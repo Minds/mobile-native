@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -16,6 +16,7 @@ import SupplyDashboard from './SupplyDashboard';
 import TransactionsDashboard from './TransactionsDashboard';
 import capitalize from '../../../common/helpers/capitalize';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
+import MText from '../../../common/components/MText';
 
 export type DashBoardPropsType = {
   metrics: MetricsSubType;
@@ -92,10 +93,10 @@ const TokensTab = observer(({ route }: { route: any }) => {
 
   if (error || dataError) {
     return (
-      <Text style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+      </MText>
     );
   }
 

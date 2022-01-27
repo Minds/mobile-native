@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
 import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
+import { ScreenHeader, Screen } from '~/common/ui/screen';
 
 type TAnalyticsTabs =
   | 'earnings'
@@ -92,8 +93,8 @@ const AnalyticsScreen = observer(
     }, [Earnings, Engagement, Token, Traffic, Trending, activeTabId]);
 
     return (
-      <View style={theme.flexContainer}>
-        <Text style={title}>{i18n.t('analytics.title')}</Text>
+      <Screen safe>
+        <ScreenHeader title={i18n.t('analytics.title')} />
         <TopbarTabbar
           current={activeTabId}
           onChange={_onTabBarChange}
@@ -106,11 +107,9 @@ const AnalyticsScreen = observer(
           ]}
         />
         <View style={theme.centered}>{screen()}</View>
-      </View>
+      </Screen>
     );
   },
 );
-
-const title = ThemedStyles.combine('padding4x', 'titleText', 'paddingBottom2x');
 
 export default AnalyticsScreen;

@@ -4,13 +4,6 @@ import type { EmitterSubscription } from 'react-native';
 
 import navigationService from '../../navigation/NavigationService';
 
-type MediaEvent = {
-  mime: string;
-  path: string;
-  name: string;
-  uri: string;
-};
-
 export type SharedItem = {
   mimeType: string;
   data: string;
@@ -30,7 +23,7 @@ class ReceiveShareService {
       Image.getSize(
         item.data,
         (width, height) => {
-          navigationService.navigate('Capture', {
+          navigationService.navigate('Compose', {
             media: {
               type: item.mimeType,
               uri: item.data,
@@ -42,7 +35,7 @@ class ReceiveShareService {
         err => console.log(err),
       );
     } else if (item.mimeType.startsWith('video/')) {
-      navigationService.navigate('Capture', {
+      navigationService.navigate('Compose', {
         media: {
           type: item.mimeType,
           uri: item.data,
@@ -61,7 +54,7 @@ class ReceiveShareService {
     if (item.mimeType.includes('image/') || item.mimeType.includes('video/')) {
       this.handleMedia(item);
     } else if (item.mimeType.includes('text')) {
-      navigationService.navigate('Capture', { text: item.data });
+      navigationService.navigate('Compose', { text: item.data });
     }
   };
 }

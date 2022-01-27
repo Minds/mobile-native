@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
@@ -9,6 +9,7 @@ import MindsSwitch from '../../common/components/MindsSwitch';
 import i18nService from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
 import { ONCHAIN_ENABLED } from '../../config/Config';
+import MText from '../../common/components/MText';
 
 type propsType = {
   store: FabScreenStore;
@@ -51,18 +52,19 @@ const TokensForm = observer(({ store }: propsType) => {
               onSelectedValueChange={v => store.wire.setTokenType(v)}
             />
           ) : (
-            <Text style={styles.type}>
+            <MText style={styles.type}>
               {i18nService.t('blockchain.offchain')}
-            </Text>
+            </MText>
           )}
         </LabeledComponent>
 
         <LabeledComponent
           label="Wallet Balance"
           wrapperStyle={theme.marginBottom4x}>
-          <Text style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
+          <MText
+            style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
             {store.walletBalance}
-          </Text>
+          </MText>
         </LabeledComponent>
 
         {store.wire.offchain && (
@@ -70,7 +72,7 @@ const TokensForm = observer(({ store }: propsType) => {
             <CheckBox
               containerStyle={[theme.checkbox, styles.checkbox]}
               title={
-                <Text
+                <MText
                   style={[
                     theme.colorPrimaryText,
                     theme.fontMedium,
@@ -78,7 +80,7 @@ const TokensForm = observer(({ store }: propsType) => {
                     theme.fontL,
                   ]}>
                   Repeat ?
-                </Text>
+                </MText>
               }
               checked={store.wire.recurring}
               onPress={store.setRepeat}
@@ -92,13 +94,9 @@ const TokensForm = observer(({ store }: propsType) => {
 
 export const styles = ThemedStyles.create({
   type: ['fontL', 'fontMedium'],
-  inputContainer: [
-    'bgPrimaryBackgroundHighlight_Dark',
-    'bcolorPrimaryBorder_Dark',
-    'marginBottom4x',
-  ],
-  label: ['colorSecondaryText_Dark'],
-  inputText: ['colorPrimaryText_Dark', 'marginBottom0x'],
+  inputContainer: ['marginBottom4x'],
+  label: ['colorSecondaryText'],
+  inputText: ['colorPrimaryText', 'marginBottom0x'],
   checkbox: {
     marginRight: 0,
     marginTop: 0,

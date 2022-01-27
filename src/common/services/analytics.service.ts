@@ -1,5 +1,6 @@
 import {
   createTracker,
+  EventContext,
   ReactNativeTracker,
 } from '@snowplow/react-native-tracker';
 import DeviceInfo from 'react-native-device-info';
@@ -9,8 +10,8 @@ import { Version } from '../../config/Version';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import { getTopLevelNavigator } from '../../navigation/NavigationService';
-import GroupModel from '../../groups/GroupModel';
-import UserModel from '../../channel/UserModel';
+import type GroupModel from '../../groups/GroupModel';
+import type UserModel from '../../channel/UserModel';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -20,27 +21,35 @@ const IGNORE_SCREENS = ['Comments'];
 export class AnalyticsService {
   tracker?: ReactNativeTracker;
   previousRouteName = '';
+  contexts: EventContext[] = [];
 
   constructor() {
-    this.tracker = createTracker('ma', {
-      // required
-      endpoint: 'sp.minds.com',
-      appId: 'minds',
+    this.tracker = createTracker(
+      'ma',
+      {
+        // required
+        endpoint: 'sp.minds.com',
 
-      // optional
-      method: 'post',
-      protocol: 'https',
-      base64Encoded: true,
-      platformContext: true,
-      applicationContext: false,
-      lifecycleEvents: false,
-      screenContext: true,
-      sessionContext: true,
-      foregroundTimeout: 600,
-      backgroundTimeout: 300,
-      checkInterval: 15,
-      installTracking: false,
-    });
+        // optional
+        method: 'post',
+      },
+      {
+        trackerConfig: {
+          appId: 'minds',
+          platformContext: true,
+          applicationContext: false,
+          lifecycleAutotracking: false,
+          screenContext: true,
+          sessionContext: true,
+          installAutotracking: false,
+          base64Encoding: true,
+        },
+        sessionConfig: {
+          foregroundTimeout: 600,
+          backgroundTimeout: 300,
+        },
+      },
+    );
 
     const screen = Dimensions.get('screen');
     const window = Dimensions.get('window');
@@ -56,6 +65,33 @@ export class AnalyticsService {
       useragent,
       viewportWidth: window.width,
       viewportHeight: window.height,
+    });
+  }
+
+  /**
+   * Sets the user id
+   */
+  setUserId(userId: string) {
+    this.tracker?.setUserId(userId);
+  }
+
+  /**
+   * clear contexts array
+   */
+  clearContexts() {
+    this.contexts = [];
+  }
+
+  /**
+   * Add an experiment context
+   */
+  addExperimentContext(experimentId: string, variationId: number): void {
+    this.contexts.push({
+      schema: 'iglu:com.minds/growthbook_context/jsonschema/1-0-1',
+      data: {
+        experiment_id: experimentId,
+        variation_id: variationId,
+      },
     });
   }
 
@@ -86,7 +122,10 @@ export class AnalyticsService {
    * @param screenName
    */
   trackScreenViewEvent(screenName: string) {
-    return this.tracker?.trackScreenViewEvent({ screenName });
+    return this.tracker?.trackScreenViewEvent(
+      { name: screenName },
+      this.contexts,
+    );
   }
 
   /**
@@ -115,17 +154,22 @@ export class AnalyticsService {
             entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
             entity_type: entity.type,
             entity_subtype:
-              !(entity instanceof GroupModel || entity instanceof UserModel) &&
-              entity.subtype
-                ? entity.subtype
+              !(
+                entity.instanceOf('GroupModel') ||
+                entity.instanceOf('UserModel')
+              ) && (entity as any).subtype
+                ? (entity as any).subtype!
                 : '',
             entity_container_guid:
-              !(entity instanceof GroupModel || entity instanceof UserModel) &&
-              entity.containerObj
-                ? entity.containerObj.guid
+              !(
+                entity.instanceOf('GroupModel') ||
+                entity.instanceOf('UserModel')
+              ) && (entity as any).containerObj!
+                ? (entity as any).containerObj!.guid
                 : '',
           },
         },
+        ...this.contexts,
       ],
     );
   }
@@ -135,7 +179,7 @@ export class AnalyticsService {
    * @param pageUrl
    */
   trackPageViewEvent(pageUrl: string) {
-    this.tracker?.trackPageViewEvent({ pageUrl }, []);
+    this.tracker?.trackPageViewEvent({ pageUrl }, this.contexts);
   }
 }
 

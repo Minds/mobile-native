@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
@@ -23,8 +24,8 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={viewPadding}>
-          <Text style={titleStyle}>{i18n.t('blockchain.offchain')}</Text>
-          <Text style={earningStyle}>{offchain}</Text>
+          <MText style={titleStyle}>{i18n.t('blockchain.offchain')}</MText>
+          <MText style={earningStyle}>{offchain}</MText>
         </View>
         <View
           style={[
@@ -33,8 +34,8 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
             theme.marginTop3x,
             ...viewPadding,
           ]}>
-          <Text style={titleStyle}>{i18n.t('blockchain.onchain')}</Text>
-          <Text style={earningStyle}>{onchain}</Text>
+          <MText style={titleStyle}>{i18n.t('blockchain.onchain')}</MText>
+          <MText style={earningStyle}>{onchain}</MText>
         </View>
       </ScrollView>
     </View>

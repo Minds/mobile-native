@@ -1,12 +1,13 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Badge } from 'react-native-elements';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -32,10 +33,10 @@ export default class ToolbarItem extends PureComponent {
         style={buttonStyle}
         onPress={() => onPress(value)}>
         {iconCmp}
-        <Text style={textStyle} numberOfLines={1}>
+        <MText style={textStyle} numberOfLines={1}>
           {text}
-        </Text>
-        {subtext && <Text style={subTextStyle}>{subtext}</Text>}
+        </MText>
+        {subtext && <MText style={subTextStyle}>{subtext}</MText>}
         {this.getBadge()}
       </DebouncedTouchableOpacity>
     );
@@ -108,7 +109,7 @@ export default class ToolbarItem extends PureComponent {
     if (!icon) {
       return (
         <View style={iconContainerStyle}>
-          <Text style={style}>{badge}</Text>
+          <MText style={style}>{badge}</MText>
         </View>
       );
     }

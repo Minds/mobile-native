@@ -1,14 +1,6 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  useWindowDimensions,
-  Text,
-} from 'react-native';
-import { useDimensions } from '@react-native-community/hooks';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { View, Platform, TouchableOpacity, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useFocus } from '@msantang78/react-native-pager';
 import { observer, useLocalStore } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,13 +22,11 @@ import videoPlayerService from '../common/services/video-player.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 import LockV2 from '../wire/v2/lock/Lock';
-import { AppStackParamList } from '../navigation/NavigationTypes';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
 import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
-
-type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
+import MText from '../common/components/MText';
 
 type PropsType = {
   entity: ActivityModel;
@@ -46,22 +36,15 @@ type PropsType = {
   onPressPrev: () => void;
 };
 
+const window = Dimensions.get('window');
+
 const volumeIconSize = Platform.select({ ios: 30, android: 26 });
 const isIOS = Platform.OS === 'ios';
 
 const PortraitActivity = observer((props: PropsType) => {
-  const windowHeight = useWindowDimensions().height;
-
   // Local store
   const store = useLocalStore(() => ({
     comments: new CommentsStore(props.entity),
-    displayComment: false,
-    showComments() {
-      store.displayComment = true;
-    },
-    hideComments() {
-      store.displayComment = false;
-    },
     toggleVolume() {
       videoPlayerService.current?.toggleVolume();
     },
@@ -69,7 +52,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   const focused = useFocus();
   const insets = useSafeAreaInsets();
-  const window = useDimensions().window;
+
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
@@ -80,6 +63,7 @@ const PortraitActivity = observer((props: PropsType) => {
   const hasRemind = !!entity.remind_object;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom ? insets.bottom - 10 : 0,
+    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
   });
   const { current: cleanTop } = useRef({
     paddingTop: insets.top
@@ -96,13 +80,7 @@ const PortraitActivity = observer((props: PropsType) => {
   }, [commentsRef]);
 
   useEffect(() => {
-    let time: any;
     if (focused) {
-      time = setTimeout(() => {
-        if (store) {
-          store.showComments();
-        }
-      }, 500);
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -116,13 +94,7 @@ const PortraitActivity = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
-      store.hideComments();
     }
-    return () => {
-      if (time) {
-        clearTimeout(time);
-      }
-    };
   }, [focused, props.forceAutoplay, store]);
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
@@ -140,7 +112,7 @@ const PortraitActivity = observer((props: PropsType) => {
         <FloatingBackButton
           size={35}
           onPress={navigation.goBack}
-          style={[theme.colorPrimaryText, styles.backButton]}
+          style={styles.backButton}
         />
       }
       rightToolbar={
@@ -149,17 +121,17 @@ const PortraitActivity = observer((props: PropsType) => {
         </View>
       }>
       <View style={theme.rowJustifyStart}>
-        <Text
+        <MText
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
           {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
-            <Text style={[theme.fontS, theme.colorSecondaryText]}>
+            <MText style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
               · {i18n.t('edited').toUpperCase()}
-            </Text>
+            </MText>
           )}
-        </Text>
+        </MText>
       </View>
     </OwnerBlock>
   );
@@ -181,7 +153,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   const touchableStyle = {
     top: 90 + insets.top,
-    height: windowHeight - ((isIOS ? 200 : 230) + insets.top + insets.bottom),
+    height: window.height - ((isIOS ? 200 : 230) + insets.top + insets.bottom),
   };
 
   const tappingArea = (
@@ -200,13 +172,11 @@ const PortraitActivity = observer((props: PropsType) => {
   );
 
   return (
-    <View style={[window, theme.flexContainer, theme.bgSecondaryBackground]}>
+    <View style={styles.mainContainer}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         {showNSFW && tappingArea}
-        <View
-          pointerEvents="box-none"
-          style={[theme.justifyCenter, theme.flexContainer, styles.content]}>
+        <View pointerEvents="box-none" style={styles.content}>
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
           ) : (
@@ -227,13 +197,7 @@ const PortraitActivity = observer((props: PropsType) => {
                 <>{lock}</>
               )}
               {hasRemind && (
-                <View
-                  style={[
-                    styles.remind,
-                    theme.margin2x,
-                    theme.borderHair,
-                    theme.bcolorPrimaryBackground,
-                  ]}>
+                <View style={styles.remind}>
                   <Activity
                     ref={remindRef}
                     hideTabs={true}
@@ -248,12 +212,7 @@ const PortraitActivity = observer((props: PropsType) => {
           )}
         </View>
         {entity.hasVideo() && (
-          <View
-            style={[
-              theme.positionAbsoluteBottomRight,
-              theme.padding2x,
-              styles.volume,
-            ]}>
+          <View style={styles.volume}>
             <Icon
               onPress={store.toggleVolume}
               name={
@@ -275,18 +234,15 @@ const PortraitActivity = observer((props: PropsType) => {
         />
       </View>
       {!showNSFW && tappingArea}
-      <CommentBottomSheet
-        commentsStore={store.comments}
-        ref={commentsRef}
-        hideContent={Boolean(!store.displayComment)}
-      />
+      <CommentBottomSheet commentsStore={store.comments} ref={commentsRef} />
     </View>
   );
 });
 
 export default withErrorBoundary(PortraitActivity);
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  mainContainer: [window, 'flexContainer', 'bgSecondaryBackground'],
   backButton: {
     position: undefined,
     top: undefined,
@@ -298,41 +254,47 @@ const styles = StyleSheet.create({
     }),
     marginLeft: -17,
   },
-  volume: {
-    opacity: 0.8,
-  },
+  volume: ['positionAbsoluteBottomRight', 'padding2x', 'opacity75'],
   content: {
     flexGrow: 1,
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  header: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
+  header: [
+    'bgPrimaryBackground',
+    {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.22,
+      shadowRadius: 2.22,
+      borderBottomWidth: 0,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    borderBottomWidth: 0,
-  },
+  ],
   linear: {
     position: 'absolute',
     bottom: 0,
     height: 40,
     width: '100%',
   },
-  remind: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+  remind: [
+    'margin2x',
+    'borderHair',
+    'bcolorPrimaryBackground',
+    {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 2,
+        height: 2,
+      },
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
 
-    elevation: 5,
-  },
+      elevation: 5,
+    },
+  ],
   touchLeft: {
     position: 'absolute',
     left: 0,

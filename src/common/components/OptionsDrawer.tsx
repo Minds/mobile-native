@@ -1,29 +1,44 @@
-//@ts-nocheck
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+const keyExtractor = (item, index) => index.toString();
+
+const renderItem = item => (
+  <MenuItem
+    item={item.item}
+    containerItemStyle={
+      item.index > 0 ? styles.menuItemStyle : styles.firstMenuItemStyle
+    }
+  />
+);
+
 export default function ({ navigation, route }) {
   if (!route.params.options) {
     return null;
   }
-  const theme = ThemedStyles.style;
 
   const list = route.params.options(navigation, route).filter(r => r);
 
-  const innerWrapper = [theme.borderBottomHair, theme.bcolorPrimaryBorder];
-
   return (
-    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <View style={innerWrapper}>
+    <View style={styles.container}>
+      <View style={styles.innerWrapper}>
         <FlatList
           data={list}
-          renderItem={MenuItem}
-          style={[theme.bgPrimaryBackground, theme.paddingTop4x]}
-          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
+          style={styles.list}
+          keyExtractor={keyExtractor}
         />
       </View>
     </View>
   );
 }
+
+const styles = ThemedStyles.create({
+  container: ['flexContainer', 'bgPrimaryBackground'],
+  innerWrapper: ['borderBottomHair', 'bcolorPrimaryBorder'],
+  list: ['bgPrimaryBackground', 'paddingTop4x'],
+  firstMenuItemStyle: ['bgSecondaryBackground'],
+  menuItemStyle: ['bgSecondaryBackground', 'borderTop0x'],
+});

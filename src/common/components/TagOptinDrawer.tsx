@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
 import Modal from 'react-native-modal';
@@ -10,6 +10,7 @@ import TagSelect from './TagSelect';
 import TagInput from './TagInput';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type Props = any;
 
@@ -109,7 +110,7 @@ class TagOptinDrawer extends Component<Props> {
                   theme.paddingBottom2x,
                   theme.bcolorPrimaryBorders,
                 ]}>
-                <Text>{i18n.t('hashtags.preferred')}</Text>
+                <MText>{i18n.t('hashtags.preferred')}</MText>
                 <Switch
                   value={!this.props.hashtag.all}
                   onSyncPress={this.toogleAll}
@@ -117,7 +118,7 @@ class TagOptinDrawer extends Component<Props> {
               </View>
             ) : null}
             {this.props.onSelectOne ? (
-              <Text
+              <MText
                 style={[
                   theme.fontS,
                   theme.colorTextSeconday,
@@ -126,7 +127,7 @@ class TagOptinDrawer extends Component<Props> {
                   theme.marginTop,
                 ]}>
                 {i18n.t('hashtags.hold')}
-              </Text>
+              </MText>
             ) : null}
             <TagSelect
               tagStyle={[theme.bgWhite, theme.padding1x, theme.flexContainer]}

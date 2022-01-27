@@ -1,17 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
-
 import ThemedStyles from '../styles/ThemedStyles';
+import { Icon } from '~/common/ui/icons';
+import { Avatar, Column, B3 } from '~ui';
 import excerpt from '../common/helpers/excerpt';
-import type { PortraitBarItem } from './createPortraitStore';
-import PressableScale from '../common/components/PressableScale';
 import navigationService from '../navigation/NavigationService';
 
 type PropsType = {
-  item: PortraitBarItem;
-  index: number;
+  avatarUrl?: any;
+  unseen?: boolean;
+  title: string;
+  index?: number;
+  onPress?: any;
+  withPlus?: boolean;
 };
 
 /**
@@ -26,20 +27,24 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
   }, [props.index]);
 
   return (
-    <View style={containerStyle}>
-      <PressableScale onPress={onPress} activeOpacity={0.5}>
-        <FastImage
-          source={props.item.user.getAvatarSource()}
-          style={styles.avatar}
-        />
-        {props.item.unseen ? <View style={styles.unseen} /> : null}
-      </PressableScale>
-      <Text style={textStyle}>{excerpt(props.item.user.username, 10)}</Text>
-    </View>
+    <Column align="centerBoth" horizontal="XS">
+      <Avatar
+        source={props.avatarUrl}
+        onPress={props.onPress ? props.onPress : onPress}
+        border={props.unseen ? 'active' : 'transparent'}
+        size="medium">
+        {props.withPlus && <PlusIcon />}
+      </Avatar>
+      <B3 top="XXS">{excerpt(props.title, 10)}</B3>
+    </Column>
   );
 });
 
-const styles = StyleSheet.create({
+const PlusIcon = () => (
+  <Icon style={styles.plusIcon} name="plus-circle" color="Link" />
+);
+
+const styles = ThemedStyles.create({
   container: {
     padding: 10,
     overflow: 'visible',
@@ -58,22 +63,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderColor: '#ECDA51',
   },
-  avatar: {
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
-  },
+  avatar: [
+    'bgTertiaryBackground',
+    {
+      height: 55,
+      width: 55,
+      borderRadius: 27.5,
+    },
+  ],
+  plusIcon: [
+    {
+      position: 'absolute',
+      right: -5,
+      bottom: -5,
+      borderRadius: 100,
+    },
+    'bgPrimaryBackground',
+  ],
 });
-
-const textStyle = ThemedStyles.combine(
-  'fontM',
-  styles.text,
-  'colorSecondaryText',
-);
-
-const containerStyle = ThemedStyles.combine(
-  'columnAlignCenter',
-  styles.container,
-  'bgTransparent',
-  'centered',
-);

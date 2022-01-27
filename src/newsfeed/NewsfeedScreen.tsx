@@ -7,7 +7,6 @@ import { View } from 'react-native';
 
 import FeedList from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
-import type MessengerListStore from '../messenger/MessengerListStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import CheckLanguage from '../common/components/CheckLanguage';
@@ -15,6 +14,10 @@ import ActivityPlaceHolder from './ActivityPlaceHolder';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
+import Feature from '~/common/components/Feature';
+import Topbar from '~/topbar/Topbar';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -22,10 +25,11 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
   'Newsfeed'
 >;
 
+const sticky = [0];
+
 type PropsType = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
-  messengerList: MessengerListStore;
   newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
@@ -33,7 +37,7 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'messengerList')
+@inject('newsfeed', 'user')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
@@ -45,13 +49,6 @@ class NewsfeedScreen extends Component<PropsType> {
         <ActivityPlaceHolder />
       </View>
     ),
-  };
-
-  /**
-   * Nav to activity full screen
-   */
-  navToCapture = () => {
-    this.props.navigation.navigate('Capture', {});
   };
 
   refreshNewsfeed = e => {
@@ -66,7 +63,7 @@ class NewsfeedScreen extends Component<PropsType> {
    * Load data on mount
    */
   componentDidMount() {
-    this.disposeTabPress = this.props.navigation.addListener(
+    this.disposeTabPress = this.props.navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
       this.refreshNewsfeed,
@@ -80,19 +77,12 @@ class NewsfeedScreen extends Component<PropsType> {
     // this.props.discovery.init();
 
     await this.props.newsfeed.feedStore.fetchLocalThenRemote();
-
-    // load messenger
-    this.props.messengerList.loadList();
-
-    // listen socket on app start
-    this.props.messengerList.listen();
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
-    this.props.messengerList.unlisten();
     if (this.disposeTabPress) {
       this.disposeTabPress();
     }
@@ -111,7 +101,16 @@ class NewsfeedScreen extends Component<PropsType> {
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View>
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
+        <Topbar navigation={this.props.navigation} />
+      </View>
+    );
+
+    const prepend = (
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
+        <Feature feature="social-compass">
+          <SocialCompassPrompt />
+        </Feature>
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />
@@ -123,6 +122,9 @@ class NewsfeedScreen extends Component<PropsType> {
 
     return (
       <FeedList
+        stickyHeaderHiddenOnScroll={true}
+        prepend={prepend}
+        stickyHeaderIndices={sticky}
         ref={newsfeed.setListRef}
         header={header}
         feedStore={newsfeed.feedStore}

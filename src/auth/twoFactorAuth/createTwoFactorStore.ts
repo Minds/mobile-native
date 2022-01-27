@@ -1,5 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
+import SettingsService from '~/settings/SettingsService';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
@@ -7,12 +8,14 @@ import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
 import authService from '../AuthService';
-export type Options = 'app' | 'sms' | 'disable';
+export type Options = 'app' | 'sms' | 'email' | 'disable';
 
 // Used to 'navigate' between forms inside loginscreen
 export type TwoFactorAuthSteps = 'login' | 'authCode' | 'recoveryCode';
 
 const createTwoFactorStore = () => ({
+  loaded: false,
+  loadError: false,
   loading: false,
   selectedOption: 'app' as Options,
   secret: '',
@@ -35,10 +38,23 @@ const createTwoFactorStore = () => ({
     this.appCode = appCode;
   },
   has2fa(has2fa: { sms: boolean; totp: boolean }) {
+    this.loaded = true;
     if (has2fa.totp) {
       this.appAuthEnabled = true;
     } else if (has2fa.sms) {
       this.smsAuthEnabled = true;
+    }
+  },
+  async load() {
+    this.loadError = false;
+    try {
+      const settings: any = await SettingsService.getSettings();
+      if (settings && settings.channel) {
+        this.has2fa(settings.channel.has2fa);
+      }
+    } catch (error) {
+      this.loadError = true;
+      logService.exception(error);
     }
   },
   get has2faEnabled() {
@@ -81,13 +97,13 @@ const createTwoFactorStore = () => ({
   async disable2fa(onComplete: Function, password: string) {
     try {
       this.error = false;
-      let response;
+
       if (this.appAuthEnabled) {
-        response = <any>await apiService.delete('api/v3/security/totp', {
+        <any>await apiService.delete('api/v3/security/totp', {
           code: this.appCode,
         });
       } else {
-        response = await twoFactorAuthenticationService.remove(password);
+        await twoFactorAuthenticationService.remove(password);
       }
       this.appAuthEnabled = false;
       this.smsAuthEnabled = false;

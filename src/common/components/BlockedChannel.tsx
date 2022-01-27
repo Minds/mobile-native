@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import i18n from '../services/i18n.service';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,6 +8,7 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import UserModel from '../../channel/UserModel';
+import MText from './MText';
 
 type PropsType = {
   entity?: ActivityModel | BlogModel;
@@ -51,17 +52,17 @@ export default class BlockedChannel extends Component<PropsType> {
           theme.bgTertiaryBackground,
           theme.fullWidth,
         ]}>
-        <Text
+        <MText
           style={[theme.fontXXL, theme.colorPrimaryText, theme.marginBottom5x]}>
           @{user?.username}
-        </Text>
+        </MText>
         <Icon name="cancel" style={theme.colorPrimaryText} size={60} />
-        <Text
+        <MText
           style={[theme.fontXXXL, theme.colorPrimaryText, theme.marginTop5x]}>
           {i18n.t('channel.blocked')}
-        </Text>
+        </MText>
         <TouchableOpacity onPress={() => user?.toggleBlock(false)}>
-          <Text
+          <MText
             style={[
               theme.fontXXL,
               theme.colorLink,
@@ -69,14 +70,14 @@ export default class BlockedChannel extends Component<PropsType> {
               theme.link,
             ]}>
             {i18n.t('channel.unblock')}
-          </Text>
+          </MText>
         </TouchableOpacity>
         {this.props.onPressBack && (
-          <Text
+          <MText
             onPress={this.props.onPressBack}
             style={[theme.fontXL, theme.colorLink, theme.marginTop8x]}>
             {i18n.t('goback')}
-          </Text>
+          </MText>
         )}
       </View>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ResetPasswordStore } from './createLocalStore';
@@ -8,7 +9,7 @@ type PropsType = {
   store: ResetPasswordStore;
 };
 
-const CText = ({ children }) => <Text style={textStyle}>{children}</Text>;
+const CText = ({ children }) => <MText style={textStyle}>{children}</MText>;
 const EmailSended = ({ store }: PropsType) => {
   return (
     <View style={containerStyle}>
@@ -23,11 +24,11 @@ const EmailSended = ({ store }: PropsType) => {
 export const containerStyle = ThemedStyles.combine(
   'paddingHorizontal10x',
   'borderTopHair',
-  'bcolorPrimaryBorder_Dark',
+  'bcolorPrimaryBorder',
 );
 
 export const textStyle = ThemedStyles.combine(
-  'colorSecondaryText_Dark',
+  'colorSecondaryText',
   'fontL',
   'fontMedium',
   'marginTop4x',

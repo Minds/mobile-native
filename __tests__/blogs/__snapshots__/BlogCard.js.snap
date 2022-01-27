@@ -1,13 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`blog card component should renders correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "backgroundColor": "#1A2025",
+    }
+  }
+>
   <View
-    onPress={[Function]}
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "backgroundColor": "#F6F7F7",
-      }
+      Array [
+        Object {
+          "backgroundColor": undefined,
+        },
+        undefined,
+      ]
     }
   >
     <View
@@ -34,6 +54,7 @@ exports[`blog card component should renders correctly 1`] = `
               "Cache-Control": "no-cache, no-store, must-revalidate",
               "Content-Type": "application/json",
               "Pragma": "no-cache",
+              "no-cache": "1",
             },
             "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
           }
@@ -52,7 +73,7 @@ exports[`blog card component should renders correctly 1`] = `
     <View
       style={
         Object {
-          "padding": 10,
+          "padding": 8,
         }
       }
     >
@@ -69,15 +90,23 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 18,
+                "color": "#FFFFFF",
               },
               Object {
-                "fontFamily": "Roboto-Medium",
-                "fontWeight": "500",
+                "fontFamily": "Roboto",
               },
-              Object {
-                "flex": 1,
-              },
+              Array [
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                  "fontWeight": "500",
+                },
+                Object {
+                  "flex": 1,
+                },
+              ],
             ]
           }
         >
@@ -87,10 +116,10 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "marginBottom": 10,
+                "marginBottom": 8,
               },
               Object {
-                "marginTop": 15,
+                "marginTop": 12,
               },
               Object {
                 "flexDirection": "row",
@@ -230,7 +259,9 @@ exports[`blog card component should renders correctly 1`] = `
               />
               <View
                 accessibilityElementsHidden={false}
+                collapsable={false}
                 importantForAccessibility="yes"
+                nativeID="animatedComponent"
                 pointerEvents="auto"
                 style={
                   Object {
@@ -273,14 +304,22 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 16,
+                  "color": "#FFFFFF",
                 },
                 Object {
-                  "paddingLeft": 10,
+                  "fontFamily": "Roboto",
                 },
-                Object {
-                  "flex": 1,
-                },
+                Array [
+                  Object {
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "paddingLeft": 8,
+                  },
+                  Object {
+                    "flex": 1,
+                  },
+                ],
               ]
             }
           >
@@ -290,11 +329,19 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 10,
+                  "color": "#FFFFFF",
                 },
                 Object {
-                  "paddingLeft": 5,
+                  "fontFamily": "Roboto",
                 },
+                Array [
+                  Object {
+                    "fontSize": 10,
+                  },
+                  Object {
+                    "paddingLeft": 4,
+                  },
+                ],
               ]
             }
           >
@@ -303,7 +350,7 @@ exports[`blog card component should renders correctly 1`] = `
           <View
             style={
               Object {
-                "paddingLeft": 5,
+                "paddingLeft": 4,
               }
             }
           >
@@ -318,7 +365,7 @@ exports[`blog card component should renders correctly 1`] = `
                       "fontSize": 28,
                     },
                     Object {
-                      "color": "#9B9B9B",
+                      "color": "#797B82",
                     },
                     Object {
                       "fontFamily": "Material Icons",

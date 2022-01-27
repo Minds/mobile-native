@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import { Text, View, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import Clipboard from '@react-native-clipboard/clipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type PropsType = {
   message: string;
@@ -66,18 +67,17 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     return (
       <View style={[theme.columnAlignCenter, containerStyle]}>
-        <Text
+        <MText
           style={[
-            textSmall ? theme.fontS : theme.fontM,
+            textSmall ? theme.fontM : theme.fontM,
             theme.textCenter,
             theme.marginTop2x,
-            theme.fontHairline,
-            theme.colorAlert,
+            theme.colorSecondaryText,
           ]}
           onPress={this.copy}>
           {this.props.message || i18n.t('errorDisplaying')}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[
             textSmall ? theme.fontXS : theme.fontS,
             theme.textCenter,
@@ -87,7 +87,7 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
           ]}
           onPress={this.copy}>
           {i18n.t('tapCopyError')}
-        </Text>
+        </MText>
       </View>
     );
   }

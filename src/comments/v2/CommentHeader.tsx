@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
@@ -8,6 +8,8 @@ import type CommentModel from './CommentModel';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -27,12 +29,13 @@ class CommentHeader extends PureComponent<PropsType> {
    * Navigate To channel
    */
   _navToChannel = () => {
-    if (this.props.navigation) {
-      this.props.navigation.push('Channel', {
+    NavigationService.push('App', {
+      screen: 'Channel',
+      params: {
         guid: this.props.entity.ownerObj.guid,
         entity: this.props.entity.ownerObj,
-      });
-    }
+      },
+    });
   };
 
   /**
@@ -65,7 +68,7 @@ class CommentHeader extends PureComponent<PropsType> {
               <DebouncedTouchableOpacity
                 onPress={this._navToChannel}
                 style={[theme.rowJustifyStart, theme.alignCenter]}>
-                <Text
+                <MText
                   numberOfLines={1}
                   style={[
                     styles.username,
@@ -74,7 +77,7 @@ class CommentHeader extends PureComponent<PropsType> {
                   ]}>
                   {name || channel.username}
                   {Boolean(name) && (
-                    <Text
+                    <MText
                       numberOfLines={1}
                       style={[
                         styles.username,
@@ -83,11 +86,11 @@ class CommentHeader extends PureComponent<PropsType> {
                       ]}>
                       {' '}
                       @{channel.username}
-                    </Text>
+                    </MText>
                   )}
-                </Text>
+                </MText>
               </DebouncedTouchableOpacity>
-              <Text
+              <MText
                 style={[
                   styles.groupName,
                   ThemedStyles.style.colorSecondaryText,
@@ -95,14 +98,10 @@ class CommentHeader extends PureComponent<PropsType> {
                 lineBreakMode="tail"
                 numberOfLines={1}>
                 {date}
-              </Text>
+              </MText>
             </View>
           </View>
-          <ChannelBadges
-            size={20}
-            channel={this.props.entity.ownerObj}
-            iconStyle={theme.colorLink}
-          />
+          <ChannelBadges channel={this.props.entity.ownerObj} />
           {rightToolbar}
         </View>
       </View>

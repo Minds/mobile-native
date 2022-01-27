@@ -1,1 +1,3 @@
-export const TouchableOpacity = jest.fn();
+import { View } from 'react-native';
+
+export const TouchableOpacity = View;

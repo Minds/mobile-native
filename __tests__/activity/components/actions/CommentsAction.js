@@ -6,6 +6,7 @@ import { shallow } from 'enzyme';
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 
 import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
+import IconButtonNext from '../../../../src/common/ui/icons';
 
 describe('Comment action component', () => {
   let screen, navigatorStore, navigation;
@@ -34,16 +35,16 @@ describe('Comment action component', () => {
   it('should have a comment button', async () => {
     screen.update();
 
-    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
+    expect(screen.find('withSpacer(IconButtonNextComponent)')).toHaveLength(1);
   });
 
   it('should navigate a thumb on press ', async () => {
     navigation.dangerouslyGetState.mockReturnValue({ routes: null });
 
     screen.update();
-    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
+    let touchables = screen.find('withSpacer(IconButtonNextComponent)');
     touchables.at(0).props().onPress();
     expect(navigation.push).toHaveBeenCalled();
-    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
+    expect(screen.find('withSpacer(IconButtonNextComponent)')).toHaveLength(1);
   });
 });

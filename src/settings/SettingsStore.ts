@@ -125,7 +125,7 @@ export class SettingsStore {
    */
   @action
   setDataSaverMode(value: boolean) {
-    storages.app.setItem('dataSaverMode', value);
+    storages.app.setBool('dataSaverMode', value);
     this.dataSaverMode = value;
   }
 
@@ -134,7 +134,7 @@ export class SettingsStore {
    */
   @action
   setDataSaverModeDisablesOnWiFi(value: boolean) {
-    storages.app.setItem('dataSaverModeDisablesOnWiFi', value);
+    storages.app.setBool('dataSaverModeDisablesOnWiFi', value);
     this.dataSaverModeDisablesOnWiFi = value;
   }
 }

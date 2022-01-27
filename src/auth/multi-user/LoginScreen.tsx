@@ -1,31 +1,27 @@
+import { NavigationProp } from '@react-navigation/core';
 import React from 'react';
 import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../../styles/ThemedStyles';
-import LoginFormHandler from '../login/LoginFormHandler';
+import LoginForm from '../login/LoginForm';
 
 type PropsType = {
-  navigation: any;
+  navigation: NavigationProp<any>;
   route: any;
 };
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
-  const onLogin = React.useCallback(() => navigation.goBack(), [navigation]);
+  const onLogin = React.useCallback(() => {
+    route.params?.onLogin && route.params.onLogin(navigation);
+  }, [navigation, route.params]);
   const theme = ThemedStyles.style;
   return (
     <ModalContainer
       title={i18n.t('auth.login')}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackgroundHighlight}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
-      <LoginFormHandler
-        navigation={navigation}
-        route={route}
-        multiUser
-        onLogin={onLogin}
-      />
+      contentContainer={theme.bgPrimaryBackgroundHighlight}>
+      <LoginForm onLogin={onLogin} />
     </ModalContainer>
   );
 };

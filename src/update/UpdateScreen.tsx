@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 import * as Progress from 'react-native-progress';
@@ -8,6 +8,7 @@ import * as Progress from 'react-native-progress';
 import updateService from '../common/services/update.service';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 const UpdatingScreen = observer(() => {
   return (
@@ -19,17 +20,17 @@ const UpdatingScreen = observer(() => {
           source={require('../assets/logos/bulb.png')}
         />
         <View>
-          <Text style={styles.title}>
+          <MText style={styles.title}>
             {i18n.t('update.title', { version: updateService.version })}
-          </Text>
+          </MText>
           <Progress.Bar
             progress={updateService.progress / 100}
             width={null}
             color={ThemedStyles.getColor('Link')}
           />
-          <Text style={styles.downloading}>
+          <MText style={styles.downloading}>
             {i18n.t('downloading')} {updateService.progress}%
-          </Text>
+          </MText>
         </View>
       </View>
     </View>

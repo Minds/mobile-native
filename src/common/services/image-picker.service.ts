@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
-
+import { IMAGE_MAX_SIZE } from './../../config/Config';
 import permissions from './permissions.service';
 
 export interface CustomImage extends Image {
@@ -71,7 +71,7 @@ class ImagePickerService {
    */
   async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkCameraPermissions();
+    await this.checkCameraPermissions();
 
     const opt = this.buildOptions(type);
 
@@ -165,7 +165,9 @@ class ImagePickerService {
         return response.map((image: PatchImage) =>
           Object.assign(
             {
-              uri: image.path,
+              uri: image.path.startsWith('/')
+                ? `file://${image.path}`
+                : image.path,
               sourceURL: image.sourceURL,
               type: image.mime,
             },
@@ -173,7 +175,9 @@ class ImagePickerService {
           ),
         );
       } else {
-        const uri = response.path;
+        const uri = response.path.startsWith('/')
+          ? `file://${response.path}`
+          : response.path;
         return Object.assign(
           {
             uri,
@@ -205,6 +209,8 @@ class ImagePickerService {
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
       compressVideoPreset: 'Passthrough',
+      compressImageMaxHeight: IMAGE_MAX_SIZE, // twice the size of xlarge image on the backend
+      compressImageMaxWidth: IMAGE_MAX_SIZE, // twice the size of xlarge image on the backend
       cropperCircleOverlay,
     };
   }

@@ -67,6 +67,7 @@
     "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
     "forgot": "Forgot your password?",
+    "alreadyLogged": "You are already logged into this account",
     "email": "Email",
     "username": "Username",
     "password": "Password",
@@ -93,6 +94,7 @@
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
     "loginFail": "Wrong Username or Password",
+    "userTaken": "Username already taken",
     "waitLogin": "Logging in with new credentials...",
     "resetPassword": "Reset Password",
     "createNewPassword": "Create a new password",
@@ -169,6 +171,8 @@
     "blogListEmpty": "This list is empty"
   },
   "boosts": {
+    "emptyList": "There is no boosts to display",
+    "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",
@@ -256,6 +260,7 @@
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
     "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
+    "scheduleError": "The selected date should be in the future",
     "post": "Post",
     "remind": "Remind",
     "placeholder": "Speak your mind...",
@@ -275,7 +280,9 @@
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
     "attach": "Photo & Video Library",
-    "takePhoto": "Camera"
+    "takePhoto": "Camera",
+    "usePhoto": "Use photo",
+    "useVideo": "Use video"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -366,29 +373,17 @@
     "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
-    "decrypting": "decrypting...",
-    "notAllowed": "This user only allows messages from users that they subscribe to",
-    "allowContact": "Allow contact from unsubscribed users",
-    "couldntDecrypt": "couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
-    "isntUsingMessenger": "isn't using Minds Messenger yet",
-    "looksLike": "Looks like",
-    "checkCredentials": "Please check your credentials",
-    "errorCreatingKeys": "Error creating the encryptions keys",
     "messenger": "Messenger",
-    "noMessages": "Search for someone to message",
-    "logoutMessage": "Do you want to logout from messenger?",
-    "changeKeyMessage": "Changing your encryption password will cause your previous messages to be unreadable",
-    "notEncryptedMessage": "Hey @{{user}}! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.",
-    "onboardingText": "An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.",
-    "setupMessage1": "You only need to enter this encryption password once as long as you stay signed in.",
-    "setupMessage2": "It is important so that no one other than you and the people you are communicating with can access the content of your messages.",
-    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
-    "messengerRekey": "Change your encryption password",
-    "legacyMessenger": "Legacy Messenger",
-    "errorDirectMessage": "Oops! Please try again in a moment"
+    "modal": {
+      "action": "Install Minds Chat",
+      "appname": "Minds Chat Application",
+      "text": "For an enhanced chat experience install the application directly from {{store}}.",
+      "theappstore": "the App Store",
+      "googleplay": "Google Play"
+    }
   },
   "newsfeed": {
     "title": "Newsfeed",
@@ -453,6 +448,22 @@
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "filters": {
+      "all": "All",
+      "tags": "Tags",
+      "comments": "Comments",
+      "subscriptions": "Subscribers",
+      "votes": "Votes",
+      "reminds": "Reminds"
+    },
+    "empty": {
+      "all": "You have no notifications",
+      "comments": "You have no comments notifications",
+      "tags": "You have no tags notification",
+      "subscriptions": "You have no subscriptions notification",
+      "votes": "You have no votes notification",
+      "reminds": "You have no reminds notification"
+    },
     "verbs": {
       "vote_up": "voted up",
       "vote_down": "voted down",
@@ -635,6 +646,11 @@
   },
   "settings": {
     "submit": "Submit",
+    "chooseBrowser": "Choose Browser",
+    "chooseBrowserDescription": "Please choose where you want to open the external links.",
+    "chooseBrowserHint": "This option can be changed from the settings",
+    "inAppBrowser": "In-App Browser",
+    "defaultBrowser": "Default Browser",
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
@@ -701,9 +717,11 @@
       "appTitle": "App",
       "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",
       "smsTitle": "SMS",
-      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
+      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted",
+      "emailTitle": "Email",
+      "emailDescription": "Minds will send you an email with a two-factor authentication code when no other Two-factor authentication is set-up."
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "Close all sessions",
     "closeSession": "Close session",
     "subscriptionListEmpty": "You don't have any recurring subscription",
@@ -772,7 +790,10 @@
       "c": "ACCOUNT",
       "c2": "Delete Account",
       "d": "INFO",
-      "d1": "App"
+      "d1": "App",
+      "e": "LEGACY",
+      "f": "DATA",
+      "g": "REFERRALS"
     },
     "notificationsOptions": {
       "push": "Push",
@@ -908,7 +929,8 @@
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
     "improvedExperience": "Your feed should be livelier!",
-    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,"
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
+    "codeSent": "Verification code sent to"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
@@ -967,7 +989,8 @@
       "notes2": "A small amount of ETH will be changed to cover the transaction fee.",
       "notes1": "You can transfer up to {{amount}} tokens to your on-chain wallet.",
       "errorAmountToHigh": "You don't have enough tokens",
-      "acceptTerms": "I agree and understand the terms"
+      "acceptTerms": "I agree and understand the terms",
+      "onchain_transfers": "Onchain Transfers"
     },
     "usd": {
       "bankInfo": "Bank Information",
@@ -1227,7 +1250,8 @@
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
-    "button": "NSFW"
+    "button": "NSFW",
+    "showContent": "Show NSFW content in results"
   },
   "update": {
     "title": "Updating to v{{version}}",
@@ -1282,6 +1306,7 @@
     }
   },
   "referrals": {
+    "menu": "Invite friends",
     "title": "Earn tokens by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
@@ -1297,6 +1322,13 @@
     "rewardsSignup": "Rewards Signup",
 
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
+  },
+  "socialCompass": {
+    "promptTitle": "Build your algorithm",
+    "promptDesc": "Set your echo chamber preferences.",
+    "questionsDesc": "The preferences you set will improve your recommendations over time as the open source machine learning monkeys evolve. Don't worry, it won't impact your default newsfeed.",
+    "thanks": "Thank you for your feedback and supporting the Minds Community",
+    "callToAction": "Start"
   },
   "add": "Add",
   "downloading": "Downloading",
@@ -1419,6 +1451,7 @@
   "close": "Close",
   "now": "Now",
   "joined": "Joined",
+  "range": "Range {{range}}",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
@@ -1430,6 +1463,7 @@
   "uploading": "Uploading media, please wait",
   "verify": "Verify",
   "other": "Other",
+  "type": "Type",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
@@ -1460,7 +1494,7 @@
     "buy": "Continue"
   },
   "earnScreen": {
-    "title": "Earn",
+    "title": "Earning on Minds",
     "increase": "Increase your earnings",
     "resources": {
       "title": "Resources",
@@ -1502,5 +1536,6 @@
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
   "and": "and",
-  "others": "others"
+  "others": "others",
+  "newMoment": "New Moment"
 }

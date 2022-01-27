@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type propsType = {
   label: string;
@@ -22,7 +23,7 @@ const LabeledComponent: FunctionComponent<propsType> = ({
 
   return (
     <View style={wrapperStyles}>
-      <Text style={labelStyles}>{label}</Text>
+      <MText style={labelStyles}>{label}</MText>
       {children}
     </View>
   );

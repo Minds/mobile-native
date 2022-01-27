@@ -338,6 +338,7 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
+      'no-cache': '1',
       'App-Version': Version.VERSION,
       ...customHeaders,
     };
@@ -372,9 +373,9 @@ export class ApiService {
     if (!params) {
       params = {};
     }
-    if (process.env.JEST_WORKER_ID === undefined) {
-      params.cb = Date.now(); //bust the cache every time
-    }
+    // if (process.env.JEST_WORKER_ID === undefined) {
+    //   params.cb = Date.now(); //bust the cache every time
+    // }
 
     if (MINDS_STAGING) {
       params.staging = '1';
@@ -443,6 +444,23 @@ export class ApiService {
     });
 
     return response.data;
+  }
+
+  /**
+   * Api post
+   * @param {string} url
+   * @param {object} body
+   */
+  async rawPost<T>(
+    url: string,
+    body: any = {},
+    headers: any = {},
+  ): Promise<AxiosResponse<T>> {
+    const response = await this.axios.post(this.buildUrl(url), body, {
+      headers,
+    });
+
+    return response;
   }
 
   /**

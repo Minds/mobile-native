@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from 'react-native-animatable';
+import { StyleSheet, View } from 'react-native';
 import CloseableModal, {
   CloseableModalProps,
 } from '../../common/components/CloseableModal';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 export interface OrderReport {
   tokenAmount: number;
   paymentMethod: string;
@@ -35,15 +35,15 @@ export default function ({ report, ...modalProps }: Props) {
           theme.padding8x,
           theme.bgPrimaryBackground,
         ]}>
-        <Text style={[theme.marginBottom5x, theme.fontXL]}>
+        <MText style={[theme.marginBottom5x, theme.fontXL]}>
           {i18n.t('orderReport.thanksMessage', {
             tokenAmount: String(tokenAmount).slice(0, 6),
           })}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[theme.marginBottom8x, theme.fontL, theme.colorSecondaryText]}>
           {i18n.t('orderReport.processDuration')}
-        </Text>
+        </MText>
         <View
           style={[
             theme.rowJustifySpaceBetween,
@@ -54,24 +54,26 @@ export default function ({ report, ...modalProps }: Props) {
             styles.wrap,
           ]}>
           <View>
-            <Text style={theme.colorSecondaryText}>
+            <MText style={theme.colorSecondaryText}>
               {i18n.t('orderReport.paymentMethod')}
-            </Text>
-            <Text style={theme.fontXL}>{paymentMethod}</Text>
+            </MText>
+            <MText style={theme.fontXL}>{paymentMethod}</MText>
           </View>
           <View>
-            <Text style={theme.colorSecondaryText}>
+            <MText style={theme.colorSecondaryText}>
               {i18n.t('orderReport.tokenAmount')}
-            </Text>
-            <Text style={theme.fontXL}>{String(tokenAmount).slice(0, 6)}</Text>
+            </MText>
+            <MText style={theme.fontXL}>
+              {String(tokenAmount).slice(0, 6)}
+            </MText>
           </View>
           <View style={theme.paddingTop5x}>
-            <Text style={theme.colorSecondaryText}>
+            <MText style={theme.colorSecondaryText}>
               {i18n.t('orderReport.totalPayment')}
-            </Text>
-            <Text style={theme.fontXL}>
+            </MText>
+            <MText style={theme.fontXL}>
               {fiatAmount} {fiatCurrency}
-            </Text>
+            </MText>
           </View>
         </View>
       </View>

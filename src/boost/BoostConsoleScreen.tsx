@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,6 +12,8 @@ import { ComponentsStyle } from '../styles/Components';
 import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
+import { Button } from '~ui';
 
 /**
  * News feed list component
@@ -39,7 +41,7 @@ export default class BoostConsoleScreen extends Component {
   }
 
   createPost() {
-    this.props.navigation.navigate('Capture');
+    this.props.navigation.navigate('Compose');
   }
   /**
    * Render component
@@ -57,14 +59,18 @@ export default class BoostConsoleScreen extends Component {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Icon name="trending-up" size={72} color="#444" />
-            <Text style={ComponentsStyle.emptyComponentMessage}>
+            <MText style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('boosts.youDontHaveBoosts')}
-            </Text>
-            <Text
-              style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Capture')}>
+            </MText>
+            <Button
+              onPress={() => this.props.navigation.navigate('Capture')}
+              type="action"
+              mode="outline"
+              align="center"
+              top="L"
+              size="large">
               {i18n.t('createAPost')}
-            </Text>
+            </Button>
           </View>
         </View>
       );

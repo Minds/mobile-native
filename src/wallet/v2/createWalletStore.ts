@@ -2,7 +2,6 @@ import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
-import number from '../../common/helpers/number';
 import type {
   StripeDetails,
   Wallet,
@@ -385,8 +384,13 @@ const createWalletStore = () => ({
   async loadRewards(date: Date) {
     try {
       const dateTs = getStartOfDayUnixTs(date);
+      const formattedDate = moment(dateTs * 1000)
+        .utc()
+        .startOf('day')
+        .format('Y-M-D');
+
       let rewards = <any>await api.get('api/v3/rewards/', {
-        date: date.toISOString(),
+        date: formattedDate,
       });
       await this.loadPrices();
       const response = <any>await api.get('api/v2/blockchain/contributions', {

@@ -1,7 +1,8 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer, inject } from 'mobx-react';
+import MText from '../common/components/MText';
 
 @inject('wallet')
 @observer
@@ -14,8 +15,10 @@ export default class BlockchainSettingsOverviewView extends Component {
     return (
       <View style={styles.view}>
         <View>
-          <Text style={styles.amount}>{this.props.wallet.tokensFormatted}</Text>
-          <Text style={styles.currency}>COINS</Text>
+          <MText style={styles.amount}>
+            {this.props.wallet.tokensFormatted}
+          </MText>
+          <MText style={styles.currency}>COINS</MText>
         </View>
       </View>
     );

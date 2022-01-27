@@ -12,7 +12,6 @@ import {
   Platform,
   AppState,
   Linking,
-  Text,
   UIManager,
   RefreshControl,
   YellowBox,
@@ -24,7 +23,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Orientation from 'react-native-orientation-locker';
-
+import { PortalProvider } from '@gorhom/portal';
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
@@ -48,7 +47,6 @@ import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
-
 YellowBox.ignoreWarnings(['']);
 
 const appInitManager = new AppInitManager();
@@ -60,9 +58,6 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-
-require('intl');
-require('intl/locale-data/jsonp/en');
 
 type State = {
   appState: string;
@@ -98,20 +93,6 @@ class App extends Component<Props, State> {
   constructor(props) {
     super(props);
     Orientation.lockToPortrait();
-
-    // workaround to set default font;
-
-    let oldRender = Text.render;
-    Text.render = function (...args) {
-      let origin = oldRender.call(this, ...args);
-      return React.cloneElement(origin, {
-        style: [
-          ThemedStyles.style.colorPrimaryText,
-          { fontFamily: 'Roboto' },
-          origin.props.style,
-        ],
-      });
-    };
 
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};
@@ -171,12 +152,10 @@ class App extends Component<Props, State> {
   handleOpenURL = event => {
     if (event.url) {
       // the var can be cleaned so we check again
-      if (!appInitManager.handlePasswordResetDeepLink()) {
-        setTimeout(() => {
-          deeplinkService.navigate(event.url);
-          event.url = '';
-        }, 100);
-      }
+      setTimeout(() => {
+        deeplinkService.navigate(event.url);
+        event.url = '';
+      }, 100);
     }
   };
 
@@ -191,7 +170,8 @@ class App extends Component<Props, State> {
 
     const stores = getStores();
 
-    const isLoggedIn = sessionService.userLoggedIn;
+    // Should show auth screens?
+    const showAuthNav = sessionService.showAuthNav;
 
     return (
       <>
@@ -205,19 +185,21 @@ class App extends Component<Props, State> {
                 onStateChange={analyticsService.onNavigatorStateChange}>
                 <StoresProvider>
                   <Provider key="app" {...stores}>
-                    <BottomSheetModalProvider>
-                      <ErrorBoundary
-                        message="An error occurred"
-                        containerStyle={ThemedStyles.style.centered}>
-                        <WCContextProvider>
-                          <NavigationStack
-                            key={ThemedStyles.theme + i18n.locale}
-                            isLoggedIn={isLoggedIn}
-                          />
-                        </WCContextProvider>
-                        <AppMessages />
-                      </ErrorBoundary>
-                    </BottomSheetModalProvider>
+                    <PortalProvider>
+                      <BottomSheetModalProvider>
+                        <ErrorBoundary
+                          message="An error occurred"
+                          containerStyle={ThemedStyles.style.centered}>
+                          <WCContextProvider>
+                            <NavigationStack
+                              key={ThemedStyles.theme + i18n.locale}
+                              showAuthNav={showAuthNav}
+                            />
+                          </WCContextProvider>
+                          <AppMessages />
+                        </ErrorBoundary>
+                      </BottomSheetModalProvider>
+                    </PortalProvider>
                   </Provider>
                 </StoresProvider>
               </NavigationContainer>

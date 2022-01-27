@@ -11,6 +11,7 @@ import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 import ThemedStyles from '../styles/ThemedStyles';
 import type UserModel from '../channel/UserModel';
+import MText from '../common/components/MText';
 
 type PropsType = {
   row: {
@@ -102,13 +103,13 @@ class DiscoveryUser extends Component<PropsType> {
         {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
         <View style={theme.flexContainer}>
-          <Text style={[styles.body, styles.title, theme.colorPrimaryText]}>
+          <MText style={[styles.body, styles.title, theme.colorPrimaryText]}>
             {row.item.name}
-          </Text>
-          <Text
+          </MText>
+          <MText
             style={[styles.body, styles.subtitle, theme.colorSecondaryText]}>
             @{row.item.username}
-          </Text>
+          </MText>
         </View>
         {renderRightButton && this.renderRightButton()}
       </TouchableOpacity>

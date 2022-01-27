@@ -2,6 +2,71 @@
 
 Minds Mobile
 
+## 4.21.0 - 2022-01-25
+
+### Changed
+
+- New navigation structure
+- User and hashtag autocomplete
+- Fix post scheduler
+- Refresh in comments
+- React native updated
+- Level 2 replies auto tag
+- Channel edit city autocomplete fixed
+- Fix tags manager and tags selector scroll issues
+- Fix notifications refresh
+- General fixes and improvements
+
+## 4.20.1 - 2022-01-17
+
+### Changed
+
+- Bug fixing
+
+## 4.20.0 - 2021-12-10
+
+### Changed
+
+- New post composer screen
+- New photo filters
+- New date picker
+- Social compass
+- Comments improvements
+- Improved UI consistency
+- Withdrawal console added to wallet
+- Post button added to user's profile screen
+- Browser selector (in-app or default)
+- Improved search UX
+- Improved blog view screen
+- Allow group owners and moderators to delete posts/comments
+- Bug fixing
+
+## 4.19.1 - 2021-11-04
+
+### Changed
+
+- Fix unresponsive UI in some Android devices
+- Fix discovery visual errors
+
+## 4.19.0 - 2021-10-25
+
+### Changed
+
+- Improved multi-user transitions
+- New welcome, login, and register screens
+- Improves error handling on the login screen
+- New camera with zoom, HDR, and low light modes
+- Help & support added.
+- Improved UI consistency
+- Improved 2FA settings screen
+- Fix camera issues
+- Fix push notification navigation and un-registering
+- Fix link navigation in the blog viewer
+- Fix issues with the android back button
+- Fix data saver crash
+- Compress the images to improve the upload speed
+- General bug fixing
+
 ## 4.18.0 - 2021-09-20
 
 ### Changed

@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-  Text,
-  TouchableOpacity,
   TextStyle,
   ViewStyle,
   GestureResponderEvent,
   TouchableOpacityProps,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { View } from 'react-native-animatable';
+import { Flow } from 'react-native-animated-spinkit';
 
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
+import MText from './MText';
 
 export interface ButtonPropsType extends TouchableOpacityProps {
   text?: string;
@@ -37,130 +38,123 @@ export interface ButtonPropsType extends TouchableOpacityProps {
 /**
  * Custom Button component
  */
-export default class Button extends Component<ButtonPropsType> {
-  /**
-   * Default props
-   */
-  static defaultProps = {
-    loading: false,
+const Button = props => {
+  const theme = ThemedStyles.style;
+
+  const {
+    onPress,
+    textColor,
+    color,
+    children,
+    containerStyle,
+    accessibilityLabel,
+    textStyle,
+    disabled,
+    loading,
+    inverted,
+    large,
+    small,
+    xSmall,
+    transparent,
+    action,
+    active,
+    borderless,
+    centered = true,
+    ...extraProps
+  } = props;
+
+  let background = ThemedStyles.getColor(
+    active ? 'Active' : 'PrimaryBackground',
+  );
+  let mainColor =
+    color || (transparent ? '#FFFFFF' : ThemedStyles.getColor('PrimaryText'));
+
+  if (inverted !== undefined) {
+    background = mainColor;
+    mainColor = ThemedStyles.getColor('PrimaryBackground');
+  }
+
+  const padding = {
+    paddingVertical: small || xSmall ? 8 : 10,
+    paddingHorizontal: large ? 23 : xSmall ? 16 : 21,
   };
 
-  /**
-   * Render
-   */
-  render() {
-    const theme = ThemedStyles.style;
+  const border = borderless
+    ? {}
+    : {
+        ...(action ? theme.bcolorLink : theme.bcolorPrimaryBorder),
+        ...theme.border,
+      };
 
-    const {
-      onPress,
-      textColor,
-      color,
-      children,
-      containerStyle,
-      accessibilityLabel,
-      textStyle,
-      disabled,
-      loading,
-      inverted,
-      large,
-      small,
-      xSmall,
-      transparent,
-      action,
-      active,
-      borderless,
-      centered = true,
-      ...extraProps
-    } = this.props;
+  const transparentStyle = transparent
+    ? {
+        backgroundColor: 'rgba(0,0,0,0.40)',
+        borderColor: action
+          ? ThemedStyles.getColor('Link')
+          : Platform.select({
+              android: 'rgba(255,255,255,0.40)',
+              ios: 'rgba(255,255,255,0.60)',
+            }),
+      }
+    : {};
 
-    let background = ThemedStyles.getColor(
-      active ? 'Active' : 'PrimaryBackground',
-    );
-    let mainColor =
-      color || (transparent ? '#FFFFFF' : ThemedStyles.getColor('PrimaryText'));
+  const [textWidth, setTextWidth] = useState(undefined);
+  const onLayout = useCallback(e => {
+    setTextWidth(e.nativeEvent.layout.width);
+  }, []);
 
-    if (inverted !== undefined) {
-      background = mainColor;
-      mainColor = ThemedStyles.getColor('PrimaryBackground');
-    }
-
-    const padding = {
-      paddingVertical: small || xSmall ? 8 : 10,
-      paddingHorizontal: large ? 23 : xSmall ? 16 : 21,
-    };
-
-    const border = borderless
-      ? {}
-      : {
-          ...(action ? theme.bcolorLink : theme.bcolorPrimaryBorder),
-          ...theme.border,
-        };
-
-    const transparentStyle = transparent
-      ? {
-          backgroundColor: 'rgba(0,0,0,0.40)',
-          borderColor: action
-            ? ThemedStyles.getColor('Link')
-            : Platform.select({
-                android: 'rgba(255,255,255,0.40)',
-                ios: 'rgba(255,255,255,0.60)',
-              }),
-        }
-      : {};
-
-    const style = {
+  const style = [
+    theme.rowJustifyCenter,
+    centered ? theme.centered : {},
+    {
       backgroundColor: background,
       borderRadius: 21,
       ...padding,
       ...border,
       ...transparentStyle,
-    };
+    },
+    containerStyle,
+  ];
 
-    const fontSize = { fontSize: large ? 19 : small ? 16 : xSmall ? 14 : 17 };
-    const body = loading ? (
-      <DotIndicator
-        containerStyle={dotIndicatorStyle}
-        color={textColor || mainColor}
-        scaleEnabled={true}
-      />
-    ) : (
-      this.props.text && (
-        <Text
-          style={[
-            fontSize,
-            { color: textColor || mainColor },
-            textStyle,
-            { fontWeight: '500' },
-          ]}>
-          {' '}
-          {this.props.text}{' '}
-        </Text>
-      )
-    );
+  const dotIndicatorContainerStyle = useMemoStyle(
+    [{ minWidth: textWidth }],
+    [textWidth],
+  );
 
-    const onButtonPress = loading ? undefined : onPress;
-
-    return (
-      <TouchableOpacity
-        onPress={onButtonPress}
-        disabled={disabled}
-        accessibilityLabel={accessibilityLabel}
+  const fontSize = { fontSize: large ? 19 : small ? 16 : xSmall ? 14 : 17 };
+  const body = loading ? (
+    <View style={dotIndicatorContainerStyle}>
+      <Flow color={textColor || mainColor} />
+    </View>
+  ) : (
+    props.text && (
+      <MText
+        onLayout={onLayout}
         style={[
-          theme.rowJustifyCenter,
-          centered ? theme.centered : {},
-          style,
-          containerStyle,
-        ]}
-        {...extraProps}>
-        {children}
-        {body}
-      </TouchableOpacity>
-    );
-  }
-}
+          fontSize,
+          { color: textColor || mainColor },
+          textStyle,
+          { fontWeight: '500' },
+        ]}>
+        {' '}
+        {props.text}{' '}
+      </MText>
+    )
+  );
 
-const dotIndicatorStyle = ThemedStyles.combine(
-  { width: 50 },
-  'rowJustifyCenter',
-  'padding2x',
-);
+  const onButtonPress = loading ? undefined : onPress;
+
+  return (
+    <TouchableOpacity
+      onPress={onButtonPress}
+      disabled={disabled}
+      accessibilityLabel={accessibilityLabel}
+      style={style}
+      {...extraProps}>
+      {children}
+      {body}
+    </TouchableOpacity>
+  );
+};
+
+export default Button;

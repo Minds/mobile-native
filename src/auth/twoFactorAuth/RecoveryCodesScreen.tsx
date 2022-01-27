@@ -1,16 +1,17 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SaveButton from '../../common/components/SaveButton';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
 
 type RecoveryCodesRouteProp = RouteProp<
-  AppStackParamList,
+  MoreStackParamList,
   'RecoveryCodesScreen'
 >;
 
@@ -37,15 +38,15 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
 
   return (
     <View style={[theme.flexContainer, theme.paddingTop7x]}>
-      <Text style={styles.title}>
+      <MText style={styles.title}>
         {i18n.t('settings.TFARecoveryCodesTitle')}
-      </Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      </MText>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('settings.TFARecoveryCodesDesc')}
-      </Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      </MText>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('settings.TFARecoveryCodesBeSure')}
-      </Text>
+      </MText>
       <View
         style={[
           theme.padding4x,
@@ -56,9 +57,9 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           theme.marginTop5x,
         ]}>
         <View style={theme.rowJustifySpaceBetween}>
-          <Text style={styles.smallTitle}>
+          <MText style={styles.smallTitle}>
             {i18n.t('settings.TFARecoveryCodes')}
-          </Text>
+          </MText>
           <TouchableOpacity
             style={[theme.rowJustifyStart, theme.centered]}
             onPress={store.copyRecoveryCode}>
@@ -67,13 +68,13 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
               color={ThemedStyles.getColor('PrimaryText')}
               size={14}
             />
-            <Text style={[styles.smallTitle, theme.marginLeft]}>
+            <MText style={[styles.smallTitle, theme.marginLeft]}>
               {i18n.t('copy')}
-            </Text>
+            </MText>
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Text style={styles.textCode}>{store.recoveryCode}</Text>
+          <MText style={styles.textCode}>{store.recoveryCode}</MText>
         </View>
       </View>
     </View>

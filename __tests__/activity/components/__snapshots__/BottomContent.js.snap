@@ -35,7 +35,7 @@ exports[`BottomContent component renders correctly 1`] = `
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
-          "guid": "824853017709780997",
+          "guid": null,
           "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,
@@ -128,7 +128,7 @@ exports[`BottomContent component renders correctly 1`] = `
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
-          "guid": "824853017709780997",
+          "guid": null,
           "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,
@@ -187,6 +187,7 @@ exports[`BottomContent component renders correctly 1`] = `
         },
       }
     }
+    onPressComment={[Function]}
   />
   <Scheduled
     isScheduled={false}

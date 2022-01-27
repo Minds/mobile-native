@@ -9,7 +9,7 @@ import authService from '../../src/auth/AuthService';
 import Input from '../../src/common/components/Input';
 import Button from '../../src/common/components/Button';
 import { getStores } from '../../AppStores';
-
+jest.mock('@gorhom/bottom-sheet');
 jest.mock('../../src/auth/AuthService');
 
 getStores.mockReturnValue({

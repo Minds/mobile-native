@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Linking,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -15,6 +9,7 @@ import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ONCHAIN_ENABLED } from '../config/Config';
+import MText from '../common/components/MText';
 
 const linkTo = (dest: string) =>
   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -36,14 +31,14 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
         size={20}
         style={[theme.centered, theme.marginRight3x]}
       />
-      <Text style={[theme.fontL, theme.colorPrimaryText, theme.bold]}>
+      <MText style={[theme.fontL, theme.colorPrimaryText, theme.bold]}>
         {i18n.t(`earnScreen.${content.name}.title`)}
-      </Text>
+      </MText>
     </View>
   ) : (
-    <Text style={[theme.fontL, theme.colorSecondaryText, theme.fontMedium]}>
+    <MText style={[theme.fontL, theme.colorSecondaryText, theme.fontMedium]}>
       {i18n.t(`earnScreen.${content.name}`)}
-    </Text>
+    </MText>
   );
 
   return (
@@ -89,7 +84,7 @@ export default observer(function ({ navigation }) {
     {
       name: 'create',
       icon: 'plus-box',
-      onPress: () => navTo('Capture', { mode: 'text', start: true }),
+      onPress: () => navTo('Compose', { mode: 'text', start: true }),
     },
     {
       name: 'refer',
@@ -153,19 +148,19 @@ export default observer(function ({ navigation }) {
       <ModalScreen
         source={require('../assets/withdrawalbg.jpg')}
         title={i18n.t('earnScreen.title')}>
-        <Text style={titleStyle}>{i18n.t('earnScreen.increase')}</Text>
+        <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
         {earnItems.map(item => (
           <EarnItem content={item} />
         ))}
-        <Text style={[titleStyle, theme.paddingTop2x]}>
+        <MText style={[titleStyle, theme.paddingTop2x]}>
           {i18n.t('earnScreen.resources.title')}
-        </Text>
+        </MText>
         {resourcesItems.map(item => (
           <EarnItem content={item} />
         ))}
-        <Text style={[titleStyle, theme.paddingTop2x]}>
+        <MText style={[titleStyle, theme.paddingTop2x]}>
           {i18n.t('earnScreen.unlock.title')}
-        </Text>
+        </MText>
         {unlockItems.map(item => (
           <EarnItem content={item} />
         ))}

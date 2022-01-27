@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import featuresService from '../../common/services/features.service';
@@ -7,6 +7,7 @@ import viewportPercentage from '../../common/helpers/viewportPercentage';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { Currency, Reward } from '../WireTypes';
+import MText from '../../common/components/MText';
 
 const { value: slideWidth, viewportHeight } = viewportPercentage(75);
 const { value: itemHorizontalMargin } = viewportPercentage(2);
@@ -112,10 +113,10 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
           theme.borderBottom,
         ]}>
         <View style={theme.columnAlignCenter}>
-          <Text style={[theme.fontXXL, theme.fontMedium]}>{text}</Text>
-          <Text numberOfLines={5} style={[theme.fontL, theme.fontMedium]}>
+          <MText style={[theme.fontXXL, theme.fontMedium]}>{text}</MText>
+          <MText numberOfLines={5} style={[theme.fontL, theme.fontMedium]}>
             {row.item.description}
-          </Text>
+          </MText>
         </View>
       </View>
     );

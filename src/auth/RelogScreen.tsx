@@ -1,11 +1,11 @@
+import { useBackHandler } from '@react-native-community/hooks';
 import { RouteProp } from '@react-navigation/native';
-import React from 'react';
-import { BackHandler } from 'react-native';
+import React, { useCallback } from 'react';
 import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ModalContainer from '../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../styles/ThemedStyles';
-import LoginFormHandler from './login/LoginFormHandler';
+import LoginForm from './login/LoginForm';
 
 type RelogScreenRouteProp = RouteProp<RootStackParamList, 'RelogScreen'>;
 
@@ -30,11 +30,11 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
   }, [navigation, onCancel]);
 
   // Disable back button on Android
-  React.useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => true);
-  }, []);
+  useBackHandler(
+    useCallback(() => {
+      return true;
+    }, []),
+  );
 
   return (
     <ModalContainer
@@ -42,13 +42,8 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
       onPressBack={onBackHandler}
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
-      <LoginFormHandler
-        relogin
-        onLogin={onLoginHandler}
-        sessionIndex={sessionIndex}
-      />
+      titleStyle={theme.colorPrimaryText}>
+      <LoginForm relogin onLogin={onLoginHandler} sessionIndex={sessionIndex} />
     </ModalContainer>
   );
 };

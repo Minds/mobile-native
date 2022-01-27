@@ -38,6 +38,7 @@ import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics'
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsActionSheet from '../../../common/components/interactions/InteractionsBottomSheet';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -46,8 +47,8 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
-  showCommentsOnFocus?: boolean;
   forceAutoplay?: boolean;
+  noBottomInset?: boolean;
 };
 
 const ActivityOwner = ({
@@ -103,13 +104,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     comments: new CommentsStore(props.entity),
     scrollViewHeight: 0,
     contentHeight: 0,
-    displayComment: !props.showCommentsOnFocus,
-    showComments() {
-      store.displayComment = true;
-    },
-    hideComments() {
-      store.displayComment = false;
-    },
     onContentSizeChange(width, height) {
       store.contentHeight = height;
     },
@@ -143,6 +137,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showText = !!entity.text || !!entity.title;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
+    ...ThemedStyles.style.bgPrimaryBackground,
   });
 
   const onPressComment = useCallback(() => {
@@ -154,13 +149,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   useEffect(() => {
     let time: any;
     if (focused) {
-      if (props.showCommentsOnFocus) {
-        time = setTimeout(() => {
-          if (store) {
-            store.showComments();
-          }
-        }, 300);
-      }
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -176,30 +164,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
-      if (props.showCommentsOnFocus) {
-        store.hideComments();
-      }
     }
     return () => {
       if (time) {
         clearTimeout(time);
       }
     };
-  }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
-
-  useEffect(() => {
-    let openCommentsTimeOut: number | null = null;
-    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      openCommentsTimeOut = setTimeout(() => {
-        onPressComment();
-      }, 400);
-    }
-    return () => {
-      if (openCommentsTimeOut) {
-        clearTimeout(openCommentsTimeOut);
-      }
-    };
-  }, [navigation, onPressComment, route]);
+  }, [focused, props.forceAutoplay, store]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -268,7 +239,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70 + (entity.remind_users ? 42 : 0),
+    height: 60 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
@@ -306,100 +277,113 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   return (
-    <View style={containerStyle}>
-      <View style={theme.flexContainer}>
-        {ownerBlockShadow}
-        <ScrollView
-          style={theme.flexContainer}
-          onLayout={store.onScrollViewSizeChange}
-          onContentSizeChange={store.onContentSizeChange}
-          contentContainerStyle={
-            store.contentFit ? contentFitStyle : contentNotFitStyle
-          }>
-          {showNSFW ? (
-            <ExplicitOverlay entity={entity} />
-          ) : (
-            <>
-              {hasMedia ? (
-                <View>
-                  {lock}
-                  <MediaView
-                    ref={mediaRef}
-                    entity={entity}
-                    navigation={navigation}
-                    autoHeight
-                    ignoreDataSaver
-                  />
-                </View>
-              ) : (
-                <>{lock}</>
-              )}
-              <TouchableOpacity
-                accessibilityLabel="touchableTextCopy"
-                onLongPress={copyText}
-                style={textCopyTouchableStyle}>
-                {showText && (
-                  <>
-                    <ExplicitText
+    <GroupContext.Provider value={route.params.group || null}>
+      <View style={containerStyle}>
+        <View style={theme.flexContainer}>
+          {ownerBlockShadow}
+          <ScrollView
+            style={theme.flexContainer}
+            onLayout={store.onScrollViewSizeChange}
+            onContentSizeChange={store.onContentSizeChange}
+            contentContainerStyle={
+              store.contentFit ? contentFitStyle : contentNotFitStyle
+            }>
+            {showNSFW ? (
+              <ExplicitOverlay entity={entity} />
+            ) : (
+              <>
+                {hasMedia ? (
+                  <View>
+                    {lock}
+                    <MediaView
+                      ref={mediaRef}
                       entity={entity}
                       navigation={navigation}
-                      style={fontStyle}
-                      selectable={false}
-                      noTruncate={true}
+                      autoHeight
+                      ignoreDataSaver
                     />
-                    <Translate
-                      ref={translateRef}
-                      entity={entity}
-                      style={fontStyle}
-                    />
-                  </>
+                  </View>
+                ) : (
+                  <>{lock}</>
                 )}
-              </TouchableOpacity>
-              {hasRemind && (
-                <View style={remindContainerStyle}>
-                  <Activity
-                    ref={remindRef}
-                    hideTabs={true}
-                    entity={entity.remind_object as ActivityModel}
-                    navigation={navigation}
-                    isReminded={true}
-                    hydrateOnNav={true}
-                  />
-                </View>
-              )}
-            </>
+                <TouchableOpacity
+                  accessibilityLabel="touchableTextCopy"
+                  onLongPress={copyText}
+                  style={textCopyTouchableStyle}>
+                  {showText && (
+                    <>
+                      <ExplicitText
+                        entity={entity}
+                        navigation={navigation}
+                        style={fontStyle}
+                        selectable={false}
+                        noTruncate={true}
+                      />
+                      <Translate
+                        ref={translateRef}
+                        entity={entity}
+                        style={fontStyle}
+                      />
+                    </>
+                  )}
+                </TouchableOpacity>
+                {hasRemind && (
+                  <View style={remindContainerStyle}>
+                    <Activity
+                      ref={remindRef}
+                      hideTabs={true}
+                      entity={entity.remind_object as ActivityModel}
+                      navigation={navigation}
+                      isReminded={true}
+                      hydrateOnNav={true}
+                    />
+                  </View>
+                )}
+              </>
+            )}
+            <ActivityMetrics entity={props.entity} fullDate />
+          </ScrollView>
+          {!store.contentFit && (
+            <LinearGradient colors={gradientColors} style={styles.linear} />
           )}
-          <ActivityMetrics entity={props.entity} fullDate />
-        </ScrollView>
-        {!store.contentFit && (
-          <LinearGradient colors={gradientColors} style={styles.linear} />
-        )}
-      </View>
-      <View style={cleanBottom}>
-        <InteractionsBar
-          onShowUpVotesPress={showUpVotes}
-          onShowDownVotesPress={showDownVotes}
-          onShowRemindsPress={showReminds}
-          onShowQuotesPress={showQuotes}
+        </View>
+        <View
+          style={
+            props.noBottomInset
+              ? ThemedStyles.style.bgPrimaryBackground
+              : cleanBottom
+          }>
+          <InteractionsBar
+            onShowUpVotesPress={showUpVotes}
+            onShowDownVotesPress={showDownVotes}
+            onShowRemindsPress={showReminds}
+            onShowQuotesPress={showQuotes}
+            entity={entity}
+          />
+          <Actions
+            entity={entity}
+            hideCount
+            showCommentsOutlet={false}
+            onPressComment={onPressComment}
+          />
+        </View>
+        <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
+        <InteractionsActionSheet
           entity={entity}
+          ref={downVotesInteractionsRef}
         />
-        <Actions
-          entity={entity}
-          hideCount
-          showCommentsOutlet={false}
-          onPressComment={onPressComment}
+        <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
+        <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
+        <CommentBottomSheet
+          ref={commentsRef}
+          autoOpen={
+            Boolean(route.params?.focusedUrn) ||
+            Boolean(route.params?.scrollToBottom)
+          }
+          commentsStore={store.comments}
         />
       </View>
-      <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
-      <InteractionsActionSheet entity={entity} ref={downVotesInteractionsRef} />
-      <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
-      <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
-      <CommentBottomSheet
-        ref={commentsRef}
-        hideContent={Boolean(!store.displayComment)}
-        commentsStore={store.comments}
-      />
-    </View>
+    </GroupContext.Provider>
   );
 });
 
@@ -413,11 +397,8 @@ const styles = StyleSheet.create({
     position: undefined,
     top: undefined,
     width: 50,
-    paddingTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
-    marginLeft: -17,
+    paddingTop: 0,
+    marginLeft: -20,
     marginRight: -5,
   },
   content: {

@@ -13,11 +13,15 @@ type PropsType = {
   inputType?: inputType;
 } & Props;
 
+/**
+ * Deprecated!!!
+ * Use InputContainer instead
+ */
 const SettingInput = ({ onError, ref, ...props }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const wrapperStyle = [
-    theme.paddingLeft3x,
+    theme.paddingHorizontal3x,
     theme.paddingTop3x,
     theme.bgSecondaryBackground,
     props.wrapperBorder,

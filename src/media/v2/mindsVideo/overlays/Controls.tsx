@@ -4,13 +4,14 @@ import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/v2/CommentModel';
-import { View, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
-import { styles, iconSize, iconResSize, playSize } from './styles';
+import { styles, iconSize, playSize } from './styles';
 // workaround to fix tooltips on android
-import Tooltip from 'rne-modal-tooltip';
+// import Tooltip from 'rne-modal-tooltip';
+// import MText from '../../../../common/components/MText';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -18,9 +19,9 @@ type PropsType = {
   hideOverlay?: boolean;
 };
 
-type SourceSelectorPropsType = {
-  localStore: MindsVideoStoreType;
-};
+// type SourceSelectorPropsType = {
+//   localStore: MindsVideoStoreType;
+// };
 
 const DebouncedTouchableWithoutFeedback = withPreventDoubleTap(
   TouchableWithoutFeedback,
@@ -29,28 +30,28 @@ const DebouncedTouchableWithoutFeedback = withPreventDoubleTap(
 const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
 const controlColor = '#F7F7F7';
 
-const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
-  const theme = ThemedStyles.style;
-  if (!localStore.sources) {
-    return null;
-  }
-  return (
-    <View>
-      {localStore.sources.map((s, i) => (
-        <Text
-          style={[
-            theme.colorWhite,
-            theme.fontL,
-            theme.paddingBottom,
-            i === localStore.source ? theme.bold : null,
-          ]}
-          onPress={() => localStore.setSource(i)}>
-          {s.size}p
-        </Text>
-      ))}
-    </View>
-  );
-};
+// const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
+//   const theme = ThemedStyles.style;
+//   if (!localStore.sources) {
+//     return null;
+//   }
+//   return (
+//     <View>
+//       {localStore.sources.map((s, i) => (
+//         <MText
+//           style={[
+//             theme.colorWhite,
+//             theme.fontL,
+//             theme.paddingBottom,
+//             i === localStore.source ? theme.bold : null,
+//           ]}
+//           onPress={() => localStore.setSource(i)}>
+//           {s.size}p
+//         </MText>
+//       ))}
+//     </View>
+//   );
+// };
 
 const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
   const theme = ThemedStyles.style;
@@ -68,7 +69,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
       </View>
     );
 
-    const sourceSelector = <SourceSelector localStore={localStore} />;
+    // remove source selector (we have only one source)
+    // const sourceSelector = <SourceSelector localStore={localStore} />;
 
     return (
       <DebouncedTouchableWithoutFeedback
@@ -92,7 +94,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               />
             </View>
           </View>
-          {localStore.duration > 0 && entity && (
+          {/* {localStore.duration > 0 && entity && (
             <View style={styles.controlSettingsContainer}>
               <Tooltip
                 popover={sourceSelector}
@@ -111,7 +113,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                 />
               </Tooltip>
             </View>
-          )}
+          )} */}
           {localStore.duration > 0 && (
             <View style={styles.controlBarContainer}>
               <Icon

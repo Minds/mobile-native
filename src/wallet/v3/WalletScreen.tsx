@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
 import {
   RouteProp,
   useFocusEffect,
@@ -8,21 +7,16 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/tokens/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';
 import type {
-  InternalStackParamList,
   AppStackParamList,
+  MoreStackParamList,
 } from '../../navigation/NavigationTypes';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import BottomOptionPopup, {
-  BottomOptionsStoreType,
-  useBottomOption,
-} from '../../common/components/BottomOptionPopup';
 import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
@@ -30,11 +24,12 @@ import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStor
 import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
+import { ScreenHeader, Screen } from '~ui/screen';
 
-export type WalletScreenRouteProp = RouteProp<InternalStackParamList, 'Wallet'>;
+export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
-  StackNavigationProp<InternalStackParamList, 'Wallet'>,
-  StackNavigationProp<AppStackParamList, 'Main'>
+  StackNavigationProp<MoreStackParamList, 'Wallet'>,
+  StackNavigationProp<AppStackParamList, 'Tabs'>
 >;
 
 type PropsType = {
@@ -48,7 +43,6 @@ type PropsType = {
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const store: WalletStoreType = useStores().wallet;
-  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
@@ -118,7 +112,6 @@ const WalletScreen = observer((props: PropsType) => {
         body = (
           <TokensTab
             walletStore={store}
-            bottomStore={bottomStore}
             navigation={props.navigation}
             store={tokenTabStore}
           />
@@ -140,38 +133,17 @@ const WalletScreen = observer((props: PropsType) => {
     body = <CenteredLoading />;
   }
   return (
-    <View style={[theme.flexContainer, theme.paddingTop4x]}>
-      <View
-        style={[
-          theme.rowJustifySpaceBetween,
-          theme.paddingHorizontal4x,
-          theme.alignCenter,
-        ]}>
-        <Text style={[theme.fontXXXL, theme.bold]}>
-          {i18n.t('wallet.wallet')}
-        </Text>
-        <TokenPrice />
-      </View>
-      <View style={theme.paddingTop3x}>
-        <TopbarTabbar
-          titleStyle={theme.fontXL}
-          tabs={tabs}
-          onChange={currency => store.setCurrent(currency)}
-          current={store.currency}
-          tabStyle={theme.paddingVertical}
-        />
-      </View>
-      {body}
-      <BottomOptionPopup
-        height={500}
-        title={bottomStore.title}
-        show={bottomStore.visible}
-        onCancel={bottomStore.hide}
-        onDone={bottomStore.onPressDone}
-        content={bottomStore.content}
-        doneText={bottomStore.doneText}
+    <Screen safe>
+      <ScreenHeader title={i18n.t('wallet.wallet')} extra={<TokenPrice />} />
+      <TopbarTabbar
+        titleStyle={theme.fontXL}
+        tabs={tabs}
+        onChange={currency => store.setCurrent(currency)}
+        current={store.currency}
+        tabStyle={theme.paddingVertical}
       />
-    </View>
+      {body}
+    </Screen>
   );
 });
 

@@ -1,55 +1,58 @@
 import React, { forwardRef, useCallback } from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetBackgroundProps,
-} from '@gorhom/bottom-sheet';
-import { Dimensions, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import CommentList from './CommentList';
-import CommentsStore from './CommentsStore';
+import {
+  useBackHandler,
+  useDimensions,
+  useKeyboard,
+} from '@react-native-community/hooks';
 import {
   createStackNavigator,
   StackNavigationOptions,
   TransitionPresets,
 } from '@react-navigation/stack';
-import { useRoute } from '@react-navigation/native';
-import CommentInput from './CommentInput';
-import { useLocalStore } from 'mobx-react';
-import Handle from '../../common/components/bottom-sheet/Handle';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 
-const BottomSheetLocalStore = ({ onChange }) => ({
-  isOpen: 0,
-  setOpen(isOpen: number) {
-    if (this.isOpen !== isOpen) {
-      this.isOpen = isOpen;
-    }
-    onChange && onChange(isOpen);
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { observer, useLocalStore } from 'mobx-react';
+
+import CommentList from './CommentList';
+import CommentsStore from './CommentsStore';
+import ThemedStyles from '~/styles/ThemedStyles';
+import Handle from '~/common/components/bottom-sheet/Handle';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const bottomSheetLocalStore = ({ autoOpen }) => ({
+  isRendered: Boolean(autoOpen),
+  setIsRendered(isRendered: boolean) {
+    this.isRendered = isRendered;
   },
 });
 
-const { height: windowHeight } = Dimensions.get('window');
-
-const snapPoints = [-150, Math.floor(windowHeight * 0.85)];
-
-/**
- * Custom background
- * (fixes visual issues on Android dark mode)
- */
-const CustomBackground = ({ style }: BottomSheetBackgroundProps) => {
-  return <View style={style} />;
-};
+const renderBackdrop = backdropProps => (
+  <BottomSheetBackdrop
+    {...backdropProps}
+    pressBehavior="close"
+    opacity={0.5}
+    appearsOnIndex={0}
+    disappearsOnIndex={-1}
+  />
+);
 
 type PropsType = {
   commentsStore: CommentsStore;
-  hideContent: boolean;
+  autoOpen?: boolean; // auto opens the bottom sheet when the component mounts
   title?: string;
   onChange?: (isOpen: number) => void;
 };
 
 const Stack = createStackNavigator();
 
-const ScreenReplyComment = () => {
+const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
+
+  useBackHandler(() => {
+    navigation.goBack();
+    return true;
+  });
   const store = React.useMemo(() => {
     const s = new CommentsStore(route.params.entity);
     s.setParent(route.params.comment);
@@ -61,23 +64,53 @@ const ScreenReplyComment = () => {
     }
   }, []);
 
-  return <CommentList store={store} />;
+  return <CommentList store={store} navigation={navigation} />;
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
-  const localStore = useLocalStore(BottomSheetLocalStore, {
+  const height = useDimensions().window.height;
+  const topInsets = useSafeAreaInsets().top;
+  const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
+    autoOpen: props.autoOpen,
   });
   const { current: focusedUrn } = React.useRef(
     props.commentsStore.getFocusedUrn(),
   );
+
+  const sheetRef = React.useRef<any>(null);
   const route = useRoute<any>();
+
+  React.useImperativeHandle(ref, () => ({
+    expand: () => {
+      if (localStore.isRendered) {
+        sheetRef.current?.present();
+      } else {
+        localStore.setIsRendered(true);
+      }
+    },
+    close: () => {
+      sheetRef.current?.dismiss();
+    },
+  }));
+
+  React.useEffect(() => {
+    if (!localStore.isRendered && props.autoOpen) {
+      localStore.setIsRendered(true);
+    }
+  }, [props.autoOpen, localStore]);
+
+  React.useEffect(() => {
+    if (localStore.isRendered) {
+      sheetRef.current?.present();
+    }
+  }, [localStore.isRendered]);
 
   React.useEffect(() => {
     if (
       (props.commentsStore.parent &&
         props.commentsStore.parent['comments:count'] === 0) ||
-      (route.params.open && props.commentsStore.entity['comments:count'] === 0)
+      (route.params?.open && props.commentsStore.entity['comments:count'] === 0)
     ) {
       setTimeout(() => {
         if (props?.commentsStore) {
@@ -85,7 +118,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         }
       }, 500);
     }
-  }, [props.commentsStore, route.params.open]);
+  }, [props.commentsStore, route.params]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
@@ -93,44 +126,53 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       headerShown: false,
       safeAreaInsets: { top: 0 },
       // headerBackground: ThemedStyles.style.bgSecondaryBackground,
-      cardStyle: ThemedStyles.style.bgSecondaryBackground,
+      cardStyle: [
+        ThemedStyles.style.bgSecondaryBackground,
+        { overflow: 'visible' },
+      ],
     }),
     [],
   );
 
   const ScreenComment = React.useCallback(
-    () => <CommentList store={props.commentsStore} />,
+    ({ navigation }) => (
+      <CommentList store={props.commentsStore} navigation={navigation} />
+    ),
     [props.commentsStore],
   );
 
   // renders
-  const renderBackdrop = React.useCallback(
-    props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
-    [],
-  );
 
   const renderHandle = useCallback(
-    () => (
-      <Handle
-        style={{ backgroundColor: ThemedStyles.getColor('PrimaryBackground') }}
-      />
-    ),
+    () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
     [],
   );
+  const onDismiss = useCallback(() => props.commentsStore.setShowInput(false), [
+    props.commentsStore,
+  ]);
 
-  return [
-    <BottomSheet
+  const { keyboardShown } = useKeyboard();
+
+  if (!localStore.isRendered) {
+    return null;
+  }
+
+  return (
+    <BottomSheetModal
       key="commentSheet"
-      ref={ref}
+      backdropComponent={renderBackdrop}
+      onDismiss={onDismiss}
+      handleHeight={20}
+      backgroundComponent={null}
+      ref={sheetRef}
+      snapPoints={[keyboardShown ? height - topInsets : '85%']}
       index={0}
-      onChange={localStore.setOpen}
-      containerHeight={windowHeight}
-      snapPoints={snapPoints}
-      handleComponent={renderHandle}
-      backgroundComponent={CustomBackground}
-      backdropComponent={renderBackdrop}>
-      {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
-        <Stack.Navigator screenOptions={screenOptions}>
+      enableContentPanningGesture={true}
+      handleComponent={renderHandle}>
+      <NavigationContainer independent={true}>
+        <Stack.Navigator
+          screenOptions={screenOptions}
+          initialRouteName="Comments">
           <Stack.Screen
             name="Comments"
             component={ScreenComment}
@@ -144,11 +186,10 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
             initialParams={{ focusedUrn }}
           />
         </Stack.Navigator>
-      )}
-    </BottomSheet>,
-    <CommentInput key="commentInput" />,
-  ];
+      </NavigationContainer>
+    </BottomSheetModal>
+  );
 };
 
 // @ts-ignore
-export default forwardRef(CommentBottomSheet);
+export default observer(forwardRef(CommentBottomSheet));

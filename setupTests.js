@@ -74,4 +74,22 @@ jest.mock(
   },
 );
 
+jest.mock('react-native-orientation-locker', () => {
+  return {
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    lockToPortrait: jest.fn(),
+    lockToLandscapeLeft: jest.fn(),
+    lockToLandscapeRight: jest.fn(),
+    unlockAllOrientations: jest.fn(),
+  };
+});
+
+jest.mock('pusher-js/react-native', () => jest.fn());
+jest.mock('react-native-system-setting', () => {
+  return {
+    getVolume: jest.fn(() => Promise.resolve()),
+  };
+});
+jest.mock('react-native-silent-switch');
 global.__reanimatedWorkletInit = jest.fn();

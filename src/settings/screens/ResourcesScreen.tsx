@@ -170,13 +170,16 @@ const ResourcesScreen = ({}: PropsType) => {
           <MenuSubtitle>
             {i18n.t(`settings.${item.id}.title`).toUpperCase()}
           </MenuSubtitle>
-          {item.options.map(option => (
+          {item.options.map((option, i) => (
             <MenuItem
               item={{
                 title: i18n.t(`settings.${item.id}.${option.id}`),
                 onPress: option.onPress,
                 noIcon: true,
               }}
+              containerItemStyle={
+                i > 0 ? ThemedStyles.style.borderTop0x : undefined
+              }
             />
           ))}
         </>

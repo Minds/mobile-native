@@ -16,7 +16,7 @@ type Style = keyof Styles;
 
 type CustomStyle = ViewStyle | TextStyle | ImageStyle;
 
-type StyleOrCustom = Style | CustomStyle;
+export type StyleOrCustom = Style | CustomStyle;
 
 type CustomStyles = { [key: string]: Array<StyleOrCustom> | CustomStyle };
 
@@ -42,7 +42,7 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.theme = storages.app.getInt('theme') || 0;
+    this.theme = storages.app.getInt('theme') ?? 1;
     this.style = buildStyle(this.theme === 0 ? LIGHT_THEME : DARK_THEME);
     this.generateNavStyle();
   }
@@ -114,8 +114,8 @@ export class ThemedStylesStore {
    * Get color of theme based on property
    * @param {String} prop
    */
-  getColor(prop: ColorsNameType) {
-    const theme = this.theme === 1 ? DARK_THEME : LIGHT_THEME;
+  getColor(prop: ColorsNameType, t = this.theme) {
+    const theme = t === 1 ? DARK_THEME : LIGHT_THEME;
     return theme[prop];
   }
 
@@ -148,7 +148,7 @@ export class ThemedStylesStore {
       },
       animation: Platform.select({
         ios: 'default',
-        android: 'fade',
+        android: 'slide_from_right',
       }),
     };
 
@@ -157,8 +157,6 @@ export class ThemedStylesStore {
     // Fix for the header's extra padding on android
     if (Platform.OS === 'android') {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
-      this.defaultScreenOptions.statusBarColor = theme.SecondaryBackground;
-      this.defaultScreenOptions.statusBarStyle = this.theme ? 'light' : 'dark';
     }
   }
 }
@@ -179,10 +177,15 @@ export function useStyle(...styles: Array<StyleOrCustom>) {
 }
 
 export function useMemoStyle(
-  styles: Array<StyleOrCustom>,
+  styles: Array<StyleOrCustom> | (() => Array<StyleOrCustom>),
   dependencies: React.DependencyList | undefined,
 ) {
-  return React.useMemo(() => ThemedStyles.combine(...styles), dependencies);
+  const fn =
+    typeof styles === 'function'
+      ? () => ThemedStyles.combine(...styles())
+      : () => ThemedStyles.combine(...styles);
+
+  return React.useMemo(fn, dependencies);
 }
 
 /**

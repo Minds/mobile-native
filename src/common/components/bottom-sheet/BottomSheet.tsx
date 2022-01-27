@@ -1,103 +1,62 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
-import { BottomSheetModal, BottomSheetModalProps } from '@gorhom/bottom-sheet';
-import { StatusBar, Text, View } from 'react-native';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Backdrop from './Backdrop';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetProps,
+} from '@gorhom/bottom-sheet';
+import React, { forwardRef, useCallback } from 'react';
+import { Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
+import useBackHandler from './useBackHandler';
 
-interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
-  title?: string;
-  subtitle?: string;
-  detail?: string;
-  autoShow?: boolean;
+const { height: windowHeight } = Dimensions.get('window');
+const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
+
+interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
-  forceHeight?: number;
+  onVisibilityChange?: (visible: boolean) => void;
 }
 
-export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
-  const { title, detail, snapPoints, autoShow, children, ...other } = props;
+export const renderBackdrop = backdropProps => (
+  <BottomSheetBackdrop
+    {...backdropProps}
+    pressBehavior="close"
+    opacity={0.5}
+    appearsOnIndex={0}
+    disappearsOnIndex={-1}
+  />
+);
 
-  const [contentHeight, setContentHeight] = React.useState(0);
-
-  const insets = useSafeAreaInsets();
-
-  const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 24,
-  });
-
-  React.useEffect(() => {
-    //@ts-ignore
-    if (ref && ref.current && autoShow) {
-      //@ts-ignore
-      ref.current.present();
-    }
-  }, [autoShow, ref]);
-
-  const snapPointsMemo = React.useMemo(() => snapPoints || [contentHeight], [
-    contentHeight,
-    snapPoints,
-  ]);
-
-  const handleOnLayout = React.useCallback(
-    ({
-      nativeEvent: {
-        layout: { height },
-      },
-    }) => {
-      height && setContentHeight(props.forceHeight || height);
-    },
-    [props.forceHeight],
+/**
+ * The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
+ */
+const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
+  const { onAnimateHandler } = useBackHandler(
+    // @ts-ignore
+    useCallback(() => ref?.current?.close(), [ref]),
+    props,
   );
 
-  // renders
-  const renderBackdrop = React.useCallback(
-    props => <Backdrop {...props} pressBehavior="close" />,
+  const renderHandle = useCallback(
+    handleProps => <Handle {...handleProps} />,
     [],
   );
 
-  const renderHandle = useCallback(() => <Handle />, []);
-
   return (
-    <BottomSheetModal
+    <BottomSheet
       ref={ref}
+      index={-1}
+      containerHeight={windowHeight}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
-      snapPoints={snapPointsMemo}
-      backgroundComponent={null}
       backdropComponent={renderBackdrop}
-      style={styles.sheetContainer as any}
-      {...other}>
-      <View style={contStyle} onLayout={handleOnLayout}>
-        {Boolean(title) && <Text style={styles.title}>{title}</Text>}
-        {Boolean(detail) && <Text style={styles.detail}>{detail}</Text>}
-        {children}
-      </View>
-    </BottomSheetModal>
+      enablePanDownToClose={true}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
+      backgroundComponent={null}
+      {...props}
+      snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}
+      onAnimate={onAnimateHandler}
+    />
   );
 });
 
-const styles = ThemedStyles.create({
-  contentContainer: ['bgPrimaryBackgroundHighlight'],
-  title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
-  detail: [
-    'fontL',
-    'fontMedium',
-    'textCenter',
-    'marginTop3x',
-    'marginBottom5x',
-    'colorSecondaryText',
-  ],
-  sheetContainer: [
-    'shadowBlack',
-    {
-      shadowOffset: {
-        width: 0,
-        height: -3,
-      },
-      shadowOpacity: 0.58,
-      shadowRadius: 4.0,
-      elevation: 16,
-    },
-  ],
-});
+export default MBottomSheet;

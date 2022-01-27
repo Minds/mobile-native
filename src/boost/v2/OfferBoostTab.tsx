@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-import { Alert, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, TouchableOpacity, View } from 'react-native';
 import InputContainer from '../../common/components/InputContainer';
+import MText from '../../common/components/MText';
 import UserTypeahead from '../../common/components/user-typeahead/UserTypeahead';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
@@ -50,7 +51,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
   return (
     <View style={[theme.flexContainer, theme.marginTop5x]}>
       <View style={theme.marginBottom4x}>
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.fontL,
@@ -58,7 +59,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.marginBottom4x,
           ]}>
           {i18n.t('boosts.offersDescription')}
-        </Text>
+        </MText>
         <InputContainer
           placeholder={i18n.t('tokens')}
           onChangeText={localStore.setAmountTokens}
@@ -76,12 +77,12 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.borderBottom,
           ]}
           onPress={() => setSearching(true)}>
-          <Text style={[theme.fontM, theme.colorSecondaryText, marginB]}>
+          <MText style={[theme.fontM, theme.colorSecondaryText, marginB]}>
             {i18n.t('boosts.targetChannel')}
-          </Text>
-          <Text style={theme.fontL}>
+          </MText>
+          <MText style={theme.fontL}>
             @{localStore.boostOfferTarget?.username || ''}
-          </Text>
+          </MText>
         </TouchableOpacity>
         <BoostPayment localStore={localStore} />
       </View>

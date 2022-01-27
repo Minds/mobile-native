@@ -4,7 +4,6 @@ import {
   EarningsCurrencyType,
   WalletStoreType,
 } from '../../v2/createWalletStore';
-import { ScrollView } from 'react-native-gesture-handler';
 import AccordionSet, {
   AccordionDataType,
   RenderFunction,
@@ -13,7 +12,6 @@ import MindsTokens, { format } from './MindsTokens';
 import { Earnings } from '../../v2/WalletTypes';
 import AccordionContent, { AccordionContentData } from './AccordionContent';
 import AccordionHeader from './AccordionHeader';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import capitalize from '../../../common/helpers/capitalize';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -21,6 +19,7 @@ import { TokensTabStore } from './tokens/createTokensTabStore';
 import sessionService from '../../../common/services/session.service';
 import AccordionHeaderTitle from './AccordionHeaderTitle';
 import i18n from '../../../common/services/i18n.service';
+import { Spacer } from '~ui';
 
 type PropsType = {
   localStore: TokensTabStore;
@@ -77,8 +76,6 @@ const ContentComponent: RenderFunction = (content: AccordionDataType) =>
 
 const EarningsOverview = observer(
   ({ localStore, walletStore, currencyType }: PropsType) => {
-    const theme = ThemedStyles.style;
-
     if (localStore.loading) {
       return <CenteredLoading />;
     }
@@ -134,13 +131,13 @@ const EarningsOverview = observer(
         };
       });
     return (
-      <ScrollView contentContainerStyle={theme.paddingTop4x}>
+      <Spacer vertical="S">
         <AccordionSet
           data={accordionData}
           headerComponent={renderHeader}
           contentComponent={ContentComponent}
         />
-      </ScrollView>
+      </Spacer>
     );
   },
 );

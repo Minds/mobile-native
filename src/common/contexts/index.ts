@@ -1,9 +1,7 @@
 import newsfeed from '../../newsfeed/NewsfeedStore';
 import boost from '../../boost/BoostStore';
-import messengerList from '../../messenger/MessengerListStore';
 import user from '../../auth/UserStore';
 import blogs from '../../blogs/BlogsStore';
-import blogsView from '../../blogs/BlogsViewStore';
 import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
@@ -26,10 +24,8 @@ export function createClassStores() {
   const stores = {
     subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
-    messengerList: new messengerList(),
     user: new user(),
     blogs: new blogs(),
-    blogsView: new blogsView(),
     wire: new wire(),
     boost: new boost(),
     groups: new groups(),
@@ -39,7 +35,7 @@ export function createClassStores() {
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
     discoveryV2Store: new DiscoveryV2Store(),
-    mindsPlusV2Store: new DiscoveryV2Store(),
+    mindsPlusV2Store: new DiscoveryV2Store(true),
     wallet: new wallet(),
   };
   sessionService.onLogout(() => {

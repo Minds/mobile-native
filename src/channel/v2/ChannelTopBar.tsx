@@ -3,7 +3,6 @@ import {
   Image,
   Platform,
   SafeAreaView,
-  Text,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -24,6 +23,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import MText from '../../common/components/MText';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -110,6 +110,10 @@ const ChannelTopBar = observer(
           backgroundColor:
             backgroundColor || theme.bgPrimaryBackground.backgroundColor,
           paddingLeft: 70,
+          paddingRight: Platform.select({
+            ios: 50,
+            android: 100,
+          }),
         },
         backgroundOpacityAnimatedStyle,
       ],
@@ -171,7 +175,7 @@ const ChannelTopBar = observer(
             value={store?.channelSearch}
             onChangeText={store?.setChannelSearch}
             returnKeyType={'search'}
-            onSubmitEditing={store?.searchInChannel}
+            onSubmitEditing={store?.filterChannelFeed}
           />
           <Icon
             reverse
@@ -204,9 +208,9 @@ const ChannelTopBar = observer(
             />
           )}
           <SafeAreaView style={styles.nameWrapper}>
-            <Text style={nameStyles} numberOfLines={1}>
+            <MText style={nameStyles} numberOfLines={1}>
               {store?.channel?.name}
-            </Text>
+            </MText>
           </SafeAreaView>
         </Animated.View>
         <SmallCircleButton

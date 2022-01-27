@@ -1,26 +1,17 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {
-  BottomOptionsStoreType,
-  useBottomOption,
-} from '../../../../../common/components/BottomOptionPopup';
+import { StyleSheet, View } from 'react-native';
 import MenuItem from '../../../../../common/components/menus/MenuItem';
+import MText from '../../../../../common/components/MText';
+import requirePhoneValidation from '../../../../../common/hooks/requirePhoneValidation';
 import i18n from '../../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
-import PhoneValidator from './PhoneValidator';
 
-const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
-  bottomStore.show(
-    i18n.t('wallet.phoneVerification'),
-    i18n.t('send'),
-    <PhoneValidator bottomStore={bottomStore} />,
-  );
+const showPhoneValidator = async () => {
+  await requirePhoneValidation();
 };
-
+//TODO: Remove BottomOptions logic and replace it with new Bottomsheets
 const Setup = ({ user, walletStore, navigation }) => {
   const theme = ThemedStyles.style;
-
-  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const onComplete = useCallback(
     (success: any) => {
@@ -36,11 +27,11 @@ const Setup = ({ user, walletStore, navigation }) => {
   walletSetup = [
     {
       title: (
-        <Text style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
+        <MText style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
           {i18n.t('wallet.phoneVerification')}
-        </Text>
+        </MText>
       ),
-      onPress: () => showPhoneValidator(bottomStore),
+      onPress: () => showPhoneValidator(),
       icon: user.rewards
         ? { name: 'md-checkmark', type: 'ionicon' }
         : undefined,
@@ -48,9 +39,9 @@ const Setup = ({ user, walletStore, navigation }) => {
     },
     {
       title: (
-        <Text style={[titleStyle, user.plus ? theme.strikeThrough : null]}>
+        <MText style={[titleStyle, user.plus ? theme.strikeThrough : null]}>
           {i18n.t('monetize.plusHeader')}
-        </Text>
+        </MText>
       ),
       onPress: () => {
         if (!user.plus) {
@@ -65,9 +56,9 @@ const Setup = ({ user, walletStore, navigation }) => {
   ];
   return (
     <View style={theme.paddingTop7x}>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('wallet.tokens.completeToTransfer')}
-      </Text>
+      </MText>
       {walletSetup.map((item, i) => (
         <MenuItem
           item={item}

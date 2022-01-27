@@ -2,18 +2,19 @@ import React from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
 import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { CommentInputContext } from './CommentInput';
+import CommentInput, { CommentInputContext } from './CommentInput';
 import sessionService from '../../common/services/session.service';
 import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 
 // types
 type PropsType = {
@@ -25,6 +26,7 @@ type PropsType = {
   scrollToBottom?: boolean;
   onInputFocus?: Function;
   onCommentFocus?: Function;
+  navigation: any;
 };
 
 /**
@@ -32,7 +34,6 @@ type PropsType = {
  * @param props
  */
 const CommentList: React.FC<PropsType> = (props: PropsType) => {
-  const theme = ThemedStyles.style;
   const ref = React.useRef<any>(null);
   const provider = React.useContext(CommentInputContext);
   const navigation = useNavigation<any>();
@@ -108,9 +109,9 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           onPress={() => props.store.setShowInput(true)}
           style={styles.touchableStyles}>
           <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-          <Text style={styles.reply}>
+          <MText style={styles.reply}>
             {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-          </Text>
+          </MText>
         </TouchableOpacity>
 
         <LoadMore store={props.store} next={true} />
@@ -127,19 +128,24 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <CommentListHeader store={props.store} />
+      <CommentListHeader store={props.store} navigation={navigation} />
       <BottomSheetFlatList
         focusHook={useFocusEffect}
         ref={ref}
         data={props.store.comments.slice()}
         ListHeaderComponent={Header}
+        onRefresh={props.store.refresh}
+        refreshing={props.store.refreshing}
         ListFooterComponent={Footer}
         keyExtractor={keyExtractor}
+        initialNumToRender={4}
+        maxToRenderPerBatch={4}
         onEndReached={loadMore}
         renderItem={renderItem}
         style={styles.list}
         contentContainerStyle={styles.listContainer}
       />
+      <CommentInput key="commentInput" />
     </View>
   );
 };

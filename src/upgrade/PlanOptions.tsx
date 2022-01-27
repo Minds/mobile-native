@@ -4,7 +4,8 @@ import MenuItem from '../common/components/menus/MenuItem';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UpgradeStoreType } from './createUpgradeStore';
 import { observer } from 'mobx-react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import MText from '../common/components/MText';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -19,7 +20,7 @@ const PlanOptions = observer(({ store, pro }: PropsType) => {
   const plans = pro ? store.paymentPlans.pro : store.paymentPlans.plus;
   return (
     <View style={theme.marginTop3x}>
-      <Text
+      <MText
         style={[
           theme.colorSecondaryText,
           theme.paddingLeft4x,
@@ -27,19 +28,19 @@ const PlanOptions = observer(({ store, pro }: PropsType) => {
           theme.fontL,
         ]}>
         SELECT PLAN
-      </Text>
+      </MText>
       {(store.method === 'tokens' ? plans.tokens : plans.usd).map(plan => (
         <MenuItem
           item={{
             onPress: () => store.setSelectedOption(plan),
             title: (
               <>
-                <Text style={[theme.colorPrimaryText]}>
+                <MText style={[theme.colorPrimaryText]}>
                   {plan.primarylabel(plan.cost / 12, plan.cost)}{' '}
-                  <Text style={[theme.colorSecondaryText]}>
+                  <MText style={[theme.colorSecondaryText]}>
                     {plan.secondarylabel(plan.cost / 12, plan.cost)}
-                  </Text>
-                </Text>
+                  </MText>
+                </MText>
               </>
             ),
             icon: plan.id === store.selectedOption.id ? checkIcon : undefined,

@@ -8,7 +8,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       },
       Object {
         "alignItems": "center",
@@ -29,13 +29,13 @@ exports[`Update Screen Component renders correctly 1`] = `
           "justifyContent": "center",
         },
         Object {
-          "padding": 25,
+          "padding": 20,
         },
         Object {
           "borderRadius": 14,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#1F252C",
         },
       ]
     }
@@ -59,14 +59,22 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 22,
+              "color": "#FFFFFF",
             },
             Object {
-              "textAlign": "center",
+              "fontFamily": "Roboto",
             },
-            Object {
-              "paddingVertical": 15,
-            },
+            Array [
+              Object {
+                "fontSize": 22,
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "paddingVertical": 12,
+              },
+            ],
           ]
         }
       >
@@ -100,6 +108,8 @@ exports[`Update Screen Component renders correctly 1`] = `
         useNativeDriver={false}
       >
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "backgroundColor": "#1B85D6",
@@ -123,21 +133,29 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 14,
+              "color": "#FFFFFF",
             },
             Object {
-              "fontFamily": "Roboto-Medium",
-              "fontWeight": "500",
+              "fontFamily": "Roboto",
             },
-            Object {
-              "textAlign": "center",
-            },
-            Object {
-              "color": "#43434D",
-            },
-            Object {
-              "marginTop": 10,
-            },
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+                "fontWeight": "500",
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "marginTop": 8,
+              },
+            ],
           ]
         }
       >

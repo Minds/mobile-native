@@ -10,7 +10,6 @@ import {
   FlatList,
   ListRenderItem,
   StyleProp,
-  Text,
   View,
   ViewStyle,
 } from 'react-native';
@@ -19,6 +18,7 @@ import useApiFetch from '../hooks/useApiFetch';
 import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
+import MText from './MText';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -43,8 +43,6 @@ type FetchResponseType = {
   'load-next': string | number;
 };
 
-const mapping = data => data;
-
 export default observer(
   // TODO: add ref types
   forwardRef(function OffsetList<T>(props: PropsType, ref: any) {
@@ -52,7 +50,6 @@ export default observer(
     type ApiFetchType = FetchResponseType & T;
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>('');
-    const [refreshing, setRefreshing] = useState<boolean>(false);
     const opts = {
       limit: 12,
       [props.offsetField || 'offset']: offset,
@@ -60,28 +57,19 @@ export default observer(
     if (props.params) {
       Object.assign(opts, props.params);
     }
-    const map = props.map || mapping;
     const keyExtractor = (item, index: any) => `${item.urn}${index}`;
     const {
       result,
       loading,
       error,
       fetch,
-      setResult,
+      refresh,
+      refreshing,
     } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
       params: opts,
-      updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
-        ({
-          ...newData,
-          [props.endpointData]: [
-            ...(oldData ? oldData[props.endpointData] : []),
-            ...map(
-              newData && newData[props.endpointData]
-                ? newData[props.endpointData]
-                : [],
-            ),
-          ],
-        } as ApiFetchType),
+      dataField: props.endpointData,
+      updateStrategy: 'merge',
+      map: props.map,
     });
     const data = useMemo(() => {
       if (result) {
@@ -95,37 +83,22 @@ export default observer(
       }
 
       return [];
-    }, [result, props.placeholderCount]);
+    }, [result, props.placeholderCount, props.endpointData]);
 
     // =====================| METHODS |=====================>
     useImperativeHandle(ref, () => ({
       refreshList: () => refresh(),
     }));
 
-    const refresh = React.useCallback(async () => {
+    const _refresh = React.useCallback(() => {
       setOffset('');
-      setRefreshing(true);
-      await fetch(undefined, undefined, {
-        updateState: (newData: ApiFetchType) =>
-          ({
-            ...newData,
-            [props.endpointData]: [
-              ...map(
-                newData && newData[props.endpointData]
-                  ? newData[props.endpointData]
-                  : [],
-              ),
-            ],
-          } as ApiFetchType),
-      });
-      setRefreshing(false);
-    }, [fetch, setResult]);
+      refresh();
+    }, [refresh]);
 
     const onFetchMore = useCallback(() => {
-      !loading &&
-        result &&
-        result['load-next'] &&
+      if (!loading && result && Boolean(result['load-next'])) {
         setOffset(result['load-next']);
+      }
     }, [loading, result]);
 
     // =====================| RENDERS |=====================>
@@ -135,7 +108,7 @@ export default observer(
       }
 
       return props.renderPlaceholder || props.renderItem;
-    }, [result, props.renderPlaceholder, props.renderItem]);
+    }, [result, props.endpointData, props.renderPlaceholder, props.renderItem]);
 
     /**
      * if it was loading and we already had some results,
@@ -148,12 +121,12 @@ export default observer(
             <ActivityIndicator size={30} />
           </View>
         ) : undefined,
-      [loading, refreshing, result?.[props.endpointData]],
+      [loading, refreshing, props.endpointData, result?.[props.endpointData]],
     );
 
     if (error && !loading) {
       return (
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.textCenter,
@@ -162,8 +135,8 @@ export default observer(
           ]}
           onPress={() => fetch()}>
           {i18n.t('error') + '\n'}
-          <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-        </Text>
+          <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+        </MText>
       );
     }
 
@@ -181,7 +154,7 @@ export default observer(
         ListFooterComponent={loadingFooter}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
-        onRefresh={refresh}
+        onRefresh={_refresh}
         refreshing={refreshing}
         contentContainerStyle={props.contentContainerStyle}
         style={props.style || listStyle}

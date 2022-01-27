@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { ScrollView, View, StyleSheet, Pressable, Linking } from 'react-native';
+import { View, StyleSheet, Pressable, Linking } from 'react-native';
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
-import Button from '../common/components/Button';
-import { Text, CheckBox } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
   TransakOrderProcessed,
@@ -15,6 +14,16 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
+import {
+  B1,
+  B2,
+  B3,
+  ScreenHeader,
+  ScreenSection,
+  Row,
+  Screen,
+  Button,
+} from '~ui';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -68,112 +77,95 @@ export default observer(() => {
     });
   }, [store]);
 
+  const handleButtonPress = () => {
+    if (store.paymentMethod === 'crypto') {
+      store.setShowUniswapWidget(!store.showUniswapWidget);
+    } else {
+      store.setShowTransakWidget(!store.showTransakWidget);
+    }
+  };
+
   return (
     <>
-      <ScrollView
-        style={[theme.flexContainer, theme.bgPrimaryBackground]}
-        contentContainerStyle={theme.padding4x}>
-        <View style={theme.alignCenter}>
-          <Text
-            style={[
-              theme.colorPrimaryText,
-              theme.marginBottom5x,
-              theme.fontXXL,
-              theme.bold,
+      <Screen safe scroll>
+        <ScreenHeader title={i18n.t('buyTokensScreen.paymentMethod')} />
+        <ScreenSection>
+          <Row
+            align="centerBetween"
+            bottom="XL"
+            containerStyle={[
+              styles.optionsContainer,
+              theme.border2x,
+              styles.buttonsContainer,
+              theme.bcolorPrimaryBorder,
             ]}>
-            {i18n.t('buyTokensScreen.paymentMethod')}
-          </Text>
-        </View>
-        <View
-          style={[
-            theme.flexContainer,
-            theme.rowJustifySpaceBetween,
-            theme.marginBottom5x,
-            styles.optionsContainer,
-            theme.border2x,
-            styles.buttonsContainer,
-            theme.bcolorPrimaryBorder,
-          ]}>
-          {paymentMethodsList.map(({ type, name }, index) => (
-            <Pressable
-              style={[
-                theme.bcolorPrimaryBorder,
-                styles.option,
-                ...buildButtonStyles(index, store.paymentMethod === type),
-                store.paymentMethod === type ? theme.bgLink : '',
-              ]}
-              onPress={() => store.handleOptionSelection(type)}>
-              <Text
-                style={
-                  store.paymentMethod === type
-                    ? theme.colorWhite
-                    : theme.colorPrimaryText
-                }>
-                {name}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-        <View style={[theme.flexContainer, theme.rowStretch]}>
-          <Text style={theme.colorPrimaryText}>
+            {paymentMethodsList.map(({ type, name }, index) => {
+              const isSelected = store.paymentMethod === type;
+              return (
+                <Pressable
+                  style={[
+                    theme.bcolorPrimaryBorder,
+                    styles.option,
+                    ...buildButtonStyles(index, isSelected),
+                    isSelected ? theme.bgLink : '',
+                  ]}
+                  onPress={() => store.handleOptionSelection(type)}>
+                  <B1 color={isSelected ? 'white' : undefined} font="bold">
+                    {name}
+                  </B1>
+                </Pressable>
+              );
+            })}
+          </Row>
+          <B3>
             {i18n.t('buyTokensScreen.deliverEstimate', {
               estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
             })}
-          </Text>
-        </View>
-        <View>
-          <CheckBox
-            checked={store.aggressTerms}
-            onPress={() => store.setAggressTerms(!store.aggressTerms)}
-            containerStyle={[theme.checkbox]}
-            title={
-              <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
-                {i18n.to(
-                  'buyTokensScreen.terms',
-                  {},
-                  {
-                    link: (
-                      <Text
-                        style={theme.link}
-                        onPress={() => {
-                          Linking.openURL(
-                            'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
-                          );
-                        }}>
-                        {i18n.t('buyTokensScreen.linkText')}
-                      </Text>
-                    ),
-                  },
-                )}
-              </Text>
-            }
-          />
-        </View>
-        <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text
-            style={[theme.colorPrimaryText, styles.learMoreLink]}
-            onPress={navToTokens}>
-            {i18n.t('buyTokensScreen.learnMore')}
-          </Text>
-          <Button
-            text={i18n.t('buyTokensScreen.buy')}
-            containerStyle={
-              [
-                theme.alignCenter,
-                !canBuyTokens ? styles.disabledButton : null,
-              ] as any
-            }
-            onPress={() => {
-              if (store.paymentMethod === 'crypto') {
-                store.setShowUniswapWidget(!store.showUniswapWidget);
-              } else {
-                store.setShowTransakWidget(!store.showTransakWidget);
+          </B3>
+          <View>
+            <CheckBox
+              checked={store.aggressTerms}
+              onPress={() => store.setAggressTerms(!store.aggressTerms)}
+              containerStyle={theme.checkbox}
+              title={
+                <B3 left="XS">
+                  {i18n.to(
+                    'buyTokensScreen.terms',
+                    {},
+                    {
+                      link: (
+                        <B3
+                          color="link"
+                          onPress={() => {
+                            Linking.openURL(
+                              'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                            );
+                          }}>
+                          {i18n.t('buyTokensScreen.linkText')}
+                        </B3>
+                      ),
+                    },
+                  )}
+                </B3>
               }
-            }}
-            disabled={!canBuyTokens}
-          />
-        </View>
-      </ScrollView>
+            />
+          </View>
+          <Button
+            top="L"
+            stretch
+            type="action"
+            mode="outline"
+            onPress={handleButtonPress}
+            disabled={!canBuyTokens}>
+            {i18n.t('buyTokensScreen.buy')}
+          </Button>
+          <Row top="XL" align="centerBoth">
+            <B2 font="bold" onPress={navToTokens}>
+              {i18n.t('buyTokensScreen.learnMore')}
+            </B2>
+          </Row>
+        </ScreenSection>
+      </Screen>
       <UniswapWidget
         isVisible={store.showUniswapWidget}
         onCloseButtonPress={() =>
@@ -263,7 +255,9 @@ const styles = StyleSheet.create({
     height: 70,
   },
   option: {
+    height: '100%',
     flexGrow: 1,
+    flex: 1,
     flexBasis: 0,
     alignItems: 'center',
     justifyContent: 'center',

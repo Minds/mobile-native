@@ -64,7 +64,6 @@ export default function useCameraStyle(insets: EdgeInsets) {
             paddingLeft: 40,
             alignItems: 'center',
           },
-
           {
             bottom: 0,
             flexDirection: 'column',
@@ -77,8 +76,8 @@ export default function useCameraStyle(insets: EdgeInsets) {
         ),
       ],
       galleryIcon: [
+        'padding3x',
         {
-          padding: 10,
           color: 'white',
           alignSelf: 'center',
           textShadowColor: 'rgba(0, 0, 0, 0.35)',
@@ -94,7 +93,7 @@ export default function useCameraStyle(insets: EdgeInsets) {
       ],
       lowLight: [
         { position: 'absolute' },
-        portrait({ right: 20, top: insets.top }, { left: 15, bottom: 5 }),
+        portrait({ right: 10, top: insets.top + 8 }, { left: 15, bottom: 5 }),
       ],
       clock: {
         position: 'absolute',

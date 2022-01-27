@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import { TierStoreType } from '../../../compose/monetize/MembershipMonetizeScreeen';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,7 +8,9 @@ import MenuItem from '../menus/MenuItem';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { navToTierScreen } from './TierManagementScreen';
-import Button from '../../../common/components/Button';
+// import Button from '../../../common/components/Button';
+import MText from '../MText';
+import { Button } from '~ui';
 
 type PropsType = {
   tiers: SupportTiersType[];
@@ -36,34 +38,28 @@ const TiersList = observer(
 
     if (!tiers || tiers.length === 0) {
       return (
-        <View style={[theme.centered, style.emptyContainer]}>
+        <View style={styles.emptyContainer}>
           <Image
-            style={style.image}
+            style={styles.image}
             source={require('../../../assets/images/emptyTiers.png')}
           />
 
-          <Text style={style.header}>{i18n.t('settings.noTiersTitle')}</Text>
-          <Text style={[theme.colorSecondaryText, style.subTitle]}>
+          <MText style={styles.header}>{i18n.t('settings.noTiersTitle')}</MText>
+          <MText style={styles.subTitle}>
             {i18n.t('settings.noTiersSubTitle')}
-          </Text>
+          </MText>
 
           <Button
             onPress={onLinkPress}
-            text={i18n.t('settings.addFirstTier')}
-            large
-            action
-          />
+            mode="outline"
+            type="action"
+            size="large"
+            align="center">
+            {i18n.t('settings.addFirstTier')}
+          </Button>
         </View>
       );
     }
-
-    const titleStyle = [
-      theme.fullWidth,
-      theme.rowJustifySpaceBetween,
-      theme.paddingTop3x,
-      theme.paddingBottom3x,
-      theme.paddingLeft2x,
-    ];
 
     return (
       <>
@@ -74,13 +70,13 @@ const TiersList = observer(
                 useForSelection && tierStore
                   ? () => tierStore.setSelectedTier(tier)
                   : () => navToTierScreen(navigation, tier),
-              title: (
-                <View style={titleStyle}>
-                  <Text style={theme.colorPrimaryText}>{tier.name}</Text>
-                  <Text
-                    style={
-                      theme.colorSecondaryText
-                    }>{`$${tier.usd}+ / mth`}</Text>
+              title: '',
+              content: (
+                <View style={styles.titleContainer}>
+                  <MText style={styles.title} numberOfLines={1}>
+                    {tier.name}
+                  </MText>
+                  <MText style={styles.price}>{`$${tier.usd}+ / mth`}</MText>
                 </View>
               ),
               icon: !useForSelection
@@ -97,7 +93,15 @@ const TiersList = observer(
   },
 );
 
-const style = StyleSheet.create({
+const styles = ThemedStyles.create({
+  titleContainer: [
+    'fullWidth',
+    'rowJustifySpaceBetween',
+    'alignCenter',
+    'paddingVertical5x',
+  ],
+  title: ['fontL', 'colorPrimaryText'],
+  price: ['fontL', 'colorSecondaryText'],
   emptyContainer: {
     paddingTop: 45,
     paddingBottom: 100,
@@ -108,14 +112,12 @@ const style = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
   },
-  subTitle: {
-    fontSize: 16,
-    paddingBottom: 28,
-    paddingTop: 10,
-    paddingRight: 20,
-    paddingLeft: 20,
-    textAlign: 'center',
-  },
+  subTitle: [
+    'colorSecondaryText',
+    'fontL',
+    'paddingHorizontal4x',
+    'textCenter',
+  ],
   image: {
     width: 176,
     height: 122,

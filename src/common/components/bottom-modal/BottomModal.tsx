@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ViewStyle, TouchableOpacity } from 'react-native';
+import { View, ViewStyle, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,6 +10,7 @@ import createBottomModalStore, {
   BottomModalStore,
 } from './createBottomModalStore';
 import { observer, useLocalStore } from 'mobx-react';
+import MText from '../MText';
 
 type PropsType = {
   children: React.ReactNode;
@@ -54,7 +55,7 @@ const BottomModal: React.ForwardRefRenderFunction<
             onPress={props.onPressBack}
           />
         )}
-        {!!props.title && <Text style={styles.title}>{props.title}</Text>}
+        {!!props.title && <MText style={styles.title}>{props.title}</MText>}
         {!!props.title && (
           <MIcon
             size={34}
@@ -104,7 +105,7 @@ const Error = observer(({ store }: { store: BottomModalStore }) => {
         <Icon name="error" size={32} color="white" />
       </View>
       <View style={styles.errorTextView}>
-        <Text style={styles.errorText}>{store.error}</Text>
+        <MText style={styles.errorText}>{store.error}</MText>
       </View>
     </TouchableOpacity>
   );
@@ -112,29 +113,25 @@ const Error = observer(({ store }: { store: BottomModalStore }) => {
 
 const styles = {
   view: ThemedStyles.combine('justifyEnd', 'margin0x'),
-  container: ThemedStyles.combine(
-    'bgPrimaryBackground_Dark',
-    'paddingBottom2x',
-    {
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      overflow: 'hidden',
-    },
-  ),
+  container: ThemedStyles.combine('bgPrimaryBackground', 'paddingBottom2x', {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    overflow: 'hidden',
+  }),
   title: ThemedStyles.combine(
-    'colorPrimaryText_Dark',
+    'colorPrimaryText',
     'marginTop5x',
     'marginBottom4x',
     'bold',
     'fontXXL',
     'textCenter',
   ),
-  closeIcon: ThemedStyles.combine('colorPrimaryText_Dark', {
+  closeIcon: ThemedStyles.combine('colorPrimaryText', {
     position: 'absolute',
     top: 24,
     right: 10,
   }),
-  backIcon: ThemedStyles.combine('colorPrimaryText_Dark', {
+  backIcon: ThemedStyles.combine('colorPrimaryText', {
     position: 'absolute',
     top: 24,
     left: 10,

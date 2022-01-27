@@ -10,6 +10,7 @@ import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
+import type GroupModel from '~/groups/GroupModel';
 
 type AnyType = any;
 
@@ -24,6 +25,26 @@ export type DrawerParamList = {
 };
 
 export type InternalStackParamList = {
+  Onboarding: {};
+};
+
+export type DiscoveryStackParamList = {
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+  Discovery: {};
+  Activity: {
+    entity?: ActivityModel;
+    group?: GroupModel;
+    guid?: string;
+    scrollToBottom?: boolean;
+    focusedUrn?: string;
+    noBottomInset?: boolean;
+  };
+  Channel: {};
+};
+
+export type MoreStackParamList = {
+  Drawer: {};
+  Channel: {};
   Wallet: {
     currency?: string;
     section?: string;
@@ -33,13 +54,66 @@ export type InternalStackParamList = {
   GroupsList: {};
   Settings: {};
   Analytics: {};
-  Onboarding: {};
   InitialOnboarding: {};
   BuyTokens: {};
-  Test: {};
+  Account: {};
+  Network: {};
+  Security: {};
+  Billing: {};
+  Referrals: {};
+  Other: {};
+  Resources: {};
+  SettingsEmail: {};
+  MessengerSettingsScreen: {};
+  RekeyScreen: {};
+  AutoplaySettingsScreen: {};
+  BoostSettingsScreen: {};
+  SettingsPassword: {};
+  SettingsNotifications: {};
+  PushNotificationsSettings: {};
+  EmailNotificationsSettings: {};
+  DataSaverScreen: {};
+  BlockedChannels: {};
+  TierManagementScreen: {};
+  DeleteChannel: {};
+  DeactivateChannel: {};
+  PaymentMethods: {};
+  RecurringPayments: {};
+  ReportedContent: {};
+  AppInfo: {};
+  LanguageScreen: {};
+  NSFWScreen: {};
+  DevicesScreen: {};
+  TwoFactorAuthSettingsScreen: {};
+  RecoveryCodesScreen: {
+    store: TwoFactorStore;
+  };
+  VerifyAuthAppScreen: {
+    store: TwoFactorStore;
+  };
+  DisableTFA: {
+    store: TwoFactorStore;
+    password: string;
+  };
+  ChooseBrowser: {};
 };
 
 export type RootStackParamList = {
+  Compose: {};
+  Capture: {
+    portrait?: boolean;
+    noText?: boolean;
+    isRemind?: boolean;
+    entity?: any;
+    text?: string;
+    media?: any;
+    start?: boolean;
+    mode?: 'photo' | 'video' | 'text';
+  };
+  MultiUserScreen: {};
+  ChooseBrowserModal: {
+    onSelected?: () => void;
+  };
   TwoFactorConfirmation: {
     onConfirm: (string) => void;
     title?: string;
@@ -72,7 +146,9 @@ export type RootStackParamList = {
   SuggestedChannel: {};
   SuggestedGroups: {};
   PhoneValidation: {
-    onComplete?: Function;
+    onConfirm: Function;
+    onCancel: Function;
+    description?: string;
   };
   WalletWithdrawal: {};
   EarnModal: {};
@@ -93,6 +169,10 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
+  Welcome: {
+    username?: string;
+    code?: string;
+  };
   Login: {
     username?: string;
     code?: string;
@@ -112,12 +192,12 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;
   };
   ExportLegacyWallet: {};
-  Messenger: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -139,60 +219,7 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Capture: {
-    portrait?: boolean;
-    noText?: boolean;
-    isRemind?: boolean;
-    entity?: any;
-    text?: string;
-    media?: any;
-    start?: boolean;
-    mode?: 'photo' | 'video' | 'text';
-  };
-  Main: {};
-  Account: {};
-  Network: {};
-  Security: {};
-  Billing: {};
-  Referrals: {};
-  BoostConsole: {};
-  Other: {};
-  Resources: {};
-  SettingsEmail: {};
-  MessengerSettingsScreen: {};
-  RekeyScreen: {};
-  AutoplaySettingsScreen: {};
-  BoostSettingsScreen: {};
-  SettingsPassword: {};
-  SettingsNotifications: {};
-  PushNotificationsSettings: {};
-  EmailNotificationsSettings: {};
-  DataSaverScreen: {};
-  BlockedChannels: {};
-  TierManagementScreen: {};
-  DeleteChannel: {};
-  DeactivateChannel: {};
-  PaymentMethods: {};
-  RecurringPayments: {};
-  ReportedContent: {};
-  AppInfo: {};
-  LanguageScreen: {};
-  NSFWScreen: {};
-  DevicesScreen: {};
-  TwoFactorAuthSettingsScreen: {};
-  RecoveryCodesScreen: {
-    store: TwoFactorStore;
-  };
-  VerifyAuthAppScreen: {
-    store: TwoFactorStore;
-  };
-  VerifyPhoneNumberScreen: {
-    store: TwoFactorStore;
-  };
-  DisableTFA: {
-    store: TwoFactorStore;
-    password: string;
-  };
+  Tabs: {};
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
@@ -229,13 +256,15 @@ export type AppStackParamList = {
   };
   Activity: {
     entity?: ActivityModel;
+    group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
     focusedUrn?: string;
+    noBottomInset?: boolean;
   };
   Conversation: {};
   DiscoveryFeed: {};
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+
   Subscribers: {};
   GroupView: {};
   BlogList: {};

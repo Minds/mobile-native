@@ -1,11 +1,11 @@
-import { observable, action, runInAction } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 
 import {
+  deleteComment,
+  getComment,
   getComments,
   postComment,
   updateComment,
-  deleteComment,
-  getComment,
 } from '../CommentsService';
 
 import CommentModel from './CommentModel';
@@ -35,6 +35,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable selection = { start: 0, end: 0 };
   @observable mature = 0;
   @observable loadingPrevious = false;
   @observable loadingNext = false;
@@ -77,9 +78,22 @@ export default class CommentsStore {
     this.mature = this.mature ? 0 : 1;
   };
 
+  /**
+   * @param {boolean} value a boolean whether to show the input or not
+   * @param {CommentModel} edit the comment to edit
+   * @param {string} text a text to put in the input when opening it, used in replies in level 2
+   * @return {void}
+   **/
   @action
-  setShowInput(value: boolean, edit?: CommentModel) {
+  setShowInput(value: boolean, edit?: CommentModel, text?: string) {
     this.showInput = value;
+    // if the text was an unfinished reply like "@someone ", remove it
+    if (this.text && /^@.+ /.test(this.text)) {
+      this.setText('');
+    }
+    if (text) {
+      this.setText(text);
+    }
     if (this.edit && !edit) {
       this.text = '';
     }
@@ -447,10 +461,17 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh() {
+  refresh = () => {
     this.refreshing = true;
     this.clearComments();
-  }
+    this.loadComments()
+      .then(() => {
+        this.refreshDone();
+      })
+      .catch(() => {
+        this.refreshDone();
+      });
+  };
 
   /**
    * Refresh done
@@ -504,6 +525,15 @@ export default class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
+  }
+
+  /**
+   * Set selection
+   * @param {object} selection
+   */
+  @action
+  setSelection(selection) {
+    this.selection = selection;
   }
 
   /**

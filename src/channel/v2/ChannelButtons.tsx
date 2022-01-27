@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
 import type { GestureResponderEvent } from 'react-native';
-import { Platform, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -20,6 +19,7 @@ import Subscribe from './buttons/Subscribe';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
+import { Row } from '~ui';
 
 type ButtonsType =
   | 'edit'
@@ -77,7 +77,6 @@ const check = {
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
-    const theme = ThemedStyles.style;
     const navigation = useNavigation<
       NativeStackNavigationProp<AppStackParamList>
     >();
@@ -88,13 +87,6 @@ const ChannelButtons = withErrorBoundary(
       });
     }, [navigation, props.store.channel]);
 
-    /**
-     * called when edit button is pressed
-     **/
-    const onEditPress = useCallback(
-      () => navigation.push('ChannelEdit', { store: props.store }),
-      [],
-    );
     if (!props.store.channel) return null;
 
     const shouldShow = (button: ButtonsType) =>
@@ -103,12 +95,7 @@ const ChannelButtons = withErrorBoundary(
 
     const showSubscribe = shouldShow('subscribe');
     return (
-      <View
-        style={[
-          theme.rowJustifyEnd,
-          theme.marginRight2x,
-          props.containerStyle,
-        ]}>
+      <Row right="S" containerStyle={[props.containerStyle]}>
         {props.children}
         {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (
@@ -144,7 +131,7 @@ const ChannelButtons = withErrorBoundary(
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />
         )}
-      </View>
+      </Row>
     );
   }),
 );

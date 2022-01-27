@@ -11,7 +11,7 @@ describe('Minds service', () => {
 
     api.get.mockResolvedValue(apiResponse);
 
-    service.getSettings();
+    service.update();
 
     // call api upload one time
     expect(api.get.mock.calls.length).toEqual(1);

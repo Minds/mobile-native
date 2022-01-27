@@ -1,15 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
 import {
-  View,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Text,
   Alert,
 } from 'react-native';
-import Button from '../../common/components/Button';
+import { Button, ScreenSection, B1 } from '~ui';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -52,21 +49,12 @@ export default class DeactivateChannelScreen extends Component {
         <KeyboardAvoidingView
           style={[theme.flexContainer]}
           behavior={Platform.OS === 'ios' ? 'padding' : null}>
-          <Text
-            style={[
-              theme.fontL,
-              theme.marginTop,
-              theme.marginBottom2x,
-              theme.colorSecondaryText,
-            ]}>
-            {i18n.t('settings.disableDescription')}
-          </Text>
-          <View style={theme.marginTop4x}>
-            <Button
-              text={i18n.t('settings.disableChannelButton')}
-              onPress={this.confirmPassword}
-            />
-          </View>
+          <ScreenSection top="M">
+            <B1>{i18n.t('settings.disableDescription')}</B1>
+            <Button top="XXL" onPress={this.confirmPassword} type="warning">
+              {i18n.t('settings.disableChannelButton')}
+            </Button>
+          </ScreenSection>
         </KeyboardAvoidingView>
       </ScrollView>
     );

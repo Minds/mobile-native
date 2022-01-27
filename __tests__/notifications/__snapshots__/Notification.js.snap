@@ -15,7 +15,7 @@ exports[`Notifications component renders correctly 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#D3DBE3",
+        "borderColor": "#414C57",
       },
     ]
   }
@@ -47,6 +47,7 @@ exports[`Notifications component renders correctly 1`] = `
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
                 "Pragma": "no-cache",
+                "no-cache": "1",
               },
               "uri": "https://cdn.minds.com/icon/100000000000000519/medium/1623077876",
             }
@@ -74,7 +75,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -85,7 +86,7 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#72727C",
+              "color": "#B8C1CA",
             },
           ]
         }
@@ -324,7 +325,7 @@ exports[`Notifications component renders correctly 1`] = `
           }
         />
          
-      </Text>
+      </MText>
     </View>
     <View
       style={
@@ -336,7 +337,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -347,13 +348,13 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#72727C",
+              "color": "#B8C1CA",
             },
           ]
         }
       >
         1w
-      </Text>
+      </MText>
     </View>
   </View>
   <Memo()

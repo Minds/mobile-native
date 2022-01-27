@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   PixelRatio,
   Dimensions,
   TouchableOpacity,
@@ -15,6 +14,7 @@ import SmartImage from '../../src/common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import domain from '../common/helpers/domain';
+import MText from '../common/components/MText';
 
 const imgSize = Dimensions.get('window').width / 4;
 const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
@@ -58,14 +58,14 @@ export default observer(function (props) {
           resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>
-          <Text numberOfLines={1} style={[theme.fontXL, theme.padding]}>
+          <MText numberOfLines={1} style={[theme.fontXL, theme.padding]}>
             {props.meta.title}
-          </Text>
-          <Text
+          </MText>
+          <MText
             numberOfLines={2}
             style={[theme.fontM, theme.padding, theme.colorSecondaryText]}>
             {props.meta.description || domain(props.meta.url)}
-          </Text>
+          </MText>
         </View>
       </View>
     </View>

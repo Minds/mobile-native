@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import logService from '../services/log.service';
@@ -10,6 +10,7 @@ import SettingInput from './SettingInput';
 import i18n from '../services/i18n.service';
 import debounce from '../helpers/debounce';
 import Input from './Input';
+import MText from './MText';
 
 type addressType = {
   state?: string;
@@ -22,7 +23,7 @@ type locationType = {
   long: number;
 };
 type onEditFn = (onEdit: boolean) => boolean;
-type propsType = {
+type PropsType = {
   placeholder?: string;
   info?: string;
   editable?: boolean;
@@ -38,7 +39,7 @@ interface GeolocationResponse extends ApiResponse {
   results: Array<locationType>;
 }
 
-const createLocationAutoSuggestStore = () => {
+const createLocationAutoSuggestStore = (p: PropsType) => {
   const locations: Array<locationType> = [];
   const store = {
     isFocused: false,
@@ -57,6 +58,7 @@ const createLocationAutoSuggestStore = () => {
       this.value = value;
       this.setTapped(false);
       this.setError(false);
+      p.onChangeText(value);
       if (doQuery && this.value.length >= 3) {
         this.setLoading(true);
         if (this.onEdit) {
@@ -112,15 +114,14 @@ const createLocationAutoSuggestStore = () => {
   return store;
 };
 
-const LocationAutoSuggest = observer((props: propsType) => {
-  const store = useLocalStore(createLocationAutoSuggestStore);
+const LocationAutoSuggest = observer((props: PropsType) => {
+  const store = useLocalStore(createLocationAutoSuggestStore, props);
   const theme = ThemedStyles.style;
 
   const setLocation = useCallback(
     value => {
       store.setValue(value, false);
       store.setTapped(true);
-      props.onChangeText(value);
       if (props.onEdit) {
         props.onEdit(false);
       }
@@ -145,7 +146,6 @@ const LocationAutoSuggest = observer((props: propsType) => {
         onChangeText={store.setValue}
         value={store.value}
         testID="cityInput"
-        onFocus={() => store.setValue('')}
         onBlur={store.onBlur}
         wrapperBorder={[theme.borderTop, props.wrapperBorder]}
       />
@@ -159,7 +159,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
                 return null;
               }
               return (
-                <Text
+                <MText
                   onPress={() =>
                     setLocation(value.address.city ?? value.address.state)
                   }
@@ -172,7 +172,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
                   {`${value.address.town ?? ''}${value.address.city ?? ''}, ${
                     value.address.state ?? ''
                   }`}
-                </Text>
+                </MText>
               );
             })
           )}

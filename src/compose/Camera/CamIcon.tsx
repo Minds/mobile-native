@@ -19,8 +19,10 @@ const CamIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   // Rotate the icon when changing
   const animate = React.useMemo(
     () => ({
-      rotateY: store.cameraType === 'back' ? '0deg' : '180deg',
-      perspective: 850,
+      transform: [
+        { rotate: store.cameraType === 'back' ? '0deg' : '180deg' },
+        { perspective: 850 },
+      ],
     }),
     [store.cameraType],
   );
@@ -34,7 +36,7 @@ const CamIcon: FC<PropsType> = ({ store, style }: PropsType) => {
       }}>
       <Icon
         name="md-camera-reverse-outline"
-        size={30}
+        size={35}
         style={style}
         onPress={onPress}
       />

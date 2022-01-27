@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import LockTag from './LockTag';
 import { SupportTiersType } from '../../WireTypes';
 import mindsService from '../../../common/services/minds-config.service';
 import Button from '../../../common/components/Button';
@@ -11,6 +10,7 @@ import i18n from '../../../common/services/i18n.service';
 import type { LockType } from '../../../types/Common';
 import currency from '../../../common/helpers/currency';
 import BlogModel from '../../../blogs/BlogModel';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -104,7 +104,7 @@ const Lock = observer(({ entity }: PropsType) => {
           theme.centered,
           theme.padding2x,
         ]}>
-        <Text
+        <MText
           style={[
             theme.colorWhite,
             styles.lockMessage,
@@ -112,7 +112,7 @@ const Lock = observer(({ entity }: PropsType) => {
             theme.textCenter,
           ]}>
           {message}
-        </Text>
+        </MText>
         {button}
       </View>
     );
@@ -130,7 +130,7 @@ const Lock = observer(({ entity }: PropsType) => {
         styles.mask,
         aspectRatio ? { aspectRatio } : theme.fullHeight,
       ]}>
-      <Text
+      <MText
         style={[
           theme.colorWhite,
           styles.lockMessage,
@@ -138,7 +138,7 @@ const Lock = observer(({ entity }: PropsType) => {
           theme.textCenter,
         ]}>
         {message}
-      </Text>
+      </MText>
       {button}
     </View>
   );
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     minHeight: 150,
     zIndex: 10,
     padding: 10,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },

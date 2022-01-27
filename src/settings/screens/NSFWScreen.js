@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text } from 'react-native-animatable';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import Switch from 'react-native-switch-pro';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import MText from '../../common/components/MText';
 
 export default function () {
   const theme = ThemedStyles.style;
@@ -60,9 +61,10 @@ export default function () {
           theme.borderTopHair,
           theme.borderBottomHair,
         ]}>
-        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}>
+        <MText
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}>
           {i18n.t('settings.showMatureContent')}
-        </Text>
+        </MText>
         <Switch value={matureContent} onSyncPress={save} />
       </View>
     </View>

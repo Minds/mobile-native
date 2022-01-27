@@ -26,7 +26,7 @@ const FlashIcon: FC<PropsType> = ({ store, style }: PropsType) => {
 
   let flashIconName = icons[store.flashMode] || '';
 
-  const autoStyle = [style, { position: 'absolute' }];
+  const autoStyle = [style, { position: 'absolute', top: -3, left: 0 }];
 
   return (
     <View>

@@ -31,3 +31,7 @@ process.env['NODE_ENV'] = isDev ? 'development' : 'production';
 if (typeof localStorage !== 'undefined') {
   localStorage.debug = isDev ? '*' : '';
 }
+
+// Fix: growthbook error
+if (!global.window) global.window = {};
+global.window.location = { href: '' };

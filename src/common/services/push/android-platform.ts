@@ -5,6 +5,7 @@ import {
 } from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';
+import sessionService from '../session.service';
 
 /**
  * Android Platform
@@ -21,6 +22,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
 
     NotificationsAndroid.setRegistrationTokenUpdateListener(deviceToken => {
       this.token = deviceToken;
+      sessionService.deviceToken = deviceToken;
       if (this.shouldRegister) {
         this.registerToken();
       }

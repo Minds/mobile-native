@@ -51,9 +51,9 @@ export async function migrateLegacyStorage() {
         '@Minds:Locale',
       ]);
 
-      if (settings) {
+      if (settings && settings.some(d => d[1])) {
         const leftHanded = settings[0][1];
-        const theme = settings[1][1] ? parseInt(settings[1][1], 10) : 0;
+        const theme = settings[1][1] ? parseInt(settings[1][1], 10) : 1;
         const ignoreBestLanguage = settings[2][1] || '';
         const composerMode = settings[3][1] || 'photo';
         const ignoreOnboarding = settings[4][1] || '';

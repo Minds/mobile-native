@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, Linking } from 'react-native';
+import { View, StyleSheet, Linking } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -10,6 +10,7 @@ import { CheckBox } from 'react-native-elements';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import MText from '../../common/components/MText';
 
 type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
 type PlusMonetizeScreenNavigationProp = StackNavigationProp<
@@ -57,14 +58,14 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
     return (
       <Wrapper store={store} hideDone={true} onPressRight={save}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-          <Text
+          <MText
             style={[
               theme.colorSecondaryText,
               theme.fontL,
               theme.paddingVertical2x,
             ]}>
             {i18n.t('monetize.plusMonetize.notPlus')}
-          </Text>
+          </MText>
           <Button
             text={i18n.t('monetize.plusMonetize.upgrade')}
             textStyle={styles.title}
@@ -84,27 +85,27 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
       onPressRight={save}
       hideDone={!localStore.agreedTerms}>
       <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.fontL,
             theme.paddingVertical2x,
           ]}>
           {i18n.t('monetize.plusMonetize.submit')}
-        </Text>
+        </MText>
         <CheckBox
           containerStyle={[theme.checkbox, styles.checkbox]}
           title={
-            <Text style={theme.colorPrimaryText}>
+            <MText style={theme.colorPrimaryText}>
               {i18n.t('auth.accept')}{' '}
-              <Text
+              <MText
                 style={theme.link}
                 onPress={() =>
                   Linking.openURL('https://www.minds.com/p/terms')
                 }>
                 {i18n.t('auth.termsAndConditions')}
-              </Text>
-            </Text>
+              </MText>
+            </MText>
           }
           checked={localStore.agreedTerms}
           onPress={localStore.setAgreedTerms}

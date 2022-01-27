@@ -1,10 +1,8 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment-timezone';
+import { Icon, PressableLine, HairlineRow, B1, B2, Column, Row } from '~ui';
 
 type PropsType = {
   minimumDate: Date;
@@ -14,7 +12,6 @@ type PropsType = {
 };
 
 const MonthPickerInput = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     date: new Date(),
     showPicker: false,
@@ -37,22 +34,19 @@ const MonthPickerInput = observer((props: PropsType) => {
 
   return (
     <>
-      <TouchableOpacity
-        style={[theme.rowJustifySpaceBetween, props.containerStyle]}
-        onPress={localStore.openPicker}>
-        <View>
-          <Text style={[styles.label, theme.colorSecondaryText]}>Month</Text>
-          <Text style={[theme.fontLM, theme.fontMedium]}>
-            {moment(localStore.date).format('MM-YYYY')}
-          </Text>
-        </View>
-        <Icon
-          name="calendar"
-          size={21}
-          color={ThemedStyles.getColor('SecondaryText')}
-          style={theme.centered}
-        />
-      </TouchableOpacity>
+      <PressableLine
+        onPress={localStore.openPicker}
+        containerStyle={props.containerStyle}>
+        <HairlineRow flex>
+          <Row align="centerStart" flex space="L">
+            <Column stretch>
+              <B2 color="secondary">Month</B2>
+              <B1 font="medium">{moment(localStore.date).format('MM-YYYY')}</B1>
+            </Column>
+            <Icon name="calendar" size="small" />
+          </Row>
+        </HairlineRow>
+      </PressableLine>
       {localStore.showPicker && (
         <MonthPicker
           onChange={localStore.onValueChange}
@@ -63,13 +57,6 @@ const MonthPickerInput = observer((props: PropsType) => {
       )}
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    fontWeight: '400',
-  },
 });
 
 export default MonthPickerInput;

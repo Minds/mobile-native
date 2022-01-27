@@ -1,19 +1,18 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
+  "dateformats": {
+    "date": "MMM DD, YYYY",
+    "short": "MMM DD",
+    "nameDay": "ddd MMM Do",
+    "datetime": "MMM DD YYYY · HH:mm"
   },
   "activity": {
     "loadEarlier": "पहले का लोड करें",
     "loadLater": "बाद का लोड करें",
-    "typeComment": "अपना कमेंट लिखें...",
+    "notSafeComment": "This comment is not safe for work and cannot be accessed via iOS",
+    "explicitComment": "The comment is marked as Explicit",
+    "typeComment": "Add your comment",
+    "typeReply": "Add your reply",
+    "replyTo": "Reply to @{{user}}",
     "error": "SORRY, हम सक्रियता का उल्लंघन कर रहे हैं",
     "tryAgain": "बाद में पुन: प्रयास करें",
     "remindBlocked": "यह रिमाइंड मौजूद नहीं है क्योंकि आपने ब्लॉक किया है",
@@ -21,10 +20,15 @@
     "pendingModeration": "इस पोस्ट को मॉडरेशन का इंतजार है"
   },
   "permissions": {
-    "externalStorage": "Minds को आपके बाहरी स्टोरेज तक एक्सेस की आवश्यकता है ताकि आप बहुत बढ़िया तस्वीरें अपलोड कर सकें।﻿",
-    "writeExternalStorage": "Minds को आपके बाहरी स्टोरेज तक एक्सेस की आवश्यकता है ताकि आप बहुत बढ़िया तस्वीरें अपलोड कर सकें।﻿",
-    "sms": "सत्यापन कोड ऑटो-डिटेक्ट करने के लिए Minds को sms पढ़ने की आवश्यकता होती है।",
-    "camera": "Minds को आपके बाहरी कैमरा की एक्सेस की जरूरत है तांकि आप कमाल की तस्वीरें अपलोड कर सकें।",
+    "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
+    "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
+    "camera": "Minds needs access to your external camera so you can capture pictures.",
+    "mediaLibrary": "This lets you share photos from your library and save photos to your camera roll",
+    "blockedCamera": "You have blocked access to your camera. Please go to your device settings to enable.",
+    "blockedStorageWrite": "You have blocked to write the storage. Please go to your device settings to enable.",
+    "blockedStorageRead": "You have blocked to read the storage. Please go to your device settings to enable.",
+    "blockedMediaLibrary": "You have blocked access to media library. Please go to your device settings to enable.",
+    "tapAllow": "Tap to allow",
     "grant": "अनुदान",
     "notAllowed": {
       "appoint_admin": "आपको एडमिन नियुक्त करने की अनुमति नहीं है",
@@ -44,7 +48,6 @@
       "edit_post": "आपको इस पोस्ट को संपादित करने की अनुमति नहीं है",
       "invite": "आपको आमंत्रित करने की अनुमति नहीं है",
       "join": "आपको शामिल होने की अनुमति नहीं है",
-      "gathering": "आपको इस सभा में शामिल होने की अनुमति नहीं है",
       "message": "आपको इस उपयोगकर्ता को संदेश देने की अनुमति नहीं है",
       "subscribe": "आपको सदस्यता लेने की अनुमति नहीं है",
       "tag": "आपको इस कंटेंट को टैग करने की अनुमति नहीं है",
@@ -55,8 +58,16 @@
     }
   },
   "auth": {
+    "2faRequired": "2FA required",
+    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address ({{email}}) before continuing.",
+    "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
+    "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
+    "2faInvalid": "Invalid code",
+    "fieldRequired": "Required",
+    "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "लॉग इन",
     "forgot": "पासवर्ड भूल गए",
+    "alreadyLogged": "You are already logged into this account",
     "email": "ईमेल",
     "username": "यूज़रनेम",
     "password": "पासवर्ड",
@@ -67,15 +78,43 @@
     "invalidPassword": "गलत पासवर्ड। कृपया पुन: प्रयास करें।",
     "confirmPasswordError": "पासवर्ड आपस में मिलने चाहिए",
     "termsAcceptedError": "आपको नियम और शर्तें स्वीकार करनी चाहिए",
-    "accept": "मैं इसे पढ़ लिया है और स्वीकार करता हूं",
-    "termsAndConditions": "नियम और शर्तें",
+    "promotions": "Receive exclusive promotions from Minds",
+    "accept": "I accept the",
+    "termsAndConditions": "Terms & Conditions",
     "join": "चैनल बनाएँ",
-    "createChannel": "Minds से अभी जुड़ें",
+    "createChannel": "Join Minds",
     "haveAccount": "आपका खाता नहीं है?",
     "alreadyHaveAccount": "क्या पहले से आपका खाता मौजूद है? &{login}&",
-    "failedToLoginNewAccount": "आपके नए खाते के साथ लॉग इन विफल हो गया है, कृपया लॉग इन स्क्रीन में लॉग इन करने का प्रयास करें"
+    "failedToLoginNewAccount": "आपके नए खाते के साथ लॉग इन विफल हो गया है, कृपया लॉग इन स्क्रीन में लॉग इन करने का प्रयास करें",
+    "authCode": "Authentication code",
+    "recoveryCode": "Recovery code",
+    "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
+    "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
+    "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
+    "recoveryFail": "The recovery code you enter doesn't match",
+    "confirmPasswordModal": "Please confirm your account password to continue",
+    "loginFail": "Wrong Username or Password",
+    "userTaken": "Username already taken",
+    "waitLogin": "Logging in with new credentials...",
+    "resetPassword": "Reset Password",
+    "createNewPassword": "Create a new password",
+    "inputUser": "Enter your channel name below to start the password recovery process.",
+    "emailSent": "An email with reset instructions has been sent to your inbox.",
+    "followInstuctions": "Follow the instructions contained within to continue the reset process.",
+    "sendAgain": "Send email again",
+    "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
+    "newPassword": "Create a new password. You’ll use this to access your account."
+  },
+  "multiUser": {
+    "switchChannel": "Switch Account",
+    "login": "Add existing account",
+    "create": "Create new channel",
+    "sessionExpired": "Logged out"
   },
   "blockchain": {
+    "exportLegacyWallet": "Export legacy wallets",
+    "exportLegacy1": "You have the private keys of at least one wallet in the app.",
+    "exportLegacy2": "Please store it if you don't want to lose access to them.",
     "boostCreate": "{{tokensAmount}} Minds टोकन {{message}} के लिए नेटवर्क बूस्ट।",
     "boostPeerCreate": "{{tokensAmount}} Minds टोकन के लिए {{receiver}} के लिए चैनल बूस्ट। {{message}}",
     "tokenApprove": "भविष्य में {{tokensAmount}} टोकन खर्च करने के लिए {{address}} स्वीकृत करें। {{message}}",
@@ -164,11 +203,11 @@
     "offers": "ऑफ़र",
     "sidebars": "साइडबार",
     "feedsDescription": "आपका कंटेंट साइट की न्यूज़फ़ीड पर दिखाई देगा।",
-    "offersDescription": "आपका कंटेंट USD या टोकन या पुरस्कार के बदले किसी खास चैनल के साथ शेयर किया जाएगा।",
+    "offersDescription": "आपका कंटेंट USD या टोकन के बदले किसी खास चैनल के साथ शेयर किया जाएगा।",
     "sidebarsDescription": "आपका कंटेंट पूरी साइट में साइडबार पर डिस्प्ले होगा।",
     "tabNewsfeed": "न्यूज़फ़ीड",
     "tabSidebar": "साइड बार",
-    "tabOffers": "ऑफ़र",
+    "tabOffers": "Offer",
     "rejectionReasons": {
       "0": "अवैध",
       "1": "स्पष्ट",
@@ -180,8 +219,14 @@
       "7": "स्पैम",
       "8": "Boost निर्णय पर अपील",
       "12": "Onchain भुगतान विफल हो गया",
-      "13": "मूल पोस्ट हटा दिया गया है"
-    }
+      "13": "मूल पोस्ट हटा दिया गया है",
+      "14": "High Boost backlog"
+    },
+    "boostChannel": "Boost Channel",
+    "boostPost": "Boost Post",
+    "boostOffer": "Make Offer",
+    "paymentMethod": "PAYMENT METHOD",
+    "targetChannel": "Target Channel"
   },
   "translate": {
     "from": "से अनुवादित",
@@ -195,8 +240,13 @@
     "hold": "केवल एक को चुनने के लिए होल्ड करें"
   },
   "capture": {
+    "discardPost": "Discard this post?",
+    "discardPostDescription": "If you discard you’ll lose this post",
+    "keepEditing": "Keep Editing",
+    "yesDiscard": "Yes, Discard",
     "licenseDescription": "अपने मनचाहे लाइसेंस प्रकार का चयन करें। इसे पोस्ट करने के बाद किसी भी समय बदला जा सकता है।",
     "pupularLicenses": "लोकप्रिय लाइसेंस",
+    "mediaPortraitError": "Selected media is not portrait",
     "otherLicenses": "अन्य लाइसेंस",
     "paywallLabel": "न्यूनतम मासिक योगदान ({{currency}})",
     "paywallDescription": "अपने उन यूज़र को पोस्ट उपलब्ध कराकर मॉनेटाइज़ करें जो आपके चैनल को सपोर्ट करते हैं।",
@@ -206,6 +256,7 @@
     "tagsDescription": "आपकी पोस्ट को टैग करने से आपका कंटेंट अधिक आसानी से खोजा जा सकेगा।",
     "couldNotLoad": "{{domain}} से मीडिया लोड नहीं किया जा सका।",
     "maxHashtags": "क्षमा करें, आपकी पोस्ट में {{maxHashtags}} से अधिक हैशटैग नहीं हो सकते।",
+    "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "पोस्ट शेड्यूल करें",
     "post": "पोस्ट",
     "remind": "याद दिलाएं",
@@ -221,22 +272,34 @@
     "text": "Text",
     "postOptions": "पोस्ट विकल्प",
     "retake": "Retake",
+    "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
+    "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "क्षमा करें, Plus की पैसे-कमाई वाली पोस्टों में हैशटैग होना जरूरी है।",
-    "noExternalLinks": "क्षमा करें, Plus की पैसे-कमाई वाली पोस्टों में बाहरी लिंक नहीं होने चाहिए।"
+    "noExternalLinks": "क्षमा करें, Plus की पैसे-कमाई वाली पोस्टों में बाहरी लिंक नहीं होने चाहिए।",
+    "attach": "Photo & Video Library",
+    "takePhoto": "Camera"
   },
   "channel": {
     "editChannel": "चैनल संपादित करें",
     "confirmUnsubscribe": "क्या आप वाकई इस चैनल से सदस्यता समाप्त करना चाहते हैं?",
     "subscribe": "सदस्यता लें",
+    "subscribed": "सदस्यता लिया",
+    "message": "Message via Chat",
     "requestSubscription": "सदस्यता का अनुरोध करें",
     "briefDescription": "आपके बारे में संक्षिप्त विवरण...",
     "block": "ब्लॉक",
     "unsubscribe": "सदस्यता रद्द",
-    "unblock": "अनब्लॉक करें",
+    "unblock": "Unblock channel",
     "report": "रिपोर्ट",
     "createFirstPost": "अपनी पहली पोस्ट बनाएं",
-    "blockedNav": "आपने &{username}& को ब्लॉक कर दिया है",
+    "createFirstPostTitle": "Your feed is empty",
+    "createFirstPostSubTitle": "You’ll not turn many heads with an empty feed",
+    "createFirstPostAction": "अपनी पहली पोस्ट बनाएं",
+    "blocked": "Channel Blocked",
+    "banned": "This channel is banned",
     "viewScheduled": "अनुसूचित",
+    "notExist": "क्षमा करें, यह चैनल मौजूद नहीं है",
+    "subscriber": "Subscribes to you",
     "edit": {
       "bio": "बायो",
       "about": "जानकारी के बारे में",
@@ -247,8 +310,14 @@
       "dob": "जन्म की तारीख"
     },
     "badges": "Badges",
-    "fabSend": "भुगतान भेजें",
-    "fabPay": "भुगतान करें"
+    "badge": {
+      "plus": "Minds Plus",
+      "verified": "सत्यापित",
+      "founder": "संस्थापक"
+    },
+    "fabSend": "Send Tip",
+    "fabPay": "Tip",
+    "share": "Share Channel"
   },
   "discovery": {
     "title": "खोज",
@@ -268,7 +337,9 @@
     "blogs": "ब्लॉग",
     "groups": "ग्रुप",
     "addTags": "अपनी फ़ीड को पर्सनलाइज करने के लिए टैग जोड़ें",
-    "selectTags": "Select tags"
+    "selectTags": "Select tags",
+    "posts": "पोस्ट",
+    "votes": "वोट"
   },
   "groups": {
     "ongoingGathering": "इकट्ठा हो रहा है",
@@ -298,6 +369,8 @@
   },
   "messenger": {
     "decrypting": "decrypting",
+    "notAllowed": "This user only allows messages from users that they subscribe to",
+    "allowContact": "Allow contact from unsubscribed users",
     "couldntDecrypt": "couldn't decrypt",
     "typeYourMessage": "अपना संदेश टाइप करें...",
     "invited": "आमंत्रित",
@@ -307,14 +380,17 @@
     "checkCredentials": "कृपया अपने क्रेडेंशल चेक करें",
     "errorCreatingKeys": "एन्क्रिप्शन कुंजी बनाने में त्रुटि",
     "messenger": "Messenger",
-    "noMessages": "आपके पास कोई संदेश नहीं है",
+    "noMessages": "Search for someone to message",
     "logoutMessage": "क्या आप Messenger से लॉगआउट करना चाहते हैं?",
     "changeKeyMessage": "अपने एन्क्रिप्शन पासवर्ड को बदलने से आपके पिछले मैसेज अपठनीय हो जाएंगे",
     "notEncryptedMessage": "@{{user}}! ऐसा लगता है कि आपने अभी तक अपने एन्क्रिप्टेड चैट पासवर्ड को सेटअप नहीं किया है। हम अनुशंसा करते हैं कि आप अतिरिक्त सुरक्षा के लिए अपने खाते के पासवर्ड से अलग पासवर्ड का उपयोग करें।",
     "onboardingText": "Messenger के लिए एक अतिरिक्त पासवर्ड की आवश्यकता होती है ताकि यह सुनिश्चित हो सके कि आपके संदेश निजी और पूरी तरह से एन्क्रिप्ट किए गए हैं।",
     "setupMessage1": "जब तक आप साइन इन रहेंगे तब तक आपको केवल एक बार इस encryption पासवर्ड को दर्ज करना होगा।",
     "setupMessage2": "यह महत्वपूर्ण है ताकि आपके और जिन लोगों के साथ आप बातचीत कर रहे हैं, उनके अलावा कोई भी आपके मैसेज के कंटेंट तक न पहुंच सके।",
-    "setupMessage3": "डिफ़ॉल्ट रूप से आपके मैसेज के कंटेंट को पूरी तरह से एन्क्रिप्ट किया गया है। बढ़ी हुई सुरक्षा के लिए आप अपनी ऐप सेटिंग में जाकर मेटाडेटा को ट्रैक करने से रोकने के लिए पुश सूचना को बंद कर सकते हैं।"
+    "setupMessage3": "डिफ़ॉल्ट रूप से आपके मैसेज के कंटेंट को पूरी तरह से एन्क्रिप्ट किया गया है। बढ़ी हुई सुरक्षा के लिए आप अपनी ऐप सेटिंग में जाकर मेटाडेटा को ट्रैक करने से रोकने के लिए पुश सूचना को बंद कर सकते हैं।",
+    "messengerRekey": "अपना एन्क्रिप्शन पासवर्ड बदलें",
+    "legacyMessenger": "Legacy Messenger",
+    "errorDirectMessage": "Oops! Please try again in a moment"
   },
   "newsfeed": {
     "title": "न्यूज़फ़ीड",
@@ -322,7 +398,7 @@
     "empty": "आपका न्यूज़फ़ीड खाली है"
   },
   "comments": {
-    "successRemoving": "टिप्पणी सफलतापूर्वक हटा दी गई",
+    "successRemoving": "Comment removed",
     "comments": "टिप्पणियाँ",
     "errorRemoving": "कमेंट हटाने में त्रुटि"
   },
@@ -378,10 +454,51 @@
     "rewardsStateDecrease": "हमें आपकी याद आती है! आपने एक {{state}} उपयोगकर्ता को नीचे गिरा दिया।",
     "rewardsStateDecrease1": "आपका दैनिक टोकन पुरस्कार गुणक {{multiplier}}x में कम हो गया है",
     "rewardsStateDecreaseToday": "अब भी बहुत देर नहीं हुई है! आप आज के अंत तक एक {{state}} यूज़र तक नीचे जाएंगे और आपका दैनिक टोकन पुरस्कार गुणक {{multiplier}}x तक कम हो जाएगा। अपना स्कोर वापस लाने के लिए लाइक और कमेंट पाएं!",
-    "rewardsSummary": "आपने कल {{amount}} टोकन जीते।"
+    "rewardsSummary": "आपने कल {{amount}} टोकन जीते।",
+    "verbs": {
+      "vote_up": "को वोट किया",
+      "vote_down": "voted down",
+      "comment": "पर टिप्पणी की है",
+      "reply": "replied to",
+      "tag": "tagged you in",
+      "remind": "reminded",
+      "quote": "quoted",
+      "subscribe": "subscribed to",
+      "group_queue_add": "Your post is awaiting approval from the group administrators",
+      "group_queue_approve": "मंजूर किया",
+      "group_queue_reject": "नामंजूर किया",
+      "wire_received": "paid",
+      "boost_peer_request": "sent you",
+      "boost_peer_accepted": "accepted",
+      "boost_peer_rejected": "declined",
+      "boost_rejected": "is unable to approve",
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+    }
+  },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "याद दिलाएं",
+      "other": "रिमाइंड"
+    },
+    "quotes": {
+      "one": "quote",
+      "other": "quotes"
+    },
+    "subscribers": {
+      "one": "subscriber",
+      "other": "सदस्य"
+    }
   },
   "notificationSettings": {
-    "enableDisable": "Push सूचनाओं को सक्षम और अक्षम करें",
+    "enableDisable": "Enable Push Notifications",
     "comment": "टिप्पणियाँ",
     "like": "वोट",
     "tag": "टैग",
@@ -389,19 +506,46 @@
     "remind": "रिमाइंडर",
     "boost_request": "बूस्ट ऑफ़र",
     "boost_rejected": "Boost अस्वीकार कर दिया",
-    "boost_completed": "पूरे किए गए बूस्ट",
     "rewards_reminder": "पुरस्कार रिमाइंडर",
     "rewards_summary": "पुरस्कार दैनिक सारांश",
     "message": "Messenger",
     "messenger_invite": "Messenger आमंत्रण",
-    "daily": "रोज",
     "group_invite": "ग्रुप आमंत्रित करता है",
     "boost_gift": "बूस्ट गिफ़्ट",
     "boost_accepted": "Boost स्वीकृत",
     "boost_revoked": "Boost रद्द",
     "referral_ping": "रेफ़रल पिंग",
     "referral_pending": "रेफ़रल पेंडिंग",
-    "referral_complete": "रेफ़रल पूरा"
+    "referral_complete": "रेफ़रल पूरा",
+    "votes": "वोट",
+    "tags": "टैग",
+    "subscriptions": "सदस्यता",
+    "comments": "टिप्पणियाँ",
+    "reminds": "रिमाइंड",
+    "boosts": "Boosts",
+    "tokens": "टोकन",
+    "related": "Related to your posts and channel",
+    "emailWhen": "मुझे ईमेल करें जब",
+    "emailWith": "मुझे ईमेल करें",
+    "emailUpdated": "मुझे इससे अपडेट रखें",
+    "exclusive_promotions": "Exclusive Promotions",
+    "minds_news": "नए Minds प्रोडक्ट और फ़ीचर के बारे में समाचार",
+    "minds_tips": "Minds का उपयोग करने के तरीके पर सुझाव",
+    "boost_completed": "मेरा हौसला पूरा हो गया",
+    "unread_notifications": "मेरे पास अपठित सूचनाएं हैं",
+    "wire_received": "मुझे एक भुगतान मिला है",
+    "channel_improvement_tips": "मेरे चैनल को बेहतर बनाने के टिप्स",
+    "new_channels": "New things to subscribe to",
+    "posts_missed_since_login": "Things I’ve missed since my last login",
+    "top_posts": "मेरे नेटवर्क से शीर्ष पोस्ट",
+    "frecuency": "Notification Frequency",
+    "periodically": "समय-समय",
+    "daily": "रोज",
+    "weekly": "साप्ताहिक",
+    "never": "Never"
+  },
+  "plus": {
+    "freeTrialDesciption": "Start your free trial for 7 days"
   },
   "payments": {
     "confirmDeleteCard": "क्या आप इस कार्ड को हटाना चाहते हैं?"
@@ -494,6 +638,7 @@
   "settings": {
     "submit": "जमा करें",
     "blockedChannels": "अवरुद्ध चैनल",
+    "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "वर्तमान पासवर्ड",
     "disableChannelConfirm": "आपका खाता बंद कर दिया जाएगा। क्या आप वाकई आगे बढ़ना चाहते हैं?",
     "deleteChannelConfirm": "आपका खाता और इससे संबंधित सभी डेटा स्थायी रूप से हटा दिए जाएंगे। क्या आप वाकई आगे बढ़ना चाहते हैं?",
@@ -516,7 +661,10 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "अन्य",
+    "resources": "Resources",
+    "referrals": "रेफ़रल",
     "account": "खाता",
+    "network": "Network",
     "security": "सुरक्षा",
     "billing": "बिलिंग",
     "invalidPassword": "गलत पासवर्ड",
@@ -527,12 +675,39 @@
     "passwordFormatNumber": "कम से कम 1 नंबर",
     "passwordFormatNoSpaces": "रिक्त स्थान नहीं है",
     "showMatureContent": "हमेशा वयस्क लोगों का कंटेंट दिखाएं (18)",
-    "TFA": "Two-factor authentication",
-    "TFAdescription": "2FA सक्षम करके अपने खाते में सुरक्षा की एक अतिरिक्त परत जोड़ें।",
-    "TFAEnabled": "आप किसी भी बिंदु पर 2FA को अक्षम कर सकते हैं। यदि आप मोबाइल नंबर नहीं बदलते हैं, तो आपको 2FA को अक्षम और फिर से सक्षम करना होगा",
+    "TFA": "2FA",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAEnabled": "2FA Enabled",
+    "TFADisabled": "2FA Disabled",
     "TFADisable": "Disable 2FA",
-    "sessionsOpened": "आपके पास वर्तमान में {{amount}} खुले हुए सत्र हैं",
-    "closeSessions": "सभी सत्रों को बंद करें",
+    "TFADisableYes": "Yes, Disable 2FA",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
+    "TFAEnterCode": "Enter the six-digit code from the application",
+    "TFARecoveryCodes": "Recovery codes",
+    "TFARecoveryCodesTitle": "2. Recovery codes",
+    "TFARecoveryCodesDesc": "Recovery codes are used to access your account in the event you cannot receive two-factor authentication codes.",
+    "TFARecoveryCodesBeSure": "Please make sure to store this information securely. If you lose it we can not guarantee that you will regain access to your account",
+    "TFAVerifyTitle": "1. Verify with authenticator app",
+    "TFAVerifyDesc": "Enter the following two-factor secret into your authenticator app",
+    "TFAVerifyPhoneTitle1": "1. Phone number",
+    "TFAVerifyPhoneTitle2": "2. Confirm code",
+    "TFAVerifyPhoneDesc2": "Verification code sent to",
+    "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
+    "TFARecoveryCodeEnter": "Enter a two-factor recovery code",
+    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your Minds account because you used your one-time TOTP recovery code.",
+    "TFARecoveryCodeUsedEnable": "Enable 2FA",
+    "TFARecoveryCodeUsedSettings": "Security Settings",
+    "TFARecoveryCodeUsedContact": "If you did not enter your recovery code or believe you have received this message in error, please contact us immediately at",
+    "TFARecoveryCodeUsedMailto": "info@minds.com",
+    "TFAOptions": {
+      "appTitle": "ऐप",
+      "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",
+      "smsTitle": "SMS",
+      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
+    },
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
+    "closeSessions": "सभी सत्र बंद करें",
+    "closeSession": "Close session",
     "subscriptionListEmpty": "आपके पास कोई आवर्ती सदस्यता नहीं है",
     "recurringPaymentsDescription": "उन आवर्ती भुगतान का रिकॉर्ड रखें जो आप अन्य चैनलों को सपोर्ट करने के लिए करते हैं।",
     "enterDark": "डार्क मोड में जाएं",
@@ -541,7 +716,14 @@
     "usdTiers": "USD टियर",
     "addTier": "Add Tier",
     "noTiers": "आपके पास कोई टियर नहीं है",
+    "noTiersTitle": "You have no memberships tiers",
+    "noTiersSubTitle": "Increase your revenue by creating exclusive content for your members",
+    "addFirstTier": "Add a membership tier",
     "payment": "भुगतान",
+    "dataSaverDisableOnWifi": "Disable on Wi-Fi",
+    "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
+    "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
+    "saved": "Setting saved",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -567,7 +749,13 @@
       "2": "Display Language",
       "3": "पासवर्ड",
       "4": "सूचनाएं",
-      "5": "NSFW सामग्री"
+      "5": "NSFW सामग्री",
+      "6": "Messenger",
+      "7": "वीडियो ऑटोप्ले करें",
+      "8": "Boosted Content"
+    },
+    "networkOptions": {
+      "1": "Data Saver"
     },
     "securityOptions": {
       "1": "Two-factor authentication(2FA)",
@@ -587,6 +775,74 @@
       "c2": "खाता हटाएं",
       "d": "INFO",
       "d1": "ऐप"
+    },
+    "notificationsOptions": {
+      "push": "Push",
+      "email": "ईमेल"
+    },
+    "autoplay": {
+      "description": "Control whether videos in your feed play automatically.",
+      "enable": "वीडियो ऑटोप्ले चालू करें",
+      "saved": "Changes Saved",
+      "notPlus": "This feature is only available to Plus users."
+    },
+    "boost": {
+      "description": "Control how boost works across the site.",
+      "learn": "Learn more about",
+      "viewBoostedContent": "View Boosted Content",
+      "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
+      "boostAutoRotation": "Boost Auto-rotation",
+      "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
+      "openContent": "Open Content",
+      "openContentTooltip": "ओपन में विवादास्पद कंटेंट हो सकता है। ओपन का चयन करके, आप स्वीकार करते हैं कि आप विवादास्पद कंटेंट देखने के लिए तैयार हैं।",
+      "liquiditySpot": "Liquidity Spot",
+      "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
+      "optIn": "Opt-in",
+      "optOut": "Opt-out",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
+    "about": {
+      "title": "about",
+      "mobile": "मोबाइल",
+      "careers": "करियर",
+      "blog": "ब्लॉग",
+      "whitepaper": "Whitepaper",
+      "rights": "Bill of Rights",
+      "events": "आयोजन",
+      "store": "दुकान",
+      "terms": "सेवा की शर्तें",
+      "privacy": "Privacy Policy",
+      "content": "कंटेंट पॉलिसी",
+      "dmca": "DMCA"
+    },
+    "support": {
+      "title": "सहयोग",
+      "help": "सहायता केंद्र",
+      "contact": "Contact",
+      "community": "समुदाय",
+      "languages": "बोली",
+      "status": "स्थिति"
+    },
+    "business": {
+      "title": "व्यापार",
+      "upgrade": "अपग्रेड",
+      "token": "टोकन",
+      "plus": "प्लस",
+      "pro": "परे",
+      "pay": "वेतन",
+      "nodes": "Nodes",
+      "boost": "बढ़ावा",
+      "rewards": "पुरस्कार",
+      "youtube": "YouTube माइग्रेशन"
+    },
+    "developers": {
+      "title": "डेवलपर्स",
+      "docs": "Docs",
+      "community": "समुदाय",
+      "code": "कोड",
+      "canary": "Canary",
+      "branding": "ब्रांडिंग"
     }
   },
   "comingSoon": {
@@ -598,6 +854,25 @@
     "tooLong": "वीडियो की अवधि {{minutes}} मिनट से कम होनी चाहिए"
   },
   "onboarding": {
+    "startEarning": "Start earning tokens",
+    "improveExperience": "Improve your experience",
+    "hidePanel": "Hide this panel",
+    "joinGroup": "Join a group",
+    "subscribeToChannel": "Subscribe to a channel",
+    "completeToEarn": "Complete to earn tokens",
+    "tooltipInitial1": "To get most from Minds",
+    "tooltipInitial2": "please complete these steps",
+    "verifyEmailAddress": "Verify email address",
+    "selectTags": "Select tags",
+    "setupChannel": "Setup channel",
+    "verifyUniqueness": "Verify uniqueness",
+    "setContentPreferences": "Set content preferences",
+    "verifyEmailDescription1": "A verification email was sent to {{email}} with a verification link.",
+    "verifyEmailDescription2": "Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
+    "resendEmail": "Resend verification email",
+    "couldntLoadStatus": "Couldn't load your onboarding status",
+    "hashtagDescription": "Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
+    "selectThreeTags": "Select at least three tags",
     "chooseAvatar": "एक अवतार चुनें",
     "earnTokens": "अपनी गतिविधि के लिए टोकन जीतें",
     "weDontStorePhone": "हम आपके फ़ोन नंबर को अपने सर्वर पर स्टोर नहीं करते हैं।",
@@ -622,16 +897,36 @@
     "infoLocation": "स्थान",
     "infoDateBirth": "जन्म की तारीख",
     "groupTitle": "ग्रुप",
-    "numberConfirmed": "आपका Number मान्य कर दिया गया है",
+    "numberConfirmed": "Your number has been validated",
+    "phoneNumberInvalid": "अवैध फोन नंबर",
     "phoneNumberTooltip": "आपके मोबाइल नंबर का उपयोग अतिरिक्त खाता सुरक्षा, विशिष्ट पहचान और आपके दोस्तों को खोजने में आपकी सहायता के लिए किया जा सकता है। यह डेटा निजी और एन्क्रिप्टेड है।",
     "dateofBirthTooltip": "कृपया अपनी आयु की पुष्टि करने के लिए अपनी जन्मतिथि डालें और हमारी सिफारिशों को बेहतर बनाने में हमारी मदद करें।",
-    "locationTooltip": "अपने क्षेत्र के चैनलों से आपको जोड़ने में हमारी सहायता करने के लिए कृपया अपना शहर दर्ज करें। हम आपके सटीक स्थान को ट्रैक नहीं करते हैं।"
+    "locationTooltip": "अपने क्षेत्र के चैनलों से आपको जोड़ने में हमारी सहायता करने के लिए कृपया अपना शहर दर्ज करें। हम आपके सटीक स्थान को ट्रैक नहीं करते हैं।",
+    "send": "Send Verification Code",
+    "resend": "Resend Code",
+    "sent": "Verification code sent to",
+    "connectWallet": "Connect Wallet",
+    "connectBank": "Connect Bank",
+    "buyTokens": "Buy Tokens",
+    "onboardingCompleted": "Now you can earn tokens",
+    "improvedExperience": "Your feed should be livelier!",
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
+    "codeSent": "Verification code sent to"
+  },
+  "membership": {
+    "noTokens": "It doesn't accept Tokens",
+    "noUSD": "It doesn't accept USD",
+    "join": "Join Membership",
+    "pay": "Pay Custom Tier",
+    "alreadyMember": "You are already a member"
   },
   "wallet": {
     "wallet": "Wallet",
+    "connect": "Connect Wallet",
+    "reconnect": "Reconnect Wallet",
     "cash": "नकद",
     "activeAddress": "Mobile Receiver Address (Active)",
-    "alternateReceiver": "Alternate receiver address",
+    "alternateReceiver": "पता बदल जाना",
     "createAddress": "एक नया पता बनाएं (अनुशंसित)",
     "transferToOnchain": "On-chain में ट्रांसफ़र करें",
     "usePrivateKey": "अपनी निजी कुंजी का उपयोग करें",
@@ -643,8 +938,29 @@
     "walletActions": "WALLET ACTIONS",
     "walletBalance": "Wallet balance",
     "transactionsEmpty": "आपकी लेन-देन सूची खाली है",
+    "unpaid": "Unpaid",
+    "unpaidEarnings": "Unpaid earnings",
+    "total": "Total",
+    "totalPaidout": "Total paid out",
+    "alltime": "All-time earnings",
+    "addressCopied": "Address copied to clipboard",
+    "wire": "Minds Pay",
+    "wireAll": "Memberships & Tips",
+    "partner": "Revenue Share",
+    "plus": "Minds+ Content",
+    "wireReferral": "Minds Pay Commissions",
+    "yourScore": "अपने स्कोर",
+    "networkScore": "नेटवर्क स्कोर",
+    "yourShare": "आपका हिस्सा",
+    "rewards": {
+      "one": "Reward",
+      "other": "पुरस्कार"
+    },
+    "completeStep": "Please complete the step in your wallet app",
+    "connectFirst": "Connect the wallet first",
+    "verified": "Your On-chain address is now setup and verified",
     "withdraw": {
-      "errorOnlyOnceDay": "आप दिन में केवल एक बार वापस ले सकते हैं",
+      "errorOnlyOnceDay": "You can only have one pending withdrawal at a time",
       "errorWithdrawing": "टोकन वापस लेने में त्रुटि",
       "amount": "रकम",
       "errorAmountNegative": "राशि एक सकारात्मक संख्या होनी चाहिए",
@@ -661,10 +977,22 @@
       "bankInfoDescription": "अपने बैंक खाते का विवरण जोड़ें जहां मासिक USD पुरस्कार जमा किए जाते हैं",
       "add": "अपने बैंक विवरण जोड़ें",
       "leave": "डिमोनेटाइज़ेशन प्रोग्राम छोड़ें",
-      "leaveDescription": "सुरक्षा कारणों से, आप मोनेटाइज़ेशन प्रोग्राम को फिर से करने में सक्षम नहीं हैं",
+      "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
       "leaveButton": "डिमोनेटाइज़ेशन प्रोग्राम छोड़ें",
       "confirmLeave": "क्या आपको यकीन है? आप फिर से शामिल नहीं हो पाएंगे।",
-      "sure": "हाँ मुझे यकीन है"
+      "sure": "हाँ मुझे यकीन है",
+      "earnings": "कमाई",
+      "tooltips": {
+        "proTitle": "Summary of your earnings through your Minds Pro membership.",
+        "plusTitle": "Summary of your earnings through your Minds+ membership.",
+        "plusScore": "Your score for engagement on your content submissions to Minds+.",
+        "plusTotal": "Total network score for engagement on all content submissions to Minds+.",
+        "plusPercentage": "Your score divided by the total network score.",
+        "plusReward": "Your estimated token reward based on your percent share.",
+        "plusActivity": "Your account's activity level to determine your multiplier",
+        "proPageviews": "Your total earnings for registered pageviews on your content or channel",
+        "proReferrals": "Your total earning for active users you have referred."
+      }
     },
     "transactions": {
       "transaction": "लेन-देन",
@@ -673,7 +1001,7 @@
       "filter": "फ़िल्टर",
       "reward": "आज के दैनिक पुरस्कार",
       "filterTransactions": "Filter Transactions",
-      "filterTypes": "TRANSACTION TYPES",
+      "filterTypes": "Transaction types",
       "allFilter": "सभी",
       "mindsReward": "Minds Reward",
       "rewardsFilter": "Minds Rewards",
@@ -720,7 +1048,7 @@
       "description": "आप नीचे अपने Bitcoin रिसीवर पते को जोड़कर Bitcoin भुगतान प्राप्त कर सकते हैं।",
       "add": "Bitcoin एड्रेस जोड़ें",
       "current": "CURRENT RECEIVER ADDRESS",
-      "update": "पता अपडेट करें",
+      "update": "Bitcoin पता अपडेट करें",
       "error": "SORRY, हम आपके विज्ञापन की जाँच कर रहे हैं"
     },
     "bank": {
@@ -747,6 +1075,98 @@
       "fail": "कुछ गलत हो गया है",
       "finish": "नकद भुगतान प्राप्त करना शुरू करने के लिए अपने बैंक विवरण जोड़ना समाप्त करें।",
       "complete": "पूरा बैंक विवरण"
+    },
+    "date": "दिनांक",
+    "today": "Today",
+    "todayEstimate": "Today’s estimate",
+    "payout": "भुगतान",
+    "engagement": "एंगेजमेंट",
+    "holding": "Holding",
+    "liquidity": "Liquidity",
+    "tokens": {
+      "tooltips": {
+        "todayEstimate": "Your estimated token payout for today's contribution.",
+        "prevDateEarnings": "Your token payout for this date.",
+        "nextPayout": "Countdown until your next token payout is issued.",
+        "engagement": "Summary of your token rewards for engagement on your content.",
+        "holding": "Summary of your token rewards for holding tokens on-chain.",
+        "liquidity": "Summary of your token rewards for providing liquidity.",
+        "engagementScore": "Your score for referrals and engagement on your content and channel.",
+        "engagementTotal": "Total network score for all referrals and engagement on the app.",
+        "engagementPercentage": "Your score divided by the total network score.",
+        "engagementReward": "Your estimated token reward based on your percent share.",
+        "engagementActivity": "Your account's activity level to determine your multiplier.",
+        "holdingScore": "Your score for holding your tokens on-chain.",
+        "holdingTotal": "Total network score for holding tokens on-chain.",
+        "holdingPercentage": "Your score divided by the total network score.",
+        "holdingReward": "Your estimated token reward based on your percent share.",
+        "holdingBalance": "Your current on-chain token balance.",
+        "holdingDuration": "The number of consecutive days you have held tokens on-chain",
+        "holdingMultiplier": "Your score multiplier as determined by duration.",
+        "liquidityScore": "Your score for providing liquidity.",
+        "liquidityTotal": "Total network score for providing liquidity.",
+        "liquidityPercentage": "Your score divided by the total network score.",
+        "liquidityReward": "Your estimated token reward based on your percent share.",
+        "liquidityBalance": "Your current liquidity position.",
+        "liquidityDuration": "The number of consecutive days you have provided liquidity.",
+        "liquidityMultiplier": "Your score multiplier as determined by duration."
+      },
+      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
+      "tokenAmount": "राशि",
+      "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
+      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
+    }
+  },
+  "analytics": {
+    "title": "एनालिटिक्स",
+    "traffic": "यातायात",
+    "engagement": "एंगेजमेंट",
+    "earnings": "कमाई",
+    "trending": {
+      "title": "रुझान",
+      "content": "Content",
+      "totalViews": "Total Views",
+      "organic": "Organic",
+      "pageViews": "Page Views"
+    },
+    "tokens": {
+      "title": "टोकन",
+      "labels": {
+        "LiquidityFees": "Fees (24h)",
+        "LiquidityTotal": "Total liquidity",
+        "LiquidityTradedVolume": "Traded volume (24h)",
+        "EngagementScore": "एंगेजमेंट",
+        "HoldingScore": "Holding",
+        "LiquidityScore": "Liquidity",
+        "EmissionBreakDown": "Emission breakdown",
+        "CirculatingSupply": "Circulating supply",
+        "MarketCap": "Market cap",
+        "TokenHolders": "All-time token holders",
+        "TokensReclaimed": "Tokens reclaimed",
+        "TokensRewarded": "Tokens rewarded",
+        "TotalSupply": "Total Supply",
+        "TransactionsCount": "Transactions count",
+        "TransactionsUnique": "Active token users",
+        "TransactionsVolume": "Transactions volume"
+      },
+      "tooltips": {
+        "LiquidityFees": "Total fees earned by liquidity providers in the past 24 hours",
+        "LiquidityTotal": "Total liquidity pooled on Uniswap",
+        "LiquidityTradedVolume": "Total volume traded on Uniswap in the past 24 hours",
+        "EngagementScore": "The total number of points generated by the community for receiving engagement on their posts in the past 24 hours",
+        "HoldingScore": "The total number of points generated by the community for holding tokens on-chain in the past 24 hours",
+        "LiquidityScore": "The total number of points generated by the community for providing liquidity in the past 24 hours",
+        "EmissionBreakDown": "A summary of how many tokens are rewarded each day and how they are allocated",
+        "CirculatingSupply": "The number of tokens circulating in the community",
+        "MarketCap": "The circulating supply multiplied by the current market price of the token",
+        "TokenHolders": "The total number of users who have ever held a token",
+        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services",
+        "TokensRewarded": "The total number of tokens rewarded to the community",
+        "TotalSupply": "The total number of tokens that can ever exist",
+        "TransactionsCount": "The total number of token transactions in the past 24 hours",
+        "TransactionsUnique": "The total number of unique users who have performed a token transaction in the past 24 hours",
+        "TransactionsVolume": "The total volume of tokens exchanged in the past 24 hours"
+      }
     }
   },
   "wire": {
@@ -806,19 +1226,23 @@
     "6": "अन्य",
     "safe": "सुरक्षित",
     "notSafe": "असुरक्षित",
+    "notSafeChannel": "This channel is not safe for work and cannot be accessed via iOS",
     "categories": "NSFW श्रेणियां",
     "description1": "यदि इस पोस्ट में NSFW (काम के लिए सुरक्षित नहीं है) कंटेंट है, तो इसके अनुसार टैग करना आपकी ज़िम्मेदारी है।",
     "description2": "अधिक जानकारी के लिए दिशानिर्देश देखें।",
     "button": "NSFW"
   },
   "update": {
-    "title": "v{{version}} में अपडेट करें"
+    "title": "Updating to v{{version}}",
+    "failed": "Error updating the App"
   },
   "searchBar": {
     "title": "मन खोजें",
     "searchHistory": "Search History",
     "emptySuggested": "आप जो खोज रहे हैं, वह हमें नहीं मिला",
-    "clear": "साफ़ करें"
+    "clear": "साफ़ करें",
+    "discovery": "खोज",
+    "channels": "चैनल"
   },
   "monetize": {
     "title": "कमाई करें",
@@ -838,8 +1262,8 @@
     "custom": "Custom",
     "subScreensTitle": "पिछले महीने प्रो क्रिएटर्स ने $2,500 से अधिक कमाया",
     "plusMonetize": {
-      "notPro": "आपको अपना पोस्ट Minds प्लस कंटेंट पूल में भेजने के लिए Minds प्रो में अपग्रेड करना होगा। आप कंटेंट के प्रदर्शन के आधार पर रेवेन्यू हासिल करेंगे।",
-      "upgrade": "प्रो में अपग्रेड करें",
+      "notPlus": "You’ll need to upgrade to Minds+ in order to submit your post to the Minds+ content pool. You will earn revenue based on the performance of the content.",
+      "upgrade": "Minds+ में अपग्रेड करें",
       "submit": "इस पद को Minds Plus पूल में जमा करें और संभावित राजस्व अर्जित करें।",
       "agree": "मैं T&C's से सहमत हूं",
       "exclusivity": "विशिष्टता की अवधि",
@@ -847,24 +1271,39 @@
       "always": "हमेशा"
     },
     "membershipMonetize": {
-      "description": "इस पोस्ट को एक्सक्लूसिव रूप से अपने किसी एक सदस्यता टियर के लिए उपलब्ध करें।",
+      "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "आपके पास कोई भी सदस्य संख्या नहीं है",
       "tiersDescription": "अपने टियर को सेट करना तेज और आसान है। आज से ही अपने कंटेंट के लिए अतिरिक्त आमदनी कमाना शुरू करें।",
-      "setup": "सेटअप सदस्य टीयर",
+      "setup": "Setup membership tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "मैनेज करें"
     },
     "customMonetize": {
-      "usd": "USD में योगदान (यदि आवश्यक हो तो टोकन में बदल दिया जाएगा)",
+      "usd": "Contribution in USD (will be converted to tokens if necessary)",
       "hasUsd": "USD स्वीकार करें",
       "hasTokens": "Tokens स्वीकार करें"
     }
   },
+  "referrals": {
+    "title": "Earn tokens by inviting your friends to Minds",
+    "sendLinkToFriends": "रेफ़रल के लिए टोकन कमाने के लिए अपने दोस्तों को यह लिंक भेजें",
+    "codeSuffixLabel": "आपके द्वारा शेयर किए गए किसी भी Minds लिंक के अंत में इस कोड को जोड़कर आप रेफ़रल भी प्राप्त कर सकते हैं",
+    "moreWaysToShare": "शेयर करने के और तरीके",
+    "myReferrals": "My Referrals",
+    "noReferrals": "आपके पास अभी तक कोई रेफ़रल नहीं है।",
+    "signedUpOn": "Signed up on",
+    "pinged": "You pinged @{{username}}",
+    "joinMeOnMinds": "Join me on Minds",
+    "user": "User",
+    "status": "Status",
+    "rewardsSignup": "पुरस्कार साइनअप",
+    "description": "यदि आपका दोस्त आपके साथ शेयर किए गए लिंक पर क्लिक करने के 24 घंटे के भीतर Minds के लिए साइन अप करता है, तो उन्हें आपके लंबित रेफ़रल में जोड़ दिया जाएगा। एक बार जब वे अपने Minds वॉलेट को सेटअप करके पुरस्कार कार्यक्रम के लिए साइन अप करते हैं, तो रेफ़रल पूरा हो जाता है और आप दोनों के योगदान स्कोर में +10 जुड़ जाएगा!"
+  },
   "add": "Add",
   "downloading": "डाउनलोड हो रहा है ",
-  "confirm18": "पुष्टि करें कि आप 18+ हैं",
-  "postCantBeShown": "यह पोस्ट नहीं दिखाया जा सकता है",
-  "readMore": "और पढ़ें",
+  "confirm18": "I'm over 18 years of age",
+  "postCantBeShown": "Can't be shown on apps installed via the Store",
+  "readMore": "Show More",
   "showLess": "कम दिखाएं",
   "featureUnavailablePlatform": "यह फ़ीचर वर्तमान में आपके प्लेटफ़ॉर्म पर अनुपलब्ध है",
   "continue": "जारी रहें",
@@ -873,6 +1312,7 @@
   "save": "सहेजें",
   "edit": "संपादित करें",
   "goback": "वापस जाओ",
+  "quote": "Quote",
   "copy": "कॉपी बनाएं",
   "yes": "हाँ",
   "no": "नहीं",
@@ -897,6 +1337,7 @@
   "accept": "स्वीकार करें",
   "confirmNoUndo": "क्या आपको यकीन है? कोई UNDO नहीं है।",
   "confirmMessage": "क्या आपको यकीन है?",
+  "loadMore": "Load more",
   "cantLoadMore": "अधिक लोड नहीं कर सकते",
   "cantLoad": "लोड नहीं कर सकता",
   "conversation": "बातचीत",
@@ -904,7 +1345,7 @@
   "errorMessage": "ओह। लगता है कि कोई त्रुटि थी।",
   "error": "त्रुटि",
   "reply": "जवाब दे दो",
-  "setExplicit": "स्पष्ट सेट करें",
+  "setExplicit": "Mark as explicit",
   "report": "रिपोर्ट",
   "removeExplicit": "स्पष्ट निकालें",
   "members": "सदस्य",
@@ -913,13 +1354,14 @@
   "description": " विवरण",
   "sorry": "क्षमा करें!",
   "tryAgain": "पुनः प्रयास करें",
-  "pleaseTryAgain": "कृपया पुन: प्रयास करें।",
+  "pleaseTryAgain": "Please try again",
   "attention": "ध्यान दें",
   "retry": "पुन: प्रयास करें",
   "unlock": "अनलॉक",
   "unlockPost": "पोस्ट अनलॉक करें",
   "setup": "सेट अप",
   "send": "भेजें",
+  "sendTo": "Send to",
   "passwordPlaceholder": "पासवर्ड ",
   "passwordConmfirmPlaceholder": "पासवर्ड की पुष्टि करें...",
   "boost": "बढ़ावा",
@@ -961,6 +1403,10 @@
   "rememberTomorrow": "बाद में मुझे याद करना",
   "enableComments": "टिप्पणी सक्षम करें",
   "disableComments": "टिप्पणियों को अक्षम करें",
+  "viewRepliesComments": {
+    "one": "View 1 reply",
+    "other": "View {{count}} replies"
+  },
   "noInternet": "कोई इंटरनेट कनेक्शन नहीं",
   "cantReachServer": "सर्वर तक नहीं पहुंच सकता",
   "showingStored": "संग्रहित डेटा दिखा रहा है",
@@ -970,13 +1416,92 @@
   "validate": "VALIDATE",
   "plusTabTitleDiscovery": "Minds+",
   "linkCopied": "लिंक क्लिपबोर्ड पर कॉपी किया गया",
+  "copied": "Copied to clipboard",
   "close": "बंद करे",
   "now": "अभी",
+  "joined": "शामिल हो गए",
   "title": "शीर्षक",
   "filter": "फ़िल्टर",
   "captcha": "ऊपर वर्ण दर्ज करें",
+  "startFreeTrial": "Start free trial",
+  "visibility": "Visibility",
   "about": "About",
-  "purchase": "खरीदें",
+  "takePhoto": "Take a photo",
+  "uploadPhoto": "Upload a photo",
+  "uploading": "Uploading media, please wait",
   "verify": "Verify",
-  "other": "अन्य"
+  "other": "अन्य",
+  "purchase": "खरीदें",
+  "verification": "Verification",
+  "uploadFailed": "Upload failed",
+  "imageViewer": "View image",
+  "remindedBy": "Reminded by",
+  "pinnedPost": "Pinned post",
+  "postReminded": "Post has been reminded",
+  "remindRemoved": "Remind has been removed",
+  "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
+  "undoRemind": "Undo remind",
+  "permaweb": {
+    "title": "Permaweb",
+    "description": "Posting to permaweb",
+    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
+    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
+    "cannotMonetize": "Cannot post monetized posts to permaweb",
+    "viewOnPermaweb": "Permaweb"
+  },
+  "help": "मदद",
+  "unblock": "Unblock",
+  "buyTokensScreen": {
+    "title": "Buy Tokens",
+    "paymentMethod": "भुगतान का तरीका",
+    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
+    "terms": "I have read and accept the &{link}& for the Minds Token.",
+    "linkText": "Terms Of Sale",
+    "learnMore": "Learn more about tokens",
+    "buy": "जारी रहें"
+  },
+  "earnScreen": {
+    "title": "Earn",
+    "increase": "Increase your earnings",
+    "resources": {
+      "title": "Resources",
+      "rewards": "How rewards are calculated",
+      "tokens": "How to use tokens",
+      "earnings": "Track your earnings",
+      "analytics": "View token analytics"
+    },
+    "pool": {
+      "title": "Add liquidity"
+    },
+    "transfer": {
+      "title": "Transfer on-chain"
+    },
+    "create": {
+      "title": "Create content"
+    },
+    "refer": {
+      "title": "Refer"
+    },
+    "unlock": {
+      "title": "Unlock revenue-sharing",
+      "mindsPlus": "Minds+ में अपग्रेड करें",
+      "pro": "प्रो में अपग्रेड करें"
+    }
+  },
+  "orderReport": {
+    "thanksMessage": "Thank you. We've received your order for {{tokenAmount}} Minds tokens.",
+    "processDuration": "It normally takes a few minutes for your order to be delivered. You will receive a confirmation email once your order is processed.",
+    "paymentMethod": "भुगतान का तरीका",
+    "tokenAmount": "टोकन राशि",
+    "totalPayment": "Total Payment"
+  },
+  "points": "अंक",
+  "mindsPlusFeature": "Minds+ Feature",
+  "browserOnly": "Browser Only",
+  "clickHere": "click here",
+  "enabled": "Enabled",
+  "copyToClipboard": "Copy to Clipboard",
+  "emptyList": "Sorry the list is empty",
+  "and": "and",
+  "others": "others"
 }

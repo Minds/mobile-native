@@ -1,33 +1,28 @@
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-
-import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-
+import { Alert, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import FastImage, { Source } from 'react-native-fast-image';
-import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import SmallCircleButton from '~/common/components/SmallCircleButton';
+import Actions from '~/newsfeed/activity/Actions';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
+import MText from '../common/components/MText';
 import SmartImage from '../common/components/SmartImage';
 import { FLAG_VIEW } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import RemindAction from '../newsfeed/activity/actions/RemindAction';
-import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
-import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
-import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
+import { AppStackParamList } from '../navigation/NavigationTypes';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
-import shareService from '../share/ShareService';
+import { ComponentsStyle } from '../styles/Components';
 import ThemedStyles from '../styles/ThemedStyles';
 import Lock from '../wire/v2/lock/Lock';
 import BlogActionSheet from './BlogActionSheet';
-
+import BlogsViewStore from './BlogsViewStore';
 import BlogViewHTML from './BlogViewHTML';
-import type BlogsViewStore from './BlogsViewStore';
-import { AppStackParamList } from '../navigation/NavigationTypes';
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ComponentsStyle } from '../styles/Components';
 
 type BlogScreenRouteProp = RouteProp<AppStackParamList, 'BlogView'>;
 type BlogScreenNavigationProp = StackNavigationProp<
@@ -44,24 +39,17 @@ type PropsType = {
 /**
  * Blog View Screen
  */
-@inject('user', 'blogsView')
+@inject('user')
 @observer
 export default class BlogsViewScreen extends Component<PropsType> {
-  listRef: any;
   commentsRef: any;
+  blogsView: BlogsViewStore;
 
   /**
    * Disable navigation bar
    */
   static navigationOptions = {
     header: null,
-  };
-
-  share = () => {
-    const blog = this.props.blogsView.blog;
-    if (blog) {
-      shareService.share(blog.title, blog.perma_url);
-    }
   };
 
   state = {
@@ -75,8 +63,8 @@ export default class BlogsViewScreen extends Component<PropsType> {
   constructor(props) {
     super(props);
 
-    this.listRef = React.createRef();
     this.commentsRef = React.createRef();
+    this.blogsView = props.blogsView ?? new BlogsViewStore();
   }
 
   /**
@@ -86,13 +74,13 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const params = this.props.route.params;
     try {
       if (params.blog) {
-        await this.props.blogsView.setBlog(params.blog);
+        await this.blogsView.setBlog(params.blog);
 
         if (!params.blog.description) {
-          await this.props.blogsView.loadBlog(params.blog.guid);
+          await this.blogsView.loadBlog(params.blog.guid);
         }
       } else {
-        this.props.blogsView.reset();
+        this.blogsView.reset();
         let guid;
         if (params.slug) {
           guid = params.slug.substr(params.slug.lastIndexOf('-') + 1);
@@ -100,19 +88,19 @@ export default class BlogsViewScreen extends Component<PropsType> {
           guid = params.guid;
         }
 
-        await this.props.blogsView.loadBlog(guid);
+        await this.blogsView.loadBlog(guid);
       }
 
       // check permissions
-      if (!this.props.blogsView.blog?.can(FLAG_VIEW, true)) {
+      if (!this.blogsView.blog?.can(FLAG_VIEW, true)) {
         this.props.navigation.goBack();
         return;
       }
 
-      if (this.props.blogsView.blog) {
-        this.props.blogsView.blog.sendViewed('single');
+      if (this.blogsView.blog) {
+        this.blogsView.blog.sendViewed('single');
       }
-    } catch (error) {
+    } catch (error: any) {
       logService.exception(error);
       Alert.alert(
         'Error',
@@ -127,128 +115,113 @@ export default class BlogsViewScreen extends Component<PropsType> {
    * On component will unmount
    */
   componentWillUnmount() {
-    this.props.blogsView.reset();
+    this.blogsView.reset();
   }
 
-  /**
-   * On HTML height updated
-   */
-  onHeightUpdated = () => {
-    const params = this.props.route.params;
-    if (params && params.scrollToBottom && this.listRef.current) {
-      this.listRef.current.scrollToBottom();
+  getToolbar() {
+    const blog = this.blogsView.blog;
+    if (!blog) {
+      return null;
     }
-  };
+    const theme = ThemedStyles.style;
+
+    return (
+      <SafeAreaView style={theme.bgPrimaryBackground}>
+        <Actions
+          onPressComment={() => {
+            this.commentsRef.current.expand();
+          }}
+          entity={blog}
+        />
+      </SafeAreaView>
+    );
+  }
 
   /**
    * Render blog
    */
   getBody() {
-    const blog = this.props.blogsView.blog;
-    if (!blog) return null;
-
+    const blog = this.blogsView.blog;
+    if (!blog) {
+      return null;
+    }
     const theme = ThemedStyles.style;
-
-    const actions = !blog.paywall ? (
-      <View style={[theme.paddingHorizontal2x, theme.rowJustifySpaceBetween]}>
-        <ThumbUpAction entity={blog} />
-        <ThumbDownAction entity={blog} />
-        <CommentsAction
-          entity={blog}
-          navigation={this.props.navigation}
-          onPressComment={() => {
-            this.commentsRef.current.expand();
-          }}
-        />
-        <RemindAction entity={blog} />
-      </View>
-    ) : null;
     const image = blog.getBannerSource();
 
     return (
-      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
-        <SmartImage
-          source={image as Source}
-          resizeMode={FastImage.resizeMode.cover}
-          style={styles.image}
-        />
-        <Text style={styles.title}>{blog.title}</Text>
-        <View style={styles.ownerBlockContainer}>
-          <OwnerBlock
-            entity={blog}
-            navigation={this.props.navigation}
-            rightToolbar={
-              <View style={styles.actionSheet}>
-                <BlogActionSheet
-                  entity={blog}
-                  navigation={this.props.navigation}
-                />
-              </View>
-            }>
-            <Text style={[styles.timestamp, theme.colorSecondaryText]}>
-              {i18n.date(parseInt(blog.time_created, 10) * 1000)}
-            </Text>
-          </OwnerBlock>
-        </View>
-        {actions}
-        <View style={styles.description}>
-          {blog.description ? (
-            <BlogViewHTML
-              html={blog.description}
-              onHeightUpdated={this.onHeightUpdated}
+      <ScrollView stickyHeaderIndices={[1]}>
+        <>
+          <SmartImage
+            source={image as Source}
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.image}
+          />
+          <MText style={styles.title}>{blog.title}</MText>
+          <SafeAreaView style={styles.header}>
+            <SmallCircleButton
+              name="chevron-left"
+              raised
+              size={20}
+              style={theme.colorIcon}
+              onPress={this.props.navigation.goBack}
+              iconStyle={styles.iconStyle}
             />
-          ) : blog.paywall ? (
-            <Lock entity={blog} navigation={this.props.navigation} />
-          ) : (
-            <CenteredLoading />
+          </SafeAreaView>
+        </>
+
+        <SafeAreaInsetsContext.Consumer>
+          {insets => (
+            <View
+              style={[styles.ownerBlockContainer, { paddingTop: insets?.top }]}>
+              <OwnerBlock
+                entity={blog}
+                navigation={this.props.navigation}
+                rightToolbar={
+                  <View style={styles.actionSheet}>
+                    <BlogActionSheet
+                      entity={blog}
+                      navigation={this.props.navigation}
+                    />
+                  </View>
+                }>
+                <MText style={[styles.timestamp, theme.colorSecondaryText]}>
+                  {i18n.date(parseInt(blog.time_created, 10) * 1000)}
+                </MText>
+              </OwnerBlock>
+            </View>
+          )}
+        </SafeAreaInsetsContext.Consumer>
+
+        <View>
+          <View style={styles.description}>
+            {blog.description ? (
+              <BlogViewHTML html={blog.description} />
+            ) : blog.paywall ? (
+              // FIXME: Lock text is white on white and overlaps with license
+              <Lock entity={blog} navigation={this.props.navigation} />
+            ) : (
+              <CenteredLoading />
+            )}
+          </View>
+          {!blog.paywall && (
+            <View style={styles.moreInformation}>
+              {Boolean(blog.getLicenseText()) && (
+                <Icon style={theme.colorIcon} size={18} name="public" />
+              )}
+              <MText
+                style={[
+                  theme.fontXS,
+                  theme.paddingLeft,
+                  theme.colorSecondaryText,
+                  theme.paddingRight2x,
+                ]}>
+                {blog.getLicenseText()}
+              </MText>
+            </View>
           )}
         </View>
-        {!blog.paywall && (
-          <View style={styles.moreInformation}>
-            {Boolean(blog.getLicenseText()) && (
-              <Icon style={theme.colorIcon} size={18} name="public" />
-            )}
-            <Text
-              style={[
-                theme.fontXS,
-                theme.paddingLeft,
-                theme.colorSecondaryText,
-                theme.paddingRight2x,
-              ]}>
-              {blog.getLicenseText()}
-            </Text>
-            <Icon
-              style={theme.colorLink}
-              size={20}
-              name="share"
-              onPress={this.share}
-            />
-          </View>
-        )}
-        <SafeAreaView style={styles.header}>
-          <Icon
-            raised
-            style={theme.colorLink}
-            size={22}
-            name="arrow-back"
-            onPress={() => this.props.navigation.goBack()}
-          />
-        </SafeAreaView>
-      </View>
+      </ScrollView>
     );
-  }
-
-  async handleActionSheetSelection(option) {
-    switch (option) {
-      case i18n.t('disableComments'):
-      case i18n.t('enableComments'):
-        try {
-          await this.props.blogsView.blog?.toggleAllowComments();
-        } catch (err) {
-          console.error(err);
-          this.showError();
-        }
-    }
   }
 
   /**
@@ -274,30 +247,30 @@ export default class BlogsViewScreen extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
 
-    if (!this.props.blogsView.blog) {
+    // TODO: add loading state
+    if (!this.blogsView.blog) {
       return <CenteredLoading />;
     } else {
       // force observe on description
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const desc = this.props.blogsView.blog.description;
+      this.blogsView.blog.description;
     }
 
     // check async update of permissions
-    if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+    if (!this.blogsView.blog.can(FLAG_VIEW, true)) {
       this.props.navigation.goBack();
       return null;
     }
 
     return (
-      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
+      <View style={styles.container}>
         {!this.state.error ? (
           <>
-            <ScrollView ref={this.listRef}>{this.getBody()}</ScrollView>
-            {this.props.blogsView.comments && (
+            {this.getBody()}
+            {this.getToolbar()}
+            {this.blogsView.comments && (
               <CommentBottomSheet
                 ref={this.commentsRef}
-                hideContent={false}
-                commentsStore={this.props.blogsView.comments}
+                commentsStore={this.blogsView.comments}
               />
             )}
           </>
@@ -308,10 +281,10 @@ export default class BlogsViewScreen extends Component<PropsType> {
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
-            <Text style={[theme.fontL, theme.colorAlert]}>
+            <MText style={[theme.fontL, theme.colorAlert]}>
               {i18n.t('blogs.error')}
-            </Text>
-            <Text style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</Text>
+            </MText>
+            <MText style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</MText>
           </View>
         )}
       </View>
@@ -322,7 +295,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
 /**
  * Styles
  */
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   actionSheet: {
     paddingLeft: 5,
   },
@@ -341,9 +314,7 @@ const styles = StyleSheet.create({
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
-  ownerBlockContainer: {
-    marginVertical: 8,
-  },
+  ownerBlockContainer: ['bgSecondaryBackground'],
   description: {
     paddingLeft: 15,
     paddingRight: 15,
@@ -360,4 +331,6 @@ const styles = StyleSheet.create({
     padding: 12,
     flexDirection: 'row',
   },
+  container: ['flexContainer', 'bgSecondaryBackground'],
+  iconStyle: { fontSize: 28 },
 });

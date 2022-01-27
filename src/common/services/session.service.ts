@@ -1,4 +1,4 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, computed } from 'mobx';
 import {
   RefreshToken,
   SessionStorageService,
@@ -11,7 +11,7 @@ import type UserModel from '../../channel/UserModel';
 import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
-import delay from '../helpers/delay';
+import analyticsService from './analytics.service';
 
 export class TokenExpiredError extends Error {}
 
@@ -29,8 +29,11 @@ export class SessionService {
   @observable tokensData: Array<TokensData> = [];
   @observable activeIndex: number = 0;
   @observable sessionExpired: boolean = false;
+  @observable switchingAccount: boolean = false;
 
   apiServiceInstances: Array<ApiService> = [];
+
+  deviceToken: string = '';
 
   /**
    * Session token
@@ -75,6 +78,11 @@ export class SessionService {
     this.sessionStorage = sessionStorage;
   }
 
+  @computed
+  get showAuthNav() {
+    return !this.userLoggedIn && !this.switchingAccount;
+  }
+
   /**
    * Init service
    */
@@ -96,9 +104,12 @@ export class SessionService {
       this.setActiveIndex(sessionData.activeIndex);
       this.setTokensData(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user } = this.tokensData[
+      const { accessToken, refreshToken, user, pseudoId } = this.tokensData[
         this.activeIndex
       ];
+
+      // set the analytics pseudo id
+      analyticsService.setUserId(pseudoId);
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
@@ -236,8 +247,12 @@ export class SessionService {
   }
 
   @action
-  setLoggedIn(value) {
+  setLoggedIn(value: boolean) {
     this.userLoggedIn = value;
+  }
+  @action
+  setSwitchingAccount(value: boolean) {
+    this.switchingAccount = value;
   }
 
   @action
@@ -296,7 +311,9 @@ export class SessionService {
       tokensData.push(sessionData);
       this.setTokensData(tokensData);
 
-      // set the active index wich will be logged
+      analyticsService.setUserId(sessionData.pseudoId);
+
+      // set the active index which will be logged
       this.setActiveIndex(this.tokensData.length - 1);
       this.apiServiceInstances.push(new ApiService(this.activeIndex));
 
@@ -347,6 +364,7 @@ export class SessionService {
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
     return {
       user: user || getStores().user.me,
+      pseudoId: tokens.pseudo_id,
       sessionExpired: false,
       accessToken: {
         access_token: tokens.access_token,
@@ -394,7 +412,10 @@ export class SessionService {
   }
 
   getIndexSessionFromGuid(guid: string) {
-    const index = this.tokensData.findIndex(v => guid === v.user.guid);
+    const index = this.tokensData.findIndex(
+      v => String(guid) === String(v.user.guid),
+    );
+
     return index >= 0 ? index : false;
   }
 
@@ -428,10 +449,12 @@ export class SessionService {
 
   /**
    * Logout user for a given index
+   * returns a boolean indicating if it logout the current user
    */
-  logoutFrom(index: number) {
+  logoutFrom(index: number): boolean {
     if (index === this.activeIndex) {
       this.logout();
+      return true;
     } else {
       const guid = this.tokensData[this.activeIndex].user.guid;
       const tokensData = this.tokensData;
@@ -440,6 +463,7 @@ export class SessionService {
       const newIndex = this.getIndexSessionFromGuid(guid);
       this.setActiveIndex(newIndex || 0);
       this.popApiServiceInstance();
+      return false;
     }
   }
 

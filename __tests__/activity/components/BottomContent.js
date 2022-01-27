@@ -8,12 +8,14 @@ import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetr
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import { shallow } from 'enzyme';
+import sessionService from '../../../src/common/services/session.service';
 
 describe('BottomContent component', () => {
   let model, navigation, screen;
   beforeEach(() => {
     const activityResponse = activitiesServiceFaker().load(1);
     model = ActivityModel.create(activityResponse.activities[0]);
+    model.ownerObj.guid = sessionService.guid;
     screen = shallow(<BottomContent entity={model} />);
   });
   it('renders correctly', async () => {

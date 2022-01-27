@@ -6,7 +6,7 @@ import SearchView from '../../../common/components/SearchView';
 import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '../../../navigation/NavigationTypes';
+import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { useNavigation } from '@react-navigation/native';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -14,7 +14,10 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import FeedFilter from '../../../common/components/FeedFilter';
 
-type NavigationType = StackNavigationProp<AppStackParamList, 'DiscoverySearch'>;
+type NavigationType = StackNavigationProp<
+  DiscoveryStackParamList,
+  'DiscoverySearch'
+>;
 
 const tabs = [
   { id: 'top', title: 'Top' },
@@ -68,6 +71,7 @@ export const DiscoverySearchHeader = observer(() => {
         />
         {shouldRenderFilter && (
           <FeedFilter
+            nsfw
             store={store}
             containerStyles={styles.feedFilterContainer}
             textStyle={ThemedStyles.style.colorSecondaryText}

@@ -13,6 +13,7 @@ const createChatStore = () => ({
   inProgress: false,
   createInProgress: false,
   polling: 0,
+  // hasSeenModal: false,
   async checkAppInstalled(openStore = true) {
     try {
       let installed = false;
@@ -92,7 +93,7 @@ const createChatStore = () => ({
       this.createInProgress = false;
     }
   },
-  clear() {
+  reset() {
     if (this.polling) {
       clearInterval(this.polling);
     }

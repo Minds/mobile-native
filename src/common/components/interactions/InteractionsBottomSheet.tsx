@@ -1,12 +1,8 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetBackgroundProps,
-} from '@gorhom/bottom-sheet';
+
 import { observer, useLocalStore } from 'mobx-react';
-import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
-import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
 import UserModel from '../../../channel/UserModel';
 import ActivityModel from '../../../newsfeed/ActivityModel';
@@ -21,6 +17,10 @@ import ChannelListItem from '../ChannelListItem';
 import Handle from '../bottom-sheet/Handle';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
+import MText from '../MText';
+import { useNavigation } from '@react-navigation/core';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { renderBackdrop } from '../bottom-sheet/BottomSheet';
 
 type Interactions =
   | 'upVotes'
@@ -33,22 +33,27 @@ type Interactions =
 
 type PropsType = {
   entity: BaseModel;
+  modal?: boolean;
+  withoutInsets?: boolean;
+  snapPoints?: any;
+  keepOpen?: boolean;
 };
 
-const { height: windowHeight } = Dimensions.get('window');
-
-const snapPoints = [-150, Math.floor(windowHeight * 0.8)];
-const renderItemUser = (row: { item: any; index: number }) => (
-  <ChannelListItem channel={row.item} navigation={navigationService} />
+const _renderItemUser = navigation => (row: { item: any; index: number }) => (
+  <ChannelListItem channel={row.item} navigation={navigation} />
 );
-const renderItemActivity = (row: { item: any; index: number }) => (
+const _renderItemActivity = navigation => (row: {
+  item: any;
+  index: number;
+}) => (
   <Activity
     entity={row.item}
     hideTabs={true}
     hideRemind={true}
-    navigation={navigationService}
+    navigation={navigation}
   />
 );
+
 const mapUser = data => data.map(d => UserModel.create(d.actor));
 const mapSubscriber = data => data.map(d => UserModel.create(d));
 const mapActivity = data =>
@@ -72,12 +77,15 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   PropsType
 > = (props: PropsType, ref) => {
   // =====================| STATES & VARIABLES |=====================>
-  const bottomSheetRef = React.useRef<BottomSheet>(null);
+  const bottomSheetRef = React.useRef<any>(null);
   const insets = useSafeAreaInsets();
+  const bottomInsets = props.withoutInsets ? 0 : insets.bottom;
+  // whether the bottomsheet contents should be kept. defaults to true
+  const keepOpen = typeof props.keepOpen === 'boolean' ? props.keepOpen : true;
+  const navigation = useNavigation();
   const footerStyle = useStyle(styles.cancelContainer, {
-    paddingBottom:
-      insets.bottom + Platform.select({ default: 25, android: 45 }),
-    paddingTop: insets.bottom * 1.5,
+    paddingBottom: bottomInsets + Platform.select({ default: 25, android: 45 }),
+    paddingTop: bottomInsets * 1.5,
   });
   const footerGradientColors = useMemo(
     () => [
@@ -96,17 +104,19 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       this.visible = visible;
     },
     show() {
-      bottomSheetRef.current?.expand();
+      bottomSheetRef.current?.present();
       store.visible = true;
     },
     hide() {
-      bottomSheetRef.current?.close();
+      bottomSheetRef.current?.dismiss();
       /**
        * we don't turn visibility off, because then
        * the offsetlist will be unmounted and the data,
        * will be reset. we want to keep the data
        **/
-      // store.visible = false;
+      if (!keepOpen) {
+        store.visible = false;
+      }
     },
     setInteraction(interaction: Interactions) {
       store.interaction = interaction;
@@ -217,21 +227,23 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
+  const close = React.useCallback(() => bottomSheetRef.current?.dismiss(), [
     bottomSheetRef,
   ]);
 
-  /**
-   * only turn visibility on, never off.
-   * because we don't turn visibility off. because then
-   * the offsetlist will be unmounted and the data,
-   * will be reset. we want to keep the data
-   **/
-  const onBottomSheetVisibilityChange = useCallback((visible: number) => {
-    if (Boolean(visible)) {
-      store.setVisibility(Boolean(visible));
-    }
-  }, []);
+  const onBottomSheetVisibilityChange = useCallback(
+    (visible: number) => {
+      const shouldShow = visible >= 0;
+      setTimeout(() => {
+        if (keepOpen && shouldShow) {
+          store.setVisibility(shouldShow);
+        } else {
+          store.setVisibility(shouldShow);
+        }
+      }, 500);
+    },
+    [keepOpen],
+  );
 
   const title = useMemo(() => {
     switch (store.interaction) {
@@ -249,7 +261,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     () => (
       <Handle>
         <View style={styles.navbarContainer}>
-          <Text style={styles.titleStyle}>{capitalize(title)}</Text>
+          <MText style={styles.titleStyle}>{capitalize(title)}</MText>
         </View>
       </Handle>
     ),
@@ -267,19 +279,6 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     </View>
   );
 
-  /**
-   * Custom background
-   * (fixes visual issues on Android dark mode)
-   */
-  const CustomBackground = ({ style }: BottomSheetBackgroundProps) => (
-    <View style={style} />
-  );
-
-  const renderBackdrop = React.useCallback(
-    props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
-    [],
-  );
-
   const renderPlaceholder = useCallback(() => {
     if (isVote || isChannels) {
       return <ChannelListItemPlaceholder />;
@@ -288,18 +287,24 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     return <ActivityPlaceHolder />;
   }, [isVote, isChannels]);
 
+  const renderItemUser = useMemo(() => _renderItemUser(navigation), [
+    navigation,
+  ]);
+  const renderItemActivity = useMemo(() => _renderItemActivity(navigation), [
+    navigation,
+  ]);
+
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={bottomSheetRef}
-      index={0}
-      containerHeight={windowHeight}
-      snapPoints={snapPoints}
       handleComponent={Header}
+      enablePanDownToClose={true}
+      backdropComponent={renderBackdrop}
       enableContentPanningGesture={false}
       enableHandlePanningGesture={true}
+      backgroundComponent={null}
       onChange={onBottomSheetVisibilityChange}
-      backgroundComponent={CustomBackground}
-      backdropComponent={renderBackdrop}>
+      snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}>
       <View style={styles.container}>
         {store.visible && (
           <>
@@ -322,9 +327,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
           </>
         )}
       </View>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };
+
+const DEFAULT_SNAP_POINTS = ['80%'];
 
 const styles = ThemedStyles.create({
   container: ['bgPrimaryBackground', 'flexContainer'],

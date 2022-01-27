@@ -88,10 +88,10 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
           "flexDirection": "row",
         },
         Object {
-          "padding": 20,
+          "padding": 16,
         },
         Object {
-          "borderColor": "#D3DBE3",
+          "borderColor": "#414C57",
         },
       ]
     }
@@ -110,9 +110,17 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 16,
-              "fontWeight": "bold",
+              "color": "#FFFFFF",
             },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+              },
+            ],
           ]
         }
       >
@@ -123,11 +131,19 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
         style={
           Array [
             Object {
-              "paddingTop": 8,
+              "color": "#FFFFFF",
             },
             Object {
-              "color": "#72727C",
+              "fontFamily": "Roboto",
             },
+            Array [
+              Object {
+                "paddingTop": 8,
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
           ]
         }
       >
@@ -152,10 +168,10 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
         "flexDirection": "row",
       },
       Object {
-        "padding": 20,
+        "padding": 16,
       },
       Object {
-        "borderColor": "#D3DBE3",
+        "borderColor": "#414C57",
       },
     ]
   }
@@ -174,9 +190,17 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       style={
         Array [
           Object {
-            "fontSize": 16,
-            "fontWeight": "bold",
+            "color": "#FFFFFF",
           },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+            },
+          ],
         ]
       }
     >
@@ -187,11 +211,19 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       style={
         Array [
           Object {
-            "paddingTop": 8,
+            "color": "#FFFFFF",
           },
           Object {
-            "color": "#72727C",
+            "fontFamily": "Roboto",
           },
+          Array [
+            Object {
+              "paddingTop": 8,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
         ]
       }
     >
@@ -269,10 +301,10 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
         "flexDirection": "row",
       },
       Object {
-        "padding": 20,
+        "padding": 16,
       },
       Object {
-        "borderColor": "#D3DBE3",
+        "borderColor": "#414C57",
       },
     ]
   }
@@ -291,11 +323,19 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
       style={
         Array [
           Object {
-            "paddingBottom": 8,
+            "color": "#FFFFFF",
           },
           Object {
-            "color": "#72727C",
+            "fontFamily": "Roboto",
           },
+          Array [
+            Object {
+              "paddingBottom": 8,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
         ]
       }
     >
@@ -309,9 +349,17 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
       style={
         Array [
           Object {
-            "fontSize": 16,
-            "fontWeight": "bold",
+            "color": "#FFFFFF",
           },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+            },
+          ],
         ]
       }
     >
@@ -349,7 +397,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
           style={
             Array [
               Object {
-                "color": "#9B9B9B",
+                "color": "#797B82",
                 "fontSize": 32,
               },
               Object {

@@ -1,11 +1,13 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Text, Dimensions, Linking, View } from 'react-native';
+import { Dimensions, Linking, Platform, View } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
+import MText from '../common/components/MText';
+import openUrlService from '~/common/services/open-url.service';
 
 const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
@@ -164,7 +166,7 @@ const renderHTML = function (props) {
 
 type PropsType = {
   html: string;
-  onHeightUpdated: () => void;
+  onHeightUpdated?: () => void;
 };
 
 /**
@@ -198,9 +200,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
 
     if (height > this.state.style.height) {
       this.setState({ style: { height, flex: 0 } }, () => {
-        if (this.props.onHeightUpdated) {
-          this.props.onHeightUpdated();
-        }
+        this.props.onHeightUpdated?.();
       });
     }
   };
@@ -215,7 +215,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * On error
    */
-  onError = () => <Text>Sorry, failed to load. please try again</Text>;
+  onError = () => <MText>Sorry, failed to load. please try again</MText>;
 
   /**
    * On nav state change
@@ -223,7 +223,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   onStateChange = event => {
     if (event.url.indexOf('http') > -1) {
       this.webview.stopLoading();
-      Linking.openURL(event.url);
+      openUrlService.open(event.url);
     }
   };
 
@@ -243,6 +243,15 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   }
 
   /**
+   * a hack used only on android to prevent the link openning in webview
+   * @return { boolean }
+   */
+  private handleShouldStartLoadWithRequest({ url }: any) {
+    openUrlService.open(url);
+    return false;
+  }
+
+  /**
    * Render
    */
   render() {
@@ -253,18 +262,24 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
         scrollEnabled={false}
         source={this.state.html}
         mixedContentMode="compatibility"
-        style={this.state.style}
+        style={[ThemedStyles.style.bgSecondaryBackground, this.state.style]}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
-        // startInLoadingState={true}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
         // renderLoading={this.renderLoading}
+        onShouldStartLoadWithRequest={
+          Platform.OS === 'android'
+            ? this.handleShouldStartLoadWithRequest
+            : undefined
+        }
         startInLoadingState={true}
         renderLoading={() => <View style={ThemedStyles.style.flexContainer} />}
         renderError={this.onError}
-        onNavigationStateChange={this.onStateChange}
+        onNavigationStateChange={
+          Platform.OS === 'android' ? undefined : this.onStateChange
+        }
       />
     );
   }

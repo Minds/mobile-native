@@ -9,6 +9,7 @@ interface HandleProps {
 
 const Handle: FC<HandleProps> = ({ children, showHandleBar = true, style }) => (
   <View
+    renderToHardwareTextureAndroid={true}
     style={useMemoStyle(
       [children ? styles.containerWithChildren : styles.container, style],
       [style],
@@ -28,10 +29,10 @@ export default Handle;
 const styles = ThemedStyles.create({
   container: [
     {
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      borderTopLeftRadius: 18,
+      borderTopRightRadius: 18,
+      height: 22,
       paddingTop: 10,
-      paddingBottom: 5,
     },
     'bgPrimaryBackgroundHighlight',
   ],

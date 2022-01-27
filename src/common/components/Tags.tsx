@@ -3,10 +3,12 @@ import _ from 'lodash';
 
 import React, { PureComponent } from 'react';
 
-import { Text, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
+import NavigationService from '~/navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 import openUrlService from '../services/open-url.service';
+import MText from './MText';
 
 export const hashRegex = new RegExp(
   [
@@ -62,16 +64,16 @@ export default class Tags extends PureComponent<PropsType> {
 
       return chunks.map((data, i) => {
         return (
-          <Text selectable={selectable} style={this.props.style} key={i}>
+          <MText selectable={selectable} style={this.props.style} key={i}>
             {data}
-          </Text>
+          </MText>
         );
       });
     } else {
       return (
-        <Text selectable={selectable} style={this.props.style}>
+        <MText selectable={selectable} style={this.props.style}>
           {tags}
-        </Text>
+        </MText>
       );
     }
   }
@@ -103,14 +105,14 @@ export default class Tags extends PureComponent<PropsType> {
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -123,14 +125,14 @@ export default class Tags extends PureComponent<PropsType> {
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -143,14 +145,14 @@ export default class Tags extends PureComponent<PropsType> {
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -161,14 +163,14 @@ export default class Tags extends PureComponent<PropsType> {
   parseHash = str => {
     return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
           #{content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -176,14 +178,14 @@ export default class Tags extends PureComponent<PropsType> {
   parseCash = str => {
     return this.replaceRegular(str, cashRegex, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
           }}>
           ${content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -196,14 +198,14 @@ export default class Tags extends PureComponent<PropsType> {
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
           }}>
           @{content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -212,14 +214,31 @@ export default class Tags extends PureComponent<PropsType> {
    * Navigate to discovery
    */
   navToDiscovery = q => {
-    this.props.navigation.navigate('DiscoverySearch', { query: q });
+    if (this.props.navigation === NavigationService) {
+      this.props.navigation.navigate('App', {
+        screen: 'DiscoverySearch',
+        params: { query: q },
+      });
+    } else {
+      this.props.navigation.navigate('Discovery', {
+        screen: 'DiscoverySearch',
+        params: { query: q },
+      });
+    }
   };
 
   /**
    * Navigate to discovery
    */
   navToChannel = q => {
-    this.props.navigation.push('Channel', { username: q });
+    if (this.props.navigation === NavigationService) {
+      this.props.navigation.push('App', {
+        screen: 'Channel',
+        params: { username: q },
+      });
+    } else {
+      this.props.navigation.push('Channel', { username: q });
+    }
   };
 
   navToURL = q => {

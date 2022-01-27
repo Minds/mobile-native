@@ -1,23 +1,16 @@
 import React from 'react';
-import { Text } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import { B3 } from '~ui';
 
 type PropsType = {
   children: React.ReactNode;
 };
 
 const MenuSubtitle = ({ children }: PropsType) => {
-  const theme = ThemedStyles.style;
-  const subTitleStyle = [
-    theme.colorSecondaryText,
-    theme.fontMedium,
-    theme.fontM,
-    theme.marginTop5x,
-    theme.marginBottom2x,
-    theme.paddingHorizontal4x,
-  ];
-
-  return <Text style={subTitleStyle}>{children}</Text>;
+  return (
+    <B3 font="medium" color="secondary" horizontal="L" top="L" bottom="S">
+      {children}
+    </B3>
+  );
 };
 
 export default MenuSubtitle;

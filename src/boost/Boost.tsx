@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
@@ -7,14 +8,13 @@ import BlogCard from '../blogs/BlogCard';
 import VideoCard from '../media/VideoCard';
 import ImageCard from '../media/ImageCard';
 
-import { Text, StyleSheet, View } from 'react-native';
-
 import Activity from '../newsfeed/activity/Activity';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
 import GroupCard from '../groups/card/GroupCard';
 import GroupModel from '../groups/GroupModel';
+import MText from '../common/components/MText';
 
 /**
  * Boost console item
@@ -92,9 +92,9 @@ export default class Boost extends Component {
         }
     }
     return (
-      <Text>
+      <MText>
         Entity {entity.type} {entity.subtype} not supported
-      </Text>
+      </MText>
     );
   }
 }

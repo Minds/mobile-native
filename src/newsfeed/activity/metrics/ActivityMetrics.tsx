@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import { Icon } from 'react-native-elements';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import abbrev from '../../../common/helpers/abbrev';
 import LockTag from '../../../wire/v2/lock/LockTag';
 import type { SupportTiersType } from '../../../wire/WireTypes';
 import { getLockType } from '../../../wire/v2/lock/Lock';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   entity: ActivityModel;
@@ -46,13 +47,13 @@ export default class ActivityMetrics extends Component<PropsType> {
 
     return (
       <View style={containerStyle}>
-        <Text style={textStyle}>
+        <MText style={textStyle}>
           {entity.impressions > 0
             ? abbrev(entity.impressions, 1) +
               ` ${i18n.t('views').toLowerCase()} · `
             : ''}
           {date}
-        </Text>
+        </MText>
 
         {this.props.entity.boosted ? (
           <View style={boostedContainerStyle}>
@@ -64,9 +65,9 @@ export default class ActivityMetrics extends Component<PropsType> {
               color={ThemedStyles.getColor('Link')}
             />
 
-            <Text style={boostedTextStyle}>
+            <MText style={boostedTextStyle}>
               {i18nService.t('boosted').toUpperCase()}
-            </Text>
+            </MText>
           </View>
         ) : undefined}
         {lockType !== null && <LockTag type={lockType} />}

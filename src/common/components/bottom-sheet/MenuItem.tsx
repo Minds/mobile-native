@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Icon, IconType } from 'react-native-elements';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
+import MText from '../MText';
+import { B1 } from '~ui';
 
 export type MenuItemProps = {
   title: string | JSX.Element;
@@ -10,7 +12,7 @@ export type MenuItemProps = {
   iconType?: IconType;
   iconSize?: number;
   testID?: string;
-  onPress: () => void;
+  onPress?: () => void;
   style?: any;
   textStyle?: any;
 };
@@ -25,13 +27,17 @@ const MenuItem = ({
   textStyle,
   testID = '',
 }: MenuItemProps) => {
-  iconSize = iconSize || 25;
+  iconSize = iconSize || 24;
 
   const txtStyle = useStyle(styles.menuText, textStyle);
   const containerStyle = useStyle(styles.menuContainer, style);
 
   return (
-    <MPressable style={containerStyle} onPress={onPress} testID={testID}>
+    <MPressable
+      style={containerStyle}
+      onPress={onPress}
+      testID={testID}
+      disabled={!onPress}>
       {Boolean(iconName) && (
         <View style={styles.iconContainer}>
           <Icon
@@ -42,7 +48,11 @@ const MenuItem = ({
           />
         </View>
       )}
-      <Text style={txtStyle}>{title}</Text>
+      {textStyle ? (
+        <MText style={txtStyle}>{title}</MText>
+      ) : (
+        <B1 font="medium">{title}</B1>
+      )}
     </MPressable>
   );
 };
@@ -55,7 +65,7 @@ const styles = ThemedStyles.create({
     'alignCenter',
     'rowJustifyStart',
     'paddingVertical3x',
-    'paddingHorizontal5x',
+    'paddingHorizontal4x',
   ],
   menuText: ['fontL', 'fontMedium'],
 });

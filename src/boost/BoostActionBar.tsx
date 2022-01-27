@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { Icon } from 'react-native-elements';
 
-import { Text, StyleSheet, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -13,6 +13,7 @@ import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 @inject('user', 'boost')
 @observer
@@ -40,9 +41,9 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value} numberOfLines={1}>
+        <MText style={styles.value} numberOfLines={1}>
           {'@' + this.props.entity.destination.username}
-        </Text>
+        </MText>
       </View>
     ) : (
       <View></View>
@@ -59,9 +60,9 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value}>
+        <MText style={styles.value}>
           {this.props.entity.impressions + ' views'}
-        </Text>
+        </MText>
       </View>
     ) : (
       <View />
@@ -78,10 +79,10 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value}>{this.props.entity.state}</Text>
+        <MText style={styles.value}>{this.props.entity.state}</MText>
       </View>
     ) : (
-      <View></View>
+      <View />
     );
   }
 
@@ -95,7 +96,7 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value}>
+        <MText style={styles.value}>
           {(this.props.entity.bidType == 'offchain' ||
             this.props.entity.bidType == 'onchain' ||
             this.props.entity.bidType == 'peer' ||
@@ -106,7 +107,7 @@ export default class BoostActionBar extends Component {
             '$' + (this.props.entity.bid / 100).toFixed(2)}
           {this.props.entity.bidType == 'points' &&
             this.props.entity.bid + ' points'}
-        </Text>
+        </MText>
       </View>
     ) : (
       <View></View>
@@ -123,9 +124,9 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value}>
+        <MText style={styles.value}>
           {i18n.date(this.props.entity.scheduledTs * 1000)}
-        </Text>
+        </MText>
       </View>
     ) : (
       <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
@@ -136,9 +137,9 @@ export default class BoostActionBar extends Component {
           size={20}
           style={styles.icon}
         />
-        <Text style={styles.value}>
+        <MText style={styles.value}>
           {i18n.date(this.props.entity.time_created * 1000, 'datetime')}
-        </Text>
+        </MText>
       </View>
     );
   }
@@ -154,10 +155,10 @@ export default class BoostActionBar extends Component {
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
-            <Text style={ThemedStyles.style.colorAlert}>
+            <MText style={ThemedStyles.style.colorAlert}>
               {' '}
               {i18n.t('revoke').toUpperCase()}{' '}
-            </Text>
+            </MText>
           </TouchableHighlight>
         </View>,
       );
@@ -172,13 +173,13 @@ export default class BoostActionBar extends Component {
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
-            <Text
+            <MText
               style={ThemedStyles.style.colorAlert}
               adjustsFontSizeToFit
               numberOfLines={1}>
               {' '}
               {i18n.t('reject').toUpperCase()}{' '}
-            </Text>
+            </MText>
           </TouchableHighlight>
         </View>,
       );
@@ -193,13 +194,13 @@ export default class BoostActionBar extends Component {
             }}
             underlayColor="transparent"
             style={ComponentsStyle.bluebutton}>
-            <Text
+            <MText
               style={ThemedStyles.style.colorLink}
               adjustsFontSizeToFit
               numberOfLines={1}>
               {' '}
               {i18n.t('accept').toUpperCase()}{' '}
-            </Text>
+            </MText>
           </TouchableHighlight>
         </View>,
       );

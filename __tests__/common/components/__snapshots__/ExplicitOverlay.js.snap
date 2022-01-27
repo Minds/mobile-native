@@ -6,15 +6,16 @@ exports[`Explicit overlay component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "alignSelf": "center",
+        "alignItems": "stretch",
+        "flex": 1,
+        "flexDirection": "column",
         "justifyContent": "center",
       },
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       },
       Object {
+        "alignItems": "center",
         "minHeight": 400,
       },
       undefined,
@@ -28,41 +29,42 @@ exports[`Explicit overlay component renders correctly 1`] = `
     size={55}
     style={
       Object {
-        "color": "#72727C",
+        "color": "#B8C1CA",
       }
     }
   />
-  <Text
+  <MText
     style={
       Array [
         Object {
-          "color": "#43434D",
+          "color": "#FFFFFF",
         },
         Object {
-          "paddingTop": 30,
+          "paddingTop": 24,
         },
         Object {
           "fontSize": 22,
         },
         Object {
+          "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
       ]
     }
   >
     NSFW
-  </Text>
-  <Text
+  </MText>
+  <MText
     style={
       Array [
         Object {
-          "color": "#9B9B9B",
+          "color": "#797B82",
         },
         Object {
-          "paddingVertical": 10,
+          "paddingVertical": 8,
         },
         Object {
-          "marginBottom": 30,
+          "marginBottom": 24,
         },
         Object {
           "fontSize": 18,
@@ -75,25 +77,25 @@ exports[`Explicit overlay component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#D3DBE3",
+          "borderColor": "#414C57",
         },
         Object {
           "borderWidth": 0.5,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#1F252C",
         },
         Object {
-          "margin": 20,
+          "margin": 16,
         },
       ]
     }
   >
-    <Text
+    <MText
       style={
         Array [
           Object {
-            "padding": 10,
+            "padding": 8,
           },
           Object {
             "fontSize": 16,
@@ -103,7 +105,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       }
     >
       Can't be shown on apps installed via the Store
-    </Text>
+    </MText>
   </TouchableOpacity>
 </View>
 `;
@@ -114,15 +116,16 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   style={
     Array [
       Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "alignSelf": "center",
+        "alignItems": "stretch",
+        "flex": 1,
+        "flexDirection": "column",
         "justifyContent": "center",
       },
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       },
       Object {
+        "alignItems": "center",
         "minHeight": 400,
       },
       undefined,
@@ -136,41 +139,42 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     size={55}
     style={
       Object {
-        "color": "#72727C",
+        "color": "#B8C1CA",
       }
     }
   />
-  <Text
+  <MText
     style={
       Array [
         Object {
-          "color": "#43434D",
+          "color": "#FFFFFF",
         },
         Object {
-          "paddingTop": 30,
+          "paddingTop": 24,
         },
         Object {
           "fontSize": 22,
         },
         Object {
+          "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
       ]
     }
   >
     NSFW
-  </Text>
-  <Text
+  </MText>
+  <MText
     style={
       Array [
         Object {
-          "color": "#9B9B9B",
+          "color": "#797B82",
         },
         Object {
-          "paddingVertical": 10,
+          "paddingVertical": 8,
         },
         Object {
-          "marginBottom": 30,
+          "marginBottom": 24,
         },
         Object {
           "fontSize": 18,
@@ -183,25 +187,25 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#D3DBE3",
+          "borderColor": "#414C57",
         },
         Object {
           "borderWidth": 0.5,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#1F252C",
         },
         Object {
-          "margin": 20,
+          "margin": 16,
         },
       ]
     }
   >
-    <Text
+    <MText
       style={
         Array [
           Object {
-            "padding": 10,
+            "padding": 8,
           },
           Object {
             "fontSize": 16,
@@ -211,7 +215,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       }
     >
       Can't be shown on apps installed via the Store
-    </Text>
+    </MText>
   </TouchableOpacity>
 </View>
 `;

@@ -1,4 +1,5 @@
 import api from './api.service';
+// import experimentsService from './experiments.service';
 import featuresService from './features.service';
 import { storages } from './storage/storages.service';
 
@@ -17,8 +18,9 @@ class MindsConfigService {
    * Update the settings from the server
    */
   async update() {
-    const settings = await api.get('api/v1/minds/config');
+    const settings = await api.get<any>('api/v1/minds/config');
     storages.app.setMap('mindsSettings', settings);
+
     this.settings = settings;
     // update the features based on the settings
     featuresService.updateFeatures();
@@ -37,7 +39,6 @@ class MindsConfigService {
       this.settings = settings;
       // update the features based on the settings
       featuresService.updateFeatures();
-      this.update();
     }
 
     return this.settings;

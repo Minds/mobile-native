@@ -1,22 +1,27 @@
 import React from 'react';
 import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { Text, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
+import { Button, Spacer } from '~ui';
 
 type propsType = {
   onPress: () => void;
   text?: string;
+  spinner?: boolean;
   style?: TextStyle | TextStyle[];
 };
 
-const SaveButton = ({ onPress, text, style }: propsType) => {
-  const theme = ThemedStyles.style;
+const SaveButton = ({ onPress, text, spinner, style }: propsType) => {
   return (
-    <Text
-      onPress={onPress}
-      style={[theme.colorLink, theme.fontL, theme.bold, style]}>
-      {text || i18n.t('save')}
-    </Text>
+    <Spacer containerStyle={style}>
+      <Button
+        onPress={onPress}
+        spinner={spinner}
+        mode="flat"
+        type="action"
+        size="small">
+        {text || i18n.t('save')}
+      </Button>
+    </Spacer>
   );
 };
 

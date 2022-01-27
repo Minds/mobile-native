@@ -1,15 +1,8 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
-import React, { useCallback, useMemo } from 'react';
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useCallback } from 'react';
+import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
+import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -113,10 +106,10 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   if (error || dataError) {
     return (
-      <Text style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+      </MText>
     );
   }
 
@@ -126,22 +119,24 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
       contentContainerStyle={theme.padding4x}>
       <View style={theme.rowJustifySpaceBetween}>
         <View style={styles.firstColumn}>
-          <Text style={theme.bold}>{i18n.t('analytics.trending.content')}</Text>
+          <MText style={theme.bold}>
+            {i18n.t('analytics.trending.content')}
+          </MText>
         </View>
         <View style={styles.columnView}>
-          <Text style={styles.text}>
+          <MText style={styles.text}>
             {i18n.t('analytics.trending.totalViews')}
-          </Text>
+          </MText>
         </View>
         <View style={styles.columnView}>
-          <Text style={styles.text}>
+          <MText style={styles.text}>
             {i18n.t('analytics.trending.organic')}
-          </Text>
+          </MText>
         </View>
         <View style={styles.columnView}>
-          <Text style={styles.text}>
+          <MText style={styles.text}>
             {i18n.t('analytics.trending.pageViews')}
-          </Text>
+          </MText>
         </View>
       </View>
 
@@ -152,19 +147,19 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           onPress={row.values.entity.onPress}
           style={theme.rowJustifySpaceBetween}>
           <View style={styles.firstColumn}>
-            <Text>{row.values.entity.title}</Text>
-            <Text style={styles.tertiaryText}>
+            <MText>{row.values.entity.title}</MText>
+            <MText style={styles.tertiaryText}>
               {`@${row.values.entity.username}`}
-            </Text>
+            </MText>
           </View>
           <View style={styles.columnViewP}>
-            <Text>{row.values['views::total']}</Text>
+            <MText>{row.values['views::total']}</MText>
           </View>
           <View style={styles.columnViewP}>
-            <Text>{row.values['views::organic']}</Text>
+            <MText>{row.values['views::organic']}</MText>
           </View>
           <View style={styles.columnViewP}>
-            <Text>{row.values['views::single']}</Text>
+            <MText>{row.values['views::single']}</MText>
           </View>
         </TouchableOpacity>
       ))}

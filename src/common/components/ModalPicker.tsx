@@ -1,10 +1,11 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
-import { Picker, Platform, Text, View } from 'react-native';
+import { Picker, Platform, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
+import MText from './MText';
 
 const height = Platform.OS === 'ios' ? 300 : 150;
 
@@ -103,7 +104,7 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
     return (
       <Modal isVisible={this.props.show}>
         <View style={[CS.bgTertiaryBackground, { height, paddingBottom: 8 }]}>
-          <Text
+          <MText
             style={[
               CS.fontL,
               CS.textCenter,
@@ -112,7 +113,7 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
               CS.bgTertiaryBackground,
             ]}>
             {title}
-          </Text>
+          </MText>
           <View style={[CS.flexContainer]}>
             <Picker
               {...props}

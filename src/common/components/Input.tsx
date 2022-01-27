@@ -1,19 +1,13 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TextStyle,
-  TextInputProps,
-} from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import { View, StyleSheet, TextStyle, TextInputProps } from 'react-native';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
-import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 import TextInput from './TextInput';
+import MText from './MText';
+import DatePicker from './controls/DatePicker';
+import ErrorBoundary from './ErrorBoundary';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -47,12 +41,6 @@ export interface PropsType extends TextInputProps {
  */
 export default class Input extends Component<PropsType> {
   timeoutCleanup = null;
-  /**
-   * State
-   */
-  state = {
-    datePickerVisible: false,
-  };
 
   /**
    * Constructor
@@ -82,20 +70,6 @@ export default class Input extends Component<PropsType> {
   }
 
   /**
-   * Show date picker
-   */
-  showDatePicker = () => {
-    this.setState({ datePickerVisible: true });
-  };
-
-  /**
-   * Dismiss date picker
-   */
-  dismissDatePicker = () => {
-    this.setState({ datePickerVisible: false });
-  };
-
-  /**
    * Confirm date picker
    */
   confirmDatePicker = date => {
@@ -108,7 +82,6 @@ export default class Input extends Component<PropsType> {
         dateString = date.toLocaleDateString();
         break;
     }
-    this.dismissDatePicker();
     this.props.onChangeText(dateString);
   };
 
@@ -132,52 +105,19 @@ export default class Input extends Component<PropsType> {
   };
 
   /**
-   * Phone input
-   */
-  phoneInput = () => {
-    const theme = ThemedStyles.style;
-    return (
-      <PhoneValidationComponent
-        style={[theme.input, this.props.style]}
-        textStyle={theme.colorPrimaryText}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        TFA={this.props.TFA}
-        TFAConfirmed={this.props.TFAConfirmed}
-      />
-    );
-  };
-
-  /**
    * Date input
    */
   dateInput = () => {
-    const theme = ThemedStyles.style;
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 13);
     return (
-      <View>
-        <TouchableOpacity
-          {...this.props}
-          style={[theme.input, this.props.style]}
-          placeholderTextColor="#444"
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          underlineColorAndroid="transparent"
-          placeholder=""
-          onPress={this.showDatePicker}>
-          <Text style={theme.colorPrimaryText}>{this.props.value}</Text>
-        </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.datePickerVisible}
-          onConfirm={this.confirmDatePicker}
-          date={maxDate}
-          maximumDate={maxDate}
-          onCancel={this.dismissDatePicker}
-          mode="date"
-          display="spinner"
-        />
-      </View>
+      <DatePicker
+        hideTitle
+        spacing="S"
+        noHorizontal
+        date={this.props.value}
+        onConfirm={d => this.confirmDatePicker(d)}
+        maximumDate={this.props.maximumDate}
+        minimumDate={this.props.minimumDate}
+      />
     );
   };
 
@@ -190,8 +130,6 @@ export default class Input extends Component<PropsType> {
       switch (inputType) {
         case 'textInput':
           return this.textInput();
-        case 'phoneInput':
-          return this.phoneInput();
         case 'dateInput':
           return this.dateInput();
       }
@@ -205,36 +143,39 @@ export default class Input extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
-      <Text style={[styles.optional, theme.colorSecondaryText]}>
+      <MText style={[styles.optional, theme.colorSecondaryText]}>
         {'Optional'}
-      </Text>
+      </MText>
     ) : null;
 
     return (
-      <View style={styles.container}>
-        <View>
-          <View style={theme.rowStretch}>
-            <Text
-              style={[
-                styles.label,
-                theme.colorSecondaryText,
-                this.props.labelStyle,
-              ]}>
-              {this.props.placeholder}
-            </Text>
-            {this.props.info && <InfoPopup info={this.props.info} />}
-            {!!this.props.error && (
-              <View style={styles.errorContainer}>
-                <Text style={[theme.colorAlert, theme.fontL, theme.textRight]}>
-                  {this.props.error}
-                </Text>
-              </View>
-            )}
+      <ErrorBoundary>
+        <View style={styles.container}>
+          <View>
+            <View style={theme.rowStretch}>
+              <MText
+                style={[
+                  styles.label,
+                  theme.colorSecondaryText,
+                  this.props.labelStyle,
+                ]}>
+                {this.props.placeholder}
+              </MText>
+              {this.props.info && <InfoPopup info={this.props.info} />}
+              {!!this.props.error && (
+                <View style={styles.errorContainer}>
+                  <MText
+                    style={[theme.colorAlert, theme.fontL, theme.textRight]}>
+                    {this.props.error}
+                  </MText>
+                </View>
+              )}
+            </View>
+            {optional}
           </View>
-          {optional}
+          {this.renderInput()}
         </View>
-        {this.renderInput()}
-      </View>
+      </ErrorBoundary>
     );
   }
 }

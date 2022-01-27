@@ -1,10 +1,45 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { Linking, ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
+import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
+import { isNetworkError } from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
+import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
+import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { ScreenHeader, Screen } from '~/common/ui/screen';
+
+/**
+ * Retrieves the link & jwt for zendesk and navigate to it.
+ */
+const navigateToHelp = async () => {
+  try {
+    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+      returnUrl: 'true',
+    });
+    if (response && response.url) {
+      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+    }
+  } catch (err) {
+    console.log(err);
+    if (isNetworkError(err)) {
+      showMessage(i18n.t('errorMessage'));
+    } else {
+      showMessage(i18n.t('cantReachServer'));
+    }
+  }
+};
+
+const setDarkMode = () => {
+  if (ThemedStyles.theme) {
+    ThemedStyles.setLight();
+  } else {
+    ThemedStyles.setDark();
+  }
+};
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -22,15 +57,10 @@ export default function ({ navigation }) {
     [user],
   );
 
-  const itemsMapping = [
+  const firstSection = [
     {
       title: i18n.t('settings.account'),
       screen: 'Account',
-      params: {},
-    },
-    {
-      title: i18n.t('settings.networkOptions.1'),
-      screen: 'DataSaverScreen',
       params: {},
     },
     {
@@ -43,27 +73,10 @@ export default function ({ navigation }) {
       screen: 'Billing',
       params: {},
     },
-    {
-      title: i18n.t('settings.referrals'),
-      screen: 'Referrals',
-      params: {},
-    },
-    {
-      title: i18n.t('boost'),
-      screen: 'BoostConsole',
-    },
-    {
-      title: i18n.t('blockchain.exportLegacyWallet'),
-      screen: 'ExportLegacyWallet',
-    },
-    {
-      title: i18n.t('messenger.legacyMessenger'),
-      screen: 'Messenger',
-    },
   ];
 
   if (!user.plus) {
-    itemsMapping.push({
+    firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
       params: { onComplete: onComplete(false), pro: false },
@@ -71,77 +84,115 @@ export default function ({ navigation }) {
   }
 
   if (!user.pro) {
-    itemsMapping.push({
+    firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',
       params: { onComplete: onComplete(true), pro: true },
     });
   }
 
-  itemsMapping.push({
+  firstSection.push({
+    title: i18n.t('settings.chooseBrowser'),
+    screen: 'ChooseBrowser',
+  });
+
+  firstSection.push({
     title: i18n.t('settings.other'),
     screen: 'Other',
     params: {},
   });
 
-  itemsMapping.push({
+  firstSection.push({
     title: i18n.t('settings.resources'),
     screen: 'Resources',
     params: {},
   });
 
-  const items = itemsMapping.map(({ title, screen, params }) => ({
-    title,
-    onPress: () => navigation.push(screen, params),
-  }));
-
-  const setDarkMode = () => {
-    if (ThemedStyles.theme) {
-      ThemedStyles.setLight();
-    } else {
-      ThemedStyles.setDark();
-    }
-  };
-
-  const innerWrapper = [
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
+  const secondSection = [
+    {
+      title: i18n.t('boost'),
+      screen: 'BoostConsole',
+    },
+    {
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    },
+    {
+      title: i18n.t('help'),
+      onPress: navigateToHelp,
+    },
+    {
+      title: i18n.t('settings.logout'),
+      onPress: () => AuthService.logout(),
+      icon: {
+        name: 'login-variant',
+        type: 'material-community',
+      },
+    },
   ];
 
-  const themeChange = {
-    title: i18n.t(
-      ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-    ),
-    onPress: setDarkMode,
-  };
-
-  const help = {
-    title: i18n.t('help'),
-    onPress: () => Linking.openURL('https://www.minds.com/help'),
-    icon: {
-      name: 'help-circle-outline',
-      type: 'material-community',
-    },
-  };
+  const firstSectionItems = firstSection.map(
+    ({ title, screen, params, ...rest }) => ({
+      title,
+      onPress: () => navigation.push(screen, params),
+      ...rest,
+    }),
+  );
+  const secondSectionItems = secondSection.map(
+    ({ title, screen, params, ...rest }) => ({
+      title,
+      onPress: () => navigation.push(screen, params),
+      ...rest,
+    }),
+  );
 
   return (
-    <ScrollView
-      style={[theme.flexContainer, theme.bgPrimaryBackground]}
-      contentContainerStyle={theme.paddingBottom4x}>
-      <Text
-        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
-        {i18n.t('moreScreen.settings')}
-      </Text>
-      <View style={[innerWrapper, theme.bgPrimaryBackground]}>
-        {items.map(item => (
-          <MenuItem item={item} />
-        ))}
-      </View>
-      <View style={[innerWrapper, theme.marginTop7x]}>
-        <MenuItem item={themeChange} i={4} />
-        <MenuItem item={help} i={5} />
-      </View>
-    </ScrollView>
+    <Screen safe>
+      <ScrollView
+        style={containerStyle}
+        contentContainerStyle={theme.paddingBottom4x}>
+        <ScreenHeader title={i18n.t('moreScreen.settings')} />
+        <View style={[innerWrapper, theme.bgSecondaryBackground]}>
+          {firstSectionItems.map((item, index) => (
+            <MenuItem
+              item={item}
+              containerItemStyle={
+                index > 0
+                  ? menuItemStyle
+                  : ThemedStyles.style.bgSecondaryBackground
+              }
+            />
+          ))}
+        </View>
+        <View style={[innerWrapper, theme.marginTop7x]}>
+          {secondSectionItems.map((item, index) => (
+            <MenuItem
+              item={item}
+              containerItemStyle={
+                index > 0
+                  ? menuItemStyle
+                  : ThemedStyles.style.bgSecondaryBackground
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </Screen>
   );
 }
+
+const innerWrapper = ThemedStyles.combine(
+  'borderTopHair',
+  'borderBottomHair',
+  'bcolorPrimaryBorder',
+);
+const menuItemStyle = ThemedStyles.combine(
+  'borderTop0x',
+  'bgSecondaryBackground',
+);
+const containerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'bgPrimaryBackground',
+);

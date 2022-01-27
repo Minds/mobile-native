@@ -1,5 +1,4 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import * as Animatable from 'react-native-animatable';
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment-timezone';
 import MenuItem from '../../common/components/menus/MenuItem';
@@ -9,6 +8,8 @@ import { Tooltip } from 'react-native-elements';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
 import SettingsStore from '../../settings/SettingsStore';
+// import Pulse from '~/common/components/animations/Pulse';
+import { Spacer } from '~/common/ui';
 
 let shownOnce = false;
 /**
@@ -82,14 +83,10 @@ export default observer(function InitialOnboardingButton() {
   }
 
   return (
-    <Animatable.View
-      animation="pulse"
-      duration={700}
-      iterationDelay={100}
-      iterationCount={2}
-      useNativeDriver
-      delay={1500}>
+    // <Pulse repeat={2}>
+    <Spacer vertical="S">
       <MenuItem item={item} titleStyle={theme.bold} testID="startOnboarding" />
-    </Animatable.View>
+    </Spacer>
+    // </Pulse>
   );
 });

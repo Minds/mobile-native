@@ -1,13 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { Dimensions, ScrollView, Text, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Dimensions, ScrollView, View, Image } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
-import { Image } from 'react-native-animatable';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
@@ -23,6 +19,8 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
+import MText from '../../common/components/MText';
+import { B2, Column, H4, Row } from '~ui';
 
 const CENTERED = false;
 
@@ -124,14 +122,14 @@ const ChannelHeader = withErrorBoundary(
               <View style={styles.bottomBar}>
                 {props.store.feedStore.scheduledCount > 0 ? (
                   <View style={bottomBarInnerWrapper}>
-                    <Text
+                    <MText
                       style={styles.viewScheduled}
                       onPress={props.store.toggleScheduled}>
                       {i18n.t('channel.viewScheduled')}:{' '}
-                      <Text style={theme.colorPrimaryText}>
+                      <MText style={theme.colorPrimaryText}>
                         {props.store.feedStore.scheduledCount}
-                      </Text>
-                    </Text>
+                      </MText>
+                    </MText>
                   </View>
                 ) : (
                   <View />
@@ -203,31 +201,25 @@ const ChannelHeader = withErrorBoundary(
             </View>
           )}
 
-          <View style={CENTERED ? theme.centered : undefined}>
-            <View style={styles.nameWrapper}>
-              <Text style={styles.name} numberOfLines={1}>
+          <Column top="XL2" align={CENTERED ? 'centerBoth' : undefined}>
+            <Row align="centerStart">
+              <H4 numberOfLines={1}>
                 {channel ? channel.name : props.channelName}
-              </Text>
-              {channel && (
-                <ChannelBadges
-                  channel={channel}
-                  size={20}
-                  iconStyle={theme.colorLink}
-                />
-              )}
-            </View>
-            <View style={styles.usernameWrapper}>
-              <Text style={styles.username} numberOfLines={1}>
+              </H4>
+              {channel && <ChannelBadges channel={channel} left="XS" />}
+            </Row>
+            <Row top="XXXS">
+              <B2 color="secondary" numberOfLines={1}>
                 @{channel ? channel.username : props.channelName}
-              </Text>
+              </B2>
               {Boolean(channel!.subscriber) && (
-                <Text style={theme.colorSecondaryText}>
-                  {` · `}
+                <B2 color="secondary">
+                  {' · '}
                   {i18n.t('channel.subscriber')}
-                </Text>
+                </B2>
               )}
-            </View>
-          </View>
+            </Row>
+          </Column>
 
           {!props.hideButtons && (
             <ChannelButtons
@@ -253,23 +245,23 @@ const ChannelHeader = withErrorBoundary(
                     style={theme.colorPrimaryText}
                     size={15}
                   />
-                  <Text style={styles.city}>{channel.city}</Text>
+                  <MText style={styles.city}>{channel.city}</MText>
                 </View>
               )}
-              <Text style={styles.subscribersWrapper}>
-                <Text
+              <MText style={styles.subscribersWrapper}>
+                <MText
                   onPress={props.onOpenSubscribers}
                   style={theme.colorSecondaryText}>
-                  <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+                  <MText> {abbrev(channel.subscribers_count, 0)}</MText>
                   {' ' + i18n.t('subscribers') + '    '}
-                </Text>
-                <Text
+                </MText>
+                <MText
                   onPress={props.onOpenSubscriptions}
                   style={theme.colorSecondaryText}>
-                  <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
+                  <MText> {abbrev(channel.subscriptions_count, 0)}</MText>
                   {' ' + i18n.t('subscriptions')}
-                </Text>
-              </Text>
+                </MText>
+              </MText>
             </>
           )}
         </View>
@@ -289,6 +281,7 @@ const ChannelHeader = withErrorBoundary(
                   onLayout={onFadeViewLayout}
                   style={styles.fadeView}>
                   <FeedFilter
+                    dateRange
                     store={props.store}
                     containerStyles={styles.feedFilter}
                     textStyle={styles.feedFilterText}
@@ -308,10 +301,9 @@ const ChannelHeader = withErrorBoundary(
 const styles = ThemedStyles.create({
   channelDescription: ['paddingVertical'],
   buttonsMarginContainer: {
-    marginTop: 5,
     position: 'absolute',
-    right: 0,
-    top: 5,
+    right: 7,
+    top: 12,
   },
   bannerSmallButton: {
     position: 'absolute',
@@ -362,7 +354,6 @@ const styles = ThemedStyles.create({
       textAlign: 'center',
     },
   ],
-  usernameWrapper: ['rowStretch', 'paddingBottom1x'],
   name: {
     fontSize: 18,
     fontWeight: '600',

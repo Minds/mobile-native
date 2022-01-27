@@ -5,6 +5,8 @@ import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import OffsetList from '../common/components/OffsetList';
 import GroupModel from './GroupModel';
+import { ScreenHeader, Screen } from '~/common/ui';
+import i18n from '~/common/services/i18n.service';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -19,11 +21,14 @@ const GroupsListScreen = observer(() => {
   );
 
   return (
-    <OffsetList
-      renderItem={renderGroup}
-      fetchEndpoint={'api/v1/groups/member'}
-      endpointData={'groups'}
-    />
+    <Screen safe>
+      <ScreenHeader title={i18n.t('discovery.groups')} />
+      <OffsetList
+        renderItem={renderGroup}
+        fetchEndpoint={'api/v1/groups/member'}
+        endpointData={'groups'}
+      />
+    </Screen>
   );
 });
 

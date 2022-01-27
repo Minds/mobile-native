@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { showNotification } from '../../../AppMessages';
 import {
   getExportableWallets,
@@ -8,17 +8,18 @@ import {
   fetchPrivateKeyFromStorage,
   setWallets,
 } from '../../blockchain/ExportOldWallet';
-import Button from '../../common/components/Button';
+import MText from '../../common/components/MText';
 import Selector from '../../common/components/SelectorV2';
 import TextInput from '../../common/components/TextInput';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { Button } from '~ui';
 
 const getWalletLabel = (wallet: any) => (
   <View style={ThemedStyles.style.borderBottomHair}>
-    <Text style={[ThemedStyles.style.fontXL, ThemedStyles.style.centered]}>
+    <MText style={[ThemedStyles.style.fontXL, ThemedStyles.style.centered]}>
       {wallet.address.substr(0, 25)}...
-    </Text>
+    </MText>
   </View>
 );
 
@@ -59,13 +60,13 @@ export default observer(function ExportLegacyWallet() {
 
   return (
     <View style={[theme.flexContainer, theme.padding4x]}>
-      <Text style={[theme.fontXXL, theme.textCenter, theme.marginBottom6x]}>
+      <MText style={[theme.fontXXL, theme.textCenter, theme.marginBottom6x]}>
         {i18n.t('blockchain.exportLegacy1')}
-      </Text>
-      <Text style={[theme.fontL, theme.textCenter, theme.marginBottom6x]}>
+      </MText>
+      <MText style={[theme.fontL, theme.textCenter, theme.marginBottom6x]}>
         {i18n.t('blockchain.exportLegacy2')}
-      </Text>
-      <Text>Keychain Password</Text>
+      </MText>
+      <MText>Keychain Password</MText>
       <TextInput
         style={[theme.input, theme.marginBottom6x]}
         value={store.password}
@@ -80,7 +81,11 @@ export default observer(function ExportLegacyWallet() {
         keyExtractor={keyExtractor}
         backdropOpacity={0.95}
       />
-      <Button text={'Export'} onPress={() => selectorRef.current?.show()} />
+      <Button
+        disabled={!store.password}
+        onPress={() => selectorRef.current?.show()}>
+        Export
+      </Button>
     </View>
   );
 });

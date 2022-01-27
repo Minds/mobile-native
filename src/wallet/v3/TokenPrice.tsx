@@ -1,16 +1,13 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import number from '../../common/helpers/number';
 import useApiFetch from '../../common/hooks/useApiFetch';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles from '~styles/ThemedStyles';
+import { B3 } from '~ui';
 
 export default observer(function TokenPrice() {
-  const theme = ThemedStyles.style;
-  const textStyles = [theme.colorSecondaryText, theme.fontM, theme.fontMedium];
-  const textStylesBold = [theme.colorPrimaryText, theme.bold];
-
   const { result } = useApiFetch<{ minds: number }>(
     'api/v3/blockchain/token-prices',
     {
@@ -24,15 +21,7 @@ export default observer(function TokenPrice() {
 
   // .get('api/v3/blockchain/token-prices')
   return (
-    <Pressable
-      style={[
-        theme.bcolorPrimaryBorder,
-        theme.border,
-        theme.alignCenter,
-        theme.borderRadius10x,
-        theme.rowJustifyStart,
-        theme.paddingRight2x,
-      ]}>
+    <Pressable style={styles.pressableContainer}>
       <View style={styles.avatarContainer}>
         <FastImage
           style={styles.avatar}
@@ -43,27 +32,42 @@ export default observer(function TokenPrice() {
           }}
         />
       </View>
-      <Text style={textStyles}>
-        <Text style={textStylesBold}>1</Text> MINDS{' '}
-        <Text style={textStylesBold}>= {number(result.minds, 4, 4)}</Text> USD
-      </Text>
+      <B3 font="medium">
+        1{' '}
+        <B3 font="medium" color="secondary">
+          MINDS
+        </B3>{' '}
+        = {number(result.minds, 4, 4)}{' '}
+        <B3 font="medium" color="secondary">
+          USD
+        </B3>
+      </B3>
     </Pressable>
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  pressableContainer: [
+    'bcolorPrimaryBorder',
+    'border',
+    'alignCenter',
+    'borderRadius20x',
+    'rowJustifyStart',
+    'paddingHorizontal2x',
+    'paddingVertical',
+  ],
   avatarContainer: {
-    height: 25,
-    width: 25,
-    borderRadius: 12.5,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 6,
-  },
-  avatar: {
     height: 20,
     width: 20,
     borderRadius: 10,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 4,
+  },
+  avatar: {
+    height: 16,
+    width: 16,
+    borderRadius: 8,
   },
 });

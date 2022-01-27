@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../common/components/MText';
 import { useStores } from '../../../common/hooks/use-stores';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -25,12 +26,16 @@ const Card = ({ metrics, type }: PropsType) => {
       </View>
       <AmountInfo metrics={metrics} />
       {metrics.format !== 'points' && metrics.format !== 'usd' && (
-        <Text style={theme.colorSecondaryText}>
+        <MText style={theme.colorSecondaryText}>
           On-chain{' '}
-          <Text style={theme.colorPrimaryText}>{format(metrics.onchain)}</Text>{' '}
+          <MText style={theme.colorPrimaryText}>
+            {format(metrics.onchain)}
+          </MText>{' '}
           · Off-chain{' '}
-          <Text style={theme.colorPrimaryText}>{format(metrics.offchain)}</Text>{' '}
-        </Text>
+          <MText style={theme.colorPrimaryText}>
+            {format(metrics.offchain)}
+          </MText>{' '}
+        </MText>
       )}
     </View>
   );
@@ -40,9 +45,9 @@ const Title = ({ type }) => {
   const theme = ThemedStyles.style;
   return (
     <View style={theme.rowJustifyStart}>
-      <Text style={styles.title}>
+      <MText style={styles.title}>
         {i18n.t(`analytics.tokens.labels.${type}`)}
-      </Text>
+      </MText>
       <Tooltip
         skipAndroidStatusBar={true}
         withOverlay={false}
@@ -51,9 +56,9 @@ const Title = ({ type }) => {
         height={100}
         backgroundColor={ThemedStyles.getColor('Link')}
         popover={
-          <Text style={theme.colorWhite}>
+          <MText style={theme.colorWhite}>
             {i18n.t(`analytics.tokens.tooltips.${type}`)}
-          </Text>
+          </MText>
         }>
         <Icon
           name="information-variant"
@@ -88,18 +93,17 @@ const Comparative = ({
         size={20}
         color={comparative.increase ? '#59B814' : '#e03c20'}
       />
-      <Text style={styles.comparativeText}>
+      <MText style={styles.comparativeText}>
         {format(comparative.total_diff)}{' '}
-        <Text style={styles.comparativeText}>
+        <MText style={styles.comparativeText}>
           ({Math.round((prcnt + Number.EPSILON) * 100) / 100}%)
-        </Text>
-      </Text>
+        </MText>
+      </MText>
     </View>
   );
 };
 
 const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
-  const theme = ThemedStyles.style;
   const { wallet } = useStores();
   let body;
   switch (metrics.format) {
@@ -107,7 +111,6 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
     case 'usd':
       body = (
         <MindsTokens
-          textStyles={[styles.amountText, theme.colorPrimaryText]}
           secondaryTextStyle={styles.amountTextSecondary}
           mindsPrice={wallet.prices.minds}
           currencyType={metrics.format === 'token' ? 'tokens' : 'usd'}
@@ -119,12 +122,15 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
     case 'number':
     case 'points':
       body = (
-        <Text style={styles.amountText}>
+        <MText style={styles.amountText}>
           {format(metrics.total)}
           {metrics.format === 'points' && (
-            <Text style={styles.amountTextSecondary}> {i18n.t('points')}</Text>
+            <MText style={styles.amountTextSecondary}>
+              {' '}
+              {i18n.t('points')}
+            </MText>
           )}
-        </Text>
+        </MText>
       );
       break;
   }

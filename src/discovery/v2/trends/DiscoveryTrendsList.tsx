@@ -1,15 +1,19 @@
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
+
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
 import FeedList from '../../../common/components/FeedList';
-import { useNavigation } from '@react-navigation/native';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DiscoveryTrendPlaceHolder from './DiscoveryTrendPlaceHolder';
+import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   plus?: boolean;
@@ -25,6 +29,7 @@ const ItemPartial = (item, index) => {
  */
 export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   let listRef = useRef<FeedList<any>>(null);
+  let tagRef = useRef<BottomSheetModal>(null);
 
   const navigation = useNavigation();
 
@@ -53,10 +58,11 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
       <CenteredLoading />
     ) : (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyMessage}>{i18n.t('discovery.addTags')}</Text>
+        <MText style={styles.emptyMessage}>{i18n.t('discovery.addTags')}</MText>
+        <DiscoveryTagsManager ref={tagRef} />
         <Button
           text={i18n.t('discovery.selectTags')}
-          onPress={() => store.setShowManageTags(true)}
+          onPress={() => tagRef.current?.present()}
         />
       </View>
     );
@@ -67,12 +73,11 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
     store.allFeed.refresh();
   };
 
-  const header =
-    store.trends.length === 0 ? (
-      <DiscoveryTrendPlaceHolder />
-    ) : (
-      <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
-    );
+  const header = store.trends.length ? (
+    <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
+  ) : store.loading ? (
+    <DiscoveryTrendPlaceHolder />
+  ) : null;
 
   /**
    * Render

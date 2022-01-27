@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import * as entities from 'entities';
 // import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import ReplyAction from '../ReplyAction';
@@ -20,6 +20,8 @@ import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
 import Translate from '../../common/components/translate/Translate';
+import MText from '../../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
 
 type PropsType = {
   comment: CommentModel;
@@ -38,11 +40,7 @@ export default observer(function Comment(props: PropsType) {
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
 
-  const canReply =
-    props.comment.can_reply &&
-    props.comment.parent_guid_l2 === '0' &&
-    !props.hideReply;
-
+  const canReply = props.comment.parent_guid_l2 && !props.hideReply;
   const backgroundColor = ThemedStyles.getColor(
     props.isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
@@ -53,7 +51,7 @@ export default observer(function Comment(props: PropsType) {
     handlePress => {
       return (
         <TouchableOpacity onPress={handlePress}>
-          <Text
+          <MText
             style={[
               theme.fontL,
               theme.bold,
@@ -61,7 +59,7 @@ export default observer(function Comment(props: PropsType) {
               theme.textCenter,
             ]}>
             {i18n.t('showLess')}
-          </Text>
+          </MText>
         </TouchableOpacity>
       );
     },
@@ -76,7 +74,7 @@ export default observer(function Comment(props: PropsType) {
             colors={[startColor, endColor]}
             style={styles.linear}
           />
-          <Text
+          <MText
             style={[
               theme.colorPrimaryText,
               theme.fontL,
@@ -85,7 +83,7 @@ export default observer(function Comment(props: PropsType) {
               theme.marginTop2x,
             ]}>
             {i18n.t('readMore')}
-          </Text>
+          </MText>
         </TouchableOpacity>
       );
     },
@@ -107,6 +105,15 @@ export default observer(function Comment(props: PropsType) {
   }, [translateRef]);
 
   const reply = React.useCallback(() => {
+    // if we can't reply, open input and fill in owner username
+    if (!props.comment.can_reply) {
+      return props.store.setShowInput(
+        true,
+        undefined,
+        `@${props.comment.ownerObj.username} `,
+      );
+    }
+
     navigation.push('ReplyComment', {
       comment: props.comment,
       entity: props.store.entity,
@@ -136,7 +143,7 @@ export default observer(function Comment(props: PropsType) {
               <>
                 <ReadMore
                   numberOfLines={6}
-                  navigation={navigation}
+                  navigation={NavigationService}
                   text={entities.decodeHTML(props.comment.description)}
                   renderTruncatedFooter={renderTruncatedFooter}
                   renderRevealedFooter={renderRevealedFooter}
@@ -157,39 +164,41 @@ export default observer(function Comment(props: PropsType) {
             )}
             {mature && (
               <View style={theme.marginTop3x}>
-                <Text style={[theme.fontL, theme.colorTertiaryText]}>
+                <MText style={[theme.fontL, theme.colorTertiaryText]}>
                   {i18n.t('activity.explicitComment')}
-                </Text>
+                </MText>
               </View>
             )}
           </View>
           <View style={styles.actionsContainer}>
             <ThumbUpAction
               entity={props.comment}
-              size={16}
+              size="tiny"
               touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
               entity={props.comment}
-              size={16}
+              size="tiny"
               touchableComponent={TouchableOpacity}
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
+            {!props.isHeader && (
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            )}
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
-              <Text style={[styles.viewReply, theme.colorLink]}>
+              <MText style={[styles.viewReply, theme.colorLink]}>
                 {i18n.t('viewRepliesComments', {
                   count: props.comment.replies_count,
                 })}
-              </Text>
+              </MText>
             </TouchableOpacity>
           )}
         </>
@@ -199,10 +208,10 @@ export default observer(function Comment(props: PropsType) {
           <TouchableOpacity
             onPress={props.comment.toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
-            <Text style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
+            <MText style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
-            </Text>
-            <Text
+            </MText>
+            <MText
               style={[
                 theme.bold,
                 theme.fontL,
@@ -210,16 +219,18 @@ export default observer(function Comment(props: PropsType) {
                 theme.paddingVertical2x,
               ]}>
               {i18n.t('confirm18')}
-            </Text>
+            </MText>
           </TouchableOpacity>
-          <View style={[theme.rowJustifyEnd, theme.padding3x]}>
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
-          </View>
+          {!props.isHeader && (
+            <View style={[theme.rowJustifyEnd, theme.padding3x]}>
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            </View>
+          )}
         </View>
       )}
     </View>

@@ -6,52 +6,131 @@ import { observer, useLocalStore } from 'mobx-react';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from '../reset-password/ResetPasswordModal';
-import { LoginScreenRouteProp } from './LoginScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
 import createLoginStore from './createLoginStore';
-import AnimatableText from './AnimatableText';
-import LoginInputs from './LoginInputs';
-import LoginButtons from './LoginButtons';
+import FastImage from 'react-native-fast-image';
+import UserModel from '../../channel/UserModel';
+import sessionService from '../../common/services/session.service';
+import InputContainer from '../../common/components/InputContainer';
+import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
+import { IS_IOS } from '../../config/Config';
+import { Button, B3, Row } from '~ui';
 
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
-  route?: LoginScreenRouteProp;
   multiUser?: boolean;
   relogin?: boolean;
   sessionIndex?: number;
 };
-
+/**
+ * Login Form component
+ */
 export default observer(function LoginForm(props: PropsType) {
   const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const localStore = useLocalStore(createLoginStore, { props, resetRef });
 
-  const username = props.route?.params?.username;
-  const code = props.route?.params?.code;
-  React.useEffect(() => {
-    const navToInputPassword = username && code && !!resetRef.current;
-    if (navToInputPassword) {
-      resetRef.current!.show(navToInputPassword, username, code);
-    }
-  }, [code, username]);
-
   const theme = ThemedStyles.style;
+
+  const user =
+    props.sessionIndex !== undefined
+      ? UserModel.checkOrCreate(
+          sessionService.tokensData[props.sessionIndex].user,
+        )
+      : sessionService.getUser();
+
+  const usernameInput = props.relogin ? (
+    <View style={styles.container}>
+      <FastImage
+        source={user.getAvatarSource('medium')}
+        style={styles.avatar}
+      />
+      <View style={styles.nameContainer}>
+        <MText style={styles.name}>{user.name}</MText>
+        <MText style={styles.username} testID={`username${user.username}`}>
+          @{user.username}
+        </MText>
+      </View>
+    </View>
+  ) : (
+    <InputContainer
+      placeholder={i18n.t('auth.username')}
+      onChangeText={localStore.setUsername}
+      autoComplete="username"
+      textContentType="username"
+      value={localStore.username}
+      testID="usernameInput"
+      noBottomBorder
+      autoFocus={true}
+    />
+  );
 
   return (
     <View style={theme.flexContainer}>
-      <AnimatableText msg={localStore.msg} />
-      <LoginInputs
-        localStore={localStore}
-        multiUser={props.multiUser}
-        relogin={props.relogin}
-        sessionIndex={props.sessionIndex}
-      />
-      <LoginButtons
-        localStore={localStore}
-        multiUser={props.multiUser}
-        onRegisterPress={props.onRegisterPress}
-        relogin={props.relogin}
-      />
+      {usernameInput}
+      <View style={theme.marginBottom4x}>
+        <InputContainer
+          placeholder={i18n.t('auth.password')}
+          secureTextEntry={localStore.hidePassword}
+          autoComplete="password"
+          textContentType="password"
+          onChangeText={localStore.setPassword}
+          value={localStore.password}
+          testID="userPasswordInput"
+          autoFocus={props.relogin}
+        />
+        <Icon
+          name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
+          size={25}
+          onPress={localStore.toggleHidePassword}
+          style={styles.icon}
+        />
+      </View>
+      <Button
+        mode="outline"
+        type="action"
+        testID="loginButton"
+        spinner
+        horizontal="XL"
+        top="L"
+        onPress={localStore.onLoginPress}>
+        {i18n.t('auth.login')}
+      </Button>
+      <Row top="XL" align="centerBoth">
+        <B3 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B3>
+      </Row>
       <ResetPasswordModal ref={resetRef} />
     </View>
   );
+});
+
+const styles = ThemedStyles.create({
+  name: ['bold', 'fontXL'],
+  username: ['fontMedium', 'fontM'],
+  forgotText: ['colorPrimaryText', 'fontL', 'textCenter'],
+  container: [
+    'rowJustifyCenter',
+    'padding4x',
+    'bcolorPrimaryBorder',
+    'borderTopHair',
+    'bgPrimaryBackground',
+  ],
+  nameContainer: ['flexContainerCenter', 'paddingLeft', 'justifyCenter'],
+  avatar: [
+    {
+      height: 40,
+      width: 40,
+      borderRadius: 20,
+    },
+    'bgTertiaryBackground',
+  ],
+  icon: [
+    {
+      position: 'absolute',
+      right: 12,
+      top: IS_IOS ? 30 : 33,
+    },
+    'colorSecondaryText',
+  ],
 });

@@ -4,16 +4,12 @@ import {
   PlaceholderLine,
   Fade,
 } from 'rn-placeholder';
-import UserModel from '../../channel/UserModel';
-import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useDimensions } from '@react-native-community/hooks';
 import React from 'react';
 
 const ChannelListItemPlaceholder = () => {
   const theme = ThemedStyles.style;
   const color = ThemedStyles.getColor('TertiaryBackground');
-  const { width } = useDimensions().screen;
 
   const animation = props => (
     <Fade {...props} style={theme.bgPrimaryBackground} />

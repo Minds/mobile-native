@@ -5,9 +5,11 @@ import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import { useNavigation } from '@react-navigation/native';
 import RegisterForm from '../register/RegisterForm';
 
-type PropsType = {};
+type PropsType = {
+  route: any;
+};
 
-const RegisterScreen = ({}: PropsType) => {
+const RegisterScreen = ({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   return (
@@ -15,9 +17,8 @@ const RegisterScreen = ({}: PropsType) => {
       title={i18n.t('auth.createChannel')}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackground_Dark}
-      titleStyle={theme.colorPrimaryText_Dark}
-      backIconStyle={theme.colorPrimaryText_Dark}>
+      contentContainer={theme.bgPrimaryBackground}
+      titleStyle={theme.colorPrimaryText}>
       <RegisterForm />
     </ModalContainer>
   );

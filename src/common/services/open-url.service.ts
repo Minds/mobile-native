@@ -4,17 +4,43 @@ import { Alert, Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { storages } from './storage/storages.service';
+import NavigationService from '~/navigation/NavigationService';
+
+const STORAGE_NAMESPACE = 'openLinksBrowser';
+
+type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default browser
 
 /**
  * Open url service
  */
 class OpenURLService {
+  preferredBrowser: BrowserType = undefined;
+
+  /**
+   * Load settings from storage
+   */
+  init() {
+    this.preferredBrowser = storages.app.getInt(STORAGE_NAMESPACE) ?? undefined;
+  }
+
+  /**
+   * Sets the preferred browser (default or in-app)
+   */
+  setPreferredBrowser(value: BrowserType) {
+    this.preferredBrowser = value;
+    storages.app.setInt(STORAGE_NAMESPACE, value);
+  }
+
   shouldOpenInIABrowser(url: string): boolean {
+    if (this.preferredBrowser === 1) {
+      return false;
+    }
     /**
      * TODO: do not open links such as minds links and youtube
      *       links in the IABrowser. Logic is TBD
      **/
-    const excludedURLs = ['youtube.com'].map(url => new URL(url));
+    const excludedURLs = ['youtube.com', 'youtu.be'].map(url => new URL(url));
     return !excludedURLs.find(p => url.includes(String(p)));
   }
 
@@ -66,13 +92,26 @@ class OpenURLService {
    * Open url
    * @param {string} url
    */
-  open(url) {
+  open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
     if (url.startsWith(MINDS_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;
     }
 
+    if (
+      this.preferredBrowser === undefined &&
+      this.shouldOpenInIABrowser(url)
+    ) {
+      NavigationService.push('ChooseBrowserModal', {
+        onSelected: () => this._open(url),
+      });
+    } else {
+      this._open(url);
+    }
+  }
+
+  private _open(url) {
     return this.shouldOpenInIABrowser(url)
       ? this.openLinkInInAppBrowser(url)
       : Linking.openURL(url);

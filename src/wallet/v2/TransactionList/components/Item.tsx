@@ -4,39 +4,34 @@ import {
   ExtendedEntity,
   currencyType,
 } from '../TransactionsListTypes';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import { View, Text } from 'react-native';
 import { AvatarIcon, DeltaIcon } from './Icons';
-import { Avatar } from 'react-native-elements';
 import i18n from '../../../../common/services/i18n.service';
 import capitalize from '../../../../common/helpers/capitalize';
+import { B1, B2, B3, Row, Column, Avatar } from '~ui';
 
 const Item = ({ entity, navigation, currency }: ItemPropsType) => {
-  const theme = ThemedStyles.style;
   const { typeString, avatar } = getTypeStringAndIcon(
     entity,
     currency,
     navigation,
   );
 
-  const secondaryText = [theme.colorSecondaryText, theme.fontS];
-
   return (
-    <View style={[theme.rowJustifySpaceEvenly, theme.marginBottom2x]}>
+    <Row bottom="M">
       {avatar}
-      <View style={theme.flexColumn}>
+      <Column flex>
         {typeString}
-        <Text style={[...secondaryText, theme.marginTop]}>
+        <B3 color="secondary" top="XS">
           {i18n.date(entity.timestamp, 'time')}
-        </Text>
-      </View>
-      <View style={theme.flexColumn}>
-        <View style={[theme.rowJustifyEnd, theme.alignCenter]}>
+        </B3>
+      </Column>
+      <Column left="S">
+        <Row align="centerStart">
           <DeltaIcon delta={entity.delta} />
-          <Text style={theme.colorPrimaryText}>{entity.amount}</Text>
-        </View>
-      </View>
-    </View>
+          <B1 font="bold">{entity.amount}</B1>
+        </Row>
+      </Column>
+    </Row>
   );
 };
 
@@ -61,56 +56,39 @@ const getTypeStringAndIcon = (
   currency: currencyType,
   navigation: any,
 ) => {
-  const theme = ThemedStyles.style;
-
-  const textColor = theme.colorPrimaryText;
-
   let typeString: JSX.Element, avatar: JSX.Element;
   switch (entity.superType) {
     case 'reward':
       avatar = <AvatarIcon name="star-outline" />;
       typeString = (
-        <Text style={textColor}>
+        <B2>
           {entity.reward_type
             ? `${capitalize(entity.reward_type)} Reward`
             : i18n.t('wallet.transactions.mindsReward')}
-        </Text>
+        </B2>
       );
       break;
     case 'boost':
       avatar = <AvatarIcon name="trending-up" />;
       typeString = (
-        <Text style={textColor}>{`${getTypeLabel(
-          entity.contract,
-          currency,
-        )}ed Content`}</Text>
+        <B2>{`${getTypeLabel(entity.contract, currency)}ed Content`}</B2>
       );
       break;
     case 'purchase':
       avatar = <AvatarIcon name="cart" />;
-      typeString = <Text style={textColor}>{i18n.t('purchase')}</Text>;
+      typeString = <B2>{i18n.t('purchase')}</B2>;
       break;
     case 'withdraw':
       avatar = <AvatarIcon name="arrow-right" />;
-      typeString = (
-        <Text style={textColor}>{getTypeLabel(entity.contract, currency)}</Text>
-      );
+      typeString = <B2>{getTypeLabel(entity.contract, currency)}</B2>;
       break;
     case 'payout':
       avatar = <AvatarIcon name="arrow-right" />;
-      typeString = (
-        <Text style={textColor}>
-          {i18n.t('wallet.transactions.payoutsFilter')}
-        </Text>
-      );
+      typeString = <B2>{i18n.t('wallet.transactions.payoutsFilter')}</B2>;
       break;
     case 'pro_earning':
       avatar = <AvatarIcon name="arrow-right" />;
-      typeString = (
-        <Text style={textColor}>
-          {i18n.t('wallet.transactions.payoutsFilter')}
-        </Text>
-      );
+      typeString = <B2>{i18n.t('wallet.transactions.payoutsFilter')}</B2>;
       break;
     case 'wire':
       const otherUser = entity.otherUser || {
@@ -118,37 +96,25 @@ const getTypeStringAndIcon = (
         username: '',
         isSender: false,
       };
-      avatar = (
-        <Avatar
-          size={36}
-          rounded={true}
-          source={otherUser.avatar}
-          containerStyle={[theme.padding, theme.marginRight3x]}
-        />
-      );
+      avatar = <Avatar size="tiny" source={otherUser.avatar} right="M" />;
       typeString = (
-        <Text>
-          <Text style={textColor}>{`${getTypeLabel(
-            entity.contract,
-            currency,
-          )} ${otherUser.isSender ? 'from ' : 'to '}`}</Text>
-          <Text
-            style={theme.colorLink}
+        <Row flexWrap>
+          <B2>{`${getTypeLabel(entity.contract, currency)} ${
+            otherUser.isSender ? 'from ' : 'to '
+          }`}</B2>
+          <B2
+            color="link"
             onPress={() =>
               navigation.push('Channel', { username: otherUser.username })
             }>
             {'@' + otherUser.username}
-          </Text>
-        </Text>
+          </B2>
+        </Row>
       );
       break;
     default:
       avatar = <AvatarIcon name="arrow-right" />;
-      typeString = (
-        <Text style={textColor}>
-          {i18n.t('wallet.transactions.transaction')}
-        </Text>
-      );
+      typeString = <B2>{i18n.t('wallet.transactions.transaction')}</B2>;
       break;
   }
   return { typeString, avatar };

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Text, View, Alert, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
@@ -13,6 +13,7 @@ import { MINDS_ASSETS_CDN_URI, MINDS_CDN_URI } from '../../config/Config';
 import i18n from '../../common/services/i18n.service';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   entity: ActivityModel;
@@ -41,7 +42,7 @@ export default class Lock extends PureComponent<PropsType> {
       return (
         <View style={[theme.padding2x, theme.rowJustifyCenter, theme.centered]}>
           <View style={styles.textContainer}>
-            <Text style={theme.fontS}>{this.getOwnerIntro()}</Text>
+            <MText style={theme.fontS}>{this.getOwnerIntro()}</MText>
           </View>
           <View style={[theme.rowJustifyCenter, theme.centered]}>
             <Icon
@@ -52,9 +53,9 @@ export default class Lock extends PureComponent<PropsType> {
               iconStyle={iconStyle}
               color="#4caf50"
             />
-            <Text style={[theme.fontM, ThemedStyles.style.colorPrimaryText]}>
+            <MText style={[theme.fontM, ThemedStyles.style.colorPrimaryText]}>
               {i18n.t('locked')}
-            </Text>
+            </MText>
           </View>
         </View>
       );
@@ -74,7 +75,7 @@ export default class Lock extends PureComponent<PropsType> {
             theme.centered,
           ]}>
           <View style={styles.textContainer}>
-            <Text>{intro}</Text>
+            <MText>{intro}</MText>
           </View>
           <Button
             loading={this.state.unlocking}
@@ -88,16 +89,16 @@ export default class Lock extends PureComponent<PropsType> {
         <FastImage source={imageUri} style={imageStyle} />
         <View style={[theme.centered, theme.padding2x, styles.mask]}>
           <Icon name="ios-flash" type="ionicon" size={55} color="white" />
-          <Text
+          <MText
             style={[theme.colorWhite, theme.fontXXXL, theme.paddingBottom2x]}>
             {i18n.t('wire.amountMonth', { amount: this.getFormatedAmount() })}
-          </Text>
-          <Text style={[theme.colorWhite, theme.fontS, theme.textCenter]}>
+          </MText>
+          <MText style={[theme.colorWhite, theme.fontS, theme.textCenter]}>
             {i18n.t('wire.amountMonthDescription', {
               amount: this.getFormatedAmount().toUpperCase(),
               name: entity.ownerObj.name.toUpperCase(),
             })}
-          </Text>
+          </MText>
         </View>
       </View>
     );

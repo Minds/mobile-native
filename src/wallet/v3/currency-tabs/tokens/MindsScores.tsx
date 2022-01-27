@@ -1,12 +1,10 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView } from 'react-native';
 import AccordionSet, {
   AccordionDataType,
   RenderFunction,
 } from '../../../../common/components/AccordionSet';
 import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import AccordionHeader from '../AccordionHeader';
 import MindsTokens, { format } from '../MindsTokens';
 import AccordionContent, { AccordionContentData } from '../AccordionContent';
@@ -15,6 +13,7 @@ import HoldingSummary from './HoldingSummary';
 import LiquiditySummary from './LiquiditySummary';
 import { PricesType } from '../../../v2/createWalletStore';
 import { Reward, TokensTabStore } from './createTokensTabStore';
+import { Spacer } from '~ui';
 
 type PropsType = {
   store: TokensTabStore;
@@ -98,12 +97,12 @@ const ContentComponent: RenderFunction = (content: AccordionDataType) =>
   content.children;
 
 const MindsScores = observer(({ store, prices }: PropsType) => {
-  const theme = ThemedStyles.style;
   const scores = [
     store.rewards.engagement,
     store.rewards.holding,
     store.rewards.liquidity,
   ];
+
   const accordionData: Array<AccordionDataType> = scores.map(reward => ({
     title: i18n.t(`wallet.${reward.reward_type}`),
     subtitle: (
@@ -129,13 +128,13 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
   }));
 
   return (
-    <ScrollView contentContainerStyle={theme.paddingTop4x}>
+    <Spacer vertical="S">
       <AccordionSet
         data={accordionData}
         headerComponent={renderHeader}
         contentComponent={ContentComponent}
       />
-    </ScrollView>
+    </Spacer>
   );
 });
 

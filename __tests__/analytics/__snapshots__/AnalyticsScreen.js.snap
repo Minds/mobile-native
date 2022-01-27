@@ -1,33 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalyticsScreen component should render correctly 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
+<Screen
+  safe={true}
 >
-  <Text
-    style={
-      Array [
-        Object {
-          "padding": 20,
-        },
-        Object {
-          "fontFamily": "Roboto",
-          "fontSize": 26,
-          "fontWeight": "500",
-          "lineHeight": 44,
-        },
-        Object {
-          "paddingBottom": 10,
-        },
-      ]
-    }
-  >
-    Analytics
-  </Text>
+  <ScreenHeader
+    title="Analytics"
+  />
   <TopbarTabbar
     current="token"
     onChange={[Function]}
@@ -68,5 +47,5 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
   >
     <Memo(wrappedComponent) />
   </View>
-</View>
+</Screen>
 `;

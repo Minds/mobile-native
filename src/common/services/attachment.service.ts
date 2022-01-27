@@ -4,6 +4,8 @@ import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
+import imageManipulatorService from './image-manipulator.service';
+import { IMAGE_MAX_SIZE } from './../../config/Config';
 
 /**
  * Attachment service
@@ -39,6 +41,61 @@ class AttachmentService {
     }
 
     return promise;
+  }
+
+  /**
+   * Processes the media
+   * @param {object} media
+   * @param {string} guid
+   * @return {object} media
+   */
+  async processMedia(media) {
+    // scale down the image
+    switch (media.type) {
+      // TODO better way to do this
+      case 'image/jpeg':
+      case 'image/png':
+      case 'image/gif':
+      case 'image/webp':
+        const maxLength = Math.max(media.width, media.height);
+
+        //resize image if necessary
+        if (maxLength > IMAGE_MAX_SIZE) {
+          let targetWidth, targetHeight;
+          if (maxLength === media.width) {
+            targetWidth = IMAGE_MAX_SIZE;
+            targetHeight = Math.round(
+              (IMAGE_MAX_SIZE * media.height) / media.width,
+            );
+          } else {
+            targetHeight = IMAGE_MAX_SIZE;
+            targetWidth = Math.round(
+              (IMAGE_MAX_SIZE * media.width) / media.height,
+            );
+          }
+
+          const processedImage = await imageManipulatorService.resize(
+            media.uri,
+            {
+              width: targetWidth,
+              height: targetHeight,
+            },
+          );
+
+          // workaround image manipulation returning wrong resolution
+          processedImage.height = targetHeight;
+
+          media = {
+            ...media,
+            ...processedImage,
+          };
+        }
+        break;
+      default:
+        break;
+    }
+
+    return media;
   }
 
   /**
@@ -90,7 +147,7 @@ class AttachmentService {
     return api.get(`api/v1/media/transcoding/${guid}`);
   }
 
-  getVideoSources(guid) {
+  getVideo(guid) {
     return api.get(`api/v2/media/video/${guid}`);
   }
 

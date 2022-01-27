@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,6 +14,7 @@ import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../wire/WireTypes';
 import TextInput from '../../common/components/TextInput';
+import MText from '../../common/components/MText';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -103,7 +104,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
   return (
     <Wrapper store={store} hideDone={!localStore.show} onPressRight={save}>
       <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-        <Text
+        <MText
           style={[
             theme.paddingVertical6x,
             theme.colorSecondaryText,
@@ -111,13 +112,13 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
             theme.paddingHorizontal3x,
           ]}>
           {i18n.t('capture.paywallDescription')}
-        </Text>
+        </MText>
         <TouchableOpacity
           style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
-          <Text style={[theme.flexContainer, theme.fontL]}>
+          <MText style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.noPaywall')}
-          </Text>
+          </MText>
           {!localStore.show && (
             <MIcon name="check" size={23} style={theme.colorPrimaryText} />
           )}
@@ -125,18 +126,18 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
         <TouchableOpacity
           style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
-          <Text style={[theme.flexContainer, theme.fontL]}>
+          <MText style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.paywall')}
-          </Text>
+          </MText>
           {localStore.show && (
             <MIcon name="check" size={23} style={theme.colorPrimaryText} />
           )}
         </TouchableOpacity>
         {localStore.show && (
           <>
-            <Text style={labelStyle}>
+            <MText style={labelStyle}>
               {i18n.t('monetize.customMonetize.usd')}
-            </Text>
+            </MText>
             <TextInput
               ref={inputRef}
               style={[
@@ -158,9 +159,9 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
 
             <View style={theme.rowJustifySpaceBetween}>
               <View style={theme.flexColumnCentered}>
-                <Text style={labelStyle}>
+                <MText style={labelStyle}>
                   {i18n.t('monetize.customMonetize.hasTokens')}
-                </Text>
+                </MText>
                 <Switch
                   value={localStore.has_usd}
                   onSyncPress={localStore.setHasUsd}

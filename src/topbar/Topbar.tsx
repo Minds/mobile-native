@@ -1,38 +1,36 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
-
+import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
+import { IconCircled, Spacer, H1 } from '~ui';
 import { observer } from 'mobx-react';
-import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
-import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
+import PressableScale from '~/common/components/PressableScale';
+import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
+import ChatIcon from '~/chat/ChatIcon';
 
 type PropsType = {
   navigation: any;
+  title?: string;
+  noInsets?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
+  const container = React.useRef({
+    paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
+    height: Platform.select({ ios: props.noInsets ? 70 : 110, android: 70 }),
+    display: 'flex',
+    flexDirection: 'row',
+  }).current as ViewStyle;
   // dereference to react to observable changes
-  const balance = wallet.balance;
-  const prices = wallet.prices;
-  const usdBalance = balance * parseFloat(prices.minds);
 
+  const chatModal = React.useRef<ChatModalHandle>(null);
   useEffect(() => {
     if (user) {
       wallet.loadPrices();
@@ -40,76 +38,36 @@ export const Topbar = observer((props: PropsType) => {
     }
   });
 
-  const avatar = React.useMemo(
-    () => (user ? user.getAvatarSource('medium') : { uri: '' }),
-    [user],
-  );
-
-  const cleanTop = React.useRef({
-    paddingTop: insets && insets.top ? insets.top - 5 : 0,
-  }).current;
-
-  const openMenu = React.useCallback(() => {
-    props.navigation.openDrawer();
-  }, [props.navigation]);
-
-  const openWallet = React.useCallback(() => {
-    props.navigation.navigate('Tabs', {
-      screen: 'CaptureTab',
-      params: { screen: 'Wallet' },
-    });
-  }, [props.navigation]);
-
-  const theme = ThemedStyles.style;
   return (
     <View style={containerStyle}>
-      <View
-        style={[
-          styles.container,
-          theme.borderBottomHair,
-          theme.bcolorPrimaryBorder,
-          cleanTop,
-        ]}>
+      <TabChatPreModal ref={chatModal} />
+      <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            <TouchableOpacity onPress={openMenu} testID="topbarAvatar">
-              <FastImage
-                source={avatar}
-                style={avatarStyle}
+            {!!props.title ? (
+              <H1>{props.title}</H1>
+            ) : (
+              <Image
                 resizeMode="contain"
+                source={
+                  ThemedStyles.theme
+                    ? require('../assets/logos/logo-white.png')
+                    : require('../assets/logos/logo.png')
+                }
+                style={styles.logo}
               />
-              <View style={styles.menuIconContainer}>
-                <Icon
-                  name="md-menu"
-                  style={
-                    ThemedStyles.theme
-                      ? theme.colorPrimaryBackground
-                      : theme.colorSecondaryText
-                  }
-                  size={14}
-                />
-              </View>
-            </TouchableOpacity>
-            <SearchComponent navigation={props.navigation} />
+            )}
           </View>
           <View style={styles.topbarRight}>
-            <Text
-              onPress={openWallet}
-              style={[
-                theme.fontL,
-                theme.colorSecondaryText,
-                theme.paddingRight2x,
-                theme.paddingVertical2x,
-              ]}>
-              {usdBalance > 0 && '$' + intword(usdBalance)}
-            </Text>
-
-            <IconFA
-              name="coins"
-              size={20}
-              style={theme.colorIcon}
-              onPress={openWallet}
-            />
+            <Spacer right="L">
+              <PressableScale onPress={() => chatModal.current?.showModal()}>
+                <ChatIcon />
+              </PressableScale>
+            </Spacer>
+            <PressableScale
+              onPress={() => props.navigation.navigate('SearchScreen')}>
+              <IconCircled size="small" name="search" color="PrimaryText" />
+            </PressableScale>
           </View>
         </View>
       </View>
@@ -127,17 +85,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     // paddingBottom: 8,
   },
-  menuIconContainer: {
-    backgroundColor: '#d8d8d8',
-    paddingTop: 1,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: -3,
-    right: -3,
+  logo: {
+    marginLeft: 4,
+    marginTop: -12,
+    width: 118,
+    height: 40,
   },
   shadow: {
     zIndex: 999,
@@ -150,13 +102,6 @@ export const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 3,
   },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    borderWidth: 2.5,
-    alignSelf: 'flex-start',
-  },
   topbar: {
     flex: 1,
     // alignItems: 'center',
@@ -164,7 +109,7 @@ export const styles = StyleSheet.create({
   },
   topbarLeft: {
     flexGrow: 1,
-    marginLeft: 20,
+    marginLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -181,7 +126,6 @@ export const styles = StyleSheet.create({
   },
 });
 
-const avatarStyle = ThemedStyles.combine(styles.avatar, 'bcolorIcon');
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,

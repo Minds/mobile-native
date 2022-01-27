@@ -3,9 +3,9 @@ import {
   ImageBackground,
   ImageSourcePropType,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
+import MText from './MText';
 
 const bannerAspectRatio = 3.5;
 
@@ -18,7 +18,7 @@ const ModalHeader = ({ title, source }: PropsType) => {
   return (
     <ImageBackground style={styles.banner} source={source} resizeMode="cover">
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <MText style={styles.title}>{title}</MText>
       </View>
     </ImageBackground>
   );

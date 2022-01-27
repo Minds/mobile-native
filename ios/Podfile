@@ -45,7 +45,7 @@ target 'Minds' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
   # Note for M1 Mac: enable flipper
-  # use_flipper!({ 'Flipper' => '0.87.0', 'Flipper-Folly' => '2.5.3', 'Flipper-RSocket' => '1.3.1' })
+  # use_flipper!()
   post_install do |installer|
     # flipper_post_install(installer)
     installer.pods_project.targets.each do |target|
@@ -59,6 +59,8 @@ target 'Minds' do
         target.remove_from_project
       end
     end
+    react_native_post_install(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
 

@@ -12,7 +12,7 @@ import {
   useRoute,
 } from '../../../__mocks__/@react-navigation/native';
 import { getStores } from '../../../AppStores';
-
+jest.mock('react-native/Libraries/LogBox/LogBox');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
@@ -21,20 +21,12 @@ getStores.mockReturnValue({
   newsfeed: {},
 });
 
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
-
 jest.mock('react-native-safe-area-context');
 jest.mock('react-native-material-menu');
-jest.mock('react-native-silent-switch');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
 jest.mock('../../../src/common/components/KeyboardSpacingView');
-jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

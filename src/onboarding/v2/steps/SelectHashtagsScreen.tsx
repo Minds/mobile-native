@@ -1,9 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { showNotification } from '../../../../AppMessages';
 import Button from '../../../common/components/Button';
+import MText from '../../../common/components/MText';
 import TagSelect from '../../../common/components/TagSelect';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import i18n from '../../../common/services/i18n.service';
@@ -65,9 +66,9 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
   return (
     <ModalContainer title="Hashtags" onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
-        <Text style={[theme.fontLM, theme.textCenter]}>
+        <MText style={[theme.fontLM, theme.textCenter]}>
           {i18n.t('onboarding.hashtagDescription')}
-        </Text>
+        </MText>
         <TagSelect
           tagStyle={styles.hashtag}
           tagSelectedStyle={theme.bcolorIconActive}
