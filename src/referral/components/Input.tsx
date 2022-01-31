@@ -25,7 +25,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
   const _onFocus = useCallback(() => {
     _textInput.current!.focus();
     Clipboard.setString(textToCopy);
-    showNotification(i18n.t('copied'), 'info', 3000, 'top');
+    showNotification(i18n.t('copied'), 'info', 3000);
   }, [textToCopy]);
 
   return (

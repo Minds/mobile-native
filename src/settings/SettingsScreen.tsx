@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
 import { isNetworkError } from '../common/services/api.service';
@@ -11,6 +10,7 @@ import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
+import { showNotification } from 'AppMessages';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -26,9 +26,9 @@ const navigateToHelp = async () => {
   } catch (err) {
     console.log(err);
     if (isNetworkError(err)) {
-      showMessage(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'warning');
     } else {
-      showMessage(i18n.t('cantReachServer'));
+      showNotification(i18n.t('cantReachServer'), 'warning');
     }
   }
 };

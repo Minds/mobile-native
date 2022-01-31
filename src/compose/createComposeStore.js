@@ -1,4 +1,3 @@
-import { showMessage } from 'react-native-flash-message';
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 
@@ -8,7 +7,6 @@ import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
 import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
-import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
@@ -19,23 +17,14 @@ import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
+import { showNotification } from 'AppMessages';
 
 /**
  * Display an error message to the user.
  * @param {string} message
  */
 const showError = message => {
-  showMessage({
-    position: 'top',
-    message: message,
-    titleStyle: [
-      ThemedStyles.style.fontXL,
-      ThemedStyles.style.colorPrimaryText,
-    ],
-    duration: 3000,
-    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-    type: 'danger',
-  });
+  showNotification(message, 'danger', 3000);
 };
 
 const DEFAULT_MONETIZE = {

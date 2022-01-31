@@ -377,7 +377,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
       'warning',
       2000,
-      'top',
     );
   }
 

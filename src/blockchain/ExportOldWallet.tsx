@@ -1,13 +1,7 @@
-import React from 'react';
-import { Platform, TouchableOpacity, View } from 'react-native';
-import { hideMessage, showMessage } from 'react-native-flash-message';
+import { Platform } from 'react-native';
 import Share from 'react-native-share';
 import Web3 from 'web3';
-import MText from '../common/components/MText';
-import i18n from '../common/services/i18n.service';
 import storageService from '../common/services/storage.service';
-import NavigationService from '../navigation/NavigationService';
-import ThemedStyles from '../styles/ThemedStyles';
 
 function storageKey(key) {
   return `BlockchainWallet:${key}`;
@@ -54,75 +48,6 @@ export async function getExportableWallets(
     console.log(error);
     throw error;
   }
-}
-
-export async function showMessageForPrivateKey() {
-  const wallets: Array<any> = await getExportableWallets();
-  if (!wallets?.length) {
-    return;
-  }
-  const theme = ThemedStyles.style;
-  showMessage({
-    position: 'top',
-    message: '',
-    floating: false,
-    duration: 0,
-    //@ts-ignore
-    renderCustomContent: () => (
-      <View>
-        <MText style={[theme.fontXL, theme.textCenter]} onPress={hideMessage}>
-          {i18n.t('blockchain.exportLegacy1')}
-        </MText>
-        <MText
-          style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
-          onPress={hideMessage}>
-          {i18n.t('blockchain.exportLegacy2')}
-        </MText>
-        <View
-          style={[
-            theme.rowJustifySpaceEvenly,
-            theme.marginTop6x,
-            theme.paddingTop2x,
-            theme.borderTopHair,
-            theme.bcolorPrimaryBorder,
-            styles.messageHorizontalLine,
-          ]}>
-          <View
-            style={[
-              theme.bcolorPrimaryBorder,
-              theme.borderRightHair,
-              theme.justifyCenter,
-              styles.messageVerticalLine,
-            ]}>
-            <MText
-              style={[theme.fontXL, theme.colorLink, theme.paddingHorizontal4x]}
-              onPress={hideMessage}>
-              {i18n.t('no')}
-            </MText>
-          </View>
-          <TouchableOpacity
-            style={theme.justifyCenter}
-            onPress={() => {
-              hideMessage();
-              NavigationService.navigate('ExportLegacyWallet');
-            }}>
-            <MText
-              style={[
-                theme.fontXL,
-                theme.colorLink,
-                theme.paddingHorizontal4x,
-              ]}>
-              {i18n.t('yes')}
-            </MText>
-          </TouchableOpacity>
-        </View>
-      </View>
-    ),
-    color: ThemedStyles.getColor('PrimaryText'),
-    titleStyle: ThemedStyles.style.fontXL,
-    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-    type: 'default',
-  });
 }
 
 function normalizePrivateKey(privateKey) {
@@ -179,14 +104,3 @@ export async function exportPrivate(privateKey: string) {
 
   await Share.open(shareOptions);
 }
-
-const styles = {
-  messageHorizontalLine: {
-    marginLeft: -20,
-    marginRight: -20,
-  },
-  messageVerticalLine: {
-    marginTop: -10,
-    marginBottom: -14,
-  },
-};

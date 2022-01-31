@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, InteractionManager, StatusBar, View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
-import { showMessage } from 'react-native-flash-message';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
 import {
@@ -38,17 +37,7 @@ import MediaPreviewFullScreen from './MediaPreviewFullScreen';
  * @param {string} message
  */
 const showError = message => {
-  showMessage({
-    position: 'top',
-    message: message,
-    titleStyle: [
-      ThemedStyles.style.fontXL,
-      ThemedStyles.style.colorPrimaryText,
-    ],
-    duration: 3000,
-    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-    type: 'danger',
-  });
+  showNotification(message, 'danger', 3000);
 };
 
 /**
@@ -202,9 +191,9 @@ export default observer(function (props) {
         undefined,
         `minds/${Date.now()}`, // is this good?
       );
-      showNotification(i18n.t('imageAdded'), 'info', 3000, 'top');
+      showNotification(i18n.t('imageAdded'), 'info', 3000);
     } catch (e: any) {
-      showNotification(i18n.t('errorDownloading'), 'danger', 3000, 'top');
+      showNotification(i18n.t('errorDownloading'), 'danger', 3000);
       logService.exception('[MediaView] runDownload', e);
     }
     setDownloading(false);

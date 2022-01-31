@@ -20,7 +20,7 @@ import {
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
-import { showMessage } from 'react-native-flash-message';
+import { showNotification } from 'AppMessages';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -36,9 +36,9 @@ const navigateToHelp = async () => {
   } catch (err) {
     console.log(err);
     if (isNetworkError(err)) {
-      showMessage(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'warning');
     } else {
-      showMessage(i18n.t('cantReachServer'));
+      showNotification(i18n.t('cantReachServer'), 'warning');
     }
   }
 };

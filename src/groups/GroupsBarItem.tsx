@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import { observer, inject } from 'mobx-react';
-import { showMessage, hideMessage } from 'react-native-flash-message';
+// import { showMessage, hideMessage } from 'react-native-flash-message';
 import { Platform, StyleSheet, View, TouchableOpacity } from 'react-native';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -39,26 +39,27 @@ export default class GroupsBarItem extends Component {
   askGatheringOrNav = () => {
     const theme = ThemedStyles.style;
 
-    showMessage({
-      position: 'top',
-      message: i18n.t('groups.ongoingGathering'),
-      floating: true,
-      duration: 4000,
-      renderCustomContent: () => (
-        <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
-          <MText style={theme.fontXL} onPress={this.navToGathering}>
-            {i18n.t('groups.joinGathering')}
-          </MText>
-          <MText style={theme.fontXL} onPress={this.navToGroup}>
-            {i18n.t('groups.gotoGroup')}
-          </MText>
-        </View>
-      ),
-      color: ThemedStyles.getColor('PrimaryText'),
-      titleStyle: ThemedStyles.style.fontXL,
-      backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-      type: 'default',
-    });
+    // TODO: Reimplement with a bottomsheet modal
+    // showMessage({
+    //   position: 'top',
+    //   message: i18n.t('groups.ongoingGathering'),
+    //   floating: true,
+    //   duration: 4000,
+    //   renderCustomContent: () => (
+    //     <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
+    //       <MText style={theme.fontXL} onPress={this.navToGathering}>
+    //         {i18n.t('groups.joinGathering')}
+    //       </MText>
+    //       <MText style={theme.fontXL} onPress={this.navToGroup}>
+    //         {i18n.t('groups.gotoGroup')}
+    //       </MText>
+    //     </View>
+    //   ),
+    //   color: ThemedStyles.getColor('PrimaryText'),
+    //   titleStyle: ThemedStyles.style.fontXL,
+    //   backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
+    //   type: 'default',
+    // });
   };
 
   render() {

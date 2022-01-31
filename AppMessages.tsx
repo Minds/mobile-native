@@ -1,150 +1,90 @@
-import React, { useCallback } from 'react';
-import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { View, StyleSheet, Platform } from 'react-native';
-
-import IconIon from 'react-native-vector-icons/Ionicons';
-import IconAnt from 'react-native-vector-icons/AntDesign';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
-import type { MessageType, Icon } from 'react-native-flash-message';
 import ThemedStyles from './src/styles/ThemedStyles';
+import { ToastConfig } from '@msantang78/react-native-styled-toast/dist/Toast';
+
+let toast: undefined | ((config: ToastConfig) => void);
+
+export function registerToast(t) {
+  toast = t;
+}
+
+type MessageType = 'success' | 'info' | 'warning' | 'danger';
+
+function getIcon(type: MessageType): any {
+  switch (type) {
+    case 'success':
+      return {
+        iconColor: '#59A05E',
+        iconFamily: 'Ionicons',
+        iconName: 'md-checkmark',
+      };
+    case 'warning':
+      return {
+        iconColor: '#D49538',
+        iconFamily: 'Ionicons',
+        iconName: 'ios-warning',
+      };
+    case 'info':
+      return {
+        iconColor: '#5282A7',
+        iconFamily: 'EvilIcons',
+        iconName: 'exclamation',
+      };
+    case 'danger':
+      return {
+        iconColor: '#CA4A34',
+        iconFamily: 'MaterialCommunityIcons',
+        iconName: 'alert-octagon',
+      };
+  }
+  return {};
+}
 
 /**
- *  Show a notification message to the user
+ * Show a notification message to the user
  * @param message
  * @param type
- * @param duration use 0 for permanent message
+ * @param duration
+ * @param subMessage
+ * @param shouldVibrate
  */
 export const showNotification = (
   message: string,
   type: MessageType = 'info',
   duration: number = 2800,
-  position: 'top' | 'bottom' | 'center' | undefined = 'bottom',
+  subMessage?: string,
+  shouldVibrate = false,
 ) => {
-  showMessage({
-    floating: true,
-    position,
-    message,
-    icon: type,
-    duration,
-    backgroundColor: '#FFFFFF',
-    //@ts-ignore style parameter is not defined on the type
-    style: styles.container,
-    titleStyle: styles.title,
-    color: '#7D7D82',
-    type,
-  });
-};
-
-/**
- * Icon renderer
- * @param icon
- */
-const renderNotificationIcon = (icon: Icon = 'success') => {
-  const theme = ThemedStyles.style;
-  switch (icon) {
-    case 'success':
-      return (
-        <View style={[styles.success, theme.bgSuccessBackground]}>
-          <IconIon name="md-checkmark" color="white" size={25} />
-        </View>
-      );
-    case 'info':
-      return (
-        <View style={[styles.info, theme.bgInfoBackground]}>
-          <IconAnt name="exclamationcircleo" color="white" size={25} />
-        </View>
-      );
-    case 'warning':
-      return (
-        <View style={[styles.warning, theme.bgWarningBackground]}>
-          <IconIon name="ios-warning" color="white" size={25} />
-        </View>
-      );
-    case 'danger':
-      return (
-        <View style={[styles.danger, theme.bgDangerBackground]}>
-          <IconMC name="alert-octagon" color="white" size={25} />
-        </View>
-      );
+  if (toast) {
+    toast({
+      closeIconColor: ThemedStyles.getColor('SecondaryText'),
+      message,
+      hideAccent: true,
+      shouldVibrate,
+      duration,
+      subMessage,
+      ...getIcon(type),
+      closeIconSize: 22,
+      messageProps: {
+        fontFamily: 'Roboto-Medium',
+        fontSize: 14,
+        textAlign: 'center',
+        numberOfLines: 2,
+      },
+      iconSize: 22,
+      toastStyles: {
+        alginItems: 'center',
+        borderRadius: 4,
+      },
+      shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 6,
+        elevation: 4,
+      },
+    });
   }
-  return null;
 };
-
-/**
- * App messages component
- */
-const AppMessages = () => {
-  const renderNotification = useCallback(
-    (message: any) =>
-      message.renderCustomContent ? message.renderCustomContent() : null,
-    [],
-  );
-  return (
-    <FlashMessage
-      //@ts-ignore renderCustomContent prop is not defined on the type
-      renderCustomContent={renderNotification}
-      renderFlashMessageIcon={renderNotificationIcon}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  info: {
-    height: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  success: {
-    height: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  danger: {
-    height: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  warning: {
-    height: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 17,
-    padding: 15,
-    paddingRight: 15,
-    marginRight: 55,
-    alignSelf: 'center',
-    flexWrap: 'wrap',
-  },
-  container: {
-    shadowColor: 'black',
-    shadowOpacity: Platform.select({ ios: 0.2, android: 0.3 }),
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    elevation: 15,
-    alignItems: 'center',
-    minHeight: 70,
-    borderRadius: 0,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    marginTop: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0,
-  },
-  messageHorizontalLine: {
-    marginLeft: -20,
-    marginRight: -20,
-  },
-  messageVerticalLine: {
-    marginTop: -10,
-    marginBottom: -14,
-  },
-});
-
-export default AppMessages;
