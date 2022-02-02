@@ -83,13 +83,7 @@ export class AnalyticsService {
         console.log('[Snowplow] network user id: ', this.networkUserId);
       }
       this.tracker.setNetworkUserId(this.networkUserId);
-      CookieManager.set('https://minds.com', {
-        name: 'minds_sp',
-        domain: 'minds.com',
-        value: this.networkUserId,
-        path: '/',
-        secure: true,
-      });
+      this.setNetworkCookie();
     }
 
     this.tracker.setSubjectData({
@@ -100,6 +94,20 @@ export class AnalyticsService {
       viewportWidth: window.width,
       viewportHeight: window.height,
     });
+  }
+
+  /**
+   * Sets the networkId cookie
+   */
+  setNetworkCookie() {
+    if (this.networkUserId) {
+      CookieManager.set('https://www.minds.com', {
+        name: 'minds_sp',
+        value: this.networkUserId,
+        path: '/',
+        secure: true,
+      });
+    }
   }
 
   /**
