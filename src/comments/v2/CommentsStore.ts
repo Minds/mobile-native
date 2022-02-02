@@ -354,7 +354,13 @@ export default class CommentsStore {
     }
 
     if (response.comments) {
-      const comments = CommentModel.createMany(response.comments);
+      const comments = CommentModel.createMany(response.comments).map(
+        comment => {
+          comment.store = new CommentsStore(this.entity);
+          comment.store.setParent(comment);
+          return comment;
+        },
+      );
 
       if (descending) {
         comments.reverse().forEach(c => this.comments.push(c));
@@ -367,11 +373,17 @@ export default class CommentsStore {
 
   /**
    * Add a comment
-   * @param {object} comment
+   * @param {object} rawComment
    */
   @action
-  pushComment(comment) {
-    this.comments.unshift(CommentModel.create(comment));
+  pushComment(rawComment) {
+    if (this.parent) {
+      this.parent.replies_count = this.parent?.replies_count + 1;
+    }
+    const comment = CommentModel.create(rawComment);
+    comment.store = new CommentsStore(this.entity);
+    comment.store.setParent(comment);
+    this.comments.unshift(comment);
   }
 
   /**
@@ -690,6 +702,10 @@ export default class CommentsStore {
 
       if (this.entity.decrementCommentsCounter) {
         this.entity.decrementCommentsCounter();
+      }
+
+      if (this.parent) {
+        this.parent.replies_count--;
       }
 
       this.comments.splice(index, 1);

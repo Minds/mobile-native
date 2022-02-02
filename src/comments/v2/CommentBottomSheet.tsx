@@ -48,16 +48,12 @@ const Stack = createStackNavigator();
 
 const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
+  const store = route.params.comment.store;
 
   useBackHandler(() => {
     navigation.goBack();
     return true;
   });
-  const store = React.useMemo(() => {
-    const s = new CommentsStore(route.params.entity);
-    s.setParent(route.params.comment);
-    return s;
-  }, [route.params.comment, route.params.entity]);
   React.useEffect(() => {
     if (route.params.open) {
       store.setShowInput(true);
