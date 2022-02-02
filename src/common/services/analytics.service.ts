@@ -3,15 +3,20 @@ import {
   EventContext,
   ReactNativeTracker,
 } from '@snowplow/react-native-tracker';
+import { v4 as uuidv4 } from 'uuid';
 import DeviceInfo from 'react-native-device-info';
-import i18nService from './i18n.service';
 import { Dimensions, Platform } from 'react-native';
+import CookieManager from '@react-native-cookies/cookies';
+
+import i18nService from './i18n.service';
 import { Version } from '../../config/Version';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import { getTopLevelNavigator } from '../../navigation/NavigationService';
 import type GroupModel from '../../groups/GroupModel';
 import type UserModel from '../../channel/UserModel';
+import { storages } from './storage/storages.service';
+import { IS_IOS } from '~/config/Config';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -22,6 +27,8 @@ export class AnalyticsService {
   tracker?: ReactNativeTracker;
   previousRouteName = '';
   contexts: EventContext[] = [];
+  networkUserId: string | null | undefined;
+  userId: string | null | undefined;
 
   constructor() {
     this.tracker = createTracker(
@@ -58,6 +65,33 @@ export class AnalyticsService {
       Platform.OS === 'ios' ? 'iOS' : 'Android'
     } ${DeviceInfo.getSystemVersion()}) Version/${Version.VERSION}`;
 
+    // set a cookie
+    if (!IS_IOS) {
+      // we set the network explicitly here, as setting it on the subject data doesn't work
+      this.networkUserId = storages.app.getString('snowplow_network_id');
+      if (!this.networkUserId) {
+        this.networkUserId = uuidv4() as string;
+        storages.app.setString(
+          'snowplow_network_id',
+          this.networkUserId as string,
+        );
+        console.log(
+          '[Snowplow] Generated network user id: ',
+          this.networkUserId,
+        );
+      } else {
+        console.log('[Snowplow] network user id: ', this.networkUserId);
+      }
+      this.tracker.setNetworkUserId(this.networkUserId);
+      CookieManager.set('https://minds.com', {
+        name: 'minds_sp',
+        domain: 'minds.com',
+        value: this.networkUserId,
+        path: '/',
+        secure: true,
+      });
+    }
+
     this.tracker.setSubjectData({
       screenWidth: screen.width,
       screenHeight: screen.height,
@@ -73,6 +107,12 @@ export class AnalyticsService {
    */
   setUserId(userId: string) {
     this.tracker?.setUserId(userId);
+    this.userId = userId;
+    CookieManager.set('https://www.minds.com', {
+      name: 'minds_pseudoid',
+      value: this.userId,
+      path: '/',
+    });
   }
 
   /**

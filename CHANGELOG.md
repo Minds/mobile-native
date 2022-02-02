@@ -2,6 +2,12 @@
 
 Minds Mobile
 
+## 4.21.1 - 2022-02-03
+
+### Changed
+
+- Fix snowplow analytics information
+
 ## 4.21.0 - 2022-01-25
 
 ### Changed
