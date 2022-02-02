@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
 import { SettingsStore } from './src/settings/SettingsStore';
-import apiService from './src/common/services/api.service';
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
 
@@ -46,9 +45,6 @@ export default class AppInitManager {
 
     // init push service
     pushService.init();
-
-    // clear old cookies
-    apiService.clearCookies();
 
     // init settings loading
     this.deeplinkPromise = Linking.getInitialURL();
