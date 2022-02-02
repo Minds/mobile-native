@@ -862,7 +862,8 @@
       "code": "Code",
       "canary": "Canary",
       "branding": "Branding"
-    }
+    },
+    "twitterSync": "Twitter Sync"
   },
   "comingSoon": {
     "try": "Try the canary app at",

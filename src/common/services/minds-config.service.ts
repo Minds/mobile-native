@@ -53,4 +53,6 @@ class MindsConfigService {
   }
 }
 
-export default new MindsConfigService();
+const mindsConfigService = new MindsConfigService();
+
+export default mindsConfigService;
