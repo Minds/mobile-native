@@ -95,7 +95,7 @@ export default class Input extends Component<PropsType> {
         {...this.props}
         style={[theme.input, this.props.style]}
         placeholderTextColor="#444"
-        returnKeyType={'done'}
+        returnKeyType={this.props.returnKeyType || 'done'}
         autoCapitalize={'none'}
         underlineColorAndroid="transparent"
         ref={this.inputRef}

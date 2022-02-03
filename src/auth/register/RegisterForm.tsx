@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Linking } from 'react-native';
+import { Linking, ScrollView, View } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
@@ -21,6 +21,8 @@ import PasswordInput from '../../common/components/password-input/PasswordInput'
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
+import KeyboardSpacingView from '~/common/components/KeyboardSpacingView';
+import FitScrollView from '~/common/components/FitScrollView';
 
 type PropsType = {
   // called after registeration is finished
@@ -32,6 +34,7 @@ const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
+  const scrollViewRef = useRef<ScrollView>();
 
   const store = useLocalStore(() => ({
     focused: false,
@@ -157,6 +160,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         this.showErrors = true;
       }
     },
+    onPasswordFocus() {
+      scrollViewRef.current?.scrollToEnd();
+    },
     get usernameError() {
       if (this.usernameTaken) {
         return i18n.t('auth.userTaken');
@@ -185,6 +191,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         noBottomBorder
         autofocus
         autoCorrect={false}
+        returnKeyType="next"
         keyboardType="name-phone-pad"
         autoComplete="username-new"
         textContentType="username"
@@ -198,6 +205,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         autoCapitalize="none"
         keyboardType="email-address"
         textContentType="emailAddress"
+        returnKeyType="next"
         testID="emailInput"
         error={
           !store.showErrors
@@ -211,68 +219,70 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         noBottomBorder
         onBlur={store.emailInputBlur}
       />
-      <View>
-        <PasswordInput
-          store={store}
-          tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
-          inputProps={{
-            textContentType: 'newPassword',
-            error:
-              store.showErrors && validatePassword(store.password)
-                ? i18n.t('settings.invalidPassword')
-                : undefined,
-          }}
-        />
-      </View>
+      <PasswordInput
+        store={store}
+        tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+        inputProps={{
+          textContentType: 'newPassword',
+          onFocus: store.onPasswordFocus,
+          onSubmitEditing: store.onRegisterPress,
+          error:
+            store.showErrors && validatePassword(store.password)
+              ? i18n.t('settings.invalidPassword')
+              : undefined,
+        }}
+      />
     </View>
   );
 
   return (
-    <>
-      {inputs}
-      <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-        <CheckBox
-          containerStyle={styles.checkboxTerm}
-          title={
-            <MText style={styles.checkboxText}>
-              {i18n.t('auth.accept')}{' '}
-              <MText
-                style={theme.link}
-                onPress={() =>
-                  Linking.openURL('https://www.minds.com/p/terms')
-                }>
-                {i18n.t('auth.termsAndConditions')}
+    <KeyboardSpacingView style={theme.flexContainer}>
+      <FitScrollView ref={scrollViewRef} keyboardShouldPersistTaps={'always'}>
+        {inputs}
+        <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+          <CheckBox
+            containerStyle={styles.checkboxTerm}
+            title={
+              <MText style={styles.checkboxText}>
+                {i18n.t('auth.accept')}{' '}
+                <MText
+                  style={theme.link}
+                  onPress={() =>
+                    Linking.openURL('https://www.minds.com/p/terms')
+                  }>
+                  {i18n.t('auth.termsAndConditions')}
+                </MText>
               </MText>
-            </MText>
-          }
-          checked={store.termsAccepted}
-          onPress={store.toggleTerms}
+            }
+            checked={store.termsAccepted}
+            onPress={store.toggleTerms}
+          />
+          <CheckBox
+            containerStyle={styles.checkboxPromotions}
+            title={
+              <MText style={styles.checkboxText}>
+                {i18n.t('auth.promotions')}
+              </MText>
+            }
+            checked={store.exclusivePromotions}
+            onPress={store.togglePromotions}
+          />
+        </View>
+        <BottomSheetButton
+          onPress={store.onRegisterPress}
+          text={i18n.t('auth.createChannel')}
+          disabled={true || store.inProgress}
+          loading={store.inProgress}
+          testID="registerButton"
+          action
         />
-        <CheckBox
-          containerStyle={styles.checkboxPromotions}
-          title={
-            <MText style={styles.checkboxText}>
-              {i18n.t('auth.promotions')}
-            </MText>
-          }
-          checked={store.exclusivePromotions}
-          onPress={store.togglePromotions}
+        <Captcha
+          ref={captchaRef}
+          onResult={store.onCaptchResult}
+          testID="captcha"
         />
-      </View>
-      <BottomSheetButton
-        onPress={store.onRegisterPress}
-        text={i18n.t('auth.createChannel')}
-        disabled={true || store.inProgress}
-        loading={store.inProgress}
-        testID="registerButton"
-        action
-      />
-      <Captcha
-        ref={captchaRef}
-        onResult={store.onCaptchResult}
-        testID="captcha"
-      />
-    </>
+      </FitScrollView>
+    </KeyboardSpacingView>
   );
 });
 
