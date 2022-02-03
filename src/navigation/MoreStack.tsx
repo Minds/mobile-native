@@ -44,7 +44,7 @@ import OtherScreen from '~/settings/screens/OtherScreen';
 import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
-import TwitterSyncScreen from '~/settings/screens/TwitterSyncScreen';
+import TwitterSyncScreen from '~/settings/screens/twitter-sync/TwitterSyncScreen';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
