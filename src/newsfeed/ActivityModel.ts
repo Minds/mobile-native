@@ -532,6 +532,31 @@ export default class ActivityModel extends BaseModel {
   setEdited(value) {
     this.edited = value;
   }
+
+  /**
+   * whether the entity is locked
+   */
+  isLocked() {
+    if (this.isOwner() || this.hasVideo() || !this.paywall) {
+      return false;
+    }
+
+    const wire_threshold = this.wire_threshold;
+    const support_tier: SupportTiersType | null =
+      wire_threshold && 'support_tier' in wire_threshold
+        ? wire_threshold.support_tier
+        : null;
+
+    if (support_tier) {
+      return true;
+    } else {
+      if (wire_threshold && wire_threshold.min) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
 
 /**

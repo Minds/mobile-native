@@ -199,6 +199,7 @@ build:android-mr-production:
       - /^feat-*/
       - /^fix-*/
       - /^chore-*/
+      - /^refactor-*/
 
 # Cleanup merged APK from browserstack
 build:cleanup:

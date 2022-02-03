@@ -12541,6 +12541,11 @@ react-native-animated-spinkit@^1.5.2:
   resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
   integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
 
+react-native-blurhash@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.5.tgz#27545afb126347059a3a9324f5c3640a94b1ec53"
+  integrity sha512-RX5lgZ+wwl+XhdgSvR94YpGrPWj5KI6D/9I650Y+TF2W9PDuvJ3gDMz98ispvG2FaUqQrf9LM39pedUxBVWROA==
+
 react-native-bootsplash@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-3.2.4.tgz#73d3b38606ddc7e1d489012f007c1fbd26fc68d1"
