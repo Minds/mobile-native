@@ -161,7 +161,7 @@ const BlurredThumbnail = ({
   thumbnailSource,
   entity,
 }) => {
-  const blurhash = entity?.custom_data[0]?.blurhash || entity?.blurhash;
+  const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
   if (blurhash) {
     return <Blurhash decodeAsync blurhash={blurhash} style={style} />;
   }
