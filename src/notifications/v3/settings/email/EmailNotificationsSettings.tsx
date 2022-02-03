@@ -9,6 +9,9 @@ import type EmailNotificationsSettingModel from './EmailNotificationsSettingMode
 import InputSelector from '../../../../common/components/InputSelector';
 import Toggle from '../../../../common/components/Toggle';
 import MText from '../../../../common/components/MText';
+import Empty from '~/common/components/Empty';
+import { Button } from '~/common/ui';
+import CenteredLoading from '~/common/components/CenteredLoading';
 
 type PropsType = {};
 
@@ -25,6 +28,12 @@ type frecuencyOptionType = { frecuency: string; label: string };
 const EmailNotificationsSettings = ({}: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
+  React.useEffect(() => {
+    if (notifications.pushNotificationsSettings === null) {
+      notifications.loadMailNotificationsSettings();
+    }
+  }, [notifications]);
+
   const frecuencyOptions = [
     {
       frecuency: 'never',
@@ -37,16 +46,18 @@ const EmailNotificationsSettings = ({}: PropsType) => {
     { frecuency: 'daily', label: i18n.t('notificationSettings.daily') },
     { frecuency: 'weekly', label: i18n.t('notificationSettings.weekly') },
   ];
-  return (
-    <View style={containerStyle}>
-      <ScrollView>
+
+  const body =
+    notifications.mailsNotificationsSettings &&
+    notifications.mailsNotificationsSettings.length > 0 ? (
+      <>
         {campaingTypes.map(campaignType => {
           return (
             <>
               <MText style={titleStyle}>
                 {i18n.t(`notificationSettings.${campaignType.tag}`)}
               </MText>
-              {notifications.mailsNotificationsSettings.map(
+              {notifications.mailsNotificationsSettings?.map(
                 (setting: EmailNotificationsSettingModel) => {
                   if (setting.campaign !== campaignType.name) {
                     return null;
@@ -79,7 +90,23 @@ const EmailNotificationsSettings = ({}: PropsType) => {
             </>
           );
         })}
-      </ScrollView>
+      </>
+    ) : !notifications.mailsNotificationsSettings ? (
+      <Empty title={i18n.t('cantLoad')}>
+        <Button
+          top="L"
+          onPress={() => notifications.loadMailNotificationsSettings()}
+          type="action">
+          {i18n.t('tryAgain')}
+        </Button>
+      </Empty>
+    ) : (
+      <CenteredLoading />
+    );
+
+  return (
+    <View style={containerStyle}>
+      <ScrollView>{body}</ScrollView>
     </View>
   );
 };
@@ -171,4 +198,4 @@ export const containerStyle = ThemedStyles.combine(
   'paddingVertical2x',
 );
 
-export default EmailNotificationsSettings;
+export default observer(EmailNotificationsSettings);
