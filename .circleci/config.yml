@@ -147,7 +147,7 @@ workflows:
             - analyse_js
           filters:
             branches:
-              only: /^(fix|feat|chore).*/
+              only: /^(fix|feat|chore|refactor).*/
       - e2e_prod:
           requires:
             - checkout_code

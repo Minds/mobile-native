@@ -1,22 +1,18 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
+import { Blurhash } from 'react-native-blurhash';
+import ActivityModel from '~/newsfeed/ActivityModel';
 
 interface SmartImageProps {
   thumbnail?: Source;
@@ -30,6 +26,7 @@ interface SmartImageProps {
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
   thumbBlurRadius?: number;
+  entity?: ActivityModel;
 }
 
 const defaultBlur = Platform.select({ android: 1, ios: 4 });
@@ -53,7 +50,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   useEffect(() => {
     try {
-      store.showImageIfCacheExists();
+      store.onInit();
     } catch (e) {
       console.error(e);
     }
@@ -98,87 +95,109 @@ const SmartImage = observer(function (props: SmartImageProps) {
           onProgress={store.onProgress}
         />
       )}
-      {
-        /**
-         * Thumbnail
-         * */
-        store.showOverlay && props.thumbnail && (
-          <Image
-            key={`thumbnail:${store.retries}`}
-            blurRadius={props.thumbBlurRadius || defaultBlur}
-            style={props.style}
-            source={props.thumbnail as any}
-          />
-        )
-      }
-      {dataSaverEnabled && (
-        <ImageOverlay
-          store={store}
-          withoutDownloadButton={withoutDownloadButton}
+
+      <ImageOverlay visible={store.showOverlay}>
+        <BlurredThumbnail
+          key={`thumbnail:${store.retries}`}
+          thumbBlurRadius={props.thumbBlurRadius}
+          style={props.style}
+          thumbnailSource={props.thumbnail as any}
+          entity={props.entity}
         />
-      )}
+        {dataSaverEnabled && !withoutDownloadButton && (
+          <DownloadButton store={store} />
+        )}
+      </ImageOverlay>
     </View>
   );
 });
 
-export default SmartImage;
-
-export type { Source };
-
-const styles = StyleSheet.create({
-  downloadButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 100,
-    width: 50,
-    height: 50,
-  },
-});
-
 /**
- * ImageOverlay component
+ * this component overlays the image and will disappear with a fade transition when
+ * store.showOverlay is turned off
  */
-const ImageOverlay = ({
-  withoutDownloadButton,
-  store,
-}: {
-  withoutDownloadButton?: boolean;
-  store: SmartImageStore;
-}) => {
+const ImageOverlay: FC<{ visible: boolean }> = ({ visible, ...props }) => {
   const theme = ThemedStyles.style;
-  const showOverlayTransition = useTimingTransition(store.showOverlay, {
+  const previousVisibility = useRef<boolean | null>(null);
+  const [shouldRender, setShouldRender] = useState(true);
+  const showOverlayTransition = useTimingTransition(visible, {
     duration: 150,
   });
   const opacity = mix(showOverlayTransition, 0, 1);
 
+  useEffect(() => {
+    if (!visible && previousVisibility.current === true) {
+      setTimeout(() => {
+        setShouldRender(false);
+      }, 150);
+    } else {
+      setShouldRender(true);
+    }
+    previousVisibility.current = visible;
+  }, [visible]);
+
+  if (!shouldRender) {
+    return null;
+  }
+
   return (
     <Animated.View
-      pointerEvents={store.showOverlay ? undefined : 'none'}
+      {...props}
+      pointerEvents={visible ? undefined : 'none'}
       style={[
         theme.positionAbsolute,
         theme.centered,
         {
           opacity,
         },
-      ]}>
-      {!withoutDownloadButton && (
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={store.progress === undefined ? store.onDownload : undefined}
-          style={[theme.positionAbsolute, theme.centered]}>
-          <View style={[styles.downloadButton, theme.centered]}>
-            {typeof store.progress === 'number' ? (
-              <ProgressCircle
-                progress={store.progress}
-                color="white"
-                indeterminate={store.imageVisible && store.progress === 0}
-              />
-            ) : (
-              <Icon name="arrow-down" style={theme.colorWhite} size={30} />
-            )}
-          </View>
-        </TouchableOpacity>
-      )}
-    </Animated.View>
+      ]}
+    />
+  );
+};
+
+const BlurredThumbnail = ({
+  thumbBlurRadius,
+  style,
+  thumbnailSource,
+  entity,
+}) => {
+  const blurhash = entity?.custom_data[0]?.blurhash || entity?.blurhash;
+  if (blurhash) {
+    return <Blurhash decodeAsync blurhash={blurhash} style={style} />;
+  }
+
+  if (thumbnailSource) {
+    return (
+      <Image
+        blurRadius={thumbBlurRadius || defaultBlur}
+        style={style}
+        source={thumbnailSource}
+      />
+    );
+  }
+
+  return null;
+};
+
+const DownloadButton = ({ store }) => {
+  const theme = ThemedStyles.style;
+  return (
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={store.progress === undefined ? store.onDownload : undefined}
+      style={useStyle('positionAbsolute', 'centered')}>
+      <View style={styles.downloadButton}>
+        {typeof store.progress === 'number' ? (
+          <ProgressCircle
+            progress={store.progress}
+            color="white"
+            indeterminate={store.imageVisible && store.progress === 0}
+          />
+        ) : (
+          <Icon name="arrow-down" style={theme.colorWhite} size={30} />
+        )}
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -189,10 +208,15 @@ const createSmartImageStore = props => {
     retries: 0,
     progress: undefined,
     imageVisible: props.ignoreDataSaver ? true : !dataSaverEnabled,
-    showOverlay: props.ignoreDataSaver ? false : dataSaverEnabled,
+    /**
+     * whether to show the overlay.
+     * by default no overlay is shown. the overlay will be shown after we find out
+     * whether the image is cached or not. if the iamge wasn't cached, we will show the overlay.
+     * when the image fully loads, the overlay will be hidden.
+     */
+    showOverlay: false,
     showImage(show: boolean = true) {
       this.imageVisible = show;
-      this.showOverlay = !show;
     },
     setError(error) {
       this.error = true;
@@ -203,10 +227,12 @@ const createSmartImageStore = props => {
       }
     },
     onLoadEnd() {
-      this.showOverlay = false;
+      // if the entity should be blurred or was locked, don't remove the overlay
+      if (!props.entity?.shouldBeBlured() && !props.entity?.isLocked()) {
+        this.showOverlay = false;
+      }
       this.progress = undefined;
       this.retries = 0;
-
       if (props.onLoadEnd) {
         props.onLoadEnd();
       }
@@ -232,22 +258,54 @@ const createSmartImageStore = props => {
       this.error = false;
       this.retries++;
     },
-    async showImageIfCacheExists() {
+    async isCached() {
       if (!props.source.uri) {
-        return;
-      }
-      //@ts-ignore
-      const cached = await FastImage.getCachePath({
-        uri: props.source.uri,
-      });
-
-      if (!cached) {
-        return;
+        return false;
       }
 
-      this.showImage();
+      try {
+        //@ts-ignore
+        const cached = await FastImage.getCachePath({
+          uri: props.source.uri,
+        });
+
+        return cached;
+      } catch (e) {}
+
+      return false;
+    },
+    // shows image if cache exists and shows overlay if it didn't
+    async onInit() {
+      // if entity was locked, show overlay and return
+      if (props.entity?.shouldBeBlured() || props.entity?.isLocked()) {
+        this.showOverlay = true;
+        return;
+      }
+
+      // if it was cached, show the image, otherwise show the overlay
+      if (await this.isCached()) {
+        this.showImage();
+      } else {
+        this.showOverlay = true;
+      }
     },
   };
 };
 
 export type SmartImageStore = ReturnType<typeof createSmartImageStore>;
+
+export default SmartImage;
+
+export type { Source };
+
+const styles = ThemedStyles.create({
+  downloadButton: [
+    'centered',
+    {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      borderRadius: 100,
+      width: 50,
+      height: 50,
+    },
+  ],
+});
