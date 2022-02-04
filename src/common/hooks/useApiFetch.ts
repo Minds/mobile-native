@@ -184,7 +184,11 @@ const createStore = ({
     this.setLoading(true);
     this.setError(null);
     try {
-      const result = await apiService[method](url, data);
+      const result = await apiService[method](
+        url,
+        data,
+        method === 'get' ? this : undefined,
+      );
 
       // hack to remove the offset if the result was empty
       if (dataField && result[dataField]?.length === 0) {
