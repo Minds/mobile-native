@@ -30,6 +30,8 @@ import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
+import CookieManager from '@react-native-cookies/cookies';
+import analyticsService from './analytics.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -87,6 +89,26 @@ export class ApiService {
 
   constructor(sessionIndex: number | null = null, axiosInstance = null) {
     this.sessionIndex = sessionIndex;
+
+    if (MINDS_CANARY) {
+      CookieManager.set('https://www.minds.com', {
+        name: 'canary',
+        value: '1',
+        path: '/',
+      }).then(done => {
+        console.log('CookieManager.set =>', done);
+      });
+    }
+    if (MINDS_STAGING) {
+      CookieManager.set('https://www.minds.com', {
+        name: 'staging',
+        value: '1',
+        path: '/',
+      }).then(done => {
+        console.log('CookieManager.set =>', done);
+      });
+    }
+
     this.axios =
       axiosInstance ||
       axios.create({
@@ -326,7 +348,11 @@ export class ApiService {
    */
   clearCookies() {
     return new Promise(success => {
-      NativeModules.Networking.clearCookies(success);
+      NativeModules.Networking.clearCookies(d => {
+        // we need to set the network id cookie for android
+        analyticsService.setNetworkCookie();
+        success(d);
+      });
     });
   }
 
@@ -338,16 +364,10 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
+      'no-cache': '1',
       'App-Version': Version.VERSION,
       ...customHeaders,
     };
-
-    if (MINDS_STAGING) {
-      headers.Cookie = `${headers.Cookie};staging=1`;
-    }
-    if (MINDS_CANARY) {
-      headers.Cookie = `${headers.Cookie};canary=1`;
-    }
 
     if (this.accessToken && !headers.Authorization) {
       headers = {

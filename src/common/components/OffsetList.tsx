@@ -2,7 +2,6 @@ import { observer } from 'mobx-react';
 import React, {
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -68,7 +67,6 @@ export default observer(
       refreshing,
     } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
       params: opts,
-      skip: true,
       dataField: props.endpointData,
       updateStrategy: 'merge',
       map: props.map,
@@ -98,16 +96,10 @@ export default observer(
     }, [refresh]);
 
     const onFetchMore = useCallback(() => {
-      !loading &&
-        result &&
-        result['load-next'] &&
-        setOffset(result['load-next']) &&
-        fetch();
-    }, [fetch, loading, result]);
-
-    useEffect(() => {
-      fetch();
-    }, [fetch]);
+      if (!loading && result && Boolean(result['load-next'])) {
+        setOffset(result['load-next']);
+      }
+    }, [loading, result]);
 
     // =====================| RENDERS |=====================>
     const renderItem = useMemo(() => {
@@ -129,7 +121,7 @@ export default observer(
             <ActivityIndicator size={30} />
           </View>
         ) : undefined,
-      [loading, refreshing, result?.[props.endpointData]],
+      [loading, refreshing, props.endpointData, result?.[props.endpointData]],
     );
 
     if (error && !loading) {
