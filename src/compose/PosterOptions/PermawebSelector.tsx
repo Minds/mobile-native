@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
 
@@ -8,13 +8,20 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
+
+interface PermawebProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'PermawebSelector'> {}
 
 /**
  * Permaweb selector
  */
-export default observer(function (props) {
+export default observer(function ({}: PermawebProps) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
 
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>

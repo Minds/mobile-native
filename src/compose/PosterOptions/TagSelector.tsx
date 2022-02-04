@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, useRef } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -11,6 +11,9 @@ import hashtagService from '../../common/services/hashtag.service';
 import HistoryStore from '../../common/stores/HistoryStore';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
 
 /**
  * Tag row
@@ -38,12 +41,16 @@ const TagRow = props => {
   );
 };
 
+interface TagSelectorProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'TagSelector'> {}
+
 /**
  * Tag selector
  */
-export default observer(function (props) {
+export default observer(function ({}: TagSelectorProps) {
   const theme = ThemedStyles.style;
-  const store = props.route?.params?.store;
+  const store = useComposeContext();
   const inputRef = useRef<any>(null);
 
   const localStore = useLocalStore(

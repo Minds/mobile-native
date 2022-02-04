@@ -9,7 +9,7 @@ import {
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
-import SmartImage from '../../src/common/components/SmartImage';
+import SmartImage from '../common/components/SmartImage';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
@@ -52,7 +52,6 @@ export default observer(function (props) {
         ]}>
         <SmartImage
           style={[styles.thumbnail, theme.bgTertiaryBackground]}
-          threshold={150}
           source={source}
           thumbnail={thumbnail}
           resizeMode={FastImage.resizeMode.cover}
