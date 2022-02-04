@@ -361,12 +361,6 @@
     "disableConversations": "Отключить беседы",
     "enableConversations": "Включить беседы"
   },
-  "keychain": {
-    "unlockMessage": "Разблокировать {{keychain}} keychain",
-    "setupMessage": "Разблокировать {{keychain}} keychain",
-    "encryptMessage": "Введите пароль для зашифровки {{keychain}} keychain.",
-    "encryptMessage1": "Запомните пароль, иначе вам будет отказано в доступе."
-  },
   "messenger": {
     "decrypting": "расшифровка...",
     "notAllowed": "This user only allows messages from users that they subscribe to",

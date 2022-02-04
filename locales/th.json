@@ -361,12 +361,6 @@
     "disableConversations": "ปิดการใช้งานการสนทนา",
     "enableConversations": "เปิดใช้งานการสนทนา"
   },
-  "keychain": {
-    "unlockMessage": "ปลดล็อก {{keychain}} keychain",
-    "setupMessage": "ปลดล็อก {{keychain}} keychain",
-    "encryptMessage": "ป้อนรหัสผ่านที่จะเข้ารหัส {{keychain}} keychain",
-    "encryptMessage1": "โปรดจดจำรหัสผ่านไม่เช่นนั้นคุณจะไม่สามารถทำการอ่าน / เขียนได้หากไม่มีรหัส"
-  },
   "messenger": {
     "decrypting": "กำลังถอดรหัส...",
     "notAllowed": "This user only allows messages from users that they subscribe to",
