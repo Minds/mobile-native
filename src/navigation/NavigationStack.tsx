@@ -26,13 +26,12 @@ import UpdatingScreen from '../update/UpdateScreen';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import ComposeScreen from '../compose/v2/ComposeScreen';
-import CameraScreen from '../compose/v2/CameraScreen';
+import ComposeScreen from '../compose/ComposeScreen';
+import CameraScreen from '../compose/CameraScreen';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import UpgradeScreen from '../upgrade/UpgradeScreen';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
@@ -134,11 +133,6 @@ const AppStack = function () {
           name="ExportLegacyWallet"
           component={ExportLegacyWallet}
           options={{ title: 'Export Wallet' }}
-        />
-        <AppStackNav.Screen
-          name="CustomMonetize"
-          component={CustomMonetizeScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="EmailConfirmation"

@@ -3,24 +3,22 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
-import MenuItem from '../../common/components/menus/MenuItem';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
-import { useNavCallback } from '../PosterOptions/PosterOptions';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import i18n from '../../../common/services/i18n.service';
+import NavigationService from '../../../navigation/NavigationService';
+import MenuItem from '../../../common/components/menus/MenuItem';
+import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
+import { useNavCallback } from '../PosterOptions';
 import Wrapper from './common/Wrapper';
-import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/core';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
-import mindsService from '../../common/services/minds-config.service';
-import MText from '../../common/components/MText';
+import mindsService from '../../../common/services/minds-config.service';
+import MText from '../../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '../PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
 
-type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
-
-type PropsType = {
-  route: MonetizeScreenRouteProp;
-};
+interface PropsType
+  extends StackScreenProps<PosterStackParamList, 'MonetizeSelector'> {}
 
 type IconItemPropsType = {
   isActive: boolean;
@@ -38,10 +36,10 @@ const IconItem = ({ isActive }: IconItemPropsType) => {
   );
 };
 
-const MonetizeScreen = observer(({ route }: PropsType) => {
+const MonetizeScreen = observer(({}: PropsType) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
-  const store = route.params.store;
+  const store = useComposeContext();
 
   const support_tier_urn = mindsService.settings.plus.support_tier_urn;
 

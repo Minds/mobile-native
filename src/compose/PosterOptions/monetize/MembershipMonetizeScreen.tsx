@@ -1,31 +1,21 @@
-import React, { useEffect, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { FC, useCallback, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import i18n from '../../../common/services/i18n.service';
 import Wrapper from './common/Wrapper';
-import type { SupportTiersType } from '../../wire/WireTypes';
-import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import supportTiersService from '../../common/services/support-tiers.service';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import MText from '../../common/components/MText';
+import type { SupportTiersType } from '~/wire/WireTypes';
+import TierManagementScreen from '../../../common/components/tier-management/TierManagementScreen';
+import { StackScreenProps } from '@react-navigation/stack';
+import supportTiersService from '../../../common/services/support-tiers.service';
+import CenteredLoading from '../../../common/components/CenteredLoading';
+import MText from '../../../common/components/MText';
+import { useComposeContext } from '~/compose/useComposeStore';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 
-type MembershipMonetizeScreenRouteProp = RouteProp<
-  AppStackParamList,
-  'MembershipMonetize'
->;
-type MembershipMonetizeScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'MembershipMonetize'
->;
-
-type PropsType = {
-  route: MembershipMonetizeScreenRouteProp;
-  navigation: MembershipMonetizeScreenNavigationProp;
-};
+interface MembershipMonetizeScreenProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'MembershipMonetize'> {}
 
 const createMembershipMonetizeStore = () => {
   const store = {
@@ -60,9 +50,9 @@ const createMembershipMonetizeStore = () => {
 
 export type TierStoreType = ReturnType<typeof createMembershipMonetizeStore>;
 
-const MembershipMonetizeScreeen = observer(
-  ({ route, navigation }: PropsType) => {
-    const store = route.params.store;
+const MembershipMonetizeScreen = observer(
+  ({ route, navigation }: MembershipMonetizeScreenProps) => {
+    const store = useComposeContext();
     const theme = ThemedStyles.style;
 
     const descriptionTextStyle = [
@@ -134,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MembershipMonetizeScreeen;
+export default MembershipMonetizeScreen;
