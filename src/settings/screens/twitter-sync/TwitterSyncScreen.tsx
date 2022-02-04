@@ -12,11 +12,11 @@ import Switch from 'react-native-switch-pro';
 import MText from '~/common/components/MText';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { observer } from 'mobx-react';
-import sleep from '~/common/helpers/sleep';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useConnectAccount from './hooks/useConnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
+import delay from '~/common/helpers/delay';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -120,7 +120,7 @@ function TwitterSyncScreen() {
       'info',
       10000,
     );
-    await sleep(10000);
+    await delay(10000);
     connectAccount(twitterHandle)
       .then(() => {
         showNotification('Your Twitter account is now synced', 'success');
