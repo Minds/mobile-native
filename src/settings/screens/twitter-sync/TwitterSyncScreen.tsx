@@ -9,7 +9,6 @@ import KeyboardSpacingView from '~/common/components/KeyboardSpacingView';
 import { showNotification } from '../../../../AppMessages';
 import i18n from '~/common/services/i18n.service';
 import Switch from 'react-native-switch-pro';
-import MText from '~/common/components/MText';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { observer } from 'mobx-react';
 import useConnectedAccount from './hooks/useConnectedAccount';
@@ -168,9 +167,9 @@ function TwitterSyncScreen() {
       <>
         <ScreenSection top="L2">
           <Row>
-            <MText style={switchLabelStyle}>
+            <B1 containerStyle={ThemedStyles.style.flexContainer} right="XXL">
               {i18n.t('settings.dataSaverDescription')}
-            </MText>
+            </B1>
 
             <Switch value={discoverable} onAsyncPress={onDiscoverableChange} />
           </Row>
@@ -257,9 +256,3 @@ function TwitterSyncScreen() {
 }
 
 export default observer(TwitterSyncScreen);
-
-const switchLabelStyle = ThemedStyles.combine(
-  'flexContainer',
-  'marginRight6x',
-  'fontL',
-);
