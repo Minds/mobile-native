@@ -1,12 +1,39 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, memoize } from 'lodash';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
-import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
 import moment from 'moment-timezone';
-import { observable, action } from 'mobx';
+import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
+
+// importing directly to use the type
+// TODO: consider if we can only do this on dev env to reduce bundle size??
+const enLocale = require('../../../locales/en.json');
+
+// returns property value from object O given property path T, otherwise never
+type GetDictValue<T extends string, O> = T extends `${infer A}.${infer B}`
+  ? A extends keyof O
+    ? GetDictValue<B, O[A]>
+    : never
+  : T extends keyof O
+  ? O[T]
+  : never;
+
+// get all possible key paths
+type DeepKeys<T> = T extends object
+  ? {
+      [K in keyof T]-?: `${K & string}` | Concat<K & string, DeepKeys<T[K]>>;
+    }[keyof T]
+  : '';
+
+// or: only get leaf and no intermediate key path
+type DeepLeafKeys<T> = T extends object
+  ? { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
+  : '';
+type Concat<K extends string, P extends string> = `${K}${'' extends P
+  ? ''
+  : '.'}${P}`;
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -143,7 +170,10 @@ class I18nService {
   /**
    * Translate
    */
-  t(scope: string, options?: object) {
+  t<P extends DeepLeafKeys<typeof enLocale>>(
+    scope: P,
+    options?: object,
+  ): GetDictValue<P, typeof enLocale> {
     return translate(scope, options);
   }
 
