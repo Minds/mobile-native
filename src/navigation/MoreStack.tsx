@@ -258,7 +258,7 @@ export default function () {
       <MoreStack.Screen
         name="TwitterSync"
         component={TwitterSyncScreen}
-        options={{ title: i18n.t('settings.twitterSync') }}
+        options={{ title: i18n.t('settings.twitterSync.title') }}
       />
       <MoreStack.Screen
         name="DeleteChannel"

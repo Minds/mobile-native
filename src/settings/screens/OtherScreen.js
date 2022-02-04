@@ -47,7 +47,7 @@ export default function ({ navigation }) {
       onPress: useNavCallback('TierManagementScreen'),
     },
     {
-      title: i18n.t('settings.twitterSync'),
+      title: i18n.t('settings.twitterSync.title'),
       onPress: useNavCallback('TwitterSync'),
     },
     /*{

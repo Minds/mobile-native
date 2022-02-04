@@ -51,8 +51,9 @@ function TwitterSyncScreen() {
     if (!user) return;
 
     const siteUrl = mindsSettings.site_url;
-    const tweetMessage =
-      'Verifying my channel on @minds. ' + siteUrl + user?.username;
+    const tweetMessage = `${i18n.t('settings.twitterSync.verificationText')} ${
+      siteUrl + user?.username
+    }`;
 
     return Linking.openURL(
       `https://twitter.com/intent/tweet?text=${tweetMessage}`,
@@ -101,7 +102,7 @@ function TwitterSyncScreen() {
         })
         .catch(() => {
           showNotification(
-            "Sorry, we couldn't update your preference",
+            i18n.t('settings.twitterSync.error.update'),
             'danger',
           );
           cb(false);
@@ -115,19 +116,22 @@ function TwitterSyncScreen() {
    **/
   const onConnectAccount = useCallback(async () => {
     showNotification(
-      'Please wait a moment, tweets can take a while to be visible.',
+      i18n.t('settings.twitterSync.notifs.info.connect'),
       'info',
       10000,
     );
     await delay(10000);
     connectAccount(twitterHandle)
       .then(() => {
-        showNotification('Your Twitter account is now synced', 'success');
+        showNotification(
+          i18n.t('settings.twitterSync.notifs.success.connect'),
+          'success',
+        );
         setIsSynced(true);
       })
       .catch(() =>
         showNotification(
-          "Sorry, we couldn't find your verification post",
+          i18n.t('settings.twitterSync.notifs.error.connect'),
           'danger',
         ),
       );
@@ -141,7 +145,7 @@ function TwitterSyncScreen() {
       .then(() => setIsSynced(false))
       .catch(() =>
         showNotification(
-          "Sorry, we couldn't disconnect your account",
+          i18n.t('settings.twitterSync.notifs.error.disconnect'),
           'danger',
         ),
       );
@@ -168,7 +172,7 @@ function TwitterSyncScreen() {
         <ScreenSection top="L2">
           <Row>
             <B1 containerStyle={ThemedStyles.style.flexContainer} right="XXL">
-              {i18n.t('settings.dataSaverDescription')}
+              {i18n.t('settings.twitterSync.discoverable')}
             </B1>
 
             <Switch value={discoverable} onAsyncPress={onDiscoverableChange} />
@@ -182,7 +186,7 @@ function TwitterSyncScreen() {
             mode="outline"
             spinner
             loading={disconnectAccountLoading}>
-            Disconnect
+            {i18n.t('settings.twitterSync.disconnect')}
           </Button>
         </ScreenSection>
       </>
@@ -191,30 +195,33 @@ function TwitterSyncScreen() {
     content = (
       <>
         <ScreenSection top="L2">
-          <H1>Step 1</H1>
+          <H1>{i18n.t('settings.twitterSync.step1.title')}</H1>
           <B1 color="secondary" vertical="L">
-            We need you to create a Tweet so that we can pair your account. It's
-            important that the pre-populated link is not changed.
+            {i18n.t('settings.twitterSync.step1.desc')}
           </B1>
           <Button onPress={onPostToTwitter} type={'action'} mode={'outline'}>
-            Create a Tweet
+            {i18n.t('settings.twitterSync.step1.action')}
           </Button>
         </ScreenSection>
         <ScreenSection top="L2">
-          <H1>Step 2</H1>
+          <H1>{i18n.t('settings.twitterSync.step2.title')}</H1>
           <B1 color="secondary" vertical="L">
-            What is your Twitter handle (e.g. @minds)
+            {i18n.t('settings.twitterSync.step2.desc')}
           </B1>
         </ScreenSection>
         <InputContainer
-          placeholder={'e.g. @minds'}
+          placeholder={i18n.t('settings.twitterSync.step2.input.placeholder')}
           onChangeText={onUsernameChange}
           autoComplete="username"
           textContentType="username"
           value={twitterHandle}
           onBlur={onBlur}
           onFocus={onFocus}
-          error={!isValid && errorsVisible ? 'Invalid handle' : undefined}
+          error={
+            !isValid && errorsVisible
+              ? i18n.t('settings.twitterSync.step2.input.error')
+              : undefined
+          }
         />
 
         <ScreenSection top="L" bottom="XXXL2">
@@ -225,7 +232,7 @@ function TwitterSyncScreen() {
             loading={connectAccountLoading}
             spinner
             disabled={!validateHandle(twitterHandle)}>
-            Verify
+            {i18n.t('settings.twitterSync.step2.action')}
           </Button>
         </ScreenSection>
       </>
@@ -241,11 +248,9 @@ function TwitterSyncScreen() {
         keyboardDismissMode={'on-drag'}>
         <ScreenSection top="L">
           <B1 color="secondary">
-            Using our Twitter Sync tool, Twitter users with over{' '}
-            {Number(minFollowers).toLocaleString()} followers can have their new
-            tweets automatically copied over from Twitter to Minds. Retweets,
-            replies, and tweet deletions are not synced to Minds. You can edit
-            and/or delete posts on Minds through the Minds app or website.
+            {i18n.t('settings.twitterSync.description', {
+              limit: Number(minFollowers).toLocaleString(),
+            })}
           </B1>
         </ScreenSection>
 
