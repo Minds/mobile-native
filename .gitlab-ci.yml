@@ -12,25 +12,28 @@ cache:
   key:
     files:
       - yarn.lock
-    prefix: ${CI_JOB_NAME}
+    prefix: ${CI_JOB_STAGE}
   paths:
     - node_modules/
     - .jest/cache/
 
 test:
   stage: test
+  before_script:
+    - yarn --frozen-lockfile
   script:
     - yarn test --forceExit
 
 lint:
   stage: test
   script:
+    - npm i -g prettier@"^1.19.1"
     - yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
 
-build:
+static-analysis:
   stage: test
   before_script:
-    - yarn install --frozen-lockfile
+    - yarn --frozen-lockfile
   script:
     - yarn tsc
 
