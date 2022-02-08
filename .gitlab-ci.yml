@@ -1,5 +1,8 @@
+image: node:12.13.0
+
 stages:
-  - test and build
+  - test
+  - build
   - e2e
   - deploy
   - release
@@ -15,18 +18,17 @@ cache:
     - .jest/cache/
 
 test:
-  image: node:12.13.0
-  stage: test and build
+  stage: test
   script:
     - yarn test --forceExit
 
 lint:
-  stage: test and build
+  stage: test
   script:
     - yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
 
 build:
-  stage: test and build
+  stage: test
   before_script:
     - yarn install --frozen-lockfile
   script:
@@ -127,7 +129,7 @@ build:
 
 .build_android: &build_android
   image: circleci/android:api-30-node
-  stage: test and build
+  stage: build
   # cache:
   #   key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
   #   paths:
@@ -169,7 +171,7 @@ build:androidproduction:
 # Production version for MR testing (manual)
 build:android-mr-production:
   image: circleci/android:api-30-node
-  stage: test and build
+  stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
     paths:
@@ -216,7 +218,7 @@ build:android-mr-production:
 build:cleanup:
   image: circleci/android:api-30-node
   when: manual
-  stage: test and build
+  stage: build
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
@@ -238,7 +240,7 @@ build:cleanup:
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   image: circleci/android:api-30-node
-  stage: test and build
+  stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
     paths:
