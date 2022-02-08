@@ -17,10 +17,17 @@ cache:
     - node_modules/
     - .jest/cache/
 
-test:
+static-analysis:
   stage: test
   before_script:
     - yarn --frozen-lockfile
+  script:
+    - yarn tsc
+
+test:
+  stage: test
+  needs:
+    - static-analysis
   script:
     - yarn test --forceExit
 
@@ -29,13 +36,6 @@ lint:
   script:
     - npm i -g prettier@"^1.19.1"
     - yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
-
-static-analysis:
-  stage: test
-  before_script:
-    - yarn --frozen-lockfile
-  script:
-    - yarn tsc
 
 # e2e test
 # e2e:detox:
