@@ -24,7 +24,7 @@ static-analysis:
   script:
     - yarn tsc
 
-test:
+jest:
   stage: test
   needs:
     - static-analysis
@@ -171,12 +171,15 @@ build:androidproduction:
       - /^test-*/
       - /^release-*/
 
-# Production version for MR testing (manual)
-build:android-mr-production:
+# Production version for MR testing
+build:android-review-app:
   image: circleci/android:api-30-node
   stage: build
   cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    key:
+      files:
+        - yarn.lock
+      prefix: ${CI_JOB_NAME}
     paths:
       - node_modules/
       - android/vendor/bundle
@@ -226,10 +229,6 @@ build:cleanup:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
     action: stop
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
   before_script:
     - yarn install --frozen-lockfile
   script:
@@ -245,7 +244,10 @@ build:androidproduction-playstore:
   image: circleci/android:api-30-node
   stage: build
   cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    key:
+      files:
+        - yarn.lock
+      prefix: ${CI_JOB_NAME}
     paths:
       - node_modules/
       - android/vendor/bundle
