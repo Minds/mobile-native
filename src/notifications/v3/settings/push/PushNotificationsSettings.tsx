@@ -14,15 +14,26 @@ import {
   titleStyle,
 } from '../email/EmailNotificationsSettings';
 import MText from '../../../../common/components/MText';
+import Empty from '~/common/components/Empty';
+import { Button } from '~/common/ui';
+import CenteredLoading from '~/common/components/CenteredLoading';
 
 type PropsType = {};
 
 const PushNotificationsSettings = ({}: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
-  return (
-    <View style={containerStyle}>
-      <ScrollView>
+
+  React.useEffect(() => {
+    if (notifications.pushNotificationsSettings === null) {
+      notifications.loadPushNotificationsSettings();
+    }
+  }, [notifications]);
+
+  const body =
+    notifications.pushNotificationsSettings &&
+    notifications.pushNotificationsSettings.length > 0 ? (
+      <>
         <MenuItem
           item={{
             title: i18n.t('notificationSettings.enableDisable'),
@@ -55,7 +66,23 @@ const PushNotificationsSettings = ({}: PropsType) => {
             />
           );
         })}
-      </ScrollView>
+      </>
+    ) : !notifications.pushNotificationsSettings ? (
+      <Empty title={i18n.t('cantLoad')}>
+        <Button
+          top="L"
+          onPress={() => notifications.loadPushNotificationsSettings()}
+          type="action">
+          {i18n.t('tryAgain')}
+        </Button>
+      </Empty>
+    ) : (
+      <CenteredLoading />
+    );
+
+  return (
+    <View style={containerStyle}>
+      <ScrollView>{body}</ScrollView>
     </View>
   );
 };
@@ -74,4 +101,4 @@ const SettingToggle = observer(
   },
 );
 
-export default PushNotificationsSettings;
+export default observer(PushNotificationsSettings);
