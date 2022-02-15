@@ -1538,5 +1538,7 @@
   "emptyList": "Sorry the list is empty",
   "and": "and",
   "others": "others",
-  "newMoment": "New Moment"
+  "newMoment": "New Moment",
+  "recommendedChannels": "Recommended Channels",
+  "seeMore": "See more"
 }

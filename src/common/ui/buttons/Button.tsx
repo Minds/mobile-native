@@ -19,6 +19,7 @@ import {
 import { frameThrower } from '~ui/helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
+import { Icon } from '..';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -36,6 +37,7 @@ export type ButtonPropsType = {
   onPress?: (release: any) => void;
   testID?: string;
   accessibilityLabel?: string;
+  icon?: React.ReactNode;
 };
 const shouldBreak = (num, disabled, state) => {
   return (
@@ -65,6 +67,7 @@ export const ButtonComponent = ({
   shouldAnimateChanges = true,
   testID,
   accessibilityLabel,
+  icon,
 }: ButtonPropsType) => {
   const containerStyle = [
     styles.container,
@@ -72,6 +75,7 @@ export const ButtonComponent = ({
     styles[size],
     styles[`${mode}_${type}`],
     styles[`${mode}_${size}`],
+    icon && styles.paddingLess,
     disabled && styles[`${mode}_disabled`],
   ];
 
@@ -253,9 +257,13 @@ export const ButtonComponent = ({
         {darkContent && <View style={styles.darken} />}
         {/** Button Text */}
         <Animated.View style={{ transform: [{ scale: textAnimation }] }}>
-          <Font font={font} color={textColor} numberOfLines={1}>
-            {text}
-          </Font>
+          {icon ? (
+            icon
+          ) : (
+            <Font font={font} color={textColor} numberOfLines={1}>
+              {text}
+            </Font>
+          )}
         </Animated.View>
       </View>
     </Pressable>
@@ -363,6 +371,9 @@ const styles = ThemedStyles.create({
   },
   spinner_tiny: {
     transform: [{ scale: 0.8 }],
+  },
+  paddingLess: {
+    paddingHorizontal: 0,
   },
 });
 
