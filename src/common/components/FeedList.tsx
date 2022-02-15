@@ -19,6 +19,20 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 
+/**
+ * an item to be injected in feed
+ */
+export interface InjectItem {
+  /**
+   * the indexes in the feed this item should be inserted
+   */
+  indexes: number[];
+  /**
+   * the component to render
+   */
+  component: React.ReactNode;
+}
+
 type PropsType = {
   prepend?: React.ReactNode;
   feedStore: FeedStore;
@@ -39,6 +53,10 @@ type PropsType = {
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
+  /**
+   * a list of items to inject at various positions in the feed
+   */
+  injectItems?: InjectItem[];
 };
 
 /**
@@ -294,6 +312,10 @@ export default class FeedList<T> extends Component<PropsType> {
           autoHeight={false}
           showCommentsOutlet={false}
         />
+        {
+          this.props.injectItems?.find(p => p.indexes.includes(row.index))
+            ?.component
+        }
       </ErrorBoundary>
     );
   };

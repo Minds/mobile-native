@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import FeedList from '../common/components/FeedList';
+import FeedList, { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
@@ -18,6 +18,7 @@ import SocialCompassPrompt from '../common/components/social-compass/SocialCompa
 import Feature from '~/common/components/Feature';
 import Topbar from '~/topbar/Topbar';
 import ThemedStyles from '~/styles/ThemedStyles';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -50,6 +51,12 @@ class NewsfeedScreen extends Component<PropsType> {
       </View>
     ),
   };
+  injectItems: InjectItem[] = [
+    {
+      indexes: [2],
+      component: <ChannelRecommendation />,
+    },
+  ];
 
   refreshNewsfeed = e => {
     if (this.props.navigation.isFocused()) {
@@ -130,6 +137,7 @@ class NewsfeedScreen extends Component<PropsType> {
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
         afterRefresh={this.refreshPortrait}
+        injectItems={this.injectItems}
         {...additionalProps}
       />
     );

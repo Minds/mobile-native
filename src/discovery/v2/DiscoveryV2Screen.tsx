@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
@@ -11,7 +11,7 @@ import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import FeedList from '../../common/components/FeedList';
+import FeedList, { InjectItem } from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { AnimatePresence } from 'moti';
@@ -19,6 +19,7 @@ import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 
 interface Props {
   navigation: any;
@@ -60,6 +61,16 @@ export const DiscoveryV2Screen = withErrorBoundary(
         </Empty>
       ),
       [navigation],
+    );
+
+    const feedInjectItems: InjectItem[] = useMemo(
+      () => [
+        {
+          indexes: [2],
+          component: <ChannelRecommendation />,
+        },
+      ],
+      [],
     );
 
     useEffect(() => {
@@ -116,6 +127,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
                 feedStore={store.topFeed}
                 navigation={navigation}
                 header={header}
+                injectItems={feedInjectItems}
               />
             </DiscoveryTabContent>
           );
