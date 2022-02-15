@@ -19,7 +19,6 @@ import {
 import { frameThrower } from '~ui/helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
-import { Icon } from '..';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';

@@ -14,7 +14,6 @@ export const useChannelRecommendation = () => {
       type: 'all',
       limit: 3,
     },
-    persist: true,
     dataField: 'suggestions',
     map: suggestions =>
       suggestions.map(suggestion => ({
