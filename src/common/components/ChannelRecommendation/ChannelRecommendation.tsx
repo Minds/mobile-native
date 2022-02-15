@@ -4,6 +4,7 @@ import React, { FC, useCallback } from 'react';
 import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
+// import useExperiment from '~/common/hooks/useExperiment';
 import i18nService from '~/common/services/i18n.service';
 import { Avatar, B1, B2, Column, H3, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -47,6 +48,10 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
 interface ChannelRecommendationProps {}
 
 const ChannelRecommendation: FC<ChannelRecommendationProps> = () => {
+  // if (!useExperiment('channel-recommendation')) {
+  //   return null;
+  // }
+
   const { result } = useChannelRecommendation();
 
   if (!result?.suggestions.length) {
