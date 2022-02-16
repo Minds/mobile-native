@@ -9,7 +9,7 @@ import i18nService from '~/common/services/i18n.service';
 import { Avatar, B1, B2, Column, H3, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import MPressable from '../MPressable';
-import { useChannelRecommendation } from './hooks/useChannelRecommndation';
+import { useChannelRecommendation } from './hooks/useChannelRecommendation';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
@@ -45,14 +45,18 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
   );
 };
 
-interface ChannelRecommendationProps {}
+interface ChannelRecommendationProps {
+  location: string;
+}
 
-const ChannelRecommendation: FC<ChannelRecommendationProps> = () => {
+const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
+  location,
+}) => {
   // if (!useExperiment('channel-recommendation')) {
   //   return null;
   // }
 
-  const { result } = useChannelRecommendation();
+  const { result } = useChannelRecommendation(location);
 
   if (!result?.suggestions.length) {
     return null;

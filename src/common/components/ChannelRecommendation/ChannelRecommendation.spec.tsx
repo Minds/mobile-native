@@ -49,7 +49,9 @@ jest.mock('~/common/hooks/useApiFetch', () => () => ({
 
 describe('ChannelRecommendation', () => {
   test('renders correctly', () => {
-    const component = shallow(<ChannelRecommendation />);
+    const component = shallow(
+      <ChannelRecommendation location="fakeLocation" />,
+    );
 
     expect(component).toMatchSnapshot();
   });

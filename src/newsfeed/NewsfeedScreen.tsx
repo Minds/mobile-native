@@ -54,7 +54,7 @@ class NewsfeedScreen extends Component<PropsType> {
   injectItems: InjectItem[] = [
     {
       indexes: [2],
-      component: <ChannelRecommendation />,
+      component: <ChannelRecommendation location="newsfeed" />,
     },
   ];
 
