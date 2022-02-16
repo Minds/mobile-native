@@ -1,7 +1,7 @@
 import { reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useEffect } from 'react';
-import apiService, { isAbort } from '../services/api.service';
+import apiService, { ApiError, isAbort } from '../services/api.service';
 import { storages } from '../services/storage/storages.service';
 
 const getCacheKey = (url: string, params: any) =>
@@ -77,7 +77,7 @@ export interface FetchStore<T> {
   retryTimer: any;
   loading: boolean;
   result: T | null;
-  error: any;
+  error?: ApiError;
   setResult: (v: any) => void;
   clearRetryTimer: (boolean) => void;
   setLoading: (v: boolean) => void;
@@ -107,7 +107,7 @@ const createStore = ({
   loading: false,
   refreshing: false,
   result: <any>null,
-  error: null,
+  error: undefined,
   clearRetryTimer(clearCount: boolean) {
     if (this.retryTimer !== undefined) {
       //@ts-ignore

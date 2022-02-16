@@ -43,8 +43,10 @@ export interface ApiResponse {
  * Api Error
  */
 export class ApiError extends Error {
-  errId: string = '';
-  headers: any = null;
+  errorId?: string;
+  headers?: any;
+  errors?: { field: string; message: string }[];
+  status?: number;
 
   constructor(...args) {
     super(...args);
@@ -316,12 +318,28 @@ export class ApiService {
     const data = response.data;
 
     // Failed on API side
-    if (data && data.status && data.status !== 'success') {
-      const msg = data && data.message ? data.message : 'Server error';
-      const errId = data && data.errorId ? data.errorId : '';
+    if (data?.status !== 'success') {
+      const msg = data?.message || 'Server error';
+
       const apiError = new ApiError(msg);
-      apiError.errId = errId;
+
+      apiError.errorId = data?.errorId;
+      // @ts-ignore
+      apiError.errors = data?.errors;
+      apiError.status = response.status;
+
+      if (__DEV__) {
+        console.error(
+          `API ERROR: ${response.config.url} failed with \n ${JSON.stringify(
+            apiError,
+            null,
+            2,
+          )}`,
+        );
+      }
+
       apiError.headers = response.headers;
+
       throw apiError;
     }
     if (response.status >= 500) {
