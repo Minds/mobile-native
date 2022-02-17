@@ -10,8 +10,6 @@ import WireAction from './actions/WireAction';
 import CommentsAction from './actions/CommentsAction';
 import RemindAction from './actions/RemindAction';
 import BoostAction from './actions/BoostAction';
-
-import featuresService from '../../common/services/features.service';
 import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
@@ -37,7 +35,6 @@ export const Actions = observer((props: PropsType) => {
   const entity = props.entity;
   const isOwner = entity.isOwner();
   const hasWire = Platform.OS !== 'ios';
-  const hasCrypto = featuresService.has('crypto');
   const isScheduled = BaseModel.isScheduled(
     parseInt(entity.time_created, 10) * 1000,
   );
@@ -61,11 +58,11 @@ export const Actions = observer((props: PropsType) => {
 
           <ShareAction entity={entity} />
 
-          {!isOwner && hasCrypto && hasWire && (
+          {!isOwner && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />
           )}
 
-          {isOwner && hasCrypto && !isScheduled && (
+          {isOwner && !isScheduled && (
             <BoostAction entity={entity} navigation={navigation} />
           )}
         </View>

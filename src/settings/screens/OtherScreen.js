@@ -5,7 +5,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
-import featuresService from '../../common/services/features.service';
 import { getExportableWallets } from '~/blockchain/ExportOldWallet';
 
 function useNavCallback(screen) {
@@ -92,8 +91,7 @@ export default function ({ navigation }) {
     <ScrollView style={containerStyle}>
       {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {generateSection(i18n.t('settings.otherOptions.g'), referrals)}
-      {featuresService.has('paywall-2020') &&
-        generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}

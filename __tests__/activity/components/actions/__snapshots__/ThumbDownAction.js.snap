@@ -37,7 +37,7 @@ exports[`Thumb action component renders correctly 1`] = `
     }
   >
     <AnimatedThumb
-      canVote={true}
+      canVote={false}
       down={true}
       name="thumb-down"
       size={21}

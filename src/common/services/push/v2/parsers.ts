@@ -1,7 +1,6 @@
 import navigation from '../../../../navigation/NavigationService';
 import logService from '../../log.service';
 import entitiesService from '../../entities.service';
-import featuresService from '../../features.service';
 
 export const parseByEntityType = (data: any) => {
   const [entity_type_one, entity_type_two] = data.json.entity_type.split(':');
@@ -61,15 +60,9 @@ export const parseComment = async (data: any) => {
 };
 
 export const parseReward = () => {
-  if (featuresService.has('crypto')) {
-    navigation.navigate('App', {
-      screen: 'Wallet',
-    });
-  } else {
-    navigation.navigate('App', {
-      screen: 'Notifications',
-    });
-  }
+  navigation.navigate('App', {
+    screen: 'Wallet',
+  });
 };
 
 export const error = (data: any, errorType: string) => {

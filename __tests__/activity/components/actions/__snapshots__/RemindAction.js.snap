@@ -3,7 +3,7 @@
 exports[`Thumb action component renders correctly 1`] = `
 <Fragment>
   <withSpacer(IconButtonNextComponent)
-    disabled={false}
+    disabled={true}
     extra={null}
     fill={true}
     name="remind"

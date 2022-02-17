@@ -5,7 +5,6 @@ import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
-import featuresService from '../../common/services/features.service';
 import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
@@ -124,10 +123,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     // if can edit
-    if (
-      entity.isOwner() ||
-      (featuresService.has('permissions') && entity.can(FLAG_EDIT_POST))
-    ) {
+    if (entity.isOwner() || entity.can(FLAG_EDIT_POST)) {
       // Edit
       options.push({
         title: i18n.t('edit'),
@@ -172,24 +168,21 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         });
       }
 
-      if (featuresService.has('allow-comments-toggle')) {
-        // Toggle comments
-        options.push({
-          title: entity.allow_comments
-            ? i18n.t('disableComments')
-            : i18n.t('enableComments'),
-          iconName: 'pin-outline',
-          iconType: 'material-community',
-          onPress: async () => {
-            try {
-              this.hideActionSheet();
-              await this.props.entity.toggleAllowComments();
-            } catch (err) {
-              this.showError();
-            }
-          },
-        });
-      }
+      options.push({
+        title: entity.allow_comments
+          ? i18n.t('disableComments')
+          : i18n.t('enableComments'),
+        iconName: 'pin-outline',
+        iconType: 'material-community',
+        onPress: async () => {
+          try {
+            this.hideActionSheet();
+            await this.props.entity.toggleAllowComments();
+          } catch (err) {
+            this.showError();
+          }
+        },
+      });
     }
 
     if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {
@@ -206,7 +199,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     // Permaweb
-    if (featuresService.has('permaweb') && entity.permaweb_id) {
+    if (entity.permaweb_id) {
       options.push({
         title: i18n.t('permaweb.viewOnPermaweb'),
         iconName: 'format-paragraph',

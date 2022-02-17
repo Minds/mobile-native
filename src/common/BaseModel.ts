@@ -9,7 +9,6 @@ import logService from './services/log.service';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import i18n from './services/i18n.service';
-import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import { showNotification } from '../../AppMessages';
@@ -306,9 +305,6 @@ export default class BaseModel extends AbstractModel {
    * @returns {boolean}
    */
   can(actionName: string, showAlert = false) {
-    // TODO: clean up permissions feature flag
-    if (!featuresService.has('permissions')) return true;
-
     let allowed = true;
 
     if (!this.permissions || !this.permissions.permissions) {
