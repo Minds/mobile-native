@@ -17,25 +17,19 @@ import { FLAG_JOIN } from '../../common/Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
-import type GroupsBarStore from '../GroupsBarStore';
 import GroupViewStore from '../GroupViewStore';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import AnimatedSearch from './AnimatedSearch';
-import BottomSheetModal from '../../common/components/bottom-sheet/BottomSheetModal';
-import MenuItem from '../../common/components/bottom-sheet/MenuItem';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
 import MText from '../../common/components/MText';
 import { Button, IconButtonNext } from '~ui';
 
 type PropsTypes = {
-  groupsBar: GroupsBarStore;
   store: GroupViewStore;
 };
 
 /**
  * Group Header
  */
-@inject('groupsBar')
 @observer
 export default class GroupHeader extends Component<PropsTypes> {
   state = {
@@ -55,11 +49,6 @@ export default class GroupHeader extends Component<PropsTypes> {
       props.styles.userAvatar,
       'bcolorPrimaryBackground',
     );
-  }
-
-  componentDidMount() {
-    const group = this.props.store.group;
-    this.props.groupsBar.markAsRead(group, 'activity');
   }
 
   /**
@@ -205,7 +194,6 @@ export default class GroupHeader extends Component<PropsTypes> {
         // clear list without mark loaded flag
         if (this.props.store.list) {
           this.props.store.refresh(group.guid);
-          this.props.groupsBar.markAsRead(group, 'activity');
         }
         break;
       case 'desc':
@@ -213,11 +201,6 @@ export default class GroupHeader extends Component<PropsTypes> {
         break;
       case 'members':
         this.props.store.loadMembers();
-        break;
-      case 'conversation':
-        if (group.conversationDisabled) return;
-
-        this.props.groupsBar.markAsRead(group, 'conversation');
         break;
       default:
         break;
