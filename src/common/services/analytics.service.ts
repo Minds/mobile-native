@@ -131,16 +131,19 @@ export class AnalyticsService {
   }
 
   /**
-   * Add an experiment context
+   * Add an experiment
    */
-  addExperimentContext(experimentId: string, variationId: number): void {
-    this.contexts.push({
-      schema: 'iglu:com.minds/growthbook_context/jsonschema/1-0-1',
-      data: {
-        experiment_id: experimentId,
-        variation_id: variationId,
+  addExperiment(experimentId: string, variationId: number): void {
+    this.tracker?.trackSelfDescribingEvent(
+      {
+        schema: 'iglu:com.minds/growthbook_experiment/jsonschema/1-0-0',
+        data: {
+          experiment_id: experimentId,
+          variation_id: variationId,
+        },
       },
-    });
+      this.contexts,
+    );
   }
 
   /**

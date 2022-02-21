@@ -18,9 +18,9 @@ import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
-import experimentsService from './src/common/services/experiments.service';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
+import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
@@ -107,28 +107,11 @@ export default class AppInitManager {
     const user = sessionService.getUser();
 
     //we initialize growth book with cached data
-    const settings = mindsConfigService.getSettings();
-    if (settings.experiments && settings.experiments.length > 0) {
-      experimentsService.initGrowthbook(
-        sessionService.getUser(),
-        settings.experiments || [],
-      );
-    }
+    updateGrowthBookAttributes();
     // Update the config for this user
     mindsConfigService.update().then(() => {
       // if it changed we initialize growth book again
-      const settingsNew = mindsConfigService.getSettings();
-      if (
-        settingsNew.experiments &&
-        settings.experiments &&
-        JSON.stringify(settingsNew.experiments) !==
-          JSON.stringify(settings.experiments)
-      ) {
-        experimentsService.initGrowthbook(
-          sessionService.getUser(),
-          settingsNew.experiments,
-        );
-      }
+      updateGrowthBookAttributes();
     });
 
     Sentry.configureScope(scope => {
