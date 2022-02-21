@@ -15,6 +15,10 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
+jest.mock('@react-native-cookies/cookies', () => ({
+  set: jest.fn(),
+}));
+
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

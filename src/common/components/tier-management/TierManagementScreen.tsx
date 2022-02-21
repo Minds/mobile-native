@@ -3,7 +3,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import i18n from '../../services/i18n.service';
 import { ScrollView } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { TierStoreType } from '../../../compose/monetize/MembershipMonetizeScreeen';
+import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
 
 import supportTiersService from '../../services/support-tiers.service';
 import CenteredLoading from '../CenteredLoading';
