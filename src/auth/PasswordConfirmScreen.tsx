@@ -4,14 +4,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/core';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import InputContainer from '../common/components/InputContainer';
@@ -19,6 +12,7 @@ import { icon } from './styles';
 import authService from './AuthService';
 import NavigationService from '../navigation/NavigationService';
 import MText from '../common/components/MText';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type PasswordConfirmation = RouteProp<
   RootStackParamList,
@@ -76,9 +70,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
 
   return (
     <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <KeyboardAvoidingView
-        style={theme.flexContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAwareScrollView style={theme.flexContainer}>
         <View style={styles.container}>
           <Icon
             name="chevron-left"
@@ -132,7 +124,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             style={[theme.inputIcon, icon, theme.paddingRight]}
           />
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 });

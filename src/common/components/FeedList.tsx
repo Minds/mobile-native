@@ -296,7 +296,6 @@ export default class FeedList<T> extends Component<PropsType> {
           entity={entity}
           navigation={this.props.navigation}
           autoHeight={false}
-          showCommentsOutlet={false}
         />
       </ErrorBoundary>
     );

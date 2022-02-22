@@ -9,12 +9,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { observer } from 'mobx-react';
-import SoftInputMode from 'react-native-set-soft-input-mode';
 import { useBackHandler } from '@react-native-community/hooks';
 import { action, observable } from 'mobx';
 import { Flow } from 'react-native-animated-spinkit';
 
-import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
+import KeyboardSpacingView from '../../common/components/keyboard/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
@@ -23,7 +22,7 @@ import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { CHAR_LIMIT } from '../../config/Config';
+import { CHAR_LIMIT, IS_IOS } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
 import Animated, {
@@ -81,13 +80,6 @@ const CommentInput = observer((onShow, onDismiss) => {
     }, [hideInput, provider.store?.showInput]),
   );
 
-  React.useEffect(() => {
-    if (Platform.OS === 'android') {
-      SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
-      return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
-    }
-  }, []);
-
   const afterSelected = () => setTimeout(() => ref.current?.focus(), 400);
   const beforeSelect = () => ref.current?.blur();
 
@@ -118,7 +110,7 @@ const CommentInput = observer((onShow, onDismiss) => {
   return (
     <KeyboardSpacingView
       style={StyleSheet.absoluteFill}
-      enabled={Platform.OS === 'ios'}
+      enabled={IS_IOS}
       noInset
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>

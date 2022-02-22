@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect } from 'react';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-import {
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from 'react-native';
+import { ImageBackground, Platform, View } from 'react-native';
 import SmallCircleButton from '../../../common/components/SmallCircleButton';
 import * as Progress from 'react-native-progress';
 import LabeledComponent from '../../../common/components/LabeledComponent';
@@ -19,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
 import InputContainer from '~/common/components/InputContainer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type PropsType = {
   route: any;
@@ -238,18 +233,13 @@ const ChannelEditScreen = (props: PropsType) => {
   }, [route, store]);
 
   return (
-    <ScrollView
-      style={useStyle('flexContainer', 'bgPrimaryBackground')}
-      contentContainerStyle={useStyle({
+    <KeyboardAwareScrollView
+      style={styles.scroll}
+      contentContainerStyle={{
         paddingBottom: insets.bottom + 100,
-      })}
+      }}
       keyboardShouldPersistTaps="handled">
-      <KeyboardAvoidingView
-        style={useStyle('flexContainer', 'paddingTop3x')}
-        behavior="position"
-        keyboardVerticalOffset={Platform.select({
-          ios: 64,
-        })}>
+      <View style={styles.container}>
         <LabeledComponent label={'Banner'} labelStyle={styles.labelStyle}>
           <Banner {...props} store={store} />
         </LabeledComponent>
@@ -263,12 +253,14 @@ const ChannelEditScreen = (props: PropsType) => {
         </LabeledComponent>
         <Bio {...props} store={store} />
         <About {...props} store={store} />
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = ThemedStyles.create({
+  scroll: ['flexContainer', 'bgPrimaryBackground'],
+  container: ['flexContainer', 'paddingTop3x'],
   contentContainerStyle: ['paddingBottom10x'],
   labelStyle: ['paddingLeft4x', 'paddingBottom2x'],
   tapOverlayView: {
