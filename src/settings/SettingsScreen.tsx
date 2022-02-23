@@ -163,14 +163,14 @@ export default function ({ navigation }) {
         style={containerStyle}
         contentContainerStyle={theme.paddingBottom4x}>
         <ScreenHeader title={i18n.t('moreScreen.settings')} />
-        <View style={[innerWrapper, theme.bgPrimaryBackground]}>
+        <View style={[innerWrapper, theme.bgSecondaryBackground]}>
           {firstSectionItems.map((item, index) => (
             <MenuItem
               item={item}
               containerItemStyle={
                 index > 0
                   ? menuItemStyle
-                  : ThemedStyles.style.bgPrimaryBackground
+                  : ThemedStyles.style.bgSecondaryBackground
               }
             />
           ))}
@@ -182,7 +182,7 @@ export default function ({ navigation }) {
               containerItemStyle={
                 index > 0
                   ? menuItemStyle
-                  : ThemedStyles.style.bgPrimaryBackground
+                  : ThemedStyles.style.bgSecondaryBackground
               }
             />
           ))}
@@ -199,9 +199,9 @@ const innerWrapper = ThemedStyles.combine(
 );
 const menuItemStyle = ThemedStyles.combine(
   'borderTop0x',
-  'bgPrimaryBackground',
+  'bgSecondaryBackground',
 );
 const containerStyle = ThemedStyles.combine(
   'flexContainer',
-  'bgSecondaryBackground',
+  'bgPrimaryBackground',
 );

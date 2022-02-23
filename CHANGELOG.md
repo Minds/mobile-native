@@ -2,6 +2,27 @@
 
 Minds Mobile
 
+## 4.21.1 - 2022-02-03
+
+### Changed
+
+- Fix snowplow analytics information
+
+## 4.21.0 - 2022-01-25
+
+### Changed
+
+- New navigation structure
+- User and hashtag autocomplete
+- Fix post scheduler
+- Refresh in comments
+- React native updated
+- Level 2 replies auto tag
+- Channel edit city autocomplete fixed
+- Fix tags manager and tags selector scroll issues
+- Fix notifications refresh
+- General fixes and improvements
+
 ## 4.20.1 - 2022-01-17
 
 ### Changed

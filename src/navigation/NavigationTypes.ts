@@ -199,7 +199,6 @@ export type AppStackParamList = {
     items: Array<PortraitBarItem>;
     index: number;
   };
-  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -221,25 +220,12 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Main: {};
+  Tabs: {};
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
   PermawebSelector: {};
   AccessSelector: {
-    store: ComposeStoreType;
-  };
-  MonetizeSelector: {
-    store: ComposeStoreType;
-  };
-  PlusMonetize: {
-    store: ComposeStoreType;
-  };
-  MembershipMonetize: {
-    store: ComposeStoreType;
-    useForSelection: boolean;
-  };
-  CustomMonetize: {
     store: ComposeStoreType;
   };
   LicenseSelector: {};

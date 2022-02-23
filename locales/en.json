@@ -328,6 +328,7 @@
     "title": "Discovery",
     "manage": "Manage Tags",
     "justForYou": "Just for you",
+    "top": "Top",
     "yourTags": "Your tags",
     "otherTags": "Other tags",
     "trendingTags": "Trending tags",
@@ -358,19 +359,13 @@
     "myGroups": "My Groups",
     "ban": "Ban",
     "kick": "Kick",
-    "makeOwner": "Make Owner",
-    "removeOwner": "Remove as Owner",
+    "makeAdmin": "Make Admin",
+    "removeAdmin": "Remove as Admin",
     "makeModerator": "Make Moderator",
     "removeModerator": "Remove as Moderator",
     "listMembersCount": "{{count}} members",
     "disableConversations": "Disable conversations",
     "enableConversations": "Enable conversations"
-  },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Enter a password that will encrypt the {{keychain}} keychain.",
-    "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
     "typeYourMessage": "Type your message...",

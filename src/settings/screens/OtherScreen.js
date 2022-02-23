@@ -6,7 +6,6 @@ import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
 import featuresService from '../../common/services/features.service';
-import { getExportableWallets } from '~/blockchain/ExportOldWallet';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -15,14 +14,6 @@ function useNavCallback(screen) {
 }
 
 export default function ({ navigation }) {
-  const [showWallets, setShowWallets] = React.useState(false);
-  React.useEffect(() => {
-    getExportableWallets(true).then(w => {
-      console.log('wallets', w);
-      setShowWallets(w?.length > 0);
-    });
-  }, []);
-
   const contentAdmin = [
     /*{
       title: i18n.t('settings.otherOptions.a1'),
@@ -63,17 +54,6 @@ export default function ({ navigation }) {
     },
   ];
 
-  const legacy = [];
-
-  if (showWallets) {
-    legacy.push({
-      title: i18n.t('blockchain.exportLegacyWallet'),
-      onPress: () => {
-        NavigationService.navigate('ExportLegacyWallet');
-      },
-    });
-  }
-
   const data = [
     {
       title: i18n.t('settings.networkOptions.1'),
@@ -97,7 +77,6 @@ export default function ({ navigation }) {
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
-      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
     </ScrollView>
   );
 }

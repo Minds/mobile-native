@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import {
   useBackHandler,
   useDimensions,
@@ -70,6 +70,10 @@ const ScreenReplyComment = ({ navigation }) => {
 const CommentBottomSheet = (props: PropsType, ref: any) => {
   const height = useDimensions().window.height;
   const topInsets = useSafeAreaInsets().top;
+  /**
+   * used to enable/disable back handler
+   **/
+  const [isVisible, setIsVisible] = useState(false);
   const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
     autoOpen: props.autoOpen,
@@ -85,6 +89,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     expand: () => {
       if (localStore.isRendered) {
         sheetRef.current?.present();
+        setIsVisible(true);
       } else {
         localStore.setIsRendered(true);
       }
@@ -93,6 +98,17 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       sheetRef.current?.dismiss();
     },
   }));
+
+  useBackHandler(
+    useCallback(() => {
+      if (isVisible) {
+        sheetRef.current?.dismiss();
+        return true;
+      }
+
+      return false;
+    }, [sheetRef, isVisible]),
+  );
 
   React.useEffect(() => {
     if (!localStore.isRendered && props.autoOpen) {
@@ -147,6 +163,10 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
     [],
   );
+  const onDismiss = useCallback(() => {
+    props.commentsStore.setShowInput(false);
+    setIsVisible(false);
+  }, [props.commentsStore]);
 
   const { keyboardShown } = useKeyboard();
 
@@ -158,6 +178,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     <BottomSheetModal
       key="commentSheet"
       backdropComponent={renderBackdrop}
+      onDismiss={onDismiss}
       handleHeight={20}
       backgroundComponent={null}
       ref={sheetRef}

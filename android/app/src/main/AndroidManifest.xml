@@ -51,7 +51,67 @@
         android:windowSoftInputMode="adjustPan"
         tools:replace="android:allowBackup"
         android:requestLegacyExternalStorage="true">
-        <activity  android:exported="false" android:name=".CustomErrorScreen"></activity>
+        <!-- Temporal fix android 12 issues temporal -->
+        <activity android:name="com.masteratul.exceptionhandler.DefaultErrorScreen"
+                android:exported="false"
+                tools:node="merge" />
+        <activity android:name="com.proyecto26.inappbrowser.ChromeTabsManagerActivity" android:exported="false" tools:node="merge" >
+        </activity>
+        <activity
+            android:name="com.stripe.android.view.AddPaymentMethodActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.view.PaymentMethodsActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.view.PaymentFlowActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.view.PaymentAuthWebViewActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.view.PaymentRelayActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.payments.StripeBrowserLauncherActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.view.Stripe3ds2CompletionActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.paymentsheet.PaymentSheetActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.paymentsheet.PaymentOptionsActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.googlepay.StripeGooglePayActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.stripe3ds2.views.ChallengeActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <activity
+            android:name="com.stripe.android.stripe3ds2.views.ChallengeProgressActivity"
+            android:exported="false"
+            tools:node="merge" />
+        <service android:name="com.wix.reactnativenotifications.core.ProxyService" android:exported="false"
+            tools:node="merge"/>
+        <service android:name="com.wix.reactnativenotifications.fcm.FcmInstanceIdListenerService" android:exported="false"
+            tools:node="merge"/>
+        <!-- Temporal fix android 12 issues temporal -->
+        
+        <activity android:exported="false" android:name=".CustomErrorScreen"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"

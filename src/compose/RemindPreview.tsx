@@ -13,7 +13,8 @@ import ThemedStyles from '../styles/ThemedStyles';
 export default function (props) {
   const entity = props.entity.remind_object || props.entity;
 
-  const ShowComponent = entity.subtype === 'blog' ? BlogCard : Activity;
+  const ShowComponent: React.ElementType =
+    entity.subtype === 'blog' ? BlogCard : Activity;
   const navigation = useNavigation();
 
   return (

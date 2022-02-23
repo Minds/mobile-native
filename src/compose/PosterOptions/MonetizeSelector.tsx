@@ -1,21 +1,27 @@
-import React, { useCallback, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { FC, useCallback, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
+
+interface MonetizeSelectorProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'MonetizeSelector'> {}
 
 /**
- * NSFW selector
+ * Monetize selector
  */
-export default observer(function (props) {
+export default observer(function ({}: MonetizeSelectorProps) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
 
   const localStore = useLocalStore(() => ({
     show: false,

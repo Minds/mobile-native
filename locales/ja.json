@@ -361,12 +361,6 @@
     "disableConversations": "会話を無効にする。",
     "enableConversations": "会話を有効にする。"
   },
-  "keychain": {
-    "unlockMessage": "{{keychain}}キーチェーンをアンロックする",
-    "setupMessage": "{{keychain}}キーチェーンをアンロックする",
-    "encryptMessage": "{{keychain}}キーチェーンを暗号化するパスワードを入力してください。",
-    "encryptMessage1": "パスワードを忘れないようにしてください。パスワードを読み書きできなくなります。"
-  },
   "messenger": {
     "decrypting": "復号化...",
     "notAllowed": "This user only allows messages from users that they subscribe to",

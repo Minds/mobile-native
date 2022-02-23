@@ -361,12 +361,6 @@
     "disableConversations": "Ẩn cuộc hội thoại",
     "enableConversations": "Mở cuộc hội thoại"
   },
-  "keychain": {
-    "unlockMessage": "Mở khóa keychain {{keychain}}",
-    "setupMessage": "Mở khóa keychain {{keychain}}",
-    "encryptMessage": "Nhập mật khẩu sẽ mã hóa chuỗi {{keychain}} keychain.",
-    "encryptMessage1": "Hãy nhớ mật khẩu hoặc bạn sẽ không thể đọc/ghi từ nó."
-  },
   "messenger": {
     "decrypting": "giải mã",
     "notAllowed": "This user only allows messages from users that they subscribe to",

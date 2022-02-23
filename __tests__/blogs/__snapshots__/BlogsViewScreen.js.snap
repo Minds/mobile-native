@@ -53,6 +53,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "Cache-Control": "no-cache, no-store, must-revalidate",
                   "Content-Type": "application/json",
                   "Pragma": "no-cache",
+                  "no-cache": "1",
                 },
                 "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
               }
@@ -68,6 +69,29 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           />
         </View>
+        <View
+          pointerEvents="none"
+          style={
+            Array [
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "alignSelf": "center",
+                "justifyContent": "center",
+              },
+              Object {
+                "opacity": undefined,
+              },
+            ]
+          }
+        />
       </View>
       <Text
         style={
