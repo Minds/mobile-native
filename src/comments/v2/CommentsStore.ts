@@ -35,6 +35,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable selection = { start: 0, end: 0 };
   @observable mature = 0;
   @observable loadingPrevious = false;
   @observable loadingNext = false;
@@ -428,6 +429,9 @@ export default class CommentsStore {
 
       if (this.entity.incrementCommentsCounter) {
         this.entity.incrementCommentsCounter();
+        if (this.parent) {
+          this.parent.increaseReply();
+        }
       }
     } catch (err) {
       logService.exception('[CommentsStore] post', err);
@@ -524,6 +528,15 @@ export default class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
+  }
+
+  /**
+   * Set selection
+   * @param {object} selection
+   */
+  @action
+  setSelection(selection) {
+    this.selection = selection;
   }
 
   /**

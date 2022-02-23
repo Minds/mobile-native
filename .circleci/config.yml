@@ -33,6 +33,36 @@ jobs:
       - persist_to_workspace:
           paths: .
           root: .
+
+  fastlane_build_qa:
+    executor:
+      name: rn/macos
+      xcode_version: '13.2.0'
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/yarn_install:
+          cache_folder: /Users/distiller/Library/Caches/Yarn
+      - run:
+          working_directory: ios
+          command: pod install
+      - install_fastlane
+      - run:
+          command: node ./tasks/deleteBrowserstackFile.js Minds-`echo "<< pipeline.git.branch >>" | iconv -t ascii//TRANSLIT | sed -E 's/[~\^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+\|-+$//g' | sed -E 's/^-+//g' | sed -E 's/-+$//g' | tr A-Z a-z`.ipa
+          name: Delete Browserstack File
+      - run:
+          working_directory: ios
+          command: fastlane buildrelease
+          name: Run build
+      - run:
+          working_directory: ios
+          command: mv Minds.ipa Minds-`echo "<< pipeline.git.branch >>" | iconv -t ascii//TRANSLIT | sed -E 's/[~\^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+\|-+$//g' | sed -E 's/^-+//g' | sed -E 's/-+$//g' | tr A-Z a-z`.ipa
+          name: Rename
+      - run:
+          working_directory: ios
+          command: curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@Minds-`echo "<< pipeline.git.branch >>" | iconv -t ascii//TRANSLIT | sed -E 's/[~\^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+\|-+$//g' | sed -E 's/^-+//g' | sed -E 's/-+$//g' | tr A-Z a-z`.ipa"
+          name: Upload to Browserstack
+
   fastlane_release:
     executor:
       name: rn/macos
@@ -112,6 +142,12 @@ workflows:
           filters:
             branches:
               ignore: /^stable.*/
+      - fastlane_build_qa:
+          requires:
+            - analyse_js
+          filters:
+            branches:
+              only: /^(fix|feat|chore|refactor|stable).*/
       - e2e_prod:
           requires:
             - checkout_code

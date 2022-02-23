@@ -26,13 +26,12 @@ import UpdatingScreen from '../update/UpdateScreen';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import ComposeScreen from '../compose/v2/ComposeScreen';
-import CameraScreen from '../compose/v2/CameraScreen';
+import ComposeScreen from '../compose/ComposeScreen';
+import CameraScreen from '../compose/CameraScreen';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import UpgradeScreen from '../upgrade/UpgradeScreen';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
@@ -59,7 +58,6 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
-import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
@@ -71,6 +69,7 @@ import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
 import withModalProvider from './withModalProvide';
+import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -117,7 +116,7 @@ const AppStack = function () {
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
-          name="Main"
+          name="Tabs"
           component={TabScreenWithModal}
           options={hideHeader}
         />
@@ -128,16 +127,6 @@ const AppStack = function () {
             animation: 'fade_from_bottom',
             ...hideHeader,
           }}
-        />
-        <AppStackNav.Screen
-          name="ExportLegacyWallet"
-          component={ExportLegacyWallet}
-          options={{ title: 'Export Wallet' }}
-        />
-        <AppStackNav.Screen
-          name="CustomMonetize"
-          component={CustomMonetizeScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="EmailConfirmation"
@@ -156,6 +145,10 @@ const AppStack = function () {
           name="Channel"
           component={ChannelScreenV2WithModal}
           options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="DiscoverySearch"
+          component={DiscoverySearchScreen}
         />
         <AppStackNav.Screen
           name="ChannelEdit"
@@ -204,11 +197,6 @@ const AppStack = function () {
           name="Report"
           component={ReportScreen}
           options={{ title: i18n.t('report') }}
-        />
-        <AppStackNav.Screen
-          name="OnboardingScreen"
-          component={OnboardingScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="TierScreen"

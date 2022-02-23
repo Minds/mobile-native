@@ -139,6 +139,7 @@ test:jest:
   script:
     - bundle exec fastlane assemble_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
   artifacts:
     name: 'Minds APK'
     paths:
@@ -198,10 +199,11 @@ build:android-mr-production:
       - /^feat-*/
       - /^fix-*/
       - /^chore-*/
+      - /^refactor-*/
 
 # Cleanup merged APK from browserstack
 build:cleanup:
-  image: circleci/android:api-30-node
+  image: circleci/android:api-31-node
   when: manual
   stage: build
   environment:
@@ -224,7 +226,7 @@ build:cleanup:
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
-  image: circleci/android:api-30-node
+  image: circleci/android:api-31-node
   stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
@@ -249,6 +251,7 @@ build:androidproduction-playstore:
   script:
     - bundle exec fastlane assemble_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG-play_store.apk
   artifacts:
     name: 'Minds APK'
     paths:
@@ -265,16 +268,9 @@ build:androidproduction-playstore:
 .deploy_s3andbrowserstack: &deploy_s3andbrowserstack
   stage: deploy
   image: minds/ci:latest
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
   script:
     - echo "Upload $APK_FILENAME"
     - aws s3 cp $APK_FILENAME s3://minds-repo/mobile/$APK_FILENAME
-    - node ./tasks/deleteBrowserstackFile.js $APK_FILENAME
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_FILENAME"
 
 deploy:s3andbrowserstack:oss:

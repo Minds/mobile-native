@@ -1,6 +1,27 @@
 {
   "versions": [
     {
+      "version": "4.20.1",
+      "href": "https://cdn-assets.minds.com/android/Minds-stable-4-20-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.20.1",
+      "changelog": ["Bug fixing"],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "a65341a02eb7d99c74660630c97dfef5"
+        },
+        {
+          "type": "sha256",
+          "value": "0310a27daac0e8427713510c74288d1d264555f8abc6a3fa7032cd13130a78d8"
+        },
+        {
+          "type": "sha512",
+          "value": "946a18de8bb64e2d4a966ea49ad5db6cf6975309f28d7e04d5f6b7b43876e91d6287c91b01f032a2618e799b9610d0a22ce595ca1dc0aea02e5bb544c92f9aaa"
+        }
+      ]
+    },
+    {
       "version": "4.19.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-19-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.19.1",

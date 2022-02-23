@@ -16,6 +16,7 @@ type PropsType = {
   navigation: any;
   title?: string;
   noInsets?: boolean;
+  shadowLess?: boolean;
   showBack?: boolean;
 };
 
@@ -40,7 +41,7 @@ export const Topbar = observer((props: PropsType) => {
   });
 
   return (
-    <View style={containerStyle}>
+    <View style={props.shadowLess ? shadowLessContainerStyle : containerStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
@@ -96,9 +97,10 @@ export const styles = StyleSheet.create({
     // paddingBottom: 8,
   },
   logo: {
+    marginLeft: 4,
     marginTop: -12,
-    width: 130,
-    height: 45,
+    width: 118,
+    height: 40,
   },
   shadow: {
     zIndex: 999,
@@ -138,4 +140,11 @@ export const styles = StyleSheet.create({
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,
+);
+const shadowLessContainerStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  styles.shadow,
+  {
+    shadowColor: 'transparent',
+  },
 );

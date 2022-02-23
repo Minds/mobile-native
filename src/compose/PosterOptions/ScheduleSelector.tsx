@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,23 +9,38 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
+import { showNotification } from 'AppMessages';
 import DateTimePicker from '~/common/components/controls/DateTimePicker';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
+
+interface ScheduleSelectorProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'ScheduleSelector'> {}
 
 /**
  * NSFW selector
  */
-export default observer(function (props) {
+export default observer(function ({}: ScheduleSelectorProps) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
     showPicker() {
       dateTimePickerRef.current.show();
     },
     onSelect(data) {
-      // only asign if the date is gt than now
+      // only assign if the date is gt than now
       if (moment(data).diff(moment()) > 0) {
         store.setTimeCreated(data);
+      } else {
+        showNotification(
+          i18n.t('capture.scheduleError'),
+          'warning',
+          3000,
+          'top',
+        );
       }
     },
   }));

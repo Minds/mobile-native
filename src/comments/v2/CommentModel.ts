@@ -1,4 +1,4 @@
-import { observable, decorate } from 'mobx';
+import { observable, decorate, action } from 'mobx';
 
 import ActivityModel from '../../newsfeed/ActivityModel';
 
@@ -21,6 +21,16 @@ export default class CommentModel extends ActivityModel {
    * The parent comment
    */
   parent = null;
+  @action
+  increaseReply() {
+    this.replies_count++;
+  }
+  @action
+  decreaseReply() {
+    if (this.replies_count > 0) {
+      this.replies_count--;
+    }
+  }
 
   //   /**
   //    * Get the activity thumb source

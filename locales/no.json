@@ -290,12 +290,6 @@
     "disableConversations": "Deaktiver samtaler",
     "enableConversations": "Aktiver samtaler"
   },
-  "keychain": {
-    "unlockMessage": "Lås opp {{keychain}} nøkkelring",
-    "setupMessage": "Lås opp {{keychain}} nøkkelring",
-    "encryptMessage": "Skriv inn et passord som vil kryptere {{keychain}} -nøkkelringen.",
-    "encryptMessage1": "Husk passordet eller du vil ikke kunne lese/skrive det fra det."
-  },
   "messenger": {
     "decrypting": "dekrypterer...",
     "couldntDecrypt": "kunne ikke dekryptere",

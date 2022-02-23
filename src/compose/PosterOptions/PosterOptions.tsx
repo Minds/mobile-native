@@ -1,12 +1,6 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import React, { FC, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { observer } from 'mobx-react';
 import moment from 'moment';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -14,33 +8,18 @@ import i18n from '../../common/services/i18n.service';
 import {
   getAccessText,
   getLicenseText,
-} from '../../common/services/list-options.service';
+} from '~/common/services/list-options.service';
 import featuresService from '../../common/services/features.service';
 import MText from '../../common/components/MText';
-import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from '@react-navigation/stack';
-
-import TagSelector from './TagSelector';
-import AccessSelector from './AccessSelector';
-import NsfwSelector from './NsfwSelector';
-import ScheduleSelector from './ScheduleSelector';
-import PermawebSelector from './PermawebSelector';
-import MonetizeSelector from './MonetizeSelector';
-import MonetizeScreen from '../monetize/MonetizeScreen';
-import LicenseSelector from './LicenseSelector';
-import { useNavigation } from '@react-navigation/core';
 import MPressable from '~/common/components/MPressable';
-import PlusMonetizeScreen from '../monetize/PlusMonetizeScreeen';
-import MembershipMonetizeScreeen from '../monetize/MembershipMonetizeScreeen';
 import TopBar from '../TopBar';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from './PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
+import { observer } from 'mobx-react';
 
 const height = 83;
-
-const Stack = createStackNavigator();
 
 /**
  * Item
@@ -70,14 +49,16 @@ export function useNavCallback(screen, store, navigation) {
   }, [store, screen, navigation]);
 }
 
-const snapPoints = ['90%'];
+interface PosterOptionsType
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'PosterOptions'> {}
 
-const PosterOptions = observer(props => {
-  const store = props.route.params.store;
+function PosterOptions(props: PosterOptionsType) {
+  const store = useComposeContext();
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
   const tags = store.tags.slice();
-  const time_created = store.time_created;
+  const time_created = store.time_created!;
   const license = store.attachment.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
@@ -193,82 +174,9 @@ const PosterOptions = observer(props => {
       )}
     </View>
   );
-});
+}
 
-/**
- * Options
- * @param {Object} props
- */
-export default observer(
-  forwardRef((props: any, ref) => {
-    const sheetRef = useRef<any>();
-    const navigation = useNavigation();
-
-    useImperativeHandle(ref, () => ({
-      show: () => {
-        sheetRef.current.expand();
-      },
-      navigateTo: screen => {
-        sheetRef.current.expand();
-        // @ts-ignore
-        navigation.navigate(screen, { store: props.store });
-      },
-    }));
-    const screenOptions = React.useMemo(
-      () => ({
-        ...TransitionPresets.SlideFromRightIOS,
-        headerShown: false,
-        safeAreaInsets: { top: 0 },
-      }),
-      [],
-    );
-    const handleVisibilityChange = useCallback(
-      visible => {
-        if (!visible) {
-          navigation.navigate('PosterOptions', { store: props.store });
-        }
-      },
-      [navigation, props.store],
-    );
-
-    return (
-      <BottomSheet
-        // @ts-ignore
-        ref={sheetRef}
-        handleStyle={ThemedStyles.style.bgPrimaryBackground}
-        onVisibilityChange={handleVisibilityChange}
-        enableContentPanningGesture
-        snapPoints={snapPoints}>
-        <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen
-            name="PosterOptions"
-            component={PosterOptions}
-            initialParams={props}
-          />
-          <Stack.Screen name="TagSelector" component={TagSelector} />
-          <Stack.Screen name="NsfwSelector" component={NsfwSelector} />
-          <Stack.Screen name="PermawebSelector" component={PermawebSelector} />
-          <Stack.Screen name="ScheduleSelector" component={ScheduleSelector} />
-          <Stack.Screen
-            name="MonetizeSelector"
-            component={
-              featuresService.has('paywall-2020')
-                ? MonetizeScreen
-                : MonetizeSelector
-            }
-          />
-          <Stack.Screen name="LicenseSelector" component={LicenseSelector} />
-          <Stack.Screen name="AccessSelector" component={AccessSelector} />
-          <Stack.Screen name="PlusMonetize" component={PlusMonetizeScreen} />
-          <Stack.Screen
-            name="MembershipMonetize"
-            component={MembershipMonetizeScreeen}
-          />
-        </Stack.Navigator>
-      </BottomSheet>
-    );
-  }),
-);
+export default observer(PosterOptions);
 
 const styles = ThemedStyles.create({
   headerContainer: {

@@ -20,8 +20,6 @@ type ApiFetchType = FetchResponseType;
 
 const defaultMap = data => data;
 
-const defaultUpdateState = (newData, _) => newData;
-
 /**
  * a function that merges the new state with the old state
  */
@@ -85,7 +83,6 @@ export interface FetchStore<T> {
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
   fetch: (data?: any, retry?: any, options?: FetchOptions) => Promise<any>;
-  hydrate: (params: any) => any;
   /**
    * fetches and replaces the data with the given options or the options of the hook
    */
@@ -121,13 +118,10 @@ const createStore = ({
       this.retryCount = 0;
     }
   },
-  hydrate(params: any) {
-    if (this.result) {
-      return;
-    }
+  hydrate(params: any, updateState) {
     try {
       const data = storages.user?.getMap(getCacheKey(url, params));
-      if (data) this.setResult(data);
+      if (data) this.setResult(updateState(data, this.result));
     } catch (e) {
       console.error(e);
     }
@@ -157,9 +151,10 @@ const createStore = ({
       dataField,
       updateStrategy,
       map,
+      persist,
     } = Object.assign(
       {
-        updateState: defaultUpdateState,
+        updateStrategy: 'replace',
         offsetField: 'load-next',
         dataField: 'entities',
       },
@@ -168,15 +163,20 @@ const createStore = ({
     );
     this.clearRetryTimer(!retry);
 
-    if (updateStrategy && dataField) {
+    if (!updateState) {
       switch (updateStrategy) {
         case 'merge':
           updateState = mergeState(dataField, map);
           break;
         case 'replace':
+        default:
           updateState = replaceState(dataField, map);
           break;
       }
+    }
+
+    if (persist) {
+      this.hydrate(data, updateState);
     }
 
     this.setLoading(true);
@@ -193,7 +193,10 @@ const createStore = ({
 
       const state = updateState(result, this.result);
       this.setResult(state);
-      this.persist(data);
+
+      if (persist) {
+        this.persist(data);
+      }
     } catch (err) {
       this.setError(err);
       if (hookOptions?.retry !== undefined && !isAbort(err)) {
@@ -244,7 +247,6 @@ export default function useApiFetch<T>(
   });
   const observableParams = useAsObservableSource(options.params || {});
 
-  // if persist was true, hydrate on the first render
   useEffect(() => {
     return () => store.clearRetryTimer(true);
   }, [store]);

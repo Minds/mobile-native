@@ -1,6 +1,5 @@
-//@ts-nocheck
 import React, { useCallback } from 'react';
-import { Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -15,8 +14,6 @@ function useNavCallback(screen) {
 }
 
 export default function ({ navigation }) {
-  const theme = ThemedStyles.style;
-
   const contentAdmin = [
     /*{
       title: i18n.t('settings.otherOptions.a1'),
@@ -57,13 +54,6 @@ export default function ({ navigation }) {
     },
   ];
 
-  const legacy = [
-    {
-      title: i18n.t('blockchain.exportLegacyWallet'),
-      onPress: useNavCallback('ExportLegacyWallet'),
-    },
-  ];
-
   const data = [
     {
       title: i18n.t('settings.networkOptions.1'),
@@ -85,7 +75,6 @@ export default function ({ navigation }) {
       {featuresService.has('paywall-2020') &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
-      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
     </ScrollView>

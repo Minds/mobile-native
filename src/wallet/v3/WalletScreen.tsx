@@ -29,7 +29,7 @@ import { ScreenHeader, Screen } from '~ui/screen';
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<MoreStackParamList, 'Wallet'>,
-  StackNavigationProp<AppStackParamList, 'Main'>
+  StackNavigationProp<AppStackParamList, 'Tabs'>
 >;
 
 type PropsType = {

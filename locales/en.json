@@ -260,6 +260,7 @@
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
     "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
+    "scheduleError": "The selected date should be in the future",
     "post": "Post",
     "remind": "Remind",
     "placeholder": "Speak your mind...",
@@ -327,6 +328,7 @@
     "title": "Discovery",
     "manage": "Manage Tags",
     "justForYou": "Just for you",
+    "top": "Top",
     "yourTags": "Your tags",
     "otherTags": "Other tags",
     "trendingTags": "Trending tags",
@@ -357,19 +359,13 @@
     "myGroups": "My Groups",
     "ban": "Ban",
     "kick": "Kick",
-    "makeOwner": "Make Owner",
-    "removeOwner": "Remove as Owner",
+    "makeAdmin": "Make Admin",
+    "removeAdmin": "Remove as Admin",
     "makeModerator": "Make Moderator",
     "removeModerator": "Remove as Moderator",
     "listMembersCount": "{{count}} members",
     "disableConversations": "Disable conversations",
     "enableConversations": "Enable conversations"
-  },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Enter a password that will encrypt the {{keychain}} keychain.",
-    "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
     "typeYourMessage": "Type your message...",
@@ -466,6 +462,7 @@
     },
     "empty": {
       "all": "You have no notifications",
+      "comments": "You have no comments notifications",
       "tags": "You have no tags notification",
       "subscriptions": "You have no subscriptions notification",
       "votes": "You have no votes notification",

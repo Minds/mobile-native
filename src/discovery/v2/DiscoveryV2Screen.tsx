@@ -29,7 +29,6 @@ interface Props {
  */
 export const DiscoveryV2Screen = withErrorBoundary(
   observer((props: Props) => {
-    const theme = ThemedStyles.style;
     const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
       false,
     );
@@ -38,6 +37,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
     const tabs = React.useMemo(
       () => [
+        { id: 'top', title: i18n.t('discovery.top') },
         { id: 'foryou', title: i18n.t('discovery.justForYou') },
         { id: 'your-tags', title: i18n.t('discovery.yourTags') },
         { id: 'trending-tags', title: i18n.t('discovery.trending') },
@@ -85,26 +85,62 @@ export const DiscoveryV2Screen = withErrorBoundary(
       return unsubscribe;
     }, [store, navigation]);
 
+    useEffect(() => {
+      store.topFeed.fetchLocalOrRemote();
+    }, [store]);
+
+    const header = (
+      <>
+        <Topbar title="Discovery" navigation={navigation} />
+        <View style={styles.header}>
+          <InitialOnboardingButton />
+          <TopbarTabbar
+            current={store.activeTabId}
+            onChange={tabId => {
+              store.setTabId(tabId as TDiscoveryV2Tabs);
+            }}
+            tabs={tabs}
+          />
+        </View>
+      </>
+    );
+
     const screen = () => {
       switch (store.activeTabId) {
+        case 'top':
+          return (
+            <DiscoveryTabContent key="top">
+              <FeedList
+                stickyHeaderIndices={sticky}
+                stickyHeaderHiddenOnScroll
+                feedStore={store.topFeed}
+                navigation={navigation}
+                header={header}
+              />
+            </DiscoveryTabContent>
+          );
         case 'foryou':
           return (
             <DiscoveryTabContent key="foryou">
-              <DiscoveryTrendsList store={store} />
+              <DiscoveryTrendsList store={store} header={header} />
             </DiscoveryTabContent>
           );
         case 'your-tags':
           return (
             <DiscoveryTabContent key="your-tags">
-              <DiscoveryTagsList type="your" store={store} />
+              <DiscoveryTagsList type="your" store={store} header={header} />
             </DiscoveryTabContent>
           );
         case 'trending-tags':
-          store.trendingFeed.fetchRemoteOrLocal();
           return (
             <DiscoveryTabContent key="trending-tags">
               <FeedList
-                header={
+                stickyHeaderIndices={sticky}
+                stickyHeaderHiddenOnScroll
+                header={header}
+                feedStore={store.trendingFeed}
+                navigation={navigation}
+                prepend={
                   <DiscoveryTagsList
                     type="trending"
                     store={store}
@@ -112,16 +148,16 @@ export const DiscoveryV2Screen = withErrorBoundary(
                     showManageTags={false}
                   />
                 }
-                feedStore={store.trendingFeed}
-                navigation={navigation}
               />
             </DiscoveryTabContent>
           );
         case 'boosts':
-          store.boostFeed.fetchRemoteOrLocal();
           return (
             <DiscoveryTabContent key="boosts">
               <FeedList
+                stickyHeaderIndices={sticky}
+                stickyHeaderHiddenOnScroll
+                header={header}
                 feedStore={store.boostFeed}
                 navigation={navigation}
                 emptyMessage={emptyBoosts}
@@ -135,27 +171,17 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
     return (
       <View style={styles.container}>
-        <Topbar title="Discovery" navigation={navigation} />
-        <View style={theme.paddingTop}>
-          <InitialOnboardingButton />
-          <TopbarTabbar
-            current={store.activeTabId}
-            onChange={tabId => {
-              store.setTabId(tabId as TDiscoveryV2Tabs);
-            }}
-            tabs={tabs}
-          />
-        </View>
-        <View style={theme.flexContainer}>
-          <AnimatePresence>{screen()}</AnimatePresence>
-        </View>
+        <AnimatePresence>{screen()}</AnimatePresence>
       </View>
     );
   }),
 );
 
+const sticky = [0];
+
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
+  header: ['flexContainer', 'bgPrimaryBackground', 'paddingTop'],
   bottomBorder: {
     borderBottomColor: '#eee',
     borderBottomWidth: 10,

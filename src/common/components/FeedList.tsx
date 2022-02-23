@@ -18,6 +18,7 @@ import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
 type PropsType = {
   prepend?: React.ReactNode;
@@ -165,44 +166,47 @@ export default class FeedList<T> extends Component<PropsType> {
     }
 
     return (
-      <ListComponent
-        containerStyle={ThemedStyles.style.paddingBottom10x}
-        ref={this.setListRef}
-        key={feedStore.isTiled ? 't' : 'f'}
-        onLayout={this.onLayout}
-        ListHeaderComponent={header}
-        ListFooterComponent={this.getFooter}
-        data={!this.props.hideItems ? feedStore.entities.slice() : []}
-        renderItem={renderRow}
-        keyExtractor={this.keyExtractor}
-        onEndReached={this.loadMore}
-        refreshControl={
-          Boolean(this.props.refreshControlTintColor) ? (
-            <RefreshControl
-              tintColor={this.props.refreshControlTintColor}
-              refreshing={this.refreshing}
-              onRefresh={this.refresh}
-            />
-          ) : undefined
-        }
-        // onEndReachedThreshold={0}
-        numColumns={feedStore.isTiled ? 3 : 1}
-        style={style}
-        initialNumToRender={3}
-        maxToRenderPerBatch={4}
-        windowSize={9}
-        // removeClippedSubviews={true}
-        ListEmptyComponent={!this.props.hideItems ? empty : null}
-        viewabilityConfig={this.viewOpts}
-        onViewableItemsChanged={this.onViewableItemsChanged}
-        keyboardShouldPersistTaps="always"
-        testID="feedlistCMP"
-        {...passThroughProps}
-        onRefresh={this.refresh}
-        refreshing={this.refreshing}
-        keyboardDismissMode="on-drag"
-        onScroll={this.onScroll}
-      />
+      <SafeAreaInsetsContext.Consumer>
+        {insets => (
+          <ListComponent
+            containerStyle={ThemedStyles.style.paddingBottom10x}
+            ref={this.setListRef}
+            key={feedStore.isTiled ? 't' : 'f'}
+            onLayout={this.onLayout}
+            ListHeaderComponent={header}
+            ListFooterComponent={this.getFooter}
+            data={!this.props.hideItems ? feedStore.entities.slice() : []}
+            renderItem={renderRow}
+            keyExtractor={this.keyExtractor}
+            onRefresh={this.refresh}
+            refreshing={this.refreshing}
+            onEndReached={this.loadMore}
+            refreshControl={
+              <RefreshControl
+                tintColor={this.props.refreshControlTintColor}
+                refreshing={feedStore.refreshing}
+                onRefresh={this.refresh}
+                progressViewOffset={(insets?.top || 0) / 1.25}
+              />
+            }
+            // onEndReachedThreshold={0}
+            numColumns={feedStore.isTiled ? 3 : 1}
+            style={style}
+            initialNumToRender={3}
+            maxToRenderPerBatch={4}
+            windowSize={9}
+            // removeClippedSubviews={true}
+            ListEmptyComponent={!this.props.hideItems ? empty : null}
+            viewabilityConfig={this.viewOpts}
+            onViewableItemsChanged={this.onViewableItemsChanged}
+            keyboardShouldPersistTaps="always"
+            testID="feedlistCMP"
+            {...passThroughProps}
+            keyboardDismissMode="on-drag"
+            onScroll={this.onScroll}
+          />
+        )}
+      </SafeAreaInsetsContext.Consumer>
     );
   }
 

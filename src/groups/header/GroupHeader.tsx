@@ -17,25 +17,19 @@ import { FLAG_JOIN } from '../../common/Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
-import type GroupsBarStore from '../GroupsBarStore';
 import GroupViewStore from '../GroupViewStore';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import AnimatedSearch from './AnimatedSearch';
-import BottomSheetModal from '../../common/components/bottom-sheet/BottomSheetModal';
-import MenuItem from '../../common/components/bottom-sheet/MenuItem';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
 import MText from '../../common/components/MText';
 import { Button, IconButtonNext } from '~ui';
 
 type PropsTypes = {
-  groupsBar: GroupsBarStore;
   store: GroupViewStore;
 };
 
 /**
  * Group Header
  */
-@inject('groupsBar')
 @observer
 export default class GroupHeader extends Component<PropsTypes> {
   state = {
@@ -55,11 +49,6 @@ export default class GroupHeader extends Component<PropsTypes> {
       props.styles.userAvatar,
       'bcolorPrimaryBackground',
     );
-  }
-
-  componentDidMount() {
-    const group = this.props.store.group;
-    this.props.groupsBar.markAsRead(group, 'activity');
   }
 
   /**
@@ -205,7 +194,6 @@ export default class GroupHeader extends Component<PropsTypes> {
         // clear list without mark loaded flag
         if (this.props.store.list) {
           this.props.store.refresh(group.guid);
-          this.props.groupsBar.markAsRead(group, 'activity');
         }
         break;
       case 'desc':
@@ -213,11 +201,6 @@ export default class GroupHeader extends Component<PropsTypes> {
         break;
       case 'members':
         this.props.store.loadMembers();
-        break;
-      case 'conversation':
-        if (group.conversationDisabled) return;
-
-        this.props.groupsBar.markAsRead(group, 'conversation');
         break;
       default:
         break;
@@ -252,40 +235,40 @@ export default class GroupHeader extends Component<PropsTypes> {
     }
   };
 
-  getActionSheet() {
-    return (
-      <View style={stylesheet.rightToolbar}>
-        <Icon
-          name="more-vert"
-          onPress={this.showActionSheet}
-          size={26}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-        <BottomSheetModal ref={this.refActionSheet} title={i18n.t('actions')}>
-          {this.props.store.group.conversationDisabled ? (
-            <MenuItem
-              title={i18n.t('groups.enableConversations')}
-              iconName="message-outline"
-              iconType="material-community"
-              onPress={this.toggleConversation}
-            />
-          ) : (
-            <MenuItem
-              title={i18n.t('groups.disableConversations')}
-              iconName="message-lock-outline"
-              iconType="material-community"
-              onPress={this.toggleConversation}
-            />
-          )}
+  // getActionSheet() {
+  //   return (
+  //     <View style={stylesheet.rightToolbar}>
+  //       <Icon
+  //         name="more-vert"
+  //         onPress={this.showActionSheet}
+  //         size={26}
+  //         style={ThemedStyles.style.colorPrimaryText}
+  //       />
+  //       <BottomSheetModal ref={this.refActionSheet} title={i18n.t('actions')}>
+  //         {this.props.store.group.conversationDisabled ? (
+  //           <MenuItem
+  //             title={i18n.t('groups.enableConversations')}
+  //             iconName="message-outline"
+  //             iconType="material-community"
+  //             onPress={this.toggleConversation}
+  //           />
+  //         ) : (
+  //           <MenuItem
+  //             title={i18n.t('groups.disableConversations')}
+  //             iconName="message-lock-outline"
+  //             iconType="material-community"
+  //             onPress={this.toggleConversation}
+  //           />
+  //         )}
 
-          <BottomSheetButton
-            text={i18n.t('cancel')}
-            onPress={this.hideActionSheet}
-          />
-        </BottomSheetModal>
-      </View>
-    );
-  }
+  //         <BottomSheetButton
+  //           text={i18n.t('cancel')}
+  //           onPress={this.hideActionSheet}
+  //         />
+  //       </BottomSheetModal>
+  //     </View>
+  //   );
+  // }
 
   showActionSheet = async () => {
     this.refActionSheet.current?.present();
@@ -320,7 +303,7 @@ export default class GroupHeader extends Component<PropsTypes> {
 
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
-    const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
+    // const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
       <DismissKeyboard>
         <View>
@@ -352,19 +335,11 @@ export default class GroupHeader extends Component<PropsTypes> {
                   style={iconStyle}
                   onPress={this.share}
                 />
-                {!this.props.store.group?.conversationDisabled && (
-                  <IconButtonNext
-                    name="chat"
-                    size="medium"
-                    style={iconStyle}
-                    onPress={this.props.onPressComment}
-                  />
-                )}
                 {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
                 {group.can(FLAG_JOIN) && this.getActionButton()}
               </View>
             </View>
-            {actionSheet}
+            {/* {actionSheet} */}
           </View>
           <View style={stylesheet.avatarContainer}>
             <Image source={avatar} style={this.avatarStyle} />
@@ -409,4 +384,4 @@ const avatarContainersStyle = ThemedStyles.combine(
   'rowJustifyStart',
   'flexContainer',
 );
-const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');
+// const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');

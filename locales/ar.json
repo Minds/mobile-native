@@ -361,12 +361,6 @@
     "disableConversations": "تعطيل المحادثات",
     "enableConversations": "تمكين المحادثات"
   },
-  "keychain": {
-    "unlockMessage": "فتح سلسلة مفاتيح {{keychain}}",
-    "setupMessage": "فتح سلسلة مفاتيح {{keychain}}",
-    "encryptMessage": "أدخل كلمة مرور لتشفير سلسلة مفاتيح {{keychain}}.",
-    "encryptMessage1": "تذكر كلمة المرور أو أنك لن تتمكن من القراءة/الكتابة منها."
-  },
   "messenger": {
     "decrypting": "فك التشفير...",
     "notAllowed": "This user only allows messages from users that they subscribe to",
