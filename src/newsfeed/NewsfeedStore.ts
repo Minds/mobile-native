@@ -18,7 +18,7 @@ class NewsfeedStore<T> {
     .setEndpoint('api/v2/feeds/subscribed/activities')
     .setInjectBoost(true)
     .setLimit(12)
-    .setMetadataService(
+    .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('feed'),
     );
   /**
@@ -28,7 +28,7 @@ class NewsfeedStore<T> {
     .setEndpoint('api/v3/newsfeed/feed/unseen-top')
     .setInjectBoost(false)
     .setLimit(3)
-    .setMetadataService(
+    .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
     );
   /**

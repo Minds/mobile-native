@@ -25,7 +25,7 @@ const useTopFeed = () => {
       .setEndpoint('api/v3/newsfeed/feed/unseen-top')
       .setInjectBoost(true)
       .setLimit(12)
-      .setMetadataService(
+      .setMetadata(
         new MetadataService().setSource('top-feed').setMedium('feed'),
       ),
   ).current;
