@@ -45,6 +45,7 @@ describe('Thumb action component', () => {
     };
 
     entity.toggleVote = jest.fn();
+    entity.can = jest.fn(() => true);
 
     screen = shallow(
       <ThumbDownAction entity={entity} navigation={navigation} />,
