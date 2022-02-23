@@ -38,7 +38,7 @@ const mockEntity = {
 jest.mock('~/common/hooks/useApiFetch', () => () => ({
   result: {
     status: '',
-    suggestions: [
+    entities: [
       {
         entity: mockEntity,
         guid: '',

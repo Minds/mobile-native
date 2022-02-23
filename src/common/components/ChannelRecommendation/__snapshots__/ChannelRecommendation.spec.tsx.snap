@@ -3,12 +3,12 @@
 exports[`ChannelRecommendation renders correctly 1`] = `
 <Fragment>
   <Spacer
-    horizontal="L"
     vertical="XL"
   >
     <Row
       align="centerBetween"
       bottom="XL"
+      horizontal="L"
     >
       <H3>
         Recommended Channels
@@ -73,7 +73,8 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
   onPress={[Function]}
 >
   <Row
-    bottom="L"
+    horizontal="L"
+    vertical="S"
   >
     <withSpacer()
       right="M"
@@ -98,10 +99,6 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
     >
       <B1
         font="bold"
-      />
-      <B2
-        color="secondary"
-        numberOfLines={2}
       />
     </Column>
     <Subscribe
@@ -171,6 +168,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
         }
       }
       mini={true}
+      shouldUpdateFeed={false}
     />
   </Row>
 </MPressable>
