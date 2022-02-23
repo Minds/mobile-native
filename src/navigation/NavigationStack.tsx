@@ -58,7 +58,6 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
-import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
@@ -128,11 +127,6 @@ const AppStack = function () {
             animation: 'fade_from_bottom',
             ...hideHeader,
           }}
-        />
-        <AppStackNav.Screen
-          name="ExportLegacyWallet"
-          component={ExportLegacyWallet}
-          options={{ title: 'Export Wallet' }}
         />
         <AppStackNav.Screen
           name="EmailConfirmation"

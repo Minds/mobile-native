@@ -290,12 +290,6 @@
     "disableConversations": "Zakázat konverzace",
     "enableConversations": "Povolit konverzace"
   },
-  "keychain": {
-    "unlockMessage": "Odemknout {{keychain}} keychain",
-    "setupMessage": "Odemknout {{keychain}} keychain",
-    "encryptMessage": "Zadejte heslo, které zašifruje {{keychain}} keychain.",
-    "encryptMessage1": "Zapamatujte si heslo, nebo z něj nebudete moci číst/psát."
-  },
   "messenger": {
     "decrypting": "dešifrování...",
     "couldntDecrypt": "nelze dešifrovat",

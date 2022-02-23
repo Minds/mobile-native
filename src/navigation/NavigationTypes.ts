@@ -197,7 +197,6 @@ export type AppStackParamList = {
     items: Array<PortraitBarItem>;
     index: number;
   };
-  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;

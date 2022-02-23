@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
+import throttle from 'lodash/throttle';
 
 import FeedList, { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
@@ -28,19 +29,24 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 
 const sticky = [0];
 
-type PropsType = {
+type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
   newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
 
+type NewsfeedScreenState = { shadowLessTopBar: boolean };
+
 /**
  * News Feed Screen
  */
 @inject('newsfeed', 'user')
 @observer
-class NewsfeedScreen extends Component<PropsType> {
+class NewsfeedScreen extends Component<
+  NewsfeedScreenProps,
+  NewsfeedScreenState
+> {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
   emptyProps = {
@@ -51,12 +57,25 @@ class NewsfeedScreen extends Component<PropsType> {
       </View>
     ),
   };
+  /**
+   * whether the topbar should be shadowLess
+   */
+  shadowLessTopBar: boolean = true;
   injectItems: InjectItem[] = [
     {
       indexes: [2],
       component: <ChannelRecommendation location="newsfeed" />,
     },
   ];
+
+  constructor(props) {
+    super(props);
+
+    this.onScroll = throttle(this.onScroll, 100);
+    this.state = {
+      shadowLessTopBar: true,
+    };
+  }
 
   refreshNewsfeed = e => {
     if (this.props.navigation.isFocused()) {
@@ -101,6 +120,18 @@ class NewsfeedScreen extends Component<PropsType> {
     }
   };
 
+  onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
+    const offsetTop = e?.nativeEvent?.contentOffset?.y;
+
+    if (offsetTop > 90 && this.state.shadowLessTopBar) {
+      this.setState({ shadowLessTopBar: false });
+    }
+
+    if (offsetTop <= 90 && !this.state.shadowLessTopBar) {
+      this.setState({ shadowLessTopBar: true });
+    }
+  };
+
   /**
    * Render
    */
@@ -109,7 +140,10 @@ class NewsfeedScreen extends Component<PropsType> {
 
     const header = (
       <View style={ThemedStyles.style.bgPrimaryBackground}>
-        <Topbar navigation={this.props.navigation} />
+        <Topbar
+          shadowLess={this.state.shadowLessTopBar}
+          navigation={this.props.navigation}
+        />
       </View>
     );
 
@@ -137,6 +171,7 @@ class NewsfeedScreen extends Component<PropsType> {
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
         afterRefresh={this.refreshPortrait}
+        onScroll={this.onScroll}
         injectItems={this.injectItems}
         {...additionalProps}
       />

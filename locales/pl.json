@@ -290,12 +290,6 @@
     "disableConversations": "Wyłącz rozmowy",
     "enableConversations": "Włącz rozmowy"
   },
-  "keychain": {
-    "unlockMessage": "Odblokuj {{keychain}} pęk kluczy",
-    "setupMessage": "Odblokuj {{keychain}} pęk kluczy",
-    "encryptMessage": "Wprowadź hasło, które zaszyfrowuje {{keychain}} pęk kluczy.",
-    "encryptMessage1": "Zapamiętaj hasło lub nie będziesz w stanie z niego odczytać/napisać."
-  },
   "messenger": {
     "decrypting": "odszyfrowanie...",
     "couldntDecrypt": "nie można odszyfrować",
