@@ -6,8 +6,8 @@ buildscript {
     ext {
         buildToolsVersion = "30.0.2"
         minSdkVersion = 21
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+        compileSdkVersion = 31
+        targetSdkVersion = 31
         supportLibVersion = "30.0.0"
         androidXCore = "1.5.0"
         glideVersion = "4.9.0"
@@ -70,6 +70,9 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 21
+                    manifestPlaceholders = [
+                        tipsiStripeRedirectScheme: "mindsapp"
+                    ]
                 }
             }
         }

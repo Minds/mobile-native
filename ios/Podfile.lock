@@ -463,8 +463,6 @@ PODS:
     - React-Core
   - RNBootSplash (3.2.4):
     - React-Core
-  - RNCAsyncStorage (1.12.1):
-    - React-Core
   - RNCClipboard (1.7.0):
     - React-Core
   - RNCMaskedView (0.1.10):
@@ -570,7 +568,7 @@ PODS:
     - UMCore
   - UMTaskManagerInterface (6.2.0):
     - UMCore
-  - VisionCamera (2.9.0):
+  - VisionCamera (2.12.0):
     - React
     - React-callinvoker
     - React-Core
@@ -672,7 +670,6 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - rn-update-apk (from `../node_modules/rn-update-apk`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
@@ -869,8 +866,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-update-apk"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
-  RNCAsyncStorage:
-    :path: "../node_modules/@react-native-community/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
@@ -1021,7 +1016,6 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
   rn-update-apk: c9ed556a751a89894351f2f029387fa215ca5658
   RNBootSplash: 4844706cbb56a3270556c9b94e59dedadccd47e4
-  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
@@ -1054,7 +1048,7 @@ SPEC CHECKSUMS:
   UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
   UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
-  VisionCamera: 4224808527786fddb3dc96615287a0aa0a2c7052
+  VisionCamera: e3f4eea37f32f9a2ab40ce560940174a5258abaf
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

@@ -14,6 +14,7 @@ type PropsType = {
   navigation: any;
   title?: string;
   noInsets?: boolean;
+  shadowLess?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -37,7 +38,7 @@ export const Topbar = observer((props: PropsType) => {
   });
 
   return (
-    <View style={containerStyle}>
+    <View style={props.shadowLess ? shadowLessContainerStyle : containerStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
@@ -126,4 +127,11 @@ export const styles = StyleSheet.create({
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,
+);
+const shadowLessContainerStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  styles.shadow,
+  {
+    shadowColor: 'transparent',
+  },
 );

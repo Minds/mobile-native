@@ -361,12 +361,6 @@
     "disableConversations": "Gespräche deaktivieren",
     "enableConversations": "Gespräche aktivieren"
   },
-  "keychain": {
-    "unlockMessage": "Keychain {{keychain}} freischalten",
-    "setupMessage": "Keychain {{keychain}} freischalten",
-    "encryptMessage": "Ein Passwort zur Verschlüsselung der Keychain {{keychain}} eingeben.",
-    "encryptMessage1": "Ohne es kann kein Zugriff auf sie genommen werden."
-  },
   "messenger": {
     "decrypting": "entschlüsseln...",
     "notAllowed": "This user only allows messages from users that they subscribe to",

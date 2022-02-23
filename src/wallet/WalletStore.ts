@@ -4,7 +4,6 @@ import walletService from './WalletService';
 import token from '../common/helpers/token';
 import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
-import storageService from '../common/services/storage.service';
 import type { ApiResponse } from '../common/services/api.service';
 
 interface WalletResponse extends ApiResponse {
@@ -126,27 +125,6 @@ class WalletStore {
     };
     this.onboardingShown = false;
     this.ledger = new TokensStore();
-    storageService.removeItem('walletOnboardingComplete');
-  }
-
-  // TODO: Implement forced auto-refresh every X minutes
-  // TODO: Implement socket and atomic increases/decreases
-
-  // Onboarding
-
-  async canShowOnboarding() {
-    return (
-      !this.isOnboardingShown &&
-      !(await storageService.getItem('walletOnboardingComplete'))
-    );
-  }
-
-  @action setOnboardingShown(value) {
-    this.isOnboardingShown = !!value;
-  }
-
-  async setOnboardingComplete(value) {
-    await storageService.setItem('walletOnboardingComplete', !!value);
   }
 }
 
