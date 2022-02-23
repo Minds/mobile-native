@@ -8,7 +8,7 @@ import useApiFetch from '~/common/hooks/useApiFetch';
  */
 export const useChannelRecommendation = (location: string) => {
   const res = useApiFetch<{
-    suggestions: {
+    entities: {
       confidence_score: number;
       entity: UserModel;
       entity_guid: string;
@@ -18,7 +18,11 @@ export const useChannelRecommendation = (location: string) => {
     params: {
       location,
     },
-    map: entities => UserModel.createMany(entities),
+    map: recommendations =>
+      recommendations.map(recommendation => ({
+        ...recommendation,
+        entity: UserModel.create(recommendation.entity),
+      })),
   });
 
   return res;

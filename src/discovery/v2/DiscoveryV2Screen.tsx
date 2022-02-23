@@ -20,6 +20,7 @@ import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 interface Props {
   navigation: any;
@@ -67,7 +68,11 @@ export const DiscoveryV2Screen = withErrorBoundary(
       () => [
         {
           indexes: [2],
-          component: <ChannelRecommendation location="discovery-feed" />,
+          component: (
+            <IfFeatureEnabled feature="channel-recommendations">
+              <ChannelRecommendation location="discovery-feed" />
+            </IfFeatureEnabled>
+          ),
         },
       ],
       [],

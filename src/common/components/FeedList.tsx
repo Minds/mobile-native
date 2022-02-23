@@ -317,7 +317,7 @@ export default class FeedList<T> extends Component<PropsType> {
           showCommentsOutlet={false}
         />
         {
-          this.props.injectItems?.find(p => p.indexes.includes(row.index))
+          this.props.injectItems?.find(p => p?.indexes.includes(row.index))
             ?.component
         }
       </ErrorBoundary>

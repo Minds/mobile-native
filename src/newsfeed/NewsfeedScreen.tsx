@@ -20,6 +20,7 @@ import Feature from '~/common/components/Feature';
 import Topbar from '~/topbar/Topbar';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -57,6 +58,7 @@ class NewsfeedScreen extends Component<
       </View>
     ),
   };
+
   /**
    * whether the topbar should be shadowLess
    */
@@ -64,7 +66,11 @@ class NewsfeedScreen extends Component<
   injectItems: InjectItem[] = [
     {
       indexes: [2],
-      component: <ChannelRecommendation location="newsfeed" />,
+      component: (
+        <IfFeatureEnabled feature="channel-recommendations">
+          <ChannelRecommendation location="newsfeed" />
+        </IfFeatureEnabled>
+      ),
     },
   ];
 
