@@ -111,6 +111,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
+   * Sets metadata service
+   * @param { MetadataService } metadataService
+   * @returns { FeedStore }
+   */
+  setMetadataService(metadataService: MetadataService) {
+    this.metadataService = metadataService;
+    return this;
+  }
+
+  /**
    * Set or add to the list
    * @param {BaseModel} list
    * @param {boolean} replace

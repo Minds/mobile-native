@@ -5,6 +5,7 @@ import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
 import type FeedList from '../common/components/FeedList';
+import MetadataService from '~/common/services/metadata.service';
 
 /**
  * News feed store
@@ -13,11 +14,23 @@ class NewsfeedStore<T> {
   /**
    * Feed store
    */
-  latestFeedStore: FeedStore = new FeedStore(true);
+  latestFeedStore = new FeedStore()
+    .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setInjectBoost(true)
+    .setLimit(12)
+    .setMetadataService(
+      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
+    );
   /**
    * Feed store
    */
-  topFeedStore: FeedStore = new FeedStore(true);
+  topFeedStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+    .setInjectBoost(false)
+    .setLimit(3)
+    .setMetadataService(
+      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
+    );
   /**
    * List reference
    */
@@ -34,8 +47,6 @@ class NewsfeedStore<T> {
    * Constructors
    */
   constructor() {
-    this.buildStores();
-
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
     ActivityModel.events.on('newPost', this.onNewPost);
@@ -96,28 +107,6 @@ class NewsfeedStore<T> {
     }
   };
 
-  buildStores() {
-    this.latestFeedStore
-      .getMetadataService()! // we ignore because the metadata is defined
-      .setSource('feed/subscribed')
-      .setMedium('feed');
-
-    this.latestFeedStore
-      .setEndpoint('api/v2/feeds/subscribed/activities')
-      .setInjectBoost(true)
-      .setLimit(12);
-
-    this.topFeedStore
-      .getMetadataService()! // we ignore because the metadata is defined
-      .setSource('feed/subscribed')
-      .setMedium('top-feed');
-
-    this.topFeedStore
-      .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-      .setInjectBoost(false)
-      .setLimit(3);
-  }
-
   prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
 
@@ -128,7 +117,6 @@ class NewsfeedStore<T> {
   reset() {
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
-    this.buildStores();
   }
 }
 

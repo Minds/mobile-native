@@ -21,8 +21,8 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import i18nService from '~/common/services/i18n.service';
 import { storages } from '~/common/services/storage/storages.service';
-import Experiment from '~/common/components/Experiment';
 import { Button } from '~/common/ui';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
@@ -41,7 +41,10 @@ type NewsfeedScreenProps = {
   route: NewsfeedScreenRouteProp;
 };
 
-type NewsfeedScreenState = { shadowLessTopBar: boolean };
+type NewsfeedScreenState = {
+  shadowLessTopBar: boolean;
+  feedType: 'top' | 'latest';
+};
 
 /**
  * News Feed Screen
@@ -54,9 +57,6 @@ class NewsfeedScreen extends Component<
 > {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
-  state = {
-    feedType: 'latest',
-  };
 
   emptyProps = {
     ListEmptyComponent: (
@@ -75,8 +75,17 @@ class NewsfeedScreen extends Component<
     super(props);
 
     this.onScroll = throttle(this.onScroll, 100);
+
+    let storedFeedType;
+    try {
+      storedFeedType = storages.user?.getString(FEED_TYPE_KEY);
+    } catch (e) {
+      console.error(e);
+    }
+
     this.state = {
       shadowLessTopBar: true,
+      feedType: storedFeedType || 'latest',
     };
   }
 
@@ -99,12 +108,6 @@ class NewsfeedScreen extends Component<
       this.refreshNewsfeed,
     );
 
-    const storedFeedType = storages.user?.getString(FEED_TYPE_KEY);
-    if (storedFeedType) {
-      this.setState({
-        feedType: storedFeedType,
-      });
-    }
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
   }
@@ -168,18 +171,15 @@ class NewsfeedScreen extends Component<
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />
-        <Feature feature="top-feed">
-          <Experiment experiment="top-feed-2" variation="on">
-            <NewsfeedHeader
-              feedType={this.state.feedType}
-              onFeedTypeChange={this.handleFeedTypeChange}
-            />
-
-            {this.state.feedType === 'top' && (
-              <TopFeedMini feed={newsfeed.topFeedStore} />
-            )}
-          </Experiment>
-        </Feature>
+        <IfFeatureEnabled feature="top-feed-2">
+          <NewsfeedHeader
+            feedType={this.state.feedType}
+            onFeedTypeChange={this.handleFeedTypeChange}
+          />
+          {this.state.feedType === 'top' && (
+            <TopFeedMini feed={newsfeed.topFeedStore} />
+          )}
+        </IfFeatureEnabled>
       </View>
     );
 
