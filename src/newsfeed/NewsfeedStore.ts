@@ -1,10 +1,10 @@
 import { action } from 'mobx';
-
 import NewsfeedService from './NewsfeedService';
 import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
 import type FeedList from '../common/components/FeedList';
+import MetadataService from '~/common/services/metadata.service';
 
 /**
  * News feed store
@@ -13,7 +13,13 @@ class NewsfeedStore<T> {
   /**
    * Feed store
    */
-  feedStore: FeedStore = new FeedStore(true);
+  feedStore: FeedStore = new FeedStore()
+    .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setInjectBoost(true)
+    .setLimit(12)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
+    );
   /**
    * List reference
    */
@@ -25,8 +31,6 @@ class NewsfeedStore<T> {
    * Constructors
    */
   constructor() {
-    this.buildStores();
-
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
     ActivityModel.events.on('newPost', this.onNewPost);
@@ -68,18 +72,6 @@ class NewsfeedStore<T> {
     }
   };
 
-  buildStores() {
-    this.feedStore
-      .getMetadataService()! // we ignore because the metadata is defined
-      .setSource('feed/subscribed')
-      .setMedium('feed');
-
-    this.feedStore
-      .setEndpoint('api/v2/feeds/subscribed/activities')
-      .setInjectBoost(true)
-      .setLimit(12);
-  }
-
   prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
 
@@ -89,7 +81,6 @@ class NewsfeedStore<T> {
   @action
   reset() {
     this.feedStore.reset();
-    this.buildStores();
   }
 }
 

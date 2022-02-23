@@ -1,8 +1,6 @@
 //@ts-nocheck
 import { observable, action } from 'mobx';
-
 import groupsService from './GroupsService';
-
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
@@ -11,6 +9,7 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
+import MetadataService from '~/common/services/metadata.service';
 
 /**
  * Groups store
@@ -30,7 +29,9 @@ class GroupViewStore {
   /**
    * Feed store
    */
-  feed = new FeedStore(true);
+  feed = new FeedStore().setMetadata(
+    new MetadataService().setSource('feed/groups').setMedium('feed'),
+  );
 
   /**
    * Group
@@ -65,10 +66,6 @@ class GroupViewStore {
   @observable search = '';
 
   guid = '';
-
-  constructor() {
-    this.feed.getMetadataService().setSource('feed/groups').setMedium('feed');
-  }
 
   /**
    * Show/hide poster fab

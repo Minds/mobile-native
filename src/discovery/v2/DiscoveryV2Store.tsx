@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import MetadataService from '~/common/services/metadata.service';
 import apiService from '../../common/services/api.service';
 import FeedStore from '../../common/stores/FeedStore';
 
@@ -44,39 +45,37 @@ export default class DiscoveryV2Store {
   topFeed: FeedStore;
 
   constructor(plus: boolean = false) {
-    this.boostFeed = new FeedStore(true);
-    this.boostFeed
-      .getMetadataService()!
-      .setSource('feed/boosts')
-      .setMedium('featured-content');
+    this.boostFeed = new FeedStore().setMetadata(
+      new MetadataService()
+        .setSource('feed/boosts')
+        .setMedium('featured-content'),
+    );
 
     this.boostFeed
       .setEndpoint('api/v2/boost/feed')
       .setInjectBoost(false)
       .setLimit(15);
 
-    this.trendingFeed = new FeedStore(true)
+    this.trendingFeed = new FeedStore()
       .setEndpoint('api/v2/feeds/global/top/all')
       .setParams({ period: '12h', plus })
       .setInjectBoost(false)
-      .setLimit(15);
+      .setLimit(15)
+      .setMetadata(new MetadataService());
 
-    this.allFeed = new FeedStore(true);
-    this.allFeed
-      .getMetadataService()!
-      .setSource('feed/discovery')
-      .setMedium('feed');
-
-    this.allFeed
+    this.allFeed = new FeedStore()
       .setEndpoint('api/v2/feeds/global/topV2/all')
       .setInjectBoost(false)
-      .setLimit(15);
+      .setLimit(15)
+      .setMetadata(
+        new MetadataService().setSource('feed/discovery').setMedium('feed'),
+      );
 
-    this.topFeed = new FeedStore(true);
-    this.topFeed
+    this.topFeed = new FeedStore()
       .setEndpoint('api/v3/newsfeed/default-feed')
       .setInjectBoost(false)
-      .setLimit(15);
+      .setLimit(15)
+      .setMetadata(new MetadataService());
   }
 
   @action

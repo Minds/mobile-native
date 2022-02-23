@@ -12,6 +12,7 @@ import supportTiersService from '../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../wire/WireTypes';
 import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
+import MetadataService from '~/common/services/metadata.service';
 import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
 import moment from 'moment';
@@ -51,7 +52,9 @@ const createChannelStore = () => {
     tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,
     range: <{ from: number; to: number } | null>null,
-    feedStore: new FeedStore(true),
+    feedStore: new FeedStore().setMetadata(
+      new MetadataService().setSource('feed/channel'),
+    ),
     showScheduled: false,
     uploading: false,
     bannerProgress: 0,
@@ -398,7 +401,6 @@ const createChannelStore = () => {
     },
   };
 
-  store.feedStore.getMetadataService()?.setSource('feed/channel');
   return store;
 };
 

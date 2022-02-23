@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx';
-
 import logService from '../services/log.service';
 import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
@@ -77,16 +76,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
-   * Class constructor
-   * @param {boolean} includeMetadata include a metadata service
-   */
-  constructor(includeMetadata = false) {
-    if (includeMetadata) {
-      this.metadataService = new MetadataService();
-    }
-  }
-
-  /**
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
    * @param {string} medium
@@ -108,6 +97,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   getMetadataService() {
     return this.metadataService;
+  }
+
+  /**
+   * Sets metadata service
+   * @param { MetadataService } metadataService
+   * @returns { FeedStore }
+   */
+  setMetadata(metadataService: MetadataService) {
+    this.metadataService = metadataService;
+    return this;
   }
 
   /**

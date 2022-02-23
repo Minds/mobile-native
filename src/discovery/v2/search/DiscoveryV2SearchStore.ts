@@ -1,13 +1,13 @@
 import { action, observable } from 'mobx';
 import { storages } from '~/common/services/storage/storages.service';
-
+import MetadataService from '~/common/services/metadata.service';
 import FeedStore from '../../../common/stores/FeedStore';
 
 /**
  * Discovery Search Store
  */
 export default class DiscoveryV2SearchStore {
-  listStore = new FeedStore(true);
+  listStore = new FeedStore();
 
   @observable algorithm: string = 'top';
   @observable query: string = '';
@@ -25,7 +25,9 @@ export default class DiscoveryV2SearchStore {
   };
 
   constructor() {
-    this.listStore.getMetadataService()?.setSource(`search/${this.algorithm}`);
+    this.listStore.setMetadata(
+      new MetadataService().setSource(`search/${this.algorithm}`),
+    );
     this.params.nsfw = storages.user?.getArray('discovery-nsfw') || [];
     this.nsfw = this.params.nsfw;
     this.listStore
