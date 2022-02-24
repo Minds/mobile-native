@@ -15,6 +15,7 @@ exports[`ChannelRecommendation renders correctly 1`] = `
       </H3>
       <B2
         color="link"
+        onPress={[Function]}
       >
         See more
       </B2>
