@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
 import ThemedStyles from '../../styles/ThemedStyles';
 import UserModel from '../../channel/UserModel';
 import { observer } from 'mobx-react';
@@ -9,6 +8,7 @@ import SearchHistory from './SearchHistory';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { SearchResultStoreType } from './createSearchResultStore';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import ChannelListItem from '~/common/components/ChannelListItem';
 
 type PropsType = {
   navigation: any;
@@ -20,8 +20,8 @@ const SearchResultComponent = observer(
     const renderUser = useCallback(
       (user, index) => {
         return (
-          <DiscoveryUserNew
-            row={{ item: UserModel.checkOrCreate(user), index }}
+          <ChannelListItem
+            channel={UserModel.checkOrCreate(user)}
             key={user.guid}
             //@ts-ignore
             testID={`suggestedUser${index}`}
@@ -29,8 +29,11 @@ const SearchResultComponent = observer(
               localStore.searchBarItemTap(item);
               navigation.goBack();
             }}
-            subscribe={false}
+            hideButtons
             navigation={navigation}
+            avatarSize="medium"
+            containerStyles={ThemedStyles.style.paddingVertical2x}
+            borderless
           />
         );
       },
