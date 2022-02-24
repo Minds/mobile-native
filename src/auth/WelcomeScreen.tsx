@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '~/common/components/MText';
+import { IS_REVIEW } from '~/config/Config';
 import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
@@ -72,15 +73,18 @@ export default function WelcomeScreen(props: PropsType) {
       </View>
       <ResetPasswordModal ref={resetRef} />
 
-      <MText style={devtoolsStyle} onPress={openDevtools}>
-        Dev Options
-      </MText>
+      {IS_REVIEW && (
+        <MText style={devtoolsStyle} onPress={openDevtools}>
+          Dev Options
+        </MText>
+      )}
     </SafeAreaView>
   );
 }
 
 const devtoolsStyle = ThemedStyles.combine(
   'positionAbsoluteTopRight',
+  'marginTop9x',
   'padding5x',
 );
 

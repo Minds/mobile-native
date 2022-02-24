@@ -8,7 +8,6 @@ export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
-export const EXPERIMENTS_ID_KEY = 'experiments_id';
 export const STAGING_KEY = 'staging';
 export const CANARY_KEY = 'canary';
 
@@ -16,14 +15,19 @@ export const ENV =
   typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
 export const IS_PRODUCTION = ENV === 'production';
-export const IS_REVIEW = true || ENV === 'review';
+export const IS_REVIEW = ENV === 'review';
 
-// Send staging cookie to api
-export const MINDS_STAGING = storages.app.getBool(STAGING_KEY) || false;
-export const MINDS_CANARY = storages.app.getBool(CANARY_KEY) || false;
-
-// the user id to be used with growthbook experiments
-export const EXPERIMENTS_ID = storages.app.getString(EXPERIMENTS_ID_KEY) || '';
+/**
+ * We get the values only for review apps in order to avoid issues
+ * by setting them to true in a review app and after updating the app
+ * with a production version having that option turned on
+ */
+export const MINDS_STAGING = IS_REVIEW
+  ? storages.app.getBool(STAGING_KEY) || false
+  : false;
+export const MINDS_CANARY = IS_REVIEW
+  ? storages.app.getBool(CANARY_KEY) || false
+  : false;
 
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
