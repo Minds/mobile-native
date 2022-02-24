@@ -143,6 +143,8 @@ workflows:
             branches:
               ignore: /^stable.*/
       - fastlane_build_qa:
+          environment:
+            ENVFILE: .env.review
           requires:
             - analyse_js
           filters:
