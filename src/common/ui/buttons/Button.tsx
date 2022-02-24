@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   Animated,
+  PressableProps,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -37,6 +38,7 @@ export type ButtonPropsType = {
   testID?: string;
   accessibilityLabel?: string;
   icon?: React.ReactNode;
+  pressableProps?: PressableProps;
 };
 const shouldBreak = (num, disabled, state) => {
   return (
@@ -67,6 +69,7 @@ export const ButtonComponent = ({
   testID,
   accessibilityLabel,
   icon,
+  pressableProps,
 }: ButtonPropsType) => {
   const containerStyle = [
     styles.container,
@@ -233,7 +236,8 @@ export const ButtonComponent = ({
       onPress={handlePress}
       style={stretch ? styles.stretch : styles[align]}
       accessibilityLabel={accessibilityLabel}
-      testID={testID}>
+      testID={testID}
+      {...pressableProps}>
       {/** Main Wrapper */}
       <View style={containerStyle}>
         {/** Border Overlay */}

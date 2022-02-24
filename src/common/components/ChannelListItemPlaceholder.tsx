@@ -18,7 +18,7 @@ const ChannelListItemPlaceholder = () => {
   return (
     <Placeholder
       Left={() => (
-        <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
+        <PlaceholderMedia isRound color={color} style={theme.marginRight4x} />
       )}
       Animation={animation}
       style={styles.container}>
@@ -44,13 +44,10 @@ const styles = ThemedStyles.create({
     {
       alignItems: 'center',
       flexWrap: 'wrap',
-      paddingTop: 10,
-      paddingBottom: 10,
     },
-    'paddingHorizontal2x',
+    'padding4x',
     'bcolorPrimaryBorder',
     'borderBottomHair',
-    'bgPrimaryBackground',
   ],
   namePlaceholder: { marginBottom: 8 },
   usernamePlaceholder: { marginBottom: 0 },

@@ -1,12 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import ChannelListItem from '~/common/components/ChannelListItem';
+import ChannelListItemPlaceholder from '~/common/components/ChannelListItemPlaceholder';
 import UserModel from '../../../channel/UserModel';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
-import DiscoveryUser from '../../../discovery/DiscoveryUserNew';
 import NavigationService from '../../../navigation/NavigationService';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ModalContainer from './ModalContainer';
@@ -28,23 +28,21 @@ export default observer(function SuggestedChannelsScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.subscribeToChannel')}
+      contentContainer={theme.bgPrimaryBackgroundHighlight}
       onPressBack={NavigationService.goBack}>
-      <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
-        <MText
-          style={[
-            theme.subTitleText,
-            theme.colorPrimaryText,
-            theme.paddingHorizontal2x,
-          ]}>
-          {i18n.t('onboarding.suggestedChannelsDescription')}
-        </MText>
-        <ScrollView style={theme.flexContainer}>
-          {suggestions.loading && <CenteredLoading />}
-          {suggestions.result?.slice().map((user, index) => (
-            <DiscoveryUser row={{ item: user, index }} key={user.guid} />
-          ))}
-        </ScrollView>
-      </View>
+      <ScrollView style={theme.flexContainer}>
+        {suggestions.loading &&
+          !suggestions.result?.length &&
+          new Array(12).fill(true).map(() => <ChannelListItemPlaceholder />)}
+        {suggestions.result?.slice().map(user => (
+          <ChannelListItem
+            updateFeed={false}
+            navigation={NavigationService}
+            channel={user}
+            key={user.guid}
+          />
+        ))}
+      </ScrollView>
     </ModalContainer>
   );
 });

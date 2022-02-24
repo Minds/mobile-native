@@ -5,6 +5,10 @@ import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
 import { Button, Icon } from '~ui';
 
+const HITSLOP = {
+  hitSlop: 10,
+};
+
 const Subscribe = (props: {
   channel: UserModel;
   testID?: string;
@@ -44,6 +48,7 @@ const Subscribe = (props: {
       type={channel.subscribed ? 'base' : 'action'}
       size="tiny"
       onPress={onSubscriptionPress}
+      pressableProps={HITSLOP}
       icon={
         mini && (
           <Icon

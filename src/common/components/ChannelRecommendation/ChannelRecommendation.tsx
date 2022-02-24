@@ -53,6 +53,7 @@ interface ChannelRecommendationProps {
 const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
   location,
 }) => {
+  const navigation = useNavigation();
   const { result } = useChannelRecommendation(location);
 
   if (!result?.entities.length) {
@@ -64,7 +65,11 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
       <Spacer vertical="XL">
         <Row align="centerBetween" bottom="XL" horizontal="L">
           <H3>{i18nService.t('recommendedChannels')}</H3>
-          <B2 color="link">{i18nService.t('seeMore')}</B2>
+          <B2
+            color="link"
+            onPress={() => navigation.navigate('SuggestedChannel')}>
+            {i18nService.t('seeMore')}
+          </B2>
         </Row>
 
         {result?.entities.slice(0, 3).map(suggestion => (
