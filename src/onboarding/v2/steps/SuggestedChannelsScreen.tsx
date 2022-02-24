@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { ScrollView } from 'react-native';
