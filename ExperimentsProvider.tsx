@@ -6,6 +6,7 @@ import analyticsService from '~/common/services/analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
+import { IS_REVIEW } from '~/config/Config';
 
 export const growthbook = new GrowthBook({
   trackingCallback: (experiment, result) => {
@@ -16,7 +17,9 @@ export const growthbook = new GrowthBook({
     } else {
       storages.user?.setInt(CACHE_KEY, Date.now());
     }
-    analyticsService.addExperiment(experiment.key, result.variationId);
+    if (!IS_REVIEW) {
+      analyticsService.addExperiment(experiment.key, result.variationId);
+    }
   },
 });
 

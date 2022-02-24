@@ -66,6 +66,9 @@ export default class AppInitManager {
           const token = await sessionService.init();
 
           if (!token) {
+            // update settings and init growthbook
+            this.updateMindsConfigAndInitGrowthbook();
+
             logService.info('[App] there is no active session');
             RNBootSplash.hide({ fade: true });
           } else {
@@ -90,6 +93,16 @@ export default class AppInitManager {
     Blurhash.clearCosineCache();
   }
 
+  updateMindsConfigAndInitGrowthbook() {
+    // init with current cached data
+    updateGrowthBookAttributes();
+    // Update the config
+    mindsConfigService.update().then(() => {
+      // if it changed we initialize growth book again
+      updateGrowthBookAttributes();
+    });
+  }
+
   /**
    * Handle session logout
    */
@@ -106,19 +119,12 @@ export default class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    //we initialize growth book with cached data
-    updateGrowthBookAttributes();
-    // Update the config for this user
-    mindsConfigService.update().then(() => {
-      // if it changed we initialize growth book again
-      updateGrowthBookAttributes();
-    });
+    // update settings for this user and init growthbook
+    this.updateMindsConfigAndInitGrowthbook();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
     });
-
-    logService.info('[App] Getting minds settings and onboarding progress');
 
     // register device token into backend on login
     pushService.registerToken();
