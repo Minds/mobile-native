@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, H1, IconButton } from '~ui';
+import { IconCircled, Spacer, IconButton, H2 } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -51,12 +51,12 @@ export const Topbar = observer((props: PropsType) => {
                 name="chevron-left"
                 size="huge"
                 right="S"
-                color="White"
+                color="Icon"
                 onPress={() => props.navigation.goBack()}
               />
             )}
             {!!props.title ? (
-              <H1>{props.title}</H1>
+              <H2>{props.title}</H2>
             ) : (
               <Image
                 resizeMode="contain"
