@@ -97,6 +97,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
     <Column
       align="centerStart"
       flex={true}
+      right="L"
     >
       <B1
         font="bold"
