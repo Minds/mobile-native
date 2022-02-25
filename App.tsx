@@ -47,6 +47,8 @@ import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingVie
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
+import ExperimentsProvider from 'ExperimentsProvider';
+
 YellowBox.ignoreWarnings(['']);
 
 const appInitManager = new AppInitManager();
@@ -174,7 +176,7 @@ class App extends Component<Props, State> {
     const showAuthNav = sessionService.showAuthNav;
 
     return (
-      <>
+      <ExperimentsProvider>
         <SafeAreaProvider>
           <ScreenHeightProvider>
             {sessionService.ready && (
@@ -209,7 +211,7 @@ class App extends Component<Props, State> {
           </ScreenHeightProvider>
         </SafeAreaProvider>
         <TosModal user={stores.user} />
-      </>
+      </ExperimentsProvider>
     );
   }
 }

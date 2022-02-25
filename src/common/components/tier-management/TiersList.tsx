@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, Image } from 'react-native';
-import { TierStoreType } from '../../../compose/monetize/MembershipMonetizeScreeen';
+import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MenuItem from '../menus/MenuItem';

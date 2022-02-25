@@ -20,14 +20,11 @@ import i18nService from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
 import { IconButtonNext } from '~/common/ui/icons';
 import NavigationService from '~/navigation/NavigationService';
-import FloatingBackButton from '../../common/components/FloatingBackButton';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../styles/ThemedStyles';
-import Camera from '../Camera/Camera';
-import PermissionsCheck from '../PermissionsCheck';
+import FloatingBackButton from '../common/components/FloatingBackButton';
+import i18n from '../common/services/i18n.service';
+import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
+import Camera from './Camera/Camera';
+import PermissionsCheck from './PermissionsCheck';
 import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
 

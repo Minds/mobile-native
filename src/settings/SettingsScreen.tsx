@@ -11,6 +11,7 @@ import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { showNotification } from 'AppMessages';
+import { IS_REVIEW } from '~/config/Config';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -123,15 +124,23 @@ export default function ({ navigation }) {
       title: i18n.t('help'),
       onPress: navigateToHelp,
     },
-    {
-      title: i18n.t('settings.logout'),
-      onPress: () => AuthService.logout(),
-      icon: {
-        name: 'login-variant',
-        type: 'material-community',
-      },
-    },
   ];
+
+  if (IS_REVIEW) {
+    secondSection.push({
+      title: 'Developer Options',
+      screen: 'DevTools',
+    });
+  }
+
+  secondSection.push({
+    title: i18n.t('settings.logout'),
+    onPress: () => AuthService.logout(),
+    icon: {
+      name: 'login-variant',
+      type: 'material-community',
+    },
+  });
 
   const firstSectionItems = firstSection.map(
     ({ title, screen, params, ...rest }) => ({

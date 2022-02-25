@@ -290,12 +290,6 @@
     "disableConversations": "Dezactivează conversațiile",
     "enableConversations": "Activează conversațiile"
   },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Introduceți o parolă care va cripta lanțul cheie {{keychain}}.",
-    "encryptMessage1": "Amintește-ți parola sau nu vei putea citi/scrie din ea."
-  },
   "messenger": {
     "decrypting": "decriptare...",
     "couldntDecrypt": "nu poate decripta",

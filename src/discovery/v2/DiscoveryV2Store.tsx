@@ -3,16 +3,18 @@ import apiService from '../../common/services/api.service';
 import FeedStore from '../../common/stores/FeedStore';
 
 export type TDiscoveryV2Tabs =
+  | 'top'
   | 'foryou'
   | 'your-tags'
   | 'trending-tags'
   | 'boosts';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
-  foryou: 0,
-  'your-tags': 1,
-  'trending-tags': 2,
-  boosts: 3,
+  top: 0,
+  foryou: 1,
+  'your-tags': 2,
+  'trending-tags': 3,
+  boosts: 4,
 };
 
 export type TDiscoveryTrendsTrend = {};
@@ -22,7 +24,7 @@ export type TDiscoveryTagsTag = {
 };
 
 export default class DiscoveryV2Store {
-  @observable activeTabId: TDiscoveryV2Tabs = 'foryou';
+  @observable activeTabId: TDiscoveryV2Tabs = 'top';
   @observable trends: TDiscoveryTrendsTrend[] = [];
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
@@ -39,6 +41,7 @@ export default class DiscoveryV2Store {
   boostFeed: FeedStore;
   trendingFeed: FeedStore;
   allFeed: FeedStore;
+  topFeed: FeedStore;
 
   constructor(plus: boolean = false) {
     this.boostFeed = new FeedStore(true);
@@ -68,6 +71,12 @@ export default class DiscoveryV2Store {
       .setEndpoint('api/v2/feeds/global/topV2/all')
       .setInjectBoost(false)
       .setLimit(15);
+
+    this.topFeed = new FeedStore(true);
+    this.topFeed
+      .setEndpoint('api/v3/newsfeed/default-feed')
+      .setInjectBoost(false)
+      .setLimit(15);
   }
 
   @action
@@ -76,15 +85,20 @@ export default class DiscoveryV2Store {
     this.direction = tabIndex[id] > tabIndex[this.activeTabId] ? 1 : 0;
     if (tabIndex)
       switch (id) {
+        case 'top':
+          this.topFeed.fetchRemoteOrLocal();
+          break;
+        case 'boosts':
+          this.boostFeed.fetchRemoteOrLocal();
+          break;
+        case 'trending-tags':
+          this.trendingFeed.fetchRemoteOrLocal();
+          break;
         case 'foryou':
           if (id === this.activeTabId) {
             // already on tab
             this.refreshTrends();
           }
-          break;
-        case 'trending-tags':
-          break;
-        case 'boosts':
           break;
       }
     this.activeTabId = id;
@@ -193,6 +207,10 @@ export default class DiscoveryV2Store {
 
   @action
   reset() {
+    this.allFeed.reset();
+    this.topFeed.reset();
+    this.trendingFeed.reset();
+    this.boostFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];

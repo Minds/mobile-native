@@ -175,7 +175,7 @@ export default observer(function (props: PropsType) {
                 ref={camera}
                 style={StyleSheet.absoluteFill}
                 device={device}
-                format={format}
+                format={IS_IOS ? format : undefined}
                 fps={30}
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost
