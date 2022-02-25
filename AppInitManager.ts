@@ -111,6 +111,7 @@ export default class AppInitManager {
     badgeService.setUnreadConversations(0);
     badgeService.setUnreadNotifications(0);
     translationService.purgeLanguagesCache();
+    updateGrowthBookAttributes();
   };
 
   /**
