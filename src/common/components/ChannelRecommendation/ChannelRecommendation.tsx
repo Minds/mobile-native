@@ -32,7 +32,7 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
     <MPressable onPress={onPress}>
       <Row vertical="S" horizontal="L">
         <Avatar size="tiny" right="M" top="XS" source={avatar} />
-        <Column flex align="centerStart">
+        <Column flex align="centerStart" right="L">
           <B1 font="bold">{channel.name}</B1>
           {Boolean(channel.briefdescription) && (
             <B2 numberOfLines={2} color="secondary">
