@@ -4,7 +4,6 @@ import NewsfeedService from './NewsfeedService';
 import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
-import type FeedList from '../common/components/FeedList';
 
 /**
  * News feed store
@@ -17,7 +16,7 @@ class NewsfeedStore<T> {
   /**
    * List reference
    */
-  listRef?: FeedList<T>;
+  listRef?: any;
 
   service = new NewsfeedService();
 
@@ -62,7 +61,7 @@ class NewsfeedStore<T> {
   /**
    * Set FeedList reference
    */
-  setListRef = (r: FeedList<T> | null) => {
+  setListRef = r => {
     if (r) {
       this.listRef = r;
     }
