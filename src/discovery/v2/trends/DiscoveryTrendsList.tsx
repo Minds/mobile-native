@@ -30,7 +30,7 @@ const ItemPartial = (item, index) => {
  */
 export const DiscoveryTrendsList = observer(
   ({ plus, store, header }: PropsType) => {
-    let listRef = useRef<FeedList<any>>(null);
+    let listRef = useRef<any>(null);
     let tagRef = useRef<BottomSheetModal>(null);
 
     const navigation = useNavigation();

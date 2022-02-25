@@ -124,7 +124,7 @@
     "react-native-reanimated-hooks": "^2.0.0",
     "react-native-reanimated-indicators": "^2.0.0",
     "react-native-redash": "^14.2.3",
-    "react-native-safe-area-context": "^3.3.0",
+    "react-native-safe-area-context": "^4.0.1",
     "react-native-screens": "^3.8.0",
     "react-native-send-intent": "msantang78/react-native-send-intent",
     "react-native-set-soft-input-mode": "^1.1.0",
