@@ -20,6 +20,10 @@ import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
+export interface InjectItemComponentProps {
+  index: number;
+}
+
 /**
  * an item to be injected in feed
  */
@@ -31,7 +35,7 @@ export interface InjectItem {
   /**
    * the component to render
    */
-  component: React.ReactNode;
+  component: (props: InjectItemComponentProps) => React.ReactNode;
 }
 
 type PropsType = {
@@ -316,10 +320,9 @@ export default class FeedList<T> extends Component<PropsType> {
           autoHeight={false}
           showCommentsOutlet={false}
         />
-        {
-          this.props.injectItems?.find(p => p?.indexes.includes(row.index))
-            ?.component
-        }
+        {this.props.injectItems
+          ?.find(p => p?.indexes.includes(row.index))
+          ?.component?.({ index: row.index })}
       </ErrorBoundary>
     );
   };

@@ -66,7 +66,7 @@ class NewsfeedScreen extends Component<
   injectItems: InjectItem[] = [
     {
       indexes: [2],
-      component: (
+      component: () => (
         <IfFeatureEnabled feature="channel-recommendations">
           <ChannelRecommendation location="newsfeed" />
         </IfFeatureEnabled>

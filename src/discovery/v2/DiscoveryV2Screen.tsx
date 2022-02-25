@@ -68,7 +68,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
       () => [
         {
           indexes: [2],
-          component: (
+          component: () => (
             <IfFeatureEnabled feature="channel-recommendations">
               <ChannelRecommendation location="discovery-feed" />
             </IfFeatureEnabled>
