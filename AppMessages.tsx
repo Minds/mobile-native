@@ -60,19 +60,18 @@ export const showNotification = (
       message,
       hideAccent: true,
       shouldVibrate,
+      allowFontScaling: false,
+      // hideCloseIcon: true,
       duration,
       subMessage,
       ...getIcon(type),
-      closeIconSize: 22,
+      closeIconSize: 18,
       messageProps: {
         fontFamily: 'Roboto-Medium',
         fontSize: 14,
-        textAlign: 'center',
-        numberOfLines: 2,
       },
-      iconSize: 22,
+      iconSize: 24,
       toastStyles: {
-        alginItems: 'center',
         borderRadius: 4,
       },
       shadow: {

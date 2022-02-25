@@ -13,11 +13,10 @@ export default function AppMessageProvider({ children }) {
   const theme = React.useMemo(() => {
     const bg = ThemedStyles.theme
       ? tinycolor(ThemedStyles.getColor('PrimaryBackgroundHighlight'))
-          // .lighten()
+          .lighten()
           .toString()
-      : tinycolor(ThemedStyles.getColor('PrimaryBackgroundHighlight'))
-          // .darken()
-          .toString();
+      : ThemedStyles.getColor('PrimaryBackgroundHighlight');
+
     return {
       space: [0, 4, 5, 12, 16, 20, 24, 32, 40, 48],
       colors: {
@@ -33,7 +32,7 @@ export default function AppMessageProvider({ children }) {
   }, [ThemedStyles.theme]);
   return (
     <ThemeProvider theme={theme}>
-      <ToastProvider position="TOP">
+      <ToastProvider position="TOP" offset={20}>
         <ToastContext.Consumer>
           {({ toast }) => {
             registerToast(toast);
