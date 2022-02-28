@@ -17,6 +17,8 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
+import debounce from 'lodash/debounce';
 
 type PropsType = {
   navigation?: any;
@@ -58,19 +60,18 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
   const filter = notifications.filter;
-  const params = {
-    filter,
-    limit: 15,
-    offset: notifications.offset,
-  };
   const {
     result,
+    refresh: realRefresh,
     error,
     loading,
-    fetch,
     setResult,
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params,
+    params: {
+      filter,
+      limit: 15,
+      offset: notifications.offset,
+    },
     updateStrategy: 'merge',
     dataField: 'notifications',
     map,
@@ -91,32 +92,28 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
-    setResult(null);
-    fetch(params);
-  }, [notifications, fetch, params, setResult]);
+    realRefresh();
+  }, [notifications, realRefresh]);
 
   const handleListRefresh = React.useCallback(() => {
     setRefreshing(true);
     refresh();
   }, [refresh, setRefreshing]);
 
-  const onFocus = React.useCallback(() => {
-    notifications.setUnread(0);
-    // only refresh if we already have notifications
-    if (result) {
-      refresh();
-    }
-  }, [notifications, refresh, result]);
+  const notificationsLength = result?.notifications.length || 0;
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener(
-      //@ts-ignore
-      'tabPress',
-      () => navigation.isFocused() && onFocus(),
-    );
+  const onFocus = React.useCallback(
+    debounce(() => {
+      notifications.setUnread(0);
+      // only refresh if we already have notifications
+      if (notificationsLength) {
+        refresh();
+      }
+    }, 100),
+    [notificationsLength],
+  );
 
-    return unsubscribe;
-  }, [navigation, onFocus]);
+  useFocusEffect(onFocus);
 
   React.useEffect(() => {
     if (!notifications.loaded) {
@@ -150,7 +147,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (error && !loading && !isRefreshing) {
       return (
         <View style={styles.errorContainerStyle}>
-          <MText style={styles.errorStyle} onPress={() => fetch()}>
+          <MText style={styles.errorStyle} onPress={() => refresh()}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
           </MText>
@@ -175,7 +172,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />
       </View>
     );
-  }, [error, loading, fetch, isRefreshing, filter]);
+  }, [error, loading, refresh, isRefreshing, filter]);
 
   const user = sessionService.getUser();
 
