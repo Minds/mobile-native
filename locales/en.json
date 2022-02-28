@@ -793,7 +793,8 @@
       "d1": "App",
       "e": "LEGACY",
       "f": "DATA",
-      "g": "REFERRALS"
+      "g": "REFERRALS",
+      "contentMigration": "Content Migration"
     },
     "notificationsOptions": {
       "push": "Push",
