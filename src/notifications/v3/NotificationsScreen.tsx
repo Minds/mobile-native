@@ -17,7 +17,6 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import debounce from 'lodash/debounce';
 
 type PropsType = {
   navigation?: any;
@@ -102,7 +101,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const notificationsLength = result?.notifications.length || 0;
 
   const onFocus = React.useCallback(
-    debounce((showIndicator = false) => {
+    (showIndicator = false) => {
       notifications.setUnread(0);
       // only refresh if we already have notifications
       if (notificationsLength) {
@@ -112,8 +111,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           refresh();
         }
       }
-    }, 100),
-    [notificationsLength],
+    },
+    [handleListRefresh, notifications, notificationsLength, refresh],
   );
 
   // const isFocused = navigation.isFocused();
@@ -159,7 +158,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (error && !loading && !isRefreshing) {
       return (
         <View style={styles.errorContainerStyle}>
-          <MText style={styles.errorStyle} onPress={() => refresh()}>
+          <MText style={styles.errorStyle} onPress={handleListRefresh}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
           </MText>
@@ -184,7 +183,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />
       </View>
     );
-  }, [error, loading, refresh, isRefreshing, filter]);
+  }, [error, loading, handleListRefresh, isRefreshing, filter]);
 
   const user = sessionService.getUser();
 
