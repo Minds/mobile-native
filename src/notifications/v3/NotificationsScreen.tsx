@@ -17,7 +17,6 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 import debounce from 'lodash/debounce';
 
 type PropsType = {
@@ -103,17 +102,30 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const notificationsLength = result?.notifications.length || 0;
 
   const onFocus = React.useCallback(
-    debounce(() => {
+    debounce((showIndicator = false) => {
       notifications.setUnread(0);
       // only refresh if we already have notifications
       if (notificationsLength) {
-        refresh();
+        if (showIndicator) {
+          handleListRefresh();
+        } else {
+          refresh();
+        }
       }
     }, 100),
     [notificationsLength],
   );
 
-  useFocusEffect(onFocus);
+  // const isFocused = navigation.isFocused();
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      //@ts-ignore
+      'tabPress',
+      () => navigation.isFocused() && onFocus(true),
+    );
+
+    return unsubscribe;
+  }, [navigation, onFocus]);
 
   React.useEffect(() => {
     if (!notifications.loaded) {
