@@ -52,6 +52,14 @@ type PropsType = {
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
   ListEmptyComponent?: React.ReactNode;
+  /**
+   * a function to call on refresh. this replaces the feedList default refresh function
+   */
+  onRefresh?: () => Promise<any>;
+  /**
+   * refreshing state. overwrites the feedList's refreshing
+   */
+  refreshing?: Boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
@@ -192,14 +200,14 @@ export class FeedList<T> extends Component<PropsType> {
         data={!this.props.hideItems ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
-        onRefresh={feedStore.refresh}
-        refreshing={feedStore.refreshing}
+        onRefresh={this.refresh}
+        refreshing={this.refreshing}
         onEndReached={this.loadMore}
         refreshControl={
           <RefreshControl
             tintColor={this.props.refreshControlTintColor}
-            refreshing={feedStore.refreshing}
-            onRefresh={feedStore.refresh}
+            refreshing={this.refreshing}
+            onRefresh={this.refresh}
             progressViewOffset={(insets?.top || 0) / 1.25}
           />
         }
@@ -290,6 +298,30 @@ export class FeedList<T> extends Component<PropsType> {
   loadFeedForce = () => {
     this.props.feedStore.reload();
   };
+
+  /**
+   * Refresh feed data
+   */
+  refresh = async () => {
+    if (this.props.onRefresh) {
+      await this.props.onRefresh();
+    } else {
+      await this.props.feedStore.refresh();
+    }
+
+    if (this.props.afterRefresh) {
+      this.props.afterRefresh();
+    }
+  };
+
+  /**
+   * returns refreshing based on props or feedStore
+   */
+  get refreshing() {
+    return typeof this.props.refreshing === 'boolean'
+      ? this.props.refreshing
+      : this.props.feedStore.refreshing;
+  }
 
   /**
    * Render activity
