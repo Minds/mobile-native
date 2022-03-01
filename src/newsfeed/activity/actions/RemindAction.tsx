@@ -107,7 +107,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       .submit()
       .then(activity => {
         // append the entity to the feed
-        newsfeed.feedStore?.prepend(activity);
+        newsfeed.feedStore.prepend(activity);
 
         showNotification(i18n.t('postReminded'), 'success');
       })

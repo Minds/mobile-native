@@ -59,6 +59,7 @@ class NewsfeedStore<T> {
       case 'top':
         return this.topFeedStore;
       case 'latest':
+      default:
         return this.latestFeedStore;
     }
   }
@@ -89,7 +90,7 @@ class NewsfeedStore<T> {
       this.topFeedStore.removeFromOwner(user.guid);
       this.latestFeedStore.removeFromOwner(user.guid);
     } else {
-      this.feedStore?.refresh();
+      this.feedStore.refresh();
     }
   };
 
@@ -105,7 +106,7 @@ class NewsfeedStore<T> {
         console.error(e);
       }
     }
-    this.feedStore?.fetchLocalThenRemote(refresh);
+    this.feedStore.fetchLocalThenRemote(refresh);
   };
 
   /**
@@ -128,12 +129,12 @@ class NewsfeedStore<T> {
 
   private prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
-    this.feedStore?.prepend(model);
+    this.feedStore.prepend(model);
   }
 
   @action
   reset() {
-    this.feedStore?.reset();
+    this.feedStore.reset();
   }
 }
 
