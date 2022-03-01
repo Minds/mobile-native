@@ -96,6 +96,7 @@ export type MoreStackParamList = {
     password: string;
   };
   ChooseBrowser: {};
+  DevTools: {};
 };
 
 export type RootStackParamList = {
@@ -166,6 +167,7 @@ export type RootStackParamList = {
     onLogin?: Function;
     onCancel?: Function;
   };
+  DevTools: {};
 };
 
 export type AuthStackParamList = {
@@ -197,7 +199,6 @@ export type AppStackParamList = {
     items: Array<PortraitBarItem>;
     index: number;
   };
-  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -225,19 +226,6 @@ export type AppStackParamList = {
   ScheduleSelector: {};
   PermawebSelector: {};
   AccessSelector: {
-    store: ComposeStoreType;
-  };
-  MonetizeSelector: {
-    store: ComposeStoreType;
-  };
-  PlusMonetize: {
-    store: ComposeStoreType;
-  };
-  MembershipMonetize: {
-    store: ComposeStoreType;
-    useForSelection: boolean;
-  };
-  CustomMonetize: {
     store: ComposeStoreType;
   };
   LicenseSelector: {};

@@ -5,7 +5,6 @@ import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
 import { SettingsStore } from './src/settings/SettingsStore';
-import apiService from './src/common/services/api.service';
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
 
@@ -18,12 +17,10 @@ import boostedContentService from './src/common/services/boosted-content.service
 import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
-import { getStores } from './AppStores';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { migrateLegacyStorage } from './src/common/services/storage/legacyStorageMigrator';
-import experimentsService from './src/common/services/experiments.service';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
+import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
@@ -48,9 +45,6 @@ export default class AppInitManager {
     // init push service
     pushService.init();
 
-    // clear old cookies
-    apiService.clearCookies();
-
     // init settings loading
     this.deeplinkPromise = Linking.getInitialURL();
 
@@ -62,41 +56,51 @@ export default class AppInitManager {
 
     openUrlService.init();
 
-    //TODO: remove store migrator
-    migrateLegacyStorage().then(() => {
-      this.checkDeepLink().then(async shouldHandlePasswordReset => {
-        if (shouldHandlePasswordReset) {
-          sessionService.setReady();
-          this.shouldHandlePasswordReset = true;
-        } else {
-          try {
-            logService.info('[App] init session');
-            const token = await sessionService.init();
+    this.checkDeepLink().then(async shouldHandlePasswordReset => {
+      if (shouldHandlePasswordReset) {
+        sessionService.setReady();
+        this.shouldHandlePasswordReset = true;
+      } else {
+        try {
+          logService.info('[App] init session');
+          const token = await sessionService.init();
 
-            if (!token) {
-              logService.info('[App] there is no active session');
-              RNBootSplash.hide({ fade: true });
-            } else {
-              logService.info('[App] session initialized');
-            }
-          } catch (err) {
-            logService.exception('[App] Error initializing the app', err);
-            Alert.alert(
-              'Error',
-              'There was an error initializing the app.\n Do you want to copy the stack trace.',
-              [
-                { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
-                { text: 'No' },
-              ],
-              { cancelable: false },
-            );
+          if (!token) {
+            // update settings and init growthbook
+            this.updateMindsConfigAndInitGrowthbook();
+
+            logService.info('[App] there is no active session');
+            RNBootSplash.hide({ fade: true });
+          } else {
+            logService.info('[App] session initialized');
           }
+        } catch (err) {
+          logService.exception('[App] Error initializing the app', err);
+          Alert.alert(
+            'Error',
+            'There was an error initializing the app.\n Do you want to copy the stack trace.',
+            [
+              { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
+              { text: 'No' },
+            ],
+            { cancelable: false },
+          );
         }
-      });
+      }
     });
 
     // clear cosine cache of blurhash
     Blurhash.clearCosineCache();
+  }
+
+  updateMindsConfigAndInitGrowthbook() {
+    // init with current cached data
+    updateGrowthBookAttributes();
+    // Update the config
+    mindsConfigService.update().then(() => {
+      // if it changed we initialize growth book again
+      updateGrowthBookAttributes();
+    });
   }
 
   /**
@@ -106,8 +110,8 @@ export default class AppInitManager {
     // clear app badge
     badgeService.setUnreadConversations(0);
     badgeService.setUnreadNotifications(0);
-    getStores().groupsBar.clearLocal();
     translationService.purgeLanguagesCache();
+    updateGrowthBookAttributes();
   };
 
   /**
@@ -116,36 +120,12 @@ export default class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    //we initialize growth book with cached data
-    const settings = mindsConfigService.getSettings();
-    if (settings.experiments && settings.experiments.length > 0) {
-      experimentsService.initGrowthbook(
-        sessionService.getUser(),
-        settings.experiments || [],
-      );
-    }
-    // Update the config for this user
-    mindsConfigService.update().then(() => {
-      // if it changed we initialize growth book again
-      const settingsNew = mindsConfigService.getSettings();
-      if (
-        settingsNew.experiments &&
-        settings.experiments &&
-        JSON.stringify(settingsNew.experiments) !==
-          JSON.stringify(settings.experiments)
-      ) {
-        experimentsService.initGrowthbook(
-          sessionService.getUser(),
-          settingsNew.experiments,
-        );
-      }
-    });
+    // update settings for this user and init growthbook
+    this.updateMindsConfigAndInitGrowthbook();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
     });
-
-    logService.info('[App] Getting minds settings and onboarding progress');
 
     // register device token into backend on login
     pushService.registerToken();
@@ -163,8 +143,6 @@ export default class AppInitManager {
   };
 
   async initialNavigationHandling() {
-    // hide splash
-    RNBootSplash.hide({ fade: true });
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
@@ -173,6 +151,7 @@ export default class AppInitManager {
         sessionService.initialScreen,
       );
       if (sessionService.initialScreen) {
+        console.log('initialScreen', sessionService.initialScreen);
         NavigationService.navigate(sessionService.initialScreen, {
           initial: true,
         });
@@ -198,6 +177,9 @@ export default class AppInitManager {
         sessionService.setRecoveryCodeUsed(false);
         NavigationService.navigate('RecoveryCodeUsedScreen');
       }
+
+      // hide splash
+      RNBootSplash.hide({ fade: true });
     } catch (err) {
       logService.exception(err);
     }

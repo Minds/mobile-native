@@ -361,12 +361,6 @@
     "disableConversations": "Desactivar conversaciones",
     "enableConversations": "Activar conversaciones"
   },
-  "keychain": {
-    "unlockMessage": "Desbloquear el llavero {{keychain}}",
-    "setupMessage": "Desbloquear el llavero {{keychain}}",
-    "encryptMessage": "Ingresa una contraseña que va a encriptar {{keychain}} llavero.",
-    "encryptMessage1": "Recuerda la contraseña o no podrás leer/escribir en el."
-  },
   "messenger": {
     "decrypting": "desencriptando...",
     "notAllowed": "Este usuario sólo permite mensajes de usuarios a los que está suscrito",

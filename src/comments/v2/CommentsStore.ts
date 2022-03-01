@@ -429,6 +429,9 @@ export default class CommentsStore {
 
       if (this.entity.incrementCommentsCounter) {
         this.entity.incrementCommentsCounter();
+        if (this.parent) {
+          this.parent.increaseReply();
+        }
       }
     } catch (err) {
       logService.exception('[CommentsStore] post', err);

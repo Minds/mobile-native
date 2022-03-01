@@ -11,7 +11,9 @@ import { mix, useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { observer, useLocalStore } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import { useDimensions } from '@react-native-community/hooks';
+import { IS_IOS } from '~/config/Config';
 
 interface PropsType extends ViewProps {
   children: React.ReactNode;
@@ -25,17 +27,19 @@ export const screenRealHeightContext = React.createContext<number>(0);
 /**
  * This components leaves room for the keyboard adding a padding bellow it
  * in order to work as expected the bottom of the view should be at the bottom of the screen
+ *
+ * this component is disabled on android by default (we are using the adjustResizeMode that already resize the view)
  */
 export default observer(function KeyboardSpacingView({
   children,
   style,
-  enabled = true,
+  enabled = IS_IOS,
   onKeyboardShown,
   noInset,
   ...otherProps
 }: PropsType) {
   const insets = useSafeAreaInsets();
-  const heightContext = React.useContext(screenRealHeightContext);
+  const windowHeight = useDimensions().window.height;
   const store = useLocalStore(
     ({ enabled: enabledProp }) => ({
       shown: false,
@@ -45,7 +49,7 @@ export default observer(function KeyboardSpacingView({
           store.shown = true;
         }
         store.height =
-          heightContext -
+          windowHeight -
           e.endCoordinates.screenY -
           (noInset ? insets.bottom : 0);
         if (onKeyboardShown) {

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { RouteProp } from '@react-navigation/core';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '../common/components/MText';
 import { useBackHandler } from '@react-native-community/hooks';
 import { Button } from '~ui';
+import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -88,59 +89,68 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       : i18n.t('auth.2faSmsDescription');
 
   return (
-    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <KeyboardAvoidingView
-        style={theme.flexContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={styles.header}>
-          <Icon
-            name="close"
-            size={25}
-            color={ThemedStyles.getColor('SecondaryText')}
-            onPress={localStore.cancel}
-          />
-          <MText style={styles.titleText}>
-            {title || i18n.t('auth.2faRequired')}
-          </MText>
-          <Button
-            mode="flat"
-            size="small"
-            type="action"
-            onPress={localStore.submit}>
-            {i18n.t('verify')}
-          </Button>
-        </View>
-        <MText style={styles.description}>{description}</MText>
-        <View style={theme.fullWidth}>
-          <InputContainer
-            maxLength={localStore.recovery ? undefined : 6}
-            keyboardType={localStore.recovery ? undefined : 'numeric'}
-            labelStyle={theme.colorPrimaryText}
-            style={theme.colorPrimaryText}
-            placeholder={
-              localStore.recovery
-                ? i18n.t('auth.recoveryCode')
-                : i18n.t('auth.authCode')
-            }
-            onChangeText={localStore.setCode}
-            error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
-            value={localStore.code}
-          />
-        </View>
-        {mfaType === 'email' && (
-          <MText style={styles.description} onPress={localStore.resend}>
-            {i18n.t('onboarding.verifyEmailDescription2')}
-            <MText style={styles.resend}> {i18n.t('onboarding.resend')}</MText>
-          </MText>
-        )}
-        {mfaType === 'totp' && showRecovery && (
-          <MText style={styles.description} onPress={localStore.toggleRecovery}>
-            {i18n.t('auth.recoveryDesc')}
-            <MText style={styles.resend}> {i18n.t('auth.recoveryCode')}</MText>
-          </MText>
-        )}
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <KeyboardSpacingView
+      style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+      <ScrollView>
+        <SafeAreaView>
+          <View style={styles.header}>
+            <Icon
+              name="close"
+              size={25}
+              color={ThemedStyles.getColor('SecondaryText')}
+              onPress={localStore.cancel}
+            />
+            <MText style={styles.titleText}>
+              {title || i18n.t('auth.2faRequired')}
+            </MText>
+            <Button
+              mode="flat"
+              size="small"
+              type="action"
+              onPress={localStore.submit}>
+              {i18n.t('verify')}
+            </Button>
+          </View>
+          <MText style={styles.description}>{description}</MText>
+          <View style={theme.fullWidth}>
+            <InputContainer
+              maxLength={localStore.recovery ? undefined : 6}
+              keyboardType={localStore.recovery ? undefined : 'numeric'}
+              labelStyle={theme.colorPrimaryText}
+              style={theme.colorPrimaryText}
+              placeholder={
+                localStore.recovery
+                  ? i18n.t('auth.recoveryCode')
+                  : i18n.t('auth.authCode')
+              }
+              onChangeText={localStore.setCode}
+              error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
+              value={localStore.code}
+            />
+          </View>
+          {mfaType === 'email' && (
+            <MText style={styles.description} onPress={localStore.resend}>
+              {i18n.t('onboarding.verifyEmailDescription2')}
+              <MText style={styles.resend}>
+                {' '}
+                {i18n.t('onboarding.resend')}
+              </MText>
+            </MText>
+          )}
+          {mfaType === 'totp' && showRecovery && (
+            <MText
+              style={styles.description}
+              onPress={localStore.toggleRecovery}>
+              {i18n.t('auth.recoveryDesc')}
+              <MText style={styles.resend}>
+                {' '}
+                {i18n.t('auth.recoveryCode')}
+              </MText>
+            </MText>
+          )}
+        </SafeAreaView>
+      </ScrollView>
+    </KeyboardSpacingView>
   );
 });
 

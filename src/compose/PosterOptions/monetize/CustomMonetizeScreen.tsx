@@ -1,38 +1,27 @@
-import React, { useCallback, useRef, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import type { TextInput as TextInputType } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-
-import { AppStackParamList } from '../../navigation/NavigationTypes';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import i18n from '../../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import { SupportTiersType } from '../../wire/WireTypes';
-import TextInput from '../../common/components/TextInput';
-import MText from '../../common/components/MText';
+import CenteredLoading from '../../../common/components/CenteredLoading';
+import { SupportTiersType } from '../../../wire/WireTypes';
+import TextInput from '../../../common/components/TextInput';
+import MText from '../../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
 
-type CustomMonetizeScreenRouteProp = RouteProp<
-  AppStackParamList,
-  'CustomMonetize'
->;
-type CustomMonetizeScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'CustomMonetize'
->;
+interface PropsType
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'CustomMonetize'> {}
 
-type PropsType = {
-  route: CustomMonetizeScreenRouteProp;
-  navigation: CustomMonetizeScreenNavigationProp;
-};
-
-const CustomMonetizeScreen = observer((props: PropsType) => {
+const CustomMonetizeScreen = observer(({}: PropsType) => {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
 
   const localStore = useLocalStore(() => ({
     show: false,

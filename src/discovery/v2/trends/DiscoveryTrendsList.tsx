@@ -18,6 +18,7 @@ import MText from '../../../common/components/MText';
 type PropsType = {
   plus?: boolean;
   store: DiscoveryV2Store;
+  header?: React.ReactNode;
 };
 
 const ItemPartial = (item, index) => {
@@ -27,72 +28,81 @@ const ItemPartial = (item, index) => {
 /**
  * Discovery List Item
  */
-export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
-  let listRef = useRef<FeedList<any>>(null);
-  let tagRef = useRef<BottomSheetModal>(null);
+export const DiscoveryTrendsList = observer(
+  ({ plus, store, header }: PropsType) => {
+    let listRef = useRef<any>(null);
+    let tagRef = useRef<BottomSheetModal>(null);
 
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  useEffect(() => {
-    // do not reload if there is data already
-    if (store.trends.length !== 0) return;
-    store.loadTags(plus);
-    store.loadTrends(plus);
-    if (plus) {
-      store.allFeed.setParams({ plus: true });
-    }
-    store.allFeed.fetch();
-  }, [store, plus]);
+    useEffect(() => {
+      // do not reload if there is data already
+      if (store.trends.length !== 0) return;
+      store.loadTags(plus);
+      store.loadTrends(plus);
+      if (plus) {
+        store.allFeed.setParams({ plus: true });
+      }
+      store.allFeed.fetch();
+    }, [store, plus]);
 
-  useEffect(() => {
-    if (listRef.current && listRef.current.listRef) {
-      listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
-    }
-  }, [store.refreshing, listRef]);
+    useEffect(() => {
+      if (listRef.current && listRef.current.listRef) {
+        listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
+      }
+    }, [store.refreshing, listRef]);
 
-  const EmptyPartial = () => {
-    return store.loading ||
-      store.refreshing ||
-      store.allFeed.loading ||
-      store.allFeed.refreshing ? (
-      <CenteredLoading />
-    ) : (
-      <View style={styles.emptyContainer}>
-        <MText style={styles.emptyMessage}>{i18n.t('discovery.addTags')}</MText>
-        <DiscoveryTagsManager ref={tagRef} />
-        <Button
-          text={i18n.t('discovery.selectTags')}
-          onPress={() => tagRef.current?.present()}
-        />
-      </View>
+    const EmptyPartial = () => {
+      return store.loading ||
+        store.refreshing ||
+        store.allFeed.loading ||
+        store.allFeed.refreshing ? (
+        <CenteredLoading />
+      ) : (
+        <View style={styles.emptyContainer}>
+          <MText style={styles.emptyMessage}>
+            {i18n.t('discovery.addTags')}
+          </MText>
+          <DiscoveryTagsManager ref={tagRef} />
+          <Button
+            text={i18n.t('discovery.selectTags')}
+            onPress={() => tagRef.current?.present()}
+          />
+        </View>
+      );
+    };
+
+    const onRefresh = () => {
+      store.refreshTrends(plus, false);
+      store.allFeed.refresh();
+    };
+
+    const listHeader = store.trends.length ? (
+      <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
+    ) : store.loading ? (
+      <DiscoveryTrendPlaceHolder />
+    ) : null;
+
+    /**
+     * Render
+     */
+    return (
+      <FeedList
+        ref={listRef}
+        stickyHeaderHiddenOnScroll
+        stickyHeaderIndices={sticky}
+        prepend={listHeader}
+        header={header}
+        feedStore={store.allFeed}
+        emptyMessage={EmptyPartial}
+        navigation={navigation}
+        onRefresh={onRefresh}
+      />
     );
-  };
+  },
+);
 
-  const onRefresh = () => {
-    store.refreshTrends(plus, false);
-    store.allFeed.refresh();
-  };
-
-  const header = store.trends.length ? (
-    <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
-  ) : store.loading ? (
-    <DiscoveryTrendPlaceHolder />
-  ) : null;
-
-  /**
-   * Render
-   */
-  return (
-    <FeedList
-      ref={listRef}
-      header={header}
-      feedStore={store.allFeed}
-      emptyMessage={EmptyPartial}
-      navigation={navigation}
-      onRefresh={onRefresh}
-    />
-  );
-});
+const sticky = [0];
 
 const styles = ThemedStyles.create({
   emptyContainer: ['halfHeight', 'alignCenter', 'justifyCenter', 'flexColumn'],

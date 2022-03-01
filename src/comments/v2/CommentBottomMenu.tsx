@@ -1,7 +1,6 @@
 import React from 'react';
 import * as entities from 'entities';
 import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -23,6 +22,7 @@ import {
   MenuItem,
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
+import NavigationService from '~/navigation/NavigationService';
 
 type PropsType = {
   comment: CommentModel;
@@ -45,7 +45,6 @@ export default function CommentBottomMenu({
   const theme = ThemedStyles.style;
   const group = React.useContext(GroupContext);
 
-  const navigation = useNavigation<any>();
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
 
@@ -166,7 +165,7 @@ export default function CommentBottomMenu({
         iconName: 'ios-flag-outline',
         iconType: 'ionicon',
         onPress: () => {
-          navigation.push('Report', { entity: comment });
+          NavigationService.push('Report', { entity: comment });
           close();
         },
       });
@@ -182,7 +181,7 @@ export default function CommentBottomMenu({
       });
     }
     return actions;
-  }, [close, comment, entity, navigation, onTranslate, store, group]);
+  }, [close, comment, entity, onTranslate, store, group]);
 
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>

@@ -74,7 +74,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
       },
       {
         title: i18n.t('share'),
-        onPress: localStore.hide,
+        onPress: localStore.share,
       },
     ],
     [

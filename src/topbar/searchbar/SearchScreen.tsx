@@ -7,7 +7,7 @@ import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
 import SearchResultComponent from './SearchResultComponent';
 import { observer } from 'mobx-react';
-import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
+import KeyboardSpacingView from '../../common/components/keyboard/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextInput from '../../common/components/TextInput';
 import { Button, IconButton, Icon } from '~ui';
@@ -128,10 +128,6 @@ const styles = ThemedStyles.create({
     flex: 1,
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
-  },
-  modal: {
-    margin: 0,
-    justifyContent: 'flex-start',
   },
   cancel: ['marginLeft4x'],
 });

@@ -290,12 +290,6 @@
     "disableConversations": "Disable conversations",
     "enableConversations": "Enable conversations"
   },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Enter a password that will encrypt the {{keychain}} keychain.",
-    "encryptMessage1": "Remember the password or you will be unable to read/write from it."
-  },
   "messenger": {
     "decrypting": "decrypting...",
     "couldntDecrypt": "kon niet decoderen",
