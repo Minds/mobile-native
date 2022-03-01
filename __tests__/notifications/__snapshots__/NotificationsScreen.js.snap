@@ -29,7 +29,20 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         <Memo(wrappedComponent)
           navigation={
             Object {
-              "addListener": [MockFunction],
+              "addListener": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "tabPress",
+                    [Function],
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
               "navigate": [MockFunction],
               "push": [MockFunction],
             }
