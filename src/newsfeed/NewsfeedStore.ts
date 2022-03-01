@@ -54,6 +54,15 @@ class NewsfeedStore<T> {
     ActivityModel.events.on('newPost', this.onNewPost);
   }
 
+  get feedStore() {
+    switch (this.feedType) {
+      case 'top':
+        return this.topFeedStore;
+      case 'latest':
+        return this.latestFeedStore;
+    }
+  }
+
   @action
   changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
     this.feedType = feedType;
@@ -80,12 +89,7 @@ class NewsfeedStore<T> {
       this.topFeedStore.removeFromOwner(user.guid);
       this.latestFeedStore.removeFromOwner(user.guid);
     } else {
-      switch (this.feedType) {
-        case 'top':
-          return this.topFeedStore.refresh();
-        case 'latest':
-          return this.latestFeedStore.refresh();
-      }
+      this.feedStore?.refresh();
     }
   };
 
@@ -101,13 +105,7 @@ class NewsfeedStore<T> {
         console.error(e);
       }
     }
-
-    switch (this.feedType) {
-      case 'top':
-        return this.topFeedStore.fetchLocalThenRemote(refresh);
-      case 'latest':
-        return this.latestFeedStore.fetchLocalThenRemote(refresh);
-    }
+    this.feedStore?.fetchLocalThenRemote(refresh);
   };
 
   /**
@@ -130,13 +128,12 @@ class NewsfeedStore<T> {
 
   private prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
-    this.latestFeedStore.prepend(model);
+    this.feedStore?.prepend(model);
   }
 
   @action
   reset() {
-    this.latestFeedStore.reset();
-    this.topFeedStore.reset();
+    this.feedStore?.reset();
   }
 }
 

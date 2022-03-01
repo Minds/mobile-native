@@ -1,29 +1,25 @@
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { inject, observer } from 'mobx-react';
-import React, { Component, useEffect, useRef } from 'react';
-import { InteractionManager, View } from 'react-native';
 import throttle from 'lodash/throttle';
-
-import FeedList, { InjectItem } from '../common/components/FeedList';
-import type { AppStackParamList } from '../navigation/NavigationTypes';
+import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import Feature from '~/common/components/Feature';
+import ThemedStyles from '~/styles/ThemedStyles';
+import Topbar from '~/topbar/Topbar';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import FeedList, { InjectItem } from '../common/components/FeedList';
 import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
-import Feature from '~/common/components/Feature';
-import Topbar from '~/topbar/Topbar';
-import ThemedStyles from '~/styles/ThemedStyles';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import ActivityPlaceHolder from './ActivityPlaceHolder';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
-import i18nService from '~/common/services/i18n.service';
-import { Button } from '~/common/ui';
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
-import FeedStore from '~/common/stores/FeedStore';
-import MetadataService from '~/common/services/metadata.service';
+import TopFeedHighlights from './TopFeedHighlights';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -213,52 +209,5 @@ class NewsfeedScreen extends Component<
     );
   }
 }
-
-const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
-  const feed = useRef(
-    new FeedStore()
-      .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-      .setInjectBoost(false)
-      .setLimit(3)
-      .setMetadata(
-        new MetadataService()
-          .setSource('feed/subscribed')
-          .setMedium('top-feed'),
-      ),
-  ).current;
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    feed.fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!feed.entities.length) {
-    return null;
-  }
-
-  return (
-    <>
-      <NewsfeedHeader title="Highlights" />
-      <FeedList
-        feedStore={feed}
-        navigation={navigation}
-        onEndReached={undefined}
-      />
-      <View style={moreTopPostsButtonStyle}>
-        <Button
-          type="action"
-          mode="solid"
-          size="small"
-          align="center"
-          onPress={onSeeTopFeedPress}>
-          {i18nService.t('newsfeed.seeMoreTopPosts')}
-        </Button>
-      </View>
-    </>
-  );
-});
-
-const moreTopPostsButtonStyle = ThemedStyles.combine({ marginTop: -22 });
 
 export default withErrorBoundary(NewsfeedScreen);

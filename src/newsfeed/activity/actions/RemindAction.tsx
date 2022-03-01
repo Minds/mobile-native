@@ -107,7 +107,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       .submit()
       .then(activity => {
         // append the entity to the feed
-        newsfeed.latestFeedStore.prepend(activity);
+        newsfeed.feedStore?.prepend(activity);
 
         showNotification(i18n.t('postReminded'), 'success');
       })
@@ -115,7 +115,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         console.log(e);
         showNotification(i18n.t('errorMessage'), 'warning');
       });
-  }, [entity, newsfeed.latestFeedStore]);
+  }, [entity, newsfeed.feedStore]);
 
   return (
     <>
