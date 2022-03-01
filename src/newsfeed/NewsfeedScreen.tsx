@@ -1,11 +1,11 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from 'mobx-react';
-import React, { Component, useCallback } from 'react';
-import { View } from 'react-native';
+import React, { Component, useEffect, useRef } from 'react';
+import { InteractionManager, View } from 'react-native';
 import throttle from 'lodash/throttle';
 
-import FeedList from '../common/components/FeedList';
+import FeedList, { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
@@ -20,11 +20,10 @@ import ActivityPlaceHolder from './ActivityPlaceHolder';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import i18nService from '~/common/services/i18n.service';
-import { storages } from '~/common/services/storage/storages.service';
 import { Button } from '~/common/ui';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
-
-const FEED_TYPE_KEY = 'newsfeed:feedType';
+import FeedStore from '~/common/stores/FeedStore';
+import MetadataService from '~/common/services/metadata.service';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -43,7 +42,6 @@ type NewsfeedScreenProps = {
 
 type NewsfeedScreenState = {
   shadowLessTopBar: boolean;
-  feedType: 'top' | 'latest';
 };
 
 /**
@@ -71,21 +69,31 @@ class NewsfeedScreen extends Component<
    */
   shadowLessTopBar: boolean = true;
 
+  injectItems: InjectItem[] = [
+    {
+      indexes: [2],
+      component: () => (
+        <IfFeatureEnabled feature="top-feed-2">
+          <TopFeedHighlights
+            onSeeTopFeedPress={() => {
+              this.props.newsfeed.listRef?.scrollToTop(true);
+              setTimeout(() => {
+                this.props.newsfeed.changeFeedTypeChange('top', true);
+              }, 500);
+            }}
+          />
+        </IfFeatureEnabled>
+      ),
+    },
+  ];
+
   constructor(props) {
     super(props);
 
     this.onScroll = throttle(this.onScroll, 100);
 
-    let storedFeedType;
-    try {
-      storedFeedType = storages.user?.getString(FEED_TYPE_KEY);
-    } catch (e) {
-      console.error(e);
-    }
-
     this.state = {
       shadowLessTopBar: true,
-      feedType: storedFeedType || 'latest',
     };
   }
 
@@ -131,11 +139,6 @@ class NewsfeedScreen extends Component<
     }
   };
 
-  handleFeedTypeChange = feedType => {
-    storages.user?.setString(FEED_TYPE_KEY, feedType);
-    this.setState({ feedType });
-  };
-
   onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
     const offsetTop = e?.nativeEvent?.contentOffset?.y;
 
@@ -173,12 +176,9 @@ class NewsfeedScreen extends Component<
         <PortraitContentBar ref={this.portraitBar} />
         <IfFeatureEnabled feature="top-feed-2">
           <NewsfeedHeader
-            feedType={this.state.feedType}
-            onFeedTypeChange={this.handleFeedTypeChange}
+            feedType={this.props.newsfeed.feedType}
+            onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
-          {this.state.feedType === 'top' && (
-            <TopFeedMini feed={newsfeed.topFeedStore} />
-          )}
         </IfFeatureEnabled>
       </View>
     );
@@ -195,24 +195,43 @@ class NewsfeedScreen extends Component<
         stickyHeaderIndices={sticky}
         ref={newsfeed.setListRef}
         header={header}
-        feedStore={newsfeed.latestFeedStore}
+        feedStore={
+          this.props.newsfeed.feedType === 'latest'
+            ? newsfeed.latestFeedStore
+            : newsfeed.topFeedStore
+        }
         navigation={this.props.navigation}
         afterRefresh={this.refreshPortrait}
-        onRefresh={this.props.newsfeed.refreshFeed}
-        refreshing={this.props.newsfeed.refreshing}
         onScroll={this.onScroll}
+        injectItems={
+          this.props.newsfeed.feedType === 'latest'
+            ? this.injectItems
+            : undefined
+        }
         {...additionalProps}
       />
     );
   }
 }
 
-const TopFeedMini = observer(({ feed }) => {
+const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
+  const feed = useRef(
+    new FeedStore()
+      .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+      .setInjectBoost(false)
+      .setLimit(3)
+      .setMetadata(
+        new MetadataService()
+          .setSource('feed/subscribed')
+          .setMedium('top-feed'),
+      ),
+  ).current;
   const navigation = useNavigation();
-  const navigateToTopFeed = useCallback(
-    () => navigation.navigate('TopNewsfeed'),
-    [navigation],
-  );
+
+  useEffect(() => {
+    feed.fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!feed.entities.length) {
     return null;
@@ -220,6 +239,7 @@ const TopFeedMini = observer(({ feed }) => {
 
   return (
     <>
+      <NewsfeedHeader title="Highlights" />
       <FeedList
         feedStore={feed}
         navigation={navigation}
@@ -231,12 +251,10 @@ const TopFeedMini = observer(({ feed }) => {
           mode="solid"
           size="small"
           align="center"
-          onPress={navigateToTopFeed}>
+          onPress={onSeeTopFeedPress}>
           {i18nService.t('newsfeed.seeMoreTopPosts')}
         </Button>
       </View>
-
-      <NewsfeedHeader feedType={'latest'} />
     </>
   );
 });

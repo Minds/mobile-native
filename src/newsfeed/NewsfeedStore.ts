@@ -1,11 +1,15 @@
 import { action, observable } from 'mobx';
-
-import NewsfeedService from './NewsfeedService';
-import ActivityModel from './ActivityModel';
-import FeedStore from '../common/stores/FeedStore';
-import UserModel from '../channel/UserModel';
-import type FeedList from '../common/components/FeedList';
 import MetadataService from '~/common/services/metadata.service';
+import { storages } from '~/common/services/storage/storages.service';
+import UserModel from '../channel/UserModel';
+import { FeedList } from '../common/components/FeedList';
+import FeedStore from '../common/stores/FeedStore';
+import ActivityModel from './ActivityModel';
+import NewsfeedService from './NewsfeedService';
+
+const FEED_TYPE_KEY = 'newsfeed:feedType';
+
+export type NewsfeedType = 'top' | 'latest';
 
 /**
  * News feed store
@@ -27,7 +31,7 @@ class NewsfeedStore<T> {
   topFeedStore = new FeedStore()
     .setEndpoint('api/v3/newsfeed/feed/unseen-top')
     .setInjectBoost(false)
-    .setLimit(3)
+    .setLimit(12)
     .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
     );
@@ -35,13 +39,11 @@ class NewsfeedStore<T> {
    * List reference
    */
   listRef?: FeedList<T>;
-  /**
-   * Refreshing state of the newsfeed.
-   * used to mix topFeed and latest feed refreshing state
-   */
-  @observable refreshing = false;
 
   service = new NewsfeedService();
+
+  @observable
+  feedType?: NewsfeedType;
 
   /**
    * Constructors
@@ -51,6 +53,17 @@ class NewsfeedStore<T> {
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
     ActivityModel.events.on('newPost', this.onNewPost);
   }
+
+  @action
+  changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
+    this.feedType = feedType;
+    try {
+      storages.user?.setString(FEED_TYPE_KEY, feedType);
+    } catch (e) {
+      console.error(e);
+    }
+    this.loadFeed(refresh);
+  };
 
   /**
    * On new post created
@@ -67,26 +80,34 @@ class NewsfeedStore<T> {
       this.topFeedStore.removeFromOwner(user.guid);
       this.latestFeedStore.removeFromOwner(user.guid);
     } else {
-      this.topFeedStore.refresh();
-      this.latestFeedStore.refresh();
+      switch (this.feedType) {
+        case 'top':
+          return this.topFeedStore.refresh();
+        case 'latest':
+          return this.latestFeedStore.refresh();
+      }
     }
   };
 
-  public loadFeed = async () => {
-    await this.topFeedStore.refresh();
-    await this.latestFeedStore.fetchLocalThenRemote(true);
-  };
+  public loadFeed = async (refresh?: boolean) => {
+    if (!this.feedType) {
+      try {
+        const storedFeedType = storages.user?.getString(
+          FEED_TYPE_KEY,
+        ) as NewsfeedType;
 
-  @action
-  public refreshFeed = async () => {
-    this.refreshing = true;
+        this.feedType = storedFeedType || 'latest';
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
-    await Promise.all([
-      this.topFeedStore.refresh(),
-      this.latestFeedStore.refresh(),
-    ]);
-
-    this.refreshing = false;
+    switch (this.feedType) {
+      case 'top':
+        return this.topFeedStore.fetchLocalThenRemote(refresh);
+      case 'latest':
+        return this.latestFeedStore.fetchLocalThenRemote(refresh);
+    }
   };
 
   /**
@@ -107,9 +128,8 @@ class NewsfeedStore<T> {
     }
   };
 
-  prepend(entity: ActivityModel) {
+  private prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
-
     this.latestFeedStore.prepend(model);
   }
 

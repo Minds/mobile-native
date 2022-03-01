@@ -5,16 +5,19 @@ import {
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
 import i18nService from '~/common/services/i18n.service';
-import { Column, H4, IconButtonNext } from '~/common/ui';
+import { Column, H3, IconButtonNext } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { NewsfeedType } from './NewsfeedStore';
 
 interface NewsfeedHeaderProps {
-  feedType: string;
-  onFeedTypeChange?: (feedType: string) => void;
+  title?: string;
+  feedType?: string;
+  onFeedTypeChange?: (feedType: NewsfeedType) => void;
   withoutIcon?: any;
 }
 
 const NewsfeedHeader = ({
+  title,
   feedType,
   onFeedTypeChange,
 }: NewsfeedHeaderProps) => {
@@ -40,7 +43,7 @@ const NewsfeedHeader = ({
     [],
   );
 
-  let title;
+  let feedTitle = title;
   let sheetTitle;
   let sheetDesc;
   let sheetActionTitle;
@@ -48,14 +51,14 @@ const NewsfeedHeader = ({
 
   switch (feedType) {
     case 'top':
-      title = i18nService.t('newsfeed.topPosts');
+      feedTitle = i18nService.t('newsfeed.topPosts');
       sheetTitle = i18nService.t('newsfeed.topTitle');
       sheetDesc = i18nService.t('newsfeed.topDesc');
       sheetActionTitle = i18nService.t('newsfeed.latestAction');
       onSheetAction = onLatest;
       break;
     case 'latest':
-      title = i18nService.t('newsfeed.latestPosts');
+      feedTitle = i18nService.t('newsfeed.latestPosts');
       sheetTitle = i18nService.t('newsfeed.latestTitle');
       sheetDesc = i18nService.t('newsfeed.latestDesc');
       sheetActionTitle = i18nService.t('newsfeed.topAction');
@@ -65,7 +68,7 @@ const NewsfeedHeader = ({
 
   return (
     <View style={containerStyle}>
-      <H4>{title}</H4>
+      <H3>{feedTitle}</H3>
 
       {!withoutIcon && (
         <IconButtonNext
