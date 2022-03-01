@@ -77,7 +77,7 @@ type PropsType = {
 const ChannelScreen = observer((props: PropsType) => {
   // =====================| STATES & VARIABLES |=====================>
   const theme = ThemedStyles.style;
-  const feedRef = useRef<FeedList<any>>(null);
+  const feedRef = useRef<any>(null);
   const store = useLocalStore(createChannelStore);
   /**
    * disables topbar animation. useful when we want to

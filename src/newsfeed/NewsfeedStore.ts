@@ -101,7 +101,7 @@ class NewsfeedStore<T> {
   /**
    * Set FeedList reference
    */
-  setListRef = (r: FeedList<T> | null) => {
+  setListRef = r => {
     if (r) {
       this.listRef = r;
     }

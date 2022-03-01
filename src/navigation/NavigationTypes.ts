@@ -96,6 +96,7 @@ export type MoreStackParamList = {
     password: string;
   };
   ChooseBrowser: {};
+  DevTools: {};
 };
 
 export type RootStackParamList = {
@@ -166,6 +167,7 @@ export type RootStackParamList = {
     onLogin?: Function;
     onCancel?: Function;
   };
+  DevTools: {};
 };
 
 export type AuthStackParamList = {

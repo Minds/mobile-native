@@ -18,7 +18,7 @@ import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
-import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   prepend?: React.ReactNode;
@@ -47,6 +47,7 @@ type PropsType = {
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
+  insets?: any;
   onEndReached?: () => void;
 };
 
@@ -54,7 +55,7 @@ type PropsType = {
  * News feed list component
  */
 @observer
-export default class FeedList<T> extends Component<PropsType> {
+class FeedList<T> extends Component<PropsType> {
   listRef?: FlatList<T>;
   cantShowActivity: string = '';
   viewOpts = {
@@ -137,6 +138,7 @@ export default class FeedList<T> extends Component<PropsType> {
       emptyMessage,
       header,
       listComponent,
+      insets,
       ...passThroughProps
     } = this.props;
 
@@ -166,47 +168,43 @@ export default class FeedList<T> extends Component<PropsType> {
     }
 
     return (
-      <SafeAreaInsetsContext.Consumer>
-        {insets => (
-          <ListComponent
-            containerStyle={ThemedStyles.style.paddingBottom10x}
-            ref={this.setListRef}
-            key={feedStore.isTiled ? 't' : 'f'}
-            onLayout={this.onLayout}
-            ListHeaderComponent={header}
-            ListFooterComponent={this.getFooter}
-            data={!this.props.hideItems ? feedStore.entities.slice() : []}
-            renderItem={renderRow}
-            keyExtractor={this.keyExtractor}
+      <ListComponent
+        containerStyle={ThemedStyles.style.paddingBottom10x}
+        ref={this.setListRef}
+        key={feedStore.isTiled ? 't' : 'f'}
+        onLayout={this.onLayout}
+        ListHeaderComponent={header}
+        ListFooterComponent={this.getFooter}
+        data={!this.props.hideItems ? feedStore.entities.slice() : []}
+        renderItem={renderRow}
+        keyExtractor={this.keyExtractor}
+        onRefresh={this.refresh}
+        refreshing={this.refreshing}
+        onEndReached={this.loadMore}
+        refreshControl={
+          <RefreshControl
+            tintColor={this.props.refreshControlTintColor}
+            refreshing={feedStore.refreshing}
             onRefresh={this.refresh}
-            refreshing={this.refreshing}
-            onEndReached={this.loadMore}
-            refreshControl={
-              <RefreshControl
-                tintColor={this.props.refreshControlTintColor}
-                refreshing={feedStore.refreshing}
-                onRefresh={this.refresh}
-                progressViewOffset={(insets?.top || 0) / 1.25}
-              />
-            }
-            // onEndReachedThreshold={0}
-            numColumns={feedStore.isTiled ? 3 : 1}
-            style={style}
-            initialNumToRender={3}
-            maxToRenderPerBatch={4}
-            windowSize={9}
-            // removeClippedSubviews={true}
-            ListEmptyComponent={!this.props.hideItems ? empty : null}
-            viewabilityConfig={this.viewOpts}
-            onViewableItemsChanged={this.onViewableItemsChanged}
-            keyboardShouldPersistTaps="always"
-            testID="feedlistCMP"
-            {...passThroughProps}
-            keyboardDismissMode="on-drag"
-            onScroll={this.onScroll}
+            progressViewOffset={(insets?.top || 0) / 1.25}
           />
-        )}
-      </SafeAreaInsetsContext.Consumer>
+        }
+        // onEndReachedThreshold={0}
+        numColumns={feedStore.isTiled ? 3 : 1}
+        style={style}
+        initialNumToRender={3}
+        maxToRenderPerBatch={4}
+        windowSize={9}
+        // removeClippedSubviews={true}
+        ListEmptyComponent={!this.props.hideItems ? empty : null}
+        viewabilityConfig={this.viewOpts}
+        onViewableItemsChanged={this.onViewableItemsChanged}
+        keyboardShouldPersistTaps="always"
+        testID="feedlistCMP"
+        {...passThroughProps}
+        keyboardDismissMode="on-drag"
+        onScroll={this.onScroll}
+      />
     );
   }
 
@@ -342,3 +340,5 @@ export default class FeedList<T> extends Component<PropsType> {
 const style = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');
 
 const footerStyle = ThemedStyles.combine('centered', 'padding3x');
+
+export default withSafeAreaInsets<PropsType>(FeedList);
