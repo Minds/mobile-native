@@ -29,36 +29,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         <Memo(wrappedComponent)
           navigation={
             Object {
-              "addListener": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "addListener": [MockFunction],
               "navigate": [MockFunction],
               "push": [MockFunction],
             }
@@ -499,6 +470,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -655,6 +628,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -811,6 +786,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -967,6 +944,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -1123,6 +1102,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -1279,6 +1260,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
