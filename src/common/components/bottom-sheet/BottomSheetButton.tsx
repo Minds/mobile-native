@@ -24,7 +24,8 @@ export default function BottomSheetButton({
       onPress={onPress}
       testID={testID}
       loading={loading}
-      mode={action ? 'outline' : 'solid'}>
+      mode={action ? 'outline' : 'solid'}
+      type={action ? 'action' : undefined}>
       {text}
     </Button>
   );
