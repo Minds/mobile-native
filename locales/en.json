@@ -1469,6 +1469,7 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
+  "yesterday": "Yesterday",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
