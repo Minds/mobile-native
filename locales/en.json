@@ -59,7 +59,7 @@
   },
   "auth": {
     "2faRequired": "2FA required",
-    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address ({{email}}) before continuing.",
+    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address before continuing.",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
     "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
     "2faInvalid": "Invalid code",
@@ -328,6 +328,7 @@
     "title": "Discovery",
     "manage": "Manage Tags",
     "justForYou": "Just for you",
+    "top": "Top",
     "yourTags": "Your tags",
     "otherTags": "Other tags",
     "trendingTags": "Trending tags",
@@ -365,12 +366,6 @@
     "listMembersCount": "{{count}} members",
     "disableConversations": "Disable conversations",
     "enableConversations": "Enable conversations"
-  },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Enter a password that will encrypt the {{keychain}} keychain.",
-    "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
     "typeYourMessage": "Type your message...",
@@ -1509,6 +1504,7 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
+  "yesterday": "Yesterday",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",

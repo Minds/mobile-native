@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
+import {
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import usePhoneValidationStore from '../usePhoneValidationStore';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
@@ -13,6 +18,21 @@ type PropsType = {};
 const InputNumber = observer(({}: PropsType) => {
   const store = usePhoneValidationStore();
   const phoneInput = React.useRef<PhoneInput>(null);
+  const textInputRef = React.useRef<TextInput>(null);
+  const [textInputFocused, setTextInputFocused] = useState(false);
+  const textInputProps: TextInputProps = useMemo(
+    () => ({
+      selectionColor: ThemedStyles.getColor('Link'),
+      ref: textInputRef,
+      onFocus: () => setTextInputFocused(true),
+      onBlur: () => setTextInputFocused(false),
+    }),
+    [],
+  );
+
+  const onContainerPress = useCallback(() => textInputRef.current?.focus(), [
+    textInputRef,
+  ]);
 
   React.useEffect(() => {
     store?.setPhoneInputRef(phoneInput);
@@ -23,7 +43,10 @@ const InputNumber = observer(({}: PropsType) => {
 
   return (
     <View>
-      <View style={styles.mainContainer}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.mainContainer}
+        onPress={textInputFocused ? undefined : onContainerPress}>
         <MText style={styles.label}>{i18n.t('onboarding.phoneNumber')}</MText>
         {Boolean(store?.error) && (
           <MText style={styles.error}>{store?.error}</MText>
@@ -34,9 +57,11 @@ const InputNumber = observer(({}: PropsType) => {
           layout="first"
           onChangeFormattedText={store?.setPhone}
           placeholder=" "
+          textInputProps={textInputProps}
+          autoFocus
           {...phoneInputStyles}
         />
-      </View>
+      </TouchableOpacity>
       <Button
         text={i18n.t('onboarding.send')}
         containerStyle={styles.buttonContainer}

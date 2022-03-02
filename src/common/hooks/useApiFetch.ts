@@ -20,8 +20,6 @@ type ApiFetchType = FetchResponseType;
 
 const defaultMap = data => data;
 
-const defaultUpdateState = (newData, _) => newData;
-
 /**
  * a function that merges the new state with the old state
  */
@@ -156,8 +154,7 @@ const createStore = ({
       persist,
     } = Object.assign(
       {
-        updateStrategy: 'merge',
-        updateState: defaultUpdateState,
+        updateStrategy: 'replace',
         offsetField: 'load-next',
         dataField: 'entities',
       },
@@ -166,12 +163,13 @@ const createStore = ({
     );
     this.clearRetryTimer(!retry);
 
-    if (updateStrategy && dataField) {
+    if (!updateState) {
       switch (updateStrategy) {
         case 'merge':
           updateState = mergeState(dataField, map);
           break;
         case 'replace':
+        default:
           updateState = replaceState(dataField, map);
           break;
       }

@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import _ from 'lodash';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -9,6 +9,9 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
 
 /**
  * Nsfw Option
@@ -38,12 +41,16 @@ const NsfwOption = props => {
   );
 };
 
+interface NsfwProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'NsfwSelector'> {}
+
 /**
  * NSFW selector
  */
-export default observer(function (props) {
-  const store = props.route.params.store;
-  const length = store.nsfw.length; // dereferencing the array to bind the component to the observable
+export default observer(function ({}: NsfwProps) {
+  const store = useComposeContext();
+  const length = store.nsfw.length;
   const options = useMemo(
     () =>
       _.times(7, i => ({
@@ -100,6 +107,7 @@ const styles = ThemedStyles.create({
     padding: 15,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
+    minHeight: 55,
   },
   descStyle: [
     'paddingVertical3x',

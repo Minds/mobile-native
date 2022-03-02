@@ -4,14 +4,8 @@ import {
   BottomSheetModal,
   BottomSheetButton,
 } from '../../../common/components/bottom-sheet';
-import {
-  View,
-  StyleProp,
-  ViewStyle,
-  SectionList,
-  SectionListData,
-} from 'react-native';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
+import { BottomSheetSectionList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
@@ -22,6 +16,7 @@ import i18n from '../../../common/services/i18n.service';
 import { useDimensions } from '@react-native-community/hooks';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import FloatingInput from '../../../common/components/FloatingInput';
+import { Spacer } from '~/common/ui';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -93,7 +88,9 @@ type StoreType = ReturnType<typeof createStore>;
 const SectionHeaderPartial = (info: { section: SectionListData<any> }) => {
   return (
     <View style={ThemedStyles.style.bgPrimaryBackgroundHighlight}>
-      <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
+      <Spacer top="L">
+        <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
+      </Spacer>
     </View>
   );
 };
@@ -159,6 +156,17 @@ const DiscoveryTagsManager = (props: Props, ref) => {
     height,
   ]);
 
+  const sections = [
+    {
+      title: i18n.t('discovery.yourTags'),
+      data: store.selected.slice(),
+    },
+    {
+      title: i18n.t('discovery.otherTags'),
+      data: store.other.slice(),
+    },
+  ];
+
   /**
    * Render
    */
@@ -173,21 +181,12 @@ const DiscoveryTagsManager = (props: Props, ref) => {
             <BottomSheetButton text={i18n.t('save')} onPress={onDone} action />
           </View>
         </View>
-        <SectionList
+        <BottomSheetSectionList
           style={listHeight}
           contentContainerStyle={theme.paddingBottom20x}
           renderItem={ItemPartial}
           renderSectionHeader={SectionHeaderPartial}
-          sections={[
-            {
-              title: i18n.t('discovery.yourTags'),
-              data: store.selected.slice(),
-            },
-            {
-              title: i18n.t('discovery.otherTags'),
-              data: store.other.slice(),
-            },
-          ]}
+          sections={sections}
           keyExtractor={keyExtractor}
           stickySectionHeadersEnabled={true}
         />
