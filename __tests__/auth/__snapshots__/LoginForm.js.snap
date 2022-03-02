@@ -749,9 +749,6 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "fontSize": 16,
                   },
                   Object {
-                    "borderTopWidth": 0.5,
-                  },
-                  Object {
                     "textAlign": "center",
                   },
                   Object {
@@ -759,9 +756,6 @@ exports[`LoginForm component should renders correctly 1`] = `
                   },
                   Object {
                     "paddingHorizontal": 16,
-                  },
-                  Object {
-                    "borderColor": "#414C57",
                   },
                   Object {
                     "color": "#B8C1CA",
