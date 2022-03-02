@@ -8,10 +8,9 @@ import {
   TextInputProps,
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
-import SoftInputMode from 'react-native-set-soft-input-mode';
 import { Portal } from '@gorhom/portal';
 
-import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
+import KeyboardSpacingView from './keyboard/KeyboardSpacingView';
 import ThemedStyles from '../../styles/ThemedStyles';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { Flow } from 'react-native-animated-spinkit';
@@ -37,14 +36,6 @@ const FloatingInput = React.forwardRef(
     const inputRef = React.useRef<TextInputType>(null);
     const [show, setShow] = React.useState(false);
 
-    React.useEffect(() => {
-      // workaround to fix the keyboard handling based on the platform
-      if (Platform.OS === 'android') {
-        SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
-        return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
-      }
-    }, []);
-
     React.useImperativeHandle(ref, () => ({
       show() {
         setShow(true);
@@ -65,7 +56,6 @@ const FloatingInput = React.forwardRef(
         <FullWindowOverlay style={StyleSheet.absoluteFill}>
           <KeyboardSpacingView
             style={StyleSheet.absoluteFill}
-            enabled={Platform.OS === 'ios'}
             pointerEvents="box-none">
             <View style={styles.mainContainer}>
               <TouchableOpacity

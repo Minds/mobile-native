@@ -80,7 +80,6 @@ const renderContent = (notification: NotificationModel, navigation: any) => {
         entity={ActivityModel.create(notification.entity)}
         navigation={navigation}
         autoHeight={false}
-        showCommentsOutlet={false}
         showOnlyContent={true}
       />
     );

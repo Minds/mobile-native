@@ -2159,17 +2159,17 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@growthbook/growthbook-react@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@growthbook/growthbook-react/-/growthbook-react-0.7.0.tgz#8a94a47dec60cc5ad25ea78dd97760d8f50cb401"
-  integrity sha512-3+aBMBO3PTfvxaNNiAE8nwej1fhtWwVuPZIwg2hyM4Jsrq3TjP+UPlbJNtT3VndLv5+cuzfVxMcl0Kr5ORlnww==
+"@growthbook/growthbook-react@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@growthbook/growthbook-react/-/growthbook-react-0.8.0.tgz#bdf2f6bcdcef67e641621acc5c845373b0b5231f"
+  integrity sha512-HjuzgbyD8Hn1tIQ54HPaLRjbhZu9UZ91UgzTjasDL/oWTnB5UyeEV+P6Jx8Pukv1StRh/9+FtK3J2/ryqYr3qg==
   dependencies:
-    "@growthbook/growthbook" "^0.16.0"
+    "@growthbook/growthbook" "^0.17.0"
 
-"@growthbook/growthbook@^0.16.0", "@growthbook/growthbook@^0.16.2":
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-0.16.2.tgz#e5e5041992be66c684bc058832d925f5c579a96e"
-  integrity sha512-mEPqDLDSO6n76gp9TLoyvgjkBaFKrH9BJyQNb0PwF4oXXzjbgG2qsIuNL/DKJvvkYFqOK80mbDR6C5xw9HGHyA==
+"@growthbook/growthbook@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-0.17.0.tgz#7848084a8b419bb028e677481d47b087f55bd184"
+  integrity sha512-CfDKCsemHPS8IwE73nyVnSUjKMrkI/1Kp9F6hxm3TLeQgr3xjspA77J9VPl3Ejv2+2Ka2P7yMRBv3XmrX2qiDA==
 
 "@hapi/hoek@^9.0.0":
   version "9.1.1"
@@ -12595,6 +12595,11 @@ react-native-collapsible@^1.5.3:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-config@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.5.tgz#6fe5895410b75e44fe4f4bf00caaf894a0981f3a"
+  integrity sha512-5oiAsoW88SOYDg/0cleJ2vJDqv98FJUbFQYEnH4sdMtEn3AAT3lb7BkTGW8HO/t3Vk9VOruwxUUnO4tzuxzCsw==
+
 react-native-convert-ph-asset@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-convert-ph-asset/-/react-native-convert-ph-asset-1.0.3.tgz#af299a6a3f7270b55c3bdfe472a40cea02c93c80"
@@ -12770,10 +12775,10 @@ react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-keyboard-aware-scroll-view@^0.9.4:
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.4.tgz#83b356062123070c4b75f57d34dd276b9dd5796a"
-  integrity sha512-9Q8lxGvUdEnyL2Q0/VZdcEjHUGjm1lOAMd/3bNnhknoA7RqjJDaRGOQDhOAjVW1iwrKUct+B1old87nIsiX6iw==
+react-native-keyboard-aware-scroll-view@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.5.tgz#e2e9665d320c188e6b1f22f151b94eb358bf9b71"
+  integrity sha512-XwfRn+T/qBH9WjTWIBiJD2hPWg0yJvtaEw6RtPCa5/PYHabzBaWxYBOl0usXN/368BL1XktnZPh8C2lmTpOREA==
   dependencies:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
@@ -12949,10 +12954,10 @@ react-native-safe-area-context@3.2.0:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz#06113c6b208f982d68ab5c3cebd199ca93db6941"
   integrity sha512-k2Nty4PwSnrg9HwrYeeE+EYqViYJoOFwEy9LxL5RIRfoqxAq/uQXNGwpUg2/u4gnKpBbEPa9eRh15KKMe/VHkA==
 
-react-native-safe-area-context@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.0.tgz#6e0b45baa031589ec9c54f8359ace166a36aa5e5"
-  integrity sha512-IrCNx56LO9RJ75yCf2CSSO1ceLj3mvxTAF+HWnehaeRIfF4pIcIn3WEUlXulFiha641OKS5X0+1XZCbbQ7pITA==
+react-native-safe-area-context@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.0.1.tgz#b8413ad703088d8c36d2e56202a28b17aa0df79b"
+  integrity sha512-N8xvlDrcdQ8FBtS/jIvsxm7Wwb5ZRnYjQpoQR2CfFTN1AwIHG80ZACteeLFQ8ErGBRTPBgXNBPoFCppCDHbnyg==
 
 react-native-safe-modules@^1.0.0:
   version "1.0.0"
@@ -12979,11 +12984,6 @@ react-native-screens@^3.8.0:
 react-native-send-intent@msantang78/react-native-send-intent:
   version "1.2.3"
   resolved "https://codeload.github.com/msantang78/react-native-send-intent/tar.gz/e13361d40631a49aff98e93ec2ebf760a09c00de"
-
-react-native-set-soft-input-mode@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-set-soft-input-mode/-/react-native-set-soft-input-mode-1.1.0.tgz#0bc0c5265dab5105c631bfc00c0fef186b1935c7"
-  integrity sha512-xB/U7EQPUwFsUtJ78x3DRjmrezMf4oZVpfr6NOLawSWDvh8HxiDfBx8LsvRQmpC/g8k8veVfqVmVTQ8wYPdqqA==
 
 react-native-share-menu@^5.0.5:
   version "5.0.5"
