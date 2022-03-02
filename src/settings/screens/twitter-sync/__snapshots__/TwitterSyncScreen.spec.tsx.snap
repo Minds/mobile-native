@@ -1,35 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TwitterSyncScreen renders correctly 1`] = `
-<KeyboardSpacingView
-  noInset={true}
+<KeyboardAwareScrollView
+  enableAutomaticScroll={true}
+  enableOnAndroid={false}
+  enableResetScrollToCoords={true}
+  extraHeight={75}
+  extraScrollHeight={0}
+  keyboardDismissMode="on-drag"
+  keyboardOpeningTime={250}
   style={
     Object {
       "flex": 1,
     }
   }
+  viewIsInsideTabBar={false}
 >
-  <ScrollView
-    keyboardDismissMode="on-drag"
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
+  <ScreenSection
+    top="L"
   >
-    <ScreenSection
-      top="L"
+    <B1
+      color="secondary"
     >
-      <B1
-        color="secondary"
-      >
-        Using our Twitter Sync tool, Twitter users with over
-         
-        NaN
-         followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.
-      </B1>
-    </ScreenSection>
-    <CenteredLoading />
-  </ScrollView>
-</KeyboardSpacingView>
+      Using our Twitter Sync tool, Twitter users with over NaN followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.
+    </B1>
+  </ScreenSection>
+  <CenteredLoading />
+</KeyboardAwareScrollView>
 `;

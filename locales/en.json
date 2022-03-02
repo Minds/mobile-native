@@ -789,7 +789,7 @@
       "e": "LEGACY",
       "f": "DATA",
       "g": "REFERRALS",
-      "contentMigration": "Content Migration"
+      "contentMigration": "CONTENT MIGRATION"
     },
     "notificationsOptions": {
       "push": "Push",

@@ -1,21 +1,21 @@
+import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { B1, Button, H1, Row, ScreenSection } from '~ui';
-import InputContainer from '~/common/components/InputContainer';
-import mindsConfigService from '~/common/services/minds-config.service';
-import useCurrentUser from '~/common/hooks/useCurrentUser';
-import { Linking, ScrollView } from 'react-native';
-import ThemedStyles from '~styles/ThemedStyles';
-import KeyboardSpacingView from '~/common/components/KeyboardSpacingView';
-import { showNotification } from '../../../../AppMessages';
-import i18n from '~/common/services/i18n.service';
+import { Linking } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Switch from 'react-native-switch-pro';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import { observer } from 'mobx-react';
-import useConnectedAccount from './hooks/useConnectedAccount';
-import useConnectAccount from './hooks/useConnectAccount';
-import useUpdateAccount from './hooks/useUpdateAccount';
-import useDisconnectAccount from './hooks/useDisconnectAccount';
+import InputContainer from '~/common/components/InputContainer';
 import delay from '~/common/helpers/delay';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
+import i18n from '~/common/services/i18n.service';
+import mindsConfigService from '~/common/services/minds-config.service';
+import ThemedStyles from '~styles/ThemedStyles';
+import { B1, Button, H1, Row, ScreenSection } from '~ui';
+import { showNotification } from '../../../../AppMessages';
+import useConnectAccount from './hooks/useConnectAccount';
+import useConnectedAccount from './hooks/useConnectedAccount';
+import useDisconnectAccount from './hooks/useDisconnectAccount';
+import useUpdateAccount from './hooks/useUpdateAccount';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -58,7 +58,7 @@ function TwitterSyncScreen() {
     return Linking.openURL(
       `https://twitter.com/intent/tweet?text=${tweetMessage}`,
     );
-  }, [mindsSettings.site_url, user?.username]);
+  }, [mindsSettings.site_url, user]);
 
   /**
    * validates the twitter handle
@@ -218,7 +218,7 @@ function TwitterSyncScreen() {
           onBlur={onBlur}
           onFocus={onFocus}
           error={
-            !isValid && errorsVisible
+            !isValid && twitterHandle && errorsVisible
               ? i18n.t('settings.twitterSync.step2.input.error')
               : undefined
           }
@@ -242,21 +242,19 @@ function TwitterSyncScreen() {
   }
 
   return (
-    <KeyboardSpacingView style={ThemedStyles.style.flexContainer} noInset>
-      <ScrollView
-        style={ThemedStyles.style.flexContainer}
-        keyboardDismissMode={'on-drag'}>
-        <ScreenSection top="L">
-          <B1 color="secondary">
-            {i18n.t('settings.twitterSync.description', {
-              limit: Number(minFollowers).toLocaleString(),
-            })}
-          </B1>
-        </ScreenSection>
+    <KeyboardAwareScrollView
+      style={ThemedStyles.style.flexContainer}
+      keyboardDismissMode={'on-drag'}>
+      <ScreenSection top="L">
+        <B1 color="secondary">
+          {i18n.t('settings.twitterSync.description', {
+            limit: Number(minFollowers).toLocaleString(),
+          })}
+        </B1>
+      </ScreenSection>
 
-        {content}
-      </ScrollView>
-    </KeyboardSpacingView>
+      {content}
+    </KeyboardAwareScrollView>
   );
 }
 
