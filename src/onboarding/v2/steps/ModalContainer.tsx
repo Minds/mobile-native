@@ -76,7 +76,6 @@ const styles = ThemedStyles.create({
     'fontSemibold',
     { flex: 1 },
   ],
-  description: ['borderLeft5x'],
   contentContainer: [
     'bgPrimaryBackground',
     {
