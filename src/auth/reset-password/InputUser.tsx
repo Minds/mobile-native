@@ -46,11 +46,9 @@ export const styles = {
   text: ThemedStyles.combine(
     'fontMedium',
     'fontL',
-    'borderTopHair',
     'textCenter',
     'paddingVertical6x',
     'paddingHorizontal4x',
-    'bcolorPrimaryBorder',
     'colorSecondaryText',
     {
       top: -3,
