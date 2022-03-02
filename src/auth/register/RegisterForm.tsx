@@ -21,7 +21,7 @@ import PasswordInput from '../../common/components/password-input/PasswordInput'
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
-import KeyboardSpacingView from '~/common/components/KeyboardSpacingView';
+import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
 
 type PropsType = {
@@ -236,8 +236,11 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   );
 
   return (
-    <KeyboardSpacingView style={theme.flexContainer}>
-      <FitScrollView ref={scrollViewRef} keyboardShouldPersistTaps={'always'}>
+    <KeyboardSpacingView style={theme.flexContainer} noInset>
+      <FitScrollView
+        ref={scrollViewRef}
+        keyboardShouldPersistTaps={'always'}
+        contentContainerStyle={theme.paddingBottom4x}>
         {inputs}
         <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
           <CheckBox
