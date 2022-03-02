@@ -32,6 +32,7 @@ class NewsfeedStore<T> {
     .setEndpoint('api/v3/newsfeed/feed/unseen-top')
     .setInjectBoost(false)
     .setLimit(12)
+    .setPaginated(false) // this endpoint doesn't support pagination!
     .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
     );
@@ -105,6 +106,10 @@ class NewsfeedStore<T> {
       } catch (e) {
         console.error(e);
       }
+    }
+    // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
+    if (this.feedType === 'top') {
+      this.feedStore.clear();
     }
     this.feedStore.fetchLocalThenRemote(refresh);
   };
