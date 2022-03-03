@@ -64,7 +64,7 @@ const getColorFromURI = async uri => {
   return color;
 };
 
-const EASING = Easing.bezier(0.16, 0.4, 0.3, 1);
+const EASING = Easing.bezier(0.16, 0.4, 0.3, 1) as any; //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
 
 type PropsType = {
   navigation: any;

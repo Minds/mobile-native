@@ -120,7 +120,7 @@
     "react-native-progress": "^4.0.3",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
-    "react-native-reanimated": "^2.3.1",
+    "react-native-reanimated": "^2.4.1",
     "react-native-reanimated-hooks": "^2.0.0",
     "react-native-reanimated-indicators": "^2.0.0",
     "react-native-redash": "^14.2.3",
