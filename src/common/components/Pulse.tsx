@@ -7,7 +7,7 @@ import { mix } from 'react-native-redash';
 export default function (props) {
   const loop = useLoop({ easing: Easing.in(Easing.ease) });
 
-  const circleStyle = useMemo(() => {
+  const circleStyle: any = useMemo(() => {
     const scale = mix(loop.position, 1, 1.3);
     const opacity = mix(loop.position, 1, 0);
 
