@@ -305,14 +305,14 @@ export default function () {
         component={DevicesScreen}
         options={{ title: i18n.t('settings.securityOptions.2') }}
       />
-      {IS_IOS && (
+      {!IS_IOS && (
         <MoreStack.Screen
           name="PaymentMethods"
           component={BillingScreen}
           options={{ title: i18n.t('settings.billingOptions.1') }}
         />
       )}
-      {IS_IOS && (
+      {!IS_IOS && (
         <MoreStack.Screen
           name="RecurringPayments"
           component={RecurringPayments}
