@@ -8,18 +8,20 @@ import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Topbar from '~/topbar/Topbar';
+
+import FeedList, { InjectItem } from '../common/components/FeedList';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
-import FeedList, { InjectItem } from '../common/components/FeedList';
 import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
-import type { AppStackParamList } from '../navigation/NavigationTypes';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import ActivityPlaceHolder from './ActivityPlaceHolder';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -51,7 +53,6 @@ class NewsfeedScreen extends Component<
 > {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
-
   emptyProps = {
     ListEmptyComponent: (
       <View>
@@ -60,14 +61,22 @@ class NewsfeedScreen extends Component<
       </View>
     ),
   };
+
   /**
    * whether the topbar should be shadowLess
    */
   shadowLessTopBar: boolean = true;
-
   injectItems: InjectItem[] = [
     {
       indexes: [2],
+      component: () => (
+        <IfFeatureEnabled feature="channel-recommendations">
+          <ChannelRecommendation location="newsfeed" />
+        </IfFeatureEnabled>
+      ),
+    },
+    {
+      indexes: [3],
       component: () => (
         <IfFeatureEnabled feature="top-feed-2">
           <TopFeedHighlights
@@ -153,7 +162,7 @@ class NewsfeedScreen extends Component<
   render() {
     const newsfeed = this.props.newsfeed;
 
-    const header = (
+    const header = () => (
       <View style={ThemedStyles.style.bgPrimaryBackground}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}

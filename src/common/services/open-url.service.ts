@@ -118,4 +118,6 @@ class OpenURLService {
   }
 }
 
-export default new OpenURLService();
+const openUrlService = new OpenURLService();
+
+export default openUrlService;

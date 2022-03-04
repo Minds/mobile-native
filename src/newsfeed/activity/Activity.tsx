@@ -49,7 +49,6 @@ type PropsType = {
   hideRemind?: boolean;
   parentMature?: boolean;
   onLayout?: Function;
-  showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
   showOnlyContent?: boolean;
   borderless?: boolean;
@@ -294,7 +293,6 @@ export default class Activity extends Component<PropsType> {
             <BottomContent
               entity={entity}
               showOnlyContent={this.props.showOnlyContent}
-              showCommentsOutlet={this.props.showCommentsOutlet}
               hideTabs={this.props.hideTabs}
             />
           </TouchableOpacity>

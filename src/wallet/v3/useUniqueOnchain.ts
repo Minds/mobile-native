@@ -7,7 +7,7 @@ type UniqueOnchainType = {
 } & ApiResponse;
 
 export function isConnected(store: UniqueOnChainStoreType) {
-  return store.result !== null && store.result.address && store.result.unique;
+  return store.result && store.result.address && store.result.unique;
 }
 
 export default function useUniqueOnchain() {
