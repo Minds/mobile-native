@@ -28,15 +28,21 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
       }),
     [navigation, channel],
   );
+
+  const description =
+    channel.briefdescription && channel.briefdescription.trim
+      ? channel.briefdescription.trim()
+      : '';
+
   return (
     <MPressable onPress={onPress}>
       <Row vertical="S" horizontal="L">
         <Avatar size="tiny" right="M" top="XS" source={avatar} />
         <Column flex align="centerStart" right="L">
           <B1 font="bold">{channel.name}</B1>
-          {Boolean(channel.briefdescription) && (
+          {Boolean(description) && (
             <B2 numberOfLines={2} color="secondary">
-              {channel.briefdescription}
+              {description}
             </B2>
           )}
         </Column>
