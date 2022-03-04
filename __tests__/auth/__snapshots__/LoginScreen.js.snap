@@ -1157,6 +1157,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       undefined,
                       undefined,
                       undefined,
+                      undefined,
                     ]
                   }
                 >

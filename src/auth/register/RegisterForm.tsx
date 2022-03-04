@@ -122,8 +122,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
       captchaRef.current?.show();
     },
+    // on password focus
     focus() {
       this.focused = true;
+      scrollViewRef.current?.scrollToEnd();
     },
     blur() {
       this.focused = false;
@@ -159,9 +161,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       if (!validatorService.email(store.email)) {
         this.showErrors = true;
       }
-    },
-    onPasswordFocus() {
-      scrollViewRef.current?.scrollToEnd();
     },
     get usernameError() {
       if (this.usernameTaken) {
@@ -224,10 +223,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         inputProps={{
           textContentType: 'newPassword',
-          onFocus: store.onPasswordFocus,
           onSubmitEditing: store.onRegisterPress,
           error:
-            store.showErrors && validatePassword(store.password)
+            store.showErrors && !validatePassword(store.password).all
               ? i18n.t('settings.invalidPassword')
               : undefined,
         }}

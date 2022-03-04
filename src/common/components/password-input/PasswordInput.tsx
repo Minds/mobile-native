@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { ColorValue, ViewStyle, TextStyle } from 'react-native';
+import { ColorValue, ViewStyle, TextStyle, View } from 'react-native';
 import Tooltip from '../Tooltip';
 import PasswordValidator from './PasswordValidator';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -32,7 +32,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
   const theme = ThemedStyles.style;
 
   return (
-    <>
+    <View>
       {!!store.password && store.focused && (
         <Tooltip
           bottom={12}
@@ -63,7 +63,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
         onPress={store.toggleHidePassword}
         style={iconStyle}
       />
-    </>
+    </View>
   );
 });
 
