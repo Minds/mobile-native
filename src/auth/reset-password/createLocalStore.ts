@@ -1,6 +1,4 @@
-import { RefObject } from 'react';
 import { showNotification } from '../../../AppMessages';
-import { BottomModalHandles } from '../../common/components/bottom-modal/BottomModal';
 import delay from '../../common/helpers/delay';
 import validatePassword from '../../common/helpers/validatePassword';
 import apiService from '../../common/services/api.service';
@@ -10,7 +8,10 @@ import AuthService from '../AuthService';
 
 type StepsType = 'inputUser' | 'emailSended' | 'inputPassword';
 
-const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
+const showError = (error: string) =>
+  showNotification(error, 'danger', undefined, 'top');
+
+const createLocalStore = () => ({
   currentStep: 'inputUser' as StepsType,
   username: '',
   code: '',
@@ -77,23 +78,23 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
         const message =
           (typeof err === 'object' && err !== null && err.message) ||
           i18n.t('messenger.errorDirectMessage');
-        ref.current?.store.setError(message);
+        showError(message);
         logService.exception('[ForgotPassword]', err);
       } finally {
         this.setSending(false);
       }
     } else {
-      ref.current?.store.setError(i18n.t('auth.waitMoment'));
+      showError(i18n.t('auth.waitMoment'));
     }
   },
   async resetPassword() {
     if (!this.username || !this.code) {
-      ref.current?.store.setError(i18n.t('errorMessage'));
+      showError(i18n.t('errorMessage'));
       return false;
     }
 
     if (!validatePassword(this.password).all) {
-      ref.current?.store.setError(i18n.t('auth.invalidPassword'));
+      showError(i18n.t('auth.invalidPassword'));
       return false;
     }
 
@@ -112,11 +113,11 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
         } else {
           throw data;
         }
-      } catch (err) {
+      } catch (err: any) {
         if (err.message) {
-          ref.current?.store.setError(err.message);
+          showError(err.message);
         } else {
-          ref.current?.store.setError(i18n.t('errorMessage'));
+          showError(i18n.t('errorMessage'));
         }
         logService.exception('[ResetPassword]', err);
       } finally {
@@ -128,6 +129,7 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
             success,
             login: async () => {
               showNotification(i18n.t('auth.waitLogin'), 'info', 3000, 'top');
+
               await delay(150);
               // clear the cookies (fix future issues with calls)
               await apiService.clearCookies();

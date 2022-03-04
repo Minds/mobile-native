@@ -1,12 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 import { useLayout } from '@react-native-community/hooks';
 
 /**
  * Scroll view that disable the scroll if content fits on it
  */
-export default function FitScrollView(
+function FitScrollView(
   props: ScrollViewProps & { children: React.ReactNode },
+  ref,
 ) {
   const [contentHeight, setContentHeight] = useState(0);
   const onSizeChange = useCallback((w, h) => setContentHeight(h), [
@@ -17,6 +18,7 @@ export default function FitScrollView(
 
   return (
     <ScrollView
+      ref={ref}
       onLayout={onLayout}
       onContentSizeChange={onSizeChange}
       scrollEnabled={shouldScroll}
@@ -25,6 +27,8 @@ export default function FitScrollView(
     />
   );
 }
+
+export default forwardRef(FitScrollView);
 
 const styles = StyleSheet.create({
   flex: {
