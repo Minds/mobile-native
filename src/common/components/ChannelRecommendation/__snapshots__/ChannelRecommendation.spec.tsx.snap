@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChannelRecommendation renders correctly 1`] = `
+<Fragment>
+  <Spacer
+    vertical="XL"
+  >
+    <Row
+      align="centerBetween"
+      bottom="XL"
+      horizontal="L"
+    >
+      <H3>
+        Recommended Channels
+      </H3>
+      <B2
+        color="link"
+        onPress={[Function]}
+      >
+        See more
+      </B2>
+    </Row>
+    <ChannelRecommendationItem
+      channel={
+        Object {
+          "attachment_guid": false,
+          "blurb": false,
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "guid": "",
+          "mature": false,
+          "message": "Message",
+          "ownerObj": Object {
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "perma_url": false,
+          "rowKey": "something",
+          "shouldBeBlured": [MockFunction],
+          "thumbnail_src": false,
+          "time_created": "1522036284",
+          "title": "TITLE",
+          "type": "activity",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
+        }
+      }
+    />
+  </Spacer>
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomWidth": 6,
+        },
+        Object {
+          "borderColor": "#3f4b56",
+        },
+      ]
+    }
+  />
+</Fragment>
+`;
+
+exports[`ChannelRecommendationItem renders correctly 1`] = `
+<MPressable
+  onPress={[Function]}
+>
+  <Row
+    horizontal="L"
+    vertical="S"
+  >
+    <withSpacer()
+      right="M"
+      size="tiny"
+      source={
+        Object {
+          "headers": Object {
+            "App-Version": "3.8.0",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
+            "Pragma": "no-cache",
+            "no-cache": "1",
+          },
+          "uri": "https://cdn.minds.com/icon//medium/undefined",
+        }
+      }
+      top="XS"
+    />
+    <Column
+      align="centerStart"
+      flex={true}
+      right="L"
+    >
+      <B1
+        font="bold"
+      />
+    </Column>
+    <Subscribe
+      channel={
+        Object {
+          "allow_comments": true,
+          "attachment_guid": false,
+          "blocked": undefined,
+          "blurb": false,
+          "canary": false,
+          "confirmEmail": [Function],
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "disable_autoplay_videos": undefined,
+          "edited": "",
+          "email_confirmed": false,
+          "eth_wallet": "",
+          "founder": false,
+          "groupsCount": 0,
+          "guid": "",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "last_accepted_tos": 0,
+          "mature": false,
+          "mature_visibility": false,
+          "message": "Message",
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "ownerObj": Object {
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "pending_subscribe": false,
+          "perma_url": false,
+          "permissions": Object {},
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "rewards": false,
+          "rowKey": "something",
+          "shouldBeBlured": [MockFunction],
+          "subscribed": undefined,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "tags": Array [],
+          "thumbnail_src": false,
+          "time_created": "1522036284",
+          "time_updated": "",
+          "title": "TITLE",
+          "type": "activity",
+          "urn": "",
+          "username": "",
+          "verified": false,
+          "wire_rewards": undefined,
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
+        }
+      }
+      mini={true}
+      shouldUpdateFeed={false}
+    />
+  </Row>
+</MPressable>
+`;

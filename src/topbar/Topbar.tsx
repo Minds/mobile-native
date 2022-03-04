@@ -45,7 +45,7 @@ export const Topbar = observer((props: PropsType) => {
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            {!!props.title ? (
+            {props.title ? (
               <H1>{props.title}</H1>
             ) : (
               <Image

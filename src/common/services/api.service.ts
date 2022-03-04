@@ -421,7 +421,9 @@ export class ApiService {
    * Api get with abort support
    * @param {string} url
    * @param {object} params
-   * @param {mixed} tag
+   * @param {mixed} tag this is used to abort the fetch when another fetch is done.
+   * For the get request, we auto-cancel the previous request if another one is made.
+   * Very useful if the parameters change often and we are making new calls (like a search or autocomplete)
    */
   async get<T extends ApiResponse>(
     url: string,
