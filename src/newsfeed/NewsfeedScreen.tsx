@@ -6,7 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 import throttle from 'lodash/throttle';
 
-import FeedList from '../common/components/FeedList';
+import FeedList, { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
@@ -19,6 +19,8 @@ import SocialCompassPrompt from '../common/components/social-compass/SocialCompa
 import Feature from '~/common/components/Feature';
 import Topbar from '~/topbar/Topbar';
 import ThemedStyles from '~/styles/ThemedStyles';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -57,10 +59,21 @@ class NewsfeedScreen extends Component<
       </View>
     ),
   };
+
   /**
    * whether the topbar should be shadowLess
    */
   shadowLessTopBar: boolean = true;
+  injectItems: InjectItem[] = [
+    {
+      indexes: [2],
+      component: () => (
+        <IfFeatureEnabled feature="channel-recommendations">
+          <ChannelRecommendation location="newsfeed" />
+        </IfFeatureEnabled>
+      ),
+    },
+  ];
 
   constructor(props) {
     super(props);
@@ -171,6 +184,7 @@ class NewsfeedScreen extends Component<
         navigation={this.props.navigation}
         afterRefresh={this.refreshPortrait}
         onScroll={this.onScroll}
+        injectItems={this.injectItems}
         {...additionalProps}
       />
     );

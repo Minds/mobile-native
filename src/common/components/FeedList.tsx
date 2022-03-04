@@ -20,6 +20,24 @@ import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
+export interface InjectItemComponentProps {
+  index: number;
+}
+
+/**
+ * an item to be injected in feed
+ */
+export interface InjectItem {
+  /**
+   * the indexes in the feed this item should be inserted
+   */
+  indexes: number[];
+  /**
+   * the component to render
+   */
+  component: (props: InjectItemComponentProps) => React.ReactNode;
+}
+
 type PropsType = {
   prepend?: React.ReactNode;
   feedStore: FeedStore;
@@ -41,6 +59,10 @@ type PropsType = {
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
   insets?: any;
+  /**
+   * a list of items to inject at various positions in the feed
+   */
+  injectItems?: InjectItem[];
 };
 
 /**
@@ -305,6 +327,9 @@ class FeedList<T> extends Component<PropsType> {
           navigation={this.props.navigation}
           autoHeight={false}
         />
+        {this.props.injectItems
+          ?.find(p => p?.indexes.includes(row.index))
+          ?.component?.({ index: row.index })}
       </ErrorBoundary>
     );
   };

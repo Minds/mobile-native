@@ -19,6 +19,11 @@ type PropsType = {
   renderRight?: any;
   nameStyles?: TextStyle;
   usernameStyles?: TextStyle;
+  /**
+   * whether the feed should be updated after a channel
+   * was subscribed/unsubscribed
+   */
+  updateFeed?: boolean;
 };
 
 const ChannelListItem = (props: PropsType) => {
@@ -65,7 +70,9 @@ const ChannelListItem = (props: PropsType) => {
       return;
     }
 
-    return <Subscribe channel={channel} />;
+    return (
+      <Subscribe mini shouldUpdateFeed={props.updateFeed} channel={channel} />
+    );
   }, [props]);
 
   const { ...otherProps } = props;
@@ -103,7 +110,7 @@ const styles = ThemedStyles.create({
       flexWrap: 'wrap',
       paddingVertical: 17,
     },
-    'paddingHorizontal2x',
+    'paddingHorizontal4x',
     'bcolorPrimaryBorder',
     'borderBottom1x',
   ],
