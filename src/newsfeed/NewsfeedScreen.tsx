@@ -48,6 +48,7 @@ class NewsfeedScreen extends Component<
 > {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
+  prepend?: React.ReactNode;
   emptyProps = {
     ListEmptyComponent: (
       <View>
@@ -125,31 +126,36 @@ class NewsfeedScreen extends Component<
     }
   };
 
+  get prependComponent() {
+    if (this.prepend === undefined) {
+      this.prepend = (
+        <View style={ThemedStyles.style.bgPrimaryBackground}>
+          <Feature feature="social-compass">
+            <SocialCompassPrompt />
+          </Feature>
+          <CheckLanguage />
+          <InitialOnboardingButton />
+          <PortraitContentBar ref={this.portraitBar} />
+        </View>
+      );
+    }
+    return this.prepend;
+  }
+
   /**
    * Render
    */
   render() {
     const newsfeed = this.props.newsfeed;
 
-    const header = (
+    const header = () => [
       <View style={ThemedStyles.style.bgPrimaryBackground}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-      </View>
-    );
-
-    const prepend = (
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
-        <Feature feature="social-compass">
-          <SocialCompassPrompt />
-        </Feature>
-        <CheckLanguage />
-        <InitialOnboardingButton />
-        <PortraitContentBar ref={this.portraitBar} />
-      </View>
-    );
+      </View>,
+    ];
 
     // Show placeholder before the loading as an empty component.
     const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
@@ -157,7 +163,7 @@ class NewsfeedScreen extends Component<
     return (
       <FeedList
         stickyHeaderHiddenOnScroll={true}
-        prepend={prepend}
+        prepend={this.prependComponent}
         stickyHeaderIndices={sticky}
         ref={newsfeed.setListRef}
         header={header}
