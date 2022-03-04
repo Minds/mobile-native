@@ -146,12 +146,10 @@ export default class AppInitManager {
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
-      logService.info(
-        '[App] navigating to initial screen',
-        sessionService.initialScreen,
-      );
       if (sessionService.initialScreen) {
-        console.log('initialScreen', sessionService.initialScreen);
+        logService.info(
+          '[App] navigating to initial screen: ' + sessionService.initialScreen,
+        );
         NavigationService.navigate(sessionService.initialScreen, {
           initial: true,
         });

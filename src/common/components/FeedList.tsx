@@ -159,6 +159,15 @@ class FeedList<T> extends Component<PropsType> {
       }
     }
 
+    const items: Array<ActivityModel | null> = !this.props.hideItems
+      ? feedStore.entities.slice()
+      : [];
+
+    // We prepend a null value used to render the prepend component always with the same key (to avoid unmounting/mounting)
+    if (this.props.prepend) {
+      items.unshift(null);
+    }
+
     return (
       <ListComponent
         containerStyle={ThemedStyles.style.paddingBottom10x}
@@ -167,7 +176,7 @@ class FeedList<T> extends Component<PropsType> {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={this.getFooter}
-        data={!this.props.hideItems ? feedStore.entities.slice() : []}
+        data={items}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
@@ -204,7 +213,7 @@ class FeedList<T> extends Component<PropsType> {
    * Key extractor for list items
    */
   keyExtractor = (item: { boosted: any; urn: any }, index: any) => {
-    return item.boosted ? `${item.urn}:${index}` : item.urn;
+    return item ? (item.boosted ? `${item.urn}:${index}` : item.urn) : index;
   };
 
   /**
@@ -285,11 +294,12 @@ class FeedList<T> extends Component<PropsType> {
   renderActivity = (row: { index: number; item: ActivityModel }) => {
     const entity = row.item;
 
-    return (
+    return row.index === 0 && entity === null && this.props.prepend ? (
+      this.props.prepend
+    ) : (
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
-        {row.index === 0 ? this.props.prepend : null}
         <Activity
           entity={entity}
           navigation={this.props.navigation}
