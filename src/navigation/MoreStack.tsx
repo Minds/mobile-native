@@ -44,6 +44,7 @@ import OtherScreen from '~/settings/screens/OtherScreen';
 import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
+import TwitterSyncScreen from '~/settings/screens/twitter-sync/TwitterSyncScreen';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -249,6 +250,11 @@ export default function () {
         component={TierManagementScreen}
         options={{ title: i18n.t('settings.otherOptions.b1') }}
         initialParams={{ useForSelection: false }}
+      />
+      <MoreStack.Screen
+        name="TwitterSync"
+        component={TwitterSyncScreen}
+        options={{ title: i18n.t('settings.twitterSync.titleLong') }}
       />
       <MoreStack.Screen
         name="DeleteChannel"

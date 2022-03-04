@@ -75,6 +75,7 @@ export type MoreStackParamList = {
   DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};
+  TwitterSync: {};
   DeleteChannel: {};
   DeactivateChannel: {};
   PaymentMethods: {};
