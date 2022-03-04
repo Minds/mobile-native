@@ -223,8 +223,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "fontFamily": "Roboto-Bold",
                         },
                         Object {
-                          "fontSize": 30,
-                          "lineHeight": 36,
+                          "fontSize": 24,
+                          "lineHeight": 32,
                         },
                         Object {
                           "textAlign": "left",

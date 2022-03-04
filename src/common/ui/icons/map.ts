@@ -238,6 +238,10 @@ const ICON_MAP: {
     font: 'Feather',
     name: 'download',
   },
+  tune: {
+    font: 'MaterialCommunityIcons',
+    name: 'tune',
+  },
 };
 
 export default ICON_MAP;

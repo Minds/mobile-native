@@ -52,13 +52,21 @@ type PropsType = {
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
   ListEmptyComponent?: React.ReactNode;
-  onRefresh?: () => void;
+  /**
+   * a function to call on refresh. this replaces the feedList default refresh function
+   */
+  onRefresh?: () => Promise<any>;
+  /**
+   * refreshing state. overwrites the feedList's refreshing
+   */
+  refreshing?: Boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
   insets?: any;
+  onEndReached?: () => void;
   /**
    * a list of items to inject at various positions in the feed
    */
@@ -69,7 +77,7 @@ type PropsType = {
  * News feed list component
  */
 @observer
-class FeedList<T> extends Component<PropsType> {
+export class FeedList<T> extends Component<PropsType> {
   listRef?: FlatList<T>;
   cantShowActivity: string = '';
   viewOpts = {
@@ -202,12 +210,12 @@ class FeedList<T> extends Component<PropsType> {
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
-        refreshing={feedStore.refreshing}
+        refreshing={this.refreshing}
         onEndReached={this.loadMore}
         refreshControl={
           <RefreshControl
             tintColor={this.props.refreshControlTintColor}
-            refreshing={feedStore.refreshing}
+            refreshing={this.refreshing}
             onRefresh={this.refresh}
             progressViewOffset={(insets?.top || 0) / 1.25}
           />
@@ -303,12 +311,26 @@ class FeedList<T> extends Component<PropsType> {
   /**
    * Refresh feed data
    */
-  refresh = () => {
-    this.props.feedStore.refresh();
+  refresh = async () => {
+    if (this.props.onRefresh) {
+      await this.props.onRefresh();
+    } else {
+      await this.props.feedStore.refresh();
+    }
+
     if (this.props.afterRefresh) {
       this.props.afterRefresh();
     }
   };
+
+  /**
+   * returns refreshing based on props or feedStore
+   */
+  get refreshing() {
+    return typeof this.props.refreshing === 'boolean'
+      ? this.props.refreshing
+      : this.props.feedStore.refreshing;
+  }
 
   /**
    * Render activity

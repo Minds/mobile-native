@@ -383,7 +383,16 @@
   "newsfeed": {
     "title": "Newsfeed",
     "designYourChannel": "Design your channel",
-    "empty": "Your newsfeed is empty"
+    "empty": "Your newsfeed is empty",
+    "topPosts": "Top Posts",
+    "latestPosts": "Latest Posts",
+    "seeMoreTopPosts": "See more top posts",
+    "latestTitle": "Latest posts enabled",
+    "latestDesc": "Show posts as they happen",
+    "latestAction": "Enable Latest Posts",
+    "topTitle": "Top posts enabled",
+    "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
+    "topAction": "Enable Top Posts"
   },
   "comments": {
     "successRemoving": "Comment removed",
