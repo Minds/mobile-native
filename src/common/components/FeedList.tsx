@@ -5,6 +5,7 @@ import {
   StyleProp,
   ViewStyle,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import Activity from '../../newsfeed/activity/Activity';
@@ -37,6 +38,8 @@ export interface InjectItem {
    */
   component: (props: InjectItemComponentProps) => React.ReactNode;
 }
+
+const itemHeight = Dimensions.get('window').width / 3;
 
 type PropsType = {
   prepend?: React.ReactNode;
@@ -84,9 +87,6 @@ export class FeedList<T> extends Component<PropsType> {
     itemVisiblePercentThreshold: 50,
     minimumViewTime: 300,
   };
-  state = {
-    itemHeight: 0,
-  };
 
   /**
    * Constructor
@@ -95,16 +95,6 @@ export class FeedList<T> extends Component<PropsType> {
     super(props);
     this.cantShowActivity = i18n.t('errorShowActivity');
   }
-
-  /**
-   * Adjust tiles to 1/cols size
-   */
-  onLayout = (e: { nativeEvent: { layout: { width: any } } }) => {
-    const width = e.nativeEvent.layout.width;
-    this.setState({
-      itemHeight: width / 3,
-    });
-  };
 
   /**
    * Scroll to top
@@ -146,18 +136,35 @@ export class FeedList<T> extends Component<PropsType> {
     this.props.onScroll?.(e);
   };
 
+  get empty(): React.ReactNode {
+    if (this.props.feedStore.loaded && !this.props.feedStore.refreshing) {
+      if (this.props.emptyMessage) {
+        return this.props.emptyMessage;
+      } else {
+        return (
+          <View style={ComponentsStyle.emptyComponentContainer}>
+            <View style={ComponentsStyle.emptyComponent}>
+              <MText style={ComponentsStyle.emptyComponentMessage}>
+                {i18n.t('newsfeed.empty')}
+              </MText>
+            </View>
+          </View>
+        );
+      }
+    }
+    return null;
+  }
+
   /**
    * Render component
    */
   render() {
     let renderRow: Function;
-    let empty: React.ReactNode = null;
 
     const {
       feedStore,
       renderTileActivity,
       renderActivity,
-      emptyMessage,
       header,
       listComponent,
       insets,
@@ -172,30 +179,13 @@ export class FeedList<T> extends Component<PropsType> {
       renderRow = renderActivity || this.renderActivity;
     }
 
-    // empty view
-    if (feedStore.loaded && !feedStore.refreshing) {
-      if (emptyMessage) {
-        empty = emptyMessage;
-      } else {
-        empty = (
-          <View style={ComponentsStyle.emptyComponentContainer}>
-            <View style={ComponentsStyle.emptyComponent}>
-              <MText style={ComponentsStyle.emptyComponentMessage}>
-                {i18n.t('newsfeed.empty')}
-              </MText>
-            </View>
-          </View>
-        );
-      }
-    }
-
-    const items: Array<ActivityModel | null> = !this.props.hideItems
+    const items: Array<ActivityModel | { urn: string }> = !this.props.hideItems
       ? feedStore.entities.slice()
       : [];
 
     // We prepend a null value used to render the prepend component always with the same key (to avoid unmounting/mounting)
     if (this.props.prepend) {
-      items.unshift(null);
+      items.unshift({ urn: 'prepend' });
     }
 
     return (
@@ -203,7 +193,6 @@ export class FeedList<T> extends Component<PropsType> {
         containerStyle={ThemedStyles.style.paddingBottom10x}
         ref={this.setListRef}
         key={feedStore.isTiled ? 't' : 'f'}
-        onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={this.getFooter}
         data={items}
@@ -220,14 +209,14 @@ export class FeedList<T> extends Component<PropsType> {
             progressViewOffset={(insets?.top || 0) / 1.25}
           />
         }
-        // onEndReachedThreshold={0}
+        onEndReachedThreshold={0.2}
         numColumns={feedStore.isTiled ? 3 : 1}
         style={style}
         initialNumToRender={3}
         maxToRenderPerBatch={4}
         windowSize={9}
         // removeClippedSubviews={true}
-        ListEmptyComponent={!this.props.hideItems ? empty : null}
+        ListEmptyComponent={!this.props.hideItems ? this.empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
         keyboardShouldPersistTaps="always"
@@ -243,7 +232,7 @@ export class FeedList<T> extends Component<PropsType> {
    * Key extractor for list items
    */
   keyExtractor = (item: { boosted: any; urn: any }, index: any) => {
-    return item ? (item.boosted ? `${item.urn}:${index}` : item.urn) : index;
+    return item.boosted ? `${item.urn}:${index}` : item.urn;
   };
 
   /**
@@ -338,8 +327,11 @@ export class FeedList<T> extends Component<PropsType> {
   renderActivity = (row: { index: number; item: ActivityModel }) => {
     const entity = row.item;
 
-    return row.index === 0 && entity === null && this.props.prepend ? (
-      this.props.prepend
+    return row.index === 0 && this.props.prepend ? (
+      <>
+        {this.props.prepend}
+        {this.props.feedStore.entities.length === 0 && this.empty}
+      </>
     ) : (
       <ErrorBoundary
         message={this.cantShowActivity}
@@ -363,7 +355,7 @@ export class FeedList<T> extends Component<PropsType> {
     const entity = row.item;
     return (
       <TileElement
-        size={this.state.itemHeight}
+        size={itemHeight}
         entity={entity}
         navigation={this.props.navigation}
       />
