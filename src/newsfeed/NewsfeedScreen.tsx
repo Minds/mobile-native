@@ -172,7 +172,7 @@ class NewsfeedScreen extends Component<
     );
 
     const prepend = (
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
+      <>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -185,13 +185,11 @@ class NewsfeedScreen extends Component<
             onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
         </IfFeatureEnabled>
-      </View>
+      </>
     );
 
     // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.latestFeedStore.loaded
-      ? null
-      : this.emptyProps;
+    const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
 
     return (
       <FeedList
