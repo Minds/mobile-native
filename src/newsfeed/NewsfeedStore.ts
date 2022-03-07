@@ -65,6 +65,9 @@ class NewsfeedStore<T> {
     }
   }
 
+  /**
+   * Change FeedType and refresh the feed
+   */
   @action
   changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
     this.feedType = feedType;
@@ -139,7 +142,9 @@ class NewsfeedStore<T> {
 
   @action
   reset() {
-    this.feedStore.reset();
+    this.latestFeedStore.reset();
+    this.topFeedStore.reset();
+    this.feedType = undefined;
   }
 }
 
