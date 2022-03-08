@@ -23,7 +23,7 @@
 	<key>HostAppBundleIdentifier</key>
 	<string>com.minds.mobile</string>
 	<key>HostAppURLScheme</key>
-	<string>minds://</string>
+	<string>mindsapp://</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
