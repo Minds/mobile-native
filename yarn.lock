@@ -2135,6 +2135,11 @@
     lodash.pick "^4.4.0"
     lodash.template "^4.5.0"
 
+"@flyerhq/react-native-android-uri-path@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-android-uri-path/-/react-native-android-uri-path-2.3.0.tgz#399579172de19a06a9d8374a95d930e0205b37d7"
+  integrity sha512-qqSopL07BuWh3j20AAdc3MqJsvbXjv7MQaf1KusDX6+VU3Kys/bXOoXuHl4nkPbdqK3XB0CxMVu3d5+Q+eLg5g==
+
 "@gorhom/bottom-sheet@^4.1.5":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.5.tgz#35341d45799de28082c380db6639537b04fa0b26"

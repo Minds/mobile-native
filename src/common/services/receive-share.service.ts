@@ -1,8 +1,9 @@
 // import RNFileShareIntent from 'react-native-file-share-intent';
 import { Image } from 'react-native';
 import type { EmitterSubscription } from 'react-native';
-
+import getPath from '@flyerhq/react-native-android-uri-path';
 import navigationService from '../../navigation/NavigationService';
+import { IS_IOS } from '~/config/Config';
 
 export type SharedItem = {
   mimeType: string;
@@ -20,6 +21,11 @@ class ReceiveShareService {
    */
   private handleMedia(item: SharedItem) {
     if (item.mimeType.startsWith('image/')) {
+      // Fix Android content:// uris
+      if (!IS_IOS) {
+        item.data = 'file://' + getPath(item.data);
+      }
+
       Image.getSize(
         item.data,
         (width, height) => {
