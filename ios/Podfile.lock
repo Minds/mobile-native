@@ -373,7 +373,7 @@ PODS:
     - React
   - react-native-measure-text-size (1.0.0):
     - React-Core
-  - react-native-mmkv-storage (0.6.8):
+  - react-native-mmkv-storage (0.6.12):
     - MMKV (= 1.2.10)
     - React-Core
   - react-native-month-year-picker (1.8.0):
@@ -1002,7 +1002,7 @@ SPEC CHECKSUMS:
   react-native-cookies: cd92f3824ed1e32a20802e8185101e14bb5b76da
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-measure-text-size: df17d060f981d8ec652aa3118e37322bd7019bd5
-  react-native-mmkv-storage: 97ec49dd76cd9823120376677f59f34508ebf708
+  react-native-mmkv-storage: 88bcb10bbe85a8122061d17d03abcc64a02fe1c9
   react-native-month-year-picker: 2f00a9c261a86a39e14cafd02f4c319ac0fe7fe6
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee

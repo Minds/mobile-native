@@ -106,7 +106,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-localize": "^1.3.0",
     "react-native-material-menu": "^1.1.3",
-    "react-native-mmkv-storage": "^0.6.8",
+    "react-native-mmkv-storage": "^0.6.12",
     "react-native-modal": "^11.10.0",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-month-year-picker": "^1.8.0",
