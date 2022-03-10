@@ -22,7 +22,7 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
       <Column flex>
         {typeString}
         <B3 color="secondary" top="XS">
-          {i18n.date(entity.timestamp, 'time')}
+          {entity.displayTime}
         </B3>
       </Column>
       <Column left="S">

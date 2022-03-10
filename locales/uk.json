@@ -290,12 +290,6 @@
     "disableConversations": "Вимкнути бесіди",
     "enableConversations": "Увімкнути бесіди"
   },
-  "keychain": {
-    "unlockMessage": "Unlock {{keychain}} keychain",
-    "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage": "Enter a password that will encrypt the {{keychain}} keychain.",
-    "encryptMessage1": "Запам'ятати пароль або ви не зможете прочитати або записати з нього."
-  },
   "messenger": {
     "decrypting": "дешифрування...",
     "couldntDecrypt": "couldn't decrypt",

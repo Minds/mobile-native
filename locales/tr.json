@@ -290,12 +290,6 @@
     "disableConversations": "Sohbeti devre dışı bırak",
     "enableConversations": "Enable conversations"
   },
-  "keychain": {
-    "unlockMessage": "{{keychain}} anahtar zincirini aç",
-    "setupMessage": "{{keychain}} anahtar zincirini aç",
-    "encryptMessage": "{{keychain}} anahtar zincirini şifrelemek için bir parola girin.",
-    "encryptMessage1": "Parolanızı hatırlayın yoksa okuyup yazamayacaksınız."
-  },
   "messenger": {
     "decrypting": "çözülüyor...",
     "couldntDecrypt": "veri çözülemedi",

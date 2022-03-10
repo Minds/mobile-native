@@ -7,7 +7,6 @@ import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
 import channelSubscribersStore from '../../channel/subscribers/ChannelSubscribersStore';
 import hashtag from '../../common/stores/HashtagStore';
-import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
 import wallet from '../../wallet/WalletStore';
@@ -32,7 +31,6 @@ export function createClassStores() {
     groupView: new groupView(),
     channelSubscribersStore: new channelSubscribersStore(),
     hashtag: new hashtag(),
-    groupsBar: new groupsBar(),
     reportstore: new reportStore(),
     discoveryV2Store: new DiscoveryV2Store(),
     mindsPlusV2Store: new DiscoveryV2Store(true),

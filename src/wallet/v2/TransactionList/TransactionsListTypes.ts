@@ -1,6 +1,7 @@
 import type OffsetListStore from '../../../common/stores/OffsetListStore';
 import type UserModel from '../../../channel/UserModel';
 import { WalletStoreType } from '../createWalletStore';
+import type { Moment } from 'moment';
 
 export type FilterStore = {
   filters: ListFiltersType;
@@ -27,6 +28,8 @@ export type deltaType = 'neutral' | 'positive' | 'negative';
 export interface ExtendedEntity extends Entity {
   formatted: boolean;
   superType: string;
+  txMoment: Moment;
+  displayTime: string;
   date: Date | string;
   customer_user: any;
   otherUser: {

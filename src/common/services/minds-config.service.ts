@@ -1,5 +1,4 @@
 import api from './api.service';
-// import experimentsService from './experiments.service';
 import featuresService from './features.service';
 import { storages } from './storage/storages.service';
 
@@ -53,4 +52,6 @@ class MindsConfigService {
   }
 }
 
-export default new MindsConfigService();
+const mindsConfigService = new MindsConfigService();
+
+export default mindsConfigService;

@@ -26,7 +26,7 @@ jest.mock('react-native-material-menu');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
-jest.mock('../../../src/common/components/KeyboardSpacingView');
+jest.mock('../../../src/common/components/keyboard/KeyboardSpacingView');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

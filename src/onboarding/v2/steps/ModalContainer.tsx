@@ -61,11 +61,14 @@ export default function ModalContainer(props: PropsType) {
 }
 
 const styles = ThemedStyles.create({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: HORIZONTAL,
-  },
+  header: [
+    {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: HORIZONTAL,
+    },
+    'paddingVertical2x',
+  ],
   title: [
     { fontSize: 20, marginLeft: ICON_SIZES.large },
     'paddingVertical3x',
@@ -73,7 +76,6 @@ const styles = ThemedStyles.create({
     'fontSemibold',
     { flex: 1 },
   ],
-  description: ['borderLeft5x'],
   contentContainer: [
     'bgPrimaryBackground',
     {

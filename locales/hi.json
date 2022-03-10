@@ -361,12 +361,6 @@
     "disableConversations": "बातचीत बंद करें",
     "enableConversations": "बातचीत चालू करें"
   },
-  "keychain": {
-    "unlockMessage": "{{keychain}} कीचेन अनलॉक करें",
-    "setupMessage": "{{keychain}} कीचेन अनलॉक करें",
-    "encryptMessage": "एक पासवर्ड दर्ज करें जो {{keychain}} कीचेन को एन्क्रिप्ट करेगा।",
-    "encryptMessage1": "पासवर्ड याद रखें नहीं तो आप इससे पढ़ने/लिखने में असमर्थ होंगे।﻿"
-  },
   "messenger": {
     "decrypting": "decrypting",
     "notAllowed": "This user only allows messages from users that they subscribe to",

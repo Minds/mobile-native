@@ -25,6 +25,7 @@ import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';
 import BottomContent from './BottomContent';
 import {
+  borderLessContainerStyle,
   containerStyle,
   onlyContentContainerStyle,
   remindBlockContainerStyle,
@@ -48,9 +49,9 @@ type PropsType = {
   hideRemind?: boolean;
   parentMature?: boolean;
   onLayout?: Function;
-  showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
   showOnlyContent?: boolean;
+  borderless?: boolean;
 };
 
 /**
@@ -244,6 +245,8 @@ export default class Activity extends Component<PropsType> {
             ? remindedContainerStyle
             : this.props.showOnlyContent
             ? onlyContentContainerStyle
+            : this.props.borderless
+            ? borderLessContainerStyle
             : containerStyle
         }
         onLayout={this.onLayout}>
@@ -290,7 +293,6 @@ export default class Activity extends Component<PropsType> {
             <BottomContent
               entity={entity}
               showOnlyContent={this.props.showOnlyContent}
-              showCommentsOutlet={this.props.showCommentsOutlet}
               hideTabs={this.props.hideTabs}
             />
           </TouchableOpacity>

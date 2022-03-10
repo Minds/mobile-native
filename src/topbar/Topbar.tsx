@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, H1 } from '~ui';
+import { IconCircled, Spacer, IconButton, H2 } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,6 +16,8 @@ type PropsType = {
   navigation: any;
   title?: string;
   noInsets?: boolean;
+  shadowLess?: boolean;
+  showBack?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -39,13 +41,22 @@ export const Topbar = observer((props: PropsType) => {
   });
 
   return (
-    <View style={containerStyle}>
+    <View style={props.shadowLess ? shadowLessContainerStyle : containerStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
+            {props.showBack && (
+              <IconButton
+                name="chevron-left"
+                size="huge"
+                right="S"
+                color="Icon"
+                onPress={() => props.navigation.goBack()}
+              />
+            )}
             {!!props.title ? (
-              <H1>{props.title}</H1>
+              <H2>{props.title}</H2>
             ) : (
               <Image
                 resizeMode="contain"
@@ -129,4 +140,11 @@ export const styles = StyleSheet.create({
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,
+);
+const shadowLessContainerStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  styles.shadow,
+  {
+    shadowColor: 'transparent',
+  },
 );

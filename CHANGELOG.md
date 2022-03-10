@@ -2,6 +2,54 @@
 
 Minds Mobile
 
+## 4.22.0 - 2022-03-09
+
+### Changed
+
+- Twitter sync added
+- Channel recommendations added to the feed
+- Top/Latest feed
+- Login/Register creative/UX
+- Adds support for Blurhash in SmartImage (blurred placeholder while loading images)
+- Add top discovery tab and add collapsible header to the discovery screen
+- Bottom sheets can now be closed with the back button on Android devices
+- Updates the camera package, disable frame processors (improve performance), and bump android target SDK
+- Use growthbook react and use new event for experiments
+- Development tools implemented: Analog to the growthbook chrome extension and to manage canary/staging options in dev mode
+- Fix comments count propagation (replies)
+- Standardize the keyboard handling
+- Update reanimated library to 2.4.1
+- Fix group deep linking and in-app linking
+- Fix Billing settings
+- Fix devices sleeps recording a video
+- Fix portrait bar initial load
+- Fix CI for play store deployment and update Fastlane
+- Fix tokens transactions list date localization
+- Fix notifications blurred thumbnail error
+- Fix share post option (Android)
+- Fix missing translations
+- Fix growthbook attribute on logout
+- Fix the feed pagination and update safe area package
+- Fix make admin options in groups
+- Fix notifications settings fail to load
+- Removes legacy storage and code cleanup
+- Fix remove pin option in main newsfeed
+- Fix Activity indicator position and topbar border
+- Fix android build error (due to photo editor package)
+- Refactor and remove old composer code
+- Fix comment report navigation
+- Fix phone verification textbox reachability
+- Adds support for spec tests in components folder
+- Fix share to minds image preview on android
+- Fix share to minds on iOS
+- Fix social compass sliders on iOS
+
+## 4.21.1 - 2022-02-03
+
+### Changed
+
+- Fix snowplow analytics information
+
 ## 4.21.0 - 2022-01-25
 
 ### Changed

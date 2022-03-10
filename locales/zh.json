@@ -361,12 +361,6 @@
     "disableConversations": "禁用对话",
     "enableConversations": "启用对话"
   },
-  "keychain": {
-    "unlockMessage": "解锁{{keychain}}钥匙串\n",
-    "setupMessage": "解锁{{keychain}}钥匙串\n",
-    "encryptMessage": "输入将加密{{keychain}}钥匙串的密码。",
-    "encryptMessage1": "记住密码，否则您将无法读取/写入。"
-  },
   "messenger": {
     "decrypting": "解密...\n",
     "notAllowed": "This user only allows messages from users that they subscribe to",

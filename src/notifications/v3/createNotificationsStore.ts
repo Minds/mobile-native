@@ -17,8 +17,8 @@ const createNotificationsStore = () => ({
   filter: '' as FilterType,
   offset: '',
   pollInterval: null as number | null,
-  pushNotificationsSettings: [] as PushNotificationsSettingModel[],
-  mailsNotificationsSettings: [] as EmailNotificationsSettingModel[],
+  pushNotificationsSettings: [] as PushNotificationsSettingModel[] | null, // null when failed to load
+  mailsNotificationsSettings: [] as EmailNotificationsSettingModel[] | null, // null when failed to load
   loaded: false,
   setLoaded(loaded: boolean) {
     this.loaded = loaded;
@@ -93,14 +93,18 @@ const createNotificationsStore = () => ({
   },
   async loadMailNotificationsSettings() {
     try {
+      this.mailsNotificationsSettings = [];
       const response = <any>await apiService.get('api/v2/settings/emails');
       if (response.notifications) {
         this.mailsNotificationsSettings = response.notifications.map(
           (notifications: EmailNotificationsSettingType) =>
             new EmailNotificationsSettingModel(notifications),
         );
+      } else {
+        this.mailsNotificationsSettings = null;
       }
     } catch (err) {
+      this.mailsNotificationsSettings = null;
       logService.exception(
         '[NotificationsStore] loadMailNotificationsSettings',
         err,
@@ -109,6 +113,7 @@ const createNotificationsStore = () => ({
   },
   async loadPushNotificationsSettings() {
     try {
+      this.pushNotificationsSettings = [];
       const response = <any>(
         await apiService.get('api/v3/notifications/push/settings')
       );
@@ -116,8 +121,11 @@ const createNotificationsStore = () => ({
         this.pushNotificationsSettings = response.settings.map(
           setting => new PushNotificationsSettingModel(setting),
         );
+      } else {
+        this.pushNotificationsSettings = null;
       }
     } catch (err) {
+      this.pushNotificationsSettings = null;
       logService.exception('[NotificationsStore] loadSettings', err);
     }
   },

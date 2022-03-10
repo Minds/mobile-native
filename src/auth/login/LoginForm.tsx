@@ -15,7 +15,7 @@ import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
-import { Button, B3, Row } from '~ui';
+import { Button, Row, B1 } from '~ui';
 
 type PropsType = {
   onLogin?: Function;
@@ -61,7 +61,14 @@ export default observer(function LoginForm(props: PropsType) {
       textContentType="username"
       value={localStore.username}
       testID="usernameInput"
+      autoCorrect={false}
       noBottomBorder
+      keyboardType="name-phone-pad"
+      error={
+        localStore.showErrors &&
+        !localStore.username &&
+        i18n.t('auth.fieldRequired')
+      }
       autoFocus={true}
     />
   );
@@ -79,6 +86,11 @@ export default observer(function LoginForm(props: PropsType) {
           value={localStore.password}
           testID="userPasswordInput"
           autoFocus={props.relogin}
+          error={
+            localStore.showErrors &&
+            !localStore.password &&
+            i18n.t('auth.fieldRequired')
+          }
         />
         <Icon
           name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
@@ -93,12 +105,12 @@ export default observer(function LoginForm(props: PropsType) {
         testID="loginButton"
         spinner
         horizontal="XL"
-        top="L"
+        top="XXL"
         onPress={localStore.onLoginPress}>
         {i18n.t('auth.login')}
       </Button>
-      <Row top="XL" align="centerBoth">
-        <B3 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B3>
+      <Row top="L2" align="centerBoth">
+        <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
       </Row>
       <ResetPasswordModal ref={resetRef} />
     </View>
