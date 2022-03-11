@@ -12831,9 +12831,9 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
   integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
-react-native-notifications@Minds/react-native-notifications#09c0e3278ec966a46c329dda6f79b3659464387f:
-  version "3.0.0"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/09c0e3278ec966a46c329dda6f79b3659464387f"
+react-native-notifications@Minds/react-native-notifications#5ce75ea5a0a87fbda5d76f574ece82973422c621:
+  version "3.0.1"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/5ce75ea5a0a87fbda5d76f574ece82973422c621"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
