@@ -277,7 +277,7 @@ const createSmartImageStore = props => {
     // shows image if cache exists and shows overlay if it didn't
     async onInit() {
       // if entity was locked, show overlay and return
-      if (props.entity?.shouldBeBlured() || props.entity?.isLocked()) {
+      if (props.entity?.isLocked()) {
         this.showOverlay = true;
         return;
       }

@@ -72,7 +72,7 @@ export default function () {
       title: i18n.t('settings.accountOptions.4'),
       onPress: () => navigation.push('SettingsNotifications'),
     },
-    IS_IOS
+    !IS_IOS
       ? {
           title: i18n.t('settings.accountOptions.5'),
           onPress: () => navigation.push('NSFWScreen'),
