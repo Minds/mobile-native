@@ -322,7 +322,8 @@
     },
     "fabSend": "Send Tip",
     "fabPay": "Tip",
-    "share": "Share Channel"
+    "share": "Share Channel",
+    "userHasntPostedYet": "@{{username}} hasn't posted anything yet"
   },
   "discovery": {
     "title": "Discovery",

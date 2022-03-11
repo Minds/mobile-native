@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView, View, Image } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
@@ -21,6 +21,9 @@ import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
 import { B2, Column, H4, Row } from '~ui';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import UserModel from '../UserModel';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 const CENTERED = false;
 
@@ -51,6 +54,10 @@ const ChannelHeader = withErrorBoundary(
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const [fadeViewWidth, setFadeViewWidth] = useState(50);
+    const [
+      shouldShowChannelRecommendation,
+      setShouldShowChannelRecommendation,
+    ] = useState(false);
     const channel = props.store?.channel;
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
@@ -87,11 +94,20 @@ const ChannelHeader = withErrorBoundary(
               : undefined,
         },
         'bcolorPrimaryBorder',
-        'borderBottom8x',
+        'borderBottom6x',
         'bcolorTertiaryBackground',
       ],
       [props.store?.tab],
     );
+
+    // =====================| EFFECTS |=====================>
+    useEffect(() => {
+      UserModel.events.on('toggleSubscription', ({ user }) => {
+        if (user.guid === channel?.guid) {
+          setShouldShowChannelRecommendation(user.subscribed);
+        }
+      });
+    }, [channel]);
 
     // =====================| METHODS |=====================>
     const onFadeViewLayout = useCallback(event => {
@@ -292,6 +308,16 @@ const ChannelHeader = withErrorBoundary(
 
             {screen()}
           </>
+        )}
+
+        {!channel?.isOwner() && (
+          <IfFeatureEnabled feature="channel-recommendations">
+            <ChannelRecommendation
+              channel={channel}
+              visible={shouldShowChannelRecommendation}
+              location="channel"
+            />
+          </IfFeatureEnabled>
         )}
       </View>
     );

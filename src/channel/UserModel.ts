@@ -150,9 +150,10 @@ export default class UserModel extends BaseModel {
     try {
       const metadata = this.getClientMetadata();
       await ChannelService.toggleSubscription(this.guid, value, metadata);
-      if (shouldUpdateFeed) {
-        UserModel.events.emit('toggleSubscription', this);
-      }
+      UserModel.events.emit('toggleSubscription', {
+        user: this,
+        shouldUpdateFeed,
+      });
     } catch (err) {
       runInAction(() => {
         this.subscribed = !value;

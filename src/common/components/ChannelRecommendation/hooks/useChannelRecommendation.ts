@@ -4,9 +4,13 @@ import useApiFetch from '~/common/hooks/useApiFetch';
 /**
  * channel recommendation resource
  * @param { string } location the location in which this recommendation is shown
+ * @param { UserModel } channel
  * @returns { FetchStore }
  */
-export const useChannelRecommendation = (location: string) => {
+export const useChannelRecommendation = (
+  location: string,
+  channel?: UserModel,
+) => {
   const res = useApiFetch<{
     entities: {
       confidence_score: number;
@@ -17,6 +21,8 @@ export const useChannelRecommendation = (location: string) => {
   }>('api/v3/recommendations', {
     params: {
       location,
+      targetUserGuid: channel?.guid,
+      limit: 3,
     },
     map: recommendations =>
       recommendations.map(recommendation => ({
