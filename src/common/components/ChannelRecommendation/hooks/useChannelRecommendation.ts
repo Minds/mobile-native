@@ -1,5 +1,6 @@
 import UserModel from '~/channel/UserModel';
 import useApiFetch from '~/common/hooks/useApiFetch';
+import sessionService from '~/common/services/session.service';
 
 /**
  * channel recommendation resource
@@ -22,6 +23,7 @@ export const useChannelRecommendation = (
     params: {
       location,
       targetUserGuid: channel?.guid,
+      mostRecentSubscriptionUserGuid: sessionService.getUser()?.guid,
       limit: 3,
     },
     map: recommendations =>
