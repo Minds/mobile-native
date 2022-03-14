@@ -388,10 +388,8 @@ export class ApiService {
    * @param {string} url
    * @param {any} params
    */
-  buildUrl(url, params: any = {}) {
-    if (!params) {
-      params = {};
-    }
+  buildUrl(url, _params: any = {}) {
+    const params = Object.assign({}, _params);
     if (process.env.JEST_WORKER_ID === undefined) {
       params.cb = Date.now(); //bust the cache every time
     }
