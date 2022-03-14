@@ -24,9 +24,9 @@ export class RecentSubscriptionsStore {
   static readonly STORAGE_KEY = 'recent-subscriptions';
   @observable subscriptions: RecentSubscription[] = [];
 
-  constructor(protected storage = storages.user) {
+  constructor() {
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
-    this._rehydrate();
+    setTimeout(() => this._rehydrate(), 0);
   }
 
   onSubscriptionChange = ({ user }) => {
@@ -72,14 +72,14 @@ export class RecentSubscriptionsStore {
   @action
   reset() {
     this.subscriptions = [];
-    this._rehydrate();
+    setTimeout(() => this._rehydrate(), 0);
   }
 
   /**
    * saves subscriptions to storage
    */
   private _persist() {
-    this.storage?.setArray(
+    storages.user?.setArray(
       RecentSubscriptionsStore.STORAGE_KEY,
       this.subscriptions,
     );
@@ -91,7 +91,7 @@ export class RecentSubscriptionsStore {
   @action
   private _rehydrate() {
     this.subscriptions =
-      this.storage?.getArray<RecentSubscription>(
+      storages.user?.getArray<RecentSubscription>(
         RecentSubscriptionsStore.STORAGE_KEY,
       ) || [];
   }
