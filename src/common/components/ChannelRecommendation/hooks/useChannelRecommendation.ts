@@ -1,4 +1,5 @@
 import UserModel from '~/channel/UserModel';
+import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
 
 /**
@@ -11,6 +12,7 @@ export const useChannelRecommendation = (
   location: string,
   channel?: UserModel,
 ) => {
+  const { recentSubscriptions } = useLegacyStores();
   const res = useApiFetch<{
     entities: {
       confidence_score: number;
@@ -22,7 +24,10 @@ export const useChannelRecommendation = (
     params: {
       location,
       targetUserGuid: channel?.guid,
-      mostRecentSubscriptionUserGuid: channel?.guid,
+      // mostRecentSubscriptionUserGuid: recentSubscriptions.list().join(',') || channel?.guid,
+      // TODO: send a list when backend supports it
+      mostRecentSubscriptionUserGuid:
+        recentSubscriptions.list()[0] || channel?.guid,
       limit: 3,
     },
     map: recommendations =>
