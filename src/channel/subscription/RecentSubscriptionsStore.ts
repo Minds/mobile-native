@@ -29,9 +29,9 @@ export class RecentSubscriptionsStore {
     this._rehydrate();
   }
 
-  onSubscriptionChange({ user }) {
+  onSubscriptionChange = ({ user }) => {
     this.recordSubscriptionChange(user);
-  }
+  };
 
   /**
    * @param { MindsUser } channel
