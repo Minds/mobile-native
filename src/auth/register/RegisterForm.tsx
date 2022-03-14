@@ -23,6 +23,7 @@ import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
 import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 
 type PropsType = {
   // called after registeration is finished
@@ -239,49 +240,53 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         ref={scrollViewRef}
         keyboardShouldPersistTaps={'always'}
         contentContainerStyle={theme.paddingBottom4x}>
-        {inputs}
-        <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-          <CheckBox
-            containerStyle={styles.checkboxTerm}
-            title={
-              <MText style={styles.checkboxText}>
-                {i18n.t('auth.accept')}{' '}
-                <MText
-                  style={theme.link}
-                  onPress={() =>
-                    Linking.openURL('https://www.minds.com/p/terms')
-                  }>
-                  {i18n.t('auth.termsAndConditions')}
-                </MText>
-              </MText>
-            }
-            checked={store.termsAccepted}
-            onPress={store.toggleTerms}
-          />
-          <CheckBox
-            containerStyle={styles.checkboxPromotions}
-            title={
-              <MText style={styles.checkboxText}>
-                {i18n.t('auth.promotions')}
-              </MText>
-            }
-            checked={store.exclusivePromotions}
-            onPress={store.togglePromotions}
-          />
-        </View>
-        <BottomSheetButton
-          onPress={store.onRegisterPress}
-          text={i18n.t('auth.createChannel')}
-          disabled={true || store.inProgress}
-          loading={store.inProgress}
-          testID="registerButton"
-          action
-        />
-        <Captcha
-          ref={captchaRef}
-          onResult={store.onCaptchResult}
-          testID="captcha"
-        />
+        <DismissKeyboard>
+          <>
+            {inputs}
+            <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+              <CheckBox
+                containerStyle={styles.checkboxTerm}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.accept')}{' '}
+                    <MText
+                      style={theme.link}
+                      onPress={() =>
+                        Linking.openURL('https://www.minds.com/p/terms')
+                      }>
+                      {i18n.t('auth.termsAndConditions')}
+                    </MText>
+                  </MText>
+                }
+                checked={store.termsAccepted}
+                onPress={store.toggleTerms}
+              />
+              <CheckBox
+                containerStyle={styles.checkboxPromotions}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.promotions')}
+                  </MText>
+                }
+                checked={store.exclusivePromotions}
+                onPress={store.togglePromotions}
+              />
+            </View>
+            <BottomSheetButton
+              onPress={store.onRegisterPress}
+              text={i18n.t('auth.createChannel')}
+              disabled={true || store.inProgress}
+              loading={store.inProgress}
+              testID="registerButton"
+              action
+            />
+            <Captcha
+              ref={captchaRef}
+              onResult={store.onCaptchResult}
+              testID="captcha"
+            />
+          </>
+        </DismissKeyboard>
       </FitScrollView>
     </KeyboardSpacingView>
   );
