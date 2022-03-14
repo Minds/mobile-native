@@ -72,6 +72,7 @@ export class RecentSubscriptionsStore {
   @action
   reset() {
     this.subscriptions = [];
+    this._rehydrate();
   }
 
   /**
