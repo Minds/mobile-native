@@ -35,6 +35,8 @@ jobs:
           root: .
 
   fastlane_build_qa:
+    environment:
+      - ENVFILE: '.env.review'
     executor:
       name: rn/macos
       xcode_version: '13.2.0'
@@ -147,7 +149,7 @@ workflows:
             - analyse_js
           filters:
             branches:
-              only: /^(fix|feat|chore|refactor).*/
+              only: /^(fix|feat|chore|refactor|stable).*/
       - e2e_prod:
           requires:
             - checkout_code

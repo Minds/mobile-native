@@ -49,7 +49,9 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
             return false;
           }
           if (!entity.formatted) {
-            entity.date = i18n.date(entity.timestamp * 1000, 'nameDay');
+            entity.txMoment = moment(entity.timestamp * 1000).local();
+            entity.displayTime = entity.txMoment.format('hh:mm a');
+            entity.date = i18n.date(entity.txMoment, 'nameDay');
             entity.otherUser = entity.contract.includes('wire')
               ? this.getUser(entity)
               : null;

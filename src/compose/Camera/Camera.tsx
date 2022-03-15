@@ -4,6 +4,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import { MotiView } from 'moti';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import Reanimated, {
   useAnimatedProps,
   useSharedValue,
@@ -140,6 +141,12 @@ export default observer(function (props: PropsType) {
     };
   }, [store, onPress, route.params, navigation]);
 
+  // Keep device awake while camera is mounted
+  useEffect(() => {
+    activateKeepAwake();
+    return () => deactivateKeepAwake();
+  }, []);
+
   // capture long press handler
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
@@ -175,7 +182,7 @@ export default observer(function (props: PropsType) {
                 ref={camera}
                 style={StyleSheet.absoluteFill}
                 device={device}
-                format={format}
+                format={IS_IOS ? format : undefined}
                 fps={30}
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost

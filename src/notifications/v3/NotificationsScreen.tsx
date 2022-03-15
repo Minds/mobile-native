@@ -71,6 +71,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     setResult,
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
     params,
+    updateStrategy: 'merge',
     dataField: 'notifications',
     map,
   });

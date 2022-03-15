@@ -20,8 +20,6 @@ type ApiFetchType = FetchResponseType;
 
 const defaultMap = data => data;
 
-const defaultUpdateState = (newData, _) => newData;
-
 /**
  * a function that merges the new state with the old state
  */
@@ -49,7 +47,7 @@ const replaceState = (dataField: string, map = defaultMap) => (
   ],
 });
 
-type MethodType = 'get' | 'post' | 'put';
+type MethodType = 'get' | 'post' | 'put' | 'delete';
 
 export interface FetchOptions {
   updateState?: (newData: any, oldData: any) => any;
@@ -78,7 +76,7 @@ export interface FetchOptions {
 export interface FetchStore<T> {
   retryTimer: any;
   loading: boolean;
-  result: T | null;
+  result: T | null | undefined;
   error: any;
   setResult: (v: any) => void;
   clearRetryTimer: (boolean) => void;
@@ -108,7 +106,7 @@ const createStore = ({
   retryCount: 0,
   loading: false,
   refreshing: false,
-  result: <any>null,
+  result: <any>undefined,
   error: null,
   clearRetryTimer(clearCount: boolean) {
     if (this.retryTimer !== undefined) {
@@ -156,8 +154,7 @@ const createStore = ({
       persist,
     } = Object.assign(
       {
-        updateStrategy: 'merge',
-        updateState: defaultUpdateState,
+        updateStrategy: 'replace',
         offsetField: 'load-next',
         dataField: 'entities',
       },
@@ -166,12 +163,13 @@ const createStore = ({
     );
     this.clearRetryTimer(!retry);
 
-    if (updateStrategy && dataField) {
+    if (!updateState) {
       switch (updateStrategy) {
         case 'merge':
           updateState = mergeState(dataField, map);
           break;
         case 'replace':
+        default:
           updateState = replaceState(dataField, map);
           break;
       }
@@ -184,9 +182,11 @@ const createStore = ({
     this.setLoading(true);
     this.setError(null);
     try {
-      const result = await (method === 'get'
-        ? apiService.get(url, data, this)
-        : apiService.post(url, data));
+      const result = await apiService[method](
+        url,
+        data,
+        method === 'get' ? this : undefined,
+      );
 
       // hack to remove the offset if the result was empty
       if (dataField && result[dataField]?.length === 0) {
@@ -211,6 +211,7 @@ const createStore = ({
           }, hookOptions?.retryDelay || 3000);
         }
       }
+      throw err;
     } finally {
       this.setLoading(false);
     }

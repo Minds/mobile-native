@@ -1,15 +1,18 @@
 import React from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Pressable } from 'react-native';
 
-const onPress = () => Keyboard.dismiss();
+const onPress = () => {
+  Keyboard.dismiss();
+  console.log('dismissed');
+};
 
 /**
  * Dismiss keyboard on tap
  */
 export default function DismissKeyboard({ children, ...otherProps }) {
   return (
-    <TouchableWithoutFeedback onPress={onPress} {...otherProps}>
+    <Pressable onPress={onPress} {...otherProps}>
       {children}
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 }

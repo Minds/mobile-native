@@ -1,15 +1,33 @@
 //@ts-nocheck
+import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
-
+import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
-// Send staging cookie to api
-export const MINDS_STAGING = false;
-export const MINDS_CANARY = false;
+export const STAGING_KEY = 'staging';
+export const CANARY_KEY = 'canary';
+
+export const ENV =
+  typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
+
+export const IS_PRODUCTION = ENV === 'production';
+export const IS_REVIEW = ENV === 'review';
+
+/**
+ * We get the values only for review apps in order to avoid issues
+ * by setting them to true in a review app and after updating the app
+ * with a production version having that option turned on
+ */
+export const MINDS_STAGING = IS_REVIEW
+  ? storages.app.getBool(STAGING_KEY) || false
+  : false;
+export const MINDS_CANARY = IS_REVIEW
+  ? storages.app.getBool(CANARY_KEY) || false
+  : false;
 
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
@@ -93,8 +111,8 @@ export const MINDS_DEEPLINK = [
   ['forgot-password;:username;:code', 'Forgot'],
   ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
-  ['groups/profile/:guid/feed', 'More/GroupView'],
-  ['groups/profile/:guid', 'More/GroupView'],
+  ['groups/profile/:guid/feed', 'GroupView'],
+  ['groups/profile/:guid', 'GroupView'],
   ['notifications', 'Notifications', 'navigate'],
   ['groups/:filter', 'More/GroupsList'],
   ['newsfeed/:guid', 'Activity'],

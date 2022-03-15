@@ -290,12 +290,6 @@
     "disableConversations": "Gesprekken uitschakelen",
     "enableConversations": "Gesprekken inschakelen"
   },
-  "keychain": {
-    "unlockMessage": "Ontgrendel {{keychain}} sleutelhanger",
-    "setupMessage": "Ontgrendel {{keychain}} sleutelhanger",
-    "encryptMessage": "Voer een wachtwoord in dat de {{keychain}} sleutelhanger zal versleutelen.",
-    "encryptMessage1": "Onthoud het wachtwoord anders kunt u het niet lezen/schrijven."
-  },
   "messenger": {
     "decrypting": "decoderen...",
     "couldntDecrypt": "kon niet worden gedecodeerd",

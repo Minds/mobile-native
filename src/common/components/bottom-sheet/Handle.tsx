@@ -31,9 +31,8 @@ const styles = ThemedStyles.create({
     {
       borderTopLeftRadius: 18,
       borderTopRightRadius: 18,
-      height: 22,
-      paddingTop: 10,
     },
+    'paddingVertical3x',
     'bgPrimaryBackgroundHighlight',
   ],
   get containerWithChildren() {
@@ -46,7 +45,7 @@ const styles = ThemedStyles.create({
   },
   handleBar: [
     {
-      width: 30,
+      width: '20%',
       height: 5,
       borderRadius: 10,
     },

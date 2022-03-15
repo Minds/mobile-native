@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { ColorValue, ViewStyle, TextStyle } from 'react-native';
+import { ColorValue, ViewStyle, TextStyle, View } from 'react-native';
 import Tooltip from '../Tooltip';
 import PasswordValidator from './PasswordValidator';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -8,6 +8,7 @@ import InputContainer from '../InputContainer';
 import i18n from '../../services/i18n.service';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { IS_IOS } from '../../../config/Config';
+import { PropsType as InputPropsType } from '../Input';
 
 type StoreType = {
   password: string;
@@ -23,6 +24,7 @@ type PropsType = {
   tooltipBackground: ColorValue;
   inputContainerStyle?: ViewStyle | ViewStyle[];
   inputStyle?: any;
+  inputProps?: InputPropsType;
   inputLabelStyle?: TextStyle | TextStyle[];
 };
 
@@ -30,7 +32,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
   const theme = ThemedStyles.style;
 
   return (
-    <>
+    <View>
       {!!store.password && store.focused && (
         <Tooltip
           bottom={12}
@@ -53,6 +55,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
         testID="passwordInput"
         onFocus={store.focus}
         onBlur={store.blur}
+        {...props.inputProps}
       />
       <Icon
         name={store.hidePassword ? 'md-eye' : 'md-eye-off'}
@@ -60,7 +63,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
         onPress={store.toggleHidePassword}
         style={iconStyle}
       />
-    </>
+    </View>
   );
 });
 

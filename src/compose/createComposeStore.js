@@ -1,7 +1,6 @@
 import { showMessage } from 'react-native-flash-message';
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
-
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
@@ -17,7 +16,7 @@ import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
-import { hashRegex } from '../common/components/Tags';
+import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 
 /**
@@ -100,6 +99,7 @@ export default function (props) {
       }
 
       if (params.media) {
+        console.log('media', params.media);
         this.mode = 'text';
         this.mediaToConfirm = params.media;
         this.attachment.attachMedia(params.media);

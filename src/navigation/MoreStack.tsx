@@ -44,6 +44,7 @@ import OtherScreen from '~/settings/screens/OtherScreen';
 import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
+import TwitterSyncScreen from '~/settings/screens/twitter-sync/TwitterSyncScreen';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -71,16 +72,12 @@ export default function () {
       title: i18n.t('settings.accountOptions.4'),
       onPress: () => navigation.push('SettingsNotifications'),
     },
-    IS_IOS
+    !IS_IOS
       ? {
           title: i18n.t('settings.accountOptions.5'),
           onPress: () => navigation.push('NSFWScreen'),
         }
       : null,
-    {
-      title: i18n.t('settings.accountOptions.6'),
-      onPress: () => navigation.push('MessengerSettingsScreen'),
-    },
     {
       title: i18n.t('settings.accountOptions.7'),
       onPress: () => navigation.push('AutoplaySettingsScreen'),
@@ -255,6 +252,11 @@ export default function () {
         initialParams={{ useForSelection: false }}
       />
       <MoreStack.Screen
+        name="TwitterSync"
+        component={TwitterSyncScreen}
+        options={{ title: i18n.t('settings.twitterSync.titleLong') }}
+      />
+      <MoreStack.Screen
         name="DeleteChannel"
         component={DeleteChannelScreen}
         options={{ title: i18n.t('settings.deleteChannel') }}
@@ -309,14 +311,14 @@ export default function () {
         component={DevicesScreen}
         options={{ title: i18n.t('settings.securityOptions.2') }}
       />
-      {IS_IOS && (
+      {!IS_IOS && (
         <MoreStack.Screen
           name="PaymentMethods"
           component={BillingScreen}
           options={{ title: i18n.t('settings.billingOptions.1') }}
         />
       )}
-      {IS_IOS && (
+      {!IS_IOS && (
         <MoreStack.Screen
           name="RecurringPayments"
           component={RecurringPayments}

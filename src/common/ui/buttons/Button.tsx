@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   Animated,
+  PressableProps,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -36,6 +37,8 @@ export type ButtonPropsType = {
   onPress?: (release: any) => void;
   testID?: string;
   accessibilityLabel?: string;
+  icon?: React.ReactNode;
+  pressableProps?: PressableProps;
 };
 const shouldBreak = (num, disabled, state) => {
   return (
@@ -65,6 +68,8 @@ export const ButtonComponent = ({
   shouldAnimateChanges = true,
   testID,
   accessibilityLabel,
+  icon,
+  pressableProps,
 }: ButtonPropsType) => {
   const containerStyle = [
     styles.container,
@@ -72,6 +77,7 @@ export const ButtonComponent = ({
     styles[size],
     styles[`${mode}_${type}`],
     styles[`${mode}_${size}`],
+    icon && styles.paddingLess,
     disabled && styles[`${mode}_disabled`],
   ];
 
@@ -230,7 +236,8 @@ export const ButtonComponent = ({
       onPress={handlePress}
       style={stretch ? styles.stretch : styles[align]}
       accessibilityLabel={accessibilityLabel}
-      testID={testID}>
+      testID={testID}
+      {...pressableProps}>
       {/** Main Wrapper */}
       <View style={containerStyle}>
         {/** Border Overlay */}
@@ -253,9 +260,13 @@ export const ButtonComponent = ({
         {darkContent && <View style={styles.darken} />}
         {/** Button Text */}
         <Animated.View style={{ transform: [{ scale: textAnimation }] }}>
-          <Font font={font} color={textColor} numberOfLines={1}>
-            {text}
-          </Font>
+          {icon ? (
+            icon
+          ) : (
+            <Font font={font} color={textColor} numberOfLines={1}>
+              {text}
+            </Font>
+          )}
         </Animated.View>
       </View>
     </Pressable>
@@ -363,6 +374,9 @@ const styles = ThemedStyles.create({
   },
   spinner_tiny: {
     transform: [{ scale: 0.8 }],
+  },
+  paddingLess: {
+    paddingHorizontal: 0,
   },
 });
 

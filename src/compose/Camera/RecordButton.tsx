@@ -26,7 +26,7 @@ export default observer(function (props: PropsType) {
   const internalSize = props.size - 5;
   const borderRadiusInternal = mix(transition, internalSize / 2, 10);
 
-  const innerStyle = useMemo(
+  const innerStyle: any = useMemo(
     () => ({
       transform: [{ scale }],
       backgroundColor: props.isPhoto ? '#fff' : '#E03C20',
