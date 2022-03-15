@@ -17,6 +17,7 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 
 type PropsType = {
   navigation?: any;
@@ -132,6 +133,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       onFocus();
     }
   }, [notifications, onFocus]);
+
+  useFocusEffect(onFocus);
 
   React.useEffect(() => {
     if (!loading && isRefreshing) {
