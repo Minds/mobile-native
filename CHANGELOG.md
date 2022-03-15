@@ -2,6 +2,13 @@
 
 Minds Mobile
 
+## 4.22.2 - 2022-03-15
+
+### Changed
+
+- Fix push notification not opening app on Android 12
+- Fix cache issues
+
 ## 4.22.1 - 2022-03-11
 
 ### Changed
