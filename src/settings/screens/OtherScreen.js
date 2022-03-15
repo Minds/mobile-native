@@ -37,10 +37,13 @@ export default function ({ navigation }) {
       title: i18n.t('settings.otherOptions.b1'),
       onPress: useNavCallback('TierManagementScreen'),
     },
-    /*{
-      title: i18n.t('settings.otherOptions.b2'),
-      onPress: '',
-    },*/
+  ];
+
+  const contentMigration = [
+    {
+      title: i18n.t('settings.twitterSync.title'),
+      onPress: useNavCallback('TwitterSync'),
+    },
   ];
 
   const account = [
@@ -74,6 +77,10 @@ export default function ({ navigation }) {
       {generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {featuresService.has('paywall-2020') &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {generateSection(
+        i18n.t('settings.otherOptions.contentMigration'),
+        contentMigration,
+      )}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}

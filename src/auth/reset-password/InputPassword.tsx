@@ -33,7 +33,6 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         <PasswordInput
           store={store}
           tooltipBackground={DARK_THEME.TertiaryBackground}
-          inputContainerStyle={styles.inputContainer}
           inputStyle={styles.inputText}
           inputLabelStyle={styles.label}
         />

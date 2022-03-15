@@ -11,7 +11,9 @@ const createLoginStore = ({ props, resetRef }) => ({
   language: i18n.getCurrentLocale(),
   hidePassword: true,
   inProgress: false,
+  showErrors: false,
   setUsername(value) {
+    this.showErrors = false;
     let username = String(value).trim();
     // check for @ char at start, remove it if it is present.
     if (username.charAt(0) === '@') {
@@ -20,6 +22,7 @@ const createLoginStore = ({ props, resetRef }) => ({
     this.username = username;
   },
   setPassword(value) {
+    this.showErrors = false;
     const password = String(value).trim();
     this.password = password;
   },
@@ -39,6 +42,12 @@ const createLoginStore = ({ props, resetRef }) => ({
     this.inProgress = false;
   },
   onLoginPress(releaseButton: any) {
+    if (!this.username || !this.password) {
+      this.showErrors = true;
+      releaseButton();
+      return;
+    }
+
     this.initLogin();
     // is two factor auth
     AuthService.login(this.username, this.password)

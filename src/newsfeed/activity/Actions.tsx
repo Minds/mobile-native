@@ -16,12 +16,10 @@ import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import CommentsEntityOutlet from '../../comments/CommentsEntityOutlet';
 import ShareAction from './actions/ShareAction';
 
 type PropsType = {
   entity: ActivityModel;
-  showCommentsOutlet?: boolean;
   hideCount?: boolean;
   onPressComment?: () => void;
   hideTabs?: boolean;
@@ -70,9 +68,6 @@ export const Actions = observer((props: PropsType) => {
           )}
         </View>
       )}
-      {props.showCommentsOutlet ? (
-        <CommentsEntityOutlet entity={entity} />
-      ) : undefined}
     </View>
   );
 });

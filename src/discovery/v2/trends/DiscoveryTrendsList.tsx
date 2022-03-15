@@ -74,7 +74,7 @@ export const DiscoveryTrendsList = observer(
 
     const onRefresh = () => {
       store.refreshTrends(plus, false);
-      store.allFeed.refresh();
+      return store.allFeed.refresh();
     };
 
     const listHeader = store.trends.length ? (
