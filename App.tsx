@@ -47,6 +47,7 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import { showNotification } from 'AppMessages';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -121,6 +122,16 @@ class App extends Component<Props, State> {
       shouldDuckAndroid: false,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
     });
+    setTimeout(() => {
+      showNotification('This is a test toaster', 'success', 0);
+      showNotification('This is a test toaster', 'info', 0);
+      showNotification('This is a test toaster', 'warning', 0);
+      showNotification(
+        'This is a larger text toaster that should take more than a line',
+        'danger',
+        0,
+      );
+    }, 5000);
   }
 
   /**
