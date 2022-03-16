@@ -27,7 +27,7 @@ const CashOnboarding = observer(
     );
 
     return (
-      <DismissKeyboard>
+      <DismissKeyboard style={theme.flexContainer}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <CountrySelector
             onlyAllowed="allowedCountriesBankAccount"
