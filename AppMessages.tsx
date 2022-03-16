@@ -68,20 +68,21 @@ export const showNotification = (
       closeIconSize: 18,
       messageProps: {
         fontFamily: 'Roboto-Medium',
-        fontSize: 14,
+        fontSize: 15,
       },
       iconSize: 24,
       toastStyles: {
         borderRadius: 4,
       },
       shadow: {
-        shadowColor: '#000',
+        shadowColor: '#000000',
         shadowOffset: {
           width: 0,
           height: 1,
         },
         shadowOpacity: 0.5,
-        shadowRadius: 6,
+        shadowRadius: 2,
+
         elevation: 4,
       },
     });

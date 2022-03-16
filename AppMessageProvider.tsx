@@ -7,18 +7,13 @@ import {
 } from '@msantang78/react-native-styled-toast';
 import { registerToast } from 'AppMessages';
 import ThemedStyles from '~/styles/ThemedStyles';
-const tinycolor = require('tinycolor2');
 
 export default function AppMessageProvider({ children }) {
   const theme = React.useMemo(() => {
-    const bg = ThemedStyles.theme
-      ? tinycolor(ThemedStyles.getColor('PrimaryBackgroundHighlight'))
-          .lighten()
-          .toString()
-      : ThemedStyles.getColor('PrimaryBackgroundHighlight');
+    const bg = ThemedStyles.getColor('PrimaryBorder');
 
     return {
-      space: [0, 4, 5, 12, 16, 20, 24, 32, 40, 48],
+      space: [0, 4, 8, 12, 16, 20, 24, 32, 40, 48],
       colors: {
         text: ThemedStyles.getColor('PrimaryText'),
         background: bg,
@@ -32,7 +27,7 @@ export default function AppMessageProvider({ children }) {
   }, [ThemedStyles.theme]);
   return (
     <ThemeProvider theme={theme}>
-      <ToastProvider position="TOP" offset={20}>
+      <ToastProvider position="TOP" offset={20} maxToasts={5}>
         <ToastContext.Consumer>
           {({ toast }) => {
             registerToast(toast);
