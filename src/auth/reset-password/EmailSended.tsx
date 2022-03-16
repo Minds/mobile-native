@@ -23,8 +23,7 @@ const EmailSended = ({ store }: PropsType) => {
 };
 export const containerStyle = ThemedStyles.combine(
   'paddingHorizontal10x',
-  'borderTopHair',
-  'bcolorPrimaryBorder',
+  'paddingVertical2x',
 );
 
 export const textStyle = ThemedStyles.combine(
@@ -35,6 +34,6 @@ export const textStyle = ThemedStyles.combine(
   'textCenter',
 );
 
-const touchableStyle = ThemedStyles.combine('marginTop6x', 'marginBottom20x');
+const touchableStyle = ThemedStyles.combine('marginTop16x', 'marginBottom20x');
 
 export default EmailSended;

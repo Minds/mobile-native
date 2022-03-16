@@ -227,11 +227,7 @@ const PortraitActivity = observer((props: PropsType) => {
         )}
       </View>
       <View style={cleanBottom}>
-        <Actions
-          entity={entity}
-          showCommentsOutlet={false}
-          onPressComment={onPressComment}
-        />
+        <Actions entity={entity} onPressComment={onPressComment} />
       </View>
       {!showNSFW && tappingArea}
       <CommentBottomSheet commentsStore={store.comments} ref={commentsRef} />

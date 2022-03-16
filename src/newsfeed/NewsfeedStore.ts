@@ -1,10 +1,15 @@
-import { action } from 'mobx';
-
-import NewsfeedService from './NewsfeedService';
-import ActivityModel from './ActivityModel';
-import FeedStore from '../common/stores/FeedStore';
+import { action, observable } from 'mobx';
+import MetadataService from '~/common/services/metadata.service';
+import { storages } from '~/common/services/storage/storages.service';
 import UserModel from '../channel/UserModel';
-import type FeedList from '../common/components/FeedList';
+import { FeedList } from '../common/components/FeedList';
+import FeedStore from '../common/stores/FeedStore';
+import ActivityModel from './ActivityModel';
+import NewsfeedService from './NewsfeedService';
+
+const FEED_TYPE_KEY = 'newsfeed:feedType';
+
+export type NewsfeedType = 'top' | 'latest';
 
 /**
  * News feed store
@@ -13,7 +18,24 @@ class NewsfeedStore<T> {
   /**
    * Feed store
    */
-  feedStore: FeedStore = new FeedStore(true);
+  latestFeedStore = new FeedStore()
+    .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setInjectBoost(true)
+    .setLimit(12)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
+    );
+  /**
+   * Feed store
+   */
+  topFeedStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+    .setInjectBoost(false)
+    .setLimit(12)
+    .setPaginated(false) // this endpoint doesn't support pagination!
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
+    );
   /**
    * List reference
    */
@@ -21,16 +43,41 @@ class NewsfeedStore<T> {
 
   service = new NewsfeedService();
 
+  @observable
+  feedType?: NewsfeedType;
+
   /**
    * Constructors
    */
   constructor() {
-    this.buildStores();
-
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
     ActivityModel.events.on('newPost', this.onNewPost);
   }
+
+  get feedStore() {
+    switch (this.feedType) {
+      case 'top':
+        return this.topFeedStore;
+      case 'latest':
+      default:
+        return this.latestFeedStore;
+    }
+  }
+
+  /**
+   * Change FeedType and refresh the feed
+   */
+  @action
+  changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
+    this.feedType = feedType;
+    try {
+      storages.user?.setString(FEED_TYPE_KEY, feedType);
+    } catch (e) {
+      console.error(e);
+    }
+    this.loadFeed(refresh);
+  };
 
   /**
    * On new post created
@@ -44,10 +91,30 @@ class NewsfeedStore<T> {
    */
   onSubscriptionChange = (user: UserModel) => {
     if (!user.subscribed) {
-      this.feedStore.removeFromOwner(user.guid);
+      this.topFeedStore.removeFromOwner(user.guid);
+      this.latestFeedStore.removeFromOwner(user.guid);
     } else {
       this.feedStore.refresh();
     }
+  };
+
+  public loadFeed = async (refresh?: boolean) => {
+    if (!this.feedType) {
+      try {
+        const storedFeedType = storages.user?.getString(
+          FEED_TYPE_KEY,
+        ) as NewsfeedType;
+
+        this.feedType = storedFeedType || 'latest';
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
+    if (this.feedType === 'top') {
+      this.feedStore.clear();
+    }
+    this.feedStore.fetchLocalThenRemote(refresh);
   };
 
   /**
@@ -62,34 +129,22 @@ class NewsfeedStore<T> {
   /**
    * Set FeedList reference
    */
-  setListRef = (r: FeedList<T> | null) => {
+  setListRef = r => {
     if (r) {
       this.listRef = r;
     }
   };
 
-  buildStores() {
-    this.feedStore
-      .getMetadataService()! // we ignore because the metadata is defined
-      .setSource('feed/subscribed')
-      .setMedium('feed');
-
-    this.feedStore
-      .setEndpoint('api/v2/feeds/subscribed/activities')
-      .setInjectBoost(true)
-      .setLimit(12);
-  }
-
-  prepend(entity: ActivityModel) {
+  private prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
-
     this.feedStore.prepend(model);
   }
 
   @action
   reset() {
-    this.feedStore.reset();
-    this.buildStores();
+    this.latestFeedStore.reset();
+    this.topFeedStore.reset();
+    this.feedType = undefined;
   }
 }
 

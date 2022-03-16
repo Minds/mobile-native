@@ -75,6 +75,7 @@ export type MoreStackParamList = {
   DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};
+  TwitterSync: {};
   DeleteChannel: {};
   DeactivateChannel: {};
   PaymentMethods: {};
@@ -291,6 +292,7 @@ export type AppStackParamList = {
     pro?: boolean;
   };
   MultiUserScreen: {};
+  TopNewsfeed: {};
 };
 
 // types for channel edit screens

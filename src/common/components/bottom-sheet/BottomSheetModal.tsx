@@ -10,7 +10,8 @@ import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
-import { H3, B1 } from '~ui';
+import { H3, B1, IconButton } from '~ui';
+import { HORIZONTAL } from '~/styles/Tokens';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -19,11 +20,22 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   autoShow?: boolean;
   snapPoints?: Array<number | string>;
   forceHeight?: number;
+  onBack?: () => void;
+  onDismiss?: () => void;
 }
 
 const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
   (props, ref) => {
-    const { title, detail, snapPoints, autoShow, children, ...other } = props;
+    const {
+      title,
+      detail,
+      snapPoints,
+      autoShow,
+      onBack,
+      onDismiss,
+      children,
+      ...other
+    } = props;
     const { onAnimateHandler } = useBackHandler(
       // @ts-ignore
       useCallback(() => ref?.current?.close(), [ref]),
@@ -87,10 +99,27 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         onAnimate={onAnimateHandler}>
         <View style={contStyle} onLayout={handleContentLayout}>
           {Boolean(title) && (
-            <H3 vertical="M" align="center">
-              {title}
-            </H3>
+            <View style={styles.header}>
+              <H3 vertical="M" align="center">
+                {title}
+              </H3>
+              {Boolean(onBack) && (
+                <View style={styles.backIcon}>
+                  <IconButton
+                    size="large"
+                    name="chevron-left"
+                    onPress={onBack}
+                  />
+                </View>
+              )}
+              {Boolean(onDismiss) && (
+                <View style={styles.closeIcon}>
+                  <IconButton size="large" name="close" onPress={onDismiss} />
+                </View>
+              )}
+            </View>
           )}
+
           {Boolean(detail) && (
             <B1
               horizontal="L"
@@ -129,6 +158,27 @@ const styles = ThemedStyles.create({
       shadowOpacity: 0.58,
       shadowRadius: 4.0,
       elevation: 16,
+    },
+  ],
+  header: [
+    {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: HORIZONTAL,
+    },
+    'paddingVertical2x',
+  ],
+  backIcon: [
+    {
+      position: 'absolute',
+      left: HORIZONTAL,
+    },
+  ],
+  closeIcon: [
+    {
+      position: 'absolute',
+      right: HORIZONTAL,
     },
   ],
 });

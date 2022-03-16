@@ -18,7 +18,7 @@ const BlockedChannelsScreen = observer(props => {
   );
 
   const onRefresh = useCallback(() => {
-    localStore.loadList(true);
+    return localStore.loadList(true);
   }, [localStore]);
 
   useEffect(() => {

@@ -122,6 +122,10 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'plus',
   },
+  check: {
+    font: 'MaterialCommunityIcons',
+    name: 'check',
+  },
   'plus-circle-outline': {
     font: 'MaterialIcons',
     name: 'add-circle-outline',
@@ -233,6 +237,10 @@ const ICON_MAP: {
   download: {
     font: 'Feather',
     name: 'download',
+  },
+  tune: {
+    font: 'MaterialCommunityIcons',
+    name: 'tune',
   },
 };
 

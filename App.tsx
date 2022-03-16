@@ -43,7 +43,6 @@ import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
-import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
@@ -178,37 +177,34 @@ class App extends Component<Props, State> {
     return (
       <ExperimentsProvider>
         <SafeAreaProvider>
-          <ScreenHeightProvider>
-            {sessionService.ready && (
-              <NavigationContainer
-                ref={setTopLevelNavigator}
-                theme={ThemedStyles.navTheme}
-                onReady={appInitManager.onNavigatorReady}
-                onStateChange={analyticsService.onNavigatorStateChange}>
-                <StoresProvider>
-                  <Provider key="app" {...stores}>
-                    <PortalProvider>
-                      <BottomSheetModalProvider>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
-                          <ErrorBoundary
-                            message="An error occurred"
-                            containerStyle={ThemedStyles.style.centered}>
-                            <WCContextProvider>
-                              <NavigationStack
-                                key={ThemedStyles.theme + i18n.locale}
-                                showAuthNav={showAuthNav}
-                              />
-                            </WCContextProvider>
-                          </ErrorBoundary>
-                        </AppMessageProvider>
-                      </BottomSheetModalProvider>
-                    </PortalProvider>
-                  </Provider>
-                </StoresProvider>
-              </NavigationContainer>
-            )}
-          </ScreenHeightProvider>
+          {sessionService.ready && (
+            <NavigationContainer
+              ref={setTopLevelNavigator}
+              theme={ThemedStyles.navTheme}
+              onReady={appInitManager.onNavigatorReady}
+              onStateChange={analyticsService.onNavigatorStateChange}>
+              <StoresProvider>
+                <Provider key="app" {...stores}>
+                  <PortalProvider>
+                    <BottomSheetModalProvider>
+                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                        <ErrorBoundary
+                          message="An error occurred"
+                          containerStyle={ThemedStyles.style.centered}>
+                          <WCContextProvider>
+                            <NavigationStack
+                              key={ThemedStyles.theme + i18n.locale}
+                              showAuthNav={showAuthNav}
+                            />
+                          </WCContextProvider>
+                        </ErrorBoundary>
+                      </AppMessageProvider>
+                    </BottomSheetModalProvider>
+                  </PortalProvider>
+                </Provider>
+              </StoresProvider>
+            </NavigationContainer>
+          )}
         </SafeAreaProvider>
         <TosModal user={stores.user} />
       </ExperimentsProvider>
