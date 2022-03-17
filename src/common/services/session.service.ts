@@ -145,6 +145,7 @@ export class SessionService {
   }
 
   tokenCanRefresh(refreshToken?: RefreshToken) {
+    if (this.switchingAccount) return false;
     if (!refreshToken) {
       return (
         this.refreshToken &&
@@ -164,6 +165,7 @@ export class SessionService {
     logService.info('[SessionService] refreshing token');
     if (this.tokenCanRefresh()) {
       const tokens = await AuthService.refreshToken();
+      tokens.pseudo_id = this.tokensData[this.activeIndex].pseudoId;
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
       this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
@@ -181,6 +183,7 @@ export class SessionService {
         refreshToken.refresh_token,
         accessToken.access_token,
       );
+      tokens.pseudo_id = this.tokensData[index].pseudoId;
       this.tokensData[index] = this.buildSessionData(
         tokens,
         this.tokensData[index].user,
@@ -334,6 +337,9 @@ export class SessionService {
       },
       tokensData.user,
     );
+
+    analyticsService.setUserId(tokensData.pseudoId);
+
     this.saveToStore();
   }
 

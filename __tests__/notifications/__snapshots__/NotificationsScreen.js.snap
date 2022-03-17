@@ -269,6 +269,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "transform": Array [
@@ -357,6 +359,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     onStartShouldSetResponder={[Function]}
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [

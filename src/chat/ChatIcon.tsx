@@ -6,9 +6,13 @@ import ChatBubbleIcon from './ChatBubbleIcon';
 
 const ChatIcon = () => {
   const { chat } = useStores();
-
   useEffect(() => {
-    chat.init();
+    // deffer the initial load to avoid issues when switching users
+    setTimeout(() => {
+      if (chat) {
+        chat.init();
+      }
+    }, 2000);
     return () => {
       chat.reset();
     };

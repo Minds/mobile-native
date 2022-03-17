@@ -53,12 +53,12 @@ const createChatStore = () => ({
     }
   },
   async init() {
-    this.loadCount();
     const chatUrl = mindsService.getSettings().matrix?.chat_url;
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }
     this.polling = setInterval(this.loadCount, 15000);
+    this.loadCount();
   },
   async loadCount(): Promise<void> {
     if (this.inProgress) {
