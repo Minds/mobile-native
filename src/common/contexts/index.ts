@@ -6,7 +6,6 @@ import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
 import hashtag from '../../common/stores/HashtagStore';
-import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
 import wallet from '../../wallet/WalletStore';
 
@@ -20,7 +19,6 @@ import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
  */
 export function createClassStores() {
   const stores = {
-    subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
     user: new user(),
     blogs: new blogs(),
