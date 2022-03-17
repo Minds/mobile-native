@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
 import { ScrollView } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import ChannelListItemPlaceholder from '~/common/components/ChannelListItemPlaceholder';

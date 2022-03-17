@@ -8,7 +8,7 @@ import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
 
-type PropsType = {
+export type ChannelListItemProps = {
   onPress?: (channel: UserModel) => void;
   channel: UserModel;
   navigation?: any;
@@ -26,7 +26,7 @@ type PropsType = {
   updateFeed?: boolean;
 };
 
-const ChannelListItem = (props: PropsType) => {
+const ChannelListItem = (props: ChannelListItemProps) => {
   const containerStyle = useStyle(
     styles.container,
     props.containerStyles || {},
