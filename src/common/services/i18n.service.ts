@@ -6,30 +6,23 @@ import { I18nManager } from 'react-native';
 import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
-
 // importing directly to use the type
 // TODO: consider if we can only do this on dev env to reduce bundle size??
-const enLocale = require('../../../locales/en.json');
-
-// returns property value from object O given property path T, otherwise never
-type GetDictValue<T extends string, O> = T extends `${infer A}.${infer B}`
-  ? A extends keyof O
-    ? GetDictValue<B, O[A]>
-    : never
-  : T extends keyof O
-  ? O[T]
-  : never;
+import enLocale from '../../../locales/en.json';
 
 // get all possible key paths
 type DeepKeys<T> = T extends object
   ? {
+      // @ts-ignore
       [K in keyof T]-?: `${K & string}` | Concat<K & string, DeepKeys<T[K]>>;
     }[keyof T]
   : '';
 
 // or: only get leaf and no intermediate key path
+// @ts-ignore
 type DeepLeafKeys<T> = T extends object
-  ? { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
+  ? // @ts-ignore
+    { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
   : '';
 type Concat<K extends string, P extends string> = `${K}${'' extends P
   ? ''
@@ -173,7 +166,7 @@ class I18nService {
   t<P extends DeepLeafKeys<typeof enLocale>>(
     scope: P,
     options?: object,
-  ): GetDictValue<P, typeof enLocale> {
+  ): string {
     return translate(scope, options);
   }
 
