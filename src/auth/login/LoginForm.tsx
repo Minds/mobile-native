@@ -64,7 +64,7 @@ export default observer(function LoginForm(props: PropsType) {
       testID="usernameInput"
       autoCorrect={false}
       noBottomBorder
-      keyboardType="name-phone-pad"
+      keyboardType="default"
       error={
         localStore.showErrors &&
         !localStore.username &&
