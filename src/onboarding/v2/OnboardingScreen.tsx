@@ -55,7 +55,7 @@ export default observer(function OnboardingScreen() {
       // show old data (initial onboarding)
       return oldData;
     } else if (newData && newData.is_completed) {
-      onOnboardingCompleted('onboarding.improvedExperience');
+      onOnboardingCompleted('onboarding.onboardingCompleted');
     }
 
     // Check for post created locally (the backend check takes too long)
