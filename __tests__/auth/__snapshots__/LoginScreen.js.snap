@@ -313,7 +313,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             autoFocus={true}
             error={false}
             keyboardAppearance="dark"
-            keyboardType="name-phone-pad"
+            keyboardType="default"
             labelStyle={
               Array [
                 Object {

@@ -1,27 +1,26 @@
 {
   "versions": [
     {
-      "version": "4.22.1",
-      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-1.apk",
-      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.1",
+      "version": "4.22.2",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-2.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.2",
       "changelog": [
-        "Fix a crash on some Android 12 devices when receiving a push notification",
-        "Fix missing NSFW settings on Android",
-        "Fix blurred NSFW images after open them"
+        "Fix push notification not opening app on Android 12",
+        "Fix cache issues"
       ],
       "unstable": false,
       "hashes": [
         {
           "type": "md5",
-          "value": "d6d8184371449616852a3802cd76f169"
+          "value": "fdf8f631a1d0838bcbbd081c45977ed7"
         },
         {
           "type": "sha256",
-          "value": "676bc5502fe19e9768b38d13d734b5bd027e839396215c3ab57a0af277628513"
+          "value": "b18306a24bda20625524b67671175af2762960ac1048e29c94d6bc0c299b3510"
         },
         {
           "type": "sha512",
-          "value": "57209a1873682e7237cae4fbf611e8c9d35d7e299c9199f31e1c77a40e60bd2ca1a2dabdc46e8c12d8a0b7f27d07e22a6e4709a4020128a25f6d430ca8744cac"
+          "value": "52af7880c16efe68b25f0dd865e5471d66cc0ba37f9a39802ca765bc6b996466e9f575599636471cbf4a1f209cdd6af43518159839579b9c080bc93591f6ec1e"
         }
       ]
     },
