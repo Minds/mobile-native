@@ -24,6 +24,7 @@ import {
   Screen,
   Button,
 } from '~ui';
+import { LIQUIDITY_ENABLED } from '~/config/Config';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -198,7 +199,7 @@ export default observer(() => {
 const createStore = (): Store => ({
   transakApiKey: '',
   tokenAddress: '',
-  paymentMethod: null,
+  paymentMethod: 'card',
   orderReport: null,
   showOrderReport: false,
   showUniswapWidget: false,
@@ -285,10 +286,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const paymentMethodsList: PaymentOption[] = [
-  { type: 'card', name: 'Card / Bank' },
-  { type: 'crypto', name: 'Crypto' },
-];
+const paymentMethodsList: PaymentOption[] = LIQUIDITY_ENABLED
+  ? [
+      { type: 'card', name: 'Card / Bank' },
+      { type: 'crypto', name: 'Crypto' },
+    ]
+  : [{ type: 'card', name: 'Card / Bank' }];
 
 const buildButtonStyles = (position: number, _) => {
   switch (position) {
