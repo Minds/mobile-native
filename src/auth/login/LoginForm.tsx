@@ -34,12 +34,19 @@ export default observer(function LoginForm(props: PropsType) {
 
   const theme = ThemedStyles.style;
 
-  const user =
-    props.sessionIndex !== undefined
-      ? UserModel.checkOrCreate(
-          sessionService.tokensData[props.sessionIndex].user,
-        )
-      : sessionService.getUser();
+  const user = React.useMemo(() => {
+    const u =
+      props.sessionIndex !== undefined
+        ? UserModel.checkOrCreate(
+            sessionService.tokensData[props.sessionIndex].user,
+          )
+        : sessionService.getUser();
+
+    if (props.sessionIndex !== undefined) {
+      localStore.username = u.username;
+    }
+    return u;
+  }, [props.sessionIndex, localStore]);
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
