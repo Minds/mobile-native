@@ -24,11 +24,13 @@ export type ChannelListItemProps = {
    * was subscribed/unsubscribed
    */
   updateFeed?: boolean;
+  borderless?: boolean;
 };
 
 const ChannelListItem = (props: ChannelListItemProps) => {
   const containerStyle = useStyle(
     styles.container,
+    props.borderless ? null : ThemedStyles.style.borderBottom,
     props.containerStyles || {},
   );
   const nameStyles = useStyle(props.nameStyles || {}, styles.name);
@@ -112,7 +114,6 @@ const styles = ThemedStyles.create({
     },
     'paddingHorizontal4x',
     'bcolorPrimaryBorder',
-    'borderBottom1x',
   ],
   nameContainer: ['flexContainerCenter', 'paddingLeft2x', 'justifyCenter'],
   name: [bodyStyle, 'fontL'],

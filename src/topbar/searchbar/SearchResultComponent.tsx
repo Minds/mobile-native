@@ -31,7 +31,6 @@ const SearchResultComponent = observer(
             }}
             hideButtons
             navigation={navigation}
-            avatarSize="medium"
             containerStyles={ThemedStyles.style.paddingVertical2x}
             borderless
           />

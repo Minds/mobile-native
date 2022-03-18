@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import { Screen } from '~/common/ui';
 import UserModel from '../../../channel/UserModel';
@@ -7,7 +6,6 @@ import Button from '../../../common/components/Button';
 import apiService from '../../../common/services/api.service';
 import blockListService from '../../../common/services/block-list.service';
 import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { BlockedChannelsStore } from './createBlockedChannelsStore';
 
 export type Row = {
@@ -21,7 +19,6 @@ type PropsType = {
 };
 
 const BlockedChannel = ({ row, localStore }: PropsType) => {
-  const theme = ThemedStyles.style;
   const user = UserModel.checkOrCreate(row.item);
 
   const unblock = useCallback(
