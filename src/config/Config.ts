@@ -6,7 +6,10 @@ import DeviceInfo from 'react-native-device-info';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
-export const ONCHAIN_ENABLED = true;
+export const ONCHAIN_ENABLED = false;
+
+// we should check how to use v2 before enable it again
+export const LIQUIDITY_ENABLED = false;
 
 export const STAGING_KEY = 'staging';
 export const CANARY_KEY = 'canary';
