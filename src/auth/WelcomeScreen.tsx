@@ -1,10 +1,12 @@
 import { RouteProp } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '~/common/components/MText';
-import { IS_REVIEW } from '~/config/Config';
+import { DEV_MODE } from '~/config/Config';
+import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
@@ -23,7 +25,7 @@ type PropsType = {
 
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
-export default function WelcomeScreen(props: PropsType) {
+function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
   const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const onLoginPress = useCallback(() => {
@@ -73,11 +75,14 @@ export default function WelcomeScreen(props: PropsType) {
       </View>
       <ResetPasswordModal ref={resetRef} />
 
-      {IS_REVIEW && (
+      {DEV_MODE.isActive && (
         <MText style={devtoolsStyle} onPress={openDevtools}>
           Dev Options
         </MText>
       )}
+      <HiddenTap style={devToggleStyle}>
+        <View />
+      </HiddenTap>
     </SafeAreaView>
   );
 }
@@ -87,6 +92,15 @@ const devtoolsStyle = ThemedStyles.combine(
   'marginTop9x',
   'padding5x',
 );
+
+const devToggleStyle = ThemedStyles.combine(
+  'positionAbsoluteTopLeft',
+  'width30',
+  'marginTop9x',
+  'padding5x',
+);
+
+export default observer(WelcomeScreen);
 
 const styles = StyleSheet.create({
   bulb: {

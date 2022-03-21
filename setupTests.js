@@ -17,6 +17,7 @@ configure({ adapter: new Adapter() });
 
 jest.mock('@react-native-cookies/cookies', () => ({
   set: jest.fn(),
+  clearByName: jest.fn(),
 }));
 
 jest.mock('react-native-reanimated', () =>

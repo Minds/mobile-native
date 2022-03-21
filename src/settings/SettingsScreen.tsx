@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemItem } from '../common/components/menus/MenuItem';
 import { isNetworkError } from '../common/services/api.service';
@@ -10,7 +11,9 @@ import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
-import { IS_REVIEW, IS_IOS } from '~/config/Config';
+import { IS_IOS, DEV_MODE } from '~/config/Config';
+import { observer } from 'mobx-react';
+import { HiddenTap } from './screens/DevToolsScreen';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -50,7 +53,7 @@ const setDarkMode = () => {
 
 type Item = MenuItemItem & { screen?: string; params?: any };
 
-export default function ({ navigation }) {
+const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
   const user = sessionService.getUser();
@@ -137,7 +140,7 @@ export default function ({ navigation }) {
     },
   ];
 
-  if (IS_REVIEW) {
+  if (DEV_MODE.isActive) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',
@@ -173,7 +176,9 @@ export default function ({ navigation }) {
       <ScrollView
         style={containerStyle}
         contentContainerStyle={theme.paddingBottom4x}>
-        <ScreenHeader title={i18n.t('moreScreen.settings')} />
+        <HiddenTap>
+          <ScreenHeader title={i18n.t('moreScreen.settings')} />
+        </HiddenTap>
         <View style={[innerWrapper, theme.bgSecondaryBackground]}>
           {firstSectionItems.map((item, index) => (
             <MenuItem
@@ -201,7 +206,9 @@ export default function ({ navigation }) {
       </ScrollView>
     </Screen>
   );
-}
+});
+
+export default SettingsScreen;
 
 const innerWrapper = ThemedStyles.combine(
   'borderTopHair',
