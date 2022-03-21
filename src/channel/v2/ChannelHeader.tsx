@@ -21,6 +21,7 @@ import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
 import { B2, Column, H4, Row } from '~ui';
+import { IS_IOS } from '~/config/Config';
 
 const CENTERED = false;
 
@@ -61,7 +62,7 @@ const ChannelHeader = withErrorBoundary(
         ]
       : [
           { id: 'feed', title: i18n.t('feed') },
-          props.store?.tiers?.length
+          props.store?.tiers?.length && !IS_IOS
             ? { id: 'memberships', title: i18n.t('settings.otherOptions.b1') }
             : (null as any),
           // { id: 'shop', title: 'Shop' },
