@@ -2,6 +2,15 @@
 
 Minds Mobile
 
+## 4.22.3 - 2022-03-18
+
+### Changed
+
+- Fix crash when translating post
+- Fix issues switching users
+- Fix some onboarding layout problems
+- Fix symbols not allowed in username input
+
 ## 4.22.2 - 2022-03-15
 
 ### Changed

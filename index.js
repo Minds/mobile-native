@@ -13,9 +13,9 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import reanimated from 'react-native-reanimated';
 import App from './App';
-import { enableScreens } from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 
-enableScreens();
+enableFreeze(true);
 
 // // grab this text blob, and put it in a file named packager/modulePaths.js
 // console.log(`module.exports = ${JSON.stringify(loadedModuleNames.sort())};`);

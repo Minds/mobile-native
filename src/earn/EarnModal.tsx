@@ -8,7 +8,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ONCHAIN_ENABLED } from '../config/Config';
+import { ONCHAIN_ENABLED, LIQUIDITY_ENABLED } from '../config/Config';
 import MText from '../common/components/MText';
 
 const linkTo = (dest: string) =>
@@ -76,12 +76,6 @@ export default observer(function ({ navigation }) {
 
   const earnItems = [
     {
-      name: 'pool',
-      icon: 'plus-circle-outline',
-      onPress: localStore.toggleUniswapWidget,
-    },
-
-    {
       name: 'create',
       icon: 'plus-box',
       onPress: () => navTo('Compose', { mode: 'text', start: true }),
@@ -92,6 +86,14 @@ export default observer(function ({ navigation }) {
       onPress: () => navTo('Referrals'),
     },
   ];
+
+  if (LIQUIDITY_ENABLED) {
+    earnItems.unshift({
+      name: 'pool',
+      icon: 'plus-circle-outline',
+      onPress: localStore.toggleUniswapWidget,
+    });
+  }
 
   if (ONCHAIN_ENABLED) {
     earnItems.push({
