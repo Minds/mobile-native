@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,7 +8,7 @@ import MenuItem from '../menus/MenuItem';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { navToTierScreen } from './TierManagementScreen';
-// import Button from '../../../common/components/Button';
+import Empty from '~/common/components/Empty';
 import MText from '../MText';
 import { Button } from '~ui';
 
@@ -38,17 +38,9 @@ const TiersList = observer(
 
     if (!tiers || tiers.length === 0) {
       return (
-        <View style={styles.emptyContainer}>
-          <Image
-            style={styles.image}
-            source={require('../../../assets/images/emptyTiers.png')}
-          />
-
-          <MText style={styles.header}>{i18n.t('settings.noTiersTitle')}</MText>
-          <MText style={styles.subTitle}>
-            {i18n.t('settings.noTiersSubTitle')}
-          </MText>
-
+        <Empty
+          title={i18n.t('settings.noTiersTitle')}
+          subtitle={i18n.t('settings.noTiersSubTitle')}>
           <Button
             onPress={onLinkPress}
             mode="outline"
@@ -57,7 +49,7 @@ const TiersList = observer(
             align="center">
             {i18n.t('settings.addFirstTier')}
           </Button>
-        </View>
+        </Empty>
       );
     }
 

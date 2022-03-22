@@ -11,6 +11,7 @@ import {
   isConnected as isWalletConnected,
 } from '../../useUniqueOnchain';
 import { B2, Icon, Row } from '~ui';
+import { ONCHAIN_ENABLED } from '~/config/Config';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -32,22 +33,28 @@ const OnchainButton = observer((props: PropsType) => {
   const children: any = {};
 
   children.childrenButton1 = (
-    <B2C>{props.walletStore.wallet.eth.balance} ETH</B2C>
-  );
-
-  children.childrenButton2 = !isConnected ? (
-    <Row align="centerBoth">
-      <B2C color="secondary">
-        {i18n.t(hasReceiver ? 'wallet.reconnect' : 'wallet.connect') + ' '}
-      </B2C>
-      <Icon name="plus-circle" size="tiny" />
-    </Row>
-  ) : (
-    <B2C color="secondary">
-      {props.walletStore.wallet.receiver.address?.substr(0, 6)}...
-      {props.walletStore.wallet.receiver.address?.substr(-6)}
+    <B2C>
+      {props.walletStore.wallet.eth.balance} ETH{!ONCHAIN_ENABLED ? '  ' : ''}
     </B2C>
   );
+
+  if (ONCHAIN_ENABLED) {
+    children.childrenButton2 = !isConnected ? (
+      <Row align="centerBoth">
+        <B2C color="secondary">
+          {i18n.t(hasReceiver ? 'wallet.reconnect' : 'wallet.connect') + ' '}
+        </B2C>
+        <Icon name="plus-circle" size="tiny" />
+      </Row>
+    ) : (
+      <B2C color="secondary">
+        {props.walletStore.wallet.receiver.address?.substr(0, 6)}...
+        {props.walletStore.wallet.receiver.address?.substr(-6)}
+      </B2C>
+    );
+  } else {
+    children.childrenButton2 = null;
+  }
 
   return props.onchainStore.loading ? (
     <View style={styles.loader}>

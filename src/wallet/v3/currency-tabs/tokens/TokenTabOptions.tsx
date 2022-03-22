@@ -12,7 +12,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../../../common/components/bottom-sheet';
-import { ONCHAIN_ENABLED } from '../../../../config/Config';
+import { IS_IOS, ONCHAIN_ENABLED } from '../../../../config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -52,15 +52,16 @@ const TokenTabOptions = observer((props: PropsType) => {
         iconName: 'arrow-right',
         iconType: 'material-community',
       });
-    actions.push({
-      title: i18n.t('buyTokensScreen.title'),
-      onPress: () => {
-        close();
-        navigation.navigate('BuyTokens');
-      },
-      iconName: 'coins',
-      iconType: 'font-awesome-5',
-    });
+    !IS_IOS &&
+      actions.push({
+        title: i18n.t('buyTokensScreen.title'),
+        onPress: () => {
+          close();
+          navigation.navigate('BuyTokens');
+        },
+        iconName: 'coins',
+        iconType: 'font-awesome-5',
+      });
     if (isConnected) {
       actions.push({
         title: i18n.t('copyToClipboard'),
@@ -75,6 +76,10 @@ const TokenTabOptions = observer((props: PropsType) => {
     }
     return actions;
   }, [address, close, isConnected, navigation]);
+
+  if (dismissOptions.length === 0) {
+    return null;
+  }
 
   return (
     <>

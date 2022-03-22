@@ -21,6 +21,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from 'AppMessages';
+import { IS_IOS } from '~/config/Config';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -88,21 +89,23 @@ const getOptionsList = navigation => {
           },
         }
       : null,
-    {
-      name: 'Buy Tokens',
-      icon: 'coins',
-      onPress: async () => {
-        const navToBuyTokens = () => {
-          navigation.navigate('BuyTokens');
-        };
-        if (!hasRewards) {
-          await requirePhoneValidation();
-          navToBuyTokens();
-        } else {
-          navToBuyTokens();
+    !IS_IOS
+      ? {
+          name: 'Buy Tokens',
+          icon: 'coins',
+          onPress: async () => {
+            const navToBuyTokens = () => {
+              navigation.navigate('BuyTokens');
+            };
+            if (!hasRewards) {
+              await requirePhoneValidation();
+              navToBuyTokens();
+            } else {
+              navToBuyTokens();
+            }
+          },
         }
-      },
-    },
+      : null,
   ];
   list = [
     ...list,

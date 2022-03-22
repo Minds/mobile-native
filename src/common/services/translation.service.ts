@@ -50,7 +50,7 @@ class TranslationService {
           );
           storages.app.setString(
             'translation:userDefault',
-            response.userDefault,
+            response.userDefault || '', // if value is null it crashes the app on ios
           );
           return response.languages;
         } catch (e) {
