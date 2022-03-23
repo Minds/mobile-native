@@ -10,7 +10,11 @@ import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
-import { IS_REVIEW, IS_IOS } from '~/config/Config';
+import {
+  IS_REVIEW,
+  IS_IOS,
+  PRO_PLUS_SUBSCRIPTION_ENABLED,
+} from '~/config/Config';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -87,7 +91,7 @@ export default function ({ navigation }) {
     });
   }
 
-  if (!user.plus) {
+  if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -95,7 +99,7 @@ export default function ({ navigation }) {
     });
   }
 
-  if (!user.pro) {
+  if (!user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',
