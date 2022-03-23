@@ -12,7 +12,7 @@ const LockTag = ({ type }: PropsType) => {
   const lockIcon = <Icon name="lock" color="#FFFFFF" />;
 
   const text =
-    type !== 'paywall' ? i18n.t(`wire.lock.${type}`).toUpperCase() : false;
+    type !== 'paywall' ? i18n.td(['wire', 'lock', type]).toUpperCase() : false;
 
   return (
     <View style={styles.wrapper}>

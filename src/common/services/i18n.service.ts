@@ -18,6 +18,8 @@ type DeepKeys<T> = T extends object
     }[keyof T]
   : '';
 
+type LocaleType = typeof enLocale;
+
 // or: only get leaf and no intermediate key path
 // @ts-ignore
 type DeepLeafKeys<T> = T extends object
@@ -163,11 +165,23 @@ class I18nService {
   /**
    * Translate
    */
-  t<P extends DeepLeafKeys<typeof enLocale>>(
-    scope: P,
+  t<P extends DeepLeafKeys<LocaleType>>(scope: P, options?: object): string {
+    return translate(scope, options);
+  }
+
+  /**
+   * Translate with dynamic values
+   */
+  td<
+    L1 extends keyof LocaleType,
+    L2 extends keyof LocaleType[L1],
+    L3 extends keyof LocaleType[L1][L2],
+    L4 extends keyof LocaleType[L1][L2][L3]
+  >(
+    path: [L1, L2, L3, L4] | [L1, L2, L3] | [L1, L2] | [L1],
     options?: object,
   ): string {
-    return translate(scope, options);
+    return translate(path.join('.'), options);
   }
 
   /**
