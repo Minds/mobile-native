@@ -25,9 +25,7 @@ export default observer(function LoadMore({
     ? store.loadNext && !store.loadingNext
     : store.loadPrevious && !store.loadingPrevious;
 
-  const showIndicator = next
-    ? store.loadingNext && store.loaded
-    : store.loadingPrevious && store.loaded;
+  const showIndicator = next ? store.loadingNext : store.loadingPrevious;
 
   return (
     <View>

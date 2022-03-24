@@ -106,7 +106,7 @@ export default observer(function SetupChannelScreen() {
     <ModalContainer
       title={i18n.t('onboarding.setupChannel')}
       onPressBack={NavigationService.goBack}>
-      <DismissKeyboard>
+      <DismissKeyboard style={theme.flexContainer}>
         <View style={theme.flexContainer}>
           <InputContainer
             placeholder={i18n.t('channel.edit.displayName')}

@@ -380,7 +380,7 @@ PODS:
     - React
   - react-native-netinfo (5.9.10):
     - React-Core
-  - react-native-notifications (3.0.0):
+  - react-native-notifications (3.0.2):
     - React
   - react-native-orientation-locker (1.3.1):
     - React-Core
@@ -536,7 +536,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.10.2):
     - React-Core
     - React-RCTImage
   - RNSentry (2.6.0):
@@ -1005,7 +1005,7 @@ SPEC CHECKSUMS:
   react-native-mmkv-storage: 97ec49dd76cd9823120376677f59f34508ebf708
   react-native-month-year-picker: 2f00a9c261a86a39e14cafd02f4c319ac0fe7fe6
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
-  react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
+  react-native-notifications: a6ffe0a53e17a3b60fe71cdea6483c122ae058c0
   react-native-orientation-locker: 998c0744e26624407dac068c04c605b4af7304a2
   react-native-performance: 6bd6cfac80594775fb782405fceaaf206becf53b
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
@@ -1042,7 +1042,7 @@ SPEC CHECKSUMS:
   RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
   RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
   RNReanimated: d41fa04bb5d2057d3115db666d3a73a7cbc90b79
-  RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNSharedElement: 87baf6d04da5b068f000dd8c953d28a1196999c0

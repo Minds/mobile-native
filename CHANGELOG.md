@@ -2,6 +2,30 @@
 
 Minds Mobile
 
+## 4.22.3 - 2022-03-18
+
+### Changed
+
+- Fix crash when translating post
+- Fix issues switching users
+- Fix some onboarding layout problems
+- Fix symbols not allowed in username input
+
+## 4.22.2 - 2022-03-15
+
+### Changed
+
+- Fix push notification not opening app on Android 12
+- Fix cache issues
+
+## 4.22.1 - 2022-03-11
+
+### Changed
+
+- Fix a crash on some Android 12 devices when receiving a push notification
+- Fix missing NSFW settings on Android
+- Fix blurred NSFW images after open them
+
 ## 4.22.0 - 2022-03-09
 
 ### Changed

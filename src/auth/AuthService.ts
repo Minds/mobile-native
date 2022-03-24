@@ -89,16 +89,16 @@ class AuthService {
       headers,
     );
 
-    if (session.isRelogin(username, data)) {
-      return data;
-    }
-
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
       const result = regex.exec(responseHeaders['set-cookie'].join());
       if (result && result[1]) {
         data.pseudo_id = result[1];
       }
+    }
+
+    if (session.isRelogin(username, data)) {
+      return data;
     }
 
     const isFirstLogin = session.tokensData.length === 0;
@@ -116,13 +116,14 @@ class AuthService {
 
     await session.addSession(data);
     await session.login();
-    session.setSwitchingAccount(false);
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
     // To force rendering the app behind the modal and get rid of the splash screen
     if (!isFirstLogin) {
       resetStackAndGoBack();
     }
+
+    session.setSwitchingAccount(false);
 
     return data;
   }
@@ -131,7 +132,11 @@ class AuthService {
    * Check if the user is already logged
    */
   checkUserExist(username: string) {
-    if (session.tokensData.some(token => token.user.username === username)) {
+    if (
+      session.tokensData.some(
+        token => token.user.username === username && !token.sessionExpired,
+      )
+    ) {
       throw new Error(i18n.t('auth.alreadyLogged'));
     }
   }
@@ -156,8 +161,8 @@ class AuthService {
     await delay(100);
     await session.switchUser(sessionIndex);
     await session.login();
-    session.setSwitchingAccount(false);
     resetStackAndGoBack();
+    session.setSwitchingAccount(false);
   }
 
   /**

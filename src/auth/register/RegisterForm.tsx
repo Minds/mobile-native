@@ -192,7 +192,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         autofocus
         autoCorrect={false}
         returnKeyType="next"
-        keyboardType="name-phone-pad"
+        keyboardType="default"
         autoComplete="username-new"
         textContentType="username"
       />

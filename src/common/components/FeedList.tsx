@@ -209,7 +209,7 @@ export class FeedList<T> extends Component<PropsType> {
             progressViewOffset={(insets?.top || 0) / 1.25}
           />
         }
-        onEndReachedThreshold={0.2}
+        onEndReachedThreshold={5} // 5 times the visible list height
         numColumns={feedStore.isTiled ? 3 : 1}
         style={style}
         initialNumToRender={3}
