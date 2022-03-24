@@ -46,7 +46,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     email: '',
     termsAccepted: false,
     exclusivePromotions: true,
-    hidePassword: true,
     inProgress: false,
     showErrors: false,
     usernameTaken: false,
@@ -151,9 +150,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     toggleTerms() {
       store.termsAccepted = !store.termsAccepted;
     },
-    toggleHidePassword() {
-      store.hidePassword = !store.hidePassword;
-    },
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
@@ -217,16 +213,20 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         onBlur={store.emailInputBlur}
       />
       <PasswordInput
-        store={store}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
-        inputProps={{
-          textContentType: 'newPassword',
-          onSubmitEditing: store.onRegisterPress,
-          error:
-            store.showErrors && !validatePassword(store.password).all
-              ? i18n.t('settings.invalidPassword')
-              : undefined,
-        }}
+        showValidator={Boolean(store.password) && store.focused}
+        onChangeText={store.setPassword}
+        value={store.password}
+        testID="passwordInput"
+        onFocus={store.focus}
+        onBlur={store.blur}
+        textContentType="newPassword"
+        onSubmitEditing={store.onRegisterPress}
+        error={
+          store.showErrors && !validatePassword(store.password).all
+            ? i18n.t('settings.invalidPassword')
+            : undefined
+        }
       />
     </View>
   );
