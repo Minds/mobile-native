@@ -16,7 +16,6 @@ import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
-import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
@@ -166,7 +165,6 @@ const AppStack = function () {
           component={ActivityScreenWithModal}
           options={hideHeader}
         />
-        <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen
           name="GroupView"
           component={GroupViewScreenWithModal}

@@ -17,7 +17,7 @@ import { Icon } from 'react-native-elements';
 import { truncate } from 'lodash';
 
 import * as entities from 'entities';
-import GroupUser from './GroupUser';
+import GroupMemberListItem from './GroupMemberListItem';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
@@ -365,11 +365,10 @@ export default class GroupViewScreen extends Component {
    */
   renderRow = row => {
     return (
-      <GroupUser
-        store={this.props.groupView}
-        row={row}
+      <GroupMemberListItem
+        channel={row.item}
         navigation={this.props.navigation}
-        onRightIconPress={this.memberMenuPress}
+        onMenuPress={this.memberMenuPress}
         isOwner={this.props.groupView.group['is:owner']}
         isModerator={this.props.groupView.group['is:moderator']}
       />
