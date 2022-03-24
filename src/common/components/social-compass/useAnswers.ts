@@ -1,8 +1,8 @@
-import { useApiPost } from '../../hooks/useApiFetch';
+import { useApiCall } from '../../hooks/useApiFetch';
 import { IQuestion } from './useQuestions';
 
 export const useAnswers = (questions: IQuestion[]) => {
-  const { post, ...rest } = useApiPost('api/v3/social-compass/answers');
+  const { post, ...rest } = useApiCall('api/v3/social-compass/answers');
 
   return {
     ...rest,
