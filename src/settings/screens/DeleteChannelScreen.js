@@ -1,11 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-} from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { ScreenSection, Button, B1 } from '~ui';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
@@ -49,16 +44,12 @@ export default class DeleteChannelScreen extends Component {
     const theme = ThemedStyles.style;
     return (
       <ScrollView style={[theme.flexContainer, theme.padding2x]}>
-        <KeyboardAvoidingView
-          style={[theme.flexContainer]}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}>
-          <ScreenSection top="M">
-            <B1>{i18n.t('settings.deleteDescription')}</B1>
-            <Button top="XXL" onPress={this.confirmPassword} type="warning">
-              {i18n.t('settings.deleteChannelButton')}
-            </Button>
-          </ScreenSection>
-        </KeyboardAvoidingView>
+        <ScreenSection top="M">
+          <B1>{i18n.t('settings.deleteDescription')}</B1>
+          <Button top="XXL" onPress={this.confirmPassword} type="warning">
+            {i18n.t('settings.deleteChannelButton')}
+          </Button>
+        </ScreenSection>
       </ScrollView>
     );
   }

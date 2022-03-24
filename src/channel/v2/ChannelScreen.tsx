@@ -64,7 +64,7 @@ const getColorFromURI = async uri => {
   return color;
 };
 
-const EASING = Easing.bezier(0.16, 0.4, 0.3, 1);
+const EASING = Easing.bezier(0.16, 0.4, 0.3, 1) as any; //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
 
 type PropsType = {
   navigation: any;
@@ -77,7 +77,7 @@ type PropsType = {
 const ChannelScreen = observer((props: PropsType) => {
   // =====================| STATES & VARIABLES |=====================>
   const theme = ThemedStyles.style;
-  const feedRef = useRef<FeedList<any>>(null);
+  const feedRef = useRef<any>(null);
   const store = useLocalStore(createChannelStore);
   /**
    * disables topbar animation. useful when we want to

@@ -20,7 +20,7 @@ import { withSpacer } from '~ui/layout';
 const SLOP_PROP = 1 / 3;
 
 export interface IIconButton extends IIcon {
-  onPress: () => void;
+  onPress?: () => void;
   scale?: boolean;
   fill?: boolean;
   extra?: any;

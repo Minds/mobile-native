@@ -12,7 +12,6 @@ import CommentsStore from '~/comments/v2/CommentsStore';
 type PropsType = {
   showOnlyContent?: boolean;
   entity: ActivityModel;
-  showCommentsOutlet?: boolean;
   hideTabs?: boolean;
 };
 
@@ -41,7 +40,6 @@ const BottomContent = (props: PropsType) => {
       <Actions
         onPressComment={onPressComment}
         entity={props.entity}
-        showCommentsOutlet={props.showCommentsOutlet}
         hideTabs={props.hideTabs}
       />
       {props.entity.isOwner() && (

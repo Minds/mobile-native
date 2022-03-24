@@ -93,6 +93,11 @@ const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
 );
 
+const borderLessContainerStyle = ThemedStyles.combine(
+  styles.container,
+  'bgPrimaryBackground',
+);
+
 const onlyContentContainerStyle = ThemedStyles.combine(
   styles.container,
   'borderHair',
@@ -111,6 +116,7 @@ export {
   remindBlockContainerStyle,
   remindContainerStyle,
   containerStyle,
+  borderLessContainerStyle,
   onlyContentContainerStyle,
   remindedContainerStyle,
 };

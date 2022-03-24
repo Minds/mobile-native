@@ -98,6 +98,7 @@ export default function (props) {
       }
 
       if (params.media) {
+        console.log('media', params.media);
         this.mode = 'text';
         this.mediaToConfirm = params.media;
         this.attachment.attachMedia(params.media);

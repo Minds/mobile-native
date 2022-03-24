@@ -25,6 +25,7 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
+android/app/play-store.json
 build/
 .idea
 .gradle

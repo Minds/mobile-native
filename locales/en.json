@@ -59,7 +59,7 @@
   },
   "auth": {
     "2faRequired": "2FA required",
-    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address ({{email}}) before continuing.",
+    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address before continuing.",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
     "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
     "2faInvalid": "Invalid code",
@@ -383,7 +383,16 @@
   "newsfeed": {
     "title": "Newsfeed",
     "designYourChannel": "Design your channel",
-    "empty": "Your newsfeed is empty"
+    "empty": "Your newsfeed is empty",
+    "topPosts": "Top Posts",
+    "latestPosts": "Latest Posts",
+    "seeMoreTopPosts": "See more top posts",
+    "latestTitle": "Latest posts enabled",
+    "latestDesc": "Show posts as they happen",
+    "latestAction": "Enable Latest Posts",
+    "topTitle": "Top posts enabled",
+    "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
+    "topAction": "Enable Top Posts"
   },
   "comments": {
     "successRemoving": "Comment removed",
@@ -788,7 +797,8 @@
       "d1": "App",
       "e": "LEGACY",
       "f": "DATA",
-      "g": "REFERRALS"
+      "g": "REFERRALS",
+      "contentMigration": "CONTENT MIGRATION"
     },
     "notificationsOptions": {
       "push": "Push",
@@ -857,6 +867,41 @@
       "code": "Code",
       "canary": "Canary",
       "branding": "Branding"
+    },
+    "twitterSync": {
+      "title": "Twitter",
+      "titleLong": "Twitter Sync",
+      "description": "Using our Twitter Sync tool, Twitter users with over {{limit}} followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.",
+      "discoverable": "Allow other channels to discover me via Twitter",
+      "disconnect": "Disconnect",
+      "verificationText": "Verifying my channel on @minds.",
+      "step1": {
+        "title": "Step 1",
+        "desc": "We need you to create a Tweet so that we can pair your account. It's important that the pre-populated link is not changed.",
+        "action": "Create a Tweet"
+      },
+      "step2": {
+        "title": "Step 1",
+        "desc": "What is your Twitter handle (e.g. @minds)",
+        "action": "Verify",
+        "input": {
+          "placeholder": "e.g. @minds",
+          "error": "Invalid username"
+        }
+      },
+      "notifs": {
+        "error": {
+          "update": "Sorry, we couldn't update your preference",
+          "connect": "Sorry, we couldn't find your verification post",
+          "disconnect": "Sorry, we couldn't disconnect your account"
+        },
+        "info": {
+          "connect": "Please wait a moment, tweets can take a while to be visible."
+        },
+        "success": {
+          "connect": "Your Twitter account is now synced"
+        }
+      }
     }
   },
   "comingSoon": {
@@ -923,7 +968,6 @@
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
-    "improvedExperience": "Your feed should be livelier!",
     "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
     "codeSent": "Verification code sent to"
   },
@@ -1469,6 +1513,7 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
+  "yesterday": "Yesterday",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
@@ -1532,5 +1577,7 @@
   "emptyList": "Sorry the list is empty",
   "and": "and",
   "others": "others",
-  "newMoment": "New Moment"
+  "newMoment": "New Moment",
+  "recommendedChannels": "Recommended Channels",
+  "seeMore": "See more"
 }

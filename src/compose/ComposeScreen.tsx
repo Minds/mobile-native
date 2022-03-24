@@ -22,8 +22,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './ComposeBottomBar';
 import MediaPreview from './MediaPreview';
 import Tags from '../common/components/Tags';
-import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
-import SoftInputMode from 'react-native-set-soft-input-mode';
+import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
 import TextInput from '../common/components/TextInput';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
@@ -210,13 +209,6 @@ export default observer(function ComposeScreen(props) {
   );
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
-      return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
-    }
-  }, []);
-
-  useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         if (inputRef.current) {
@@ -338,10 +330,7 @@ export default observer(function ComposeScreen(props) {
         </Animated.View>
 
         {showBottomBar && (
-          <KeyboardSpacingView
-            enabled={Platform.OS === 'ios'}
-            noInset
-            style={styles.bottomBarContainer}>
+          <KeyboardSpacingView noInset style={styles.bottomBarContainer}>
             <BottomBar
               store={store}
               onHashtag={handleHashtagPress}

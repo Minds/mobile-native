@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Linking } from 'react-native';
+import { Linking, ScrollView, View } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
@@ -20,6 +20,9 @@ import PasswordInput from '../../common/components/password-input/PasswordInput'
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
+import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
+import FitScrollView from '~/common/components/FitScrollView';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 
 type PropsType = {
   // called after registeration is finished
@@ -31,6 +34,7 @@ const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
+  const scrollViewRef = useRef<ScrollView>();
 
   const store = useLocalStore(() => ({
     focused: false,
@@ -109,6 +113,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
       if (
         !store.username ||
+        store.usernameTaken ||
         !store.email ||
         !validatorService.email(store.email)
       ) {
@@ -116,8 +121,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
       captchaRef.current?.show();
     },
+    // on password focus
     focus() {
       this.focused = true;
+      scrollViewRef.current?.scrollToEnd();
     },
     blur() {
       this.focused = false;
@@ -181,11 +188,22 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         error={store.usernameError}
         noBottomBorder
         autofocus
+        autoCorrect={false}
+        returnKeyType="next"
+        keyboardType="default"
+        autoComplete="username-new"
+        textContentType="username"
       />
       <InputContainer
         placeholder={i18n.t('auth.email')}
         onChangeText={store.setEmail}
         value={store.email}
+        autoComplete="email"
+        autoCorrect={false}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
+        returnKeyType="next"
         testID="emailInput"
         error={
           !store.showErrors
@@ -199,61 +217,76 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         noBottomBorder
         onBlur={store.emailInputBlur}
       />
-      <View>
-        <PasswordInput
-          store={store}
-          tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
-        />
-      </View>
+      <PasswordInput
+        store={store}
+        tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+        inputProps={{
+          textContentType: 'newPassword',
+          onSubmitEditing: store.onRegisterPress,
+          error:
+            store.showErrors && !validatePassword(store.password).all
+              ? i18n.t('settings.invalidPassword')
+              : undefined,
+        }}
+      />
     </View>
   );
 
   return (
-    <>
-      {inputs}
-      <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-        <CheckBox
-          containerStyle={styles.checkboxTerm}
-          title={
-            <MText style={styles.checkboxText}>
-              {i18n.t('auth.accept')}{' '}
-              <MText
-                style={theme.link}
-                onPress={() =>
-                  Linking.openURL('https://www.minds.com/p/terms')
-                }>
-                {i18n.t('auth.termsAndConditions')}
-              </MText>
-            </MText>
-          }
-          checked={store.termsAccepted}
-          onPress={store.toggleTerms}
-        />
-        <CheckBox
-          containerStyle={styles.checkboxPromotions}
-          title={
-            <MText style={styles.checkboxText}>
-              {i18n.t('auth.promotions')}
-            </MText>
-          }
-          checked={store.exclusivePromotions}
-          onPress={store.togglePromotions}
-        />
-      </View>
-      <BottomSheetButton
-        onPress={store.onRegisterPress}
-        text={i18n.t('auth.createChannel')}
-        disabled={store.inProgress}
-        loading={store.inProgress}
-        testID="registerButton"
-        action
-      />
-      <Captcha
-        ref={captchaRef}
-        onResult={store.onCaptchResult}
-        testID="captcha"
-      />
-    </>
+    <KeyboardSpacingView style={theme.flexContainer} noInset>
+      <FitScrollView
+        ref={scrollViewRef}
+        keyboardShouldPersistTaps={'always'}
+        contentContainerStyle={theme.paddingBottom4x}>
+        <DismissKeyboard>
+          <>
+            {inputs}
+            <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+              <CheckBox
+                containerStyle={styles.checkboxTerm}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.accept')}{' '}
+                    <MText
+                      style={theme.link}
+                      onPress={() =>
+                        Linking.openURL('https://www.minds.com/p/terms')
+                      }>
+                      {i18n.t('auth.termsAndConditions')}
+                    </MText>
+                  </MText>
+                }
+                checked={store.termsAccepted}
+                onPress={store.toggleTerms}
+              />
+              <CheckBox
+                containerStyle={styles.checkboxPromotions}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.promotions')}
+                  </MText>
+                }
+                checked={store.exclusivePromotions}
+                onPress={store.togglePromotions}
+              />
+            </View>
+            <BottomSheetButton
+              onPress={store.onRegisterPress}
+              text={i18n.t('auth.createChannel')}
+              disabled={true || store.inProgress}
+              loading={store.inProgress}
+              testID="registerButton"
+              action
+            />
+            <Captcha
+              ref={captchaRef}
+              onResult={store.onCaptchResult}
+              testID="captcha"
+            />
+          </>
+        </DismissKeyboard>
+      </FitScrollView>
+    </KeyboardSpacingView>
   );
 });
 

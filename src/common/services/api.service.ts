@@ -388,13 +388,11 @@ export class ApiService {
    * @param {string} url
    * @param {any} params
    */
-  buildUrl(url, params: any = {}) {
-    if (!params) {
-      params = {};
+  buildUrl(url, _params: any = {}) {
+    const params = Object.assign({}, _params);
+    if (process.env.JEST_WORKER_ID === undefined) {
+      params.cb = Date.now(); //bust the cache every time
     }
-    // if (process.env.JEST_WORKER_ID === undefined) {
-    //   params.cb = Date.now(); //bust the cache every time
-    // }
 
     if (MINDS_STAGING) {
       params.staging = '1';
@@ -421,7 +419,9 @@ export class ApiService {
    * Api get with abort support
    * @param {string} url
    * @param {object} params
-   * @param {mixed} tag
+   * @param {mixed} tag this is used to abort the fetch when another fetch is done.
+   * For the get request, we auto-cancel the previous request if another one is made.
+   * Very useful if the parameters change often and we are making new calls (like a search or autocomplete)
    */
   async get<T extends ApiResponse>(
     url: string,

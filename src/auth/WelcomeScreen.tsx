@@ -3,6 +3,8 @@ import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MText from '~/common/components/MText';
+import { IS_REVIEW } from '~/config/Config';
 import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
@@ -11,7 +13,7 @@ import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from './reset-password/ResetPasswordModal';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
 
 type PropsType = {
@@ -41,6 +43,11 @@ export default function WelcomeScreen(props: PropsType) {
     }
   }, [code, username]);
 
+  const openDevtools = useCallback(
+    () => props.navigation.navigate('DevTools'),
+    [props.navigation],
+  );
+
   return (
     <SafeAreaView style={theme.flexContainer}>
       <View style={theme.flexColumnStretch}>
@@ -65,9 +72,21 @@ export default function WelcomeScreen(props: PropsType) {
         </View>
       </View>
       <ResetPasswordModal ref={resetRef} />
+
+      {IS_REVIEW && (
+        <MText style={devtoolsStyle} onPress={openDevtools}>
+          Dev Options
+        </MText>
+      )}
     </SafeAreaView>
   );
 }
+
+const devtoolsStyle = ThemedStyles.combine(
+  'positionAbsoluteTopRight',
+  'marginTop9x',
+  'padding5x',
+);
 
 const styles = StyleSheet.create({
   bulb: {
@@ -77,15 +96,15 @@ const styles = StyleSheet.create({
     // height: 70,
   },
   image: {
-    height: 0.3679 * (width * 0.43),
-    width: '43%',
+    height: '14%',
+    width: '50%',
     position: 'absolute',
     top: '10%',
     alignSelf: 'center',
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: '10%',
+    bottom: '3%',
     left: 0,
     right: 0,
     padding: 32,

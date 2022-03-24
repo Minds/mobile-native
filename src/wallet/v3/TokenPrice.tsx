@@ -18,8 +18,6 @@ export default observer(function TokenPrice() {
   if (!result) {
     return null;
   }
-
-  // .get('api/v3/blockchain/token-prices')
   return (
     <Pressable style={styles.pressableContainer}>
       <View style={styles.avatarContainer}>

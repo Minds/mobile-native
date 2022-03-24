@@ -9,6 +9,7 @@ import OnchainButton from './OnchainButton';
 import TokenTabOptions from './TokenTabOptions';
 import MindsTokens from '../MindsTokens';
 import { Row, Spacer } from '~ui';
+import { ONCHAIN_ENABLED } from '~/config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -24,43 +25,54 @@ const TokenTopBar = ({
   const theme = ThemedStyles.style;
   const tooltipRef = useRef<any>();
   const screen = useDimensions().screen;
+  const tokens = (
+    <>
+      <Tooltip
+        ref={tooltipRef}
+        closeOnlyOnBackdropPress={true}
+        skipAndroidStatusBar={true}
+        toggleOnPress={false}
+        withOverlay={true}
+        overlayColor={'#00000015'}
+        containerStyle={theme.borderRadius}
+        width={screen.width - 20}
+        height={200}
+        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        popover={<BalanceInfo walletStore={walletStore} />}>
+        <TouchableOpacity
+          style={[theme.bgPrimaryBorder, styles.touchable]}
+          onPress={() => tooltipRef.current.toggleTooltip()}>
+          <MindsTokens
+            mindsPrice={walletStore.prices.minds}
+            value={walletStore.balance.toString()}
+            containerStyle={styles.minds}
+          />
+        </TouchableOpacity>
+      </Tooltip>
+      <TokenTabOptions onchainStore={onchainStore} walletStore={walletStore} />
+    </>
+  );
+  const onchain = (
+    <OnchainButton
+      walletStore={walletStore}
+      onPress={connectWallet}
+      onchainStore={onchainStore}
+    />
+  );
+
   return (
     <Spacer horizontal="M" bottom="XXL">
-      <Row bottom="S">
-        <Tooltip
-          ref={tooltipRef}
-          closeOnlyOnBackdropPress={true}
-          skipAndroidStatusBar={true}
-          toggleOnPress={false}
-          withOverlay={true}
-          overlayColor={'#00000015'}
-          containerStyle={theme.borderRadius}
-          width={screen.width - 20}
-          height={200}
-          backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-          popover={<BalanceInfo walletStore={walletStore} />}>
-          <TouchableOpacity
-            style={[theme.bgPrimaryBorder, styles.touchable]}
-            onPress={() => tooltipRef.current.toggleTooltip()}>
-            <MindsTokens
-              mindsPrice={walletStore.prices.minds}
-              value={walletStore.balance.toString()}
-              containerStyle={styles.minds}
-            />
-          </TouchableOpacity>
-        </Tooltip>
-        <TokenTabOptions
-          onchainStore={onchainStore}
-          walletStore={walletStore}
-        />
-      </Row>
-      <Row align="centerStart">
-        <OnchainButton
-          walletStore={walletStore}
-          onPress={connectWallet}
-          onchainStore={onchainStore}
-        />
-      </Row>
+      {ONCHAIN_ENABLED ? (
+        <>
+          <Row bottom="S">{tokens}</Row>
+          <Row align="centerStart">{onchain}</Row>
+        </>
+      ) : (
+        <Row bottom="S" align="centerBetween">
+          <Row>{tokens}</Row>
+          {onchain}
+        </Row>
+      )}
     </Spacer>
   );
 };

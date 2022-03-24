@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch } from 'react-native';
 
 type PropsType = {
-  onValueChange: () => void;
+  onValueChange: (value: boolean) => void;
   value: boolean;
 };
 

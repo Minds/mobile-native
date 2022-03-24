@@ -1,4 +1,6 @@
 import React from 'react';
+import { showMessage } from 'react-native-flash-message';
+
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
@@ -19,8 +21,7 @@ import {
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
-import { showMessage } from 'react-native-flash-message';
-
+import { IS_IOS } from '~/config/Config';
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
@@ -83,21 +84,23 @@ const getOptionsList = navigation => {
         navigation.navigate('Wallet');
       },
     },
-    {
-      name: 'Buy Tokens',
-      icon: 'coins',
-      onPress: async () => {
-        const navToBuyTokens = () => {
-          navigation.navigate('BuyTokens');
-        };
-        if (!hasRewards) {
-          await requirePhoneValidation();
-          navToBuyTokens();
-        } else {
-          navToBuyTokens();
+    !IS_IOS
+      ? {
+          name: 'Buy Tokens',
+          icon: 'coins',
+          onPress: async () => {
+            const navToBuyTokens = () => {
+              navigation.navigate('BuyTokens');
+            };
+            if (!hasRewards) {
+              await requirePhoneValidation();
+              navToBuyTokens();
+            } else {
+              navToBuyTokens();
+            }
+          },
         }
-      },
-    },
+      : null,
   ];
   list = [
     ...list,

@@ -8,6 +8,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import ChannelScreen from '~/channel/v2/ChannelScreen';
 import ActivityScreen from '~/newsfeed/ActivityScreen';
+import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 
 const NewsfeedStack = createNativeStackNavigator<AppStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -18,6 +19,11 @@ export default function () {
       <NewsfeedStack.Screen
         name="Newsfeed"
         component={NewsfeedScreen}
+        options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="TopNewsfeed"
+        component={TopNewsfeedScreen}
         options={hideHeader}
       />
       <NewsfeedStack.Screen

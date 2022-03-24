@@ -356,12 +356,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onShowQuotesPress={showQuotes}
             entity={entity}
           />
-          <Actions
-            entity={entity}
-            hideCount
-            showCommentsOutlet={false}
-            onPressComment={onPressComment}
-          />
+          <Actions entity={entity} hideCount onPressComment={onPressComment} />
         </View>
         <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
         <InteractionsActionSheet
