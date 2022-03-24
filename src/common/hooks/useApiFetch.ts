@@ -271,7 +271,7 @@ export default function useApiFetch<T>(
  * @param url string
  * @param method string
  */
-export function useApiPost<T>(
+export function useApiCall<T>(
   url: string,
   method: MethodType = 'post',
 ): PostStore<T> {
