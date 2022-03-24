@@ -89,8 +89,6 @@ export const DiscoveryTrendsList = observer(
     return (
       <FeedList
         ref={listRef}
-        stickyHeaderHiddenOnScroll
-        stickyHeaderIndices={sticky}
         prepend={listHeader}
         header={header}
         feedStore={store.allFeed}
@@ -101,8 +99,6 @@ export const DiscoveryTrendsList = observer(
     );
   },
 );
-
-const sticky = [0];
 
 const styles = ThemedStyles.create({
   emptyContainer: ['halfHeight', 'alignCenter', 'justifyCenter', 'flexColumn'],
