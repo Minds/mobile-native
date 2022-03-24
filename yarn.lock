@@ -12847,10 +12847,10 @@ react-native-material-menu@^1.1.3:
   resolved "https://registry.yarnpkg.com/react-native-material-menu/-/react-native-material-menu-1.2.0.tgz#07fac14ccc6e1cd7b995016340efbfbddc6a7a58"
   integrity sha512-1XbzJP8Uo09YjW0G8xuKcL2BD76BL/IYOq1KQuQ2yGMuwqBvfU/+AKvhvHWuckQK+bhcDSUgTWbH8qv1mRAX6w==
 
-react-native-mmkv-storage@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.6.8.tgz#1860882b58af907ed422d1c27588fe6c45c40655"
-  integrity sha512-l26DVejvL3jN/1pHC8mTQxatoUc1qAEwOmhG2s+PNjRqudgUpRJwFEWbdMj6tmJ54hvP3bbRW3e1+jpryFzMcQ==
+react-native-mmkv-storage@^0.6.12:
+  version "0.6.12"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.6.12.tgz#e9e052e26c3dea6818211919d2586cb260ee8e24"
+  integrity sha512-9gJlnGSAJkeWanNE24GPqEn4NMiNFVBpPsTZAQ5YDEKEX/gG7bGdHCTNkXc6L826QxLEPKjpPmf9ZqgPM2G8TQ==
 
 react-native-modal@^11.10.0:
   version "11.10.0"
