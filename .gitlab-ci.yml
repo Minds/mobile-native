@@ -35,7 +35,7 @@ lint:
   stage: test
   script:
     - npm i -g prettier@"^1.19.1"
-    - yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
+    - prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
 
 # e2e test
 # e2e:detox:
