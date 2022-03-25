@@ -25,6 +25,7 @@ import { IS_IOS } from '~/config/Config';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import UserModel from '../UserModel';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import useModelEvent from '~/common/hooks/useModelEvent';
 
 const CENTERED = false;
 
@@ -60,6 +61,7 @@ const ChannelHeader = withErrorBoundary(
       setShouldShowChannelRecommendation,
     ] = useState(false);
     const channel = props.store?.channel;
+    const channelGuid = channel?.guid;
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
           { id: 'feed', title: i18n.t('feed') },
@@ -102,13 +104,18 @@ const ChannelHeader = withErrorBoundary(
     );
 
     // =====================| EFFECTS |=====================>
-    useEffect(() => {
-      UserModel.events.on('toggleSubscription', ({ user }) => {
-        if (user.guid === channel?.guid) {
-          setShouldShowChannelRecommendation(user.subscribed);
-        }
-      });
-    }, [channel]);
+    useModelEvent(
+      UserModel,
+      'toggleSubscription',
+      useCallback(
+        ({ user }) => {
+          if (user.guid === channelGuid) {
+            setShouldShowChannelRecommendation(user.subscribed);
+          }
+        },
+        [channelGuid],
+      ),
+    );
 
     // =====================| METHODS |=====================>
     const onFadeViewLayout = useCallback(event => {
