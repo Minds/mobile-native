@@ -1,7 +1,7 @@
-import { useApiPost } from '~/common/hooks/useApiFetch';
+import { useApiCall } from '~/common/hooks/useApiFetch';
 
 const useDisconnectAccount = () => {
-  const response = useApiPost('api/v3/twitter-sync', 'delete');
+  const response = useApiCall('api/v3/twitter-sync', 'delete');
 
   return {
     ...response,

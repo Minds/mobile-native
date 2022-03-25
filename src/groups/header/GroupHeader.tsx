@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { Image, View, StyleSheet, Alert } from 'react-native';
 
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';

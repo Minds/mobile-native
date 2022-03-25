@@ -8,6 +8,7 @@ import { DevMode } from './DevMode';
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
+export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
 
 // we should check how to use v2 before enable it again
 export const LIQUIDITY_ENABLED = false;
@@ -141,8 +142,6 @@ export const MINDS_DEEPLINK = [
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
 ];
-
-export const DISABLE_PASSWORD_INPUTS = false;
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =

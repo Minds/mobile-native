@@ -11,6 +11,7 @@ import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 import { useNavigation } from '@react-navigation/core';
 
 import { B1, B2, Row, Column } from '~ui';
+import { ONCHAIN_ENABLED } from '~/config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -24,18 +25,21 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
 
   const walletActions = [
     {
-      title: i18n.t('wallet.transferToOnchain'),
-      onPress: () => {
-        navigation.navigate('WalletWithdrawal');
-      },
-      noIcon: true,
-    },
-    {
       title: i18n.t('wallet.leanMore'),
       onPress: navToTokens,
       noIcon: true,
     },
   ];
+
+  if (ONCHAIN_ENABLED) {
+    walletActions.unshift({
+      title: i18n.t('wallet.transferToOnchain'),
+      onPress: () => {
+        navigation.navigate('WalletWithdrawal');
+      },
+      noIcon: true,
+    });
+  }
 
   return (
     <>
