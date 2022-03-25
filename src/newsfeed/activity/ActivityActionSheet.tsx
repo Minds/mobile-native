@@ -99,14 +99,15 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }> = [];
 
     const entity = this.props.entity;
+    const isReminded = entity.remind_users && entity.remind_users.length;
 
-    const reminded =
+    const remindedByMe =
       entity.remind_users &&
       entity.remind_users.some(
         user => user.guid === sessionService.getUser().guid,
       );
 
-    if (reminded) {
+    if (remindedByMe || (isReminded && sessionService.getUser().isAdmin())) {
       options.push({
         title: i18n.t('undoRemind'),
         iconName: 'undo',
@@ -306,9 +307,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
 
     // if can delete
     if (
-      entity.isOwner() ||
-      sessionService.getUser().isAdmin() ||
-      (group && (group['is:owner'] || group['is:moderator']))
+      !isReminded &&
+      (entity.isOwner() ||
+        sessionService.getUser().isAdmin() ||
+        (group && (group['is:owner'] || group['is:moderator'])))
     ) {
       options.push({
         iconName: 'delete',

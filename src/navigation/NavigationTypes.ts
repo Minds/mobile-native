@@ -254,7 +254,6 @@ export type AppStackParamList = {
   Conversation: {};
   DiscoveryFeed: {};
 
-  Subscribers: {};
   GroupView: {};
   BlogList: {};
   BlogView: {
