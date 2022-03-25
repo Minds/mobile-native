@@ -324,6 +324,8 @@ class GroupViewStore {
     this.members.clearList();
     this.group = null;
     this.tab = 'feed';
+    this.search = '';
+    this.showSearch = false;
     this.memberSearch = '';
   }
 
