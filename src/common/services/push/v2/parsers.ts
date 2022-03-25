@@ -86,7 +86,7 @@ const navigateToActivityOrGroup = async (data: any) => {
     );
 
     if (entity.type === 'group') {
-      navigation.push('App', {
+      navigation.navigate('App', {
         screen: 'GroupView',
         params: {
           guid: data.json.parent_guid,
