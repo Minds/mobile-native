@@ -18,7 +18,7 @@ class NotificationsRouter {
     feature: parseByEntityType,
     tag: parseByEntityType,
     remind: (data: any) =>
-      navigation.navigate('App', {
+      navigation.push('App', {
         screen: 'Activity',
         params: { guid: data.json.entity_guid },
       }),

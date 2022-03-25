@@ -29,7 +29,7 @@ class CommentHeader extends PureComponent<PropsType> {
    * Navigate To channel
    */
   _navToChannel = () => {
-    NavigationService.navigate('App', {
+    NavigationService.push('App', {
       screen: 'Channel',
       params: {
         guid: this.props.entity.ownerObj.guid,

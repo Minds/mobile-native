@@ -232,7 +232,7 @@ export default class Tags extends PureComponent<PropsType> {
    */
   navToChannel = q => {
     if (this.props.navigation === NavigationService) {
-      this.props.navigation.navigate('App', {
+      this.props.navigation.push('App', {
         screen: 'Channel',
         params: { username: q },
       });
