@@ -8,7 +8,7 @@ import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
 
-type PropsType = {
+export type ChannelListItemProps = {
   onPress?: (channel: UserModel) => void;
   channel: UserModel;
   navigation?: any;
@@ -24,11 +24,13 @@ type PropsType = {
    * was subscribed/unsubscribed
    */
   updateFeed?: boolean;
+  borderless?: boolean;
 };
 
-const ChannelListItem = (props: PropsType) => {
+const ChannelListItem = (props: ChannelListItemProps) => {
   const containerStyle = useStyle(
     styles.container,
+    props.borderless ? null : ThemedStyles.style.borderBottom,
     props.containerStyles || {},
   );
   const nameStyles = useStyle(props.nameStyles || {}, styles.name);
@@ -112,7 +114,6 @@ const styles = ThemedStyles.create({
     },
     'paddingHorizontal4x',
     'bcolorPrimaryBorder',
-    'borderBottom1x',
   ],
   nameContainer: ['flexContainerCenter', 'paddingLeft2x', 'justifyCenter'],
   name: [bodyStyle, 'fontL'],
