@@ -33,9 +33,10 @@ jest:
 
 lint:
   stage: test
+  needs:
+    - static-analysis
   script:
-    - npm i -g prettier@"^1.19.1"
-    - prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
+    - yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
 
 # e2e test
 # e2e:detox:
