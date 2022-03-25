@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Dimensions, ScrollView, View, Image } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
