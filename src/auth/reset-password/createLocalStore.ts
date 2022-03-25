@@ -16,7 +16,6 @@ const createLocalStore = () => ({
   username: '',
   code: '',
   password: '',
-  hidePassword: true,
   sending: false,
   sent: 0,
   focused: false,
@@ -25,9 +24,6 @@ const createLocalStore = () => ({
   },
   setUsername(username: string) {
     this.username = username;
-  },
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
   },
   navToInputUser() {
     this.currentStep = 'inputUser';

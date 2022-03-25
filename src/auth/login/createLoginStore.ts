@@ -9,7 +9,6 @@ const createLoginStore = ({ props, resetRef }) => ({
   password: '',
   msg: '',
   language: i18n.getCurrentLocale(),
-  hidePassword: true,
   inProgress: false,
   showErrors: false,
   setUsername(value) {
@@ -25,9 +24,6 @@ const createLoginStore = ({ props, resetRef }) => ({
     this.showErrors = false;
     const password = String(value).trim();
     this.password = password;
-  },
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
   },
   setInProgress(value: boolean) {
     this.inProgress = value;

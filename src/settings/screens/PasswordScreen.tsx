@@ -3,10 +3,8 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 
-import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import { DISABLE_PASSWORD_INPUTS } from '../../config/Config';
 import validatePassword from '../../common/helpers/validatePassword';
 import authService from '../../auth/AuthService';
 import settingsService from '../SettingsService';
@@ -15,6 +13,7 @@ import { isUserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
 import { Button } from '~ui';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import PasswordInput from '~/common/components/password-input/PasswordInput';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
@@ -51,17 +50,10 @@ export default observer(function () {
       store.setNewPassword('');
       store.setConfirmationPassword('');
     },
-    currentPasswordFocus() {
-      store.setCurrentPassword('');
-    },
     newPasswordBlurred() {
       store.setPasswordFocused(false);
     },
-    confirmationPasswordFocus() {
-      store.setConfirmationPassword('');
-    },
     newPasswordFocus() {
-      store.setNewPassword('');
       store.setPasswordFocused(true);
     },
   }));
@@ -126,92 +118,46 @@ export default observer(function () {
     ),
   });
 
-  const getInput = useCallback(
-    props => {
-      const wrapperStyle = [
-        theme.paddingLeft3x,
-        theme.paddingTop3x,
-        theme.bgSecondaryBackground,
-        props.wrapperBorder,
-        theme.bcolorPrimaryBorder,
-      ];
-
-      const labelStyle = [
-        theme.colorSecondaryText,
-        theme.fontL,
-        theme.paddingLeft,
-      ];
-
-      return (
-        <View style={wrapperStyle}>
-          <Input
-            style={[theme.border0x, styles.inputHeight]}
-            labelStyle={labelStyle}
-            placeholder={props.placeholder}
-            onChangeText={props.onChangeText}
-            value={props.value}
-            testID={props.testID}
-            clearTextOnFocus={true}
-            secureTextEntry={!DISABLE_PASSWORD_INPUTS}
-            onFocus={props.onFocus}
-            onBlur={props.onBlur ?? (() => {})}
-            error={props.error}
-            ref={props.ref ?? (() => {})}
-          />
-        </View>
-      );
-    },
-    [theme],
-  );
-
   const subContainer = !store.passwordFocused ? [theme.paddingTop7x] : [];
 
   return (
     <KeyboardAwareScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingTop3x}>
-      {!store.passwordFocused &&
-        getInput({
-          placeholder: i18n.t('settings.currentPassword'),
-          onChangeText: store.setCurrentPassword,
-          value: store.currentPassword,
-          testID: 'currentPasswordInput',
-          onFocus: store.currentPasswordFocus,
-          error: store.currentPasswordError,
-          wrapperBorder: [theme.borderTop, theme.borderBottom],
-        })}
+      {!store.passwordFocused && (
+        <PasswordInput
+          placeholder={i18n.t('settings.currentPassword')}
+          onChangeText={store.setCurrentPassword}
+          value={store.currentPassword}
+          testID={'currentPasswordInput'}
+          error={store.currentPasswordError}
+        />
+      )}
       <View style={subContainer}>
         {store.passwordFocused && (
           <View style={[theme.paddingLeft3x]}>
             <PasswordValidator password={store.newPassword} />
           </View>
         )}
-        {getInput({
-          placeholder: i18n.t('settings.newPassword'),
-          onChangeText: store.setNewPassword,
-          value: store.newPassword,
-          testID: 'newPasswordInput',
-          onFocus: store.newPasswordFocus,
-          onBlur: store.newPasswordBlurred,
-          error: store.newPasswordError,
-          wrapperBorder: theme.borderTop,
-        })}
-        {getInput({
-          placeholder: i18n.t('settings.confirmNewPassword'),
-          onChangeText: store.setConfirmationPassword,
-          value: store.confirmationPassword,
-          testID: 'confirmationPasswordPasswordInput',
-          onFocus: store.confirmationPasswordFocus,
-          onBlur: store.newPasswordBlurred,
-          wrapperBorder: [theme.borderBottom, theme.borderTop],
-        })}
+        <PasswordInput
+          placeholder={i18n.t('settings.newPassword')}
+          onChangeText={store.setNewPassword}
+          value={store.newPassword}
+          testID={'newPasswordInput'}
+          onFocus={store.newPasswordFocus}
+          onBlur={store.newPasswordBlurred}
+          error={store.newPasswordError}
+          noBottomBorder={true}
+        />
+
+        <PasswordInput
+          placeholder={i18n.t('settings.confirmNewPassword')}
+          onChangeText={store.setConfirmationPassword}
+          value={store.confirmationPassword}
+          testID={'confirmationPasswordPasswordInput'}
+          onBlur={store.newPasswordBlurred}
+        />
       </View>
     </KeyboardAwareScrollView>
   );
 });
-
-const styles = {
-  inputHeight: {
-    height: 40,
-  },
-};

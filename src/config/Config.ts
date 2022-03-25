@@ -134,8 +134,6 @@ export const MINDS_DEEPLINK = [
   ['discovery/:tab', 'Discovery', 'navigate'],
 ];
 
-export const DISABLE_PASSWORD_INPUTS = false;
-
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
   DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
