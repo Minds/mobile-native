@@ -79,7 +79,7 @@ export default observer(function VerifyUniquenessScreen() {
           <MenuItem item={item} />
         ))}
 
-        {!PRO_PLUS_SUBSCRIPTION_ENABLED && (
+        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
           <LabeledComponent
             label={'OTHER'}
             labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
