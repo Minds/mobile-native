@@ -1,8 +1,6 @@
 import React from 'react';
-
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
@@ -10,7 +8,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import i18n from '../../common/services/i18n.service';
-import { ScreenHeader, Screen } from '~ui/screen';
+import { ScreenHeader } from '~ui/screen';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 const SAFE_AREA_EDGES: Edge[] = ['top'];
