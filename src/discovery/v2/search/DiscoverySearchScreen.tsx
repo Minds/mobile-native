@@ -8,7 +8,6 @@ import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
-import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -39,8 +38,6 @@ export const DiscoverySearchScreen = observer((props: Props) => {
 
   return (
     <View style={theme.flexContainer}>
-      <DiscoverySearchHeader />
-
       <DiscoverySearchList
         navigation={navigation}
         style={theme.flexContainer}

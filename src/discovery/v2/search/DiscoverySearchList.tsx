@@ -17,6 +17,7 @@ import type UserModel from '../../../channel/UserModel';
 import { useStores } from '../../../common/hooks/use-stores';
 import MText from '../../../common/components/MText';
 import ChannelListItem from '~/common/components/ChannelListItem';
+import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 
 interface Props {
   navigation: any;
@@ -105,6 +106,9 @@ export const DiscoverySearchList = observer((props: Props) => {
   return (
     <View style={theme.flexContainer}>
       <FeedList
+        header={<DiscoverySearchHeader />}
+        stickyHeaderHiddenOnScroll
+        stickyHeaderIndices={stickyIndices}
         feedStore={store.listStore}
         navigation={props.navigation}
         emptyMessage={EmptyPartial}
@@ -113,3 +117,5 @@ export const DiscoverySearchList = observer((props: Props) => {
     </View>
   );
 });
+
+const stickyIndices = [0];
