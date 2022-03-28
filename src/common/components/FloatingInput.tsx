@@ -24,6 +24,7 @@ const Touchable = preventDoubleTap(TouchableOpacity);
 type PropsType = {
   progress?: boolean;
   onSubmit: () => void;
+  onCancel?: () => void;
   children?: React.ReactNode;
 } & TextInputProps;
 
@@ -31,7 +32,7 @@ type PropsType = {
  * Floating Input component
  */
 const FloatingInput = React.forwardRef(
-  ({ onSubmit, progress, children, ...props }: PropsType, ref) => {
+  ({ onSubmit, progress, onCancel, children, ...props }: PropsType, ref) => {
     const theme = ThemedStyles.style;
     const inputRef = React.useRef<TextInputType>(null);
     const [show, setShow] = React.useState(false);
@@ -59,7 +60,10 @@ const FloatingInput = React.forwardRef(
             pointerEvents="box-none">
             <View style={styles.mainContainer}>
               <TouchableOpacity
-                onPress={() => setShow(false)}
+                onPress={() => {
+                  setShow(false);
+                  onCancel && onCancel();
+                }}
                 style={styles.backdrop}
               />
               <View style={styles.inputContainer}>
@@ -72,7 +76,7 @@ const FloatingInput = React.forwardRef(
                     {...props}
                     style={styles.input}
                   />
-                  {!progress && children ? (
+                  {!progress ? (
                     <View>
                       <Touchable
                         onPress={onSubmit}

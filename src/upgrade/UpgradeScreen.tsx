@@ -20,7 +20,8 @@ import {
 import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
-import { Button as NewButton } from '~ui';
+import { Button, Column, H3 } from '~ui';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const isIos = Platform.OS === 'ios';
 
@@ -95,27 +96,42 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      {localStore.settings === false && <UpgradeScreenPlaceHolder />}
-      {localStore.settings !== false && (
-        <FitScrollView>
-          {!isIos && <PaymentMethod store={localStore} />}
-          <PlanOptions store={localStore} pro={pro} />
-          {localStore.method === 'usd' && (
-            <View style={theme.marginTop6x}>
-              <StripeCardSelector onCardSelected={localStore.setCard} />
-            </View>
-          )}
-          <NewButton
+      {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
+        <Column top="XL" align="centerBoth" horizontal="L">
+          <H3>Sorry, this is not available on iOS</H3>
+          <Button
+            top="XL2"
             mode="outline"
             type="action"
-            top="L2"
-            horizontal="L"
-            loading={localStore.loading}
-            onPress={confirmSend}
-            spinner>
-            {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
-          </NewButton>
-        </FitScrollView>
+            onPress={navigation.goBack}>
+            {i18n.t('close')}
+          </Button>
+        </Column>
+      ) : (
+        <>
+          {localStore.settings === false && <UpgradeScreenPlaceHolder />}
+          {localStore.settings !== false && (
+            <FitScrollView>
+              {!isIos && <PaymentMethod store={localStore} />}
+              <PlanOptions store={localStore} pro={pro} />
+              {localStore.method === 'usd' && (
+                <View style={theme.marginTop6x}>
+                  <StripeCardSelector onCardSelected={localStore.setCard} />
+                </View>
+              )}
+              <Button
+                mode="outline"
+                type="action"
+                top="L2"
+                horizontal="L"
+                loading={localStore.loading}
+                onPress={confirmSend}
+                spinner>
+                {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
+              </Button>
+            </FitScrollView>
+          )}
+        </>
       )}
     </View>
   );

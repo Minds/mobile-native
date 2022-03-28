@@ -4,6 +4,7 @@ import React from 'react';
 import sessionService from '../../../common/services/session.service';
 import { getFriendlyLabel } from './EarningsOverview';
 import { B1, B2, Column } from '~ui';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 type PropsType = {
   earningId: string;
@@ -39,7 +40,7 @@ const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
   return (
     <Column flex>
       <B1 font="medium">{getFriendlyLabel(earningId)}</B1>
-      {earningId === 'partner' && !user.pro && (
+      {earningId === 'partner' && !user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED && (
         <B2>
           Upgrade to{' '}
           {!user.plus && (

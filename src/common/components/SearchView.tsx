@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import {
-  StyleSheet,
   Platform,
   TouchableOpacity,
   StyleProp,
@@ -84,18 +83,15 @@ export default class SearchView extends PureComponent<Props> {
             <TouchableOpacity
               style={styles.iconRight}
               onPress={iconRightOnPress}>
-              <Icon size={18} name={iconRight} color={'#444'} />
+              <Icon
+                size={18}
+                name={iconRight}
+                style={ThemedStyles.style.colorSecondaryText}
+              />
             </TouchableOpacity>
           );
         } else {
-          return (
-            <Icon
-              size={18}
-              style={styles.iconRight}
-              name={iconRight}
-              color={'#444'}
-            />
-          );
+          return <Icon size={18} style={styles.iconRight} name={iconRight} />;
         }
       }
       return iconRight;
@@ -104,23 +100,28 @@ export default class SearchView extends PureComponent<Props> {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    borderBottomColor: '#000',
-    borderTopColor: '#000',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#f2f2f2',
-    borderRadius: 50,
-    height: 45,
-    padding: 6,
-    marginHorizontal: 5,
-  },
-  iconRight: {
-    right: 0,
-    paddingRight: 12,
-    marginLeft: 10,
-  },
+const styles = ThemedStyles.create({
+  container: [
+    'bgSecondaryBackground',
+    {
+      borderBottomColor: '#000',
+      borderTopColor: '#000',
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderRadius: 50,
+      height: 45,
+      padding: 6,
+      marginHorizontal: 5,
+    },
+  ],
+  iconRight: [
+    'colorSecondaryText',
+    {
+      right: 0,
+      paddingRight: 12,
+      marginLeft: 10,
+    },
+  ],
   icon: {
     marginLeft: 10,
   },

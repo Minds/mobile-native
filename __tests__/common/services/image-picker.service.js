@@ -1,10 +1,9 @@
-import { Platform, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import service from '../../../src/common/services/image-picker.service';
-import i18n from '../../../src/common/services/i18n.service';
 
 import androidPermissions from '../../../src/common/services/permissions.service';
 
+jest.mock('../../../AppMessages', () => ({}));
 jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/i18n.service', () => ({
   t: jest.fn(),

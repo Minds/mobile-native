@@ -1,7 +1,7 @@
-import { useApiPost } from '~/common/hooks/useApiFetch';
+import { useApiCall } from '~/common/hooks/useApiFetch';
 
 const useConnectAccount = () => {
-  const response = useApiPost('api/v3/twitter-sync/connect');
+  const response = useApiCall('api/v3/twitter-sync/connect');
 
   return {
     ...response,
