@@ -6,11 +6,11 @@ import logService from '../services/log.service';
 import CenteredLoading from './CenteredLoading';
 import apiService from '../services/api.service';
 import type { ApiResponse } from '../services/api.service';
-import SettingInput from './SettingInput';
 import i18n from '../services/i18n.service';
 import debounce from '../helpers/debounce';
 import Input from './Input';
 import MText from './MText';
+import InputContainer from './InputContainer';
 
 type addressType = {
   state?: string;
@@ -137,7 +137,7 @@ const LocationAutoSuggest = observer((props: PropsType) => {
 
   const listStyle = [theme.bgTertiaryBackground, theme.flexContainer];
 
-  const TextInput = props?.inputStyle === 'inputAlone' ? Input : SettingInput;
+  const TextInput = props?.inputStyle === 'inputAlone' ? Input : InputContainer;
 
   return (
     <View>
@@ -147,7 +147,6 @@ const LocationAutoSuggest = observer((props: PropsType) => {
         value={store.value}
         testID="cityInput"
         onBlur={store.onBlur}
-        wrapperBorder={[theme.borderTop, props.wrapperBorder]}
       />
       {store.shouldShowList() && (
         <View style={listStyle}>

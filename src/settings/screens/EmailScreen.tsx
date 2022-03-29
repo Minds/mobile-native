@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import settingsService from '../SettingsService';
@@ -15,6 +15,7 @@ import { Button } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
 import { MoreStackParamList } from '~/navigation/NavigationTypes';
 import type UserStore from '~/auth/UserStore';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 type NavigationProp = StackNavigationProp<MoreStackParamList, 'SettingsEmail'>;
 /**
  * Email settings screen
@@ -137,7 +138,7 @@ class EmailScreen extends Component<
     ) : null;
 
     return (
-      <View
+      <DismissKeyboard
         style={[
           theme.flexContainer,
           theme.paddingTop3x,
@@ -158,7 +159,7 @@ class EmailScreen extends Component<
           onSuccess={this.save}
           close={this.dismissModal}
         />
-      </View>
+      </DismissKeyboard>
     );
   }
 }

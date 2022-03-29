@@ -234,7 +234,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "paddingHorizontal": 16,
             },
             Object {
-              "paddingTop": 10,
+              "paddingTop": 8,
             },
             Object {
               "backgroundColor": "#1A2025",
@@ -251,124 +251,139 @@ exports[`LoginScreen component should renders correctly 1`] = `
         }
       >
         <View
-          style={
-            Object {
-              "paddingBottom": 10,
-              "paddingTop": 5,
-            }
-          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "alignItems": "stretch",
-                  "flexDirection": "row",
-                }
+          <View
+            style={
+              Object {
+                "paddingBottom": 10,
+                "paddingTop": 5,
               }
-            >
-              <Text
+            }
+          >
+            <View>
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "alignItems": "stretch",
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
                       Object {
-                        "fontFamily": "Roboto",
-                        "fontSize": 16,
-                        "fontWeight": "400",
-                        "marginBottom": 0,
+                        "color": "#FFFFFF",
                       },
                       Object {
-                        "color": "#B8C1CA",
+                        "fontFamily": "Roboto",
                       },
                       Array [
                         Object {
+                          "fontFamily": "Roboto",
+                          "fontSize": 16,
+                          "fontWeight": "400",
+                          "marginBottom": 0,
+                        },
+                        Object {
                           "color": "#B8C1CA",
                         },
-                        Object {
-                          "fontSize": 16,
-                        },
-                        Object {
-                          "paddingLeft": 1,
-                        },
-                        undefined,
+                        Array [
+                          Object {
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontSize": 16,
+                          },
+                          Object {
+                            "paddingLeft": 1,
+                          },
+                          undefined,
+                        ],
                       ],
-                    ],
-                  ]
-                }
-              >
-                Username
-              </Text>
+                    ]
+                  }
+                >
+                  Username
+                </Text>
+              </View>
             </View>
-          </View>
-          <TextInput
-            autoCapitalize="none"
-            autoComplete="username"
-            autoCorrect={false}
-            autoFocus={true}
-            error={false}
-            keyboardAppearance="dark"
-            keyboardType="default"
-            labelStyle={
-              Array [
-                Object {
-                  "color": "#B8C1CA",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "paddingLeft": 1,
-                },
-                undefined,
-              ]
-            }
-            onChangeText={[Function]}
-            placeholder=""
-            placeholderTextColor="#444"
-            returnKeyType="done"
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderColor": "#414C57",
-                  "borderRadius": 2,
-                  "borderWidth": 1,
-                  "color": "#FFFFFF",
-                  "fontFamily": "Roboto",
-                  "fontSize": 16,
-                  "lineHeight": 21,
-                },
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="username"
+              autoCorrect={false}
+              autoFocus={true}
+              error={false}
+              keyboardAppearance="dark"
+              keyboardType="default"
+              labelStyle={
                 Array [
                   Object {
-                    "borderWidth": 0,
-                    "marginBottom": 7,
-                    "paddingHorizontal": 0,
-                    "paddingVertical": 6,
+                    "color": "#B8C1CA",
+                  },
+                  Object {
+                    "fontSize": 16,
                   },
                   Object {
                     "paddingLeft": 1,
                   },
-                  Object {
-                    "fontSize": 18,
-                  },
-                  Object {
-                    "color": "#FFFFFF",
-                  },
                   undefined,
-                ],
-              ]
-            }
-            testID="usernameInput"
-            textContentType="username"
-            underlineColorAndroid="transparent"
-            value=""
-          />
+                ]
+              }
+              onChangeText={[Function]}
+              placeholder=""
+              placeholderTextColor="#444"
+              returnKeyType="done"
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#414C57",
+                    "borderRadius": 2,
+                    "borderWidth": 1,
+                    "color": "#FFFFFF",
+                    "fontFamily": "Roboto",
+                    "fontSize": 16,
+                    "lineHeight": 21,
+                  },
+                  Array [
+                    Object {
+                      "borderWidth": 0,
+                      "marginBottom": 7,
+                      "paddingHorizontal": 0,
+                      "paddingVertical": 6,
+                    },
+                    Object {
+                      "paddingLeft": 1,
+                    },
+                    Object {
+                      "fontSize": 18,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+              testID="usernameInput"
+              textContentType="username"
+              underlineColorAndroid="transparent"
+              value=""
+            />
+          </View>
         </View>
       </View>
       <View
@@ -386,7 +401,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "paddingHorizontal": 16,
                 },
                 Object {
-                  "paddingTop": 10,
+                  "paddingTop": 8,
                 },
                 Object {
                   "backgroundColor": "#1A2025",
@@ -405,122 +420,137 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           >
             <View
-              style={
-                Object {
-                  "paddingBottom": 10,
-                  "paddingTop": 5,
-                }
-              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
-              <View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "stretch",
-                      "flexDirection": "row",
-                    }
+              <View
+                style={
+                  Object {
+                    "paddingBottom": 10,
+                    "paddingTop": 5,
                   }
-                >
-                  <Text
+                }
+              >
+                <View>
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                        },
-                        Object {
-                          "fontFamily": "Roboto",
-                        },
+                      Object {
+                        "alignItems": "stretch",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
                         Array [
                           Object {
-                            "fontFamily": "Roboto",
-                            "fontSize": 16,
-                            "fontWeight": "400",
-                            "marginBottom": 0,
+                            "color": "#FFFFFF",
                           },
                           Object {
-                            "color": "#B8C1CA",
+                            "fontFamily": "Roboto",
                           },
                           Array [
                             Object {
+                              "fontFamily": "Roboto",
+                              "fontSize": 16,
+                              "fontWeight": "400",
+                              "marginBottom": 0,
+                            },
+                            Object {
                               "color": "#B8C1CA",
                             },
-                            Object {
-                              "fontSize": 16,
-                            },
-                            Object {
-                              "paddingLeft": 1,
-                            },
-                            undefined,
+                            Array [
+                              Object {
+                                "color": "#B8C1CA",
+                              },
+                              Object {
+                                "fontSize": 16,
+                              },
+                              Object {
+                                "paddingLeft": 1,
+                              },
+                              undefined,
+                            ],
                           ],
-                        ],
-                      ]
-                    }
-                  >
-                    Password
-                  </Text>
+                        ]
+                      }
+                    >
+                      Password
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <TextInput
-                autoCapitalize="none"
-                autoComplete="password"
-                error={false}
-                keyboardAppearance="dark"
-                labelStyle={
-                  Array [
-                    Object {
-                      "color": "#B8C1CA",
-                    },
-                    Object {
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "paddingLeft": 1,
-                    },
-                    undefined,
-                  ]
-                }
-                onChangeText={[Function]}
-                placeholder=""
-                placeholderTextColor="#444"
-                returnKeyType="done"
-                secureTextEntry={true}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderColor": "#414C57",
-                      "borderRadius": 2,
-                      "borderWidth": 1,
-                      "color": "#FFFFFF",
-                      "fontFamily": "Roboto",
-                      "fontSize": 16,
-                      "lineHeight": 21,
-                    },
+                <TextInput
+                  autoCapitalize="none"
+                  autoComplete="password"
+                  error={false}
+                  keyboardAppearance="dark"
+                  labelStyle={
                     Array [
                       Object {
-                        "borderWidth": 0,
-                        "marginBottom": 7,
-                        "paddingHorizontal": 0,
-                        "paddingVertical": 6,
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontSize": 16,
                       },
                       Object {
                         "paddingLeft": 1,
                       },
-                      Object {
-                        "fontSize": 18,
-                      },
-                      Object {
-                        "color": "#FFFFFF",
-                      },
                       undefined,
-                    ],
-                  ]
-                }
-                testID="userPasswordInput"
-                textContentType="password"
-                underlineColorAndroid="transparent"
-                value=""
-              />
+                    ]
+                  }
+                  onChangeText={[Function]}
+                  placeholder=""
+                  placeholderTextColor="#444"
+                  returnKeyType="done"
+                  secureTextEntry={true}
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "borderColor": "#414C57",
+                        "borderRadius": 2,
+                        "borderWidth": 1,
+                        "color": "#FFFFFF",
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "lineHeight": 21,
+                      },
+                      Array [
+                        Object {
+                          "borderWidth": 0,
+                          "marginBottom": 7,
+                          "paddingHorizontal": 0,
+                          "paddingVertical": 6,
+                        },
+                        Object {
+                          "paddingLeft": 1,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                  testID="userPasswordInput"
+                  textContentType="password"
+                  underlineColorAndroid="transparent"
+                  value=""
+                />
+              </View>
             </View>
           </View>
           <Text
@@ -998,7 +1028,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "paddingHorizontal": 16,
                     },
                     Object {
-                      "paddingTop": 10,
+                      "paddingTop": 8,
                     },
                     Object {
                       "backgroundColor": "#1A2025",
@@ -1017,109 +1047,124 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "paddingBottom": 10,
-                      "paddingTop": 5,
-                    }
-                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                 >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "stretch",
-                          "flexDirection": "row",
-                        }
+                  <View
+                    style={
+                      Object {
+                        "paddingBottom": 10,
+                        "paddingTop": 5,
                       }
-                    >
-                      <Text
+                    }
+                  >
+                    <View>
+                      <View
                         style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                            },
-                            Object {
-                              "fontFamily": "Roboto",
-                            },
+                          Object {
+                            "alignItems": "stretch",
+                            "flexDirection": "row",
+                          }
+                        }
+                      >
+                        <Text
+                          style={
                             Array [
                               Object {
-                                "fontFamily": "Roboto",
-                                "fontSize": 16,
-                                "fontWeight": "400",
-                                "marginBottom": 0,
+                                "color": "#FFFFFF",
                               },
                               Object {
-                                "color": "#B8C1CA",
+                                "fontFamily": "Roboto",
                               },
                               Array [
                                 Object {
+                                  "fontFamily": "Roboto",
+                                  "fontSize": 16,
+                                  "fontWeight": "400",
+                                  "marginBottom": 0,
+                                },
+                                Object {
                                   "color": "#B8C1CA",
                                 },
+                                Array [
+                                  Object {
+                                    "color": "#B8C1CA",
+                                  },
+                                ],
                               ],
-                            ],
-                          ]
-                        }
-                      >
-                        Username
-                      </Text>
+                            ]
+                          }
+                        >
+                          Username
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                  <TextInput
-                    autoCapitalize="none"
-                    autoComplete="username"
-                    keyboardAppearance="dark"
-                    labelStyle={
-                      Array [
-                        Object {
-                          "color": "#B8C1CA",
-                        },
-                      ]
-                    }
-                    onChangeText={[Function]}
-                    placeholder=""
-                    placeholderTextColor="#444"
-                    returnKeyType="done"
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderColor": "#414C57",
-                          "borderRadius": 2,
-                          "borderWidth": 1,
-                          "color": "#FFFFFF",
-                          "fontFamily": "Roboto",
-                          "fontSize": 16,
-                          "lineHeight": 21,
-                        },
+                    <TextInput
+                      autoCapitalize="none"
+                      autoComplete="username"
+                      keyboardAppearance="dark"
+                      labelStyle={
                         Array [
                           Object {
-                            "borderWidth": 0,
-                            "marginBottom": 7,
-                            "paddingHorizontal": 0,
-                            "paddingVertical": 6,
+                            "color": "#B8C1CA",
                           },
+                        ]
+                      }
+                      onChangeText={[Function]}
+                      placeholder=""
+                      placeholderTextColor="#444"
+                      returnKeyType="done"
+                      style={
+                        Array [
                           Object {
-                            "paddingLeft": 1,
-                          },
-                          Object {
-                            "fontSize": 18,
-                          },
-                          Object {
+                            "backgroundColor": "transparent",
+                            "borderColor": "#414C57",
+                            "borderRadius": 2,
+                            "borderWidth": 1,
                             "color": "#FFFFFF",
+                            "fontFamily": "Roboto",
+                            "fontSize": 16,
+                            "lineHeight": 21,
                           },
                           Array [
                             Object {
+                              "borderWidth": 0,
+                              "marginBottom": 7,
+                              "paddingHorizontal": 0,
+                              "paddingVertical": 6,
+                            },
+                            Object {
+                              "paddingLeft": 1,
+                            },
+                            Object {
+                              "fontSize": 18,
+                            },
+                            Object {
                               "color": "#FFFFFF",
                             },
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                              },
+                            ],
                           ],
-                        ],
-                      ]
-                    }
-                    textContentType="username"
-                    underlineColorAndroid="transparent"
-                    value=""
-                  />
+                        ]
+                      }
+                      textContentType="username"
+                      underlineColorAndroid="transparent"
+                      value=""
+                    />
+                  </View>
                 </View>
               </View>
               <View
