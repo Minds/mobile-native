@@ -3,12 +3,12 @@ import { View, StyleSheet, ViewStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Input, { PropsType as InputPropsType } from './Input';
 
-export interface PropsType extends InputPropsType {
+export interface InputContainerPropsType extends InputPropsType {
   noBottomBorder?: boolean;
   containerStyle?: ViewStyle | Array<ViewStyle>;
 }
 
-const InputContainer = (props: PropsType) => {
+const InputContainer = (props: InputContainerPropsType) => {
   const theme = ThemedStyles.style;
   const { style, noBottomBorder, ...otherProps } = props;
 

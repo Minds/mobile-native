@@ -6,7 +6,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from '../reset-password/ResetPasswordModal';
-import Icon from 'react-native-vector-icons/Ionicons';
 import createLoginStore from './createLoginStore';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
@@ -17,6 +16,7 @@ import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
+import PasswordInput from '~/common/components/password-input/PasswordInput';
 
 type PropsType = {
   onLogin?: Function;
@@ -86,9 +86,8 @@ export default observer(function LoginForm(props: PropsType) {
       <DismissKeyboard>
         {usernameInput}
         <View style={theme.marginBottom4x}>
-          <InputContainer
+          <PasswordInput
             placeholder={i18n.t('auth.password')}
-            secureTextEntry={localStore.hidePassword}
             autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
@@ -100,12 +99,6 @@ export default observer(function LoginForm(props: PropsType) {
               !localStore.password &&
               i18n.t('auth.fieldRequired')
             }
-          />
-          <Icon
-            name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
-            size={25}
-            onPress={localStore.toggleHidePassword}
-            style={styles.icon}
           />
         </View>
         <Button
