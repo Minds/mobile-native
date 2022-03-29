@@ -107,14 +107,12 @@ const ChannelHeader = withErrorBoundary(
     useModelEvent(
       UserModel,
       'toggleSubscription',
-      useCallback(
-        ({ user }) => {
-          if (user.guid === channelGuid) {
-            setShouldShowChannelRecommendation(user.subscribed);
-          }
-        },
-        [channelGuid],
-      ),
+      ({ user }) => {
+        if (user.guid === channelGuid) {
+          setShouldShowChannelRecommendation(user.subscribed);
+        }
+      },
+      [channelGuid],
     );
 
     // =====================| METHODS |=====================>

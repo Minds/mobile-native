@@ -8,6 +8,7 @@ export default function useModelEvent(
   model: typeof BaseModel,
   eventName: string,
   fn: (...args: any) => void,
+  deps: React.DependencyList = [],
 ) {
   return useEffect(() => {
     model.events.on(eventName, fn);
@@ -15,6 +16,5 @@ export default function useModelEvent(
     return () => {
       model.events.off(eventName, fn);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventName, fn]);
+  }, deps);
 }
