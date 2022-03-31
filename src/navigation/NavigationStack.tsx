@@ -281,16 +281,20 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      screenOptions={defaultScreenOptions}>
+      screenOptions={({ route }) => ({
+        ...defaultScreenOptions,
+        ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
+      })}>
       {!props.showAuthNav ? (
         <>
           <RootStackNav.Screen
             name="App"
             component={AppStack}
-            options={{
-              animationEnabled: false,
+            options={({ route }) => ({
+              // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+              animationEnabled: Boolean(route.params),
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-            }}
+            })}
           />
           <RootStackNav.Screen
             name="Capture"
