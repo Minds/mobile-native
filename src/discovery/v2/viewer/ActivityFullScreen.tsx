@@ -37,7 +37,7 @@ import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
-import InteractionsActionSheet from '../../../common/components/interactions/InteractionsBottomSheet';
+import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
@@ -362,13 +362,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
           />
           <Actions entity={entity} hideCount onPressComment={onPressComment} />
         </View>
-        <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
-        <InteractionsActionSheet
+        <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
+        <InteractionsBottomSheet
           entity={entity}
           ref={downVotesInteractionsRef}
         />
-        <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
-        <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
+        <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
+        <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={
