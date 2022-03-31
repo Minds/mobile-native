@@ -16,7 +16,6 @@ const createLocalStore = () => ({
   username: '',
   code: '',
   password: '',
-  hidePassword: true,
   sending: false,
   sent: 0,
   focused: false,
@@ -25,9 +24,6 @@ const createLocalStore = () => ({
   },
   setUsername(username: string) {
     this.username = username;
-  },
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
   },
   navToInputUser() {
     this.currentStep = 'inputUser';
@@ -123,6 +119,8 @@ const createLocalStore = () => ({
       } finally {
         this.setSending(false);
         if (success) {
+          const password = this.password;
+          const username = this.username;
           this.setPassword('');
           this.setUsername('');
           const response = {
@@ -134,7 +132,7 @@ const createLocalStore = () => ({
               // clear the cookies (fix future issues with calls)
               await apiService.clearCookies();
               await delay(300);
-              AuthService.login(this.username, this.password);
+              AuthService.login(username, password);
             },
           };
           return response;

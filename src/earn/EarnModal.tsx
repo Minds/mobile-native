@@ -8,7 +8,11 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ONCHAIN_ENABLED, LIQUIDITY_ENABLED } from '../config/Config';
+import {
+  ONCHAIN_ENABLED,
+  LIQUIDITY_ENABLED,
+  PRO_PLUS_SUBSCRIPTION_ENABLED,
+} from '../config/Config';
 import MText from '../common/components/MText';
 
 const linkTo = (dest: string) =>
@@ -160,12 +164,16 @@ export default observer(function ({ navigation }) {
         {resourcesItems.map(item => (
           <EarnItem content={item} />
         ))}
-        <MText style={[titleStyle, theme.paddingTop2x]}>
-          {i18n.t('earnScreen.unlock.title')}
-        </MText>
-        {unlockItems.map(item => (
-          <EarnItem content={item} />
-        ))}
+        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+          <>
+            <MText style={[titleStyle, theme.paddingTop2x]}>
+              {i18n.t('earnScreen.unlock.title')}
+            </MText>
+            {unlockItems.map(item => (
+              <EarnItem content={item} />
+            ))}
+          </>
+        )}
       </ModalScreen>
       <UniswapWidget
         isVisible={localStore.showUniswapWidget}

@@ -113,8 +113,13 @@ export default function (props) {
         this.hydrateFromEntity();
       }
 
+      if (props.route?.params && props.route.params.group) {
+        this.group = props.route.params.group;
+      }
+
       // clear params to avoid repetition
       props.navigation.setParams({
+        group: undefined,
         entity: undefined,
         media: undefined,
         mode: undefined,
@@ -493,7 +498,7 @@ export default function (props) {
 
         let newPost = {
           message: this.text,
-          accessId: this.accessId,
+          access_id: this.accessId,
           time_created: Math.floor(this.time_created / 1000) || null,
         };
 
@@ -530,11 +535,9 @@ export default function (props) {
           newPost = Object.assign(newPost, this.embed.meta);
         }
 
-        if (props.route?.params && props.route.params.group) {
-          newPost.container_guid = props.route.params.group.guid;
-          this.group = props.route.params.group;
-          // remove the group to avoid reuse it on future posts
-          props.navigation.setParams({ group: undefined });
+        if (this.group) {
+          newPost.container_guid = this.group.guid;
+          newPost.access_id = this.group.guid;
         }
 
         // keep the container if it is an edited activity
