@@ -34,7 +34,7 @@ const createLoginStore = ({ props, resetRef }) => ({
   },
   setError(msg: string) {
     this.msg = msg;
-    showNotification(msg, 'warning', 3000, 'top');
+    showNotification(msg, 'warning', 3000);
     this.inProgress = false;
   },
   onLoginPress(releaseButton: any) {

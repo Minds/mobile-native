@@ -132,9 +132,9 @@ export default class MediaView extends Component<PropsType> {
   runDownload = async source => {
     try {
       await download.downloadToGallery(source.uri, this.props.entity);
-      showNotification(i18n.t('imageAdded'), 'info', 3000, 'top');
+      showNotification(i18n.t('imageAdded'), 'info', 3000);
     } catch (e) {
-      showNotification(i18n.t('errorDownloading'), 'danger', 3000, 'top');
+      showNotification(i18n.t('errorDownloading'), 'danger', 3000);
       logService.exception('[MediaView] runDownload', e);
     }
   };

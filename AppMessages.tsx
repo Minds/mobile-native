@@ -53,11 +53,13 @@ export const showNotification = (
   duration: number = 2800,
   subMessage?: string,
   shouldVibrate = false,
+  onPress?: () => void,
 ) => {
   if (toast) {
     toast({
       closeIconColor: ThemedStyles.getColor('SecondaryText'),
       message,
+      onPress,
       hideAccent: true,
       shouldVibrate,
       allowFontScaling: false,

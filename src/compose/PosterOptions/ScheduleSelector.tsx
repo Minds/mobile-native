@@ -35,12 +35,7 @@ export default observer(function ({}: ScheduleSelectorProps) {
       if (moment(data).diff(moment()) > 0) {
         store.setTimeCreated(data);
       } else {
-        showNotification(
-          i18n.t('capture.scheduleError'),
-          'warning',
-          3000,
-          'top',
-        );
+        showNotification(i18n.t('capture.scheduleError'), 'warning', 3000);
       }
     },
   }));

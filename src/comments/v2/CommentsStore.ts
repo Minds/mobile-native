@@ -379,7 +379,7 @@ export default class CommentsStore {
    */
   post = async () => {
     if (this.attachment.uploading) {
-      showNotification(i18n.t('uploading'), 'info', 3000, 'top');
+      showNotification(i18n.t('uploading'), 'info', 3000);
       return;
     }
 
@@ -389,12 +389,7 @@ export default class CommentsStore {
     };
 
     if (comment.comment === '') {
-      showNotification(
-        i18n.t('messenger.typeYourMessage'),
-        'info',
-        3000,
-        'top',
-      );
+      showNotification(i18n.t('messenger.typeYourMessage'), 'info', 3000);
       return;
     }
 
