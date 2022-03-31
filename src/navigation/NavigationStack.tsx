@@ -16,7 +16,6 @@ import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
-import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
@@ -71,7 +70,6 @@ import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScree
 import withModalProvider from './withModalProvide';
 import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 import DevToolsScreen from '~/settings/screens/DevToolsScreen';
-import { IS_REVIEW } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -166,7 +164,6 @@ const AppStack = function () {
           component={ActivityScreenWithModal}
           options={hideHeader}
         />
-        <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen
           name="GroupView"
           component={GroupViewScreenWithModal}
@@ -421,14 +418,11 @@ const RootStack = function (props) {
         component={MultiUserRegisterScreen}
         options={modalOptions}
       />
-
-      {IS_REVIEW && (
-        <RootStackNav.Screen
-          name="DevTools"
-          component={DevToolsScreen}
-          options={modalOptions}
-        />
-      )}
+      <RootStackNav.Screen
+        name="DevTools"
+        component={DevToolsScreen}
+        options={modalOptions}
+      />
     </RootStackNav.Navigator>
   );
 };

@@ -17,6 +17,7 @@ configure({ adapter: new Adapter() });
 
 jest.mock('@react-native-cookies/cookies', () => ({
   set: jest.fn(),
+  clearByName: jest.fn(),
 }));
 
 jest.mock('react-native-reanimated', () =>
@@ -97,4 +98,5 @@ jest.mock('react-native-system-setting', () => {
   };
 });
 jest.mock('react-native-silent-switch');
+jest.mock('react-native-mmkv-storage');
 global.__reanimatedWorkletInit = jest.fn();

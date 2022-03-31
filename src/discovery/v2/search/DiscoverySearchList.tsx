@@ -12,11 +12,11 @@ import FeedList from '../../../common/components/FeedList';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import GroupsListItem from '../../../groups/GroupsListItem';
-import DiscoveryUser from '../../DiscoveryUserNew';
 import i18n from '../../../common/services/i18n.service';
 import type UserModel from '../../../channel/UserModel';
 import { useStores } from '../../../common/hooks/use-stores';
 import MText from '../../../common/components/MText';
+import ChannelListItem from '~/common/components/ChannelListItem';
 
 interface Props {
   navigation: any;
@@ -46,12 +46,13 @@ export const DiscoverySearchList = observer((props: Props) => {
       switch (row.item.type) {
         case 'user':
           entity = (
-            <DiscoveryUser
-              row={row}
+            <ChannelListItem
+              channel={row.item}
               navigation={props.navigation}
               onUserTap={(item: UserModel) =>
                 searchBarStore.user?.searchBarItemTap(item)
               }
+              borderless
             />
           );
           break;

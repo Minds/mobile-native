@@ -46,7 +46,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     email: '',
     termsAccepted: false,
     exclusivePromotions: true,
-    hidePassword: true,
     inProgress: false,
     showErrors: false,
     usernameTaken: false,
@@ -106,9 +105,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
       if (!validatePassword(store.password).all) {
         showNotification(
-          i18n.t('auth.invalidPassword'),
-          'warning',
-          2000,
+          i18n.t('auth.invalidPasswordDescription'),
+          'info',
+          2500,
           'top',
         );
         return;
@@ -126,7 +125,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     // on password focus
     focus() {
       this.focused = true;
-      scrollViewRef.current?.scrollToEnd();
+      scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
     },
     blur() {
       this.focused = false;
@@ -151,17 +150,11 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     toggleTerms() {
       store.termsAccepted = !store.termsAccepted;
     },
-    toggleHidePassword() {
-      store.hidePassword = !store.hidePassword;
-    },
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
     emailInputBlur() {
       store.email = store.email.trim();
-      if (!validatorService.email(store.email)) {
-        this.showErrors = true;
-      }
     },
     get usernameError() {
       if (this.usernameTaken) {
@@ -220,16 +213,20 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         onBlur={store.emailInputBlur}
       />
       <PasswordInput
-        store={store}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
-        inputProps={{
-          textContentType: 'newPassword',
-          onSubmitEditing: store.onRegisterPress,
-          error:
-            store.showErrors && !validatePassword(store.password).all
-              ? i18n.t('settings.invalidPassword')
-              : undefined,
-        }}
+        showValidator={Boolean(store.password) && store.focused}
+        onChangeText={store.setPassword}
+        value={store.password}
+        testID="passwordInput"
+        onFocus={store.focus}
+        onBlur={store.blur}
+        textContentType="newPassword"
+        onSubmitEditing={store.onRegisterPress}
+        error={
+          store.showErrors && !validatePassword(store.password).all
+            ? i18n.t('settings.invalidPassword')
+            : undefined
+        }
       />
     </View>
   );

@@ -3,10 +3,12 @@ import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
+import { DevMode } from './DevMode';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
+export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
 
 // we should check how to use v2 before enable it again
 export const LIQUIDITY_ENABLED = false;
@@ -20,15 +22,20 @@ export const ENV =
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
 
+// developer mode controller
+export const DEV_MODE = new DevMode(IS_REVIEW);
+
+export const CUSTOM_API_URL = DEV_MODE.getApiURL();
+
 /**
  * We get the values only for review apps in order to avoid issues
  * by setting them to true in a review app and after updating the app
  * with a production version having that option turned on
  */
-export const MINDS_STAGING = IS_REVIEW
+export const MINDS_STAGING = DEV_MODE.isActive
   ? storages.app.getBool(STAGING_KEY) || false
   : false;
-export const MINDS_CANARY = IS_REVIEW
+export const MINDS_CANARY = DEV_MODE.isActive
   ? storages.app.getBool(CANARY_KEY) || false
   : false;
 
@@ -47,7 +54,10 @@ export const IMAGE_MAX_SIZE = 2048;
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
-export const MINDS_API_URI = 'https://www.minds.com/';
+export const MINDS_API_URI =
+  DEV_MODE.isActive && CUSTOM_API_URL
+    ? CUSTOM_API_URL
+    : 'https://www.minds.com/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
@@ -132,8 +142,6 @@ export const MINDS_DEEPLINK = [
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
 ];
-
-export const DISABLE_PASSWORD_INPUTS = false;
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
