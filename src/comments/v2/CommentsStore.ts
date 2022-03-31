@@ -580,7 +580,9 @@ export default class CommentsStore {
       if (response) this.onAttachedMedia(response);
     } catch (e) {
       logService.exception(e);
-      showNotification(e.message);
+      if (e instanceof Error) {
+        showNotification(e.message);
+      }
     }
   }
 
@@ -596,7 +598,9 @@ export default class CommentsStore {
       if (response) this.onAttachedMedia(response);
     } catch (e) {
       logService.exception(e);
-      showNotification(e.message);
+      if (e instanceof Error) {
+        showNotification(e.message);
+      }
     }
   }
 

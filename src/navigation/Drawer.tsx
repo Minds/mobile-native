@@ -1,5 +1,4 @@
 import React from 'react';
-import { showMessage } from 'react-native-flash-message';
 
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
@@ -23,6 +22,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
 import { IS_IOS } from '~/config/Config';
+import { showNotification } from 'AppMessages';
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
@@ -37,9 +37,9 @@ const navigateToHelp = async () => {
   } catch (err) {
     console.log(err);
     if (isNetworkError(err)) {
-      showMessage(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'warning');
     } else {
-      showMessage(i18n.t('cantReachServer'));
+      showNotification(i18n.t('cantReachServer'), 'warning');
     }
   }
 };

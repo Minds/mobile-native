@@ -4,7 +4,7 @@ import { View, Alert } from 'react-native';
 import api, { ApiResponse } from '../../common/services/api.service';
 import stripe, { initStripe } from '../../common/services/stripe.service';
 import Button from '../../common/components/Button';
-import i18nService from '../../common/services/i18n.service';
+import i18n from '../../common/services/i18n.service';
 import StripeCardCarousel from './StripeCardCarousel';
 import type { StripeCard } from '../WireTypes';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
@@ -116,7 +116,7 @@ export default class StripeCardSelector extends React.PureComponent<
    * @param {string} message
    */
   showError(message: string) {
-    Alert.alert(message + '\n' + i18nService.t('tryAgain'));
+    Alert.alert(message + '\n' + i18n.t('tryAgain'));
   }
 
   /**
@@ -131,7 +131,7 @@ export default class StripeCardSelector extends React.PureComponent<
       this.intentId = intent.id;
       return true;
     } catch (err) {
-      this.showError(i18nService.t('cantReachServer'));
+      this.showError(i18n.t('cantReachServer'));
       return false;
     }
   }
@@ -193,11 +193,14 @@ export default class StripeCardSelector extends React.PureComponent<
       // finally we save the card
       this.saveCard();
     } catch (err) {
-      if (err.message && err.message === 'Cancelled by user') {
-        return;
+      if (err instanceof Error) {
+        if (err.message && err.message === 'Cancelled by user') {
+          return;
+        }
+        this.showError(err.message || i18n.t('errorMessage'));
+      } else {
+        this.showError(i18n.t('errorMessage'));
       }
-      this.showError(err.message || i18nService.t('errorMessage'));
-      console.log(err);
     }
   };
 

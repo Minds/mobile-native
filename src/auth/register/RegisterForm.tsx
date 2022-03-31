@@ -87,7 +87,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           }
         }
       } catch (err) {
-        showNotification(err.message, 'warning', 3000, 'top');
+        if (err instanceof Error) {
+          showNotification(err.message, 'warning', 3000, 'top');
+        }
         logService.exception(err);
       } finally {
         store.inProgress = false;
@@ -206,7 +208,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             : !store.email
             ? i18n.t('auth.fieldRequired')
             : !validatorService.email(store.email)
-            ? validatorService.emailMessage(store.email)
+            ? validatorService.emailMessage(store.email) || ''
             : undefined
         }
         noBottomBorder

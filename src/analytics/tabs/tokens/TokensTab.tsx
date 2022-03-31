@@ -9,7 +9,7 @@ import { useStores } from '../../../common/hooks/use-stores';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { TokensMetrics } from '../../AnalyticsTypes';
+import { CardType, TokensMetrics } from '../../AnalyticsTypes';
 import LiquidityDashboard from './LiquidityDashboard';
 import RewardsDashboard from './RewardsDashboard';
 import SupplyDashboard from './SupplyDashboard';
@@ -25,7 +25,7 @@ export type DashBoardPropsType = {
 type TokensOptions = 'Supply' | 'Transactions' | 'Liquidity' | 'Rewards';
 
 export type MetricsSubType = {
-  [key: string]: TokensMetrics;
+  [K in CardType]: TokensMetrics;
 };
 
 const options: Array<ButtonTabType<TokensOptions>> = [
@@ -41,6 +41,10 @@ const createStore = () => ({
     this.option = option;
   },
 });
+
+type RowType = {
+  [K in TokensOptions]: MetricsSubType;
+};
 
 const TokensTab = observer(({ route }: { route: any }) => {
   const theme = ThemedStyles.style;
@@ -72,14 +76,12 @@ const TokensTab = observer(({ route }: { route: any }) => {
     return null;
   }
 
-  const rows: {
-    [K in TokensOptions]: MetricsSubType;
-  } = {
+  const rows = {
     Supply: {},
     Transactions: {},
     Liquidity: {},
     Rewards: {},
-  };
+  } as RowType;
   let dataError;
 
   try {

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemItem } from '../common/components/menus/MenuItem';
@@ -18,6 +17,7 @@ import {
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
+import { showNotification } from 'AppMessages';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -40,9 +40,9 @@ const navigateToHelp = async () => {
   } catch (err) {
     console.log(err);
     if (isNetworkError(err)) {
-      showMessage(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'warning');
     } else {
-      showMessage(i18n.t('cantReachServer'));
+      showNotification(i18n.t('cantReachServer'), 'warning');
     }
   }
 };

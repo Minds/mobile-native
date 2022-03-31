@@ -492,7 +492,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "评论",
     "like": "投票",
     "tag": "标签",

@@ -116,6 +116,8 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
+      enable: undefined,
+      disable: undefined,
       disabled: !user.plus,
     },
     {
@@ -128,6 +130,9 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
+      enable: undefined,
+      disable: undefined,
+      disabled: false,
     },
     {
       id: 'openContent',
@@ -139,6 +144,9 @@ const BoostSettingsScreen = observer(() => {
         height: 100,
         width: 230,
       },
+      enable: undefined,
+      disable: undefined,
+      disabled: false,
     },
     {
       id: 'liquiditySpot',
@@ -152,8 +160,9 @@ const BoostSettingsScreen = observer(() => {
       },
       enable: 'optIn',
       disable: 'optOut',
+      disabled: false,
     },
-  ];
+  ] as const;
 
   const checked = (
     <Icon

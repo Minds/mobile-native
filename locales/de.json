@@ -492,7 +492,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "Kommentare",
     "like": "Stimmen",
     "tag": "Erwähnungen",

@@ -7,7 +7,6 @@ import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
 // importing directly to use the type
-// TODO: consider if we can only do this on dev env to reduce bundle size??
 import enLocale from '../../../locales/en.json';
 
 // get all possible key paths
@@ -19,7 +18,6 @@ type DeepKeys<T> = T extends object
   : '';
 
 // or: only get leaf and no intermediate key path
-// @ts-ignore
 type DeepLeafKeys<T> = T extends object
   ? // @ts-ignore
     { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
@@ -28,10 +26,12 @@ type Concat<K extends string, P extends string> = `${K}${'' extends P
   ? ''
   : '.'}${P}`;
 
+export type LocaleType = typeof enLocale;
+
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
   en: () => {
-    return require('../../../locales/en.json');
+    return enLocale;
   },
   es: () => {
     require('moment/locale/es');
@@ -163,10 +163,7 @@ class I18nService {
   /**
    * Translate
    */
-  t<P extends DeepLeafKeys<typeof enLocale>>(
-    scope: P,
-    options?: object,
-  ): string {
+  t<P extends DeepLeafKeys<LocaleType>>(scope: P, options?: object): string {
     return translate(scope, options);
   }
 

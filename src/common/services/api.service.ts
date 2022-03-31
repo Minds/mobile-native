@@ -53,10 +53,11 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {}
 
-export const isApiError = function (err) {
+export const isApiError = function (err): err is ApiError {
   return err instanceof ApiError;
 };
-export const isNetworkError = function (err) {
+
+export const isNetworkError = function (err): err is NetworkError {
   return err instanceof NetworkError;
 };
 
@@ -227,6 +228,7 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
+            console.log('Server responded with 401! trying to refresh token');
             await this.tokenRefresh(() => {
               originalReq._isRetry = true;
               this.axios.request(originalReq);
@@ -298,7 +300,7 @@ export class ApiService {
     try {
       await this.refreshPromise;
       this.refreshPromise = null;
-    } catch (error) {
+    } catch (error: any) {
       this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||

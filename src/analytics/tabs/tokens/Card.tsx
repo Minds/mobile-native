@@ -9,11 +9,15 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import MindsTokens, {
   format,
 } from '../../../wallet/v3/currency-tabs/MindsTokens';
-import { MetricsComparative, TokensMetrics } from '../../AnalyticsTypes';
+import {
+  CardType,
+  MetricsComparative,
+  TokensMetrics,
+} from '../../AnalyticsTypes';
 
 type PropsType = {
   metrics: TokensMetrics;
-  type: string;
+  type: CardType;
 };
 
 const Card = ({ metrics, type }: PropsType) => {
@@ -41,7 +45,7 @@ const Card = ({ metrics, type }: PropsType) => {
   );
 };
 
-const Title = ({ type }) => {
+const Title = ({ type }: { type: CardType }) => {
   const theme = ThemedStyles.style;
   return (
     <View style={theme.rowJustifyStart}>

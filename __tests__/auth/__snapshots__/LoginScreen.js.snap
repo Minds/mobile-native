@@ -311,7 +311,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             autoComplete="username"
             autoCorrect={false}
             autoFocus={true}
-            error={false}
             keyboardAppearance="dark"
             keyboardType="default"
             labelStyle={
@@ -463,7 +462,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
               <TextInput
                 autoCapitalize="none"
                 autoComplete="password"
-                error={false}
                 keyboardAppearance="dark"
                 labelStyle={
                   Array [
