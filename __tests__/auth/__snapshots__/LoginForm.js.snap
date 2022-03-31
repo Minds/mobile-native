@@ -552,6 +552,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       hardwareAccelerated={false}
       onAnimate={[Function]}
       snapPoints={null}
+      stackBehavior="push"
       style={
         Array [
           Object {
