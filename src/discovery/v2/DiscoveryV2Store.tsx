@@ -77,6 +77,10 @@ export default class DiscoveryV2Store {
       .setEndpoint('api/v3/newsfeed/default-feed')
       .setInjectBoost(false)
       .setLimit(15);
+
+    if (plus) {
+      this.activeTabId = 'foryou';
+    }
   }
 
   @action

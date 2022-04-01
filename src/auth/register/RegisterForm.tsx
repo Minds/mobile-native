@@ -85,7 +85,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           }
         }
       } catch (err) {
-        showNotification(err.message, 'warning', 3000, 'top');
+        showNotification(err.message, 'warning', 3000);
         logService.exception(err);
       } finally {
         store.inProgress = false;
@@ -98,7 +98,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           i18n.t('auth.termsAcceptedError'),
           'info',
           3000,
-          'top',
         );
       }
       if (!validatePassword(store.password).all) {
@@ -106,7 +105,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           i18n.t('auth.invalidPasswordDescription'),
           'info',
           2500,
-          'top',
         );
         return;
       }

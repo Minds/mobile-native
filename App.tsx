@@ -39,13 +39,13 @@ import ErrorBoundary from './src/common/components/ErrorBoundary';
 import TosModal from './src/tos/TosModal';
 import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
-import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
+import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 
 YellowBox.ignoreWarnings(['']);
@@ -105,7 +105,7 @@ class App extends Component<Props, State> {
   /**
    * On component did mount
    */
-  async componentDidMount() {
+  componentDidMount() {
     // Register event listeners
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     Linking.addEventListener('url', this.handleOpenURL);
@@ -187,17 +187,18 @@ class App extends Component<Props, State> {
                 <Provider key="app" {...stores}>
                   <PortalProvider>
                     <BottomSheetModalProvider>
-                      <ErrorBoundary
-                        message="An error occurred"
-                        containerStyle={ThemedStyles.style.centered}>
-                        <WCContextProvider>
-                          <NavigationStack
-                            key={ThemedStyles.theme + i18n.locale}
-                            showAuthNav={showAuthNav}
-                          />
-                        </WCContextProvider>
-                        <AppMessages />
-                      </ErrorBoundary>
+                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                        <ErrorBoundary
+                          message="An error occurred"
+                          containerStyle={ThemedStyles.style.centered}>
+                          <WCContextProvider>
+                            <NavigationStack
+                              key={ThemedStyles.theme + i18n.locale}
+                              showAuthNav={showAuthNav}
+                            />
+                          </WCContextProvider>
+                        </ErrorBoundary>
+                      </AppMessageProvider>
                     </BottomSheetModalProvider>
                   </PortalProvider>
                 </Provider>
