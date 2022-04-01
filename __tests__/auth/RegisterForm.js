@@ -41,7 +41,6 @@ describe('RegisterScreen component', () => {
       'You should accept the terms and conditions',
       'info',
       3000,
-      'top',
     );
   });
 
@@ -65,7 +64,6 @@ describe('RegisterScreen component', () => {
       'Password must match the criteria',
       'info',
       2500,
-      'top',
     );
   });
 

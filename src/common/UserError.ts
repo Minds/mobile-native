@@ -7,9 +7,9 @@ export type UserErrorType = 'info' | 'warning' | 'danger';
  * Every time a user error exception is thrown a message is show to the user
  */
 export class UserError extends Error {
-  constructor(message, type: UserErrorType = 'info') {
+  constructor(message, type: UserErrorType = 'info', onPress?: () => void) {
     super(message);
-    showNotification(message, type);
+    showNotification(message, type, 3000, undefined, false, onPress);
   }
 }
 

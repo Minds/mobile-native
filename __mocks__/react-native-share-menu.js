@@ -1,4 +1,5 @@
 export default {
-  decrshareSingleypt: jest.fn(),
-  open: jest.fn()
+  rshareSingle: jest.fn(),
+  open: jest.fn(),
+  addNewShareListener: jest.fn(),
 };

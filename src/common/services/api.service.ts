@@ -238,7 +238,9 @@ export class ApiService {
           // prompt the user if email verification is needed for this endpoint
           if (isApiForbidden(response) && response.data.must_verify) {
             this.setMustVerify(true);
-            throw new ApiError(i18n.t('emailConfirm.confirm'));
+            throw new UserError(i18n.t('emailConfirm.confirm'), 'info', () =>
+              NavigationService.navigate('VerifyEmail'),
+            );
           }
 
           this.checkResponse(response);
