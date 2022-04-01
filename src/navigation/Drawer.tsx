@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
@@ -71,24 +70,20 @@ const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
 
   let list = [
-    featuresService.has('plus-2020')
-      ? {
-          name: i18n.t('wire.lock.plus'),
-          icon: 'queue',
-          onPress: () => {
-            navigation.navigate('PlusDiscoveryScreen');
-          },
-        }
-      : null,
-    featuresService.has('crypto')
-      ? {
-          name: i18n.t('moreScreen.wallet'),
-          icon: 'bank',
-          onPress: () => {
-            navigation.navigate('Wallet');
-          },
-        }
-      : null,
+    {
+      name: i18n.t('wire.lock.plus'),
+      icon: 'queue',
+      onPress: () => {
+        navigation.navigate('PlusDiscoveryScreen');
+      },
+    },
+    {
+      name: i18n.t('moreScreen.wallet'),
+      icon: 'bank',
+      onPress: () => {
+        navigation.navigate('Wallet');
+      },
+    },
     !IS_IOS
       ? {
           name: 'Buy Tokens',

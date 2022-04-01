@@ -145,7 +145,12 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           }
         >
-          <View>
+          <View
+            activeOpacity={0.3}
+            disabled={false}
+            onPress={[MockFunction]}
+            underlayColor="#1F252C"
+          >
             <View
               style={
                 Object {

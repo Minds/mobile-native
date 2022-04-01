@@ -28,9 +28,7 @@ import CommentsStore from '../../../comments/v2/CommentsStore';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
-import featuresService from '../../../common/services/features.service';
 import LockV2 from '../../../wire/v2/lock/Lock';
-import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
@@ -231,10 +229,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
     }
   }, [translateRef]);
 
-  const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
-
   const lock = entity.paywall ? (
-    <LockCmp entity={entity} navigation={navigation} />
+    <LockV2 entity={entity} navigation={navigation} />
   ) : null;
 
   const shadowOpt = {

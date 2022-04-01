@@ -16,7 +16,6 @@ import apiService from '../../common/services/api.service';
 import delay from '../../common/helpers/delay';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
-import featuresService from '../../common/services/features.service';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
@@ -71,9 +70,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
-        if (featuresService.has('onboarding-october-2020')) {
-          sessionService.setInitialScreen('SelectHashtags');
-        }
+        sessionService.setInitialScreen('SelectHashtags');
+
         try {
           await authService.login(store.username, store.password);
           i18n.setLocaleBackend();

@@ -6,7 +6,6 @@ import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
 import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
-import featuresService from '../common/services/features.service';
 import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
@@ -494,9 +493,7 @@ export default function (props) {
 
         if (this.paywalled) {
           newPost.paywall = true;
-          newPost.wire_threshold = featuresService.has('paywall-2020')
-            ? this.wire_threshold
-            : this.wire_threshold.min;
+          newPost.wire_threshold = this.wire_threshold;
         }
 
         // add remind
@@ -601,7 +598,7 @@ export default function (props) {
     },
     get paywalled() {
       return (
-        (featuresService.has('paywall-2020') && this.haveSupportTier) ||
+        this.haveSupportTier ||
         (this.wire_threshold && this.wire_threshold.min > 0)
       );
     },
