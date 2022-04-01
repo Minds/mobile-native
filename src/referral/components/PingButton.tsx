@@ -30,7 +30,6 @@ const PingButton = observer(
               i18n.t('referrals.pinged', { username }),
               'success',
               3000,
-              'top',
             );
           }
         }),

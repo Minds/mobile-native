@@ -35,6 +35,7 @@ jest.mock('react-native-localize');
 // jest.mock('mobx-react', () => require('mobx-react/custom'));
 
 jest.mock('./AppStores');
+jest.mock('./AppMessageProvider');
 jest.useFakeTimers();
 
 jest.doMock('moment', () => {
