@@ -6,7 +6,6 @@ import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import translationService from '../../common/services/translation.service';
-import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../ActivityModel';
@@ -124,7 +123,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     // if can edit
-    if (entity.isOwner() || entity.can(FLAG_EDIT_POST)) {
+    if (entity.isOwner()) {
       // Edit
       options.push({
         title: i18n.t('edit'),
