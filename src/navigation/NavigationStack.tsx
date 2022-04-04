@@ -281,10 +281,7 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      screenOptions={({ route }) => ({
-        ...defaultScreenOptions,
-        ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
-      })}>
+      screenOptions={defaultScreenOptions}>
       {!props.showAuthNav ? (
         <>
           <RootStackNav.Screen
@@ -294,6 +291,7 @@ const RootStack = function (props) {
               // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
               animationEnabled: Boolean(route.params),
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+              ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
             })}
           />
           <RootStackNav.Screen
