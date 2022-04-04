@@ -4,16 +4,18 @@ import { IconCircled } from '~ui/icons';
 import { useStores } from '~/common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 
-const ChatIcon = () => {
+const ChatIcon = React.memo(() => {
   const { chat } = useStores();
+
   useEffect(() => {
     // deffer the initial load to avoid issues when switching users
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (chat) {
         chat.init();
       }
     }, 2000);
     return () => {
+      timeout && clearTimeout(timeout);
       chat.reset();
     };
   }, [chat]);
@@ -24,7 +26,7 @@ const ChatIcon = () => {
       <ChatBubbleIcon chatStore={chat} />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
