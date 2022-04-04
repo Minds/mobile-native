@@ -227,11 +227,23 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
+            logService.info(
+              `[ApiService] refreshing token for ${originalReq.url}`,
+            );
             await this.tokenRefresh(() => {
               originalReq._isRetry = true;
+              logService.info(
+                '[ApiService] retrying request ' + originalReq.url,
+              );
               this.axios.request(originalReq);
             });
+
+            logService.info(
+              `[ApiService] refreshed token for ${originalReq.url}`,
+            );
+
             originalReq._isRetry = true;
+            logService.info('[ApiService] retrying request ' + originalReq.url);
             return this.axios.request(originalReq);
           }
 
@@ -375,7 +387,7 @@ export class ApiService {
       ...customHeaders,
     };
 
-    if (this.accessToken && !headers.Authorization) {
+    if (this.accessToken) {
       headers = {
         ...headers,
         ...this.buildAuthorizationHeader(this.accessToken),
