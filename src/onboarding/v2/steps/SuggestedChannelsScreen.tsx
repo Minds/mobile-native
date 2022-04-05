@@ -6,7 +6,6 @@ import ChannelListItemPlaceholder from '~/common/components/ChannelListItemPlace
 import Empty from '~/common/components/Empty';
 import UserModel from '../../../channel/UserModel';
 import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18nService from '../../../common/services/i18n.service';
 import i18n from '../../../common/services/i18n.service';
 import NavigationService from '../../../navigation/NavigationService';
 import ThemedStyles from '../../../styles/ThemedStyles';
