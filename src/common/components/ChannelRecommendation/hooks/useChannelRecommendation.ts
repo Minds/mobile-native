@@ -23,11 +23,8 @@ export const useChannelRecommendation = (
   }>('api/v3/recommendations', {
     params: {
       location,
-      targetUserGuid: channel?.guid,
-      // mostRecentSubscriptionUserGuid: recentSubscriptions.list().join(',') || channel?.guid,
-      // TODO: send a list when backend supports it
-      mostRecentSubscriptionUserGuid:
-        recentSubscriptions.list()[0] || channel?.guid,
+      mostRecentSubscription: recentSubscriptions.list() || channel?.guid,
+      currentChannelUserGuid: channel?.guid,
       limit: 3,
     },
     map: recommendations =>
