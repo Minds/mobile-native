@@ -145,7 +145,12 @@ export class SessionService {
   }
 
   tokenCanRefresh(refreshToken?: RefreshToken) {
-    if (this.switchingAccount) return false;
+    if (this.switchingAccount) {
+      logService.info(
+        '[sessionService] unable to refresh token when switching account',
+      );
+      return false;
+    }
     if (!refreshToken) {
       return (
         this.refreshToken &&
@@ -162,23 +167,25 @@ export class SessionService {
   }
 
   async refreshAuthToken() {
-    logService.info('[SessionService] refreshing token');
     if (this.tokenCanRefresh()) {
+      logService.info('[SessionService] refreshing token...');
       const tokens = await AuthService.refreshToken();
       tokens.pseudo_id = this.tokensData[this.activeIndex].pseudoId;
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
       this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
       this.saveToStore();
+      logService.info('[SessionService] token refreshed!');
     } else {
+      logService.info("[SessionService] can't refreshing token");
       throw new TokenExpiredError('Session Expired');
     }
   }
 
   async refreshAuthTokenFrom(index: number) {
-    logService.info('[SessionService] refreshing token from');
     const { refreshToken, accessToken } = this.tokensData[index];
     if (this.tokenCanRefresh(refreshToken)) {
+      logService.info('[SessionService] refreshing token from');
       const tokens = await AuthService.refreshToken(
         refreshToken.refresh_token,
         accessToken.access_token,
@@ -189,7 +196,9 @@ export class SessionService {
         this.tokensData[index].user,
       );
       this.saveToStore();
+      logService.info('[SessionService] token refreshed!');
     } else {
+      logService.info("[SessionService] can't refreshing token");
       throw new TokenExpiredError('Session Expired');
     }
   }
@@ -309,6 +318,10 @@ export class SessionService {
       // get session data from tokens returned by login
       const sessionData = this.buildSessionData(tokens);
 
+      // set expire
+      this.accessTokenExpires = sessionData.accessToken.access_token_expires;
+      this.refreshTokenExpires = sessionData.refreshToken.refresh_token_expires;
+
       // add data to current tokens data array
       const tokensData = this.tokensData;
       tokensData.push(sessionData);
@@ -337,6 +350,9 @@ export class SessionService {
       },
       tokensData.user,
     );
+    // set expire
+    this.accessTokenExpires = tokensData.accessToken.access_token_expires;
+    this.refreshTokenExpires = tokensData.refreshToken.refresh_token_expires;
 
     analyticsService.setUserId(tokensData.pseudoId);
 
@@ -432,6 +448,8 @@ export class SessionService {
     this.guid = null;
     this.setToken(null);
     this.setRefreshToken(null);
+    this.accessTokenExpires = null;
+    this.refreshTokenExpires = null;
     this.setLoggedIn(false);
     if (clearStorage) {
       const tokensData = this.tokensData;

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemItem } from '../common/components/menus/MenuItem';
@@ -11,6 +10,7 @@ import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
+import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
@@ -40,9 +40,9 @@ const navigateToHelp = async () => {
   } catch (err) {
     console.log(err);
     if (isNetworkError(err)) {
-      showMessage(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'warning');
     } else {
-      showMessage(i18n.t('cantReachServer'));
+      showNotification(i18n.t('cantReachServer'), 'warning');
     }
   }
 };

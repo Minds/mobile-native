@@ -220,9 +220,8 @@ export default class Tags extends PureComponent<PropsType> {
         params: { query: q },
       });
     } else {
-      this.props.navigation.navigate('Discovery', {
-        screen: 'DiscoverySearch',
-        params: { query: q },
+      this.props.navigation.push('DiscoverySearch', {
+        query: q,
       });
     }
   };

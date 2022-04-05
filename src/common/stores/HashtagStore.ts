@@ -7,7 +7,7 @@ import settingsStore from '../../settings/SettingsStore';
 /**
  * Hashtag
  */
-class HashtagStore {
+export class HashtagStore {
   @observable loading = false;
   @observable all = false;
   @observable hashtag = '';

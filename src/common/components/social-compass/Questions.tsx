@@ -57,7 +57,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   const _onSubmit = useCallback(async () => {
     await answer();
-    showNotification(i18n.t('socialCompass.thanks'), 'success', 3000, 'top');
+    showNotification(i18n.t('socialCompass.thanks'), 'success', 3000);
     onSubmit();
   }, [answer, onSubmit]);
   // #endregion

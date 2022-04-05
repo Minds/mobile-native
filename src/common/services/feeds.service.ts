@@ -3,7 +3,6 @@ import logService from './log.service';
 import apiService, { isNetworkError } from './api.service';
 import entitiesService from './entities.service';
 import feedsStorage from './storage/feeds.storage';
-import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import boostedContentService from './boosted-content.service';
@@ -11,6 +10,7 @@ import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
+import { showNotification } from 'AppMessages';
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -401,18 +401,14 @@ export default class FeedsService {
         throw err;
       }
 
-      showMessage({
-        floating: true,
-        position: 'top',
-        message: connectivityService.isConnected
+      showNotification(
+        connectivityService.isConnected
           ? i18n.t('cantReachServer')
           : i18n.t('noInternet'),
-        description: i18n.t('showingStored'),
-        duration: 1300,
-        backgroundColor: '#FFDD63DD',
-        color: '#222222',
-        type: 'info',
-      });
+        'info',
+        3000,
+        i18n.t('showingStored'),
+      );
     }
   }
 

@@ -71,9 +71,12 @@ describe('Activity screen component', () => {
       useRoute.mockReturnValue({ params: {} });
       NavigationService.getCurrentState.mockReturnValue({ params: {} });
 
+      const entity = activitiesServiceFaker().load(1).activities[0];
+      entity.can = jest.fn(() => true);
+
       const route = {
         routeName: 'some',
-        params: { entity: activitiesServiceFaker().load(1).activities[0] },
+        params: { entity },
       };
 
       entitiesService.single.mockResolvedValue(

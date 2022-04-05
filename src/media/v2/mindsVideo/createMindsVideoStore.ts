@@ -6,7 +6,6 @@ import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
-import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 
@@ -219,7 +218,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       }
 
       if ((!this.sources || this.sources.length === 0) && entity) {
-        if (entity.paywall && featuresService.has('paywall-2020')) {
+        if (entity.paywall) {
           await entity.unlockOrPay();
           if (entity.paywall) {
             return;
