@@ -28,16 +28,14 @@ import CommentsStore from '../../../comments/v2/CommentsStore';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
-import featuresService from '../../../common/services/features.service';
 import LockV2 from '../../../wire/v2/lock/Lock';
-import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
-import InteractionsActionSheet from '../../../common/components/interactions/InteractionsBottomSheet';
+import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
@@ -231,10 +229,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
     }
   }, [translateRef]);
 
-  const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
-
   const lock = entity.paywall ? (
-    <LockCmp entity={entity} navigation={navigation} />
+    <LockV2 entity={entity} navigation={navigation} />
   ) : null;
 
   const shadowOpt = {
@@ -362,13 +358,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
           />
           <Actions entity={entity} hideCount onPressComment={onPressComment} />
         </View>
-        <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
-        <InteractionsActionSheet
+        <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
+        <InteractionsBottomSheet
           entity={entity}
           ref={downVotesInteractionsRef}
         />
-        <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
-        <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
+        <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
+        <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={

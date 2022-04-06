@@ -259,6 +259,10 @@ class AuthService {
     }
   }
 
+  /**
+   * This methods logs out the current session but WITHOUt removing it from the storage
+   * @returns boolean
+   */
   async sessionLogout() {
     try {
       this.justRegistered = false;
@@ -295,7 +299,7 @@ class AuthService {
    * Refresh user token
    */
   async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
-    logService.info('[AuthService] Refreshing token');
+    logService.info('[AuthService] Refreshing token...');
 
     const params = {
       grant_type: 'refresh_token',
@@ -314,6 +318,7 @@ class AuthService {
         params,
         headers,
       );
+      logService.info('[AuthService] token refreshed');
       return data;
     } catch (err) {
       logService.exception('[AuthService] error claiming refresh token', err);

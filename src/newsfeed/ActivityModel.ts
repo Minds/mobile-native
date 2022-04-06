@@ -383,7 +383,7 @@ export default class ActivityModel extends BaseModel {
       const isApiErr = isApiError(err);
 
       if (isApiErr && !ignoreError) {
-        showNotification(err.message, 'warning', 3000, 'top');
+        showNotification(err.message, 'warning', 3000);
       }
 
       if (isApiErr) {
@@ -391,7 +391,7 @@ export default class ActivityModel extends BaseModel {
       }
 
       if (isNetworkError(err)) {
-        showNotification(i18n.t('cantReachServer'), 'warning', 3000, 'top');
+        showNotification(i18n.t('cantReachServer'), 'warning', 3000);
       }
 
       return -1;

@@ -47,7 +47,9 @@ describe('blog view screen component', () => {
   let store,
     user,
     route,
-    navigation = {};
+    navigation = {
+      goBack: jest.fn(),
+    };
 
   beforeEach(() => {
     NavigationService.getCurrentState.mockClear();

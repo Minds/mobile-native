@@ -1,8 +1,5 @@
 import React from 'react';
-
 import { View, TouchableOpacity } from 'react-native';
-
-import featuresService from '../../common/services/features.service';
 import testID from '../../common/helpers/testID';
 import PaymentMethodIcon from './PaymentMethodIcon';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -17,27 +14,12 @@ type PropsType = {
  * Payment method selector
  */
 export default class PaymentMethodSelector extends React.PureComponent<PropsType> {
-  methods: Array<any>;
-
-  /**
-   * @param {PropsType} props
-   */
-  constructor(props: PropsType) {
-    super(props);
-
-    if (featuresService.has('wire-multi-currency')) {
-      this.methods = [
-        { label: 'Tokens', handle: (): any => this.onSelect('tokens') },
-        { label: 'USD', handle: (): any => this.onSelect('usd') },
-        { label: 'BTC', handle: (): any => this.onSelect('btc') },
-        { label: 'ETH', handle: (): any => this.onSelect('eth') },
-      ];
-    } else {
-      this.methods = [
-        { label: 'Tokens', handle: (): any => this.onSelect('tokens') },
-      ];
-    }
-  }
+  methods = [
+    { label: 'Tokens', handle: (): any => this.onSelect('tokens') },
+    { label: 'USD', handle: (): any => this.onSelect('usd') },
+    { label: 'BTC', handle: (): any => this.onSelect('btc') },
+    { label: 'ETH', handle: (): any => this.onSelect('eth') },
+  ];
 
   /**
    * On method selected

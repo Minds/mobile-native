@@ -162,7 +162,7 @@ class NewsfeedScreen extends Component<
   render() {
     const newsfeed = this.props.newsfeed;
 
-    const header = () => (
+    const header = (
       <View style={ThemedStyles.style.bgPrimaryBackground}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}

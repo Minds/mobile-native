@@ -90,7 +90,7 @@ export const DiscoveryTrendsList = observer(
       <FeedList
         ref={listRef}
         stickyHeaderHiddenOnScroll
-        stickyHeaderIndices={sticky}
+        stickyHeaderIndices={header ? sticky : undefined}
         prepend={listHeader}
         header={header}
         feedStore={store.allFeed}

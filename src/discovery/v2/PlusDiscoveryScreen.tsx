@@ -1,8 +1,6 @@
 import React from 'react';
-
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
@@ -10,29 +8,19 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import i18n from '../../common/services/i18n.service';
-import { ScreenHeader, Screen } from '~ui/screen';
+import { ScreenHeader } from '~ui/screen';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
+const SAFE_AREA_EDGES: Edge[] = ['top'];
 /**
  * Discovery Feed Screen
  */
 const PlusDiscoveryScreen = observer(() => {
+  const theme = ThemedStyles.style;
   const store = useMindsPlusV2Store();
 
-  const screen = () => {
-    switch (store.activeTabId) {
-      case 'foryou':
-        return <DiscoveryTrendsList plus={true} store={store} />;
-      case 'your-tags':
-        return <DiscoveryTagsList type="your" plus={true} store={store} />;
-      case 'trending-tags':
-        return <DiscoveryTagsList type="trending" plus={true} store={store} />;
-      default:
-        return <View />;
-    }
-  };
-
-  return (
-    <Screen safe>
+  const header = (
+    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.bgPrimaryBackground}>
       <ScreenHeader title={i18n.t('plusTabTitleDiscovery')} />
 
       <TopbarTabbar
@@ -46,10 +34,39 @@ const PlusDiscoveryScreen = observer(() => {
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
         ]}
       />
-
-      <View style={ThemedStyles.style.flexContainer}>{screen()}</View>
-    </Screen>
+    </SafeAreaView>
   );
+
+  const screen = () => {
+    switch (store.activeTabId) {
+      case 'foryou':
+        return (
+          <DiscoveryTrendsList header={header} plus={true} store={store} />
+        );
+      case 'your-tags':
+        return (
+          <DiscoveryTagsList
+            header={header}
+            type="your"
+            plus={true}
+            store={store}
+          />
+        );
+      case 'trending-tags':
+        return (
+          <DiscoveryTagsList
+            header={header}
+            type="trending"
+            plus={true}
+            store={store}
+          />
+        );
+      default:
+        return <View />;
+    }
+  };
+
+  return screen();
 });
 
 export default PlusDiscoveryScreen;

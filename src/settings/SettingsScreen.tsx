@@ -10,6 +10,7 @@ import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
+import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
@@ -17,7 +18,6 @@ import {
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
-import { showNotification } from 'AppMessages';
 
 interface HelpResponse extends ApiResponse {
   url: string;

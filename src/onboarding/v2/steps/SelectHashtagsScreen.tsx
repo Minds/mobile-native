@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { showNotification } from '../../../../AppMessages';
 import Button from '../../../common/components/Button';
 import MText from '../../../common/components/MText';
@@ -60,34 +61,38 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradient = (
-    <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
+    <LinearGradient
+      colors={[startColor, endColor]}
+      style={styles.linear}
+      pointerEvents="none"
+    />
   );
 
   return (
     <ModalContainer title="Hashtags" onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
-        <MText style={[theme.fontLM, theme.textCenter]}>
-          {i18n.t('onboarding.hashtagDescription')}
-        </MText>
-        <TagSelect
-          tagStyle={styles.hashtag}
-          tagSelectedStyle={theme.bcolorIconActive}
-          textSelectedStyle={theme.colorPrimaryText}
-          textStyle={[theme.colorSecondaryText, theme.fontLM, theme.bold]}
-          onTagDeleted={hashtag.deselect}
-          onTagAdded={hashtag.select}
-          tags={hashtag.suggested}
-          disableSort={true}
-        />
+        <ScrollView contentContainerStyle={theme.paddingBottom7x}>
+          <MText style={[theme.fontLM, theme.textCenter, theme.marginBottom2x]}>
+            {i18n.t('onboarding.hashtagDescription')}
+          </MText>
+          <TagSelect
+            tagStyle={styles.hashtag}
+            tagSelectedStyle={theme.bcolorIconActive}
+            textSelectedStyle={theme.colorPrimaryText}
+            textStyle={[theme.colorSecondaryText, theme.fontLM, theme.bold]}
+            onTagDeleted={hashtag.deselect}
+            onTagAdded={hashtag.select}
+            tags={hashtag.suggested}
+            disableSort={true}
+          />
+        </ScrollView>
         {gradient}
         <Button
           onPress={onPress}
           text={i18n.t('done')}
           containerStyle={[
             theme.transparentButton,
-            theme.paddingVertical3x,
             theme.fullWidth,
-            theme.marginTop,
             theme.bcolorPrimaryBorder,
           ]}
           textStyle={theme.buttonText}
@@ -111,10 +116,9 @@ const styles = StyleSheet.create({
   },
   linear: {
     position: 'absolute',
-    height: 50,
+    height: 80,
     width: '100%',
     left: 0,
-    bottom: 60,
-    zIndex: 9999,
+    bottom: 30,
   },
 });
