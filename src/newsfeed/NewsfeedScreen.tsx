@@ -70,7 +70,7 @@ class NewsfeedScreen extends Component<
     {
       indexes: [2],
       component: () => (
-        <IfFeatureEnabled feature="channel-recommendations">
+        <IfFeatureEnabled feature="mob-channel-recommendations">
           <ChannelRecommendation location="newsfeed" />
         </IfFeatureEnabled>
       ),

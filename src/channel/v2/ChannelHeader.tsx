@@ -317,7 +317,7 @@ const ChannelHeader = withErrorBoundary(
         )}
 
         {!channel?.isOwner() && (
-          <IfFeatureEnabled feature="channel-recommendations">
+          <IfFeatureEnabled feature="mob-channel-recommendations">
             <ChannelRecommendation
               channel={channel}
               visible={shouldShowChannelRecommendation}
