@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 
 import { Alert } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
 import { Button } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
-import { MoreStackParamList } from '~/navigation/NavigationTypes';
 import type UserStore from '~/auth/UserStore';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
-type NavigationProp = StackNavigationProp<MoreStackParamList, 'SettingsEmail'>;
+
 /**
  * Email settings screen
  */
 @inject('user')
 class EmailScreen extends Component<
   {
-    navigation: NavigationProp;
+    navigation: any;
     user: UserStore;
   },
   {
@@ -102,7 +99,10 @@ class EmailScreen extends Component<
   };
 
   confirmPassword = () => {
-    this.setState({ isVisible: true });
+    this.props.navigation.navigate('PasswordConfirmation', {
+      title: i18n.t('auth.confirmpassword'),
+      onConfirm: this.save,
+    });
   };
 
   dismissModal = () => {
@@ -154,11 +154,6 @@ class EmailScreen extends Component<
           selectTextOnFocus={true}
         />
         {confirmNote}
-        <ModalConfirmPassword
-          isVisible={this.state.isVisible}
-          onSuccess={this.save}
-          close={this.dismissModal}
-        />
       </DismissKeyboard>
     );
   }
