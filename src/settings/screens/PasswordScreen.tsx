@@ -73,7 +73,7 @@ export default observer(function () {
       store.setCurrentPasswordError('');
       await authService.validatePassword(store.currentPassword);
     } catch (err) {
-      store.setCurrentPasswordError(i18n.t('settings.invalidPassword'));
+      store.setCurrentPasswordError(i18n.t('auth.invalidPassword'));
       return;
     }
 
