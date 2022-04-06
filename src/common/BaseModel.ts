@@ -8,11 +8,8 @@ import { setViewed, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
-import i18n from './services/i18n.service';
-import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
-import { showNotification } from '../../AppMessages';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
 
@@ -306,27 +303,10 @@ export default class BaseModel extends AbstractModel {
    * @returns {boolean}
    */
   can(actionName: string, showAlert = false) {
-    // TODO: clean up permissions feature flag
-    if (!featuresService.has('permissions')) return true;
+    // TODO: implement permission check for each action
+    // show a toaster notification if showAlert is true
 
-    let allowed = true;
-
-    if (!this.permissions || !this.permissions.permissions) {
-      allowed = false;
-    } else {
-      allowed = this.permissions.permissions.some(item => item === actionName);
-    }
-
-    if (showAlert && !allowed) {
-      showNotification(
-        i18n.t(`permissions.notAllowed.${actionName}`, {
-          defaultValue: i18n.t('notAllowed'),
-        }),
-        'warning',
-      );
-    }
-
-    return allowed;
+    return true;
   }
 
   /**

@@ -3,12 +3,10 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
-import featuresService from '~/common/services/features.service';
 import AccessSelector from './AccessSelector';
 import LicenseSelector from './LicenseSelector';
 import MonetizeScreen from './monetize/MonetizeScreen';
 import PlusMonetizeScreen from './monetize/PlusMonetizeScreen';
-import MonetizeSelector from './MonetizeSelector';
 import NsfwSelector from './NsfwSelector';
 import PermawebSelector from './PermawebSelector';
 import PosterOptions from './PosterOptions';
@@ -46,14 +44,7 @@ export default function PosterStackNavigator() {
       <Stack.Screen name="NsfwSelector" component={NsfwSelector} />
       <Stack.Screen name="PermawebSelector" component={PermawebSelector} />
       <Stack.Screen name="ScheduleSelector" component={ScheduleSelector} />
-      <Stack.Screen
-        name="MonetizeSelector"
-        component={
-          featuresService.has('paywall-2020')
-            ? MonetizeScreen
-            : MonetizeSelector
-        }
-      />
+      <Stack.Screen name="MonetizeSelector" component={MonetizeScreen} />
       <Stack.Screen name="LicenseSelector" component={LicenseSelector} />
       <Stack.Screen name="AccessSelector" component={AccessSelector} />
       <Stack.Screen name="PlusMonetize" component={PlusMonetizeScreen} />

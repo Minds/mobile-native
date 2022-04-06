@@ -40,11 +40,11 @@ export class DevMode {
         }
       }
       storages.app.setString('developer_api_url', value);
-      showNotification('Saved, please restart', 'success', 3000, 'top');
+      showNotification('Saved, please restart', 'success', 3000);
       return true;
     } catch (_) {
       console.log(_);
-      showNotification('Invalid URL', 'danger', 3000, 'top');
+      showNotification('Invalid URL', 'danger', 3000);
       return false;
     }
   }

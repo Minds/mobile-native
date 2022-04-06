@@ -6,8 +6,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
-import featuresService from '../common/services/features.service';
-import EmailConfirmation from './EmailConfirmation';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
@@ -82,7 +80,6 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         </View>
       </View>
-      {!featuresService.has('onboarding-october-2020') && <EmailConfirmation />}
     </View>
   );
 });

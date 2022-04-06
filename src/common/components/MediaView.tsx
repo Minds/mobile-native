@@ -9,8 +9,6 @@ import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
 import download from '../services/download.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
-import { showMessage } from 'react-native-flash-message';
-import { DARK_THEME } from '../../styles/Colors';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import NavigationService from '../../navigation/NavigationService';
@@ -134,9 +132,9 @@ export default class MediaView extends Component<PropsType> {
   runDownload = async source => {
     try {
       await download.downloadToGallery(source.uri, this.props.entity);
-      showNotification(i18n.t('imageAdded'), 'info', 3000, 'top');
+      showNotification(i18n.t('imageAdded'), 'info', 3000);
     } catch (e) {
-      showNotification(i18n.t('errorDownloading'), 'danger', 3000, 'top');
+      showNotification(i18n.t('errorDownloading'), 'danger', 3000);
       logService.exception('[MediaView] runDownload', e);
     }
   };
@@ -197,15 +195,7 @@ export default class MediaView extends Component<PropsType> {
       setTimeout(async () => {
         if (this.props.entity.perma_url) {
           await Clipboard.setString(this.props.entity.perma_url);
-          showMessage({
-            floating: true,
-            position: 'top',
-            message: i18n.t('linkCopied'),
-            duration: 1300,
-            backgroundColor: '#FFDD63DD',
-            color: DARK_THEME.PrimaryText,
-            type: 'info',
-          });
+          showNotification(i18n.t('linkCopied'));
         }
       }, 100);
     } else {

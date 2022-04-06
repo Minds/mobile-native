@@ -2,6 +2,33 @@
 
 Minds Mobile
 
+## 4.23.0 - 2022-04-04
+
+### Changed
+
+- Fix hashtag navigation error
+- Cleans up feature flag logic
+- New toaster notifications
+- Unverified email toaster added
+- Improved transitions when opening multiple bottom sheets
+- Fix Minds+ screen errors
+- Fix some navigation issues with the interactions bottom sheets
+- Fix onboarding tag selector visual an functional issues
+- Fix posts visibility option when creating a post
+- Fix groups posts visible on the main newsfeed
+- Added custom API URL to dev tools
+- Makes dev tools accessible on production mode by tapping multiple times hidden parts of the app
+- Fix the auto login password reset flow is completed
+- Fix group's search issues
+- Adds a password show option to all the password fields of the app
+- Standardize the user lists components
+- Update the local storage package
+- Fix the delete post error for admins when deleting a remind
+- Improves the UX on feeds by loading next page before we reach the end
+- Fix notification count issues
+- Enable react-freeze, that improves the performance by freezing screens that are not visible
+- Fix loading state indicators in comments
+
 ## 4.22.3 - 2022-03-18
 
 ### Changed

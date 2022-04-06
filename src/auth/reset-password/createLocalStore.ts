@@ -9,7 +9,7 @@ import AuthService from '../AuthService';
 type StepsType = 'inputUser' | 'emailSended' | 'inputPassword';
 
 const showError = (error: string) =>
-  showNotification(error, 'danger', undefined, 'top');
+  showNotification(error, 'danger', undefined);
 
 const createLocalStore = () => ({
   currentStep: 'inputUser' as StepsType,
@@ -126,7 +126,7 @@ const createLocalStore = () => ({
           const response = {
             success,
             login: async () => {
-              showNotification(i18n.t('auth.waitLogin'), 'info', 3000, 'top');
+              showNotification(i18n.t('auth.waitLogin'), 'info', 3000);
 
               await delay(150);
               // clear the cookies (fix future issues with calls)

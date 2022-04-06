@@ -287,10 +287,12 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="App"
             component={AppStack}
-            options={{
-              animationEnabled: false,
+            options={({ route }) => ({
+              // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+              animationEnabled: Boolean(route.params),
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-            }}
+              ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
+            })}
           />
           <RootStackNav.Screen
             name="Capture"

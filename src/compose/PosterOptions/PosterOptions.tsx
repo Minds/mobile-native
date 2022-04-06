@@ -9,7 +9,6 @@ import {
   getAccessText,
   getLicenseText,
 } from '~/common/services/list-options.service';
-import featuresService from '../../common/services/features.service';
 import MText from '../../common/components/MText';
 import MPressable from '~/common/components/MPressable';
 import TopBar from '../TopBar';
@@ -101,11 +100,7 @@ function PosterOptions(props: PosterOptionsType) {
 
   const showMonetize = !store.portraitMode && !store.isRemind;
 
-  const showPermaweb =
-    !store.isEdit &&
-    !store.group &&
-    !store.isRemind &&
-    featuresService.has('permaweb');
+  const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 
   const permawebDesc = store.postToPermaweb
     ? i18n.t('permaweb.description')

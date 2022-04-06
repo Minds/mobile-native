@@ -63,7 +63,6 @@ const ActivityScreen = observer((props: PropsType) => {
               i18n.t('settings.reportedContent.postNotFound'),
               'info',
               3000,
-              'top',
             );
           }
 

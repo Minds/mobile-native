@@ -89,6 +89,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         topInset={StatusBar.currentHeight || 0}
         handleComponent={renderHandle}
         snapPoints={animatedSnapPoints}
+        stackBehavior="push"
         handleHeight={animatedHandleHeight}
         contentHeight={animatedContentHeight}
         backdropComponent={renderBackdrop}

@@ -6,8 +6,8 @@ import {
   TouchableOpacityProps,
   Platform,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { View } from 'react-native-animatable';
 import { Flow } from 'react-native-animated-spinkit';
 
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
