@@ -20,15 +20,24 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
     (type, entity) => {
       switch (type) {
         case 'activity':
+        case 'remind':
+        case 'image':
+        case 'video':
+        case 'blog':
           return () =>
             navigation.push('Activity', {
               entity,
             });
+        case 'group':
+          return () =>
+            navigation.push('GroupView', {
+              group: entity,
+            });
         case 'channel':
-        case 'blog':
-        case 'remind':
-        case 'image':
-        case 'video':
+          return () =>
+            navigation.push('Channel', {
+              entity: entity,
+            });
         default:
           return () => null;
       }
@@ -38,30 +47,41 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   const reformatEntity = useCallback(
     (entity: Entity) => {
-      let type, username, name, titleType;
+      let type, subtitle, title;
       type = entity.type;
 
-      if (type === 'user') {
-        type = 'channel';
-        username = entity.username;
-        name = entity.name;
-      } else {
-        username = entity.ownerObj!.username;
-        name = entity.ownerObj!.name;
-      }
+      switch (type) {
+        case 'user':
+          type = 'channel';
+          title =
+            entity.title || entity.message || `@${entity.username}'s Channel`;
+          subtitle = `@${entity.username}`;
+          break;
+        case 'group':
+          subtitle = entity.briefdescription;
+          title = entity.name;
+          break;
+        case 'activity':
+        default:
+          let titleType = type.charAt(0).toUpperCase() + type.slice(1);
+          if (type === 'activity') {
+            titleType = 'Post';
+          }
 
-      titleType = type.charAt(0).toUpperCase() + type.slice(1);
-      if (type === 'activity') {
-        titleType = 'Post';
+          title =
+            entity.title ||
+            entity.message ||
+            `@${entity.ownerObj?.username}'s ${titleType}`;
+          subtitle = `@${entity.ownerObj?.username}`;
+          break;
       }
 
       return {
-        type: type,
+        type,
         time_created: entity.time_created,
-        title: entity.title || entity.message || `${username}'s ${titleType}`,
         onPress: getEntityRoute(type, entity),
-        username: username,
-        name: name,
+        subtitle,
+        title,
       };
     },
     [getEntityRoute],
@@ -149,7 +169,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           <View style={styles.firstColumn}>
             <MText>{row.values.entity.title}</MText>
             <MText style={styles.tertiaryText}>
-              {`@${row.values.entity.username}`}
+              {row.values.entity.subtitle}
             </MText>
           </View>
           <View style={styles.columnViewP}>
