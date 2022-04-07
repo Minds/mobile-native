@@ -167,8 +167,13 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           onPress={row.values.entity.onPress}
           style={theme.rowJustifySpaceBetween}>
           <View style={styles.firstColumn}>
-            <MText>{row.values.entity.title}</MText>
-            <MText style={styles.tertiaryText}>
+            <MText ellipsizeMode="tail" numberOfLines={2}>
+              {row.values.entity.title}
+            </MText>
+            <MText
+              ellipsizeMode="tail"
+              numberOfLines={3}
+              style={styles.tertiaryText}>
               {row.values.entity.subtitle}
             </MText>
           </View>
