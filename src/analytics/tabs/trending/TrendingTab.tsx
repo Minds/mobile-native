@@ -86,7 +86,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
     },
     [getEntityRoute],
   );
-  const { result, error, loading, fetch } = useApiFetch<{
+  const { result, error, loading, refresh } = useApiFetch<{
     dashboard: Dashboard;
   }>('api/v2/analytics/dashboards/trending', {
     params: {
@@ -96,6 +96,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
     },
     persist: true,
   });
+  const onTryAgain = useCallback(() => refresh(), [refresh]);
 
   if (!result && loading) {
     return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
@@ -126,7 +127,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   if (error || dataError) {
     return (
-      <MText style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={onTryAgain}>
         {i18n.t('error') + '\n'}
         <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
       </MText>
