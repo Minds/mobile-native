@@ -228,13 +228,19 @@ class NewsfeedScreen extends Component<
 
 export default withErrorBoundary(NewsfeedScreen);
 
-const newPostsButtonEnteringAnimation = FadeInUp.mass(0.3).duration(500);
-const newPostsButtonExitingAnimation = FadeInDown.mass(0.3).duration(500);
 const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
   top: 120,
 });
 
 const ShowNewPostsButton = ({ newsfeed }) => {
+  const newPostsButtonEnteringAnimation = useMemo(
+    () => FadeInUp.mass(0.3).duration(500),
+    [],
+  );
+  const newPostsButtonExitingAnimation = useMemo(
+    () => FadeInDown.mass(0.3).duration(500),
+    [],
+  );
   const onPress = useCallback(() => {
     newsfeed.listRef?.scrollToTop();
     newsfeed.latestFeedStore.refresh();
