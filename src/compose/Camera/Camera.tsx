@@ -228,29 +228,46 @@ export default observer(function (props: PropsType) {
           style={[orientationStyle.clock, cleanTop]}
           timer={store.videoLimit}
           onTimer={onPress}
+          paused={!store.recordingPaused}
         />
       )}
       {device && store.ready && (
         <View style={orientationStyle.buttonContainer}>
           <View style={orientationStyle.leftIconContainer}>
-            <FadeFrom delay={PRESENTATION_ORDER.third}>
-              <FIcon
-                size={30}
-                name="image"
-                style={orientationStyle.galleryIcon}
-                onPress={props.onPressGallery}
-              />
-            </FadeFrom>
-            {supportsHdr ? (
+            {!store.recording && (
+              <FadeFrom delay={PRESENTATION_ORDER.third}>
+                <FIcon
+                  size={30}
+                  name="image"
+                  style={orientationStyle.galleryIcon}
+                  onPress={props.onPressGallery}
+                />
+              </FadeFrom>
+            )}
+            {supportsHdr && !store.recording ? (
               <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <HdrIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
+            {store.recording && (
+              <FadeFrom delay={PRESENTATION_ORDER.second}>
+                <Icon
+                  size={45}
+                  name={
+                    store.recordingPaused
+                      ? 'play-circle-outline'
+                      : 'ios-pause-circle-outline'
+                  }
+                  style={orientationStyle.galleryIcon}
+                  onPress={() => store.toggleRecording(camera)}
+                />
+              </FadeFrom>
+            )}
           </View>
           <View style={orientationStyle.rightButtonsContainer}>
-            {supportsFlash ? (
+            {supportsFlash && !store.recording ? (
               <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <FlashIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
