@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View, Platform, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconButton } from '~ui/icons';
-import { ICON_SIZES, HORIZONTAL } from '~styles/Tokens';
+import { HORIZONTAL } from '~styles/Tokens';
 import Handle from '../../../common/components/bottom-sheet/Handle';
 import MText from '../../../common/components/MText';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
@@ -12,6 +12,7 @@ type PropsType = {
   title: string;
   onPressBack: () => void;
   children: React.ReactNode;
+  leftButton?: React.ReactNode;
   marginTop?: number;
   contentContainer?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
@@ -50,9 +51,9 @@ export default function ModalContainer(props: PropsType) {
       <Handle style={ThemedStyles.style.bgPrimaryBackgroundHighlight} />
       <View style={styles.header}>
         <MText style={titleStyle}>{props.title}</MText>
-        <View style={styles.backIcon}>
-          <IconButton size="large" name="close" onPress={props.onPressBack} />
-        </View>
+        {props.leftButton}
+        <View />
+        <IconButton size="large" name="close" onPress={props.onPressBack} />
       </View>
 
       {props.children}
@@ -65,12 +66,18 @@ const styles = ThemedStyles.create({
     {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingHorizontal: HORIZONTAL,
     },
     'paddingVertical2x',
   ],
   title: [
-    { fontSize: 20, marginLeft: ICON_SIZES.large },
+    {
+      fontSize: 20,
+      position: 'absolute',
+      width: '100%',
+      marginLeft: HORIZONTAL,
+    },
     'paddingVertical3x',
     'textCenter',
     'fontSemibold',
