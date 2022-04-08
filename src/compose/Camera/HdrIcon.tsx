@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';
+import PressableScale from '~/common/components/PressableScale';
 
 type PropsType = {
   store: CameraStore;
@@ -17,12 +18,14 @@ const HdrIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   const onPress = React.useCallback(() => store.toggleHdr(), [store]);
 
   return (
-    <Icon
-      name={store.hdr ? 'hdr' : 'hdr-off'}
-      size={30}
-      style={style}
-      onPress={onPress}
-    />
+    <PressableScale onPress={onPress}>
+      <Icon
+        name={store.hdr ? 'hdr' : 'hdr-off'}
+        size={30}
+        style={style}
+        onPress={onPress}
+      />
+    </PressableScale>
   );
 };
 

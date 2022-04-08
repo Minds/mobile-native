@@ -5,6 +5,7 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
+import PressableScale from '~/common/components/PressableScale';
 
 type PropsType = {
   store: CameraStore;
@@ -29,17 +30,12 @@ const FlashIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   const autoStyle = [style, { position: 'absolute', top: -3, left: 0 }];
 
   return (
-    <View>
-      <Icon name={flashIconName} size={30} style={style} onPress={onPress} />
+    <PressableScale onPress={onPress}>
+      <Icon name={flashIconName} size={30} style={style} />
       {store.flashMode === 'auto' && (
-        <MIcon
-          name="format-text-variant"
-          size={12}
-          style={autoStyle}
-          onPress={onPress}
-        />
+        <MIcon name="format-text-variant" size={12} style={autoStyle} />
       )}
-    </View>
+    </PressableScale>
   );
 };
 

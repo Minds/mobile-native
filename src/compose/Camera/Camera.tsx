@@ -30,6 +30,7 @@ import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
 import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
+import PressableScale from '~/common/components/PressableScale';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -215,12 +216,13 @@ export default observer(function (props: PropsType) {
           direction="right"
           delay={PRESENTATION_ORDER.third}
           style={orientationStyle.lowLight}>
-          <Icon
-            size={30}
-            name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
-            style={orientationStyle.galleryIcon}
-            onPress={() => store.toggleLowLightBoost()}
-          />
+          <PressableScale onPress={() => store.toggleLowLightBoost()}>
+            <Icon
+              size={30}
+              name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
+              style={orientationStyle.galleryIcon}
+            />
+          </PressableScale>
         </FadeFrom>
       </MotiView>
       {store.recording && (
@@ -236,12 +238,13 @@ export default observer(function (props: PropsType) {
           <View style={orientationStyle.leftIconContainer}>
             {!store.recording && (
               <FadeFrom delay={PRESENTATION_ORDER.third}>
-                <FIcon
-                  size={30}
-                  name="image"
-                  style={orientationStyle.galleryIcon}
-                  onPress={props.onPressGallery}
-                />
+                <PressableScale onPress={props.onPressGallery}>
+                  <FIcon
+                    size={30}
+                    name="image"
+                    style={orientationStyle.galleryIcon}
+                  />
+                </PressableScale>
               </FadeFrom>
             )}
             {supportsHdr && !store.recording ? (
@@ -253,16 +256,17 @@ export default observer(function (props: PropsType) {
             )}
             {store.recording && (
               <FadeFrom delay={PRESENTATION_ORDER.second}>
-                <Icon
-                  size={45}
-                  name={
-                    store.recordingPaused
-                      ? 'play-circle-outline'
-                      : 'ios-pause-circle-outline'
-                  }
-                  style={orientationStyle.galleryIcon}
-                  onPress={() => store.toggleRecording(camera)}
-                />
+                <PressableScale onPress={() => store.toggleRecording(camera)}>
+                  <Icon
+                    size={45}
+                    name={
+                      store.recordingPaused
+                        ? 'play-circle-outline'
+                        : 'ios-pause-circle-outline'
+                    }
+                    style={orientationStyle.galleryIcon}
+                  />
+                </PressableScale>
               </FadeFrom>
             )}
           </View>
