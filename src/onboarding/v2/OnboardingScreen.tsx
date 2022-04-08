@@ -119,6 +119,8 @@ export default observer(function OnboardingScreen() {
           navigation.navigate('VerifyEmail', {
             store: progressStore,
           });
+        } else {
+          showNotification(i18n.t('emailConfirm.alreadyConfirmed'));
         }
       },
     },
