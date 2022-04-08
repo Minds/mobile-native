@@ -20,6 +20,7 @@ class NewsfeedStore<T> {
    */
   latestFeedStore = new FeedStore()
     .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
     .setInjectBoost(true)
     .setLimit(12)
     .setMetadata(

@@ -148,3 +148,5 @@ export const GOOGLE_PLAY_STORE =
   DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
+
+export const NEWSFEED_NEW_POST_POLL_INTERVAL = 5000;

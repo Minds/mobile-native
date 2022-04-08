@@ -49,6 +49,11 @@ export default class FeedsService {
   endpoint: string = '';
 
   /**
+   * @var {string}
+   */
+  countEndpoint: string = '';
+
+  /**
    * @var {Object}
    */
   params: Object = { sync: 1 };
@@ -204,6 +209,16 @@ export default class FeedsService {
    */
   setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
+    return this;
+  }
+
+  /**
+   * Set count endpoint
+   * @param {string} endpoint
+   * @returns {FeedsService}
+   */
+  setCountEndpoint(endpoint: string): FeedsService {
+    this.countEndpoint = endpoint;
     return this;
   }
 
@@ -444,5 +459,23 @@ export default class FeedsService {
     this.params = { sync: 1 };
     this.feed = [];
     return this;
+  }
+
+  /**
+   * counts newsfeed posts created after fromTimestamp
+   * @param { number } fromTimestamp
+   * @returns { Promise<number> }
+   */
+  async count(fromTimestamp: number): Promise<number> {
+    if (!this.countEndpoint) {
+      throw new Error('[FeedsService] No count endpoint');
+    }
+
+    const params = {
+      from_timestamp: fromTimestamp,
+    };
+
+    const result = await apiService.get(this.countEndpoint, params, this);
+    return result.count;
   }
 }

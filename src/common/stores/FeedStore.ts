@@ -9,6 +9,7 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
+import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 
 /**
  * Feed store
@@ -75,6 +76,21 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   get fallbackIndex() {
     return this.feedsService.fallbackIndex;
   }
+
+  /**
+   * the last time we checked for new posts
+   */
+  private newPostsLastCountedAt = Date.now();
+
+  /**
+   * the new post polling interval
+   */
+  private newPostInterval;
+
+  /**
+   * the number of new posts we haven't seen yet
+   */
+  @observable newPostsCount = 0;
 
   /**
    * Class constructor
@@ -255,9 +271,20 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Set endpoint for the feeds service
    * @param {string} endpoint
+   * @returns {FeedStore}
    */
   setEndpoint(endpoint: string): FeedStore<T> {
     this.feedsService.setEndpoint(endpoint);
+    return this;
+  }
+
+  /**
+   * Set count endpoint for the feeds service
+   * @param {string} endpoint
+   * @returns {FeedStore}
+   */
+  setCountEndpoint(endpoint: string): FeedStore<T> {
+    this.feedsService.setCountEndpoint(endpoint);
     return this;
   }
 
@@ -438,6 +465,13 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
+    const oldCount = this.newPostsCount;
+    const oldTimestamp = this.newPostsLastCountedAt;
+
+    if (refresh) {
+      this.newPostsCount = 0;
+      this.newPostsLastCountedAt = Date.now();
+    }
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
@@ -459,6 +493,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
+
+      this.newPostsLastCountedAt = oldTimestamp;
+      this.newPostsCount = oldCount;
     } finally {
       this.setLoading(false);
     }
@@ -580,6 +617,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   reset() {
     this.clear();
     this.feedsService.clear();
+    clearInterval(this.newPostInterval);
   }
 
   /**
@@ -593,5 +631,28 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   setScheduledCount(count) {
     this.scheduledCount = count;
+  }
+
+  /**
+   *
+   * @param {() => boolean} hasFocus does the screen have focus?
+   * @returns { Function } a function to remove the watcher
+   */
+  @action
+  public watchForUpdates(hasFocus: () => boolean): () => void {
+    clearInterval(this.newPostInterval);
+    this.newPostInterval = setInterval(async () => {
+      if (!hasFocus()) {
+        return;
+      }
+
+      const count = await this.feedsService.count(this.newPostsLastCountedAt);
+
+      console.log('NEW COUNT: ', count, this.newPostsLastCountedAt);
+      this.newPostsCount += count;
+      this.newPostsLastCountedAt = Date.now();
+    }, NEWSFEED_NEW_POST_POLL_INTERVAL);
+
+    return () => clearInterval(this.newPostInterval);
   }
 }

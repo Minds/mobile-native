@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import throttle from 'lodash/throttle';
 import { inject, observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -22,6 +22,8 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import { Button } from '~/common/ui';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -52,6 +54,7 @@ class NewsfeedScreen extends Component<
   NewsfeedScreenState
 > {
   disposeTabPress?: Function;
+  disposeUpdatesWatcher?: Function;
   portraitBar = React.createRef<any>();
   emptyProps = {
     ListEmptyComponent: (
@@ -123,6 +126,10 @@ class NewsfeedScreen extends Component<
 
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
+
+    this.disposeUpdatesWatcher = this.props.newsfeed.latestFeedStore.watchForUpdates(
+      () => this.props.navigation.isFocused(),
+    );
   }
 
   async loadFeed() {
@@ -133,9 +140,8 @@ class NewsfeedScreen extends Component<
    * Component will unmount
    */
   componentWillUnmount() {
-    if (this.disposeTabPress) {
-      this.disposeTabPress();
-    }
+    this.disposeTabPress?.();
+    this.disposeUpdatesWatcher?.();
   }
 
   refreshPortrait = () => {
@@ -168,6 +174,9 @@ class NewsfeedScreen extends Component<
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
+        {newsfeed.latestFeedStore.newPostsCount > 0 && (
+          <ShowNewPostsButton newsfeed={newsfeed} />
+        )}
       </View>
     );
 
@@ -218,3 +227,33 @@ class NewsfeedScreen extends Component<
 }
 
 export default withErrorBoundary(NewsfeedScreen);
+
+const newPostsButtonEnteringAnimation = FadeInUp.mass(0.3).duration(500);
+const newPostsButtonExitingAnimation = FadeInDown.mass(0.3).duration(500);
+const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
+  top: 120,
+});
+
+const ShowNewPostsButton = ({ newsfeed }) => {
+  const onPress = useCallback(() => {
+    newsfeed.listRef?.scrollToTop();
+    newsfeed.latestFeedStore.refresh();
+  }, [newsfeed.latestFeedStore, newsfeed.listRef]);
+
+  return (
+    <Animated.View
+      entering={newPostsButtonEnteringAnimation}
+      exiting={newPostsButtonExitingAnimation}
+      style={newPostsButtonStyle}>
+      <Button
+        align="center"
+        type="action"
+        mode="solid"
+        size="small"
+        onPress={onPress}
+        shouldAnimateChanges={false}>
+        See {newsfeed.latestFeedStore.newPostsCount} latest posts
+      </Button>
+    </Animated.View>
+  );
+};
