@@ -17,6 +17,7 @@ import {
   YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
+import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -73,6 +74,7 @@ export let APP_CONST = {
 /**
  * App
  */
+@codePush
 @observer
 class App extends Component<Props, State> {
   ShareReceiveListener;
