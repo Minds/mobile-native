@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Flow } from 'react-native-animated-spinkit';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Button from '../../../common/components/Button';
@@ -24,8 +26,9 @@ import BottomButtonOptions, {
 } from '../../../common/components/BottomButtonOptions';
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
-import { Flow } from 'react-native-animated-spinkit';
 import MText from '../../../common/components/MText';
+import { Button as Btn } from '~/common/ui';
+import { useKeyboard } from '@react-native-community/hooks';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -40,6 +43,7 @@ export default observer(function SetupChannelScreen() {
   const avatar = (channelStore.uploading
     ? { uri: channelStore.avatarPath }
     : user?.getAvatarSource()) as ImageSourcePropType;
+  const keyboard = useKeyboard();
 
   const store = useLocalStore(() => ({
     name: user?.name || '',
@@ -105,7 +109,14 @@ export default observer(function SetupChannelScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.setupChannel')}
-      onPressBack={NavigationService.goBack}>
+      onPressBack={NavigationService.goBack}
+      leftButton={
+        keyboard.keyboardShown ? (
+          <Btn type="action" mode="flat" size="small" onPress={store.save}>
+            {i18n.t('save')}
+          </Btn>
+        ) : undefined
+      }>
       <DismissKeyboard style={theme.flexContainer}>
         <View style={theme.flexContainer}>
           <InputContainer
@@ -117,6 +128,7 @@ export default observer(function SetupChannelScreen() {
           <InputContainer
             placeholder={i18n.t('channel.edit.bio')}
             onChangeText={store.setBio}
+            returnKeyType="default"
             multiline={true}
             scrollEnabled={false}
             value={store.bio}
