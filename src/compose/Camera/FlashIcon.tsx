@@ -4,7 +4,6 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
 import PressableScale from '~/common/components/PressableScale';
 
 type PropsType = {
