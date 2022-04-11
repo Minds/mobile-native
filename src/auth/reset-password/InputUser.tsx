@@ -33,7 +33,7 @@ const InputUser = observer(({ store }: PropsType) => {
         containerStyle={styles.button}
         loading={store.sending}
         spinner
-        disabled={!store.username}>
+        disabled={!store.username || store.rateLimited}>
         {i18n.t('continue')}
       </Button>
     </View>

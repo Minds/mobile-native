@@ -76,6 +76,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
+          "justifyContent": "space-between",
           "paddingHorizontal": 16,
         },
         Object {
@@ -97,7 +98,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
             Array [
               Object {
                 "fontSize": 20,
-                "marginLeft": 28,
+                "marginLeft": 16,
+                "position": "absolute",
+                "width": "100%",
               },
               Object {
                 "paddingVertical": 12,
@@ -119,88 +122,87 @@ exports[`LoginScreen component should renders correctly 1`] = `
     >
       Login
     </Text>
-    <View>
+    <View />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "position": "relative",
+        }
+      }
+    >
       <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 9.333333333333332,
+            "left": 9.333333333333332,
+            "right": 9.333333333333332,
+            "top": 9.333333333333332,
+          }
+        }
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Object {
             "alignItems": "center",
             "justifyContent": "center",
-            "position": "relative",
           }
         }
       >
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 9.333333333333332,
-              "left": 9.333333333333332,
-              "right": 9.333333333333332,
-              "top": 9.333333333333332,
-            }
-          }
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
+              "flexDirection": "row",
               "justifyContent": "center",
             }
           }
         >
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 28,
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "width": 28,
+                },
+              ]
             }
           >
-            <View
+            <Text
+              allowFontScaling={false}
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "height": 28,
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "width": 28,
+                    "color": "#AEB0B8",
+                    "fontSize": 25.76,
                   },
+                  Object {},
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#AEB0B8",
-                      "fontSize": 25.76,
-                    },
-                    Object {},
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                
-              </Text>
-            </View>
+              
+            </Text>
           </View>
         </View>
       </View>
