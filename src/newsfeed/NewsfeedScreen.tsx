@@ -172,19 +172,20 @@ class NewsfeedScreen extends Component<
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
+      <View style={headerStyle}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-        {newsfeed.latestFeedStore.newPostsCount > 0 && (
-          <ShowNewPostsButton newsfeed={newsfeed} />
-        )}
+        {this.props.newsfeed.feedType === 'latest' &&
+          newsfeed.latestFeedStore.newPostsCount > 0 && (
+            <ShowNewPostsButton newsfeed={newsfeed} />
+          )}
       </View>
     );
 
     const prepend = (
-      <>
+      <View style={prependStyle}>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -197,7 +198,7 @@ class NewsfeedScreen extends Component<
             onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
         </IfFeatureEnabled>
-      </>
+      </View>
     );
 
     // Show placeholder before the loading as an empty component.
@@ -266,3 +267,9 @@ const ShowNewPostsButton = ({ newsfeed }) => {
     </Animated.View>
   );
 };
+
+const headerStyle = ThemedStyles.combine('bgPrimaryBackground', {
+  paddingBottom: 50,
+});
+
+const prependStyle = { marginTop: -50 };
