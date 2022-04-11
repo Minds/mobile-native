@@ -31,7 +31,7 @@ const PaymentMethod = ({ store }: PropsType) => {
         backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
         style={theme.marginHorizontal2x}
       />
-      <MText style={switchTextStyle}>tokens</MText>
+      <MText style={switchTextStyle}>Tokens</MText>
     </View>
   );
 };
