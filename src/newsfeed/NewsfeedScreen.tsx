@@ -268,8 +268,6 @@ const ShowNewPostsButton = ({ newsfeed }) => {
   );
 };
 
-const headerStyle = ThemedStyles.combine('bgPrimaryBackground', {
-  paddingBottom: 50,
-});
+const headerStyle = { paddingBottom: 50 };
 
 const prependStyle = { marginTop: -50 };
