@@ -23,6 +23,10 @@ export const growthbook = new GrowthBook({
   },
 });
 
+export function hasFeature(feature: string) {
+  return growthbook.feature(feature);
+}
+
 /**
  * Update growthbook's attributes and features
  */

@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import throttle from 'lodash/throttle';
 import { inject, observer } from 'mobx-react';
-import React, { Component, useCallback } from 'react';
+import React, { Component, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -24,6 +24,7 @@ import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { Button } from '~/common/ui';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { hasFeature } from 'ExperimentsProvider';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -127,9 +128,11 @@ class NewsfeedScreen extends Component<
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
-    this.disposeUpdatesWatcher = this.props.newsfeed.latestFeedStore.watchForUpdates(
-      () => this.props.navigation.isFocused(),
-    );
+    if (hasFeature('mob-4193-polling')) {
+      this.disposeUpdatesWatcher = this.props.newsfeed.latestFeedStore.watchForUpdates(
+        () => this.props.navigation.isFocused(),
+      );
+    }
   }
 
   async loadFeed() {
