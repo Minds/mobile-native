@@ -28,6 +28,13 @@ Minds Mobile
 - Fix notification count issues
 - Enable react-freeze, that improves the performance by freezing screens that are not visible
 - Fix loading state indicators in comments
+- Fix password confirmation when changing email
+- Improved UX for onboarding channel setup
+- Better rate limit message for the user when resetting the password
+- Allow to verify email only once
+- Fix trending analytics screen errors
+- Remove full screen view for NSFW images when forbidden
+- Improve validation/error messages on the change password screen
 
 ## 4.22.3 - 2022-03-18
 
