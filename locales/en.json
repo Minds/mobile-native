@@ -1260,7 +1260,8 @@
     "confirm": "Please confirm your email address.",
     "sendAgain": "Click here to send again.",
     "confirmNote": "Note: If you change your email address, it will need to be confirmed again.",
-    "sent": "Email sent"
+    "sent": "Email sent",
+    "alreadyConfirmed": "Email address already confirmed"
   },
   "subtype": {
     "image": "image",
