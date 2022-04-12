@@ -3,7 +3,6 @@ import { Keyboard, Pressable } from 'react-native';
 
 const onPress = () => {
   Keyboard.dismiss();
-  console.log('dismissed');
 };
 
 /**

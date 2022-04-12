@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
@@ -12,6 +12,7 @@ import MText from '../../common/components/MText';
 import { Button } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
 import type UserStore from '~/auth/UserStore';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 
 /**
  * Email settings screen
@@ -137,7 +138,7 @@ class EmailScreen extends Component<
     ) : null;
 
     return (
-      <View
+      <DismissKeyboard
         style={[
           theme.flexContainer,
           theme.paddingTop3x,
@@ -153,7 +154,7 @@ class EmailScreen extends Component<
           selectTextOnFocus={true}
         />
         {confirmNote}
-      </View>
+      </DismissKeyboard>
     );
   }
 }

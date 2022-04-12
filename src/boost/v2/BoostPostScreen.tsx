@@ -14,6 +14,7 @@ import OfferBoostTab from './OfferBoostTab';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import ModalScreen from '../../common/components/ModalScreen';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
@@ -56,10 +57,12 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     <ModalScreen
       title={i18n.t('boosts.boostPost')}
       source={require('../../assets/boostBG.png')}>
-      <View style={theme.marginTop4x}>
-        <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
-      </View>
-      {renderTab()}
+      <DismissKeyboard>
+        <View style={theme.marginTop4x}>
+          <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
+        </View>
+        {renderTab()}
+      </DismissKeyboard>
     </ModalScreen>
   );
 });
