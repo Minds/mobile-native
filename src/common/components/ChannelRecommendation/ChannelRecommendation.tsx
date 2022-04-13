@@ -12,7 +12,7 @@ import { useChannelRecommendation } from './hooks/useChannelRecommendation';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
-  onSubscribed: (user: UserModel) => void;
+  onSubscribed?: (user: UserModel) => void;
 }
 
 export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
