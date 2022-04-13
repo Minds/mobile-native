@@ -1,3 +1,4 @@
+import { useMemo, useEffect } from 'react';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
@@ -23,7 +24,7 @@ export const useChannelRecommendation = (
   }>('api/v3/recommendations', {
     params: {
       location,
-      mostRecentSubscriptions: recentSubscriptions.list().join(','),
+      mostRecentSubscriptions: recentSubscriptions.list(),
       currentChannelUserGuid: channel?.guid,
       limit: 20,
     },
@@ -32,7 +33,13 @@ export const useChannelRecommendation = (
         ...recommendation,
         entity: UserModel.create(recommendation.entity),
       })),
+    skip: true,
   });
+
+  useEffect(() => {
+    res.fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return res;
 };
