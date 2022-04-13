@@ -12,10 +12,12 @@ import { useChannelRecommendation } from './hooks/useChannelRecommendation';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
+  onSubscribed: (user: UserModel) => void;
 }
 
 export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
   channel,
+  onSubscribed,
 }) => {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
@@ -46,7 +48,12 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
             </B2>
           )}
         </Column>
-        <Subscribe mini shouldUpdateFeed={false} channel={channel} />
+        <Subscribe
+          mini
+          shouldUpdateFeed={false}
+          channel={channel}
+          onSubscribed={onSubscribed}
+        />
       </Row>
     </MPressable>
   );
@@ -70,8 +77,32 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
   channel,
 }) => {
   const navigation = useNavigation();
-  const { result } = useChannelRecommendation(location, channel);
+  const { result, setResult } = useChannelRecommendation(location, channel);
   const shouldRender = Boolean(result?.entities.length) && visible;
+
+  /**
+   * When a channel was subscribed, remove it from the list——unless the list is small
+   */
+  const onSubscribed = useCallback(
+    subscribedChannel => {
+      if (!result?.entities) {
+        return;
+      }
+
+      if (result.entities.length <= 3) {
+        return null;
+      }
+
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setResult({
+        ...result,
+        entities: result?.entities.filter(
+          suggestion => suggestion.entity_guid !== subscribedChannel.guid,
+        ),
+      });
+    },
+    [result, setResult],
+  );
 
   // layout animations
   useLayoutEffect(() => {
@@ -101,6 +132,7 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
           <ChannelRecommendationItem
             key={suggestion.entity_guid}
             channel={suggestion.entity}
+            onSubscribed={onSubscribed}
           />
         ))}
       </Spacer>
