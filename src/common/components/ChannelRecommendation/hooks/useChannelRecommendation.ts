@@ -23,7 +23,7 @@ export const useChannelRecommendation = (
   }>('api/v3/recommendations', {
     params: {
       location,
-      mostRecentSubscriptions: recentSubscriptions.list(),
+      mostRecentSubscriptions: recentSubscriptions.list().join(','),
       currentChannelUserGuid: channel?.guid,
       limit: 3,
     },
