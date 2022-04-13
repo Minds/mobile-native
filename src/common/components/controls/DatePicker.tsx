@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { Keyboard, ViewStyle } from 'react-native';
 import i18n from '../../services/i18n.service';
 import { B1, B2, Column, Icon, PressableLine, Row } from '~ui';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -54,6 +54,8 @@ const DatePicker = observer((props: PropsType) => {
           : '';
       },
       openPicker() {
+        // we dismiss the keyboard in case it is open
+        Keyboard.dismiss();
         ref.current?.present();
       },
       closePicker() {

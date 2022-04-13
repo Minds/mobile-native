@@ -52,6 +52,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
           containerStyle={theme.bgPrimaryBackgroundHighlight}
           labelStyle={theme.colorPrimaryText}
           style={theme.colorPrimaryText}
+          autoFocus
           placeholder={i18n.t('settings.TFAEnterCode')}
           onChangeText={store.setAppCode}
           value={store.appCode}
