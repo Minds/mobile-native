@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
@@ -13,6 +14,18 @@ export const useChannelRecommendation = (
   channel?: UserModel,
 ) => {
   const { recentSubscriptions } = useLegacyStores();
+  const channelGuid = channel?.guid;
+  const recentSubscriptionsGuids = recentSubscriptions.list().join(',');
+  const params = useMemo(
+    () => ({
+      location,
+      mostRecentSubscriptions: recentSubscriptions.list(),
+      currentChannelUserGuid: channelGuid,
+      limit: 3,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [channelGuid, location, recentSubscriptionsGuids],
+  );
   const res = useApiFetch<{
     entities: {
       confidence_score: number;
@@ -21,12 +34,7 @@ export const useChannelRecommendation = (
       entity_type: string;
     }[];
   }>('api/v3/recommendations', {
-    params: {
-      location,
-      mostRecentSubscriptions: recentSubscriptions.list().join(','),
-      currentChannelUserGuid: channel?.guid,
-      limit: 3,
-    },
+    params,
     map: recommendations =>
       recommendations.map(recommendation => ({
         ...recommendation,
