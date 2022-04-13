@@ -63,6 +63,12 @@ export default class Input extends Component<PropsType> {
     }, 300);
   }
 
+  focus() {
+    if (this.inputRef.current) {
+      this.inputRef.current.focus();
+    }
+  }
+
   componentWillUnmount() {
     if (this.timeoutCleanup) {
       clearTimeout(this.timeoutCleanup);
