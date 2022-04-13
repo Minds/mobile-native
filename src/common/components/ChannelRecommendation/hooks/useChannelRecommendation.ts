@@ -25,7 +25,7 @@ export const useChannelRecommendation = (
       location,
       mostRecentSubscriptions: recentSubscriptions.list().join(','),
       currentChannelUserGuid: channel?.guid,
-      limit: 3,
+      limit: 20,
     },
     map: recommendations =>
       recommendations.map(recommendation => ({

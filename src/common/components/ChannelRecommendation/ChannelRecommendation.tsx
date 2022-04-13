@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
-import React, { FC, useCallback, useLayoutEffect } from 'react';
+import React, { FC, useCallback, useLayoutEffect, useState } from 'react';
 import { LayoutAnimation, View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
@@ -77,6 +77,7 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
   channel,
 }) => {
   const navigation = useNavigation();
+  const [listSize, setListSize] = useState(3);
   const { result, setResult } = useChannelRecommendation(location, channel);
   const shouldRender = Boolean(result?.entities.length) && visible;
 
@@ -100,8 +101,11 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
           suggestion => suggestion.entity_guid !== subscribedChannel.guid,
         ),
       });
+      if (listSize === 3) {
+        setListSize(5);
+      }
     },
-    [result, setResult],
+    [result, setResult, listSize],
   );
 
   // layout animations
@@ -128,7 +132,7 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
           </B2>
         </Row>
 
-        {result?.entities.slice(0, 3).map(suggestion => (
+        {result?.entities.slice(0, listSize).map(suggestion => (
           <ChannelRecommendationItem
             key={suggestion.entity_guid}
             channel={suggestion.entity}
