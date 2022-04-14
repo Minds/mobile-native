@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
 import { IconButtonNext } from '~ui/icons';
-import { MINDS_URI } from '../../config/Config';
+import { IS_IOS, MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
@@ -327,7 +327,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       });
     }
 
-    if (entity.hasImage()) {
+    if (entity.hasImage() && !(entity.shouldBeBlured() && IS_IOS)) {
       options.push({
         iconName: 'fullscreen',
         iconType: 'material-community',
