@@ -404,7 +404,7 @@ const ChannelScreen = observer((props: PropsType) => {
           username: store.channel?.username,
         })}
       </B1>
-      <IfFeatureEnabled feature="mob-channel-recommendations">
+      <IfFeatureEnabled feature="mob-4107-channelrecs">
         <View style={styles.thickBorder} />
         <ChannelRecommendation channel={store.channel} location="channel" />
       </IfFeatureEnabled>
