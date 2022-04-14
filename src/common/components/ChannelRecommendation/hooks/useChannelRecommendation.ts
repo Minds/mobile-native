@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useEffect } from 'react';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
