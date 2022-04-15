@@ -1,11 +1,13 @@
-import React, { useMemo, useCallback } from 'react';
-import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
+import React, { useCallback, useMemo } from 'react';
+import { Platform } from 'react-native';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 import i18nService from '~/common/services/i18n.service';
 import { Button, Icon } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
-  top: 120,
+  top: Platform.select({ android: 75, ios: 70 }),
 });
 
 export const ShowNewPostsButton = ({ newsfeed }) => {
@@ -27,18 +29,22 @@ export const ShowNewPostsButton = ({ newsfeed }) => {
       entering={newPostsButtonEnteringAnimation}
       exiting={newPostsButtonExitingAnimation}
       style={newPostsButtonStyle}>
-      <Button
-        align="center"
-        type="action"
-        mode="solid"
-        size="small"
-        icon={<Icon name="arrow-up" color="PrimaryText" size="small" />}
-        onPress={onPress}
-        shouldAnimateChanges={false}>
-        {i18nService.t('newsfeed.seeLatestTitle', {
-          count: newsfeed.latestFeedStore.newPostsCount,
-        })}
-      </Button>
+      <SafeAreaView edges={edges}>
+        <Button
+          align="center"
+          type="action"
+          mode="solid"
+          size="small"
+          icon={<Icon name="arrow-up" color="PrimaryText" size="small" />}
+          onPress={onPress}
+          shouldAnimateChanges={false}>
+          {i18nService.t('newsfeed.seeLatestTitle', {
+            count: newsfeed.latestFeedStore.newPostsCount,
+          })}
+        </Button>
+      </SafeAreaView>
     </Animated.View>
   );
 };
+
+const edges: Edge[] = ['top'];
