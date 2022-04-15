@@ -149,4 +149,4 @@ export const GOOGLE_PLAY_STORE =
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
 
-export const NEWSFEED_NEW_POST_POLL_INTERVAL = 5000;
+export const NEWSFEED_NEW_POST_POLL_INTERVAL = 30000;
