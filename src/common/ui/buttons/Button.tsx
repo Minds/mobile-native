@@ -232,6 +232,30 @@ export const ButtonComponent = ({
     stateRef.current.state = 0;
   };
 
+  const renderContent = () => {
+    let content;
+    const title = (
+      <Font font={font} color={textColor} numberOfLines={1}>
+        {text}
+      </Font>
+    );
+
+    if (iconOnly) {
+      content = icon;
+    } else if (icon) {
+      content = (
+        <Row>
+          {icon ? <Spacer right="XS">{icon}</Spacer> : null}
+          {title}
+        </Row>
+      );
+    } else {
+      content = title;
+    }
+
+    return content;
+  };
+
   return (
     <Pressable
       onPressIn={handlePressIn}
@@ -266,16 +290,7 @@ export const ButtonComponent = ({
           style={{
             transform: [{ scale: textAnimation }],
           }}>
-          {iconOnly ? (
-            icon
-          ) : (
-            <Row>
-              {icon ? <Spacer right="XS">{icon}</Spacer> : null}
-              <Font font={font} color={textColor} numberOfLines={1}>
-                {text}
-              </Font>
-            </Row>
-          )}
+          {renderContent()}
         </Animated.View>
       </View>
     </Pressable>
