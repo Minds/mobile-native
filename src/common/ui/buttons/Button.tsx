@@ -20,6 +20,7 @@ import {
 import { frameThrower } from '~ui/helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
+import { Row, Spacer } from '../layout';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -71,13 +72,15 @@ export const ButtonComponent = ({
   icon,
   pressableProps,
 }: ButtonPropsType) => {
+  const iconOnly = icon && !children;
+
   const containerStyle = [
     styles.container,
     styles[mode],
     styles[size],
     styles[`${mode}_${type}`],
     styles[`${mode}_${size}`],
-    icon && styles.paddingLess,
+    iconOnly && styles.paddingLess,
     disabled && styles[`${mode}_disabled`],
   ];
 
@@ -259,13 +262,19 @@ export const ButtonComponent = ({
         />
         {darkContent && <View style={styles.darken} />}
         {/** Button Text */}
-        <Animated.View style={{ transform: [{ scale: textAnimation }] }}>
-          {icon ? (
+        <Animated.View
+          style={{
+            transform: [{ scale: textAnimation }],
+          }}>
+          {iconOnly ? (
             icon
           ) : (
-            <Font font={font} color={textColor} numberOfLines={1}>
-              {text}
-            </Font>
+            <Row>
+              {icon ? <Spacer right="XS">{icon}</Spacer> : null}
+              <Font font={font} color={textColor} numberOfLines={1}>
+                {text}
+              </Font>
+            </Row>
           )}
         </Animated.View>
       </View>
