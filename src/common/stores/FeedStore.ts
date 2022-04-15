@@ -648,7 +648,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
       const count = await this.feedsService.count(this.newPostsLastCountedAt);
 
-      console.log('NEW COUNT: ', count, this.newPostsLastCountedAt);
       this.newPostsCount += count;
       this.newPostsLastCountedAt = Date.now();
     }, NEWSFEED_NEW_POST_POLL_INTERVAL);
