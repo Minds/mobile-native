@@ -3,10 +3,9 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import throttle from 'lodash/throttle';
 import { inject, observer } from 'mobx-react';
-import React, { Component, useCallback, useMemo } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
-import ThemedStyles from '~/styles/ThemedStyles';
 import Topbar from '~/topbar/Topbar';
 
 import FeedList, { InjectItem } from '../common/components/FeedList';
@@ -22,9 +21,8 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import { Button } from '~/common/ui';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import { hasFeature } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
+import { ShowNewPostsButton } from './ShowNewPostsButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -128,7 +126,7 @@ class NewsfeedScreen extends Component<
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
-    if (hasFeature('mob-4193-polling')) {
+    if (hasVariation('mob-4193-polling')) {
       this.disposeUpdatesWatcher = this.props.newsfeed.latestFeedStore.watchForUpdates(
         () => this.props.navigation.isFocused(),
       );
@@ -231,42 +229,6 @@ class NewsfeedScreen extends Component<
 }
 
 export default withErrorBoundary(NewsfeedScreen);
-
-const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
-  top: 120,
-});
-
-const ShowNewPostsButton = ({ newsfeed }) => {
-  const newPostsButtonEnteringAnimation = useMemo(
-    () => FadeInUp.mass(0.3).duration(500),
-    [],
-  );
-  const newPostsButtonExitingAnimation = useMemo(
-    () => FadeInDown.mass(0.3).duration(500),
-    [],
-  );
-  const onPress = useCallback(() => {
-    newsfeed.listRef?.scrollToTop();
-    newsfeed.latestFeedStore.refresh();
-  }, [newsfeed.latestFeedStore, newsfeed.listRef]);
-
-  return (
-    <Animated.View
-      entering={newPostsButtonEnteringAnimation}
-      exiting={newPostsButtonExitingAnimation}
-      style={newPostsButtonStyle}>
-      <Button
-        align="center"
-        type="action"
-        mode="solid"
-        size="small"
-        onPress={onPress}
-        shouldAnimateChanges={false}>
-        See {newsfeed.latestFeedStore.newPostsCount} latest posts
-      </Button>
-    </Animated.View>
-  );
-};
 
 const headerStyle = { paddingBottom: 50 };
 

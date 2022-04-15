@@ -23,8 +23,9 @@ export const growthbook = new GrowthBook({
   },
 });
 
-export function hasFeature(feature: string) {
-  return growthbook.feature(feature);
+export function hasVariation(feature: string, variation: string = 'on') {
+  const featureResult = growthbook.feature(feature);
+  return featureResult.value === featureResult[variation];
 }
 
 /**
