@@ -168,22 +168,32 @@ class NewsfeedScreen extends Component<
    */
   render() {
     const newsfeed = this.props.newsfeed;
+    const LatestPostsButtonVisible =
+      this.props.newsfeed.feedType === 'latest' &&
+      newsfeed.latestFeedStore.newPostsCount > 0;
 
     const header = (
-      <View style={headerStyle}>
+      <View
+        style={
+          LatestPostsButtonVisible
+            ? latestPostsContainerStyles.header
+            : undefined
+        }>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-        {this.props.newsfeed.feedType === 'latest' &&
-          newsfeed.latestFeedStore.newPostsCount > 0 && (
-            <ShowNewPostsButton newsfeed={newsfeed} />
-          )}
+        {LatestPostsButtonVisible && <ShowNewPostsButton newsfeed={newsfeed} />}
       </View>
     );
 
     const prepend = (
-      <View style={prependStyle}>
+      <View
+        style={
+          LatestPostsButtonVisible
+            ? latestPostsContainerStyles.prepend
+            : undefined
+        }>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -230,6 +240,13 @@ class NewsfeedScreen extends Component<
 
 export default withErrorBoundary(NewsfeedScreen);
 
-const headerStyle = { paddingBottom: 50 };
-
-const prependStyle = { marginTop: -50 };
+/**
+ * these styles are used to hide the latest posts button completely when there's some notch
+ * on top of the screen. It's a little hard to explain. But if you remove these from the
+ * iPhone 13, the button will be partially visible under the notch, but with these styles
+ * the button will get out of the screen
+ */
+const latestPostsContainerStyles = {
+  header: { paddingBottom: 50 },
+  prepend: { marginTop: -50 },
+};
