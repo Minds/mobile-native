@@ -34,7 +34,6 @@ export const ShowNewPostsButton = ({ newsfeed }) => {
         size="small"
         icon={<Icon name="arrow-up" color="PrimaryText" size="small" />}
         onPress={onPress}
-        horizontal="XL"
         shouldAnimateChanges={false}>
         {i18nService.t('newsfeed.seeLatestTitle', {
           count: newsfeed.latestFeedStore.newPostsCount,

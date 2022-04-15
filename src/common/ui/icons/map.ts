@@ -242,6 +242,10 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'tune',
   },
+  'arrow-up': {
+    font: 'MaterialCommunityIcons',
+    name: 'arrow-up',
+  },
 };
 
 export default ICON_MAP;
