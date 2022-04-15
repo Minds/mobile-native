@@ -36,7 +36,6 @@ jest.mock('@gorhom/bottom-sheet', () => {
     BottomSheetFlatList: react.FlatList,
   };
 });
-jest.mock('react-native-notifications');
 jest.mock('react-navigation-shared-element', () => ({
   createSharedElementStackNavigator: jest.fn(),
 }));

@@ -50,9 +50,6 @@ import ExperimentsProvider from 'ExperimentsProvider';
 
 YellowBox.ignoreWarnings(['']);
 
-const appInitManager = new AppInitManager();
-appInitManager.initializeServices();
-
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -100,6 +97,10 @@ class App extends Component<Props, State> {
     }
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
+
+    //
+    this.appInitManager = new AppInitManager();
+    this.appInitManager.initializeServices();
   }
 
   /**
@@ -181,7 +182,7 @@ class App extends Component<Props, State> {
             <NavigationContainer
               ref={setTopLevelNavigator}
               theme={ThemedStyles.navTheme}
-              onReady={appInitManager.onNavigatorReady}
+              onReady={this.appInitManager.onNavigatorReady}
               onStateChange={analyticsService.onNavigatorStateChange}>
               <StoresProvider>
                 <Provider key="app" {...stores}>

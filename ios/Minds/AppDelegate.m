@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "RNNotifications.h"
 #import "AppDelegate.h"
 #import "RNBootSplash.h"
-
+#import <Firebase.h>
+#import "RNFBMessagingModule.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -49,11 +49,12 @@ static void InitializeFlipper(UIApplication *application) {
   #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
   #endif
-  NSDictionary *initialProperties = arguments();
+  NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];
+
   RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [self.reactDelegate createRootViewWithBridge:bridge
                                                    moduleName:@"Minds"
-                                            initialProperties:initialProperties];
+                                            initialProperties:appProperties];
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
@@ -64,8 +65,6 @@ static void InitializeFlipper(UIApplication *application) {
   [self.window makeKeyAndVisible];
 
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
-
-  [RNNotifications startMonitorNotifications];
 
   [ReactNativeExceptionHandler replaceNativeExceptionHandlerBlock:^(NSException *exception, NSString *readeableException){
 
@@ -91,7 +90,7 @@ static void InitializeFlipper(UIApplication *application) {
   }];
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
-
+  [FIRApp configure];
   return YES;
 }
 
@@ -128,62 +127,6 @@ static void InitializeFlipper(UIApplication *application) {
            sourceApplication:sourceApplication
            annotation:annotation
          ];
-}
-
-// Required to register for notifications
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  [RNNotifications didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
-}
-
-
-static NSDictionary *arguments()
-{
-    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-
-    if(arguments.count < 2)
-        return nil;
-
-    NSMutableDictionary *argsDict = [[NSMutableDictionary alloc] init];
-
-    NSMutableArray *args = [arguments mutableCopy];
-    [args removeObjectAtIndex:0];
-
-    NSInteger skip = 0;
-    for(NSString *arg in args)
-    {
-        if(skip > 0 && ((NSInteger)[arguments indexOfObject:arg]) == skip)
-        {
-            continue;
-        }
-        else
-        {
-            if([arg rangeOfString:@"="].location != NSNotFound && [arg rangeOfString:@"--"].location != NSNotFound)
-            {
-                NSArray *components = [arg componentsSeparatedByString:@"="];
-                NSString *key       = [[components objectAtIndex:0] stringByReplacingOccurrencesOfString:@"--" withString:@""];
-                NSString *value     = [components objectAtIndex:1];
-
-                [argsDict setObject:value forKey:key];
-            }
-            else if([arg rangeOfString:@"-"].location != NSNotFound)
-            {
-                NSInteger index = [arguments indexOfObject:arg];
-                NSInteger next  = index + 1;
-                NSString *key   = [arg stringByReplacingOccurrencesOfString:@"-" withString:@""];
-                NSString *value = [arguments objectAtIndex:next];
-
-                [argsDict setObject:value forKey:key];
-            }
-        }
-    }
-
-    NSLog(@"ARGS: %@", argsDict);
-
-    return [argsDict copy];
 }
 
 @end

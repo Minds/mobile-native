@@ -98,9 +98,8 @@ export class ApiService {
       }).then(done => {
         console.log('CookieManager.set =>', done);
       });
-    } else {
-      CookieManager.clearByName('https://www.minds.com', 'canary');
     }
+
     if (MINDS_STAGING) {
       CookieManager.set('https://www.minds.com', {
         name: 'staging',
@@ -109,8 +108,6 @@ export class ApiService {
       }).then(done => {
         console.log('CookieManager.set =>', done);
       });
-    } else {
-      CookieManager.clearByName('https://www.minds.com', 'staging');
     }
 
     this.axios =

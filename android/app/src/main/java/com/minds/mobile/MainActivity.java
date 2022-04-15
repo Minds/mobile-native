@@ -6,7 +6,6 @@ import com.facebook.react.ReactActivityDelegate;
 import android.os.Bundle;
 import com.zoontek.rnbootsplash.RNBootSplash;
 import com.facebook.react.ReactActivity;
-
 // image picker imports
 import com.facebook.react.modules.core.PermissionListener;
 
@@ -37,20 +36,28 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
-        return new ReactActivityDelegateWrapper(this,
-        new ReactActivityDelegate(this, getMainComponentName())
-        );
+      return new ReactActivityDelegate(this, getMainComponentName()) {
+        @Override
+        protected ReactRootView createRootView() {
+            return new RNGestureHandlerEnabledRootView(MainActivity.this);
+        }
+        
+        @Override
+        protected void loadApp(String appKey) {
+            RNBootSplash.init(getPlainActivity());
+            super.loadApp(appKey);
+        }
+
+      };
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
-        RNBootSplash.init(R.drawable.bootsplash, MainActivity.this);
         setRequestedOrientation(
             ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
         );
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)

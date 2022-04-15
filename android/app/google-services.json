@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "81109256529",
-    "firebase_url": "https://minds-com-api-project-81109256529.firebaseio.com",
-    "project_id": "minds.com:api-project-81109256529"
+    "project_number": "604662077091",
+    "firebase_url": "https://minds-apptest.firebaseio.com",
+    "project_id": "minds-apptest",
+    "storage_bucket": "minds-apptest.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:81109256529:android:471681f082570885",
+        "mobilesdk_app_id": "1:604662077091:android:426400bb87aab158871116",
         "android_client_info": {
           "package_name": "com.minds.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "81109256529-7bnt4565mfv7nelmd1suvb2mkakt3d6o.apps.googleusercontent.com",
+          "client_id": "604662077091-nc31pbihfpio3ajvdharg6n0vhrec8ea.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDt4mTYivmWtg1Sb4TUbnObO8YQ-5aZGA0"
+          "current_key": "AIzaSyD7R1U2r75Sr3WKrEn1k5JAxdXn8JqsSp8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "81109256529-7bnt4565mfv7nelmd1suvb2mkakt3d6o.apps.googleusercontent.com",
+              "client_id": "604662077091-nc31pbihfpio3ajvdharg6n0vhrec8ea.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

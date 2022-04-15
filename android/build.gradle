@@ -5,7 +5,7 @@ project.ext {
 buildscript {
     ext {
         buildToolsVersion = "30.0.2"
-        minSdkVersion = 21
+        minSdkVersion = 23
         compileSdkVersion = 31
         targetSdkVersion = 31
         supportLibVersion = "30.0.0"
@@ -52,6 +52,9 @@ allprojects {
         maven { url "https://www.jitpack.io" }
         maven { url 'https://maven.google.com' }
         jcenter()
+        maven {
+            url "$rootDir/../node_modules/@notifee/react-native/android/libs"
+        }
     }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
@@ -69,10 +72,12 @@ subprojects {
                 buildToolsVersion rootProject.ext.supportLibVersion
 
                 defaultConfig {
-                    minSdkVersion 21
-                    manifestPlaceholders = [
-                        tipsiStripeRedirectScheme: "mindsapp"
-                    ]
+                    minSdkVersion 23
+                    if (p.name == 'tipsi-stripe') {
+                        manifestPlaceholders = [
+                            tipsiStripeRedirectScheme: "mindsapp"
+                        ]
+                    }
                 }
             }
         }

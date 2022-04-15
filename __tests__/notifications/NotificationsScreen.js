@@ -7,7 +7,6 @@ import { getStores } from '../../AppStores';
 
 jest.mock('@react-navigation/native');
 jest.mock('react-native-system-setting');
-jest.mock('react-native-notifications');
 jest.mock(
   '../../src/common/components/interactions/InteractionsBottomSheet',
   () => 'InteractionsBottomSheet',

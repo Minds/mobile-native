@@ -13,7 +13,6 @@ import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
-import com.wix.reactnativenotifications.RNNotificationsPackage;
 
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -51,7 +50,6 @@ public class MainApplication extends Application implements ShareApplication, Re
       protected List<ReactPackage> getPackages() {
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
-        packages.add(new RNNotificationsPackage(this.getApplication()));
 
         return packages;
       }

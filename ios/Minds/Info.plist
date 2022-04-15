@@ -22,8 +22,6 @@
 	<string>4.24.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -45,7 +43,7 @@
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-    <string>mindschat</string>
+		<string>mindschat</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -110,6 +108,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
@@ -119,6 +118,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -134,6 +135,6 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-  <false/>
+	<false/>
 </dict>
 </plist>

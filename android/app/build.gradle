@@ -216,6 +216,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.core:core-splashscreen:1.0.0-beta01"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -233,11 +234,9 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 
     implementation project(':tipsi-stripe')
-    implementation project(':reactnativenotifications')
 
-
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
+    // implementation 'com.google.firebase:firebase-core:16.0.7'
+    // implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
 
     // I manually linked this package to fix the build errors ignoring the following packages
     // implementation(project(':react-native-jitsi-meet')) {

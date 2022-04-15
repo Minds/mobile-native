@@ -35,14 +35,9 @@ if (process.env.JEST_WORKER_ID === undefined) {
   });
 }
 
-// // Log Mobx global errors
-// onError(error => {
-//   console.log(error);
-//   logService.exception(error);
-// });
 
 // react-native-exception-handler global handlers
-if (!__DEV__) {
+if (true) {
   /**
    * Globar error handlers
    */
