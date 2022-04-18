@@ -23,6 +23,7 @@ import { useNavigation } from '@react-navigation/core';
 import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
+import FriedlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 
 type PropsType = {
   // called after registeration is finished
@@ -224,6 +225,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             : undefined
         }
       />
+
+      <View style={{ height: 70, width: '100%' }}>
+        <FriedlyCaptcha />
+      </View>
     </View>
   );
 
