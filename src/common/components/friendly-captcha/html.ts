@@ -109,7 +109,6 @@ export default `
           document.getElementById('captcha'),
           {
             startMode: 'auto',
-            // sitekey: 'FCMNS7BU7R8316DQ',
             sitekey: 'minds-front',
             puzzleEndpoint:
               'api/v3/friendly-captcha/puzzle',
