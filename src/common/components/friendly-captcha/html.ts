@@ -112,7 +112,7 @@ export default `
             // sitekey: 'FCMNS7BU7R8316DQ',
             sitekey: 'minds-front',
             puzzleEndpoint:
-              'https://feat-friendly-captcha-2272.minds.io/api/v3/friendly-captcha/puzzle',
+              'api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
               postMessage({ solution });
               onSuccess();
