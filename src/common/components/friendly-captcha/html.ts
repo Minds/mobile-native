@@ -77,6 +77,8 @@ export default `
     src="https://unpkg.com/friendly-challenge@0.9.1/widget.min.js"
   ></script>
   <script>
+    let widgetInstance;
+
     function postMessage(data) {
       window.ReactNativeWebView.postMessage(JSON.stringify(data))
     }
@@ -103,9 +105,15 @@ export default `
       }
     }
 
+    function reset() {
+      if (widgetInstance) {
+        widgetInstance.reset();
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function (event) {
       try {
-        new friendlyChallenge.WidgetInstance(
+        widgetInstance = new friendlyChallenge.WidgetInstance(
           document.getElementById('captcha'),
           {
             startMode: 'auto',

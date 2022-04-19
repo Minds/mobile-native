@@ -1,5 +1,10 @@
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import WebView from 'react-native-webview';
 import openUrlService from '~/common/services/open-url.service';
 import { MINDS_API_URI } from '~/config/Config';
@@ -21,7 +26,8 @@ const whiteListAll = ['*'];
 /**
  * Friendly captcha component using a webview
  */
-function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
+function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
+  const webViewRef = useRef<WebView>(null);
   /**
    * receives done or error callbacks from the webview
    */
@@ -45,6 +51,14 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
     [onError, onSolved],
   );
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      reset: () => webViewRef.current?.injectJavaScript('reset()'),
+    }),
+    [],
+  );
+
   /**
    * If the webview was navigating to an external url, open it using our openUrlService
    */
@@ -59,6 +73,7 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
 
   return (
     <WebView
+      ref={webViewRef}
       source={webViewSource}
       originWhitelist={whiteListAll}
       scrollEnabled={false}
@@ -79,4 +94,4 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
 
 const transparentBg = { backgroundColor: 'transparent' };
 
-export default observer(FriendlyCaptcha);
+export default observer(forwardRef(FriendlyCaptcha));

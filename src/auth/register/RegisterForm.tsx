@@ -36,6 +36,7 @@ const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
+  const friendlyCaptchaRef = useRef<any>(null);
   const scrollViewRef = useRef<ScrollView>();
   const friendlyCaptchaEnabled = useFeature('engine-2272-captcha').on;
 
@@ -107,6 +108,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         }
       } catch (err: any) {
         showNotification(err.message, 'warning', 3000);
+        friendlyCaptchaRef.current?.reset();
         logService.exception(err);
       } finally {
         store.inProgress = false;
@@ -256,7 +258,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
 
       {store.friendlyCaptchaEnabled && (
         <View style={styles.friendlyCaptchaContainer}>
-          <FriedlyCaptcha onSolved={store.setCaptcha} />
+          <FriedlyCaptcha
+            ref={friendlyCaptchaRef}
+            onSolved={store.setCaptcha}
+          />
         </View>
       )}
     </View>
