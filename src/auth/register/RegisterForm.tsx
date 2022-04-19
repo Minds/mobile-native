@@ -134,9 +134,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         return;
       }
 
-      // use friendly captcha if it was enabled and puzzle was solved,
-      // otherwise fall back to legacy captcha
-      if (friendlyCaptchaEnabled && this.captcha) {
+      // use friendly captcha if it was enabled and if the puzzle was solved,
+      // otherwise fall back to the legacy captcha
+      if (store.friendlyCaptchaEnabled && this.captcha) {
         return this.register();
       } else {
         store.setFriendlyCaptchaEnabled(false);
