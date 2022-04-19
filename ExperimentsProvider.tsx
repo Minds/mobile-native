@@ -31,7 +31,7 @@ export const growthbook = new GrowthBook({
  */
 export function hasVariation(featureKey: string, variation: string = 'on') {
   const featureResult = growthbook.feature(featureKey);
-  return featureResult.value === featureResult[variation];
+  return featureResult[variation];
 }
 
 /**
