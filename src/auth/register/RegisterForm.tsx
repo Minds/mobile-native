@@ -71,6 +71,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       store.register();
     },
     register: async () => {
+      if (store.inProgress) {
+        return null;
+      }
+
       store.inProgress = true;
 
       try {
