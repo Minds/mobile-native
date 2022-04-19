@@ -46,8 +46,6 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
 
   return (
     <WebView
-      // forceDarkOn
-      // style={{ backgroundColor: 'transparent' }}
       source={webViewSource}
       originWhitelist={whiteListAll}
       scrollEnabled={false}
@@ -57,11 +55,14 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
       sharedCookiesEnabled
       textInteractionEnabled={false}
       injectedJavaScript={`setTheme(${
-        ThemedStyles.theme === 1 ? 'dark' : 'light'
+        ThemedStyles.theme === 1 ? "'dark'" : "'light'"
       })`}
       onMessage={onMessage}
+      style={transparentBg}
     />
   );
 }
+
+const transparentBg = { backgroundColor: 'transparent' };
 
 export default observer(FriendlyCaptcha);

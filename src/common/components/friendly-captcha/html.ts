@@ -28,12 +28,12 @@ export default `
 
       * {
         color: var(--primary-text);
-        background-color: var(--primary-bg);
       }
 
       body {
         margin: 0;
         padding: 4px;
+        background-color: var(--primary-bg, transparent);
       }
 
       .frc-icon {
@@ -65,7 +65,7 @@ export default `
       }
     </style>
   </head>
-  <body class="dark">
+  <body>
     <div id="captcha"></div>
   </body>
   <script
@@ -82,7 +82,7 @@ export default `
     }
 
     function setTheme(theme) {
-      document.getElementsByTagName('body')[0].className = 'dark';
+      document.querySelector('body').className = theme;
     }
 
     function onSuccess() {
