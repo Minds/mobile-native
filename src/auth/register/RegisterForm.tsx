@@ -24,6 +24,7 @@ import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingVie
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriedlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
+import { useFeature } from '@growthbook/growthbook-react';
 
 type PropsType = {
   // called after registeration is finished
@@ -36,6 +37,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
   const scrollViewRef = useRef<ScrollView>();
+  const friendlyCaptchaEnabled = useFeature('engine-2272-captcha').on;
 
   const store = useLocalStore(() => ({
     focused: false,
@@ -49,16 +51,27 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     inProgress: false,
     showErrors: false,
     usernameTaken: false,
+    captcha: '',
     validateUser: debounce(async (username: string) => {
       const response = await apiService.get<any>('api/v3/register/validate', {
         username,
       });
       store.usernameTaken = !response.valid;
     }, 300),
+    friendlyCaptchaEnabled,
+    setFriendlyCaptchaEnabled(enabled: boolean) {
+      store.friendlyCaptchaEnabled = enabled;
+    },
+    setCaptcha(value: string) {
+      this.captcha = value;
+    },
     onCaptchResult: async (captcha: string) => {
-      store.inProgress = true;
-
+      store.captcha = captcha;
       captchaRef.current.hide();
+      store.register();
+    },
+    register: async () => {
+      store.inProgress = true;
 
       try {
         const params = {
@@ -66,7 +79,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           email: store.email,
           password: store.password,
           exclusive_promotions: store.exclusivePromotions,
-          captcha,
+          captcha: store.captcha,
+          friendly_captcha_enabled: store.friendlyCaptchaEnabled,
         } as registerParams;
         await authService.register(params);
         await apiService.clearCookies();
@@ -85,7 +99,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             logService.exception(error);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         showNotification(err.message, 'warning', 3000);
         logService.exception(err);
       } finally {
@@ -117,7 +131,15 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       ) {
         return;
       }
-      captchaRef.current?.show();
+
+      // use friendly captcha if it was enabled and puzzle was solved,
+      // otherwise fall back to legacy captcha
+      if (friendlyCaptchaEnabled && this.captcha) {
+        return this.register();
+      } else {
+        store.setFriendlyCaptchaEnabled(false);
+        captchaRef.current?.show();
+      }
     },
     // on password focus
     focus() {
@@ -226,9 +248,11 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         }
       />
 
-      <View style={{ height: 70, width: '100%' }}>
-        <FriedlyCaptcha />
-      </View>
+      {friendlyCaptchaEnabled && (
+        <View style={styles.friendlyCaptchaContainer}>
+          <FriedlyCaptcha onSolved={store.setCaptcha} />
+        </View>
+      )}
     </View>
   );
 
@@ -296,4 +320,5 @@ const styles = ThemedStyles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
+  friendlyCaptchaContainer: { height: 70, width: '100%' },
 });

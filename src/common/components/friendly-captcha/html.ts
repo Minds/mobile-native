@@ -1,3 +1,4 @@
+export default `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,9 +19,9 @@
     src="https://unpkg.com/friendly-challenge@0.9.1/widget.min.js"
   ></script>
   <script>
-    const postMessage = window.ReactNativeWebView
-      ? window.ReactNativeWebView.postMessage
-      : console.log;
+    function postMessage(data) {
+      window.ReactNativeWebView.postMessage(JSON.stringify(data))
+    }
 
     document.addEventListener('DOMContentLoaded', function (event) {
       try {
@@ -28,21 +29,21 @@
           document.getElementById('captcha'),
           {
             startMode: 'auto',
-            sitekey: 'FCMNS7BU7R8316DQ',
-            // puzzleEndpoint:
-            //   'https://feat-friendly-captcha-2272.minds.io/api/v3/friendly-captcha/puzzle',
+            // sitekey: 'FCMNS7BU7R8316DQ',
+            sitekey: 'minds-front',
+            puzzleEndpoint:
+              'https://feat-friendly-captcha-2272.minds.io/api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
-              postMessage(`SUCCESS: ${solution}`);
+              postMessage({ solution });
             },
             errorCallback: error => {
-              postMessage(`ERROR: ${error}`);
+              postMessage({ error });
             },
           },
         );
-      } catch (e) {
-        postMessage(`ERROR: ${e}`);
-        console.error(e);
+      } catch (error) {
+        postMessage({ error });
       }
     });
   </script>
-</html>
+</html>`;
