@@ -250,7 +250,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         }
       />
 
-      {friendlyCaptchaEnabled && (
+      {store.friendlyCaptchaEnabled && (
         <View style={styles.friendlyCaptchaContainer}>
           <FriedlyCaptcha onSolved={store.setCaptcha} />
         </View>
