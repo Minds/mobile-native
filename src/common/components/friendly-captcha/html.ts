@@ -5,9 +5,67 @@ export default `
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Captch</title>
+    <style>
+      :root .light {
+        --primary-text: #43434d;
+        --icon: #7d7d82;
+        --primary-bg: #ffffff;
+        --secondary-bg: #f6f7f7;
+        --tertiary-bg: #e3e4e9;
+        --success: #59A05E;
+        --danger: #CA4A34;
+      }
+
+      :root .dark {
+        --primary-text: #ffffff;
+        --icon: #aeb0b8;
+        --primary-bg: #1f252c;
+        --secondary-bg: #1a2025;
+        --tertiary-bg: #404e53;
+        --success: #5AC36F;
+        --danger: #CA4A34;
+      }
+
+      * {
+        color: var(--primary-text);
+        background-color: var(--primary-bg);
+      }
+
+      body {
+        margin: 0;
+        padding: 4px;
+      }
+
+      .frc-icon {
+        fill: var(--icon) !important;
+        stroke: var(--icon) !important;
+      }
+
+      .frc-text b {
+        color: var(--primary-text);
+      }
+
+      .frc-button {
+        background-color: var(--tertiary-bg) !important;
+        color: var(--primary-text);
+      }
+
+      .frc-button:hover {
+        background-color: var(--secondary-bg) !important;
+      }
+
+      .success svg {
+        fill: var(--success) !important;
+        stroke: var(--success) !important;
+      }
+
+      .danger svg {
+        fill: var(--danger) !important;
+        stroke: var(--danger) !important;
+      }
+    </style>
   </head>
-  <body style="background-color: transparent">
+  <body class="dark">
     <div id="captcha"></div>
   </body>
   <script
@@ -23,6 +81,28 @@ export default `
       window.ReactNativeWebView.postMessage(JSON.stringify(data))
     }
 
+    function setTheme(theme) {
+      document.getElementsByTagName('body')[0].className = 'dark';
+    }
+
+    function onSuccess() {
+      try {
+        document.querySelector('.frc-container').className =
+          'frc-container success';
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function onError() {
+      try {
+        document.querySelector('.frc-container').className =
+          'frc-container danger';
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function (event) {
       try {
         new friendlyChallenge.WidgetInstance(
@@ -35,14 +115,17 @@ export default `
               'https://feat-friendly-captcha-2272.minds.io/api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
               postMessage({ solution });
+              onSuccess();
             },
             errorCallback: error => {
               postMessage({ error });
+              onError();
             },
           },
         );
       } catch (error) {
         postMessage({ error });
+        onError();
       }
     });
   </script>

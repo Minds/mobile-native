@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import WebView from 'react-native-webview';
 import { MINDS_API_URI } from '~/config/Config';
+import ThemedStyles from '~/styles/ThemedStyles';
 import html from './html';
 
 interface FriendlyCaptchaProps {
@@ -55,6 +56,9 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
       bounces={false}
       sharedCookiesEnabled
       textInteractionEnabled={false}
+      injectedJavaScript={`setTheme(${
+        ThemedStyles.theme === 1 ? 'dark' : 'light'
+      })`}
       onMessage={onMessage}
     />
   );
