@@ -27,7 +27,7 @@ const whiteListAll = ['*'];
  * Friendly captcha component using a webview
  */
 function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   /**
    * receives done or error callbacks from the webview
    */
