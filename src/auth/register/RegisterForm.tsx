@@ -38,7 +38,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const captchaRef = useRef<any>(null);
   const friendlyCaptchaRef = useRef<any>(null);
   const scrollViewRef = useRef<ScrollView>();
-  const friendlyCaptchaEnabled = useFeature('engine-2272-captcha').on;
+  const friendlyCaptchaEnabled = useFeature('mob-4231-captcha').on;
 
   const store = useLocalStore(() => ({
     focused: false,
