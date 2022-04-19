@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import WebView from 'react-native-webview';
+import openUrlService from '~/common/services/open-url.service';
 import { MINDS_API_URI } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import html from './html';
@@ -44,6 +45,18 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
     [onError, onSolved],
   );
 
+  /**
+   * If the webview was navigating to an external url, open it using our openUrlService
+   */
+  const onNavigation = useCallback(request => {
+    if (!request.url.includes(MINDS_API_URI)) {
+      openUrlService.open(request.url);
+      return false;
+    }
+
+    return true;
+  }, []);
+
   return (
     <WebView
       source={webViewSource}
@@ -59,6 +72,7 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps) {
       })`}
       onMessage={onMessage}
       style={transparentBg}
+      onShouldStartLoadWithRequest={onNavigation}
     />
   );
 }
