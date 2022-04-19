@@ -20,8 +20,12 @@ const createNotificationsStore = () => ({
   pushNotificationsSettings: [] as PushNotificationsSettingModel[] | null, // null when failed to load
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[] | null, // null when failed to load
   loaded: false,
+  silentRefresh: false,
   setLoaded(loaded: boolean) {
     this.loaded = loaded;
+  },
+  setSilentRefresh(value: boolean) {
+    this.silentRefresh = value;
   },
   init() {
     sessionService.onSession((token: string) => {
@@ -131,6 +135,8 @@ const createNotificationsStore = () => ({
     }
   },
   reset() {
+    this.silentRefresh = false;
+    this.filter = '';
     this.unlisten();
     this.stopPollCount();
     this.setUnread(0);
