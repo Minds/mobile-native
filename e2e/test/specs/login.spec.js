@@ -11,9 +11,8 @@ describe('Login Page Test Cases', () => {
     await LoginPage.loginButton.waitForDisplayed();
     await LoginPage.login(LoginPage.validUser, LoginPage.validPassword);
     await LoginPage.homeButton.waitForDisplayed();
-    expect(LoginPage.homeButton.isDisplayed()).toBeTruthy(
-      'Login was not successful!',
-    );
+    const homeButtonDisplayed = LoginPage.homeButton.isDisplayed();
+    expect(homeButtonDisplayed).toBeTruthy('Login was not successful!');
   });
 
   // After All method - closes the mobile app.

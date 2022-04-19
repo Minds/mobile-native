@@ -1,9 +1,11 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 export default class Page {
   /**
    * define elements
    */
+  get maxTimeout() {
+    return 30000;
+  }
   get loginButton() {
     return this.selectElement('text', 'Login');
   }
@@ -49,7 +51,7 @@ export default class Page {
     await this.passwordField.waitForDisplayed();
     await this.passwordField.setValue(password);
     await this.loginButtonAfterCredentials.click();
-    await this.homeButton.waitForDisplayed();
+    await this.homeButton.waitForDisplayed({ timeout: this.maxTimeout });
   }
 
   logout() {
