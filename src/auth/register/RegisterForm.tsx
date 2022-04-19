@@ -80,8 +80,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           password: store.password,
           exclusive_promotions: store.exclusivePromotions,
           captcha: store.captcha,
-          friendly_captcha_enabled: store.friendlyCaptchaEnabled,
         } as registerParams;
+        if (store.friendlyCaptchaEnabled) {
+          params.friendly_captcha_enabled = true;
+        }
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
