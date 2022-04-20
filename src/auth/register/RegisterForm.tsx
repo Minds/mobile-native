@@ -23,7 +23,7 @@ import { useNavigation } from '@react-navigation/core';
 import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
-import FriedlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
+import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { useFeature } from '@growthbook/growthbook-react';
 
 type PropsType = {
@@ -257,12 +257,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       />
 
       {store.friendlyCaptchaEnabled && (
-        <View style={styles.friendlyCaptchaContainer}>
-          <FriedlyCaptcha
-            ref={friendlyCaptchaRef}
-            onSolved={store.setCaptcha}
-          />
-        </View>
+        <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
       )}
     </View>
   );
@@ -331,5 +326,4 @@ const styles = ThemedStyles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
-  friendlyCaptchaContainer: { height: 70, width: '100%' },
 });

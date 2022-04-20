@@ -28,6 +28,7 @@ export default `
 
       * {
         color: var(--primary-text);
+        font-family: Helvetica, sans-serif !important;
       }
 
       body {

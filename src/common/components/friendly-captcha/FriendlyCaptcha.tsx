@@ -86,12 +86,16 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
         ThemedStyles.theme === 1 ? "'dark'" : "'light'"
       })`}
       onMessage={onMessage}
-      style={transparentBg}
+      style={containerStyle}
       onShouldStartLoadWithRequest={onNavigation}
     />
   );
 }
 
-const transparentBg = { backgroundColor: 'transparent' };
+const containerStyle = {
+  backgroundColor: 'transparent',
+  height: 60,
+  width: '100%',
+};
 
 export default observer(forwardRef(FriendlyCaptcha));
