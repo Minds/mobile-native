@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
+import i18nService from '../services/i18n.service';
 import MText from './MText';
 
 type PropsType = {
@@ -9,7 +10,11 @@ type PropsType = {
   children?: React.ReactNode;
 };
 
-export default function Empty({ title, subtitle, children }: PropsType) {
+export default function Empty({
+  title = i18nService.t('nothingToSee'),
+  subtitle,
+  children,
+}: PropsType) {
   return (
     <View style={styles.emptyContainer}>
       <Image

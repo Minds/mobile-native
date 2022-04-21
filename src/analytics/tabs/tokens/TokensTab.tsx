@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
@@ -64,9 +64,10 @@ const TokensTab = observer(({ route }: { route: any }) => {
     }
   }, [route, store, wallet]);
 
-  const { result, error, loading, fetch } = useApiFetch<{
+  const { result, error, loading, refresh } = useApiFetch<{
     metrics: Array<TokensMetrics>;
   }>('api/v3/blockchain/metrics');
+  const onTryAgain = useCallback(() => refresh(), [refresh]);
 
   if (!result && loading) {
     return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
@@ -95,7 +96,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
 
   if (error || dataError) {
     return (
-      <MText style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={onTryAgain}>
         {i18n.t('error') + '\n'}
         <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
       </MText>

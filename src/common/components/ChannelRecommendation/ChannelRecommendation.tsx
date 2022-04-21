@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
-import React, { FC, useCallback } from 'react';
-import { View } from 'react-native';
+import React, { FC, useCallback, useLayoutEffect } from 'react';
+import { LayoutAnimation, View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
 import i18nService from '~/common/services/i18n.service';
@@ -54,15 +54,34 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
 
 interface ChannelRecommendationProps {
   location: string;
+  /**
+   * use this prop to allow the component to prefetch the data but not render the component
+   */
+  visible?: boolean;
+  /**
+   * the channel for which we should get recommendations
+   */
+  channel?: UserModel;
 }
 
 const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
   location,
+  visible = true,
+  channel,
 }) => {
   const navigation = useNavigation();
-  const { result } = useChannelRecommendation(location);
+  const { result } = useChannelRecommendation(location, channel);
+  const shouldRender = Boolean(result?.entities.length) && visible;
 
-  if (!result?.entities.length) {
+  // layout animations
+  useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+
+    return () =>
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [shouldRender]);
+
+  if (!shouldRender) {
     return null;
   }
 

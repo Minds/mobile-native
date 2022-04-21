@@ -118,6 +118,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
               keyboardType={localStore.recovery ? undefined : 'numeric'}
               labelStyle={theme.colorPrimaryText}
               style={theme.colorPrimaryText}
+              autoFocus
               placeholder={
                 localStore.recovery
                   ? i18n.t('auth.recoveryCode')
