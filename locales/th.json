@@ -492,7 +492,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "ความคิดเห็น",
     "like": "โหวต",
     "tag": "แท็ก",

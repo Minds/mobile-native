@@ -375,7 +375,7 @@
     "rewardsSummary": "Ai câștigat {{amount}} jetoane ieri."
   },
   "notificationSettings": {
-    "enableDisable": "Activează și dezactivează notificările push",
+    "all": "Activează și dezactivează notificările push",
     "comment": "Comentarii",
     "like": "Voturi",
     "tag": "Etichete",

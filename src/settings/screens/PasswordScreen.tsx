@@ -121,7 +121,9 @@ export default observer(function () {
       store.clearInputs();
       showNotification(i18n.t('settings.passwordChanged'), 'success');
     } catch (err) {
-      if (!isUserError(err)) showNotification(err.message, 'danger');
+      if (!isUserError(err) && err instanceof Error) {
+        showNotification(err.message, 'danger');
+      }
     }
   }, [store]);
 

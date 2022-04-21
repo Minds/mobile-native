@@ -66,7 +66,11 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
 
         complete(done);
       } catch (err) {
-        throw new UserError(err.message);
+        if (err instanceof Error) {
+          throw new UserError(err.message);
+        } else {
+          throw new UserError(i18n.t('boosts.errorPayment'));
+        }
       } finally {
         localStore.setLoading(false);
       }

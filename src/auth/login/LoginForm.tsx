@@ -73,9 +73,9 @@ export default observer(function LoginForm(props: PropsType) {
       noBottomBorder
       keyboardType="default"
       error={
-        localStore.showErrors &&
-        !localStore.username &&
-        i18n.t('auth.fieldRequired')
+        localStore.showErrors && !localStore.username
+          ? i18n.t('auth.fieldRequired')
+          : undefined
       }
       autoFocus={true}
     />
@@ -95,9 +95,9 @@ export default observer(function LoginForm(props: PropsType) {
             testID="userPasswordInput"
             autoFocus={props.relogin}
             error={
-              localStore.showErrors &&
-              !localStore.password &&
-              i18n.t('auth.fieldRequired')
+              localStore.showErrors && !localStore.password
+                ? i18n.t('auth.fieldRequired')
+                : undefined
             }
           />
         </View>

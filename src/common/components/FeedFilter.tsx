@@ -32,6 +32,8 @@ type PropsType = {
   textStyle?: TextStyle | TextStyle[];
 };
 
+const filters = ['all', 'images', 'videos', 'blogs'] as const;
+
 /**
  * Feed Filter selector
  */
@@ -56,7 +58,7 @@ const FeedFilter = (props: PropsType) => {
 
   const options = React.useMemo(
     () =>
-      ['all', 'images', 'videos', 'blogs'].map(f => ({
+      filters.map(f => ({
         title: i18n.t(`discovery.${f}`),
         onPress: () => {
           close();

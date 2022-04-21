@@ -195,9 +195,12 @@ export default observer(function Comment(props: PropsType) {
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
               <MText style={[styles.viewReply, theme.colorLink]}>
-                {i18n.t('viewRepliesComments', {
-                  count: props.comment.replies_count,
-                })}
+                {
+                  //@ts-ignore
+                  i18n.t('viewRepliesComments', {
+                    count: props.comment.replies_count,
+                  })
+                }
               </MText>
             </TouchableOpacity>
           )}

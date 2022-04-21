@@ -53,7 +53,7 @@ export default observer(function ({}: NsfwProps) {
   const length = store.nsfw.length;
   const options = useMemo(
     () =>
-      _.times(7, i => ({
+      _.times(7, (i: 0 | 1 | 2 | 3 | 4 | 5 | 6) => ({
         value: i,
         selected: i === 0 ? length === 0 : store.nsfw.some(o => i === o),
         label: i18n.t(`nsfw.${i}`),
