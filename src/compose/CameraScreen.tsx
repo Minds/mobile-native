@@ -27,6 +27,7 @@ import Camera from './Camera/Camera';
 import PermissionsCheck from './PermissionsCheck';
 import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
+import { useBackHandler } from '@react-native-community/hooks';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -47,6 +48,9 @@ export default observer(function (props) {
     props.route?.params ?? {};
   const [mode, setMode] = useState<'photo' | 'video'>('photo');
   const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
+
+  console.log('camera screen props');
+
   /**
    * the current selected filter
    */
@@ -199,7 +203,17 @@ export default observer(function (props) {
   /**
    * called when retake button is pressed. Resets current image to null
    */
-  const retake = useCallback(() => setMediaToConfirm(null), []);
+  const retake = useCallback(() => {
+    setMediaToConfirm(null);
+  }, []);
+
+  /**
+   * Android back button handler
+   */
+  useBackHandler(() => {
+    mediaToConfirm ? retake() : props.navigation.goBack();
+    return true;
+  });
 
   /**
    * called when the camera captures something
