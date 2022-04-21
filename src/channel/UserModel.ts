@@ -33,7 +33,6 @@ export default class UserModel extends BaseModel {
   sums;
   btc_address?: string;
   icontime!: string;
-  username!: string;
   briefdescription!: string;
   city!: string;
   type!: string;

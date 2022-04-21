@@ -371,6 +371,7 @@
     "enableConversations": "Enable conversations"
   },
   "messenger": {
+    "errorDirectMessage": "Error sending direct message",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
@@ -514,7 +515,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "Comments",
     "like": "Votes",
     "tag": "Tags",

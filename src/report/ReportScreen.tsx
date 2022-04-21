@@ -97,12 +97,14 @@ export default class ReportScreen extends Component<PropsType, StateType> {
 
     // reasons in current language with fallback in english translation, in case that both fails the origial label is shown
     settings.report_reasons.forEach(r => {
+      //@ts-ignore we ignore the type validation because it depends on the server response
       r.label = i18n.t(`reports.reasons.${r.value}.label`, {
         defaultValue: r.label,
       });
       if (r.reasons && r.reasons.length) {
         r.reasons.forEach(r2 => {
           r2.label = i18n.t(
+            //@ts-ignore
             `reports.reasons.${r.value}.reasons.${r2.value}.label`,
             { defaultValue: r2.label },
           );

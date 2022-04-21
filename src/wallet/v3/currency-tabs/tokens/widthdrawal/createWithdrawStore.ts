@@ -106,7 +106,7 @@ const createWithdrawStore = (p: {
 
         return response && response.entity;
       } catch (err) {
-        if (err.message !== 'E_CANCELLED') {
+        if (err instanceof Error && err.message !== 'E_CANCELLED') {
           const error =
             err.message || i18n.t('wallet.withdraw.errorWithdrawing');
           showNotification(error, 'warning');
