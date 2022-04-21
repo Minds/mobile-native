@@ -54,7 +54,12 @@ export const DiscoveryV2Screen = withErrorBoundary(
           title={i18n.t('boosts.emptyList')}
           subtitle={i18n.t('boosts.emptyListSubtitle')}>
           <Button
-            onPress={() => navigation.navigate('BoostSettingsScreen')}
+            onPress={() =>
+              navigation.navigate('More', {
+                screen: 'BoostSettingsScreen',
+                initial: false,
+              })
+            }
             text={i18n.t('moreScreen.settings')}
             large
             action
