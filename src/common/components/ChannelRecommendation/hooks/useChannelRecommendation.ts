@@ -29,10 +29,12 @@ export const useChannelRecommendation = (
       limit: 12,
     },
     map: recommendations =>
-      recommendations.map(recommendation => ({
-        ...recommendation,
-        entity: UserModel.create(recommendation.entity),
-      })),
+      recommendations
+        .filter(rec => Boolean(rec.entity))
+        .map(recommendation => ({
+          ...recommendation,
+          entity: UserModel.create(recommendation.entity),
+        })),
     skip: true,
   });
 
