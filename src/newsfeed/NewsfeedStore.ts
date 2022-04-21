@@ -89,7 +89,17 @@ class NewsfeedStore<T> {
   /**
    * On subscription change
    */
-  onSubscriptionChange = (user: UserModel) => {
+  onSubscriptionChange = ({
+    user,
+    shouldUpdateFeed,
+  }: {
+    user: UserModel;
+    shouldUpdateFeed: boolean;
+  }) => {
+    if (!shouldUpdateFeed) {
+      return;
+    }
+
     if (!user.subscribed) {
       this.topFeedStore.removeFromOwner(user.guid);
       this.latestFeedStore.removeFromOwner(user.guid);

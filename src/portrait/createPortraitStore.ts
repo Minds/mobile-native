@@ -9,7 +9,7 @@ import portraitContentService from './PortraitContentService';
 import { extendObservable, computed } from 'mobx';
 import logService from '../common/services/log.service';
 import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { MINDS_GUID } from '../config/Config';
 import sessionService from '../common/services/session.service';
 
@@ -117,7 +117,10 @@ function createPortraitStore() {
   const feedStore = new FeedStore();
 
   feedStore.setEndpoint(portraitEndpoint).setLimit(150).setPaginated(false);
-  const joins = fromEvent<UserModel>(UserModel.events, 'toggleSubscription');
+  const joins = fromEvent<{ user: UserModel; shouldUpdateFeed: boolean }>(
+    UserModel.events,
+    'toggleSubscription',
+  ).pipe(filter(({ shouldUpdateFeed }) => shouldUpdateFeed));
   let subscription$: Subscription | null = null;
 
   return {
