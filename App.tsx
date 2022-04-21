@@ -47,6 +47,9 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import { storages } from '~/common/services/storage/storages.service';
+
+const PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -62,6 +65,14 @@ if (
 
 type State = {
   appState: string;
+  /**
+   * the state of the navigator. Used to persist navigation on dev refresh
+   */
+  navigationState: undefined;
+  /**
+   * is the app ready to be run? Used to persist navigation
+   */
+  appReadyForDev: boolean;
 };
 
 type Props = {};
@@ -82,6 +93,8 @@ class App extends Component<Props, State> {
    */
   state = {
     appState: AppState.currentState || '',
+    navigationState: undefined,
+    appReadyForDev: false,
   };
 
   /**
@@ -121,6 +134,10 @@ class App extends Component<Props, State> {
       shouldDuckAndroid: false,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
     });
+
+    if (__DEV__) {
+      this._restoreNavState();
+    }
   }
 
   /**
@@ -160,12 +177,44 @@ class App extends Component<Props, State> {
     }
   };
 
+  onNavigationStateChange = (state: any) => {
+    analyticsService.onNavigatorStateChange();
+    if (__DEV__) {
+      storages.app.setMapAsync(PERSISTENCE_KEY, state);
+    }
+  };
+
+  /**
+   * Restores the navigation state from the storage
+   */
+  private _restoreNavState = async () => {
+    try {
+      const initialUrl = await Linking.getInitialURL();
+
+      // Only restore state if there's no deep link and we're not on web
+      if (Platform.OS !== 'web' && initialUrl == null) {
+        const navigationState = storages.app.getMap(PERSISTENCE_KEY);
+        if (navigationState !== undefined) {
+          this.setState({
+            navigationState,
+          });
+        }
+      }
+    } finally {
+      this.setState({ appReadyForDev: true });
+    }
+  };
+
   /**
    * Render
    */
   render() {
     // App not shown until the theme is loaded
     if (ThemedStyles.theme === -1) {
+      return null;
+    }
+
+    if (__DEV__ && !this.state.appReadyForDev) {
       return null;
     }
 
@@ -181,8 +230,9 @@ class App extends Component<Props, State> {
             <NavigationContainer
               ref={setTopLevelNavigator}
               theme={ThemedStyles.navTheme}
+              initialState={this.state.navigationState}
               onReady={appInitManager.onNavigatorReady}
-              onStateChange={analyticsService.onNavigatorStateChange}>
+              onStateChange={this.onNavigationStateChange}>
               <StoresProvider>
                 <Provider key="app" {...stores}>
                   <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
