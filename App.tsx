@@ -68,11 +68,11 @@ type State = {
   /**
    * the state of the navigator. Used to persist navigation on dev refresh
    */
-  navigationState: undefined;
+  navigationState?: any;
   /**
    * is the app ready to be run? Used to persist navigation
    */
-  appReadyForDev: boolean;
+  isReady: boolean;
 };
 
 type Props = {};
@@ -94,7 +94,7 @@ class App extends Component<Props, State> {
   state = {
     appState: AppState.currentState || '',
     navigationState: undefined,
-    appReadyForDev: false,
+    isReady: __DEV__ ? false : true,
   };
 
   /**
@@ -201,7 +201,7 @@ class App extends Component<Props, State> {
         }
       }
     } finally {
-      this.setState({ appReadyForDev: true });
+      this.setState({ isReady: true });
     }
   };
 
@@ -214,7 +214,7 @@ class App extends Component<Props, State> {
       return null;
     }
 
-    if (__DEV__ && !this.state.appReadyForDev) {
+    if (!this.state.isReady) {
       return null;
     }
 
