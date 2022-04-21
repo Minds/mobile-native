@@ -56,12 +56,13 @@ const ChannelHeader = withErrorBoundary(
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const [fadeViewWidth, setFadeViewWidth] = useState(50);
-    const [
-      shouldShowChannelRecommendation,
-      setShouldShowChannelRecommendation,
-    ] = useState(false);
+    /** Whether the user interacted with the channel */
+    const [interacted, setInteracted] = useState(false);
     const channel = props.store?.channel;
     const channelGuid = channel?.guid;
+    /** Whether the channel recommendation widget should be shown after channel is subscribed */
+    const shouldRenderChannelRecommendation =
+      !channel?.isOwner() && Boolean(props.store?.feedStore.entities.length);
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
           { id: 'feed', title: i18n.t('feed') },
@@ -109,7 +110,7 @@ const ChannelHeader = withErrorBoundary(
       'toggleSubscription',
       ({ user }) => {
         if (user.guid === channelGuid) {
-          setShouldShowChannelRecommendation(user.subscribed);
+          setInteracted(user.subscribed);
         }
       },
       [channelGuid],
@@ -316,11 +317,11 @@ const ChannelHeader = withErrorBoundary(
           </>
         )}
 
-        {!channel?.isOwner() && (
-          <IfFeatureEnabled feature="mob-channel-recommendations">
+        {shouldRenderChannelRecommendation && (
+          <IfFeatureEnabled feature="mob-4107-channelrecs">
             <ChannelRecommendation
               channel={channel}
-              visible={shouldShowChannelRecommendation}
+              visible={interacted}
               location="channel"
             />
           </IfFeatureEnabled>
