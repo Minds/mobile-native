@@ -26,20 +26,27 @@ export default observer(function () {
     newPassword: '',
     newPasswordError: '',
     confirmationPassword: '',
+    confirmationPasswordError: '',
     passwordFocused: false,
     setCurrentPassword(password) {
+      store.currentPasswordError = '';
       store.currentPassword = password;
     },
     setCurrentPasswordError(error) {
       store.currentPasswordError = error;
     },
     setNewPassword(password) {
+      store.newPasswordError = '';
       store.newPassword = password;
     },
     setNewPasswordError(error) {
       store.newPasswordError = error;
     },
+    setConfirmationPasswordError(error) {
+      store.confirmationPasswordError = error;
+    },
     setConfirmationPassword(password) {
+      store.confirmationPasswordError = '';
       store.confirmationPassword = password;
     },
     setPasswordFocused(value) {
@@ -60,6 +67,17 @@ export default observer(function () {
 
   const confirmPassword = useCallback(async () => {
     // missing data
+
+    if (!store.currentPassword) {
+      store.setCurrentPasswordError(i18n.t('auth.fieldRequired'));
+    }
+    if (!store.newPassword) {
+      store.setNewPasswordError(i18n.t('auth.fieldRequired'));
+    }
+    if (!store.confirmationPassword) {
+      store.setConfirmationPasswordError(i18n.t('auth.fieldRequired'));
+    }
+
     if (
       !store.currentPassword ||
       !store.newPassword ||
@@ -73,7 +91,7 @@ export default observer(function () {
       store.setCurrentPasswordError('');
       await authService.validatePassword(store.currentPassword);
     } catch (err) {
-      store.setCurrentPasswordError(i18n.t('settings.invalidPassword'));
+      store.setCurrentPasswordError(i18n.t('auth.invalidPassword'));
       return;
     }
 
@@ -154,6 +172,7 @@ export default observer(function () {
           placeholder={i18n.t('settings.confirmNewPassword')}
           onChangeText={store.setConfirmationPassword}
           value={store.confirmationPassword}
+          error={store.confirmationPasswordError}
           testID={'confirmationPasswordPasswordInput'}
           onBlur={store.newPasswordBlurred}
         />

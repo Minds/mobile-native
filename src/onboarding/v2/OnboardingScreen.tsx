@@ -111,6 +111,18 @@ export default observer(function OnboardingScreen() {
     VerifyEmailStep: {
       title: i18n.t('onboarding.verifyEmailAddress'),
       screen: 'VerifyEmail',
+      onPress: () => {
+        const done = progressStore.result?.steps.some(
+          s => s.id === 'VerifyEmailStep' && s.is_completed,
+        );
+        if (!done) {
+          navigation.navigate('VerifyEmail', {
+            store: progressStore,
+          });
+        } else {
+          showNotification(i18n.t('emailConfirm.alreadyConfirmed'));
+        }
+      },
     },
     SuggestedHashtagsStep: {
       title: i18n.t('onboarding.selectTags'),

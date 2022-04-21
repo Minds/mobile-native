@@ -75,7 +75,7 @@
     "requestNewPassword": "To request a new password, enter your username",
     "requestNewPasswordSuccess": "We have sent an unlock code to your registered email address.",
     "invalidGrant": "Incorrect username/password. Please try again.",
-    "invalidPassword": "Incorrect password. Please try again.",
+    "invalidPassword": "Incorrect password",
     "invalidPasswordDescription": "Password must match the criteria",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError": "You should accept the terms and conditions",
@@ -104,6 +104,7 @@
     "followInstuctions": "Follow the instructions contained within to continue the reset process.",
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
+    "rateLimit": "Too many attempts, please try again later",
     "newPassword": "Create a new password. You’ll use this to access your account."
   },
   "multiUser": {
@@ -323,7 +324,8 @@
     },
     "fabSend": "Send Tip",
     "fabPay": "Tip",
-    "share": "Share Channel"
+    "share": "Share Channel",
+    "userHasntPostedYet": "@{{username}} hasn't posted anything yet"
   },
   "discovery": {
     "title": "Discovery",
@@ -673,7 +675,7 @@
     "deactivate": "Deactivate Account",
     "logout": "Logout",
     "errorSaving": "Error saving setting, please try again",
-    "passwordChanged": "Password changed succesfully.",
+    "passwordChanged": "Password changed successfully.",
     "keyGenerated": "Keys regenerated successfully!",
     "pushNotification": "Push Notifications",
     "regenerateKey": "Regenerate messenger keys",
@@ -1259,7 +1261,8 @@
     "confirm": "Please confirm your email address.",
     "sendAgain": "Click here to send again.",
     "confirmNote": "Note: If you change your email address, it will need to be confirmed again.",
-    "sent": "Email sent"
+    "sent": "Email sent",
+    "alreadyConfirmed": "Email address already confirmed"
   },
   "subtype": {
     "image": "image",
@@ -1576,6 +1579,7 @@
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
+  "nothingToSee": "Nothing to see here",
   "and": "and",
   "others": "others",
   "newMoment": "New Moment",

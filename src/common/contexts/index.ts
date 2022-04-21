@@ -12,6 +12,7 @@ import wallet from '../../wallet/WalletStore';
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
 import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
+import { RecentSubscriptionsStore } from '~/channel/subscription/RecentSubscriptionsStore';
 
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
@@ -31,6 +32,7 @@ export function createClassStores() {
     discoveryV2Store: new DiscoveryV2Store(),
     mindsPlusV2Store: new DiscoveryV2Store(true),
     wallet: new wallet(),
+    recentSubscriptions: new RecentSubscriptionsStore(),
   };
   sessionService.onLogout(() => {
     for (const id in stores) {
