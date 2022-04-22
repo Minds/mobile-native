@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
@@ -9,7 +9,7 @@ import { useStores } from '../../../common/hooks/use-stores';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { TokensMetrics } from '../../AnalyticsTypes';
+import { CardType, TokensMetrics } from '../../AnalyticsTypes';
 import LiquidityDashboard from './LiquidityDashboard';
 import RewardsDashboard from './RewardsDashboard';
 import SupplyDashboard from './SupplyDashboard';
@@ -25,7 +25,7 @@ export type DashBoardPropsType = {
 type TokensOptions = 'Supply' | 'Transactions' | 'Liquidity' | 'Rewards';
 
 export type MetricsSubType = {
-  [key: string]: TokensMetrics;
+  [K in CardType]: TokensMetrics;
 };
 
 const options: Array<ButtonTabType<TokensOptions>> = [
@@ -41,6 +41,10 @@ const createStore = () => ({
     this.option = option;
   },
 });
+
+type RowType = {
+  [K in TokensOptions]: MetricsSubType;
+};
 
 const TokensTab = observer(({ route }: { route: any }) => {
   const theme = ThemedStyles.style;
@@ -60,9 +64,10 @@ const TokensTab = observer(({ route }: { route: any }) => {
     }
   }, [route, store, wallet]);
 
-  const { result, error, loading, fetch } = useApiFetch<{
+  const { result, error, loading, refresh } = useApiFetch<{
     metrics: Array<TokensMetrics>;
   }>('api/v3/blockchain/metrics');
+  const onTryAgain = useCallback(() => refresh(), [refresh]);
 
   if (!result && loading) {
     return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
@@ -72,14 +77,12 @@ const TokensTab = observer(({ route }: { route: any }) => {
     return null;
   }
 
-  const rows: {
-    [K in TokensOptions]: MetricsSubType;
-  } = {
+  const rows = {
     Supply: {},
     Transactions: {},
     Liquidity: {},
     Rewards: {},
-  };
+  } as RowType;
   let dataError;
 
   try {
@@ -93,7 +96,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
 
   if (error || dataError) {
     return (
-      <MText style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={onTryAgain}>
         {i18n.t('error') + '\n'}
         <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
       </MText>

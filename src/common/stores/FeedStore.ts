@@ -9,6 +9,7 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
+import { isAbort } from '../services/api.service';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 
 /**
@@ -396,7 +397,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities, replace);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -448,7 +449,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -489,7 +490,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
@@ -538,7 +539,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(remoteEntities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       console.log(err);
       logService.exception('[FeedStore]', err);
       if (this.entities.length === 0) this.setErrorLoading(true);
@@ -573,7 +574,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {

@@ -36,7 +36,7 @@ const PushNotificationsSettings = ({}: PropsType) => {
       <>
         <MenuItem
           item={{
-            title: i18n.t('notificationSettings.enableDisable'),
+            title: i18n.t('notificationSettings.all'),
             icon: (
               <SettingToggle
                 setting={notifications.pushNotificationsSettings.find(

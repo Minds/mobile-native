@@ -1,20 +1,22 @@
 import { action, computed, observable } from 'mobx';
 import apiService from '../../../../common/services/api.service';
-import i18n from '../../../../common/services/i18n.service';
+import i18n, { LocaleType } from '../../../../common/services/i18n.service';
 import logService from '../../../../common/services/log.service';
 
 export type EmailNotificationsSettingType = {
   campaign: 'global' | 'when' | 'with';
   guid: string;
-  topic: string;
+  topic: NotificationGroupType;
   user_guid: string;
   value: string;
 };
 
+type NotificationGroupType = keyof LocaleType['notificationSettings'];
+
 export default class EmailNotificationsSettingModel {
   campaign: 'global' | 'when' | 'with';
   guid: string;
-  _topic: string;
+  _topic: NotificationGroupType;
   user_guid: string;
   @observable value: string;
   oldValue = '';
@@ -29,7 +31,7 @@ export default class EmailNotificationsSettingModel {
 
   @computed
   get topic() {
-    let translation = i18n.t('notificationSettings.' + this._topic);
+    let translation = i18n.t(`notificationSettings.${this._topic}`);
     if (
       translation.includes('missing') &&
       translation.includes('translation')
@@ -57,6 +59,7 @@ export default class EmailNotificationsSettingModel {
       });
     } catch (err) {
       this._toggleValue(this.oldValue);
+
       logService.exception('[NotificationsSettingModel] toggleEnabled', err);
     }
   }

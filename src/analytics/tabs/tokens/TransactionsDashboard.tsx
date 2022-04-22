@@ -6,7 +6,7 @@ import { DashBoardPropsType } from './TokensTab';
 const TransactionsDashboard = ({ metrics }: DashBoardPropsType) => {
   return (
     <View>
-      {Object.keys(metrics).map((key: string) => {
+      {Object.keys(metrics).map((key: any) => {
         return <Card metrics={metrics[key]} type={key} />;
       })}
     </View>

@@ -116,6 +116,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             textContentType="password"
             onChangeText={localStore.setPassword}
             value={localStore.password}
+            autoFocus
           />
           <IonIcon
             name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}

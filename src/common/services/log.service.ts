@@ -35,7 +35,7 @@ class LogService {
     // deviceLog.error(...args);
   }
 
-  exception(prepend, error?: Error = undefined) {
+  exception(prepend, error?: any) {
     if (!error) {
       error = prepend;
       prepend = null;
@@ -47,6 +47,7 @@ class LogService {
     }
 
     if (
+      error instanceof Error &&
       shouldReportToSentry(error) &&
       process.env.JEST_WORKER_ID === undefined &&
       !__DEV__

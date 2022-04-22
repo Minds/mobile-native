@@ -39,6 +39,9 @@ import {
 import AnimatedBanner from './AnimatedBanner';
 import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
 import Empty from '~/common/components/Empty';
+import { B1 } from '~/common/ui';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 const tinycolor = require('tinycolor2');
 
@@ -355,7 +358,7 @@ const ChannelScreen = observer((props: PropsType) => {
     !store.channel.mature_visibility
   ) {
     return (
-      <View style={style.nsfwChannel}>
+      <View style={styles.nsfwChannel}>
         <ChannelTopBar
           navigation={props.navigation}
           store={store}
@@ -394,7 +397,19 @@ const ChannelScreen = observer((props: PropsType) => {
         action
       />
     </Empty>
-  ) : undefined;
+  ) : (
+    <View>
+      <B1 align="center" color="secondary" vertical="XL">
+        {i18n.t('channel.userHasntPostedYet', {
+          username: store.channel?.username,
+        })}
+      </B1>
+      <IfFeatureEnabled feature="mob-4107-channelrecs">
+        <View style={styles.thickBorder} />
+        <ChannelRecommendation channel={store.channel} location="channel" />
+      </IfFeatureEnabled>
+    </View>
+  );
 
   return (
     <ChannelContext.Provider value={channelContext}>
@@ -454,8 +469,9 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 });
 
-const style = ThemedStyles.create({
+const styles = ThemedStyles.create({
   nsfwChannel: ['bgPrimaryBackground', 'flexContainer'],
+  thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
 export default withErrorBoundary(ChannelScreen);

@@ -1,3 +1,4 @@
+import NavigationService from '~/navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import delay from '../../common/helpers/delay';
 import validatePassword from '../../common/helpers/validatePassword';
@@ -17,6 +18,7 @@ const createLocalStore = () => ({
   code: '',
   password: '',
   sending: false,
+  rateLimited: false,
   sent: 0,
   focused: false,
   setPassword(password: string) {
@@ -74,6 +76,14 @@ const createLocalStore = () => ({
         const message =
           (typeof err === 'object' && err !== null && err.message) ||
           i18n.t('messenger.errorDirectMessage');
+        if (
+          message === 'You have exceed the rate limit. Please try again later.'
+        ) {
+          this.rateLimited = true;
+          showError(i18n.t('auth.rateLimit'));
+          NavigationService.goBack();
+          return;
+        }
         showError(message);
         logService.exception('[ForgotPassword]', err);
       } finally {
@@ -110,6 +120,7 @@ const createLocalStore = () => ({
           throw data;
         }
       } catch (err: any) {
+        console.log('err', err);
         if (err.message) {
           showError(err.message);
         } else {

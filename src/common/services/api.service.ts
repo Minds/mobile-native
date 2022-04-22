@@ -53,10 +53,11 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {}
 
-export const isApiError = function (err) {
+export const isApiError = function (err): err is ApiError {
   return err instanceof ApiError;
 };
-export const isNetworkError = function (err) {
+
+export const isNetworkError = function (err): err is NetworkError {
   return err instanceof NetworkError;
 };
 
@@ -312,7 +313,7 @@ export class ApiService {
     try {
       await this.refreshPromise;
       this.refreshPromise = null;
-    } catch (error) {
+    } catch (error: any) {
       this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||
@@ -428,6 +429,17 @@ export class ApiService {
   getParamsString(params) {
     return Object.keys(params)
       .map(k => {
+        if (Array.isArray(params[k])) {
+          return params[k]
+            .map(
+              (value, index) =>
+                `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
+                  value,
+                )}`,
+            )
+            .join('&');
+        }
+
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');

@@ -1,6 +1,6 @@
 //@ts-nocheck
 import logService from './log.service';
-import apiService, { isNetworkError } from './api.service';
+import apiService, { isAbort, isNetworkError } from './api.service';
 import entitiesService from './entities.service';
 import feedsStorage from './storage/feeds.storage';
 import i18n from './i18n.service';
@@ -384,7 +384,7 @@ export default class FeedsService {
         await this.fetch();
       }
     } catch (err) {
-      if (err.code === 'Abort') {
+      if (isAbort(err)) {
         return;
       }
 
@@ -403,7 +403,7 @@ export default class FeedsService {
     try {
       await this.fetch();
     } catch (err) {
-      if (err.code === 'Abort') {
+      if (isAbort(err)) {
         return;
       }
 

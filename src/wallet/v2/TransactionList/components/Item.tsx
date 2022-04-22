@@ -41,7 +41,7 @@ const getTypeLabel = (type: string, currency: currencyType) => {
     wire: i18n.t('wallet.transactions.onchainWire'),
     reward: i18n.t('blockchain.receiver'),
     token: i18n.t('purchase'),
-    withdraw: i18n.t('withdraw.title'),
+    withdraw: i18n.t('wallet.withdraw.title'),
     'offchain:boost': i18n.t('wallet.transactions.offchainBoost'),
     boost: i18n.t('wallet.transactions.onchainBoost'),
     pro_earning: i18n.t('wallet.transactions.proEarningsFilter'),
