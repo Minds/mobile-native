@@ -560,14 +560,6 @@ PODS:
     - FMDB (~> 2.7)
   - SocketRocket (0.6.0)
   - TOCropViewController (2.6.0)
-  - UMAppLoader (2.2.0)
-  - UMCore (7.1.2)
-  - UMReactNativeAdapter (6.3.9):
-    - ExpoModulesCore
-    - React-Core
-    - UMCore
-  - UMTaskManagerInterface (6.2.0):
-    - UMCore
   - VisionCamera (2.13.1):
     - React
     - React-callinvoker
@@ -1040,14 +1032,10 @@ SPEC CHECKSUMS:
   SnowplowTracker: 2eee2d6606a60db98f7c4e1515499bb216b6c8ad
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
-  UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
-  UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
-  UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
-  UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   VisionCamera: 2103a8a09baa162a77951037b66d47c0926c48d9
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 136d8d4317f5c084b85a9581df180d278e8c28a5
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
