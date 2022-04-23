@@ -101,7 +101,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       }
     } catch (err) {
       console.error('There was an error', err);
-      showNotification(err.toString(), 'danger');
+      if (err instanceof Error) {
+        showNotification(err.toString(), 'danger');
+      }
     } finally {
       onchainStore.setLoading(false);
     }

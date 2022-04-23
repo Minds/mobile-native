@@ -43,7 +43,7 @@ class GroupsStore {
       this.loaded = true;
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       this.list.setErrorLoading(true);
       if (!isNetworkError(err)) {
         logService.exception('[GroupsStore]', err);

@@ -57,7 +57,6 @@ export default class ActivityModel extends BaseModel {
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
-  ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
   paywall_unlocked: boolean = false;

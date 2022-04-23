@@ -19,7 +19,7 @@ const campaingTypes = [
   { tag: 'emailWhen', name: 'when' },
   { tag: 'emailWith', name: 'with' },
   { tag: 'emailUpdated', name: 'global' },
-];
+] as const;
 
 const topicsWithSelector = ['unread_notifications', 'top_posts'];
 

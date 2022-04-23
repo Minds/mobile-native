@@ -1,26 +1,79 @@
 {
   "versions": [
     {
-      "version": "4.22.2",
-      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-2.apk",
-      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.2",
+      "version": "4.23.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-23-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.23.0",
       "changelog": [
-        "Fix push notification not opening app on Android 12",
-        "Fix cache issues"
+        "Fix hashtag navigation error",
+        "Cleans up feature flag logic",
+        "New toaster notifications",
+        "Unverified email toaster added",
+        "Improved transitions when opening multiple bottom sheets",
+        "Fix Minds+ screen errors",
+        "Fix some navigation issues with the interactions bottom sheets",
+        "Fix onboarding tag selector visual an functional issues",
+        "Fix posts visibility option when creating a post",
+        "Fix groups posts visible on the main newsfeed",
+        "Added custom API URL to dev tools",
+        "Makes dev tools accessible on production mode by tapping multiple times hidden parts of the app",
+        "Fix the auto login password reset flow is completed",
+        "Fix group's search issues",
+        "Adds a password show option to all the password fields of the app",
+        "Standardize the user lists components",
+        "Update the local storage package",
+        "Fix the delete post error for admins when deleting a remind",
+        "Improves the UX on feeds by loading next page before we reach the end",
+        "Fix notification count issues",
+        "Enable react-freeze, that improves the performance by freezing screens that are not visible",
+        "Fix loading state indicators in comments",
+        "Fix password confirmation when changing email",
+        "Improved UX for onboarding channel setup",
+        "Better rate limit message for the user when resetting the password",
+        "Allow to verify email only once",
+        "Fix trending analytics screen errors",
+        "Remove full screen view for NSFW images when forbidden",
+        "Improve validation/error messages on the change password screen"
       ],
       "unstable": false,
       "hashes": [
         {
           "type": "md5",
-          "value": "fdf8f631a1d0838bcbbd081c45977ed7"
+          "value": "50463d824e742027ed108e3bf9062c87"
         },
         {
           "type": "sha256",
-          "value": "b18306a24bda20625524b67671175af2762960ac1048e29c94d6bc0c299b3510"
+          "value": "19dbbb9ee7ac86c6d64ab953c8e953d4e4804f886e501f9182bdb9a5459d8b81"
         },
         {
           "type": "sha512",
-          "value": "52af7880c16efe68b25f0dd865e5471d66cc0ba37f9a39802ca765bc6b996466e9f575599636471cbf4a1f209cdd6af43518159839579b9c080bc93591f6ec1e"
+          "value": "2a8f3ed10d9a7ff12208cc84daf50900c3aa28a3f93c56add86ff5d9f2ae62f3fce6d64b4ab56d32a030548d9ef4ff8c4b5ccb70cdc05ae3186a9e9be4f32be5"
+        }
+      ]
+    },
+    {
+      "version": "4.22.3",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-3.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.3",
+      "changelog": [
+        "Fix crash when translating post",
+        "Fix issues switching users",
+        "Fix some onboarding layout problems",
+        "Fix symbols not allowed in username input"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "5bcca7bcdabdf153e05bb2b0d21457db"
+        },
+        {
+          "type": "sha256",
+          "value": "198aa642961d1571a8531e078a13cadc15f5b740261e8233a5c86d05bd832e02"
+        },
+        {
+          "type": "sha512",
+          "value": "b601349e623117f1f9075dc90d87de72bfaee652ea66cc364fc59a5aad5752728f12a8a053d13a9bb827ad41de325ccd2b4aaf89ffc4cbaa33aa3c6ffd96bdc5"
         }
       ]
     },

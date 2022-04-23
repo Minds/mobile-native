@@ -38,10 +38,14 @@ export default observer(function OnboardingScreen() {
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
   const { newsfeed } = useLegacyStores();
-  const onOnboardingCompleted = (message: string) => {
+  const onOnboardingCompleted = () => {
     setTimeout(() => {
       navigation.navigate('Newsfeed');
-      showNotification(i18n.t(message), 'success', 4000);
+      showNotification(
+        i18n.t('onboarding.onboardingCompleted'),
+        'success',
+        4000,
+      );
     }, 300);
   };
   const updateState = (
@@ -49,13 +53,13 @@ export default observer(function OnboardingScreen() {
     oldData: OnboardingGroupState,
   ) => {
     if (newData && oldData && newData.id !== oldData.id) {
-      onOnboardingCompleted('onboarding.onboardingCompleted');
+      onOnboardingCompleted();
       const m = moment().add(2, 'hours');
       SettingsStore.setIgnoreOnboarding(m);
       // show old data (initial onboarding)
       return oldData;
     } else if (newData && newData.is_completed) {
-      onOnboardingCompleted('onboarding.onboardingCompleted');
+      onOnboardingCompleted();
     }
 
     // Check for post created locally (the backend check takes too long)
@@ -188,13 +192,9 @@ export default observer(function OnboardingScreen() {
               onPress:
                 stepsMapping[s.id].onPress ||
                 (() =>
-                  navigation.navigate(
-                    stepsMapping[s.id]
-                      .screen as keyof ReactNavigation.RootParamList,
-                    {
-                      store: progressStore,
-                    },
-                  )),
+                  navigation.navigate(stepsMapping[s.id].screen, {
+                    store: progressStore,
+                  })),
             }
           : null,
       )

@@ -4,7 +4,7 @@ export type Currency = 'tokens' | 'usd' | 'eth' | 'btc';
 
 export type Reward = {
   amount: number;
-  description: 'string';
+  description: string;
   currency: Currency;
 };
 

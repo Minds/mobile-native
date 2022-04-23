@@ -1,6 +1,57 @@
 {
   "versions": [
     {
+      "version": "4.23.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-23-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.23.0",
+      "changelog": [
+        "Fix hashtag navigation error",
+        "Cleans up feature flag logic",
+        "New toaster notifications",
+        "Unverified email toaster added",
+        "Improved transitions when opening multiple bottom sheets",
+        "Fix Minds+ screen errors",
+        "Fix some navigation issues with the interactions bottom sheets",
+        "Fix onboarding tag selector visual an functional issues",
+        "Fix posts visibility option when creating a post",
+        "Fix groups posts visible on the main newsfeed",
+        "Added custom API URL to dev tools",
+        "Makes dev tools accessible on production mode by tapping multiple times hidden parts of the app",
+        "Fix the auto login password reset flow is completed",
+        "Fix group's search issues",
+        "Adds a password show option to all the password fields of the app",
+        "Standardize the user lists components",
+        "Update the local storage package",
+        "Fix the delete post error for admins when deleting a remind",
+        "Improves the UX on feeds by loading next page before we reach the end",
+        "Fix notification count issues",
+        "Enable react-freeze, that improves the performance by freezing screens that are not visible",
+        "Fix loading state indicators in comments",
+        "Fix password confirmation when changing email",
+        "Improved UX for onboarding channel setup",
+        "Better rate limit message for the user when resetting the password",
+        "Allow to verify email only once",
+        "Fix trending analytics screen errors",
+        "Remove full screen view for NSFW images when forbidden",
+        "Improve validation/error messages on the change password screen"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "50463d824e742027ed108e3bf9062c87"
+        },
+        {
+          "type": "sha256",
+          "value": "19dbbb9ee7ac86c6d64ab953c8e953d4e4804f886e501f9182bdb9a5459d8b81"
+        },
+        {
+          "type": "sha512",
+          "value": "2a8f3ed10d9a7ff12208cc84daf50900c3aa28a3f93c56add86ff5d9f2ae62f3fce6d64b4ab56d32a030548d9ef4ff8c4b5ccb70cdc05ae3186a9e9be4f32be5"
+        }
+      ]
+    },
+    {
       "version": "4.22.3",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-3.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.3",
