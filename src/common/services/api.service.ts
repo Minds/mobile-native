@@ -32,6 +32,7 @@ import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
+import AuthService from '~/auth/AuthService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -133,6 +134,7 @@ export class ApiService {
       },
       async error => {
         const { config: originalReq, response, request } = error;
+
         if (response) {
           // 2FA authentication interceptor
           if (
@@ -288,21 +290,6 @@ export class ApiService {
       : session.refreshAuthToken();
   }
 
-  async tryToRelog(onLogin: Function) {
-    const onCancel = () => {
-      if (session.sessionExpired) {
-        session.logoutFrom(session.activeIndex);
-      }
-    };
-    const promise = new Promise((resolve, reject) => {
-      NavigationService.navigate('RelogScreen', {
-        onLogin,
-        onCancel,
-      });
-    });
-    await promise;
-  }
-
   /**
    * Refresh token (only one call at the time)
    */
@@ -324,7 +311,7 @@ export class ApiService {
           session.setSessionExpiredFor(true, this.sessionIndex);
         } else {
           session.setSessionExpired(true);
-          await this.tryToRelog(onLogin);
+          AuthService.tryToRelog(onLogin);
         }
       }
       throw error;
@@ -429,16 +416,16 @@ export class ApiService {
   getParamsString(params) {
     return Object.keys(params)
       .map(k => {
-        if (Array.isArray(params[k])) {
-          return params[k]
-            .map(
-              (value, index) =>
-                `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
-                  value,
-                )}`,
-            )
-            .join('&');
-        }
+        // if (Array.isArray(params[k])) {
+        //   return params[k]
+        //     .map(
+        //       (value, index) =>
+        //         `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
+        //           value,
+        //         )}`,
+        //     )
+        //     .join('&');
+        // }
 
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })

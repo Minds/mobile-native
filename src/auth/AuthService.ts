@@ -141,19 +141,6 @@ class AuthService {
     }
   }
 
-  async reLogin(password: string, headers: any = {}) {
-    const username = session.getUser().username;
-    const params = {
-      grant_type: 'password',
-      client_id: 'mobile',
-      //client_secret: '',
-      username,
-      password,
-    } as loginParms;
-
-    await api.post<LoginResponse>('api/v3/oauth/token', params, headers);
-  }
-
   async loginWithIndex(sessionIndex: number) {
     session.setSwitchingAccount(true);
     await this.sessionLogout();
@@ -199,7 +186,7 @@ class AuthService {
     try {
       if (session.tokensData.length > 0) {
         const state = NavigationService.getCurrentState();
-        if (state && state.name === 'Settings') {
+        if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
         }
       }
@@ -208,19 +195,79 @@ class AuthService {
       await this.unregisterTokenFrom(sessionService.activeIndex);
 
       api.post('api/v3/oauth/revoke');
-      session.setSwitchingAccount(true);
-      session.logout();
 
-      // Fixes auto-subscribe issue on register
-      await api.clearCookies();
-      await this.handleActiveAccount();
-      session.setSwitchingAccount(false);
+      // Logout and handle user switching or navigating to welcome screen
+      this.logoutSession();
+
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }
+  }
+
+  /**
+   * Logout session and handle user switching or navigating to welcome screen
+   */
+  private async logoutSession() {
+    session.setSwitchingAccount(true);
+    session.logout();
+
+    // Fixes auto-subscribe issue on register
+    await api.clearCookies();
+    await this.handleActiveAccount();
+    session.setSwitchingAccount(false);
+  }
+
+  /**
+   * Revoke tokens and relogin (The current user session)
+   */
+  async revokeTokens(): Promise<boolean> {
+    this.justRegistered = false;
+    try {
+      if (session.tokensData.length > 0) {
+        const state = NavigationService.getCurrentState();
+        if (state && state.name !== 'MultiUserScreen') {
+          NavigationService.navigate('MultiUserScreen');
+          await delay(100);
+        }
+      }
+      // delete device token first
+      await this.unregisterTokenFrom(sessionService.activeIndex);
+
+      session.setSwitchingAccount(true);
+      // revoke local session
+      session.setSessionExpired(true);
+
+      this.tryToRelog(() => {
+        session.setSessionExpired(false);
+        NavigationService.goBack();
+      });
+
+      return true;
+    } catch (err) {
+      session.setSwitchingAccount(false);
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
+
+  /**
+   * Opens the re-login modal for the current user and handles a successful login or the cancel
+   */
+  async tryToRelog(onLogin?: Function) {
+    const onCancel = async () => {
+      if (session.sessionExpired) {
+        console.log('[AuthService] tryToRelog: session expired');
+        this.logoutSession();
+      }
+    };
+
+    NavigationService.navigate('RelogScreen', {
+      onLogin,
+      onCancel,
+    });
   }
 
   unregisterTokenFrom(index: number) {

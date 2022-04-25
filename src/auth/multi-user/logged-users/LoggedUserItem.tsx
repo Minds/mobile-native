@@ -18,13 +18,10 @@ const doLogin = async (index: number) => {
     return;
   }
   if (sessionService.tokensData[index].sessionExpired) {
-    const promise = new Promise((resolve, reject) => {
-      NavigationService.navigate('RelogScreen', {
-        sessionIndex: index,
-        onLogin: () => AuthService.loginWithIndex(index),
-      });
+    NavigationService.navigate('RelogScreen', {
+      sessionIndex: index,
+      onLogin: () => AuthService.loginWithIndex(index),
     });
-    await promise;
   } else {
     AuthService.loginWithIndex(index);
   }

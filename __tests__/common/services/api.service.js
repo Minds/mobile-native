@@ -30,7 +30,7 @@ var mock = new MockAdapter(axios);
 const axiosInstance = axios.create();
 // const axiosMock = new MockAdapter(axios);
 
-ApiService.prototype.tryToRelog = jest.fn().mockImplementation(() => false);
+// AuthService.prototype.tryToRelog = jest.fn().mockImplementation(() => false);
 const api = new ApiService(null, axiosInstance);
 
 /**
