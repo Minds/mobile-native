@@ -36,6 +36,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     player: null as Video | null,
     paused: !autoplay,
     forceHideOverlay: false,
+    hideOverlay: () => null as any,
     setForceHideOverlay(forceHideOverlay: boolean) {
       this.forceHideOverlay = forceHideOverlay;
     },
@@ -140,9 +141,9 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       var minutes = Math.floor(seconds / 60);
       var remainingSeconds = seconds % 60;
       return (
-        _.padStart(minutes.toFixed(0), 2, 0) +
+        _.padStart(minutes.toFixed(0), 2, '0') +
         ':' +
-        _.padStart(remainingSeconds.toFixed(0), 2, 0)
+        _.padStart(remainingSeconds.toFixed(0), 2, '0')
       );
     },
     get currentTimeSeconds() {
@@ -208,7 +209,6 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
       this.hideOverlay();
     },
-    hideOverlay: () => null,
     /**
      * Play the current video and activate the player
      */
