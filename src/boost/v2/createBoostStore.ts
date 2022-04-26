@@ -209,7 +209,9 @@ const createBoostStore = ({
         }
         NavigationService.goBack();
       } catch (err) {
-        showNotification(err.message, 'danger');
+        if (err instanceof Error) {
+          showNotification(err.message, 'danger');
+        }
       } finally {
         this.loading = false;
       }

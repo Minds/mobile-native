@@ -301,7 +301,7 @@
     "rewardsStateDecrease1": "Váš multiplikátor denných tokenových odmien sa znížil na {{multiplier}}x"
   },
   "notificationSettings": {
-    "enableDisable": "Zapnúť/vypnúť upozornenia",
+    "all": "Zapnúť/vypnúť upozornenia",
     "comment": "Komentáre",
     "like": "Hlasy",
     "tag": "Označenia",

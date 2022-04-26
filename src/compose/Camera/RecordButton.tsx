@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { mix, useTransition } from 'react-native-redash';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 import Pulse from '../../common/components/Pulse';
 
@@ -55,13 +54,13 @@ export default observer(function (props: PropsType) {
   return (
     <View style={containerStyle}>
       {props.pulse && <Pulse size={props.size} />}
-      <TouchableOpacity
+      <Pressable
         onPress={props.onPress}
         onLongPress={props.onLongPress}
         onPressOut={props.onPressOut}
         style={buttonStyle}>
         <Animated.View style={innerStyle} />
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 });

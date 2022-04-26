@@ -32,7 +32,7 @@ export default class BaseModel extends AbstractModel {
   };
 
   // TODO remove this and fix model.listRef logic
-  listRef?: any;
+  // listRef?: any;
 
   /**
    * Event emitter
@@ -85,6 +85,7 @@ export default class BaseModel extends AbstractModel {
     // remove references to the list
     //@ts-ignore
     delete plainEntity.__list;
+    //@ts-ignore
     delete plainEntity.listRef;
 
     return plainEntity;

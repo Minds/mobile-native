@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
+import NavigationService from '~/navigation/NavigationService';
 
 export type ChannelListItemProps = {
   onPress?: (channel: UserModel) => void;
@@ -49,10 +50,21 @@ const ChannelListItem = (props: ChannelListItemProps) => {
       if (props.channel.isOpen() && !props.channel.can(FLAG_VIEW, true)) {
         return;
       }
-      props.navigation.push('Channel', {
-        guid: props.channel.guid,
-        entity: props.channel,
-      });
+
+      if (props.navigation === NavigationService) {
+        props.navigation.push('App', {
+          screen: 'Channel',
+          params: {
+            guid: props.channel.guid,
+            entity: props.channel,
+          },
+        });
+      } else {
+        props.navigation.push('Channel', {
+          guid: props.channel.guid,
+          entity: props.channel,
+        });
+      }
     }
   }, [props]);
 

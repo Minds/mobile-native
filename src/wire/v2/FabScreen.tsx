@@ -121,12 +121,14 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
           this.goBack();
         }
       } catch (e) {
-        if (!e || e.message !== 'E_CANCELLED') {
+        if (!e || (e instanceof Error && e.message !== 'E_CANCELLED')) {
           logService.error(e);
 
           Alert.alert(
             i18n.t('wire.errorSendingWire'),
-            (e && e.message) || 'Unknown internal error',
+            e && e instanceof Error && e.message
+              ? e.message
+              : 'Unknown internal error',
             [{ text: i18n.t('ok') }],
             { cancelable: false },
           );

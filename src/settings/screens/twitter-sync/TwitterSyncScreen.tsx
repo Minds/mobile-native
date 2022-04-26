@@ -102,7 +102,7 @@ function TwitterSyncScreen() {
         })
         .catch(() => {
           showNotification(
-            i18n.t('settings.twitterSync.error.update'),
+            i18n.t('settings.twitterSync.notifs.error.update'),
             'danger',
           );
           cb(false);
