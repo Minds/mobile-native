@@ -129,7 +129,7 @@ export default `
           document.getElementById('captcha'),
           {
             startMode: 'auto',
-            sitekey: 'minds-front',
+            sitekey: 'minds-mobile',
             puzzleEndpoint:
               'api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
