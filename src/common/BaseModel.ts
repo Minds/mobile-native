@@ -24,7 +24,7 @@ export default class BaseModel extends AbstractModel {
   ownerObj!: UserModel;
   mature: boolean = false;
   pending?: '0' | '1';
-  state?: 'rejected' | 'accepted' | 'revoked';
+  @observable state?: 'rejected' | 'accepted' | 'revoked';
   time_created!: string;
   urn: string = '';
   wire_totals?: {
