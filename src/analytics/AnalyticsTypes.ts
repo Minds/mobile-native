@@ -496,3 +496,21 @@ export interface TokensMetrics {
   onchain: string;
   total: string;
 }
+
+export type CardType =
+  | 'LiquidityFees'
+  | 'LiquidityTotal'
+  | 'LiquidityTradedVolume'
+  | 'EngagementScore'
+  | 'HoldingScore'
+  | 'LiquidityScore'
+  | 'EmissionBreakDown'
+  | 'CirculatingSupply'
+  | 'MarketCap'
+  | 'TokenHolders'
+  | 'TokensReclaimed'
+  | 'TokensRewarded'
+  | 'TotalSupply'
+  | 'TransactionsCount'
+  | 'TransactionsUnique'
+  | 'TransactionsVolume';

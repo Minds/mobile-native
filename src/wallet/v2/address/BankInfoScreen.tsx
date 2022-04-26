@@ -89,7 +89,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
 
       await walletStore.createStripeAccount(form);
     } catch (err) {
-      if (!isUserError(err)) {
+      if (!isUserError(err) && err instanceof Error) {
         logService.exception('[BankInfoScreen] createStripeAccount', err);
       }
     } finally {
@@ -122,7 +122,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
       await walletStore.addStripeBank(form);
       navigation.goBack();
     } catch (err) {
-      if (!isUserError(err)) {
+      if (!isUserError(err) && err instanceof Error) {
         logService.exception('[BankInfoScreen] createStripeAccount', err);
       }
     } finally {

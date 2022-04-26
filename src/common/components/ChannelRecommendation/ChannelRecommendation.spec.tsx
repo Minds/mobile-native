@@ -47,6 +47,16 @@ jest.mock('~/common/hooks/useApiFetch', () => () => ({
   },
 }));
 
+jest.mock('~/common/hooks/use-stores', () => ({
+  useLegacyStores: () => ({
+    recentSubscriptions: {
+      list() {
+        return [];
+      },
+    },
+  }),
+}));
+
 describe('ChannelRecommendation', () => {
   test('renders correctly', () => {
     const component = shallow(

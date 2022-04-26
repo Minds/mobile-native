@@ -19,10 +19,20 @@ const createCameraStore = p => {
     hdr: <boolean>false,
     lowLightBoost: <boolean>false,
     recording: false,
+    recordingPaused: false,
     show: false,
     pulse: false,
     ready: false,
     focusPoint: false as false | FocusPoint,
+    toggleRecording(camera) {
+      if (!this.recordingPaused) {
+        this.recordingPaused = true;
+        camera.current?.pauseRecording();
+      } else {
+        this.recordingPaused = false;
+        camera.current?.resumeRecording();
+      }
+    },
     showCam() {
       this.show = true;
     },
@@ -64,6 +74,7 @@ const createCameraStore = p => {
     setRecording(value, pulse = false) {
       this.recording = value;
       this.pulse = pulse;
+      this.recordingPaused = false;
     },
     async recordVideo(pulse = false, format, camera) {
       if (this.recording) {

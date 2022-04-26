@@ -62,7 +62,9 @@ const createTierStore = () => {
         }
       } catch (err) {
         response = false;
-        throw new UserError(err.message);
+        throw new UserError(
+          err && err instanceof Error ? err.message : 'Unexpected error',
+        );
       } finally {
         return response;
       }
