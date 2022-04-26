@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { Icon } from 'react-native-elements';
 
-import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import { TouchableHighlight, View } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -249,13 +249,18 @@ export default class BoostActionBar extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    padding: 4,
-  },
+const styles = ThemedStyles.create({
+  container: [
+    'borderBottom6x',
+    'bcolorBaseBackground',
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'stretch',
+      padding: 4,
+      paddingBottom: 16,
+    },
+  ],
   icon: {
     marginBottom: 4,
   },
