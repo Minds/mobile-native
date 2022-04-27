@@ -48,6 +48,7 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import { CODE_PUSH_KEY } from '~/config/Config';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -74,7 +75,6 @@ export let APP_CONST = {
 /**
  * App
  */
-@codePush
 @observer
 class App extends Component<Props, State> {
   ShareReceiveListener;
@@ -102,6 +102,18 @@ class App extends Component<Props, State> {
     }
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
+
+    // Check for codepush update and restart app immediately if necessary
+    codePush.sync(
+      CODE_PUSH_KEY
+        ? {
+            installMode: codePush.InstallMode.IMMEDIATE,
+            deploymentKey: CODE_PUSH_KEY,
+          }
+        : {
+            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESUME, // install mandatory updates on app resume
+          },
+    );
   }
 
   /**
