@@ -416,16 +416,16 @@ export class ApiService {
   getParamsString(params) {
     return Object.keys(params)
       .map(k => {
-        // if (Array.isArray(params[k])) {
-        //   return params[k]
-        //     .map(
-        //       (value, index) =>
-        //         `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
-        //           value,
-        //         )}`,
-        //     )
-        //     .join('&');
-        // }
+        if (Array.isArray(params[k])) {
+          return params[k]
+            .map(
+              (value, index) =>
+                `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
+                  value,
+                )}`,
+            )
+            .join('&');
+        }
 
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
