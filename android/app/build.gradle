@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
-apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 
@@ -243,8 +242,6 @@ dependencies {
     // react-native-screens need both
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
-
-    addUnimodulesDependencies()
 
     implementation project(':tipsi-stripe')
     implementation project(':reactnativenotifications')

@@ -1,6 +1,8 @@
 package com.minds.mobile;
 
-import com.minds.mobile.generated.BasePackageList;
+import android.content.res.Configuration;
+import expo.modules.ApplicationLifecycleDispatcher;
+import expo.modules.ReactNativeHostWrapper;
 
 import android.app.Application;
 
@@ -21,10 +23,6 @@ import com.rnfs.RNFSPackage;
 import java.util.List;
 import java.util.Arrays;
 
-import org.unimodules.adapters.react.ModuleRegistryAdapter;
-import org.unimodules.adapters.react.ReactModuleRegistryProvider;
-import org.unimodules.core.interfaces.SingletonModule;
-
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import com.minds.mobile.CustomErrorScreen;
@@ -38,10 +36,8 @@ import org.wonday.orientation.OrientationActivityLifecycle;
 import com.microsoft.codepush.react.CodePush;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
- private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
-
  private final ReactNativeHost mReactNativeHost =
-    new ReactNativeHost(this) {
+    new ReactNativeHostWrapper(this, new ReactNativeHost(this) {
       @Override
       public boolean getUseDeveloperSupport() {
         return BuildConfig.DEBUG;
@@ -58,11 +54,6 @@ public class MainApplication extends Application implements ShareApplication, Re
         List<ReactPackage> packages = new PackageList(this).getPackages();
         packages.add(new RNNotificationsPackage(this.getApplication()));
 
-        // Add unimodules
-        List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
-          new ModuleRegistryAdapter(mModuleRegistryProvider)
-        );
-        packages.addAll(unimodules);
         return packages;
       }
 
@@ -70,7 +61,7 @@ public class MainApplication extends Application implements ShareApplication, Re
       public String getJSBundleFile() {
           return CodePush.getJSBundleFile();
       }
-  };
+  });
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -84,6 +75,13 @@ public class MainApplication extends Application implements ShareApplication, Re
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ReactNativeExceptionHandlerModule.replaceErrorScreenActivityClass(CustomErrorScreen.class);
     registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance()); 
+     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig);
   }
 
   /**

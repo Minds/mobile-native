@@ -187,9 +187,9 @@ class App extends Component<Props, State> {
               onStateChange={analyticsService.onNavigatorStateChange}>
               <StoresProvider>
                 <Provider key="app" {...stores}>
-                  <PortalProvider>
-                    <BottomSheetModalProvider>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                  <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                    <PortalProvider>
+                      <BottomSheetModalProvider>
                         <ErrorBoundary
                           message="An error occurred"
                           containerStyle={ThemedStyles.style.centered}>
@@ -200,9 +200,9 @@ class App extends Component<Props, State> {
                             />
                           </WCContextProvider>
                         </ErrorBoundary>
-                      </AppMessageProvider>
-                    </BottomSheetModalProvider>
-                  </PortalProvider>
+                      </BottomSheetModalProvider>
+                    </PortalProvider>
+                  </AppMessageProvider>
                 </Provider>
               </StoresProvider>
             </NavigationContainer>

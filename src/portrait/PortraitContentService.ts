@@ -36,6 +36,7 @@ export class PortraitContentService {
       return new Map(urns);
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
+
       return null;
     }
   }

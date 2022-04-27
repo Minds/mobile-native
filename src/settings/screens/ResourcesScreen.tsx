@@ -160,19 +160,23 @@ const items = [
       },
     ],
   },
-];
+] as const;
+
+type Items = typeof items[number];
+type Options<T extends number> = typeof items[T]['options'][number];
 
 const ResourcesScreen = ({}: PropsType) => {
   return (
     <ScrollView style={styles.container}>
-      {items.map(item => (
+      {items.map((item: Items, index) => (
         <>
           <MenuSubtitle>
             {i18n.t(`settings.${item.id}.title`).toUpperCase()}
           </MenuSubtitle>
-          {item.options.map((option, i) => (
+          {item.options.map((option: Options<typeof index>, i) => (
             <MenuItem
               item={{
+                //@ts-ignore TODO: solve this nested type error
                 title: i18n.t(`settings.${item.id}.${option.id}`),
                 onPress: option.onPress,
                 noIcon: true,

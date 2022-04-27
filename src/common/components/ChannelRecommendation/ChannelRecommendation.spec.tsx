@@ -47,12 +47,22 @@ jest.mock('~/common/hooks/useApiFetch', () => () => ({
   },
 }));
 
+jest.mock('~/common/hooks/use-stores', () => ({
+  useLegacyStores: () => ({
+    recentSubscriptions: {
+      list() {
+        return [];
+      },
+    },
+  }),
+}));
+
 describe('ChannelRecommendation', () => {
   test('renders correctly', () => {
     const component = shallow(
       <ChannelRecommendation location="fakeLocation" />,
     );
-
+    //@ts-ignore jasmine types overwriting jest types
     expect(component).toMatchSnapshot();
   });
 });
@@ -62,7 +72,7 @@ describe('ChannelRecommendationItem', () => {
     const componentItem = shallow(
       <ChannelRecommendationItem channel={UserModel.create(mockEntity)} />,
     );
-
+    //@ts-ignore jasmine types overwriting jest types
     expect(componentItem).toMatchSnapshot();
   });
 });

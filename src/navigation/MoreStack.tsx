@@ -190,7 +190,7 @@ export default function () {
       <MoreStack.Screen
         name="BoostConsole"
         component={BoostConsoleScreen}
-        options={{ title: i18n.t('boost') }}
+        options={{ title: i18n.t('settings.boostConsole') }}
       />
       <MoreStack.Screen
         name="Other"

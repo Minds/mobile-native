@@ -6,7 +6,7 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 import BoostModel from './BoostModel';
 import BoostService from './BoostService';
 import logService from '../common/services/log.service';
-import { isNetworkError } from '../common/services/api.service';
+import { isAbort, isNetworkError } from '../common/services/api.service';
 
 /**
  * Boosts Store
@@ -59,7 +59,7 @@ class BoostStore {
       this.list.setList(feed, refresh);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       if (!isNetworkError(err)) {
         logService.exception('[BoostStore]', err);
       }

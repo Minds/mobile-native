@@ -77,7 +77,8 @@ const createPhoneValidationStore = ({
 
       this.isConfirming(secret);
     } catch (e) {
-      const error = (e && e.message) || 'Unknown server error';
+      const error =
+        e instanceof Error && e.message ? e.message : 'Unknown server error';
       this.setInProgress(false);
       this.setError(error);
       throw e;
@@ -103,7 +104,8 @@ const createPhoneValidationStore = ({
       onConfirm && onConfirm(true);
       NavigationService.goBack();
     } catch (e) {
-      const error = (e && e.message) || 'Unknown server error';
+      const error =
+        e instanceof Error && e.message ? e.message : 'Unknown server error';
       this.setError(error);
       logService.exception(e);
       throw e;

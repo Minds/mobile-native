@@ -1,17 +1,37 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, memoize } from 'lodash';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
-import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
 import moment from 'moment-timezone';
-import { observable, action } from 'mobx';
+import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
+// importing directly to use the type
+import enLocale from '../../../locales/en.json';
+
+// get all possible key paths
+type DeepKeys<T> = T extends object
+  ? {
+      // @ts-ignore
+      [K in keyof T]-?: `${K & string}` | Concat<K & string, DeepKeys<T[K]>>;
+    }[keyof T]
+  : '';
+
+// or: only get leaf and no intermediate key path
+type DeepLeafKeys<T> = T extends object
+  ? // @ts-ignore
+    { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
+  : '';
+type Concat<K extends string, P extends string> = `${K}${'' extends P
+  ? ''
+  : '.'}${P}`;
+
+export type LocaleType = typeof enLocale;
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
   en: () => {
-    return require('../../../locales/en.json');
+    return enLocale;
   },
   es: () => {
     require('moment/locale/es');
@@ -143,7 +163,7 @@ class I18nService {
   /**
    * Translate
    */
-  t(scope: string, options?: object) {
+  t<P extends DeepLeafKeys<LocaleType>>(scope: P, options?: object): string {
     return translate(scope, options);
   }
 
@@ -260,7 +280,9 @@ class I18nService {
       storages.app.setString('locale', locale);
     }
     // clear translation cache
-    translate.cache.clear();
+    if (translate.cache !== undefined && translate.cache.clear !== undefined) {
+      translate.cache.clear();
+    }
     // update layout direction
     I18nManager.forceRTL(false);
 
