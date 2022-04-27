@@ -3,6 +3,7 @@ import debounce from 'lodash/debounce';
 import { storages } from '~/common/services/storage/storages.service';
 
 import FeedStore from '../../../common/stores/FeedStore';
+import type { DebouncedFunc } from 'lodash';
 
 /**
  * Discovery Search Store
@@ -15,6 +16,7 @@ export default class DiscoveryV2SearchStore {
   @observable refreshing: boolean = false;
   @observable filter: string = 'all';
   @observable nsfw: Array<number> = [];
+  refresh: DebouncedFunc<() => Promise<void>>;
 
   params = {
     period: 'relevant',
@@ -36,7 +38,8 @@ export default class DiscoveryV2SearchStore {
       .setAsActivities(false)
       .setPaginated(true)
       .setParams(this.params);
-    this.refresh = debounce(this.refresh, 300);
+
+    this.refresh = debounce(this._refresh, 300);
   }
 
   @action
@@ -83,7 +86,7 @@ export default class DiscoveryV2SearchStore {
   };
 
   @action
-  async refresh(): Promise<void> {
+  async _refresh(): Promise<void> {
     this.refreshing = true;
     this.listStore.clear();
     await this.listStore.setParams(this.params).refresh();
