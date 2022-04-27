@@ -1,7 +1,6 @@
 import { storages } from './../../common/services/storage/storages.service';
 import { observable, action } from 'mobx';
 import UserModel from '~/channel/UserModel';
-import { ParamsArray } from '~/common/services/api.service';
 /**
  * how long should the subscriptions persist
  */
@@ -64,7 +63,7 @@ export class RecentSubscriptionsStore {
       this.subscriptions = recentSubscriptions;
       this._persist();
     }
-    return new ParamsArray(this.subscriptions.map(sub => sub.channelGuid));
+    return this.subscriptions.map(sub => sub.channelGuid);
   }
 
   /**
