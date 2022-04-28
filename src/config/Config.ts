@@ -19,6 +19,11 @@ export const CANARY_KEY = 'canary';
 export const ENV =
   typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
+// Override the production if there is a value defined for the environment
+export const CODE_PUSH_KEY = IS_IOS
+  ? RNConfig.CODEPUSH_KEY_IOS
+  : RNConfig.CODEPUSH_KEY_ANDROID;
+
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
 
