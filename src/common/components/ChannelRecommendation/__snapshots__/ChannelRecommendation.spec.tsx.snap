@@ -150,7 +150,6 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "rewards": false,
           "rowKey": "something",
           "shouldBeBlured": [MockFunction],
-          "state": undefined,
           "subscribed": undefined,
           "subscriber": false,
           "subscribers_count": undefined,
