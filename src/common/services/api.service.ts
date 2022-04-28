@@ -40,6 +40,12 @@ export interface ApiResponse {
 }
 
 /**
+ * Parameters array (new format)
+ * This array is transformed to param[]=value&param[]=value
+ */
+export class ParamsArray extends Array<any> {}
+
+/**
  * Api Error
  */
 export class ApiError extends Error {
@@ -256,7 +262,7 @@ export class ApiService {
             );
           }
 
-          this.checkResponse(response);
+          this.checkResponse(response, originalReq.url);
         } else if (request) {
           throw new NetworkError(error.message); // server down or there is not connectivity
         }
@@ -331,7 +337,10 @@ export class ApiService {
     }
   }
 
-  checkResponse<T extends ApiResponse>(response: AxiosResponse<T>): T {
+  checkResponse<T extends ApiResponse>(
+    response: AxiosResponse<T>,
+    url?: string,
+  ): T {
     const data = response.data;
 
     // Failed on API side
@@ -344,6 +353,10 @@ export class ApiService {
       throw apiError;
     }
     if (response.status >= 500) {
+      logService.info(
+        '[ApiService] server error',
+        response.request?.url || url,
+      );
       throw new ApiError('Server error ' + response.status);
     }
 
@@ -429,7 +442,7 @@ export class ApiService {
   getParamsString(params) {
     return Object.keys(params)
       .map(k => {
-        if (Array.isArray(params[k])) {
+        if (params[k] instanceof ParamsArray) {
           return params[k]
             .map(
               (value, index) =>
@@ -439,7 +452,6 @@ export class ApiService {
             )
             .join('&');
         }
-
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');

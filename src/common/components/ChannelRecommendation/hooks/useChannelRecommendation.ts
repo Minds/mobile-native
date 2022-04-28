@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
+import { ParamsArray } from '~/common/services/api.service';
 
 /**
  * channel recommendation resource
@@ -24,7 +25,7 @@ export const useChannelRecommendation = (
   }>('api/v3/recommendations', {
     params: {
       location,
-      mostRecentSubscriptions: recentSubscriptions.list(),
+      mostRecentSubscriptions: new ParamsArray(...recentSubscriptions.list()),
       currentChannelUserGuid: channel?.guid,
       limit: 3,
     },
