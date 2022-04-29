@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
@@ -11,23 +11,19 @@ const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
 });
 
 export const ShowNewPostsButton = ({ newsfeed }) => {
-  const newPostsButtonEnteringAnimation = useMemo(
-    () => FadeInUp.mass(0.3).duration(500),
-    [],
-  );
-  const newPostsButtonExitingAnimation = useMemo(
-    () => FadeInDown.mass(0.3).duration(500),
-    [],
-  );
   const onPress = useCallback(() => {
     newsfeed.listRef?.scrollToTop();
     newsfeed.latestFeedStore.refresh();
   }, [newsfeed.latestFeedStore, newsfeed.listRef]);
 
+  if (!newsfeed.latestFeedStore.newPostsCount) {
+    return null;
+  }
+
   return (
     <Animated.View
-      entering={newPostsButtonEnteringAnimation}
-      exiting={newPostsButtonExitingAnimation}
+      entering={FadeInUp.mass(0.3).duration(500)}
+      exiting={FadeInDown.mass(0.3).duration(500)}
       style={newPostsButtonStyle}>
       <SafeAreaView edges={edges}>
         <Button
