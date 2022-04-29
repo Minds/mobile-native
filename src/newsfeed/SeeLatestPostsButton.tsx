@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -20,7 +21,7 @@ interface SeeLatestPostsButtonProps {
 /**
  * A prompt that appears in a feed and shows how many new posts are there
  */
-export const SeeLatestPostsButton = ({
+const SeeLatestPostsButton = ({
   feedStore,
   onPress,
 }: SeeLatestPostsButtonProps) => {
@@ -59,5 +60,7 @@ export const SeeLatestPostsButton = ({
     </Animated.View>
   );
 };
+
+export default observer(SeeLatestPostsButton);
 
 const edges: Edge[] = ['top'];

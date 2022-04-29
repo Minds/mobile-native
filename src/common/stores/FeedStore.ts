@@ -81,7 +81,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * the last time we checked for new posts
    */
-  private newPostsLastCountedAt?: number;
+  private feedLastFetchedAt?: number;
 
   /**
    * the new post polling interval
@@ -466,17 +466,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
-    const oldCount = this.newPostsCount;
-    const oldTimestamp = this.newPostsLastCountedAt;
-
-    if (refresh) {
-      this.newPostsCount = 0;
-      this.newPostsLastCountedAt = Date.now();
-    }
-
-    if (!this.newPostsLastCountedAt) {
-      this.newPostsLastCountedAt = Date.now();
-    }
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
@@ -498,10 +487,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
-      runInAction(() => {
-        this.newPostsLastCountedAt = oldTimestamp;
-        this.newPostsCount = oldCount;
-      });
     } finally {
       this.setLoading(false);
     }
@@ -532,8 +517,13 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (refresh) this.clear();
       this.addEntities(localEntities);
 
+      const fetchTime = Date.now();
       await this.feedsService.fetch();
       const remoteEntities = await this.feedsService.getEntities();
+      runInAction(() => {
+        this.newPostsCount = 0;
+        this.feedLastFetchedAt = fetchTime;
+      });
 
       if (
         endpoint !== this.feedsService.endpoint ||
@@ -651,11 +641,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         return;
       }
 
-      const count = await this.feedsService.count(this.newPostsLastCountedAt);
+      const count = await this.feedsService.count(this.feedLastFetchedAt);
 
       runInAction(() => {
-        this.newPostsCount += count;
-        this.newPostsLastCountedAt = Date.now();
+        this.newPostsCount = count;
       });
     }, NEWSFEED_NEW_POST_POLL_INTERVAL);
 
