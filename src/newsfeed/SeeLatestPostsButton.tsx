@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 import i18nService from '~/common/services/i18n.service';
+import FeedStore from '~/common/stores/FeedStore';
 import { Button, Icon } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 
@@ -10,13 +12,28 @@ const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
   top: Platform.select({ android: 75, ios: 70 }),
 });
 
-export const SeeLatestPostsButton = ({ newsfeed }) => {
-  const onPress = useCallback(() => {
-    newsfeed.listRef?.scrollToTop();
-    newsfeed.latestFeedStore.refresh();
-  }, [newsfeed.latestFeedStore, newsfeed.listRef]);
+interface SeeLatestPostsButtonProps {
+  onPress: () => void;
+  feedStore: FeedStore;
+}
 
-  if (!newsfeed.latestFeedStore.newPostsCount) {
+/**
+ * A prompt that appears in a feed and shows how many new posts are there
+ */
+export const SeeLatestPostsButton = ({
+  feedStore,
+  onPress,
+}: SeeLatestPostsButtonProps) => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const disposeWatcher = feedStore.watchForUpdates(() =>
+      navigation.isFocused(),
+    );
+
+    return () => disposeWatcher();
+  }, [feedStore, navigation]);
+
+  if (!feedStore.newPostsCount) {
     return null;
   }
 
@@ -35,7 +52,7 @@ export const SeeLatestPostsButton = ({ newsfeed }) => {
           onPress={onPress}
           shouldAnimateChanges={false}>
           {i18nService.t('newsfeed.seeLatestTitle', {
-            count: newsfeed.latestFeedStore.newPostsCount,
+            count: feedStore.newPostsCount,
           })}
         </Button>
       </SafeAreaView>

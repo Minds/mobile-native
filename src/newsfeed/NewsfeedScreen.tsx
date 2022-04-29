@@ -53,7 +53,6 @@ class NewsfeedScreen extends Component<
   NewsfeedScreenState
 > {
   disposeTabPress?: Function;
-  disposeUpdatesWatcher?: Function;
   portraitBar = React.createRef<any>();
   emptyProps = {
     ListEmptyComponent: (
@@ -104,11 +103,15 @@ class NewsfeedScreen extends Component<
     };
   }
 
-  refreshNewsfeed = e => {
+  refreshNewsfeed = () => {
+    this.props.newsfeed.scrollToTop();
+    this.props.newsfeed.latestFeedStore.refresh();
+    this.props.newsfeed.topFeedStore.refresh();
+  };
+
+  onTabPress = e => {
     if (this.props.navigation.isFocused()) {
-      this.props.newsfeed.scrollToTop();
-      this.props.newsfeed.latestFeedStore.refresh();
-      this.props.newsfeed.topFeedStore.refresh();
+      this.refreshNewsfeed();
       e && e.preventDefault();
     }
   };
@@ -120,17 +123,11 @@ class NewsfeedScreen extends Component<
     this.disposeTabPress = this.props.navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
-      this.refreshNewsfeed,
+      this.onTabPress,
     );
 
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
-
-    if (hasVariation('mob-4193-polling')) {
-      this.disposeUpdatesWatcher = this.props.newsfeed.latestFeedStore.watchForUpdates(
-        () => this.props.navigation.isFocused(),
-      );
-    }
   }
 
   async loadFeed() {
@@ -142,7 +139,6 @@ class NewsfeedScreen extends Component<
    */
   componentWillUnmount() {
     this.disposeTabPress?.();
-    this.disposeUpdatesWatcher?.();
   }
 
   refreshPortrait = () => {
@@ -176,7 +172,14 @@ class NewsfeedScreen extends Component<
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-        {isLatest && <SeeLatestPostsButton newsfeed={newsfeed} />}
+        {isLatest && (
+          <IfFeatureEnabled feature="mob-4193-polling">
+            <SeeLatestPostsButton
+              onPress={this.refreshNewsfeed}
+              feedStore={newsfeed.latestFeedStore}
+            />
+          </IfFeatureEnabled>
+        )}
       </View>
     );
 
