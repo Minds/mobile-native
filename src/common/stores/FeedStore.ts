@@ -81,7 +81,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * the last time we checked for new posts
    */
-  private newPostsLastCountedAt = Date.now();
+  private newPostsLastCountedAt?: number;
 
   /**
    * the new post polling interval
@@ -471,6 +471,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
     if (refresh) {
       this.newPostsCount = 0;
+      this.newPostsLastCountedAt = Date.now();
+    }
+
+    if (!this.newPostsLastCountedAt) {
       this.newPostsLastCountedAt = Date.now();
     }
 

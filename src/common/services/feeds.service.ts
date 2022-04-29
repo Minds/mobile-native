@@ -466,9 +466,13 @@ export default class FeedsService {
    * @param { number } fromTimestamp
    * @returns { Promise<number> }
    */
-  async count(fromTimestamp: number): Promise<number> {
+  async count(fromTimestamp?: number): Promise<number> {
     if (!this.countEndpoint) {
       throw new Error('[FeedsService] No count endpoint');
+    }
+
+    if (!fromTimestamp) {
+      throw new Error('[FeedsService] No fromTimestamp provided');
     }
 
     const params = {
