@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 import logService from '../services/log.service';
 import Viewed from './Viewed';
@@ -639,7 +639,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {() => boolean} hasFocus does the screen have focus?
    * @returns { Function } a function to remove the watcher
    */
-  @action
   public watchForUpdates(hasFocus: () => boolean): () => void {
     clearInterval(this.newPostInterval);
     this.newPostInterval = setInterval(async () => {
@@ -649,8 +648,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
       const count = await this.feedsService.count(this.newPostsLastCountedAt);
 
-      this.newPostsCount += count;
-      this.newPostsLastCountedAt = Date.now();
+      runInAction(() => {
+        this.newPostsCount += count;
+        this.newPostsLastCountedAt = Date.now();
+      });
     }, NEWSFEED_NEW_POST_POLL_INTERVAL);
 
     return () => clearInterval(this.newPostInterval);
