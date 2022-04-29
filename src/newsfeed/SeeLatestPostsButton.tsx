@@ -41,7 +41,6 @@ const SeeLatestPostsButton = ({
   return (
     <Animated.View
       entering={FadeInUp.mass(0.3).duration(500)}
-      exiting={FadeInDown.mass(0.3).duration(500)}
       style={newPostsButtonStyle}>
       <SafeAreaView edges={edges}>
         <Button
