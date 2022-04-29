@@ -168,32 +168,20 @@ class NewsfeedScreen extends Component<
    */
   render() {
     const newsfeed = this.props.newsfeed;
-    const LatestPostsButtonVisible =
-      this.props.newsfeed.feedType === 'latest' &&
-      newsfeed.latestFeedStore.newPostsCount > 0;
+    const isLatest = this.props.newsfeed.feedType === 'latest';
 
     const header = (
-      <View
-        style={
-          LatestPostsButtonVisible
-            ? latestPostsContainerStyles.header
-            : undefined
-        }>
+      <View style={isLatest ? latestPostsContainerStyles.header : undefined}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-        {LatestPostsButtonVisible && <ShowNewPostsButton newsfeed={newsfeed} />}
+        {isLatest && <ShowNewPostsButton newsfeed={newsfeed} />}
       </View>
     );
 
     const prepend = (
-      <View
-        style={
-          LatestPostsButtonVisible
-            ? latestPostsContainerStyles.prepend
-            : undefined
-        }>
+      <View style={isLatest ? latestPostsContainerStyles.prepend : undefined}>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
