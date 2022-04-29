@@ -33,6 +33,7 @@ import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import com.minds.mobile.CustomMMKVJSIModulePackage;
 import com.facebook.react.bridge.JSIModulePackage;
 import org.wonday.orientation.OrientationActivityLifecycle;
+import com.microsoft.codepush.react.CodePush;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
  private final ReactNativeHost mReactNativeHost =
@@ -57,13 +58,8 @@ public class MainApplication extends Application implements ShareApplication, Re
       }
 
       @Override
-      protected String getJSMainModuleName() {
-        return "index";
-      }
-
-      @Override
-      protected @Nullable String getBundleAssetName() {
-        return "app.bundle";
+      public String getJSBundleFile() {
+          return CodePush.getJSBundleFile();
       }
   });
 

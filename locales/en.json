@@ -655,6 +655,7 @@
   },
   "settings": {
     "submit": "Submit",
+    "boostConsole": "Boost Console",
     "chooseBrowser": "Choose Browser",
     "chooseBrowserDescription": "Please choose where you want to open the external links.",
     "chooseBrowserHint": "This option can be changed from the settings",

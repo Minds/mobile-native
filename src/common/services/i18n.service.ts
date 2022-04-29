@@ -280,7 +280,9 @@ class I18nService {
       storages.app.setString('locale', locale);
     }
     // clear translation cache
-    translate.cache.clear();
+    if (translate.cache !== undefined && translate.cache.clear !== undefined) {
+      translate.cache.clear();
+    }
     // update layout direction
     I18nManager.forceRTL(false);
 
