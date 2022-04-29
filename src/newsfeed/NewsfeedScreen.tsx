@@ -21,7 +21,6 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import { hasVariation } from 'ExperimentsProvider';
 import { SeeLatestPostsButton } from './SeeLatestPostsButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
