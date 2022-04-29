@@ -466,6 +466,17 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
+    const oldCount = this.newPostsCount;
+    const oldTimestamp = this.feedLastFetchedAt;
+
+    if (refresh) {
+      this.newPostsCount = 0;
+      this.feedLastFetchedAt = Date.now();
+    }
+
+    if (!this.feedLastFetchedAt) {
+      this.feedLastFetchedAt = Date.now();
+    }
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
@@ -487,6 +498,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
+      runInAction(() => {
+        this.feedLastFetchedAt = oldTimestamp;
+        this.newPostsCount = oldCount;
+      });
     } finally {
       this.setLoading(false);
     }
