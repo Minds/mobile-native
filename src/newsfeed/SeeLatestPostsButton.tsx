@@ -10,7 +10,7 @@ const newPostsButtonStyle = ThemedStyles.combine('positionAbsolute', {
   top: Platform.select({ android: 75, ios: 70 }),
 });
 
-export const ShowNewPostsButton = ({ newsfeed }) => {
+export const SeeLatestPostsButton = ({ newsfeed }) => {
   const onPress = useCallback(() => {
     newsfeed.listRef?.scrollToTop();
     newsfeed.latestFeedStore.refresh();

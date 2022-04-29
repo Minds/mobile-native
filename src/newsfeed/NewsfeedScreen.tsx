@@ -22,7 +22,7 @@ import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { hasVariation } from 'ExperimentsProvider';
-import { ShowNewPostsButton } from './ShowNewPostsButton';
+import { SeeLatestPostsButton } from './SeeLatestPostsButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -176,7 +176,7 @@ class NewsfeedScreen extends Component<
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
-        {isLatest && <ShowNewPostsButton newsfeed={newsfeed} />}
+        {isLatest && <SeeLatestPostsButton newsfeed={newsfeed} />}
       </View>
     );
 
