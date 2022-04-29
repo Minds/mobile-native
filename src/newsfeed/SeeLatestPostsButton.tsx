@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 import i18nService from '~/common/services/i18n.service';
 import FeedStore from '~/common/stores/FeedStore';
