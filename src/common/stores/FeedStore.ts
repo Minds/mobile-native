@@ -498,9 +498,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
-
-      this.newPostsLastCountedAt = oldTimestamp;
-      this.newPostsCount = oldCount;
+      runInAction(() => {
+        this.newPostsLastCountedAt = oldTimestamp;
+        this.newPostsCount = oldCount;
+      });
     } finally {
       this.setLoading(false);
     }
