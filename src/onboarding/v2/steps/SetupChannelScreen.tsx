@@ -69,6 +69,8 @@ export default observer(function SetupChannelScreen() {
           briefdescription: store.bio,
           name: store.name,
         });
+        user?.setBio(store.bio);
+        user?.setDisplayName(store.name);
       } catch (error) {
         showNotification(i18n.t('errorMessage'));
       } finally {

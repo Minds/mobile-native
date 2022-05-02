@@ -366,4 +366,14 @@ export default class UserModel extends BaseModel {
   setLiquiditySpotOptOut(liquidity_spot_opt_out: boolean) {
     this.liquidity_spot_opt_out = liquidity_spot_opt_out;
   }
+
+  @action
+  setBio(bio: string) {
+    this.briefdescription = bio;
+  }
+
+  @action
+  setDisplayName(name: string) {
+    this.name = name;
+  }
 }
