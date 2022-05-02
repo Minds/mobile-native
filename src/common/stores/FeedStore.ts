@@ -512,7 +512,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (refresh) this.clear();
       this.addEntities(localEntities);
 
-      const fetchTime = Date.now();
       await this.feedsService.fetch();
       const remoteEntities = await this.feedsService.getEntities();
 
