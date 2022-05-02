@@ -79,11 +79,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
-   * the last time we checked for new posts
-   */
-  private feedLastFetchedAt?: number;
-
-  /**
    * the new post polling interval
    */
   private newPostInterval;
@@ -466,17 +461,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
-    const oldCount = this.newPostsCount;
-    const oldTimestamp = this.feedLastFetchedAt;
-
-    if (refresh) {
-      this.newPostsCount = 0;
-      this.feedLastFetchedAt = Date.now();
-    }
-
-    if (!this.feedLastFetchedAt) {
-      this.feedLastFetchedAt = Date.now();
-    }
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
@@ -498,10 +482,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
-      runInAction(() => {
-        this.feedLastFetchedAt = oldTimestamp;
-        this.newPostsCount = oldCount;
-      });
     } finally {
       this.setLoading(false);
     }
@@ -535,10 +515,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       const fetchTime = Date.now();
       await this.feedsService.fetch();
       const remoteEntities = await this.feedsService.getEntities();
-      runInAction(() => {
-        this.newPostsCount = 0;
-        this.feedLastFetchedAt = fetchTime;
-      });
 
       if (
         endpoint !== this.feedsService.endpoint ||
@@ -598,6 +574,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   async refresh() {
     this.refreshing = true;
+    this.newPostsCount = 0;
+
     try {
       await this.fetchRemoteOrLocal(true);
     } catch (err) {
@@ -646,7 +624,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
 
   /**
    *
-   * @param {() => boolean} hasFocus does the screen have focus?
+   * @param {() => boolean} hasFocus - A function that returns whether the screen has focus or not?
    * @returns { Function } a function to remove the watcher
    */
   public watchForUpdates(hasFocus: () => boolean): () => void {
@@ -656,7 +634,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         return;
       }
 
-      const count = await this.feedsService.count(this.feedLastFetchedAt);
+      const count = await this.feedsService.count(
+        this.feedsService.feedLastFetchedAt,
+      );
 
       runInAction(() => {
         this.newPostsCount = count;

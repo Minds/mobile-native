@@ -89,6 +89,11 @@ export default class FeedsService {
   fallbackIndex = -1;
 
   /**
+   * the last time we checked for new posts
+   */
+  feedLastFetchedAt?: number;
+
+  /**
    * Get entities from the current page
    */
   async getEntities(): Promise<Array<any>> {
@@ -310,7 +315,9 @@ export default class FeedsService {
     if (this.paginated && more) {
       params.from_timestamp = this.pagingToken;
     }
+    const fetchTime = Date.now();
     const response = await apiService.get(this.endpoint, params, this);
+    this.feedLastFetchedAt = fetchTime;
 
     if (response.entities && response.entities.length) {
       if (response.entities.length < params.limit) {
