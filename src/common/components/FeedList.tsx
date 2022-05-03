@@ -194,7 +194,7 @@ export class FeedList<T> extends Component<PropsType> {
         ref={this.setListRef}
         key={feedStore.isTiled ? 't' : 'f'}
         ListHeaderComponent={header}
-        ListFooterComponent={this.getFooter}
+        ListFooterComponent={this.getFooter()}
         data={items}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
