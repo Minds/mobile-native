@@ -13,9 +13,10 @@ interface PatchImage extends Image {
   sourceURL?: string;
 }
 
-type mediaType = 'photo' | 'video' | 'any';
-type imagePromise = false | PatchImage | PatchImage[];
-export type customImagePromise = false | CustomImage | CustomImage[];
+export type MediaType = 'photo' | 'video' | 'any';
+type ImageResponse = false | PatchImage | PatchImage[];
+export type CustomImageResponse = false | CustomImage | CustomImage[];
+export type CustomSingleImageResponse = false | CustomImage;
 
 /**
  * Image picker service
@@ -69,13 +70,15 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
+  async launchCamera(
+    type: MediaType = 'photo',
+  ): Promise<CustomSingleImageResponse> {
     // check or ask for permissions
     await this.checkCameraPermissions();
 
     const opt = this.buildOptions(type);
 
-    return this.returnCustom(ImagePicker.openCamera(opt));
+    return this.returnCustomSingle(ImagePicker.openCamera(opt));
   }
 
   /**
@@ -84,9 +87,9 @@ class ImagePickerService {
    * @param {string} type photo or video
    */
   async launchImageLibrary(
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     crop = true,
-  ): Promise<customImagePromise> {
+  ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkGalleryPermissions();
 
@@ -100,11 +103,11 @@ class ImagePickerService {
    */
   async show(
     title: string,
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     cropperCircleOverlay: boolean = false,
     width,
     height,
-  ): Promise<customImagePromise> {
+  ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkGalleryPermissions();
 
@@ -126,13 +129,12 @@ class ImagePickerService {
    * Show camera
    */
   async showCamera(
-    title: string,
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     cropperCircleOverlay: boolean = false,
     front: boolean = false,
     width,
     height,
-  ): Promise<customImagePromise> {
+  ): Promise<CustomSingleImageResponse> {
     // check permissions
     await this.checkCameraPermissions();
 
@@ -148,12 +150,23 @@ class ImagePickerService {
     }
     opt.useFrontCamera = front;
 
-    return this.returnCustom(ImagePicker.openCamera(opt));
+    return this.returnCustomSingle(ImagePicker.openCamera(opt));
   }
 
-  async returnCustom(
-    promise: Promise<imagePromise>,
-  ): Promise<customImagePromise> {
+  private _mapMedia(media): CustomImage {
+    return Object.assign(
+      {
+        uri: media.path.startsWith('/') ? `file://${media.path}` : media.path,
+        sourceURL: media.sourceURL,
+        type: media.mime,
+      },
+      media,
+    );
+  }
+
+  private async returnCustom(
+    promise: Promise<ImageResponse>,
+  ): Promise<CustomImageResponse | CustomSingleImageResponse> {
     try {
       const response = await promise;
 
@@ -162,31 +175,32 @@ class ImagePickerService {
       }
 
       if (Array.isArray(response)) {
-        return response.map((image: PatchImage) =>
-          Object.assign(
-            {
-              uri: image.path.startsWith('/')
-                ? `file://${image.path}`
-                : image.path,
-              sourceURL: image.sourceURL,
-              type: image.mime,
-            },
-            image,
-          ),
-        );
+        return response.map(this._mapMedia);
       } else {
-        const uri = response.path.startsWith('/')
-          ? `file://${response.path}`
-          : response.path;
-        return Object.assign(
-          {
-            uri,
-            sourceURL: response.sourceURL,
-            type: response.mime,
-          },
-          response,
-        );
+        return this._mapMedia(response);
       }
+    } catch (err) {
+      if (
+        err instanceof Error &&
+        !err.message.includes('cancelled image selection')
+      ) {
+        throw err;
+      }
+      return false;
+    }
+  }
+
+  private async returnCustomSingle(
+    promise: Promise<ImageResponse>,
+  ): Promise<CustomSingleImageResponse> {
+    try {
+      const response = await promise;
+
+      if (!response) {
+        return false;
+      }
+
+      return this._mapMedia(response);
     } catch (err) {
       if (
         err instanceof Error &&
@@ -203,7 +217,7 @@ class ImagePickerService {
    * @param {string} type
    */
   buildOptions(
-    type: mediaType,
+    type: MediaType,
     crop: boolean = true,
     cropperCircleOverlay: boolean = false,
   ): Options {

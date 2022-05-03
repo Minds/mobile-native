@@ -2482,7 +2482,8 @@ exports[`Activity screen component renders correctly  1`] = `
           "cancelOrDelete": [Function],
           "fileName": null,
           "guid": "",
-          "transcoding": false,
+          "height": 0,
+          "width": 0,
         },
         "comments": Array [],
         "embed": RichEmbedStore {

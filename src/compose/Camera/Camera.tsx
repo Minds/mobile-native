@@ -78,7 +78,10 @@ export default observer(function (props: PropsType) {
   // local store
   const store = useLocalStore(createCameraStore, { navigation, ...props });
 
-  const [devices, device, formats, format] = useBestCameraAndFormat(store);
+  const [devices, device, formats, format] = useBestCameraAndFormat(
+    store,
+    props.mode,
+  );
 
   const supportsCameraFlipping = React.useMemo(
     () => devices.back != null && devices.front != null,
@@ -183,7 +186,7 @@ export default observer(function (props: PropsType) {
                 ref={camera}
                 style={StyleSheet.absoluteFill}
                 device={device}
-                format={IS_IOS ? format : undefined}
+                format={!IS_IOS ? format : undefined}
                 fps={30}
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost

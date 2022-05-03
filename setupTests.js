@@ -20,6 +20,8 @@ jest.mock('@react-native-cookies/cookies', () => ({
   clearByName: jest.fn(),
 }));
 
+jest.mock('ffmpeg-kit-react-native');
+
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

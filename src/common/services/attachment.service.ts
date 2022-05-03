@@ -1,9 +1,7 @@
-//@ts-nocheck
 import api from './api.service';
-import imagePicker from './image-picker.service';
+import imagePicker, { MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
-import { showNotification } from '../../../AppMessages';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
 
@@ -16,7 +14,7 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  attachMedia(media, extra, onProgress = null) {
+  attachMedia(media, extra, onProgress: Function | null = null) {
     const file = {
       uri: media.uri,
       path: media.path || null,
@@ -108,7 +106,7 @@ class AttachmentService {
    */
   uploadToS3(file, progress) {
     return new Cancelable(async (resolve, reject, onCancel) => {
-      const response = await api.put(`api/v2/media/upload/prepare/video`);
+      const response = await api.put<any>(`api/v2/media/upload/prepare/video`);
       // upload file to s3
       const uploadPromise = api
         .uploadToS3(response.lease, file, progress)
@@ -191,33 +189,27 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType = 'photo', crop = true) {
-    const response = await imagePicker.launchImageLibrary(mediaType, crop);
+  async gallery(mediaType: MediaType = 'photo', crop = true) {
+    let response = await imagePicker.launchImageLibrary(mediaType, crop);
 
     if (!response) {
       return null;
     }
 
-    if (response.didCancel) {
-      return null;
-    } else if (response.error) {
-      showNotification(response.error);
-      return null;
-    } else {
-      if (!response.type) {
-        if (!response.width) {
-          response.type = 'video/mp4';
-        } else if (response.uri.includes('.gif')) {
-          response.type = 'image/gif';
-        }
-      }
-      // if (Platform.OS === 'ios') {
-      //   response.uri =
-      //     '~' + response.uri.substring(response.uri.indexOf('/Documents'));
-      // }
-
-      return response;
+    // we support only one attachment for now
+    if (Array.isArray(response)) {
+      response = response[0];
     }
+
+    if (!response.type) {
+      if (!response.width) {
+        response.type = 'video/mp4';
+      } else if (response.uri.includes('.gif')) {
+        response.type = 'image/gif';
+      }
+    }
+
+    return response;
   }
 }
 

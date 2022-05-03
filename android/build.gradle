@@ -1,11 +1,13 @@
 project.ext {
     excludeAppGlideModule = true
+    ffmpegKitPackage = "min-gpl"
 }
+
 
 buildscript {
     ext {
         buildToolsVersion = "30.0.2"
-        minSdkVersion = 21
+        minSdkVersion = 24
         compileSdkVersion = 31
         targetSdkVersion = 31
         supportLibVersion = "30.0.0"
@@ -69,7 +71,7 @@ subprojects {
                 buildToolsVersion rootProject.ext.supportLibVersion
 
                 defaultConfig {
-                    minSdkVersion 21
+                    minSdkVersion 24
                     manifestPlaceholders = [
                         tipsiStripeRedirectScheme: "mindsapp"
                     ]

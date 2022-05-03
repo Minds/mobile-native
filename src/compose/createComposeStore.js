@@ -87,7 +87,6 @@ export default function (props) {
       }
 
       if (params.media) {
-        console.log('media', params.media);
         this.mode = 'text';
         this.mediaToConfirm = params.media;
         this.attachment.attachMedia(params.media);
@@ -421,7 +420,7 @@ export default function (props) {
      * Accept media
      */
     acceptMedia() {
-      this.attachment.attachMedia(this.mediaToConfirm, this.extra);
+      this.attachment.attachMedia(this.mediaToConfirm, this.extra, true);
       this.mode = 'text';
     },
     /**

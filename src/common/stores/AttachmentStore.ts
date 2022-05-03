@@ -1,13 +1,16 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 import { Alert, Platform } from 'react-native';
-import RNConvertPhAsset from 'react-native-convert-ph-asset';
 
 import attachmentService from '../services/attachment.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import mindsConfigService from '../services/minds-config.service';
 import { showNotification } from '../../../AppMessages';
+import {
+  cancelTranscoding,
+  transcode,
+} from '../services/video-transcode.service';
+import { CancellablePromise } from 'mobx/lib/internal';
 
 /**
  * Attachment Store
@@ -15,16 +18,17 @@ import { showNotification } from '../../../AppMessages';
 export default class AttachmentStore {
   @observable hasAttachment = false;
   @observable uploading = false;
+  @observable transcoding = false;
   @observable progress = 0;
   @observable uri = '';
   @observable type = '';
   @observable license = '';
 
+  uploadPromise?: CancellablePromise<any>;
   guid = '';
   fileName = null;
-  transcoding = false;
-  width: 1;
-  height: 1;
+  width: number = 0;
+  height: number = 0;
 
   /**
    * Attach media
@@ -32,9 +36,10 @@ export default class AttachmentStore {
    * @param {object} extra
    */
   @action
-  async attachMedia(media, extra = null) {
+  async attachMedia(media, extra = null, transcodeVideo: boolean = false) {
     if (this.transcoding) {
-      return;
+      // cancel previous transcoding
+      cancelTranscoding();
     }
 
     if (this.uploading) {
@@ -55,27 +60,22 @@ export default class AttachmentStore {
     }
 
     this.setHasAttachment(true);
+    if (transcodeVideo && media.type && media.type.startsWith('video')) {
+      this.transcoding = true;
+      const newUri = await transcode(media.uri, true);
+      this.transcoding = false;
+      if (newUri) {
+        media.uri = `file://${newUri}`;
+      } else if (newUri === false) {
+        // cancel transcoding
+        this.setHasAttachment(false);
+        return;
+      }
+    }
+
+    logService.info('[AttachmentStore] Attaching', media);
 
     if (Platform.OS === 'ios') {
-      // correctly handle videos from ph:// paths on ios
-      if (media.type === 'video' && media.uri.startsWith('ph://')) {
-        try {
-          this.transcoding = true;
-          const converted = await RNConvertPhAsset.convertVideoFromUrl({
-            url: media.uri,
-            convertTo: 'm4v',
-            quality: 'original',
-          });
-          media.type = converted.mimeType;
-          media.uri = converted.path;
-          media.filename = converted.filename;
-        } catch (error) {
-          Alert.alert('Error reading the video', 'Please try again');
-        } finally {
-          this.transcoding = false;
-        }
-      }
-
       // fix camera roll gif issue
       if (media.type === 'image/jpeg' && media.filename) {
         const extension = media.filename.split('.').pop();
@@ -115,7 +115,9 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      showNotification(err.message || i18n.t('uploadFailed'));
+      if (err instanceof Error) {
+        showNotification(err.message || i18n.t('uploadFailed'));
+      }
     } finally {
       this.setUploading(false);
     }
@@ -141,18 +143,18 @@ export default class AttachmentStore {
    * Cancel current upload promise and request
    */
   cancelCurrentUpload(clear = true) {
-    this.uploadPromise &&
-      this.uploadPromise.cancel(() => {
-        if (clear) {
-          this.clear();
-        }
-      });
+    this.uploadPromise && this.uploadPromise.cancel();
+
+    clear && this.clear();
   }
 
   /**
    * Cancel the upload or delete the attachment if it is finished
    */
   cancelOrDelete = (deleteRemote = true) => {
+    if (this.transcoding) {
+      cancelTranscoding();
+    }
     if (this.uploading) {
       this.cancelCurrentUpload();
     } else {
@@ -215,7 +217,6 @@ export default class AttachmentStore {
     this.type = '';
     this.uri = '';
     this.hasAttachment = false;
-    this.checkingVideoLength = false;
     this.uploading = false;
     this.progress = 0;
   }

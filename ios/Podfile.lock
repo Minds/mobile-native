@@ -45,6 +45,10 @@ PODS:
     - React-Core (= 0.66.3)
     - React-jsi (= 0.66.3)
     - ReactCommon/turbomodule/core (= 0.66.3)
+  - ffmpeg-kit-ios-min-gpl (4.5.1)
+  - ffmpeg-kit-react-native/min-gpl (4.5.1):
+    - ffmpeg-kit-ios-min-gpl (= 4.5.1)
+    - React-Core
   - Flipper (0.122.0):
     - Flipper-Folly (~> 2.6)
     - Flipper-RSocket (~> 1.4)
@@ -475,8 +479,6 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
-  - RNConvertPhAsset (1.0.3):
-    - React
   - RNDeviceInfo (8.4.8):
     - React-Core
   - RNFastImage (8.3.5):
@@ -595,6 +597,7 @@ DEPENDENCIES:
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
+  - ffmpeg-kit-react-native/min-gpl (from `../node_modules/ffmpeg-kit-react-native/ffmpeg-kit-react-native.podspec`)
   - Flipper (= 0.122.0)
   - Flipper-Boost-iOSX (= 1.76.0.1.11)
   - Flipper-DoubleConversion (= 3.1.7)
@@ -676,7 +679,6 @@ DEPENDENCIES:
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
-  - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -704,6 +706,7 @@ SPEC REPOS:
     - Base64
     - Bolts
     - CocoaAsyncSocket
+    - ffmpeg-kit-ios-min-gpl
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -766,6 +769,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
+  ffmpeg-kit-react-native:
+    :podspec: "../node_modules/ffmpeg-kit-react-native/ffmpeg-kit-react-native.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   iOSPhotoEditor:
@@ -879,8 +884,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
-  RNConvertPhAsset:
-    :path: "../node_modules/react-native-convert-ph-asset"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
@@ -950,6 +953,8 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 32c0ccb47f477d330ee93db72505380adf0de09a
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
+  ffmpeg-kit-ios-min-gpl: da951b00628916702be2a90918181ebdcdd569ff
+  ffmpeg-kit-react-native: f07dd13b146f9bdef9e2639ab68c9e3ddeedc099
   Flipper: a8ba108d0222a569c0b7b8762f3920ac7dca7d4b
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 57ffbe81ef95306cc9e69c4aa3aeeeeb58a6a28c
@@ -1024,7 +1029,6 @@ SPEC CHECKSUMS:
   RNBootSplash: 4844706cbb56a3270556c9b94e59dedadccd47e4
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
@@ -1055,6 +1059,6 @@ SPEC CHECKSUMS:
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 136d8d4317f5c084b85a9581df180d278e8c28a5
+PODFILE CHECKSUM: 585d21ece48ff89b40a241de9d3108cf55e8931c
 
 COCOAPODS: 1.11.3

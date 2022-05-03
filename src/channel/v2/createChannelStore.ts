@@ -5,7 +5,7 @@ import ChannelService from '../ChannelService';
 import imagePickerService from '../../common/services/image-picker.service';
 import type {
   CustomImage,
-  customImagePromise,
+  CustomImageResponse,
 } from '../../common/services/image-picker.service';
 import sessionService from '../../common/services/session.service';
 import supportTiersService from '../../common/services/support-tiers.service';
@@ -294,14 +294,13 @@ const createChannelStore = () => {
     async upload(
       type: channelMediaType,
       camera = false,
-      onImageSelected?: (customImagePromise) => void,
+      onImageSelected?: (image: CustomImageResponse) => void,
     ) {
       const isBanner = type === 'banner';
 
       try {
         const promise = camera
           ? imagePickerService.showCamera(
-              '',
               'photo',
               type === 'avatar',
               true,
@@ -316,7 +315,7 @@ const createChannelStore = () => {
               isBanner ? 600 : 1024,
             );
         await promise
-          .then(async (response: customImagePromise) => {
+          .then(async (response: CustomImageResponse) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
               file = response;

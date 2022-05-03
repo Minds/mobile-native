@@ -8,7 +8,7 @@ install! 'cocoapods',
 
 $RNFirebaseAsStaticFramework = true
 
-platform :ios, '12.0'
+platform :ios, '12.1'
 
 target 'Minds' do
   use_expo_modules!
@@ -19,6 +19,9 @@ target 'Minds' do
       Pod::UI.warn e
     end
   end
+
+  pod 'ffmpeg-kit-react-native', :subspecs => ['min-gpl'], :podspec => '../node_modules/ffmpeg-kit-react-native/ffmpeg-kit-react-native.podspec'
+
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
@@ -82,6 +85,7 @@ end
 
 target 'Share' do
   # use_react_native!
+  pod 'ffmpeg-kit-react-native', :subspecs => ['min-gpl'], :podspec => '../node_modules/ffmpeg-kit-react-native/ffmpeg-kit-react-native.podspec'
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)

@@ -104,12 +104,17 @@ export default observer(function MediaPreview(props: PropsType) {
           />
         </>
       )}
-      {props.store.attachment.uploading && (
+      {(props.store.attachment.uploading ||
+        props.store.attachment.transcoding) && (
         <Progress.Bar
           indeterminate={true}
           progress={props.store.attachment.progress}
           width={width}
-          color={ThemedStyles.getColor('Green')}
+          color={
+            props.store.attachment.uploading
+              ? ThemedStyles.getColor('Green')
+              : ThemedStyles.getColor('Link')
+          }
           borderWidth={0}
           borderRadius={0}
           useNativeDriver={true}
