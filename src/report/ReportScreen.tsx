@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import openUrlService from '~/common/services/open-url.service';
+import { Icon } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
@@ -251,18 +251,9 @@ export default class ReportScreen extends Component<PropsType, StateType> {
     );
   }
 
-  /**
-   * Open default mailer
-   */
-  openZendeskDMCA = () => {
-    return openUrlService.open(
-      'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
-    );
-  };
-
-  getOnPressFromReason(reason): undefined | (() => void) {
+  getExternalLinkForReason(reason): undefined | string {
     if (reason.value === 10) {
-      return this.openZendeskDMCA;
+      return 'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852';
     }
 
     return;
@@ -280,14 +271,14 @@ export default class ReportScreen extends Component<PropsType, StateType> {
         : this.state.reasons;
 
     const reasonItems = reasons?.map((reason, i) => {
-      const onPress = this.getOnPressFromReason(reason);
+      const externalLink = this.getExternalLinkForReason(reason);
       return (
         <TouchableOpacity
           style={styles.reasonItem}
           key={i}
           onPress={
-            onPress
-              ? onPress
+            externalLink
+              ? () => openUrlService.open(externalLink)
               : () =>
                   this.state.reason
                     ? this.selectSubreason(reason)
@@ -298,9 +289,13 @@ export default class ReportScreen extends Component<PropsType, StateType> {
               <MText style={styles.reasonItemLabel}>{reason.label}</MText>
             </View>
           </View>
-          {reason.hasMore && !onPress && (
+          {reason.hasMore && (
             <View style={styles.chevronContainer}>
-              <Icon name="chevron-right" size={36} style={theme.colorLink} />
+              <Icon
+                name={externalLink ? 'external-link' : 'chevron-right'}
+                size="large"
+                color="Link"
+              />
             </View>
           )}
         </TouchableOpacity>
