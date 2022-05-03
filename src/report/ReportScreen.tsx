@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import openUrlService from '~/common/services/open-url.service';
-import { Icon } from '~/common/ui';
+import { Icon, IconButton } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
@@ -58,7 +58,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
       title: i18n.t('report'),
       headerLeft: () => {
         return (
-          <Icon
+          <IconButton
             name="chevron-left"
             size={38}
             style={ThemedStyles.style.colorLink}
