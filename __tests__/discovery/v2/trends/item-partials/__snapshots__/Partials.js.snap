@@ -77,29 +77,6 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
         }
       />
     </View>
-    <View
-      pointerEvents="none"
-      style={
-        Array [
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
-          Object {
-            "opacity": undefined,
-          },
-        ]
-      }
-    />
   </View>
   <View
     style={
@@ -309,29 +286,6 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
         }
       />
     </View>
-    <View
-      pointerEvents="none"
-      style={
-        Array [
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
-          Object {
-            "opacity": undefined,
-          },
-        ]
-      }
-    />
   </View>
 </View>
 `;
