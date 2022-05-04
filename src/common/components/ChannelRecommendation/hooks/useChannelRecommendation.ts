@@ -26,13 +26,15 @@ export const useChannelRecommendation = (
       location,
       mostRecentSubscriptions: recentSubscriptions.list(),
       currentChannelUserGuid: channel?.guid,
-      limit: 3,
+      limit: 12,
     },
     map: recommendations =>
-      recommendations.map(recommendation => ({
-        ...recommendation,
-        entity: UserModel.create(recommendation.entity),
-      })),
+      recommendations
+        .filter(rec => Boolean(rec.entity))
+        .map(recommendation => ({
+          ...recommendation,
+          entity: UserModel.create(recommendation.entity),
+        })),
     skip: true,
   });
 
