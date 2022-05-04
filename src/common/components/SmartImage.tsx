@@ -1,18 +1,17 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, MotiView } from 'moti';
+import React, { FC, useEffect } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
+import { Blurhash } from 'react-native-blurhash';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
-import Animated from 'react-native-reanimated';
-import { mix, useTimingTransition } from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
-import { Blurhash } from 'react-native-blurhash';
-import ActivityModel from '~/newsfeed/ActivityModel';
 
 interface SmartImageProps {
   thumbnail?: Source;
@@ -37,9 +36,7 @@ const defaultBlur = Platform.select({ android: 1, ios: 4 });
  */
 const SmartImage = observer(function (props: SmartImageProps) {
   const { withoutDownloadButton, ...otherProps } = props;
-
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
-
   const store = useLocalStore(createSmartImageStore, props);
 
   useEffect(() => {
@@ -96,61 +93,46 @@ const SmartImage = observer(function (props: SmartImageProps) {
         />
       )}
 
-      <ImageOverlay visible={store.showOverlay}>
-        <BlurredThumbnail
-          key={`thumbnail:${store.retries}`}
-          thumbBlurRadius={props.thumbBlurRadius}
-          style={props.style}
-          thumbnailSource={props.thumbnail as any}
-          entity={props.entity}
-        />
-        {dataSaverEnabled && !withoutDownloadButton && (
-          <DownloadButton store={store} />
+      <AnimatePresence>
+        {store.showOverlay && (
+          <ImageOverlay>
+            <BlurredThumbnail
+              key={`thumbnail:${store.retries}`}
+              thumbBlurRadius={props.thumbBlurRadius}
+              style={props.style}
+              thumbnailSource={props.thumbnail as any}
+              entity={props.entity}
+            />
+            {dataSaverEnabled && !withoutDownloadButton && (
+              <DownloadButton store={store} />
+            )}
+          </ImageOverlay>
         )}
-      </ImageOverlay>
+      </AnimatePresence>
     </View>
   );
 });
+
+const exitAnimation = {
+  opacity: 0,
+};
+const animate = {
+  opacity: 1,
+};
+const transition = { type: 'timing', duration: 1000 };
 
 /**
  * this component overlays the image and will disappear with a fade transition when
  * store.showOverlay is turned off
  */
-const ImageOverlay: FC<{ visible: boolean }> = ({ visible, ...props }) => {
-  const theme = ThemedStyles.style;
-  const previousVisibility = useRef<boolean | null>(null);
-  const [shouldRender, setShouldRender] = useState(true);
-  const showOverlayTransition = useTimingTransition(visible, {
-    duration: 150,
-  });
-  const opacity = mix(showOverlayTransition, 0, 1);
-
-  useEffect(() => {
-    if (!visible && previousVisibility.current === true) {
-      setTimeout(() => {
-        setShouldRender(false);
-      }, 150);
-    } else {
-      setShouldRender(true);
-    }
-    previousVisibility.current = visible;
-  }, [visible]);
-
-  if (!shouldRender) {
-    return null;
-  }
-
+const ImageOverlay: FC = ({ ...props }) => {
   return (
-    <Animated.View
+    <MotiView
       {...props}
-      pointerEvents={visible ? undefined : 'none'}
-      style={[
-        theme.positionAbsolute,
-        theme.centered,
-        {
-          opacity,
-        },
-      ]}
+      animate={animate}
+      exit={exitAnimation}
+      transition={transition}
+      style={absoluteCenter}
     />
   );
 };
@@ -298,6 +280,7 @@ export default SmartImage;
 
 export type { Source };
 
+const absoluteCenter = ThemedStyles.combine('positionAbsolute', 'centered');
 const styles = ThemedStyles.create({
   downloadButton: [
     'centered',
