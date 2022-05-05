@@ -107,11 +107,11 @@ class App extends Component<Props, State> {
     codePush.sync(
       CODE_PUSH_KEY
         ? {
-            installMode: codePush.InstallMode.IMMEDIATE,
+            installMode: codePush.InstallMode.ON_NEXT_RESTART, // install updates on app restart
             deploymentKey: CODE_PUSH_KEY,
           }
         : {
-            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESUME, // install mandatory updates on app resume
+            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE, // install mandatory updates immediately
           },
     );
   }
