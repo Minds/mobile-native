@@ -10,8 +10,11 @@ import InputContainer from '../common/components/InputContainer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '../common/components/MText';
 import { useBackHandler } from '@react-native-community/hooks';
-import { Button } from '~ui';
+import { B1, Button } from '~ui';
 import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
+import { showNotification } from 'AppMessages';
+import { TwoFactorError } from '~/common/services/api.service';
+import i18nService from '../common/services/i18n.service';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -49,6 +52,10 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     code: oldCode,
     recovery: false,
     error: !!oldCode,
+    /**
+     * Whether email resend is in progress
+     */
+    resending: false,
     setCode(code: string) {
       this.code = code;
     },
@@ -62,8 +69,26 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       onCancel && onCancel();
       navigation.goBack();
     },
-    resend: () => {
-      onConfirm('');
+    /**
+     * Resends email confirmation code
+     */
+    resend(): void {
+      // resends the same request (the backend will resend the email confirmation)
+      this.resending = true;
+      onConfirm('')
+        .then(() => {
+          // this code won't get called because the backend is always throwing an error here. Please refer to .catch
+          showNotification(i18nService.t('emailConfirm.sent'), 'info');
+        })
+        .catch(e => {
+          // the backend is always returning an error, se we have no other option but to optimistically consider this a sucess
+          if (e instanceof TwoFactorError) {
+            showNotification(i18nService.t('emailConfirm.sent'), 'info');
+          }
+        })
+        .finally(() => {
+          this.resending = false;
+        });
     },
     submit() {
       this.error = false;
@@ -111,7 +136,9 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
               {i18n.t('verify')}
             </Button>
           </View>
-          <MText style={styles.description}>{description}</MText>
+          <B1 color="secondary" vertical="XL" horizontal="L" space="XS">
+            {description}
+          </B1>
           <View style={theme.fullWidth}>
             <InputContainer
               maxLength={localStore.recovery ? undefined : 6}
@@ -130,13 +157,15 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
             />
           </View>
           {mfaType === 'email' && (
-            <MText style={styles.description} onPress={localStore.resend}>
+            <B1 color="secondary" vertical="XL" horizontal="L">
               {i18n.t('onboarding.verifyEmailDescription2')}
-              <MText style={styles.resend}>
+              <B1
+                color={localStore.resending ? 'tertiary' : 'link'}
+                onPress={localStore.resend}>
                 {' '}
                 {i18n.t('onboarding.resend')}
-              </MText>
-            </MText>
+              </B1>
+            </B1>
           )}
           {mfaType === 'totp' && showRecovery && (
             <MText
@@ -156,14 +185,6 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
 });
 
 const styles = ThemedStyles.create({
-  // continue: ['fontL', 'fontMedium', 'colorLink', 'paddingTop'],
-  resend: ['fontMedium', 'colorLink'],
-  description: [
-    'colorSecondaryText',
-    'paddingVertical8x',
-    'paddingHorizontal4x',
-    'fontL',
-  ],
   header: [
     'rowJustifySpaceBetween',
     'alignCenter',
