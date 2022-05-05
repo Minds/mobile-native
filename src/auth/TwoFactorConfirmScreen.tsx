@@ -14,7 +14,7 @@ import { B1, Button } from '~ui';
 import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import { showNotification } from 'AppMessages';
 import { TwoFactorError } from '~/common/services/api.service';
-import i18nService from '../common/services/i18n.service';
+import { runInAction } from 'mobx';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -51,6 +51,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const localStore = useLocalStore(() => ({
     code: oldCode,
     recovery: false,
+    codeSentAt: undefined as number | undefined,
     error: !!oldCode,
     /**
      * Whether email resend is in progress
@@ -70,24 +71,42 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       navigation.goBack();
     },
     /**
+     * Ensures we don't resend the code more than once every 10 seconds
+     */
+    get canResendRateLimit() {
+      if (this.codeSentAt && Date.now() - this.codeSentAt < 10000) {
+        return false;
+      }
+
+      return true;
+    },
+    /**
      * Resends email confirmation code
      */
     resend(): void {
+      if (!this.canResendRateLimit) {
+        showNotification(i18n.t('auth.waitMoment'), 'danger', undefined);
+        return;
+      }
+
       // resends the same request (the backend will resend the email confirmation)
       this.resending = true;
       onConfirm('')
         .then(() => {
           // this code won't get called because the backend is always throwing an error here. Please refer to .catch
-          showNotification(i18nService.t('emailConfirm.sent'), 'info');
+          showNotification(i18n.t('emailConfirm.sent'), 'info');
         })
         .catch(e => {
-          // the backend is always returning an error, se we have no other option but to optimistically consider this a sucess
+          // the backend is always returning an error, se we have no other option but to optimistically consider this a success
           if (e instanceof TwoFactorError) {
-            showNotification(i18nService.t('emailConfirm.sent'), 'info');
+            showNotification(i18n.t('emailConfirm.sent'), 'info');
           }
         })
         .finally(() => {
-          this.resending = false;
+          runInAction(() => {
+            this.codeSentAt = Date.now();
+            this.resending = false;
+          });
         });
     },
     submit() {

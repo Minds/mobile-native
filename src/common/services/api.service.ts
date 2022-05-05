@@ -196,14 +196,15 @@ export class ApiService {
               const code = await new Promise<string>((resolve, reject) => {
                 NavigationService.navigate('TwoFactorConfirmation', {
                   onConfirm: async (confirmationCode?: string) => {
-                    // if we confirmation code was received successfully,
+                    // if confirmation code was received successfully,
                     // resolve the promise and continue the original request
                     if (confirmationCode) {
                       return resolve(confirmationCode);
                     }
 
-                    // if the code wasn't received, it's a resend attempt,
+                    // if the code wasn't received, it's a resend confirmation code attempt,
                     // so make another request similar to the original request (while keping the original request pending)
+                    // as a means of resending the confirmation code
                     return this.axios.request(originalReq);
                   },
                   onCancel: reject,
