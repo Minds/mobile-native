@@ -155,7 +155,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
               {i18n.t('verify')}
             </Button>
           </View>
-          <B1 color="secondary" vertical="XL" horizontal="L" space="XS">
+          <B1 color="secondary" vertical="XL" horizontal="L">
             {description}
           </B1>
           <View style={theme.fullWidth}>
@@ -187,15 +187,15 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
             </B1>
           )}
           {mfaType === 'totp' && showRecovery && (
-            <MText
-              style={styles.description}
-              onPress={localStore.toggleRecovery}>
+            <B1 color="secondary" vertical="XL" horizontal="L">
               {i18n.t('auth.recoveryDesc')}
-              <MText style={styles.resend}>
+              <B1 color={'link'} onPress={localStore.toggleRecovery}>
                 {' '}
-                {i18n.t('auth.recoveryCode')}
-              </MText>
-            </MText>
+                {localStore.recovery
+                  ? i18n.t('auth.authCode')
+                  : i18n.t('auth.recoveryCode')}
+              </B1>
+            </B1>
           )}
         </SafeAreaView>
       </ScrollView>
