@@ -188,8 +188,6 @@ export default class DiscoveryV2Store {
   @action
   async refreshTags(): Promise<void> {
     this.refreshing = true;
-    this.setTags([]);
-    this.setTrendingTags([]);
     await this.loadTags();
     this.refreshing = false;
   }
