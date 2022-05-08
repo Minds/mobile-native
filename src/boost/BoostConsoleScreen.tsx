@@ -1,19 +1,14 @@
 //@ts-nocheck
+import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
-import { observer, inject } from 'mobx-react';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import Boost from './Boost';
-
+import { Button, H2, Icon } from '~ui';
 import CenteredLoading from '../common/components/CenteredLoading';
-import { ComponentsStyle } from '../styles/Components';
-import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
+import { ComponentsStyle } from '../styles/Components';
 import ThemedStyles from '../styles/ThemedStyles';
-import MText from '../common/components/MText';
-import { Button } from '~ui';
+import Boost from './Boost';
+import BoostTabBar from './BoostTabBar';
 
 /**
  * News feed list component
@@ -40,9 +35,9 @@ export default class BoostConsoleScreen extends Component {
     this.props.boost.loadList(this.props.guid);
   }
 
-  createPost() {
+  createPost = () => {
     this.props.navigation.navigate('Compose');
-  }
+  };
   /**
    * Render component
    */
@@ -58,12 +53,12 @@ export default class BoostConsoleScreen extends Component {
       empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <Icon name="trending-up" size={72} color="#444" />
-            <MText style={ComponentsStyle.emptyComponentMessage}>
+            <Icon name="boost" size="huge" />
+            <H2 color="secondary" vertical="M">
               {i18n.t('boosts.youDontHaveBoosts')}
-            </MText>
+            </H2>
             <Button
-              onPress={() => this.props.navigation.navigate('Capture')}
+              onPress={this.createPost}
               type="action"
               mode="outline"
               align="center"
