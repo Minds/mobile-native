@@ -1,42 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import Placeholder from '~/common/components/Placeholder';
 
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
-import ThemedStyles from '../../../styles/ThemedStyles';
-
-export default function NotificationPlaceHolder() {
-  const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('TertiaryBackground');
-
-  const animation = props => (
-    <Fade {...props} style={theme.bgPrimaryBackground} />
-  );
-
+import { Column, Row } from '~/common/ui';
+const NotificationPlaceHolder = () => {
   return (
-    <View
-      style={[
-        theme.borderBottom8x,
-        theme.bcolorPrimaryBackground,
-        theme.paddingBottom4x,
-        theme.paddingTop4x,
-      ]}>
-      <Placeholder
-        Left={() => (
-          <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
-        )}
-        style={theme.paddingHorizontal5x}
-        Animation={animation}>
-        <View style={lineStyle}>
-          <PlaceholderLine color={color} width={70} />
-        </View>
-      </Placeholder>
-    </View>
+    <Row horizontal="M" align="centerStart" vertical="M">
+      <Placeholder radius="round" height={40} width={40} />
+      <Column left="M">
+        <Placeholder width="70%" height={15} bottom="XS" />
+        <Placeholder width="50%" height={13} />
+      </Column>
+      <Placeholder width={50} height={13} />
+    </Row>
   );
-}
-
-const lineStyle = ThemedStyles.combine('paddingTop2x', 'paddingLeft4x');
+};
+export default NotificationPlaceHolder;

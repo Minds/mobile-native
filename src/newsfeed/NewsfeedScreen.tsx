@@ -17,11 +17,11 @@ import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/PortraitContentBar';
-import ActivityPlaceHolder from './ActivityPlaceHolder';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -53,14 +53,6 @@ class NewsfeedScreen extends Component<
 > {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
-  emptyProps = {
-    ListEmptyComponent: (
-      <View>
-        <ActivityPlaceHolder />
-        <ActivityPlaceHolder />
-      </View>
-    ),
-  };
 
   /**
    * whether the topbar should be shadowLess
@@ -188,9 +180,6 @@ class NewsfeedScreen extends Component<
       </>
     );
 
-    // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
-
     return (
       <FeedList
         stickyHeaderHiddenOnScroll={true}
@@ -211,7 +200,7 @@ class NewsfeedScreen extends Component<
             ? this.injectItems
             : undefined
         }
-        {...additionalProps}
+        placeholder={NewsfeedPlaceholder}
       />
     );
   }

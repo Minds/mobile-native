@@ -5,7 +5,6 @@ import React, {
   forwardRef,
 } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -17,6 +16,7 @@ import { useStores } from '../common/hooks/use-stores';
 import sessionService from '~/common/services/session.service';
 import { Row } from '~/common/ui';
 import i18nService from '~/common/services/i18n.service';
+import Placeholder from '~/common/components/Placeholder';
 
 /**
  * Header component
@@ -48,19 +48,27 @@ const Header = () => {
 export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
 
 const BarPlaceholder = () => {
-  const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('TertiaryBackground');
-  const animation = props => (
-    <Fade {...props} style={theme.bgPrimaryBackground} />
-  );
   return (
-    <Placeholder Animation={animation}>
-      <View style={theme.rowJustifyStart}>
-        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
-        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
-        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
-      </View>
-    </Placeholder>
+    <Row space="M">
+      <Placeholder
+        horizontal="XS"
+        radius="round"
+        width={AVATAR_SIZE.medium}
+        height={AVATAR_SIZE.medium}
+      />
+      <Placeholder
+        horizontal="XS"
+        radius="round"
+        width={AVATAR_SIZE.medium}
+        height={AVATAR_SIZE.medium}
+      />
+      <Placeholder
+        horizontal="XS"
+        radius="round"
+        width={AVATAR_SIZE.medium}
+        height={AVATAR_SIZE.medium}
+      />
+    </Row>
   );
 };
 
@@ -141,14 +149,6 @@ const styles = ThemedStyles.create({
       borderRadius: AVATAR_SIZE.medium / 2,
     },
     'bgTertiaryBackground',
-  ],
-  placeholder: [
-    {
-      height: AVATAR_SIZE.medium,
-      width: AVATAR_SIZE.medium,
-      borderRadius: AVATAR_SIZE.medium / 2,
-    },
-    'margin2x',
   ],
   listContainerStyle: [
     'paddingLeft2x',

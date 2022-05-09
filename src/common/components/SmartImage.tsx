@@ -1,6 +1,6 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import { AnimatePresence, MotiView } from 'moti';
+import { AnimatePresence, MotiTransitionProp, MotiView } from 'moti';
 import React, { FC, useEffect } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { Blurhash } from 'react-native-blurhash';
@@ -119,7 +119,7 @@ const exitAnimation = {
 const animate = {
   opacity: 1,
 };
-const transition = { type: 'timing', duration: 1000 };
+const transition: MotiTransitionProp = { type: 'timing', duration: 1000 };
 
 /**
  * this component overlays the image and will disappear with a fade transition when

@@ -54,7 +54,11 @@ type PropsType = {
   hideItems?: boolean;
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
-  ListEmptyComponent?: React.ReactNode;
+  placeholder?:
+    | React.ComponentType<any>
+    | React.ReactElement
+    | null
+    | undefined;
   /**
    * a function to call on refresh. this replaces the feedList default refresh function
    */
@@ -236,9 +240,23 @@ export class FeedList<T> extends Component<PropsType> {
   };
 
   /**
+   * Returns the placeholder element
+   */
+  getPlaceholder() {
+    if (this.props.placeholder) {
+      const PlaceHolder = this.props.placeholder;
+
+      return React.isValidElement(PlaceHolder) ? PlaceHolder : <PlaceHolder />;
+    }
+  }
+
+  /**
    * Get footer
    */
   getFooter = () => {
+    if (this.props.placeholder && !this.props.feedStore.loaded) {
+      return this.getPlaceholder();
+    }
     if (this.props.feedStore.loading && !this.props.feedStore.refreshing) {
       return (
         <View style={footerStyle} testID="ActivityIndicatorView">

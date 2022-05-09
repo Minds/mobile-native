@@ -1,13 +1,17 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { ItemPropType, RowPropType } from './types';
+import { ItemPropType, RowPropType, SpacerPropType } from './types';
 import { Row } from './Row';
 import { UNIT } from '~styles/Tokens';
 
-export const Item = ({ noBorder, ...more }: ItemPropType & RowPropType) => {
+export const Item = ({
+  noBorder,
+  noPadding,
+  ...more
+}: ItemPropType & RowPropType & SpacerPropType) => {
   const style = StyleSheet.flatten([
-    styles.container,
+    !noPadding && styles.container,
     !noBorder && styles.border,
   ]);
 
