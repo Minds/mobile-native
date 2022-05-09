@@ -2,6 +2,7 @@ import { observable, action, runInAction } from 'mobx';
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
 import logService from '../services/log.service';
+import { Timeout } from '~/types/Common';
 
 export type MetaType = {
   thumbnail?: string;
@@ -18,7 +19,7 @@ export default class RichEmbedStore {
   @observable metaInProgress = false;
   @observable meta: MetaType = null;
   richEmbedUrl = '';
-  _richEmbedFetchTimer: number | null = null;
+  _richEmbedFetchTimer: Timeout | null = null;
   setRichEmbedPromise: Promise<void> | null = null; // used for testing
 
   /**
