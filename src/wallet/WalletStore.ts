@@ -5,6 +5,7 @@ import token from '../common/helpers/token';
 import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
 import type { ApiResponse } from '../common/services/api.service';
+import { Timeout } from '~/types/Common';
 
 interface WalletResponse extends ApiResponse {
   balance: number;
@@ -36,7 +37,7 @@ class WalletStore {
   refreshing: boolean = false;
   loaded: boolean = false;
 
-  interval!: number;
+  interval!: Timeout;
 
   isOnboardingShown!: boolean;
 
