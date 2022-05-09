@@ -61,6 +61,11 @@ public class MainApplication extends Application implements ShareApplication, Re
       public String getJSBundleFile() {
           return CodePush.getJSBundleFile();
       }
+
+      @Override
+      protected String getJSMainModuleName() {
+        return "index";
+      }
   });
 
   @Override

@@ -52,6 +52,7 @@ exports[`ChannelRecommendation renders correctly 1`] = `
           },
         }
       }
+      onSubscribed={[Function]}
     />
   </Spacer>
   <View
