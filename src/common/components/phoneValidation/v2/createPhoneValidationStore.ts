@@ -116,7 +116,11 @@ const createPhoneValidationStore = ({
     NavigationService.goBack();
   },
   confirmAction() {
-    if (this.inProgress || !this.canConfirm) {
+    if (!this.canConfirm) {
+      this.setError(i18n.t('onboarding.confirmationCodeInvalid'));
+      return null;
+    }
+    if (this.inProgress) {
       return null;
     }
 
