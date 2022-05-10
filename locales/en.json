@@ -396,7 +396,8 @@
     "latestAction": "Enable Latest Posts",
     "topTitle": "Top posts enabled",
     "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
-    "topAction": "Enable Top Posts"
+    "topAction": "Enable Top Posts",
+    "seeLatestTitle": "See {{count}} latest posts"
   },
   "comments": {
     "successRemoving": "Comment removed",
