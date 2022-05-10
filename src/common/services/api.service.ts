@@ -59,6 +59,8 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {}
 
+export class TwoFactorError extends Error {}
+
 export const isApiError = function (err): err is ApiError {
   return err instanceof ApiError;
 };
@@ -181,47 +183,63 @@ export class ApiService {
             const hasRecovery =
               mfaType === 'totp' && data.password && data.username;
 
+            const state = NavigationService.getCurrentState();
+
+            if (state?.name === 'TwoFactorConfirmation') {
+              // here, we've made a request and the server is requiring 2fa but
+              // we're already on the 2fa screen so we'll just throw an error
+              throw new TwoFactorError(error);
+            }
+
             try {
               // console.log( NavigationService.navigate)
-              const promise = new Promise<string>((resolve, reject) => {
+              const code = await new Promise<string>((resolve, reject) => {
                 NavigationService.navigate('TwoFactorConfirmation', {
-                  onConfirm: resolve,
+                  onConfirm: async (confirmationCode?: string) => {
+                    // if confirmation code was received successfully,
+                    // resolve the promise and continue the original request
+                    if (confirmationCode) {
+                      return resolve(confirmationCode);
+                    }
+
+                    // if the code wasn't received, it's a resend confirmation code attempt,
+                    // so make another request similar to the original request (while keping the original request pending)
+                    // as a means of resending the confirmation code
+                    return this.axios.request(originalReq);
+                  },
                   onCancel: reject,
                   mfaType,
                   oldCode,
                   showRecovery: hasRecovery,
                 });
               });
-              const code = await promise;
 
-              if (code) {
-                // is a recovery code?
-                if (hasRecovery && code.length > 6) {
-                  const recoveryResponse = <any>await this.post(
-                    'api/v3/security/totp/recovery',
-                    {
-                      username: data.username,
-                      password: data.password,
-                      recovery_code: code,
-                    },
-                  );
-                  if (!recoveryResponse.matches) {
-                    throw new UserError(i18n.t('auth.recoveryFail'));
-                  }
-                } else {
-                  originalReq.headers['X-MINDS-2FA-CODE'] = code;
+              // is a recovery code?
+              if (hasRecovery && code.length > 6) {
+                const recoveryResponse = await this.post<any>(
+                  'api/v3/security/totp/recovery',
+                  {
+                    username: data.username,
+                    password: data.password,
+                    recovery_code: code,
+                  },
+                );
+                if (!recoveryResponse.matches) {
+                  throw new UserError(i18n.t('auth.recoveryFail'));
+                }
+              } else {
+                originalReq.headers['X-MINDS-2FA-CODE'] = code;
 
-                  if (smsKey) {
-                    originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
-                  }
-
-                  if (emailKey) {
-                    originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
-                  }
+                if (smsKey) {
+                  originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
                 }
 
-                originalReq.oldCode = code;
+                if (emailKey) {
+                  originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
+                }
               }
+
+              originalReq.oldCode = code;
               return this.axios.request(originalReq);
             } catch (err) {
               throw new UserError('Canceled');
