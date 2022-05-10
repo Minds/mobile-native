@@ -50,8 +50,6 @@ export default observer(function (props) {
   const [mode, setMode] = useState<'photo' | 'video'>('photo');
   const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
 
-  console.log('camera screen props');
-
   /**
    * the current selected filter
    */
