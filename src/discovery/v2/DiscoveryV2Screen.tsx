@@ -81,7 +81,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     useEffect(() => {
       const unsubscribe = navigation.getParent().addListener('tabPress', () => {
         if (shouldRefreshOnTabPress) {
-          store.refreshTrends();
+          store.refreshActiveTab();
         }
       });
       return unsubscribe;
@@ -199,8 +199,5 @@ const sticky = [0];
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   header: ['flexContainer', 'bgPrimaryBackground', 'paddingTop'],
-  bottomBorder: {
-    borderBottomColor: '#eee',
-    borderBottomWidth: 10,
-  },
+  bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
 });
