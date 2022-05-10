@@ -65,7 +65,7 @@ const Subscribe = (props: {
         )
       }
       testID={props.testID}>
-      {subscriptionText}
+      {mini ? undefined : subscriptionText}
     </Button>
   );
 };
