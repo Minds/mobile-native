@@ -42,7 +42,7 @@ export default observer(function LoginForm(props: PropsType) {
           )
         : sessionService.getUser();
 
-    if (props.sessionIndex !== undefined) {
+    if (props.relogin && !localStore.username) {
       localStore.username = u.username;
     }
     return u;
