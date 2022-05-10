@@ -41,6 +41,7 @@ export type registerParams = {
   email: string;
   password: string;
   exclusive_promotions: boolean;
+  friendly_captcha_enabled?: boolean;
 };
 
 type resetParams = {
