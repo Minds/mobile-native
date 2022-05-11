@@ -12,6 +12,8 @@ import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
+import { showNotification } from './../../AppMessages';
+import i18n from '~/common/services/i18n.service';
 
 /**
  * Base model
@@ -32,7 +34,7 @@ export default class BaseModel extends AbstractModel {
   };
 
   // TODO remove this and fix model.listRef logic
-  listRef?: any;
+  // listRef?: any;
 
   /**
    * Event emitter
@@ -85,6 +87,7 @@ export default class BaseModel extends AbstractModel {
     // remove references to the list
     //@ts-ignore
     delete plainEntity.__list;
+    //@ts-ignore
     delete plainEntity.listRef;
 
     return plainEntity;
@@ -279,6 +282,7 @@ export default class BaseModel extends AbstractModel {
     try {
       await revokeBoost(this.guid, filter);
       this.state = 'revoked';
+      showNotification(i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {
       logService.exception('[BaseModel]', err);
       throw err;

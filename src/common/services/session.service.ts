@@ -427,6 +427,11 @@ export class SessionService {
         this.tokensData[index].user,
       );
       this.tokensData[index] = sessionData;
+
+      this.setSessionExpired(false);
+      // persist data
+      this.saveToStore();
+
       return true;
     }
 

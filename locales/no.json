@@ -375,7 +375,7 @@
     "rewardsSummary": "Du har tjent {{amount}} tokens i går."
   },
   "notificationSettings": {
-    "enableDisable": "Aktiver og deaktiver push-meldinger",
+    "all": "Aktiver og deaktiver push-meldinger",
     "comment": "Kommentarer",
     "like": "Stemmer",
     "tag": "Tagger",

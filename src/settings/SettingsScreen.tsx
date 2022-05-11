@@ -129,7 +129,7 @@ const SettingsScreen = observer(({ navigation }) => {
 
   const secondSection: Array<Item> = [
     {
-      title: i18n.t('boost'),
+      title: i18n.t('settings.boostConsole'),
       screen: 'BoostConsole',
     },
     {

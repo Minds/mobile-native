@@ -69,10 +69,11 @@ const navigator = {
     this.params = {
       Activity: activityParams,
       Tabs: {
-        screen: 'CaptureTab',
+        screen: 'More',
         params: {
           screen: 'Wallet',
           params: { currency: 'tokens', section: 'transactions' },
+          initial: false,
         },
       },
       GroupView: {

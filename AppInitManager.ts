@@ -76,15 +76,23 @@ export default class AppInitManager {
           }
         } catch (err) {
           logService.exception('[App] Error initializing the app', err);
-          Alert.alert(
-            'Error',
-            'There was an error initializing the app.\n Do you want to copy the stack trace.',
-            [
-              { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
-              { text: 'No' },
-            ],
-            { cancelable: false },
-          );
+          if (err instanceof Error) {
+            Alert.alert(
+              'Error',
+              'There was an error initializing the app.\n Do you want to copy the stack trace.',
+              [
+                {
+                  text: 'Yes',
+                  onPress: () => {
+                    if (err instanceof Error)
+                      Clipboard.setString(err.stack || '');
+                  },
+                },
+                { text: 'No' },
+              ],
+              { cancelable: false },
+            );
+          }
         }
       }
     });

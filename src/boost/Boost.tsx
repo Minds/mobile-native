@@ -50,6 +50,7 @@ export default class Boost extends Component {
             entity={ActivityModel.create(entity)}
             hideTabs={true}
             navigation={this.props.navigation}
+            borderless
           />
         );
       case 'user':

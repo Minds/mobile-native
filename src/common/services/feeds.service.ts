@@ -1,6 +1,6 @@
 //@ts-nocheck
 import logService from './log.service';
-import apiService, { isNetworkError } from './api.service';
+import apiService, { isAbort, isNetworkError } from './api.service';
 import entitiesService from './entities.service';
 import feedsStorage from './storage/feeds.storage';
 import i18n from './i18n.service';
@@ -49,6 +49,11 @@ export default class FeedsService {
   endpoint: string = '';
 
   /**
+   * @var {string}
+   */
+  countEndpoint: string = '';
+
+  /**
    * @var {Object}
    */
   params: Object = { sync: 1 };
@@ -82,6 +87,11 @@ export default class FeedsService {
    * @var {number}
    */
   fallbackIndex = -1;
+
+  /**
+   * the last time we checked for new posts
+   */
+  feedLastFetchedAt?: number;
 
   /**
    * Get entities from the current page
@@ -208,6 +218,16 @@ export default class FeedsService {
   }
 
   /**
+   * Set count endpoint
+   * @param {string} endpoint
+   * @returns {FeedsService}
+   */
+  setCountEndpoint(endpoint: string): FeedsService {
+    this.countEndpoint = endpoint;
+    return this;
+  }
+
+  /**
    * Set parameters
    * @param {Object} params
    */
@@ -295,7 +315,9 @@ export default class FeedsService {
     if (this.paginated && more) {
       params.from_timestamp = this.pagingToken;
     }
+    const fetchTime = Date.now();
     const response = await apiService.get(this.endpoint, params, this);
+    this.feedLastFetchedAt = fetchTime;
 
     if (response.entities && response.entities.length) {
       if (response.entities.length < params.limit) {
@@ -369,7 +391,7 @@ export default class FeedsService {
         await this.fetch();
       }
     } catch (err) {
-      if (err.code === 'Abort') {
+      if (isAbort(err)) {
         return;
       }
 
@@ -388,7 +410,7 @@ export default class FeedsService {
     try {
       await this.fetch();
     } catch (err) {
-      if (err.code === 'Abort') {
+      if (isAbort(err)) {
         return;
       }
 
@@ -444,5 +466,27 @@ export default class FeedsService {
     this.params = { sync: 1 };
     this.feed = [];
     return this;
+  }
+
+  /**
+   * counts newsfeed posts created after fromTimestamp
+   * @param { number } fromTimestamp
+   * @returns { Promise<number> }
+   */
+  async count(fromTimestamp?: number): Promise<number> {
+    if (!this.countEndpoint) {
+      throw new Error('[FeedsService] No count endpoint');
+    }
+
+    if (!fromTimestamp) {
+      throw new Error('[FeedsService] No fromTimestamp provided');
+    }
+
+    const params = {
+      from_timestamp: fromTimestamp,
+    };
+
+    const result = await apiService.get(this.countEndpoint, params, this);
+    return result.count;
   }
 }

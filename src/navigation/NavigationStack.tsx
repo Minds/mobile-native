@@ -70,6 +70,8 @@ import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScree
 import withModalProvider from './withModalProvide';
 import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 import DevToolsScreen from '~/settings/screens/DevToolsScreen';
+import { observer } from 'mobx-react';
+import sessionService from '~/common/services/session.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -105,7 +107,10 @@ const ActivityScreenWithModal = withModalProvider(ActivityScreen);
 const GroupViewScreenWithModal = withModalProvider(GroupViewScreen);
 const BlogsViewScreenWithModal = withModalProvider(BlogsViewScreen);
 
-const AppStack = function () {
+const AppStack = observer(() => {
+  if (sessionService.switchingAccount) {
+    return null;
+  }
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
@@ -238,7 +243,7 @@ const AppStack = function () {
       </AppStackNav.Navigator>
     </>
   );
-};
+});
 
 const AuthStack = function () {
   return (

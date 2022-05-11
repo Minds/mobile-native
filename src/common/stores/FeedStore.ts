@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 import logService from '../services/log.service';
 import Viewed from './Viewed';
@@ -9,6 +9,8 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
+import { isAbort } from '../services/api.service';
+import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 
 /**
  * Feed store
@@ -75,6 +77,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   get fallbackIndex() {
     return this.feedsService.fallbackIndex;
   }
+
+  /**
+   * the new post polling interval
+   */
+  private newPostInterval;
+
+  /**
+   * the number of new posts we haven't seen yet
+   */
+  @observable newPostsCount = 0;
 
   /**
    * Class constructor
@@ -255,9 +267,20 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Set endpoint for the feeds service
    * @param {string} endpoint
+   * @returns {FeedStore}
    */
   setEndpoint(endpoint: string): FeedStore<T> {
     this.feedsService.setEndpoint(endpoint);
+    return this;
+  }
+
+  /**
+   * Set count endpoint for the feeds service
+   * @param {string} endpoint
+   * @returns {FeedStore}
+   */
+  setCountEndpoint(endpoint: string): FeedStore<T> {
+    this.feedsService.setCountEndpoint(endpoint);
     return this;
   }
 
@@ -369,7 +392,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities, replace);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -421,7 +444,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -455,7 +478,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
@@ -501,7 +524,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(remoteEntities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       console.log(err);
       logService.exception('[FeedStore]', err);
       if (this.entities.length === 0) this.setErrorLoading(true);
@@ -536,7 +559,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (isAbort(err)) return;
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -550,6 +573,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   async refresh() {
     this.refreshing = true;
+    this.newPostsCount = 0;
+
     try {
       await this.fetchRemoteOrLocal(true);
     } catch (err) {
@@ -580,6 +605,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   reset() {
     this.clear();
     this.feedsService.clear();
+    clearInterval(this.newPostInterval);
   }
 
   /**
@@ -593,5 +619,29 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   setScheduledCount(count) {
     this.scheduledCount = count;
+  }
+
+  /**
+   *
+   * @param {() => boolean} hasFocus - A function that returns whether the screen has focus or not?
+   * @returns { Function } a function to remove the watcher
+   */
+  public watchForUpdates(hasFocus: () => boolean): () => void {
+    clearInterval(this.newPostInterval);
+    this.newPostInterval = setInterval(async () => {
+      if (!hasFocus()) {
+        return;
+      }
+
+      const count = await this.feedsService.count(
+        this.feedsService.feedLastFetchedAt,
+      );
+
+      runInAction(() => {
+        this.newPostsCount = count;
+      });
+    }, NEWSFEED_NEW_POST_POLL_INTERVAL);
+
+    return () => clearInterval(this.newPostInterval);
   }
 }

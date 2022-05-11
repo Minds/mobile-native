@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import {
   Alert,
   Button,
-  StyleSheet,
   ScrollView,
-  View,
+  StyleSheet,
   TouchableOpacity,
-  Linking,
+  View,
 } from 'react-native';
-
-import reportService from './ReportService';
-
-import i18n from '../common/services/i18n.service';
-
-import mindsService from '../common/services/minds-config.service';
-import CenteredLoading from '../common/components/CenteredLoading';
-import ThemedStyles from '../styles/ThemedStyles';
-import TextInput from '../common/components/TextInput';
-import MText from '../common/components/MText';
+import openUrlService from '~/common/services/open-url.service';
+import { Icon, IconButton } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
+import CenteredLoading from '../common/components/CenteredLoading';
+import MText from '../common/components/MText';
+import TextInput from '../common/components/TextInput';
+import i18n from '../common/services/i18n.service';
+import mindsService from '../common/services/minds-config.service';
+import ThemedStyles from '../styles/ThemedStyles';
+import reportService from './ReportService';
 
 type PropsType = {
   route: any;
@@ -63,7 +58,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
       title: i18n.t('report'),
       headerLeft: () => {
         return (
-          <Icon
+          <IconButton
             name="chevron-left"
             size={38}
             style={ThemedStyles.style.colorLink}
@@ -97,12 +92,14 @@ export default class ReportScreen extends Component<PropsType, StateType> {
 
     // reasons in current language with fallback in english translation, in case that both fails the origial label is shown
     settings.report_reasons.forEach(r => {
+      //@ts-ignore we ignore the type validation because it depends on the server response
       r.label = i18n.t(`reports.reasons.${r.value}.label`, {
         defaultValue: r.label,
       });
       if (r.reasons && r.reasons.length) {
         r.reasons.forEach(r2 => {
           r2.label = i18n.t(
+            //@ts-ignore
             `reports.reasons.${r.value}.reasons.${r2.value}.label`,
             { defaultValue: r2.label },
           );
@@ -254,12 +251,13 @@ export default class ReportScreen extends Component<PropsType, StateType> {
     );
   }
 
-  /**
-   * Open default mailer
-   */
-  mailToCopyright = () => {
-    Linking.openURL('mailto:copyright@minds.com');
-  };
+  getExternalLinkForReason(reason): undefined | string {
+    if (reason.value === 10) {
+      return 'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852';
+    }
+
+    return;
+  }
 
   /**
    * Render reasons list
@@ -267,45 +265,39 @@ export default class ReportScreen extends Component<PropsType, StateType> {
   renderReasons() {
     const theme = ThemedStyles.style;
 
-    if (this.state.reason && this.state.reason.value === 10) {
-      return (
-        <MText
-          style={[theme.fontL, theme.padding2x, theme.textCenter]}
-          onPress={this.mailToCopyright}>
-          {i18n.t('reports.DMCA')}
-        </MText>
-      );
-    }
-
     const reasons =
       this.state.reason && this.state.reason.hasMore
         ? this.state.reason.reasons
         : this.state.reasons;
 
     const reasonItems = reasons?.map((reason, i) => {
+      const externalLink = this.getExternalLinkForReason(reason);
       return (
         <TouchableOpacity
           style={styles.reasonItem}
           key={i}
-          onPress={() =>
-            this.state.reason
-              ? this.selectSubreason(reason)
-              : this.selectReason(reason)
+          onPress={
+            externalLink
+              ? () => openUrlService.open(externalLink)
+              : () =>
+                  this.state.reason
+                    ? this.selectSubreason(reason)
+                    : this.selectReason(reason)
           }>
           <View style={styles.reasonItemLabelContainer}>
             <View style={theme.rowStretch}>
               <MText style={styles.reasonItemLabel}>{reason.label}</MText>
             </View>
           </View>
-          <View style={styles.chevronContainer}>
-            <Icon
-              name="chevron-right"
-              size={36}
-              style={
-                reason.hasMore ? theme.colorLink : theme.colorSecondaryText
-              }
-            />
-          </View>
+          {reason.hasMore && (
+            <View style={styles.chevronContainer}>
+              <Icon
+                name={externalLink ? 'external-link' : 'chevron-right'}
+                size="large"
+                color="Link"
+              />
+            </View>
+          )}
         </TouchableOpacity>
       );
     });
@@ -377,6 +369,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 8,
     paddingBottom: 8,
+    minHeight: 50,
   },
   reasonItemLabelContainer: {
     flex: 1,

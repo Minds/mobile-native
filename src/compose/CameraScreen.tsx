@@ -1,3 +1,4 @@
+import CameraRoll from '@react-native-community/cameraroll';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -48,8 +49,6 @@ export default observer(function (props) {
     props.route?.params ?? {};
   const [mode, setMode] = useState<'photo' | 'video'>('photo');
   const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
-
-  console.log('camera screen props');
 
   /**
    * the current selected filter
@@ -106,6 +105,15 @@ export default observer(function (props) {
       if (filter && !extractedImage) {
         // TODO loading please (extracting) and explain
         return setExtractEnabled(true);
+      }
+
+      if (mediaToConfirm.type && mediaToConfirm.type.startsWith('video')) {
+        CameraRoll.save(mediaToConfirm.uri, {
+          album: 'Minds',
+          type: 'video',
+        }).catch(error =>
+          console.log('[Composer] Error saving video to gallery', error),
+        );
       }
 
       if (onMediaConfirmed) {

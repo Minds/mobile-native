@@ -13,6 +13,8 @@ import MText from '../../common/components/MText';
 import Button from '~/common/components/Button';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 
+type OptionDef = { id: Exclude<Options, 'disable'>; enabled: boolean };
+
 const TwoFactorAuthSettingsScreen = observer(() => {
   const navigation = useNavigation();
   const localStore = useLocalStore(createTwoFactorStore);
@@ -21,16 +23,16 @@ const TwoFactorAuthSettingsScreen = observer(() => {
     localStore.load();
   }, [localStore]);
 
-  const items = [
+  const items: Array<OptionDef> = [
     {
-      id: 'app' as Options,
+      id: 'app',
       enabled: localStore.appAuthEnabled,
     },
   ];
 
   if (!localStore.appAuthEnabled) {
     items.push({
-      id: 'email' as Options,
+      id: 'email',
       enabled: !localStore.appAuthEnabled,
     });
   }
@@ -116,7 +118,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
   );
 });
 
-const ItemTitle = ({ id, enabled }) => {
+const ItemTitle = ({ id, enabled }: OptionDef) => {
   // Inverted colors
   const backgroundColor = ThemedStyles.theme
     ? ThemedStyles.style.bgPrimaryBackground_Light

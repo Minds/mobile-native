@@ -3,6 +3,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import ChannelListItemPlaceholder from '~/common/components/ChannelListItemPlaceholder';
+import Empty from '~/common/components/Empty';
 import UserModel from '../../../channel/UserModel';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
@@ -24,15 +25,22 @@ export default observer(function SuggestedChannelsScreen() {
     },
   });
 
+  const empty =
+    !suggestions.loading && !suggestions.result?.length ? <Empty /> : null;
+
+  const loadingPlaceholder =
+    suggestions.loading &&
+    !suggestions.result?.length &&
+    new Array(12).fill(true).map(() => <ChannelListItemPlaceholder />);
+
   return (
     <ModalContainer
       title={i18n.t('onboarding.subscribeToChannel')}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
       onPressBack={NavigationService.goBack}>
       <ScrollView style={theme.flexContainer}>
-        {suggestions.loading &&
-          !suggestions.result?.length &&
-          new Array(12).fill(true).map(() => <ChannelListItemPlaceholder />)}
+        {empty}
+        {loadingPlaceholder}
         {suggestions.result?.slice().map(user => (
           <ChannelListItem
             updateFeed={false}

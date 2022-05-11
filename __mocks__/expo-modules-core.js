@@ -12,6 +12,8 @@ export const NativeModulesProxy = {
   },
 };
 
+export const createPermissionHook = jest.fn();
+
 export const EventEmitter = require('eventemitter3');
 
 export const Platform = require('react-native').Platform;

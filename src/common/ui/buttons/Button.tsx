@@ -20,6 +20,7 @@ import {
 import { frameThrower } from '~ui/helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
+import { Row, Spacer } from '../layout';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -71,13 +72,15 @@ export const ButtonComponent = ({
   icon,
   pressableProps,
 }: ButtonPropsType) => {
+  const iconOnly = icon && !children;
+
   const containerStyle = [
     styles.container,
     styles[mode],
     styles[size],
     styles[`${mode}_${type}`],
     styles[`${mode}_${size}`],
-    icon && styles.paddingLess,
+    iconOnly && styles.paddingLess,
     disabled && styles[`${mode}_disabled`],
   ];
 
@@ -229,6 +232,30 @@ export const ButtonComponent = ({
     stateRef.current.state = 0;
   };
 
+  const renderContent = () => {
+    let content;
+    const title = (
+      <Font font={font} color={textColor} numberOfLines={1}>
+        {text}
+      </Font>
+    );
+
+    if (iconOnly) {
+      content = icon;
+    } else if (icon) {
+      content = (
+        <Row>
+          {icon ? <Spacer right="XS">{icon}</Spacer> : null}
+          {title}
+        </Row>
+      );
+    } else {
+      content = title;
+    }
+
+    return content;
+  };
+
   return (
     <Pressable
       onPressIn={handlePressIn}
@@ -259,14 +286,11 @@ export const ButtonComponent = ({
         />
         {darkContent && <View style={styles.darken} />}
         {/** Button Text */}
-        <Animated.View style={{ transform: [{ scale: textAnimation }] }}>
-          {icon ? (
-            icon
-          ) : (
-            <Font font={font} color={textColor} numberOfLines={1}>
-              {text}
-            </Font>
-          )}
+        <Animated.View
+          style={{
+            transform: [{ scale: textAnimation }],
+          }}>
+          {renderContent()}
         </Animated.View>
       </View>
     </Pressable>

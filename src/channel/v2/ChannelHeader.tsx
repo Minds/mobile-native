@@ -22,6 +22,10 @@ import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
 import { B2, Column, H4, Row } from '~ui';
 import { IS_IOS } from '~/config/Config';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import UserModel from '../UserModel';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import useModelEvent from '~/common/hooks/useModelEvent';
 
 const CENTERED = false;
 
@@ -52,7 +56,13 @@ const ChannelHeader = withErrorBoundary(
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const [fadeViewWidth, setFadeViewWidth] = useState(50);
+    /** Whether the user interacted with the channel */
+    const [interacted, setInteracted] = useState(false);
     const channel = props.store?.channel;
+    const channelGuid = channel?.guid;
+    /** Whether the channel recommendation widget should be shown after channel is subscribed */
+    const shouldRenderChannelRecommendation =
+      !channel?.isOwner() && Boolean(props.store?.feedStore.entities.length);
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
           { id: 'feed', title: i18n.t('feed') },
@@ -88,10 +98,22 @@ const ChannelHeader = withErrorBoundary(
               : undefined,
         },
         'bcolorPrimaryBorder',
-        'borderBottom8x',
+        'borderBottom6x',
         'bcolorTertiaryBackground',
       ],
       [props.store?.tab],
+    );
+
+    // =====================| EFFECTS |=====================>
+    useModelEvent(
+      UserModel,
+      'toggleSubscription',
+      ({ user }) => {
+        if (user.guid === channelGuid) {
+          setInteracted(user.subscribed);
+        }
+      },
+      [channelGuid],
     );
 
     // =====================| METHODS |=====================>
@@ -293,6 +315,16 @@ const ChannelHeader = withErrorBoundary(
 
             {screen()}
           </>
+        )}
+
+        {shouldRenderChannelRecommendation && (
+          <IfFeatureEnabled feature="mob-4107-channelrecs">
+            <ChannelRecommendation
+              channel={channel}
+              visible={interacted}
+              location="channel"
+            />
+          </IfFeatureEnabled>
         )}
       </View>
     );

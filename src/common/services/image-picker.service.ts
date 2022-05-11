@@ -188,7 +188,10 @@ class ImagePickerService {
         );
       }
     } catch (err) {
-      if (!err.message.includes('cancelled image selection')) {
+      if (
+        err instanceof Error &&
+        !err.message.includes('cancelled image selection')
+      ) {
         throw err;
       }
       return false;

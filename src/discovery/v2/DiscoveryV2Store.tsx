@@ -188,8 +188,6 @@ export default class DiscoveryV2Store {
   @action
   async refreshTags(): Promise<void> {
     this.refreshing = true;
-    this.setTags([]);
-    this.setTrendingTags([]);
     await this.loadTags();
     this.refreshing = false;
   }
@@ -207,6 +205,24 @@ export default class DiscoveryV2Store {
 
     // this.refreshTrends();
     this.refreshTags(); // Sometimes the server gets behind
+  }
+
+  @action
+  refreshActiveTab() {
+    switch (this.activeTabId) {
+      case 'top':
+        return this.topFeed.refresh();
+      case 'foryou':
+        this.refreshTrends();
+        return this.allFeed.refresh();
+      case 'your-tags':
+        return this.refreshTags();
+      case 'trending-tags':
+        this.refreshTags();
+        return this.trendingFeed.clear().refresh();
+      case 'boosts':
+        return this.boostFeed.refresh();
+    }
   }
 
   @action

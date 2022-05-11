@@ -111,7 +111,9 @@ const createTwoFactorStore = () => ({
     } catch (err) {
       logService.exception(err);
       this.error = true;
-      showNotification(err.message, 'warning');
+      if (err instanceof Error) {
+        showNotification(err.message, 'warning');
+      }
     } finally {
       this.setAppCode('');
       this.setLoading(false);
@@ -186,7 +188,9 @@ const createTwoFactorStore = () => ({
     } catch (err) {
       this.setLoading(false);
       logService.exception(err);
-      showNotification(err.message, 'warning');
+      if (err instanceof Error) {
+        showNotification(err.message, 'warning');
+      }
     }
   },
 });

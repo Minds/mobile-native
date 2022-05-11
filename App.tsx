@@ -17,6 +17,7 @@ import {
   YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
+import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -47,6 +48,7 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import { CODE_PUSH_KEY } from '~/config/Config';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -100,6 +102,18 @@ class App extends Component<Props, State> {
     }
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
+
+    // Check for codepush update and restart app immediately if necessary
+    codePush.sync(
+      CODE_PUSH_KEY
+        ? {
+            installMode: codePush.InstallMode.ON_NEXT_RESTART, // install updates on app restart
+            deploymentKey: CODE_PUSH_KEY,
+          }
+        : {
+            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE, // install mandatory updates immediately
+          },
+    );
   }
 
   /**

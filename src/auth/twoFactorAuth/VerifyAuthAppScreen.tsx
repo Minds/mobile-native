@@ -59,7 +59,9 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
         store.setLoading(true);
         await store.fetchSecret();
       } catch (err) {
-        showNotification(err.message, 'warning');
+        if (err instanceof Error) {
+          showNotification(err.message, 'warning');
+        }
       } finally {
         store.setLoading(false);
       }

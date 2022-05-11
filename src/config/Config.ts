@@ -19,6 +19,11 @@ export const CANARY_KEY = 'canary';
 export const ENV =
   typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
+// Override the production if there is a value defined for the environment
+export const CODE_PUSH_KEY = IS_IOS
+  ? RNConfig.CODEPUSH_KEY_IOS
+  : RNConfig.CODEPUSH_KEY_ANDROID;
+
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
 
@@ -148,3 +153,6 @@ export const GOOGLE_PLAY_STORE =
   DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
+
+// in ms
+export const NEWSFEED_NEW_POST_POLL_INTERVAL = 30000;

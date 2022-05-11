@@ -236,11 +236,15 @@ export default class StripeCardSelector extends React.PureComponent<
       // finally we save the card
       this.saveCard();
     } catch (err) {
-      if (err.message && err.message === 'Cancelled by user') {
-        return;
-      }
-      this.showError(err.message || i18n.t('errorMessage'));
       console.log(err);
+      if (err instanceof Error) {
+        if (err.message && err.message === 'Cancelled by user') {
+          return;
+        }
+        this.showError(err.message || i18n.t('errorMessage'));
+      } else {
+        this.showError(i18n.t('errorMessage'));
+      }
     }
   };
 

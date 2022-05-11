@@ -304,7 +304,9 @@ export const createStore = (): WCStore => ({
       return result as string[];
     } catch (err) {
       console.error(err);
-      showNotification(err.toString(), 'danger');
+      if (err instanceof Error) {
+        showNotification(err.toString(), 'danger');
+      }
     }
     return [''];
   },

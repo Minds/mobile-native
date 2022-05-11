@@ -20,8 +20,12 @@ const Subscribe = (props: {
    * whether the feed should update to remove/add posts of the unsubscribed/subscribed user
    */
   shouldUpdateFeed?: boolean;
+  /**
+   * subscribe button was pressed
+   */
+  onSubscribed?: (user: UserModel) => void;
 }) => {
-  const { channel, mini, shouldUpdateFeed = true } = props;
+  const { channel, mini, shouldUpdateFeed = true, onSubscribed } = props;
 
   const subscriptionText = channel.subscribed
     ? i18n.t('channel.subscribed')
@@ -37,10 +41,11 @@ const Subscribe = (props: {
         { text: i18n.t('no') },
       ]);
     } else {
+      onSubscribed?.(channel);
       return channel.toggleSubscription(shouldUpdateFeed);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channel.subscribed, channel.toggleSubscription]);
+  }, [channel.subscribed, channel.toggleSubscription, onSubscribed]);
 
   return (
     <Button
@@ -60,7 +65,7 @@ const Subscribe = (props: {
         )
       }
       testID={props.testID}>
-      {subscriptionText}
+      {mini ? undefined : subscriptionText}
     </Button>
   );
 };

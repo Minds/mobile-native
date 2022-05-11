@@ -139,9 +139,10 @@ const DiscoveryTagsManager = (props: Props, ref) => {
 
   const inputRef = React.useRef<any>();
 
-  const onDone = useCallback(() => {
-    discoveryV2.saveTags(store.selected, store.deselected);
-  }, [discoveryV2, store]);
+  const onDone = useCallback(async () => {
+    await discoveryV2.saveTags(store.selected, store.deselected);
+    ref?.current?.dismiss();
+  }, [discoveryV2, ref, store]);
 
   const onCreate = useCallback(() => {
     store.createTag();

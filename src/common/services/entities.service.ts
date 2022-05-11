@@ -1,7 +1,7 @@
 //@ts-nocheck
 import _ from 'lodash';
 
-import apiService, { isApiForbidden } from './api.service';
+import apiService, { isAbort, isApiForbidden } from './api.service';
 import GroupModel from '../../groups/GroupModel';
 import UserModel from '../../channel/UserModel';
 import BlogModel from '../../blogs/BlogModel';
@@ -115,7 +115,7 @@ class EntitiesService {
         }
       } catch (err) {
         // we ignore the fetch error if there are local entities to show
-        if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
+        if (urnsToResync.length === 0 || isAbort(err)) throw err;
       }
     }
 
