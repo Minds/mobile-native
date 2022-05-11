@@ -396,7 +396,8 @@
     "latestAction": "Enable Latest Posts",
     "topTitle": "Top posts enabled",
     "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
-    "topAction": "Enable Top Posts"
+    "topAction": "Enable Top Posts",
+    "seeLatestTitle": "See {{count}} latest posts"
   },
   "comments": {
     "successRemoving": "Comment removed",
@@ -947,6 +948,7 @@
     "phoneNumber": "Phone Number",
     "weJustSentCode": "We just sent the code to {{phone}} in order to verify that your number is correct.",
     "confirmationCode": "Confirmation Code",
+    "confirmationCodeInvalid": "Please enter a code",
     "welcomeNew": "Welcome to the Minds Community!",
     "welcomePrivacy": "Your privacy is our priority. You are free to provide as much or as little information as you wish for better recommendations and to connect with people in your local area.",
     "welcomeLater": "No thanks, I’ll do it later",

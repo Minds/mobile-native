@@ -20,6 +20,7 @@ const FPS = 30;
  */
 export default function useBestCameraAndFormat(
   store: CameraStore,
+  mode: 'video' | 'photo',
 ): [
   CameraDevices,
   CameraDevice | undefined,
@@ -42,11 +43,24 @@ export default function useBestCameraAndFormat(
       result = result.filter(f => f.supportsVideoHDR || f.supportsPhotoHDR);
     }
 
-    // find the first format that includes the given FPS
-    return result.find(f =>
+    // only 30 FPS
+    result = result.filter(f =>
       f.frameRateRanges.some(r => frameRateIncluded(r, FPS)),
     );
-  }, [formats, store.hdr]);
+
+    if (mode === 'video') {
+      const fullHD = result.filter(
+        f => f.videoHeight === 1080 && f.videoWidth === 1920,
+      );
+      if (fullHD.length > 0) {
+        return fullHD[0];
+      }
+    }
+
+    if (result.length > 0) {
+      return result[0];
+    }
+  }, [formats, mode, store.hdr]);
 
   return [devices, device, formats, format];
 }

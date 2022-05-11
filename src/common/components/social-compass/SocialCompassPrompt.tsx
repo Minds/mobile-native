@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import MText from '~/common/components/MText';
 import { storages } from '~/common/services/storage/storages.service';
@@ -19,7 +20,7 @@ const PROMPT_DISMISS_DURATION = 3 * 24 * 60 * 60 * 1000; // 3 days
 const SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY =
   'social-compass-questionnaire:dismissed';
 
-const SocialCompassPrompt = ({}: PropsType) => {
+const SocialCompassPrompt = observer(({}: PropsType) => {
   const ref = React.useRef<any>();
   const { result: questionsResult, loading } = useQuestions();
   const [dismissed, dismiss] = useDismissHandler(questionsResult);
@@ -62,7 +63,7 @@ const SocialCompassPrompt = ({}: PropsType) => {
       </BottomSheetModal>
     </Column>
   );
-};
+});
 
 const styles = ThemedStyles.create({
   title: [
