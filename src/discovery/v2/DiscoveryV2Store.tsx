@@ -208,6 +208,24 @@ export default class DiscoveryV2Store {
   }
 
   @action
+  refreshActiveTab() {
+    switch (this.activeTabId) {
+      case 'top':
+        return this.topFeed.refresh();
+      case 'foryou':
+        this.refreshTrends();
+        return this.allFeed.refresh();
+      case 'your-tags':
+        return this.refreshTags();
+      case 'trending-tags':
+        this.refreshTags();
+        return this.trendingFeed.clear().refresh();
+      case 'boosts':
+        return this.boostFeed.refresh();
+    }
+  }
+
+  @action
   reset() {
     this.allFeed.reset();
     this.topFeed.reset();

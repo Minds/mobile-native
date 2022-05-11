@@ -1,3 +1,4 @@
+import { Timeout } from '~/types/Common';
 import apiService from '../../common/services/api.service';
 import badgeService from '../../common/services/badge.service';
 import logService from '../../common/services/log.service';
@@ -16,7 +17,7 @@ const createNotificationsStore = () => ({
   unread: 0,
   filter: '' as FilterType,
   offset: '',
-  pollInterval: null as number | null,
+  pollInterval: null as Timeout | null,
   pushNotificationsSettings: [] as PushNotificationsSettingModel[] | null, // null when failed to load
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[] | null, // null when failed to load
   loaded: false,

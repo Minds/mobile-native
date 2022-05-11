@@ -72,3 +72,5 @@ export interface SocialProfileMeta {
   customIcon?: boolean;
   domain: string;
 }
+
+export type Timeout = ReturnType<typeof setTimeout>;

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import ChannelListItem from '~/common/components/ChannelListItem';
-import { Screen } from '~/common/ui';
 import UserModel from '../../../channel/UserModel';
 import Button from '../../../common/components/Button';
 import apiService from '../../../common/services/api.service';
@@ -31,17 +30,15 @@ const BlockedChannel = ({ row, localStore }: PropsType) => {
   );
 
   return (
-    <Screen>
-      <ChannelListItem
-        channel={user}
-        key={user.guid}
-        //@ts-ignore
-        testID={`blockedChannel${row.index}`}
-        renderRight={() => (
-          <Button text={i18n.t('unblock')} onPress={() => unblock(user.guid)} />
-        )}
-      />
-    </Screen>
+    <ChannelListItem
+      channel={user}
+      key={user.guid}
+      //@ts-ignore
+      testID={`blockedChannel${row.index}`}
+      renderRight={() => (
+        <Button text={i18n.t('unblock')} onPress={() => unblock(user.guid)} />
+      )}
+    />
   );
 };
 

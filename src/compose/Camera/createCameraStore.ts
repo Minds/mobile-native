@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { Timeout } from '~/types/Common';
 import mindsConfigService from '../../common/services/minds-config.service';
 
 type FocusPoint = {
@@ -6,7 +7,7 @@ type FocusPoint = {
   y: number;
 };
 
-let focusTimer: null | number = null;
+let focusTimer: null | Timeout = null;
 
 type FlashType = 'off' | 'on' | 'auto';
 type CameraType = 'front' | 'back';
