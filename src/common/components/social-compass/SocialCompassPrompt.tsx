@@ -85,6 +85,7 @@ export default SocialCompassPrompt;
 
 function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
   const answersProvideed = questionsResult?.answersProvided;
+  const isLoggedIn = questionsResult?.isLoggedIn;
   const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
 
   const dismiss = useCallback(async () => {
@@ -97,7 +98,7 @@ function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
 
   // determine whether we've already answered the questions or not
   useEffect(() => {
-    if (!questionsResult) {
+    if (!questionsResult || isLoggedIn === false) {
       return;
     }
 
