@@ -1,7 +1,6 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import { AnimatePresence, MotiTransitionProp, MotiView } from 'moti';
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { Blurhash } from 'react-native-blurhash';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
@@ -11,6 +10,7 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
+import Delayed from './Delayed';
 import RetryableImage from './RetryableImage';
 
 interface SmartImageProps {
@@ -93,9 +93,9 @@ const SmartImage = observer(function (props: SmartImageProps) {
         />
       )}
 
-      <AnimatePresence>
-        {store.showOverlay && (
-          <ImageOverlay>
+      {store.showOverlay && (
+        <View style={absoluteCenter}>
+          <Delayed delay={120}>
             <BlurredThumbnail
               key={`thumbnail:${store.retries}`}
               thumbBlurRadius={props.thumbBlurRadius}
@@ -103,39 +103,15 @@ const SmartImage = observer(function (props: SmartImageProps) {
               thumbnailSource={props.thumbnail as any}
               entity={props.entity}
             />
-            {dataSaverEnabled && !withoutDownloadButton && (
-              <DownloadButton store={store} />
-            )}
-          </ImageOverlay>
-        )}
-      </AnimatePresence>
+          </Delayed>
+          {dataSaverEnabled && !withoutDownloadButton && (
+            <DownloadButton store={store} />
+          )}
+        </View>
+      )}
     </View>
   );
 });
-
-const exitAnimation = {
-  opacity: 0,
-};
-const animate = {
-  opacity: 1,
-};
-const transition: MotiTransitionProp = { type: 'timing', duration: 1000 };
-
-/**
- * this component overlays the image and will disappear with a fade transition when
- * store.showOverlay is turned off
- */
-const ImageOverlay: FC = ({ ...props }) => {
-  return (
-    <MotiView
-      {...props}
-      animate={animate}
-      exit={exitAnimation}
-      transition={transition}
-      style={absoluteCenter}
-    />
-  );
-};
 
 const BlurredThumbnail = ({
   thumbBlurRadius,
@@ -145,7 +121,15 @@ const BlurredThumbnail = ({
 }) => {
   const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
   if (blurhash) {
-    return <Blurhash decodeAsync blurhash={blurhash} style={style} />;
+    return (
+      <Blurhash
+        decodeWidth={16}
+        decodeHeight={16}
+        decodeAsync
+        blurhash={blurhash}
+        style={style}
+      />
+    );
   }
 
   if (thumbnailSource) {
