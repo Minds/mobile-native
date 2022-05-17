@@ -39,6 +39,10 @@
         android:name="android.permission.FOREGROUND_SERVICE"
         tools:node="remove" />
 
+    <queries>
+        <package android:name="com.minds.chat" />
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
