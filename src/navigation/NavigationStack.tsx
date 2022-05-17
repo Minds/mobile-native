@@ -260,9 +260,10 @@ const AuthStack = function () {
           name="TwoFactorConfirmation"
           component={TwoFactorConfirmScreen}
           options={{
+            ...modalOptions,
             headerMode: 'screen',
             headerShown: false,
-            ...modalOptions,
+            gestureEnabled: false,
           }}
         />
       </AuthStackNav.Navigator>
@@ -401,7 +402,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="TwoFactorConfirmation"
             component={TwoFactorConfirmScreen}
-            options={modalOptions}
+            options={{ ...modalOptions, gestureEnabled: false }}
           />
           <RootStackNav.Screen
             name="RecoveryCodeUsedScreen"
