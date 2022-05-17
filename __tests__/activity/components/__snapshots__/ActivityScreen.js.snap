@@ -887,12 +887,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "width": 20,
                     },
                     Object {},
-                    Array [
-                      undefined,
-                      Object {
-                        "transform": Array [],
-                      },
-                    ],
                   ]
                 }
               >
@@ -991,12 +985,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "width": 20,
                     },
                     Object {},
-                    Array [
-                      undefined,
-                      Object {
-                        "transform": Array [],
-                      },
-                    ],
                   ]
                 }
               >

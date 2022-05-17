@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { motify } from 'moti';
 import { Icon } from '~ui/icons';
-import withClass from '~ui/withClass';
+// import withClass from '~ui/withClass';
 import { UISizing } from '~styles/Tokens';
 // import { frameThrower } from '~ui/helpers';
 import Counter from './Counter';
@@ -28,7 +27,7 @@ type PropsType = {
   touchableComponent?: React.ComponentClass;
 };
 
-const AnimatedIcon: any = motify(withClass(Icon))();
+// const AnimatedIcon: any = motify(withClass(Icon))();
 
 const AnimatedThumb = ({
   voted,
@@ -105,18 +104,22 @@ const AnimatedThumb = ({
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [voted]);
 
+  // const disabled = !canVote;
+  // const active = !!(canVote && voted);
+
+  // return (
+  //   <AnimatedIcon
+  //     active={active}
+  //     disabled={disabled}
+  //     name={name}
+  //     size={size}
+  //     // state={animation}
+  //   />
+  // );
   const disabled = !canVote;
   const active = !!(canVote && voted);
 
-  return (
-    <AnimatedIcon
-      active={active}
-      disabled={disabled}
-      name={name}
-      size={size}
-      // state={animation}
-    />
-  );
+  return <Icon active={active} disabled={disabled} name={name} size={size} />;
 };
 
 /**
