@@ -20,6 +20,16 @@ import { IS_IOS } from '~/config/Config';
 
 const IGNORE_SCREENS = ['Comments'];
 
+// entity that can be contextualized into an 'entity_context'.
+export type ContextualizableEntity = {
+  guid: string;
+  type: string;
+  subtype: string;
+  access_id: string;
+  container_guid: string;
+  owner_guid: string;
+};
+
 /**
  * Analytics service
  */
@@ -231,6 +241,37 @@ export class AnalyticsService {
    */
   trackPageViewEvent(pageUrl: string) {
     this.tracker?.trackPageViewEvent({ pageUrl }, this.contexts);
+  }
+
+  public trackClick(ref: string, contexts: EventContext[] = []): void {
+    this.tracker?.trackSelfDescribingEvent(
+      {
+        schema: 'iglu:com.minds/click_event/jsonschema/1-0-0',
+        data: {
+          ref: ref,
+        },
+      },
+      [...contexts, ...this.contexts],
+    );
+  }
+
+  /**
+   * Build entity context for a given entity.
+   * @param { ContextualizableEntity } entity - entity to build entity_context for.
+   * @returns { SnowplowContext } - built entity_context.
+   */
+  public buildEntityContext(entity: ContextualizableEntity): EventContext {
+    return {
+      schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+      data: {
+        entity_guid: entity.guid ?? null,
+        entity_type: entity.type ?? null,
+        entity_subtype: entity.subtype ?? null,
+        entity_owner_guid: entity.owner_guid ?? null,
+        entity_access_id: entity.access_id ?? null,
+        entity_container_guid: entity.container_guid ?? null,
+      },
+    };
   }
 }
 
