@@ -1257,7 +1257,8 @@
   },
   "validation": {
     "email": "Invalid email",
-    "number": "Invalid number"
+    "number": "Invalid number",
+    "amount": "Invalid amount"
   },
   "emailConfirm": {
     "confirmed": "Email address confirmed!",
