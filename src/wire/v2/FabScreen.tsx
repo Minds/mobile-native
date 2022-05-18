@@ -19,7 +19,6 @@ import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext'
 import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
-import { showNotification } from 'AppMessages';
 
 const isIos = Platform.OS === 'ios';
 
