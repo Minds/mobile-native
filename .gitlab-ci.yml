@@ -8,7 +8,7 @@ stages:
 
 # Spec test
 test:jest:
-  image: node:12.13.0
+  image: node:14.19.2
   stage: test
   cache:
     key: ${CI_COMMIT_REF_SLUG}
