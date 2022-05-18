@@ -38,8 +38,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     paused: !autoplay,
     forceHideOverlay: false,
     /**
-     * True if player is muted when ready event fires.
-     * Allows us to track initial unmute event.
+     * Should we track unmute event? true if volume is initially 0
      */
     shouldTrackUnmuteEvent: videoPlayerService.currentVolume === 0,
     hideOverlay: () => null as any,
@@ -90,6 +89,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       videoPlayerService.setVolume(volume);
     },
     trackUnmute() {
+      console.log('UNMUTE');
       analyticsService.trackClick('video-player-unmuted', [
         analyticsService.buildEntityContext(entity),
       ]);
