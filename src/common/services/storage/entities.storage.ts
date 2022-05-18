@@ -75,7 +75,7 @@ export class EntitiesStorage {
    */
   read(urn) {
     try {
-      return storages.userCache?.getMap(urn) || null;
+      return storages.userCache?.getMap<Object>(urn) || null;
     } catch (err) {
       logService.exception('[EntitiesStorage]', err);
       return null;

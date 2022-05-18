@@ -60,9 +60,6 @@ jest.mock('@gorhom/bottom-sheet', () => {
   };
 });
 jest.mock('react-native-notifications');
-jest.mock('react-navigation-shared-element', () => ({
-  createSharedElementStackNavigator: jest.fn(),
-}));
 jest.mock('react-native-convert-ph-asset');
 jest.mock('@react-navigation/native');
 jest.mock('@react-navigation/bottom-tabs');

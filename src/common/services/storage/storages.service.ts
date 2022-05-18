@@ -1,12 +1,16 @@
 import { Platform } from 'react-native';
-import MMKVStorage from 'react-native-mmkv-storage';
+import {
+  MMKVLoader,
+  MMKVInstance,
+  ProcessingModes,
+} from 'react-native-mmkv-storage';
 
 type Storages = {
-  session: MMKVStorage.API;
-  app: MMKVStorage.API;
-  user: MMKVStorage.API | null;
-  userPortrait: MMKVStorage.API | null;
-  userCache: MMKVStorage.API | null;
+  session: MMKVInstance;
+  app: MMKVInstance;
+  user: MMKVInstance | null;
+  userPortrait: MMKVInstance | null;
+  userCache: MMKVInstance | null;
 };
 
 export const storages: Storages = {
@@ -23,12 +27,12 @@ export const storages: Storages = {
 export function createStorage(
   storageId: string,
   encrypted = false,
-): MMKVStorage.API {
-  const loader = new MMKVStorage.Loader().withInstanceID(storageId);
+): MMKVInstance {
+  const loader = new MMKVLoader().withInstanceID(storageId);
 
   // Multi-process crash on iOS
   if (Platform.OS !== 'ios') {
-    loader.setProcessingMode(MMKVStorage.MODES.MULTI_PROCESS);
+    loader.setProcessingMode(ProcessingModes.MULTI_PROCESS);
   }
   if (encrypted) {
     loader.withEncryption();

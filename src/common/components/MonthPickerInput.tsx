@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import MonthPicker from 'react-native-month-year-picker';
+// import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment-timezone';
 import { Icon, PressableLine, HairlineRow, B1, B2, Column, Row } from '~ui';
 
@@ -47,14 +47,14 @@ const MonthPickerInput = observer((props: PropsType) => {
           </Row>
         </HairlineRow>
       </PressableLine>
-      {localStore.showPicker && (
+      {/* {localStore.showPicker && (
         <MonthPicker
           onChange={localStore.onValueChange}
           value={localStore.date}
           minimumDate={props.minimumDate}
           maximumDate={props.maximumDate}
         />
-      )}
+      )} */}
     </>
   );
 });

@@ -60,9 +60,3 @@ export default class ViewImageScreen extends Component {
     );
   }
 }
-
-const sharedElements: SharedElementsComponentConfig = route => {
-  const item = route.params.entity;
-  return [{ id: `${item.urn}.image` }];
-};
-ViewImageScreen.sharedElements = sharedElements;
