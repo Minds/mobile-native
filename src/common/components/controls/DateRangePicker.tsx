@@ -8,6 +8,7 @@ import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Calendar } from 'react-native-calendars';
 import { UIUnitType } from '~/styles/Tokens';
+import useModernTheme from './useModernTheme';
 
 export type DateRangePickerPropsType = {
   spacing?: UIUnitType;
@@ -36,29 +37,7 @@ function generateDateRange(startDate, endDate) {
 const DateRangePicker = observer((props: DateRangePickerPropsType) => {
   const ref = React.useRef<BottomSheetModalType>(null);
   const todaysDate = new Date().toISOString().substring(0, 10);
-
-  // Theme ---------------------------------------------------
-  const theme = React.useMemo(
-    () => ({
-      backgroundColor: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      calendarBackground: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      dayTextColor: ThemedStyles.getColor('PrimaryText'),
-      textSectionTitleDisabledColor: ThemedStyles.getColor('TertiaryText'),
-      textDisabledColor: ThemedStyles.getColor('TertiaryText'),
-      textSectionTitleColor: ThemedStyles.getColor('SecondaryText'),
-      indicatorColor: ThemedStyles.getColor('Link'),
-      dotColor: ThemedStyles.getColor('Link'),
-      selectedDayBackgroundColor: ThemedStyles.getColor('Link'),
-      selectedDayTextColor: ThemedStyles.getColor(
-        'PrimaryText',
-        ThemedStyles.theme ? 0 : 1,
-      ),
-      monthTextColor: ThemedStyles.getColor('PrimaryText'),
-      todayTextColor: ThemedStyles.getColor('Link'),
-      arrowColor: ThemedStyles.getColor('Link'),
-    }),
-    [],
-  );
+  const theme = useModernTheme();
 
   // Store --------------------------------------------------
   const localStore = useLocalStore(

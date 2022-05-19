@@ -24,6 +24,8 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   onDismiss?: () => void;
 }
 
+export type BottomSheetModalHandle = BottomSheetModal;
+
 const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
   (props, ref) => {
     const {
@@ -62,7 +64,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
 
     React.useEffect(() => {
       //@ts-ignore
-      if (ref && ref.current && autoShow) {
+      if (ref?.current && autoShow) {
         //@ts-ignore
         ref.current.present();
       }
