@@ -2,7 +2,9 @@ import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
 import { B1, B2, Column, HairlineRow, Icon, PressableLine, Row } from '~ui';
-import MonthPicker, { MonthPickerHandle } from './controls/MonthPicker';
+import MonthYearPicker, {
+  MonthYearPickerHandle,
+} from './controls/MonthYearPicker';
 
 type PropsType = {
   minimumDate: Date;
@@ -12,17 +14,17 @@ type PropsType = {
 };
 
 const MonthPickerInput = observer((props: PropsType) => {
-  const monthPickerRef = useRef<MonthPickerHandle>(null);
+  const monthYearPickerRef = useRef<MonthYearPickerHandle>(null);
   const localStore = useLocalStore(() => ({
     date: new Date(),
     setDate(date: Date) {
       this.date = date;
     },
     openPicker() {
-      monthPickerRef.current?.show();
+      monthYearPickerRef.current?.show();
     },
     closePicker() {
-      monthPickerRef.current?.dismiss();
+      monthYearPickerRef.current?.dismiss();
     },
     onValueChange(newDate: Date) {
       const selectedDate = newDate || this.date;
@@ -47,8 +49,8 @@ const MonthPickerInput = observer((props: PropsType) => {
           </Row>
         </HairlineRow>
       </PressableLine>
-      <MonthPicker
-        ref={monthPickerRef}
+      <MonthYearPicker
+        ref={monthYearPickerRef}
         onChange={localStore.onValueChange}
         value={localStore.date}
         minimumDate={props.minimumDate}

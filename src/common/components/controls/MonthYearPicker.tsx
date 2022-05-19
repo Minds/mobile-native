@@ -15,21 +15,21 @@ import {
 } from '../bottom-sheet';
 import useModernTheme from './useModernTheme';
 
-export type MonthPickerHandle = {
+export type MonthYearPickerHandle = {
   show: () => void;
   dismiss: () => void;
 };
 
-export type MonthPickerProps = {
+export type MonthYearPickerProps = {
   onChange: (date: Date) => void;
   value: Date;
   minimumDate?: Date;
   maximumDate?: Date;
 };
 
-const MonthPicker: ForwardRefRenderFunction<
-  MonthPickerHandle,
-  MonthPickerProps
+const MonthYearPicker: ForwardRefRenderFunction<
+  MonthYearPickerHandle,
+  MonthYearPickerProps
 > = ({ value, onChange, minimumDate, maximumDate }, ref) => {
   const bottomSheetRef = useRef<BottomSheetModalHandle>(null);
   const theme = useModernTheme();
@@ -76,4 +76,4 @@ const MonthPicker: ForwardRefRenderFunction<
   );
 };
 
-export default forwardRef(MonthPicker);
+export default forwardRef(MonthYearPicker);
