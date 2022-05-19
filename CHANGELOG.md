@@ -2,6 +2,24 @@
 
 Minds Mobile
 
+## 4.24.0 - 2022-05-19
+
+### Changed
+
+- Regenerative Recommendations
+- Latest posts prompt
+- Friendly Captcha
+- Channel contextual recommendations
+- Save videos locally before uploading
+- Video pause/resume functionality added to the composer
+- Camera package updated
+- Added android split-screen support
+- Added CodePush support for faster updates
+- Fix share videos to minds app (iOS)
+- Fix the portrait feed showing scheduled posts
+- Fix deep links and chat app detection on Android
+- General bug fixing and improvements
+
 ## 4.23.0 - 2022-04-04
 
 ### Changed
