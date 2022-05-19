@@ -17,7 +17,9 @@ commands:
 
 jobs:
   analyse_js:
-    executor: rn/linux_js
+    executor:
+      name: rn/linux_js
+      node_version: '14.19.1'
     steps:
       - attach_workspace:
           at: .
@@ -129,7 +131,7 @@ jobs:
           configuration: ios.release
 
 orbs:
-  rn: react-native-community/react-native@5.4.0
+  rn: react-native-community/react-native@7.0.0
 version: 2.1
 workflows:
   test:
@@ -138,12 +140,6 @@ workflows:
       - analyse_js:
           requires:
             - checkout_code
-      - e2e:
-          requires:
-            - checkout_code
-          filters:
-            branches:
-              ignore: /^stable.*/
       - fastlane_build_qa:
           requires:
             - analyse_js
