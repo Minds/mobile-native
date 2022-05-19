@@ -3,10 +3,15 @@ import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
+import { DevMode } from './DevMode';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
-export const ONCHAIN_ENABLED = true;
+export const ONCHAIN_ENABLED = false;
+export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
+
+// we should check how to use v2 before enable it again
+export const LIQUIDITY_ENABLED = false;
 
 export const STAGING_KEY = 'staging';
 export const CANARY_KEY = 'canary';
@@ -14,18 +19,28 @@ export const CANARY_KEY = 'canary';
 export const ENV =
   typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
+// Override the production if there is a value defined for the environment
+export const CODE_PUSH_KEY = IS_IOS
+  ? RNConfig.CODEPUSH_KEY_IOS
+  : RNConfig.CODEPUSH_KEY_ANDROID;
+
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
+
+// developer mode controller
+export const DEV_MODE = new DevMode(IS_REVIEW);
+
+export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 /**
  * We get the values only for review apps in order to avoid issues
  * by setting them to true in a review app and after updating the app
  * with a production version having that option turned on
  */
-export const MINDS_STAGING = IS_REVIEW
+export const MINDS_STAGING = DEV_MODE.isActive
   ? storages.app.getBool(STAGING_KEY) || false
   : false;
-export const MINDS_CANARY = IS_REVIEW
+export const MINDS_CANARY = DEV_MODE.isActive
   ? storages.app.getBool(CANARY_KEY) || false
   : false;
 
@@ -44,7 +59,10 @@ export const IMAGE_MAX_SIZE = 2048;
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
-export const MINDS_API_URI = 'https://www.minds.com/';
+export const MINDS_API_URI =
+  DEV_MODE.isActive && CUSTOM_API_URL
+    ? CUSTOM_API_URL
+    : 'https://www.minds.com/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
@@ -130,10 +148,11 @@ export const MINDS_DEEPLINK = [
   ['discovery/:tab', 'Discovery', 'navigate'],
 ];
 
-export const DISABLE_PASSWORD_INPUTS = false;
-
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
   DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
+
+// in ms
+export const NEWSFEED_NEW_POST_POLL_INTERVAL = 30000;

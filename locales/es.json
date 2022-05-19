@@ -492,7 +492,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "Comentarios",
     "like": "Votos",
     "tag": "etiquetas",
@@ -763,7 +763,7 @@
       "a": "ADMIN DE CONTENTO",
       "a1": "Contenido reportado",
       "b": "CONTENCIA DE PAID",
-      "b1": "Gestión de niveles de suscripción",
+      "b1": "Membrecías",
       "b2": "Vista previa",
       "c": "CUENTA",
       "c2": "Borrar Canal",

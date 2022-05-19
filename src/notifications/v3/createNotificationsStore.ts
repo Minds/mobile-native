@@ -1,3 +1,4 @@
+import { Timeout } from '~/types/Common';
 import apiService from '../../common/services/api.service';
 import badgeService from '../../common/services/badge.service';
 import logService from '../../common/services/log.service';
@@ -16,12 +17,16 @@ const createNotificationsStore = () => ({
   unread: 0,
   filter: '' as FilterType,
   offset: '',
-  pollInterval: null as number | null,
+  pollInterval: null as Timeout | null,
   pushNotificationsSettings: [] as PushNotificationsSettingModel[] | null, // null when failed to load
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[] | null, // null when failed to load
   loaded: false,
+  silentRefresh: false,
   setLoaded(loaded: boolean) {
     this.loaded = loaded;
+  },
+  setSilentRefresh(value: boolean) {
+    this.silentRefresh = value;
   },
   init() {
     sessionService.onSession((token: string) => {
@@ -87,6 +92,7 @@ const createNotificationsStore = () => ({
   async markAsRead(notification: NotificationModel): Promise<void> {
     try {
       await apiService.put('api/v3/notifications/read/' + notification.urn);
+      this.setUnread(this.unread - 1);
     } catch (err) {
       logService.exception('[NotificationsStore] markAsRead', err);
     }
@@ -130,6 +136,8 @@ const createNotificationsStore = () => ({
     }
   },
   reset() {
+    this.silentRefresh = false;
+    this.filter = '';
     this.unlisten();
     this.stopPollCount();
     this.setUnread(0);

@@ -69,7 +69,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   /**
    * API Call
    * */
-  const { result, loading, error, fetch } = useApiFetch<{
+  const { result, loading, error, refresh } = useApiFetch<{
     dashboard: Dashboard;
   }>(url, {
     params: {
@@ -80,6 +80,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         .join(','),
     },
   });
+  const onTryAgain = useCallback(() => refresh(), [refresh]);
 
   if (!result && loading) {
     return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
@@ -106,7 +107,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 
   if (error || dataError) {
     return (
-      <MText style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={onTryAgain}>
         {i18n.t('error') + '\n'}
         <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
       </MText>

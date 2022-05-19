@@ -1,3 +1,4 @@
+import NavigationService from '~/navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import delay from '../../common/helpers/delay';
 import validatePassword from '../../common/helpers/validatePassword';
@@ -9,15 +10,15 @@ import AuthService from '../AuthService';
 type StepsType = 'inputUser' | 'emailSended' | 'inputPassword';
 
 const showError = (error: string) =>
-  showNotification(error, 'danger', undefined, 'top');
+  showNotification(error, 'danger', undefined);
 
 const createLocalStore = () => ({
   currentStep: 'inputUser' as StepsType,
   username: '',
   code: '',
   password: '',
-  hidePassword: true,
   sending: false,
+  rateLimited: false,
   sent: 0,
   focused: false,
   setPassword(password: string) {
@@ -25,9 +26,6 @@ const createLocalStore = () => ({
   },
   setUsername(username: string) {
     this.username = username;
-  },
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
   },
   navToInputUser() {
     this.currentStep = 'inputUser';
@@ -78,6 +76,14 @@ const createLocalStore = () => ({
         const message =
           (typeof err === 'object' && err !== null && err.message) ||
           i18n.t('messenger.errorDirectMessage');
+        if (
+          message === 'You have exceed the rate limit. Please try again later.'
+        ) {
+          this.rateLimited = true;
+          showError(i18n.t('auth.rateLimit'));
+          NavigationService.goBack();
+          return;
+        }
         showError(message);
         logService.exception('[ForgotPassword]', err);
       } finally {
@@ -114,6 +120,7 @@ const createLocalStore = () => ({
           throw data;
         }
       } catch (err: any) {
+        console.log('err', err);
         if (err.message) {
           showError(err.message);
         } else {
@@ -123,18 +130,20 @@ const createLocalStore = () => ({
       } finally {
         this.setSending(false);
         if (success) {
+          const password = this.password;
+          const username = this.username;
           this.setPassword('');
           this.setUsername('');
           const response = {
             success,
             login: async () => {
-              showNotification(i18n.t('auth.waitLogin'), 'info', 3000, 'top');
+              showNotification(i18n.t('auth.waitLogin'), 'info', 3000);
 
               await delay(150);
               // clear the cookies (fix future issues with calls)
               await apiService.clearCookies();
               await delay(300);
-              AuthService.login(this.username, this.password);
+              AuthService.login(username, password);
             },
           };
           return response;

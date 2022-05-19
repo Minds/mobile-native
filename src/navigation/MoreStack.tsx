@@ -72,7 +72,7 @@ export default function () {
       title: i18n.t('settings.accountOptions.4'),
       onPress: () => navigation.push('SettingsNotifications'),
     },
-    IS_IOS
+    !IS_IOS
       ? {
           title: i18n.t('settings.accountOptions.5'),
           onPress: () => navigation.push('NSFWScreen'),
@@ -190,7 +190,7 @@ export default function () {
       <MoreStack.Screen
         name="BoostConsole"
         component={BoostConsoleScreen}
-        options={{ title: i18n.t('boost') }}
+        options={{ title: i18n.t('settings.boostConsole') }}
       />
       <MoreStack.Screen
         name="Other"

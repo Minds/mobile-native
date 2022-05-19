@@ -375,7 +375,7 @@
     "rewardsSummary": "Včera jste vydělali {{amount}} tokenů."
   },
   "notificationSettings": {
-    "enableDisable": "Povolit a zakázat push oznámení",
+    "all": "Povolit a zakázat push oznámení",
     "comment": "Komentáře",
     "like": "Lajky",
     "tag": "Označení",

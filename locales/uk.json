@@ -375,7 +375,7 @@
     "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
   "notificationSettings": {
-    "enableDisable": "Enable and disable push notifications",
+    "all": "Enable and disable push notifications",
     "comment": "Коментарі",
     "like": "Голоси",
     "tag": "Мітки",

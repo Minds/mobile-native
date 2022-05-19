@@ -1,5 +1,6 @@
 import { Linking, Platform } from 'react-native';
 import SendIntentAndroid from 'react-native-send-intent';
+import type { Timeout } from '~/types/Common';
 import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
 import i18nService from '../common/services/i18n.service';
@@ -12,7 +13,7 @@ const createChatStore = () => ({
   chatUrl: '',
   inProgress: false,
   createInProgress: false,
-  polling: 0,
+  polling: <Timeout | 0>0,
   // hasSeenModal: false,
   async checkAppInstalled(openStore = true) {
     try {
@@ -53,12 +54,12 @@ const createChatStore = () => ({
     }
   },
   async init() {
-    this.loadCount();
     const chatUrl = mindsService.getSettings().matrix?.chat_url;
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }
     this.polling = setInterval(this.loadCount, 15000);
+    this.loadCount();
   },
   async loadCount(): Promise<void> {
     if (this.inProgress) {

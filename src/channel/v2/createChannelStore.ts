@@ -46,7 +46,7 @@ const createChannelStore = () => {
 
   const store = {
     tab: 'feed' as ChannelTabType,
-    channel: null as UserModel | null,
+    channel: undefined as UserModel | undefined,
     loaded: false,
     tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -17,6 +17,7 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 
 type PropsType = {
   navigation?: any;
@@ -53,24 +54,16 @@ const map = data => {
 };
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
-  const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
-  const filter = notifications.filter;
-  const params = {
-    filter,
-    limit: 15,
-    offset: notifications.offset,
-  };
-  const {
-    result,
-    error,
-    loading,
-    fetch,
-    setResult,
-  } = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params,
+
+  const store = useApiFetch<NotificationList>('api/v3/notifications/list', {
+    params: {
+      filter: notifications.filter,
+      limit: 15,
+      offset: notifications.offset,
+    },
     updateStrategy: 'merge',
     dataField: 'notifications',
     map,
@@ -83,54 +76,50 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   }).current;
 
   const onFetchMore = () => {
-    !loading &&
-      result &&
-      result['load-next'] &&
-      notifications.setOffset(result['load-next']);
+    !store.loading &&
+      store.result &&
+      store.result['load-next'] &&
+      notifications.setOffset(store.result['load-next']);
   };
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
-    setResult(null);
-    fetch(params);
-  }, [notifications, fetch, params, setResult]);
+    return store.refresh({
+      filter: notifications.filter,
+      limit: 15,
+      offset: notifications.offset,
+    });
+  }, [notifications, store]);
 
-  const handleListRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    refresh();
-  }, [refresh, setRefreshing]);
+  /**
+   *
+   */
+  const onFocus = React.useCallback(
+    (silentRefresh = true) => {
+      // only refresh if the data is already loaded (even empty array)
+      if (store.result === undefined) {
+        return;
+      }
+      notifications.setUnread(0);
+      // only refresh if we already have notifications
+      notifications.setSilentRefresh(silentRefresh);
+      refresh().finally(() => notifications.setSilentRefresh(false));
+    },
+    // Be extra careful with the dependencies here, it may cause too many refresh or an infinite loop
+    [notifications, refresh, store],
+  );
 
-  const onFocus = React.useCallback(() => {
-    notifications.setUnread(0);
-    // only refresh if we already have notifications
-    if (result) {
-      refresh();
-    }
-  }, [notifications, refresh, result]);
-
+  // const isFocused = navigation.isFocused();
   React.useEffect(() => {
     const unsubscribe = navigation.addListener(
       //@ts-ignore
       'tabPress',
-      () => navigation.isFocused() && onFocus(),
+      () => navigation.isFocused() && onFocus(false),
     );
-
     return unsubscribe;
   }, [navigation, onFocus]);
 
-  React.useEffect(() => {
-    if (!notifications.loaded) {
-      notifications.setLoaded(true);
-      onFocus();
-    }
-  }, [notifications, onFocus]);
-
-  React.useEffect(() => {
-    if (!loading && isRefreshing) {
-      setRefreshing(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  useFocusEffect(onFocus);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -147,10 +136,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 
   const ListEmptyComponent = React.useMemo(() => {
-    if (error && !loading && !isRefreshing) {
+    if (store.error && !store.loading && !store.refreshing) {
       return (
         <View style={styles.errorContainerStyle}>
-          <MText style={styles.errorStyle} onPress={() => fetch()}>
+          <MText style={styles.errorStyle} onPress={refresh}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
           </MText>
@@ -158,7 +147,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
 
-    if (loading || isRefreshing) {
+    if (store.loading || store.refreshing) {
       return (
         <View>
           <NotificationPlaceHolder />
@@ -172,10 +161,18 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     }
     return (
       <View style={styles.errorContainerStyle}>
-        <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />
+        <EmptyList
+          text={i18n.t(`notification.empty.${notifications.filter || 'all'}`)}
+        />
       </View>
     );
-  }, [error, loading, fetch, isRefreshing, filter]);
+  }, [
+    store.error,
+    store.loading,
+    store.refreshing,
+    notifications.filter,
+    refresh,
+  ]);
 
   const user = sessionService.getUser();
 
@@ -196,7 +193,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
   }, []);
 
-  const data = result?.notifications || [];
+  const data = store.result?.notifications || [];
 
   return (
     <View style={styles.container}>
@@ -209,17 +206,18 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
             <Topbar title="Notifications" navigation={navigation} noInsets />
             <NotificationsTopBar
               store={notifications}
-              setResult={setResult}
+              setResult={store.setResult}
               refresh={refresh}
             />
           </View>
         }
+        scrollEnabled={!store.refreshing}
         data={data.slice()}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         onEndReached={onFetchMore}
-        onRefresh={handleListRefresh}
-        refreshing={isRefreshing}
+        onRefresh={refresh}
+        refreshing={store.refreshing && !notifications.silentRefresh}
         onViewableItemsChanged={onViewableItemsChanged}
         // contentContainerStyle={}
         viewabilityConfig={viewabilityConfig}

@@ -6,7 +6,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from '../reset-password/ResetPasswordModal';
-import Icon from 'react-native-vector-icons/Ionicons';
 import createLoginStore from './createLoginStore';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
@@ -16,6 +15,8 @@ import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
+import PasswordInput from '~/common/components/password-input/PasswordInput';
 
 type PropsType = {
   onLogin?: Function;
@@ -33,12 +34,19 @@ export default observer(function LoginForm(props: PropsType) {
 
   const theme = ThemedStyles.style;
 
-  const user =
-    props.sessionIndex !== undefined
-      ? UserModel.checkOrCreate(
-          sessionService.tokensData[props.sessionIndex].user,
-        )
-      : sessionService.getUser();
+  const user = React.useMemo(() => {
+    const u =
+      props.sessionIndex !== undefined
+        ? UserModel.checkOrCreate(
+            sessionService.tokensData[props.sessionIndex].user,
+          )
+        : sessionService.getUser();
+
+    if (props.relogin && !localStore.username) {
+      localStore.username = u.username;
+    }
+    return u;
+  }, [props.sessionIndex, localStore]);
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
@@ -63,11 +71,11 @@ export default observer(function LoginForm(props: PropsType) {
       testID="usernameInput"
       autoCorrect={false}
       noBottomBorder
-      keyboardType="name-phone-pad"
+      keyboardType="default"
       error={
-        localStore.showErrors &&
-        !localStore.username &&
-        i18n.t('auth.fieldRequired')
+        localStore.showErrors && !localStore.username
+          ? i18n.t('auth.fieldRequired')
+          : undefined
       }
       autoFocus={true}
     />
@@ -75,44 +83,39 @@ export default observer(function LoginForm(props: PropsType) {
 
   return (
     <View style={theme.flexContainer}>
-      {usernameInput}
-      <View style={theme.marginBottom4x}>
-        <InputContainer
-          placeholder={i18n.t('auth.password')}
-          secureTextEntry={localStore.hidePassword}
-          autoComplete="password"
-          textContentType="password"
-          onChangeText={localStore.setPassword}
-          value={localStore.password}
-          testID="userPasswordInput"
-          autoFocus={props.relogin}
-          error={
-            localStore.showErrors &&
-            !localStore.password &&
-            i18n.t('auth.fieldRequired')
-          }
-        />
-        <Icon
-          name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
-          size={25}
-          onPress={localStore.toggleHidePassword}
-          style={styles.icon}
-        />
-      </View>
-      <Button
-        mode="outline"
-        type="action"
-        testID="loginButton"
-        spinner
-        horizontal="XL"
-        top="XXL"
-        onPress={localStore.onLoginPress}>
-        {i18n.t('auth.login')}
-      </Button>
-      <Row top="L2" align="centerBoth">
-        <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
-      </Row>
-      <ResetPasswordModal ref={resetRef} />
+      <DismissKeyboard>
+        {usernameInput}
+        <View style={theme.marginBottom4x}>
+          <PasswordInput
+            placeholder={i18n.t('auth.password')}
+            autoComplete="password"
+            textContentType="password"
+            onChangeText={localStore.setPassword}
+            value={localStore.password}
+            testID="userPasswordInput"
+            autoFocus={props.relogin}
+            error={
+              localStore.showErrors && !localStore.password
+                ? i18n.t('auth.fieldRequired')
+                : undefined
+            }
+          />
+        </View>
+        <Button
+          mode="outline"
+          type="action"
+          testID="loginButton"
+          spinner
+          horizontal="XL"
+          top="XXL"
+          onPress={localStore.onLoginPress}>
+          {i18n.t('auth.login')}
+        </Button>
+        <Row top="L2" align="centerBoth">
+          <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
+        </Row>
+        <ResetPasswordModal ref={resetRef} />
+      </DismissKeyboard>
     </View>
   );
 });

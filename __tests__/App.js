@@ -5,18 +5,39 @@ import { BackHandler } from 'react-native';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
+import { View } from 'react-native';
 jest.mock('react-native-orientation-locker', () => ({
   lockToPortrait: jest.fn(),
 }));
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
 jest.mock('../src/blockchain/v2/walletconnect/modal/registry');
 
 jest.mock(
   '../src/buy-tokens/transak-widget/TransakWidget',
   () => 'TransakWidget',
 );
+
+jest.mock('react-native-code-push', () => {
+  const cp = () => app => app;
+  Object.assign(cp, {
+    InstallMode: {},
+    CheckFrequency: {},
+    SyncStatus: {},
+    UpdateState: {},
+    DeploymentStatus: {},
+    DEFAULT_UPDATE_DIALOG: {},
+
+    allowRestart: jest.fn(),
+    checkForUpdate: jest.fn(() => Promise.resolve(null)),
+    disallowRestart: jest.fn(),
+    getCurrentPackage: jest.fn(() => Promise.resolve(null)),
+    getUpdateMetadata: jest.fn(() => Promise.resolve(null)),
+    notifyAppReady: jest.fn(() => Promise.resolve()),
+    restartApp: jest.fn(),
+    sync: jest.fn(() => Promise.resolve(1)),
+    clearUpdates: jest.fn(),
+  });
+  return cp;
+});
 
 // mock backhandler
 BackHandler.addEventListener = jest.fn();

@@ -1,12 +1,20 @@
+import { useEffect } from 'react';
 import UserModel from '~/channel/UserModel';
+import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch from '~/common/hooks/useApiFetch';
+import { ParamsArray } from '~/common/services/api.service';
 
 /**
  * channel recommendation resource
  * @param { string } location the location in which this recommendation is shown
+ * @param { UserModel } channel
  * @returns { FetchStore }
  */
-export const useChannelRecommendation = (location: string) => {
+export const useChannelRecommendation = (
+  location: string,
+  channel?: UserModel,
+) => {
+  const { recentSubscriptions } = useLegacyStores();
   const res = useApiFetch<{
     entities: {
       confidence_score: number;
@@ -17,13 +25,24 @@ export const useChannelRecommendation = (location: string) => {
   }>('api/v3/recommendations', {
     params: {
       location,
+      mostRecentSubscriptions: new ParamsArray(...recentSubscriptions.list()),
+      currentChannelUserGuid: channel?.guid,
+      limit: 12,
     },
     map: recommendations =>
-      recommendations.map(recommendation => ({
-        ...recommendation,
-        entity: UserModel.create(recommendation.entity),
-      })),
+      recommendations
+        .filter(rec => Boolean(rec.entity))
+        .map(recommendation => ({
+          ...recommendation,
+          entity: UserModel.create(recommendation.entity),
+        })),
+    skip: true,
   });
+
+  useEffect(() => {
+    res.fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return res;
 };

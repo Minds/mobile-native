@@ -30,6 +30,7 @@ import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
 import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
+import PressableScale from '~/common/components/PressableScale';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -77,7 +78,10 @@ export default observer(function (props: PropsType) {
   // local store
   const store = useLocalStore(createCameraStore, { navigation, ...props });
 
-  const [devices, device, formats, format] = useBestCameraAndFormat(store);
+  const [devices, device, formats, format] = useBestCameraAndFormat(
+    store,
+    props.mode,
+  );
 
   const supportsCameraFlipping = React.useMemo(
     () => devices.back != null && devices.front != null,
@@ -182,7 +186,7 @@ export default observer(function (props: PropsType) {
                 ref={camera}
                 style={StyleSheet.absoluteFill}
                 device={device}
-                format={IS_IOS ? format : undefined}
+                format={format}
                 fps={30}
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost
@@ -215,12 +219,13 @@ export default observer(function (props: PropsType) {
           direction="right"
           delay={PRESENTATION_ORDER.third}
           style={orientationStyle.lowLight}>
-          <Icon
-            size={30}
-            name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
-            style={orientationStyle.galleryIcon}
-            onPress={() => store.toggleLowLightBoost()}
-          />
+          <PressableScale onPress={() => store.toggleLowLightBoost()}>
+            <Icon
+              size={30}
+              name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
+              style={orientationStyle.galleryIcon}
+            />
+          </PressableScale>
         </FadeFrom>
       </MotiView>
       {store.recording && (
@@ -228,29 +233,48 @@ export default observer(function (props: PropsType) {
           style={[orientationStyle.clock, cleanTop]}
           timer={store.videoLimit}
           onTimer={onPress}
+          paused={!store.recordingPaused}
         />
       )}
       {device && store.ready && (
         <View style={orientationStyle.buttonContainer}>
           <View style={orientationStyle.leftIconContainer}>
-            <FadeFrom delay={PRESENTATION_ORDER.third}>
-              <FIcon
-                size={30}
-                name="image"
-                style={orientationStyle.galleryIcon}
-                onPress={props.onPressGallery}
-              />
-            </FadeFrom>
-            {supportsHdr ? (
+            {!store.recording && (
+              <FadeFrom delay={PRESENTATION_ORDER.third}>
+                <PressableScale onPress={props.onPressGallery}>
+                  <FIcon
+                    size={30}
+                    name="image"
+                    style={orientationStyle.galleryIcon}
+                  />
+                </PressableScale>
+              </FadeFrom>
+            )}
+            {supportsHdr && !store.recording ? (
               <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <HdrIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
+            {store.recording && (
+              <FadeFrom delay={PRESENTATION_ORDER.second}>
+                <PressableScale onPress={() => store.toggleRecording(camera)}>
+                  <Icon
+                    size={45}
+                    name={
+                      store.recordingPaused
+                        ? 'play-circle-outline'
+                        : 'ios-pause-circle-outline'
+                    }
+                    style={orientationStyle.galleryIcon}
+                  />
+                </PressableScale>
+              </FadeFrom>
+            )}
           </View>
           <View style={orientationStyle.rightButtonsContainer}>
-            {supportsFlash ? (
+            {supportsFlash && !store.recording ? (
               <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <FlashIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>

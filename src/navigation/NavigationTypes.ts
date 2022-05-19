@@ -100,6 +100,20 @@ export type MoreStackParamList = {
   DevTools: {};
 };
 
+type TwoFactorConfirmationParams = {
+  /**
+   * If passed a code, attempts to continue the original request with the new code.
+   * If not passed a code calls the same endpoint again (as a means of resending the confirmation code)
+   */
+  onConfirm: (code?: string) => Promise<any>;
+  title?: string;
+  onCancel: () => void;
+  mfaType: TwoFactorType;
+  oldCode: string;
+  email?: string;
+  showRecovery?: boolean;
+};
+
 export type RootStackParamList = {
   Compose: {};
   Capture: {
@@ -116,14 +130,7 @@ export type RootStackParamList = {
   ChooseBrowserModal: {
     onSelected?: () => void;
   };
-  TwoFactorConfirmation: {
-    onConfirm: (string) => void;
-    title?: string;
-    onCancel: () => void;
-    mfaType: TwoFactorType;
-    oldCode: string;
-    showRecovery?: boolean;
-  };
+  TwoFactorConfirmation: TwoFactorConfirmationParams;
   Splash: {};
   App: {};
   Auth: {};
@@ -184,14 +191,7 @@ export type AuthStackParamList = {
     code?: string;
   };
   Register: {};
-  TwoFactorConfirmation: {
-    onConfirm: (string) => void;
-    title?: string;
-    onCancel: () => void;
-    mfaType: TwoFactorType;
-    oldCode: string;
-    showRecovery?: boolean;
-  };
+  TwoFactorConfirmation: TwoFactorConfirmationParams;
 };
 
 export type AppStackParamList = {
@@ -254,7 +254,6 @@ export type AppStackParamList = {
   Conversation: {};
   DiscoveryFeed: {};
 
-  Subscribers: {};
   GroupView: {};
   BlogList: {};
   BlogView: {

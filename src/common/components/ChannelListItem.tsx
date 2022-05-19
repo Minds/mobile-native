@@ -7,8 +7,9 @@ import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
+import NavigationService from '~/navigation/NavigationService';
 
-type PropsType = {
+export type ChannelListItemProps = {
   onPress?: (channel: UserModel) => void;
   channel: UserModel;
   navigation?: any;
@@ -24,11 +25,13 @@ type PropsType = {
    * was subscribed/unsubscribed
    */
   updateFeed?: boolean;
+  borderless?: boolean;
 };
 
-const ChannelListItem = (props: PropsType) => {
+const ChannelListItem = (props: ChannelListItemProps) => {
   const containerStyle = useStyle(
     styles.container,
+    props.borderless ? null : ThemedStyles.style.borderBottom,
     props.containerStyles || {},
   );
   const nameStyles = useStyle(props.nameStyles || {}, styles.name);
@@ -47,10 +50,21 @@ const ChannelListItem = (props: PropsType) => {
       if (props.channel.isOpen() && !props.channel.can(FLAG_VIEW, true)) {
         return;
       }
-      props.navigation.push('App', {
-        screen: 'Channel',
-        params: { entity: props.channel },
-      });
+
+      if (props.navigation === NavigationService) {
+        props.navigation.push('App', {
+          screen: 'Channel',
+          params: {
+            guid: props.channel.guid,
+            entity: props.channel,
+          },
+        });
+      } else {
+        props.navigation.push('Channel', {
+          guid: props.channel.guid,
+          entity: props.channel,
+        });
+      }
     }
   }, [props]);
 
@@ -112,7 +126,6 @@ const styles = ThemedStyles.create({
     },
     'paddingHorizontal4x',
     'bcolorPrimaryBorder',
-    'borderBottom1x',
   ],
   nameContainer: ['flexContainerCenter', 'paddingLeft2x', 'justifyCenter'],
   name: [bodyStyle, 'fontL'],

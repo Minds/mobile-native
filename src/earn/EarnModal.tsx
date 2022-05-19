@@ -8,7 +8,11 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ONCHAIN_ENABLED } from '../config/Config';
+import {
+  ONCHAIN_ENABLED,
+  LIQUIDITY_ENABLED,
+  PRO_PLUS_SUBSCRIPTION_ENABLED,
+} from '../config/Config';
 import MText from '../common/components/MText';
 
 const linkTo = (dest: string) =>
@@ -16,30 +20,25 @@ const linkTo = (dest: string) =>
 
 const onComplete = () => true;
 
-type EarnItemPropsType = {
-  content: { name: string; icon?: string; onPress: () => void };
-};
+interface ResourceType {
+  onPress: () => void;
+  name:
+    | 'resources.rewards'
+    | 'resources.tokens'
+    | 'resources.earnings'
+    | 'resources.analytics'
+    | 'unlock.mindsPlus'
+    | 'unlock.pro';
+}
 
-const EarnItem = ({ content }: EarnItemPropsType) => {
+interface ContentType {
+  name: 'create' | 'refer' | 'pool' | 'transfer';
+  onPress: () => void;
+  icon: string;
+}
+
+const EarnItem = ({ content }: { content: ContentType }) => {
   const theme = ThemedStyles.style;
-
-  const body = content.icon ? (
-    <View style={[theme.rowJustifyStart, theme.alignCenter]}>
-      <Icon
-        name={content.icon}
-        color={ThemedStyles.getColor('PrimaryText')}
-        size={20}
-        style={[theme.centered, theme.marginRight3x]}
-      />
-      <MText style={[theme.fontL, theme.colorPrimaryText, theme.bold]}>
-        {i18n.t(`earnScreen.${content.name}.title`)}
-      </MText>
-    </View>
-  ) : (
-    <MText style={[theme.fontL, theme.colorSecondaryText, theme.fontMedium]}>
-      {i18n.t(`earnScreen.${content.name}`)}
-    </MText>
-  );
 
   return (
     <TouchableOpacity
@@ -50,7 +49,41 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
         theme.marginTop5x,
       ]}
       onPress={content.onPress}>
-      {body}
+      <View style={[theme.rowJustifyStart, theme.alignCenter]}>
+        <Icon
+          name={content.icon}
+          color={ThemedStyles.getColor('PrimaryText')}
+          size={20}
+          style={[theme.centered, theme.marginRight3x]}
+        />
+        <MText style={[theme.fontL, theme.colorPrimaryText, theme.bold]}>
+          {i18n.t(`earnScreen.${content.name}.title`)}
+        </MText>
+      </View>
+      <Icon
+        name={'chevron-right'}
+        color={ThemedStyles.getColor('SecondaryText')}
+        size={24}
+      />
+    </TouchableOpacity>
+  );
+};
+
+const ResourceItem = ({ content }: { content: ResourceType }) => {
+  const theme = ThemedStyles.style;
+
+  return (
+    <TouchableOpacity
+      style={[
+        theme.rowJustifySpaceBetween,
+        theme.paddingLeft5x,
+        theme.paddingRight5x,
+        theme.marginTop5x,
+      ]}
+      onPress={content.onPress}>
+      <MText style={[theme.fontL, theme.colorSecondaryText, theme.fontMedium]}>
+        {i18n.t(`earnScreen.${content.name}`)}
+      </MText>
       <Icon
         name={'chevron-right'}
         color={ThemedStyles.getColor('SecondaryText')}
@@ -74,13 +107,7 @@ export default observer(function ({ navigation }) {
 
   const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
-  const earnItems = [
-    {
-      name: 'pool',
-      icon: 'plus-circle-outline',
-      onPress: localStore.toggleUniswapWidget,
-    },
-
+  const earnItems: ContentType[] = [
     {
       name: 'create',
       icon: 'plus-box',
@@ -93,6 +120,14 @@ export default observer(function ({ navigation }) {
     },
   ];
 
+  if (LIQUIDITY_ENABLED) {
+    earnItems.unshift({
+      name: 'pool',
+      icon: 'plus-circle-outline',
+      onPress: localStore.toggleUniswapWidget,
+    });
+  }
+
   if (ONCHAIN_ENABLED) {
     earnItems.push({
       name: 'transfer',
@@ -101,7 +136,7 @@ export default observer(function ({ navigation }) {
     });
   }
 
-  const resourcesItems = [
+  const resourcesItems: ResourceType[] = [
     {
       name: 'resources.rewards',
       onPress: () => linkTo('rewards'),
@@ -125,7 +160,7 @@ export default observer(function ({ navigation }) {
     },
   ];
 
-  const unlockItems = [
+  const unlockItems: ResourceType[] = [
     {
       name: 'unlock.mindsPlus',
       onPress: () => navTo('UpgradeScreen', { onComplete, pro: false }),
@@ -156,14 +191,18 @@ export default observer(function ({ navigation }) {
           {i18n.t('earnScreen.resources.title')}
         </MText>
         {resourcesItems.map(item => (
-          <EarnItem content={item} />
+          <ResourceItem content={item} />
         ))}
-        <MText style={[titleStyle, theme.paddingTop2x]}>
-          {i18n.t('earnScreen.unlock.title')}
-        </MText>
-        {unlockItems.map(item => (
-          <EarnItem content={item} />
-        ))}
+        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+          <>
+            <MText style={[titleStyle, theme.paddingTop2x]}>
+              {i18n.t('earnScreen.unlock.title')}
+            </MText>
+            {unlockItems.map(item => (
+              <ResourceItem content={item} />
+            ))}
+          </>
+        )}
       </ModalScreen>
       <UniswapWidget
         isVisible={localStore.showUniswapWidget}

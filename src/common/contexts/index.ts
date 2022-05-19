@@ -5,15 +5,14 @@ import blogs from '../../blogs/BlogsStore';
 import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
-import channelSubscribersStore from '../../channel/subscribers/ChannelSubscribersStore';
 import hashtag from '../../common/stores/HashtagStore';
-import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
 import wallet from '../../wallet/WalletStore';
 
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
 import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
+import { RecentSubscriptionsStore } from '~/channel/subscription/RecentSubscriptionsStore';
 
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
@@ -21,7 +20,6 @@ import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
  */
 export function createClassStores() {
   const stores = {
-    subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
     user: new user(),
     blogs: new blogs(),
@@ -29,12 +27,12 @@ export function createClassStores() {
     boost: new boost(),
     groups: new groups(),
     groupView: new groupView(),
-    channelSubscribersStore: new channelSubscribersStore(),
     hashtag: new hashtag(),
     reportstore: new reportStore(),
     discoveryV2Store: new DiscoveryV2Store(),
     mindsPlusV2Store: new DiscoveryV2Store(true),
     wallet: new wallet(),
+    recentSubscriptions: new RecentSubscriptionsStore(),
   };
   sessionService.onLogout(() => {
     for (const id in stores) {

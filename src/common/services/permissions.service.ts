@@ -157,7 +157,7 @@ class PermissionsService {
       return result === RESULTS.GRANTED;
     } catch (err) {
       console.warn(err);
-      return err;
+      return false;
     }
   }
 }

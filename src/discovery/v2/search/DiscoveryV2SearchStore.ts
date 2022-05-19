@@ -1,7 +1,9 @@
 import { action, observable } from 'mobx';
+import debounce from 'lodash/debounce';
 import { storages } from '~/common/services/storage/storages.service';
 
 import FeedStore from '../../../common/stores/FeedStore';
+import type { DebouncedFunc } from 'lodash';
 
 /**
  * Discovery Search Store
@@ -14,6 +16,7 @@ export default class DiscoveryV2SearchStore {
   @observable refreshing: boolean = false;
   @observable filter: string = 'all';
   @observable nsfw: Array<number> = [];
+  refresh: DebouncedFunc<() => Promise<void>>;
 
   params = {
     period: 'relevant',
@@ -35,6 +38,8 @@ export default class DiscoveryV2SearchStore {
       .setAsActivities(false)
       .setPaginated(true)
       .setParams(this.params);
+
+    this.refresh = debounce(this._refresh, 300);
   }
 
   @action
@@ -42,12 +47,11 @@ export default class DiscoveryV2SearchStore {
     this.query = query;
     this.params.q = query;
     this.params.plus = !!plus;
-    this.listStore.clear();
     this.refresh();
   };
 
   @action
-  fetch = (refresh = false): void => {
+  fetch = (): void => {
     this.listStore
       .setParams({
         period: 'relevant',
@@ -63,7 +67,6 @@ export default class DiscoveryV2SearchStore {
     this.listStore.getMetadataService()?.setSource(`search/${algorithm}`);
     this.algorithm = algorithm;
     this.params.algorithm = algorithm;
-    this.listStore.clear();
     this.refresh();
   };
 
@@ -71,7 +74,6 @@ export default class DiscoveryV2SearchStore {
   setFilter = (filter: string) => {
     this.filter = filter;
     this.params.type = filter;
-    this.listStore.clear();
     this.refresh();
   };
 
@@ -80,13 +82,13 @@ export default class DiscoveryV2SearchStore {
     storages.user?.setArray('discovery-nsfw', nsfw);
     this.nsfw = nsfw;
     this.params.nsfw = nsfw;
-    this.listStore.clear();
     this.refresh();
   };
 
   @action
-  async refresh(): Promise<void> {
+  async _refresh(): Promise<void> {
     this.refreshing = true;
+    this.listStore.clear();
     await this.listStore.setParams(this.params).refresh();
     this.refreshing = false;
   }

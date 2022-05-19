@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
 import { IconButtonNext } from '~ui/icons';
-import { MINDS_URI } from '../../config/Config';
+import { IS_IOS, MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
-import featuresService from '../../common/services/features.service';
 import translationService from '../../common/services/translation.service';
-import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../ActivityModel';
@@ -99,14 +97,15 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }> = [];
 
     const entity = this.props.entity;
+    const isReminded = entity.remind_users && entity.remind_users.length;
 
-    const reminded =
+    const remindedByMe =
       entity.remind_users &&
       entity.remind_users.some(
         user => user.guid === sessionService.getUser().guid,
       );
 
-    if (reminded) {
+    if (remindedByMe || (isReminded && sessionService.getUser().isAdmin())) {
       options.push({
         title: i18n.t('undoRemind'),
         iconName: 'undo',
@@ -124,10 +123,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     // if can edit
-    if (
-      entity.isOwner() ||
-      (featuresService.has('permissions') && entity.can(FLAG_EDIT_POST))
-    ) {
+    if (entity.isOwner()) {
       // Edit
       options.push({
         title: i18n.t('edit'),
@@ -172,24 +168,21 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         });
       }
 
-      if (featuresService.has('allow-comments-toggle')) {
-        // Toggle comments
-        options.push({
-          title: entity.allow_comments
-            ? i18n.t('disableComments')
-            : i18n.t('enableComments'),
-          iconName: 'pin-outline',
-          iconType: 'material-community',
-          onPress: async () => {
-            try {
-              this.hideActionSheet();
-              await this.props.entity.toggleAllowComments();
-            } catch (err) {
-              this.showError();
-            }
-          },
-        });
-      }
+      options.push({
+        title: entity.allow_comments
+          ? i18n.t('disableComments')
+          : i18n.t('enableComments'),
+        iconName: 'pin-outline',
+        iconType: 'material-community',
+        onPress: async () => {
+          try {
+            this.hideActionSheet();
+            await this.props.entity.toggleAllowComments();
+          } catch (err) {
+            this.showError();
+          }
+        },
+      });
     }
 
     if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {
@@ -206,7 +199,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     // Permaweb
-    if (featuresService.has('permaweb') && entity.permaweb_id) {
+    if (entity.permaweb_id) {
       options.push({
         title: i18n.t('permaweb.viewOnPermaweb'),
         iconName: 'format-paragraph',
@@ -306,9 +299,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
 
     // if can delete
     if (
-      entity.isOwner() ||
-      sessionService.getUser().isAdmin() ||
-      (group && (group['is:owner'] || group['is:moderator']))
+      !isReminded &&
+      (entity.isOwner() ||
+        sessionService.getUser().isAdmin() ||
+        (group && (group['is:owner'] || group['is:moderator'])))
     ) {
       options.push({
         iconName: 'delete',
@@ -333,7 +327,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       });
     }
 
-    if (entity.hasImage()) {
+    if (entity.hasImage() && !(entity.shouldBeBlured() && IS_IOS)) {
       options.push({
         iconName: 'fullscreen',
         iconType: 'material-community',
@@ -377,7 +371,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
       'warning',
       2000,
-      'top',
     );
   }
 

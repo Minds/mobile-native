@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
-apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 
@@ -77,13 +76,13 @@ import com.android.build.OutputFile
 project.ext.react = [
     // bundleCommand: "ram-bundle",
     entryFile: "index.js",
-    bundleAssetName: "app.bundle",
     enableHermes: true  // clean and rebuild if changing
     //  hermesCommand: "../../node_modules/hermes-engine/%OS-BIN%/hermes",
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -136,6 +135,16 @@ android {
         pickFirst '**/*.so'
     } 
 
+    /** Fixes codeppush issue */
+    sourceSets {
+       release {
+            assets {
+            srcDirs = ['build/generated/assets/react/release"']
+            }
+        }
+    }
+
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -153,6 +162,7 @@ android {
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
+        resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
     signingConfigs {
         debug {
@@ -232,8 +242,6 @@ dependencies {
     // react-native-screens need both
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
-
-    addUnimodulesDependencies()
 
     implementation project(':tipsi-stripe')
     implementation project(':reactnativenotifications')

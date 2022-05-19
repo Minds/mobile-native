@@ -1,5 +1,8 @@
 package com.minds.mobile;
 
+import expo.modules.ReactActivityDelegateWrapper;
+import com.facebook.react.ReactActivityDelegate;
+
 import android.os.Bundle;
 import com.zoontek.rnbootsplash.RNBootSplash;
 import com.facebook.react.ReactActivity;
@@ -18,14 +21,6 @@ import android.content.pm.ActivityInfo;
 public class MainActivity extends ReactActivity {
     private PermissionListener listener;
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Intent intent = new Intent("onConfigurationChanged");
-        intent.putExtra("newConfig", newConfig);
-        this.sendBroadcast(intent);
-    }
-
    /**
     * Returns the name of the main component registered from JavaScript. This is used to schedule
     * rendering of the component.
@@ -40,14 +35,11 @@ public class MainActivity extends ReactActivity {
         moveTaskToBack(true);
     }
 
-     @Override
+    @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
-      return new ReactActivityDelegate(this, getMainComponentName()) {
-        @Override
-        protected ReactRootView createRootView() {
-         return new RNGestureHandlerEnabledRootView(MainActivity.this);
-        }
-      };
+        return new ReactActivityDelegateWrapper(this,
+        new ReactActivityDelegate(this, getMainComponentName())
+        );
     }
 
     @Override

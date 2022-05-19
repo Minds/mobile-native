@@ -17,6 +17,7 @@ import {
   YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
+import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -39,14 +40,15 @@ import ErrorBoundary from './src/common/components/ErrorBoundary';
 import TosModal from './src/tos/TosModal';
 import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
-import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
+import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import { CODE_PUSH_KEY } from '~/config/Config';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -100,12 +102,24 @@ class App extends Component<Props, State> {
     }
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
+
+    // Check for codepush update and restart app immediately if necessary
+    codePush.sync(
+      CODE_PUSH_KEY
+        ? {
+            installMode: codePush.InstallMode.ON_NEXT_RESTART, // install updates on app restart
+            deploymentKey: CODE_PUSH_KEY,
+          }
+        : {
+            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE, // install mandatory updates immediately
+          },
+    );
   }
 
   /**
    * On component did mount
    */
-  async componentDidMount() {
+  componentDidMount() {
     // Register event listeners
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     Linking.addEventListener('url', this.handleOpenURL);
@@ -185,21 +199,22 @@ class App extends Component<Props, State> {
               onStateChange={analyticsService.onNavigatorStateChange}>
               <StoresProvider>
                 <Provider key="app" {...stores}>
-                  <PortalProvider>
-                    <BottomSheetModalProvider>
-                      <ErrorBoundary
-                        message="An error occurred"
-                        containerStyle={ThemedStyles.style.centered}>
-                        <WCContextProvider>
-                          <NavigationStack
-                            key={ThemedStyles.theme + i18n.locale}
-                            showAuthNav={showAuthNav}
-                          />
-                        </WCContextProvider>
-                        <AppMessages />
-                      </ErrorBoundary>
-                    </BottomSheetModalProvider>
-                  </PortalProvider>
+                  <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                    <PortalProvider>
+                      <BottomSheetModalProvider>
+                        <ErrorBoundary
+                          message="An error occurred"
+                          containerStyle={ThemedStyles.style.centered}>
+                          <WCContextProvider>
+                            <NavigationStack
+                              key={ThemedStyles.theme + i18n.locale}
+                              showAuthNav={showAuthNav}
+                            />
+                          </WCContextProvider>
+                        </ErrorBoundary>
+                      </BottomSheetModalProvider>
+                    </PortalProvider>
+                  </AppMessageProvider>
                 </Provider>
               </StoresProvider>
             </NavigationContainer>

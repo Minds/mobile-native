@@ -41,6 +41,7 @@ export type registerParams = {
   email: string;
   password: string;
   exclusive_promotions: boolean;
+  friendly_captcha_enabled?: boolean;
 };
 
 type resetParams = {
@@ -89,16 +90,16 @@ class AuthService {
       headers,
     );
 
-    if (session.isRelogin(username, data)) {
-      return data;
-    }
-
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
       const result = regex.exec(responseHeaders['set-cookie'].join());
       if (result && result[1]) {
         data.pseudo_id = result[1];
       }
+    }
+
+    if (session.isRelogin(username, data)) {
+      return data;
     }
 
     const isFirstLogin = session.tokensData.length === 0;
@@ -116,13 +117,14 @@ class AuthService {
 
     await session.addSession(data);
     await session.login();
-    session.setSwitchingAccount(false);
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
     // To force rendering the app behind the modal and get rid of the splash screen
     if (!isFirstLogin) {
       resetStackAndGoBack();
     }
+
+    session.setSwitchingAccount(false);
 
     return data;
   }
@@ -131,22 +133,13 @@ class AuthService {
    * Check if the user is already logged
    */
   checkUserExist(username: string) {
-    if (session.tokensData.some(token => token.user.username === username)) {
+    if (
+      session.tokensData.some(
+        token => token.user.username === username && !token.sessionExpired,
+      )
+    ) {
       throw new Error(i18n.t('auth.alreadyLogged'));
     }
-  }
-
-  async reLogin(password: string, headers: any = {}) {
-    const username = session.getUser().username;
-    const params = {
-      grant_type: 'password',
-      client_id: 'mobile',
-      //client_secret: '',
-      username,
-      password,
-    } as loginParms;
-
-    await api.post<LoginResponse>('api/v3/oauth/token', params, headers);
   }
 
   async loginWithIndex(sessionIndex: number) {
@@ -156,8 +149,8 @@ class AuthService {
     await delay(100);
     await session.switchUser(sessionIndex);
     await session.login();
-    session.setSwitchingAccount(false);
     resetStackAndGoBack();
+    session.setSwitchingAccount(false);
   }
 
   /**
@@ -194,7 +187,7 @@ class AuthService {
     try {
       if (session.tokensData.length > 0) {
         const state = NavigationService.getCurrentState();
-        if (state && state.name === 'Settings') {
+        if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
         }
       }
@@ -203,19 +196,79 @@ class AuthService {
       await this.unregisterTokenFrom(sessionService.activeIndex);
 
       api.post('api/v3/oauth/revoke');
-      session.setSwitchingAccount(true);
-      session.logout();
 
-      // Fixes auto-subscribe issue on register
-      await api.clearCookies();
-      await this.handleActiveAccount();
-      session.setSwitchingAccount(false);
+      // Logout and handle user switching or navigating to welcome screen
+      this.logoutSession();
+
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }
+  }
+
+  /**
+   * Logout session and handle user switching or navigating to welcome screen
+   */
+  private async logoutSession() {
+    session.setSwitchingAccount(true);
+    session.logout();
+
+    // Fixes auto-subscribe issue on register
+    await api.clearCookies();
+    await this.handleActiveAccount();
+    session.setSwitchingAccount(false);
+  }
+
+  /**
+   * Revoke tokens and relogin (The current user session)
+   */
+  async revokeTokens(): Promise<boolean> {
+    this.justRegistered = false;
+    try {
+      if (session.tokensData.length > 0) {
+        const state = NavigationService.getCurrentState();
+        if (state && state.name !== 'MultiUserScreen') {
+          NavigationService.navigate('MultiUserScreen');
+          await delay(100);
+        }
+      }
+      // delete device token first
+      await this.unregisterTokenFrom(sessionService.activeIndex);
+
+      session.setSwitchingAccount(true);
+      // revoke local session
+      session.setSessionExpired(true);
+
+      this.tryToRelog(() => {
+        session.setSessionExpired(false);
+        NavigationService.goBack();
+      });
+
+      return true;
+    } catch (err) {
+      session.setSwitchingAccount(false);
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
+
+  /**
+   * Opens the re-login modal for the current user and handles a successful login or the cancel
+   */
+  async tryToRelog(onLogin?: Function) {
+    const onCancel = async () => {
+      if (session.sessionExpired) {
+        console.log('[AuthService] tryToRelog: session expired');
+        this.logoutSession();
+      }
+    };
+
+    NavigationService.navigate('RelogScreen', {
+      onLogin,
+      onCancel,
+    });
   }
 
   unregisterTokenFrom(index: number) {
@@ -254,6 +307,10 @@ class AuthService {
     }
   }
 
+  /**
+   * This methods logs out the current session but WITHOUt removing it from the storage
+   * @returns boolean
+   */
   async sessionLogout() {
     try {
       this.justRegistered = false;
@@ -290,7 +347,7 @@ class AuthService {
    * Refresh user token
    */
   async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
-    logService.info('[AuthService] Refreshing token');
+    logService.info('[AuthService] Refreshing token...');
 
     const params = {
       grant_type: 'refresh_token',
@@ -309,6 +366,7 @@ class AuthService {
         params,
         headers,
       );
+      logService.info('[AuthService] token refreshed');
       return data;
     } catch (err) {
       logService.exception('[AuthService] error claiming refresh token', err);

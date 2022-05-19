@@ -31,10 +31,12 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
       </View>
       <View style={wrapperStyle}>
         <PasswordInput
-          store={store}
+          showValidator={store.focused && Boolean(store.password)}
+          onFocus={store.focus}
+          onBlur={store.blur}
+          value={store.password}
           tooltipBackground={DARK_THEME.TertiaryBackground}
-          inputStyle={styles.inputText}
-          inputLabelStyle={styles.label}
+          onChangeText={store.setPassword}
         />
       </View>
       <Button

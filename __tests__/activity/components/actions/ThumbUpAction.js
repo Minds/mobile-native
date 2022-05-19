@@ -23,6 +23,7 @@ describe('Thumb action component', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
     entity = ActivityModel.create(activityResponse.activities[0]);
+    entity.can = jest.fn(() => true);
 
     screen = shallow(<ThumbUpAction entity={entity} navigation={navigation} />);
   });

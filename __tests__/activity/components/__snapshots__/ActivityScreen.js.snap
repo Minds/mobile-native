@@ -887,12 +887,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "width": 20,
                     },
                     Object {},
-                    Array [
-                      undefined,
-                      Object {
-                        "transform": Array [],
-                      },
-                    ],
                   ]
                 }
               >
@@ -991,12 +985,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "width": 20,
                     },
                     Object {},
-                    Array [
-                      undefined,
-                      Object {
-                        "transform": Array [],
-                      },
-                    ],
                   ]
                 }
               >
@@ -1908,6 +1896,41 @@ exports[`Activity screen component renders correctly  1`] = `
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
+        "can": [MockFunction] {
+          "calls": Array [
+            Array [
+              "view",
+              true,
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "remind",
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+          ],
+        },
         "comments:count": undefined,
         "containerObj": undefined,
         "container_guid": "activityguid0",
@@ -2016,6 +2039,41 @@ exports[`Activity screen component renders correctly  1`] = `
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
+        "can": [MockFunction] {
+          "calls": Array [
+            Array [
+              "view",
+              true,
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "remind",
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+          ],
+        },
         "comments:count": undefined,
         "containerObj": undefined,
         "container_guid": "activityguid0",
@@ -2124,6 +2182,41 @@ exports[`Activity screen component renders correctly  1`] = `
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
+        "can": [MockFunction] {
+          "calls": Array [
+            Array [
+              "view",
+              true,
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "remind",
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+          ],
+        },
         "comments:count": undefined,
         "containerObj": undefined,
         "container_guid": "activityguid0",
@@ -2232,6 +2325,41 @@ exports[`Activity screen component renders correctly  1`] = `
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
+        "can": [MockFunction] {
+          "calls": Array [
+            Array [
+              "view",
+              true,
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "vote",
+            ],
+            Array [
+              "remind",
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+            Object {
+              "type": "return",
+              "value": true,
+            },
+          ],
+        },
         "comments:count": undefined,
         "containerObj": undefined,
         "container_guid": "activityguid0",
@@ -2355,6 +2483,41 @@ exports[`Activity screen component renders correctly  1`] = `
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
+          "can": [MockFunction] {
+            "calls": Array [
+              Array [
+                "view",
+                true,
+              ],
+              Array [
+                "vote",
+              ],
+              Array [
+                "vote",
+              ],
+              Array [
+                "remind",
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": true,
+              },
+              Object {
+                "type": "return",
+                "value": true,
+              },
+              Object {
+                "type": "return",
+                "value": true,
+              },
+              Object {
+                "type": "return",
+                "value": true,
+              },
+            ],
+          },
           "comments:count": undefined,
           "containerObj": undefined,
           "container_guid": "activityguid0",

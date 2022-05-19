@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -18,6 +18,7 @@ import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect
 import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 
 const isIos = Platform.OS === 'ios';
 
@@ -120,12 +121,14 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
           this.goBack();
         }
       } catch (e) {
-        if (!e || e.message !== 'E_CANCELLED') {
+        if (!e || (e instanceof Error && e.message !== 'E_CANCELLED')) {
           logService.error(e);
 
           Alert.alert(
             i18n.t('wire.errorSendingWire'),
-            (e && e.message) || 'Unknown internal error',
+            e && e instanceof Error && e.message
+              ? e.message
+              : 'Unknown internal error',
             [{ text: i18n.t('ok') }],
             { cancelable: false },
           );
@@ -177,7 +180,7 @@ const FabScreen = observer(({ route, navigation }) => {
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   return (
-    <Fragment>
+    <DismissKeyboard style={theme.flexContainer}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         contentContainerStyle={cleanTop}>
@@ -209,7 +212,7 @@ const FabScreen = observer(({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-    </Fragment>
+    </DismissKeyboard>
   );
 });
 

@@ -255,6 +255,7 @@ export default observer(function ComposeScreen(props) {
           }
           showsVerticalScrollIndicator={false}
           contentContainerStyle={scrollViewContentContainerStyle}
+          scrollEventThrottle={5}
           onScroll={onScrollHandler}>
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>

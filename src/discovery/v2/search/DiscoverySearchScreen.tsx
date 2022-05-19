@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -7,8 +7,9 @@ import { RouteProp } from '@react-navigation/native';
 import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
-import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
+import { DiscoveryV2SearchStoreContext } from './DiscoveryV2SearchContext';
 import { DiscoverySearchHeader } from './DiscoverySearchHeader';
+import DiscoveryV2SearchStore from './DiscoveryV2SearchStore';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -19,7 +20,7 @@ interface Props {
  */
 export const DiscoverySearchScreen = observer((props: Props) => {
   const theme = ThemedStyles.style;
-  const store = useDiscoveryV2SearchStore();
+  const store = useMemo(() => new DiscoveryV2SearchStore(), []);
 
   const navigation = useNavigation<
     StackNavigationProp<DiscoveryStackParamList, 'DiscoverySearch'>
@@ -38,13 +39,15 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   }, [store, props.route.params]);
 
   return (
-    <View style={theme.flexContainer}>
-      <DiscoverySearchHeader />
+    <DiscoveryV2SearchStoreContext.Provider value={store}>
+      <View style={theme.flexContainer}>
+        <DiscoverySearchHeader />
 
-      <DiscoverySearchList
-        navigation={navigation}
-        style={theme.flexContainer}
-      />
-    </View>
+        <DiscoverySearchList
+          navigation={navigation}
+          style={theme.flexContainer}
+        />
+      </View>
+    </DiscoveryV2SearchStoreContext.Provider>
   );
 });

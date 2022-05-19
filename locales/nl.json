@@ -375,7 +375,7 @@
     "rewardsSummary": "Je hebt gisteren {{amount}} tokens verdiend."
   },
   "notificationSettings": {
-    "enableDisable": "Push-meldingen in- en uitschakelen",
+    "all": "Push-meldingen in- en uitschakelen",
     "comment": "Opmerkingen",
     "like": "Stemming",
     "tag": "Labels",

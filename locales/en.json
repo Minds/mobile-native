@@ -75,7 +75,8 @@
     "requestNewPassword": "To request a new password, enter your username",
     "requestNewPasswordSuccess": "We have sent an unlock code to your registered email address.",
     "invalidGrant": "Incorrect username/password. Please try again.",
-    "invalidPassword": "Incorrect password. Please try again.",
+    "invalidPassword": "Incorrect password",
+    "invalidPasswordDescription": "Password must match the criteria",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError": "You should accept the terms and conditions",
     "promotions": "Receive exclusive promotions from Minds",
@@ -103,6 +104,7 @@
     "followInstuctions": "Follow the instructions contained within to continue the reset process.",
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
+    "rateLimit": "Too many attempts, please try again later",
     "newPassword": "Create a new password. You’ll use this to access your account."
   },
   "multiUser": {
@@ -322,7 +324,8 @@
     },
     "fabSend": "Send Tip",
     "fabPay": "Tip",
-    "share": "Share Channel"
+    "share": "Share Channel",
+    "userHasntPostedYet": "@{{username}} hasn't posted anything yet"
   },
   "discovery": {
     "title": "Discovery",
@@ -368,6 +371,7 @@
     "enableConversations": "Enable conversations"
   },
   "messenger": {
+    "errorDirectMessage": "Error sending direct message",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
@@ -392,7 +396,8 @@
     "latestAction": "Enable Latest Posts",
     "topTitle": "Top posts enabled",
     "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
-    "topAction": "Enable Top Posts"
+    "topAction": "Enable Top Posts",
+    "seeLatestTitle": "See {{count}} latest posts"
   },
   "comments": {
     "successRemoving": "Comment removed",
@@ -511,7 +516,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable Push Notifications",
+    "all": "Enable Push Notifications",
     "comment": "Comments",
     "like": "Votes",
     "tag": "Tags",
@@ -572,7 +577,7 @@
             "label": "Terrorism"
           },
           "2": {
-            "label": "Paedophilia"
+            "label": "Sexualization of minors"
           },
           "3": {
             "label": "Extortion"
@@ -584,7 +589,7 @@
             "label": "Revenge Porn"
           },
           "6": {
-            "label": "Sex trafficking"
+            "label": "Trafficking"
           }
         }
       },
@@ -609,7 +614,7 @@
         }
       },
       "3": {
-        "label": "Encourages or incites violence"
+        "label": "Incitement to violence"
       },
       "4": {
         "label": "Harassment"
@@ -618,13 +623,13 @@
         "label": "Personal and confidential information"
       },
       "7": {
-        "label": "Impersonates"
+        "label": "Impersonation"
       },
       "8": {
         "label": "Spam"
       },
       "10": {
-        "label": "Infringes my copyright"
+        "label": "Intellectual Property Violation"
       },
       "11": {
         "label": "Another reason"
@@ -639,7 +644,7 @@
         "label": "Trademark infringement"
       },
       "16": {
-        "label": "Token manipulation"
+        "label": "Inauthentic engagement"
       }
     },
     "DMCA": "Please submit a DMCA notice to copyright@minds.com.",
@@ -650,6 +655,7 @@
   },
   "settings": {
     "submit": "Submit",
+    "boostConsole": "Boost Console",
     "chooseBrowser": "Choose Browser",
     "chooseBrowserDescription": "Please choose where you want to open the external links.",
     "chooseBrowserHint": "This option can be changed from the settings",
@@ -672,7 +678,7 @@
     "deactivate": "Deactivate Account",
     "logout": "Logout",
     "errorSaving": "Error saving setting, please try again",
-    "passwordChanged": "Password changed succesfully.",
+    "passwordChanged": "Password changed successfully.",
     "keyGenerated": "Keys regenerated successfully!",
     "pushNotification": "Push Notifications",
     "regenerateKey": "Regenerate messenger keys",
@@ -685,7 +691,7 @@
     "network": "Network",
     "security": "Security",
     "billing": "Billing",
-    "invalidPassword": "Incorrect password",
+    "invalidPassword": "Insecure password",
     "passwordsNotMatch": "Passwords should match",
     "passwordFormatMinCharacters": "8 or more characters",
     "passwordFormatSpecialCharacters": "At least 1 special character",
@@ -942,6 +948,7 @@
     "phoneNumber": "Phone Number",
     "weJustSentCode": "We just sent the code to {{phone}} in order to verify that your number is correct.",
     "confirmationCode": "Confirmation Code",
+    "confirmationCodeInvalid": "Please enter a code",
     "welcomeNew": "Welcome to the Minds Community!",
     "welcomePrivacy": "Your privacy is our priority. You are free to provide as much or as little information as you wish for better recommendations and to connect with people in your local area.",
     "welcomeLater": "No thanks, I’ll do it later",
@@ -968,7 +975,6 @@
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
-    "improvedExperience": "Your feed should be livelier!",
     "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
     "codeSent": "Verification code sent to"
   },
@@ -1259,7 +1265,8 @@
     "confirm": "Please confirm your email address.",
     "sendAgain": "Click here to send again.",
     "confirmNote": "Note: If you change your email address, it will need to be confirmed again.",
-    "sent": "Email sent"
+    "sent": "Email sent",
+    "alreadyConfirmed": "Email address already confirmed"
   },
   "subtype": {
     "image": "image",
@@ -1576,6 +1583,7 @@
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
+  "nothingToSee": "Nothing to see here",
   "and": "and",
   "others": "others",
   "newMoment": "New Moment",

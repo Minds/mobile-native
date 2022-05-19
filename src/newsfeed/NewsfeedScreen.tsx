@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
-import ThemedStyles from '~/styles/ThemedStyles';
 import Topbar from '~/topbar/Topbar';
 
 import FeedList, { InjectItem } from '../common/components/FeedList';
@@ -22,6 +21,7 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import SeeLatestPostsButton from './SeeLatestPostsButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -102,11 +102,15 @@ class NewsfeedScreen extends Component<
     };
   }
 
-  refreshNewsfeed = e => {
+  refreshNewsfeed = () => {
+    this.props.newsfeed.scrollToTop();
+    this.props.newsfeed.latestFeedStore.refresh();
+    this.props.newsfeed.topFeedStore.refresh();
+  };
+
+  onTabPress = e => {
     if (this.props.navigation.isFocused()) {
-      this.props.newsfeed.scrollToTop();
-      this.props.newsfeed.latestFeedStore.refresh();
-      this.props.newsfeed.topFeedStore.refresh();
+      this.refreshNewsfeed();
       e && e.preventDefault();
     }
   };
@@ -118,7 +122,7 @@ class NewsfeedScreen extends Component<
     this.disposeTabPress = this.props.navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
-      this.refreshNewsfeed,
+      this.onTabPress,
     );
 
     this.loadFeed();
@@ -133,9 +137,7 @@ class NewsfeedScreen extends Component<
    * Component will unmount
    */
   componentWillUnmount() {
-    if (this.disposeTabPress) {
-      this.disposeTabPress();
-    }
+    this.disposeTabPress?.();
   }
 
   refreshPortrait = () => {
@@ -161,18 +163,27 @@ class NewsfeedScreen extends Component<
    */
   render() {
     const newsfeed = this.props.newsfeed;
+    const isLatest = this.props.newsfeed.feedType === 'latest';
 
-    const header = () => (
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
+    const header = (
+      <View style={isLatest ? latestPostsContainerStyles.header : undefined}>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
         />
+        {isLatest && (
+          <IfFeatureEnabled feature="mob-4193-polling">
+            <SeeLatestPostsButton
+              onPress={this.refreshNewsfeed}
+              feedStore={newsfeed.latestFeedStore}
+            />
+          </IfFeatureEnabled>
+        )}
       </View>
     );
 
     const prepend = (
-      <>
+      <View style={isLatest ? latestPostsContainerStyles.prepend : undefined}>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -185,7 +196,7 @@ class NewsfeedScreen extends Component<
             onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
         </IfFeatureEnabled>
-      </>
+      </View>
     );
 
     // Show placeholder before the loading as an empty component.
@@ -218,3 +229,14 @@ class NewsfeedScreen extends Component<
 }
 
 export default withErrorBoundary(NewsfeedScreen);
+
+/**
+ * these styles are used to hide the latest posts button completely when there's some notch
+ * on top of the screen. It's a little hard to explain. But if you remove these from the
+ * iPhone 13, the button will be partially visible under the notch, but with these styles
+ * the button will get out of the screen
+ */
+const latestPostsContainerStyles = {
+  header: { paddingBottom: 50 },
+  prepend: { marginTop: -50 },
+};

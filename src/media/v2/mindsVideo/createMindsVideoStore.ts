@@ -6,7 +6,6 @@ import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
-import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 
@@ -37,6 +36,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     player: null as Video | null,
     paused: !autoplay,
     forceHideOverlay: false,
+    hideOverlay: () => null as any,
     setForceHideOverlay(forceHideOverlay: boolean) {
       this.forceHideOverlay = forceHideOverlay;
     },
@@ -141,9 +141,9 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       var minutes = Math.floor(seconds / 60);
       var remainingSeconds = seconds % 60;
       return (
-        _.padStart(minutes.toFixed(0), 2, 0) +
+        _.padStart(minutes.toFixed(0), 2, '0') +
         ':' +
-        _.padStart(remainingSeconds.toFixed(0), 2, 0)
+        _.padStart(remainingSeconds.toFixed(0), 2, '0')
       );
     },
     get currentTimeSeconds() {
@@ -209,7 +209,6 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
       this.hideOverlay();
     },
-    hideOverlay: () => null,
     /**
      * Play the current video and activate the player
      */
@@ -219,7 +218,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       }
 
       if ((!this.sources || this.sources.length === 0) && entity) {
-        if (entity.paywall && featuresService.has('paywall-2020')) {
+        if (entity.paywall) {
           await entity.unlockOrPay();
           if (entity.paywall) {
             return;

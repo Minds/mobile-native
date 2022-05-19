@@ -20,6 +20,7 @@ class NewsfeedStore<T> {
    */
   latestFeedStore = new FeedStore()
     .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
     .setInjectBoost(true)
     .setLimit(12)
     .setMetadata(
@@ -89,7 +90,17 @@ class NewsfeedStore<T> {
   /**
    * On subscription change
    */
-  onSubscriptionChange = (user: UserModel) => {
+  onSubscriptionChange = ({
+    user,
+    shouldUpdateFeed,
+  }: {
+    user: UserModel;
+    shouldUpdateFeed: boolean;
+  }) => {
+    if (!shouldUpdateFeed) {
+      return;
+    }
+
     if (!user.subscribed) {
       this.topFeedStore.removeFromOwner(user.guid);
       this.latestFeedStore.removeFromOwner(user.guid);

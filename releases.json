@@ -1,6 +1,163 @@
 {
   "versions": [
     {
+      "version": "4.23.1",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-23-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.23.1",
+      "changelog": [],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "d987b65fec86e6f22f27b7be7676e276"
+        },
+        {
+          "type": "sha256",
+          "value": "83739ac93efc5e7c9dbc5484f8d5734c4bd63a326b27594cad659bed0fc4db16"
+        },
+        {
+          "type": "sha512",
+          "value": "b756c67617fa149cd85c6db23cd1ba6c266ef58bb8ba3cd902bdd3d77dfc99fbe600a8f033ea3e9eb3fdf576bb820736bc971cfd1a0ec17128b601e26a3d134b"
+        }
+      ]
+    },
+    {
+      "version": "4.23.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-23-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.23.0",
+      "changelog": [
+        "Fix hashtag navigation error",
+        "Cleans up feature flag logic",
+        "New toaster notifications",
+        "Unverified email toaster added",
+        "Improved transitions when opening multiple bottom sheets",
+        "Fix Minds+ screen errors",
+        "Fix some navigation issues with the interactions bottom sheets",
+        "Fix onboarding tag selector visual an functional issues",
+        "Fix posts visibility option when creating a post",
+        "Fix groups posts visible on the main newsfeed",
+        "Added custom API URL to dev tools",
+        "Makes dev tools accessible on production mode by tapping multiple times hidden parts of the app",
+        "Fix the auto login password reset flow is completed",
+        "Fix group's search issues",
+        "Adds a password show option to all the password fields of the app",
+        "Standardize the user lists components",
+        "Update the local storage package",
+        "Fix the delete post error for admins when deleting a remind",
+        "Improves the UX on feeds by loading next page before we reach the end",
+        "Fix notification count issues",
+        "Enable react-freeze, that improves the performance by freezing screens that are not visible",
+        "Fix loading state indicators in comments",
+        "Fix password confirmation when changing email",
+        "Improved UX for onboarding channel setup",
+        "Better rate limit message for the user when resetting the password",
+        "Allow to verify email only once",
+        "Fix trending analytics screen errors",
+        "Remove full screen view for NSFW images when forbidden",
+        "Improve validation/error messages on the change password screen"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "50463d824e742027ed108e3bf9062c87"
+        },
+        {
+          "type": "sha256",
+          "value": "19dbbb9ee7ac86c6d64ab953c8e953d4e4804f886e501f9182bdb9a5459d8b81"
+        },
+        {
+          "type": "sha512",
+          "value": "2a8f3ed10d9a7ff12208cc84daf50900c3aa28a3f93c56add86ff5d9f2ae62f3fce6d64b4ab56d32a030548d9ef4ff8c4b5ccb70cdc05ae3186a9e9be4f32be5"
+        }
+      ]
+    },
+    {
+      "version": "4.22.3",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-3.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.3",
+      "changelog": [
+        "Fix crash when translating post",
+        "Fix issues switching users",
+        "Fix some onboarding layout problems",
+        "Fix symbols not allowed in username input"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "5bcca7bcdabdf153e05bb2b0d21457db"
+        },
+        {
+          "type": "sha256",
+          "value": "198aa642961d1571a8531e078a13cadc15f5b740261e8233a5c86d05bd832e02"
+        },
+        {
+          "type": "sha512",
+          "value": "b601349e623117f1f9075dc90d87de72bfaee652ea66cc364fc59a5aad5752728f12a8a053d13a9bb827ad41de325ccd2b4aaf89ffc4cbaa33aa3c6ffd96bdc5"
+        }
+      ]
+    },
+    {
+      "version": "4.22.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-22-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.22.0",
+      "changelog": [
+        "Twitter sync added",
+        "Channel recommendations added to the feed",
+        "Top/Latest feed",
+        "Login/Register creative/UX",
+        "Adds support for Blurhash in SmartImage (blurred placeholder while loading images)",
+        "Add top discovery tab and add collapsible header to the discovery screen",
+        "Bottom sheets can now be closed with the back button on Android devices",
+        "Updates the camera package, disable frame processors (improve performance), and bump android target SDK",
+        "Use growthbook react and use new event for experiments",
+        "Development tools implemented: Analog to the growthbook chrome extension and to manage canary/staging options in dev mode",
+        "Fix comments count propagation (replies)",
+        "Standardize the keyboard handling",
+        "Update reanimated library to 2.4.1",
+        "Fix group deep linking and in-app linking",
+        "Fix Billing settings",
+        "Fix devices sleeps recording a video",
+        "Fix portrait bar initial load",
+        "Fix CI for play store deployment and update Fastlane",
+        "Fix tokens transactions list date localization",
+        "Fix notifications blurred thumbnail error",
+        "Fix share post option (Android)",
+        "Fix missing translations",
+        "Fix growthbook attribute on logout",
+        "Fix the feed pagination and update safe area package",
+        "Fix make admin options in groups",
+        "Fix notifications settings fail to load",
+        "Removes legacy storage and code cleanup",
+        "Fix remove pin option in main newsfeed",
+        "Fix Activity indicator position and topbar border",
+        "Fix android build error (due to photo editor package)",
+        "Refactor and remove old composer code",
+        "Fix comment report navigation",
+        "Fix phone verification textbox reachability",
+        "Adds support for spec tests in components folder",
+        "Fix share to minds image preview on android",
+        "Fix share to minds on iOS",
+        "Fix social compass sliders on iOS"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "079a1e586081c9d66b533fc5a7188df2"
+        },
+        {
+          "type": "sha256",
+          "value": "5666e0c94c658093bfd666a934653589d6eaeff09186d46f594015a312ec0058"
+        },
+        {
+          "type": "sha512",
+          "value": "9d8904d9c19d0415f64fda1260d87fff8c038e2e107fb314de892699ffc097bba4fc3ecc5b019506a41ca2fa8ee7abf4cca8e993f27e806746b451cbd0493f7f"
+        }
+      ]
+    },
+    {
       "version": "4.20.1",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-20-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.20.1",

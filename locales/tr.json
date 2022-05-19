@@ -375,7 +375,7 @@
     "rewardsSummary": "Dün {{amount}} token kazandınız."
   },
   "notificationSettings": {
-    "enableDisable": "Anlık bildirimleri aç veya kapat",
+    "all": "Anlık bildirimleri aç veya kapat",
     "comment": "Yorumlar",
     "like": "Oylar",
     "tag": "Etiketler",

@@ -2,6 +2,82 @@
 
 Minds Mobile
 
+## 4.24.0 - 2022-05-19
+
+### Changed
+
+- Regenerative Recommendations
+- Latest posts prompt
+- Friendly Captcha
+- Channel contextual recommendations
+- Save videos locally before uploading
+- Video pause/resume functionality added to the composer
+- Camera package updated
+- Added android split-screen support
+- Added CodePush support for faster updates
+- Fix share videos to minds app (iOS)
+- Fix the portrait feed showing scheduled posts
+- Fix deep links and chat app detection on Android
+- General bug fixing and improvements
+
+## 4.23.0 - 2022-04-04
+
+### Changed
+
+- Fix hashtag navigation error
+- Cleans up feature flag logic
+- New toaster notifications
+- Unverified email toaster added
+- Improved transitions when opening multiple bottom sheets
+- Fix Minds+ screen errors
+- Fix some navigation issues with the interactions bottom sheets
+- Fix onboarding tag selector visual an functional issues
+- Fix posts visibility option when creating a post
+- Fix groups posts visible on the main newsfeed
+- Added custom API URL to dev tools
+- Makes dev tools accessible on production mode by tapping multiple times hidden parts of the app
+- Fix the auto login password reset flow is completed
+- Fix group's search issues
+- Adds a password show option to all the password fields of the app
+- Standardize the user lists components
+- Update the local storage package
+- Fix the delete post error for admins when deleting a remind
+- Improves the UX on feeds by loading next page before we reach the end
+- Fix notification count issues
+- Enable react-freeze, that improves the performance by freezing screens that are not visible
+- Fix loading state indicators in comments
+- Fix password confirmation when changing email
+- Improved UX for onboarding channel setup
+- Better rate limit message for the user when resetting the password
+- Allow to verify email only once
+- Fix trending analytics screen errors
+- Remove full screen view for NSFW images when forbidden
+- Improve validation/error messages on the change password screen
+
+## 4.22.3 - 2022-03-18
+
+### Changed
+
+- Fix crash when translating post
+- Fix issues switching users
+- Fix some onboarding layout problems
+- Fix symbols not allowed in username input
+
+## 4.22.2 - 2022-03-15
+
+### Changed
+
+- Fix push notification not opening app on Android 12
+- Fix cache issues
+
+## 4.22.1 - 2022-03-11
+
+### Changed
+
+- Fix a crash on some Android 12 devices when receiving a push notification
+- Fix missing NSFW settings on Android
+- Fix blurred NSFW images after open them
+
 ## 4.22.0 - 2022-03-09
 
 ### Changed

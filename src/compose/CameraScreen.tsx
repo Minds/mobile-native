@@ -1,10 +1,10 @@
+import CameraRoll from '@react-native-community/cameraroll';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, InteractionManager, StatusBar, View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
-import { showMessage } from 'react-native-flash-message';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
 import {
@@ -28,6 +28,7 @@ import Camera from './Camera/Camera';
 import PermissionsCheck from './PermissionsCheck';
 import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
+import { useBackHandler } from '@react-native-community/hooks';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -35,17 +36,7 @@ import MediaPreviewFullScreen from './MediaPreviewFullScreen';
  * @param {string} message
  */
 const showError = message => {
-  showMessage({
-    position: 'top',
-    message: message,
-    titleStyle: [
-      ThemedStyles.style.fontXL,
-      ThemedStyles.style.colorPrimaryText,
-    ],
-    duration: 3000,
-    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-    type: 'danger',
-  });
+  showNotification(message, 'danger', 3000);
 };
 
 /**
@@ -58,6 +49,7 @@ export default observer(function (props) {
     props.route?.params ?? {};
   const [mode, setMode] = useState<'photo' | 'video'>('photo');
   const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
+
   /**
    * the current selected filter
    */
@@ -113,6 +105,15 @@ export default observer(function (props) {
       if (filter && !extractedImage) {
         // TODO loading please (extracting) and explain
         return setExtractEnabled(true);
+      }
+
+      if (mediaToConfirm.type && mediaToConfirm.type.startsWith('video')) {
+        CameraRoll.save(mediaToConfirm.uri, {
+          album: 'Minds',
+          type: 'video',
+        }).catch(error =>
+          console.log('[Composer] Error saving video to gallery', error),
+        );
       }
 
       if (onMediaConfirmed) {
@@ -199,9 +200,9 @@ export default observer(function (props) {
         undefined,
         `minds/${Date.now()}`, // is this good?
       );
-      showNotification(i18n.t('imageAdded'), 'info', 3000, 'top');
+      showNotification(i18n.t('imageAdded'), 'info', 3000);
     } catch (e: any) {
-      showNotification(i18n.t('errorDownloading'), 'danger', 3000, 'top');
+      showNotification(i18n.t('errorDownloading'), 'danger', 3000);
       logService.exception('[MediaView] runDownload', e);
     }
     setDownloading(false);
@@ -210,7 +211,17 @@ export default observer(function (props) {
   /**
    * called when retake button is pressed. Resets current image to null
    */
-  const retake = useCallback(() => setMediaToConfirm(null), []);
+  const retake = useCallback(() => {
+    setMediaToConfirm(null);
+  }, []);
+
+  /**
+   * Android back button handler
+   */
+  useBackHandler(() => {
+    mediaToConfirm ? retake() : props.navigation.goBack();
+    return true;
+  });
 
   /**
    * called when the camera captures something

@@ -22,6 +22,7 @@ import { TokensTabStore } from './createTokensTabStore';
 import i18n from '../../../../common/services/i18n.service';
 import { Screen, Column } from '~ui';
 import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
+import { ONCHAIN_ENABLED } from '~/config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -50,6 +51,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
   ];
 
   const connectWallet = React.useCallback(async () => {
+    if (!ONCHAIN_ENABLED) {
+      return;
+    }
     const user = sessionService.getUser();
 
     const msg = JSON.stringify({
@@ -97,23 +101,26 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       }
     } catch (err) {
       console.error('There was an error', err);
-      showNotification(err.toString(), 'danger');
+      if (err instanceof Error) {
+        showNotification(err.toString(), 'danger');
+      }
     } finally {
       onchainStore.setLoading(false);
     }
   }, [onchainStore, walletStore, wc]);
 
-  const mustVerify = !sessionService.getUser().rewards
-    ? () => {
-        const onComplete = () => {
-          connectWallet();
-        };
-        //@ts-ignore
-        navigation.navigate('PhoneValidation', {
-          onComplete,
-        });
-      }
-    : undefined;
+  const mustVerify =
+    !sessionService.getUser().rewards && ONCHAIN_ENABLED
+      ? () => {
+          const onComplete = () => {
+            connectWallet();
+          };
+          //@ts-ignore
+          navigation.navigate('PhoneValidation', {
+            onComplete,
+          });
+        }
+      : undefined;
 
   let body;
   switch (store.option) {

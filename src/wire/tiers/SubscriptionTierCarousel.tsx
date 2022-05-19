@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
-import featuresService from '../../common/services/features.service';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -63,12 +62,9 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
       },
     ];
     const methodsMap: Array<MethodCurrencyMapper> = [
-      { method: 'tokens', currency: 'tokens' } as MethodCurrencyMapper,
+      { method: 'tokens', currency: 'tokens' },
+      { method: 'money', currency: 'usd' },
     ];
-
-    if (featuresService.has('wire-multi-currency')) {
-      methodsMap.push({ method: 'money', currency: 'usd' });
-    }
 
     for (const { method, currency } of methodsMap) {
       if (this.props.rewards[method]) {

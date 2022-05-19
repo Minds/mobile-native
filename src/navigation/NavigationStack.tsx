@@ -16,7 +16,6 @@ import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
-import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
@@ -71,7 +70,8 @@ import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScree
 import withModalProvider from './withModalProvide';
 import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 import DevToolsScreen from '~/settings/screens/DevToolsScreen';
-import { IS_REVIEW } from '~/config/Config';
+import { observer } from 'mobx-react';
+import sessionService from '~/common/services/session.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -107,7 +107,10 @@ const ActivityScreenWithModal = withModalProvider(ActivityScreen);
 const GroupViewScreenWithModal = withModalProvider(GroupViewScreen);
 const BlogsViewScreenWithModal = withModalProvider(BlogsViewScreen);
 
-const AppStack = function () {
+const AppStack = observer(() => {
+  if (sessionService.switchingAccount) {
+    return null;
+  }
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
@@ -166,7 +169,6 @@ const AppStack = function () {
           component={ActivityScreenWithModal}
           options={hideHeader}
         />
-        <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen
           name="GroupView"
           component={GroupViewScreenWithModal}
@@ -241,7 +243,7 @@ const AppStack = function () {
       </AppStackNav.Navigator>
     </>
   );
-};
+});
 
 const AuthStack = function () {
   return (
@@ -258,9 +260,10 @@ const AuthStack = function () {
           name="TwoFactorConfirmation"
           component={TwoFactorConfirmScreen}
           options={{
+            ...modalOptions,
             headerMode: 'screen',
             headerShown: false,
-            ...modalOptions,
+            gestureEnabled: false,
           }}
         />
       </AuthStackNav.Navigator>
@@ -290,10 +293,12 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="App"
             component={AppStack}
-            options={{
-              animationEnabled: false,
+            options={({ route }) => ({
+              // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+              animationEnabled: Boolean(route.params),
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-            }}
+              ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
+            })}
           />
           <RootStackNav.Screen
             name="Capture"
@@ -397,7 +402,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="TwoFactorConfirmation"
             component={TwoFactorConfirmScreen}
-            options={modalOptions}
+            options={{ ...modalOptions, gestureEnabled: false }}
           />
           <RootStackNav.Screen
             name="RecoveryCodeUsedScreen"
@@ -421,14 +426,11 @@ const RootStack = function (props) {
         component={MultiUserRegisterScreen}
         options={modalOptions}
       />
-
-      {IS_REVIEW && (
-        <RootStackNav.Screen
-          name="DevTools"
-          component={DevToolsScreen}
-          options={modalOptions}
-        />
-      )}
+      <RootStackNav.Screen
+        name="DevTools"
+        component={DevToolsScreen}
+        options={modalOptions}
+      />
     </RootStackNav.Navigator>
   );
 };

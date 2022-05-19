@@ -32,12 +32,19 @@ import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
+import AuthService from '~/auth/AuthService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
   message?: string;
   errorId?: string;
 }
+
+/**
+ * Parameters array (new format)
+ * This array is transformed to param[]=value&param[]=value
+ */
+export class ParamsArray extends Array<any> {}
 
 /**
  * Api Error
@@ -53,10 +60,13 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {}
 
-export const isApiError = function (err) {
+export class TwoFactorError extends Error {}
+
+export const isApiError = function (err): err is ApiError {
   return err instanceof ApiError;
 };
-export const isNetworkError = function (err) {
+
+export const isNetworkError = function (err): err is NetworkError {
   return err instanceof NetworkError;
 };
 
@@ -98,6 +108,8 @@ export class ApiService {
       }).then(done => {
         console.log('CookieManager.set =>', done);
       });
+    } else {
+      CookieManager.clearByName('https://www.minds.com', 'canary');
     }
     if (MINDS_STAGING) {
       CookieManager.set('https://www.minds.com', {
@@ -107,6 +119,8 @@ export class ApiService {
       }).then(done => {
         console.log('CookieManager.set =>', done);
       });
+    } else {
+      CookieManager.clearByName('https://www.minds.com', 'staging');
     }
 
     this.axios =
@@ -128,6 +142,7 @@ export class ApiService {
       },
       async error => {
         const { config: originalReq, response, request } = error;
+
         if (response) {
           // 2FA authentication interceptor
           if (
@@ -170,47 +185,63 @@ export class ApiService {
             const hasRecovery =
               mfaType === 'totp' && data.password && data.username;
 
+            const state = NavigationService.getCurrentState();
+
+            if (state?.name === 'TwoFactorConfirmation') {
+              // here, we've made a request and the server is requiring 2fa but
+              // we're already on the 2fa screen so we'll just throw an error
+              throw new TwoFactorError(error);
+            }
+
             try {
               // console.log( NavigationService.navigate)
-              const promise = new Promise<string>((resolve, reject) => {
+              const code = await new Promise<string>((resolve, reject) => {
                 NavigationService.navigate('TwoFactorConfirmation', {
-                  onConfirm: resolve,
+                  onConfirm: async (confirmationCode?: string) => {
+                    // if confirmation code was received successfully,
+                    // resolve the promise and continue the original request
+                    if (confirmationCode) {
+                      return resolve(confirmationCode);
+                    }
+
+                    // if the code wasn't received, it's a resend confirmation code attempt,
+                    // so make another request similar to the original request (while keping the original request pending)
+                    // as a means of resending the confirmation code
+                    return this.axios.request(originalReq);
+                  },
                   onCancel: reject,
                   mfaType,
                   oldCode,
                   showRecovery: hasRecovery,
                 });
               });
-              const code = await promise;
 
-              if (code) {
-                // is a recovery code?
-                if (hasRecovery && code.length > 6) {
-                  const recoveryResponse = <any>await this.post(
-                    'api/v3/security/totp/recovery',
-                    {
-                      username: data.username,
-                      password: data.password,
-                      recovery_code: code,
-                    },
-                  );
-                  if (!recoveryResponse.matches) {
-                    throw new UserError(i18n.t('auth.recoveryFail'));
-                  }
-                } else {
-                  originalReq.headers['X-MINDS-2FA-CODE'] = code;
+              // is a recovery code?
+              if (hasRecovery && code.length > 6) {
+                const recoveryResponse = await this.post<any>(
+                  'api/v3/security/totp/recovery',
+                  {
+                    username: data.username,
+                    password: data.password,
+                    recovery_code: code,
+                  },
+                );
+                if (!recoveryResponse.matches) {
+                  throw new UserError(i18n.t('auth.recoveryFail'));
+                }
+              } else {
+                originalReq.headers['X-MINDS-2FA-CODE'] = code;
 
-                  if (smsKey) {
-                    originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
-                  }
-
-                  if (emailKey) {
-                    originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
-                  }
+                if (smsKey) {
+                  originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
                 }
 
-                originalReq.oldCode = code;
+                if (emailKey) {
+                  originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
+                }
               }
+
+              originalReq.oldCode = code;
               return this.axios.request(originalReq);
             } catch (err) {
               throw new UserError('Canceled');
@@ -223,21 +254,35 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
+            logService.info(
+              `[ApiService] refreshing token for ${originalReq.url}`,
+            );
             await this.tokenRefresh(() => {
               originalReq._isRetry = true;
+              logService.info(
+                '[ApiService] retrying request ' + originalReq.url,
+              );
               this.axios.request(originalReq);
             });
+
+            logService.info(
+              `[ApiService] refreshed token for ${originalReq.url}`,
+            );
+
             originalReq._isRetry = true;
+            logService.info('[ApiService] retrying request ' + originalReq.url);
             return this.axios.request(originalReq);
           }
 
           // prompt the user if email verification is needed for this endpoint
           if (isApiForbidden(response) && response.data.must_verify) {
             this.setMustVerify(true);
-            throw new ApiError(i18n.t('emailConfirm.confirm'));
+            throw new UserError(i18n.t('emailConfirm.confirm'), 'info', () =>
+              NavigationService.navigate('VerifyEmail'),
+            );
           }
 
-          this.checkResponse(response);
+          this.checkResponse(response, originalReq.url);
         } else if (request) {
           throw new NetworkError(error.message); // server down or there is not connectivity
         }
@@ -269,21 +314,6 @@ export class ApiService {
       : session.refreshAuthToken();
   }
 
-  async tryToRelog(onLogin: Function) {
-    const onCancel = () => {
-      if (session.sessionExpired) {
-        session.logoutFrom(session.activeIndex);
-      }
-    };
-    const promise = new Promise((resolve, reject) => {
-      NavigationService.navigate('RelogScreen', {
-        onLogin,
-        onCancel,
-      });
-    });
-    await promise;
-  }
-
   /**
    * Refresh token (only one call at the time)
    */
@@ -294,7 +324,7 @@ export class ApiService {
     try {
       await this.refreshPromise;
       this.refreshPromise = null;
-    } catch (error) {
+    } catch (error: any) {
       this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||
@@ -305,14 +335,17 @@ export class ApiService {
           session.setSessionExpiredFor(true, this.sessionIndex);
         } else {
           session.setSessionExpired(true);
-          await this.tryToRelog(onLogin);
+          AuthService.tryToRelog(onLogin);
         }
       }
       throw error;
     }
   }
 
-  checkResponse<T extends ApiResponse>(response: AxiosResponse<T>): T {
+  checkResponse<T extends ApiResponse>(
+    response: AxiosResponse<T>,
+    url?: string,
+  ): T {
     const data = response.data;
 
     // Failed on API side
@@ -325,6 +358,10 @@ export class ApiService {
       throw apiError;
     }
     if (response.status >= 500) {
+      logService.info(
+        '[ApiService] server error',
+        response.request?.url || url,
+      );
       throw new ApiError('Server error ' + response.status);
     }
 
@@ -369,7 +406,7 @@ export class ApiService {
       ...customHeaders,
     };
 
-    if (this.accessToken && !headers.Authorization) {
+    if (this.accessToken) {
       headers = {
         ...headers,
         ...this.buildAuthorizationHeader(this.accessToken),
@@ -388,10 +425,8 @@ export class ApiService {
    * @param {string} url
    * @param {any} params
    */
-  buildUrl(url, params: any = {}) {
-    if (!params) {
-      params = {};
-    }
+  buildUrl(url, _params: any = {}) {
+    const params = Object.assign({}, _params);
     if (process.env.JEST_WORKER_ID === undefined) {
       params.cb = Date.now(); //bust the cache every time
     }
@@ -412,6 +447,16 @@ export class ApiService {
   getParamsString(params) {
     return Object.keys(params)
       .map(k => {
+        if (params[k] instanceof ParamsArray) {
+          return params[k]
+            .map(
+              (value, index) =>
+                `${encodeURIComponent(k)}[${index}]=${encodeURIComponent(
+                  value,
+                )}`,
+            )
+            .join('&');
+        }
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');

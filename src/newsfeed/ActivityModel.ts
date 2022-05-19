@@ -57,7 +57,6 @@ export default class ActivityModel extends BaseModel {
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
-  ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
   paywall_unlocked: boolean = false;
@@ -384,7 +383,7 @@ export default class ActivityModel extends BaseModel {
       const isApiErr = isApiError(err);
 
       if (isApiErr && !ignoreError) {
-        showNotification(err.message, 'warning', 3000, 'top');
+        showNotification(err.message, 'warning', 3000);
       }
 
       if (isApiErr) {
@@ -392,7 +391,7 @@ export default class ActivityModel extends BaseModel {
       }
 
       if (isNetworkError(err)) {
-        showNotification(i18n.t('cantReachServer'), 'warning', 3000, 'top');
+        showNotification(i18n.t('cantReachServer'), 'warning', 3000);
       }
 
       return -1;

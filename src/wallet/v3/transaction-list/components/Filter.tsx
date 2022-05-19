@@ -12,7 +12,13 @@ import {
 } from '../../../../common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
 
-const filters: Array<{ id: transactionTypes; title: string }> = [
+type titleType =
+  | 'allFilter'
+  | 'rewardsFilter'
+  | 'boostsFilter'
+  | 'transferFilter';
+
+const filters: Array<{ id: transactionTypes; title: titleType }> = [
   { id: 'all', title: 'allFilter' },
   { id: 'offchain:reward', title: 'rewardsFilter' },
   { id: 'offchain:boost', title: 'boostsFilter' },

@@ -3,12 +3,21 @@
 exports[`Boost action bar component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "stretch",
-      "display": "flex",
-      "flexDirection": "row",
-      "padding": 4,
-    }
+    Array [
+      Object {
+        "borderBottomWidth": 6,
+      },
+      Object {
+        "borderColor": "#3f4b56",
+      },
+      Object {
+        "alignItems": "stretch",
+        "display": "flex",
+        "flexDirection": "row",
+        "padding": 4,
+        "paddingBottom": 16,
+      },
+    ]
   }
 >
   <View />

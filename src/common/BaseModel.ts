@@ -8,13 +8,12 @@ import { setViewed, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
-import i18n from './services/i18n.service';
-import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
-import { showNotification } from '../../AppMessages';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
+import { showNotification } from './../../AppMessages';
+import i18n from '~/common/services/i18n.service';
 
 /**
  * Base model
@@ -35,7 +34,7 @@ export default class BaseModel extends AbstractModel {
   };
 
   // TODO remove this and fix model.listRef logic
-  listRef?: any;
+  // listRef?: any;
 
   /**
    * Event emitter
@@ -88,6 +87,7 @@ export default class BaseModel extends AbstractModel {
     // remove references to the list
     //@ts-ignore
     delete plainEntity.__list;
+    //@ts-ignore
     delete plainEntity.listRef;
 
     return plainEntity;
@@ -282,6 +282,7 @@ export default class BaseModel extends AbstractModel {
     try {
       await revokeBoost(this.guid, filter);
       this.state = 'revoked';
+      showNotification(i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {
       logService.exception('[BaseModel]', err);
       throw err;
@@ -306,27 +307,10 @@ export default class BaseModel extends AbstractModel {
    * @returns {boolean}
    */
   can(actionName: string, showAlert = false) {
-    // TODO: clean up permissions feature flag
-    if (!featuresService.has('permissions')) return true;
+    // TODO: implement permission check for each action
+    // show a toaster notification if showAlert is true
 
-    let allowed = true;
-
-    if (!this.permissions || !this.permissions.permissions) {
-      allowed = false;
-    } else {
-      allowed = this.permissions.permissions.some(item => item === actionName);
-    }
-
-    if (showAlert && !allowed) {
-      showNotification(
-        i18n.t(`permissions.notAllowed.${actionName}`, {
-          defaultValue: i18n.t('notAllowed'),
-        }),
-        'warning',
-      );
-    }
-
-    return allowed;
+    return true;
   }
 
   /**

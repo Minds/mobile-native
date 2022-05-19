@@ -7,6 +7,7 @@ import ModalContainer from './ModalContainer';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { useNavigation } from '@react-navigation/native';
 import LabeledComponent from '../../../common/components/LabeledComponent';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 type MappingItems = {
   title: string;
@@ -78,13 +79,15 @@ export default observer(function VerifyUniquenessScreen() {
           <MenuItem item={item} />
         ))}
 
-        <LabeledComponent
-          label={'OTHER'}
-          labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
-          {other.map(item => (
-            <MenuItem item={item} />
-          ))}
-        </LabeledComponent>
+        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+          <LabeledComponent
+            label={'OTHER'}
+            labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
+            {other.map(item => (
+              <MenuItem item={item} />
+            ))}
+          </LabeledComponent>
+        )}
       </View>
     </ModalContainer>
   );

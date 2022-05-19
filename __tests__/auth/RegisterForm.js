@@ -41,7 +41,6 @@ describe('RegisterScreen component', () => {
       'You should accept the terms and conditions',
       'info',
       3000,
-      'top',
     );
   });
 
@@ -62,10 +61,9 @@ describe('RegisterScreen component', () => {
     await fireEvent.press(button);
 
     expect(showNotification).toBeCalledWith(
-      'Incorrect password. Please try again.',
-      'warning',
-      2000,
-      'top',
+      'Password must match the criteria',
+      'info',
+      2500,
     );
   });
 

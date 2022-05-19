@@ -1,44 +1,42 @@
 PODS:
+  - Base64 (1.1.2)
   - Bolts/Tasks (1.9.0)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
+  - CodePush (7.0.4):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.12)
+    - React-Core
+    - SSZipArchive (~> 2.2.2)
   - DoubleConversion (1.1.6)
-  - EXApplication (3.2.0):
-    - UMCore
-  - EXAV (9.2.3):
+  - EXApplication (4.0.2):
     - ExpoModulesCore
-    - UMCore
-  - EXConstants (11.0.2):
+  - EXAV (10.2.1):
     - ExpoModulesCore
-    - UMCore
-  - EXErrorRecovery (2.2.0):
-    - UMCore
-  - EXFileSystem (11.1.3):
+    - ReactCommon/turbomodule/core
+  - EXConstants (13.0.2):
     - ExpoModulesCore
-    - UMCore
-  - EXFont (9.2.1):
+  - EXErrorRecovery (3.0.5):
     - ExpoModulesCore
-    - UMCore
-  - EXImageLoader (2.2.0):
+  - EXFileSystem (13.1.4):
+    - ExpoModulesCore
+  - EXFont (10.0.5):
+    - ExpoModulesCore
+  - EXImageLoader (3.1.1):
     - ExpoModulesCore
     - React-Core
-    - UMCore
-  - EXImageManipulator (9.2.2):
+  - EXImageManipulator (10.2.1):
+    - EXImageLoader
     - ExpoModulesCore
-    - UMCore
-  - EXKeepAwake (9.2.0):
-    - UMCore
-  - EXLinearGradient (9.2.0):
-    - UMCore
-  - ExpoModulesCore (0.2.0):
-    - ExpoModulesCore/Core (= 0.2.0)
-    - ExpoModulesCore/Interfaces (= 0.2.0)
-    - UMCore
-  - ExpoModulesCore/Core (0.2.0):
-    - UMCore
-  - ExpoModulesCore/Interfaces (0.2.0):
-    - ExpoModulesCore/Core
-    - UMCore
+  - EXKeepAwake (10.0.2):
+    - ExpoModulesCore
+  - Expo (44.0.6):
+    - ExpoModulesCore
+  - ExpoLinearGradient (11.0.3):
+    - ExpoModulesCore
+  - ExpoModulesCore (0.6.5):
+    - React-Core
+    - ReactCommon/turbomodule/core
   - FBLazyVector (0.66.3)
   - FBReactNativeSpec (0.66.3):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -115,6 +113,8 @@ PODS:
   - glog (0.3.5)
   - hermes-engine (0.9.0)
   - iOSPhotoEditor (0.5)
+  - JWT (3.0.0-beta.14):
+    - Base64 (~> 1.1.2)
   - libevent (2.1.12)
   - libwebp (1.2.1):
     - libwebp/demux (= 1.2.1)
@@ -373,14 +373,14 @@ PODS:
     - React
   - react-native-measure-text-size (1.0.0):
     - React-Core
-  - react-native-mmkv-storage (0.6.8):
+  - react-native-mmkv-storage (0.6.12):
     - MMKV (= 1.2.10)
     - React-Core
   - react-native-month-year-picker (1.8.0):
     - React
   - react-native-netinfo (5.9.10):
     - React-Core
-  - react-native-notifications (3.0.0):
+  - react-native-notifications (3.0.2):
     - React
   - react-native-orientation-locker (1.3.1):
     - React-Core
@@ -485,7 +485,7 @@ PODS:
     - SDWebImageWebPCoder (~> 0.6.1)
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (2.4.1):
     - React-Core
   - RNImageColors (1.3.1):
     - React-Core
@@ -507,16 +507,14 @@ PODS:
   - RNPhotoEditor (1.0.12):
     - iOSPhotoEditor
     - React
-  - RNReanimated (2.4.1):
+  - RNReanimated (2.8.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
     - glog
-    - hermes-engine
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -536,7 +534,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.10.2):
     - React-Core
     - React-RCTImage
   - RNSentry (2.6.0):
@@ -567,16 +565,9 @@ PODS:
   - SnowplowTracker (2.2.2):
     - FMDB (~> 2.7)
   - SocketRocket (0.6.0)
+  - SSZipArchive (2.2.3)
   - TOCropViewController (2.6.0)
-  - UMAppLoader (2.2.0)
-  - UMCore (7.1.2)
-  - UMReactNativeAdapter (6.3.9):
-    - ExpoModulesCore
-    - React-Core
-    - UMCore
-  - UMTaskManagerInterface (6.2.0):
-    - UMCore
-  - VisionCamera (2.12.0):
+  - VisionCamera (2.13.1):
     - React
     - React-callinvoker
     - React-Core
@@ -586,6 +577,7 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
@@ -596,7 +588,8 @@ DEPENDENCIES:
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - EXImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
-  - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
+  - Expo (from `../node_modules/expo/ios`)
+  - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -701,15 +694,12 @@ DEPENDENCIES:
   - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
-  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
-  - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
-  - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - Base64
     - Bolts
     - CocoaAsyncSocket
     - Flipper
@@ -724,6 +714,7 @@ SPEC REPOS:
     - FMDB
     - fmt
     - hermes-engine
+    - JWT
     - libevent
     - libwebp
     - MMKV
@@ -734,12 +725,15 @@ SPEC REPOS:
     - Sentry
     - SnowplowTracker
     - SocketRocket
+    - SSZipArchive
     - TOCropViewController
     - YogaKit
 
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
@@ -760,7 +754,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-image-manipulator/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
-  EXLinearGradient:
+  Expo:
+    :path: "../node_modules/expo/ios"
+  ExpoLinearGradient:
     :path: "../node_modules/expo-linear-gradient/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
@@ -921,14 +917,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  UMAppLoader:
-    :path: "../node_modules/unimodules-app-loader/ios"
-  UMCore:
-    :path: "../node_modules/@unimodules/core/ios"
-  UMReactNativeAdapter:
-    :path: "../node_modules/@unimodules/react-native-adapter/ios"
-  UMTaskManagerInterface:
-    :path: "../node_modules/unimodules-task-manager-interface/ios"
   VisionCamera:
     :path: "../node_modules/react-native-vision-camera"
   Yoga:
@@ -940,21 +928,24 @@ CHECKOUT OPTIONS:
     :git: https://github.com/prscX/photo-editor
 
 SPEC CHECKSUMS:
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
+  CodePush: b51b7ac64c07d4eacfc8cc5750a1dd28adbf2528
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
-  EXAV: 67bcc1d0afeb1fab854b206c84b9f2afbd61d0cd
-  EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
-  EXErrorRecovery: 404d827bc7d42f306c062d58a60b06afc4d082b3
-  EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
-  EXFont: 9846ba1bb6f5f5aed44e20eea3ac70693323832d
-  EXImageLoader: d3531a3fe530b22925c19977cb53bb43e3821fe6
-  EXImageManipulator: c9af8e8dc6543fdca23693eae280e388b2f93fb0
-  EXKeepAwake: f4105ef469be7b283f66ce2d7234bb71ac80cd26
-  EXLinearGradient: f9ea3259f096b27008860ca50764184225dc71c9
-  ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
+  EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
+  EXAV: b9ed0c201092244c46aa78f907f5c66176bed236
+  EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
+  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
+  EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
+  EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
+  EXImageLoader: 347b72c2ec2df65120ccec40ea65a4c4f24317ff
+  EXImageManipulator: 60d1bf3f1d7709453b1feb38adf8594b7f58710f
+  EXKeepAwake: bf48d7f740a5cd2befed6cf9a49911d385c6c47d
+  Expo: 534e51e607aba8229293297da5585f4b26f50fa1
+  ExpoLinearGradient: fd591c223c81f6779036ed4cef4deb20ecb87c50
+  ExpoModulesCore: 32c0ccb47f477d330ee93db72505380adf0de09a
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   Flipper: a8ba108d0222a569c0b7b8762f3920ac7dca7d4b
@@ -971,6 +962,7 @@ SPEC CHECKSUMS:
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
+  JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
@@ -1002,10 +994,10 @@ SPEC CHECKSUMS:
   react-native-cookies: cd92f3824ed1e32a20802e8185101e14bb5b76da
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-measure-text-size: df17d060f981d8ec652aa3118e37322bd7019bd5
-  react-native-mmkv-storage: 97ec49dd76cd9823120376677f59f34508ebf708
+  react-native-mmkv-storage: 88bcb10bbe85a8122061d17d03abcc64a02fe1c9
   react-native-month-year-picker: 2f00a9c261a86a39e14cafd02f4c319ac0fe7fe6
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
-  react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
+  react-native-notifications: a6ffe0a53e17a3b60fe71cdea6483c122ae058c0
   react-native-orientation-locker: 998c0744e26624407dac068c04c605b4af7304a2
   react-native-performance: 6bd6cfac80594775fb782405fceaaf206becf53b
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
@@ -1034,15 +1026,15 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
-  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNGestureHandler: 4f4986408310a43f1606c391f38f76e0d6e790d5
   RNImageColors: 5bb550d397934b18a55b8beec2af683bb9432898
   RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
   RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
-  RNReanimated: d41fa04bb5d2057d3115db666d3a73a7cbc90b79
-  RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNReanimated: 58b57be69a237fb02ec8099d25171057638cf41a
+  RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNSharedElement: 87baf6d04da5b068f000dd8c953d28a1196999c0
@@ -1055,15 +1047,12 @@ SPEC CHECKSUMS:
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   SnowplowTracker: 2eee2d6606a60db98f7c4e1515499bb216b6c8ad
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
-  UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
-  UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
-  UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
-  UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
-  VisionCamera: e3f4eea37f32f9a2ab40ce560940174a5258abaf
+  VisionCamera: 2103a8a09baa162a77951037b66d47c0926c48d9
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: a0d2f52c6578f0a95a860c82fd1c798e456d97b0
+PODFILE CHECKSUM: 136d8d4317f5c084b85a9581df180d278e8c28a5
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

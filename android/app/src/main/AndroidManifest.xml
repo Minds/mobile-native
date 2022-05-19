@@ -39,13 +39,16 @@
         android:name="android.permission.FOREGROUND_SERVICE"
         tools:node="remove" />
 
+    <queries>
+        <package android:name="com.minds.chat" />
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize"
@@ -114,7 +117,7 @@
         <activity android:exported="false" android:name=".CustomErrorScreen"></activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode|screenLayout|smallestScreenSize"
             android:documentLaunchMode="never"
             android:exported="true"
             android:label="@string/app_name"
@@ -123,7 +126,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

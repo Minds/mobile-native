@@ -35,24 +35,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "tabPress",
                     [Function],
                   ],
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
                 ],
                 "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
                   Object {
                     "type": "return",
                     "value": undefined,
@@ -77,7 +61,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               "loadMailNotificationsSettings": [Function],
               "loadPushNotificationsSettings": [Function],
               "loadUnreadCount": [Function],
-              "loaded": true,
+              "loaded": false,
               "mailsNotificationsSettings": Array [],
               "markAsRead": [Function],
               "offset": "",
@@ -88,7 +72,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               "setFilter": [Function],
               "setLoaded": [Function],
               "setOffset": [Function],
+              "setSilentRefresh": [Function],
               "setUnread": [Function],
+              "silentRefresh": false,
               "startPollCount": [Function],
               "stopPollCount": [Function],
               "unlisten": [Function],
@@ -121,6 +107,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     refreshing={false}
     removeClippedSubviews={false}
     renderItem={[Function]}
+    scrollEnabled={true}
     scrollEventThrottle={50}
     stickyHeaderHiddenOnScroll={true}
     stickyHeaderIndices={
@@ -269,6 +256,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "transform": Array [
@@ -357,6 +346,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     onStartShouldSetResponder={[Function]}
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -499,6 +490,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -655,6 +648,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -811,6 +806,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -967,6 +964,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -1123,6 +1122,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
@@ -1279,6 +1280,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [
