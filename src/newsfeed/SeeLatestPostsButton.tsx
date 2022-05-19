@@ -38,8 +38,6 @@ const SeeLatestPostsButton = ({
     return null;
   }
 
-  console.log(insets.top);
-
   return (
     <Animated.View
       entering={FadeInUp.mass(0.3).duration(500)}
