@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { View } from 'react-native';
 import i18n from '../../services/i18n.service';
 import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
