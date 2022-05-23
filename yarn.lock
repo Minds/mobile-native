@@ -8721,7 +8721,7 @@ expo-keep-awake@~10.0.2:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.2.tgz#706bda839782bb3e8ad4cbe43bde471a56368813"
   integrity sha512-Ro1lgyKldbFs4mxhWM+goX9sg0S2SRR8FiJJeOvaRzf8xNhrZfWA00Zpr+/3ocCoWQ3eEL+X9UF4PXXHf0KoOg==
 
-expo-linear-gradient@^11.0.3:
+expo-linear-gradient@11.0.3:
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-11.0.3.tgz#bc559b9a251c9dc8aa37fb6c66c7a497fe92993c"
   integrity sha512-LuzTM5+iEHCQfC2TBHAAI+ZjPvf0TvGiA7GYMsyTnakGA2r4JtsV8Ah/miQPKhfG06jLDOo4grUoSMGqbmSrEw==
@@ -14741,10 +14741,10 @@ react-native-animated-spinkit@^1.5.2:
   resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
   integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
 
-react-native-blurhash@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.5.tgz#27545afb126347059a3a9324f5c3640a94b1ec53"
-  integrity sha512-RX5lgZ+wwl+XhdgSvR94YpGrPWj5KI6D/9I650Y+TF2W9PDuvJ3gDMz98ispvG2FaUqQrf9LM39pedUxBVWROA==
+react-native-blurhash@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.10.tgz#3969af24ebab098976cba90d100ba157760d3132"
+  integrity sha512-ScLdguCk+g9er2ccdwArNet1BOMoU7MClHV2MiNheHwn6HFr9vDkFPnUG011B5ddzCJlqj9JazFBNnxwhSWZhg==
 
 react-native-bootsplash@^3.2.4:
   version "3.2.4"
@@ -14972,10 +14972,9 @@ react-native-image-progress@^1.1.1:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-inappbrowser-reborn@^3.6.3:
+"react-native-inappbrowser-reborn@https://github.com/proyecto26/react-native-inappbrowser":
   version "3.6.3"
-  resolved "https://registry.yarnpkg.com/react-native-inappbrowser-reborn/-/react-native-inappbrowser-reborn-3.6.3.tgz#12938733e5337a9f328973557da0cfd13085bfbd"
-  integrity sha512-fqF708GVZ/7zja0/GyJQfjDfKREOe1fxYq8RAKZo8/KK6SkFO9hBlYqC3PwLFPw29zzwBzR+6EpL3qo95igkLw==
+  resolved "https://github.com/proyecto26/react-native-inappbrowser#5b7b125232356acb20e61f662a0046c0e0461920"
   dependencies:
     invariant "^2.2.4"
     opencollective-postinstall "^2.0.2"

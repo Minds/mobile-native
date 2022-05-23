@@ -39,6 +39,10 @@
         android:name="android.permission.FOREGROUND_SERVICE"
         tools:node="remove" />
 
+    <queries>
+        <package android:name="com.minds.chat" />
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
@@ -122,7 +126,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

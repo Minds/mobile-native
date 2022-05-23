@@ -216,7 +216,7 @@ export class FeedList<T> extends Component<PropsType> {
         onEndReachedThreshold={5} // 5 times the visible list height
         numColumns={feedStore.isTiled ? 3 : 1}
         style={style}
-        initialNumToRender={3}
+        initialNumToRender={4}
         maxToRenderPerBatch={4}
         windowSize={9}
         // removeClippedSubviews={true}
