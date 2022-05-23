@@ -131,7 +131,7 @@ PODS:
     - React-Core
   - MMKV (1.2.10):
     - MMKVCore (~> 1.2.10)
-  - MMKVCore (1.2.11)
+  - MMKVCore (1.2.13)
   - OpenSSL-Universal (1.1.180)
   - Permission-Camera (3.0.4):
     - RNPermissions
@@ -479,10 +479,10 @@ PODS:
     - React
   - RNDeviceInfo (8.4.8):
     - React-Core
-  - RNFastImage (8.3.5):
+  - RNFastImage (8.5.11):
     - React-Core
-    - SDWebImage (~> 5.8)
-    - SDWebImageWebPCoder (~> 0.6.1)
+    - SDWebImage (~> 5.11.1)
+    - SDWebImageWebPCoder (~> 0.8.4)
   - RNFS (2.18.0):
     - React
   - RNGestureHandler (2.4.1):
@@ -553,12 +553,12 @@ PODS:
     - React
   - RNVectorIcons (7.1.0):
     - React
-  - SDWebImage (5.12.1):
-    - SDWebImage/Core (= 5.12.1)
-  - SDWebImage/Core (5.12.1)
-  - SDWebImageWebPCoder (0.6.1):
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+  - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.7)
+    - SDWebImage/Core (~> 5.10)
   - Sentry (7.0.0):
     - Sentry/Core (= 7.0.0)
   - Sentry/Core (7.0.0)
@@ -566,7 +566,7 @@ PODS:
     - FMDB (~> 2.7)
   - SocketRocket (0.6.0)
   - SSZipArchive (2.2.3)
-  - TOCropViewController (2.6.0)
+  - TOCropViewController (2.6.1)
   - VisionCamera (2.13.1):
     - React
     - React-callinvoker
@@ -968,7 +968,7 @@ SPEC CHECKSUMS:
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 69740f3742cc82d8211979e2b48681e002c22bff
   MMKV: 76033b9ace2006623308910a3afcc0e25eba3140
-  MMKVCore: f9e4f56742fdebbd042f7a273e278927f182cee7
+  MMKVCore: 3388952ded307e41b3ed8a05892736a236ed1b8e
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
   Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
@@ -1024,7 +1024,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
-  RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
+  RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: 4f4986408310a43f1606c391f38f76e0d6e790d5
   RNImageColors: 5bb550d397934b18a55b8beec2af683bb9432898
@@ -1042,13 +1042,13 @@ SPEC CHECKSUMS:
   RNSnowplowTracker: dae187f1e5392e3786fae8a933536453ccfb7528
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
-  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   SnowplowTracker: 2eee2d6606a60db98f7c4e1515499bb216b6c8ad
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
-  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   VisionCamera: 2103a8a09baa162a77951037b66d47c0926c48d9
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
