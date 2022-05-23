@@ -6,6 +6,7 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
+import { View } from 'react-native';
 import ModernDatePicker from 'react-native-modern-datepicker';
 import i18n from '~/common/services/i18n.service';
 import {
