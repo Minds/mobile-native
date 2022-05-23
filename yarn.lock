@@ -15891,11 +15891,6 @@ rn-color-matrices@^4.1.0:
   dependencies:
     clamp "^1.0.1"
 
-rn-placeholder@^3.0.1:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-3.0.3.tgz#98f635b263ee003af2a984eed32d86ade308df35"
-  integrity sha512-EmVeLT8zDcTPilQZ2OHO/IiYUy2gApKGgbshDZBX0C4qxsn0cFATwgwOwyz8O7Vwg1Hul97Ci95hu7d6Js6XMQ==
-
 rn-update-apk@^4.5.0:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/rn-update-apk/-/rn-update-apk-4.5.1.tgz#762604c57f92ef6c697854b957aab97eda0e7bc9"

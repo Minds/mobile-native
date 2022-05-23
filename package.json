@@ -147,7 +147,6 @@
     "react-native-vision-camera": "^2.13.1",
     "react-native-webview": "^11.14.0",
     "react-navigation-shared-element": "^5.0.0-alpha1",
-    "rn-placeholder": "^3.0.1",
     "rn-update-apk": "^4.5.0",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "rxjs": "^6.5.5",
