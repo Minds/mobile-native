@@ -60,20 +60,24 @@ const MonthYearPicker: ForwardRefRenderFunction<
 
   return (
     <BottomSheetModal ref={bottomSheetRef}>
-      <ModernDatePicker
-        options={theme}
-        mode="monthYear"
-        selected={value}
-        selectorStartingYear={1900}
-        selectorEndingYear={2100}
-        minimumDate={moment(minimumDate).format('YYYY-MM-DD')}
-        maximumDate={moment(maximumDate).format('YYYY-MM-DD')}
-        onMonthYearChange={onMonthYearChange}
-      />
+      <View style={fixedHeightStyle}>
+        <ModernDatePicker
+          options={theme}
+          mode="monthYear"
+          selected={value}
+          selectorStartingYear={1900}
+          selectorEndingYear={2100}
+          minimumDate={moment(minimumDate).format('YYYY-MM-DD')}
+          maximumDate={moment(maximumDate).format('YYYY-MM-DD')}
+          onMonthYearChange={onMonthYearChange}
+        />
+      </View>
 
       <BottomSheetButton text={i18n.t('close')} onPress={onClose} />
     </BottomSheetModal>
   );
 };
+
+const fixedHeightStyle = { height: 400 };
 
 export default forwardRef(MonthYearPicker);
