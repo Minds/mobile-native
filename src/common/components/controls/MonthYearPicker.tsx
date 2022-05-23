@@ -14,6 +14,7 @@ import {
   BottomSheetModal,
   BottomSheetModalHandle,
 } from '../bottom-sheet';
+import Delayed from '../Delayed';
 import useModernTheme from './useModernTheme';
 
 export type MonthYearPickerHandle = {
@@ -62,16 +63,18 @@ const MonthYearPicker: ForwardRefRenderFunction<
   return (
     <BottomSheetModal ref={bottomSheetRef}>
       <View style={fixedHeightStyle}>
-        <ModernDatePicker
-          options={theme}
-          mode="monthYear"
-          selected={value}
-          selectorStartingYear={1900}
-          selectorEndingYear={2100}
-          minimumDate={moment(minimumDate).format('YYYY-MM-DD')}
-          maximumDate={moment(maximumDate).format('YYYY-MM-DD')}
-          onMonthYearChange={onMonthYearChange}
-        />
+        <Delayed delay={0}>
+          <ModernDatePicker
+            options={theme}
+            mode="monthYear"
+            selected={value}
+            selectorStartingYear={1900}
+            selectorEndingYear={2100}
+            minimumDate={moment(minimumDate).format('YYYY-MM-DD')}
+            maximumDate={moment(maximumDate).format('YYYY-MM-DD')}
+            onMonthYearChange={onMonthYearChange}
+          />
+        </Delayed>
       </View>
 
       <BottomSheetButton text={i18n.t('close')} onPress={onClose} />

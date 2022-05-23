@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import moment from 'moment';
 import useModernTheme from './useModernTheme';
+import Delayed from '../Delayed';
 
 type PropsType = {
   date?: Date | null;
@@ -139,14 +140,17 @@ const DateTimePicker = observer(
           </Animated.View>
 
           <Animated.View style={[timePickerAnimatedStyle, viewStyle]}>
-            <ModernDatePicker
-              ref={timePickerRef}
-              mode="time"
-              current={localStore.textDate}
-              confirmButtonVisible={false}
-              options={theme}
-              minuteInterval={5}
-            />
+            <Delayed delay={0}>
+              <ModernDatePicker
+                ref={timePickerRef}
+                mode="time"
+                current={localStore.textDate}
+                confirmButtonVisible={false}
+                options={theme}
+                minuteInterval={5}
+              />
+            </Delayed>
+
             <MText style={styles.timePickerTitle}>
               {moment(localStore.selectedDate).format('MMMM Do')}
             </MText>
