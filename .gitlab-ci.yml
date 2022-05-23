@@ -326,6 +326,30 @@ release:production:
     - yarn release-json $APK_FILENAME
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
+release:codepush-ios:
+  image: node:14.19.1
+  stage: release
+  before_script:
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
+  only:
+    - /^patch-*/
+  when: manual
+
+release:codepush-android:
+  image: node:14.19.1
+  stage: release
+  before_script:
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds -d Staging
+  only:
+    - /^patch-*/
+  when: manual
+
 uploadstore:google_play:
   image: circleci/android:api-28-node
   stage: uploadstore
