@@ -358,7 +358,7 @@ PODS:
   - React-jsinspector (0.66.3)
   - React-logger (0.66.3):
     - glog
-  - react-native-blurhash (1.1.5):
+  - react-native-blurhash (1.1.10):
     - React-Core
   - react-native-cameraroll (4.1.2):
     - React-Core
@@ -959,7 +959,7 @@ SPEC CHECKSUMS:
   FlipperKit: 74e59b7b9ec3a2af9a5775f581960ba4d1ef285b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 476ee3e89abb49e07f822b48323c51c57124b572
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
@@ -973,7 +973,7 @@ SPEC CHECKSUMS:
   Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
   Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
   Permission-PhotoLibrary: 440f206f0d36e5951c4c9b28567f60471fdddfb5
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 59d2b744d8c2bf2d9bc7032a9f654809adcf7d50
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
   RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
@@ -988,7 +988,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 433a691aee158533a6a6ee9c86cb4a1684fa2853
   React-jsinspector: d9c8eb0b53f0da206fed56612b289fec84991157
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
-  react-native-blurhash: d978f8017ed091d9e1179775fe7bac14297e6e1e
+  react-native-blurhash: add4df9a937b4e021a24bc67a0714f13e0bd40b7
   react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-cookies: cd92f3824ed1e32a20802e8185101e14bb5b76da
