@@ -166,7 +166,7 @@ class NewsfeedScreen extends Component<
     const isLatest = this.props.newsfeed.feedType === 'latest';
 
     const header = (
-      <View>
+      <>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
@@ -179,11 +179,11 @@ class NewsfeedScreen extends Component<
             />
           </IfFeatureEnabled>
         )}
-      </View>
+      </>
     );
 
     const prepend = (
-      <View>
+      <>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -196,7 +196,7 @@ class NewsfeedScreen extends Component<
             onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
         </IfFeatureEnabled>
-      </View>
+      </>
     );
 
     // Show placeholder before the loading as an empty component.
