@@ -1,8 +1,10 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React from 'react';
-// import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment-timezone';
-import { Icon, PressableLine, HairlineRow, B1, B2, Column, Row } from '~ui';
+import React, { useRef } from 'react';
+import { B1, B2, Column, HairlineRow, Icon, PressableLine, Row } from '~ui';
+import MonthYearPicker, {
+  MonthYearPickerHandle,
+} from './controls/MonthYearPicker';
 
 type PropsType = {
   minimumDate: Date;
@@ -12,19 +14,19 @@ type PropsType = {
 };
 
 const MonthPickerInput = observer((props: PropsType) => {
+  const monthYearPickerRef = useRef<MonthYearPickerHandle>(null);
   const localStore = useLocalStore(() => ({
     date: new Date(),
-    showPicker: false,
     setDate(date: Date) {
       this.date = date;
     },
     openPicker() {
-      this.showPicker = true;
+      monthYearPickerRef.current?.show();
     },
     closePicker() {
-      this.showPicker = false;
+      monthYearPickerRef.current?.dismiss();
     },
-    onValueChange(event, newDate: Date) {
+    onValueChange(newDate: Date) {
       const selectedDate = newDate || this.date;
       this.closePicker();
       this.setDate(selectedDate);
@@ -47,14 +49,13 @@ const MonthPickerInput = observer((props: PropsType) => {
           </Row>
         </HairlineRow>
       </PressableLine>
-      {/* {localStore.showPicker && (
-        <MonthPicker
-          onChange={localStore.onValueChange}
-          value={localStore.date}
-          minimumDate={props.minimumDate}
-          maximumDate={props.maximumDate}
-        />
-      )} */}
+      <MonthYearPicker
+        ref={monthYearPickerRef}
+        onChange={localStore.onValueChange}
+        value={localStore.date}
+        minimumDate={props.minimumDate}
+        maximumDate={props.maximumDate}
+      />
     </>
   );
 });

@@ -1,5 +1,5 @@
 import BottomSheet from './BottomSheet';
-import BottomSheetModal from './BottomSheetModal';
+import BottomSheetModal, { BottomSheetModalHandle } from './BottomSheetModal';
 import BottomSheetButton from './BottomSheetButton';
 import MenuItem from './MenuItem';
 import RadioButton from './RadioButton';
@@ -13,3 +13,4 @@ export {
   SectionTitle,
   BottomSheetButton,
 };
+export type { BottomSheetModalHandle };

@@ -3,11 +3,11 @@ import React from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 import i18n from '../../services/i18n.service';
 import { B1, B2, Column, Icon, PressableLine, Row } from '~ui';
-import ThemedStyles from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Calendar } from 'react-native-calendars';
 import { UIUnitType } from '~/styles/Tokens';
+import useModernTheme from './useModernTheme';
 
 type PropsType = {
   hideTitle?: boolean;
@@ -23,27 +23,7 @@ type PropsType = {
 const DatePicker = observer((props: PropsType) => {
   const ref = React.useRef<BottomSheetModalType>(null);
   const todaysDate = new Date().toISOString().substring(0, 10);
-  const theme = React.useMemo(
-    () => ({
-      backgroundColor: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      calendarBackground: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      dayTextColor: ThemedStyles.getColor('PrimaryText'),
-      textSectionTitleDisabledColor: ThemedStyles.getColor('TertiaryText'),
-      textDisabledColor: ThemedStyles.getColor('TertiaryText'),
-      textSectionTitleColor: ThemedStyles.getColor('SecondaryText'),
-      indicatorColor: ThemedStyles.getColor('Link'),
-      dotColor: ThemedStyles.getColor('Link'),
-      selectedDayBackgroundColor: ThemedStyles.getColor('Link'),
-      selectedDayTextColor: ThemedStyles.getColor(
-        'PrimaryText',
-        ThemedStyles.theme ? 0 : 1,
-      ),
-      monthTextColor: ThemedStyles.getColor('PrimaryText'),
-      todayTextColor: ThemedStyles.getColor('Link'),
-      arrowColor: ThemedStyles.getColor('Link'),
-    }),
-    [],
-  );
+  const theme = useModernTheme();
 
   const localStore = useLocalStore(
     (p: PropsType) => ({
