@@ -6,6 +6,8 @@ import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
+import { UserError } from '../UserError';
+import i18n from './i18n.service';
 
 /**
  * Attachment service
@@ -130,7 +132,7 @@ class AttachmentService {
     }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
-        throw error;
+        throw new UserError(i18n.t('uploadFailed'));
       }
     });
   }
