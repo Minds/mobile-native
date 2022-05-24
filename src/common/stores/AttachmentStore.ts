@@ -8,6 +8,7 @@ import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import mindsConfigService from '../services/minds-config.service';
 import { showNotification } from '../../../AppMessages';
+import { UserError } from '../UserError';
 
 /**
  * Attachment Store
@@ -115,7 +116,9 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      showNotification(err.message || i18n.t('uploadFailed'));
+      if (!(err instanceof UserError)) {
+        showNotification(err.message || i18n.t('uploadFailed'));
+      }
     } finally {
       this.setUploading(false);
     }
