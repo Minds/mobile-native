@@ -8,6 +8,7 @@ export type SpacerPropType = {
 } & UISpacingPropType;
 
 export type ItemPropType = {
+  noPadding?: boolean;
   noBorder?: boolean;
 };
 

@@ -36,6 +36,7 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
     onComplete: (() => true) as Function | undefined,
     goBack: (() => true) as Function | undefined,
     amount: 0,
+    errors: {} as any,
     walletBalance: 0,
     initialLoad(owner: any, onComplete: Function | undefined, goBack) {
       this.wire.setOwner(owner);
@@ -67,16 +68,16 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
     setAmount(amount) {
       this.amount = amount;
       this.wire.setAmount(amount);
+      if (this.errors.amount) {
+        delete this.errors.amount;
+      }
     },
     confirmSend() {
-      // is 0 just we execute complete
-      if (this.wire.amount === 0) {
-        if (this.onComplete) {
-          this.onComplete();
-        }
-        if (this.goBack) {
-          this.goBack();
-        }
+      if (
+        Number(this.wire.amount) === 0 ||
+        Number.isNaN(Number(this.wire.amount))
+      ) {
+        this.errors.amount = i18n.t('validation.amount');
         return;
       }
 

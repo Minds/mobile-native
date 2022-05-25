@@ -20,7 +20,7 @@ const gradleProperties = fs.readFileSync('./android/gradle.properties');
 let version = gradleProperties.toString().match(/versionName=(.*)/);
 if (version) {
   version = version[1];
-  releases.versions.forEach((v) => {
+  releases.versions.forEach(v => {
     if (v.version === version) {
       console.log('The version already exist to the json file');
       process.exit(1);
@@ -34,8 +34,12 @@ if (version) {
 // check changelog
 const changelog =
   changelogFile.releases[0].version.raw.trim() == version.trim()
-    ? changelogFile.releases[0].changes.get('changed').map((c) => c.title)
+    ? changelogFile.releases[0].changes.get('changed').map(c => c.title)
     : [];
+
+const truncate = str => {
+  return str.length > 500 ? str.substr(0, 497) + '...' : str;
+};
 
 const filename = path.basename(filepath);
 
@@ -76,7 +80,7 @@ input.on('readable', () => {
     // Write changelog for fastlane
     fs.writeFileSync(
       `./android/fastlane/metadata/android/en-US/changelogs/default.txt`,
-      changelog.join('\n'),
+      truncate(changelog.join('\n')),
     );
   }
 });
