@@ -4,7 +4,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import throttle from 'lodash/throttle';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
 import Topbar from '~/topbar/Topbar';
 
