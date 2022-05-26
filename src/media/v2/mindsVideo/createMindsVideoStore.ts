@@ -89,7 +89,6 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       videoPlayerService.setVolume(volume);
     },
     trackUnmute() {
-      console.log('UNMUTE');
       analyticsService.trackClick('video-player-unmuted', [
         analyticsService.buildEntityContext(entity),
       ]);
