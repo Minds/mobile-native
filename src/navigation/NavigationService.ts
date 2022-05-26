@@ -19,6 +19,10 @@ function getStateFrom(nav) {
 }
 
 export function setTopLevelNavigator(navigatorRef) {
+  //TODO: remove after we check the push notification issue
+  console.log(
+    'SETTING TOP LEVEL NAVIGATION ' + navigatorRef ? 'WITH VALUE' : 'NULL',
+  );
   _navigator = navigatorRef;
 }
 
