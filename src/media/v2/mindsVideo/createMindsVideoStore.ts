@@ -8,6 +8,7 @@ import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
+import analyticsService from '~/common/services/analytics.service';
 
 export type Source = {
   src: string;
@@ -36,6 +37,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     player: null as Video | null,
     paused: !autoplay,
     forceHideOverlay: false,
+    /**
+     * Should we track unmute event? true if volume is initially 0
+     */
+    shouldTrackUnmuteEvent: videoPlayerService.currentVolume === 0,
     hideOverlay: () => null as any,
     setForceHideOverlay(forceHideOverlay: boolean) {
       this.forceHideOverlay = forceHideOverlay;
@@ -83,7 +88,17 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       this.player?.setIsMutedAsync(!this.volume);
       videoPlayerService.setVolume(volume);
     },
+    trackUnmute() {
+      analyticsService.trackClick('video-player-unmuted', [
+        analyticsService.buildEntityContext(entity),
+      ]);
+    },
     toggleVolume() {
+      // on first unmute call analytics
+      if (!this.volume && this.shouldTrackUnmuteEvent) {
+        this.trackUnmute();
+        this.shouldTrackUnmuteEvent = false;
+      }
       this.setVolume(this.volume ? 0 : 1);
     },
     /**
