@@ -141,17 +141,12 @@ export function IconButton({
 
   const PressableComponent = scale ? PressableScale : Pressable;
 
-  // Breather
-  const handlePress = useCallback(() => {
-    InteractionManager.runAfterInteractions(onPress);
-  }, [onPress]);
-
   return (
     <View style={containerStyles}>
       <PressableComponent
         hitSlop={sizeNumeric}
         style={onStyle}
-        onPress={handlePress}
+        onPress={onPress}
         testID={testID}>
         <View style={styles.wrapper}>
           <Icon nested {...more} />
