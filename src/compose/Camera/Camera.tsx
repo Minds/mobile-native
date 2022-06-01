@@ -148,7 +148,9 @@ export default observer(function (props: PropsType) {
   // Keep device awake while camera is mounted
   useEffect(() => {
     activateKeepAwake();
-    return () => deactivateKeepAwake();
+    return () => {
+      deactivateKeepAwake();
+    };
   }, []);
 
   // capture long press handler
