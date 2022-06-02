@@ -167,12 +167,17 @@ export default class AppInitManager {
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {
         const deeplink = this.deepLinkUrl;
+
         setTimeout(() => {
+          //TODO: remove after we check the push notification issue
+          console.log('[App] Handling deeplink');
           deeplinkService.navigate(deeplink);
         }, 300);
         this.deepLinkUrl = '';
       }
 
+      //TODO: remove after we check the push notification issue
+      console.log('[App] Handling initial notifications');
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();
 
@@ -195,6 +200,7 @@ export default class AppInitManager {
    * Run the session logic when the navigator is ready
    */
   onNavigatorReady = async () => {
+    console.log('NAV READY');
     if (this.shouldHandlePasswordReset) {
       logService.info('[App] initializing session');
       this.handlePasswordResetDeepLink();
