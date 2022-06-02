@@ -23,6 +23,8 @@ export class PushService {
     this.push = new platform();
 
     this.push.setOnNotificationOpened(notification => {
+      //TODO: remove after we check the push notification issue
+      console.log('[App] PUSH NOTIFICATION OPENED');
       // get notification data
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);
