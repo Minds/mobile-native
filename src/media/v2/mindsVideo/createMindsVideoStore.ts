@@ -67,7 +67,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     toggleFullScreen() {
       this.fullScreen = !this.fullScreen;
       if (this.fullScreen) {
-        this.player?.presentFullscreenPlayerAsync();
+        this.player?.presentFullscreenPlayer();
       }
     },
     setInProgress(inProgress: boolean) {
