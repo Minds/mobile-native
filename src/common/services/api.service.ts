@@ -51,10 +51,12 @@ export class ParamsArray extends Array<any> {}
  */
 export class ApiError extends Error {
   errId: string = '';
+  status: number = 0;
   headers: any = null;
 
-  constructor(...args) {
-    super(...args);
+  constructor(message, status) {
+    super(message);
+    this.status = status;
   }
 }
 
@@ -352,7 +354,7 @@ export class ApiService {
     if (data && data.status && data.status !== 'success') {
       const msg = data && data.message ? data.message : 'Server error';
       const errId = data && data.errorId ? data.errorId : '';
-      const apiError = new ApiError(msg);
+      const apiError = new ApiError(msg, response.status);
       apiError.errId = errId;
       apiError.headers = response.headers;
       throw apiError;
@@ -362,7 +364,7 @@ export class ApiService {
         '[ApiService] server error',
         response.request?.url || url,
       );
-      throw new ApiError('Server error ' + response.status);
+      throw new ApiError('Server error ' + response.status, response.status);
     }
 
     return data;
