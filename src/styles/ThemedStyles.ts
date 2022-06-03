@@ -8,7 +8,6 @@ import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { buildStyle, updateTheme } from './Style';
 
 import type { Styles } from './Style';
-import RNBootSplash from 'react-native-bootsplash';
 import { storages } from '../common/services/storage/storages.service';
 import useIsPortrait from '../common/hooks/useIsPortrait';
 
@@ -71,14 +70,10 @@ export class ThemedStylesStore {
    */
   @action
   setDark() {
-    RNBootSplash.show({ fade: true });
     this.theme = 1;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
-    setTimeout(() => {
-      RNBootSplash.hide({ fade: true });
-    }, 1000);
   }
 
   /**
@@ -86,14 +81,10 @@ export class ThemedStylesStore {
    */
   @action
   setLight() {
-    RNBootSplash.show({ fade: true });
     this.theme = 0;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
-    setTimeout(() => {
-      RNBootSplash.hide({ fade: true });
-    }, 2000);
   }
 
   /**
