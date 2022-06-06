@@ -53,14 +53,17 @@ class ReceiveShareService {
   /**
    * Handle received text data
    */
-  handle = (item: SharedItem) => {
-    if (!item) {
+  handle = (item: { data: SharedItem | null }) => {
+    if (!item || !item.data) {
       return;
     }
-    if (item.mimeType.includes('image/') || item.mimeType.includes('video/')) {
-      this.handleMedia(item);
-    } else if (item.mimeType.includes('text')) {
-      navigationService.navigate('Compose', { text: item.data });
+
+    const data = IS_IOS ? item.data[0] : item;
+
+    if (data.mimeType.includes('image/') || data.mimeType.includes('video/')) {
+      this.handleMedia(data);
+    } else if (data.mimeType.includes('text')) {
+      navigationService.navigate('Compose', { text: data });
     }
   };
 }
