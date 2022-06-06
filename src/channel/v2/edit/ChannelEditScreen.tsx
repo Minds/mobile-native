@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
 import InputContainer from '~/common/components/InputContainer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 
 type PropsType = {
   route: any;
@@ -139,12 +140,12 @@ const Bio = observer(({ route, navigation, store }: PropsType) => (
   />
 ));
 
-const About = observer(({ store }: PropsType) => {
-  const theme = ThemedStyles.style;
+const About = observer(
+  ({ store, onFocusLocation }: PropsType & { onFocusLocation: () => void }) => {
+    const theme = ThemedStyles.style;
 
-  return (
-    <>
-      {!store.editingCity && (
+    return (
+      <>
         <InputContainer
           placeholder={i18n.t('channel.edit.displayName')}
           onChangeText={store.setDisplayName}
@@ -152,8 +153,7 @@ const About = observer(({ store }: PropsType) => {
           testID="displayNameInput"
           noBottomBorder
         />
-      )}
-      {!store.editingCity && (
+
         <InputContainer
           placeholder={i18n.t('channel.edit.dob')}
           onChangeText={store.setDob}
@@ -163,24 +163,27 @@ const About = observer(({ store }: PropsType) => {
           dateFormat={'ISOString'}
           inputType="dateInput"
         />
-      )}
-      {store.loaded && (
-        <LocationAutoSuggest
-          value={store.city}
-          onChangeText={store.setCity}
-          onEdit={store.setEditingCity}
-          wrapperBorder={theme.borderBottom}
-        />
-      )}
-    </>
-  );
-});
+        {store.loaded && (
+          <LocationAutoSuggest
+            value={store.city}
+            onChangeText={store.setCity}
+            onEdit={store.setEditingCity}
+            wrapperBorder={theme.borderBottom}
+            onFocus={onFocusLocation}
+          />
+        )}
+      </>
+    );
+  },
+);
 
 const ChannelEditScreen = (props: PropsType) => {
   const { navigation, route } = props;
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
   const store = useLocalStore(createEditChannelStore);
+
+  const listRef = React.useRef<any>(null);
 
   const save = useCallback(async () => {
     store.setLoaded(false);
@@ -222,7 +225,7 @@ const ChannelEditScreen = (props: PropsType) => {
             : undefined,
         headerHideBackButton: Platform.OS === 'ios',
       }),
-    [navigation],
+    [navigation, save],
   );
 
   useEffect(() => {
@@ -232,11 +235,20 @@ const ChannelEditScreen = (props: PropsType) => {
     }
   }, [route, store]);
 
+  const onFocusLocation = useDebouncedCallback(
+    () => {
+      listRef.current?.scrollToEnd({ animated: true });
+    },
+    1000,
+    [],
+  );
+
   return (
     <KeyboardAwareScrollView
       style={styles.scroll}
+      ref={listRef}
       contentContainerStyle={{
-        paddingBottom: insets.bottom + 100,
+        paddingBottom: insets.bottom + 50,
       }}
       keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
@@ -252,7 +264,7 @@ const ChannelEditScreen = (props: PropsType) => {
           </View>
         </LabeledComponent>
         <Bio {...props} store={store} />
-        <About {...props} store={store} />
+        <About {...props} store={store} onFocusLocation={onFocusLocation} />
       </View>
     </KeyboardAwareScrollView>
   );

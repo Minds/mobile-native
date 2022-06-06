@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Keyboard,
-  KeyboardEventName,
-  Platform,
-  StatusBar,
-  View,
-  ViewProps,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { Keyboard, KeyboardEventName, Platform, ViewProps } from 'react-native';
 import { mix, useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { observer, useLocalStore } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDimensions } from '@react-native-community/hooks';
 import { IS_IOS } from '~/config/Config';
 
@@ -95,23 +87,3 @@ export default observer(function KeyboardSpacingView({
     </Animated.View>
   );
 });
-
-/**
- * Screen height provider
- * It detects the real height of the screen to implement a workaround
- * for the incorrect keyboard height detection in some devices
- */
-export const ScreenHeightProvider = ({ children }) => {
-  const [height, setHeight] = useState(0);
-  return (
-    <View
-      style={ThemedStyles.style.flexContainer}
-      onLayout={({ nativeEvent }) =>
-        setHeight(nativeEvent.layout.height + (StatusBar.currentHeight || 0))
-      }>
-      <screenRealHeightContext.Provider value={height}>
-        {children}
-      </screenRealHeightContext.Provider>
-    </View>
-  );
-};
