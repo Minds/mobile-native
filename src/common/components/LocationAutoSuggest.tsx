@@ -30,6 +30,7 @@ type PropsType = {
   optional?: boolean;
   value: string;
   onChangeText: Function;
+  onFocus?: () => void;
   onEdit?: onEditFn;
   inputStyle?: 'inputAlone' | 'withWraper';
   wrapperBorder: any;
@@ -146,6 +147,7 @@ const LocationAutoSuggest = observer((props: PropsType) => {
         onChangeText={store.setValue}
         value={store.value}
         testID="cityInput"
+        onFocus={props.onFocus}
         onBlur={store.onBlur}
       />
       {store.shouldShowList() && (
