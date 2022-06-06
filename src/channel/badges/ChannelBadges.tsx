@@ -43,6 +43,7 @@ export default class ChannelBadges extends PureComponent<
     if (channel.plus) {
       badges.push(
         <BadgeTooltip
+          key={'plus'}
           label={i18n.t('channel.badge.plus')}
           color={ThemedStyles.getColor('Link')}>
           <IconNext
@@ -59,6 +60,7 @@ export default class ChannelBadges extends PureComponent<
     if (channel.verified) {
       badges.push(
         <BadgeTooltip
+          key={'verified'}
           label={i18n.t('channel.badge.verified')}
           color={ThemedStyles.getColor('SuccessBackground')}>
           <IconNext
@@ -76,6 +78,7 @@ export default class ChannelBadges extends PureComponent<
     if (channel.founder) {
       badges.push(
         <BadgeTooltip
+          key={'founder'}
           label={i18n.t('channel.badge.founder')}
           color={ThemedStyles.getColor('Link')}>
           <IconNext
