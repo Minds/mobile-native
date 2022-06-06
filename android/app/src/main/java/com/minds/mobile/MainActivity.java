@@ -46,6 +46,12 @@ public class MainActivity extends ReactActivity {
         }
 
         @Override
+        protected void loadApp(String appKey) {
+            RNBootSplash.init(getPlainActivity()); // <- initialize the splash screen
+            super.loadApp(appKey);
+        }
+
+        @Override
         protected ReactRootView createRootView() {
             ReactRootView reactRootView = new ReactRootView(getContext());
             // If you opted-in for the New Architecture, we enable the Fabric Renderer.
@@ -57,7 +63,6 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
-        RNBootSplash.init(R.drawable.bootsplash, MainActivity.this);
         setRequestedOrientation(
             ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
         );

@@ -443,7 +443,7 @@ PODS:
     - React-Core
   - rn-update-apk (4.5.1):
     - React-Core
-  - RNBootSplash (3.2.4):
+  - RNBootSplash (4.1.5):
     - React-Core
   - RNCClipboard (1.7.0):
     - React-Core
@@ -935,7 +935,7 @@ SPEC CHECKSUMS:
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
   rn-update-apk: c9ed556a751a89894351f2f029387fa215ca5658
-  RNBootSplash: 4844706cbb56a3270556c9b94e59dedadccd47e4
+  RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
