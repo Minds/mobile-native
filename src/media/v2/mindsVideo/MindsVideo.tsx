@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
@@ -61,11 +61,15 @@ const MindsVideo = observer((props: PropsType) => {
       : undefined,
   ).current;
 
-  const isFocused = useIsFocused();
-
-  if (!isFocused && !localStore.paused) {
-    localStore.pause();
-  }
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        if (!localStore.paused) {
+          localStore.pause();
+        }
+      };
+    }, [localStore]),
+  );
 
   useEffect(() => {
     onStoreCreated && onStoreCreated(localStore);
