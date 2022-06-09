@@ -61,5 +61,6 @@ describe('Login Page Test Cases', () => {
   // After All method - logs out of the mobile app.
   afterAll('Logout the user...', async () => {
     await LoginPage.logout();
+    await LoginPage.loginButton.waitForDisplayed();
   });
 });
