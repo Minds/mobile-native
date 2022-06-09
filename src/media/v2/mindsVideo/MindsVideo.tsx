@@ -1,4 +1,4 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
