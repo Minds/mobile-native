@@ -159,13 +159,7 @@ export class AnalyticsService {
   /**
    * Navigation state change handler
    */
-  onNavigatorStateChange = () => {
-    const nav: any = getTopLevelNavigator();
-    if (!nav) {
-      return;
-    }
-    const currentRouteName = nav.getCurrentRoute()?.name;
-
+  onNavigatorStateChange = currentRouteName => {
     if (
       currentRouteName &&
       this.previousRouteName !== currentRouteName &&
