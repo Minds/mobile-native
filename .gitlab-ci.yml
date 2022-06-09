@@ -1,6 +1,6 @@
 stages:
   - test
-  - e2e
+  - qa
   - build
   - upload
   - release
@@ -38,6 +38,58 @@ test:jest:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
     - yarn test --forceExit
+
+# WebdriverIO Browserstack Tests
+.wdio_tests: &wdio_tests
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  before_script:
+    - yarn install --frozen-lockfile
+  script:
+    - yarn run test:real:ios
+    - yarn run test:real:android
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
+
+qa:develop:
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+
+qa:rc:nightly:
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+
+qa:prod:nightly:
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_PRODUCTION"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_PRODUCTION"
+    - *wdio_tests
+  only:
+    refs:
+      - /^master$/
+    variables:
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ### BUILD STAGE
 .prepare_build_android: &prepare_build_android
