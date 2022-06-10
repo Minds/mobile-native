@@ -21,6 +21,18 @@ export default class Page {
   get homeButton() {
     return this.selectElement('id', 'Menu tab button');
   }
+  get menuButton() {
+    return this.selectElement('id', 'Messenger tab button');
+  }
+  get multiUserButton() {
+    return this.selectElement('id', 'multiUserIcon');
+  }
+  get userDropdownButton() {
+    return this.selectElement('id', 'userDropdownMenu');
+  }
+  get logoutButton() {
+    return this.selectElement('text', 'Logout');
+  }
   /**
    * define or overwrite page methods
    */
@@ -51,10 +63,16 @@ export default class Page {
     await this.passwordField.waitForDisplayed();
     await this.passwordField.setValue(password);
     await this.loginButtonAfterCredentials.click();
-    await this.homeButton.waitForDisplayed({ timeout: this.maxTimeout });
   }
 
-  logout() {
-    // Logout function to be defined.
+  async logout() {
+    await this.menuButton.waitForDisplayed();
+    await this.menuButton.click();
+    await this.multiUserButton.waitForDisplayed();
+    await this.multiUserButton.click();
+    await this.userDropdownButton.waitForDisplayed();
+    await this.userDropdownButton.click();
+    await this.logoutButton.waitForDisplayed();
+    await this.logoutButton.click();
   }
 }

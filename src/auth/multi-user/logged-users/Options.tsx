@@ -58,7 +58,10 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
     return actions;
   }, [close, index, isActive, onSwitchPress]);
   return (
-    <TouchableOpacity onPress={show} hitSlop={hitSlop}>
+    <TouchableOpacity
+      onPress={show}
+      hitSlop={hitSlop}
+      testID="userDropdownMenu">
       <MIcon name="more-vert" size={24} style={theme.colorSecondaryText} />
       <BottomSheetModal ref={ref}>
         <MText style={styles.username}>@{username}</MText>
