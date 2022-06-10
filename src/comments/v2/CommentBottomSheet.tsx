@@ -80,7 +80,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   const height = useDimensions().window.height;
   const topInsets = useSafeAreaInsets().top;
 
-  console.log('autoOpen', props.autoOpen);
   const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
     autoOpen: props.autoOpen,
@@ -185,7 +184,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   const { keyboardShown } = useKeyboard();
 
   if (!localStore.isRendered) {
-    console.log('nuuuul');
     return null;
   }
 
