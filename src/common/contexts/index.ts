@@ -36,14 +36,16 @@ export function createClassStores() {
     recentSubscriptions: new RecentSubscriptionsStore(),
     dismissal: new DismissalStore(),
   };
-  sessionService.onLogout(() => {
+  const resetStores = () => {
     for (const id in stores) {
       if (stores[id].reset) {
         logService.info(`Reseting legacy store ${id}`);
         stores[id].reset();
       }
     }
-  });
+  };
+  sessionService.onLogout(resetStores);
+  sessionService.onLogin(resetStores);
   return stores;
 }
 
