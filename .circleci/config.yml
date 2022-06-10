@@ -140,21 +140,22 @@ workflows:
       - analyse_js:
           requires:
             - checkout_code
-      - fastlane_build_qa:
-          requires:
-            - analyse_js
-          filters:
-            branches:
-              only: /^(fix|feat|chore|refactor|stable).*/
-      - e2e_prod:
-          requires:
-            - checkout_code
-          filters:
-            branches:
-              only: /^stable.*/
-      - fastlane_release:
-          requires:
-            - analyse_js
-            - ios-testflight-approval
-      - ios-testflight-approval:
-          type: approval
+      # Disable CI: we moved it to gitlab
+      # - fastlane_build_qa:
+      #     requires:
+      #       - analyse_js
+      #     filters:
+      #       branches:
+      #         only: /^(fix|feat|chore|refactor|stable).*/
+      # - e2e_prod:
+      #     requires:
+      #       - checkout_code
+      #     filters:
+      #       branches:
+      #         only: /^stable.*/
+      # - fastlane_release:
+      #     requires:
+      #       - analyse_js
+      #       - ios-testflight-approval
+      # - ios-testflight-approval:
+      #     type: approval

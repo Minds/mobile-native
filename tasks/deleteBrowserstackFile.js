@@ -20,12 +20,10 @@ const task = async () => {
 
   const json = await response.json();
 
+  const filename = args[0];
+
   if (Array.isArray(json)) {
-    const idsArray = json.filter(
-      app =>
-        app.app_name === args[0] ||
-        app.app_name === args[0].replace('.apk', '.ipa'),
-    );
+    const idsArray = json.filter(app => app.app_name === filename);
     for (let i = 0; i < idsArray.length; i++) {
       const app = idsArray[i];
       if (app) {
