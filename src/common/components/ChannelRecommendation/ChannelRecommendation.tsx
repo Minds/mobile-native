@@ -1,12 +1,20 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
-import React, { FC, useCallback, useLayoutEffect, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { LayoutAnimation, View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
+import { useLegacyStores } from '~/common/hooks/use-stores';
 import i18nService from '~/common/services/i18n.service';
-import { Avatar, B1, B2, Column, H3, Row, Spacer } from '~/common/ui';
+import { Avatar, B1, B2, Column, H3, Icon, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import MenuSheet from '../bottom-sheet/MenuSheet';
 import MPressable from '../MPressable';
 import { useChannelRecommendation } from './hooks/useChannelRecommendation';
 
@@ -79,7 +87,25 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
   const navigation = useNavigation();
   const [listSize, setListSize] = useState(3);
   const { result, setResult } = useChannelRecommendation(location, channel);
-  const shouldRender = Boolean(result?.entities.length) && visible;
+  const { dismissal } = useLegacyStores();
+  const isDismissed = dismissal.isDismissed('channel-recommendation:feed');
+  const dismissible = location !== 'channel';
+  const sheetOptions = useMemo(
+    () => [
+      {
+        title: i18nService.t('removeFromFeed'),
+        onPress: () => dismissal.dismiss('channel-recommendation:feed'),
+        iconName: 'close',
+        iconType: 'material-community',
+      },
+    ],
+    [dismissal],
+  );
+
+  const shouldRender =
+    Boolean(result?.entities.length) &&
+    visible &&
+    (dismissible ? !isDismissed : true);
 
   /**
    * When a channel was subscribed, remove it from the list——unless the list is small
@@ -125,11 +151,19 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
       <Spacer vertical="XL">
         <Row align="centerBetween" bottom="XL" horizontal="L">
           <H3>{i18nService.t('recommendedChannels')}</H3>
-          <B2
-            color="link"
-            onPress={() => navigation.navigate('SuggestedChannel')}>
-            {i18nService.t('seeMore')}
-          </B2>
+          <Row align="centerBoth">
+            <B2
+              color="link"
+              onPress={() => navigation.navigate('SuggestedChannel')}>
+              {i18nService.t('seeMore')}
+            </B2>
+
+            {dismissible && (
+              <MenuSheet items={sheetOptions}>
+                <Icon name="more" size="large" left="M" />
+              </MenuSheet>
+            )}
+          </Row>
         </Row>
 
         {result?.entities.slice(0, listSize).map(suggestion => (
