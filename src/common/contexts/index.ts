@@ -45,7 +45,7 @@ export function createClassStores() {
     }
   };
   sessionService.onLogout(resetStores);
-  sessionService.onLogin(resetStores);
+  sessionService.onUserChange(resetStores);
   return stores;
 }
 

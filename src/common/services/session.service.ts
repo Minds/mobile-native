@@ -516,6 +516,25 @@ export class SessionService {
   }
 
   /**
+   * Run on user change
+   * @return dispose (remember to dispose!)
+   * @param {function} fn
+   */
+  onUserChange(fn) {
+    return reaction(
+      () => [this.activeIndex],
+      async args => {
+        try {
+          await fn(...args);
+        } catch (error) {
+          logService.exception('[SessionService]', error);
+        }
+      },
+      { fireImmediately: false },
+    );
+  }
+
+  /**
    * Run on session change
    * @return dispose (remember to dispose!)
    * @param {function} fn
