@@ -330,7 +330,7 @@ upload:browserstack:mr:
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID=Minds$CI_COMMIT_REF_SLUG
+    - export CUSTOM_ID=MRLast
   dependencies:
     - build:android_mr_production
   only:
