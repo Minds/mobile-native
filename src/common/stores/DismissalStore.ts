@@ -94,4 +94,12 @@ export class DismissalStore {
     this.dismisses = [];
     setTimeout(() => this._rehydrate(), 0);
   }
+
+  /**
+   * Reset the store
+   */
+  @action
+  onLogin() {
+    return this.reset();
+  }
 }

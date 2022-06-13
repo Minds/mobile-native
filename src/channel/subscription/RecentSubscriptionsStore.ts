@@ -75,6 +75,11 @@ export class RecentSubscriptionsStore {
     setTimeout(() => this._rehydrate(), 0);
   }
 
+  @action
+  onLogin() {
+    return this.reset();
+  }
+
   /**
    * saves subscriptions to storage
    */

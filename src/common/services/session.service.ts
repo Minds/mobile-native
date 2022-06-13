@@ -525,7 +525,7 @@ export class SessionService {
       () => [this.activeIndex],
       async args => {
         try {
-          await fn(...args);
+          await fn(this.tokensData[args[0]].user);
         } catch (error) {
           logService.exception('[SessionService]', error);
         }
