@@ -1,6 +1,6 @@
-export default {
-  Loader: () => ({
-    withInstanceID: () => ({
+export class MMKVLoader {
+  withInstanceID() {
+    return {
       setProcessingMode: jest.fn(),
       withEncryption: jest.fn(),
       initialize: () => ({
@@ -46,6 +46,6 @@ export default {
         getCurrentMMKVInstanceIDs: jest.fn(),
         getKey: jest.fn(),
       }),
-    }),
-  }),
-};
+    };
+  }
+}

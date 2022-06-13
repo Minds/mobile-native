@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-import { SharedElement } from 'react-navigation-shared-element';
 import SmartImage from './SmartImage';
 
 /**
@@ -20,16 +19,14 @@ export default class ImageViewer extends Component {
           cropHeight={Dimensions.get('window').height}
           imageWidth={this.props.width}
           imageHeight={this.props.height}>
-          <SharedElement id={`${this.props.urn}.image`}>
-            <SmartImage
-              style={[
-                styles.image,
-                { height: this.props.height, width: this.props.width },
-              ]}
-              resizeMode="stretch"
-              source={this.props.source}
-            />
-          </SharedElement>
+          <SmartImage
+            style={[
+              styles.image,
+              { height: this.props.height, width: this.props.width },
+            ]}
+            resizeMode="stretch"
+            source={this.props.source}
+          />
         </ImageZoom>
       </View>
     );

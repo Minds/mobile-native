@@ -10,7 +10,6 @@ import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
-  AppState,
   Linking,
   UIManager,
   RefreshControl,
@@ -62,10 +61,6 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-type State = {
-  appState: string;
-};
-
 type Props = {};
 
 export let APP_CONST = {
@@ -76,22 +71,8 @@ export let APP_CONST = {
  * App
  */
 @observer
-class App extends Component<Props, State> {
+class App extends Component<Props> {
   ShareReceiveListener;
-
-  /**
-   * State
-   */
-  state = {
-    appState: AppState.currentState || '',
-  };
-
-  /**
-   * Handle app state changes
-   */
-  handleAppStateChange = nextState => {
-    this.setState({ appState: nextState });
-  };
 
   constructor(props) {
     super(props);
@@ -123,7 +104,6 @@ class App extends Component<Props, State> {
     // Register event listeners
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     Linking.addEventListener('url', this.handleOpenURL);
-    AppState.addEventListener('change', this.handleAppStateChange);
     this.ShareReceiveListener = ShareMenu.addNewShareListener(
       receiveShareService.handle,
     );
@@ -143,7 +123,6 @@ class App extends Component<Props, State> {
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
-    AppState.removeEventListener('change', this.handleAppStateChange);
     if (this.ShareReceiveListener) {
       this.ShareReceiveListener.remove();
     }

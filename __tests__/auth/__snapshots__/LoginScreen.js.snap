@@ -657,7 +657,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             >
               <View
                 collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -676,7 +675,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             </View>
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "backgroundColor": "rgba(0, 0, 0, 0.05)",
@@ -691,7 +689,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             />
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1242,7 +1239,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     >
                       <View
                         collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "transform": Array [
@@ -1261,7 +1257,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     </View>
                     <View
                       collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "backgroundColor": "rgba(0, 0, 0, 0.05)",
@@ -1276,7 +1271,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     />
                     <View
                       collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [

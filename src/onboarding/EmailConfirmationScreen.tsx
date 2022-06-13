@@ -1,7 +1,7 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View } from 'react-native';
+import { Button } from '~/common/ui';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
@@ -11,7 +11,10 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Email confirmation screen
  */
-export default class EmailConfirmationScreen extends Component {
+export default class EmailConfirmationScreen extends Component<{
+  navigation: any;
+  route: any;
+}> {
   static navigationOptions = {
     title: 'Email confirm',
   };
@@ -55,14 +58,10 @@ export default class EmailConfirmationScreen extends Component {
     if (this.state.error) {
       return (
         <MText
-          style={[
-            ThemedStyles.style.fontL,
-            ThemedStyles.style.textCenter,
-            ThemedStyles.style.colorDarkGreyed,
-          ]}
+          style={[ThemedStyles.style.fontL, ThemedStyles.style.textCenter]}
           onPress={this.confirm}>
           {i18n.t('errorMessage') + '\n'}
-          <MText style={[ThemedStyles.style.colorPrimary]}>
+          <MText style={ThemedStyles.style.colorLink}>
             {i18n.t('tryAgain')}
           </MText>
         </MText>
@@ -71,18 +70,16 @@ export default class EmailConfirmationScreen extends Component {
 
     if (this.state.confirmed) {
       return (
-        <MText
-          style={[
-            ThemedStyles.style.fontXL,
-            ThemedStyles.style.textCenter,
-            ThemedStyles.style.colorDarkGreyed,
-          ]}
-          onPress={() => this.props.navigation.goBack()}>
-          {i18n.t('emailConfirm.confirmed') + '\n'}
-          <MText style={[ThemedStyles.style.colorPrimary]}>
-            {i18n.t('goback')}
+        <View>
+          <MText
+            style={[ThemedStyles.style.fontXXL, ThemedStyles.style.textCenter]}
+            onPress={() => this.props.navigation.goBack()}>
+            {i18n.t('emailConfirm.confirmed') + '\n'}
           </MText>
-        </MText>
+          <Button onPress={() => this.props.navigation.goBack()}>
+            {i18n.t('goback')}
+          </Button>
+        </View>
       );
     }
     return <CenteredLoading />;

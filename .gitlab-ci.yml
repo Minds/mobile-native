@@ -2,14 +2,37 @@ stages:
   - test
   - e2e
   - build
-  - deploy
+  - upload
   - release
-  - uploadstore
+  - release_store
 
-# Spec test
+variables:
+  APK_NAME: Minds.apk
+
+# Gets the version of the app parsing the gradle.properties file
+.getversion: &getversion
+  - 'export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`'
+
+# Gets the version of the iOS app parsing the project files
+.getiosversion: &getiosversion
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,\"\",$3);print $3}'`
+  - echo "APPVERSION=$APPVERSION"
+
+# Delete the build from browserstack
+.delete_browserstack: &delete_browserstack
+  - 'echo "Deleting browserstack credentials..."'
+  - node tasks/deleteBrowserstackFile.js $TARGET_NAME
+
+# Move the apk to the root folder
+.move_apk: &move_apk
+  - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
+
+### TEST STAGE
 test:jest:
-  image: node:12.13.0
+  image: node:14.19.2
   stage: test
+  interruptible: true
+  tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -22,111 +45,89 @@ test:jest:
     - yarn tsc
     - yarn test --forceExit
 
-# e2e test
-# e2e:detox:
-#  image: circleci/android:api-28-node
-#  variables:
-#    ANDROID_COMPILE_SDK: "28"
-#  stage: e2e
-#  cache:
-#    key: ${CI_COMMIT_REF_SLUG}
-#    paths:
-#      - node_modules/
-#      - .jest/cache/
-#  before_script:
-#    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
-#    - chmod +x android-wait-for-emulator
-#    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
-#    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager --update
-#    - echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
-#    - emulator @test -no-window -no-audio
-#    - ./android-wait-for-emulator
-#    - yarn global add detox-cli
-#    - yarn install --frozen-lockfile
-#    - detox build
-#    - yarn react-native start
-#
-#  script:
-#    - detox test -c android.emu.release
+### BUILD STAGE
+.prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
+  image: macos-12-xcode-13
+  tags: [shared-macos-amd64]
+  artifacts:
+    name: 'Minds IPA'
+    paths:
+      - 'ios/Minds.ipa'
+    expire_in: 45 days
+    when: on_success
+  before_script:
+    - 'mkdir -p ~/.ssh' # we github to the known_hosts file (fix hanging when cloning secrets repo)
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/devops-for-mobile-apps/load-secure-files/-/raw/main/installer" | bash
+    - mv .secure_files/id_rsa ~/.ssh/id_rsa
+    - echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - chmod 700 ~/.ssh
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-add ~/.ssh/id_rsa
+    - yarn install --frozen-lockfile
+    - cd ios
+    - pod install
 
-# Upload new terms to poeditor
-# i18n:upload:
-#   image: node:10.16.3
-#   stage: i18n
-#   cache:
-#     key: ${CI_COMMIT_REF_SLUG}
-#     paths:
-#       - node_modules/
-#   before_script:
-#     - yarn install --frozen-lockfile
-#   script:
-#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
-#   only:
-#     refs:
-#       - /^release-*/
+# Build the QA iOS app for each MR and upload it to browserstack
+build:ios_mr:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
+  only:
+    refs:
+      - /^feat-*/
+      - /^fix-*/
+      - /^chore-*/
+      - /^refactor-*/
 
-# Upload new terms and remove the deleted
-# i18n:uploadsync:
-#   image: node:10.16.3
-#   stage: i18n
-#   cache:
-#     key: ${CI_COMMIT_REF_SLUG}
-#     paths:
-#       - node_modules/
-#   before_script:
-#     - yarn install --frozen-lockfile
-#   script:
-#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
-#   only:
-#     refs:
-#       - master
+# Build iOS RC for develop branch
+build:ios_release_candidate:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+  only:
+    refs:
+      - develop
 
-# Web dev version using cache and without sentry maps upload
-# build:android:
-#   image: circleci/android:api-28-node
-#   stage: build
-#   cache:
-#     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-#     paths:
-#       - node_modules/
-#       - android/vendor/bundle
-#       - .gradle/caches
-#       - .gradle/wrapper
-#       - .android/build-cache/
-#   before_script:
-#     - 'sed -i ''s/^apply from: "..\/..\/node_modules\/\@sentry\/react-native\/sentry.gradle"//'' android/app/build.gradle'
-#     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
-#     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
-#     - sudo sysctl fs.inotify.max_user_watches=524288
-#     - sudo sysctl -p
-#     - yarn install --frozen-lockfile
-#     - cd android
-#     - bundle install --path=vendor/bundle
-#   script:
-#     - bundle exec fastlane assemble_build
-#     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
-#   artifacts:
-#     name: "Minds APK"
-#     paths:
-#       - Minds-$CI_COMMIT_REF_SLUG.apk
-#     expire_in: 7 days
-#     when: on_success
-#   only:
-#     refs:
-#       - /^release-*/
+# Build iOS for master branch
+build:ios_production:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - fastlane upload_testflight
+    - export TARGET_NAME=Minds-$APPVERSION.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+  only:
+    refs:
+      - master
 
-.build_android: &build_android
+# Android common build steps
+.prepare_build_android: &prepare_build_android
   image: circleci/android:api-30-node
   stage: build
-  # cache:
-  #   key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-  #   paths:
-  #     - node_modules/
-  #     - android/vendor/bundle
-  #     - .gradle/caches
-  #     - .gradle/wrapper
-  #     - .android/build-cache/
+  tags: [minds-ci]
+  interruptible: true
   before_script:
+    # PREPARE
+    - *getversion
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
@@ -136,30 +137,29 @@ test:jest:
     - yarn install --frozen-lockfile
     - cd android
     - bundle install --path=vendor/bundle
-  script:
-    - bundle exec fastlane assemble_build
-    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
-    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
   artifacts:
     name: 'Minds APK'
     paths:
-      - Minds-$CI_COMMIT_REF_SLUG.apk
+      - $APK_NAME
     expire_in: 45 days
     when: on_success
 
-# Web version (Higher version code)
+# Build Android production Full Version (Higher version code)
 build:androidproduction:
-  <<: *build_android
+  <<: *prepare_build_android
+  script:
+    - bundle exec fastlane assemble_build
+    - *move_apk
   only:
     refs:
-      - /^stable-*/
-      - /^test-*/
-      - /^release-*/
+      - develop
+      - master
 
-# Production version for MR testing (manual)
-build:android-mr-production:
-  image: circleci/android:api-30-node
-  stage: build
+# Production build for QA of MR
+build:android_mr_production:
+  <<: *prepare_build_android
+  variables:
+    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
     paths:
@@ -168,32 +168,14 @@ build:android-mr-production:
       - .gradle/caches
       - .gradle/wrapper
       - .android/build-cache/
-  before_script:
-    - cp android/app/debug.keystore android/debug.keystore
-    - export ENVFILE=".env.review"
-    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
-    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
-    - sudo sysctl fs.inotify.max_user_watches=524288
-    - sudo sysctl -p
-    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
-    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
-    - yarn install --frozen-lockfile
-    - cd android
-    - bundle install --path=vendor/bundle
   script:
+    - cp app/debug.keystore debug.keystore
+    - export ENVFILE=".env.review"
     - bundle exec fastlane assemble_mr_build
-    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
-    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@../Minds-$CI_COMMIT_REF_SLUG.apk"
-  artifacts:
-    name: 'Minds APK'
-    paths:
-      - Minds-$CI_COMMIT_REF_SLUG.apk
-    expire_in: 45 days
-    when: on_success
+    - *move_apk
   environment:
     name: review/$CI_COMMIT_REF_SLUG
-    url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
     on_stop: build:cleanup
   only:
     refs:
@@ -202,14 +184,18 @@ build:android-mr-production:
       - /^chore-*/
       - /^refactor-*/
 
-# Cleanup merged APK from browserstack
+# Cleanup APK from merged MRs
 build:cleanup:
   image: circleci/android:api-30-node
+  tags: [minds-ci]
   when: manual
   stage: build
+  variables:
+    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
+    IPA_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.ipa'
   environment:
     name: review/$CI_COMMIT_REF_SLUG
-    url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
     action: stop
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
@@ -218,94 +204,154 @@ build:cleanup:
   before_script:
     - yarn install --frozen-lockfile
   script:
-    - node ./tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
+    - export TARGET_NAME=$APK_FILENAME
+    - *delete_browserstack
+    - export TARGET_NAME=$IPA_FILENAME
+    - *delete_browserstack
   only:
     refs:
       - /^feat-*/
       - /^fix-*/
       - /^chore-*/
+      - /^refactor-*/
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
-  image: circleci/android:api-30-node
-  stage: build
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
-      - android/vendor/bundle
-      - .gradle/caches
-      - .gradle/wrapper
-      - .android/build-cache/
-  before_script:
-    - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
-    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
-    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
-    - sudo sysctl fs.inotify.max_user_watches=524288
-    - sudo sysctl -p
-    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
-    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
-    - yarn install --frozen-lockfile
-    - cd android
-    - bundle install --path=vendor/bundle
+  <<: *prepare_build_android
   script:
+    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
-    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
-    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG-play_store.apk
-  artifacts:
-    name: 'Minds APK'
-    paths:
-      - Minds-$CI_COMMIT_REF_SLUG-play_store.apk
-    expire_in: 7 days
-    when: on_success
+    - *move_apk
   only:
     refs:
-      - /^stable-*/
-      - /^test-*/
+      - master
 
-# Deploy Web/PlayStore versions to s3 and browserstack
-
-.deploy_s3andbrowserstack: &deploy_s3andbrowserstack
-  stage: deploy
+### UPLOAD STAGE
+.upload_s3: &upload_s3
+  stage: upload
+  tags: [minds-ci]
   image: minds/ci:latest
+  interruptible: true
   script:
-    - echo "Upload $APK_FILENAME"
-    - aws s3 cp $APK_FILENAME s3://minds-repo/mobile/$APK_FILENAME
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_FILENAME"
+    - echo "Upload $TARGET_NAME"
+    - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_NAME
 
-deploy:s3andbrowserstack:oss:
-  <<: *deploy_s3andbrowserstack
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
+.upload_browserstack: &upload_browserstack
+  stage: upload
+  tags: [minds-ci]
+  image: node:14.19.2
+  interruptible: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install --frozen-lockfile
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F 'data={"custom_id":"$CUSTOM_ID"}'
+
+# Upload production builds (Full version)
+upload:s3:oss: # Upload to S3
+  <<: *upload_s3
+  before_script:
+    - *getversion
+    - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
   only:
     refs:
-      - /^stable-*/
-      - /^release-*/
-      - /^test-*/
+      - master
 
-deploy:s3andbrowserstack:playstore:
-  <<: *deploy_s3andbrowserstack
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG-play_store.apk'
+upload:browserstack:oss: # Upload to Browserstack
+  <<: *upload_browserstack
+  before_script:
+    - *getversion
+    - export TARGET_NAME=Minds-$APPVERSION.apk
+    - export CUSTOM_ID=ANDROID_PRODUCTION
+  dependencies:
+    - build:androidproduction
+  only:
+    refs:
+      - master
+
+# Upload production builds (play-store version)
+upload:s3:playstore: # Upload to S3
+  <<: *upload_s3
+  before_script:
+    - *getversion
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
   dependencies:
     - build:androidproduction-playstore
   only:
     refs:
-      - /^stable-*/
-      - /^test-*/
+      - master
 
-# Generate releases.json and upload it
+upload:browserstack:playstore: # Upload to Browserstack
+  <<: *upload_browserstack
+  before_script:
+    - *getversion
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
+    - export CUSTOM_ID=ANDROID_PRODUCTION_PLAYSTORE
+  dependencies:
+    - build:androidproduction-playstore
+  only:
+    refs:
+      - master
+
+# Upload production RC (develop branch)
+upload:s3:oss:rc: # Upload to S3
+  <<: *upload_s3
+  before_script:
+    - *getversion
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+  dependencies:
+    - build:androidproduction
+  only:
+    refs:
+      - develop
+
+upload:browserstack:oss:rc: # Upload to Browserstack
+  <<: *upload_browserstack
+  before_script:
+    - *getversion
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+    - export CUSTOM_ID=ANDROID_RC
+  dependencies:
+    - build:androidproduction
+  only:
+    refs:
+      - develop
+
+# Upload MR builds to browserstack
+upload:browserstack:mr:
+  <<: *upload_browserstack
+  before_script:
+    - *getversion
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
+    - export CUSTOM_ID=MRLast
+  dependencies:
+    - build:android_mr_production
+  only:
+    refs:
+      - /^feat-*/
+      - /^fix-*/
+      - /^chore-*/
+      - /^refactor-*/
+
+### RELEASE STAGE
+
+# Release Full Android
 release:production:
   image: msantang78/ci-mobile:latest
   stage: release
+  tags: [minds-ci]
   variables:
     APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   dependencies:
     - build:androidproduction
-    - deploy:s3andbrowserstack:oss
+    - upload:s3:oss
   artifacts:
     name: 'Release JSON'
     paths:
@@ -316,8 +362,7 @@ release:production:
   when: manual
   only:
     refs:
-      - /^stable-*/
-      - /^test-*/ # Delete this
+      - master
   before_script:
     - node -v
     - yarn install
@@ -326,9 +371,10 @@ release:production:
     - yarn release-json $APK_FILENAME
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
-uploadstore:google_play:
+release_store:google_play:
   image: circleci/android:api-28-node
-  stage: uploadstore
+  stage: release_store
+  tags: [minds-ci]
   before_script:
     - cd android
     - bundle install --path=vendor/bundle
@@ -342,5 +388,47 @@ uploadstore:google_play:
   when: manual
   only:
     refs:
-      - /^stable-*/
-      - /^test-*/
+      - master
+
+## CodePush releases
+release:codepush-ios:
+  image: node:14.19.1
+  stage: release
+  tags: [minds-ci]
+  before_script:
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+  only:
+    - /^patch-*/
+  when: manual
+
+release:codepush-android:
+  image: node:14.19.1
+  stage: release
+  tags: [minds-ci]
+  before_script:
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds -d Production
+  only:
+    - /^patch-*/
+  when: manual
+
+# iOS Release candidate to TestFlight
+release:ios_rc_testflight:
+  image: macos-12-xcode-13
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_release_candidate
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - develop

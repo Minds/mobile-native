@@ -2,7 +2,6 @@ import { useDimensions } from '@react-native-community/hooks';
 import React from 'react';
 import { View, TouchableOpacity, StyleProp } from 'react-native';
 import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
-import { SharedElement } from 'react-navigation-shared-element';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
@@ -130,31 +129,29 @@ export default function MediaViewImage({
   }
 
   return (
-    <SharedElement id={`${entity.urn}.image`}>
-      <DoubleTapTouchable
-        onDoubleTap={onImageDoublePress}
-        onPress={onImagePress}
-        onLongPress={onImageLongPress}
-        style={containerStyle}
-        activeOpacity={1}
-        testID="Posted Image">
-        <ExplicitImage
-          resizeMode={
-            aspectRatio === MIN_ASPECT_RATIO_FIXED ||
-            aspectRatio === MIN_ASPECT_RATIO_AUTO_WIDTH
-              ? 'contain'
-              : mode
-          }
-          style={imageStyle}
-          source={source}
-          thumbnail={thumbnail}
-          entity={entity}
-          onLoad={onLoadImage}
-          onError={imageError}
-          ignoreDataSaver={ignoreDataSaver}
-        />
-      </DoubleTapTouchable>
-    </SharedElement>
+    <DoubleTapTouchable
+      onDoubleTap={onImageDoublePress}
+      onPress={onImagePress}
+      onLongPress={onImageLongPress}
+      style={containerStyle}
+      activeOpacity={1}
+      testID="Posted Image">
+      <ExplicitImage
+        resizeMode={
+          aspectRatio === MIN_ASPECT_RATIO_FIXED ||
+          aspectRatio === MIN_ASPECT_RATIO_AUTO_WIDTH
+            ? 'contain'
+            : mode
+        }
+        style={imageStyle}
+        source={source}
+        thumbnail={thumbnail}
+        entity={entity}
+        onLoad={onLoadImage}
+        onError={imageError}
+        ignoreDataSaver={ignoreDataSaver}
+      />
+    </DoubleTapTouchable>
   );
 }
 

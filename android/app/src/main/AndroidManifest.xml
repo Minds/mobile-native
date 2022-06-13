@@ -50,7 +50,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme"
+        android:theme="@style/BootTheme"
         android:windowSoftInputMode="adjustResize"
         tools:replace="android:allowBackup"
         android:requestLegacyExternalStorage="true">
@@ -124,6 +124,11 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
@@ -175,17 +180,6 @@
         <activity android:exported="false" android:name="com.ahmedadeltito.photoeditor.PhotoEditorActivity"/>
         <activity android:exported="false" android:name="com.yalantis.ucrop.UCropActivity" />
         <activity android:exported="false" android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        <activity
-            android:screenOrientation="portrait"
-            android:exported="true"
-            android:name="com.zoontek.rnbootsplash.RNBootSplashActivity"
-            android:theme="@style/BootTheme"> <!-- apply the theme you created at step 3. -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

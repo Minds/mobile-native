@@ -1,46 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
-
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
-import ThemedStyles from '../styles/ThemedStyles';
-import { useDimensions } from '@react-native-community/hooks';
+import { Column, Row, Spacer } from '~/common/ui';
+import Placeholder from '~/common/components/Placeholder';
 
 export default function ActivityPlaceHolder() {
-  const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('TertiaryBackground');
-  const { width } = useDimensions().screen;
-
-  const animation = props => (
-    <Fade {...props} style={theme.bgPrimaryBackground} />
-  );
-
   return (
-    <View
-      style={[
-        theme.borderBottom8x,
-        theme.bcolorPrimaryBackground,
-        theme.paddingBottom4x,
-        theme.paddingTop2x,
-      ]}>
-      <Placeholder
-        Left={() => (
-          <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
-        )}
-        style={theme.paddingHorizontal3x}
-        Animation={animation}>
-        <View>
-          <PlaceholderLine width={20} color={color} />
-          <PlaceholderLine width={30} color={color} />
-        </View>
-      </Placeholder>
-      <Placeholder Animation={animation}>
-        <PlaceholderMedia size={width} color={color} />
-      </Placeholder>
-    </View>
+    <Spacer vertical="S">
+      <Row horizontal="M" align="centerStart" bottom="M">
+        <Placeholder radius="round" height={38} width={38} />
+        <Column left="M">
+          <Spacer bottom="XS">
+            <Placeholder width={140} height={17} />
+          </Spacer>
+          <Placeholder width={90} height={15} />
+        </Column>
+      </Row>
+      <Placeholder radius="square" height={290} width="100%" />
+    </Spacer>
   );
 }

@@ -37,6 +37,7 @@ const TokensForm = observer(({ store }: propsType) => {
         value={store.amount.toString()}
         keyboardType="decimal-pad"
         testID="fabTokensInput"
+        error={store.errors.amount}
       />
       <View style={theme.paddingHorizontal4x}>
         <LabeledComponent

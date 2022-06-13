@@ -4,7 +4,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import throttle from 'lodash/throttle';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import Feature from '~/common/components/Feature';
 import Topbar from '~/topbar/Topbar';
 
@@ -16,11 +15,11 @@ import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/PortraitContentBar';
-import ActivityPlaceHolder from './ActivityPlaceHolder';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
@@ -53,14 +52,6 @@ class NewsfeedScreen extends Component<
 > {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
-  emptyProps = {
-    ListEmptyComponent: (
-      <View>
-        <ActivityPlaceHolder />
-        <ActivityPlaceHolder />
-      </View>
-    ),
-  };
 
   /**
    * whether the topbar should be shadowLess
@@ -166,7 +157,7 @@ class NewsfeedScreen extends Component<
     const isLatest = this.props.newsfeed.feedType === 'latest';
 
     const header = (
-      <View style={isLatest ? latestPostsContainerStyles.header : undefined}>
+      <>
         <Topbar
           shadowLess={this.state.shadowLessTopBar}
           navigation={this.props.navigation}
@@ -179,11 +170,11 @@ class NewsfeedScreen extends Component<
             />
           </IfFeatureEnabled>
         )}
-      </View>
+      </>
     );
 
     const prepend = (
-      <View style={isLatest ? latestPostsContainerStyles.prepend : undefined}>
+      <>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -196,11 +187,8 @@ class NewsfeedScreen extends Component<
             onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
           />
         </IfFeatureEnabled>
-      </View>
+      </>
     );
-
-    // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
 
     return (
       <FeedList
@@ -222,21 +210,10 @@ class NewsfeedScreen extends Component<
             ? this.injectItems
             : undefined
         }
-        {...additionalProps}
+        placeholder={NewsfeedPlaceholder}
       />
     );
   }
 }
 
 export default withErrorBoundary(NewsfeedScreen);
-
-/**
- * these styles are used to hide the latest posts button completely when there's some notch
- * on top of the screen. It's a little hard to explain. But if you remove these from the
- * iPhone 13, the button will be partially visible under the notch, but with these styles
- * the button will get out of the screen
- */
-const latestPostsContainerStyles = {
-  header: { paddingBottom: 50 },
-  prepend: { marginTop: -50 },
-};
