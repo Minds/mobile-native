@@ -522,8 +522,12 @@ export class SessionService {
    */
   onUserChange(fn) {
     return reaction(
-      () => [this.activeIndex],
+      () => [this.userLoggedIn ? this.activeIndex : null],
       async args => {
+        if (args[0] === null) {
+          return null;
+        }
+
         try {
           await fn(this.tokensData[args[0]].user);
         } catch (error) {
