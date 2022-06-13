@@ -2,6 +2,26 @@
 
 Minds Mobile
 
+## 4.25.0 - 2022-06-08
+
+### Changed
+
+- React native updated to the latest version (0.68)
+- Placeholders refactored using a more performant animation library
+- Better error message when an upload fails
+- Updated fast images package
+- Wire amount validation added
+- Track unmute events
+- Fix email confirmation screen layout
+- Fix play store automated releases when the changelog is to long
+- Dark splash screen and splash package updated
+- Fix iOS email invite encoding
+- Fix share to minds error on iOS
+- Improves the channel edit UX and keyboard handling
+- Updates the video player, the linear gradient and image manipulator packages
+- Update expo package
+- Fix back button not working in some bottom sheets
+
 ## 4.24.0 - 2022-05-19
 
 ### Changed
