@@ -110,7 +110,6 @@ build:ios_production:
   script:
     - *getiosversion
     - fastlane buildrelease
-    - fastlane upload_testflight
     - export TARGET_NAME=Minds-$APPVERSION.ipa
     - cd ..
     - *delete_browserstack
@@ -432,3 +431,19 @@ release:ios_rc_testflight:
   only:
     refs:
       - develop
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  image: macos-12-xcode-13
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - master
