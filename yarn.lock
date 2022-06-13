@@ -15777,6 +15777,11 @@ react-native-image-filter-kit@^0.8.0:
     rn-color-matrices "^4.1.0"
     ts-tiny-invariant "0.0.3"
 
+react-native-image-keyboard@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-keyboard/-/react-native-image-keyboard-2.2.0.tgz#dc3f90aaaac20a79315015a330e62e85547e0674"
+  integrity sha512-2JzKCXMBYiIUR6OtGV7F/lEWqwIU/6HS1CGOBulxwYNxoa7m1nZk45hNEZPP8SA5yE2pLNXEQePjc3WGAtXo3w==
+
 react-native-image-pan-zoom@^2.1.12:
   version "2.1.12"
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"

@@ -48,6 +48,7 @@ import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import { CODE_PUSH_KEY } from '~/config/Config';
+import 'react-native-image-keyboard';
 
 YellowBox.ignoreWarnings(['']);
 
