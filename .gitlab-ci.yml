@@ -219,8 +219,8 @@ build:cleanup:
 build:androidproduction-playstore:
   <<: *prepare_build_android
   script:
-    - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
+    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
     - *move_apk
   only:
@@ -330,7 +330,7 @@ upload:browserstack:mr:
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID=Minds-$CI_COMMIT_REF_SLUG
+    - export CUSTOM_ID=Minds$CI_COMMIT_REF_SLUG
   dependencies:
     - build:android_mr_production
   only:
