@@ -23,7 +23,7 @@ platform :ios do
   desc "Authenticate with App Store Connect"
   lane :auth do 
     app_store_connect_api_key(
-      key_id: "SSN6GGXR42",
+      key_id: "KB9JB76UKX",
       issuer_id: "69a6de78-30ef-47e3-e053-5b8c7c11a4d1",
       key_content: "#{ENV["APP_STORE_CONNECT_API_KEY"]}",
       is_key_content_base64: true,
@@ -52,7 +52,16 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :upload_testflight do
-    upload_to_testflight(skip_waiting_for_build_processing: true, api_key: auth)
+    upload_to_testflight(skip_waiting_for_build_processing: true, api_key: auth, ipa: "./Minds.ipa")
+  end
+
+  desc "Get version iOS"
+  lane :getversion do
+    version = get_version_number(
+      xcodeproj: "Minds.xcodeproj",
+      target: "Minds"
+    )
+    sh("echo " + version)
   end
 
   # desc "Prepare sentry release"
