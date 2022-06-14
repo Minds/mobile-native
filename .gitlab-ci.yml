@@ -110,7 +110,6 @@ build:ios_production:
   script:
     - *getiosversion
     - fastlane buildrelease
-    - fastlane upload_testflight
     - export TARGET_NAME=Minds-$APPVERSION.ipa
     - cd ..
     - *delete_browserstack
@@ -219,8 +218,8 @@ build:cleanup:
 build:androidproduction-playstore:
   <<: *prepare_build_android
   script:
-    - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
+    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
     - *move_apk
   only:
@@ -330,7 +329,7 @@ upload:browserstack:mr:
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID=Minds-$CI_COMMIT_REF_SLUG
+    - export CUSTOM_ID=MRLast
   dependencies:
     - build:android_mr_production
   only:
@@ -432,3 +431,19 @@ release:ios_rc_testflight:
   only:
     refs:
       - develop
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  image: macos-12-xcode-13
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - master

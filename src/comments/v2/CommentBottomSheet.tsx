@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import {
   useBackHandler,
   useDimensions,
@@ -9,7 +9,12 @@ import {
   StackNavigationOptions,
   TransitionPresets,
 } from '@react-navigation/stack';
-import { NavigationContainer, useRoute } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useFocusEffect,
+  useRoute,
+} from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { observer, useLocalStore } from 'mobx-react';
@@ -18,12 +23,16 @@ import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Handle from '~/common/components/bottom-sheet/Handle';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BackHandler } from 'react-native';
 
 const bottomSheetLocalStore = ({ autoOpen }) => ({
   isRendered: Boolean(autoOpen),
+  isVisible: false,
   setIsRendered(isRendered: boolean) {
     this.isRendered = isRendered;
+  },
+  setIsVisible(index: number) {
+    this.isVisible = index === 0;
   },
 });
 
@@ -70,10 +79,7 @@ const ScreenReplyComment = ({ navigation }) => {
 const CommentBottomSheet = (props: PropsType, ref: any) => {
   const height = useDimensions().window.height;
   const topInsets = useSafeAreaInsets().top;
-  /**
-   * used to enable/disable back handler
-   **/
-  const [isVisible, setIsVisible] = useState(false);
+
   const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
     autoOpen: props.autoOpen,
@@ -89,7 +95,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     expand: () => {
       if (localStore.isRendered) {
         sheetRef.current?.present();
-        setIsVisible(true);
       } else {
         localStore.setIsRendered(true);
       }
@@ -99,15 +104,24 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     },
   }));
 
-  useBackHandler(
-    useCallback(() => {
-      if (isVisible) {
-        sheetRef.current?.dismiss();
-        return true;
-      }
+  // back button handler
+  const backHandler = useCallback(() => {
+    if (localStore.isVisible) {
+      sheetRef.current?.dismiss();
+      return true;
+    }
 
-      return false;
-    }, [sheetRef, isVisible]),
+    return false;
+  }, [sheetRef, localStore.isVisible]);
+
+  // hardware back button handling when screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', backHandler);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', backHandler);
+    }, [backHandler]),
   );
 
   React.useEffect(() => {
@@ -165,7 +179,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
   const onDismiss = useCallback(() => {
     props.commentsStore.setShowInput(false);
-    setIsVisible(false);
   }, [props.commentsStore]);
 
   const { keyboardShown } = useKeyboard();
@@ -179,6 +192,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       key="commentSheet"
       backdropComponent={renderBackdrop}
       onDismiss={onDismiss}
+      onChange={localStore.setIsVisible}
       handleHeight={20}
       backgroundComponent={null}
       ref={sheetRef}
