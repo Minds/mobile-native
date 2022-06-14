@@ -2813,7 +2813,7 @@
 
 "@gorhom/bottom-sheet@https://github.com/msantang78/react-native-bottom-sheet.git":
   version "4.3.2"
-  resolved "https://github.com/msantang78/react-native-bottom-sheet.git#0fd8db36e7c2f7856fd24859d64525ad2b7b9d14"
+  resolved "https://github.com/msantang78/react-native-bottom-sheet.git#34bc7404a961bc4d7be7e22b6a1717de28a9c92d"
   dependencies:
     "@gorhom/portal" "1.0.13"
     invariant "^2.2.4"
