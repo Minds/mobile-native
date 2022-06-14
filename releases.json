@@ -1,6 +1,78 @@
 {
   "versions": [
     {
+      "version": "4.25.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.25.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.25.0",
+      "changelog": [
+        "React native updated to the latest version (0.68)",
+        "Placeholders refactored using a more performant animation library",
+        "Better error message when an upload fails",
+        "Updated fast images package",
+        "Wire amount validation added",
+        "Track unmute events",
+        "Fix email confirmation screen layout",
+        "Fix play store automated releases when the changelog is to long",
+        "Dark splash screen and splash package updated",
+        "Fix iOS email invite encoding",
+        "Fix share to minds error on iOS",
+        "Improves the channel edit UX and keyboard handling",
+        "Updates the video player, the linear gradient and image manipulator packages",
+        "Update expo package",
+        "Fix back button not working in some bottom sheets"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "23105d4ed3abd2fdcc0d1621549b8b80"
+        },
+        {
+          "type": "sha256",
+          "value": "ed914f536273b5082c23725387f17327cb0e5ed16637ce917a90c754a72830a9"
+        },
+        {
+          "type": "sha512",
+          "value": "c9f861bc0d5530f72fd1044cf11f55d4e0c67ce84b0ac1860fec14512d69cc0ff969cb6a7155661bde390781c36d7973877199520d4066b13c54a42b8a4650d9"
+        }
+      ]
+    },
+    {
+      "version": "4.24.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-24-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.24.0",
+      "changelog": [
+        "Regenerative Recommendations",
+        "Latest posts prompt",
+        "Friendly Captcha",
+        "Channel contextual recommendations",
+        "Save videos locally before uploading",
+        "Video pause/resume functionality added to the composer",
+        "Camera package updated",
+        "Added android split-screen support",
+        "Added CodePush support for faster updates",
+        "Fix share videos to minds app (iOS)",
+        "Fix the portrait feed showing scheduled posts",
+        "Fix deep links and chat app detection on Android",
+        "General bug fixing and improvements"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "29e886b2b6b618183a918bf44f4ce474"
+        },
+        {
+          "type": "sha256",
+          "value": "0066dffcbaa8b36aeb622854bb1f0e497ed5ae19f7415f056d54bb5abde7c38c"
+        },
+        {
+          "type": "sha512",
+          "value": "01edf4bdb2e2ac4e4cba35993d851e938996daf5cfdc23f0a675519c0b1c57ea73805c8fd66ebf175344cb1b9b5288985f5fefb9591588dcf5e2a9abc1a94d0d"
+        }
+      ]
+    },
+    {
       "version": "4.23.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-23-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.23.1",

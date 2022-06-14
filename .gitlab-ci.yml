@@ -13,10 +13,15 @@ variables:
 .getversion: &getversion
   - 'export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`'
 
+# Gets the version of the iOS app parsing the project files
+.getiosversion: &getiosversion
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,\"\",$3);print $3}'`
+  - echo "APPVERSION=$APPVERSION"
+
 # Delete the build from browserstack
 .delete_browserstack: &delete_browserstack
   - 'echo "Deleting browserstack credentials..."'
-  - node tasks/deleteBrowserstackFile.js $TARGET_APK_NAME
+  - node tasks/deleteBrowserstackFile.js $TARGET_NAME
 
 # Move the apk to the root folder
 .move_apk: &move_apk
@@ -27,6 +32,7 @@ test:jest:
   image: node:14.19.2
   stage: test
   interruptible: true
+  tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -40,9 +46,83 @@ test:jest:
     - yarn test --forceExit
 
 ### BUILD STAGE
+.prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
+  image: macos-12-xcode-13
+  tags: [shared-macos-amd64]
+  artifacts:
+    name: 'Minds IPA'
+    paths:
+      - 'ios/Minds.ipa'
+    expire_in: 45 days
+    when: on_success
+  before_script:
+    - 'mkdir -p ~/.ssh' # we github to the known_hosts file (fix hanging when cloning secrets repo)
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/devops-for-mobile-apps/load-secure-files/-/raw/main/installer" | bash
+    - mv .secure_files/id_rsa ~/.ssh/id_rsa
+    - echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - chmod 700 ~/.ssh
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-add ~/.ssh/id_rsa
+    - yarn install --frozen-lockfile
+    - cd ios
+    - pod install
+
+# Build the QA iOS app for each MR and upload it to browserstack
+build:ios_mr:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
+  only:
+    refs:
+      - /^feat-*/
+      - /^fix-*/
+      - /^chore-*/
+      - /^refactor-*/
+
+# Build iOS RC for develop branch
+build:ios_release_candidate:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+  only:
+    refs:
+      - develop
+
+# Build iOS for master branch
+build:ios_production:
+  <<: *prepare_build_ios
+  stage: build
+  interruptible: true
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$APPVERSION.ipa
+    - cd ..
+    - *delete_browserstack
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+  only:
+    refs:
+      - master
+
+# Android common build steps
 .prepare_build_android: &prepare_build_android
   image: circleci/android:api-30-node
   stage: build
+  tags: [minds-ci]
   interruptible: true
   before_script:
     # PREPARE
@@ -106,10 +186,12 @@ build:android_mr_production:
 # Cleanup APK from merged MRs
 build:cleanup:
   image: circleci/android:api-30-node
+  tags: [minds-ci]
   when: manual
   stage: build
   variables:
     APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
+    IPA_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.ipa'
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
@@ -121,7 +203,9 @@ build:cleanup:
   before_script:
     - yarn install --frozen-lockfile
   script:
-    - export TARGET_APK_NAME=$APK_FILENAME
+    - export TARGET_NAME=$APK_FILENAME
+    - *delete_browserstack
+    - export TARGET_NAME=$IPA_FILENAME
     - *delete_browserstack
   only:
     refs:
@@ -134,8 +218,8 @@ build:cleanup:
 build:androidproduction-playstore:
   <<: *prepare_build_android
   script:
-    - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
+    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
     - *move_apk
   only:
@@ -145,14 +229,16 @@ build:androidproduction-playstore:
 ### UPLOAD STAGE
 .upload_s3: &upload_s3
   stage: upload
+  tags: [minds-ci]
   image: minds/ci:latest
   interruptible: true
   script:
-    - echo "Upload $TARGET_APK_NAME"
-    - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_APK_NAME
+    - echo "Upload $TARGET_NAME"
+    - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_NAME
 
 .upload_browserstack: &upload_browserstack
   stage: upload
+  tags: [minds-ci]
   image: node:14.19.2
   interruptible: true
   cache:
@@ -163,14 +249,14 @@ build:androidproduction-playstore:
   script:
     - yarn install --frozen-lockfile
     - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_APK_NAME"
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F 'data={"custom_id":"$CUSTOM_ID"}'
 
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
   <<: *upload_s3
   before_script:
     - *getversion
-    - export TARGET_APK_NAME=Minds-$APPVERSION.apk
+    - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
   only:
@@ -181,7 +267,8 @@ upload:browserstack:oss: # Upload to Browserstack
   <<: *upload_browserstack
   before_script:
     - *getversion
-    - export TARGET_APK_NAME=Minds-$APPVERSION.apk
+    - export TARGET_NAME=Minds-$APPVERSION.apk
+    - export CUSTOM_ID=ANDROID_PRODUCTION
   dependencies:
     - build:androidproduction
   only:
@@ -193,7 +280,7 @@ upload:s3:playstore: # Upload to S3
   <<: *upload_s3
   before_script:
     - *getversion
-    - export TARGET_APK_NAME="Minds-$APPVERSION-play_store.apk"
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
   dependencies:
     - build:androidproduction-playstore
   only:
@@ -204,7 +291,8 @@ upload:browserstack:playstore: # Upload to Browserstack
   <<: *upload_browserstack
   before_script:
     - *getversion
-    - export TARGET_APK_NAME="Minds-$APPVERSION-play_store.apk"
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
+    - export CUSTOM_ID=ANDROID_PRODUCTION_PLAYSTORE
   dependencies:
     - build:androidproduction-playstore
   only:
@@ -216,7 +304,7 @@ upload:s3:oss:rc: # Upload to S3
   <<: *upload_s3
   before_script:
     - *getversion
-    - export TARGET_APK_NAME="Minds-$APPVERSION-RC.apk"
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
   dependencies:
     - build:androidproduction
   only:
@@ -227,7 +315,8 @@ upload:browserstack:oss:rc: # Upload to Browserstack
   <<: *upload_browserstack
   before_script:
     - *getversion
-    - export TARGET_APK_NAME="Minds-$APPVERSION-RC.apk"
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+    - export CUSTOM_ID=ANDROID_RC
   dependencies:
     - build:androidproduction
   only:
@@ -239,7 +328,8 @@ upload:browserstack:mr:
   <<: *upload_browserstack
   before_script:
     - *getversion
-    - export TARGET_APK_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
+    - export CUSTOM_ID=MRLast
   dependencies:
     - build:android_mr_production
   only:
@@ -255,6 +345,7 @@ upload:browserstack:mr:
 release:production:
   image: msantang78/ci-mobile:latest
   stage: release
+  tags: [minds-ci]
   variables:
     APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   dependencies:
@@ -282,6 +373,7 @@ release:production:
 release_store:google_play:
   image: circleci/android:api-28-node
   stage: release_store
+  tags: [minds-ci]
   before_script:
     - cd android
     - bundle install --path=vendor/bundle
@@ -301,6 +393,7 @@ release_store:google_play:
 release:codepush-ios:
   image: node:14.19.1
   stage: release
+  tags: [minds-ci]
   before_script:
     - npm install -g appcenter-cli
     - yarn install
@@ -313,6 +406,7 @@ release:codepush-ios:
 release:codepush-android:
   image: node:14.19.1
   stage: release
+  tags: [minds-ci]
   before_script:
     - npm install -g appcenter-cli
     - yarn install
@@ -321,3 +415,35 @@ release:codepush-android:
   only:
     - /^patch-*/
   when: manual
+
+# iOS Release candidate to TestFlight
+release:ios_rc_testflight:
+  image: macos-12-xcode-13
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_release_candidate
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - develop
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  image: macos-12-xcode-13
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - master
