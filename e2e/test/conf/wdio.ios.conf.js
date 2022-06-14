@@ -1,6 +1,8 @@
 require('dotenv').config();
 var browserstack = require('browserstack-local');
 
+const localIdentifier = `foobar_${Date.now()}`;
+
 exports.config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
@@ -19,6 +21,7 @@ exports.config = {
       os_version: '15.0',
       app: process.env.BROWSERSTACK_IOS_APP_ID,
       autoAcceptAlerts: 'true',
+      'browserstack.localIdentifier': localIdentifier,
       'browserstack.local': true,
       'browserstack.debug': true,
     },
@@ -34,7 +37,7 @@ exports.config = {
 
   framework: 'jasmine',
   jasmineOpts: {
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 300000,
   },
 
   // Code to start browserstack local before start of test
@@ -42,14 +45,17 @@ exports.config = {
     console.log('Connecting local...');
     return new Promise((resolve, reject) => {
       exports.bs_local = new browserstack.Local();
-      exports.bs_local.start({ key: exports.config.key }, error => {
-        if (error) {
-          return reject(error);
-        }
-        console.log('Connected. Now testing...');
+      exports.bs_local.start(
+        { localIdentifier, key: exports.config.key },
+        error => {
+          if (error) {
+            return reject(error);
+          }
+          console.log('Connected. Now testing...');
 
-        resolve();
-      });
+          resolve();
+        },
+      );
     });
   },
 
