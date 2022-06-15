@@ -249,6 +249,8 @@ build:androidproduction-playstore:
   script:
     - yarn install --frozen-lockfile
     - *delete_browserstack
+    - echo "Upload CustomID $CUSTOM_ID"
+    - echo 'data={"custom_id":"$CUSTOM_ID"}'
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F 'data={"custom_id":"$CUSTOM_ID"}'
 
 # Upload production builds (Full version)
