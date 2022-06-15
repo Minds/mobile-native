@@ -2,15 +2,15 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedback,
   View,
   ViewStyle,
 } from 'react-native';
+import RetryableImage from '~/common/components/RetryableImage';
 import type CommentModel from '../../../comments/v2/CommentModel';
-import SmartImage from '../../../common/components/SmartImage';
 import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
 import videoPlayerService from '../../../common/services/video-player.service';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
@@ -29,7 +29,7 @@ type PropsType = {
   autoplay?: boolean;
   repeat?: boolean;
   resizeMode?: ResizeMode;
-  video?: { uri: string };
+  video?: { uri: string; headers?: any };
   containerStyle?: StyleProp<ViewStyle>;
   onStoreCreated?: Function;
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
@@ -47,18 +47,14 @@ const MindsVideo = observer((props: PropsType) => {
     dataSaverEnabled,
   });
 
-  if (props.video && props.video.uri !== localStore.video.uri) {
-    localStore.setVideo(props.video);
-  }
-
   const onStoreCreated = props.onStoreCreated;
 
-  const posterSource = useRef(props.entity ? getVideoThumb(props.entity) : null)
-    .current;
-  const thumbnailSource = useRef(
-    props.entity && dataSaverEnabled
-      ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
-      : undefined,
+  const posterSource = useRef(
+    props.entity
+      ? dataSaverEnabled
+        ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
+        : getVideoThumb(props.entity)
+      : null,
   ).current;
 
   const isFocused = useIsFocused();
@@ -80,6 +76,16 @@ const MindsVideo = observer((props: PropsType) => {
     };
   }, [localStore]);
 
+  const onReadyForDisplay = React.useCallback(
+    e => {
+      localStore.setShowThumbnail(false);
+      if (props.onReadyForDisplay) {
+        props.onReadyForDisplay(e);
+      }
+    },
+    [localStore, props.onReadyForDisplay],
+  );
+
   // Show inProgress overlay if load has started
   const inProgressOverlay = localStore.inProgress && <InProgress />;
 
@@ -98,29 +104,25 @@ const MindsVideo = observer((props: PropsType) => {
     />
   );
 
-  const imageStyle = useMemo(
-    () => ({ opacity: localStore.showThumbnail ? 1 : 0 }),
-    [localStore.showThumbnail],
-  );
-
   return (
     <TouchableWithoutFeedback
       onPress={localStore.openControlOverlay}
       style={[theme.flexContainer, props.containerStyle]}>
       <View style={[theme.flexContainer, theme.bgBlack]}>
-        <SmartImage
-          imageVisible={!localStore.showThumbnail}
-          style={[theme.positionAbsolute, imageStyle]}
-          source={posterSource!}
-          thumbnail={thumbnailSource}
-          withoutDownloadButton
-        />
+        {localStore.showThumbnail && (
+          <RetryableImage
+            style={theme.positionAbsolute}
+            source={posterSource!}
+            withoutDownloadButton
+          />
+        )}
         <ExpoVideo
           entity={props.entity}
           localStore={localStore}
+          video={props.video}
           repeat={props.repeat}
           resizeMode={props.resizeMode}
-          onReadyForDisplay={props.onReadyForDisplay}
+          onReadyForDisplay={onReadyForDisplay}
         />
         {inProgressOverlay}
         {errorOverlay}
