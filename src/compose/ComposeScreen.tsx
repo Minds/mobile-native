@@ -39,6 +39,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
+import onImageInput from '~/common/helpers/onImageInput';
 
 const { width } = Dimensions.get('window');
 
@@ -197,37 +198,6 @@ export default observer(function ComposeScreen(props) {
   }, [store]);
 
   const handleTextInputFocus = useCallback(() => inputRef.current?.focus(), []);
-
-  /**
-   * On image paste in TextInput or gif/stickers added from the keyboard.
-   * Gets the image size and uploads it via the store
-   */
-  const onImageChange = useCallback(
-    event => {
-      try {
-        const { uri, linkUri, mime } = event.nativeEvent;
-        const actualUri = linkUri ?? 'file://' + uri;
-
-        return Image.getSize(
-          actualUri,
-          (imageWidth, imageHeight) => {
-            const media = {
-              mime,
-              type: mime,
-              width: imageWidth,
-              height: imageHeight,
-              uri: actualUri,
-            };
-            return store.onMediaFromGallery(media);
-          },
-          error => console.error("Couldn't get image size", error),
-        );
-      } catch (e) {
-        console.error('Something went wrong while uploading the image', e);
-      }
-    },
-    [store],
-  );
   // #endregion
 
   // #region effects
@@ -314,7 +284,7 @@ export default observer(function ComposeScreen(props) {
                     selectTextOnFocus={false}
                     underlineColorAndroid="transparent"
                     onSelectionChange={store.selectionChanged}
-                    onImageChange={onImageChange}
+                    onImageChange={onImageInput(store.onMediaFromGallery)}
                     testID="PostInput">
                     <Tags navigation={props.navigation} selectable={true}>
                       {store.text}

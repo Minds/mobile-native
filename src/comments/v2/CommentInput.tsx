@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import type { TextInput as TextInputType } from 'react-native';
-import { Image } from 'react-native';
 import {
   Dimensions,
   Platform,
@@ -35,6 +34,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import onImageInput from '~/common/helpers/onImageInput';
 
 const { height } = Dimensions.get('window');
 
@@ -93,37 +93,6 @@ const CommentInput = observer((onShow, onDismiss) => {
       },
     ],
   }));
-
-  /**
-   * On image paste in TextInput or gif/stickers added from the keyboard.
-   * Gets the image size and uploads it via the store
-   */
-  const onImageChange = useCallback(
-    event => {
-      try {
-        const { uri, linkUri, mime } = event.nativeEvent;
-        const actualUri = linkUri ?? 'file://' + uri;
-
-        return Image.getSize(
-          actualUri,
-          (imageWidth, imageHeight) => {
-            const media = {
-              mime,
-              type: mime,
-              width: imageWidth,
-              height: imageHeight,
-              uri: actualUri,
-            };
-            return provider.store?.onAttachedMedia(media);
-          },
-          error => console.error("Couldn't get image size", error),
-        );
-      } catch (e) {
-        console.error('Something went wrong while uploading the image', e);
-      }
-    },
-    [provider.store],
-  );
 
   if (!provider.store || !provider.store.showInput) {
     return null;
@@ -227,7 +196,11 @@ const CommentInput = observer((onShow, onDismiss) => {
             underlineColorAndroid="transparent"
             onChangeText={provider.store?.setText}
             maxLength={CHAR_LIMIT}
-            onImageChange={onImageChange}
+            onImageChange={
+              provider.store
+                ? onImageInput(provider.store.onAttachedMedia)
+                : undefined
+            }
             onSelectionChange={e =>
               provider.store?.setSelection(e.nativeEvent.selection)
             }
