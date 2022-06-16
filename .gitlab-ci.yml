@@ -416,18 +416,9 @@ release:production:
   image: msantang78/ci-mobile:latest
   stage: release
   tags: [minds-ci]
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   dependencies:
     - build:androidproduction
     - upload:s3:oss
-  artifacts:
-    name: 'Release JSON'
-    paths:
-      - releases.json
-      - android/fastlane/metadata/android/en-US/changelogs/default.txt
-    expire_in: 7 days
-    when: on_success
   when: manual
   only:
     refs:
@@ -436,23 +427,26 @@ release:production:
     - node -v
     - yarn install
   script:
-    - echo "Releasing $APK_FILENAME"
-    - yarn release-json $APK_FILENAME
+    - *getversion
+    - cp $APK_NAME Minds-$APPVERSION.apk
+    - echo "Releasing Minds-$APPVERSION.apk"
+    - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
 release_store:google_play:
-  image: circleci/android:api-28-node
+  image: circleci/android:api-30-node
   stage: release_store
   tags: [minds-ci]
   before_script:
+    - yarn install --frozen-lockfile
+    - yarn release-json Minds.apk
     - cd android
     - bundle install --path=vendor/bundle
     - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
   script:
-    - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
-    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+    - echo "Upload to the play store $APK_NAME"
+    - bundle exec fastlane supply --apk ../$APK_NAME
   dependencies:
-    - release:production
     - build:androidproduction-playstore
   when: manual
   only:
