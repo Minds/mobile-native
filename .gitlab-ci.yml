@@ -1,10 +1,10 @@
 stages:
   - test
-  - e2e
   - build
   - upload
   - release
   - release_store
+  - qa
 
 variables:
   APK_NAME: Minds.apk
@@ -249,7 +249,7 @@ build:androidproduction-playstore:
   script:
     - yarn install --frozen-lockfile
     - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F 'data={"custom_id":"$CUSTOM_ID"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
 
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
@@ -268,7 +268,7 @@ upload:browserstack:oss: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$APPVERSION.apk
-    - export CUSTOM_ID=ANDROID_PRODUCTION
+    - export CUSTOM_ID= 'data={"custom_id":"ANDROID_PRODUCTION"}'
   dependencies:
     - build:androidproduction
   only:
@@ -292,7 +292,7 @@ upload:browserstack:playstore: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-    - export CUSTOM_ID=ANDROID_PRODUCTION_PLAYSTORE
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
   dependencies:
     - build:androidproduction-playstore
   only:
@@ -316,7 +316,7 @@ upload:browserstack:oss:rc: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-    - export CUSTOM_ID=ANDROID_RC
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
   only:
@@ -329,7 +329,7 @@ upload:browserstack:mr:
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID=MRLast
+    - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
   dependencies:
     - build:android_mr_production
   only:
@@ -346,18 +346,9 @@ release:production:
   image: msantang78/ci-mobile:latest
   stage: release
   tags: [minds-ci]
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   dependencies:
     - build:androidproduction
     - upload:s3:oss
-  artifacts:
-    name: 'Release JSON'
-    paths:
-      - releases.json
-      - android/fastlane/metadata/android/en-US/changelogs/default.txt
-    expire_in: 7 days
-    when: on_success
   when: manual
   only:
     refs:
@@ -366,23 +357,26 @@ release:production:
     - node -v
     - yarn install
   script:
-    - echo "Releasing $APK_FILENAME"
-    - yarn release-json $APK_FILENAME
+    - *getversion
+    - cp $APK_NAME Minds-$APPVERSION.apk
+    - echo "Releasing Minds-$APPVERSION.apk"
+    - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
 release_store:google_play:
-  image: circleci/android:api-28-node
+  image: circleci/android:api-30-node
   stage: release_store
   tags: [minds-ci]
   before_script:
+    - yarn install --frozen-lockfile
+    - yarn release-json Minds.apk
     - cd android
     - bundle install --path=vendor/bundle
     - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
   script:
-    - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
-    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+    - echo "Upload to the play store $APK_NAME"
+    - bundle exec fastlane supply --apk ../$APK_NAME
   dependencies:
-    - release:production
     - build:androidproduction-playstore
   when: manual
   only:
@@ -447,3 +441,73 @@ release:ios_prod_testflight:
   only:
     refs:
       - master
+
+# Run QA WebdriverIO Browserstack Tests
+.wdio_tests: &wdio_tests
+  - yarn install --frozen-lockfile
+  - yarn run test:real:ios
+  - yarn run test:real:android
+
+qa:rc:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
+
+qa:rc:nightly:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
+
+qa:prod:nightly:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_PRODUCTION"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_PRODUCTION"
+    - *wdio_tests
+  only:
+    refs:
+      - /^master$/
+    variables:
+      - $CI_PROD_NIGHTLY_TESTS == "true"
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
