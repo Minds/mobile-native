@@ -319,7 +319,7 @@ build:androidproduction-playstore:
   script:
     - yarn install --frozen-lockfile
     - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F 'data={"custom_id":"$CUSTOM_ID"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
 
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
@@ -338,7 +338,7 @@ upload:browserstack:oss: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$APPVERSION.apk
-    - export CUSTOM_ID=ANDROID_PRODUCTION
+    - export CUSTOM_ID= 'data={"custom_id":"ANDROID_PRODUCTION"}'
   dependencies:
     - build:androidproduction
   only:
@@ -362,7 +362,7 @@ upload:browserstack:playstore: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-    - export CUSTOM_ID=ANDROID_PRODUCTION_PLAYSTORE
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
   dependencies:
     - build:androidproduction-playstore
   only:
@@ -386,7 +386,7 @@ upload:browserstack:oss:rc: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-    - export CUSTOM_ID=ANDROID_RC
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
   only:
@@ -399,7 +399,7 @@ upload:browserstack:mr:
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID=MRLast
+    - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
   dependencies:
     - build:android_mr_production
   only:
