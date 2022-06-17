@@ -15,7 +15,7 @@ variables:
 
 # Gets the version of the iOS app parsing the project files
 .getiosversion: &getiosversion
-  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,\"\",$3);print $3}'`
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
   - echo "APPVERSION=$APPVERSION"
 
 # Delete the build from browserstack
