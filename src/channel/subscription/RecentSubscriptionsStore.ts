@@ -26,7 +26,6 @@ export class RecentSubscriptionsStore {
 
   constructor() {
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
-    setTimeout(() => this._rehydrate(), 0);
   }
 
   onSubscriptionChange = ({ user }) => {
@@ -72,12 +71,12 @@ export class RecentSubscriptionsStore {
   @action
   reset() {
     this.subscriptions = [];
-    setTimeout(() => this._rehydrate(), 0);
   }
 
   @action
   onLogin() {
-    return this.reset();
+    this.subscriptions = [];
+    setTimeout(() => this._rehydrate(), 0);
   }
 
   /**
