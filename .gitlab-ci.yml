@@ -106,6 +106,7 @@ build:ios_release_candidate:
     - cd ..
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
   only:
     refs:
       - develop
@@ -126,6 +127,7 @@ build:ios_production:
     - cd ..
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
   only:
     refs:
       - master
@@ -282,6 +284,7 @@ build:androidproduction-playstore:
     - yarn install --frozen-lockfile
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
 
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
