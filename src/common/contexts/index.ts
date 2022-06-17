@@ -44,7 +44,7 @@ export function createClassStores() {
       }
     }
   });
-  sessionService.onUserChange(newUser => {
+  sessionService.onLogin(newUser => {
     for (const id in stores) {
       if (stores[id].onLogin) {
         logService.info(`Calling onLogin in legacy store ${id}`);

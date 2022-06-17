@@ -516,29 +516,6 @@ export class SessionService {
   }
 
   /**
-   * Run on user change
-   * @return dispose (remember to dispose!)
-   * @param {function} fn
-   */
-  onUserChange(fn) {
-    return reaction(
-      () => [this.userLoggedIn ? this.activeIndex : null],
-      async args => {
-        if (args[0] === null) {
-          return null;
-        }
-
-        try {
-          await fn(this.tokensData[args[0]].user);
-        } catch (error) {
-          logService.exception('[SessionService]', error);
-        }
-      },
-      { fireImmediately: false },
-    );
-  }
-
-  /**
    * Run on session change
    * @return dispose (remember to dispose!)
    * @param {function} fn
