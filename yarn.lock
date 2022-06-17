@@ -4302,6 +4302,11 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@type-any/react-native-clear-cache@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@type-any/react-native-clear-cache/-/react-native-clear-cache-0.1.1.tgz#1ca3c705eecb961cec5d143f572f5a7d313328cf"
+  integrity sha512-k/FafORw23IPcVbbaMhQuxccdbzCzK1j/V/Yp2Y19bILIYX6Y/UK9zjjsr+Iw8v9BqNJ0Utms3Bgq2XRbB+3gw==
+
 "@types/aria-query@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-5.0.0.tgz#df2d64b5cc73cca0d75e2a7793d6b5c199c2f7b2"

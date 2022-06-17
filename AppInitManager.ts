@@ -21,6 +21,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { clearCacheIfNeeded } from '~/common/services/device-cache.service';
 
 /**
  * App initialization manager
@@ -148,6 +149,11 @@ export default class AppInitManager {
         updateService.checkUpdate(!user.canary);
       }, 5000);
     }
+
+    // check and clear cache if needed
+    setTimeout(() => {
+      clearCacheIfNeeded();
+    }, 5500);
   };
 
   async initialNavigationHandling() {
