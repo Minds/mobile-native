@@ -23,11 +23,6 @@ export class DismissalStore {
   @observable
   private dismisses: DismissItem[] = [];
 
-  constructor() {
-    setTimeout(() => this._rehydrate(), 0);
-    this._persist = debounce(this._persist, 200);
-  }
-
   /**
    * Whether an item is dismissed
    * @param { DismissIdentifier } id
