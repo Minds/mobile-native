@@ -253,15 +253,13 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
       this.setShowOverlay(false);
 
-      await this.player?.setIsMutedAsync(!this.volume);
-
       runInAction(() => {
         this.showFullControls = true;
         this.setPaused(false);
         this.volume = sound ? 1 : 0;
       });
 
-      this.player?.playAsync();
+      this.player?.setStatusAsync({ shouldPlay: true, isMuted: !this.volume });
 
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
