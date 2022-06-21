@@ -4,6 +4,7 @@ import {
   StackActions,
   SwitchActions,
 } from '@react-navigation/native';
+import analyticsService from '~/common/services/analytics.service';
 
 let _navigator = null;
 
@@ -21,7 +22,7 @@ function getStateFrom(nav) {
 export function setTopLevelNavigator(navigatorRef) {
   //TODO: remove after we check the push notification issue
   console.log(
-    'SETTING TOP LEVEL NAVIGATION ' + navigatorRef ? 'WITH VALUE' : 'NULL',
+    'SETTING TOP LEVEL NAVIGATION ' + (navigatorRef ? 'WITH VALUE' : 'NULL'),
   );
   _navigator = navigatorRef;
 }
@@ -55,7 +56,18 @@ function addListener(name, fn) {
   return _navigator?.addListener(name, fn);
 }
 
-// add other navigation functions that you need and export them
+/**
+ * Runs every time the navigation state changes
+ */
+function onStateChange() {
+  if (!_navigator) {
+    return;
+  }
+  const currentRouteName = _navigator.getCurrentRoute()?.name;
+
+  // record analytics event for screen view
+  analyticsService.onNavigatorStateChange(currentRouteName);
+}
 
 export default {
   dispatch,
@@ -66,4 +78,5 @@ export default {
   setTopLevelNavigator,
   goBack,
   addListener,
+  onStateChange,
 };
