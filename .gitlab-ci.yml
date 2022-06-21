@@ -15,7 +15,7 @@ variables:
 
 # Gets the version of the iOS app parsing the project files
 .getiosversion: &getiosversion
-  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,\"\",$3);print $3}'`
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
   - echo "APPVERSION=$APPVERSION"
 
 # Delete the build from browserstack
@@ -44,6 +44,10 @@ test:jest:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
     - yarn test --forceExit
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ### BUILD STAGE
 .prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
@@ -85,6 +89,10 @@ build:ios_mr:
       - /^fix-*/
       - /^chore-*/
       - /^refactor-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Build iOS RC for develop branch
 build:ios_release_candidate:
@@ -98,9 +106,14 @@ build:ios_release_candidate:
     - cd ..
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
   only:
     refs:
       - develop
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Build iOS for master branch
 build:ios_production:
@@ -114,9 +127,14 @@ build:ios_production:
     - cd ..
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Android common build steps
 .prepare_build_android: &prepare_build_android
@@ -153,6 +171,10 @@ build:androidproduction:
     refs:
       - develop
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Production build for QA of MR
 build:android_mr_production:
@@ -182,6 +204,10 @@ build:android_mr_production:
       - /^fix-*/
       - /^chore-*/
       - /^refactor-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Cleanup APK from merged MRs
 build:cleanup:
@@ -213,6 +239,10 @@ build:cleanup:
       - /^fix-*/
       - /^chore-*/
       - /^refactor-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
@@ -225,6 +255,10 @@ build:androidproduction-playstore:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ### UPLOAD STAGE
 .upload_s3: &upload_s3
@@ -250,6 +284,7 @@ build:androidproduction-playstore:
     - yarn install --frozen-lockfile
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
 
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
@@ -262,6 +297,10 @@ upload:s3:oss: # Upload to S3
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 upload:browserstack:oss: # Upload to Browserstack
   <<: *upload_browserstack
@@ -274,6 +313,10 @@ upload:browserstack:oss: # Upload to Browserstack
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Upload production builds (play-store version)
 upload:s3:playstore: # Upload to S3
@@ -286,6 +329,10 @@ upload:s3:playstore: # Upload to S3
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 upload:browserstack:playstore: # Upload to Browserstack
   <<: *upload_browserstack
@@ -298,6 +345,10 @@ upload:browserstack:playstore: # Upload to Browserstack
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Upload production RC (develop branch)
 upload:s3:oss:rc: # Upload to S3
@@ -310,6 +361,10 @@ upload:s3:oss:rc: # Upload to S3
   only:
     refs:
       - develop
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 upload:browserstack:oss:rc: # Upload to Browserstack
   <<: *upload_browserstack
@@ -322,6 +377,10 @@ upload:browserstack:oss:rc: # Upload to Browserstack
   only:
     refs:
       - develop
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Upload MR builds to browserstack
 upload:browserstack:mr:
@@ -338,6 +397,10 @@ upload:browserstack:mr:
       - /^fix-*/
       - /^chore-*/
       - /^refactor-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ### RELEASE STAGE
 
@@ -362,6 +425,10 @@ release:production:
     - echo "Releasing Minds-$APPVERSION.apk"
     - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 release_store:google_play:
   image: circleci/android:api-30-node
@@ -382,6 +449,10 @@ release_store:google_play:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ## CodePush releases
 release:codepush-ios:
@@ -395,6 +466,10 @@ release:codepush-ios:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
   only:
     - /^patch-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
   when: manual
 
 release:codepush-android:
@@ -408,6 +483,10 @@ release:codepush-android:
     - appcenter codepush release-react -a Minds/Minds -d Production
   only:
     - /^patch-*/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
   when: manual
 
 # iOS Release candidate to TestFlight
@@ -425,6 +504,10 @@ release:ios_rc_testflight:
   only:
     refs:
       - develop
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # iOS production to TestFlight
 release:ios_prod_testflight:
@@ -441,6 +524,10 @@ release:ios_prod_testflight:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 # Run QA WebdriverIO Browserstack Tests
 .wdio_tests: &wdio_tests
@@ -463,6 +550,10 @@ qa:rc:
   only:
     refs:
       - /^develop$/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
   artifacts:
     when: always
     paths:

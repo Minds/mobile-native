@@ -8,7 +8,7 @@
   "activity": {
     "loadEarlier": "LOAD EARLIER",
     "loadLater": "LOAD LATER",
-    "notSafeComment": "This comment is not safe for work and cannot be accessed via iOS",
+    "notSafeComment": "This comment is not safe for work and cannot be accessed due to app store policies",
     "explicitComment": "The comment is marked as Explicit",
     "typeComment": "Add your comment",
     "typeReply": "Add your reply",
@@ -1294,7 +1294,7 @@
     "6": "Other",
     "safe": "Safe",
     "notSafe": "Not Safe",
-    "notSafeChannel": "This channel is not safe for work and cannot be accessed via iOS",
+    "notSafeChannel": "This channel is not safe for work and cannot be accessed due to app store policies",
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
