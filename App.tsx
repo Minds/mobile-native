@@ -44,7 +44,6 @@ import i18n from './src/common/services/i18n.service';
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
-import analyticsService from './src/common/services/analytics.service';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import { CODE_PUSH_KEY } from '~/config/Config';
@@ -175,7 +174,7 @@ class App extends Component<Props> {
               ref={setTopLevelNavigator}
               theme={ThemedStyles.navTheme}
               onReady={appInitManager.onNavigatorReady}
-              onStateChange={analyticsService.onNavigatorStateChange}>
+              onStateChange={NavigationService.onStateChange}>
               <StoresProvider>
                 <Provider key="app" {...stores}>
                   <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
