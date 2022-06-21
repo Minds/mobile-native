@@ -14,7 +14,7 @@ const onImageInput = (onMedia: (media: any) => void) => async (
 ) => {
   try {
     const { uri, linkUri, mime } = event.nativeEvent;
-    const actualUri = linkUri ?? uri.includes('://') ? uri : 'file://' + uri;
+    const actualUri = linkUri ?? (uri.includes('://') ? uri : 'file://' + uri);
     let imageWidth;
     let imageHeight;
 
