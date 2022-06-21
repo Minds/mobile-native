@@ -1,5 +1,4 @@
-import { Platform } from 'react-native';
-import type { AVPlaybackStatus, Video } from 'expo-av';
+import type { AVPlaybackSourceObject, AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
@@ -9,13 +8,12 @@ import logService from '../../../common/services/log.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import analyticsService from '~/common/services/analytics.service';
+import SettingsStore from '~/settings/SettingsStore';
 
 export type Source = {
   src: string;
   size: number;
 };
-
-const isIOS = Platform.OS === 'ios';
 
 const createMindsVideoStore = ({ entity, autoplay }) => {
   const store = {
@@ -27,15 +25,17 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     currentSeek: <number | null>null,
     duration: 0,
     transcoding: false,
+    initPromise: <null | Promise<void>>null,
     error: false,
     inProgress: false,
+    showFullControls: false,
     showThumbnail: true,
     loaded: false,
-    video: { uri: '', headers: undefined },
+    video: null as AVPlaybackSourceObject | null,
     showOverlay: false,
     fullScreen: false,
     player: null as Video | null,
-    paused: !autoplay,
+    paused: true,
     forceHideOverlay: false,
     /**
      * Should we track unmute event? true if volume is initially 0
@@ -52,14 +52,18 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       this.source = source;
 
       if (this.sources) {
-        this.video = {
+        this.setVideo({
           uri: this.sources[this.source].src,
           headers: apiService.buildHeaders(),
-        };
+        });
       }
     },
     setSources(sources: Array<Source>) {
       this.sources = sources;
+      this.setVideo({
+        uri: this.sources[this.source].src,
+        headers: apiService.buildHeaders(),
+      });
     },
     setFullScreen(fullSCreen: boolean) {
       this.fullScreen = fullSCreen;
@@ -79,8 +83,18 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     setShowThumbnail(showThumbnail: boolean) {
       this.showThumbnail = showThumbnail;
     },
-    setVideo(video: any) {
+    /**
+     * Sets and pre load the video
+     */
+    setVideo(video: AVPlaybackSourceObject | null) {
       this.video = video;
+      if (video) {
+        this.player?.loadAsync(video).then(_ => {
+          if (!this.paused || autoplay) {
+            this.play(undefined);
+          }
+        });
+      }
     },
     setVolume(volume: number) {
       this.volume = volume;
@@ -203,17 +217,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
             videoPlayerService.enableVolumeListener();
-          } else if (isIOS && !this.paused && !status.didJustFinish) {
-            // fix ios autoplay
-            // this.player?.setStatusAsync({
-            //   shouldPlay: true,
-            //   volume: this.volume,
-            // });
           }
-
-          // if (status.didJustFinish && !status.isLooping) {
-          //  this.onVideoEnd();
-          // }
         }
       }
     },
@@ -228,52 +232,20 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
      * Play the current video and activate the player
      */
     async play(sound: boolean | undefined) {
+      // check pay walled content
+      if (entity && entity.paywall) {
+        await entity.unlockOrPay();
+        if (entity.paywall) {
+          return;
+        }
+      }
+
       if (sound === undefined) {
         sound = Boolean(videoPlayerService.currentVolume);
       }
 
-      if ((!this.sources || this.sources.length === 0) && entity) {
-        if (entity.paywall) {
-          await entity.unlockOrPay();
-          if (entity.paywall) {
-            return;
-          }
-        }
-
-        try {
-          this.setInProgress(true);
-          const videoObj: any = await attachmentService.getVideo(
-            entity.attachments && entity.attachments.attachment_guid
-              ? entity.attachments.attachment_guid
-              : entity.entity_guid || entity.guid,
-          );
-
-          if (videoObj && videoObj.entity.transcoding_status) {
-            this.transcoding =
-              videoObj.entity.transcoding_status !== 'completed';
-            if (this.transcoding) {
-              this.setInProgress(false);
-              return;
-            }
-          }
-
-          this.setSources(videoObj.sources);
-
-          this.setSources(
-            videoObj.sources.filter(
-              v =>
-                [
-                  'video/mp4',
-                  'video/hls',
-                  'application/vnd.apple.mpegURL',
-                ].indexOf(v.type) > -1,
-            ),
-          );
-        } catch (error) {
-          if (error instanceof Error) {
-            logService.exception('[MindsVideo]', error);
-          }
-        }
+      if (!this.video) {
+        await this.init();
       }
 
       // do not sleep while video is playing
@@ -281,19 +253,13 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
       this.setShowOverlay(false);
 
-      if (Array.isArray(this.sources)) {
-        this.video = {
-          uri: this.sources[this.source].src,
-          headers: apiService.buildHeaders(),
-        };
-      }
-
-      await this.player?.setIsMutedAsync(!this.volume);
-
       runInAction(() => {
+        this.showFullControls = true;
         this.setPaused(false);
         this.volume = sound ? 1 : 0;
       });
+
+      this.player?.setStatusAsync({ shouldPlay: true, isMuted: !this.volume });
 
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
@@ -311,8 +277,12 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       deactivateKeepAwake();
 
       this.setPaused(true);
+      this.player?.pauseAsync();
     },
-    setPlayer(player: Video) {
+    /**
+     * Sets the instances of the expo-av player
+     */
+    async setPlayer(player: Video) {
       this.player = player;
 
       // We define hide overlay here to avoid the weird scope issue on the arrow function
@@ -322,8 +292,64 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         }
       }, 4000);
 
-      if (!this.paused) {
-        this.play(undefined);
+      // pre init and fetch only not paywalled content
+      if (
+        !this.video && // ignore if a video is defined (passed as a prop)
+        !entity.paywall &&
+        !SettingsStore.dataSaverEnabled
+      ) {
+        await this.init();
+      }
+    },
+
+    /**
+     * init the video
+     */
+    init(): Promise<void> {
+      if (!this.initPromise) {
+        this.initPromise = this._init().catch(error => {
+          this.initPromise = null;
+        });
+      }
+      return this.initPromise;
+    },
+
+    /**
+     * Prefetch the sources and the video
+     */
+    async _init(): Promise<void> {
+      if ((!this.sources || this.sources.length === 0) && entity) {
+        try {
+          const videoObj: any = await attachmentService.getVideo(
+            entity.attachments && entity.attachments.attachment_guid
+              ? entity.attachments.attachment_guid
+              : entity.entity_guid || entity.guid,
+          );
+
+          if (videoObj && videoObj.entity.transcoding_status) {
+            this.transcoding =
+              videoObj.entity.transcoding_status !== 'completed';
+            if (this.transcoding) {
+              return;
+            }
+          }
+
+          this.setSources(
+            videoObj.sources.filter(
+              v =>
+                [
+                  'video/mp4',
+                  'video/hls',
+                  'application/vnd.apple.mpegURL',
+                ].indexOf(v.type) > -1,
+            ),
+          );
+        } catch (error) {
+          if (error instanceof Error) {
+            logService.exception('[MindsVideo]', error);
+          }
+          throw error;
+        }
       }
     },
   };
