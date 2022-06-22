@@ -560,7 +560,12 @@
     "periodically": "Periodically",
     "daily": "Daily",
     "weekly": "Weekly",
-    "never": "Never"
+    "never": "Never",
+    "chats": "Chats",
+    "groups": "Groups",
+    "wires": "Wires",
+    "reports": "Reports",
+    "community_updates": "Community Updates"
   },
   "plus": {
     "freeTrialDesciption": "Start your free trial for 7 days"
