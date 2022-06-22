@@ -13,12 +13,34 @@ exports[`ChannelRecommendation renders correctly 1`] = `
       <H3>
         Recommended Channels
       </H3>
-      <B2
-        color="link"
-        onPress={[Function]}
+      <Row
+        align="centerBoth"
       >
-        See more
-      </B2>
+        <B2
+          color="link"
+          onPress={[Function]}
+        >
+          See more
+        </B2>
+        <MenuSheet
+          items={
+            Array [
+              Object {
+                "iconName": "close",
+                "iconType": "material-community",
+                "onPress": [Function],
+                "title": "Remove from feed",
+              },
+            ]
+          }
+        >
+          <Icon
+            left="M"
+            name="more"
+            size="large"
+          />
+        </MenuSheet>
+      </Row>
     </Row>
     <ChannelRecommendationItem
       channel={

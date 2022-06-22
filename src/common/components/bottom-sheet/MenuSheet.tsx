@@ -1,0 +1,53 @@
+import React, { PropsWithChildren, useRef } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import i18nService from '~/common/services/i18n.service';
+import {
+  BottomSheetButton,
+  BottomSheetModal,
+  BottomSheetModalHandle,
+  MenuItem,
+} from './';
+import { MenuItemProps } from './MenuItem';
+
+export interface MenuSheetProps {
+  items: MenuItemProps[];
+}
+
+/**
+ * A simple component that shows a bottomSheetModal with a list of MenuItems and a cancel button
+ */
+export default function MenuSheet({
+  items,
+  children,
+}: PropsWithChildren<MenuSheetProps>) {
+  const ref = useRef<BottomSheetModalHandle>(null);
+
+  const close = React.useCallback(() => {
+    ref.current?.dismiss();
+  }, [ref]);
+
+  const show = React.useCallback(() => {
+    ref.current?.present();
+  }, [ref]);
+
+  return (
+    <>
+      <TouchableOpacity onPress={show} activeOpacity={0.7}>
+        {children}
+      </TouchableOpacity>
+      <BottomSheetModal ref={ref}>
+        {items.map((item, i) => (
+          <MenuItem
+            {...item}
+            onPress={() => {
+              item.onPress?.();
+              close();
+            }}
+            key={i}
+          />
+        ))}
+        <BottomSheetButton text={i18nService.t('cancel')} onPress={close} />
+      </BottomSheetModal>
+    </>
+  );
+}
