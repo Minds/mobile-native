@@ -8,9 +8,10 @@ exports.config = {
   key: process.env.BROWSERSTACK_ACCESS_KEY,
 
   updateJob: false,
-  specs: ['./e2e/test/specs/login.spec.js'],
+  specs: ['./e2e/test/specs/*.spec.js'],
   exclude: [],
   services: ['browserstack'],
+  maxInstances: 10,
 
   capabilities: [
     {
