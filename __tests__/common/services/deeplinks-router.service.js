@@ -1,6 +1,8 @@
 import navigationService from '../../../src/navigation/NavigationService';
 import service from '../../../src/common/services/deeplinks-router.service';
 
+jest.mock('~/common/services/analytics.service');
+
 /**
  * Tests
  */
