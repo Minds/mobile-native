@@ -15843,9 +15843,9 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
   integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
-react-native-notifications@Minds/react-native-notifications#6f0346948455d4e0a64fc379570a6a2aa61cb674:
-  version "3.0.2"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/6f0346948455d4e0a64fc379570a6a2aa61cb674"
+react-native-notifications@Minds/react-native-notifications:
+  version "3.0.4"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/43de2bd2046b6ca16a212722a03579753b353e72"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
@@ -18634,7 +18634,7 @@ uuid@3.3.2:
 uuid@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
-  integrity sha1-Z+LoY3lyFVMN/zGOW/nc6/1Hsho=
+  integrity sha512-FULf7fayPdpASncVy4DLh3xydlXEJJpvIELjYjNeQWYUZ9pclcpvCZSr2gkmN2FrrGcI7G/cJsIEwk5/8vfXpg==
 
 uuid@^3.0.1, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"

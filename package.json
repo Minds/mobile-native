@@ -115,7 +115,7 @@
     "react-native-modal": "^11.10.0",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-navigation-bar-color": "^2.0.1",
-    "react-native-notifications": "Minds/react-native-notifications#6f0346948455d4e0a64fc379570a6a2aa61cb674",
+    "react-native-notifications": "Minds/react-native-notifications",
     "react-native-orientation-locker": "^1.3.1",
     "react-native-performance": "^2.0.0",
     "react-native-permissions": "^3.0.4",
