@@ -516,9 +516,9 @@ PODS:
     - React-Core
   - RNShareMenu (6.0.0):
     - React
-  - RNSnowplowTracker (1.0.0):
+  - RNSnowplowTracker (1.2.1):
     - React-Core
-    - SnowplowTracker (~> 2.2)
+    - SnowplowTracker (~> 3.0)
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.1.0):
@@ -532,7 +532,7 @@ PODS:
   - Sentry (7.0.0):
     - Sentry/Core (= 7.0.0)
   - Sentry/Core (7.0.0)
-  - SnowplowTracker (2.2.2):
+  - SnowplowTracker (3.1.2):
     - FMDB (~> 2.7)
   - SSZipArchive (2.2.3)
   - TOCropViewController (2.6.1)
@@ -953,18 +953,18 @@ SPEC CHECKSUMS:
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
-  RNSnowplowTracker: dae187f1e5392e3786fae8a933536453ccfb7528
+  RNSnowplowTracker: 88c65c2132ed97c0732473948c00c8f4d6473b12
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
-  SnowplowTracker: 2eee2d6606a60db98f7c4e1515499bb216b6c8ad
+  SnowplowTracker: e10ef8913e0437fa72adce900a3f08e6e4c6e188
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   VisionCamera: 476081b3788235857202394f25cd0503269cb4af
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
-PODFILE CHECKSUM: d66cfc638086e5fbca4db45b974672da3a66ae38
+PODFILE CHECKSUM: c949dcfc517d05afa9e9493130143613eec4ad5b
 
 COCOAPODS: 1.11.3
