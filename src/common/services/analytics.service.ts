@@ -59,6 +59,7 @@ export class AnalyticsService {
           sessionContext: true,
           installAutotracking: false,
           base64Encoding: true,
+          deepLinkContext: true,
         },
         sessionConfig: {
           foregroundTimeout: 600,
@@ -180,6 +181,16 @@ export class AnalyticsService {
       { name: screenName },
       this.contexts,
     );
+  }
+
+  /**
+   * Tracks a deep link received event
+   * @param url
+   */
+  trackDeepLinkReceivedEvent(url: string) {
+    return this.tracker?.trackDeepLinkReceivedEvent({
+      url,
+    });
   }
 
   /**

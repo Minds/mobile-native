@@ -3,6 +3,7 @@ import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
+import analyticsService from '~/common/services/analytics.service';
 
 /**
  * Deeplinks router
@@ -70,6 +71,10 @@ class DeeplinksRouter {
     if (!url || !cleanURL) {
       return;
     }
+
+    // this will track not only deep links, but navigation initiated from push notifs
+    analyticsService.trackDeepLinkReceivedEvent(url);
+
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
       return true;
@@ -120,7 +125,7 @@ class DeeplinksRouter {
   }
 
   /**
-   * Get url for given route
+   * Get route for given url
    */
   _getUrlRoute(url, cleanURL) {
     for (var i = 0; i < this.routes.length; i++) {
