@@ -12,15 +12,19 @@ export default class ViewImageScreen extends Component {
   constructor(props) {
     super(props);
 
-    const custom_data = this.props.route.params.entity.custom_data;
+    const entity = this.props.route.params.entity;
+    const custom_data = entity.custom_data;
 
     let width = Dimensions.get('window').width;
     const maxHeight = Dimensions.get('window').height;
 
     let height = 300;
 
-    if (custom_data && custom_data[0].height && custom_data[0].height !== '0') {
-      let ratio = custom_data[0].height / custom_data[0].width;
+    let imageWidth = Number(custom_data?.[0]?.width) || entity.width;
+    let imageHeight = Number(custom_data?.[0]?.height) || entity.height;
+
+    if (imageHeight) {
+      let ratio = imageHeight / imageWidth;
       height = Math.round(width * ratio);
 
       if (height > maxHeight) {
