@@ -22,6 +22,8 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   forceHeight?: number;
   onBack?: () => void;
   onDismiss?: () => void;
+  // disables dynamic snappoints animated height
+  fixedContentHeight?: boolean;
 }
 
 export type BottomSheetModalHandle = BottomSheetModal;
@@ -36,6 +38,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
       onBack,
       onDismiss,
       children,
+      fixedContentHeight,
       ...other
     } = props;
     const { onAnimateHandler } = useBackHandler(
@@ -90,10 +93,10 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         ref={ref}
         topInset={StatusBar.currentHeight || 0}
         handleComponent={renderHandle}
-        snapPoints={animatedSnapPoints}
         stackBehavior="push"
+        snapPoints={animatedSnapPoints}
         handleHeight={animatedHandleHeight}
-        contentHeight={animatedContentHeight}
+        contentHeight={fixedContentHeight ? undefined : animatedContentHeight}
         backdropComponent={renderBackdrop}
         enablePanDownToClose={true}
         backgroundComponent={null}
