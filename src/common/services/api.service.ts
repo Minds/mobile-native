@@ -410,8 +410,8 @@ export class ApiService {
 
     if (this.accessToken) {
       headers = {
-        ...headers,
         ...this.buildAuthorizationHeader(this.accessToken),
+        ...headers,
       };
     }
 

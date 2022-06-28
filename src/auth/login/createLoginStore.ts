@@ -3,8 +3,9 @@ import AuthService from '../AuthService';
 import { LayoutAnimation } from 'react-native';
 import logService from '../../common/services/log.service';
 import { showNotification } from '../../../AppMessages';
+import NavigationService from '~/navigation/NavigationService';
 
-const createLoginStore = ({ props, resetRef }) => ({
+const createLoginStore = ({ props }) => ({
   username: '',
   password: '',
   msg: '',
@@ -82,7 +83,7 @@ const createLoginStore = ({ props, resetRef }) => ({
       });
   },
   onForgotPress() {
-    resetRef.current?.show();
+    NavigationService.navigate('ResetPassword');
   },
 });
 
