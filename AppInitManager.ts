@@ -43,9 +43,6 @@ export default class AppInitManager {
     // init push service
     pushService.init();
 
-    // init settings loading
-    this.deepLinkUrl = (await Linking.getInitialURL()) || '';
-
     // On app login (runs if the user login or if it is already logged in)
     sessionService.onLogin(this.onLogin);
 
@@ -53,6 +50,9 @@ export default class AppInitManager {
     sessionService.onLogout(this.onLogout);
 
     openUrlService.init();
+
+    // init settings loading
+    this.deepLinkUrl = (await Linking.getInitialURL()) || '';
 
     try {
       logService.info('[App] init session');
@@ -191,7 +191,6 @@ export default class AppInitManager {
    */
   onNavigatorReady = async () => {
     console.log('NAV READY');
-    logService.info('[App] initializing session');
     this.initialNavigationHandling();
   };
 }

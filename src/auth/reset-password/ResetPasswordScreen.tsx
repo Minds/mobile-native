@@ -10,11 +10,6 @@ import EmailSended from './EmailSended';
 import InputPassword from './InputPassword';
 import InputUser from './InputUser';
 
-export type ResetPasswordScreenRouteParams = {
-  username: string;
-  code: string;
-};
-
 type ResetPasswordScreenPropsType = {
   navigation: any;
 } & StackScreenProps<RootStackParamList, 'ResetPassword'>;
