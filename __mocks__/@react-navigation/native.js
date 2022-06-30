@@ -26,6 +26,7 @@ export const CommonActions = {
 export const useRoute = jest.fn();
 export const useNavigation = jest.fn();
 export const useFocusEffect = jest.fn();
+export const createNavigationContainerRef = jest.fn();
 
 export const DefaultTheme = { colors: {} };
 export const DarkTheme = { colors: {} };
