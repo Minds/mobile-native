@@ -28,6 +28,7 @@ class LogService {
     if (!settingsStore.appLog) {
       return;
     }
+    console.warn(...args);
     // deviceLog.warn(...args);
   }
 

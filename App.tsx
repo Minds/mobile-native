@@ -25,7 +25,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Orientation from 'react-native-orientation-locker';
 import { PortalProvider } from '@gorhom/portal';
 import NavigationService, {
-  setTopLevelNavigator,
+  navigationRef,
 } from './src/navigation/NavigationService';
 import { Audio } from 'expo-av';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -171,7 +171,7 @@ class App extends Component<Props> {
         <SafeAreaProvider>
           {sessionService.ready && (
             <NavigationContainer
-              ref={setTopLevelNavigator}
+              ref={navigationRef}
               theme={ThemedStyles.navTheme}
               onReady={appInitManager.onNavigatorReady}
               onStateChange={NavigationService.onStateChange}>

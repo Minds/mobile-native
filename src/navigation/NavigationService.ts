@@ -1,16 +1,10 @@
-//@ts-nocheck
 import {
   CommonActions,
+  createNavigationContainerRef,
   StackActions,
-  SwitchActions,
 } from '@react-navigation/native';
 import analyticsService from '~/common/services/analytics.service';
-
-let _navigator = null;
-
-export function getTopLevelNavigator() {
-  return _navigator;
-}
+import logService from '~/common/services/log.service';
 
 function getStateFrom(nav) {
   if (nav.routes && nav.routes[nav.index].state) {
@@ -19,64 +13,76 @@ function getStateFrom(nav) {
   return nav.routes[nav.index];
 }
 
-export function setTopLevelNavigator(navigatorRef) {
-  //TODO: remove after we check the push notification issue
-  console.log(
-    'SETTING TOP LEVEL NAVIGATION ' + (navigatorRef ? 'WITH VALUE' : 'NULL'),
-  );
-  _navigator = navigatorRef;
-}
+export const navigationRef = createNavigationContainerRef();
 
 function getCurrentState() {
-  const root = _navigator.getRootState();
+  const root = navigationRef.getRootState();
   return getStateFrom(root);
 }
 
-function navigate(...args) {
-  _navigator.navigate(...args);
+function navigate(...args: any) {
+  return navigationRef.navigate(...args);
 }
 
 function dispatch(...args) {
-  _navigator.dispatch(...args);
+  // @ts-ignore
+  return navigationRef.dispatch(...args);
 }
 
 function push(...args) {
-  _navigator.dispatch(StackActions.push(...args));
+  // @ts-ignore
+  return navigationRef.dispatch(StackActions.push(...args));
 }
 
 function goBack() {
-  _navigator.dispatch(CommonActions.goBack());
-}
-
-function jumpTo(route) {
-  _navigator.dispatch(SwitchActions.jumpTo({ route }));
+  return navigationRef.dispatch(CommonActions.goBack());
 }
 
 function addListener(name, fn) {
-  return _navigator?.addListener(name, fn);
+  return navigationRef.addListener(name, fn);
 }
 
 /**
  * Runs every time the navigation state changes
  */
 function onStateChange() {
-  if (!_navigator) {
-    return;
-  }
-  const currentRouteName = _navigator.getCurrentRoute()?.name;
+  const currentRouteName = navigationRef.getCurrentRoute()?.name;
 
   // record analytics event for screen view
-  analyticsService.onNavigatorStateChange(currentRouteName);
+  return analyticsService.onNavigatorStateChange(currentRouteName);
 }
 
+const retry = (fn: Function, retries: number) => (...args) => {
+  setTimeout(() => runIfReady(fn, retries - 1)(...args), 500);
+};
+
+/**
+ * This function makes sure navigtion actions (fn) are handled gracefully by checking
+ * the ready state of the navigation ref and retrying a couple of times (retries).
+ * @param fn - the navigation method to run
+ * @param retries - the number of times it should be retried if navigation wasn't ready
+ * @returns the result of fn
+ */
+const runIfReady = (fn: Function, retries: number = 2) => (...args) => {
+  if (!navigationRef.isReady()) {
+    logService.warn(
+      `[NavigationService] Attempted navigation but navigator wasn't ready. Method: ${fn.name}`,
+    );
+    if (retries > 0) {
+      retry(fn, retries)(...args);
+    }
+    return null;
+  }
+
+  return fn(...args);
+};
+
 export default {
-  dispatch,
-  navigate,
-  jumpTo,
-  getCurrentState,
-  push,
-  setTopLevelNavigator,
-  goBack,
-  addListener,
-  onStateChange,
+  dispatch: runIfReady(dispatch),
+  navigate: runIfReady(navigate),
+  getCurrentState: runIfReady(getCurrentState),
+  push: runIfReady(push),
+  goBack: runIfReady(goBack),
+  addListener: runIfReady(addListener),
+  onStateChange: runIfReady(onStateChange),
 };

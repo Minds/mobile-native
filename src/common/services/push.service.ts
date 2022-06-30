@@ -38,9 +38,7 @@ export class PushService {
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);
       // delay navigation on app start
-      setTimeout(() => {
-        router.navigate(data);
-      }, 500);
+      router.navigate(data);
     });
   }
 
