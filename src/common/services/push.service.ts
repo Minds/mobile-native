@@ -4,6 +4,7 @@ import { router } from './push/v2/router';
 import logService from './log.service';
 import type IosPlatfom from './push/ios-platform';
 import type AndroidPlatfom from './push/android-platform';
+import analyticsService from './analytics.service';
 
 /**
  * Push Service
@@ -30,6 +31,7 @@ export class PushService {
       if (data.json) data.json = JSON.parse(data.json);
       // navigate
       router.navigate(data);
+      analyticsService.trackClick('push-notification');
     });
 
     this.push.setOnInitialNotification(notification => {

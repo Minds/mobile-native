@@ -247,22 +247,30 @@ export class AnalyticsService {
     this.tracker?.trackPageViewEvent({ pageUrl }, this.contexts);
   }
 
+  /**
+   * Tracks a generic view event.
+   * @param { string } ref - a string identifying the source of the click action.
+   * @param { EventContext[] } contexts - additional contexts.
+   * @returns { void }
+   */
+  public trackView(ref: string, contexts: EventContext[] = []): void {
+    return this.trackGenericEvent('view', ref, contexts);
+  }
+
+  /**
+   * Tracks a click event.
+   * @param { string } ref - a string identifying the source of the click action.
+   * @param { EventContext[] } contexts - additional contexts.
+   * @returns { void }
+   */
   public trackClick(ref: string, contexts: EventContext[] = []): void {
-    this.tracker?.trackSelfDescribingEvent(
-      {
-        schema: 'iglu:com.minds/click_event/jsonschema/1-0-0',
-        data: {
-          ref: ref,
-        },
-      },
-      [...contexts, ...this.contexts],
-    );
+    return this.trackGenericEvent('click', ref, contexts);
   }
 
   /**
    * Build entity context for a given entity.
    * @param { ContextualizableEntity } entity - entity to build entity_context for.
-   * @returns { SnowplowContext } - built entity_context.
+   * @returns { EventContext } - built entity_context.
    */
   public buildEntityContext(entity: ContextualizableEntity): EventContext {
     return {
@@ -276,6 +284,29 @@ export class AnalyticsService {
         entity_container_guid: entity.container_guid ?? null,
       },
     };
+  }
+
+  /**
+   * Tracks a generic event.
+   * @param { string } eventType - the type of this event e.g. view, click, etc.
+   * @param { string } eventRef - a string identifying the source of this action.
+   * @param  { EventContext[] } contexts
+   */
+  private trackGenericEvent(
+    eventType: string,
+    eventRef: string,
+    contexts: EventContext[] = [],
+  ): void {
+    this.tracker?.trackSelfDescribingEvent(
+      {
+        schema: 'iglu:com.minds/generic_event/jsonschema/1-0-0',
+        data: {
+          event_type: eventType,
+          event_ref: eventRef,
+        },
+      },
+      [...(this.contexts ?? []), ...contexts],
+    );
   }
 }
 
