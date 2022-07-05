@@ -2,6 +2,21 @@
 
 Minds Mobile
 
+## 4.26.0 - 2022-06-22
+
+### Changed
+
+- Video pre-load to improve UX in the feeds
+- Dismissible channel recommendations
+- Fix push notifications restart and navigation issues
+- Fix share to minds error (when sharing text/URL from other apps)
+- Fix bottom sheet opening randomly
+- Fix deeplink for unread notifications email
+- APK size reduced
+- Video pause when changing screen
+- Fix the inconsistent capitalization on Push Notifications settings
+- Fix NSFW warnings
+
 ## 4.25.0 - 2022-06-08
 
 ### Changed
