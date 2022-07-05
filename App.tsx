@@ -47,6 +47,7 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import { CODE_PUSH_KEY } from '~/config/Config';
+import 'react-native-image-keyboard';
 
 YellowBox.ignoreWarnings(['']);
 
