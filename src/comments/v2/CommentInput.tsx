@@ -34,6 +34,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import onImageInput from '~/common/helpers/onImageInput';
 
 const { height } = Dimensions.get('window');
 
@@ -195,6 +196,11 @@ const CommentInput = observer((onShow, onDismiss) => {
             underlineColorAndroid="transparent"
             onChangeText={provider.store?.setText}
             maxLength={CHAR_LIMIT}
+            onImageChange={
+              provider.store
+                ? onImageInput(provider.store.onAttachedMedia)
+                : undefined
+            }
             onSelectionChange={e =>
               provider.store?.setSelection(e.nativeEvent.selection)
             }

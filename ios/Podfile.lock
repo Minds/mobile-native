@@ -318,6 +318,8 @@ PODS:
   - react-native-image-filter-kit (0.8.0):
     - Bolts/Tasks (= 1.9.0)
     - React
+  - react-native-image-keyboard (2.2.0):
+    - React
   - react-native-measure-text-size (1.0.0):
     - React-Core
   - react-native-mmkv-storage (0.7.5):
@@ -592,6 +594,7 @@ DEPENDENCIES:
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - react-native-image-filter-kit (from `../node_modules/react-native-image-filter-kit`)
+  - react-native-image-keyboard (from `../node_modules/react-native-image-keyboard`)
   - "react-native-measure-text-size (from `../node_modules/@bigbee.dev/react-native-measure-text-size`)"
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -752,6 +755,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-cookies/cookies"
   react-native-image-filter-kit:
     :path: "../node_modules/react-native-image-filter-kit"
+  react-native-image-keyboard:
+    :path: "../node_modules/react-native-image-keyboard"
   react-native-measure-text-size:
     :path: "../node_modules/@bigbee.dev/react-native-measure-text-size"
   react-native-mmkv-storage:
@@ -910,6 +915,7 @@ SPEC CHECKSUMS:
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-cookies: cd92f3824ed1e32a20802e8185101e14bb5b76da
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
+  react-native-image-keyboard: adbf5996b8592a7d8cb8d3e431a9607f9cf3b270
   react-native-measure-text-size: df17d060f981d8ec652aa3118e37322bd7019bd5
   react-native-mmkv-storage: dd0b03f290661455896b5f1a411196b3a14adedd
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
@@ -965,6 +971,6 @@ SPEC CHECKSUMS:
   VisionCamera: 476081b3788235857202394f25cd0503269cb4af
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
-PODFILE CHECKSUM: d66cfc638086e5fbca4db45b974672da3a66ae38
+PODFILE CHECKSUM: c949dcfc517d05afa9e9493130143613eec4ad5b
 
 COCOAPODS: 1.11.3

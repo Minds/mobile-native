@@ -105,6 +105,7 @@
     "react-native-image-colors": "^1.3.1",
     "react-native-image-crop-picker": "^0.37.2",
     "react-native-image-filter-kit": "^0.8.0",
+    "react-native-image-keyboard": "^2.2.0",
     "react-native-image-pan-zoom": "^2.1.12",
     "react-native-image-progress": "^1.1.1",
     "react-native-inappbrowser-reborn": "https://github.com/proyecto26/react-native-inappbrowser",
