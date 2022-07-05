@@ -7,21 +7,22 @@ import shouldReportToSentry from '../helpers/errors';
  * Log service
  */
 class LogService {
+  data = [];
   log(...args) {
     if (__DEV__) {
       console.log(...args);
     }
-    // deviceLog.log(...args);
+    this.data.push({ type: 'info', args });
   }
 
   info(...args) {
     if (__DEV__) {
       console.log(...args);
     }
+    this.data.push({ type: 'info', args });
     if (!settingsStore.appLog) {
       return;
     }
-    // deviceLog.info(...args);
   }
 
   warn(...args) {
@@ -40,6 +41,7 @@ class LogService {
       error = prepend;
       prepend = null;
     }
+    this.data.push({ type: 'exception', args: [error] });
 
     // log exceptions to console on spec testing or dev mode
     if (process.env.JEST_WORKER_ID !== undefined || __DEV__) {

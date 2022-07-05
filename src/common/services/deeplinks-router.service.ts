@@ -3,6 +3,7 @@ import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
+import logService from './log.service';
 
 /**
  * Deeplinks router
@@ -65,39 +66,47 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
-    const cleanURL = this.cleanUrl(url);
+    try {
+      const cleanURL = this.cleanUrl(url);
 
-    if (!url || !cleanURL) {
-      return;
-    }
-    if (cleanURL.startsWith('forgot-password')) {
-      this.navToPasswordReset(url);
-      return true;
-    }
-    if (url.endsWith('/')) {
-      url = url.substr(0, url.length - 1);
-    }
-    const route = this._getUrlRoute(url, cleanURL);
+      if (!url || !cleanURL) {
+        logService.info('[DeepLinking] no url provided');
+        return;
+      }
+      if (cleanURL.startsWith('forgot-password')) {
+        this.navToPasswordReset(url);
+        return true;
+      }
+      if (url.endsWith('/')) {
+        url = url.substr(0, url.length - 1);
+      }
+      const route = this._getUrlRoute(url, cleanURL);
 
-    if (route && route.screen !== 'Redirect') {
-      const screens = route.screen.split('/');
-      if (screens.length === 1) {
-        navigationService[route.type](route.screen, route.params);
-      } else {
-        const screen = screens.shift();
-        const calcParams = this.nestedScreen(screens, route.params);
-        navigationService[route.type](screen, calcParams);
+      logService.info(`[DeepLinking] route ${route?.screen}`);
+
+      if (route && route.screen !== 'Redirect') {
+        const screens = route.screen.split('/');
+        if (screens.length === 1) {
+          navigationService[route.type](route.screen, route.params);
+        } else {
+          const screen = screens.shift();
+          const calcParams = this.nestedScreen(screens, route.params);
+          navigationService[route.type](screen, calcParams);
+        }
+      } else if (url !== 'https://www.minds.com') {
+        logService.info('[DeepLinking] fallback to web');
+        if (url.startsWith('mindsapp://')) {
+          Linking.openURL(
+            url.replace('mindsapp://', 'https://mobile.minds.com/'),
+          );
+        } else {
+          Linking.openURL(url.replace('https://www.', 'https://mobile.'));
+        }
       }
-    } else if (url !== 'https://www.minds.com') {
-      if (url.startsWith('mindsapp://')) {
-        Linking.openURL(
-          url.replace('mindsapp://', 'https://mobile.minds.com/'),
-        );
-      } else {
-        Linking.openURL(url.replace('https://www.', 'https://mobile.'));
-      }
+      return !!route;
+    } catch (error) {
+      logService.exception('[DeepLinking]', error);
     }
-    return !!route;
   }
 
   nestedScreen(data, params) {

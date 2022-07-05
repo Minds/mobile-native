@@ -133,6 +133,10 @@ const SettingsScreen = observer(({ navigation }) => {
       screen: 'BoostConsole',
     },
     {
+      title: 'Log',
+      screen: 'Log',
+    },
+    {
       title: i18n.t(
         ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
       ),

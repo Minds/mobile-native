@@ -45,6 +45,7 @@ import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
 import TwitterSyncScreen from '~/settings/screens/twitter-sync/TwitterSyncScreen';
+import LogScreen from '~/settings/screens/LogScreen';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -157,6 +158,7 @@ export default function () {
         component={SettingsScreen}
         options={hideHeader}
       />
+      <MoreStack.Screen name="Log" component={LogScreen} options={hideHeader} />
       <MoreStack.Screen
         name="BuyTokens"
         component={BuyTokensScreen}

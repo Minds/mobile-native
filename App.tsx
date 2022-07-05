@@ -47,6 +47,7 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import { CODE_PUSH_KEY } from '~/config/Config';
+import logService from '~/common/services/log.service';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -143,6 +144,7 @@ class App extends Component<Props> {
    * Handle deeplink urls
    */
   handleOpenURL = event => {
+    logService.info(`[App] deeplink opened URL: ${event.url}`);
     if (event.url) {
       // the var can be cleaned so we check again
       setTimeout(() => {
