@@ -58,7 +58,7 @@ const ResetPasswordModal: React.ForwardRefRenderFunction<
       onBack={
         store.currentStep === 'emailSended' ? store.navToInputUser : undefined
       }
-      onDismiss={() => modalRef.current?.close()}
+      onDismissBtn={() => modalRef.current?.close()}
       snapPoints={['90%']}>
       <View style={containerStyle}>{step}</View>
     </BottomSheetModal>
