@@ -69,7 +69,7 @@ target 'Minds' do
         config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
         # Note for M1 Mac: uncomment next line
-        # config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
       end
       if target.name == "React-Core.common-AccessibilityResources"
         target.remove_from_project
