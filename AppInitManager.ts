@@ -168,11 +168,9 @@ export default class AppInitManager {
       if (this.deepLinkUrl) {
         const deeplink = this.deepLinkUrl;
 
-        setTimeout(() => {
-          //TODO: remove after we check the push notification issue
-          console.log('[App] Handling deeplink');
-          deeplinkService.navigate(deeplink);
-        }, 300);
+        //TODO: remove after we check the push notification issue
+        console.log('[App] Handling deeplink');
+        deeplinkService.navigate(deeplink);
         this.deepLinkUrl = '';
       }
 
