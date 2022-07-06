@@ -7,6 +7,7 @@ Minds Mobile
 ### Changed
 
 - Video pre-load to improve UX in the feeds
+- Add keyboard GIF, sticker and image paste support
 - Dismissible channel recommendations
 - Fix push notifications restart and navigation issues
 - Fix share to minds error (when sharing text/URL from other apps)
