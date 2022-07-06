@@ -28,7 +28,6 @@ import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 export default class AppInitManager {
   initialized = false;
   settingsStorePromise?: Promise<SettingsStore>;
-  deepLinkUrl = '';
 
   /**
    * Initialize services without waiting for the promises
@@ -50,9 +49,6 @@ export default class AppInitManager {
     sessionService.onLogout(this.onLogout);
 
     openUrlService.init();
-
-    // init settings loading
-    this.deepLinkUrl = (await Linking.getInitialURL()) || '';
 
     try {
       logService.info('[App] init session');
@@ -154,16 +150,15 @@ export default class AppInitManager {
         sessionService.setInitialScreen('');
       }
 
-      // handle deep link (if the app is opened by one)
-      if (this.deepLinkUrl) {
-        const deeplink = this.deepLinkUrl;
+      const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
+      // handle deep link (if the app is opened by one)
+      if (deepLinkUrl) {
         setTimeout(() => {
           //TODO: remove after we check the push notification issue
           console.log('[App] Handling deeplink');
-          deeplinkService.navigate(deeplink);
+          deeplinkService.navigate(deepLinkUrl);
         }, 300);
-        this.deepLinkUrl = '';
       }
 
       //TODO: remove after we check the push notification issue
