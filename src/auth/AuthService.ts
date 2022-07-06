@@ -249,7 +249,7 @@ class AuthService {
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] revokeTokens', err);
       return false;
     }
   }
@@ -271,11 +271,21 @@ class AuthService {
     });
   }
 
+  /**
+   * Unregister the push token for a session index
+   */
   unregisterTokenFrom(index: number) {
-    const deviceToken = sessionService.deviceToken;
-    if (deviceToken) {
-      return sessionService.apiServiceInstances[index].delete(
-        `api/v3/notifications/push/token/${deviceToken}`,
+    try {
+      const deviceToken = sessionService.deviceToken;
+      if (deviceToken) {
+        return sessionService.apiServiceInstances[index].delete(
+          `api/v3/notifications/push/token/${deviceToken}`,
+        );
+      }
+    } catch (error) {
+      logService.exception(
+        '[AuthService] error unregistering push token',
+        error,
       );
     }
   }
@@ -302,7 +312,7 @@ class AuthService {
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] logoutFrom', err);
       return false;
     }
   }
@@ -319,7 +329,7 @@ class AuthService {
       await api.clearCookies();
       return true;
     } catch (err) {
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] sessionLogout', err);
       return false;
     }
   }
@@ -338,7 +348,7 @@ class AuthService {
 
       return true;
     } catch (err) {
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] logoutAll', err);
       return false;
     }
   }

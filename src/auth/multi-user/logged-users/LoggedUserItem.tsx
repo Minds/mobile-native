@@ -1,7 +1,7 @@
 import React from 'react';
 import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
-import { TokensData } from '../../../common/services/storage/session.storage.service';
+import { Session } from '../../../common/services/storage/session.storage.service';
 import AuthService from '../../AuthService';
 import ChannelListItem from '../../../common/components/ChannelListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -9,7 +9,7 @@ import LoggedUserDetails from './LoggedUserDetails';
 import NavigationService from '../../../navigation/NavigationService';
 
 type PropsType = {
-  tokenData: TokensData;
+  tokenData: Session;
   index: number;
 };
 

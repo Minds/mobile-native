@@ -24,8 +24,7 @@ const Icon = () => (
 const LoggedUserDetails = (props: PropsType) => {
   return (
     <View style={styles.container}>
-      {props.isActive && <Icon />}
-      {!props.isActive && <UnreadNotifications index={props.index} />}
+      {props.isActive ? <Icon /> : <UnreadNotifications index={props.index} />}
       <Options {...props} />
     </View>
   );
