@@ -61,6 +61,7 @@ import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal
 import EarnModal from '../earn/EarnModal';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
+import ResetPasswordScreen from '../auth/reset-password/ResetPasswordScreen';
 import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
@@ -429,6 +430,11 @@ const RootStack = function (props) {
       <RootStackNav.Screen
         name="DevTools"
         component={DevToolsScreen}
+        options={modalOptions}
+      />
+      <RootStackNav.Screen
+        name="ResetPassword"
+        component={ResetPasswordScreen}
         options={modalOptions}
       />
     </RootStackNav.Navigator>

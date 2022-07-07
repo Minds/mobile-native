@@ -415,7 +415,9 @@ class AuthService {
       password,
     } as resetParams;
 
-    return api.post('api/v1/forgotpassword/reset', params);
+    return api.post('api/v1/forgotpassword/reset', params, {
+      Authorization: undefined, // we want this request to be without authorization
+    });
   }
   /**
    * Validate Password, return succeed or fail

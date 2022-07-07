@@ -166,6 +166,10 @@ export type RootStackParamList = {
     onConfirm: (password: string) => void;
     title: string;
   };
+  ResetPassword: {
+    username: string;
+    code: string;
+  };
   ViewImage: {};
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
@@ -179,15 +183,9 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
-  Welcome: {
-    username?: string;
-    code?: string;
-  };
+  Welcome: {};
   Login: {
     username?: string;
-    code?: string;
-  };
-  Forgot: {
     code?: string;
   };
   Register: {};

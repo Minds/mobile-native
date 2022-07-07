@@ -27,15 +27,12 @@ import { updateGrowthBookAttributes } from 'ExperimentsProvider';
  */
 export default class AppInitManager {
   initialized = false;
-  shouldHandlePasswordReset = false;
   settingsStorePromise?: Promise<SettingsStore>;
-  deeplinkPromise?: Promise<string | null>;
-  deepLinkUrl = '';
 
   /**
    * Initialize services without waiting for the promises
    */
-  initializeServices() {
+  async initializeServices() {
     // ensure we run it once
     if (this.initialized) {
       return;
@@ -45,9 +42,6 @@ export default class AppInitManager {
     // init push service
     pushService.init();
 
-    // init settings loading
-    this.deeplinkPromise = Linking.getInitialURL();
-
     // On app login (runs if the user login or if it is already logged in)
     sessionService.onLogin(this.onLogin);
 
@@ -56,46 +50,38 @@ export default class AppInitManager {
 
     openUrlService.init();
 
-    this.checkDeepLink().then(async shouldHandlePasswordReset => {
-      if (shouldHandlePasswordReset) {
-        sessionService.setReady();
-        this.shouldHandlePasswordReset = true;
+    try {
+      logService.info('[App] init session');
+      const token = await sessionService.init();
+
+      if (!token) {
+        // update settings and init growthbook
+        this.updateMindsConfigAndInitGrowthbook();
+
+        logService.info('[App] there is no active session');
+        RNBootSplash.hide({ fade: true });
       } else {
-        try {
-          logService.info('[App] init session');
-          const token = await sessionService.init();
-
-          if (!token) {
-            // update settings and init growthbook
-            this.updateMindsConfigAndInitGrowthbook();
-
-            logService.info('[App] there is no active session');
-            RNBootSplash.hide({ fade: true });
-          } else {
-            logService.info('[App] session initialized');
-          }
-        } catch (err) {
-          logService.exception('[App] Error initializing the app', err);
-          if (err instanceof Error) {
-            Alert.alert(
-              'Error',
-              'There was an error initializing the app.\n Do you want to copy the stack trace.',
-              [
-                {
-                  text: 'Yes',
-                  onPress: () => {
-                    if (err instanceof Error)
-                      Clipboard.setString(err.stack || '');
-                  },
-                },
-                { text: 'No' },
-              ],
-              { cancelable: false },
-            );
-          }
-        }
+        logService.info('[App] session initialized');
       }
-    });
+    } catch (err) {
+      logService.exception('[App] Error initializing the app', err);
+      if (err instanceof Error) {
+        Alert.alert(
+          'Error',
+          'There was an error initializing the app.\n Do you want to copy the stack trace.',
+          [
+            {
+              text: 'Yes',
+              onPress: () => {
+                if (err instanceof Error) Clipboard.setString(err.stack || '');
+              },
+            },
+            { text: 'No' },
+          ],
+          { cancelable: false },
+        );
+      }
+    }
 
     // clear cosine cache of blurhash
     Blurhash.clearCosineCache();
@@ -164,16 +150,15 @@ export default class AppInitManager {
         sessionService.setInitialScreen('');
       }
 
-      // handle deep link (if the app is opened by one)
-      if (this.deepLinkUrl) {
-        const deeplink = this.deepLinkUrl;
+      const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
+      // handle deep link (if the app is opened by one)
+      if (deepLinkUrl) {
         setTimeout(() => {
           //TODO: remove after we check the push notification issue
           console.log('[App] Handling deeplink');
-          deeplinkService.navigate(deeplink);
+          deeplinkService.navigate(deepLinkUrl);
         }, 300);
-        this.deepLinkUrl = '';
       }
 
       //TODO: remove after we check the push notification issue
@@ -201,38 +186,6 @@ export default class AppInitManager {
    */
   onNavigatorReady = async () => {
     console.log('NAV READY');
-    if (this.shouldHandlePasswordReset) {
-      logService.info('[App] initializing session');
-      this.handlePasswordResetDeepLink();
-    } else {
-      this.initialNavigationHandling();
-    }
+    this.initialNavigationHandling();
   };
-
-  async checkDeepLink(): Promise<boolean> {
-    this.deepLinkUrl = (await this.deeplinkPromise) || '';
-    try {
-      return (
-        this.deepLinkUrl &&
-        deeplinkService.cleanUrl(this.deepLinkUrl).startsWith('forgot-password')
-      );
-    } catch (err) {
-      logService.exception(
-        '[App] Error checking for password reset deep link',
-        err,
-      );
-    }
-    return false;
-  }
-
-  /**
-   * Handle pre login deep links
-   */
-  handlePasswordResetDeepLink() {
-    RNBootSplash.hide({ fade: true });
-
-    deeplinkService.navToPasswordReset(this.deepLinkUrl);
-
-    this.deepLinkUrl = '';
-  }
 }
