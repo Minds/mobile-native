@@ -1,26 +1,36 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import ImageViewer from '../common/components/ImageViewer';
 import ThemedStyles from '../styles/ThemedStyles';
+import {
+  SafeAreaView,
+  withSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 /**
  * Full screen image viewer
  */
+@withSafeAreaInsets
 export default class ViewImageScreen extends Component {
   constructor(props) {
     super(props);
 
-    const custom_data = this.props.route.params.entity.custom_data;
+    const entity = this.props.route.params.entity;
+    const custom_data = entity.custom_data;
 
     let width = Dimensions.get('window').width;
-    const maxHeight = Dimensions.get('window').height;
+    const verticalOffset = props.insets?.top + props.insets?.bottom || 0;
+    const maxHeight = Dimensions.get('window').height - verticalOffset;
 
     let height = 300;
 
-    if (custom_data && custom_data[0].height && custom_data[0].height !== '0') {
-      let ratio = custom_data[0].height / custom_data[0].width;
+    let imageWidth = Number(custom_data?.[0]?.width) || entity.width;
+    let imageHeight = Number(custom_data?.[0]?.height) || entity.height;
+
+    if (imageHeight) {
+      let ratio = imageHeight / imageWidth;
       height = Math.round(width * ratio);
 
       if (height > maxHeight) {
@@ -48,7 +58,7 @@ export default class ViewImageScreen extends Component {
     const theme = ThemedStyles.theme;
 
     return (
-      <View style={theme.flexContainer}>
+      <SafeAreaView style={theme.flexContainer}>
         <ImageViewer
           onSwipeDown={this.onSwipeDown}
           source={source}
@@ -56,7 +66,7 @@ export default class ViewImageScreen extends Component {
           width={this.state.width}
           height={this.state.height}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
