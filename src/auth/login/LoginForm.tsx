@@ -34,7 +34,7 @@ export default observer(function LoginForm(props: PropsType) {
     const u =
       props.sessionIndex !== undefined
         ? UserModel.checkOrCreate(
-            sessionService.tokensData[props.sessionIndex].user,
+            sessionService.getSessionForIndex(props.sessionIndex).user,
           )
         : sessionService.getUser();
 
@@ -42,7 +42,7 @@ export default observer(function LoginForm(props: PropsType) {
       localStore.username = u.username;
     }
     return u;
-  }, [props.sessionIndex, localStore]);
+  }, [props.sessionIndex, props.relogin, localStore.username]);
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>

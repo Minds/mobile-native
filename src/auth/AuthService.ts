@@ -102,7 +102,7 @@ class AuthService {
       return data;
     }
 
-    const isFirstLogin = session.tokensData.length === 0;
+    const isFirstLogin = session.sessionsCount === 0;
 
     // if already have other sessions...
     if (!isFirstLogin) {
@@ -134,7 +134,7 @@ class AuthService {
    */
   checkUserExist(username: string) {
     if (
-      session.tokensData.some(
+      session.sessions.some(
         token => token.user.username === username && !token.sessionExpired,
       )
     ) {
@@ -171,7 +171,7 @@ class AuthService {
 
   async handleActiveAccount() {
     // if after logout we have other accounts...
-    if (session.tokensData.length > 0) {
+    if (session.sessionsCount > 0) {
       await delay(100);
       await session.switchUser(session.activeIndex);
       await session.login();
@@ -185,7 +185,7 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      if (session.tokensData.length > 0) {
+      if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
@@ -227,7 +227,7 @@ class AuthService {
   async revokeTokens(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      if (session.tokensData.length > 0) {
+      if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
@@ -249,7 +249,7 @@ class AuthService {
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] revokeTokens', err);
       return false;
     }
   }
@@ -271,11 +271,21 @@ class AuthService {
     });
   }
 
+  /**
+   * Unregister the push token for a session index
+   */
   unregisterTokenFrom(index: number) {
-    const deviceToken = sessionService.deviceToken;
-    if (deviceToken) {
-      return sessionService.apiServiceInstances[index].delete(
-        `api/v3/notifications/push/token/${deviceToken}`,
+    try {
+      const deviceToken = sessionService.deviceToken;
+      if (deviceToken) {
+        return sessionService.apiServiceInstances[index].delete(
+          `api/v3/notifications/push/token/${deviceToken}`,
+        );
+      }
+    } catch (error) {
+      logService.exception(
+        '[AuthService] error unregistering push token',
+        error,
       );
     }
   }
@@ -302,7 +312,7 @@ class AuthService {
       return true;
     } catch (err) {
       session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] logoutFrom', err);
       return false;
     }
   }
@@ -319,7 +329,7 @@ class AuthService {
       await api.clearCookies();
       return true;
     } catch (err) {
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] sessionLogout', err);
       return false;
     }
   }
@@ -338,7 +348,7 @@ class AuthService {
 
       return true;
     } catch (err) {
-      logService.exception('[AuthService] logout', err);
+      logService.exception('[AuthService] logoutAll', err);
       return false;
     }
   }

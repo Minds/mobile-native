@@ -6,7 +6,7 @@ import { IconButton } from '~ui/icons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../components/MText';
-import { Flow } from 'react-native-animated-spinkit';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 type PropsType = {
   title: string;
@@ -37,21 +37,12 @@ export default function ModalFullScreen({
         </View>
         <View style={theme.flexContainer}>{children}</View>
       </SafeAreaView>
-      {loading && (
-        <View style={styles.loading}>
-          <Flow color={ThemedStyles.getColor('White')} />
-        </View>
-      )}
+      {loading && <LoadingOverlay />}
     </View>
   );
 }
 
 const styles = ThemedStyles.create({
-  loading: [
-    'positionAbsolute',
-    'centered',
-    { backgroundColor: 'rgba(0,0,0,0.45)' },
-  ],
   screen: ['flexContainer', 'bgPrimaryBackground'],
   title: ['colorPrimaryText', 'fontXL', 'fontBold'],
   header: [
