@@ -2,12 +2,16 @@
 
 Minds Mobile
 
-## 4.26.0 - 2022-06-22
+## 4.26.0 - 2022-07-12
 
 ### Changed
 
+- Add keyboard GIF, sticker and image paste support (Composer & comments)
+- Fix issues on the reset password modal and flow
+- Fix issues deleting or deactivating an account when logged in with multiple users
+- Fix the data range filter for the feed
+- Fix aspect radio issues on the Image Viewer
 - Video pre-load to improve UX in the feeds
-- Add keyboard GIF, sticker and image paste support
 - Dismissible channel recommendations
 - Fix push notifications restart and navigation issues
 - Fix share to minds error (when sharing text/URL from other apps)
