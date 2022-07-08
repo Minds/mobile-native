@@ -175,7 +175,7 @@ export class SessionService {
       this.setToken(tokens.access_token);
       this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
       // persist sessions array
-      this.persistSessionsArray;
+      this.persistSessionsArray();
       logService.info('[SessionService] token refreshed!');
     } else {
       logService.info("[SessionService] can't refreshing token");
@@ -213,7 +213,7 @@ export class SessionService {
         tokens,
         this.tokensData[index].user,
       );
-      this.persistSessionsArray;
+      this.persistSessionsArray();
       logService.info('[SessionService] token refreshed!');
     } else {
       logService.info("[SessionService] can't refreshing token");
