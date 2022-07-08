@@ -17,7 +17,7 @@ const doLogin = async (index: number) => {
   if (index === sessionService.activeIndex) {
     return;
   }
-  if (sessionService.tokensData[index].sessionExpired) {
+  if (sessionService.getSessionForIndex(index).sessionExpired) {
     NavigationService.navigate('RelogScreen', {
       sessionIndex: index,
       onLogin: () => AuthService.loginWithIndex(index),

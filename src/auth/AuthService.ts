@@ -102,7 +102,7 @@ class AuthService {
       return data;
     }
 
-    const isFirstLogin = session.tokensData.length === 0;
+    const isFirstLogin = session.sessionsCount === 0;
 
     // if already have other sessions...
     if (!isFirstLogin) {
@@ -134,7 +134,7 @@ class AuthService {
    */
   checkUserExist(username: string) {
     if (
-      session.tokensData.some(
+      session.sessions.some(
         token => token.user.username === username && !token.sessionExpired,
       )
     ) {
@@ -171,7 +171,7 @@ class AuthService {
 
   async handleActiveAccount() {
     // if after logout we have other accounts...
-    if (session.tokensData.length > 0) {
+    if (session.sessionsCount > 0) {
       await delay(100);
       await session.switchUser(session.activeIndex);
       await session.login();
@@ -185,7 +185,7 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      if (session.tokensData.length > 0) {
+      if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
@@ -227,7 +227,7 @@ class AuthService {
   async revokeTokens(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      if (session.tokensData.length > 0) {
+      if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');

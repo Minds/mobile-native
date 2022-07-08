@@ -9,7 +9,7 @@ type PropsType = {};
 const LoggedUsers = observer(({}: PropsType) => {
   return (
     <View>
-      {sessionService.tokensData.map((tokenData, index) => (
+      {sessionService.getSessions().map((tokenData, index) => (
         <LoggedUserItem tokenData={tokenData} index={index} />
       ))}
     </View>

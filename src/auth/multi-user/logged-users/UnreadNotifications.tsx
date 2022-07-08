@@ -36,7 +36,7 @@ const UnreadNotifications = observer(({ index }: PropsType) => {
           <MText style={styles.notifications}>{count}</MText>
         </View>
       )}
-      {sessionService.tokensData[index].sessionExpired && (
+      {sessionService.getSessionForIndex(index).sessionExpired && (
         <MText style={styles.expired}>
           {i18n.t('multiUser.sessionExpired')}
         </MText>
