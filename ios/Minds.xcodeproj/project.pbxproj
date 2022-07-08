@@ -1358,7 +1358,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile;
 				PRODUCT_NAME = Minds;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile 1625772538";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile";
 				SWIFT_OBJC_BRIDGING_HEADER = "Minds-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1719,7 +1719,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.Share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile.Share 1625773416";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile.Share";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Share/Share-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
