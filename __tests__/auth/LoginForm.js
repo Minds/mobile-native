@@ -35,7 +35,7 @@ describe('LoginForm component', () => {
 
     const { getByTestId, getByA11yLabel } = render(<LoginForm />);
 
-    const user = getByTestId('usernameInput');
+    const user = getByTestId('usernameLoginInput');
     const pass = getByTestId('userPasswordInput');
     const button = getByTestId('loginButton');
 
