@@ -2,8 +2,8 @@ import useApiFetch from '~/common/hooks/useApiFetch';
 
 interface MutualSubscribersResponse {
   count: number;
-  entities: any[]; // TODO
-  users: any[]; // TODO: type UserModel
+  entities: any[];
+  users: any[];
 }
 
 export const useMutualSubscribers = (userGuid: string) => {
