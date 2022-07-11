@@ -11,10 +11,16 @@ import { useMutualSubscribers } from './useMutualSubscribers';
 
 type MutualSubscribersProps = {
   userGuid: string;
+  // the number of users to show separately
+  limit: number;
   navigation: any;
 } & SpacerPropType;
 
-function MutualSubscribers({ userGuid, ...props }: MutualSubscribersProps) {
+function MutualSubscribers({
+  userGuid,
+  limit = 3,
+  ...props
+}: MutualSubscribersProps) {
   const { result } = useMutualSubscribers(userGuid);
   const count = result?.count;
   const users = result?.users || [];
@@ -35,13 +41,13 @@ function MutualSubscribers({ userGuid, ...props }: MutualSubscribersProps) {
   return (
     <Spacer {...props} containerStyle={styles.container}>
       <View style={styles.avatarContainer}>
-        {users.map(user => {
+        {users.slice(0, limit).map(user => {
           return <ChannelAvatar user={user} />;
         })}
       </View>
 
       <View style={styles.usernameContainer}>
-        <Description users={users} total={count} />
+        <Description limit={limit} users={users} total={count} />
       </View>
     </Spacer>
   );
@@ -52,24 +58,37 @@ const NobodyInCommon = () => {
   return null;
 };
 
-const Description = ({ users, total }) => {
+const Description = ({ users, total, limit }) => {
   const text =
-    total > 3
+    total > limit
       ? i18n.t('channel.mutualSubscribers.descriptionMany', {
-          count: total - 3,
+          count: total - limit,
         })
       : i18n.t('channel.mutualSubscribers.description', {
-          count: users.length,
+          count: total,
         });
 
   return (
     <B2>
-      {users
-        .slice(0, 3)
-        .map((user, index) => [
-          index === 0 ? '' : ', ',
-          <ChannelUsername user={user} />,
-        ])}{' '}
+      {users.map((user, index) => {
+        let prefix = ', ';
+        if (index === 0) {
+          prefix = '';
+        } else if (index === users.length - 1) {
+          if (total < limit) {
+            prefix = ` ${i18n.t('and')} `;
+          } else if (total === limit) {
+            prefix = `, ${i18n.t('and')} `;
+          }
+        }
+
+        return (
+          <>
+            {prefix}
+            <ChannelUsername user={user} />
+          </>
+        );
+      })}{' '}
       <B2 color="secondary">{text}</B2>
     </B2>
   );
