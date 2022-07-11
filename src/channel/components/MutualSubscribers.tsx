@@ -3,17 +3,18 @@ import React, { useCallback, useLayoutEffect } from 'react';
 import { LayoutAnimation, View } from 'react-native';
 import channelAvatarUrl from '~/common/helpers/channel-avatar-url';
 import i18n from '~/common/services/i18n.service';
-import { Avatar, B2 } from '~/common/ui';
+import { Avatar, B2, Spacer } from '~/common/ui';
+import type { SpacerPropType } from '~/common/ui/layout';
 import NavigationService from '~/navigation/NavigationService';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useMutualSubscribers } from './useMutualSubscribers';
 
-interface MutualSubscribersProps {
+type MutualSubscribersProps = {
   userGuid: string;
   navigation: any;
-}
+} & SpacerPropType;
 
-function MutualSubscribers({ userGuid }: MutualSubscribersProps) {
+function MutualSubscribers({ userGuid, ...props }: MutualSubscribersProps) {
   const { result } = useMutualSubscribers(userGuid);
   const count = result?.count;
   const users = result?.users || [];
@@ -32,7 +33,7 @@ function MutualSubscribers({ userGuid }: MutualSubscribersProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <Spacer {...props} containerStyle={styles.container}>
       <View style={styles.avatarContainer}>
         {users.map(user => {
           return <ChannelAvatar user={user} />;
@@ -42,7 +43,7 @@ function MutualSubscribers({ userGuid }: MutualSubscribersProps) {
       <View style={styles.usernameContainer}>
         <Description users={users} total={count} />
       </View>
-    </View>
+    </Spacer>
   );
 }
 
@@ -114,13 +115,7 @@ const ChannelAvatar = ({ user }) => {
 };
 
 const styles = ThemedStyles.create({
-  container: [
-    'flexContainer',
-    'rowJustifyStart',
-    'alignCenter',
-    'fullWidth',
-    'marginTop4x', // TODO: move this out
-  ],
+  container: ['flexContainer', 'rowJustifyStart', 'alignCenter', 'fullWidth'],
   usernameContainer: ['flexContainer', 'rowJustifyStart', 'flexWrap'],
   avatarContainer: ['rowJustifyStart', 'paddingRight5x'],
   avatar: [

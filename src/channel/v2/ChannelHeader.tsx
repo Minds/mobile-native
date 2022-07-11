@@ -292,6 +292,7 @@ const ChannelHeader = withErrorBoundary(
                 <MutualSubscribers
                   navigation={props.navigation}
                   userGuid={channel.guid}
+                  top="M"
                 />
               )}
             </>
