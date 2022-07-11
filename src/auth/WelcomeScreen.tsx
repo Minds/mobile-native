@@ -51,6 +51,7 @@ function WelcomeScreen(props: PropsType) {
             type="action"
             font="medium"
             bottom="XL"
+            testID="joinNowButton"
             onPress={onRegisterPress}
             darkContent>
             {i18n.t('auth.createChannel')}
