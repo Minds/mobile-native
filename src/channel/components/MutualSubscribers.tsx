@@ -12,7 +12,7 @@ import { useMutualSubscribers } from './useMutualSubscribers';
 type MutualSubscribersProps = {
   userGuid: string;
   // the number of users to show separately
-  limit: number;
+  limit?: number;
   navigation: any;
 } & SpacerPropType;
 
