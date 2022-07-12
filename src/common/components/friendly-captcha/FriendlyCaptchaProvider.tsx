@@ -43,20 +43,23 @@ const FriendlyCaptchaProvider: ForwardRefRenderFunction<
         new Promise((resolve, _reject) => {
           // TODO: handle rejection
           const id = Math.random();
-          setCaptchas([
-            ...captchas,
+
+          setCaptchas(oldCaptchas => [
+            ...oldCaptchas,
             {
               id,
               origin: puzzleOrigin,
               onSolved: (solution: string) => {
-                setCaptchas(captchas.filter(c => c.id !== id));
                 resolve(solution);
+                setCaptchas(oldCaptchas2 =>
+                  oldCaptchas2.filter(c => c.id !== id),
+                );
               },
             },
           ]);
         }),
     }),
-    [captchas],
+    [],
   );
 
   return (

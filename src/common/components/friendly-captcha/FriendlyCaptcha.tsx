@@ -101,6 +101,7 @@ function FriendlyCaptcha(
         setTheme(${ThemedStyles.theme === 1 ? "'dark'" : "'light'"});
         ${origin ? `window.captchaOrigin = '${origin}';` : ''}
       `}
+      cacheEnabled
       onMessage={onMessage}
       style={containerStyle}
       onShouldStartLoadWithRequest={onNavigation}
