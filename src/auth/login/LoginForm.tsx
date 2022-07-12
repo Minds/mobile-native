@@ -64,7 +64,7 @@ export default observer(function LoginForm(props: PropsType) {
       autoComplete="username"
       textContentType="username"
       value={localStore.username}
-      testID="usernameInput"
+      testID="usernameLoginInput"
       autoCorrect={false}
       noBottomBorder
       keyboardType="default"
