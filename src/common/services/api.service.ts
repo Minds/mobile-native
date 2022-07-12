@@ -133,10 +133,9 @@ export class ApiService {
     this.axios.interceptors.request.use(config => {
       config.headers = this.buildHeaders(config.headers);
       config.timeout = NETWORK_TIMEOUT;
-      return config;
-    });
 
-    this.axios.interceptors.request.use(friendlyCaptchaInterceptor);
+      return friendlyCaptchaInterceptor(config);
+    });
 
     this.axios.interceptors.response.use(
       response => {
