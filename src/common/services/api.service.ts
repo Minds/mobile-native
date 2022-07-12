@@ -139,9 +139,7 @@ export class ApiService {
       return config;
     });
 
-    if (hasVariation('minds-3119-captcha-for-engagement')) {
-      this.axios.interceptors.request.use(friendlyCaptchaInterceptor);
-    }
+    this.axios.interceptors.request.use(friendlyCaptchaInterceptor);
 
     this.axios.interceptors.response.use(
       response => {

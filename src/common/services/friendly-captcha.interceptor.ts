@@ -1,8 +1,13 @@
+import { hasVariation } from 'ExperimentsProvider';
 import { CAPTCHA_ENABLED_ENDPOINTS } from '~/config/Config';
 import { friendlyCaptchaReference } from '../components/friendly-captcha/FriendlyCaptchaProvider';
 
 const friendlyCaptchaInterceptor = async config => {
   if (!config.url) {
+    return config;
+  }
+
+  if (!hasVariation('minds-3119-captcha-for-engagement')) {
     return config;
   }
 
