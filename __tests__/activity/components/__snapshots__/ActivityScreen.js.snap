@@ -2014,7 +2014,7 @@ exports[`Activity screen component renders correctly  1`] = `
         },
         "errorLoadingNext": false,
         "errorLoadingPrevious": false,
-        "focusedUrn": null,
+        "focusedCommentUrn": null,
         "level": 0,
         "loadNext": "",
         "loadPrevious": "",

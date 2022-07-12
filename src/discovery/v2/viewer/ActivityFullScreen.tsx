@@ -368,7 +368,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={
-            Boolean(route.params?.focusedUrn) ||
+            Boolean(route.params?.focusedCommentUrn) ||
             Boolean(route.params?.scrollToBottom)
           }
           commentsStore={store.comments}

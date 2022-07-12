@@ -95,7 +95,7 @@ const navigator = {
         ? this.notification.entity.urn
         : null;
     if (focusedUrn) {
-      params.focusedUrn = focusedUrn;
+      params.focusedCommentUrn = focusedUrn;
     }
 
     this.navigation.navigate(screen, params);
