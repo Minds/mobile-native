@@ -97,10 +97,12 @@ function FriendlyCaptcha(
       bounces={false}
       sharedCookiesEnabled
       textInteractionEnabled={false}
-      injectedJavaScript={`
+      injectedJavaScript={
+        `
         setTheme(${ThemedStyles.theme === 1 ? "'dark'" : "'light'"});
         ${origin ? `window.captchaOrigin = '${origin}';` : ''}
-      `}
+        ` as string
+      }
       cacheEnabled
       onMessage={onMessage}
       style={containerStyle}
