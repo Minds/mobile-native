@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -14,6 +15,7 @@ import html from './html';
 interface FriendlyCaptchaProps {
   onSolved: (solution: string) => void;
   onError?: (error: string) => void;
+  origin?: string;
 }
 
 const webViewSource = {
@@ -26,7 +28,10 @@ const whiteListAll = ['*'];
 /**
  * Friendly captcha component using a webview
  */
-function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
+function FriendlyCaptcha(
+  { onSolved, onError, origin }: FriendlyCaptchaProps,
+  ref,
+) {
   const webViewRef = useRef<any>(null);
   /**
    * receives done or error callbacks from the webview
@@ -51,13 +56,23 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
     [onError, onSolved],
   );
 
+  const reset = useCallback(
+    () => webViewRef.current?.injectJavaScript('reset()'),
+    [],
+  );
+
   useImperativeHandle(
     ref,
     () => ({
-      reset: () => webViewRef.current?.injectJavaScript('reset()'),
+      reset,
     }),
-    [],
+    [reset],
   );
+
+  // reset the captcha on unmount
+  useEffect(() => {
+    return reset;
+  }, [reset]);
 
   /**
    * If the webview was navigating to an external url, open it using our openUrlService
@@ -82,9 +97,10 @@ function FriendlyCaptcha({ onSolved, onError }: FriendlyCaptchaProps, ref) {
       bounces={false}
       sharedCookiesEnabled
       textInteractionEnabled={false}
-      injectedJavaScript={`setTheme(${
-        ThemedStyles.theme === 1 ? "'dark'" : "'light'"
-      })`}
+      injectedJavaScript={`
+        setTheme(${ThemedStyles.theme === 1 ? "'dark'" : "'light'"});
+        ${origin ? `window.captchaOrigin = '${origin}';` : ''}
+      `}
       onMessage={onMessage}
       style={containerStyle}
       onShouldStartLoadWithRequest={onNavigation}

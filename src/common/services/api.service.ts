@@ -33,6 +33,8 @@ import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
+import friendlyCaptchaInterceptor from './friendly-captcha.interceptor';
+import { hasVariation } from 'ExperimentsProvider';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -136,6 +138,10 @@ export class ApiService {
       config.timeout = NETWORK_TIMEOUT;
       return config;
     });
+
+    if (hasVariation('minds-3119-captcha-for-engagement')) {
+      this.axios.interceptors.request.use(friendlyCaptchaInterceptor);
+    }
 
     this.axios.interceptors.response.use(
       response => {
