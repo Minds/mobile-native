@@ -22,10 +22,8 @@ import {
   MINDS_STAGING,
   NETWORK_TIMEOUT,
 } from '../../config/Config';
-
 import { Version } from '../../config/Version';
 import logService from './log.service';
-
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
@@ -34,7 +32,6 @@ import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
 import friendlyCaptchaInterceptor from './friendly-captcha.interceptor';
-import { hasVariation } from 'ExperimentsProvider';
 
 export interface ApiResponse {
   status: 'success' | 'error';
