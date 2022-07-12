@@ -1,12 +1,14 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { View } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FriendlyCaptcha from './FriendlyCaptcha';
 
-export let friendlyCaptchaReference: null | {
-  // TODO: use a better type
-  solveAPuzzle: (origin: string) => Promise<string>;
-} = null;
+export let friendlyCaptchaReference: null | FriendlyCaptchaProviderHandle = null;
 
 export function setFriendlyCaptchaReference(ref) {
   friendlyCaptchaReference = ref;
@@ -18,7 +20,20 @@ interface Captcha {
   onSolved: (solution: string) => void;
 }
 
-function FriendlyCaptchaProvider({ children }, ref) {
+interface FriendlyCaptchaProviderHandle {
+  /**
+   * given a puzzle origin, it solves a puzzle and returns a
+   * promise that resolves with the puzzle solution
+   */
+  solveAPuzzle: (origin: string) => Promise<string>;
+}
+
+interface FriendlyCaptchaProviderProps extends React.FunctionComponent {}
+
+const FriendlyCaptchaProvider: ForwardRefRenderFunction<
+  FriendlyCaptchaProviderHandle,
+  FriendlyCaptchaProviderProps
+> = ({ children }, ref) => {
   const [captchas, setCaptchas] = useState<Captcha[]>([]);
 
   useImperativeHandle(
@@ -58,7 +73,7 @@ function FriendlyCaptchaProvider({ children }, ref) {
       </View>
     </>
   );
-}
+};
 
 const styles = ThemedStyles.create({
   container: {
