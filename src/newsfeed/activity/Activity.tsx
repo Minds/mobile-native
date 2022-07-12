@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
+import { View, LayoutChangeEvent, Pressable } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as entities from 'entities';
 
@@ -255,9 +255,9 @@ export default class Activity extends Component<PropsType> {
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
-          <TouchableOpacity
-            delayPressIn={60}
-            activeOpacity={0.8}
+          <Pressable
+            // delayPressIn={60}
+            // activeOpacity={0.8}
             onPress={this.navToActivity}
             onLongPress={this.copyText}
             onLayout={this.onLayout}
@@ -295,7 +295,7 @@ export default class Activity extends Component<PropsType> {
               showOnlyContent={this.props.showOnlyContent}
               hideTabs={this.props.hideTabs}
             />
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
     );

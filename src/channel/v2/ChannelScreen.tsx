@@ -88,6 +88,12 @@ const ChannelScreen = observer((props: PropsType) => {
    * be affected
    **/
   const topBarAnimationEnabled = useRef(true);
+
+  /**
+   * Last scroll direction: used for optimization
+   */
+  const topLastDirection = useRef(1);
+
   const channelContext = useMemo(
     () => ({
       channel: store.channel || undefined,
@@ -216,6 +222,7 @@ const ChannelScreen = observer((props: PropsType) => {
       },
     }) => {
       const direction = y > offset.value ? 'down' : 'up';
+      const delta = y - offset.value;
       offset.value = y;
 
       if (!topBarAnimationEnabled.current) return;
@@ -224,31 +231,37 @@ const ChannelScreen = observer((props: PropsType) => {
        * If the scroll had a down direction, hide the topbar
        **/
       if (direction === 'down' && y > TOPBAR_THRESHOLD) {
-        /**
-         * hide topbar
-         **/
-        contentOffset.value = withTiming(-150, {
-          duration: 500,
-          easing: EASING,
-        });
-        /**
-         * and set the text style according to app theme on iOS because
-         * the statusbar is transparent there
-         **/
-        if (Platform.OS === 'ios') {
-          setStatusBarTextStyle(
-            ThemedStyles.theme ? 'light-content' : 'dark-content',
-          );
+        if (topLastDirection.current !== 0) {
+          topLastDirection.current = 0;
+          /**
+           * hide topbar
+           **/
+          contentOffset.value = withTiming(-150, {
+            duration: 500,
+            easing: EASING,
+          });
+          /**
+           * and set the text style according to app theme on iOS because
+           * the statusbar is transparent there
+           **/
+          if (Platform.OS === 'ios') {
+            setStatusBarTextStyle(
+              ThemedStyles.theme ? 'light-content' : 'dark-content',
+            );
+          }
         }
-      } else if (direction === 'up') {
-        contentOffset.value = withTiming(0, {
-          duration: 500,
-          easing: EASING,
-        });
-        if (backgroundColor) {
-          setStatusBarTextStyle(
-            isLight(backgroundColor) ? 'dark-content' : 'light-content',
-          );
+      } else if (direction === 'up' && delta !== 0) {
+        if (topLastDirection.current !== 1) {
+          topLastDirection.current = 1;
+          contentOffset.value = withTiming(0, {
+            duration: 500,
+            easing: EASING,
+          });
+          if (backgroundColor) {
+            setStatusBarTextStyle(
+              isLight(backgroundColor) ? 'dark-content' : 'light-content',
+            );
+          }
         }
       }
 
@@ -271,7 +284,12 @@ const ChannelScreen = observer((props: PropsType) => {
         }
       }
     },
-    [topBarBackgroundVisible, backgroundColor, topBarAnimationEnabled],
+    [
+      offset.value,
+      topBarBackgroundVisible,
+      contentOffset.value,
+      backgroundColor,
+    ],
   );
 
   /**

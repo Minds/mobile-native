@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
+import { AnimatePresence } from 'moti';
 
 import i18n from '../../common/services/i18n.service';
 
@@ -11,16 +12,17 @@ import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import FeedList, { InjectItem } from '../../common/components/FeedList';
+import { InjectItem } from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
-import { AnimatePresence } from 'moti';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import FeedListSticky from '~/common/components/FeedListSticky';
+import { Screen } from '~/common/ui';
 
 interface Props {
   navigation: any;
@@ -35,6 +37,29 @@ export const DiscoveryV2Screen = withErrorBoundary(
       false,
     );
     const store = useDiscoveryV2Store();
+
+    // inject items in the store the first time
+    if (!store.trendingFeed.injectItems) {
+      store.trendingFeed.setInjectedItems([
+        new InjectItem(0, 'tags', () => (
+          <DiscoveryTagsList
+            type="trending"
+            store={store}
+            style={styles.bottomBorder}
+            showManageTags={false}
+          />
+        )),
+      ]);
+
+      store.topFeed.setInjectedItems([
+        new InjectItem(2, 'reco', () => (
+          <IfFeatureEnabled feature="channel-recommendations">
+            <ChannelRecommendation location="discovery-feed" />
+          </IfFeatureEnabled>
+        )),
+      ]);
+    }
+
     const navigation = props.navigation;
 
     const tabs = React.useMemo(
@@ -69,18 +94,20 @@ export const DiscoveryV2Screen = withErrorBoundary(
       [navigation],
     );
 
-    const feedInjectItems: InjectItem[] = useMemo(
-      () => [
-        {
-          indexes: [2],
-          component: () => (
-            <IfFeatureEnabled feature="channel-recommendations">
-              <ChannelRecommendation location="discovery-feed" />
-            </IfFeatureEnabled>
-          ),
-        },
-      ],
-      [],
+    const header = (
+      <>
+        <Topbar title="Discovery" navigation={navigation} noInsets />
+        <View style={styles.header}>
+          <InitialOnboardingButton />
+          <TopbarTabbar
+            current={store.activeTabId}
+            onChange={tabId => {
+              store.setTabId(tabId as TDiscoveryV2Tabs);
+            }}
+            tabs={tabs}
+          />
+        </View>
+      </>
     );
 
     useEffect(() => {
@@ -110,34 +137,15 @@ export const DiscoveryV2Screen = withErrorBoundary(
       store.topFeed.fetchLocalOrRemote();
     }, [store]);
 
-    const header = (
-      <>
-        <Topbar title="Discovery" navigation={navigation} />
-        <View style={styles.header}>
-          <InitialOnboardingButton />
-          <TopbarTabbar
-            current={store.activeTabId}
-            onChange={tabId => {
-              store.setTabId(tabId as TDiscoveryV2Tabs);
-            }}
-            tabs={tabs}
-          />
-        </View>
-      </>
-    );
-
     const screen = () => {
       switch (store.activeTabId) {
         case 'top':
           return (
             <DiscoveryTabContent key="top">
-              <FeedList
-                stickyHeaderIndices={sticky}
-                stickyHeaderHiddenOnScroll
+              <FeedListSticky
+                header={header}
                 feedStore={store.topFeed}
                 navigation={navigation}
-                header={header}
-                injectItems={feedInjectItems}
               />
             </DiscoveryTabContent>
           );
@@ -156,29 +164,17 @@ export const DiscoveryV2Screen = withErrorBoundary(
         case 'trending-tags':
           return (
             <DiscoveryTabContent key="trending-tags">
-              <FeedList
-                stickyHeaderIndices={sticky}
-                stickyHeaderHiddenOnScroll
+              <FeedListSticky
                 header={header}
                 feedStore={store.trendingFeed}
                 navigation={navigation}
-                prepend={
-                  <DiscoveryTagsList
-                    type="trending"
-                    store={store}
-                    style={styles.bottomBorder}
-                    showManageTags={false}
-                  />
-                }
               />
             </DiscoveryTabContent>
           );
         case 'boosts':
           return (
             <DiscoveryTabContent key="boosts">
-              <FeedList
-                stickyHeaderIndices={sticky}
-                stickyHeaderHiddenOnScroll
+              <FeedListSticky
                 header={header}
                 feedStore={store.boostFeed}
                 navigation={navigation}
@@ -192,17 +188,17 @@ export const DiscoveryV2Screen = withErrorBoundary(
     };
 
     return (
-      <View style={styles.container}>
-        <AnimatePresence>{screen()}</AnimatePresence>
-      </View>
+      <Screen safe>
+        <View style={ThemedStyles.style.flexContainer}>
+          <AnimatePresence>{screen()}</AnimatePresence>
+        </View>
+      </Screen>
     );
   }),
 );
 
-const sticky = [0];
-
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
-  header: ['flexContainer', 'bgPrimaryBackground', 'paddingTop'],
+  header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
 });

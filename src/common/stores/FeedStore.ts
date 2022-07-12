@@ -11,6 +11,7 @@ import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
 import { isAbort } from '../services/api.service';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
+import { InjectItem } from '../components/FeedList';
 
 /**
  * Feed store
@@ -49,7 +50,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * feed observable
    */
-  @observable.shallow entities: Array<T> = [];
+  @observable.shallow entities: Array<T | InjectItem> = [];
+
+  /**
+   * Custom injected components
+   */
+  injectItems?: InjectItem[];
 
   /**
    * Viewed store
@@ -96,6 +102,13 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     if (includeMetadata) {
       this.metadataService = new MetadataService();
     }
+  }
+
+  /**
+   * Sets the injected items for the feed
+   */
+  setInjectedItems(injectItems: InjectItem[]) {
+    this.injectItems = injectItems;
   }
 
   /**
@@ -147,8 +160,26 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.entities = entities;
     } else {
       entities.forEach(entity => {
+        let position = this.entities.length;
+
+        if (this.injectItems) {
+          do {
+            const injected = this.injectItems.find(i =>
+              typeof i.indexes === 'function'
+                ? i.indexes(position)
+                : position === i.indexes,
+            );
+            if (injected) {
+              this.entities.push(injected);
+              position++;
+            } else {
+              break;
+            }
+          } while (true);
+        }
+
         entity._list = this;
-        entity.position = this.entities.length + 1;
+        entity.position = position + 1;
         this.entities.push(entity);
       });
 
@@ -245,7 +276,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   removeFromOwner(guid) {
     this.entities = this.entities.filter(
-      e => !e.ownerObj || e.ownerObj.guid !== guid,
+      e =>
+        !(e instanceof InjectItem) && (!e.ownerObj || e.ownerObj.guid !== guid),
     );
     this.feedsService.removeFromOwner(guid);
 

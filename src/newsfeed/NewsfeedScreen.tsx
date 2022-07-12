@@ -1,13 +1,12 @@
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import throttle from 'lodash/throttle';
-import { inject, observer } from 'mobx-react';
-import React, { Component } from 'react';
-import Feature from '~/common/components/Feature';
+import { observer } from 'mobx-react';
+import React, { useCallback, useEffect } from 'react';
 import Topbar from '~/topbar/Topbar';
+import { View } from 'react-native';
 
-import FeedList, { InjectItem } from '../common/components/FeedList';
+import { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
@@ -21,6 +20,11 @@ import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
+import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
+import { Screen } from '~/common/ui';
+import { useLegacyStores } from '~/common/hooks/use-stores';
+import ThemedStyles from '~/styles/ThemedStyles';
+import FeedListSticky from '~/common/components/FeedListSticky';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -28,7 +32,7 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
   'Newsfeed'
 >;
 
-const sticky = [0];
+const sticky = [3, 5, 7, 9];
 
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
@@ -37,183 +41,118 @@ type NewsfeedScreenProps = {
   route: NewsfeedScreenRouteProp;
 };
 
-type NewsfeedScreenState = {
-  shadowLessTopBar: boolean;
-};
+const invisibleStyle = { width: '100%', height: 1 };
+
+const InvisibleStickyHeader = () => <View style={invisibleStyle} />;
 
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user')
-@observer
-class NewsfeedScreen extends Component<
-  NewsfeedScreenProps,
-  NewsfeedScreenState
-> {
-  disposeTabPress?: Function;
-  portraitBar = React.createRef<any>();
+const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
+  const { newsfeed } = useLegacyStores();
+  const portraitBar = React.useRef<any>();
 
-  /**
-   * whether the topbar should be shadowLess
-   */
-  shadowLessTopBar: boolean = true;
-  injectItems: InjectItem[] = [
-    {
-      indexes: [2],
-      component: () => (
-        <IfFeatureEnabled feature="channel-recommendations">
-          <ChannelRecommendation location="newsfeed" />
-        </IfFeatureEnabled>
-      ),
+  const refreshNewsfeed = useCallback(() => {
+    newsfeed.scrollToTop();
+    newsfeed.latestFeedStore.refresh();
+    newsfeed.topFeedStore.refresh();
+  }, [newsfeed]);
+
+  const onTabPress = useCallback(
+    e => {
+      if (navigation.isFocused()) {
+        refreshNewsfeed();
+        e && e.preventDefault();
+      }
     },
-    {
-      indexes: [3],
-      component: () => (
-        <IfFeatureEnabled feature="top-feed-2">
-          <TopFeedHighlights
-            onSeeTopFeedPress={() => {
-              this.props.newsfeed.listRef?.scrollToTop(true);
-              setTimeout(() => {
-                this.props.newsfeed.changeFeedTypeChange('top', true);
-              }, 500);
-            }}
-          />
-        </IfFeatureEnabled>
-      ),
-    },
-  ];
+    [navigation, refreshNewsfeed],
+  );
 
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    newsfeed.loadFeed();
 
-    this.onScroll = throttle(this.onScroll, 100);
-
-    this.state = {
-      shadowLessTopBar: true,
-    };
-  }
-
-  refreshNewsfeed = () => {
-    this.props.newsfeed.scrollToTop();
-    this.props.newsfeed.latestFeedStore.refresh();
-    this.props.newsfeed.topFeedStore.refresh();
-  };
-
-  onTabPress = e => {
-    if (this.props.navigation.isFocused()) {
-      this.refreshNewsfeed();
-      e && e.preventDefault();
-    }
-  };
-
-  /**
-   * Load data on mount
-   */
-  componentDidMount() {
-    this.disposeTabPress = this.props.navigation.getParent()?.addListener(
+    return navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
-      this.onTabPress,
+      onTabPress,
     );
+  }, [navigation, newsfeed, onTabPress]);
 
-    this.loadFeed();
-    // this.props.newsfeed.loadBoosts();
-  }
-
-  async loadFeed() {
-    await this.props.newsfeed.loadFeed();
-  }
+  const refreshPortrait = useCallback(() => {
+    if (portraitBar.current) {
+      portraitBar.current.load();
+    }
+  }, [portraitBar]);
 
   /**
-   * Component will unmount
+   * Injected items
    */
-  componentWillUnmount() {
-    this.disposeTabPress?.();
-  }
+  if (!newsfeed.latestFeedStore.injectItems) {
+    newsfeed.latestFeedStore.setInjectedItems([
+      new InjectItem(0, 'prepend', () => (
+        <View>
+          <SocialCompassPrompt />
+          <CheckLanguage />
+          <InitialOnboardingButton />
+          <PortraitContentBar ref={portraitBar} />
+          <NewsfeedHeader
+            feedType={newsfeed.feedType}
+            onFeedTypeChange={newsfeed.changeFeedTypeChange}
+          />
+        </View>
+      )),
+      new InjectItem(3, 'channel', () => (
+        <ChannelRecommendationHeader location="newsfeed" />
+      )),
+      new InjectItem(4, 'channel', () => (
+        <ChannelRecommendation location="newsfeed" />
+      )),
+      new InjectItem(5, 'end', InvisibleStickyHeader),
 
-  refreshPortrait = () => {
-    if (this.portraitBar.current) {
-      this.portraitBar.current.load();
-    }
-  };
-
-  onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
-    const offsetTop = e?.nativeEvent?.contentOffset?.y;
-
-    if (offsetTop > 90 && this.state.shadowLessTopBar) {
-      this.setState({ shadowLessTopBar: false });
-    }
-
-    if (offsetTop <= 90 && !this.state.shadowLessTopBar) {
-      this.setState({ shadowLessTopBar: true });
-    }
-  };
-
-  /**
-   * Render
-   */
-  render() {
-    const newsfeed = this.props.newsfeed;
-    const isLatest = this.props.newsfeed.feedType === 'latest';
-
-    const header = (
-      <>
-        <Topbar
-          shadowLess={this.state.shadowLessTopBar}
-          navigation={this.props.navigation}
+      new InjectItem(7, 'highlightheader', () => (
+        <NewsfeedHeader title="Highlights" small />
+      )),
+      new InjectItem(8, 'highlight', () => (
+        <TopFeedHighlights
+          onSeeTopFeedPress={() => {
+            newsfeed.listRef?.scrollToTop(true);
+            setTimeout(() => {
+              newsfeed.changeFeedTypeChange('top', true);
+            }, 500);
+          }}
         />
-        {isLatest && (
+      )),
+      new InjectItem(9, 'end', InvisibleStickyHeader),
+    ]);
+  }
+
+  return (
+    <Screen safe>
+      <View style={ThemedStyles.style.flexContainer}>
+        <FeedListSticky
+          stickyHeaderIndices={sticky}
+          header={<Topbar noInsets navigation={navigation} />}
+          ref={newsfeed.setListRef}
+          feedStore={
+            newsfeed.feedType === 'latest'
+              ? newsfeed.latestFeedStore
+              : newsfeed.topFeedStore
+          }
+          navigation={navigation}
+          afterRefresh={refreshPortrait}
+          placeholder={NewsfeedPlaceholder}
+        />
+        {newsfeed.feedType === 'latest' && (
           <IfFeatureEnabled feature="mob-4193-polling">
             <SeeLatestPostsButton
-              onPress={this.refreshNewsfeed}
+              onPress={refreshNewsfeed}
               feedStore={newsfeed.latestFeedStore}
             />
           </IfFeatureEnabled>
         )}
-      </>
-    );
-
-    const prepend = (
-      <>
-        <Feature feature="social-compass">
-          <SocialCompassPrompt />
-        </Feature>
-        <CheckLanguage />
-        <InitialOnboardingButton />
-        <PortraitContentBar ref={this.portraitBar} />
-        <IfFeatureEnabled feature="top-feed-2">
-          <NewsfeedHeader
-            feedType={this.props.newsfeed.feedType}
-            onFeedTypeChange={this.props.newsfeed.changeFeedTypeChange}
-          />
-        </IfFeatureEnabled>
-      </>
-    );
-
-    return (
-      <FeedList
-        stickyHeaderHiddenOnScroll={true}
-        prepend={prepend}
-        stickyHeaderIndices={sticky}
-        ref={newsfeed.setListRef}
-        header={header}
-        feedStore={
-          this.props.newsfeed.feedType === 'latest'
-            ? newsfeed.latestFeedStore
-            : newsfeed.topFeedStore
-        }
-        navigation={this.props.navigation}
-        afterRefresh={this.refreshPortrait}
-        onScroll={this.onScroll}
-        injectItems={
-          this.props.newsfeed.feedType === 'latest'
-            ? this.injectItems
-            : undefined
-        }
-        placeholder={NewsfeedPlaceholder}
-      />
-    );
-  }
-}
+      </View>
+    </Screen>
+  );
+});
 
 export default withErrorBoundary(NewsfeedScreen);

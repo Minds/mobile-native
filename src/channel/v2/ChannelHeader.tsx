@@ -394,10 +394,6 @@ const styles = ThemedStyles.create({
     marginRight: 5,
   },
   nameWrapper: ['rowJustifyStart', 'alignCenter', 'paddingTop10x'],
-  banner: {
-    aspectRatio: bannerAspectRatio,
-    width: '100%',
-  },
   avatarContainer: [
     'bgSecondaryBackground',
     'bcolorPrimaryBackground',

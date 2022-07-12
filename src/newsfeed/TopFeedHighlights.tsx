@@ -9,7 +9,6 @@ import MetadataService from '~/common/services/metadata.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { Button } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import NewsfeedHeader from './NewsfeedHeader';
 
 const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   const feed = useRef(
@@ -36,7 +35,6 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
 
   return (
     <>
-      <NewsfeedHeader title="Highlights" />
       <FeedList
         feedStore={feed}
         navigation={navigation}

@@ -42,7 +42,7 @@ const SeeLatestPostsButton = ({
     <Animated.View
       entering={FadeInUp.mass(0.3).duration(500)}
       style={[
-        ThemedStyles.style.positionAbsolute,
+        ThemedStyles.style.positionAbsoluteTop,
         { top: insets.top + additionalTop },
       ]}>
       <Button

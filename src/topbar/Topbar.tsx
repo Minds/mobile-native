@@ -24,7 +24,7 @@ export const Topbar = observer((props: PropsType) => {
   const insets = useSafeAreaInsets();
   const container = React.useRef({
     paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
-    height: Platform.select({ ios: props.noInsets ? 70 : 110, android: 70 }),
+    height: Platform.select({ ios: props.noInsets ? 70 : 100, android: 60 }),
     display: 'flex',
     flexDirection: 'row',
   }).current as ViewStyle;
@@ -39,7 +39,7 @@ export const Topbar = observer((props: PropsType) => {
   });
 
   return (
-    <View style={props.shadowLess ? shadowLessContainerStyle : containerStyle}>
+    <View style={containerStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
@@ -88,16 +88,16 @@ export default Topbar;
 
 export const styles = StyleSheet.create({
   container: {
-    height: Platform.select({ ios: 110, android: 70 }),
+    // height: Platform.select({ ios: 90, android: 70 }),
     display: 'flex',
     flexDirection: 'row',
     // paddingBottom: 8,
   },
   logo: {
     marginLeft: 4,
-    marginTop: -12,
-    width: 118,
-    height: 40,
+    marginTop: -10,
+    aspectRatio: 0.3389,
+    width: 105,
   },
   shadow: {
     zIndex: 999,
@@ -137,11 +137,4 @@ export const styles = StyleSheet.create({
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,
-);
-const shadowLessContainerStyle = ThemedStyles.combine(
-  'bgPrimaryBackground',
-  styles.shadow,
-  {
-    shadowColor: 'transparent',
-  },
 );

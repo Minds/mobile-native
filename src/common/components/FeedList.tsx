@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  View,
-  StyleProp,
-  ViewStyle,
-  RefreshControl,
-  Dimensions,
-} from 'react-native';
+import { View, StyleProp, ViewStyle, Dimensions } from 'react-native';
+import { FlashList, ListRenderItem } from '@shopify/flash-list';
+import Animated from 'react-native-reanimated';
+
 import { observer } from 'mobx-react';
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';
@@ -16,41 +12,53 @@ import ErrorBoundary from './ErrorBoundary';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
-import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface InjectItemComponentProps {
   index: number;
+  target: string;
 }
 
 /**
  * an item to be injected in feed
  */
-export interface InjectItem {
+export class InjectItem {
   /**
    * the indexes in the feed this item should be inserted
    */
-  indexes: number[];
+  indexes: number | ((index: number) => boolean);
+  type: string;
   /**
    * the component to render
    */
   component: (props: InjectItemComponentProps) => React.ReactNode;
+
+  constructor(
+    indexes: number | ((index: number) => boolean),
+    type: string,
+    component: (props: InjectItemComponentProps) => React.ReactNode,
+  ) {
+    this.component = component;
+    this.type = type;
+    this.indexes = indexes;
+  }
 }
+const { width, height } = Dimensions.get('window');
+const drawAhead = height;
+const itemHeight = width / 3;
 
-const itemHeight = Dimensions.get('window').width / 3;
-
-type PropsType = {
-  prepend?: React.ReactNode;
+export type FeedListPropsType<T> = {
   feedStore: FeedStore;
-  renderTileActivity?: Function;
-  renderActivity?: Function;
-  emptyMessage?: React.ReactNode;
-  header?: React.ReactNode;
+  renderTileActivity?: ListRenderItem<T>;
+  renderActivity?: ListRenderItem<T>;
+  emptyMessage?: React.ReactElement;
+  bottomComponent?: React.ReactNode;
+  header?: React.ReactElement;
   listComponent?: React.ComponentType;
   navigation: any;
   style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   hideItems?: boolean;
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
@@ -66,26 +74,22 @@ type PropsType = {
   /**
    * refreshing state. overwrites the feedList's refreshing
    */
-  refreshing?: Boolean;
+  refreshing?: boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
-  insets?: any;
   onEndReached?: () => void;
-  /**
-   * a list of items to inject at various positions in the feed
-   */
-  injectItems?: InjectItem[];
 };
 
 /**
  * News feed list component
  */
 @observer
-export class FeedList<T> extends Component<PropsType> {
-  listRef?: FlatList<T>;
+export class FeedList<T> extends Component<FeedListPropsType<T>> {
+  AnimatedFlashList: any;
+  listRef = React.createRef<FlashList<T>>();
   cantShowActivity: string = '';
   viewOpts = {
     itemVisiblePercentThreshold: 50,
@@ -98,6 +102,7 @@ export class FeedList<T> extends Component<PropsType> {
   constructor(props) {
     super(props);
     this.cantShowActivity = i18n.t('errorShowActivity');
+    this.AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
   }
 
   /**
@@ -105,8 +110,14 @@ export class FeedList<T> extends Component<PropsType> {
    * @param {boolean} animated
    */
   scrollToTop(animated = true) {
-    if (this.listRef) {
-      this.listRef.scrollToOffset({ animated, offset: 0 });
+    if (this.listRef.current) {
+      this.listRef.current.scrollToOffset({ animated, offset: 0 });
+    }
+  }
+
+  scrollToOffset(args) {
+    if (this.listRef.current) {
+      this.listRef.current.scrollToOffset(args);
     }
   }
 
@@ -117,30 +128,19 @@ export class FeedList<T> extends Component<PropsType> {
     const DISTANCE = 25;
     const currentScrollOffset = this.props.feedStore.scrollOffset;
 
-    this.listRef?.scrollToOffset({
+    this.listRef.current?.scrollToOffset({
       animated: true,
       offset: currentScrollOffset - DISTANCE,
     });
     setTimeout(() => {
-      this.listRef?.scrollToOffset({
+      this.listRef.current?.scrollToOffset({
         animated: true,
         offset: currentScrollOffset,
       });
     }, 150);
   }
 
-  /**
-   * Set list reference
-   */
-  setListRef = (r: FlatList<T> | undefined) => (this.listRef = r);
-
-  onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
-    this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
-
-    this.props.onScroll?.(e);
-  };
-
-  get empty(): React.ReactNode {
+  get empty(): React.ReactElement | null {
     if (this.props.feedStore.loaded && !this.props.feedStore.refreshing) {
       if (this.props.emptyMessage) {
         return this.props.emptyMessage;
@@ -163,19 +163,15 @@ export class FeedList<T> extends Component<PropsType> {
    * Render component
    */
   render() {
-    let renderRow: Function;
+    let renderRow: ListRenderItem<T>;
 
     const {
       feedStore,
       renderTileActivity,
       renderActivity,
       header,
-      listComponent,
-      insets,
       ...passThroughProps
     } = this.props;
-
-    const ListComponent: React.ComponentType<any> = listComponent || FlatList;
 
     if (feedStore.isTiled) {
       renderRow = renderTileActivity || this.renderTileActivity;
@@ -183,60 +179,59 @@ export class FeedList<T> extends Component<PropsType> {
       renderRow = renderActivity || this.renderActivity;
     }
 
-    const items: Array<ActivityModel | { urn: string }> = !this.props.hideItems
+    const items: Array<any> = !this.props.hideItems
       ? feedStore.entities.slice()
       : [];
 
-    // We prepend a null value used to render the prepend component always with the same key (to avoid unmounting/mounting)
-    if (this.props.prepend) {
-      items.unshift({ urn: 'prepend' });
-    }
+    const AnimatedFlashList = this.AnimatedFlashList;
 
     return (
-      <ListComponent
-        containerStyle={ThemedStyles.style.paddingBottom10x}
-        ref={this.setListRef}
-        key={feedStore.isTiled ? 't' : 'f'}
-        ListHeaderComponent={header}
-        ListFooterComponent={this.getFooter}
-        data={items}
-        renderItem={renderRow}
-        keyExtractor={this.keyExtractor}
-        onRefresh={this.refresh}
-        refreshing={this.refreshing}
-        onEndReached={this.loadMore}
-        refreshControl={
-          <RefreshControl
-            tintColor={this.props.refreshControlTintColor}
-            refreshing={this.refreshing}
-            onRefresh={this.refresh}
-            progressViewOffset={(insets?.top || 0) / 1.25}
-          />
-        }
-        onEndReachedThreshold={5} // 5 times the visible list height
-        numColumns={feedStore.isTiled ? 3 : 1}
-        style={style}
-        initialNumToRender={4}
-        maxToRenderPerBatch={4}
-        windowSize={9}
-        // removeClippedSubviews={true}
-        ListEmptyComponent={!this.props.hideItems ? this.empty : null}
-        viewabilityConfig={this.viewOpts}
-        onViewableItemsChanged={this.onViewableItemsChanged}
-        keyboardShouldPersistTaps="always"
-        testID="feedlistCMP"
-        {...passThroughProps}
-        keyboardDismissMode="on-drag"
-        onScroll={this.onScroll}
-      />
+      <View style={containerStyle}>
+        <AnimatedFlashList
+          estimatedItemSize={450}
+          ref={this.listRef}
+          key={feedStore.isTiled ? 't' : 'f'}
+          ListHeaderComponent={header}
+          ListFooterComponent={this.getFooter}
+          drawDistance={drawAhead}
+          data={items}
+          renderItem={renderRow}
+          keyExtractor={this.keyExtractor}
+          onRefresh={this.refresh}
+          refreshing={this.refreshing}
+          disableAutoLayout={true}
+          onEndReached={this.loadMore}
+          getItemType={this.getType}
+          onEndReachedThreshold={5} // 5 times the visible list height
+          numColumns={feedStore.isTiled ? 3 : 1}
+          ListEmptyComponent={!this.props.hideItems ? this.empty : null}
+          viewabilityConfig={this.viewOpts}
+          onViewableItemsChanged={this.onViewableItemsChanged}
+          scrollEventThrottle={16}
+          keyboardShouldPersistTaps="always"
+          testID="feedlistCMP"
+          {...passThroughProps}
+          keyboardDismissMode="on-drag"
+          onScroll={this.props.onScroll}
+        />
+        {this.props.bottomComponent}
+      </View>
     );
+  }
+
+  getType(item) {
+    return item instanceof InjectItem ? item.type : 'row';
   }
 
   /**
    * Key extractor for list items
    */
   keyExtractor = (item: { boosted: any; urn: any }, index: any) => {
-    return item.boosted ? `${item.urn}:${index}` : item.urn;
+    return item instanceof InjectItem
+      ? `${item.type}${index}`
+      : item.boosted
+      ? `${item.urn}:${index}`
+      : item.urn;
   };
 
   /**
@@ -248,12 +243,13 @@ export class FeedList<T> extends Component<PropsType> {
 
       return React.isValidElement(PlaceHolder) ? PlaceHolder : <PlaceHolder />;
     }
+    return null;
   }
 
   /**
    * Get footer
    */
-  getFooter = () => {
+  getFooter = (): React.ReactElement | null => {
     if (this.props.placeholder && !this.props.feedStore.loaded) {
       return this.getPlaceholder();
     }
@@ -342,26 +338,25 @@ export class FeedList<T> extends Component<PropsType> {
   /**
    * Render activity
    */
-  renderActivity = (row: { index: number; item: ActivityModel }) => {
+  renderActivity: ListRenderItem<T> = (row: {
+    index: number;
+    item: any;
+    target: string;
+  }) => {
     const entity = row.item;
-
-    return row.index === 0 && this.props.prepend ? (
-      <>
-        {this.props.prepend}
-        {this.props.feedStore.entities.length === 0 && this.empty}
-      </>
-    ) : (
+    return (
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
-        <Activity
-          entity={entity}
-          navigation={this.props.navigation}
-          autoHeight={false}
-        />
-        {this.props.injectItems
-          ?.find(p => p?.indexes.includes(row.index))
-          ?.component?.({ index: row.index })}
+        {entity instanceof InjectItem ? (
+          entity.component({ index: row.index, target: row.target })
+        ) : (
+          <Activity
+            entity={entity}
+            navigation={this.props.navigation}
+            autoHeight={false}
+          />
+        )}
       </ErrorBoundary>
     );
   };
@@ -369,7 +364,7 @@ export class FeedList<T> extends Component<PropsType> {
   /**
    * Render tile
    */
-  renderTileActivity = (row: { item: any }) => {
+  renderTileActivity: ListRenderItem<T> = (row: { item: any }) => {
     const entity = row.item;
     return (
       <TileElement
@@ -381,8 +376,9 @@ export class FeedList<T> extends Component<PropsType> {
   };
 }
 
-const style = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');
-
 const footerStyle = ThemedStyles.combine('centered', 'padding3x');
+const containerStyle = ThemedStyles.combine('flexContainer', {
+  overflow: 'hidden',
+});
 
-export default withSafeAreaInsets<PropsType>(FeedList);
+export default FeedList;

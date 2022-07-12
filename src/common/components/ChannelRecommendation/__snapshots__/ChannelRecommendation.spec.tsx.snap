@@ -3,45 +3,8 @@
 exports[`ChannelRecommendation renders correctly 1`] = `
 <Fragment>
   <Spacer
-    vertical="XL"
+    bottom="XL"
   >
-    <Row
-      align="centerBetween"
-      bottom="XL"
-      horizontal="L"
-    >
-      <H3>
-        Recommended Channels
-      </H3>
-      <Row
-        align="centerBoth"
-      >
-        <B2
-          color="link"
-          onPress={[Function]}
-        >
-          See more
-        </B2>
-        <MenuSheet
-          items={
-            Array [
-              Object {
-                "iconName": "close",
-                "iconType": "material-community",
-                "onPress": [Function],
-                "title": "Remove from feed",
-              },
-            ]
-          }
-        >
-          <Icon
-            left="M"
-            name="more"
-            size="large"
-          />
-        </MenuSheet>
-      </Row>
-    </Row>
     <ChannelRecommendationItem
       channel={
         Object {
