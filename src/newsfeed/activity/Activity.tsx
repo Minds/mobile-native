@@ -256,8 +256,6 @@ export default class Activity extends Component<PropsType> {
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
           <Pressable
-            // delayPressIn={60}
-            // activeOpacity={0.8}
             onPress={this.navToActivity}
             onLongPress={this.copyText}
             onLayout={this.onLayout}

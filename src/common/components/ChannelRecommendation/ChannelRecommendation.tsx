@@ -115,14 +115,6 @@ const ChannelRecommendation: FC<ChannelRecommendationProps> = ({
     [result, setResult, listSize],
   );
 
-  // layout animations
-  // useLayoutEffect(() => {
-  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-  //   return () =>
-  //     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  // }, [shouldRender]);
-
   if (!shouldRender) {
     return null;
   }
