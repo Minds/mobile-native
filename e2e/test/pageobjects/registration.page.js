@@ -16,10 +16,10 @@ class RegistrationPage extends Page {
     return 'wdiotestmds@gmail.com';
   }
   get joinNowButton() {
-    return super.selectElement('id', 'Join Now');
+    return super.selectElement('id', 'joinNowButton');
   }
   get usernameField() {
-    return super.selectElement('id', 'usernameInput');
+    return super.selectElement('id', 'usernameRegisterInput');
   }
   get emailField() {
     return super.selectElement('id', 'emailInput');

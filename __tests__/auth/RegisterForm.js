@@ -26,7 +26,7 @@ describe('RegisterScreen component', () => {
 
   it('should require terms', async () => {
     const { getByTestId } = render(<RegisterForm />);
-    const user = getByTestId('usernameInput');
+    const user = getByTestId('usernameRegisterInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');
     const button = getByTestId('registerButton');
@@ -46,7 +46,7 @@ describe('RegisterScreen component', () => {
 
   it('should validate password', async () => {
     const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
-    const user = getByTestId('usernameInput');
+    const user = getByTestId('usernameRegisterInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');
     const checkboxes = getAllByA11yRole('checkbox');
@@ -69,7 +69,7 @@ describe('RegisterScreen component', () => {
 
   it('should call show captcha and auth service', async () => {
     const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
-    const user = getByTestId('usernameInput');
+    const user = getByTestId('usernameRegisterInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');
     const checkboxes = getAllByA11yRole('checkbox');

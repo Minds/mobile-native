@@ -379,7 +379,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   ],
                 ]
               }
-              testID="usernameInput"
+              testID="usernameLoginInput"
               textContentType="username"
               underlineColorAndroid="transparent"
               value=""
