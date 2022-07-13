@@ -46,6 +46,13 @@ export function createStorage(
  * To be called only by the session service
  */
 export function createUserStore(guid: string) {
+  /**
+   * If there is a previous user clear memory cache
+   */
+  storages.user?.clearMemoryCache();
+  storages.userCache?.clearMemoryCache();
+  storages.userPortrait?.clearMemoryCache();
+
   storages.user = createStorage(`user_${guid}`);
   storages.userCache = createStorage(`user_cache_${guid}`);
   storages.userPortrait = createStorage(`user_port_${guid}`);
