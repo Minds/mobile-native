@@ -24,15 +24,6 @@ function MutualSubscribers({
   const { result } = useMutualSubscribers(userGuid);
   const count = result?.count;
   const users = result?.users || [];
-  const shouldRender = Boolean(count);
-
-  // layout animations
-  useLayoutEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-    return () =>
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [shouldRender]);
 
   if (!count) {
     return <NobodyInCommon />;
