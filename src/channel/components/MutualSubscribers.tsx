@@ -138,7 +138,7 @@ const styles = ThemedStyles.create({
   usernameContainer: ['flexContainer', 'rowJustifyStart', 'flexWrap'],
   avatarContainer: ['rowJustifyStart', 'paddingRight5x'],
   avatar: [
-    'border4x',
+    'border2x',
     'bcolorPrimaryBorder',
     {
       marginRight: -15,
