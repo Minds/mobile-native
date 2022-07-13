@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
-import React, { useCallback, useLayoutEffect } from 'react';
-import { LayoutAnimation, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { View } from 'react-native';
+import AnimatedHeight from '~/common/components/AnimatedHeight';
 import channelAvatarUrl from '~/common/helpers/channel-avatar-url';
 import i18n from '~/common/services/i18n.service';
 import { Avatar, B2, Spacer } from '~/common/ui';
@@ -30,17 +31,19 @@ function MutualSubscribers({
   }
 
   return (
-    <Spacer {...props} containerStyle={styles.container}>
-      <View style={styles.avatarContainer}>
-        {users.slice(0, limit).map(user => {
-          return <ChannelAvatar user={user} />;
-        })}
-      </View>
+    <AnimatedHeight>
+      <Spacer {...props} containerStyle={styles.container}>
+        <View style={styles.avatarContainer}>
+          {users.slice(0, limit).map(user => {
+            return <ChannelAvatar user={user} />;
+          })}
+        </View>
 
-      <View style={styles.usernameContainer}>
-        <Description limit={limit} users={users} total={count} />
-      </View>
-    </Spacer>
+        <View style={styles.usernameContainer}>
+          <Description limit={limit} users={users} total={count} />
+        </View>
+      </Spacer>
+    </AnimatedHeight>
   );
 }
 
@@ -119,6 +122,7 @@ const ChannelAvatar = ({ user }) => {
         onPress={onAvatarPress}
         source={{ uri: channelAvatarUrl(user) }}
         size="tiny"
+        border="primary"
       />
     </View>
   );
@@ -129,8 +133,6 @@ const styles = ThemedStyles.create({
   usernameContainer: ['flexContainer', 'rowJustifyStart', 'flexWrap'],
   avatarContainer: ['rowJustifyStart', 'paddingRight5x'],
   avatar: [
-    'border2x',
-    'bcolorPrimaryBorder',
     {
       marginRight: -15,
       borderRadius: 100,
