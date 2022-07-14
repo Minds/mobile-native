@@ -58,7 +58,7 @@ const CashOnboarding = observer(
             <SettingInput
               placeholder={friendlyFormKeys.dob}
               onChangeText={localStore.setDob}
-              value={localStore.dob}
+              value={localStore.dob || undefined}
               testID="dob"
               wrapperBorder={[theme.borderTop, theme.borderBottom]}
               dateFormat={'ISOString'}
