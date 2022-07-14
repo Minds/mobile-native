@@ -1,7 +1,6 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { View, Platform, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useFocus } from '@msantang78/react-native-pager';
 import { observer, useLocalStore } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -27,6 +26,7 @@ import BoxShadow from '../common/components/BoxShadow';
 import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import MText from '../common/components/MText';
+import { useCarouselFocus } from './PortraitViewerScreen';
 
 type PropsType = {
   entity: ActivityModel;
@@ -50,7 +50,8 @@ const PortraitActivity = observer((props: PropsType) => {
     },
   }));
 
-  const focused = useFocus();
+  const focused = useCarouselFocus();
+
   const insets = useSafeAreaInsets();
 
   const theme = ThemedStyles.style;

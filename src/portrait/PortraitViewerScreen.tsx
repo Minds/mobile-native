@@ -1,23 +1,25 @@
 import React, { useCallback } from 'react';
-import { AppStackParamList } from '../navigation/NavigationTypes';
+import { View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
   useFocusEffect,
 } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import {
-  Pager,
-  PagerProvider,
-  iPageInterpolation,
-  Extrapolate,
-} from '@msantang78/react-native-pager';
+import Carousel from 'react-native-reanimated-carousel';
+import Animated, {
+  interpolateColor,
+  SharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
+import { AppStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
 import UserContentSwiper from './UserContentSwiper';
 import { useStores } from '../common/hooks/use-stores';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
+import usePortraitAnimation from './usePortraitAnimation';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -36,41 +38,13 @@ type PropsType = {
 const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
 
-// transition angle
-const ANGLE = 0.5;
-
-const clamp = { next: 1, prev: 1 };
-const stackConfig: iPageInterpolation = {
-  transform: [
-    {
-      perspective: {
-        inputRange: [-1, 0, 1],
-        outputRange: [1000, 1000, 1000],
-      },
-      rotateY: {
-        inputRange: [-1, -0.4, 0, 0.4, 1],
-        outputRange: [-ANGLE, -ANGLE, 0, ANGLE, ANGLE],
-        extrapolate: Extrapolate.IDENTITY,
-      },
-      scaleY: {
-        inputRange: [-1, -0.4, 0, 0.4, 1],
-        outputRange: [0.9, 0.9, 1, 0.9, 0.9],
-      },
-    },
-  ],
-  zIndex: offset => offset,
-  opacity: {
-    inputRange: [-1, -0.8, 0, 0.8, 1],
-    outputRange: [0, 0.5, 1, 0.5, 0],
-  },
-};
-
 /**
  * Portrait content swiper
  */
 const PortraitViewerScreen = observer((props: PropsType) => {
   // global portrait store
   const portraitStore = useStores().portrait;
+  const ref = React.useRef<any>();
 
   const store = useLocalStore(() => ({
     unseenMode: portraitStore.items[props.route.params.index].unseen,
@@ -103,6 +77,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       if (store.index > 0) {
         store.index = store.index - 1;
         store.preloadImages();
+        ref.current?.scrollTo({ index: store.index, animated: true });
       }
     },
     nextIndex() {
@@ -114,6 +89,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         if (nextUnseen !== -1) {
           store.index = store.index + nextUnseen + 1;
           store.preloadImages();
+          ref.current?.scrollTo({ index: store.index, animated: true });
         } else {
           const prevUnseen = store.items
             .slice(0, store.index)
@@ -121,6 +97,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
           if (prevUnseen !== -1) {
             store.index = prevUnseen;
             store.preloadImages();
+            ref.current?.scrollTo({ index: store.index, animated: true });
           } else {
             props.navigation.goBack();
           }
@@ -129,6 +106,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         if (store.index < store.items.length - 1) {
           store.index = store.index + 1;
           store.preloadImages();
+          ref.current?.scrollTo({ index: store.index, animated: true });
         } else {
           props.navigation.goBack();
         }
@@ -145,38 +123,102 @@ const PortraitViewerScreen = observer((props: PropsType) => {
 
   const { width, height } = useSafeAreaFrame();
 
-  const pagerStyle: any = {
-    height,
-    width,
-    backgroundColor: ThemedStyles.theme
-      ? 'black'
-      : ThemedStyles.getColor('TertiaryBackground'),
-    alignSelf: 'center',
-  };
+  const animationStyle = usePortraitAnimation(height, width);
 
-  const pages = store.items.map((item, index) => (
-    <UserContentSwiper
-      key={index}
-      item={item}
-      nextUser={store.nextIndex}
-      prevUser={store.prevIndex}
-      unseenMode={store.unseenMode}
-    />
-  ));
+  const renderItem = useCallback(
+    ({ index, animationValue, item }) => {
+      return (
+        <CustomItem
+          index={index}
+          animationValue={animationValue}
+          item={item}
+          store={store}
+        />
+      );
+    },
+    [store],
+  );
 
   return (
-    <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
-      <Pager
-        adjacentChildOffset={1}
-        maxIndex={store.items.length - 1}
-        style={pagerStyle}
-        clamp={clamp}
-        pageInterpolation={stackConfig}
-        initialIndex={store.index}>
-        {pages}
-      </Pager>
-    </PagerProvider>
+    <View style={ThemedStyles.style.flexContainer}>
+      <Carousel
+        ref={ref}
+        vertical={false}
+        windowSize={3}
+        defaultIndex={props.route.params.index}
+        pagingEnabled={true}
+        onSnapToItem={store.setIndex}
+        width={width}
+        height={height}
+        data={store.items}
+        renderItem={renderItem}
+        customAnimation={animationStyle}
+        scrollAnimationDuration={350}
+      />
+    </View>
   );
 });
+
+/**
+ * Focus provider context
+ */
+const FocusProvider = React.createContext(false);
+
+/**
+ * use focus hook
+ */
+export const useCarouselFocus = () => React.useContext(FocusProvider);
+
+/**
+ * use focus effect hook
+ */
+export const useCarouselFocusEffect = (effect: Function) => {
+  const focused = useCarouselFocus();
+  React.useEffect(() => {
+    if (focused) {
+      effect();
+    }
+  }, [focused]);
+};
+
+type ItemProps = {
+  index: number;
+  animationValue: SharedValue<number>;
+  item: any;
+  store: any;
+};
+const CustomItem: React.FC<ItemProps> = observer(
+  ({ index, animationValue, item, store }) => {
+    const maskStyle = useAnimatedStyle(() => {
+      const backgroundColor = interpolateColor(
+        animationValue.value,
+        [-1, 0, 1],
+        ['#000000dd', 'transparent', '#000000dd'],
+      );
+
+      return {
+        backgroundColor,
+      };
+    }, [animationValue]);
+
+    return (
+      <View style={ThemedStyles.style.flexContainer}>
+        <FocusProvider.Provider value={index === store.index}>
+          <UserContentSwiper
+            key={index}
+            item={item}
+            nextUser={store.nextIndex}
+            prevUser={store.prevIndex}
+            unseenMode={store.unseenMode}
+          />
+        </FocusProvider.Provider>
+        <Animated.View
+          pointerEvents="none"
+          style={[ThemedStyles.style.absoluteFill, maskStyle]}
+        />
+      </View>
+    );
+  },
+);
 
 export default PortraitViewerScreen;
