@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const createBankInfoStore = wallet => ({
   loading: false,
   stripeAgree: false,
@@ -14,13 +16,15 @@ const createBankInfoStore = wallet => ({
   setLastName(lastName: string) {
     this.wallet.stripeDetails.lastName = lastName;
   },
-  setDob(dob: string) {
-    this.wallet.stripeDetails.dob = dob;
+  setDob(dob: Date) {
+    this.wallet.stripeDetails.dob = dob
+      ? moment(dob).utc(true).format('YYYY-MM-DD')
+      : null;
   },
   get dob() {
     return this.wallet.stripeDetails.dob
       ? new Date(this.wallet.stripeDetails.dob)
-      : '';
+      : undefined;
   },
   setPhoneNumber(phoneNumber: string) {
     this.wallet.stripeDetails.phoneNumber = phoneNumber;
