@@ -56,8 +56,6 @@ const SeeLatestPostsButton = ({
     return null;
   }
 
-  console.log('NEW POST', feedStore.newPostsCount);
-
   return (
     <Animated.View
       pointerEvents="none"
