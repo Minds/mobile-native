@@ -24,7 +24,7 @@ export const Topbar = observer((props: PropsType) => {
   const insets = useSafeAreaInsets();
   const container = React.useRef({
     paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
-    height: Platform.select({ ios: props.noInsets ? 70 : 100, android: 60 }),
+    height: Platform.select({ ios: props.noInsets ? 60 : 100, android: 60 }),
     display: 'flex',
     flexDirection: 'row',
   }).current as ViewStyle;

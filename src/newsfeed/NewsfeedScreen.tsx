@@ -124,32 +124,49 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       )),
       new InjectItem(9, 'end', InvisibleStickyHeader),
     ]);
+
+    newsfeed.topFeedStore.setInjectedItems([
+      new InjectItem(0, 'prepend', () => (
+        <View>
+          <SocialCompassPrompt />
+          <CheckLanguage />
+          <InitialOnboardingButton />
+          <PortraitContentBar ref={portraitBar} />
+          <NewsfeedHeader
+            feedType={newsfeed.feedType}
+            onFeedTypeChange={newsfeed.changeFeedTypeChange}
+          />
+        </View>
+      )),
+    ]);
   }
+
+  const isLatest = newsfeed.feedType === 'latest';
 
   return (
     <Screen safe>
       <View style={ThemedStyles.style.flexContainer}>
         <FeedListSticky
-          stickyHeaderIndices={sticky}
+          stickyHeaderIndices={isLatest ? sticky : undefined}
+          bottomComponent={
+            isLatest ? (
+              <IfFeatureEnabled feature="mob-4193-polling">
+                <SeeLatestPostsButton
+                  onPress={refreshNewsfeed}
+                  feedStore={newsfeed.latestFeedStore}
+                />
+              </IfFeatureEnabled>
+            ) : undefined
+          }
           header={<Topbar noInsets navigation={navigation} />}
           ref={newsfeed.setListRef}
           feedStore={
-            newsfeed.feedType === 'latest'
-              ? newsfeed.latestFeedStore
-              : newsfeed.topFeedStore
+            isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore
           }
           navigation={navigation}
           afterRefresh={refreshPortrait}
           placeholder={NewsfeedPlaceholder}
         />
-        {newsfeed.feedType === 'latest' && (
-          <IfFeatureEnabled feature="mob-4193-polling">
-            <SeeLatestPostsButton
-              onPress={refreshNewsfeed}
-              feedStore={newsfeed.latestFeedStore}
-            />
-          </IfFeatureEnabled>
-        )}
       </View>
     </Screen>
   );

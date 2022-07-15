@@ -38,7 +38,12 @@ const Header = ({ children, translationY, onHeight }) => {
  * Context
  */
 const Context = React.createContext<
-  { translationY: SharedValue<number> } | undefined
+  | {
+      translationY: SharedValue<number>;
+      scrollY: SharedValue<number>;
+      headerHeight: number;
+    }
+  | undefined
 >(undefined);
 
 /**
@@ -68,10 +73,10 @@ function FeedListSticky<T>(props: FeedListPropsType<T>, ref: any) {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
       // if negative (refresh or bounce)
-      if (event.contentOffset.y < 0) {
+      if (event.contentOffset.y <= 0) {
         translationY.value = event.contentOffset.y;
       } else {
-        if (dragging.value) {
+        if (dragging.value || event.contentOffset.y < headerHeight) {
           // is down
           const delta = scrollY.value - event.contentOffset.y;
           translationY.value = translationY.value - delta;
@@ -107,16 +112,19 @@ function FeedListSticky<T>(props: FeedListPropsType<T>, ref: any) {
   ]);
 
   return (
-    <Context.Provider value={{ translationY }}>
+    <Context.Provider value={{ translationY, scrollY, headerHeight }}>
       <FeedList
         ref={ref}
         {...otherProps}
         onScroll={scrollHandler}
         contentContainerStyle={contentStyle}
         bottomComponent={
-          <Header translationY={translationY} onHeight={setHeaderHeight}>
-            {header}
-          </Header>
+          <>
+            <Header translationY={translationY} onHeight={setHeaderHeight}>
+              {header}
+            </Header>
+            {props.bottomComponent}
+          </>
         }
       />
     </Context.Provider>

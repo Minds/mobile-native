@@ -177,7 +177,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 Object {
                   "display": "flex",
                   "flexDirection": "row",
-                  "height": 70,
+                  "height": 60,
                   "paddingTop": 0,
                 }
               }
