@@ -58,7 +58,7 @@ const SeeLatestPostsButton = ({
 
   return (
     <Animated.View
-      pointerEvents="none"
+      pointerEvents="box-none"
       entering={FadeInUp.mass(0.3).duration(500)}
       style={style}>
       <Button
