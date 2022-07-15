@@ -6,7 +6,7 @@ import {
   useFocusEffect,
 } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import Carousel from 'react-native-reanimated-carousel';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import Animated, {
   interpolateColor,
   SharedValue,
@@ -44,7 +44,7 @@ metadataService.setSource('portrait').setMedium('feed');
 const PortraitViewerScreen = observer((props: PropsType) => {
   // global portrait store
   const portraitStore = useStores().portrait;
-  const ref = React.useRef<any>();
+  const ref = React.useRef<ICarouselInstance>(null);
 
   const store = useLocalStore(() => ({
     unseenMode: portraitStore.items[props.route.params.index].unseen,
@@ -142,6 +142,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <Carousel
+        loop={false}
         ref={ref}
         vertical={false}
         windowSize={3}
