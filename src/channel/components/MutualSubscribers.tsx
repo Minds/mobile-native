@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import AnimatedHeight from '~/common/components/AnimatedHeight';
+import AnimatedHeight from '~/common/components/animations/AnimatedHeight';
 import channelAvatarUrl from '~/common/helpers/channel-avatar-url';
 import i18n from '~/common/services/i18n.service';
 import { Avatar, B2, Spacer } from '~/common/ui';
