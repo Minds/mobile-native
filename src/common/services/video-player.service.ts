@@ -1,8 +1,8 @@
 import { action, observable } from 'mobx';
 import SystemSetting from 'react-native-system-setting';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import SilentSwitch from 'react-native-silent-switch';
 //@ts-ignore
+import SilentSwitch from 'react-native-silent-switch';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import { IS_IOS } from '~/config/Config';
 
