@@ -4120,12 +4120,12 @@
     xcode "3.0.1"
     yargs "^16.2.0"
 
-"@shopify/flash-list@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.1.0.tgz#257f3b3cf6718094c3a7adf45b111f752cf6450b"
-  integrity sha512-nLkMscftwLFAq9kkSLs0GObucoJqqzUrzxpW+hG/HUsuwGJ6kibTT14M9K4JvoGOaGphoykHJ2a4KSBoPVg5DQ==
+"@shopify/flash-list@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.2.0.tgz#981b1a9fc92b16aeb835fc17423c9e3d5cb36565"
+  integrity sha512-P5YzT91InI3t+Cw651bFXl1au2FxPuuPPDs1ijaUDUCOCJVliZOLdVD58CXElsNVcLppEqWDah4TB1JyC54Pqg==
   dependencies:
-    recyclerlistview "4.0.1"
+    recyclerlistview "4.1.1"
     tslib "2.4.0"
 
 "@sideway/address@^4.1.0":
@@ -9444,19 +9444,6 @@ fbjs@^0.8.4:
     promise "^7.1.1"
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
-
-fbjs@^0.8.9:
-  version "0.8.18"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.18.tgz#9835e0addb9aca2eff53295cd79ca1cfc7c9662a"
-  integrity sha512-EQaWFK+fEPSoibjNy8IxUtaFOMXcWsY0JaVrQoZR9zC8N2Ygf9iDITPWjUTVIax95b6I742JFLqASHfsag/vKA==
-  dependencies:
-    core-js "^1.0.0"
-    isomorphic-fetch "^2.1.1"
-    loose-envify "^1.0.0"
-    object-assign "^4.1.0"
-    promise "^7.1.1"
-    setimmediate "^1.0.5"
-    ua-parser-js "^0.7.30"
 
 fbjs@^3.0.0:
   version "3.0.4"
@@ -15194,7 +15181,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@*:
+prop-types@*, prop-types@15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -15202,13 +15189,6 @@ prop-types@*:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
     react-is "^16.13.1"
-
-prop-types@15.5.8:
-  version "15.5.8"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
-  integrity sha512-QiDx7s0lWoAVxmEmOYnn3rIZGduup2PZgj3rta5O5y0NfPKu3ApWi+GdMfTto7PmO/5+p4yamSLMZkj0jaTL4A==
-  dependencies:
-    fbjs "^0.8.9"
 
 prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
@@ -16362,13 +16342,13 @@ recursive-readdir@^2.2.2:
   dependencies:
     minimatch "3.0.4"
 
-recyclerlistview@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.0.1.tgz#b653fc4151b2931aafe753c182908f97997c5e19"
-  integrity sha512-KPUK8uFkE7++hgaH9duoFh3ZQQOmyeIklcoe8RkzzrsK3PoUx8D6ABAo+UhRbwaYbgyqJTcILe2htW7wJeLBLQ==
+recyclerlistview@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.1.1.tgz#b8f5f99a0be4dde7ceb4984f1949105f384d53b8"
+  integrity sha512-5BaAFSaSXDF9/mjv5WplX9mbZsKgYgn7N10uYjpqjW33UGVPZcz2omUOkXv0Bs6syP4qWVg3vz+NvBTjHwAOyg==
   dependencies:
     lodash.debounce "4.0.8"
-    prop-types "15.5.8"
+    prop-types "15.8.1"
     ts-object-utils "0.0.5"
 
 redent@^2.0.0:
