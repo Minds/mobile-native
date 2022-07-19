@@ -73,7 +73,7 @@ class VideoPlayerService {
     if (this.current && this.current !== videoPlayerRef) {
       this.current.pause(false);
     }
-    if (!this.current) {
+    if (!this.current && videoPlayerRef) {
       activateKeepAwake();
     }
     this.current = videoPlayerRef;
@@ -103,12 +103,14 @@ class VideoPlayerService {
    * Clear the current player ref
    */
   clear() {
+    if (this.current) {
+      deactivateKeepAwake();
+    }
     this.current = null;
     if (this.volumeListener) {
       SystemSetting.removeVolumeListener(this.volumeListener);
       this.volumeListener = null;
     }
-    deactivateKeepAwake();
   }
 }
 
