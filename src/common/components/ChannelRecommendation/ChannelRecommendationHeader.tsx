@@ -1,4 +1,6 @@
 import React from 'react';
+import { View } from 'react-native';
+import { styles as headerStyles } from '~/topbar/Topbar';
 
 import { B2, H4, Row, Icon } from '~/common/ui';
 import i18nService from '~/common/services/i18n.service';
@@ -6,13 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import MenuSheet from '../bottom-sheet/MenuSheet';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { View } from 'react-native';
-
 type PropsType = {
   location: string;
+  shadow?: boolean;
 };
 
-export default function ChannelRecommendationHeader({ location }: PropsType) {
+export default function ChannelRecommendationHeader({
+  location,
+  shadow,
+}: PropsType) {
   const navigation = useNavigation();
   const { dismissal } = useLegacyStores();
   const dismissible = location !== 'channel';
@@ -28,7 +32,12 @@ export default function ChannelRecommendationHeader({ location }: PropsType) {
     [dismissal],
   );
   return (
-    <View style={ThemedStyles.style.bgPrimaryBackground}>
+    <View
+      style={
+        shadow
+          ? [ThemedStyles.style.bgPrimaryBackground, headerStyles.shadow]
+          : ThemedStyles.style.bgPrimaryBackground
+      }>
       <Row align="centerBetween" vertical="L" horizontal="L">
         <H4>{i18nService.t('recommendedChannels')}</H4>
         <Row align="centerBoth">

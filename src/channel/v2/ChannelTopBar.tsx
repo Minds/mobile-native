@@ -6,24 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle, useStyle } from '~/styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
 import type { ChannelStoreType } from './createChannelStore';
 import ChannelButtons from './ChannelButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { observer } from 'mobx-react';
-import { styles as headerStyles } from '../../topbar/Topbar';
-import SmallCircleButton from '../../common/components/SmallCircleButton';
+import { styles as headerStyles } from '~/topbar/Topbar';
+import SmallCircleButton from '~/common/components/SmallCircleButton';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -94,7 +91,7 @@ const ChannelTopBar = observer(
       [textColor],
     );
     const containerStyle = useStyle(
-      headerStyles.container,
+      'rowJustifyStart',
       headerStyles.shadow,
       'rowJustifySpaceBetween',
       'alignCenter',
