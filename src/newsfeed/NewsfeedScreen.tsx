@@ -88,29 +88,40 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
    * Injected items
    */
   if (!newsfeed.latestFeedStore.injectItems) {
+    // common prepend components
+    const prepend = new InjectItem(0, 'prepend', () => (
+      <View>
+        <SocialCompassPrompt />
+        <CheckLanguage />
+        <InitialOnboardingButton />
+        <PortraitContentBar ref={portraitBar} />
+        <NewsfeedHeader
+          feedType={newsfeed.feedType}
+          onFeedTypeChange={newsfeed.changeFeedTypeChange}
+        />
+      </View>
+    ));
+
+    // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
-      new InjectItem(0, 'prepend', () => (
-        <View>
-          <SocialCompassPrompt />
-          <CheckLanguage />
-          <InitialOnboardingButton />
-          <PortraitContentBar ref={portraitBar} />
-          <NewsfeedHeader
-            feedType={newsfeed.feedType}
-            onFeedTypeChange={newsfeed.changeFeedTypeChange}
-          />
-        </View>
-      )),
-      new InjectItem(3, 'channel', () => (
-        <ChannelRecommendationHeader location="newsfeed" />
+      prepend,
+      new InjectItem(3, 'channel', ({ target }) => (
+        <ChannelRecommendationHeader
+          location="newsfeed"
+          shadow={target === 'StickyHeader'}
+        />
       )),
       new InjectItem(4, 'channel', () => (
         <ChannelRecommendation location="newsfeed" />
       )),
       new InjectItem(5, 'end', InvisibleStickyHeader),
 
-      new InjectItem(7, 'highlightheader', () => (
-        <NewsfeedHeader title="Highlights" small />
+      new InjectItem(7, 'highlightheader', ({ target }) => (
+        <NewsfeedHeader
+          title="Highlights"
+          small
+          shadow={target === 'StickyHeader'}
+        />
       )),
       new InjectItem(8, 'highlight', () => (
         <TopFeedHighlights
@@ -125,20 +136,8 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       new InjectItem(9, 'end', InvisibleStickyHeader),
     ]);
 
-    newsfeed.topFeedStore.setInjectedItems([
-      new InjectItem(0, 'prepend', () => (
-        <View>
-          <SocialCompassPrompt />
-          <CheckLanguage />
-          <InitialOnboardingButton />
-          <PortraitContentBar ref={portraitBar} />
-          <NewsfeedHeader
-            feedType={newsfeed.feedType}
-            onFeedTypeChange={newsfeed.changeFeedTypeChange}
-          />
-        </View>
-      )),
-    ]);
+    // top feed injected components
+    newsfeed.topFeedStore.setInjectedItems([prepend]);
   }
 
   const isLatest = newsfeed.feedType === 'latest';

@@ -13,6 +13,11 @@ import { isAbort } from '../services/api.service';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
 
+enum FeedAction {
+  Add = 0,
+  Remove = 1,
+}
+
 /**
  * Feed store
  */
@@ -240,10 +245,55 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   prepend(entity) {
     entity._list = this;
-    this.entities.unshift(entity);
+    if (this.entities.length !== 0 && this.entities[0] instanceof InjectItem) {
+      const index = this.entities.findIndex(e => !(e instanceof InjectItem));
+      if (index !== -1) {
+        this.entities.splice(index, 0, entity);
+      }
+    } else {
+      this.entities.unshift(entity);
+    }
+
+    this.fixPositionsAndInjected(1);
+
     this.feedsService.prepend(entity);
     if (entity.isScheduled()) {
       this.setScheduledCount(this.scheduledCount + 1);
+    }
+  }
+
+  /**
+   * Fixes the position data of each entity and the injected items when removing/adding an entity
+   */
+  fixPositionsAndInjected(
+    initial: number = 0,
+    feedAction: FeedAction = FeedAction.Add,
+  ) {
+    // fix positions
+    if (feedAction === FeedAction.Add) {
+      for (let i = initial; i < this.entities.length; i++) {
+        const currentEntity = this.entities[i];
+        if (!(currentEntity instanceof InjectItem)) {
+          currentEntity.position = i;
+        } else {
+          const prevEntity = this.entities[i - 1];
+          this.entities[i - 1] = currentEntity;
+          this.entities[i] = prevEntity;
+        }
+      }
+    } else {
+      for (let i = this.entities.length - 1; i >= initial; i--) {
+        const currentEntity = this.entities[i];
+        if (!(currentEntity instanceof InjectItem)) {
+          currentEntity.position = i;
+        } else {
+          if (this.entities.length - 1 >= i + 1) {
+            const nextEntity = this.entities[i + 1];
+            this.entities[i + 1] = currentEntity;
+            this.entities[i] = nextEntity;
+          }
+        }
+      }
     }
   }
 
@@ -254,6 +304,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   removeIndex(index) {
     this.entities.splice(index, 1);
+    this.fixPositionsAndInjected(index, FeedAction.Remove);
   }
 
   /**
