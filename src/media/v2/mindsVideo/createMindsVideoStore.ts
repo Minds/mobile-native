@@ -1,7 +1,6 @@
 import type { AVPlaybackSourceObject, AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
-import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
@@ -248,9 +247,6 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         await this.init();
       }
 
-      // do not sleep while video is playing
-      activateKeepAwake();
-
       this.setShowOverlay(false);
 
       runInAction(() => {
@@ -268,16 +264,19 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       // set as the current player in the service
       videoPlayerService.setCurrent(this);
     },
-    pause() {
-      if (videoPlayerService.current === this) {
-        videoPlayerService.clear();
-      }
-
-      // can sleep when video is paused
-      deactivateKeepAwake();
+    pause(unregister: boolean = true) {
+      unregister && this.unregister();
 
       this.setPaused(true);
       this.player?.pauseAsync();
+    },
+    /**
+     * Unregister the player from the player service
+     */
+    unregister() {
+      if (videoPlayerService.current === this) {
+        videoPlayerService.clear();
+      }
     },
     /**
      * Sets the instances of the expo-av player

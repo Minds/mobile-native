@@ -5,7 +5,6 @@ import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { MindsVideoStoreType } from './createMindsVideoStore';
-import { deactivateKeepAwake } from 'expo-keep-awake';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -36,12 +35,12 @@ const ExpoVideo = observer(
       }
     }, [localStore, video]);
 
-    // deactivate keepAwake when this component was unmounted
     useEffect(() => {
       return () => {
-        deactivateKeepAwake();
+        // on unmount unregister the player from the player service if necessary
+        localStore.unregister();
       };
-    }, []);
+    }, [localStore]);
 
     return (
       <Video
