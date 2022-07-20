@@ -92,6 +92,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
     <Subscribe
       channel={
         Object {
+          "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
           "blocked": undefined,

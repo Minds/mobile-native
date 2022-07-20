@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import type BaseModel from '../BaseModel';
 import FeedList, { FeedListPropsType } from './FeedList';
 
 /**
@@ -56,7 +57,10 @@ export const useFeedListContext = () => {
 /**
  * Feed list with reanimated sticky header
  */
-function FeedListSticky<T>(props: FeedListPropsType<T>, ref: any) {
+function FeedListSticky<T extends BaseModel>(
+  props: FeedListPropsType<T>,
+  ref: any,
+) {
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);

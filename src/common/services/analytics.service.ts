@@ -22,10 +22,10 @@ const IGNORE_SCREENS = ['Comments'];
 // entity that can be contextualized into an 'entity_context'.
 export type ContextualizableEntity = {
   guid: string;
-  type: string;
+  type?: string;
   subtype: string;
   access_id: string;
-  container_guid: string;
+  container_guid?: string;
   owner_guid: string;
 };
 

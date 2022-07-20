@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import type BaseModel from '~/common/BaseModel';
 import MetadataService from '~/common/services/metadata.service';
 import { storages } from '~/common/services/storage/storages.service';
 import UserModel from '../channel/UserModel';
@@ -14,7 +15,7 @@ export type NewsfeedType = 'top' | 'latest';
 /**
  * News feed store
  */
-class NewsfeedStore<T> {
+class NewsfeedStore<T extends BaseModel> {
   /**
    * Feed store
    */

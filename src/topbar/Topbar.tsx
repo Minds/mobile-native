@@ -29,6 +29,7 @@ export const Topbar = observer((props: PropsType) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return animatedContext &&
+      !props.shadowLess &&
       animatedContext.scrollY.value > animatedContext.headerHeight &&
       animatedContext.headerHeight !== animatedContext.translationY.value
       ? {

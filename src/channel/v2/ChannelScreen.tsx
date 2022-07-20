@@ -330,7 +330,7 @@ const ChannelScreen = observer((props: PropsType) => {
     [props.navigation],
   );
 
-  const renderActivity = store.filter === 'blogs' ? renderBlog : undefined;
+  const renderActivity: any = store.filter === 'blogs' ? renderBlog : undefined;
 
   /**
    * GLOBAL LOADING

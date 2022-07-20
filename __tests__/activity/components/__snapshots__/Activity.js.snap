@@ -23,6 +23,7 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -44,6 +45,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -126,6 +128,7 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -147,6 +150,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -235,6 +239,7 @@ exports[`Activity component renders correctly 1`] = `
       <ActivityActionSheet
         entity={
           Object {
+            "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
             "blurb": false,
@@ -256,6 +261,7 @@ exports[`Activity component renders correctly 1`] = `
             "message": "Message",
             "ownerObj": Object {
               "__list": null,
+              "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
               "canary": false,
@@ -362,6 +368,7 @@ exports[`Activity component renders correctly 1`] = `
       <MediaView
         entity={
           Object {
+            "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
             "blurb": false,
@@ -383,6 +390,7 @@ exports[`Activity component renders correctly 1`] = `
             "message": "Message",
             "ownerObj": Object {
               "__list": null,
+              "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
               "canary": false,
@@ -479,6 +487,7 @@ exports[`Activity component renders correctly 1`] = `
         <ExplicitText
           entity={
             Object {
+              "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -500,6 +509,7 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": Object {
                 "__list": null,
+                "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
                 "canary": false,
@@ -607,6 +617,7 @@ exports[`Activity component renders correctly 1`] = `
         <ForwardRef(ObserverForwardRef)
           entity={
             Object {
+              "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -628,6 +639,7 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": Object {
                 "__list": null,
+                "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
                 "canary": false,
@@ -719,6 +731,7 @@ exports[`Activity component renders correctly 1`] = `
     <BottomContent
       entity={
         Object {
+          "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -740,6 +753,7 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": Object {
             "__list": null,
+            "access_id": "",
             "allow_comments": true,
             "blocked": undefined,
             "canary": false,

@@ -96,7 +96,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
     const header = (
       <>
-        <Topbar title="Discovery" navigation={navigation} noInsets />
+        <Topbar title="Discovery" navigation={navigation} noInsets shadowLess />
         <View style={styles.header}>
           <InitialOnboardingButton />
           <TopbarTabbar

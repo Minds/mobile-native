@@ -14,6 +14,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import type BaseModel from '../BaseModel';
 
 export interface InjectItemComponentProps {
   index: number;
@@ -48,8 +50,8 @@ const { width, height } = Dimensions.get('window');
 const drawAhead = height;
 const itemHeight = width / 3;
 
-export type FeedListPropsType<T> = {
-  feedStore: FeedStore;
+export type FeedListPropsType<T extends BaseModel> = {
+  feedStore: FeedStore<T>;
   renderTileActivity?: ListRenderItem<T>;
   renderActivity?: ListRenderItem<T>;
   emptyMessage?: React.ReactElement;
@@ -87,7 +89,9 @@ export type FeedListPropsType<T> = {
  * News feed list component
  */
 @observer
-export class FeedList<T> extends Component<FeedListPropsType<T>> {
+export class FeedList<T extends BaseModel> extends Component<
+  FeedListPropsType<T>
+> {
   AnimatedFlashList: any;
   listRef = React.createRef<FlashList<T>>();
   cantShowActivity: string = '';
@@ -219,8 +223,15 @@ export class FeedList<T> extends Component<FeedListPropsType<T>> {
     );
   }
 
-  getType(item) {
-    return item instanceof InjectItem ? item.type : 'row';
+  getType(item: ActivityModel | InjectItem) {
+    const isActivity = item instanceof ActivityModel;
+    return item instanceof InjectItem
+      ? item.type
+      : isActivity && item.hasVideo()
+      ? 'video'
+      : isActivity && item.hasVideo()
+      ? 'image'
+      : 'row';
   }
 
   /**
