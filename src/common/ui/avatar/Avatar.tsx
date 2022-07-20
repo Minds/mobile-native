@@ -52,6 +52,13 @@ const styles = ThemedStyles.create({
     { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
     'bcolorAvatarCircled',
   ],
+  primary: [
+    {
+      borderWidth: UNIT.XXS,
+      borderRadius: AVATAR_SIZE.large,
+      borderColor: ThemedStyles.getColor('PrimaryBackground'),
+    },
+  ],
   transparent: { borderColor: 'transparent', borderWidth: UNIT.XXS },
   icon: {
     alignItems: 'center',

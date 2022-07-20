@@ -26,6 +26,7 @@ import ChannelRecommendation from '~/common/components/ChannelRecommendation/Cha
 import UserModel from '../UserModel';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import useModelEvent from '~/common/hooks/useModelEvent';
+import MutualSubscribers from '../components/MutualSubscribers';
 
 const CENTERED = false;
 
@@ -60,10 +61,11 @@ const ChannelHeader = withErrorBoundary(
     const [interacted, setInteracted] = useState(false);
     const channel = props.store?.channel;
     const channelGuid = channel?.guid;
+    const ownChannel = channel?.isOwner();
     /** Whether the channel recommendation widget should be shown after channel is subscribed */
     const shouldRenderChannelRecommendation =
-      !channel?.isOwner() && Boolean(props.store?.feedStore.entities.length);
-    const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
+      !ownChannel && Boolean(props.store?.feedStore.entities.length);
+    const tabs: Array<TabType<ChannelTabType>> = ownChannel
       ? [
           { id: 'feed', title: i18n.t('feed') },
           { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
@@ -169,7 +171,7 @@ const ChannelHeader = withErrorBoundary(
             </ScrollView>
           );
         case 'memberships':
-          if (props.store?.channel?.isOwner()) {
+          if (ownChannel) {
             return (
               <TierManagementScreen
                 route={props.route}
@@ -285,6 +287,14 @@ const ChannelHeader = withErrorBoundary(
                   {' ' + i18n.t('subscriptions')}
                 </MText>
               </MText>
+
+              {!ownChannel && (
+                <MutualSubscribers
+                  navigation={props.navigation}
+                  userGuid={channel.guid}
+                  top="M"
+                />
+              )}
             </>
           )}
         </View>

@@ -325,7 +325,17 @@
     "fabSend": "Send Tip",
     "fabPay": "Tip",
     "share": "Share Channel",
-    "userHasntPostedYet": "@{{username}} hasn't posted anything yet"
+    "userHasntPostedYet": "@{{username}} hasn't posted anything yet",
+    "mutualSubscribers": {
+      "description": {
+        "one": "is subscribed",
+        "other": "are subscribed"
+      },
+      "descriptionMany": {
+        "one": "and {{count}} other are subscribed",
+        "other": "and {{count}} others are subscribed"
+      }
+    }
   },
   "discovery": {
     "title": "Discovery",
