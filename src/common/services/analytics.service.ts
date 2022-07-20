@@ -12,7 +12,6 @@ import i18nService from './i18n.service';
 import { Version } from '../../config/Version';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
-import { getTopLevelNavigator } from '../../navigation/NavigationService';
 import type GroupModel from '../../groups/GroupModel';
 import type UserModel from '../../channel/UserModel';
 import { storages } from './storage/storages.service';
@@ -159,13 +158,7 @@ export class AnalyticsService {
   /**
    * Navigation state change handler
    */
-  onNavigatorStateChange = () => {
-    const nav: any = getTopLevelNavigator();
-    if (!nav) {
-      return;
-    }
-    const currentRouteName = nav.getCurrentRoute()?.name;
-
+  onNavigatorStateChange = currentRouteName => {
     if (
       currentRouteName &&
       this.previousRouteName !== currentRouteName &&

@@ -21,7 +21,7 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
   forceHeight?: number;
   onBack?: () => void;
-  onDismiss?: () => void;
+  onDismissBtn?: () => void;
 }
 
 export type BottomSheetModalHandle = BottomSheetModal;
@@ -34,7 +34,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
       snapPoints,
       autoShow,
       onBack,
-      onDismiss,
+      onDismissBtn,
       children,
       ...other
     } = props;
@@ -115,9 +115,13 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
                   />
                 </View>
               )}
-              {Boolean(onDismiss) && (
+              {Boolean(onDismissBtn) && (
                 <View style={styles.closeIcon}>
-                  <IconButton size="large" name="close" onPress={onDismiss} />
+                  <IconButton
+                    size="large"
+                    name="close"
+                    onPress={onDismissBtn}
+                  />
                 </View>
               )}
             </View>

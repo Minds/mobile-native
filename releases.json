@@ -1,6 +1,43 @@
 {
   "versions": [
     {
+      "version": "4.25.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.25.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.25.0",
+      "changelog": [
+        "React native updated to the latest version (0.68)",
+        "Placeholders refactored using a more performant animation library",
+        "Better error message when an upload fails",
+        "Updated fast images package",
+        "Wire amount validation added",
+        "Track unmute events",
+        "Fix email confirmation screen layout",
+        "Fix play store automated releases when the changelog is to long",
+        "Dark splash screen and splash package updated",
+        "Fix iOS email invite encoding",
+        "Fix share to minds error on iOS",
+        "Improves the channel edit UX and keyboard handling",
+        "Updates the video player, the linear gradient and image manipulator packages",
+        "Update expo package",
+        "Fix back button not working in some bottom sheets"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "23105d4ed3abd2fdcc0d1621549b8b80"
+        },
+        {
+          "type": "sha256",
+          "value": "ed914f536273b5082c23725387f17327cb0e5ed16637ce917a90c754a72830a9"
+        },
+        {
+          "type": "sha512",
+          "value": "c9f861bc0d5530f72fd1044cf11f55d4e0c67ce84b0ac1860fec14512d69cc0ff969cb6a7155661bde390781c36d7973877199520d4066b13c54a42b8a4650d9"
+        }
+      ]
+    },
+    {
       "version": "4.24.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-24-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.24.0",

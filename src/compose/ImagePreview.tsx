@@ -45,7 +45,9 @@ export default observer(function (props) {
     return (
       <FastImage
         key={props.image.key || 'imagePreview'}
-        source={{ uri: uri + `?${props.image.key}` }} // we need to change the uri in order to force the reload of the image
+        source={{
+          uri: uri + (props.image.key ? `?${props.image.key}` : ''),
+        }} // we need to change the uri in order to force the reload of the image
         style={[
           imageStyle,
           props.style,

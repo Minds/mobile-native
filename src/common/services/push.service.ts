@@ -24,10 +24,11 @@ export class PushService {
 
     this.push.setOnNotificationOpened(notification => {
       //TODO: remove after we check the push notification issue
-      console.log('[App] PUSH NOTIFICATION OPENED');
+
       // get notification data
-      const data = notification.getData();
-      if (data.json) data.json = JSON.parse(data.json);
+      let data = notification.getData();
+      console.log('[App] PUSH NOTIFICATION OPENED', data);
+      data = data.pushNotification ? data.pushNotification : data;
       // navigate
       router.navigate(data);
     });

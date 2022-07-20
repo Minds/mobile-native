@@ -3,13 +3,14 @@ import logService from '../log.service';
 import { storages } from './storages.service';
 
 const KEY = 'SESSIONS_DATA';
+const INDEX_KEY = 'SESSIONS_ACTIVE_INDEX';
 
 export type RefreshToken = {
   refresh_token: string;
   refresh_token_expires: number | null;
 };
 
-export type TokensData = {
+export type Session = {
   user: UserModel;
   pseudoId: string; // used for snowplow
   sessionExpired: boolean;
@@ -23,9 +24,11 @@ export type TokensData = {
   };
 };
 
+export type Sessions = Array<Session>;
+
 export type SessionsData = {
   activeIndex: number;
-  tokensData: Array<TokensData>;
+  tokensData: Array<Session>;
 };
 
 /**
@@ -35,11 +38,17 @@ export class SessionStorageService {
   /**
    * Get tokens of the current user
    */
-  getAll() {
+  getAll(): SessionsData | null {
     try {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
+      const activeIndex = storages.session.getInt(INDEX_KEY) || 0;
+
       if (sessionData === null || sessionData === undefined) {
         return this.checkAndMigrate();
+      }
+      //  the active index was moved outside the session data
+      if (sessionData) {
+        sessionData.activeIndex = activeIndex;
       }
       return sessionData;
     } catch (err) {
@@ -79,15 +88,45 @@ export class SessionStorageService {
     };
 
     this.save(sessionsData);
+
+    // we remove the legacy session data once migrated
+    storages.session.removeItem('access_token');
+    storages.session.removeItem('refresh_token');
+    storages.session.removeItem('user');
+
     return sessionsData;
   }
 
+  /**
+   * Save the session array and the current active index
+   */
   save(sessionsData: SessionsData) {
     try {
       storages.session.setMap(KEY, sessionsData);
+      storages.session.setInt(INDEX_KEY, sessionsData.activeIndex);
     } catch (err) {
       logService.exception('[SessionStorage] save', err);
     }
+  }
+
+  /**
+   * Save the sessions array
+   */
+  saveSessions(sessions: Sessions) {
+    try {
+      storages.session.setMap(KEY, {
+        tokensData: sessions,
+      });
+    } catch (err) {
+      logService.exception('[SessionStorage] save', err);
+    }
+  }
+
+  /**
+   * Save the active
+   */
+  saveActiveIndex(index: number) {
+    storages.session.setInt(INDEX_KEY, index);
   }
 
   /**

@@ -54,6 +54,14 @@ jest.mock('~/common/hooks/use-stores', () => ({
         return [];
       },
     },
+    dismissal: {
+      isDismissed() {
+        return false;
+      },
+      dismiss() {
+        return;
+      },
+    },
   }),
 }));
 

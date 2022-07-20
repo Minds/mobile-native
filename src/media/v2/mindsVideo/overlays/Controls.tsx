@@ -9,9 +9,6 @@ import ThemedStyles from '../../../../styles/ThemedStyles';
 import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
 import { styles, iconSize, playSize } from './styles';
-// workaround to fix tooltips on android
-// import Tooltip from 'rne-modal-tooltip';
-// import MText from '../../../../common/components/MText';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -19,39 +16,12 @@ type PropsType = {
   hideOverlay?: boolean;
 };
 
-// type SourceSelectorPropsType = {
-//   localStore: MindsVideoStoreType;
-// };
-
 const DebouncedTouchableWithoutFeedback = withPreventDoubleTap(
   TouchableWithoutFeedback,
 );
 
 const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
 const controlColor = '#F7F7F7';
-
-// const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
-//   const theme = ThemedStyles.style;
-//   if (!localStore.sources) {
-//     return null;
-//   }
-//   return (
-//     <View>
-//       {localStore.sources.map((s, i) => (
-//         <MText
-//           style={[
-//             theme.colorWhite,
-//             theme.fontL,
-//             theme.paddingBottom,
-//             i === localStore.source ? theme.bold : null,
-//           ]}
-//           onPress={() => localStore.setSource(i)}>
-//           {s.size}p
-//         </MText>
-//       ))}
-//     </View>
-//   );
-// };
 
 const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
   const theme = ThemedStyles.style;
@@ -94,27 +64,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               />
             </View>
           </View>
-          {/* {localStore.duration > 0 && entity && (
-            <View style={styles.controlSettingsContainer}>
-              <Tooltip
-                popover={sourceSelector}
-                withOverlay={false}
-                height={60}
-                onOpen={localStore.openControlOverlay}
-                backgroundColor="rgba(48,48,48,0.7)">
-                <Icon
-                  name="ios-settings-sharp"
-                  size={iconResSize}
-                  style={[
-                    theme.paddingLeft,
-                    styles.textShadow,
-                    theme.colorWhite,
-                  ]}
-                />
-              </Tooltip>
-            </View>
-          )} */}
-          {localStore.duration > 0 && (
+          {localStore.duration > 0 && localStore.showFullControls && (
             <View style={styles.controlBarContainer}>
               <Icon
                 onPress={localStore.toggleFullScreen}

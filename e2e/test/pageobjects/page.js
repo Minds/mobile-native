@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import jwt from 'jsonwebtoken';
+
 export default class Page {
   /**
    * define elements
@@ -10,10 +12,13 @@ export default class Page {
     return this.selectElement('text', 'Login');
   }
   get usernameField() {
-    return this.selectElement('id', 'usernameInput');
+    return this.selectElement('id', 'usernameLoginInput');
   }
   get passwordField() {
     return this.selectElement('id', 'userPasswordInput');
+  }
+  get captchaInput() {
+    return this.selectElement('id', 'captcha');
   }
   get loginButtonAfterCredentials() {
     return this.selectElement('id', 'loginButton');
@@ -63,6 +68,28 @@ export default class Page {
     await this.passwordField.waitForDisplayed();
     await this.passwordField.setValue(password);
     await this.loginButtonAfterCredentials.click();
+  }
+
+  async completeCaptcha() {
+    const sharedKey = process.env.SHARED_KEY;
+    const captcha = Date.now();
+    const token = jwt.sign({ data: captcha }, sharedKey, {
+      expiresIn: '5m',
+    });
+
+    await this.captchaInput.waitForDisplayed();
+    await this.captchaInput.setValue(captcha);
+
+    browser.setCookies({ name: 'captcha_bypass', value: token });
+  }
+
+  async bypassFriendlyCaptcha() {
+    const sharedKey = process.env.SHARED_KEY;
+    const captcha = 'friendly_captcha_bypass';
+    const token = jwt.sign({ data: captcha }, sharedKey, {
+      expiresIn: '5m',
+    });
+    browser.setCookies({ name: 'captcha_bypass', value: token });
   }
 
   async logout() {

@@ -11,9 +11,6 @@ import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import ResetPasswordModal, {
-  ResetPasswordModalHandles,
-} from './reset-password/ResetPasswordModal';
 
 const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -27,7 +24,6 @@ export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
-  const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
   }, [props.navigation]);
@@ -35,15 +31,6 @@ function WelcomeScreen(props: PropsType) {
   const onRegisterPress = useCallback(() => {
     props.navigation.navigate('MultiUserRegister');
   }, [props.navigation]);
-  const username = props.route?.params?.username;
-  const code = props.route?.params?.code;
-
-  React.useEffect(() => {
-    const navToInputPassword = username && code && !!resetRef.current;
-    if (navToInputPassword) {
-      resetRef.current!.show(navToInputPassword, username, code);
-    }
-  }, [code, username]);
 
   const openDevtools = useCallback(
     () => props.navigation.navigate('DevTools'),
@@ -64,6 +51,7 @@ function WelcomeScreen(props: PropsType) {
             type="action"
             font="medium"
             bottom="XL"
+            testID="joinNowButton"
             onPress={onRegisterPress}
             darkContent>
             {i18n.t('auth.createChannel')}
@@ -73,7 +61,6 @@ function WelcomeScreen(props: PropsType) {
           </Button>
         </View>
       </View>
-      <ResetPasswordModal ref={resetRef} />
 
       {DEV_MODE.isActive && (
         <MText style={devtoolsStyle} onPress={openDevtools}>

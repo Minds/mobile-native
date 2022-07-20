@@ -38,6 +38,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
+import onImageInput from '~/common/helpers/onImageInput';
 
 const { width } = Dimensions.get('window');
 
@@ -282,6 +283,7 @@ export default observer(function ComposeScreen(props) {
                     selectTextOnFocus={false}
                     underlineColorAndroid="transparent"
                     onSelectionChange={store.selectionChanged}
+                    onImageChange={onImageInput(store.onMediaFromGallery)}
                     testID="PostInput">
                     <Tags navigation={props.navigation} selectable={true}>
                       {store.text}

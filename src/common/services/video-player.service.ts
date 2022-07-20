@@ -1,9 +1,10 @@
 import { action, observable } from 'mobx';
 import SystemSetting from 'react-native-system-setting';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 //@ts-ignore
 import SilentSwitch from 'react-native-silent-switch';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import { Platform } from 'react-native';
+import { IS_IOS } from '~/config/Config';
 
 /**
  * Video Player Service
@@ -28,7 +29,7 @@ class VideoPlayerService {
   volumeListenerFn = data => {
     // if available enable current video audio
     if (this.current && !this.current.paused && data.value > 0) {
-      if (Platform.OS === 'ios') {
+      if (IS_IOS) {
         if (data.value !== this.currentSystemVolume) {
           this.current.setVolume(1);
         }
@@ -70,7 +71,10 @@ class VideoPlayerService {
       this.volumeListener = null;
     }
     if (this.current && this.current !== videoPlayerRef) {
-      this.current.pause();
+      this.current.pause(false);
+    }
+    if (!this.current && videoPlayerRef) {
+      activateKeepAwake();
     }
     this.current = videoPlayerRef;
   }
@@ -99,6 +103,9 @@ class VideoPlayerService {
    * Clear the current player ref
    */
   clear() {
+    if (this.current) {
+      deactivateKeepAwake();
+    }
     this.current = null;
     if (this.volumeListener) {
       SystemSetting.removeVolumeListener(this.volumeListener);

@@ -208,7 +208,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         placeholder={i18n.t('auth.username')}
         onChangeText={store.setUsername}
         value={store.username}
-        testID="usernameInput"
+        testID="usernameRegisterInput"
         error={store.usernameError}
         noBottomBorder
         autofocus

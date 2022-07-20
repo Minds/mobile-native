@@ -2,7 +2,7 @@ import { observable, action, reaction, computed } from 'mobx';
 import {
   RefreshToken,
   SessionStorageService,
-  TokensData,
+  Session,
 } from './storage/session.storage.service';
 import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
@@ -26,7 +26,7 @@ export class SessionService {
   @observable userLoggedIn = false;
   @observable ready = false;
 
-  @observable tokensData: Array<TokensData> = [];
+  @observable sessions: Array<Session> = [];
   @observable activeIndex: number = 0;
   @observable sessionExpired: boolean = false;
   @observable switchingAccount: boolean = false;
@@ -78,6 +78,32 @@ export class SessionService {
     this.sessionStorage = sessionStorage;
   }
 
+  /**
+   * returns session count
+   */
+  get sessionsCount(): number {
+    return this.sessions.length;
+  }
+
+  /**
+   * Get a session for a given index
+   * @returns Session
+   */
+  getSessionForIndex(index: number) {
+    return this.sessions[index];
+  }
+
+  /**
+   * Get sessions array
+   */
+  getSessions() {
+    return this.sessions;
+  }
+
+  sessionIndexExists(index: number) {
+    return index <= this.sessions.length - 1;
+  }
+
   @computed
   get showAuthNav() {
     return !this.userLoggedIn && !this.switchingAccount;
@@ -102,9 +128,9 @@ export class SessionService {
       }
 
       this.setActiveIndex(sessionData.activeIndex);
-      this.setTokensData(sessionData.tokensData);
+      this.setSessions(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user, pseudoId } = this.tokensData[
+      const { accessToken, refreshToken, user, pseudoId } = this.sessions[
         this.activeIndex
       ];
 
@@ -128,7 +154,7 @@ export class SessionService {
         SettingsStore.loadUserSettings();
       }
 
-      for (let i = 0; i < this.tokensData.length; i++) {
+      for (let i = 0; i < this.sessions.length; i++) {
         this.apiServiceInstances.push(new ApiService(i));
       }
 
@@ -170,11 +196,12 @@ export class SessionService {
     if (this.tokenCanRefresh()) {
       logService.info('[SessionService] refreshing token...');
       const tokens = await AuthService.refreshToken();
-      tokens.pseudo_id = this.tokensData[this.activeIndex].pseudoId;
+      tokens.pseudo_id = this.sessions[this.activeIndex].pseudoId;
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
-      this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
-      this.saveToStore();
+      this.sessions[this.activeIndex] = this.buildSessionData(tokens);
+      // persist sessions array
+      this.persistSessionsArray();
       logService.info('[SessionService] token refreshed!');
     } else {
       logService.info("[SessionService] can't refreshing token");
@@ -182,20 +209,37 @@ export class SessionService {
     }
   }
 
+  /**
+   * Persist the array of sessions
+   */
+  persistSessionsArray() {
+    this.sessionStorage.saveSessions(this.sessions);
+  }
+
+  /**
+   * Persist the current active session index
+   */
+  persistActiveIndex() {
+    this.sessionStorage.saveActiveIndex(this.activeIndex);
+  }
+
+  /**
+   * Refresh the auth tokens for the given session index
+   */
   async refreshAuthTokenFrom(index: number) {
-    const { refreshToken, accessToken } = this.tokensData[index];
+    const { refreshToken, accessToken } = this.sessions[index];
     if (this.tokenCanRefresh(refreshToken)) {
       logService.info('[SessionService] refreshing token from');
       const tokens = await AuthService.refreshToken(
         refreshToken.refresh_token,
         accessToken.access_token,
       );
-      tokens.pseudo_id = this.tokensData[index].pseudoId;
-      this.tokensData[index] = this.buildSessionData(
+      tokens.pseudo_id = this.sessions[index].pseudoId;
+      this.sessions[index] = this.buildSessionData(
         tokens,
-        this.tokensData[index].user,
+        this.sessions[index].user,
       );
-      this.saveToStore();
+      this.persistSessionsArray();
       logService.info('[SessionService] token refreshed!');
     } else {
       logService.info("[SessionService] can't refreshing token");
@@ -203,6 +247,9 @@ export class SessionService {
     }
   }
 
+  /**
+   * Load user information and refresh data async if necessary
+   */
   async loadUser(user?: UserModel) {
     if (user) {
       getStores().user.setUser(user);
@@ -254,8 +301,8 @@ export class SessionService {
   }
 
   @action
-  setTokensData(tokensData: Array<TokensData>) {
-    this.tokensData = tokensData;
+  setSessions(sessions: Array<Session>) {
+    this.sessions = sessions;
   }
 
   @action
@@ -323,40 +370,45 @@ export class SessionService {
       this.refreshTokenExpires = sessionData.refreshToken.refresh_token_expires;
 
       // add data to current tokens data array
-      const tokensData = this.tokensData;
-      tokensData.push(sessionData);
-      this.setTokensData(tokensData);
+      const sessions = this.sessions;
+      sessions.push(sessionData);
+      this.setSessions(sessions);
 
       analyticsService.setUserId(sessionData.pseudoId);
 
       // set the active index which will be logged
-      this.setActiveIndex(this.tokensData.length - 1);
+      this.setActiveIndex(this.sessions.length - 1);
       this.apiServiceInstances.push(new ApiService(this.activeIndex));
 
       // save all data into session storage
-      this.saveToStore();
+      this.persistSessionsArray();
+      this.persistActiveIndex();
     } catch (err) {
       logService.exception('[SessionService addSession]', err);
     }
   }
 
+  /**
+   * Switch current active user
+   */
   async switchUser(sessionIndex: number) {
     this.setActiveIndex(sessionIndex);
-    const tokensData = this.tokensData[sessionIndex];
+    const sessions = this.sessions[sessionIndex];
     await this.setTokens(
       {
-        access_token: tokensData.accessToken.access_token,
-        refresh_token: tokensData.refreshToken.refresh_token,
+        access_token: sessions.accessToken.access_token,
+        refresh_token: sessions.refreshToken.refresh_token,
       },
-      tokensData.user,
+      sessions.user,
     );
     // set expire
-    this.accessTokenExpires = tokensData.accessToken.access_token_expires;
-    this.refreshTokenExpires = tokensData.refreshToken.refresh_token_expires;
+    this.accessTokenExpires = sessions.accessToken.access_token_expires;
+    this.refreshTokenExpires = sessions.refreshToken.refresh_token_expires;
 
-    analyticsService.setUserId(tokensData.pseudoId);
+    analyticsService.setUserId(sessions.pseudoId);
 
-    this.saveToStore();
+    // persist index
+    this.persistActiveIndex();
   }
 
   async setTokens(tokens, user?: UserModel) {
@@ -365,20 +417,13 @@ export class SessionService {
     await this.loadUser(user);
   }
 
-  saveToStore() {
-    this.sessionStorage.save({
-      tokensData: this.tokensData,
-      activeIndex: this.activeIndex,
-    });
-  }
-
   /**
-   * Get the token for a given index on tokensData
+   * Get the token for a given index on sessions
    * @param index
    * @returns the access token
    */
   getTokenWithIndex(index: number) {
-    return this.tokensData[index].accessToken.access_token;
+    return this.sessions[index].accessToken.access_token;
   }
 
   buildSessionData(tokens, user?: UserModel) {
@@ -412,25 +457,28 @@ export class SessionService {
 
   @action
   setSessionExpiredFor(sessionExpired: boolean, index: number) {
-    this.tokensData[index].sessionExpired = sessionExpired;
-    this.saveToStore();
+    this.sessions[index].sessionExpired = sessionExpired;
+    this.persistSessionsArray();
   }
 
+  /**
+   * Check if it is a re-login attempt
+   */
   isRelogin(username: string, data) {
-    const index = this.tokensData.findIndex(
+    const index = this.sessions.findIndex(
       value => value.user.username === username,
     );
 
     if (index !== -1) {
       const sessionData = this.buildSessionData(
         data,
-        this.tokensData[index].user,
+        this.sessions[index].user,
       );
-      this.tokensData[index] = sessionData;
+      this.sessions[index] = sessionData;
 
       this.setSessionExpired(false);
       // persist data
-      this.saveToStore();
+      this.persistSessionsArray();
 
       return true;
     }
@@ -438,8 +486,11 @@ export class SessionService {
     return false;
   }
 
+  /**
+   * Get the session index for a given guid
+   */
   getIndexSessionFromGuid(guid: string) {
-    const index = this.tokensData.findIndex(
+    const index = this.sessions.findIndex(
       v => String(guid) === String(v.user.guid),
     );
 
@@ -457,12 +508,13 @@ export class SessionService {
     this.refreshTokenExpires = null;
     this.setLoggedIn(false);
     if (clearStorage) {
-      const tokensData = this.tokensData;
-      tokensData.splice(this.activeIndex, 1);
-      this.setTokensData(tokensData);
+      const sessions = this.sessions;
+      sessions.splice(this.activeIndex, 1);
+      this.setSessions(sessions);
       this.setActiveIndex(0);
       this.popApiServiceInstance();
-      this.saveToStore();
+      this.persistActiveIndex();
+      this.persistSessionsArray();
     }
   }
 
@@ -471,7 +523,7 @@ export class SessionService {
    */
   popApiServiceInstance() {
     this.apiServiceInstances.pop();
-    for (let i = 0; i < this.tokensData.length; i++) {
+    for (let i = 0; i < this.sessions.length; i++) {
       this.apiServiceInstances[i].setSessionIndex(i);
     }
   }
@@ -485,13 +537,13 @@ export class SessionService {
       this.logout();
       return true;
     } else {
-      const guid = this.tokensData[this.activeIndex].user.guid;
-      const tokensData = this.tokensData;
-      tokensData.splice(index, 1);
-      this.setTokensData(tokensData);
+      const guid = this.sessions[this.activeIndex].user.guid;
+      this.sessions.splice(index, 1);
       const newIndex = this.getIndexSessionFromGuid(guid);
       this.setActiveIndex(newIndex || 0);
       this.popApiServiceInstance();
+      this.persistActiveIndex();
+      this.persistSessionsArray();
       return false;
     }
   }
@@ -569,11 +621,11 @@ export class SessionService {
   }
 
   getAccessTokenFrom(index) {
-    return this.tokensData[index].accessToken.access_token;
+    return this.sessions[index].accessToken.access_token;
   }
 
   getRefreshTokenFrom(index) {
-    return this.tokensData[index].refreshToken.refresh_token;
+    return this.sessions[index].refreshToken.refresh_token;
   }
 }
 

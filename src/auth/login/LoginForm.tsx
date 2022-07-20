@@ -3,9 +3,6 @@ import React from 'react';
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-import ResetPasswordModal, {
-  ResetPasswordModalHandles,
-} from '../reset-password/ResetPasswordModal';
 import createLoginStore from './createLoginStore';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
@@ -29,8 +26,7 @@ type PropsType = {
  * Login Form component
  */
 export default observer(function LoginForm(props: PropsType) {
-  const resetRef = React.useRef<ResetPasswordModalHandles>(null);
-  const localStore = useLocalStore(createLoginStore, { props, resetRef });
+  const localStore = useLocalStore(createLoginStore, { props });
 
   const theme = ThemedStyles.style;
 
@@ -38,7 +34,7 @@ export default observer(function LoginForm(props: PropsType) {
     const u =
       props.sessionIndex !== undefined
         ? UserModel.checkOrCreate(
-            sessionService.tokensData[props.sessionIndex].user,
+            sessionService.getSessionForIndex(props.sessionIndex).user,
           )
         : sessionService.getUser();
 
@@ -46,7 +42,7 @@ export default observer(function LoginForm(props: PropsType) {
       localStore.username = u.username;
     }
     return u;
-  }, [props.sessionIndex, localStore]);
+  }, [props.sessionIndex, props.relogin, localStore.username]);
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
@@ -68,7 +64,7 @@ export default observer(function LoginForm(props: PropsType) {
       autoComplete="username"
       textContentType="username"
       value={localStore.username}
-      testID="usernameInput"
+      testID="usernameLoginInput"
       autoCorrect={false}
       noBottomBorder
       keyboardType="default"
@@ -114,7 +110,6 @@ export default observer(function LoginForm(props: PropsType) {
         <Row top="L2" align="centerBoth">
           <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
         </Row>
-        <ResetPasswordModal ref={resetRef} />
       </DismissKeyboard>
     </View>
   );

@@ -63,7 +63,7 @@ class ReceiveShareService {
     if (data.mimeType.includes('image/') || data.mimeType.includes('video/')) {
       this.handleMedia(data);
     } else if (data.mimeType.includes('text')) {
-      navigationService.navigate('Compose', { text: data });
+      navigationService.navigate('Compose', { text: data.data });
     }
   };
 }

@@ -113,11 +113,7 @@ export default observer(function MediaPreview(props: PropsType) {
           borderWidth={0}
           borderRadius={0}
           useNativeDriver={true}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-          }}
+          style={styles.progress}
         />
       )}
     </View>
@@ -127,6 +123,11 @@ export default observer(function MediaPreview(props: PropsType) {
 const styles = StyleSheet.create({
   icon: {
     color: '#FFFFFF',
+  },
+  progress: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   removeMedia: {
     zIndex: 10000,
