@@ -30,7 +30,7 @@ const createEditChannelStore = () => ({
   },
   displayName: '',
   city: '',
-  dob: null as Date | null,
+  dob: undefined as Date | undefined,
   editingCity: false,
   setEditingCity(editingCity: boolean) {
     this.editingCity = editingCity;
@@ -46,7 +46,7 @@ const createEditChannelStore = () => ({
     this.city = city;
   },
   setDob(dob) {
-    this.dob = dob ? (dob instanceof Date ? dob : new Date(dob)) : null;
+    this.dob = dob ? (dob instanceof Date ? dob : new Date(dob)) : undefined;
   },
   initialLoad(channelStore: ChannelStoreType) {
     if (channelStore.channel) {

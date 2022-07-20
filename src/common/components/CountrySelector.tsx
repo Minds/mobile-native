@@ -5,16 +5,13 @@ import i18n from '../services/i18n.service';
 type PropsType = {
   onSelected: Function;
   selected: string;
-  onlyAllowed?: 'allowedCountriesBankAccount';
+  allowed?: string[];
 };
 
-const CountrySelector = ({ onlyAllowed, onSelected, selected }: PropsType) => {
+const CountrySelector = ({ allowed, onSelected, selected }: PropsType) => {
   let filteredCountries = countries;
-  if (onlyAllowed) {
-    const allowedCountries = allowed[onlyAllowed];
-    filteredCountries = countries.filter(({ code }) =>
-      allowedCountries.includes(code),
-    );
+  if (allowed) {
+    filteredCountries = countries.filter(({ code }) => allowed.includes(code));
   }
   return (
     <InputSelector
@@ -28,29 +25,47 @@ const CountrySelector = ({ onlyAllowed, onSelected, selected }: PropsType) => {
   );
 };
 
-const allowed: { [name: string]: Array<string> } = {
+export const allowedCountries: { [name: string]: Array<string> } = {
   allowedCountriesBankAccount: [
     'AT',
     'AU',
     'BE',
+    'BG',
+    // 'BR'
     'CA',
     'CH',
+    'CY',
+    'CZ',
     'DE',
     'DK',
+    'EE',
     'ES',
     'FI',
     'FR',
     'GB',
+    'GR',
     'HK',
+    'HU',
     'IE',
+    'IN',
     'IT',
+    // 'JP'
     'LU',
+    'LT',
+    'LV',
+    'MT',
+    // 'MX',
+    'MY',
     'NL',
     'NO',
     'NZ',
+    'PL',
     'PT',
+    'RO',
     'SE',
     'SG',
+    'SI',
+    'SK',
     'US',
   ],
 };
