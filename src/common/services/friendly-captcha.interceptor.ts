@@ -7,7 +7,7 @@ const friendlyCaptchaInterceptor = async config => {
     return config;
   }
 
-  if (!hasVariation('minds-3119-captcha-for-engagement')) {
+  if (!hasVariation('mob-minds-3119-captcha-for-engagement')) {
     return config;
   }
 
