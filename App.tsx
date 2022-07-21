@@ -48,6 +48,9 @@ import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import { CODE_PUSH_KEY } from '~/config/Config';
 import 'react-native-image-keyboard';
+import FriendlyCaptchaProvider, {
+  setFriendlyCaptchaReference,
+} from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -179,20 +182,22 @@ class App extends Component<Props> {
               <StoresProvider>
                 <Provider key="app" {...stores}>
                   <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                    <PortalProvider>
-                      <BottomSheetModalProvider>
-                        <ErrorBoundary
-                          message="An error occurred"
-                          containerStyle={ThemedStyles.style.centered}>
-                          <WCContextProvider>
-                            <NavigationStack
-                              key={ThemedStyles.theme + i18n.locale}
-                              showAuthNav={showAuthNav}
-                            />
-                          </WCContextProvider>
-                        </ErrorBoundary>
-                      </BottomSheetModalProvider>
-                    </PortalProvider>
+                    <FriendlyCaptchaProvider ref={setFriendlyCaptchaReference}>
+                      <PortalProvider>
+                        <BottomSheetModalProvider>
+                          <ErrorBoundary
+                            message="An error occurred"
+                            containerStyle={ThemedStyles.style.centered}>
+                            <WCContextProvider>
+                              <NavigationStack
+                                key={ThemedStyles.theme + i18n.locale}
+                                showAuthNav={showAuthNav}
+                              />
+                            </WCContextProvider>
+                          </ErrorBoundary>
+                        </BottomSheetModalProvider>
+                      </PortalProvider>
+                    </FriendlyCaptchaProvider>
                   </AppMessageProvider>
                 </Provider>
               </StoresProvider>

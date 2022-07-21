@@ -22,10 +22,8 @@ import {
   MINDS_STAGING,
   NETWORK_TIMEOUT,
 } from '../../config/Config';
-
 import { Version } from '../../config/Version';
 import logService from './log.service';
-
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
@@ -33,6 +31,7 @@ import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
+import friendlyCaptchaInterceptor from './friendly-captcha.interceptor';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -134,7 +133,8 @@ export class ApiService {
     this.axios.interceptors.request.use(config => {
       config.headers = this.buildHeaders(config.headers);
       config.timeout = NETWORK_TIMEOUT;
-      return config;
+
+      return friendlyCaptchaInterceptor(config);
     });
 
     this.axios.interceptors.response.use(
