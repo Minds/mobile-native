@@ -1,3 +1,6 @@
+import widget from './widget.min';
+import widgetModule from './widget.module.min';
+
 export default `
 <!DOCTYPE html>
 <html lang="en">
@@ -80,14 +83,12 @@ export default `
   <body>
     <div id="captcha"></div>
   </body>
-  <script
-    type="module"
-    src="https://unpkg.com/friendly-challenge@0.9.1/widget.module.min.js"
-  ></script>
-  <script
-    nomodule
-    src="https://unpkg.com/friendly-challenge@0.9.1/widget.min.js"
-  ></script>
+  <script type="module">
+    ${widgetModule}
+  </script>
+  <script nomodule>
+    ${widget}
+  </script>
   <script>
     let widgetInstance;
 
@@ -129,7 +130,7 @@ export default `
           document.getElementById('captcha'),
           {
             startMode: 'auto',
-            sitekey: 'minds-mobile',
+            sitekey: 'minds-mobile' + window.captchaOrigin ? '&origin=' + window.captchaOrigin : '',
             puzzleEndpoint:
               'api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
