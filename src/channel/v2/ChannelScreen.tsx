@@ -73,6 +73,10 @@ type PropsType = {
   navigation: any;
   route: any;
 };
+enum Direction {
+  Up = 1,
+  Down = 0,
+}
 
 /**
  * Channel screen
@@ -92,7 +96,7 @@ const ChannelScreen = observer((props: PropsType) => {
   /**
    * Last scroll direction: used for optimization
    */
-  const topLastDirection = useRef(1);
+  const lastDirection = useRef<Direction>(Direction.Up);
 
   const channelContext = useMemo(
     () => ({
@@ -221,7 +225,8 @@ const ChannelScreen = observer((props: PropsType) => {
         contentOffset: { y },
       },
     }) => {
-      const direction = y > offset.value ? 'down' : 'up';
+      const direction: Direction =
+        y > offset.value ? Direction.Down : Direction.Up;
       const delta = y - offset.value;
       offset.value = y;
 
@@ -230,9 +235,9 @@ const ChannelScreen = observer((props: PropsType) => {
       /**
        * If the scroll had a down direction, hide the topbar
        **/
-      if (direction === 'down' && y > TOPBAR_THRESHOLD) {
-        if (topLastDirection.current !== 0) {
-          topLastDirection.current = 0;
+      if (direction === Direction.Down && y > TOPBAR_THRESHOLD) {
+        if (lastDirection.current !== Direction.Down) {
+          lastDirection.current = Direction.Down;
           /**
            * hide topbar
            **/
@@ -250,9 +255,9 @@ const ChannelScreen = observer((props: PropsType) => {
             );
           }
         }
-      } else if (direction === 'up' && delta !== 0) {
-        if (topLastDirection.current !== 1) {
-          topLastDirection.current = 1;
+      } else if (direction === Direction.Up && delta !== 0) {
+        if (lastDirection.current !== Direction.Up) {
+          lastDirection.current = Direction.Up;
           contentOffset.value = withTiming(0, {
             duration: 500,
             easing: EASING,
