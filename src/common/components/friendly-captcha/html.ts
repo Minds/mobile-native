@@ -130,7 +130,7 @@ export default `
           document.getElementById('captcha'),
           {
             startMode: 'auto',
-            sitekey: 'minds-mobile' + window.captchaOrigin ? '&origin=' + window.captchaOrigin : '',
+            sitekey: 'minds-mobile&origin=' + (window.captchaOrigin || 'null'),
             puzzleEndpoint:
               'api/v3/friendly-captcha/puzzle',
             doneCallback: solution => {
