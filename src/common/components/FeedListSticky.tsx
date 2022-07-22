@@ -99,6 +99,7 @@ function FeedListSticky<T extends BaseModel>(
     },
     onEndDrag(event) {
       dragging.value = false;
+      // if the scroll is bigger than the header height and the header is partially shown we make it sticky
       if (
         event.contentOffset.y > headerHeight &&
         translationY.value > 0 &&
