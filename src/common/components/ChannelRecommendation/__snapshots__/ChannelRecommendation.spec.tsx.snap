@@ -2,54 +2,92 @@
 
 exports[`ChannelRecommendation renders correctly 1`] = `
 <Fragment>
-  <Spacer
-    bottom="XL"
-  >
-    <ChannelRecommendationItem
-      channel={
-        Object {
-          "attachment_guid": false,
-          "blurb": false,
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "guid": "",
-          "mature": false,
-          "message": "Message",
-          "ownerObj": Object {
-            "guid": "824853017709780997",
-            "subtype": false,
-            "time_created": "1522036284",
-            "type": "user",
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "perma_url": false,
-          "rowKey": "something",
-          "shouldBeBlured": [MockFunction],
-          "thumbnail_src": false,
-          "time_created": "1522036284",
-          "title": "TITLE",
-          "type": "activity",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
-        }
+  <ChannelRecommendationHeader
+    location="fakeLocation"
+    recommendationStore={
+      Object {
+        "result": Object {
+          "entities": Array [
+            Object {
+              "entity": Object {
+                "attachment_guid": false,
+                "blurb": false,
+                "custom_data": false,
+                "custom_type": false,
+                "description": "Congratulations! ",
+                "edited": "",
+                "guid": "",
+                "mature": false,
+                "message": "Message",
+                "ownerObj": Object {
+                  "guid": "824853017709780997",
+                  "subtype": false,
+                  "time_created": "1522036284",
+                  "type": "user",
+                },
+                "owner_guid": "824853017709780997",
+                "parent_guid": "838106762591510528",
+                "perma_url": false,
+                "rowKey": "something",
+                "shouldBeBlured": [MockFunction],
+                "thumbnail_src": false,
+                "time_created": "1522036284",
+                "title": "TITLE",
+                "type": "activity",
+                "wire_totals": Object {
+                  "tokens": 1000000000000000000,
+                },
+              },
+              "guid": "",
+            },
+          ],
+          "status": "",
+        },
       }
-      onSubscribed={[Function]}
-    />
-  </Spacer>
-  <View
-    style={
-      Array [
-        Object {
-          "borderBottomWidth": 6,
+    }
+  />
+  <ChannelRecommendationBody
+    location="fakeLocation"
+    recommendationStore={
+      Object {
+        "result": Object {
+          "entities": Array [
+            Object {
+              "entity": Object {
+                "attachment_guid": false,
+                "blurb": false,
+                "custom_data": false,
+                "custom_type": false,
+                "description": "Congratulations! ",
+                "edited": "",
+                "guid": "",
+                "mature": false,
+                "message": "Message",
+                "ownerObj": Object {
+                  "guid": "824853017709780997",
+                  "subtype": false,
+                  "time_created": "1522036284",
+                  "type": "user",
+                },
+                "owner_guid": "824853017709780997",
+                "parent_guid": "838106762591510528",
+                "perma_url": false,
+                "rowKey": "something",
+                "shouldBeBlured": [MockFunction],
+                "thumbnail_src": false,
+                "time_created": "1522036284",
+                "title": "TITLE",
+                "type": "activity",
+                "wire_totals": Object {
+                  "tokens": 1000000000000000000,
+                },
+              },
+              "guid": "",
+            },
+          ],
+          "status": "",
         },
-        Object {
-          "borderColor": "#3f4b56",
-        },
-      ]
+      }
     }
   />
 </Fragment>

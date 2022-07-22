@@ -38,6 +38,18 @@ class NewsfeedStore<T extends BaseModel> {
     .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
     );
+
+  /**
+   * Highlight store
+   */
+  highlightsStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+    .setInjectBoost(false)
+    .setLimit(3)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
+    );
+
   /**
    * List reference
    */

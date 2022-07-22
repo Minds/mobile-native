@@ -1,7 +1,7 @@
 import React from 'react';
-import ChannelRecommendation, {
-  ChannelRecommendationItem,
-} from './ChannelRecommendation';
+import ChannelRecommendation from './ChannelRecommendation';
+
+import { ChannelRecommendationItem } from './ChannelRecommendationBody';
 import { shallow } from 'enzyme';
 import UserModel from '~/channel/UserModel';
 

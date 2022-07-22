@@ -17,7 +17,7 @@ import PortraitContentBar from '../portrait/PortraitContentBar';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
-import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import ChannelRecommendationBody from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
 import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
 import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
@@ -25,6 +25,9 @@ import { Screen } from '~/common/ui';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FeedListSticky from '~/common/components/FeedListSticky';
+import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
+import { ChannelRecommendationProvider } from '~/common/components/ChannelRecommendation/ChannelRecommendationProvider';
+import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -40,10 +43,6 @@ type NewsfeedScreenProps = {
   newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
-
-const invisibleStyle = { width: '100%', height: 1 };
-
-const InvisibleStickyHeader = () => <View style={invisibleStyle} />;
 
 /**
  * News Feed Screen
@@ -112,16 +111,12 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         />
       )),
       new InjectItem(4, 'channel', () => (
-        <ChannelRecommendation location="newsfeed" />
+        <ChannelRecommendationBody location="newsfeed" />
       )),
-      new InjectItem(5, 'end', InvisibleStickyHeader),
+      new InjectItem(5, 'end', FeedListInvisibleHeader),
 
       new InjectItem(7, 'highlightheader', ({ target }) => (
-        <NewsfeedHeader
-          title="Highlights"
-          small
-          shadow={target === 'StickyHeader'}
-        />
+        <TopFeedHighlightsHeader target={target} />
       )),
       new InjectItem(8, 'highlight', () => (
         <TopFeedHighlights
@@ -133,7 +128,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           }}
         />
       )),
-      new InjectItem(9, 'end', InvisibleStickyHeader),
+      new InjectItem(9, 'end', FeedListInvisibleHeader),
     ]);
 
     // top feed injected components
@@ -144,29 +139,31 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
 
   return (
     <Screen safe>
-      <View style={ThemedStyles.style.flexContainer}>
-        <FeedListSticky
-          stickyHeaderIndices={isLatest ? sticky : undefined}
-          bottomComponent={
-            isLatest ? (
-              <IfFeatureEnabled feature="mob-4193-polling">
-                <SeeLatestPostsButton
-                  onPress={refreshNewsfeed}
-                  feedStore={newsfeed.latestFeedStore}
-                />
-              </IfFeatureEnabled>
-            ) : undefined
-          }
-          header={<Topbar noInsets navigation={navigation} />}
-          ref={newsfeed.setListRef}
-          feedStore={
-            isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore
-          }
-          navigation={navigation}
-          afterRefresh={refreshPortrait}
-          placeholder={NewsfeedPlaceholder}
-        />
-      </View>
+      <ChannelRecommendationProvider location="newsfeed">
+        <View style={ThemedStyles.style.flexContainer}>
+          <FeedListSticky
+            stickyHeaderIndices={isLatest ? sticky : undefined}
+            bottomComponent={
+              isLatest ? (
+                <IfFeatureEnabled feature="mob-4193-polling">
+                  <SeeLatestPostsButton
+                    onPress={refreshNewsfeed}
+                    feedStore={newsfeed.latestFeedStore}
+                  />
+                </IfFeatureEnabled>
+              ) : undefined
+            }
+            header={<Topbar noInsets navigation={navigation} />}
+            ref={newsfeed.setListRef}
+            feedStore={
+              isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore
+            }
+            navigation={navigation}
+            afterRefresh={refreshPortrait}
+            placeholder={NewsfeedPlaceholder}
+          />
+        </View>
+      </ChannelRecommendationProvider>
     </Screen>
   );
 });

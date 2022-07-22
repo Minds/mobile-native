@@ -1,25 +1,41 @@
 import React from 'react';
 import { View } from 'react-native';
 import { styles as headerStyles } from '~/topbar/Topbar';
+import { observer } from 'mobx-react-lite';
+import { useNavigation } from '@react-navigation/native';
 
 import { B2, H4, Row, Icon } from '~/common/ui';
 import i18nService from '~/common/services/i18n.service';
-import { useNavigation } from '@react-navigation/native';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import MenuSheet from '../bottom-sheet/MenuSheet';
 import ThemedStyles from '~/styles/ThemedStyles';
+import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
+import FeedListInvisibleHeader from '../FeedListInvisibleHeader';
+import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
+
 type PropsType = {
   location: string;
   shadow?: boolean;
+  recommendationStore?: ChannelRecommendationStore;
 };
 
-export default function ChannelRecommendationHeader({
+function ChannelRecommendationHeader({
   location,
   shadow,
+  recommendationStore,
 }: PropsType) {
   const navigation = useNavigation();
   const { dismissal } = useLegacyStores();
   const dismissible = location !== 'channel';
+  const recommendation =
+    useChannelRecommendationContext() || recommendationStore;
+
+  const shouldRender =
+    Boolean(recommendation?.result?.entities.length) &&
+    (dismissible
+      ? !dismissal.isDismissed('channel-recommendation:feed')
+      : true);
+
   const sheetOptions = React.useMemo(
     () => [
       {
@@ -31,7 +47,8 @@ export default function ChannelRecommendationHeader({
     ],
     [dismissal],
   );
-  return (
+
+  return shouldRender ? (
     <View
       style={
         shadow
@@ -55,5 +72,9 @@ export default function ChannelRecommendationHeader({
         </Row>
       </Row>
     </View>
+  ) : (
+    <FeedListInvisibleHeader />
   );
 }
+
+export default observer(ChannelRecommendationHeader);
