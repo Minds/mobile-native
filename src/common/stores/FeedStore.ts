@@ -245,6 +245,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   prepend(entity) {
     entity._list = this;
+    // if the first items are an injected item, we inject it before them
     if (this.entities.length !== 0 && this.entities[0] instanceof InjectItem) {
       const index = this.entities.findIndex(e => !(e instanceof InjectItem));
       if (index !== -1) {
