@@ -7,6 +7,7 @@ const friendlyCaptchaInterceptor = async config => {
     return config;
   }
 
+  // test gpg
   if (!hasVariation('mob-minds-3119-captcha-for-engagement')) {
     return config;
   }
