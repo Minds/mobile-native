@@ -149,9 +149,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     if (focused) {
       const user = sessionService.getUser();
 
-      // if we have some video playing we pause it and reset the current video
-      videoPlayerService.setCurrent(null);
-
       if (
         ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
         mediaRef.current
@@ -368,7 +365,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={
-            Boolean(route.params?.focusedUrn) ||
+            Boolean(route.params?.focusedCommentUrn) ||
             Boolean(route.params?.scrollToBottom)
           }
           commentsStore={store.comments}

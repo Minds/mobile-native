@@ -308,9 +308,10 @@ upload:browserstack:oss: # Upload to Browserstack
   before_script:
     - *getversion
     - export TARGET_NAME=Minds-$APPVERSION.apk
-    - export CUSTOM_ID= 'data={"custom_id":"ANDROID_PRODUCTION"}'
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
   dependencies:
     - build:androidproduction
+  allow_failure: true
   only:
     refs:
       - master
@@ -375,6 +376,7 @@ upload:browserstack:oss:rc: # Upload to Browserstack
     - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
+  allow_failure: true
   only:
     refs:
       - develop

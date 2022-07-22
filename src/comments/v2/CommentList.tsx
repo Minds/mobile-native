@@ -52,10 +52,10 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 
   React.useEffect(() => {
     // the value is cleared after the first load
-    const focusedUrn = props.store?.focusedUrn;
+    const focusedCommentUrn = props.store?.focusedCommentUrn;
 
     props.store.loadComments(true).then(() => {
-      if (focusedUrn) {
+      if (focusedCommentUrn) {
         // open focused if necessary
         const focused = props.store.comments.find(c => c.expanded);
         if (focused) {

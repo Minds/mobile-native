@@ -74,7 +74,7 @@ export default class DiscoveryV2Store {
 
     this.topFeed = new FeedStore(true);
     this.topFeed
-      .setEndpoint('api/v3/newsfeed/default-feed')
+      .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
       .setInjectBoost(false)
       .setLimit(15);
 

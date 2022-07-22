@@ -1,7 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
-import CountrySelector from '../../../../common/components/CountrySelector';
+import CountrySelector, {
+  allowedCountries,
+} from '../../../../common/components/CountrySelector';
 import MenuItem from '../../../../common/components/menus/MenuItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
@@ -30,7 +32,7 @@ const CashOnboarding = observer(
       <DismissKeyboard style={theme.flexContainer}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <CountrySelector
-            onlyAllowed="allowedCountriesBankAccount"
+            allowed={allowedCountries.allowedCountriesBankAccount}
             onSelected={localStore.setCountry}
             selected={localStore.wallet.stripeDetails.country}
           />
@@ -56,7 +58,7 @@ const CashOnboarding = observer(
             <SettingInput
               placeholder={friendlyFormKeys.dob}
               onChangeText={localStore.setDob}
-              value={localStore.dob}
+              value={localStore.dob || undefined}
               testID="dob"
               wrapperBorder={[theme.borderTop, theme.borderBottom]}
               dateFormat={'ISOString'}
@@ -83,6 +85,9 @@ const CashOnboarding = observer(
               defaultCode="US"
               onChangeFormattedText={localStore.setPhoneNumber}
               placeholder=" "
+              countryPickerProps={{
+                countryCodes: allowedCountries.allowedCountriesBankAccount,
+              }}
               {...phoneInputStyles}
             />
           </View>

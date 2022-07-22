@@ -36,7 +36,7 @@ export type DiscoveryStackParamList = {
     group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
-    focusedUrn?: string;
+    focusedCommentUrn?: string;
     noBottomInset?: boolean;
   };
   Channel: {};
@@ -246,7 +246,7 @@ export type AppStackParamList = {
     group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
-    focusedUrn?: string;
+    focusedCommentUrn?: string;
     noBottomInset?: boolean;
   };
   Conversation: {};
