@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
   logo: {
     marginLeft: 4,
     marginTop: -10,
-    aspectRatio: 0.3389,
+    height: 36,
     width: 105,
   },
   shadow: {
