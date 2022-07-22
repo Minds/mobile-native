@@ -106,8 +106,6 @@ export const DiscoveryTrendsList = observer(
   },
 );
 
-// const sticky = [0];
-
 const styles = ThemedStyles.create({
   emptyContainer: ['halfHeight', 'alignCenter', 'justifyCenter', 'flexColumn'],
   emptyMessage: [
