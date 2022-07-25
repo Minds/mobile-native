@@ -145,7 +145,7 @@ function createPortraitStore() {
           portrait: true,
           from_timestamp: moment().hour(0).minutes(0).seconds(0).unix() * 1000,
           to_timestamp:
-            moment().subtract(2, 'days').hour(0).minutes(0).seconds(0).unix() *
+            moment().subtract(1, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
         const seenList = await portraitContentService.getSeen();
