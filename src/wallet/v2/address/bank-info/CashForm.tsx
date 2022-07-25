@@ -3,7 +3,9 @@ import { observer } from 'mobx-react';
 import { ScrollView, View } from 'react-native';
 import MenuSubtitle from '../../../../common/components/menus/MenuSubtitle';
 import i18n from '../../../../common/services/i18n.service';
-import CountrySelector from '../../../../common/components/CountrySelector';
+import CountrySelector, {
+  allowedCountries,
+} from '../../../../common/components/CountrySelector';
 import SettingInput from '../../../../common/components/SettingInput';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { BankInfoStore } from './createBankInfoStore';
@@ -19,7 +21,7 @@ const CashForm = observer(({ localStore, friendlyFormKeys }: PropsType) => {
     <ScrollView keyboardShouldPersistTaps={true}>
       <MenuSubtitle>{i18n.t('wallet.bank.finish')}</MenuSubtitle>
       <CountrySelector
-        onlyAllowed="allowedCountriesBankAccount"
+        allowed={allowedCountries.allowedCountriesBankAccount}
         onSelected={localStore.setCountry}
         selected={localStore.wallet.stripeDetails.country}
       />

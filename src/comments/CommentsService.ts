@@ -1,9 +1,8 @@
-//@ts-nocheck
 import api from './../common/services/api.service';
 import commentStorageService from './CommentStorageService';
 
 const decodeUrn = urn => {
-  let parts = urn.split(':');
+  let parts: Array<string> = urn.split(':');
 
   const obj = {
     entity_guid: parts[2],
@@ -16,6 +15,8 @@ const decodeUrn = urn => {
 
   return obj;
 };
+
+type FocusedUrnObjectType = ReturnType<typeof decodeUrn>;
 
 /**
  * Get a single comment
@@ -52,7 +53,7 @@ export async function getComment(entity_guid, guid, parent_path) {
  * @param {integer} limit
  */
 export async function getComments(
-  focusedUrn,
+  focusedCommentUrn,
   entity_guid,
   parent_path,
   level,
@@ -61,21 +62,27 @@ export async function getComments(
   loadPrevious,
   descending,
 ) {
-  let focusedUrnObject = focusedUrn ? decodeUrn(focusedUrn) : null;
-  if (focusedUrn) {
-    if (entity_guid != focusedUrnObject.entity_guid) focusedUrn = null; //wrong comment thread to focus on
-    if (loadNext || loadPrevious) focusedUrn = null; //can not focus and have pagination
-    if (focusedUrn && parent_path === '0:0:0') {
+  let focusedUrnObject: FocusedUrnObjectType | null = focusedCommentUrn
+    ? decodeUrn(focusedCommentUrn)
+    : null;
+  if (focusedUrnObject) {
+    if (entity_guid !== focusedUrnObject.entity_guid) {
+      focusedCommentUrn = null; //wrong comment thread to focus on
+    }
+    if (loadNext || loadPrevious) {
+      focusedCommentUrn = null; //can not focus and have pagination
+    }
+    if (focusedCommentUrn && parent_path === '0:0:0') {
       loadNext = focusedUrnObject.parent_guid_l1;
     }
     if (
-      focusedUrn &&
+      focusedCommentUrn &&
       parent_path === `${focusedUrnObject.parent_guid_l1}:0:0`
     ) {
       loadNext = focusedUrnObject.parent_guid_l2;
     }
     if (
-      focusedUrn &&
+      focusedCommentUrn &&
       parent_path ===
         `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`
     ) {
@@ -86,7 +93,7 @@ export async function getComments(
   const opts = {
     entity_guid,
     parent_path,
-    focused_urn: focusedUrn,
+    focused_urn: focusedCommentUrn,
     limit: limit,
     'load-previous': loadPrevious || null,
     'load-next': loadNext || null,
@@ -103,7 +110,7 @@ export async function getComments(
       parent_path,
       descending,
       loadNext || loadPrevious,
-      focusedUrn,
+      focusedCommentUrn,
       response,
     );
   } catch (err) {
@@ -112,14 +119,14 @@ export async function getComments(
       parent_path,
       descending,
       loadNext || loadPrevious,
-      focusedUrn,
+      focusedCommentUrn,
     );
 
     // if there is no local data we throw the exception again
     if (!response) throw err;
   }
 
-  if (focusedUrn && focusedUrnObject) {
+  if (focusedCommentUrn && focusedUrnObject) {
     for (let comment of response.comments) {
       switch (level) {
         case 0:
@@ -139,7 +146,7 @@ export async function getComments(
   }
 
   //only use once
-  focusedUrn = null;
+  focusedCommentUrn = null;
   return response;
 }
 

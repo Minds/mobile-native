@@ -84,8 +84,8 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     onChange: props.onChange,
     autoOpen: props.autoOpen,
   });
-  const { current: focusedUrn } = React.useRef(
-    props.commentsStore.getFocusedUrn(),
+  const { current: focusedCommentUrn } = React.useRef(
+    props.commentsStore.getFocusedCommentUrn(),
   );
 
   const sheetRef = React.useRef<any>(null);
@@ -214,7 +214,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
           <Stack.Screen
             name="ReplyComment"
             component={ScreenReplyComment}
-            initialParams={{ focusedUrn }}
+            initialParams={{ focusedCommentUrn }}
           />
         </Stack.Navigator>
       </NavigationContainer>

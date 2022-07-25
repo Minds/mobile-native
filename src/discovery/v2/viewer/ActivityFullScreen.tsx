@@ -149,7 +149,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     videoPlayerService.setCurrent(null);
 
     if (
-      ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
+      (!user.disable_autoplay_videos || props.forceAutoplay) &&
       mediaRef.current
     ) {
       mediaRef.current.playVideo(
@@ -356,7 +356,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={
-            Boolean(route.params?.focusedUrn) ||
+            Boolean(route.params?.focusedCommentUrn) ||
             Boolean(route.params?.scrollToBottom)
           }
           commentsStore={store.comments}

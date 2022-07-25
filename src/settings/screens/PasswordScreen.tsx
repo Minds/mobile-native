@@ -14,7 +14,7 @@ import { showNotification } from '../../../AppMessages';
 import { Button } from '~ui';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
-import AuthService from '../../auth/AuthService';
+import apiService from '~/common/services/api.service';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
@@ -120,7 +120,10 @@ export default observer(function () {
     try {
       await settingsService.submitSettings(params);
       store.clearInputs();
-      AuthService.revokeTokens();
+      // clear the cookies (fix future issues with calls)
+      await apiService.clearCookies();
+      // @ts-ignore
+      navigation.popToTop?.();
       showNotification(i18n.t('settings.passwordChanged'), 'success');
     } catch (err) {
       if (!isUserError(err) && err instanceof Error) {

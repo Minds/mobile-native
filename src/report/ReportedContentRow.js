@@ -27,7 +27,7 @@ export default function ({ appeal }) {
           navigation.push('Activity', {
             entity: entity.entityObj,
             hydrate: true,
-            focusedUrn: entity.params.focusedCommentUrn,
+            focusedCommentUrn: entity.params.focusedCommentUrn,
           });
           break;
         case 'object':
@@ -36,7 +36,7 @@ export default function ({ appeal }) {
               navigation.push('BlogView', {
                 blog: entity.entityObj,
                 hydrate: true,
-                focusedUrn: entity.params.focusedCommentUrn,
+                focusedCommentUrn: entity.params.focusedCommentUrn,
               });
               break;
             case 'image':
@@ -44,7 +44,7 @@ export default function ({ appeal }) {
               navigation.push('Activity', {
                 entity: entity.entityObj,
                 hydrate: true,
-                focusedUrn: entity.params.focusedCommentUrn,
+                focusedCommentUrn: entity.params.focusedCommentUrn,
               });
               break;
           }
@@ -53,7 +53,7 @@ export default function ({ appeal }) {
           navigation.push('GroupView', {
             guid: entity.entityObj.guid,
             tab: 'conversation',
-            focusedUrn: entity.params.focusedCommentUrn,
+            focusedCommentUrn: entity.params.focusedCommentUrn,
           });
           break;
       }

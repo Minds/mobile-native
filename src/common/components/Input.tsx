@@ -6,8 +6,8 @@ import InfoPopup from './InfoPopup';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
 import MText from './MText';
-import DatePicker from './controls/DatePicker';
 import ErrorBoundary from './ErrorBoundary';
+import DatePickerInput from './controls/DatePickerInput';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -78,16 +78,19 @@ export default class Input extends Component<PropsType> {
   /**
    * Confirm date picker
    */
-  confirmDatePicker = date => {
+  confirmDatePicker = (date: Date) => {
     let dateString = '';
-    switch (this.props.dateFormat) {
-      case 'ISOString':
-        dateString = date.toISOString().substring(0, 10);
-        break;
-      default:
-        dateString = date.toLocaleDateString();
-        break;
+    if (date) {
+      switch (this.props.dateFormat) {
+        case 'ISOString':
+          dateString = date.toISOString().substring(0, 10);
+          break;
+        default:
+          dateString = date.toLocaleDateString();
+          break;
+      }
     }
+
     this.props.onChangeText(dateString);
   };
 
@@ -115,7 +118,7 @@ export default class Input extends Component<PropsType> {
    */
   dateInput = () => {
     return (
-      <DatePicker
+      <DatePickerInput
         hideTitle
         spacing="S"
         noHorizontal
