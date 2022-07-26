@@ -33,7 +33,7 @@ export default observer(function InteractionsBar({
         <PressableScale style={buttonStyle} onPress={onShowUpVotesPress}>
           <MText style={textStyle}>
             <MText style={countStyle}>
-              {abbrev(entity['thumbs:up:count'], 0)}
+              {abbrev(entity['thumbs:up:count'], 1)}
             </MText>{' '}
             {i18n.t('interactions.upVotes', {
               count: entity['thumbs:up:count'],
@@ -45,7 +45,7 @@ export default observer(function InteractionsBar({
         <PressableScale style={buttonStyle} onPress={onShowDownVotesPress}>
           <MText style={textStyle}>
             <MText style={countStyle}>
-              {abbrev(entity['thumbs:down:count'], 0)}
+              {abbrev(entity['thumbs:down:count'], 1)}
             </MText>{' '}
             {i18n.t('interactions.downVotes', {
               count: entity['thumbs:down:count'],
@@ -56,7 +56,7 @@ export default observer(function InteractionsBar({
       {entity.reminds > 0 && (
         <PressableScale style={buttonStyle} onPress={onShowRemindsPress}>
           <MText style={textStyle}>
-            <MText style={countStyle}>{abbrev(entity.reminds, 0)}</MText>{' '}
+            <MText style={countStyle}>{abbrev(entity.reminds, 1)}</MText>{' '}
             {i18n.t('interactions.reminds', {
               count: entity.reminds,
             })}
@@ -66,7 +66,7 @@ export default observer(function InteractionsBar({
       {entity.quotes > 0 && (
         <PressableScale style={buttonStyle} onPress={onShowQuotesPress}>
           <MText style={textStyle}>
-            <MText style={countStyle}>{abbrev(entity.quotes, 0)}</MText>{' '}
+            <MText style={countStyle}>{abbrev(entity.quotes, 1)}</MText>{' '}
             {i18n.t('interactions.quotes', {
               count: entity.quotes,
             })}
