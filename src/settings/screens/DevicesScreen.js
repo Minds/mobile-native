@@ -59,7 +59,6 @@ export default observer(function DeviceScreen() {
             <B1>{i18n.t('settings.sessionsOpened')}</B1>
           </ScreenSection>
           {result?.sessions.map((s, i) => {
-            console.log(s);
             return (
               <Item>
                 <Column right="XS">

@@ -13,6 +13,7 @@ import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import PressableScale from '~/common/components/PressableScale';
 import { withSpacer } from '~ui/layout';
+import { IconMapNameType } from '~/common/ui/icons/map';
 
 const CounterSpaced = withSpacer(Counter);
 
@@ -40,7 +41,7 @@ const AnimatedThumb = ({
   size: UISizing | string;
   canVote: boolean;
   down: boolean;
-  name: string;
+  name: IconMapNameType;
 }) => {
   // const initialRender = React.useRef(true);
   // TODO: enable animation https://github.com/nandorojo/moti/issues/131
@@ -143,7 +144,7 @@ class ThumbUpAction extends Component<PropsType> {
   /**
    * Action Icon
    */
-  iconName: string = 'thumb-up';
+  iconName: IconMapNameType = 'thumb-up';
 
   /**
    * Render

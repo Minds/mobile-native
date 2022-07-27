@@ -7,9 +7,9 @@ export const COMMON_BUTTON_STYLES = {
     paddingVertical: UNIT.S,
   },
   MEDIUM: {
-    minHeight: UNIT.XL2 + UNIT.XS,
+    minHeight: UNIT.XL2 + UNIT.XXS,
     paddingHorizontal: UNIT.XXL,
-    paddingVertical: UNIT.XS,
+    paddingVertical: UNIT.XXS,
   },
   SMALL: {
     minHeight: UNIT.L2 + UNIT.XS,

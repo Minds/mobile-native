@@ -628,9 +628,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "backgroundColor": "transparent",
                 },
                 Object {
-                  "minHeight": 44,
+                  "minHeight": 42,
                   "paddingHorizontal": 24,
-                  "paddingVertical": 4,
+                  "paddingVertical": 2,
                 },
                 undefined,
                 undefined,

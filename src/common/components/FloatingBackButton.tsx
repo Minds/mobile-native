@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { IconButton } from '~ui/icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IconMapNameType } from '~ui/icons/map';
 
 type PropsType = {
   onPress: () => void;
   style?: any;
   size?: number | string;
   light?: boolean;
-  icon?: string;
+  icon?: IconMapNameType;
   shadow?: boolean;
 };
 
