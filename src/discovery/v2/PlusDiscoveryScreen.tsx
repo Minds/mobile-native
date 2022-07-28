@@ -20,9 +20,8 @@ const PlusDiscoveryScreen = observer(() => {
   const store = useMindsPlusV2Store();
 
   const header = (
-    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.bgPrimaryBackground}>
+    <View style={theme.bgPrimaryBackground}>
       <ScreenHeader title={i18n.t('plusTabTitleDiscovery')} />
-
       <TopbarTabbar
         current={store.activeTabId}
         onChange={tabId => {
@@ -34,39 +33,34 @@ const PlusDiscoveryScreen = observer(() => {
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
         ]}
       />
-    </SafeAreaView>
+    </View>
   );
 
-  const screen = () => {
-    switch (store.activeTabId) {
-      case 'foryou':
-        return (
-          <DiscoveryTrendsList header={header} plus={true} store={store} />
-        );
-      case 'your-tags':
-        return (
+  return (
+    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.flexContainer}>
+      <View style={theme.flexContainer}>
+        {store.activeTabId === 'foryou' ? (
+          <DiscoveryTrendsList plus={true} store={store} header={header} />
+        ) : store.activeTabId === 'your-tags' ? (
           <DiscoveryTagsList
-            header={header}
             type="your"
             plus={true}
             store={store}
-          />
-        );
-      case 'trending-tags':
-        return (
-          <DiscoveryTagsList
             header={header}
+          />
+        ) : store.activeTabId === 'trending-tags' ? (
+          <DiscoveryTagsList
             type="trending"
             plus={true}
             store={store}
+            header={header}
           />
-        );
-      default:
-        return <View />;
-    }
-  };
-
-  return screen();
+        ) : (
+          <View />
+        )}
+      </View>
+    </SafeAreaView>
+  );
 });
 
 export default PlusDiscoveryScreen;

@@ -215,8 +215,8 @@ const Tabs = observer(function ({ navigation }) {
 
 const styles = ThemedStyles.create({
   compose: {
-    width: 48,
-    height: 46,
+    width: 46,
+    height: 44,
   },
   buttonContainer: {
     paddingTop: 17,
@@ -225,7 +225,7 @@ const styles = ThemedStyles.create({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
-    height: 40,
+    height: 35,
     marginBottom: IS_IOS ? 20 : 10,
   },
   buttonContainerFocused: {
@@ -235,7 +235,7 @@ const styles = ThemedStyles.create({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
-    height: 40,
+    height: 35,
     marginBottom: IS_IOS ? 20 : 10,
   },
   bar: {

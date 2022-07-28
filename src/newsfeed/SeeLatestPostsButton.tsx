@@ -1,20 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import Animated, { FadeInUp } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, { FadeInUp, useAnimatedStyle } from 'react-native-reanimated';
+import { useFeedListContext } from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { Button, Icon } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
 
 interface SeeLatestPostsButtonProps {
   onPress: () => void;
   feedStore: FeedStore;
 }
 
-const additionalTop = IS_IOS ? 110 : 90;
+const additionalTop = IS_IOS ? 160 : 150;
 
 /**
  * A prompt that appears in a feed and shows how many new posts are there
@@ -24,7 +23,26 @@ const SeeLatestPostsButton = ({
   onPress,
 }: SeeLatestPostsButtonProps) => {
   const navigation = useNavigation();
-  const insets = useSafeAreaInsets();
+
+  const context = useFeedListContext();
+
+  const scrollY = context?.scrollY;
+
+  const style = useAnimatedStyle(() => {
+    const margin = additionalTop - (IS_IOS ? 70 : 60);
+    let translateY = scrollY
+      ? scrollY.value < margin
+        ? scrollY.value
+        : margin
+      : 0;
+
+    return {
+      top: additionalTop - translateY,
+      position: 'absolute',
+      left: 0,
+      right: 0,
+    };
+  });
 
   useEffect(() => {
     const disposeWatcher = feedStore.watchForUpdates(() =>
@@ -40,11 +58,9 @@ const SeeLatestPostsButton = ({
 
   return (
     <Animated.View
+      pointerEvents="box-none"
       entering={FadeInUp.mass(0.3).duration(500)}
-      style={[
-        ThemedStyles.style.positionAbsolute,
-        { top: insets.top + additionalTop },
-      ]}>
+      style={style}>
       <Button
         align="center"
         type="action"

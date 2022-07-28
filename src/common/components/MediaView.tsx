@@ -37,7 +37,6 @@ type PropsType = {
  */
 @observer
 export default class MediaView extends Component<PropsType> {
-  _currentThumbnail = 0;
   videoPlayer: MindsVideoStoreType | null = null;
 
   /**

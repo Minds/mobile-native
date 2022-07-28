@@ -2,141 +2,192 @@
 
 exports[`ChannelRecommendation renders correctly 1`] = `
 <Fragment>
-  <Spacer
-    vertical="XL"
-  >
-    <Row
-      align="centerBetween"
-      bottom="XL"
-      horizontal="L"
-    >
-      <H3>
-        Recommended Channels
-      </H3>
-      <Row
-        align="centerBoth"
-      >
-        <B2
-          color="link"
-          onPress={[Function]}
-        >
-          See more
-        </B2>
-        <MenuSheet
-          items={
-            Array [
-              Object {
-                "iconName": "close",
-                "iconType": "material-community",
-                "onPress": [Function],
-                "title": "Remove from feed",
+  <ChannelRecommendationHeader
+    location="fakeLocation"
+    recommendationStore={
+      Object {
+        "result": Object {
+          "entities": Array [
+            Object {
+              "entity": Object {
+                "access_id": "2",
+                "banned": "no",
+                "blocked": false,
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": undefined,
+                "icontime": "1523515420",
+                "impressions": 100,
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subscribers_count": 50,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
               },
-            ]
-          }
-        >
-          <Icon
-            left="M"
-            name="more"
-            size="large"
-          />
-        </MenuSheet>
-      </Row>
-    </Row>
-    <ChannelRecommendationItem
-      channel={
-        Object {
-          "access_id": "2",
-          "banned": "no",
-          "blocked": false,
-          "boostProPlus": false,
-          "boost_autorotate": true,
-          "boost_rating": "2",
-          "briefdescription": "",
-          "categories": Array [
-            "music",
-            "nature",
-            "news",
-            "politics",
-            "science",
-            "technology",
-            "education",
-            "art",
-            "health",
-          ],
-          "chat": true,
-          "city": "",
-          "container_guid": "0",
-          "deleted": "0",
-          "disabled_boost": false,
-          "dob": "",
-          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
-          "fb": false,
-          "feature_flags": false,
-          "featured_id": "725165605782560768",
-          "founder": false,
-          "gender": "private",
-          "getAvatarSource": [MockFunction],
-          "guid": undefined,
-          "icontime": "1523515420",
-          "impressions": 100,
-          "language": "en",
-          "legacy_guid": false,
-          "mature": "1",
-          "mature_channel": "0",
-          "merchant": Object {
-            "exclusive": Object {
-              "amount": "10",
-              "enabled": true,
+              "guid": "",
             },
-            "id": "acct_Dsdfjdlsaf34243",
-            "service": "stripe",
-          },
-          "monetized": "",
-          "name": "Some User",
-          "owner_guid": "0",
-          "pinned_posts": Array [],
-          "plus": true,
-          "programs": Array [
-            "affiliate",
           ],
-          "rating": "1",
-          "rewards": true,
-          "signup_method": false,
-          "site_guid": false,
-          "social_profiles": Array [],
-          "spam": "0",
-          "subscribed": false,
-          "subscriber": true,
-          "subscribers_count": 50,
-          "subtype": false,
-          "time_created": "1468113204",
-          "time_updated": false,
-          "type": "user",
-          "username": "someusermane",
-          "verified": true,
-          "website": "",
-          "wire_rewards": Object {
-            "description": "",
-            "rewards": Object {
-              "money": Array [],
-              "points": Array [],
-            },
-          },
-        }
+          "status": "",
+        },
       }
-      onSubscribed={[Function]}
-    />
-  </Spacer>
-  <View
-    style={
-      Array [
-        Object {
-          "borderBottomWidth": 6,
+    }
+  />
+  <ChannelRecommendationBody
+    location="fakeLocation"
+    recommendationStore={
+      Object {
+        "result": Object {
+          "entities": Array [
+            Object {
+              "entity": Object {
+                "access_id": "2",
+                "banned": "no",
+                "blocked": false,
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": undefined,
+                "icontime": "1523515420",
+                "impressions": 100,
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subscribers_count": 50,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
+              },
+              "guid": "",
+            },
+          ],
+          "status": "",
         },
-        Object {
-          "borderColor": "#3f4b56",
-        },
-      ]
+      }
     }
   />
 </Fragment>

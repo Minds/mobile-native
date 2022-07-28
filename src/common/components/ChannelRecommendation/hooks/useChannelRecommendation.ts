@@ -1,8 +1,19 @@
 import { useEffect } from 'react';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-import useApiFetch from '~/common/hooks/useApiFetch';
+import useApiFetch, { FetchStore } from '~/common/hooks/useApiFetch';
 import { ParamsArray } from '~/common/services/api.service';
+
+type ChannelRecommendationType = {
+  entities: {
+    confidence_score: number;
+    entity: UserModel;
+    entity_guid: string;
+    entity_type: string;
+  }[];
+};
+
+export type ChannelRecommendationStore = FetchStore<ChannelRecommendationType>;
 
 /**
  * channel recommendation resource
@@ -13,16 +24,9 @@ import { ParamsArray } from '~/common/services/api.service';
 export const useChannelRecommendation = (
   location: string,
   channel?: UserModel,
-) => {
+): ChannelRecommendationStore => {
   const { recentSubscriptions } = useLegacyStores();
-  const res = useApiFetch<{
-    entities: {
-      confidence_score: number;
-      entity: UserModel;
-      entity_guid: string;
-      entity_type: string;
-    }[];
-  }>('api/v3/recommendations', {
+  const res = useApiFetch<ChannelRecommendationType>('api/v3/recommendations', {
     params: {
       location,
       mostRecentSubscriptions: new ParamsArray(...recentSubscriptions.list()),

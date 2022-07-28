@@ -22,14 +22,16 @@ if (process.env.JEST_WORKER_ID === undefined) {
         if (!shouldReportToSentry(hint.originalException)) {
           return null;
         }
+        if (__DEV__) {
+          console.log('Exception', hint.originalExceptionnt);
+        }
       }
 
-      // for dev only log into the console
       if (__DEV__) {
-        console.log(hint.originalException);
         return null;
       }
 
+      // for dev only log into the console
       return event;
     },
   });
@@ -63,7 +65,7 @@ if (!__DEV__) {
         );
       }
 
-      console.log('Minds Uncaught (fatal)', e);
+      console.log('Minds Uncaught (fatal)', e.stack);
     } else if (e) {
       console.log('Minds Uncaught (non-fatal)', e); // So that we can see it in the ADB logs in case of Android if need, eed
     }
@@ -82,7 +84,7 @@ if (!__DEV__) {
       Sentry.captureException(new Error(exceptionString), {
         logger: 'NativeExceptionHandler',
       });
-      console.log(exceptionString);
+      console.log('NativeExceptionHandler', exceptionString);
     },
     true,
     false,

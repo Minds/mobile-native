@@ -11,6 +11,12 @@ import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
 import { isAbort } from '../services/api.service';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
+import { InjectItem } from '../components/FeedList';
+
+enum FeedAction {
+  Add = 0,
+  Remove = 1,
+}
 
 /**
  * Feed store
@@ -49,7 +55,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * feed observable
    */
-  @observable.shallow entities: Array<T> = [];
+  @observable.shallow entities: Array<T | InjectItem> = [];
+
+  /**
+   * Custom injected components
+   */
+  injectItems?: InjectItem[];
 
   /**
    * Viewed store
@@ -96,6 +107,13 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     if (includeMetadata) {
       this.metadataService = new MetadataService();
     }
+  }
+
+  /**
+   * Sets the injected items for the feed
+   */
+  setInjectedItems(injectItems: InjectItem[]) {
+    this.injectItems = injectItems;
   }
 
   /**
@@ -147,8 +165,26 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.entities = entities;
     } else {
       entities.forEach(entity => {
+        let position = this.entities.length;
+
+        if (this.injectItems) {
+          do {
+            const injected = this.injectItems.find(i =>
+              typeof i.indexes === 'function'
+                ? i.indexes(position)
+                : position === i.indexes,
+            );
+            if (injected) {
+              this.entities.push(injected);
+              position++;
+            } else {
+              break;
+            }
+          } while (true);
+        }
+
         entity._list = this;
-        entity.position = this.entities.length + 1;
+        entity.position = position + 1;
         this.entities.push(entity);
       });
 
@@ -209,10 +245,56 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   prepend(entity) {
     entity._list = this;
-    this.entities.unshift(entity);
+    // if the first items are an injected item, we inject it before them
+    if (this.entities.length !== 0 && this.entities[0] instanceof InjectItem) {
+      const index = this.entities.findIndex(e => !(e instanceof InjectItem));
+      if (index !== -1) {
+        this.entities.splice(index, 0, entity);
+      }
+    } else {
+      this.entities.unshift(entity);
+    }
+
+    this.fixPositionsAndInjected(1);
+
     this.feedsService.prepend(entity);
     if (entity.isScheduled()) {
       this.setScheduledCount(this.scheduledCount + 1);
+    }
+  }
+
+  /**
+   * Fixes the position data of each entity and the injected items when removing/adding an entity
+   */
+  fixPositionsAndInjected(
+    initial: number = 0,
+    feedAction: FeedAction = FeedAction.Add,
+  ) {
+    // fix positions
+    if (feedAction === FeedAction.Add) {
+      for (let i = initial; i < this.entities.length; i++) {
+        const currentEntity = this.entities[i];
+        if (!(currentEntity instanceof InjectItem)) {
+          currentEntity.position = i;
+        } else {
+          const prevEntity = this.entities[i - 1];
+          this.entities[i - 1] = currentEntity;
+          this.entities[i] = prevEntity;
+        }
+      }
+    } else {
+      for (let i = this.entities.length - 1; i >= initial; i--) {
+        const currentEntity = this.entities[i];
+        if (!(currentEntity instanceof InjectItem)) {
+          currentEntity.position = i;
+        } else {
+          if (this.entities.length - 1 >= i + 1) {
+            const nextEntity = this.entities[i + 1];
+            this.entities[i + 1] = currentEntity;
+            this.entities[i] = nextEntity;
+          }
+        }
+      }
     }
   }
 
@@ -223,6 +305,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   removeIndex(index) {
     this.entities.splice(index, 1);
+    this.fixPositionsAndInjected(index, FeedAction.Remove);
   }
 
   /**
@@ -245,7 +328,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   removeFromOwner(guid) {
     this.entities = this.entities.filter(
-      e => !e.ownerObj || e.ownerObj.guid !== guid,
+      e =>
+        !(e instanceof InjectItem) && (!e.ownerObj || e.ownerObj.guid !== guid),
     );
     this.feedsService.removeFromOwner(guid);
 

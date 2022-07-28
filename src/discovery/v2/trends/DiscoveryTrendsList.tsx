@@ -8,22 +8,31 @@ import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import FeedList from '../../../common/components/FeedList';
+import { InjectItem } from '../../../common/components/FeedList';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DiscoveryTrendPlaceHolder from './DiscoveryTrendPlaceHolder';
 import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
 import MText from '../../../common/components/MText';
+import FeedListSticky from '~/common/components/FeedListSticky';
 
 type PropsType = {
   plus?: boolean;
   store: DiscoveryV2Store;
-  header?: React.ReactNode;
+  header?: React.ReactElement;
 };
 
 const ItemPartial = (item, index) => {
   return <DiscoveryTrendsListItem isHero={index === 0} data={item} />;
 };
+
+const Trend = observer(({ store }) => {
+  return store.trends.length ? (
+    <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
+  ) : store.loading ? (
+    <DiscoveryTrendPlaceHolder />
+  ) : null;
+});
 
 /**
  * Discovery List Item
@@ -47,62 +56,55 @@ export const DiscoveryTrendsList = observer(
     }, [store, plus]);
 
     useEffect(() => {
-      if (listRef.current && listRef.current.listRef) {
-        listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
+      if (listRef.current) {
+        listRef.current.scrollToOffset({ offset: -65, animated: true });
       }
     }, [store.refreshing, listRef]);
-
-    const EmptyPartial = () => {
-      return store.loading ||
-        store.refreshing ||
-        store.allFeed.loading ||
-        store.allFeed.refreshing ? (
-        <CenteredLoading />
-      ) : (
-        <View style={styles.emptyContainer}>
-          <MText style={styles.emptyMessage}>
-            {i18n.t('discovery.addTags')}
-          </MText>
-          <DiscoveryTagsManager ref={tagRef} />
-          <Button
-            text={i18n.t('discovery.selectTags')}
-            onPress={() => tagRef.current?.present()}
-          />
-        </View>
-      );
-    };
 
     const onRefresh = () => {
       store.refreshTrends(plus, false);
       return store.allFeed.refresh();
     };
 
-    const listHeader = store.trends.length ? (
-      <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
-    ) : store.loading ? (
-      <DiscoveryTrendPlaceHolder />
-    ) : null;
+    if (!store.allFeed.injectItems) {
+      store.allFeed.setInjectedItems([
+        new InjectItem(0, 'header', () => <Trend store={store} />),
+      ]);
+    }
 
     /**
      * Render
      */
     return (
-      <FeedList
+      <FeedListSticky
         ref={listRef}
-        stickyHeaderHiddenOnScroll
-        stickyHeaderIndices={header ? sticky : undefined}
-        prepend={listHeader}
-        header={header}
         feedStore={store.allFeed}
-        emptyMessage={EmptyPartial}
+        header={header}
+        emptyMessage={
+          store.loading ||
+          store.refreshing ||
+          store.allFeed.loading ||
+          store.allFeed.refreshing ? (
+            <CenteredLoading />
+          ) : (
+            <View style={styles.emptyContainer}>
+              <MText style={styles.emptyMessage}>
+                {i18n.t('discovery.addTags')}
+              </MText>
+              <DiscoveryTagsManager ref={tagRef} />
+              <Button
+                text={i18n.t('discovery.selectTags')}
+                onPress={() => tagRef.current?.present()}
+              />
+            </View>
+          )
+        }
         navigation={navigation}
         onRefresh={onRefresh}
       />
     );
   },
 );
-
-const sticky = [0];
 
 const styles = ThemedStyles.create({
   emptyContainer: ['halfHeight', 'alignCenter', 'justifyCenter', 'flexColumn'],

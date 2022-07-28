@@ -9,6 +9,8 @@ import useCurrentUser from '../common/hooks/useCurrentUser';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
+import { useFeedListContext } from '~/common/components/FeedListSticky';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
 type PropsType = {
   navigation: any;
@@ -22,9 +24,36 @@ export const Topbar = observer((props: PropsType) => {
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
+  const animatedContext = useFeedListContext();
+  const bgColor = ThemedStyles.getColor('PrimaryBackground');
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return animatedContext &&
+      !props.shadowLess &&
+      animatedContext.scrollY.value > animatedContext.headerHeight &&
+      animatedContext.headerHeight !== animatedContext.translationY.value
+      ? {
+          backgroundColor: bgColor,
+          zIndex: 999,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 1.5,
+          },
+          shadowOpacity: 0.35,
+          shadowRadius: 1.41,
+          elevation: 3,
+        }
+      : {
+          zIndex: 999,
+          backgroundColor: bgColor,
+          shadowColor: 'transparent',
+        };
+  }, [animatedContext, bgColor]);
+
   const container = React.useRef({
     paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
-    height: Platform.select({ ios: props.noInsets ? 70 : 110, android: 70 }),
+    height: Platform.select({ ios: props.noInsets ? 60 : 100, android: 60 }),
     display: 'flex',
     flexDirection: 'row',
   }).current as ViewStyle;
@@ -39,7 +68,7 @@ export const Topbar = observer((props: PropsType) => {
   });
 
   return (
-    <View style={props.shadowLess ? shadowLessContainerStyle : containerStyle}>
+    <Animated.View style={animatedStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
@@ -80,33 +109,27 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 });
 
 export default Topbar;
 
 export const styles = StyleSheet.create({
-  container: {
-    height: Platform.select({ ios: 110, android: 70 }),
-    display: 'flex',
-    flexDirection: 'row',
-    // paddingBottom: 8,
-  },
   logo: {
     marginLeft: 4,
-    marginTop: -12,
-    width: 118,
-    height: 40,
+    marginTop: -10,
+    height: 36,
+    width: 105,
   },
   shadow: {
     zIndex: 999,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1.5,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.25,
     shadowRadius: 1.41,
     elevation: 3,
   },
@@ -129,19 +152,4 @@ export const styles = StyleSheet.create({
     paddingRight: 4,
     marginRight: 15,
   },
-  scale0: {
-    transform: [{ scale: 0 }],
-  },
 });
-
-const containerStyle = ThemedStyles.combine(
-  'bgPrimaryBackground',
-  styles.shadow,
-);
-const shadowLessContainerStyle = ThemedStyles.combine(
-  'bgPrimaryBackground',
-  styles.shadow,
-  {
-    shadowColor: 'transparent',
-  },
-);
