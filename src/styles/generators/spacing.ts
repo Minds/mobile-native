@@ -1,4 +1,4 @@
-import { STEP } from '../Tokens';
+import { STEP, UIUnitType, UNIT } from '../Tokens';
 
 function getSpacing(name) {
   if (!name) {
@@ -18,12 +18,20 @@ function getSpacing(name) {
   return null;
 }
 
+function getFixedSpacing(name: UIUnitType) {
+  return UNIT[name];
+}
+
 export default function spacing(name: string) {
   const regex = /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
   const result = regex.exec(name);
 
   if (result) {
-    const space = getSpacing(result[3]);
+    const space =
+      !result[3] || name[name.length - 1] === 'x'
+        ? getSpacing(result[3])
+        : getFixedSpacing(result[3] as UIUnitType);
+
     return space !== null ? { [result[1] + (result[2] || '')]: space } : null;
   }
 }

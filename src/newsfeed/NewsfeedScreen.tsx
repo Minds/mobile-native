@@ -11,7 +11,6 @@ import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
-import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import NewsfeedHeader from './NewsfeedHeader';
@@ -28,6 +27,9 @@ import FeedListSticky from '~/common/components/FeedListSticky';
 import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import { ChannelRecommendationProvider } from '~/common/components/ChannelRecommendation/ChannelRecommendationProvider';
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
+import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
+import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
+import VerifyUniquenessNotice from '~/common/components/in-feed-notices/notices/VerifyUniquenessNotice';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -35,7 +37,15 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
   'Newsfeed'
 >;
 
-const sticky = [3, 5, 7, 9];
+const HIGHLIGHT_POSITION = 9;
+const RECOMMENDATION_POSITION = 4;
+
+const sticky = [
+  RECOMMENDATION_POSITION,
+  RECOMMENDATION_POSITION + 2,
+  HIGHLIGHT_POSITION,
+  HIGHLIGHT_POSITION + 2,
+];
 
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
@@ -90,10 +100,11 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     // common prepend components
     const prepend = new InjectItem(0, 'prepend', () => (
       <View>
-        <SocialCompassPrompt />
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={portraitBar} />
+        <TopInFeedNotice />
+        <VerifyUniquenessNotice />
         <NewsfeedHeader
           feedType={newsfeed.feedType}
           onFeedTypeChange={newsfeed.changeFeedTypeChange}
@@ -104,21 +115,27 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
-      new InjectItem(3, 'channel', ({ target }) => (
+
+      new InjectItem(RECOMMENDATION_POSITION, 'channel', ({ target }) => (
         <ChannelRecommendationHeader
           location="newsfeed"
           shadow={target === 'StickyHeader'}
         />
       )),
-      new InjectItem(4, 'channel', () => (
+      new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
         <ChannelRecommendationBody location="newsfeed" />
       )),
-      new InjectItem(5, 'end', FeedListInvisibleHeader),
+      new InjectItem(
+        RECOMMENDATION_POSITION + 2,
+        'end',
+        FeedListInvisibleHeader,
+      ),
+      new InjectItem(7, 'ilNotice', () => <InlineInFeedNotice position={1} />),
 
-      new InjectItem(7, 'highlightheader', ({ target }) => (
+      new InjectItem(HIGHLIGHT_POSITION, 'highlightheader', ({ target }) => (
         <TopFeedHighlightsHeader target={target} />
       )),
-      new InjectItem(8, 'highlight', () => (
+      new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
         <TopFeedHighlights
           onSeeTopFeedPress={() => {
             newsfeed.listRef?.scrollToTop(true);
@@ -128,7 +145,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           }}
         />
       )),
-      new InjectItem(9, 'end', FeedListInvisibleHeader),
+      new InjectItem(HIGHLIGHT_POSITION + 2, 'end', FeedListInvisibleHeader),
     ]);
 
     // top feed injected components
