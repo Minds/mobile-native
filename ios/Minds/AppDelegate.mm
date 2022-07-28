@@ -98,6 +98,10 @@
   return YES;
 }
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
+
 // minds added methods
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
