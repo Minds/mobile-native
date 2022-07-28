@@ -20,7 +20,7 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { growthbook, updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
@@ -147,6 +147,13 @@ export default class AppInitManager {
         NavigationService.navigate(sessionService.initialScreen, {
           initial: true,
         });
+        if (
+          sessionService.initialScreenParams?.isNewUser &&
+          growthbook.isOn('minds-3055-email-codes')
+        ) {
+          logService.info('[App] fire email verification for new users');
+          sessionService.getUser().confirmEmailCode();
+        }
         sessionService.setInitialScreen('');
       }
 

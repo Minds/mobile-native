@@ -26,10 +26,12 @@ import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { useFeature } from '@growthbook/growthbook-react';
 
-type PropsType = {
-  // called after registeration is finished
+type NewType = {
+  // called after registration is finished
   onRegister?: (navigation: any) => void; // TODO type
 };
+
+type PropsType = NewType;
 
 const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
@@ -92,7 +94,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
-        sessionService.setInitialScreen('SelectHashtags');
+        sessionService.setInitialScreen('SelectHashtags', { isNewUser: true });
 
         try {
           await authService.login(store.username, store.password);

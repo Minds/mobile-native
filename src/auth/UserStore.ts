@@ -9,26 +9,10 @@ import searchBarService from '../topbar/searchbar/SearchBar.service';
  */
 class UserStore {
   @observable me: UserModel;
-  @observable emailConfirmMessageDismiss = false;
   @observable searching = false;
-  @observable bannerInfoDismiss = false;
-  @observable rewards: any = false;
 
   constructor() {
     this.me = UserModel.create({});
-  }
-
-  /**
-   * Dissmis Message Banner
-   */
-  @action
-  setDissmisBanner(value: boolean): void {
-    this.bannerInfoDismiss = value;
-  }
-
-  @action
-  setDissmis(value: boolean): void {
-    this.emailConfirmMessageDismiss = value;
   }
 
   @action
