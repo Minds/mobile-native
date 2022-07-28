@@ -5,21 +5,26 @@ import {
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
 import i18nService from '~/common/services/i18n.service';
-import { Column, H3, IconButtonNext } from '~/common/ui';
+import { Column, H3, H4, IconButtonNext } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { NewsfeedType } from './NewsfeedStore';
+import { styles as headerStyles } from '~/topbar/Topbar';
 
 interface NewsfeedHeaderProps {
   title?: string;
   feedType?: string;
   onFeedTypeChange?: (feedType: NewsfeedType) => void;
   withoutIcon?: any;
+  small?: boolean;
+  shadow?: boolean;
 }
 
 const NewsfeedHeader = ({
   title,
   feedType,
   onFeedTypeChange,
+  small,
+  shadow,
 }: NewsfeedHeaderProps) => {
   const bottomSheetRef = useRef<any>(undefined);
   const withoutIcon = !onFeedTypeChange;
@@ -66,9 +71,21 @@ const NewsfeedHeader = ({
       break;
   }
 
+  const Typo = small ? H4 : H3;
+
+  const style = shadow
+    ? [
+        headerStyles.shadow,
+        small ? containerSmallStyle : containerStyle,
+        { borderBottomWidth: 0 },
+      ]
+    : small
+    ? containerSmallStyle
+    : containerStyle;
+
   return (
-    <View style={containerStyle}>
-      <H3>{feedTitle}</H3>
+    <View style={style}>
+      <Typo>{feedTitle}</Typo>
 
       {!withoutIcon && (
         <IconButtonNext
@@ -100,9 +117,20 @@ const NewsfeedHeader = ({
 
 const containerStyle = ThemedStyles.combine(
   {
-    padding: 16,
-    paddingHorizontal: 20,
+    paddingVertical: 16,
   },
+  'paddingHorizontal4x',
+  'bgPrimaryBackground',
+  'borderBottom1x',
+  'rowJustifySpaceBetween',
+  'bcolorTertiaryBackground',
+);
+const containerSmallStyle = ThemedStyles.combine(
+  {
+    paddingVertical: 12,
+  },
+  'paddingHorizontal4x',
+  'bgPrimaryBackground',
   'borderBottom1x',
   'rowJustifySpaceBetween',
   'bcolorTertiaryBackground',

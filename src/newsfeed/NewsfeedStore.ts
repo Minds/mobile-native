@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import type BaseModel from '~/common/BaseModel';
 import MetadataService from '~/common/services/metadata.service';
 import { storages } from '~/common/services/storage/storages.service';
 import UserModel from '../channel/UserModel';
@@ -14,7 +15,7 @@ export type NewsfeedType = 'top' | 'latest';
 /**
  * News feed store
  */
-class NewsfeedStore<T> {
+class NewsfeedStore<T extends BaseModel> {
   /**
    * Feed store
    */
@@ -37,6 +38,18 @@ class NewsfeedStore<T> {
     .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
     );
+
+  /**
+   * Highlight store
+   */
+  highlightsStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+    .setInjectBoost(false)
+    .setLimit(3)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
+    );
+
   /**
    * List reference
    */

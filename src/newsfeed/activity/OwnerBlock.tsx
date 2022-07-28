@@ -135,7 +135,6 @@ class OwnerBlock extends PureComponent<PropsType> {
 
   constructor(props) {
     super(props);
-    this.avatarSrc = this.props.entity.ownerObj.getAvatarSource();
 
     this.containerStyle = ThemedStyles.combine(
       'borderBottomHair',
@@ -150,6 +149,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   render() {
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
+    this.avatarSrc = this.props.entity.ownerObj.getAvatarSource();
 
     // Remind header
     const remind = this.props.entity.remind_users ? (

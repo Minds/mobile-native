@@ -42,7 +42,6 @@ const MindsVideo = observer((props: PropsType) => {
   const dataSaverEnabled =
     !props.ignoreDataSaver && settingsStore.dataSaverEnabled;
   const localStore = useLocalStore(createMindsVideoStore, {
-    entity: props.entity,
     autoplay: props.autoplay,
     dataSaverEnabled,
   });
@@ -79,6 +78,14 @@ const MindsVideo = observer((props: PropsType) => {
       }
     };
   }, [localStore]);
+
+  useEffect(() => {
+    if (props.entity) {
+      localStore.clear();
+      localStore.setEntity(props.entity);
+      localStore.preload();
+    }
+  }, [localStore, props.entity]);
 
   const onReadyForDisplay = React.useCallback(
     e => {

@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import { useOnFocus } from '@msantang78/react-native-pager';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
 import Viewed from '../common/stores/Viewed';
@@ -10,6 +9,7 @@ import MetadataService from '../common/services/metadata.service';
 import PortraitPaginator from './PortraitPaginator';
 import { PortraitBarItem } from './createPortraitStore';
 import PortraitActivity from './PortraitActivity';
+import { useCarouselFocusEffect } from './PortraitViewerScreen';
 
 type PropsType = {
   item: PortraitBarItem;
@@ -56,7 +56,7 @@ const UserContentSwiper = observer((props: PropsType) => {
     }, [activities, store]),
   );
 
-  useOnFocus(() => {
+  useCarouselFocusEffect(() => {
     store.viewed.addViewed(
       activities[store.index],
       metadataService,

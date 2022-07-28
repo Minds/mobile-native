@@ -19,6 +19,7 @@ jest.mock('react-native-reanimated', () =>
 
 getStores.mockReturnValue({
   newsfeed: {},
+  user: { me: { id: '1' } },
 });
 
 jest.mock('react-native-safe-area-context');

@@ -12,6 +12,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { MINDS_GUID } from '../config/Config';
 import sessionService from '../common/services/session.service';
+import { InjectItem } from '~/common/components/FeedList';
 
 export class PortraitBarItem {
   user: UserModel;
@@ -60,6 +61,9 @@ const postProcessPortraitEntities = (
    **/
   if (seenList) {
     entities.forEach(entity => {
+      if (entity instanceof InjectItem) {
+        return;
+      }
       const seen = seenList.has(entity.urn);
 
       if (entity.seen === undefined) {
@@ -145,14 +149,14 @@ function createPortraitStore() {
           portrait: true,
           from_timestamp: moment().hour(0).minutes(0).seconds(0).unix() * 1000,
           to_timestamp:
-            moment().subtract(2, 'days').hour(0).minutes(0).seconds(0).unix() *
+            moment().subtract(1, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
         const seenList = await portraitContentService.getSeen();
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
         await feedStore.fetch(true, true);
         this.items = postProcessPortraitEntities(
-          feedStore.entities,
+          feedStore.entities as [ActivityModel],
           seenList,
           user,
         );
@@ -180,7 +184,7 @@ function createPortraitStore() {
         }
 
         this.items = postProcessPortraitEntities(
-          feedStore.entities,
+          feedStore.entities as [ActivityModel],
           seenList,
           user,
         );

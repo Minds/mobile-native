@@ -1,4 +1,3 @@
-import { Extrapolate } from '@msantang78/react-native-pager';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -9,6 +8,7 @@ import {
 import Animated, {
   useAnimatedGestureHandler,
   interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 import { CameraStore } from './createCameraStore';
 

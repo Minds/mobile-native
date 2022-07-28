@@ -1,47 +1,40 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
-import FeedList from '~/common/components/FeedList';
+import { useLegacyStores } from '~/common/hooks/use-stores';
+
 import i18nService from '~/common/services/i18n.service';
-import MetadataService from '~/common/services/metadata.service';
-import FeedStore from '~/common/stores/FeedStore';
 import { Button } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import NewsfeedHeader from './NewsfeedHeader';
+import Activity from './activity/Activity';
+import ActivityModel from './ActivityModel';
 
 const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
-  const feed = useRef(
-    new FeedStore()
-      .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-      .setInjectBoost(false)
-      .setLimit(3)
-      .setMetadata(
-        new MetadataService()
-          .setSource('feed/subscribed')
-          .setMedium('top-feed'),
-      ),
-  ).current;
   const navigation = useNavigation();
 
-  useEffect(() => {
-    feed.fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { newsfeed } = useLegacyStores();
 
-  if (!feed.entities.length) {
+  useEffect(() => {
+    newsfeed.highlightsStore.fetch();
+  }, [newsfeed]);
+
+  if (!newsfeed.highlightsStore.entities.length) {
     return null;
   }
 
   return (
     <>
-      <NewsfeedHeader title="Highlights" />
-      <FeedList
-        feedStore={feed}
-        navigation={navigation}
-        onEndReached={undefined}
-      />
+      {newsfeed.highlightsStore.entities.map(entity =>
+        entity instanceof ActivityModel ? (
+          <Activity
+            entity={entity}
+            navigation={navigation}
+            key={`hl${entity.urn}`}
+          />
+        ) : null,
+      )}
       <View style={moreTopPostsButtonStyle}>
         <Button
           type="action"

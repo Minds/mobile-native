@@ -6,6 +6,7 @@ import React, { useRef } from 'react';
 import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { InjectItem } from '~/common/components/FeedList';
 import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
 import BottomButtonOptions, {
@@ -68,6 +69,7 @@ export default observer(function OnboardingScreen() {
       if (
         step &&
         !step.is_completed &&
+        !(newsfeed.feedStore.entities[0] instanceof InjectItem) &&
         newsfeed.feedStore.entities[0] &&
         newsfeed.feedStore.entities[0].owner_guid ===
           sessionService.getUser().guid
