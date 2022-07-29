@@ -13,8 +13,6 @@ type PropsType = {
 function InlineInFeedNotice({ position = 1 }: PropsType) {
   const notice = inFeedNoticesService.getInlineNotice(position);
 
-  console.log('InlineInFeedNotice', notice);
-
   return notice ? <InFeedNoticeMapper noticeName={notice} /> : null;
 }
 
