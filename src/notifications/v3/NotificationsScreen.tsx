@@ -17,7 +17,6 @@ import InteractionsBottomSheet from '~/common/components/interactions/Interactio
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 
 type PropsType = {
   navigation?: any;
@@ -100,6 +99,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       if (store.result === undefined) {
         return;
       }
+
+      console.log('REFRESHING NOTIFICATIONS');
       notifications.setUnread(0);
       // only refresh if we already have notifications
       notifications.setSilentRefresh(silentRefresh);
@@ -118,8 +119,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
     return unsubscribe;
   }, [navigation, onFocus]);
-
-  useFocusEffect(onFocus);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
