@@ -26,12 +26,10 @@ import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { useFeature } from '@growthbook/growthbook-react';
 
-type NewType = {
+type PropsType = {
   // called after registration is finished
   onRegister?: (navigation: any) => void; // TODO type
 };
-
-type PropsType = NewType;
 
 const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
