@@ -100,7 +100,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         return;
       }
 
-      console.log('REFRESHING NOTIFICATIONS');
       notifications.setUnread(0);
       // only refresh if we already have notifications
       notifications.setSilentRefresh(silentRefresh);
