@@ -4,7 +4,6 @@ import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
-import { SettingsStore } from './src/settings/SettingsStore';
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
 
@@ -20,14 +19,14 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { growthbook, updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
  */
 export default class AppInitManager {
   initialized = false;
-  settingsStorePromise?: Promise<SettingsStore>;
+  navReady: boolean = false;
 
   /**
    * Initialize services without waiting for the promises
@@ -134,28 +133,41 @@ export default class AppInitManager {
         updateService.checkUpdate(!user.canary);
       }, 5000);
     }
+
+    if (this.navReady) {
+      this.initialNavigationHandling();
+    }
   };
 
+  navigateToInitialScreen() {
+    if (sessionService.initialScreen) {
+      logService.info(
+        '[App] navigating to initial screen: ' + sessionService.initialScreen,
+      );
+      NavigationService.navigate(sessionService.initialScreen, {
+        initial: true,
+        ...sessionService.initialScreenParams,
+      });
+    }
+
+    if (
+      sessionService.initialScreenParams?.isNewUser &&
+      hasVariation('minds-3055-email-codes')
+    ) {
+      logService.info('[App] fire email verification for new users');
+      sessionService.getUser().confirmEmailCode();
+    }
+
+    sessionService.setInitialScreen('');
+  }
+
   async initialNavigationHandling() {
+    console.log('[App] initial Navigation Handling');
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
-      if (sessionService.initialScreen) {
-        logService.info(
-          '[App] navigating to initial screen: ' + sessionService.initialScreen,
-        );
-        NavigationService.navigate(sessionService.initialScreen, {
-          initial: true,
-        });
-        if (
-          sessionService.initialScreenParams?.isNewUser &&
-          growthbook.isOn('minds-3055-email-codes')
-        ) {
-          logService.info('[App] fire email verification for new users');
-          sessionService.getUser().confirmEmailCode();
-        }
-        sessionService.setInitialScreen('');
-      }
+      // navigate to initial screen if set
+      this.navigateToInitialScreen();
 
       const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
@@ -192,7 +204,9 @@ export default class AppInitManager {
    * Run the session logic when the navigator is ready
    */
   onNavigatorReady = async () => {
-    console.log('NAV READY');
-    this.initialNavigationHandling();
+    this.navReady = true;
+    if (sessionService.userLoggedIn) {
+      this.initialNavigationHandling();
+    }
   };
 }
