@@ -100,7 +100,7 @@ export default class UserModel extends BaseModel {
   /**
    * @var {boolean}
    */
-  email_confirmed = false;
+  @observable email_confirmed = false;
 
   @observable wire_rewards;
 
@@ -127,7 +127,7 @@ export default class UserModel extends BaseModel {
   };
 
   /**
-   * Confirm email using 2FA codes
+   * Confirm email using 2FA flow
    */
   async confirmEmailCode() {
     try {

@@ -19,12 +19,12 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
  */
-export default class AppInitManager {
+export class AppInitManager {
   initialized = false;
   navReady: boolean = false;
 
@@ -134,8 +134,9 @@ export default class AppInitManager {
       }, 5000);
     }
 
+    // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
     if (this.navReady) {
-      this.initialNavigationHandling();
+      this.initialNavigationHandling(Boolean(user.email_confirmed));
     }
   };
 
@@ -150,24 +151,16 @@ export default class AppInitManager {
       });
     }
 
-    if (
-      sessionService.initialScreenParams?.isNewUser &&
-      hasVariation('minds-3055-email-codes')
-    ) {
-      logService.info('[App] fire email verification for new users');
-      sessionService.getUser().confirmEmailCode();
-    }
-
     sessionService.setInitialScreen('');
   }
 
-  async initialNavigationHandling() {
+  async initialNavigationHandling(navigateInitialScreen: boolean = true) {
     console.log('[App] initial Navigation Handling');
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
       // navigate to initial screen if set
-      this.navigateToInitialScreen();
+      navigateInitialScreen && this.navigateToInitialScreen();
 
       const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
@@ -205,8 +198,13 @@ export default class AppInitManager {
    */
   onNavigatorReady = async () => {
     this.navReady = true;
+    // if the user is already logged in, handle initial navigation
     if (sessionService.userLoggedIn) {
       this.initialNavigationHandling();
     }
   };
 }
+
+const appInitManagerInstace = new AppInitManager();
+
+export default appInitManagerInstace;

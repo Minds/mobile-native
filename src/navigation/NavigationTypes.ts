@@ -112,6 +112,7 @@ type TwoFactorConfirmationParams = {
   oldCode: string;
   email?: string;
   showRecovery?: boolean;
+  isNewUser?: boolean;
 };
 
 export type RootStackParamList = {

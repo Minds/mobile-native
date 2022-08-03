@@ -16,7 +16,7 @@ type PropsType = {
   maxLength?: number;
   keyboardType?: string;
   detail?: React.ReactNode;
-  onBack: () => void;
+  onBack?: () => void;
   onVerify: () => void;
   onChangeText: (t: string) => void;
   value: string;
@@ -49,7 +49,7 @@ const CodeConfirmScreen = ({
 
   return (
     <ModalFullScreen
-      back
+      back={Boolean(onBack)}
       onBack={onBack}
       title={title}
       extra={
