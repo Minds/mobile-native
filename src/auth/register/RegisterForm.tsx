@@ -95,12 +95,12 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         sessionService.setInitialScreen('SelectHashtags', { isNewUser: true });
 
         try {
-          await authService.login(store.username, store.password);
+          await authService.login(store.username, store.password, true);
           i18n.setLocaleBackend();
           onRegister?.(navigation);
         } catch (err) {
           try {
-            await authService.login(store.username, store.password);
+            await authService.login(store.username, store.password, true);
           } catch (error) {
             showNotification(i18n.t('auth.failedToLoginNewAccount'));
             logService.exception(error);

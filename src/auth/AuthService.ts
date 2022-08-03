@@ -67,12 +67,12 @@ class AuthService {
 
   /**
    * Login user
-   * @param username
-   * @param password
-   * @param headers
-   * @param sessionIndex the index in where the user data is stored
+   *
+   * @param username username
+   * @param password password
+   * @param newUser it's a new registered user
    */
-  async login(username: string, password: string, headers: any = {}) {
+  async login(username: string, password: string, newUser: boolean = false) {
     const params = {
       grant_type: 'password',
       client_id: 'mobile',
@@ -81,13 +81,14 @@ class AuthService {
       password,
     } as loginParms;
 
+    this.justRegistered = newUser;
+
     // ignore if already logged in
     this.checkUserExist(username);
 
     const { data, headers: responseHeaders } = await api.rawPost<LoginResponse>(
       'api/v3/oauth/token',
       params,
-      headers,
     );
 
     if (responseHeaders && responseHeaders['set-cookie']) {
@@ -107,9 +108,9 @@ class AuthService {
     // if already have other sessions...
     if (!isFirstLogin) {
       session.setSwitchingAccount(true);
-      this.sessionLogout();
+      this.sessionLogout(newUser);
     } else {
-      NavigationService.goBack();
+      // NavigationService.goBack();
     }
 
     await api.clearCookies();
@@ -321,9 +322,9 @@ class AuthService {
    * This methods logs out the current session but WITHOUt removing it from the storage
    * @returns boolean
    */
-  async sessionLogout() {
+  async sessionLogout(newUser: boolean = false) {
     try {
-      this.justRegistered = false;
+      this.justRegistered = newUser;
       session.logout(false);
       // Fixes auto-subscribe issue on register
       await api.clearCookies();
@@ -394,7 +395,6 @@ class AuthService {
         'api/v1/register',
         params,
       );
-      this.justRegistered = true;
       return response;
     } catch (error) {
       throw error;

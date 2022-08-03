@@ -75,6 +75,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import InitialEmailVerificationScreen from '~/auth/InitialEmailVerificationScreen';
 import { useFeature } from '@growthbook/growthbook-react';
+import AuthService from '~/auth/AuthService';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -289,7 +290,10 @@ const RootStack = observer(function () {
   const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
   const shouldShowEmailVerification =
-    !is_email_confirmed && !sessionService.switchingAccount && codeEmailFF.on;
+    !is_email_confirmed &&
+    !sessionService.switchingAccount &&
+    codeEmailFF.on &&
+    AuthService.justRegistered;
 
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
@@ -300,6 +304,7 @@ const RootStack = observer(function () {
               initialParams={{ mfaType: 'email' }}
               name="App"
               component={InitialEmailVerificationScreen}
+              options={TransitionPresets.RevealFromBottomAndroid}
             />
             <RootStackNav.Screen
               name="MultiUserScreen"
@@ -439,21 +444,25 @@ const RootStack = observer(function () {
         </>
       )}
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserLogin"
         component={MultiUserLoginScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserRegister"
         component={MultiUserRegisterScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="DevTools"
         component={DevToolsScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="ResetPassword"
         component={ResetPasswordScreen}
         options={modalOptions}
