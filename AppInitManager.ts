@@ -19,7 +19,7 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
@@ -136,7 +136,12 @@ export class AppInitManager {
 
     // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
     if (this.navReady) {
-      this.initialNavigationHandling(Boolean(user.email_confirmed));
+      // when the experiment is enabled, we don't want to navigate to the initial screen because the navigation is done after the email verification.
+      this.initialNavigationHandling(
+        hasVariation('minds-3055-email-codes')
+          ? Boolean(user.email_confirmed)
+          : true,
+      );
     }
   };
 
