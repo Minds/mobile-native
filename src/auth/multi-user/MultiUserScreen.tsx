@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
+import { ModalFullScreen } from '~ui';
 
 import FitScrollView from '../../common/components/FitScrollView';
 import MenuItem from '../../common/components/menus/MenuItem';
-import ModalFullScreen from '../../common/screens/ModalFullScreen';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -33,6 +33,7 @@ const MultiUserScreen = ({}: PropsType) => {
 
   return (
     <ModalFullScreen
+      back
       title={i18n.t('multiUser.switchChannel')}
       loading={sessionService.switchingAccount}>
       <FitScrollView>

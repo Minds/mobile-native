@@ -61,7 +61,7 @@ export default class GroupCard extends Component {
                 {i18n.t('members').toUpperCase()}
               </MText>
               <MText style={styles.countervalue}>
-                {abbrev(group['members:count'], 0)}
+                {abbrev(group['members:count'], 1)}
               </MText>
             </View>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>
@@ -69,7 +69,7 @@ export default class GroupCard extends Component {
                 {i18n.t('feed').toUpperCase()}
               </MText>
               <MText style={styles.countervalue}>
-                {abbrev(group['activity:count'], 0)}
+                {abbrev(group['activity:count'], 1)}
               </MText>
             </View>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>
@@ -77,7 +77,7 @@ export default class GroupCard extends Component {
                 {i18n.t('comments.comments').toUpperCase()}
               </MText>
               <MText style={styles.countervalue}>
-                {abbrev(group['comments:count'], 0)}
+                {abbrev(group['comments:count'], 1)}
               </MText>
             </View>
           </View>

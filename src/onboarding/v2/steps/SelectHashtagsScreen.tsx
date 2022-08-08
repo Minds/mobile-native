@@ -1,3 +1,4 @@
+import { useFeature } from '@growthbook/growthbook-react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -14,10 +15,12 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import ModalContainer from './ModalContainer';
 
 /**
- * Verify Email Modal Screen
+ * Select Hashtag Screen
  */
 export default observer(function SelectHashtagsScreen({ navigation, route }) {
   const theme = ThemedStyles.style;
+
+  const redirectExperiment = useFeature('mob-discovery-redirect');
 
   const { hashtag } = useLegacyStores();
 
@@ -42,9 +45,11 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
         unsubscribe();
       }
       if (route && route.params && route.params.initial) {
-        navigation.navigate('Tabs', {
-          screen: 'Discovery',
-        });
+        if (redirectExperiment.on) {
+          navigation.navigate('Tabs', {
+            screen: 'Discovery',
+          });
+        }
       }
     };
   }, [hashtag, navigation, route]);
