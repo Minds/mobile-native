@@ -1,6 +1,43 @@
 {
   "versions": [
     {
+      "version": "4.26.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.26.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.26.0",
+      "changelog": [
+        "Add keyboard GIF, sticker and image paste support (Composer & comments)",
+        "Fix issues on the reset password modal and flow",
+        "Fix issues deleting or deactivating an account when logged in with multiple users",
+        "Fix the data range filter for the feed",
+        "Fix aspect radio issues on the Image Viewer",
+        "Video pre-load to improve UX in the feeds",
+        "Dismissible channel recommendations",
+        "Fix push notifications restart and navigation issues",
+        "Fix share to minds error (when sharing text/URL from other apps)",
+        "Fix bottom sheet opening randomly",
+        "Fix deeplink for unread notifications email",
+        "APK size reduced",
+        "Video pause when changing screen",
+        "Fix the inconsistent capitalization on Push Notifications settings",
+        "Fix NSFW warnings"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "837ec92b3bf090de4c24b6009389572b"
+        },
+        {
+          "type": "sha256",
+          "value": "c1284702ce46378e3f1b5df8dcbba64d03ff44be2f31670acd3c105c0521bc13"
+        },
+        {
+          "type": "sha512",
+          "value": "29719283140e3db950fc2f25492bd14d542dfec5f9e48021068ef5eca1c7d40f204a333019e742f9588c83857293f70946b7303947b9f3e1eddd2d9f3784d032"
+        }
+      ]
+    },
+    {
       "version": "4.25.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-4.25.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.25.0",
