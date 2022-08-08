@@ -102,7 +102,6 @@ export default class AppInitManager {
    */
   onLogout = () => {
     // clear app badge
-    badgeService.setUnreadConversations(0);
     badgeService.setUnreadNotifications(0);
     translationService.purgeLanguagesCache();
     updateGrowthBookAttributes();

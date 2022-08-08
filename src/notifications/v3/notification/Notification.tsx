@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
+import { observer } from 'mobx-react';
 import { View, TouchableOpacity } from 'react-native';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
+
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import {
   bodyTextImportantStyle,
   bodyTextStyle,
@@ -24,7 +26,7 @@ type PropsType = {
 };
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
-const NotificationItem = React.memo(
+const NotificationItem = observer(
   ({ notification, onShowSubscribers }: PropsType) => {
     const fromUser = notification.from;
     const toGuid = notification.to_guid;

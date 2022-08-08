@@ -24,8 +24,8 @@ type PropsType = {
 };
 
 const viewabilityConfig = {
-  itemVisiblePercentThreshold: 50,
-  minimumViewTime: 300,
+  itemVisiblePercentThreshold: 70,
+  minimumViewTime: 500,
   waitForInteraction: false,
 };
 
@@ -100,7 +100,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       if (store.result === undefined) {
         return;
       }
-      notifications.setUnread(0);
       // only refresh if we already have notifications
       notifications.setSilentRefresh(silentRefresh);
       refresh().finally(() => notifications.setSilentRefresh(false));
@@ -127,6 +126,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         (item: { item: NotificationModel }) => {
           if (!item.item.read) {
             item.item.read = true;
+            console.log('marking as read', item.index);
             notifications.markAsRead(item.item);
           }
         },
