@@ -29,6 +29,7 @@ import sessionService from '../../../common/services/session.service';
 import MText from '../../../common/components/MText';
 import { Button as Btn } from '~/common/ui';
 import { useKeyboard } from '@react-native-community/hooks';
+import { IS_IOS } from '~/config/Config';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -81,6 +82,16 @@ export default observer(function SetupChannelScreen() {
       NavigationService.goBack();
     },
   }));
+
+  const onAvatarPress = React.useCallback(
+    IS_IOS
+      ? store.showPicker
+      : async () => {
+          await channelStore.upload('avatar', false, () => store.hidePicker());
+          await sessionService.loadUser();
+        },
+    [channelStore, store],
+  );
 
   const avatarOptions: Array<Array<ItemType>> = useRef([
     [
@@ -153,7 +164,7 @@ export default observer(function SetupChannelScreen() {
               Avatar
             </MText>
             <TouchableCustom
-              onPress={store.showPicker}
+              onPress={onAvatarPress}
               style={[styles.avatar, theme.marginBottom2x]}
               disabled={channelStore.uploading}
               testID="selectAvatar">
