@@ -122,8 +122,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       viewableItems.viewableItems.forEach(
         (item: { item: NotificationModel }) => {
           if (!item.item.read) {
-            item.item.read = true;
-            console.log('marking as read', item.index);
             notifications.markAsRead(item.item);
           }
         },
