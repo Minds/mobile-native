@@ -1,10 +1,13 @@
 import React, { ReactNode } from 'react';
-import { View, ScrollView, SafeAreaView } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
+import FitScrollView from '~/common/components/FitScrollView';
+import LoadingOverlay from '~/common/components/LoadingOverlay';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export type ScreenPropType = {
   safe?: boolean;
   scroll?: boolean;
+  loading?: boolean;
   background?: 'primary' | 'secondary' | 'tertiary';
   children?: ReactNode;
 };
@@ -13,6 +16,7 @@ export const Screen = ({
   children,
   safe,
   scroll,
+  loading,
   background = 'primary',
 }: ScreenPropType) => {
   const Renderer = safe ? SafeAreaView : View;
@@ -20,9 +24,10 @@ export const Screen = ({
   if (scroll) {
     return (
       <Renderer style={styles[background]}>
-        <ScrollView style={ThemedStyles.style.flexContainer}>
+        <FitScrollView style={ThemedStyles.style.flexContainer}>
           {children}
-        </ScrollView>
+        </FitScrollView>
+        {loading && <LoadingOverlay />}
       </Renderer>
     );
   }

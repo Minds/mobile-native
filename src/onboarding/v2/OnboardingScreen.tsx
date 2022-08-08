@@ -1,5 +1,6 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { hasVariation } from 'ExperimentsProvider';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
@@ -122,9 +123,13 @@ export default observer(function OnboardingScreen() {
           s => s.id === 'VerifyEmailStep' && s.is_completed,
         );
         if (!done) {
-          navigation.navigate('VerifyEmail', {
-            store: progressStore,
-          });
+          if (hasVariation('minds-3055-email-codes')) {
+            sessionService.getUser().confirmEmailCode();
+          } else {
+            navigation.navigate('VerifyEmail', {
+              store: progressStore,
+            });
+          }
         } else {
           showNotification(i18n.t('emailConfirm.alreadyConfirmed'));
         }

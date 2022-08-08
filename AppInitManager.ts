@@ -4,7 +4,6 @@ import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
-import { SettingsStore } from './src/settings/SettingsStore';
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
 
@@ -20,14 +19,14 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 
 /**
  * App initialization manager
  */
-export default class AppInitManager {
+export class AppInitManager {
   initialized = false;
-  settingsStorePromise?: Promise<SettingsStore>;
+  navReady: boolean = false;
 
   /**
    * Initialize services without waiting for the promises
@@ -134,21 +133,39 @@ export default class AppInitManager {
         updateService.checkUpdate(!user.canary);
       }, 5000);
     }
+
+    // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
+    if (this.navReady) {
+      // when the experiment is enabled, we don't want to navigate to the initial screen because the navigation is done after the email verification.
+      this.initialNavigationHandling(
+        hasVariation('minds-3055-email-codes')
+          ? Boolean(user.email_confirmed)
+          : true,
+      );
+    }
   };
 
-  async initialNavigationHandling() {
+  navigateToInitialScreen() {
+    if (sessionService.initialScreen) {
+      logService.info(
+        '[App] navigating to initial screen: ' + sessionService.initialScreen,
+      );
+      NavigationService.navigate(sessionService.initialScreen, {
+        initial: true,
+        ...sessionService.initialScreenParams,
+      });
+    }
+
+    sessionService.setInitialScreen('');
+  }
+
+  async initialNavigationHandling(navigateInitialScreen: boolean = true) {
+    console.log('[App] initial Navigation Handling');
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
-      if (sessionService.initialScreen) {
-        logService.info(
-          '[App] navigating to initial screen: ' + sessionService.initialScreen,
-        );
-        NavigationService.navigate(sessionService.initialScreen, {
-          initial: true,
-        });
-        sessionService.setInitialScreen('');
-      }
+      // navigate to initial screen if set
+      navigateInitialScreen && this.navigateToInitialScreen();
 
       const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
@@ -185,7 +202,14 @@ export default class AppInitManager {
    * Run the session logic when the navigator is ready
    */
   onNavigatorReady = async () => {
-    console.log('NAV READY');
-    this.initialNavigationHandling();
+    this.navReady = true;
+    // if the user is already logged in, handle initial navigation
+    if (sessionService.userLoggedIn) {
+      this.initialNavigationHandling();
+    }
   };
 }
+
+const appInitManagerInstace = new AppInitManager();
+
+export default appInitManagerInstace;

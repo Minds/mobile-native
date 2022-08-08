@@ -110,6 +110,7 @@ export default class UserModel extends BaseModel {
   onchain_booster: number = 0;
 
   /**
+   * LEGACY: remove when the FF minds-3055-email-codes is cleaned up
    * Confirm email
    * @param {Object} params
    */
@@ -117,12 +118,26 @@ export default class UserModel extends BaseModel {
     // call any api endpoint with the param
     try {
       await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
+
       this.setEmailConfirmed(true);
       return true;
     } catch (error) {
       return false;
     }
   };
+
+  /**
+   * Confirm email using 2FA flow
+   */
+  async confirmEmailCode() {
+    try {
+      await apiService.post('api/v3/email/confirm');
+      this.setEmailConfirmed(true);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
   /**
    * Get the user icon time
@@ -179,7 +194,6 @@ export default class UserModel extends BaseModel {
     this.mode = value;
   }
 
-  @action
   setEmailConfirmed(value) {
     this.email_confirmed = value;
   }

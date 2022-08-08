@@ -27,7 +27,7 @@ import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptch
 import { useFeature } from '@growthbook/growthbook-react';
 
 type PropsType = {
-  // called after registeration is finished
+  // called after registration is finished
   onRegister?: (navigation: any) => void; // TODO type
 };
 
@@ -92,15 +92,15 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
-        sessionService.setInitialScreen('SelectHashtags');
+        sessionService.setInitialScreen('SelectHashtags', { isNewUser: true });
 
         try {
-          await authService.login(store.username, store.password);
+          await authService.login(store.username, store.password, true);
           i18n.setLocaleBackend();
           onRegister?.(navigation);
         } catch (err) {
           try {
-            await authService.login(store.username, store.password);
+            await authService.login(store.username, store.password, true);
           } catch (error) {
             showNotification(i18n.t('auth.failedToLoginNewAccount'));
             logService.exception(error);
