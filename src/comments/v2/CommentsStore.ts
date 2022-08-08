@@ -390,7 +390,7 @@ export default class CommentsStore {
       attachment_guid: <string | undefined>undefined,
     };
 
-    if (comment.comment === '') {
+    if (comment.comment === '' && !this.attachment.hasAttachment) {
       showNotification(i18n.t('messenger.typeYourMessage'), 'info', 3000);
       return;
     }

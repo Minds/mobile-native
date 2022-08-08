@@ -66,6 +66,11 @@ export class SessionService {
    */
   initialScreen = '';
 
+  /**
+   * Initial screen params
+   */
+  initialScreenParams: undefined | { [key: string]: any } = undefined;
+
   @observable refreshingTokens = false;
 
   recoveryCodeUsed = false;
@@ -254,7 +259,11 @@ export class SessionService {
     if (user) {
       getStores().user.setUser(user);
       // we update the user without wait
-      getStores().user.load(true);
+      getStores()
+        .user.load(true)
+        .then(updatedUser => {
+          this.updateActiveSessionUser(updatedUser);
+        });
     } else {
       user = await getStores().user.load();
     }
@@ -272,9 +281,14 @@ export class SessionService {
   /**
    * Set initial screen
    * @param {string} screen
+   * @param {undefined | {[key: string]: any}} params
    */
-  setInitialScreen(screen) {
+  setInitialScreen(
+    screen: string,
+    params?: undefined | { [key: string]: any },
+  ) {
     this.initialScreen = screen;
+    this.initialScreenParams = params;
   }
 
   /**
@@ -442,6 +456,14 @@ export class SessionService {
         refresh_token_expires: token_refresh_expire,
       },
     };
+  }
+
+  /**
+   * Updated user and persist
+   */
+  updateActiveSessionUser(user?: UserModel) {
+    this.sessions[this.activeIndex].user = user || getStores().user.me;
+    this.persistSessionsArray();
   }
 
   @action

@@ -277,13 +277,13 @@ const ChannelHeader = withErrorBoundary(
                 <MText
                   onPress={props.onOpenSubscribers}
                   style={theme.colorSecondaryText}>
-                  <MText> {abbrev(channel.subscribers_count, 0)}</MText>
+                  <MText> {abbrev(channel.subscribers_count, 1)}</MText>
                   {' ' + i18n.t('subscribers') + '    '}
                 </MText>
                 <MText
                   onPress={props.onOpenSubscriptions}
                   style={theme.colorSecondaryText}>
-                  <MText> {abbrev(channel.subscriptions_count, 0)}</MText>
+                  <MText> {abbrev(channel.subscriptions_count, 1)}</MText>
                   {' ' + i18n.t('subscriptions')}
                 </MText>
               </MText>

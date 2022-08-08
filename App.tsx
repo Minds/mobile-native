@@ -42,7 +42,7 @@ import { StoresProvider } from './src/common/hooks/use-stores';
 import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
-import AppInitManager from './AppInitManager';
+import appInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
@@ -54,7 +54,6 @@ import FriendlyCaptchaProvider, {
 
 YellowBox.ignoreWarnings(['']);
 
-const appInitManager = new AppInitManager();
 appInitManager.initializeServices();
 
 if (
@@ -167,9 +166,6 @@ class App extends Component<Props> {
 
     const stores = getStores();
 
-    // Should show auth screens?
-    const showAuthNav = sessionService.showAuthNav;
-
     return (
       <ExperimentsProvider>
         <SafeAreaProvider>
@@ -191,7 +187,6 @@ class App extends Component<Props> {
                             <WCContextProvider>
                               <NavigationStack
                                 key={ThemedStyles.theme + i18n.locale}
-                                showAuthNav={showAuthNav}
                               />
                             </WCContextProvider>
                           </ErrorBoundary>

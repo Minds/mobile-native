@@ -73,6 +73,9 @@ import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScre
 import DevToolsScreen from '~/settings/screens/DevToolsScreen';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
+import InitialEmailVerificationScreen from '~/auth/InitialEmailVerificationScreen';
+import { useFeature } from '@growthbook/growthbook-react';
+import AuthService from '~/auth/AuthService';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -112,6 +115,7 @@ const AppStack = observer(() => {
   if (sessionService.switchingAccount) {
     return null;
   }
+
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
@@ -282,163 +286,189 @@ const defaultScreenOptions: StackNavigationOptions = {
   cardOverlayEnabled: true,
 };
 
-const RootStack = function (props) {
-  const initial = props.showAuthNav ? 'Auth' : 'App';
+const RootStack = observer(function () {
+  const codeEmailFF = useFeature('minds-3055-email-codes');
+  const is_email_confirmed = sessionService.getUser()?.email_confirmed;
+  const shouldShowEmailVerification =
+    !is_email_confirmed &&
+    !sessionService.switchingAccount &&
+    codeEmailFF.on &&
+    AuthService.justRegistered;
 
   return (
-    <RootStackNav.Navigator
-      initialRouteName={initial}
-      screenOptions={defaultScreenOptions}>
-      {!props.showAuthNav ? (
-        <>
-          <RootStackNav.Screen
-            name="App"
-            component={AppStack}
-            options={({ route }) => ({
-              // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
-              animationEnabled: Boolean(route.params),
-              cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-              ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
-            })}
-          />
-          <RootStackNav.Screen
-            name="Capture"
-            component={CameraScreen}
-            options={TransitionPresets.RevealFromBottomAndroid}
-          />
-          <RootStackNav.Screen
-            name="Compose"
-            component={ComposeScreen}
-            options={TransitionPresets.ModalPresentationIOS}
-          />
-          {/* Modal screens here */}
-          <RootStackNav.Screen
-            name="MultiUserScreen"
-            component={MultiUserScreen}
-            options={{
-              title: i18n.t('multiUser.switchChannel'),
-            }}
-          />
-          <RootStackNav.Screen
-            name="JoinMembershipScreen"
-            component={JoinMembershipScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="ChooseBrowserModal"
-            component={ChooseBrowserModalScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
-          {/* <RootStackNav.Screen
+    <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
+      {!sessionService.showAuthNav ? (
+        shouldShowEmailVerification ? (
+          <>
+            <RootStackNav.Screen
+              initialParams={{ mfaType: 'email' }}
+              name="App"
+              component={InitialEmailVerificationScreen}
+              options={TransitionPresets.RevealFromBottomAndroid}
+            />
+            <RootStackNav.Screen
+              name="MultiUserScreen"
+              component={MultiUserScreen}
+              options={{
+                title: i18n.t('multiUser.switchChannel'),
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <RootStackNav.Screen
+              name="App"
+              component={AppStack}
+              options={({ route }) => ({
+                // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+                animationEnabled: Boolean(route.params),
+                cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+                ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
+              })}
+            />
+            <RootStackNav.Screen
+              name="Capture"
+              component={CameraScreen}
+              options={TransitionPresets.RevealFromBottomAndroid}
+            />
+            <RootStackNav.Screen
+              name="Compose"
+              component={ComposeScreen}
+              options={TransitionPresets.ModalPresentationIOS}
+            />
+            {/* Modal screens here */}
+            <RootStackNav.Screen
+              name="MultiUserScreen"
+              component={MultiUserScreen}
+              options={{
+                title: i18n.t('multiUser.switchChannel'),
+              }}
+            />
+            <RootStackNav.Screen
+              name="JoinMembershipScreen"
+              component={JoinMembershipScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="ChooseBrowserModal"
+              component={ChooseBrowserModalScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+            {/* <RootStackNav.Screen
               name="BlockchainWalletModal"
               component={BlockchainWalletModalScreen}
             /> */}
-          <RootStackNav.Screen
-            name="UpgradeScreen"
-            component={UpgradeScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="VerifyEmail"
-            component={VerifyEmailScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="SelectHashtags"
-            component={SelectHashtagsScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="SetupChannel"
-            component={SetupChannelScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="VerifyUniqueness"
-            component={VerifyUniquenessScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="SuggestedChannel"
-            component={SuggestedChannelsScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="SuggestedGroups"
-            component={SuggestedGroupsScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="PhoneValidation"
-            component={PhoneValidationScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="BoostChannelScreen"
-            component={BoostChannelScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="BoostPostScreen"
-            component={BoostPostScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="WalletWithdrawal"
-            component={Withdrawal}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="EarnModal"
-            component={EarnModal}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
-          <RootStackNav.Screen
-            name="PasswordConfirmation"
-            component={PasswordConfirmScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="TwoFactorConfirmation"
-            component={TwoFactorConfirmScreen}
-            options={{ ...modalOptions, gestureEnabled: false }}
-          />
-          <RootStackNav.Screen
-            name="RecoveryCodeUsedScreen"
-            component={RecoveryCodeUsedScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
-        </>
+            <RootStackNav.Screen
+              name="UpgradeScreen"
+              component={UpgradeScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="VerifyEmail"
+              component={VerifyEmailScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="SelectHashtags"
+              component={SelectHashtagsScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="SetupChannel"
+              component={SetupChannelScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="VerifyUniqueness"
+              component={VerifyUniquenessScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="SuggestedChannel"
+              component={SuggestedChannelsScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="SuggestedGroups"
+              component={SuggestedGroupsScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="PhoneValidation"
+              component={PhoneValidationScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="BoostChannelScreen"
+              component={BoostChannelScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="BoostPostScreen"
+              component={BoostPostScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="WalletWithdrawal"
+              component={Withdrawal}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="EarnModal"
+              component={EarnModal}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
+            <RootStackNav.Screen
+              name="PasswordConfirmation"
+              component={PasswordConfirmScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="TwoFactorConfirmation"
+              component={TwoFactorConfirmScreen}
+              options={{ ...modalOptions, gestureEnabled: false }}
+            />
+            <RootStackNav.Screen
+              name="RecoveryCodeUsedScreen"
+              component={RecoveryCodeUsedScreen}
+              options={modalOptions}
+            />
+            <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
+          </>
+        )
       ) : (
         <>
           <RootStackNav.Screen name="Auth" component={AuthStack} />
         </>
       )}
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserLogin"
         component={MultiUserLoginScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserRegister"
         component={MultiUserRegisterScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="DevTools"
         component={DevToolsScreen}
         options={modalOptions}
       />
       <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="ResetPassword"
         component={ResetPasswordScreen}
         options={modalOptions}
       />
     </RootStackNav.Navigator>
   );
-};
+});
 
 export default RootStack;

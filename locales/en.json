@@ -59,7 +59,7 @@
   },
   "auth": {
     "2faRequired": "2FA required",
-    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address before continuing.",
+    "2faEmailDescription": "Minds just sent a 6-digit authentication code to your registered email address",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
     "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
     "2faInvalid": "Invalid code",
@@ -954,7 +954,7 @@
     "completeToEarn": "Complete to earn tokens",
     "tooltipInitial1": "To get most from Minds",
     "tooltipInitial2": "please complete these steps",
-    "verifyEmailAddress": "Verify email address",
+    "verifyEmailAddress": "Verify email",
     "selectTags": "Select tags",
     "setupChannel": "Setup channel",
     "verifyUniqueness": "Verify uniqueness",

@@ -1,20 +1,15 @@
 import React, { useCallback } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
-import { RouteProp } from '@react-navigation/core';
-import { ScrollView, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
-import { RootStackParamList } from '../navigation/NavigationTypes';
-import InputContainer from '../common/components/InputContainer';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import MText from '../common/components/MText';
-import { useBackHandler } from '@react-native-community/hooks';
-import { B1, Button } from '~ui';
-import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
-import { showNotification } from 'AppMessages';
-import { TwoFactorError } from '~/common/services/api.service';
 import { runInAction } from 'mobx';
+import { RouteProp } from '@react-navigation/core';
+import { observer, useLocalStore } from 'mobx-react';
+import { useBackHandler } from '@react-native-community/hooks';
+
+import { B1 } from '~ui';
+import { showNotification } from 'AppMessages';
+import i18n from '../common/services/i18n.service';
+import { TwoFactorError } from '~/common/services/api.service';
+import { RootStackParamList } from '../navigation/NavigationTypes';
+import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -30,7 +25,6 @@ type PropsType = {
  * Two factor confirmation modal screen
  */
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
   const {
     onConfirm,
     title,
@@ -125,6 +119,11 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     },
   }));
 
+  const titleText =
+    !title && mfaType === 'email'
+      ? i18n.t('onboarding.verifyEmailAddress')
+      : title || i18n.t('auth.2faRequired');
+
   const description =
     mfaType === 'email'
       ? i18n.t('auth.2faEmailDescription')
@@ -132,99 +131,48 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       ? i18n.t('auth.2faAppDescription')
       : i18n.t('auth.2faSmsDescription');
 
-  return (
-    <KeyboardSpacingView
-      style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <ScrollView>
-        <SafeAreaView>
-          <View style={styles.header}>
-            <Icon
-              name="close"
-              size={25}
-              color={ThemedStyles.getColor('SecondaryText')}
-              onPress={localStore.cancel}
-            />
-            <MText style={styles.titleText}>
-              {title || i18n.t('auth.2faRequired')}
-            </MText>
-            <Button
-              mode="flat"
-              size="small"
-              type="action"
-              onPress={localStore.submit}>
-              {i18n.t('verify')}
-            </Button>
-          </View>
-          <B1 color="secondary" vertical="XL" horizontal="L">
-            {description}
-          </B1>
-          <View style={theme.fullWidth}>
-            <InputContainer
-              maxLength={localStore.recovery ? undefined : 6}
-              keyboardType={localStore.recovery ? undefined : 'numeric'}
-              labelStyle={theme.colorPrimaryText}
-              style={theme.colorPrimaryText}
-              autoFocus
-              placeholder={
-                localStore.recovery
-                  ? i18n.t('auth.recoveryCode')
-                  : i18n.t('auth.authCode')
-              }
-              onChangeText={localStore.setCode}
-              error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
-              value={localStore.code}
-            />
-          </View>
-          {mfaType === 'email' && (
-            <B1 color="secondary" vertical="XL" horizontal="L">
-              {i18n.t('onboarding.verifyEmailDescription2')}
-              <B1
-                color={localStore.resending ? 'tertiary' : 'link'}
-                onPress={localStore.resend}>
-                {' '}
-                {i18n.t('onboarding.resend')}
-              </B1>
-            </B1>
-          )}
-          {mfaType === 'totp' && showRecovery && (
-            <B1 color="secondary" vertical="XL" horizontal="L">
-              {i18n.t('auth.recoveryDesc')}
-              <B1 color={'link'} onPress={localStore.toggleRecovery}>
-                {' '}
-                {localStore.recovery
-                  ? i18n.t('auth.authCode')
-                  : i18n.t('auth.recoveryCode')}
-              </B1>
-            </B1>
-          )}
-        </SafeAreaView>
-      </ScrollView>
-    </KeyboardSpacingView>
-  );
-});
+  const detail =
+    mfaType === 'email' ? (
+      <B1 color="secondary" vertical="XL" horizontal="L">
+        {i18n.t('onboarding.verifyEmailDescription2')}
+        <B1
+          color={localStore.resending ? 'tertiary' : 'link'}
+          onPress={localStore.resend}>
+          {' '}
+          {i18n.t('onboarding.resend')}
+        </B1>
+      </B1>
+    ) : mfaType === 'totp' && showRecovery ? (
+      <B1 color="secondary" vertical="XL" horizontal="L">
+        {i18n.t('auth.recoveryDesc')}
+        <B1 color={'link'} onPress={localStore.toggleRecovery}>
+          {' '}
+          {localStore.recovery
+            ? i18n.t('auth.authCode')
+            : i18n.t('auth.recoveryCode')}
+        </B1>
+      </B1>
+    ) : null;
 
-const styles = ThemedStyles.create({
-  header: [
-    'rowJustifySpaceBetween',
-    'alignCenter',
-    'paddingVertical3x',
-    'borderBottomHair',
-    'bcolorPrimaryBorder',
-    'paddingHorizontal3x',
-  ],
-  error: {
-    marginTop: 8,
-    marginBottom: 8,
-    color: '#c00',
-    textAlign: 'center',
-  },
-  titleText: {
-    fontSize: 22,
-    fontWeight: '700',
-    flex: 7,
-    textAlign: 'center',
-    paddingLeft: 10,
-  },
+  return (
+    <CodeConfirmScreen
+      onBack={localStore.cancel}
+      title={titleText}
+      onVerify={localStore.submit}
+      description={description}
+      maxLength={localStore.recovery ? undefined : 6}
+      keyboardType={localStore.recovery ? undefined : 'numeric'}
+      placeholder={
+        localStore.recovery
+          ? i18n.t('auth.recoveryCode')
+          : i18n.t('auth.authCode')
+      }
+      onChangeText={localStore.setCode}
+      error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
+      value={localStore.code}
+      detail={detail}
+    />
+  );
 });
 
 export default TwoFactorConfirmScreen;
