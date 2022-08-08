@@ -128,8 +128,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     }
     viewabilityConfig={
       Object {
-        "itemVisiblePercentThreshold": 50,
-        "minimumViewTime": 300,
+        "itemVisiblePercentThreshold": 70,
+        "minimumViewTime": 500,
         "waitForInteraction": false,
       }
     }
@@ -138,8 +138,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         Object {
           "onViewableItemsChanged": [Function],
           "viewabilityConfig": Object {
-            "itemVisiblePercentThreshold": 50,
-            "minimumViewTime": 300,
+            "itemVisiblePercentThreshold": 70,
+            "minimumViewTime": 500,
             "waitForInteraction": false,
           },
         },
