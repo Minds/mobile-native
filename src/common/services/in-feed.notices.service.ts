@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 import apiService, { ApiResponse } from './api.service';
 import logService from './log.service';
 import sessionService from './session.service';
@@ -71,6 +71,18 @@ export class InFeedNoticesService {
   }
 
   /**
+   * Remove an in-feed notice (until data is loaded again)
+   * This method is used when the user remove a notice without having to wait for server response
+   */
+  markAsCompleted(name: string) {
+    if (this.data && this.data[name]) {
+      const data = toJS(this.data);
+      delete data[name];
+      this.data = data;
+    }
+  }
+
+  /**
    * Format data
    */
   private formatData(data: Array<ResponseNotice>): FormattedNotices {
@@ -83,6 +95,7 @@ export class InFeedNoticesService {
           should_show: item.should_show,
         };
       });
+
     return formatted;
   }
 

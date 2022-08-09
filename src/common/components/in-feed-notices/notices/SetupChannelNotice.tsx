@@ -24,7 +24,7 @@ function SetupChannelNotice() {
   return (
     <InFeedNotice
       title={i18nService.t('inFeedNotices.whois', { name: user?.name })}
-      description={i18nService.t('inFeedNotices.tagsDescription')}
+      description={i18nService.t('inFeedNotices.userDescription')}
       btnText={i18nService.t('inFeedNotices.userButton')}
       iconName="info-outline"
       onPress={onPress}

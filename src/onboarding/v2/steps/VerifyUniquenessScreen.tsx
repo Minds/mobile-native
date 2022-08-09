@@ -8,6 +8,7 @@ import MenuItem from '../../../common/components/menus/MenuItem';
 import { useNavigation } from '@react-navigation/native';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 
 type MappingItems = {
   title: string;
@@ -32,7 +33,10 @@ export default observer(function VerifyUniquenessScreen() {
       title: i18n.t('onboarding.phoneNumber'),
       screen: 'PhoneValidation',
       params: {
-        onConfirm: () => navigation.goBack(),
+        onConfirm: () => {
+          inFeedNoticesService.load();
+          navigation.goBack();
+        },
         onCancel: () => false,
       },
     },
@@ -52,12 +56,12 @@ export default observer(function VerifyUniquenessScreen() {
     {
       title: i18n.t('monetize.plusHeader'),
       screen: 'UpgradeScreen',
-      params: { onComplete: () => {}, pro: false },
+      params: { onComplete: () => inFeedNoticesService.load(), pro: false },
     },
     {
       title: i18n.t('monetize.proHeader'),
       screen: 'UpgradeScreen',
-      params: { onComplete: () => {}, pro: true },
+      params: { onComplete: () => inFeedNoticesService.load(), pro: true },
     },
     /*{
       title: i18n.t('onboarding.buyTokens'),

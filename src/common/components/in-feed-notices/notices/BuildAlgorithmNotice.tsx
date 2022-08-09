@@ -16,6 +16,12 @@ function BuildAlgorithm() {
   if (!inFeedNoticesService.visible('build-your-algorithm')) {
     return null;
   }
+
+  const onSubmit = () => {
+    ref.current.dismiss();
+    inFeedNoticesService.load();
+  };
+
   return (
     <>
       <BottomSheetModal
@@ -24,7 +30,7 @@ function BuildAlgorithm() {
         <Questions
           questions={questionsResult?.questions}
           loading={loading}
-          onSubmit={inFeedNoticesService.load}
+          onSubmit={onSubmit}
         />
       </BottomSheetModal>
       <InFeedNotice

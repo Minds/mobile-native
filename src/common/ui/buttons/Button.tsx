@@ -31,6 +31,7 @@ export type ButtonPropsType = {
   spinner?: boolean;
   stretch?: boolean;
   disabled?: boolean;
+  fit?: boolean;
   darkContent?: boolean;
   shouldAnimateChanges?: boolean;
   loading?: boolean;
@@ -70,6 +71,7 @@ export const ButtonComponent = ({
   testID,
   accessibilityLabel,
   icon,
+  fit,
   pressableProps,
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
@@ -235,7 +237,11 @@ export const ButtonComponent = ({
   const renderContent = () => {
     let content;
     const title = (
-      <Font font={font} color={textColor} numberOfLines={1}>
+      <Font
+        font={font}
+        color={textColor}
+        numberOfLines={1}
+        adjustsFontSizeToFit={fit}>
         {text}
       </Font>
     );

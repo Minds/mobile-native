@@ -22,7 +22,7 @@ function TagsNotice() {
   return (
     <InFeedNotice
       title={i18nService.t('inFeedNotices.updatePreferences')}
-      description={i18nService.t('inFeedNotices.userDescription')}
+      description={i18nService.t('inFeedNotices.tagsDescription')}
       btnText={i18nService.t('inFeedNotices.update')}
       iconName="info-outline"
       onPress={onPress}
