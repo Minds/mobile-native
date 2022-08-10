@@ -301,6 +301,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     undefined,
                   ]
                 }
+                multiline={false}
                 onChangeText={[Function]}
                 placeholder=""
                 placeholderTextColor="#444"

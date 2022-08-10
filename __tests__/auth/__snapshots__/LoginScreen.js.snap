@@ -489,6 +489,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         undefined,
                       ]
                     }
+                    multiline={false}
                     onChangeText={[Function]}
                     placeholder=""
                     placeholderTextColor="#444"
