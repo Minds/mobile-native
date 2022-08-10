@@ -21,7 +21,7 @@ import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
 import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
 import { Screen } from '~/common/ui';
-import { useLegacyStores } from '~/common/hooks/use-stores';
+import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FeedListSticky from '~/common/components/FeedListSticky';
 import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
@@ -29,7 +29,6 @@ import { ChannelRecommendationProvider } from '~/common/components/ChannelRecomm
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
 import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
-import VerifyUniquenessNotice from '~/common/components/in-feed-notices/notices/VerifyUniquenessNotice';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -54,12 +53,19 @@ type NewsfeedScreenProps = {
   route: NewsfeedScreenRouteProp;
 };
 
+// override item layout to estimate better the top components height and prevent initial jumps
+const overrideItemLayout = (layout, item, index) => {
+  if (index === 0) {
+    layout.size = 157;
+  }
+};
+
 /**
  * News Feed Screen
  */
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
-  const portraitBar = React.useRef<any>();
+  const portrait = useStores().portrait;
 
   const refreshNewsfeed = useCallback(() => {
     newsfeed.scrollToTop();
@@ -87,11 +93,18 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     );
   }, [navigation, newsfeed, onTabPress]);
 
+  // delay the load of the portrait feed data
+  // we load the data here given that the flashlist is rendering it twice at the first render
+  useEffect(() => {
+    const t = setTimeout(() => {
+      portrait.load();
+    }, 1000);
+    return () => clearTimeout(t);
+  }, [portrait]);
+
   const refreshPortrait = useCallback(() => {
-    if (portraitBar.current) {
-      portraitBar.current.load();
-    }
-  }, [portraitBar]);
+    portrait.load();
+  }, [portrait]);
 
   /**
    * Injected items
@@ -102,9 +115,8 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       <View>
         <CheckLanguage />
         <InitialOnboardingButton />
-        <PortraitContentBar ref={portraitBar} />
+        <PortraitContentBar />
         <TopInFeedNotice />
-        <VerifyUniquenessNotice />
         <NewsfeedHeader
           feedType={newsfeed.feedType}
           onFeedTypeChange={newsfeed.changeFeedTypeChange}
@@ -160,6 +172,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         <View style={ThemedStyles.style.flexContainer}>
           <FeedListSticky
             stickyHeaderIndices={isLatest ? sticky : undefined}
+            overrideItemLayout={overrideItemLayout}
             bottomComponent={
               isLatest ? (
                 <IfFeatureEnabled feature="mob-4193-polling">

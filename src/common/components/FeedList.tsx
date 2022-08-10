@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleProp, ViewStyle, Dimensions } from 'react-native';
-import { FlashList, ListRenderItem } from '@shopify/flash-list';
+import { FlashList, FlashListProps, ListRenderItem } from '@shopify/flash-list';
 import Animated from 'react-native-reanimated';
 
 import { observer } from 'mobx-react';
@@ -34,24 +34,25 @@ export class InjectItem {
   /**
    * the component to render
    */
-  component: (props: InjectItemComponentProps) => React.ReactNode;
+  component: (props: InjectItemComponentProps) => React.ReactElement;
 
   constructor(
     indexes: number | ((index: number) => boolean),
     type: string,
-    component: (props: InjectItemComponentProps) => React.ReactNode,
+    component: (props: InjectItemComponentProps) => React.ReactElement,
   ) {
     this.component = component;
     this.type = type;
     this.indexes = indexes;
   }
 }
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const drawAhead = height;
-const itemHeight = width / 3;
+const itemHeight = height / 3;
 
 export type FeedListPropsType<T extends BaseModel> = {
   feedStore: FeedStore<T>;
+  overrideItemLayout?: FlashListProps<T>['overrideItemLayout'];
   renderTileActivity?: ListRenderItem<T>;
   renderActivity?: ListRenderItem<T>;
   emptyMessage?: React.ReactElement;
@@ -355,12 +356,14 @@ export class FeedList<T extends BaseModel> extends Component<
     target: string;
   }) => {
     const entity = row.item;
+    const InjectedComponent =
+      entity instanceof InjectItem ? entity.component : null;
     return (
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
-        {entity instanceof InjectItem ? (
-          entity.component({ index: row.index, target: row.target })
+        {entity instanceof InjectItem && InjectedComponent ? (
+          <InjectedComponent {...row} />
         ) : (
           <Activity
             entity={entity}
