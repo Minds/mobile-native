@@ -1,3 +1,4 @@
+import { observable } from 'mobx';
 import type UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -16,7 +17,7 @@ export default class NotificationModel extends AbstractModel {
   merged_count!: number;
   merged_from!: UserModel[];
   merged_from_guids!: string[];
-  read!: boolean;
+  @observable read!: boolean;
   to_guid!: string;
   type!: NotificationType;
   urn!: string;
