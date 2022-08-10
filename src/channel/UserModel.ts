@@ -13,6 +13,7 @@ import { UserError } from '../common/UserError';
 import i18n from '../common/services/i18n.service';
 import { showNotification } from '../../AppMessages';
 import { SocialProfile } from '../types/Common';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -133,6 +134,12 @@ export default class UserModel extends BaseModel {
     try {
       await apiService.post('api/v3/email/confirm');
       this.setEmailConfirmed(true);
+
+      // mark as completed without wait for the server
+      inFeedNoticesService.markAsCompleted('verify-email');
+      // load in feed from server
+      inFeedNoticesService.load();
+
       return true;
     } catch (error) {
       return false;

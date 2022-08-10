@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { showNotification } from '../../../../AppMessages';
 import Button from '../../../common/components/Button';
 import MText from '../../../common/components/MText';
@@ -44,6 +45,10 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
       if (unsubscribe) {
         unsubscribe();
       }
+
+      // refresh in-feed notices when leaving the screen
+      inFeedNoticesService.load();
+
       if (route && route.params && route.params.initial) {
         if (redirectExperiment.on) {
           navigation.navigate('Tabs', {
