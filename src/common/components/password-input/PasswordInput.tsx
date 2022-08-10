@@ -37,6 +37,7 @@ const PasswordInput = ({
       <InputContainer
         placeholder={i18n.t('auth.password')}
         secureTextEntry={!showPassword}
+        multiline={false}
         {...props}
       />
       <Icon
