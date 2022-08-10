@@ -1,6 +1,8 @@
 import logService from '../common/services/log.service';
 import { storages } from '../common/services/storage/storages.service';
 
+const KEEP_SECONDS = 60 * 60 * 48; // 48 hours
+
 /**
  * Portrait content service
  */
@@ -28,7 +30,7 @@ export class PortraitContentService {
       if (
         urns &&
         Array.isArray(urns[0]) &&
-        urns[0][1] < Date.now() / 1000 - 172800
+        urns[0][1] < Date.now() / 1000 - KEEP_SECONDS
       ) {
         this.cleanOld(urns);
       }
@@ -45,7 +47,7 @@ export class PortraitContentService {
    * Delete old information (older than 48hs)
    */
   async cleanOld(urns: Array<[string, number]>) {
-    const threshold = Date.now() / 1000 - 172800;
+    const threshold = Date.now() / 1000 - KEEP_SECONDS;
     try {
       urns.forEach(data => {
         if (data[1] < threshold) {

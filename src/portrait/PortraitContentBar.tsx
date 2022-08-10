@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useCallback,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import React, { useCallback } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
@@ -92,45 +87,33 @@ const renderItem = ({
 /**
  * Portrait content bar
  */
-const PortraitContentBar = observer(
-  forwardRef((_, ref) => {
-    const store = useStores().portrait;
+const PortraitContentBar = observer(() => {
+  const store = useStores().portrait;
 
-    useEffect(() => {
-      store.load();
-    }, [store]);
+  const Empty = useCallback(() => {
+    if (store.loading) {
+      return <BarPlaceholder />;
+    }
+    return null;
+  }, [store]);
 
-    useImperativeHandle(ref, () => ({
-      load: () => {
-        store.load();
-      },
-    }));
-
-    const Empty = useCallback(() => {
-      if (store.loading) {
-        return <BarPlaceholder />;
-      }
-      return null;
-    }, [store]);
-
-    return (
-      <View style={styles.containerStyle}>
-        <FlatList
-          // @ts-ignore
-          ref={portraitBarRef}
-          contentContainerStyle={styles.listContainerStyle}
-          style={styles.bar}
-          horizontal={true}
-          ListHeaderComponent={Header}
-          ListEmptyComponent={Empty}
-          renderItem={renderItem}
-          data={store.items.slice()}
-          keyExtractor={keyExtractor}
-        />
-      </View>
-    );
-  }),
-);
+  return (
+    <View style={styles.containerStyle}>
+      <FlatList
+        // @ts-ignore
+        ref={portraitBarRef}
+        contentContainerStyle={styles.listContainerStyle}
+        style={styles.bar}
+        horizontal={true}
+        ListHeaderComponent={Header}
+        ListEmptyComponent={Empty}
+        renderItem={renderItem}
+        data={store.items.slice()}
+        keyExtractor={keyExtractor}
+      />
+    </View>
+  );
+});
 
 const keyExtractor = (item, _) => item.user.guid;
 

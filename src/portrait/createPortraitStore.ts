@@ -114,6 +114,9 @@ const postProcessPortraitEntities = (
   return items;
 };
 
+// Subscriptions observable
+let subscription$: Subscription | null = null;
+
 /**
  * Portrait store generator
  */
@@ -125,7 +128,6 @@ function createPortraitStore() {
     UserModel.events,
     'toggleSubscription',
   ).pipe(filter(({ shouldUpdateFeed }) => shouldUpdateFeed));
-  let subscription$: Subscription | null = null;
 
   return {
     items: <Array<PortraitBarItem>>[],
@@ -154,12 +156,15 @@ function createPortraitStore() {
         });
         const seenList = await portraitContentService.getSeen();
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
-        await feedStore.fetch(true, true);
-        this.items = postProcessPortraitEntities(
-          feedStore.entities as [ActivityModel],
-          seenList,
-          user,
-        );
+        // only if there is no data yet
+        if (!this.items.length) {
+          await feedStore.fetch(true, true);
+          this.items = postProcessPortraitEntities(
+            feedStore.entities as [ActivityModel],
+            seenList,
+            user,
+          );
+        }
 
         // =====================| 2. FETCH & LOAD DATA FROM REMOTE |=====================>
         /**

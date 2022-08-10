@@ -4115,12 +4115,12 @@
     xcode "3.0.1"
     yargs "^16.2.0"
 
-"@shopify/flash-list@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.2.0.tgz#981b1a9fc92b16aeb835fc17423c9e3d5cb36565"
-  integrity sha512-P5YzT91InI3t+Cw651bFXl1au2FxPuuPPDs1ijaUDUCOCJVliZOLdVD58CXElsNVcLppEqWDah4TB1JyC54Pqg==
+"@shopify/flash-list@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.2.1.tgz#013348b1a1d1feb3302d2d322650e2729e7668dd"
+  integrity sha512-32N3CD+eJErgdEtyM8YP4iocvMJoOMeFbLnFE65Hpc+/CFz6rKbdN1zB5u6DXrE30WYKfKdTwhw0iTJje98dPA==
   dependencies:
-    recyclerlistview "4.1.1"
+    recyclerlistview "4.1.2"
     tslib "2.4.0"
 
 "@sideway/address@^4.1.0":
@@ -16358,10 +16358,10 @@ recursive-readdir@^2.2.2:
   dependencies:
     minimatch "3.0.4"
 
-recyclerlistview@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.1.1.tgz#b8f5f99a0be4dde7ceb4984f1949105f384d53b8"
-  integrity sha512-5BaAFSaSXDF9/mjv5WplX9mbZsKgYgn7N10uYjpqjW33UGVPZcz2omUOkXv0Bs6syP4qWVg3vz+NvBTjHwAOyg==
+recyclerlistview@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.1.2.tgz#3629c2faff13be3dc64bca82490e9a5efb2303aa"
+  integrity sha512-fvopyPoXaDY/RJGJKzroGYHgBAZoXlEdLw1D4PSi3isTRhyfbh0WNNuTyLfJSiz6ctZeb0J2ErPCInYcahFTlw==
   dependencies:
     lodash.debounce "4.0.8"
     prop-types "15.8.1"
