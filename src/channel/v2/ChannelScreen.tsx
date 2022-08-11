@@ -116,6 +116,7 @@ const ChannelScreen = observer((props: PropsType) => {
   const bannerUri = store.channel?.getBannerSource().uri;
   const subscribersActionSheetRef = useRef<any>(null);
   const subscriptionsActionSheetRef = useRef<any>(null);
+  const subscribersYouKnowSheetRef = useRef<any>(null);
   /**
    * scroll offset
    **/
@@ -327,6 +328,11 @@ const ChannelScreen = observer((props: PropsType) => {
     [],
   );
 
+  const openSubscribersYouKnow = useCallback(
+    () => subscribersYouKnowSheetRef.current?.show('subscribersYouKnow'),
+    [],
+  );
+
   // =====================| RENDERS |=====================>
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -461,6 +467,7 @@ const ChannelScreen = observer((props: PropsType) => {
             route={props.route}
             onOpenSubscribers={openSubscribers}
             onOpenSubscriptions={openSubscriptions}
+            onOpenSubscribersYouKnow={openSubscribersYouKnow}
           />
         }
         navigation={props.navigation}
@@ -487,6 +494,10 @@ const ChannelScreen = observer((props: PropsType) => {
       <InteractionsBottomSheet
         entity={store.channel}
         ref={subscriptionsActionSheetRef}
+      />
+      <InteractionsBottomSheet
+        entity={store.channel}
+        ref={subscribersYouKnowSheetRef}
       />
     </ChannelContext.Provider>
   );

@@ -36,6 +36,7 @@ type PropsType = {
   params?: Object;
   placeholderCount?: number;
   renderPlaceholder?: () => JSX.Element;
+  offsetPagination: boolean;
 };
 
 type FetchResponseType = {
@@ -50,14 +51,39 @@ export default observer(
     type ApiFetchType = FetchResponseType & T;
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>('');
+    const [page, setPage] = useState<number>(1);
+    const offsetField = props.offsetField || 'offset';
     const opts = {
       limit: 12,
-      [props.offsetField || 'offset']: offset,
+      [offsetField]: offset,
     };
     if (props.params) {
       Object.assign(opts, props.params);
     }
+    if (props.offsetPagination) {
+      opts[offsetField] = (page - 1) * opts.limit;
+    }
+    const [hasMore, setHasMore] = useState<boolean>(true);
     const keyExtractor = (item, index: any) => `${item.urn}${index}`;
+
+    const updateState = useCallback(
+      (newData: any, oldData: any) => {
+        const map = props.map || ((data: any) => data);
+        if (!newData?.[props.endpointData].length) {
+          setHasMore(false);
+        }
+
+        return {
+          ...newData,
+          [props.endpointData]: [
+            ...(oldData?.[props.endpointData] || []),
+            ...map(newData?.[props.endpointData] || []),
+          ],
+        };
+      },
+      [props.endpointData, props.map],
+    );
+
     const {
       result,
       loading,
@@ -67,9 +93,7 @@ export default observer(
       refreshing,
     } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
       params: opts,
-      dataField: props.endpointData,
-      updateStrategy: 'merge',
-      map: props.map,
+      updateState,
     });
     const data = useMemo(() => {
       if (result) {
@@ -96,10 +120,18 @@ export default observer(
     }, [refresh]);
 
     const onFetchMore = useCallback(() => {
-      if (!loading && result && Boolean(result['load-next'])) {
+      if (loading) {
+        return;
+      }
+
+      if (props.offsetPagination && hasMore) {
+        return setPage(oldPage => oldPage + 1);
+      }
+
+      if (result?.['load-next']) {
         setOffset(result['load-next']);
       }
-    }, [loading, result]);
+    }, [loading, result, props.offsetPagination, hasMore]);
 
     // =====================| RENDERS |=====================>
     const renderItem = useMemo(() => {
@@ -121,7 +153,13 @@ export default observer(
             <ActivityIndicator size={30} />
           </View>
         ) : undefined,
-      [loading, refreshing, props.endpointData, result?.[props.endpointData]],
+      [
+        loading,
+        refreshing,
+        result,
+        props.endpointData,
+        theme.paddingVertical2x,
+      ],
     );
 
     if (error && !loading) {
