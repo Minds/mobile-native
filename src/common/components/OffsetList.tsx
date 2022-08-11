@@ -36,7 +36,7 @@ type PropsType = {
   params?: Object;
   placeholderCount?: number;
   renderPlaceholder?: () => JSX.Element;
-  offsetPagination: boolean;
+  offsetPagination?: boolean;
 };
 
 type FetchResponseType = {
