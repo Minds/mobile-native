@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleProp, ViewStyle, Dimensions } from 'react-native';
+import {
+  View,
+  StyleProp,
+  ViewStyle,
+  Dimensions,
+  RefreshControl,
+} from 'react-native';
 import { FlashList, FlashListProps, ListRenderItem } from '@shopify/flash-list';
 import Animated from 'react-native-reanimated';
 
@@ -16,6 +22,7 @@ import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type BaseModel from '../BaseModel';
+import { IS_IOS } from '~/config/Config';
 
 export interface InjectItemComponentProps {
   index: number;
@@ -202,8 +209,15 @@ export class FeedList<T extends BaseModel> extends Component<
           data={items}
           renderItem={renderRow}
           keyExtractor={this.keyExtractor}
-          onRefresh={this.refresh}
-          refreshing={this.refreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.refreshing}
+              onRefresh={this.refresh}
+              progressViewOffset={IS_IOS ? 0 : 80}
+              tintColor={ThemedStyles.getColor('Link')}
+              colors={[ThemedStyles.getColor('Link')]}
+            />
+          }
           disableAutoLayout={true}
           onEndReached={this.loadMore}
           getItemType={this.getType}
