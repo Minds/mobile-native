@@ -43,6 +43,7 @@ const MindsVideo = observer((props: PropsType) => {
     !props.ignoreDataSaver && settingsStore.dataSaverEnabled;
   const localStore = useLocalStore(createMindsVideoStore, {
     autoplay: props.autoplay,
+    repeat: props.repeat,
     dataSaverEnabled,
   });
 
