@@ -271,8 +271,6 @@ export default class Activity extends Component<PropsType> {
               {this.props.entity.perma_url || this.props.entity.remind_object
                 ? message
                 : undefined}
-              {this.showRemind()}
-              {this.props.entity.remind_deleted && <DeletedRemind />}
               <MediaView
                 ref={this.setMediaViewRef}
                 entity={entity}
@@ -280,6 +278,8 @@ export default class Activity extends Component<PropsType> {
                 imageStyle={theme.flexContainer}
                 autoHeight={this.props.autoHeight}
               />
+              {this.showRemind()}
+              {this.props.entity.remind_deleted && <DeletedRemind />}
               {!(
                 this.props.entity.perma_url ||
                 this.props.entity.remind_object ||
@@ -378,7 +378,7 @@ export default class Activity extends Component<PropsType> {
       }
 
       return (
-        <View style={remindContainerStyle}>
+        <View style={[remindContainerStyle, ThemedStyles.style.marginLeft15x]}>
           <Activity
             ref={this.setRemind}
             hideTabs={true}

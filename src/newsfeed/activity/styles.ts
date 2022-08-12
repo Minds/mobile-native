@@ -81,8 +81,10 @@ const remindBlockContainerStyle = ThemedStyles.combine(
 
 const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
-  'margin2x',
-  'borderHair',
+  'margin3x',
+  'marginLeft15x',
+  'borderRadius3x',
+  'border1x',
   'bcolorPrimaryBorder',
 );
 

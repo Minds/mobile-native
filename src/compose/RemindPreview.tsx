@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import BlogCard from '../blogs/BlogCard';
 import Activity from '../newsfeed/activity/Activity';
-import ThemedStyles from '../styles/ThemedStyles';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 /**
  * Remind Preview
@@ -18,8 +18,20 @@ export default function (props) {
   const navigation = useNavigation();
 
   return (
-    <View style={ThemedStyles.style.paddingHorizontal4x}>
-      <ShowComponent hideTabs={true} entity={entity} navigation={navigation} />
+    <View style={remindContainerStyle}>
+      <ShowComponent
+        hideTabs={true}
+        entity={entity}
+        navigation={navigation}
+        isReminded
+      />
     </View>
   );
 }
+
+const remindContainerStyle = ThemedStyles.combine(
+  'marginVertical3x',
+  'borderRadius3x',
+  'border1x',
+  'bcolorPrimaryBorder',
+);
