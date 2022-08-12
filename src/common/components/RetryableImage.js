@@ -16,7 +16,7 @@ export default function (props) {
       if (retries < maxRetries) {
         setRetries(retries + 1);
       } else {
-        onError(error);
+        onError?.(error);
       }
     },
     [props.retry, retries, onError],
