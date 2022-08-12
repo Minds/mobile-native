@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import AnimatedNumbers from 'react-native-animated-numbers';
 import ErrorBoundary from '~/common/components/ErrorBoundary';
