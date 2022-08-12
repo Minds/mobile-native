@@ -1,5 +1,5 @@
 import { ErrorBoundary } from '@sentry/react-native';
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import AnimatedNumbers from 'react-native-animated-numbers';
 import MText from '~/common/components/MText';
@@ -17,6 +17,13 @@ const Counter = ({ count, style }: PropsType) => {
   const { number: abbrevatedNumber, unit } = abbrevWithUnit(count, 1);
   const [d1, d2] = String(abbrevatedNumber).split('.');
   const fontStyle = [textStyle, style];
+  const [animationDuration, setAnimationDuration] = useState(0);
+
+  // set the animation duration after component mounts
+  // to disable the initial animation
+  useEffect(() => {
+    setAnimationDuration(500);
+  }, []);
 
   return (
     <ErrorBoundary
@@ -27,7 +34,7 @@ const Counter = ({ count, style }: PropsType) => {
       }>
       <View style={ThemedStyles.style.rowJustifyCenter}>
         <AnimatedNumbers
-          animationDuration={500}
+          animationDuration={animationDuration}
           animateToNumber={Number(d1)}
           fontStyle={fontStyle}
         />
@@ -35,7 +42,7 @@ const Counter = ({ count, style }: PropsType) => {
           <>
             <MText style={fontStyle}>.</MText>
             <AnimatedNumbers
-              animationDuration={500}
+              animationDuration={animationDuration}
               animateToNumber={Number(d2)}
               fontStyle={fontStyle}
             />

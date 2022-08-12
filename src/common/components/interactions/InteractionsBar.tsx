@@ -6,7 +6,6 @@ import type BlogModel from '../../../blogs/BlogModel';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import abbrev from '../../helpers/abbrev';
 import i18n from '../../services/i18n.service';
 import MText from '../MText';
 import PressableScale from '../PressableScale';
