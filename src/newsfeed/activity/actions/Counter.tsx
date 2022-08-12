@@ -1,7 +1,7 @@
-import { ErrorBoundary } from '@sentry/react-native';
 import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import AnimatedNumbers from 'react-native-animated-numbers';
+import ErrorBoundary from '~/common/components/ErrorBoundary';
 import MText from '~/common/components/MText';
 import abbrev, { abbrevWithUnit } from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -10,7 +10,7 @@ type PropsType = {
   size?: number;
   count: number;
   testID?: string;
-  style: any;
+  style?: any;
 };
 
 const Counter = ({ count, style }: PropsType) => {
