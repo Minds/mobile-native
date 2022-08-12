@@ -55,6 +55,6 @@ const Counter = ({ count, style }: PropsType) => {
   );
 };
 
-export default memo(Counter);
+export default Counter;
 
 const textStyle = ThemedStyles.combine('colorIcon', 'fontM', 'fontMedium');
