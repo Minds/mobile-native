@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   container: {
     overflow: 'visible',
   },
@@ -12,18 +11,13 @@ const styles = StyleSheet.create({
   onlyContentbodyContainer: {
     justifyContent: 'center',
   },
-  messageContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
+  messageContainer: ['paddingHorizontal4x', 'paddingVertical3x'],
   message: {
     fontFamily: 'Roboto',
     fontSize: 16,
     lineHeight: 24,
   },
-  emptyMessage: {
-    padding: 0,
-  },
+  emptyMessage: ['padding0x'],
   timestamp: {
     fontSize: 14,
     color: '#888',
@@ -52,15 +46,14 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     textAlign: 'center',
   },
-  yellowBannerText: {
-    fontSize: 11,
-    color: '#000',
-    ...ThemedStyles.style.paddingLeft,
-  },
-  yellowBanner: {
-    backgroundColor: '#ffecb3',
-    ...ThemedStyles.style.padding,
-  },
+  yellowBannerText: [
+    {
+      fontSize: 11,
+      color: '#000',
+    },
+    'paddingLeft',
+  ],
+  yellowBanner: [{ backgroundColor: '#ffecb3' }, 'padding'], //TODO: move colors to pallette or select others
 });
 
 const shortTextStyle = ThemedStyles.combine(
@@ -82,7 +75,7 @@ const remindBlockContainerStyle = ThemedStyles.combine(
 const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
   'margin3x',
-  'marginLeft15x',
+  'marginHorizontal4x',
   'borderRadius3x',
   'border1x',
   'bcolorPrimaryBorder',

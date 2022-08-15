@@ -378,7 +378,7 @@ export default class Activity extends Component<PropsType> {
       }
 
       return (
-        <View style={[remindContainerStyle, ThemedStyles.style.marginLeft15x]}>
+        <View style={remindContainerStyle}>
           <Activity
             ref={this.setRemind}
             hideTabs={true}

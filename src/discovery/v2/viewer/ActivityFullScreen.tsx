@@ -36,6 +36,7 @@ import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
+import { remindContainerStyle } from '~/newsfeed/activity/styles';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -433,9 +434,3 @@ const contentFitStyle = ThemedStyles.combine(
 );
 const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
 
-const remindContainerStyle = ThemedStyles.combine(
-  styles.remind,
-  'margin2x',
-  'borderHair',
-  'bcolorPrimaryBackground',
-);
