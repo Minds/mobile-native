@@ -433,4 +433,3 @@ const contentFitStyle = ThemedStyles.combine(
   styles.content,
 );
 const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
-

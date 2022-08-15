@@ -11,17 +11,15 @@ import ThemedStyles from '~/styles/ThemedStyles';
  * @param {Object} props
  */
 export default function (props) {
-  const entity = props.entity.remind_object || props.entity;
-
   const ShowComponent: React.ElementType =
-    entity.subtype === 'blog' ? BlogCard : Activity;
+    props.entity.subtype === 'blog' ? BlogCard : Activity;
   const navigation = useNavigation();
 
   return (
     <View style={remindContainerStyle}>
       <ShowComponent
         hideTabs={true}
-        entity={entity}
+        entity={props.entity}
         navigation={navigation}
         isReminded
       />
