@@ -81,6 +81,7 @@ export default class MediaView extends Component<PropsType> {
               ignoreDataSaver={this.props.ignoreDataSaver}
               onStoreCreated={this.onStoreCreated}
               hideOverlay={this.props.hideOverlay}
+              repeat={true}
             />
           </View>
         );
