@@ -60,6 +60,10 @@ class ReceiveShareService {
 
     const data = IS_IOS ? item.data[0] : item;
 
+    if (!data) {
+      return;
+    }
+
     if (data.mimeType.includes('image/') || data.mimeType.includes('video/')) {
       this.handleMedia(data);
     } else if (data.mimeType.includes('text')) {
