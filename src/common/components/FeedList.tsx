@@ -209,6 +209,7 @@ export class FeedList<T extends BaseModel> extends Component<
           data={items}
           renderItem={renderRow}
           keyExtractor={this.keyExtractor}
+          refreshing={this.refreshing} // on Android it throws an invariant error (it shouldn't be necessary as we are using RefreshControl)
           refreshControl={
             <RefreshControl
               refreshing={this.refreshing}
