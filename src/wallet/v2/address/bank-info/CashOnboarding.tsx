@@ -24,13 +24,11 @@ const CashOnboarding = observer(
   ({ localStore, friendlyFormKeys }: PropsType) => {
     const theme = ThemedStyles.style;
 
-    const checkIcon = (
-      <Icon size={30} name="md-checkmark" style={theme.colorIcon} />
-    );
-
     return (
-      <DismissKeyboard style={theme.flexContainer}>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={theme.paddingBottom10x}>
+        <DismissKeyboard style={theme.flexContainer}>
           <CountrySelector
             allowed={allowedCountries.allowedCountriesBankAccount}
             onSelected={localStore.setCountry}
@@ -158,13 +156,27 @@ const CashOnboarding = observer(
               item={{
                 onPress: localStore.setStripeAgree,
                 title: friendlyFormKeys.stripeAgree,
-                icon: localStore.stripeAgree ? checkIcon : undefined,
+                icon: (
+                  <Icon
+                    size={30}
+                    name={
+                      localStore.stripeAgree
+                        ? 'checkbox-outline'
+                        : 'square-outline'
+                    }
+                    style={
+                      localStore.stripeAgree
+                        ? theme.colorIcon
+                        : theme.colorIconDisabled
+                    }
+                  />
+                ),
                 noIcon: !localStore.stripeAgree,
               }}
             />
           </View>
-        </KeyboardAwareScrollView>
-      </DismissKeyboard>
+        </DismissKeyboard>
+      </KeyboardAwareScrollView>
     );
   },
 );
