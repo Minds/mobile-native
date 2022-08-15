@@ -315,7 +315,7 @@ export class FeedList<T extends BaseModel> extends Component<
     });
     change.changed.forEach(
       (c: { item: { setVisible: (arg0: any) => void }; isViewable: any }) => {
-        if (c.item.setVisible) {
+        if (c.item && c.item.setVisible) {
           c.item.setVisible(c.isViewable);
         }
       },
