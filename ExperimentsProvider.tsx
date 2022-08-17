@@ -6,7 +6,7 @@ import analyticsService from '~/common/services/analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import { IS_REVIEW } from '~/config/Config';
+import { IS_IOS, IS_REVIEW } from '~/config/Config';
 
 export const growthbook = new GrowthBook({
   trackingCallback: (experiment, result) => {
@@ -48,6 +48,9 @@ export function updateGrowthBookAttributes() {
       ...growthbook.getAttributes(),
       loggedIn: Boolean(sessionService.token),
       id: userId,
+      appVersion: DeviceInfo.getVersion(),
+      buildNumber: DeviceInfo.getBuildNumber(),
+      platform: IS_IOS ? 'ios' : 'android',
       user: {
         id: userId,
       },
