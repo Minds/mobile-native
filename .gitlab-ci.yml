@@ -79,6 +79,7 @@ build:ios_mr:
   stage: build
   interruptible: true
   script:
+    - export ENVFILE=".env.review"
     - fastlane buildrelease
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
     - cd ..
