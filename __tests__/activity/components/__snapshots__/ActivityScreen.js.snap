@@ -1287,6 +1287,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -1343,6 +1344,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -1430,6 +1432,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -1486,6 +1489,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -1573,6 +1577,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -1629,6 +1634,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -1716,6 +1722,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -1772,6 +1779,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -1874,6 +1882,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "setRichEmbedPromise": null,
         },
         "entity": Object {
+          "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -1930,6 +1939,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "message": "Message",
           "ownerObj": Object {
             "__list": null,
+            "access_id": "",
             "allow_comments": true,
             "blocked": undefined,
             "canary": false,
@@ -2014,7 +2024,7 @@ exports[`Activity screen component renders correctly  1`] = `
         },
         "errorLoadingNext": false,
         "errorLoadingPrevious": false,
-        "focusedUrn": null,
+        "focusedCommentUrn": null,
         "level": 0,
         "loadNext": "",
         "loadPrevious": "",

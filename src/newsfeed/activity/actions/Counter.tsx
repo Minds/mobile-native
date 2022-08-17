@@ -31,7 +31,7 @@ export default class Counter extends PureComponent<PropsType> {
     return (
       <View style={ThemedStyles.style.columnAlignCenter}>
         <MText style={textStyle} {...otherProps}>
-          {count > 0 ? abbrev(count, 0) : ''}
+          {count > 0 ? abbrev(count, 1) : ''}
         </MText>
       </View>
     );

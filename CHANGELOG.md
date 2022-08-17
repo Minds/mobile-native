@@ -2,6 +2,29 @@
 
 Minds Mobile
 
+## 4.27.0 - 2022-08-12
+
+### Changed
+
+- New feed implementation with performance improvements
+- Fix video sound loop and video frozen on iOS
+- Fix video loop on Android
+- Refactor of the portrait content viewer
+- In feed notices
+- Fix notifications unread count logic
+- Email code verification & improved initial screen transitions
+- Allow media only comments
+- Fix push navigation for comments
+- Track deep linking navigation
+- Fix reset password & navigation issues
+- Mutual subscription (I don't recall the new name lol)
+- Clean memory cache when switching users
+- Fix orientation lock on iOS
+- Decimal points for counters
+- Portrait content load improvements
+- Fix password mask on Android
+- Fix top post feed on the discovery screen
+
 ## 4.26.0 - 2022-07-12
 
 ### Changed

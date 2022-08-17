@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Pressable, PressableProps } from 'react-native';
-import FitScrollView from '~/common/components/FitScrollView';
+import { Pressable, PressableProps, ScrollView } from 'react-native';
 import FloatingInput from '~/common/components/FloatingInput';
 import Toggle from '~/common/components/Toggle';
 import { storages } from '~/common/services/storage/storages.service';
@@ -43,7 +42,7 @@ const DevToolsScreen = () => {
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
       titleStyle={theme.colorPrimaryText}>
-      <FitScrollView>
+      <ScrollView>
         <ScreenSection vertical="M">
           <H3>Server</H3>
           <Row align="centerBetween" vertical="L">
@@ -97,7 +96,7 @@ const DevToolsScreen = () => {
           </B2>
         </ScreenSection>
         <GrowthbookDev />
-      </FitScrollView>
+      </ScrollView>
     </ModalContainer>
   );
 };

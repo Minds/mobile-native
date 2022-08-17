@@ -36,6 +36,10 @@ function navigate(...args) {
   _navigator.navigate(...args);
 }
 
+function setParams(params) {
+  _navigator.dispatch(CommonActions.setParams(params));
+}
+
 function dispatch(...args) {
   _navigator.dispatch(...args);
 }
@@ -79,4 +83,5 @@ export default {
   goBack,
   addListener,
   onStateChange,
+  setParams,
 };

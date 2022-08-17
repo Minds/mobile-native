@@ -128,8 +128,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     }
     viewabilityConfig={
       Object {
-        "itemVisiblePercentThreshold": 50,
-        "minimumViewTime": 300,
+        "itemVisiblePercentThreshold": 70,
+        "minimumViewTime": 500,
         "waitForInteraction": false,
       }
     }
@@ -138,8 +138,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         Object {
           "onViewableItemsChanged": [Function],
           "viewabilityConfig": Object {
-            "itemVisiblePercentThreshold": 50,
-            "minimumViewTime": 300,
+            "itemVisiblePercentThreshold": 70,
+            "minimumViewTime": 500,
             "waitForInteraction": false,
           },
         },
@@ -154,22 +154,11 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "backgroundColor": "#1F252C",
-                },
-                Object {
-                  "elevation": 3,
-                  "shadowColor": "#000",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.2,
-                  "shadowRadius": 1.41,
-                  "zIndex": 999,
-                },
-              ]
+              Object {
+                "backgroundColor": "#1F252C",
+                "shadowColor": "transparent",
+                "zIndex": 999,
+              }
             }
           >
             <View
@@ -177,7 +166,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 Object {
                   "display": "flex",
                   "flexDirection": "row",
-                  "height": 70,
+                  "height": 60,
                   "paddingTop": 0,
                 }
               }

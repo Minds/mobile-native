@@ -36,7 +36,7 @@ export type DiscoveryStackParamList = {
     group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
-    focusedUrn?: string;
+    focusedCommentUrn?: string;
     noBottomInset?: boolean;
   };
   Channel: {};
@@ -112,6 +112,7 @@ type TwoFactorConfirmationParams = {
   oldCode: string;
   email?: string;
   showRecovery?: boolean;
+  isNewUser?: boolean;
 };
 
 export type RootStackParamList = {
@@ -246,7 +247,7 @@ export type AppStackParamList = {
     group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
-    focusedUrn?: string;
+    focusedCommentUrn?: string;
     noBottomInset?: boolean;
   };
   Conversation: {};

@@ -2,7 +2,6 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -116,7 +115,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     },
   }));
   const route = useRoute<ActivityRoute>();
-  const focused = useFocus();
   const insets = useSafeAreaInsets();
   const window = useDimensions().window;
   const theme = ThemedStyles.style;
@@ -145,27 +143,20 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [commentsRef]);
 
   useEffect(() => {
-    let time: any;
-    if (focused) {
-      const user = sessionService.getUser();
+    const user = sessionService.getUser();
 
-      if (
-        ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
-        mediaRef.current
-      ) {
-        mediaRef.current.playVideo(
-          !videoPlayerService.isSilent ? true : undefined,
-        );
-      }
-    } else {
-      mediaRef.current?.pauseVideo();
+    // if we have some video playing we pause it and reset the current video
+    videoPlayerService.setCurrent(null);
+
+    if (
+      (!user.disable_autoplay_videos || props.forceAutoplay) &&
+      mediaRef.current
+    ) {
+      mediaRef.current.playVideo(
+        !videoPlayerService.isSilent ? true : undefined,
+      );
     }
-    return () => {
-      if (time) {
-        clearTimeout(time);
-      }
-    };
-  }, [focused, props.forceAutoplay, store]);
+  }, [props.forceAutoplay, store]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -365,7 +356,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={
-            Boolean(route.params?.focusedUrn) ||
+            Boolean(route.params?.focusedCommentUrn) ||
             Boolean(route.params?.scrollToBottom)
           }
           commentsStore={store.comments}

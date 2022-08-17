@@ -1,4 +1,5 @@
 import { ColorsType } from './Colors';
+import { UIUnitType } from './Tokens';
 
 type PrependNextNum<A extends Array<unknown>> = A['length'] extends infer T
   ? ((t: T, ...a: A) => void) extends (...x: infer X) => void
@@ -94,4 +95,21 @@ export type DynamicStyles = {
       | `bcolor${key}${ThemeSuffix}`
       | `shadow${key}`
       | `shadow${key}${ThemeSuffix}`];
+  } &
+  {
+    [key in UIUnitType as
+      | `paddingVertical${key}`
+      | `paddingTop${key}`
+      | `paddingLeft${key}`
+      | `paddingRight${key}`
+      | `paddingBottom${key}`
+      | `paddingHorizontal${key}`
+      | `padding${key}`
+      | `marginVertical${key}`
+      | `marginTop${key}`
+      | `marginLeft${key}`
+      | `marginRight${key}`
+      | `marginBottom${key}`
+      | `marginHorizontal${key}`
+      | `margin${key}`]: any;
   };

@@ -59,7 +59,7 @@
   },
   "auth": {
     "2faRequired": "2FA required",
-    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address before continuing.",
+    "2faEmailDescription": "Minds just sent a 6-digit authentication code to your registered email address",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
     "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
     "2faInvalid": "Invalid code",
@@ -112,6 +112,18 @@
     "login": "Add existing account",
     "create": "Create new channel",
     "sessionExpired": "Logged out"
+  },
+  "inFeedNotices": {
+    "verifyEmail": "Verify email",
+    "verifyEmailDescription": "Before getting down to business on Minds, can we please ask that you verify your email address. (P.S. Check your spam folder 📥)",
+    "updatePreferences": "Update your preferences",
+    "tagsDescription": "Updating your interest tags improves your experience on Minds, and makes it easier to discover creators and content you haven't found yet.",
+    "update": "Update",
+    "whois": "Who is @{{name}}",
+    "userDescription": "Let the Minds community know who you are by decking out your channel page. This step is required to join the token rewards program.",
+    "userButton": "Setup my channel",
+    "uniquenessTitle": "You're invited! Join rewards",
+    "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -325,7 +337,17 @@
     "fabSend": "Send Tip",
     "fabPay": "Tip",
     "share": "Share Channel",
-    "userHasntPostedYet": "@{{username}} hasn't posted anything yet"
+    "userHasntPostedYet": "@{{username}} hasn't posted anything yet",
+    "mutualSubscribers": {
+      "description": {
+        "one": "is subscribed",
+        "other": "are subscribed"
+      },
+      "descriptionMany": {
+        "one": "and {{count}} other are subscribed",
+        "other": "and {{count}} others are subscribed"
+      }
+    }
   },
   "discovery": {
     "title": "Discovery",
@@ -932,7 +954,7 @@
     "completeToEarn": "Complete to earn tokens",
     "tooltipInitial1": "To get most from Minds",
     "tooltipInitial2": "please complete these steps",
-    "verifyEmailAddress": "Verify email address",
+    "verifyEmailAddress": "Verify email",
     "selectTags": "Select tags",
     "setupChannel": "Setup channel",
     "verifyUniqueness": "Verify uniqueness",
@@ -1378,10 +1400,10 @@
   },
   "socialCompass": {
     "promptTitle": "Build your algorithm",
-    "promptDesc": "Set your echo chamber preferences.",
+    "promptDesc": "Take control of your social media. Your preferences will improve your Discovery and similar feeds. But don't worry, it won't impact your default newsfeed.",
     "questionsDesc": "The preferences you set will improve your recommendations over time as the open source machine learning monkeys evolve. Don't worry, it won't impact your default newsfeed.",
     "thanks": "Thank you for your feedback and supporting the Minds Community",
-    "callToAction": "Start"
+    "callToAction": "Complete Questionnaire"
   },
   "add": "Add",
   "downloading": "Downloading",

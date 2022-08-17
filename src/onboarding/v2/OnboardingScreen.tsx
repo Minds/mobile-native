@@ -1,11 +1,13 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { hasVariation } from 'ExperimentsProvider';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
 import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { InjectItem } from '~/common/components/FeedList';
 import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
 import BottomButtonOptions, {
@@ -68,6 +70,7 @@ export default observer(function OnboardingScreen() {
       if (
         step &&
         !step.is_completed &&
+        !(newsfeed.feedStore.entities[0] instanceof InjectItem) &&
         newsfeed.feedStore.entities[0] &&
         newsfeed.feedStore.entities[0].owner_guid ===
           sessionService.getUser().guid
@@ -120,9 +123,13 @@ export default observer(function OnboardingScreen() {
           s => s.id === 'VerifyEmailStep' && s.is_completed,
         );
         if (!done) {
-          navigation.navigate('VerifyEmail', {
-            store: progressStore,
-          });
+          if (hasVariation('minds-3055-email-codes')) {
+            sessionService.getUser().confirmEmailCode();
+          } else {
+            navigation.navigate('VerifyEmail', {
+              store: progressStore,
+            });
+          }
         } else {
           showNotification(i18n.t('emailConfirm.alreadyConfirmed'));
         }

@@ -93,6 +93,13 @@ export class ApiService {
   @observable mustVerify = false;
   sessionIndex: number | null;
 
+  private twoFactorHandlerEnabled: boolean = true;
+
+  setTwoFactorHandlingEnabled(enabled: boolean) {
+    this.twoFactorHandlerEnabled = enabled;
+    return this;
+  }
+
   @action
   setMustVerify(value) {
     this.mustVerify = value;
@@ -189,10 +196,13 @@ export class ApiService {
 
             const state = NavigationService.getCurrentState();
 
-            if (state?.name === 'TwoFactorConfirmation') {
+            if (
+              state?.name === 'TwoFactorConfirmation' ||
+              !this.twoFactorHandlerEnabled
+            ) {
               // here, we've made a request and the server is requiring 2fa but
               // we're already on the 2fa screen so we'll just throw an error
-              throw new TwoFactorError(error);
+              throw new TwoFactorError(emailKey);
             }
 
             try {
@@ -207,7 +217,7 @@ export class ApiService {
                     }
 
                     // if the code wasn't received, it's a resend confirmation code attempt,
-                    // so make another request similar to the original request (while keping the original request pending)
+                    // so make another request similar to the original request (while keeping the original request pending)
                     // as a means of resending the confirmation code
                     return this.axios.request(originalReq);
                   },

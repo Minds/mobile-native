@@ -1,14 +1,12 @@
 export type IconMapNameType = keyof typeof ICON_MAP;
-
-type IconMap = {
+type Icon = {
   font: string;
   name: string;
   ratio?: number;
   top?: number;
 };
-const ICON_MAP: {
-  [name: string]: IconMap;
-} = {
+
+const ICON_MAP = {
   dev: {
     font: 'MaterialCommunityIcons',
     name: 'dev-to',
@@ -16,6 +14,14 @@ const ICON_MAP: {
   info: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
+  },
+  'info-outline': {
+    font: 'MaterialIcons',
+    name: 'info-outline',
+  },
+  warning: {
+    font: 'MaterialIcons',
+    name: 'warning',
   },
   filter: {
     font: 'MaterialCommunityIcons',
@@ -92,7 +98,7 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'account-box-multiple',
   },
-  chatOff: {
+  'chat-off': {
     font: 'MaterialCommunityIcons',
     name: 'speaker-notes-off',
     top: 2,
@@ -251,6 +257,10 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
   },
-};
+} as const;
 
-export default ICON_MAP;
+export type IconNameType = keyof typeof ICON_MAP;
+
+export type IconMap = Record<IconNameType, Icon>;
+
+export default ICON_MAP as IconMap;

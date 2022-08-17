@@ -37,7 +37,6 @@ type PropsType = {
  */
 @observer
 export default class MediaView extends Component<PropsType> {
-  _currentThumbnail = 0;
   videoPlayer: MindsVideoStoreType | null = null;
 
   /**
@@ -82,6 +81,7 @@ export default class MediaView extends Component<PropsType> {
               ignoreDataSaver={this.props.ignoreDataSaver}
               onStoreCreated={this.onStoreCreated}
               hideOverlay={this.props.hideOverlay}
+              repeat={true}
             />
           </View>
         );

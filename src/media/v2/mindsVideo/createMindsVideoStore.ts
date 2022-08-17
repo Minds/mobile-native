@@ -8,14 +8,22 @@ import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import analyticsService from '~/common/services/analytics.service';
 import SettingsStore from '~/settings/SettingsStore';
+import ActivityModel from '~/newsfeed/ActivityModel';
 
 export type Source = {
   src: string;
   size: number;
 };
 
-const createMindsVideoStore = ({ entity, autoplay }) => {
+const createMindsVideoStore = ({
+  autoplay,
+  repeat,
+}: {
+  autoplay?: boolean;
+  repeat?: boolean;
+}) => {
   const store = {
+    entity: <ActivityModel | null>null,
     initialVolume: <number | null>null,
     volume: videoPlayerService.currentVolume,
     sources: null as Array<Source> | null,
@@ -41,6 +49,25 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
      */
     shouldTrackUnmuteEvent: videoPlayerService.currentVolume === 0,
     hideOverlay: () => null as any,
+    setEntity(entity: ActivityModel | null) {
+      this.entity = entity;
+    },
+    clear() {
+      this.video = null;
+      this.sources = null;
+      this.source = 0;
+      this.paused = true;
+      this.showThumbnail = true;
+      this.currentTime = 0;
+      this.currentSeek = null;
+      this.duration = 0;
+      this.transcoding = false;
+      this.inProgress = false;
+      this.showFullControls = false;
+      this.showOverlay = false;
+      this.fullScreen = false;
+      this.initPromise = null;
+    },
     setForceHideOverlay(forceHideOverlay: boolean) {
       this.forceHideOverlay = forceHideOverlay;
     },
@@ -102,9 +129,11 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       videoPlayerService.setVolume(volume);
     },
     trackUnmute() {
-      analyticsService.trackClick('video-player-unmuted', [
-        analyticsService.buildEntityContext(entity),
-      ]);
+      if (this.entity) {
+        analyticsService.trackClick('video-player-unmuted', [
+          analyticsService.buildEntityContext(this.entity),
+        ]);
+      }
     },
     toggleVolume() {
       // on first unmute call analytics
@@ -130,17 +159,12 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     async onError(err: string) {
       console.log(err);
-      // entity is null only on video previews.
-      if (!entity) {
+      // this.entity is null only on video previews.
+      if (!this.entity) {
         return;
       }
       this.error = true;
       this.inProgress = false;
-    },
-    onVideoEnd() {
-      this.player?.pauseAsync();
-      this.currentTime = 0;
-      this.paused = true;
     },
     onLoadStart() {
       this.error = false;
@@ -203,6 +227,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         this.player?.setStatusAsync({
           positionMillis: time,
           shouldPlay: !this.paused,
+          isLooping: Boolean(repeat),
         });
       }
     },
@@ -232,9 +257,9 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
      */
     async play(sound: boolean | undefined) {
       // check pay walled content
-      if (entity && entity.paywall) {
-        await entity.unlockOrPay();
-        if (entity.paywall) {
+      if (this.entity && this.entity.paywall) {
+        await this.entity.unlockOrPay();
+        if (this.entity.paywall) {
           return;
         }
       }
@@ -255,7 +280,11 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         this.volume = sound ? 1 : 0;
       });
 
-      this.player?.setStatusAsync({ shouldPlay: true, isMuted: !this.volume });
+      this.player?.setStatusAsync({
+        shouldPlay: true,
+        isMuted: !this.volume,
+        isLooping: Boolean(repeat),
+      });
 
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
@@ -281,7 +310,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     /**
      * Sets the instances of the expo-av player
      */
-    async setPlayer(player: Video) {
+    setPlayer(player: Video) {
       this.player = player;
 
       // We define hide overlay here to avoid the weird scope issue on the arrow function
@@ -290,11 +319,15 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           this.setShowOverlay(false);
         }
       }, 4000);
+    },
 
-      // pre init and fetch only not paywalled content
+    /**
+     * Pre init and fetch only not paywalled content
+     */
+    async preload() {
       if (
         !this.video && // ignore if a video is defined (passed as a prop)
-        !entity.paywall &&
+        !this.entity?.paywall &&
         !SettingsStore.dataSaverEnabled
       ) {
         await this.init();
@@ -306,7 +339,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
      */
     init(): Promise<void> {
       if (!this.initPromise) {
-        this.initPromise = this._init().catch(error => {
+        this.initPromise = this._init().catch(_ => {
           this.initPromise = null;
         });
       }
@@ -317,12 +350,12 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
      * Prefetch the sources and the video
      */
     async _init(): Promise<void> {
-      if ((!this.sources || this.sources.length === 0) && entity) {
+      if ((!this.sources || this.sources.length === 0) && this.entity) {
         try {
           const videoObj: any = await attachmentService.getVideo(
-            entity.attachments && entity.attachments.attachment_guid
-              ? entity.attachments.attachment_guid
-              : entity.entity_guid || entity.guid,
+            this.entity.attachments && this.entity.attachments.attachment_guid
+              ? this.entity.attachments.attachment_guid
+              : this.entity.entity_guid || this.entity.guid,
           );
 
           if (videoObj && videoObj.entity.transcoding_status) {

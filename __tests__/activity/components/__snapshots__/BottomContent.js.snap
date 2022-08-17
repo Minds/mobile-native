@@ -5,6 +5,7 @@ exports[`BottomContent component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -26,6 +27,7 @@ exports[`BottomContent component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
@@ -98,6 +100,7 @@ exports[`BottomContent component renders correctly 1`] = `
   <Memo(wrappedComponent)
     entity={
       Object {
+        "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -119,6 +122,7 @@ exports[`BottomContent component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": Object {
           "__list": null,
+          "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,

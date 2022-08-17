@@ -1,8 +1,9 @@
-import FeedStore from '../../../common/stores/FeedStore';
+import type UserModel from '~/channel/UserModel';
+import FeedStore from '~/common/stores/FeedStore';
 
 const createBlockedChannelsStore = () => {
   const store = {
-    feedStore: new FeedStore(true),
+    feedStore: new FeedStore<UserModel>(true),
     async loadList(refresh = false) {
       if (refresh) {
         this.feedStore.clear();

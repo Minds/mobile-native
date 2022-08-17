@@ -21,6 +21,7 @@ import i18n from '~/common/services/i18n.service';
 export default class BaseModel extends AbstractModel {
   position?: number;
   username: string = '';
+  access_id: string = '';
   guid: string = '';
   owner_guid?: string;
   ownerObj!: UserModel;

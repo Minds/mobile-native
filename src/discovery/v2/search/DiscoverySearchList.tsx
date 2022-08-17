@@ -41,7 +41,7 @@ export const DiscoverySearchList = observer((props: Props) => {
    */
   const ItemPartial = useCallback(
     row => {
-      let entity: Element;
+      let entity: React.ReactElement;
 
       switch (row.item.type) {
         case 'user':
@@ -86,7 +86,7 @@ export const DiscoverySearchList = observer((props: Props) => {
     ],
   );
 
-  const EmptyPartial = () => {
+  const EmptyPartial = React.useMemo(() => {
     return store.refreshing ? (
       <View />
     ) : (
@@ -100,7 +100,7 @@ export const DiscoverySearchList = observer((props: Props) => {
         </View>
       </View>
     );
-  };
+  }, [store.refreshing]);
 
   return (
     <View style={theme.flexContainer}>

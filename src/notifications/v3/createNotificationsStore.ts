@@ -91,9 +91,12 @@ const createNotificationsStore = () => ({
   },
   async markAsRead(notification: NotificationModel): Promise<void> {
     try {
-      await apiService.put('api/v3/notifications/read/' + notification.urn);
+      notification.read = true;
       this.setUnread(this.unread - 1);
+      await apiService.put('api/v3/notifications/read/' + notification.urn);
     } catch (err) {
+      notification.read = false;
+      this.setUnread(this.unread + 1);
       logService.exception('[NotificationsStore] markAsRead', err);
     }
   },

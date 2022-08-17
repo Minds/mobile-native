@@ -301,6 +301,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     undefined,
                   ]
                 }
+                multiline={false}
                 onChangeText={[Function]}
                 placeholder=""
                 placeholderTextColor="#444"
@@ -421,9 +422,9 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "backgroundColor": "transparent",
               },
               Object {
-                "minHeight": 44,
+                "minHeight": 42,
                 "paddingHorizontal": 24,
-                "paddingVertical": 4,
+                "paddingVertical": 2,
               },
               undefined,
               undefined,

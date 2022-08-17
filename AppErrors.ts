@@ -22,69 +22,66 @@ if (process.env.JEST_WORKER_ID === undefined) {
         if (!shouldReportToSentry(hint.originalException)) {
           return null;
         }
+        if (__DEV__) {
+          console.log('Exception', hint.originalExceptionnt);
+        }
       }
 
-      // for dev only log into the console
       if (__DEV__) {
-        console.log(hint.originalException);
         return null;
       }
 
+      // for dev only log into the console
       return event;
     },
   });
 }
 
-// // Log Mobx global errors
-// onError(error => {
-//   console.log(error);
-//   logService.exception(error);
-// });
+/**
+ * react-native-exception-handler global handlers
+ */
 
-// react-native-exception-handler global handlers
-if (!__DEV__) {
-  /**
-   * Globar error handlers
-   */
-  const jsErrorHandler = (e, isFatal) => {
-    if (isFatal) {
-      Sentry.captureException(e);
-      if (e) {
-        Alert.alert(
-          'Unexpected error occurred',
-          `
+/**
+ * Global error handlers
+ */
+const jsErrorHandler = (e, isFatal) => {
+  if (isFatal) {
+    Sentry.captureException(e);
+    if (e) {
+      Alert.alert(
+        'Unexpected error occurred',
+        `
           Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}
         `,
-          [
-            {
-              text: 'Ok',
-            },
-          ],
-        );
-      }
-
-      console.log('Minds Uncaught (fatal)', e);
-    } else if (e) {
-      console.log('Minds Uncaught (non-fatal)', e); // So that we can see it in the ADB logs in case of Android if need, eed
+        [
+          {
+            text: 'Ok',
+          },
+        ],
+      );
     }
-  };
 
-  /**
-   * Js Errors
-   */
-  setJSExceptionHandler(jsErrorHandler, true);
+    console.log('Minds Uncaught (fatal)', e.stack);
+  } else if (e) {
+    console.log('Minds Uncaught (non-fatal)', e); // So that we can see it in the ADB logs in case of Android if need, eed
+  }
+};
 
-  /**
-   * Native Errors
-   */
-  setNativeExceptionHandler(
-    exceptionString => {
-      Sentry.captureException(new Error(exceptionString), {
-        logger: 'NativeExceptionHandler',
-      });
-      console.log(exceptionString);
-    },
-    true,
-    false,
-  );
-}
+/**
+ * Js Errors
+ */
+setJSExceptionHandler(jsErrorHandler, true);
+
+/**
+ * Native Errors
+ */
+setNativeExceptionHandler(
+  exceptionString => {
+    Sentry.captureException(new Error(exceptionString), {
+      logger: 'NativeExceptionHandler',
+    });
+    console.log('NativeExceptionHandler', exceptionString);
+  },
+  true,
+  false,
+);

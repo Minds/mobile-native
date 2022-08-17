@@ -10,6 +10,7 @@ import { BlockedChannelsStore } from './createBlockedChannelsStore';
 export type Row = {
   index: number;
   item: UserModel;
+  target: string;
 };
 
 type PropsType = {

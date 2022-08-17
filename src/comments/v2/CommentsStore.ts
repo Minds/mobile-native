@@ -45,7 +45,7 @@ export default class CommentsStore {
   @observable errorLoadingNext = false;
 
   level = 0;
-  focusedUrn = null;
+  focusedCommentUrn = null;
 
   // attachment store
   attachment = new AttachmentStore();
@@ -63,7 +63,7 @@ export default class CommentsStore {
   parent: CommentModel | null = null;
 
   constructor(entity) {
-    this.focusedUrn = this.getFocusedUrn();
+    this.focusedCommentUrn = this.getFocusedCommentUrn();
     this.entity = entity;
   }
 
@@ -133,7 +133,7 @@ export default class CommentsStore {
    * @param {String|null} value
    */
   setFocusedUrn(value) {
-    this.focusedUrn = value;
+    this.focusedCommentUrn = value;
   }
 
   /**
@@ -152,12 +152,14 @@ export default class CommentsStore {
   /**
    * Get focused urn
    */
-  getFocusedUrn() {
+  getFocusedCommentUrn() {
     const params = NavigationService.getCurrentState().params;
 
     let value = null;
 
-    if (params && params.focusedUrn) value = params.focusedUrn;
+    if (params && params.focusedCommentUrn) {
+      value = params.focusedCommentUrn;
+    }
 
     return value;
   }
@@ -187,7 +189,7 @@ export default class CommentsStore {
 
     try {
       const response = await getComments(
-        this.focusedUrn,
+        this.focusedCommentUrn,
         this.guid,
         parent_path,
         this.getLevel(),
@@ -222,7 +224,7 @@ export default class CommentsStore {
         }
       });
       // use only once
-      this.focusedUrn = null;
+      this.focusedCommentUrn = null;
     }
   }
 
@@ -388,7 +390,7 @@ export default class CommentsStore {
       attachment_guid: <string | undefined>undefined,
     };
 
-    if (comment.comment === '') {
+    if (comment.comment === '' && !this.attachment.hasAttachment) {
       showNotification(i18n.t('messenger.typeYourMessage'), 'info', 3000);
       return;
     }

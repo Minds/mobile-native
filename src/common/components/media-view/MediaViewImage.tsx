@@ -4,7 +4,7 @@ import { View, TouchableOpacity, StyleProp } from 'react-native';
 import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
@@ -84,9 +84,9 @@ export default function MediaViewImage({
     }
   }
 
-  const containerStyle = React.useMemo(
-    () => [ThemedStyles.style.fullWidth, { aspectRatio }],
-    [aspectRatio],
+  const imageStyle = React.useMemo(
+    () => [ThemedStyles.style.fullWidth, { aspectRatio }, style],
+    [aspectRatio, style],
   );
 
   const imageError = React.useCallback(() => {
@@ -107,8 +107,6 @@ export default function MediaViewImage({
     },
     [autoHeight],
   );
-
-  const imageStyle = useStyle('positionAbsolute', style as Object);
 
   if (imageLoadFailed) {
     let text = <MText style={errorTextStyle}>{i18n.t('errorMedia')}</MText>;
@@ -133,7 +131,7 @@ export default function MediaViewImage({
       onDoubleTap={onImageDoublePress}
       onPress={onImagePress}
       onLongPress={onImageLongPress}
-      style={containerStyle}
+      style={imageStyle}
       activeOpacity={1}
       testID="Posted Image">
       <ExplicitImage

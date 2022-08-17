@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Pressable } from 'react-native';
 import { shallow } from 'enzyme';
 
 import Activity from '../../../src/newsfeed/activity/Activity';
@@ -10,7 +10,6 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 import ExplicitText from '../../../src/common/components/explicit/ExplicitText';
 import OwnerBlock from '../../../src/newsfeed/activity/OwnerBlock';
 import BottomContent from '../../../src/newsfeed/activity/BottomContent';
-import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
 
 import MediaView from '../../../src/common/components/MediaView';
 
@@ -64,7 +63,7 @@ describe('Activity component', () => {
     expect(screen.find(BottomContent)).toHaveLength(1);
     expect(screen.find(OwnerBlock)).toHaveLength(1);
     expect(screen.find(ExplicitText)).toHaveLength(1);
-    expect(screen.find(TouchableOpacity)).toHaveLength(1);
+    expect(screen.find(Pressable)).toHaveLength(1);
   });
 
   // it('should navToActivity on press', () => {

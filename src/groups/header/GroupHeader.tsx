@@ -157,7 +157,7 @@ export default class GroupHeader extends Component<PropsTypes> {
       },
       {
         text: i18n.t('members').toUpperCase(),
-        badge: abbrev(group['members:count'], 0),
+        badge: abbrev(group['members:count'], 1),
         value: 'members',
       },
     ];
