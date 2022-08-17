@@ -6,7 +6,12 @@ import {
   Dimensions,
   RefreshControl,
 } from 'react-native';
-import { FlashList, FlashListProps, ListRenderItem } from '@shopify/flash-list';
+import {
+  FlashList,
+  FlashListProps,
+  ListRenderItem,
+  ViewToken,
+} from '@shopify/flash-list';
 import Animated from 'react-native-reanimated';
 
 import { observer } from 'mobx-react';
@@ -171,74 +176,6 @@ export class FeedList<T extends BaseModel> extends Component<
     return null;
   }
 
-  /**
-   * Render component
-   */
-  render() {
-    let renderRow: ListRenderItem<T>;
-
-    const {
-      feedStore,
-      renderTileActivity,
-      renderActivity,
-      header,
-      ...passThroughProps
-    } = this.props;
-
-    if (feedStore.isTiled) {
-      renderRow = renderTileActivity || this.renderTileActivity;
-    } else {
-      renderRow = renderActivity || this.renderActivity;
-    }
-
-    const items: Array<any> = !this.props.hideItems
-      ? feedStore.entities.slice()
-      : [];
-
-    const AnimatedFlashList = this.AnimatedFlashList;
-
-    return (
-      <View style={containerStyle}>
-        <AnimatedFlashList
-          estimatedItemSize={450}
-          ref={this.listRef}
-          key={feedStore.isTiled ? 't' : 'f'}
-          ListHeaderComponent={header}
-          ListFooterComponent={this.getFooter}
-          drawDistance={drawAhead}
-          data={items}
-          renderItem={renderRow}
-          keyExtractor={this.keyExtractor}
-          refreshing={this.refreshing} // on Android it throws an invariant error (it shouldn't be necessary as we are using RefreshControl)
-          refreshControl={
-            <RefreshControl
-              refreshing={this.refreshing}
-              onRefresh={this.refresh}
-              progressViewOffset={IS_IOS ? 0 : 80}
-              tintColor={ThemedStyles.getColor('Link')}
-              colors={[ThemedStyles.getColor('Link')]}
-            />
-          }
-          disableAutoLayout={true}
-          onEndReached={this.loadMore}
-          getItemType={this.getType}
-          onEndReachedThreshold={5} // 5 times the visible list height
-          numColumns={feedStore.isTiled ? 3 : 1}
-          ListEmptyComponent={!this.props.hideItems ? this.empty : null}
-          viewabilityConfig={this.viewOpts}
-          onViewableItemsChanged={this.onViewableItemsChanged}
-          scrollEventThrottle={16}
-          keyboardShouldPersistTaps="always"
-          testID="feedlistCMP"
-          {...passThroughProps}
-          keyboardDismissMode="on-drag"
-          onScroll={this.props.onScroll}
-        />
-        {this.props.bottomComponent}
-      </View>
-    );
-  }
-
   getType(item: ActivityModel | InjectItem) {
     const isActivity = item instanceof ActivityModel;
     return item instanceof InjectItem
@@ -308,18 +245,15 @@ export class FeedList<T extends BaseModel> extends Component<
    * On viewable item changed
    */
   onViewableItemsChanged = (change: {
-    viewableItems: any[];
-    changed: any[];
+    viewableItems: ViewToken[];
+    changed: ViewToken[];
   }) => {
-    change.viewableItems.forEach((item: { item: any }) => {
-      if (item && item.item && item.item.sendViewed) item.item.sendViewed();
-    });
+    change.viewableItems.forEach((item: { item: any }) =>
+      item?.item?.sendViewed?.(),
+    );
     change.changed.forEach(
-      (c: { item: { setVisible: (arg0: any) => void }; isViewable: any }) => {
-        if (c.item && c.item.setVisible) {
-          c.item.setVisible(c.isViewable);
-        }
-      },
+      (c: { item: { setVisible: (arg0: any) => void }; isViewable: any }) =>
+        c.item?.setVisible?.(c.isViewable),
     );
   };
 
@@ -403,6 +337,74 @@ export class FeedList<T extends BaseModel> extends Component<
       />
     );
   };
+
+  /**
+   * Render component
+   */
+  render() {
+    let renderRow: ListRenderItem<T>;
+
+    const {
+      feedStore,
+      renderTileActivity,
+      renderActivity,
+      header,
+      ...passThroughProps
+    } = this.props;
+
+    if (feedStore.isTiled) {
+      renderRow = renderTileActivity || this.renderTileActivity;
+    } else {
+      renderRow = renderActivity || this.renderActivity;
+    }
+
+    const items: Array<any> = !this.props.hideItems
+      ? feedStore.entities.slice()
+      : [];
+
+    const AnimatedFlashList = this.AnimatedFlashList;
+
+    return (
+      <View style={containerStyle}>
+        <AnimatedFlashList
+          estimatedItemSize={450}
+          ref={this.listRef}
+          key={feedStore.isTiled ? 't' : 'f'}
+          ListHeaderComponent={header}
+          ListFooterComponent={this.getFooter}
+          drawDistance={drawAhead}
+          data={items}
+          renderItem={renderRow}
+          keyExtractor={this.keyExtractor}
+          refreshing={this.refreshing} // on Android it throws an invariant error (it shouldn't be necessary as we are using RefreshControl)
+          refreshControl={
+            <RefreshControl
+              refreshing={this.refreshing}
+              onRefresh={this.refresh}
+              progressViewOffset={IS_IOS ? 0 : 80}
+              tintColor={ThemedStyles.getColor('Link')}
+              colors={[ThemedStyles.getColor('Link')]}
+            />
+          }
+          disableAutoLayout={true}
+          onEndReached={this.loadMore}
+          getItemType={this.getType}
+          onEndReachedThreshold={5} // 5 times the visible list height
+          numColumns={feedStore.isTiled ? 3 : 1}
+          ListEmptyComponent={!this.props.hideItems ? this.empty : null}
+          viewabilityConfig={this.viewOpts}
+          onViewableItemsChanged={this.onViewableItemsChanged}
+          scrollEventThrottle={16}
+          keyboardShouldPersistTaps="always"
+          testID="feedlistCMP"
+          {...passThroughProps}
+          keyboardDismissMode="on-drag"
+          onScroll={this.props.onScroll}
+        />
+        {this.props.bottomComponent}
+      </View>
+    );
+  }
 }
 
 const footerStyle = ThemedStyles.combine('centered', 'padding3x');
