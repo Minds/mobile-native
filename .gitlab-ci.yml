@@ -266,7 +266,7 @@ build:androidproduction-playstore:
 .upload_s3: &upload_s3
   stage: upload
   tags: [minds-ci]
-  image: minds/ci:latest
+  image: cimg/aws:2022.06.1
   interruptible: true
   script:
     - echo "Upload $TARGET_NAME"
@@ -410,7 +410,7 @@ upload:browserstack:mr:
 
 # Release Full Android
 release:production:
-  image: msantang78/ci-mobile:latest
+  image: cimg/aws:2022.06.1
   stage: release
   tags: [minds-ci]
   dependencies:
