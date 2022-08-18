@@ -69,6 +69,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
 
   const refreshNewsfeed = useCallback(() => {
     newsfeed.scrollToTop();
+    newsfeed.highlightsStore.refresh();
     newsfeed.latestFeedStore.refresh();
     newsfeed.topFeedStore.refresh();
   }, [newsfeed]);
