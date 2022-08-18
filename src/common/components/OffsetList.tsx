@@ -65,23 +65,14 @@ export default observer(
     }
     const [hasMore, setHasMore] = useState<boolean>(true);
     const keyExtractor = (item, index: any) => `${item.urn}${index}`;
-
-    const updateState = useCallback(
-      (newData: any, oldData: any) => {
-        const map = props.map || ((data: any) => data);
-        if (!newData?.[props.endpointData].length) {
+    const map = useCallback(
+      (data: any) => {
+        if (!data.length) {
           setHasMore(false);
         }
-
-        return {
-          ...newData,
-          [props.endpointData]: [
-            ...(oldData?.[props.endpointData] || []),
-            ...map(newData?.[props.endpointData] || []),
-          ],
-        };
+        return props.map ? props.map(data) : data;
       },
-      [props.endpointData, props.map],
+      [props],
     );
 
     const {
@@ -93,7 +84,9 @@ export default observer(
       refreshing,
     } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
       params: opts,
-      updateState,
+      dataField: props.endpointData,
+      updateStrategy: 'merge',
+      map,
     });
     const data = useMemo(() => {
       if (result) {
