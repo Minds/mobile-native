@@ -217,6 +217,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         keyboardType="default"
         autoComplete="username-new"
         textContentType="username"
+        maxLength={50}
       />
       <InputContainer
         placeholder={i18n.t('auth.email')}
