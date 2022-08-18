@@ -45,6 +45,7 @@ class NewsfeedStore<T extends BaseModel> {
   highlightsStore = new FeedStore()
     .setEndpoint('api/v3/newsfeed/feed/unseen-top')
     .setInjectBoost(false)
+    .setPaginated(false)
     .setLimit(3)
     .setMetadata(
       new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
@@ -137,7 +138,11 @@ class NewsfeedStore<T extends BaseModel> {
     // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
     if (this.feedType === 'top') {
       this.feedStore.clear();
+    } else {
+      // fetch highlights for the latests feed
+      this.highlightsStore.fetch();
     }
+
     this.feedStore.fetchLocalThenRemote(refresh);
   };
 
@@ -166,6 +171,7 @@ class NewsfeedStore<T extends BaseModel> {
 
   @action
   reset() {
+    this.highlightsStore.reset();
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
     this.feedType = undefined;

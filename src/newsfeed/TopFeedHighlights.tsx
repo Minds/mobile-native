@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import { useLegacyStores } from '~/common/hooks/use-stores';
@@ -15,10 +15,6 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   const navigation = useNavigation();
 
   const { newsfeed } = useLegacyStores();
-
-  useEffect(() => {
-    newsfeed.highlightsStore.fetch();
-  }, [newsfeed]);
 
   if (!newsfeed.highlightsStore.entities.length) {
     return null;
