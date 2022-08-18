@@ -459,11 +459,9 @@ export default class FeedsService {
    */
   clear(): FeedsService {
     this.offset = 0;
-    this.limit = 12;
     this.fallbackAt = null;
     this.fallbackIndex = -1;
     this.pagingToken = '';
-    this.params = { sync: 1 };
     this.feed = [];
     return this;
   }
