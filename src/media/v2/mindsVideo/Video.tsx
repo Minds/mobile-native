@@ -16,13 +16,7 @@ type PropsType = {
 };
 
 const ExpoVideo = observer(
-  ({
-    localStore,
-    repeat = true,
-    resizeMode,
-    onReadyForDisplay,
-    video,
-  }: PropsType) => {
+  ({ localStore, resizeMode, onReadyForDisplay, video }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
 
@@ -48,7 +42,6 @@ const ExpoVideo = observer(
         onLoadStart={localStore.onLoadStart}
         onLoad={localStore.onVideoLoad}
         onError={localStore.onError}
-        isLooping={repeat}
         resizeMode={resizeMode || ResizeMode.CONTAIN}
         useNativeControls={false}
         style={theme.flexContainer}

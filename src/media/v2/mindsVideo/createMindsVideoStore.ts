@@ -15,7 +15,13 @@ export type Source = {
   size: number;
 };
 
-const createMindsVideoStore = ({ autoplay }) => {
+const createMindsVideoStore = ({
+  autoplay,
+  repeat,
+}: {
+  autoplay?: boolean;
+  repeat?: boolean;
+}) => {
   const store = {
     entity: <ActivityModel | null>null,
     initialVolume: <number | null>null,
@@ -160,11 +166,6 @@ const createMindsVideoStore = ({ autoplay }) => {
       this.error = true;
       this.inProgress = false;
     },
-    onVideoEnd() {
-      this.player?.pauseAsync();
-      this.currentTime = 0;
-      this.paused = true;
-    },
     onLoadStart() {
       this.error = false;
       //this.inProgress = true;
@@ -226,6 +227,7 @@ const createMindsVideoStore = ({ autoplay }) => {
         this.player?.setStatusAsync({
           positionMillis: time,
           shouldPlay: !this.paused,
+          isLooping: Boolean(repeat),
         });
       }
     },
@@ -278,7 +280,11 @@ const createMindsVideoStore = ({ autoplay }) => {
         this.volume = sound ? 1 : 0;
       });
 
-      this.player?.setStatusAsync({ shouldPlay: true, isMuted: !this.volume });
+      this.player?.setStatusAsync({
+        shouldPlay: true,
+        isMuted: !this.volume,
+        isLooping: Boolean(repeat),
+      });
 
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;

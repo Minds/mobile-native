@@ -16,6 +16,8 @@ jest.mock(
   () => 'TransakWidget',
 );
 
+jest.mock('react-native-exception-handler');
+
 jest.mock('react-native-code-push', () => {
   const cp = () => app => app;
   Object.assign(cp, {

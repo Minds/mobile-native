@@ -7,6 +7,8 @@ Minds Mobile
 ### Changed
 
 - New feed implementation with performance improvements
+- Fix video sound loop and video frozen on iOS
+- Fix video loop on Android
 - Refactor of the portrait content viewer
 - In feed notices
 - Fix notifications unread count logic
@@ -20,6 +22,8 @@ Minds Mobile
 - Fix orientation lock on iOS
 - Decimal points for counters
 - Portrait content load improvements
+- Fix password mask on Android
+- Fix top post feed on the discovery screen
 
 ## 4.26.0 - 2022-07-12
 
