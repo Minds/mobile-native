@@ -1,3 +1,5 @@
+import { isValidNumber } from 'react-native-phone-number-input';
+
 const createBankInfoStore = wallet => ({
   loading: false,
   stripeAgree: false,
@@ -80,6 +82,7 @@ const createBankInfoStore = wallet => ({
       routingNumber:
         this.isCountry(['US']) &&
         (!form.routingNumber || form.routingNumber === ''),
+      phoneNumber: !isValidNumber(form.phoneNumber, form.country),
     };
 
     return !validators[validator];
