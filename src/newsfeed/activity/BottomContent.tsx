@@ -8,6 +8,7 @@ import Pending from './banners/Pending';
 import type ActivityModel from '../ActivityModel';
 import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
+import useForceRender from '~/common/hooks/useForceRender';
 
 type PropsType = {
   showOnlyContent?: boolean;
@@ -18,18 +19,31 @@ type PropsType = {
 const BottomContent = (props: PropsType) => {
   const shouldRender = !props.showOnlyContent;
   const commentsRef = React.useRef<BottomSheet>(null);
-  const [commentStore, setCommentStore] = React.useState<null | CommentsStore>(
-    null,
-  );
+
+  const forceRender = useForceRender();
+
+  // we use a reference instead of the state to avoid re-rendering the component
+  const commentsStore = React.useRef<null | CommentsStore>(null);
+
+  // if there is a store of a different entity (after a recycle), we remove it
+  if (
+    commentsStore.current &&
+    commentsStore.current.entity.urn !== props.entity.urn
+  ) {
+    commentsStore.current = null;
+  }
 
   const onPressComment = React.useCallback(() => {
-    if (!commentStore) {
-      setCommentStore(new CommentsStore(props.entity));
+    if (!commentsStore.current) {
+      commentsStore.current = new CommentsStore(props.entity);
+      // we force the render to shown the bottom sheet
+      forceRender();
     }
     if (commentsRef.current?.expand) {
       commentsRef.current.expand();
     }
-  }, [commentStore, props.entity]);
+  }, [props.entity, forceRender]);
+
   if (!shouldRender) {
     return null;
   }
@@ -48,11 +62,11 @@ const BottomContent = (props: PropsType) => {
           time_created={props.entity.time_created}
         />
       )}
-      {commentStore && (
+      {commentsStore.current && (
         <CommentBottomSheet
           ref={commentsRef}
           autoOpen={true}
-          commentsStore={commentStore}
+          commentsStore={commentsStore.current}
         />
       )}
       <Pending isPending={props.entity.isPending()} />
