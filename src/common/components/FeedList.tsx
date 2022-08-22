@@ -219,7 +219,7 @@ export class FeedList<T extends BaseModel> extends Component<
               colors={[ThemedStyles.getColor('Link')]}
             />
           }
-          disableAutoLayout={true}
+          disableAutoLayout={false}
           onEndReached={this.loadMore}
           getItemType={this.getType}
           onEndReachedThreshold={5} // 5 times the visible list height

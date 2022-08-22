@@ -2,7 +2,7 @@
 
 Minds Mobile
 
-## 4.27.0 - 2022-08-12
+## 4.27.0 - 2022-08-19
 
 ### Changed
 
@@ -17,7 +17,7 @@ Minds Mobile
 - Fix push navigation for comments
 - Track deep linking navigation
 - Fix reset password & navigation issues
-- Mutual subscription (I don't recall the new name lol)
+- Subscribers you know in channels screen
 - Clean memory cache when switching users
 - Fix orientation lock on iOS
 - Decimal points for counters
