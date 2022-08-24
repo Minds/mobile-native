@@ -15,7 +15,6 @@ import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
-import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import ComposeIcon from '../compose/ComposeIcon';
 import { InternalStack } from '../navigation/NavigationStack';
@@ -163,10 +162,6 @@ const Tabs = observer(function ({ navigation }) {
     () => navigation.push('Capture', { mode: 'video', start: true }),
     [navigation],
   );
-
-  if (gatheringService.inGatheringScreen) {
-    return null;
-  }
 
   return (
     <View style={theme.flexContainer}>

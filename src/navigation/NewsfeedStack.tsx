@@ -6,8 +6,6 @@ import {
 import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
-import ChannelScreen from '~/channel/v2/ChannelScreen';
-import ActivityScreen from '~/newsfeed/ActivityScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 
 const NewsfeedStack = createNativeStackNavigator<AppStackParamList>();
@@ -28,12 +26,12 @@ export default function () {
       />
       <NewsfeedStack.Screen
         name="Channel"
-        component={ChannelScreen}
+        getComponent={() => require('~/channel/v2/ChannelScreen').default}
         options={hideHeader}
       />
       <NewsfeedStack.Screen
         name="Activity"
-        component={ActivityScreen}
+        getComponent={() => require('~/newsfeed/ActivityScreen').default}
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
       />
