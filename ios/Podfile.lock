@@ -451,7 +451,7 @@ PODS:
     - React-Core
   - RNConvertPhAsset (1.0.3):
     - React
-  - RNDeviceInfo (8.4.8):
+  - RNDeviceInfo (10.0.2):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -949,7 +949,7 @@ SPEC CHECKSUMS:
   RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
-  RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
+  RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFlashList: 5318fc0772902ffa55170b35caa95ad5a69da3ef
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
