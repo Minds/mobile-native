@@ -962,37 +962,38 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View
                     style={
                       Object {
-                        "alignItems": "center",
-                        "flexDirection": "column",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
                       }
                     }
                   >
                     <Text
-                      size={15}
+                      onLayout={[Function]}
                       style={
                         Array [
-                          Object {
-                            "color": "#FFFFFF",
-                          },
-                          Object {
-                            "fontFamily": "Roboto",
-                          },
                           Array [
-                            Object {
-                              "color": "#AEB0B8",
-                            },
-                            Object {
-                              "fontSize": 14,
-                            },
-                            Object {
-                              "fontFamily": "Roboto-Medium",
-                              "fontWeight": "500",
-                            },
+                            Array [
+                              Object {
+                                "color": "#AEB0B8",
+                              },
+                              Object {
+                                "fontSize": 14,
+                              },
+                              Object {
+                                "fontFamily": "Roboto-Medium",
+                                "fontWeight": "500",
+                              },
+                            ],
+                            undefined,
                           ],
+                          Object {
+                            "position": "absolute",
+                            "top": -999999,
+                          },
                         ]
                       }
                     >
-                      
+                      0
                     </Text>
                   </View>
                 </View>

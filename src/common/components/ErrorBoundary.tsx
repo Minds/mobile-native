@@ -9,10 +9,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import MText from './MText';
 
 type PropsType = {
-  message: string;
+  message?: string;
   containerStyle?: ViewStyle | Array<ViewStyle>;
   children: React.ReactNode;
   textSmall?: boolean;
+  fallback?: any;
 };
 
 type StateType = {
@@ -63,8 +64,13 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
   };
 
   getErrorMessage() {
-    const { containerStyle, textSmall } = this.props;
+    const { containerStyle, textSmall, fallback } = this.props;
     const theme = ThemedStyles.style;
+
+    if (fallback) {
+      return fallback;
+    }
+
     return (
       <View style={[theme.columnAlignCenter, containerStyle]}>
         <MText
