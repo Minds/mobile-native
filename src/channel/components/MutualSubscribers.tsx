@@ -15,11 +15,13 @@ type MutualSubscribersProps = {
   // the number of users to show separately
   limit?: number;
   navigation: any;
+  onPress?: () => void;
 } & SpacerPropType;
 
 function MutualSubscribers({
   userGuid,
   limit = 3,
+  onPress,
   ...props
 }: MutualSubscribersProps) {
   const { result } = useMutualSubscribers(userGuid);
@@ -40,7 +42,12 @@ function MutualSubscribers({
         </View>
 
         <View style={styles.usernameContainer}>
-          <Description limit={limit} users={users} total={count} />
+          <Description
+            onPress={onPress}
+            limit={limit}
+            users={users}
+            total={count}
+          />
         </View>
       </Spacer>
     </AnimatedHeight>
@@ -52,7 +59,7 @@ const NobodyInCommon = () => {
   return null;
 };
 
-const Description = ({ users, total, limit }) => {
+const Description = ({ users, total, limit, onPress }) => {
   const text =
     total > limit
       ? i18n.t('channel.mutualSubscribers.descriptionMany', {
@@ -63,7 +70,7 @@ const Description = ({ users, total, limit }) => {
         });
 
   return (
-    <B2>
+    <B2 onPress={onPress}>
       {users.map((user, index) => {
         let prefix = ', ';
         if (index === 0) {

@@ -535,7 +535,8 @@
     "subscribers": {
       "one": "subscriber",
       "other": "subscribers"
-    }
+    },
+    "subscribersYouKnow": "Subscribers you know"
   },
   "notificationSettings": {
     "all": "Enable Push Notifications",

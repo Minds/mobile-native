@@ -41,6 +41,7 @@ type PropsType = {
   channelName?: string;
   onOpenSubscribers?: () => void;
   onOpenSubscriptions?: () => void;
+  onOpenSubscribersYouKnow?: () => void;
 };
 
 const bannerAspectRatio = 2.9;
@@ -293,6 +294,7 @@ const ChannelHeader = withErrorBoundary(
                   navigation={props.navigation}
                   userGuid={channel.guid}
                   top="M"
+                  onPress={props.onOpenSubscribersYouKnow}
                 />
               )}
             </>
