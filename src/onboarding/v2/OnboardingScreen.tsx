@@ -7,15 +7,17 @@ import React, { useRef } from 'react';
 import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {
+  BottomSheetButton,
+  BottomSheetModal,
+} from '~/common/components/bottom-sheet';
 import { InjectItem } from '~/common/components/FeedList';
+import MenuItem from '~/common/components/menus/MenuItem';
 import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
-import BottomButtonOptions, {
-  ItemType,
-} from '../../common/components/BottomButtonOptions';
+
 import CenteredLoading from '../../common/components/CenteredLoading';
 
-import MenuItem from '../../common/components/menus/MenuItem';
 import MText from '../../common/components/MText';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
@@ -40,6 +42,8 @@ export default observer(function OnboardingScreen() {
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
   const { newsfeed } = useLegacyStores();
+  // Do not render BottomSheet unless it is necessary
+  const ref = React.useRef<any>(null);
   const onOnboardingCompleted = () => {
     setTimeout(() => {
       navigation.navigate('Newsfeed');
@@ -88,7 +92,11 @@ export default observer(function OnboardingScreen() {
     showMenu: false,
     saving: false,
     showPicker() {
-      store.showMenu = true;
+      if (!this.showMenu) {
+        store.showMenu = true;
+      } else {
+        ref.current?.present();
+      }
     },
     hidePicker() {
       store.showMenu = false;
@@ -165,28 +173,6 @@ export default observer(function OnboardingScreen() {
     },
   }).current;
 
-  const dismissOptions: Array<Array<ItemType>> = useRef([
-    [
-      {
-        title: i18n.t('onboarding.hidePanel'),
-        titleStyle: theme.fontXXL,
-        onPress: async () => {
-          const m = moment().add(2, 'days');
-          SettingsStore.setIgnoreOnboarding(m);
-          store.hidePicker();
-          navigation.goBack();
-        },
-      },
-    ],
-    [
-      {
-        title: i18n.t('cancel'),
-        titleStyle: theme.colorSecondaryText,
-        onPress: store.hidePicker,
-      },
-    ],
-  ]).current;
-
   const steps = progressStore.result
     ? progressStore.result.steps.map(s =>
         stepsMapping[s.id]
@@ -254,11 +240,24 @@ export default observer(function OnboardingScreen() {
             height={8}
           />
         </View>
-        <BottomButtonOptions
-          list={dismissOptions}
-          isVisible={store.showMenu}
-          onPressClose={store.hidePicker}
-        />
+        {store.showMenu && (
+          <BottomSheetModal ref={ref} autoShow>
+            <BottomSheetButton
+              action
+              text={i18n.t('onboarding.hidePanel')}
+              onPress={() => {
+                const m = moment().add(2, 'days');
+                SettingsStore.setIgnoreOnboarding(m);
+                store.hidePicker();
+                navigation.goBack();
+              }}
+            />
+            <BottomSheetButton
+              text={i18n.t('cancel')}
+              onPress={store.hidePicker}
+            />
+          </BottomSheetModal>
+        )}
         {steps.map(item =>
           item ? (
             <MenuItem

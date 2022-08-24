@@ -20,6 +20,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
+import checkTOS from '~/tos/checkTOS';
 
 /**
  * App initialization manager
@@ -93,6 +94,9 @@ export class AppInitManager {
     mindsConfigService.update().then(() => {
       // if it changed we initialize growth book again
       updateGrowthBookAttributes();
+
+      // Check Terms of service
+      checkTOS();
     });
   }
 
