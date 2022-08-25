@@ -15925,10 +15925,10 @@ react-native-performance@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-performance/-/react-native-performance-2.0.0.tgz#6742c1a4417bf5069586200d40b3a5b805cf8a9c"
   integrity sha512-jKM9Qg0SkL9D9ad377nxb1VV+OXJSyYyIrBHKmM6CABNxfrLVA5xkQMEibjmZQde7b0ndJOZoQAiObgJjjc4VQ==
 
-react-native-permissions@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.0.4.tgz#7771d28899d7d2b75fd2a70cd3f86d44c90397ec"
-  integrity sha512-GMd0l0TA/qupidGFfKAVNaboewQkJSW+l3ndwv1cu+tBGI+TRfJdMjg8Q714wn9roZlXsZ3z407qT2xPdQmGdg==
+react-native-permissions@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.1.tgz#73adcc1cef8cd57a9ef167b4507405f4ff5749c4"
+  integrity sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ==
 
 react-native-phone-number-input@^2.1.0:
   version "2.1.0"
