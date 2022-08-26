@@ -85,7 +85,7 @@ const getOptionsList = navigation => {
         navigation.navigate('Wallet');
       },
     },
-    IS_IOS
+    !IS_IOS
       ? {
           name: 'Buy Tokens',
           icon: 'coins',
