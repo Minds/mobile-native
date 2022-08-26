@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import CountrySelector, {
   allowedCountries,
 } from '../../../../common/components/CountrySelector';
