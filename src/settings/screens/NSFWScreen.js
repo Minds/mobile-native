@@ -6,6 +6,7 @@ import Switch from 'react-native-switch-pro';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
+import sessionService from '~/common/services/session.service';
 
 export default function () {
   const theme = ThemedStyles.style;
@@ -33,6 +34,10 @@ export default function () {
       setLoading(true);
       try {
         await settingsService.submitSettings({ mature: val });
+
+        // set the value on the active user
+        sessionService.getUser().setMature(val);
+
         setMatureContent(val);
       } catch (err) {
         setMatureContent(!val);
