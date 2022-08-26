@@ -52,6 +52,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
     stripeAgree: `${i18n.t('wallet.bank.agree')} ${i18n.t('wallet.bank.ssa')}`,
     accountNumber: i18n.t('wallet.bank.iban'),
     routingNumber: i18n.t('wallet.bank.sortCode'),
+    phoneNumber: i18n.t('wallet.bank.phoneNumber'),
   };
 
   /**
@@ -108,6 +109,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
         country: walletStore.stripeDetails.country,
         accountNumber: walletStore.stripeDetails.accountNumber,
         routingNumber: walletStore.stripeDetails.routingNumber,
+        phoneNumber: walletStore.stripeDetails.phoneNumber,
       };
 
       Object.keys(form).forEach(key => {

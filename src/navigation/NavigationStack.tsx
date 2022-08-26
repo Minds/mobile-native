@@ -10,30 +10,9 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
-import WelcomeScreen from '../auth/WelcomeScreen';
-import MultiUserLoginScreen from '../auth/multi-user/LoginScreen';
-import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import TabsScreen from '../tabs/TabsScreen';
-import NotificationsScreen from '../notifications/v3/NotificationsScreen';
-import ActivityScreen from '../newsfeed/ActivityScreen';
-import GroupViewScreen from '../groups/GroupViewScreen';
-import BlogsViewScreen from '../blogs/BlogsViewScreen';
-import FabScreenV2 from '../wire/v2/FabScreen';
-import ViewImageScreen from '../media/ViewImageScreen';
-import ReportScreen from '../report/ReportScreen';
-import UpdatingScreen from '../update/UpdateScreen';
-import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import ComposeScreen from '../compose/ComposeScreen';
-import CameraScreen from '../compose/CameraScreen';
-import ChannelScreenV2 from '../channel/v2/ChannelScreen';
-import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
-import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
-import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-import TierScreen from '../settings/screens/TierScreen';
-import UpgradeScreen from '../upgrade/UpgradeScreen';
-import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
 import {
   AppStackParamList,
@@ -46,34 +25,10 @@ import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
-import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
-import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
-import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
-import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
-import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
-import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
-import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
-import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
-import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
-import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
-import BoostPostScreen from '../boost/v2/BoostPostScreen';
-import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
-import EarnModal from '../earn/EarnModal';
-import SearchScreen from '../topbar/searchbar/SearchScreen';
-import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
-import ResetPasswordScreen from '../auth/reset-password/ResetPasswordScreen';
-import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
-import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
-import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
-import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
-import RelogScreen from '../auth/RelogScreen';
-import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
+
 import withModalProvider from './withModalProvide';
-import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
-import DevToolsScreen from '~/settings/screens/DevToolsScreen';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
-import InitialEmailVerificationScreen from '~/auth/InitialEmailVerificationScreen';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
 
@@ -99,17 +54,15 @@ export const InternalStack = () => {
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
-      <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
+      <InternalStackNav.Screen
+        name="Onboarding"
+        getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
+      />
     </InternalStackNav.Navigator>
   );
 };
 
 const TabScreenWithModal = withModalProvider(TabsScreen);
-const PortraitViewerScreenWithModal = withModalProvider(PortraitViewerScreen);
-const ChannelScreenV2WithModal = withModalProvider(ChannelScreenV2);
-const ActivityScreenWithModal = withModalProvider(ActivityScreen);
-const GroupViewScreenWithModal = withModalProvider(GroupViewScreen);
-const BlogsViewScreenWithModal = withModalProvider(BlogsViewScreen);
 
 const AppStack = observer(() => {
   if (sessionService.switchingAccount) {
@@ -132,7 +85,11 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="PortraitViewerScreen"
-          component={PortraitViewerScreenWithModal}
+          getComponent={() =>
+            withModalProvider(
+              require('~/portrait/PortraitViewerScreen').default,
+            )
+          }
           options={{
             animation: 'fade_from_bottom',
             ...hideHeader,
@@ -140,29 +97,40 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="EmailConfirmation"
-          component={EmailConfirmationScreen}
+          getComponent={() =>
+            require('~/onboarding/EmailConfirmationScreen').default
+          }
         />
         <AppStackNav.Screen
           name="Update"
-          component={UpdatingScreen}
+          getComponent={() => require('~/update/UpdateScreen').default}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="Notifications"
-          component={NotificationsScreen}
+          getComponent={() =>
+            require('~/notifications/v3/NotificationsScreen').default
+          }
         />
         <AppStackNav.Screen
           name="Channel"
-          component={ChannelScreenV2WithModal}
+          getComponent={() =>
+            withModalProvider(require('~/channel/v2/ChannelScreen').default)
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="DiscoverySearch"
-          component={DiscoverySearchScreen}
+          getComponent={() =>
+            require('~/discovery/v2/search/DiscoverySearchScreen')
+              .DiscoverySearchScreen
+          }
         />
         <AppStackNav.Screen
           name="ChannelEdit"
-          component={ChannelEditScreen}
+          getComponent={() =>
+            require('~/channel/v2/edit/ChannelEditScreen').default
+          }
           options={{
             headerBackVisible: false,
             animation: 'slide_from_bottom',
@@ -171,22 +139,28 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="Activity"
-          component={ActivityScreenWithModal}
+          getComponent={() =>
+            withModalProvider(require('~/newsfeed/ActivityScreen').default)
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="GroupView"
-          component={GroupViewScreenWithModal}
+          getComponent={() =>
+            withModalProvider(require('~/groups/GroupViewScreen').default)
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          component={BlogsViewScreenWithModal}
+          getComponent={() =>
+            withModalProvider(require('~/blogs/BlogsViewScreen').default)
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="WireFab"
-          component={FabScreenV2}
+          getComponent={() => require('~/wire/v2/FabScreen').default}
           options={hideHeader}
         />
         {/* <AppStackNav.Screen
@@ -204,17 +178,19 @@ const AppStack = observer(() => {
       /> */}
         <AppStackNav.Screen
           name="Report"
-          component={ReportScreen}
+          getComponent={() => require('~/report/ReportScreen').default}
           options={{ title: i18n.t('report') }}
         />
         <AppStackNav.Screen
           name="TierScreen"
-          component={TierScreen}
+          getComponent={() => require('~/settings/screens/TierScreen').default}
           options={{ title: 'Tier Management' }}
         />
         <AppStackNav.Screen
           name="ReceiverAddressScreen"
-          component={ReceiverAddressScreen}
+          getComponent={() =>
+            require('~/wallet/v2/address/ReceiverAddressScreen').default
+          }
           options={{
             title: 'Receiver Address',
             headerStyle: {
@@ -225,7 +201,9 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="BtcAddressScreen"
-          component={BtcReceiverAddressScreen}
+          getComponent={() =>
+            require('~/wallet/v2/address/BtcAddressScreen').default
+          }
           options={{
             title: i18n.t('wallet.bitcoins.update'),
             headerStyle: {
@@ -236,7 +214,9 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="BankInfoScreen"
-          component={BankInfoScreen}
+          getComponent={() =>
+            require('~/wallet/v2/address/BankInfoScreen').default
+          }
           options={{
             title: i18n.t('wallet.bank.title'),
             headerStyle: {
@@ -260,10 +240,13 @@ const AuthStack = function () {
         headerMode="none"
         // @ts-ignore
         screenOptions={AuthTransition}>
-        <AuthStackNav.Screen name="Welcome" component={WelcomeScreen} />
+        <AuthStackNav.Screen
+          name="Welcome"
+          getComponent={() => require('~/auth/WelcomeScreen').default}
+        />
         <AuthStackNav.Screen
           name="TwoFactorConfirmation"
-          component={TwoFactorConfirmScreen}
+          getComponent={() => require('~/auth/TwoFactorConfirmScreen').default}
           options={{
             ...modalOptions,
             headerMode: 'screen',
@@ -303,12 +286,16 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}
               name="App"
-              component={InitialEmailVerificationScreen}
+              getComponent={() =>
+                require('~/auth/InitialEmailVerificationScreen').default
+              }
               options={TransitionPresets.RevealFromBottomAndroid}
             />
             <RootStackNav.Screen
               name="MultiUserScreen"
-              component={MultiUserScreen}
+              getComponent={() =>
+                require('~/auth/multi-user/MultiUserScreen').default
+              }
               options={{
                 title: i18n.t('multiUser.switchChannel'),
               }}
@@ -328,114 +315,156 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="Capture"
-              component={CameraScreen}
+              getComponent={() => require('~/compose/CameraScreen').default}
               options={TransitionPresets.RevealFromBottomAndroid}
             />
             <RootStackNav.Screen
               name="Compose"
-              component={ComposeScreen}
+              getComponent={() => require('~/compose/ComposeScreen').default}
               options={TransitionPresets.ModalPresentationIOS}
             />
             {/* Modal screens here */}
             <RootStackNav.Screen
               name="MultiUserScreen"
-              component={MultiUserScreen}
+              getComponent={() =>
+                require('~/auth/multi-user/MultiUserScreen').default
+              }
               options={{
                 title: i18n.t('multiUser.switchChannel'),
               }}
             />
             <RootStackNav.Screen
               name="JoinMembershipScreen"
-              component={JoinMembershipScreen}
+              getComponent={() =>
+                require('~/wire/v2/tiers/JoinMembershipScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="ChooseBrowserModal"
-              component={ChooseBrowserModalScreen}
+              getComponent={() =>
+                require('~/settings/screens/ChooseBrowserModalScreen').default
+              }
               options={modalOptions}
             />
-            <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+            <RootStackNav.Screen
+              name="ViewImage"
+              getComponent={() => require('~/media/ViewImageScreen').default}
+            />
             {/* <RootStackNav.Screen
               name="BlockchainWalletModal"
               component={BlockchainWalletModalScreen}
             /> */}
             <RootStackNav.Screen
               name="UpgradeScreen"
-              component={UpgradeScreen}
+              getComponent={() => require('~/upgrade/UpgradeScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="VerifyEmail"
-              component={VerifyEmailScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/VerifyEmailScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="SelectHashtags"
-              component={SelectHashtagsScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/SelectHashtagsScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="SetupChannel"
-              component={SetupChannelScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/SetupChannelScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="VerifyUniqueness"
-              component={VerifyUniquenessScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/VerifyUniquenessScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="SuggestedChannel"
-              component={SuggestedChannelsScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/SuggestedChannelsScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="SuggestedGroups"
-              component={SuggestedGroupsScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/SuggestedGroupsScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="PhoneValidation"
-              component={PhoneValidationScreen}
+              getComponent={() =>
+                require('~/onboarding/v2/steps/PhoneValidationScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="BoostChannelScreen"
-              component={BoostChannelScreen}
+              getComponent={() =>
+                require('~/boost/v2/BoostChannelScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="BoostPostScreen"
-              component={BoostPostScreen}
+              getComponent={() => require('~/boost/v2/BoostPostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="WalletWithdrawal"
-              component={Withdrawal}
+              getComponent={() =>
+                require('~/wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal')
+                  .default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="EarnModal"
-              component={EarnModal}
+              getComponent={() => require('~/earn/EarnModal').default}
               options={modalOptions}
             />
-            <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
+            <RootStackNav.Screen
+              name="SearchScreen"
+              getComponent={() =>
+                require('~/topbar/searchbar/SearchScreen').default
+              }
+            />
             <RootStackNav.Screen
               name="PasswordConfirmation"
-              component={PasswordConfirmScreen}
+              getComponent={() =>
+                require('~/auth/PasswordConfirmScreen').default
+              }
               options={modalOptions}
             />
             <RootStackNav.Screen
               name="TwoFactorConfirmation"
-              component={TwoFactorConfirmScreen}
+              getComponent={() =>
+                require('~/auth/TwoFactorConfirmScreen').default
+              }
               options={{ ...modalOptions, gestureEnabled: false }}
             />
             <RootStackNav.Screen
               name="RecoveryCodeUsedScreen"
-              component={RecoveryCodeUsedScreen}
+              getComponent={() =>
+                require('~/auth/twoFactorAuth/RecoveryCodeUsedScreen').default
+              }
               options={modalOptions}
             />
-            <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
+            <RootStackNav.Screen
+              name="RelogScreen"
+              getComponent={() => require('~/auth/RelogScreen').default}
+            />
           </>
         )
       ) : (
@@ -446,25 +475,29 @@ const RootStack = observer(function () {
       <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserLogin"
-        component={MultiUserLoginScreen}
+        getComponent={() => require('~/auth/multi-user/LoginScreen').default}
         options={modalOptions}
       />
       <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserRegister"
-        component={MultiUserRegisterScreen}
+        getComponent={() => require('~/auth/multi-user/RegisterScreen').default}
         options={modalOptions}
       />
       <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="DevTools"
-        component={DevToolsScreen}
+        getComponent={() =>
+          require('~/settings/screens/DevToolsScreen').default
+        }
         options={modalOptions}
       />
       <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="ResetPassword"
-        component={ResetPasswordScreen}
+        getComponent={() =>
+          require('~/auth/reset-password/ResetPasswordScreen').default
+        }
         options={modalOptions}
       />
     </RootStackNav.Navigator>

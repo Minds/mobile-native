@@ -2,7 +2,14 @@ import React, { useCallback, useRef } from 'react';
 import { Pressable, Animated } from 'react-native';
 
 export default function PressableScale(props) {
-  const { children, onPressIn, onPressOut, style, ...otherProps } = props;
+  const {
+    children,
+    onPressIn,
+    onPressOut,
+    style,
+    innerStyle,
+    ...otherProps
+  } = props;
 
   const scaleAnimation = useRef(new Animated.Value(1)).current;
 
@@ -45,9 +52,7 @@ export default function PressableScale(props) {
       onPressOut={onPressOutCb}
       {...otherProps}>
       <Animated.View
-        style={{
-          transform: [{ scale: scaleAnimation }],
-        }}>
+        style={[{ transform: [{ scale: scaleAnimation }] }, innerStyle]}>
         {children}
       </Animated.View>
     </Pressable>

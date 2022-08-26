@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { TextStyle, View, ViewProps } from 'react-native';
+import { Keyboard, TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BottomSheetModal, BottomSheetButton, MenuItem } from './bottom-sheet';
@@ -115,6 +115,8 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
   const show = useCallback(
     (item?) => {
       setShown(true);
+      // dismiss the keyboard if it's open
+      Keyboard.dismiss();
       setSelected(item);
 
       // SCROLL TO INDEX IF SELECTED

@@ -5,10 +5,6 @@ import {
 } from '@react-navigation/native-stack';
 import { DiscoveryStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
-import ChannelScreen from '~/channel/v2/ChannelScreen';
-import ActivityScreen from '~/newsfeed/ActivityScreen';
-import { DiscoveryV2Screen } from '~/discovery/v2/DiscoveryV2Screen';
-import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 
 const DiscoveryStack = createNativeStackNavigator<DiscoveryStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -18,21 +14,26 @@ export default function () {
     <DiscoveryStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <DiscoveryStack.Screen
         name="Discovery"
-        component={DiscoveryV2Screen}
+        getComponent={() =>
+          require('~/discovery/v2/DiscoveryV2Screen').DiscoveryV2Screen
+        }
         options={hideHeader}
       />
       <DiscoveryStack.Screen
         name="DiscoverySearch"
-        component={DiscoverySearchScreen}
+        getComponent={() =>
+          require('~/discovery/v2/search/DiscoverySearchScreen')
+            .DiscoverySearchScreen
+        }
       />
       <DiscoveryStack.Screen
         name="Channel"
-        component={ChannelScreen}
+        getComponent={() => require('~/channel/v2/ChannelScreen').default}
         options={hideHeader}
       />
       <DiscoveryStack.Screen
         name="Activity"
-        component={ActivityScreen}
+        getComponent={() => require('~/newsfeed/ActivityScreen').default}
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
       />
