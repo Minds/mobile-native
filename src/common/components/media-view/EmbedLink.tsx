@@ -47,6 +47,7 @@ export default function EmbedLink({
             onImageDoublePress={onImageDoublePress}
             onImagePress={onImagePress}
             onImageLongPress={onImageLongPress}
+            style={ThemedStyles.style.bgSecondaryBackground}
           />
         ) : null}
         <TouchableOpacity
