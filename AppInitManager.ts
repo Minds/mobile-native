@@ -32,12 +32,6 @@ export class AppInitManager {
    * Initialize services without waiting for the promises
    */
   async initializeServices() {
-    // ensure we run it once
-    if (this.initialized) {
-      return;
-    }
-    this.initialized = true;
-
     // init push service
     pushService.init();
 
@@ -104,6 +98,7 @@ export class AppInitManager {
     badgeService.setUnreadNotifications(0);
     translationService.purgeLanguagesCache();
     updateGrowthBookAttributes();
+    boostedContentService.clear();
   };
 
   /**
@@ -111,6 +106,9 @@ export class AppInitManager {
    */
   onLogin = async () => {
     const user = sessionService.getUser();
+
+    // load boosted content
+    boostedContentService.load();
 
     // update settings for this user and init growthbook
     this.updateMindsConfigAndInitGrowthbook();
@@ -159,9 +157,12 @@ export class AppInitManager {
   }
 
   async initialNavigationHandling(navigateInitialScreen: boolean = true) {
+    // ensure we run it once
+    if (this.initialized) {
+      return;
+    }
+    this.initialized = true;
     console.log('[App] initial Navigation Handling');
-    // load minds settings and boosted content
-    await boostedContentService.load();
     try {
       // navigate to initial screen if set
       navigateInitialScreen && this.navigateToInitialScreen();
@@ -179,6 +180,7 @@ export class AppInitManager {
 
       //TODO: remove after we check the push notification issue
       console.log('[App] Handling initial notifications');
+
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();
 
