@@ -38,6 +38,7 @@ import MenuItem, {
   MenuItemProps,
 } from '../common/components/bottom-sheet/MenuItem';
 import type GroupModel from './GroupModel';
+import withModalProvider from '~/navigation/withModalProvide';
 
 export const GroupContext = React.createContext<GroupModel | null>(null);
 
@@ -449,6 +450,8 @@ export default class GroupViewScreen extends Component {
     );
   }
 }
+
+export const withModal = withModalProvider(GroupViewScreen);
 
 const styles = StyleSheet.create({
   gobackicon: {
