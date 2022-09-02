@@ -74,3 +74,5 @@ export const DARK_THEME: ColorsType = {
   AvatarActive: '#ECDA51',
   AvatarCircled: '#AEB0B8',
 };
+
+export const SupermindGradient = ['#2B52E8', '#5238ED', '#9B0FA8'];

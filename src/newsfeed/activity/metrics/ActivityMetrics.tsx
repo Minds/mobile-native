@@ -13,6 +13,7 @@ import LockTag from '../../../wire/v2/lock/LockTag';
 import type { SupportTiersType } from '../../../wire/WireTypes';
 import { getLockType } from '../../../wire/v2/lock/Lock';
 import MText from '../../../common/components/MText';
+import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 
 type PropsType = {
   entity: ActivityModel;
@@ -71,6 +72,7 @@ export default class ActivityMetrics extends Component<PropsType> {
           </View>
         ) : undefined}
         {lockType !== null && <LockTag type={lockType} />}
+        {Boolean(this.props.entity.supermind) && <SupermindLabel />}
       </View>
     );
   }

@@ -37,6 +37,7 @@ import InteractionsBar from '../../../common/components/interactions/Interaction
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import { remindContainerStyle } from '~/newsfeed/activity/styles';
+import SupermindBorderView from '~/common/components/supermind/SupermindBorderView';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -232,6 +233,28 @@ const ActivityFullScreen = observer((props: PropsType) => {
     y: 0,
   };
 
+  let remind: null | React.ReactNode = null;
+
+  if (hasRemind) {
+    const Container: any =
+      props.entity.supermind && props.entity.supermind.isReply
+        ? SupermindBorderView
+        : QuoteContainer;
+
+    remind = hasRemind ? (
+      <Container>
+        <Activity
+          ref={remindRef}
+          hideTabs={true}
+          entity={entity.remind_object as ActivityModel}
+          navigation={navigation}
+          isReminded={true}
+          hydrateOnNav={true}
+        />
+      </Container>
+    ) : null;
+  }
+
   const ownerBlockShadow = React.useMemo(
     () =>
       Platform.select({
@@ -312,18 +335,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                     </>
                   )}
                 </TouchableOpacity>
-                {hasRemind && (
-                  <View style={remindContainerStyle}>
-                    <Activity
-                      ref={remindRef}
-                      hideTabs={true}
-                      entity={entity.remind_object as ActivityModel}
-                      navigation={navigation}
-                      isReminded={true}
-                      hydrateOnNav={true}
-                    />
-                  </View>
-                )}
+                {hasRemind && remind}
               </>
             )}
             <ActivityMetrics entity={props.entity} fullDate />
@@ -433,3 +445,7 @@ const contentFitStyle = ThemedStyles.combine(
   styles.content,
 );
 const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
+
+const QuoteContainer = ({ children }) => (
+  <View style={remindContainerStyle}>{children}</View>
+);
