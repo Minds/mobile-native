@@ -54,7 +54,7 @@
         android:theme="@style/BootTheme"
         android:windowSoftInputMode="adjustResize"
         tools:replace="android:allowBackup"
-        android:requestLegacyExternalStorage="true">
+    >
         <!-- Temporal fix android 12 issues temporal -->
         <activity android:name="com.masteratul.exceptionhandler.DefaultErrorScreen"
                 android:exported="false"
