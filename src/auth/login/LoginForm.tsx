@@ -68,6 +68,7 @@ export default observer(function LoginForm(props: PropsType) {
       autoCorrect={false}
       noBottomBorder
       keyboardType="default"
+      maxLength={50}
       error={
         localStore.showErrors && !localStore.username
           ? i18n.t('auth.fieldRequired')

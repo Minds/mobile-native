@@ -324,6 +324,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     undefined,
                   ]
                 }
+                maxLength={50}
                 onChangeText={[Function]}
                 placeholder=""
                 placeholderTextColor="#444"
