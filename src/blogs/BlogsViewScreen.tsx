@@ -7,6 +7,7 @@ import { Icon } from 'react-native-elements';
 import FastImage, { Source } from 'react-native-fast-image';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import SmallCircleButton from '~/common/components/SmallCircleButton';
+import withModalProvider from '~/navigation/withModalProvide';
 import Actions from '~/newsfeed/activity/Actions';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -291,6 +292,8 @@ export default class BlogsViewScreen extends Component<PropsType> {
     );
   }
 }
+
+export const withModal = withModalProvider(BlogsViewScreen);
 
 /**
  * Styles

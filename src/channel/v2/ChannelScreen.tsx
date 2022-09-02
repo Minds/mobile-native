@@ -42,6 +42,7 @@ import Empty from '~/common/components/Empty';
 import { B1 } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import withModalProvider from '~/navigation/withModalProvide';
 
 const tinycolor = require('tinycolor2');
 
@@ -197,7 +198,7 @@ const ChannelScreen = observer((props: PropsType) => {
     return () => {
       ActivityModel.events.removeListener('newPost', p);
     };
-  }, [props.route, store]);
+  }, [store]);
 
   /**
    * TODO: describe what this does
@@ -503,4 +504,8 @@ const styles = ThemedStyles.create({
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
-export default withErrorBoundary(ChannelScreen);
+const withError = withErrorBoundary(ChannelScreen);
+
+export default withError;
+
+export const withModal = withModalProvider(withError);

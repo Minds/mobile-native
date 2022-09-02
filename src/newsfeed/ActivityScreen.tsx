@@ -11,6 +11,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import type BlogModel from '../blogs/BlogModel';
 import { showNotification } from '../../AppMessages';
 import i18n from '../common/services/i18n.service';
+import withModalProvider from '~/navigation/withModalProvide';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = StackNavigationProp<
@@ -111,3 +112,5 @@ const ActivityScreen = observer((props: PropsType) => {
 });
 
 export default ActivityScreen;
+
+export const withModal = withModalProvider(ActivityScreen);

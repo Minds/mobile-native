@@ -20,6 +20,7 @@ import UserContentSwiper from './UserContentSwiper';
 import { useStores } from '../common/hooks/use-stores';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import usePortraitAnimation from './usePortraitAnimation';
+import withModalProvider from '~/navigation/withModalProvide';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -223,3 +224,5 @@ const CustomItem: React.FC<ItemProps> = observer(
 );
 
 export default PortraitViewerScreen;
+
+export const withModal = withModalProvider(PortraitViewerScreen);
