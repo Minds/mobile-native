@@ -5,6 +5,7 @@ const mock = jest.fn().mockImplementation(() => {
     {
       setUser: jest.fn(),
       setRewards: jest.fn(),
+      setTosLastUpdate: jest.fn(),
       clearUser: jest.fn(),
       load: jest.fn(),
       isAdmin: jest.fn(),

@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, screen } from '@testing-library/react-native';
 import RegisterForm from '../../src/auth/register/RegisterForm';
 import authService from '../../src/auth/AuthService';
 import { showNotification } from '../../AppMessages';
@@ -25,11 +25,11 @@ describe('RegisterScreen component', () => {
   });
 
   it('should require terms', async () => {
-    const { getByTestId } = render(<RegisterForm />);
-    const user = getByTestId('usernameRegisterInput');
-    const email = getByTestId('emailInput');
-    const password = getByTestId('passwordInput');
-    const button = getByTestId('registerButton');
+    render(<RegisterForm />);
+    const user = screen.getByTestId('usernameRegisterInput');
+    const email = screen.getByTestId('emailInput');
+    const password = screen.getByTestId('passwordInput');
+    const button = screen.getByTestId('registerButton');
 
     await fireEvent.changeText(user, 'myuser');
     await fireEvent.changeText(email, 'myuser@minds.com');
@@ -45,12 +45,12 @@ describe('RegisterScreen component', () => {
   });
 
   it('should validate password', async () => {
-    const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
-    const user = getByTestId('usernameRegisterInput');
-    const email = getByTestId('emailInput');
-    const password = getByTestId('passwordInput');
-    const checkboxes = getAllByA11yRole('checkbox');
-    const button = getByTestId('registerButton');
+    render(<RegisterForm />);
+    const user = screen.getByTestId('usernameRegisterInput');
+    const email = screen.getByTestId('emailInput');
+    const password = screen.getByTestId('passwordInput');
+    const checkboxes = screen.getAllByRole('checkbox');
+    const button = screen.getByTestId('registerButton');
 
     await fireEvent.changeText(user, 'myuser');
     await fireEvent.changeText(email, 'myuser@minds.com');
@@ -68,12 +68,12 @@ describe('RegisterScreen component', () => {
   });
 
   it('should call show captcha and auth service', async () => {
-    const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
-    const user = getByTestId('usernameRegisterInput');
-    const email = getByTestId('emailInput');
-    const password = getByTestId('passwordInput');
-    const checkboxes = getAllByA11yRole('checkbox');
-    const button = getByTestId('registerButton');
+    render(<RegisterForm />);
+    const user = screen.getByTestId('usernameRegisterInput');
+    const email = screen.getByTestId('emailInput');
+    const password = screen.getByTestId('passwordInput');
+    const checkboxes = screen.getAllByRole('checkbox');
+    const button = screen.getByTestId('registerButton');
 
     // const spy = jest.spyOn(captcha.parent, 'show');
 

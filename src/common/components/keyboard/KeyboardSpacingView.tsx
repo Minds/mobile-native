@@ -71,13 +71,13 @@ export default observer(function KeyboardSpacingView({
       android: 'keyboardDidHide',
       ios: 'keyboardWillHide',
     }) as KeyboardEventName;
-    Keyboard.addListener(eventShow, store.show);
-    Keyboard.addListener(eventHide, store.hide);
+    const subsShow = Keyboard.addListener(eventShow, store.show);
+    const subsHide = Keyboard.addListener(eventHide, store.hide);
 
     // cleanup function
     return () => {
-      Keyboard.removeListener(eventShow, store.show);
-      Keyboard.removeListener(eventHide, store.hide);
+      subsShow.remove();
+      subsHide.remove();
     };
   }, [store]);
 

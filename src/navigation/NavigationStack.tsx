@@ -465,6 +465,10 @@ const RootStack = observer(function () {
               name="RelogScreen"
               getComponent={() => require('~/auth/RelogScreen').default}
             />
+            <RootStackNav.Screen
+              name="TosScreen"
+              getComponent={() => require('~/tos/TosScreen').default}
+            />
           </>
         )
       ) : (

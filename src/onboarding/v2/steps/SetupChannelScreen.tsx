@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -21,15 +21,17 @@ import ModalContainer from './ModalContainer';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import createChannelStore from '../../../channel/v2/createChannelStore';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
-import BottomButtonOptions, {
-  ItemType,
-} from '../../../common/components/BottomButtonOptions';
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
 import MText from '../../../common/components/MText';
 import { Button as Btn } from '~/common/ui';
 import { useKeyboard } from '@react-native-community/hooks';
 import { IS_IOS } from '~/config/Config';
+import {
+  BottomSheetButton,
+  BottomSheetModal,
+  MenuItem,
+} from '~/common/components/bottom-sheet';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -38,6 +40,8 @@ const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 export default observer(function SetupChannelScreen() {
   const theme = ThemedStyles.style;
   const user = useCurrentUser();
+  // Do not render BottomSheet unless it is necessary
+  const ref = React.useRef<any>(null);
 
   const hasAvatar = user?.hasAvatar();
   const channelStore = useLocalStore(createChannelStore);
@@ -92,34 +96,6 @@ export default observer(function SetupChannelScreen() {
         },
     [channelStore, store],
   );
-
-  const avatarOptions: Array<Array<ItemType>> = useRef([
-    [
-      {
-        title: i18n.t('takePhoto'),
-        titleStyle: theme.fontXXL,
-        onPress: async () => {
-          await channelStore.upload('avatar', true, () => store.hidePicker());
-          await sessionService.loadUser();
-        },
-      },
-      {
-        title: i18n.t('uploadPhoto'),
-        titleStyle: theme.fontXXL,
-        onPress: async () => {
-          await channelStore.upload('avatar', false, () => store.hidePicker());
-          await sessionService.loadUser();
-        },
-      },
-    ],
-    [
-      {
-        title: i18n.t('cancel'),
-        titleStyle: theme.colorSecondaryText,
-        onPress: store.hidePicker,
-      },
-    ],
-  ]).current;
 
   return (
     <ModalContainer
@@ -220,11 +196,36 @@ export default observer(function SetupChannelScreen() {
           </View>
         </View>
       </DismissKeyboard>
-      <BottomButtonOptions
-        list={avatarOptions}
-        isVisible={store.showAvatarPicker}
-        onPressClose={store.hidePicker}
-      />
+      {store.showAvatarPicker && (
+        <BottomSheetModal ref={ref} autoShow>
+          <MenuItem
+            onPress={async () => {
+              await channelStore.upload('avatar', true, () =>
+                store.hidePicker(),
+              );
+              await sessionService.loadUser();
+            }}
+            title={i18n.t('takePhoto')}
+            iconName="camera"
+            iconType="ionicon"
+          />
+          <MenuItem
+            onPress={async () => {
+              await channelStore.upload('avatar', false, () =>
+                store.hidePicker(),
+              );
+              await sessionService.loadUser();
+            }}
+            title={i18n.t('uploadPhoto')}
+            iconName="image"
+            iconType="feather"
+          />
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={store.hidePicker}
+          />
+        </BottomSheetModal>
+      )}
     </ModalContainer>
   );
 });

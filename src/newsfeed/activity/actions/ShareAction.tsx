@@ -4,44 +4,52 @@ import { Linking, Platform } from 'react-native';
 
 import { IconButtonNext } from '~ui/icons';
 
-import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../ActivityModel';
 import { observer, useLocalStore } from 'mobx-react';
-import BottomButtonOptions, {
-  ItemType,
-} from '../../../common/components/BottomButtonOptions';
 import i18n from '../../../common/services/i18n.service';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
 import logService from '../../../common/services/log.service';
 import ShareService from '../../../share/ShareService';
 import { actionsContainerStyle } from './styles';
+import {
+  BottomSheetButton,
+  BottomSheetModal,
+  MenuItem,
+} from '~/common/components/bottom-sheet';
 
 type PropsType = {
   entity: ActivityModel;
 };
 
 export default observer(function ShareAction({ entity }: PropsType) {
+  // Do not render BottomSheet unless it is necessary
+  const ref = React.useRef<any>(null);
   // store
   const localStore = useLocalStore(() => ({
-    showMenu: false,
+    menuShown: false,
     onPress() {
       if (Platform.OS === 'ios') {
         localStore.share();
       } else {
-        localStore.show();
+        if (!localStore.menuShown) {
+          localStore.menuShown = true;
+          return;
+        }
+        if (ref.current) {
+          console.log('present');
+          ref.current?.present();
+        }
       }
+    },
+    hide() {
+      ref.current?.dismiss();
     },
     share() {
       ShareService.share(entity.text, MINDS_URI + 'newsfeed/' + entity.guid);
     },
-    show() {
-      localStore.showMenu = true;
-    },
-    hide() {
-      localStore.showMenu = false;
-    },
     async sendTo() {
+      ref.current?.dismiss();
       try {
         const installed = await SendIntentAndroid.isAppInstalled(
           ANDROID_CHAT_APP,
@@ -63,29 +71,6 @@ export default observer(function ShareAction({ entity }: PropsType) {
     },
   }));
 
-  const options: Array<Array<ItemType>> = React.useRef([
-    [
-      {
-        title: i18n.t('sendTo'),
-        onPress: () => {
-          localStore.hide();
-          localStore.sendTo();
-        },
-      },
-      {
-        title: i18n.t('share'),
-        onPress: localStore.share,
-      },
-    ],
-    [
-      {
-        title: i18n.t('cancel'),
-        titleStyle: ThemedStyles.style.colorSecondaryText,
-        onPress: localStore.hide,
-      },
-    ],
-  ]).current;
-
   return (
     <>
       <IconButtonNext
@@ -96,11 +81,27 @@ export default observer(function ShareAction({ entity }: PropsType) {
         name="share"
         size="small"
       />
-      <BottomButtonOptions
-        list={options}
-        isVisible={localStore.showMenu}
-        onPressClose={localStore.hide}
-      />
+      {localStore.menuShown && (
+        <BottomSheetModal ref={ref} autoShow>
+          <MenuItem
+            onPress={localStore.sendTo}
+            title={i18n.t('sendTo')}
+            iconName="repeat"
+            iconType="material"
+          />
+          <MenuItem
+            title={i18n.t('share')}
+            onPress={localStore.share}
+            iconName="edit"
+            iconType="material"
+          />
+
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={localStore.hide}
+          />
+        </BottomSheetModal>
+      )}
     </>
   );
 });
