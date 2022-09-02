@@ -1,0 +1,13 @@
+diff --git a/dist/FlashList.js b/dist/FlashList.js
+index 45658af5..1a1491d4 100644
+--- a/node_modules/@shopify/flash-list/dist/FlashList.js
++++ b/node_modules/@shopify/flash-list/dist/FlashList.js
+@@ -78,7 +78,7 @@ var FlashList = /** @class */ (function (_super) {
+         _this.container = function (props, children) {
+             _this.clearPostLoadTimeout();
+             return (react_1.default.createElement(react_1.default.Fragment, null,
+-                react_1.default.createElement(PureComponentWrapper_1.PureComponentWrapper, { enabled: children.length > 0 || _this.isEmptyList, contentStyle: _this.props.contentContainerStyle, horizontal: _this.props.horizontal, header: _this.props.ListHeaderComponent, extraData: _this.state.extraData, headerStyle: _this.props.ListHeaderComponentStyle, inverted: _this.props.inverted, renderer: _this.header }),
++                react_1.default.createElement(PureComponentWrapper_1.PureComponentWrapper, { enabled: _this.isListLoaded || children.length > 0 || _this.isEmptyList, contentStyle: _this.props.contentContainerStyle, horizontal: _this.props.horizontal, header: _this.props.ListHeaderComponent, extraData: _this.state.extraData, headerStyle: _this.props.ListHeaderComponentStyle, inverted: _this.props.inverted, renderer: _this.header }),
+                 react_1.default.createElement(AutoLayoutView_1.default, tslib_1.__assign({}, props, { onBlankAreaEvent: _this.props.onBlankArea, onLayout: _this.updateDistanceFromWindow, disableAutoLayout: _this.props.disableAutoLayout }), children),
+                 _this.isEmptyList
+                     ? _this.getValidComponent(_this.props.ListEmptyComponent)
