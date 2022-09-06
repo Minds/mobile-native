@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
+import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { IconButtonNext } from '~ui/icons';
 import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
@@ -10,7 +13,6 @@ import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   BottomSheetButton,
   BottomSheetModal,
@@ -45,8 +47,8 @@ type StateType = {
  */
 class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   static contextType = GroupContext;
-  ref = React.createRef<any>();
-  shareMenuRef = React.createRef<any>();
+  ref = React.createRef<BottomSheetModalType>();
+  shareMenuRef = React.createRef<BottomSheetModalType>();
   deleteOption: React.ReactNode;
   state: StateType = {
     options: [],
