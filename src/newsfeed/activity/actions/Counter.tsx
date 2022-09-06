@@ -33,19 +33,23 @@ const Counter = ({ count, style }: PropsType) => {
         </View>
       }>
       <View style={ThemedStyles.style.rowJustifyCenter}>
-        <AnimatedNumbers
-          animationDuration={animationDuration}
-          animateToNumber={Number(d1)}
-          fontStyle={fontStyle}
-        />
-        {Boolean(d2) && (
+        {count > 0 && (
           <>
-            <MText style={fontStyle}>.</MText>
             <AnimatedNumbers
               animationDuration={animationDuration}
-              animateToNumber={Number(d2)}
+              animateToNumber={Number(d1)}
               fontStyle={fontStyle}
             />
+            {Boolean(d2) && (
+              <>
+                <MText style={fontStyle}>.</MText>
+                <AnimatedNumbers
+                  animationDuration={animationDuration}
+                  animateToNumber={Number(d2)}
+                  fontStyle={fontStyle}
+                />
+              </>
+            )}
           </>
         )}
 
