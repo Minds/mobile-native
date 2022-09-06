@@ -14,7 +14,7 @@ import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Supermind from './actions/Supermind';
+import SupermindAction from './actions/SupermindAction';
 
 type PropsType = {
   entity: ActivityModel;
@@ -62,7 +62,7 @@ export const Actions = observer((props: PropsType) => {
             <BoostAction entity={entity} navigation={navigation} />
           )}
 
-          {!isOwner && <Supermind entity={entity} />}
+          {!isOwner && <SupermindAction entity={entity} />}
         </View>
       )}
     </View>

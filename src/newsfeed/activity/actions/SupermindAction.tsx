@@ -5,7 +5,7 @@ import { actionsContainerStyle } from './styles';
 /**
  * Supermind activity action
  */
-export default function Supermind({ entity }) {
+export default function SupermindAction({ entity }) {
   return (
     <IconButtonNext
       testID="supermind button"
@@ -14,7 +14,7 @@ export default function Supermind({ entity }) {
       name="supermind"
       size="small"
       fill
-      active={entity.supermind}
+      active={Boolean(entity.supermind)}
       onPress={() => {
         if (!entity.supermind) {
           console.log('Call the composer here');
