@@ -5,7 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { B2 } from '~/common/ui';
 import { SupermindGradient } from '~/styles/Colors';
 
-export default function SupermindLabel() {
+type Props = {
+  text?: string;
+};
+
+export default function SupermindLabel({ text }: Props) {
   return (
     <View style={styles.outerStyle}>
       <LinearGradient
@@ -14,7 +18,7 @@ export default function SupermindLabel() {
         end={end}
         locations={locations}>
         <B2 color="white" font="medium" horizontal="XS">
-          Supermind
+          {text || 'Supermind'}
         </B2>
       </LinearGradient>
     </View>
