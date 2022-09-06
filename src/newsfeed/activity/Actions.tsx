@@ -14,7 +14,6 @@ import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import ShareAction from './actions/ShareAction';
 import Supermind from './actions/Supermind';
 
 type PropsType = {
@@ -54,8 +53,6 @@ export const Actions = observer((props: PropsType) => {
             }
           />
           <RemindAction entity={entity} hideCount={props.hideCount} />
-
-          <ShareAction entity={entity} />
 
           {!isOwner && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />

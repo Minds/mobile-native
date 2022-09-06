@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
 import { IconButtonNext } from '~ui/icons';
-import { IS_IOS, MINDS_URI } from '../../config/Config';
+import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
@@ -19,6 +19,8 @@ import {
 import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
+import SendIntentAndroid from 'react-native-send-intent';
+import logService from '~/common/services/log.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -35,6 +37,7 @@ type StateType = {
   options: Array<any>;
   userBlocked: boolean;
   shown: boolean;
+  shareMenuShown: boolean;
 };
 
 /**
@@ -43,11 +46,13 @@ type StateType = {
 class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   static contextType = GroupContext;
   ref = React.createRef<any>();
+  shareMenuRef = React.createRef<any>();
   deleteOption: React.ReactNode;
   state: StateType = {
     options: [],
     userBlocked: false,
     shown: false,
+    shareMenuShown: false,
   };
 
   /**
@@ -272,10 +277,17 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       title: i18n.t('share'),
       onPress: () => {
         this.hideActionSheet();
-        shareService.share(
-          this.props.entity.text,
-          MINDS_URI + 'newsfeed/' + this.props.entity.guid,
-        );
+        if (IS_IOS) {
+          this.share();
+        } else {
+          if (!this.state.shareMenuShown) {
+            this.setState({ shareMenuShown: true });
+            return;
+          }
+          if (this.shareMenuRef.current) {
+            this.shareMenuRef.current?.present();
+          }
+        }
       },
     });
 
@@ -364,6 +376,38 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   }
 
   /**
+   * Hide the share menu
+   */
+  hideShareMenu = () => {
+    this.shareMenuRef.current?.dismiss();
+  };
+
+  /**
+   * Send link to a user in chat
+   */
+  sendTo = async () => {
+    this.hideShareMenu();
+    try {
+      const installed = await SendIntentAndroid.isAppInstalled(
+        ANDROID_CHAT_APP,
+      );
+      if (installed) {
+        SendIntentAndroid.sendText({
+          title: '',
+          text: MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+          type: SendIntentAndroid.TEXT_PLAIN,
+          package: ANDROID_CHAT_APP,
+        });
+      } else {
+        Linking.openURL('market://details?id=com.minds.chat');
+      }
+    } catch (error) {
+      logService.exception(error);
+      console.log(error);
+    }
+  };
+
+  /**
    * Show an error message
    */
   showError() {
@@ -373,6 +417,17 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       2000,
     );
   }
+
+  /**
+   * Share the link to the post
+   */
+  share = () => {
+    this.hideShareMenu();
+    shareService.share(
+      this.props.entity.text,
+      MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+    );
+  };
 
   /**
    * Render Header
@@ -396,6 +451,27 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
             <BottomSheetButton
               text={i18n.t('cancel')}
               onPress={this.hideActionSheet}
+            />
+          </BottomSheetModal>
+        )}
+        {this.state.shareMenuShown && (
+          <BottomSheetModal ref={this.shareMenuRef} autoShow>
+            <MenuItem
+              onPress={this.sendTo}
+              title={i18n.t('sendTo')}
+              iconName="repeat"
+              iconType="material"
+            />
+            <MenuItem
+              title={i18n.t('share')}
+              onPress={this.share}
+              iconName="edit"
+              iconType="material"
+            />
+
+            <BottomSheetButton
+              text={i18n.t('cancel')}
+              onPress={this.hideShareMenu}
             />
           </BottomSheetModal>
         )}
