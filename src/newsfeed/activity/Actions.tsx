@@ -15,6 +15,7 @@ import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareAction from './actions/ShareAction';
+import Supermind from './actions/Supermind';
 
 type PropsType = {
   entity: ActivityModel;
@@ -63,6 +64,8 @@ export const Actions = observer((props: PropsType) => {
           {isOwner && !isScheduled && (
             <BoostAction entity={entity} navigation={navigation} />
           )}
+
+          {!isOwner && <Supermind entity={entity} />}
         </View>
       )}
     </View>
