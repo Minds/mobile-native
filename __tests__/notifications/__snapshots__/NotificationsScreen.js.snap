@@ -303,6 +303,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             >
                               <Text
                                 allowFontScaling={false}
+                                selectable={false}
                                 style={
                                   Array [
                                     Object {
@@ -383,6 +384,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -520,6 +522,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -677,6 +680,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -834,6 +838,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -991,6 +996,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -1148,6 +1154,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {
@@ -1305,6 +1312,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            selectable={false}
                             style={
                               Array [
                                 Object {

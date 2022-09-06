@@ -144,6 +144,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -371,6 +372,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <Text
                       allowFontScaling={false}
+                      selectable={false}
                       style={
                         Array [
                           Object {
@@ -683,6 +685,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -780,6 +783,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -904,6 +908,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -1076,6 +1081,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -1166,6 +1172,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
               ]
             }
+            testID="supermind button"
           >
             <View
               collapsable={false}
@@ -1202,15 +1209,14 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
                           "color": "#AEB0B8",
                           "fontSize": 20,
                         },
-                        Object {
-                          "marginTop": -2,
-                        },
+                        undefined,
                         Object {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
@@ -1220,7 +1226,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       ]
                     }
                   >
-                    
+                    
                   </Text>
                 </View>
               </View>
