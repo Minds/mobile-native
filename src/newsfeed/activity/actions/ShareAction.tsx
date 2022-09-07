@@ -37,7 +37,6 @@ export default observer(function ShareAction({ entity }: PropsType) {
           return;
         }
         if (ref.current) {
-          console.log('present');
           ref.current?.present();
         }
       }

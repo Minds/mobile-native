@@ -19,6 +19,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'info-outline',
   },
+  supermind: {
+    font: 'MaterialIcons',
+    name: 'tips-and-updates',
+  },
   warning: {
     font: 'MaterialIcons',
     name: 'warning',

@@ -480,7 +480,7 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNPhotoEditor (1.0.12):
+  - RNPhotoEditor (1.0.13):
     - iOSPhotoEditor
     - React
   - RNReanimated (2.8.0):
@@ -525,8 +525,8 @@ PODS:
     - SnowplowTracker (~> 3.0)
   - RNSVG (12.1.0):
     - React
-  - RNVectorIcons (7.1.0):
-    - React
+  - RNVectorIcons (9.2.0):
+    - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -959,7 +959,7 @@ SPEC CHECKSUMS:
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
+  RNPhotoEditor: dae3b766e42ff5c184e74be0a95ff6af107a5ecc
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
@@ -967,7 +967,7 @@ SPEC CHECKSUMS:
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSnowplowTracker: 88c65c2132ed97c0732473948c00c8f4d6473b12
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
-  RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b

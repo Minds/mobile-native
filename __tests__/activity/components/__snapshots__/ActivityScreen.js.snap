@@ -144,6 +144,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -371,6 +372,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <Text
                       allowFontScaling={false}
+                      selectable={false}
                       style={
                         Array [
                           Object {
@@ -510,7 +512,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 "padding": 8,
               },
               Object {
-                "paddingLeft": 16,
+                "paddingHorizontal": 16,
               },
             ]
           }
@@ -683,6 +685,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -780,6 +783,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -904,6 +908,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -1047,6 +1052,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -1173,6 +1179,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
