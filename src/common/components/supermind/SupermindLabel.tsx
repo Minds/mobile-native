@@ -13,6 +13,7 @@ export default function SupermindLabel({ text }: Props) {
   return (
     <View style={styles.outerStyle}>
       <LinearGradient
+        style={ThemedStyles.style.flexContainerCenter}
         colors={SupermindGradient}
         start={start}
         end={end}
@@ -27,10 +28,10 @@ export default function SupermindLabel({ text }: Props) {
 
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
-const locations = [0, 0.3, 1];
+const locations = [0, 0.4, 1];
 const styles = ThemedStyles.create({
   outerStyle: {
-    height: 20,
+    height: 22,
     borderRadius: 3,
     overflow: 'hidden',
   },
