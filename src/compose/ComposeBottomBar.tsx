@@ -24,7 +24,7 @@ function ComposeBottomBar(props) {
   );
   const allowedMode = useMemo(() => {
     let mode;
-    const supermindRequest: SupermindRequest = props.store.getSupermindRequest();
+    const supermindRequest: SupermindRequest = props.store.supermindRequest;
     if (supermindRequest) {
       switch (supermindRequest.reply_type) {
         case ReplyType.image:
@@ -92,7 +92,7 @@ function ComposeBottomBar(props) {
         name="supermind"
         style={iconStyle}
         scale
-        color={props.store.getSupermindRequest() ? 'Link' : 'Icon'}
+        color={props.store.supermindRequest ? 'Link' : 'Icon'}
         onPress={props.onSupermind}
       />
       <View style={theme.flexContainer} />

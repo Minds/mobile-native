@@ -69,7 +69,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     data?.terms_agreed || false,
   );
   const [paymentMethod, setPaymentMethod] = useState<PaymentType>(
-    data?.payment_options.payment_type || PaymentType.cash,
+    data?.payment_options?.payment_type || PaymentType.cash,
   );
   const [cardId, setCardId] = useState<string | undefined>(
     data?.payment_options?.payment_method_id,
@@ -187,12 +187,12 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           }}
           value={`@${username}`}
           error={errors.username}
-          // noBottomBorder
         />
         <InputContainer
           placeholder={`Offer (${
             paymentMethod === PaymentType.cash ? 'USD' : 'Token'
           })`}
+          autofocus={Boolean(data?.receiver_username)}
           onChangeText={value => {
             setOffer(value);
             setErrors(err => ({

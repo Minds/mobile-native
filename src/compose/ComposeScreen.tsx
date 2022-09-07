@@ -164,13 +164,9 @@ export default observer(function ComposeScreen(props) {
     optionsRef.current.show();
   }, []);
 
-  const handleSupermindPress = useCallback(() => {
-    NavigationService.navigate('SupermindCompose', {
-      data: store.getSupermindRequest(),
-      onSave: (payload: SupermindRequest) => store.setSupermindRequest(payload),
-      onClear: () => store.clearSupermindRequest(),
-    });
-  }, [store]);
+  const handleSupermindPress = useCallback(() => store.openSupermindModal(), [
+    store,
+  ]);
 
   const onScrollHandler = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) =>
@@ -250,9 +246,7 @@ export default observer(function ComposeScreen(props) {
         <TopBar
           containerStyle={theme.paddingLeft}
           rightText={rightButton}
-          leftComponent={
-            store.getSupermindRequest() ? <SupermindLabel /> : null
-          }
+          leftComponent={store.supermindRequest ? <SupermindLabel /> : null}
           onPressRight={onPost}
           onPressBack={onPressBack}
           store={store}

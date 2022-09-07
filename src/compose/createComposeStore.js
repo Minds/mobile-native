@@ -17,6 +17,7 @@ import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequest } from './SupermindComposeScreen';
+import NavigationService from '../navigation/NavigationService';
 
 /**
  * Display an error message to the user.
@@ -103,8 +104,19 @@ export default function (props) {
         this.hydrateFromEntity();
       }
 
-      if (props.route?.params && props.route.params.group) {
+      if (params.group) {
         this.group = props.route.params.group;
+      }
+
+      if (params.supermind) {
+        this.openSupermindModal(
+          params.entity
+            ? {
+                receiver_username: params.entity.ownerObj.username,
+                receiver_guid: params.entity.ownerObj.guid,
+              }
+            : undefined,
+        );
       }
 
       // clear params to avoid repetition
@@ -635,14 +647,16 @@ export default function (props) {
         }),
       );
     },
-    getSupermindRequest() {
-      return this.supermindRequest;
-    },
-    setSupermindRequest(payload: SupermindRequest) {
-      this.supermindRequest = payload;
-    },
-    clearSupermindRequest() {
-      this.supermindRequest = undefined;
+    openSupermindModal(supermindRequest: Partial<SupermindRequest>) {
+      NavigationService.navigate('SupermindCompose', {
+        data: supermindRequest || this.supermindRequest,
+        onSave: (payload: SupermindRequest) => {
+          this.supermindRequest = payload;
+        },
+        onClear: () => {
+          this.supermindRequest = undefined;
+        },
+      });
     },
   };
 }
