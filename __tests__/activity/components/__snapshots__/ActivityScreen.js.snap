@@ -939,36 +939,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "justifyContent": "center",
                       }
                     }
-                  >
-                    <Text
-                      onLayout={[Function]}
-                      style={
-                        Array [
-                          Array [
-                            Array [
-                              Object {
-                                "color": "#AEB0B8",
-                              },
-                              Object {
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "fontFamily": "Roboto-Medium",
-                                "fontWeight": "500",
-                              },
-                            ],
-                            undefined,
-                          ],
-                          Object {
-                            "position": "absolute",
-                            "top": -999999,
-                          },
-                        ]
-                      }
-                    >
-                      0
-                    </Text>
-                  </View>
+                  />
                 </View>
               </View>
             </View>
