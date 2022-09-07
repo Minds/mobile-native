@@ -35,6 +35,7 @@ const styles = ThemedStyles.create({
       overflow: 'hidden',
     },
     'margin3x',
+    'marginHorizontal4x',
   ],
   innerStyle: {
     borderRadius: 4,

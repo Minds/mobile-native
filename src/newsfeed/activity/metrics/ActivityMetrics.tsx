@@ -81,7 +81,7 @@ export default class ActivityMetrics extends Component<PropsType> {
 const containerStyle = ThemedStyles.combine(
   'rowJustifySpaceBetween',
   'padding2x',
-  'paddingLeft4x',
+  'paddingHorizontal4x',
 );
 
 const textStyle = ThemedStyles.combine(
