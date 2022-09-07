@@ -17,7 +17,14 @@ export interface PropsType extends TextInputProps {
   autofocus?: boolean;
   dateFormat?: string;
   labelStyle?: TextStyle | Array<TextStyle>;
+  /**
+   * the label for the input
+   */
   placeholder?: string;
+  /**
+   * the placeholder text for the TextInput
+   */
+  placeholderText?: string;
   value?: string;
   testID?: string;
   keyboardType?: string;
@@ -103,12 +110,17 @@ export default class Input extends Component<PropsType> {
       <TextInput
         {...this.props}
         style={[theme.input, this.props.style]}
-        placeholderTextColor="#444"
+        placeholderTextColor={theme.colorTertiaryText.color}
         returnKeyType={this.props.returnKeyType || 'done'}
         autoCapitalize={'none'}
         underlineColorAndroid="transparent"
+        onChangeText={
+          this.props.inputType === 'number'
+            ? value => this.props.onChangeText(value.replace(/[^0-9]/g, ''))
+            : this.props.onChangeText
+        }
         ref={this.inputRef}
-        placeholder=""
+        placeholder={this.props.placeholderText}
       />
     );
   };
@@ -208,7 +220,6 @@ const styles = StyleSheet.create({
   errorContainer: {
     alignContent: 'flex-end',
     flexGrow: 1,
-    paddingRight: 10,
   },
   optional: {
     fontSize: 14,

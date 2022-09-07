@@ -39,6 +39,7 @@ import Animated, {
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import onImageInput from '~/common/helpers/onImageInput';
+import { SupermindRequest } from './SupermindComposeScreen';
 
 const { width } = Dimensions.get('window');
 
@@ -161,6 +162,14 @@ export default observer(function ComposeScreen(props) {
     Keyboard.dismiss();
     optionsRef.current.show();
   }, []);
+
+  const handleSupermindPress = useCallback(() => {
+    NavigationService.navigate('SupermindCompose', {
+      data: store.getSupermindRequest(),
+      onSave: (payload: SupermindRequest) => store.setSupermindRequest(payload),
+      onClear: () => store.clearSupermindRequest(),
+    });
+  }, [store]);
 
   const onScrollHandler = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) =>
@@ -339,6 +348,7 @@ export default observer(function ComposeScreen(props) {
               onHashtag={handleHashtagPress}
               onMoney={handleMoneyPress}
               onOptions={handleOptionsPress}
+              onSupermind={handleSupermindPress}
             />
           </KeyboardSpacingView>
         )}

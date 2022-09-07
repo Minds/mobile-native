@@ -16,6 +16,7 @@ import { Image, Platform } from 'react-native';
 import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
+import { SupermindRequest } from './SupermindComposeScreen';
 
 /**
  * Display an error message to the user.
@@ -62,6 +63,7 @@ export default function (props) {
     group: null,
     postToPermaweb: false,
     initialized: false,
+    supermindRequest: undefined,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -537,19 +539,38 @@ export default function (props) {
           newPost.tags = this.tags;
         }
 
+        if (this.supermindRequest) {
+          newPost.supermind_request = this.supermindRequest;
+        }
+
         this.setPosting(true);
 
-        const guidParam = this.isEdit ? `/${this.entity.guid}` : '';
+        let response;
 
-        const response = await api.post(`api/v2/newsfeed${guidParam}`, newPost);
-        if (response && response.activity) {
-          if (this.isEdit) {
-            this.entity.update(response.activity);
-            this.entity.setEdited('1');
-            return this.entity;
+        if (this.isEdit) {
+          response = await api.post(
+            `api/v3/newsfeed/activity/${this.entity.guid}`,
+            newPost,
+          );
+        } else {
+          response = await api.put('api/v3/newsfeed/activity', newPost);
+
+          if (response.supermind) {
+            showNotification(i18n.t('supermind.requestSubmitted'), 'success');
           }
-          return ActivityModel.create(response.activity);
         }
+
+        if (!response) {
+          return null;
+        }
+
+        if (this.isEdit) {
+          this.entity.update(response);
+          this.entity.setEdited('1');
+          return this.entity;
+        }
+
+        return ActivityModel.create(response);
       } catch (e) {
         const message = getNetworkError(e);
         if (message) {
@@ -613,6 +634,15 @@ export default function (props) {
           maxHashtags: hashtagService.maxHashtags,
         }),
       );
+    },
+    getSupermindRequest() {
+      return this.supermindRequest;
+    },
+    setSupermindRequest(payload: SupermindRequest) {
+      this.supermindRequest = payload;
+    },
+    clearSupermindRequest() {
+      this.supermindRequest = undefined;
     },
   };
 }

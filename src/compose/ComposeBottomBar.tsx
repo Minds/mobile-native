@@ -1,11 +1,12 @@
 import { useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default function ComposeBottomBar(props) {
+function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const mediaQuoteFF = useFeature('mobile-5645-media-quotes');
@@ -68,6 +69,13 @@ export default function ComposeBottomBar(props) {
         scale
         onPress={props.onHashtag}
       />
+      <IconButton
+        name="supermind"
+        style={iconStyle}
+        scale
+        color={props.store.getSupermindRequest() ? 'Link' : 'Icon'}
+        onPress={props.onSupermind}
+      />
       <View style={theme.flexContainer} />
       <IconButton
         name="cog"
@@ -79,6 +87,8 @@ export default function ComposeBottomBar(props) {
     </View>
   );
 }
+
+export default observer(ComposeBottomBar);
 
 const styles = ThemedStyles.create({
   bottomBar: [
