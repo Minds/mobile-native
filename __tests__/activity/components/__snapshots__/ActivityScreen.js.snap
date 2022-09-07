@@ -1172,7 +1172,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
               ]
             }
-            testID="supermind button"
           >
             <View
               collapsable={false}
@@ -1216,7 +1215,9 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#AEB0B8",
                           "fontSize": 20,
                         },
-                        undefined,
+                        Object {
+                          "marginTop": -2,
+                        },
                         Object {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
@@ -1226,7 +1227,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       ]
                     }
                   >
-                    
+                    
                   </Text>
                 </View>
               </View>
