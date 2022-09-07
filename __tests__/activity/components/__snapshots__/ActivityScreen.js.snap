@@ -497,34 +497,7 @@ exports[`Activity screen component renders correctly  1`] = `
               Message
             </Text>
           </View>
-          <View>
-            <Modal
-              animationType="none"
-              deviceHeight={null}
-              deviceWidth={null}
-              hardwareAccelerated={false}
-              hideModalContentWhileAnimating={false}
-              onBackdropPress={[Function]}
-              onModalHide={[Function]}
-              onModalWillHide={[Function]}
-              onModalWillShow={[Function]}
-              onRequestClose={[Function]}
-              panResponderThreshold={4}
-              scrollHorizontal={false}
-              scrollOffset={0}
-              scrollOffsetMax={0}
-              scrollTo={null}
-              supportedOrientations={
-                Array [
-                  "portrait",
-                  "landscape",
-                ]
-              }
-              swipeThreshold={100}
-              transparent={true}
-              visible={false}
-            />
-          </View>
+          <View />
         </View>
         <View
           style={
@@ -962,39 +935,11 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View
                     style={
                       Object {
-                        "alignItems": "center",
-                        "flexDirection": "column",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
                       }
                     }
-                  >
-                    <Text
-                      size={15}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                          },
-                          Object {
-                            "fontFamily": "Roboto",
-                          },
-                          Array [
-                            Object {
-                              "color": "#AEB0B8",
-                            },
-                            Object {
-                              "fontSize": 14,
-                            },
-                            Object {
-                              "fontFamily": "Roboto-Medium",
-                              "fontWeight": "500",
-                            },
-                          ],
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                  </View>
+                  />
                 </View>
               </View>
             </View>
@@ -1253,34 +1198,6 @@ exports[`Activity screen component renders correctly  1`] = `
             </View>
           </View>
         </View>
-        <Modal
-          animationType="none"
-          deviceHeight={null}
-          deviceWidth={null}
-          hardwareAccelerated={false}
-          hideModalContentWhileAnimating={false}
-          onBackdropPress={[Function]}
-          onModalHide={[Function]}
-          onModalWillHide={[Function]}
-          onModalWillShow={[Function]}
-          onRequestClose={[Function]}
-          onSwipeComplete={[Function]}
-          panResponderThreshold={4}
-          scrollHorizontal={false}
-          scrollOffset={0}
-          scrollOffsetMax={0}
-          scrollTo={null}
-          supportedOrientations={
-            Array [
-              "portrait",
-              "landscape",
-            ]
-          }
-          swipeDirection="down"
-          swipeThreshold={100}
-          transparent={true}
-          visible={false}
-        />
       </View>
     </View>
   </View>

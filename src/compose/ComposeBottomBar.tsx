@@ -1,3 +1,4 @@
+import { useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
@@ -7,6 +8,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 export default function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
+  const mediaQuoteFF = useFeature('mobile-5645-media-quotes');
+
+  const allowMedia =
+    !props.store.isEdit && (mediaQuoteFF.on || !props.store.isRemind);
+
   const iconStyle = useMemo(
     () => [
       theme.padding3x,
@@ -31,7 +37,7 @@ export default function ComposeBottomBar(props) {
 
   return (
     <View style={styles.bottomBar}>
-      {!props.store.isEdit && !props.store.isRemind && (
+      {allowMedia && (
         <IconButton
           name="image"
           style={iconStyle}
@@ -40,7 +46,7 @@ export default function ComposeBottomBar(props) {
           scale
         />
       )}
-      {!props.store.isEdit && !props.store.isRemind && (
+      {allowMedia && (
         <IconButton
           name="camera"
           style={iconStyle}

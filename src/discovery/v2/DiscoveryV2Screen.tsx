@@ -20,7 +20,6 @@ import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import FeedListSticky from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
 
@@ -53,9 +52,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
       store.topFeed.setInjectedItems([
         new InjectItem(2, 'reco', () => (
-          <IfFeatureEnabled feature="channel-recommendations">
-            <ChannelRecommendation location="discovery-feed" />
-          </IfFeatureEnabled>
+          <ChannelRecommendation location="discovery-feed" />
         )),
       ]);
     }

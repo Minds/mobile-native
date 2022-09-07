@@ -27,7 +27,8 @@ type Interactions =
   | 'quotes'
   | 'channelSubscribers'
   | 'channelSubscriptions'
-  | 'subscribers';
+  | 'subscribers'
+  | 'subscribersYouKnow';
 
 type PropsType = {
   entity: BaseModel;
@@ -130,6 +131,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
           return 'api/v1/subscribe/subscribers/' + entity.guid;
         case 'channelSubscriptions':
           return 'api/v1/subscribe/subscriptions/' + entity.guid;
+        case 'subscribersYouKnow':
+          return 'api/v3/subscriptions/relational/also-subscribe-to';
         default:
           return 'api/v3/newsfeed';
       }
@@ -150,6 +153,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
         case 'channelSubscriptions':
         case 'channelSubscribers':
           break;
+        case 'subscribersYouKnow':
+          opts.guid = entity.guid;
+          break;
         default:
           opts.direction = store.interaction === 'upVotes' ? 'up' : 'down';
           break;
@@ -168,6 +174,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       ) {
         offsetField = undefined;
       }
+      if (store.interaction === 'subscribersYouKnow') {
+        offsetField = 'offset';
+      }
       return offsetField;
     },
     setOffset(offset: any) {
@@ -179,11 +188,13 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const isChannels =
     store.interaction === 'subscribers' ||
     store.interaction === 'channelSubscriptions' ||
-    store.interaction === 'channelSubscribers';
+    store.interaction === 'channelSubscribers' ||
+    store.interaction === 'subscribersYouKnow';
   let dataField = isVote ? 'votes' : 'entities';
   if (
     store.interaction === 'channelSubscriptions' ||
-    store.interaction === 'channelSubscribers'
+    store.interaction === 'channelSubscribers' ||
+    store.interaction === 'subscribersYouKnow'
   ) {
     dataField = 'users';
   }
@@ -312,6 +323,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
               renderItem={
                 isVote || isChannels ? renderItemUser : renderItemActivity
               }
+              offsetPagination={store.interaction === 'subscribersYouKnow'}
               offsetField={store.offsetField}
               contentContainerStyle={styles.contentContainerStyle}
             />

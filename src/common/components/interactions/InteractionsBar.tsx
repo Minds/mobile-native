@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
+import Counter from '~/newsfeed/activity/actions/Counter';
 import type BlogModel from '../../../blogs/BlogModel';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import abbrev from '../../helpers/abbrev';
 import i18n from '../../services/i18n.service';
 import MText from '../MText';
 import PressableScale from '../PressableScale';
@@ -30,11 +30,13 @@ export default observer(function InteractionsBar({
   return (
     <View style={containerStyle}>
       {entity['thumbs:up:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowUpVotesPress}>
+        <PressableScale
+          innerStyle={buttonInnerStyle}
+          style={buttonStyle}
+          onPress={onShowUpVotesPress}>
+          <Counter count={entity['thumbs:up:count']} style={countStyle} />
           <MText style={textStyle}>
-            <MText style={countStyle}>
-              {abbrev(entity['thumbs:up:count'], 1)}
-            </MText>{' '}
+            {' '}
             {i18n.t('interactions.upVotes', {
               count: entity['thumbs:up:count'],
             })}
@@ -42,11 +44,13 @@ export default observer(function InteractionsBar({
         </PressableScale>
       )}
       {entity['thumbs:down:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowDownVotesPress}>
+        <PressableScale
+          innerStyle={buttonInnerStyle}
+          style={buttonStyle}
+          onPress={onShowDownVotesPress}>
+          <Counter count={entity['thumbs:down:count']} style={countStyle} />
           <MText style={textStyle}>
-            <MText style={countStyle}>
-              {abbrev(entity['thumbs:down:count'], 1)}
-            </MText>{' '}
+            {' '}
             {i18n.t('interactions.downVotes', {
               count: entity['thumbs:down:count'],
             })}
@@ -54,9 +58,13 @@ export default observer(function InteractionsBar({
         </PressableScale>
       )}
       {entity.reminds > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowRemindsPress}>
+        <PressableScale
+          innerStyle={buttonInnerStyle}
+          style={buttonStyle}
+          onPress={onShowRemindsPress}>
+          <Counter count={entity.reminds} style={countStyle} />
           <MText style={textStyle}>
-            <MText style={countStyle}>{abbrev(entity.reminds, 1)}</MText>{' '}
+            {' '}
             {i18n.t('interactions.reminds', {
               count: entity.reminds,
             })}
@@ -64,9 +72,13 @@ export default observer(function InteractionsBar({
         </PressableScale>
       )}
       {entity.quotes > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowQuotesPress}>
+        <PressableScale
+          innerStyle={buttonInnerStyle}
+          style={buttonStyle}
+          onPress={onShowQuotesPress}>
+          <Counter count={entity.quotes} style={countStyle} />
           <MText style={textStyle}>
-            <MText style={countStyle}>{abbrev(entity.quotes, 1)}</MText>{' '}
+            {' '}
             {i18n.t('interactions.quotes', {
               count: entity.quotes,
             })}
@@ -78,6 +90,7 @@ export default observer(function InteractionsBar({
 });
 
 const buttonStyle = ThemedStyles.combine('marginLeft2x', 'paddingVertical3x');
+const buttonInnerStyle = ThemedStyles.combine('rowJustifyCenter');
 const containerStyle = ThemedStyles.combine(
   'rowJustifyStart',
   'bgPrimaryBackground',

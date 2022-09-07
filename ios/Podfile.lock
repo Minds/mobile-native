@@ -71,11 +71,11 @@ PODS:
   - MMKV (1.2.10):
     - MMKVCore (~> 1.2.10)
   - MMKVCore (1.2.13)
-  - Permission-Camera (3.0.4):
+  - Permission-Camera (3.6.1):
     - RNPermissions
-  - Permission-Microphone (3.0.4):
+  - Permission-Microphone (3.6.1):
     - RNPermissions
-  - Permission-PhotoLibrary (3.0.4):
+  - Permission-PhotoLibrary (3.6.1):
     - RNPermissions
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -451,7 +451,7 @@ PODS:
     - React-Core
   - RNConvertPhAsset (1.0.3):
     - React
-  - RNDeviceInfo (8.4.8):
+  - RNDeviceInfo (10.0.2):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -478,7 +478,7 @@ PODS:
     - React-Core
   - RNLocalize (1.4.3):
     - React-Core
-  - RNPermissions (3.0.4):
+  - RNPermissions (3.6.1):
     - React-Core
   - RNPhotoEditor (1.0.12):
     - iOSPhotoEditor
@@ -896,9 +896,9 @@ SPEC CHECKSUMS:
   lottie-react-native: a501112fa980529ccb80b9f3ee117a7f98c6af3a
   MMKV: 76033b9ace2006623308910a3afcc0e25eba3140
   MMKVCore: 3388952ded307e41b3ed8a05892736a236ed1b8e
-  Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
-  Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
-  Permission-PhotoLibrary: 440f206f0d36e5951c4c9b28567f60471fdddfb5
+  Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
+  Permission-Microphone: 48212dd4d28025d9930d583e3c7a56da7268665c
+  Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
@@ -949,7 +949,7 @@ SPEC CHECKSUMS:
   RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
-  RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
+  RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFlashList: 5318fc0772902ffa55170b35caa95ad5a69da3ef
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
@@ -958,7 +958,7 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
-  RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
+  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868

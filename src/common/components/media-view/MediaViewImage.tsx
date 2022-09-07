@@ -30,7 +30,7 @@ export default function MediaViewImage({
   style,
   autoHeight,
   ignoreDataSaver,
-  mode = 'cover',
+  mode = 'contain',
   onImageDoublePress,
   onImagePress,
   onImageLongPress,
@@ -77,10 +77,12 @@ export default function MediaViewImage({
   if (autoHeight) {
     if (aspectRatio < MIN_ASPECT_RATIO_AUTO_WIDTH) {
       aspectRatio = MIN_ASPECT_RATIO_AUTO_WIDTH;
+      mode = 'cover';
     }
   } else {
     if (aspectRatio < MIN_ASPECT_RATIO_FIXED) {
       aspectRatio = MIN_ASPECT_RATIO_FIXED;
+      mode = 'cover';
     }
   }
 
@@ -135,12 +137,7 @@ export default function MediaViewImage({
       activeOpacity={1}
       testID="Posted Image">
       <ExplicitImage
-        resizeMode={
-          aspectRatio === MIN_ASPECT_RATIO_FIXED ||
-          aspectRatio === MIN_ASPECT_RATIO_AUTO_WIDTH
-            ? 'contain'
-            : mode
-        }
+        resizeMode={mode}
         style={imageStyle}
         source={source}
         thumbnail={thumbnail}

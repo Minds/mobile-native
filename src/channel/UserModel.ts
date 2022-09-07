@@ -201,6 +201,11 @@ export default class UserModel extends BaseModel {
     this.mode = value;
   }
 
+  @action
+  setMature(value) {
+    this.mature = value;
+  }
+
   setEmailConfirmed(value) {
     this.email_confirmed = value;
   }
@@ -251,6 +256,25 @@ export default class UserModel extends BaseModel {
   isOwner = () => {
     return sessionService.getUser().guid === this.guid;
   };
+
+  /**
+   * Returns true if the channel is NSFW/mature
+   */
+  isNSFW(): boolean {
+    return (this.nsfw && this.nsfw.length > 0) || Boolean(this.is_mature);
+  }
+
+  /**
+   * Returns if the images for this channel should be masked (NSFW)
+   */
+  shouldShowMaskNSFW(): boolean {
+    return (
+      this.isNSFW() &&
+      !sessionService.getUser().mature &&
+      !this.isOwner() &&
+      !this.mature_visibility
+    );
+  }
 
   /**
    * Get banner source

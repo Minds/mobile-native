@@ -117,6 +117,7 @@ type TwoFactorConfirmationParams = {
 
 export type RootStackParamList = {
   Compose: {};
+  TosScreen: {};
   Capture: {
     portrait?: boolean;
     noText?: boolean;

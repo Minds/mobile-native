@@ -42,6 +42,7 @@ import Empty from '~/common/components/Empty';
 import { B1 } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import withModalProvider from '~/navigation/withModalProvide';
 
 const tinycolor = require('tinycolor2');
 
@@ -113,9 +114,11 @@ const ChannelScreen = observer((props: PropsType) => {
     }),
     [feedRef, store.channel],
   );
+
   const bannerUri = store.channel?.getBannerSource().uri;
   const subscribersActionSheetRef = useRef<any>(null);
   const subscriptionsActionSheetRef = useRef<any>(null);
+  const subscribersYouKnowSheetRef = useRef<any>(null);
   /**
    * scroll offset
    **/
@@ -195,7 +198,7 @@ const ChannelScreen = observer((props: PropsType) => {
     return () => {
       ActivityModel.events.removeListener('newPost', p);
     };
-  }, [props.route, store]);
+  }, [store]);
 
   /**
    * TODO: describe what this does
@@ -327,6 +330,11 @@ const ChannelScreen = observer((props: PropsType) => {
     [],
   );
 
+  const openSubscribersYouKnow = useCallback(
+    () => subscribersYouKnowSheetRef.current?.show('subscribersYouKnow'),
+    [],
+  );
+
   // =====================| RENDERS |=====================>
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -373,13 +381,7 @@ const ChannelScreen = observer((props: PropsType) => {
    * viewing this from a store-downloaded app,
    * show a prompt or an error
    **/
-  if (
-    !sessionService.getUser().mature &&
-    !store.channel.isOwner() &&
-    ((store.channel.nsfw && store.channel.nsfw.length > 0) ||
-      store.channel.is_mature) &&
-    !store.channel.mature_visibility
-  ) {
+  if (store.channel.shouldShowMaskNSFW()) {
     return (
       <View style={styles.nsfwChannel}>
         <ChannelTopBar
@@ -461,6 +463,7 @@ const ChannelScreen = observer((props: PropsType) => {
             route={props.route}
             onOpenSubscribers={openSubscribers}
             onOpenSubscriptions={openSubscriptions}
+            onOpenSubscribersYouKnow={openSubscribersYouKnow}
           />
         }
         navigation={props.navigation}
@@ -488,6 +491,10 @@ const ChannelScreen = observer((props: PropsType) => {
         entity={store.channel}
         ref={subscriptionsActionSheetRef}
       />
+      <InteractionsBottomSheet
+        entity={store.channel}
+        ref={subscribersYouKnowSheetRef}
+      />
     </ChannelContext.Provider>
   );
 });
@@ -497,4 +504,8 @@ const styles = ThemedStyles.create({
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
-export default withErrorBoundary(ChannelScreen);
+const withError = withErrorBoundary(ChannelScreen);
+
+export default withError;
+
+export const withModal = withModalProvider(withError);
