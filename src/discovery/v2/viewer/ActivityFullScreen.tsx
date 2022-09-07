@@ -237,7 +237,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   if (hasRemind) {
     const Container: any =
-      props.entity.supermind && props.entity.supermind.isReply
+      props.entity.supermind && props.entity.supermind.is_reply
         ? SupermindBorderView
         : QuoteContainer;
 

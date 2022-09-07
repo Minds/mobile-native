@@ -379,7 +379,7 @@ export default class Activity extends Component<PropsType> {
       }
 
       const Container: any =
-        this.props.entity.supermind && this.props.entity.supermind.isReply
+        this.props.entity.supermind && this.props.entity.supermind.is_reply
           ? SupermindBorderView
           : QuoteContainer;
 
