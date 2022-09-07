@@ -1,3 +1,4 @@
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { IconButtonNext } from '~/common/ui';
 import { actionsContainerStyle } from './styles';
@@ -6,6 +7,8 @@ import { actionsContainerStyle } from './styles';
  * Supermind activity action
  */
 export default function SupermindAction({ entity }) {
+  const navigation = useNavigation();
+  const { key } = useRoute();
   return (
     <IconButtonNext
       testID="supermind button"
@@ -14,12 +17,14 @@ export default function SupermindAction({ entity }) {
       name="supermind"
       size="small"
       fill
-      active={Boolean(entity.supermind)}
-      onPress={() => {
-        if (!entity.supermind) {
-          console.log('Call the composer here');
-        }
-      }}
+      onPress={() =>
+        navigation.navigate('Compose', {
+          isRemind: true,
+          entity,
+          parentKey: key,
+          supermind: true,
+        })
+      }
     />
   );
 }
