@@ -269,10 +269,6 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
   },
-  supermind: {
-    font: 'MaterialCommunityIcons',
-    name: 'lightbulb-on',
-  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

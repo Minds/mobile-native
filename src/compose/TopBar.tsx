@@ -27,6 +27,7 @@ export default observer(function (props) {
         onPress={props.onPressBack}
         testID="topbarBack"
       />
+      {props.leftComponent ? props.leftComponent : null}
       {props.leftText && (
         <MText style={styles.leftText}>{props.leftText}</MText>
       )}

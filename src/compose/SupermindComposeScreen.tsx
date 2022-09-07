@@ -20,7 +20,7 @@ const showError = (error: string) =>
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
 
-enum ReplyType {
+export enum ReplyType {
   text = 0,
   image = 1,
   video = 2,
