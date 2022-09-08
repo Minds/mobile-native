@@ -32,7 +32,7 @@ enum PaymentType {
   token = 1,
 }
 
-export interface SupermindRequest {
+export interface SupermindRequestParam {
   channel: UserModel;
   payment_options: {
     payment_type: PaymentType;
@@ -54,7 +54,7 @@ interface SupermindComposeScreen {
  */
 export default function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
-  const data: SupermindRequest | undefined = props.route?.params?.data;
+  const data: SupermindRequestParam | undefined = props.route?.params?.data;
   const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
   const [replyType, setReplyType] = useState<ReplyType>(
     data?.reply_type ?? ReplyType.text,

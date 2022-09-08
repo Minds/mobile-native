@@ -17,7 +17,7 @@ import { Image, Platform } from 'react-native';
 import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
-import { SupermindRequest } from './SupermindComposeScreen';
+import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 
 /**
@@ -69,7 +69,7 @@ export default function (props) {
     group: null,
     postToPermaweb: false,
     initialized: false,
-    supermindRequest: undefined as SupermindRequest,
+    supermindRequest: undefined as SupermindRequestParam,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -116,7 +116,7 @@ export default function (props) {
 
       if (params.supermind) {
         const channel =
-          params.supermindChannelTarget || params.entity?.ownerObj;
+          params.supermindTargetChannel || params.entity?.ownerObj;
         this.openSupermindModal(channel ? { channel } : undefined);
       }
 
@@ -653,10 +653,10 @@ export default function (props) {
         }),
       );
     },
-    openSupermindModal(supermindRequest?: Partial<SupermindRequest>) {
+    openSupermindModal(supermindRequest?: Partial<SupermindRequestParam>) {
       NavigationService.navigate('SupermindCompose', {
         data: supermindRequest || this.supermindRequest,
-        onSave: (payload: SupermindRequest) => {
+        onSave: (payload: SupermindRequestParam) => {
           this.supermindRequest = payload;
         },
         onClear: () => {
