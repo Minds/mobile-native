@@ -1,7 +1,8 @@
 import { RouteProp } from '@react-navigation/core';
 import _ from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { showNotification } from '../../AppMessages';
+import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
 import InputBase from '../common/components/InputBase';
 import InputContainer from '../common/components/InputContainer';
@@ -32,8 +33,7 @@ enum PaymentType {
 }
 
 export interface SupermindRequest {
-  receiver_username: string;
-  receiver_guid: string;
+  channel: UserModel;
   payment_options: {
     payment_type: PaymentType;
     payment_method_id: string;
@@ -55,10 +55,7 @@ interface SupermindComposeScreen {
 export default function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
   const data: SupermindRequest | undefined = props.route?.params?.data;
-  const [username, setUsername] = useState(data?.receiver_username || '');
-  const [channelGuid, setChannelGuid] = useState<string | undefined>(
-    data?.receiver_guid,
-  );
+  const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
   const [replyType, setReplyType] = useState<ReplyType>(
     data?.reply_type ?? ReplyType.text,
   );
@@ -80,10 +77,11 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       : '10',
   );
   const [errors, setErrors] = useState<any>({});
+  const [tabsDisabled, setTabsDisabled] = useState<any>(false);
 
   const validate = useCallback(() => {
     const err: any = {};
-    if (!channelGuid) {
+    if (!channel) {
       err.username = 'Please select a target channel';
     }
     if (paymentMethod === PaymentType.cash && !cardId) {
@@ -104,7 +102,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       setErrors(err);
     }
     return !hasErrors;
-  }, [cardId, channelGuid, offer, paymentMethod, termsAgreed]);
+  }, [cardId, channel, offer, paymentMethod, termsAgreed]);
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
@@ -117,8 +115,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     }
 
     const supermindRequest = {
-      receiver_username: username,
-      receiver_guid: channelGuid!,
+      channel: channel!,
       payment_options: {
         amount: Number(offer),
         payment_method_id: cardId!,
@@ -139,8 +136,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     props.route?.params?.onSave(supermindRequest);
   }, [
     validate,
-    username,
-    channelGuid,
+    channel,
     offer,
     cardId,
     paymentMethod,
@@ -148,6 +144,23 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     termsAgreed,
     props.route,
   ]);
+
+  /**
+   * A user can only pay in cash where the producer has
+   * a bank account connected to their minds account
+   */
+  useEffect(() => {
+    if (!channel) {
+      return;
+    }
+
+    if (!channel.merchant) {
+      setPaymentMethod(PaymentType.token);
+      setTabsDisabled(true);
+    } else {
+      setTabsDisabled(false);
+    }
+  }, [channel]);
 
   return (
     <ModalFullScreen
@@ -163,40 +176,40 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
         </Button>
       }>
       <FitScrollView keyboardShouldPersistTaps="handled">
-        <TopbarTabbar
-          current={paymentMethod}
-          onChange={setPaymentMethod}
-          containerStyle={theme.paddingTop}
-          tabs={[
-            { id: PaymentType.cash, title: i18nService.t('wallet.cash') },
-            {
-              id: PaymentType.token,
-              title: i18nService.t('analytics.tokens.title'),
-            },
-          ]}
-        />
+        {!tabsDisabled && (
+          <TopbarTabbar
+            current={paymentMethod}
+            onChange={setPaymentMethod}
+            containerStyle={theme.paddingTop}
+            tabs={[
+              { id: PaymentType.cash, title: i18nService.t('wallet.cash') },
+              {
+                id: PaymentType.token,
+                title: i18nService.t('analytics.tokens.title'),
+              },
+            ]}
+          />
+        )}
+
         <InputBase
           label={'Target Channel'}
           onPress={() => {
             NavigationService.push('ChannelSelectScreen', {
-              onSelect: channel => {
-                setUsername(channel.username);
-                setChannelGuid(channel.guid);
-              },
+              onSelect: selectedChannel => setChannel(selectedChannel),
             });
             setErrors(err => ({
               ...err,
               username: '',
             }));
           }}
-          value={`@${username}`}
+          value={channel ? `@${channel.username}` : '@'}
           error={errors.username}
         />
         <InputContainer
           placeholder={`Offer (${
             paymentMethod === PaymentType.cash ? 'USD' : 'Token'
           })`}
-          autofocus={Boolean(data?.receiver_username)}
+          autofocus={Boolean(data?.channel)}
           onChangeText={value => {
             setOffer(value);
             setErrors(err => ({

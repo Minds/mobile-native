@@ -116,11 +116,8 @@ export default function (props) {
 
       if (params.supermind) {
         this.openSupermindModal(
-          params.entity
-            ? {
-                receiver_username: params.entity.ownerObj.username,
-                receiver_guid: params.entity.ownerObj.guid,
-              }
+          params.entity?.ownerObj
+            ? { channel: params.entity?.ownerObj }
             : undefined,
         );
       }
@@ -511,7 +508,11 @@ export default function (props) {
         };
 
         if (this.supermindRequest) {
-          newPost.supermind_request = this.supermindRequest;
+          newPost.supermind_request = {
+            ...this.supermindRequest,
+            receiver_username: this.supermindRequest.channel.username,
+            receiver_guid: this.supermindRequest.channel.guid,
+          };
         }
 
         // monetization
