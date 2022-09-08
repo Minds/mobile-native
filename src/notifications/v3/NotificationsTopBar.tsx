@@ -81,6 +81,8 @@ const NotificationsTopBar = observer(
         setResult(null);
         store.setOffset('');
         store.setFilter(option === 'all' ? '' : option);
+        store.setSilentRefresh(true);
+        refresh(false).finally(() => store.setSilentRefresh(false));
       },
     }));
 
