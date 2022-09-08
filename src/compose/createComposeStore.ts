@@ -1,3 +1,4 @@
+// @ts-nocheck
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 import AttachmentStore from '../common/stores/AttachmentStore';
@@ -57,7 +58,7 @@ export default function (props) {
     attachment: new AttachmentStore(),
     nsfw: [],
     tags: [],
-    wire_threshold: DEFAULT_MONETIZE,
+    wire_threshold: DEFAULT_MONETIZE as any,
     embed: new RichEmbedStore(),
     text: '',
     title: '',
@@ -68,7 +69,7 @@ export default function (props) {
     group: null,
     postToPermaweb: false,
     initialized: false,
-    supermindRequest: undefined,
+    supermindRequest: undefined as SupermindRequest,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -233,7 +234,7 @@ export default function (props) {
           path: this.mediaToConfirm.uri.replace('file://', ''),
           stickers: ['sticker6', 'sticker9'],
           hiddenControls: ['save', 'share'],
-          onDone: result => {
+          onDone: _result => {
             Image.getSize(
               this.mediaToConfirm.uri,
               (w, h) => {
@@ -652,7 +653,7 @@ export default function (props) {
         }),
       );
     },
-    openSupermindModal(supermindRequest: Partial<SupermindRequest>) {
+    openSupermindModal(supermindRequest?: Partial<SupermindRequest>) {
       NavigationService.navigate('SupermindCompose', {
         data: supermindRequest || this.supermindRequest,
         onSave: (payload: SupermindRequest) => {

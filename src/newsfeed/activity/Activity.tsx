@@ -53,7 +53,6 @@ type PropsType = {
   storeUserTap?: boolean;
   showOnlyContent?: boolean;
   borderless?: boolean;
-  hideMetrics?: boolean;
 };
 
 /**
@@ -294,7 +293,6 @@ export default class Activity extends Component<PropsType> {
               entity={entity}
               showOnlyContent={this.props.showOnlyContent}
               hideTabs={this.props.hideTabs}
-              hideMetrics={this.props.hideMetrics}
             />
           </Pressable>
         )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TextStyle, View } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Column, Icon, Row } from '../ui';
