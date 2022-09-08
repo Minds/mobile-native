@@ -209,6 +209,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           error={errors.offer}
           inputType="number"
           autoCorrect={false}
+          containerStyle={theme.paddingTop4x}
           returnKeyType="next"
           onFocus={() =>
             setErrors(err => ({
