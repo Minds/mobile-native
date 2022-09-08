@@ -115,11 +115,9 @@ export default function (props) {
       }
 
       if (params.supermind) {
-        this.openSupermindModal(
-          params.entity?.ownerObj
-            ? { channel: params.entity?.ownerObj }
-            : undefined,
-        );
+        const channel =
+          params.supermindChannelTarget || params.entity?.ownerObj;
+        this.openSupermindModal(channel ? { channel } : undefined);
       }
 
       // clear params to avoid repetition
