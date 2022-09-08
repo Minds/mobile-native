@@ -48,6 +48,10 @@ export default function (props) {
     isEdit: false,
     accessId: 2,
     mode: settingsStore.composerMode,
+    /**
+     * what compose mode is allowed? photo, video, and null for any
+     */
+    allowedMode: null,
     videoPoster: null,
     entity: null,
     attachment: new AttachmentStore(),
@@ -76,6 +80,7 @@ export default function (props) {
       this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
+      this.allowedMode = params.allowedMode;
       this.entity = params.entity || null;
 
       this.mode = params.mode

@@ -75,7 +75,9 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     data?.payment_options?.payment_method_id,
   );
   const [offer, setOffer] = useState(
-    data?.payment_options?.amount ? String(data?.payment_options?.amount) : '',
+    data?.payment_options?.amount
+      ? String(data?.payment_options?.amount)
+      : '10',
   );
   const [errors, setErrors] = useState<any>({});
 
@@ -89,6 +91,8 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     }
     if (!offer || !Number(offer) || Number.isNaN(Number(offer))) {
       err.offer = 'Offer is not valid';
+    } else if (offer && Number(offer) < 10) {
+      err.offer = 'Offer must be greater than 10';
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -200,6 +204,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
               offer: '',
             }));
           }}
+          hint="Min: 10"
           value={offer}
           error={errors.offer}
           inputType="number"

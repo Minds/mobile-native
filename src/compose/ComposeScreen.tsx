@@ -39,7 +39,6 @@ import Animated, {
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import onImageInput from '~/common/helpers/onImageInput';
-import { SupermindRequest } from './SupermindComposeScreen';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
 
 const { width } = Dimensions.get('window');

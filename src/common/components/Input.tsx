@@ -8,6 +8,7 @@ import TextInput from './TextInput';
 import MText from './MText';
 import ErrorBoundary from './ErrorBoundary';
 import DatePickerInput from './controls/DatePickerInput';
+import { B1 } from '../ui';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -41,6 +42,7 @@ export interface PropsType extends TextInputProps {
   style?: any;
   info?: string;
   error?: string;
+  hint?: string;
 }
 
 /**
@@ -182,6 +184,13 @@ export default class Input extends Component<PropsType> {
                 ]}>
                 {this.props.placeholder}
               </MText>
+              {!!this.props.hint && !this.props.error && (
+                <View style={theme.flexContainer}>
+                  <MText style={styles.hintStyles} align="right">
+                    {this.props.hint}
+                  </MText>
+                </View>
+              )}
               {this.props.info && <InfoPopup info={this.props.info} />}
               {!!this.props.error && (
                 <View style={styles.errorContainer}>
@@ -201,7 +210,7 @@ export default class Input extends Component<PropsType> {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   container: {
     paddingTop: 5,
     paddingBottom: 10,
@@ -235,4 +244,10 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 1,
   },
+  hintStyles: [
+    { lineHeight: 18, fontSize: 16 },
+    'fontL',
+    'colorSecondaryText',
+    'textRight',
+  ],
 });

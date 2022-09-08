@@ -5,7 +5,6 @@ import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
-import { ReplyType, SupermindRequest } from './SupermindComposeScreen';
 
 function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
@@ -22,38 +21,20 @@ function ComposeBottomBar(props) {
     ],
     [theme.colorIcon, theme.colorWhite, theme.padding3x],
   );
-  const allowedMode = useMemo(() => {
-    let mode;
-    const supermindRequest: SupermindRequest = props.store.supermindRequest;
-    if (supermindRequest) {
-      switch (supermindRequest.reply_type) {
-        case ReplyType.image:
-          mode = 'photo';
-          break;
-        case ReplyType.video:
-          mode = 'video';
-          break;
-        case ReplyType.text:
-          break;
-      }
-    }
-
-    return mode;
-  }, [props.store]);
   const onCameraPress = useCallback(() => {
     Keyboard.dismiss();
     navigation.navigate('Capture', {
-      mode: allowedMode,
+      mode: props.store.allowedMode,
       onMediaConfirmed: media => {
         props.store.onMedia(media);
         props.store.attachment.attachMedia(media, props.store.extra);
         return true;
       },
     });
-  }, [navigation, props.store, allowedMode]);
+  }, [navigation, props.store]);
   const onGalleryPress = useCallback(() => {
-    props.store.selectFromGallery(allowedMode);
-  }, [allowedMode, props.store]);
+    props.store.selectFromGallery(props.store.allowedMode);
+  }, [props.store]);
 
   return (
     <View style={styles.bottomBar}>
