@@ -55,7 +55,7 @@ function ComposeBottomBar(props) {
           onPress={onCameraPress}
         />
       )}
-      {!props.store.isGroup() && (
+      {!props.store.isGroup() && !props.store.supermindRequest && (
         <IconButton
           name="money"
           style={iconStyle}

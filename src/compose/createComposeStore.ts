@@ -510,7 +510,12 @@ export default function (props) {
           time_created: Math.floor(this.time_created / 1000) || null,
         };
 
-        if (this.paywalled) {
+        if (this.supermindRequest) {
+          newPost.supermind_request = this.supermindRequest;
+        }
+
+        // monetization
+        if (this.paywalled && !this.supermindRequest) {
           newPost.paywall = true;
           newPost.wire_threshold = this.wire_threshold;
         }
@@ -555,10 +560,6 @@ export default function (props) {
 
         if (this.tags.length) {
           newPost.tags = this.tags;
-        }
-
-        if (this.supermindRequest) {
-          newPost.supermind_request = this.supermindRequest;
         }
 
         this.setPosting(true);
