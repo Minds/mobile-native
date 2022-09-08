@@ -327,8 +327,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 }
                 maxLength={50}
                 onChangeText={[Function]}
-                placeholder=""
-                placeholderTextColor="#444"
+                placeholderTextColor="#797B82"
                 returnKeyType="done"
                 style={
                   Array [
@@ -493,8 +492,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     }
                     multiline={false}
                     onChangeText={[Function]}
-                    placeholder=""
-                    placeholderTextColor="#444"
+                    placeholderTextColor="#797B82"
                     returnKeyType="done"
                     secureTextEntry={true}
                     style={
