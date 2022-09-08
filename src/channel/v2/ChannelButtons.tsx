@@ -21,6 +21,7 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 type ButtonsType =
   | 'edit'
@@ -127,7 +128,9 @@ const ChannelButtons = withErrorBoundary(
         )}
         {showSubscribe && <Subscribe channel={props.store.channel} />}
         {shouldShow('supermind') && (
-          <SupermindButton entity={props.store.channel} />
+          <IfFeatureEnabled feature="mobile-supermind">
+            <SupermindButton entity={props.store.channel} />
+          </IfFeatureEnabled>
         )}
         {shouldShow('more') && (
           <ChannelMoreMenu

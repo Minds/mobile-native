@@ -1,4 +1,4 @@
-import { useFeature } from '@growthbook/growthbook-react';
+import { IfFeatureEnabled, useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
@@ -69,13 +69,16 @@ function ComposeBottomBar(props) {
         scale
         onPress={props.onHashtag}
       />
-      <IconButton
-        name="supermind"
-        style={iconStyle}
-        scale
-        color={props.store.supermindRequest ? 'Link' : 'Icon'}
-        onPress={props.onSupermind}
-      />
+      <IfFeatureEnabled feature="mobile-supermind">
+        <IconButton
+          name="supermind"
+          style={iconStyle}
+          scale
+          color={props.store.supermindRequest ? 'Link' : 'Icon'}
+          onPress={props.onSupermind}
+        />
+      </IfFeatureEnabled>
+
       <View style={theme.flexContainer} />
       <IconButton
         name="cog"
