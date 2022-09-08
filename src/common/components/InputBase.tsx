@@ -39,6 +39,8 @@ export default function InputBase({
         theme.paddingVertical4x,
         theme.paddingHorizontal4x,
         theme.bcolorPrimaryBorder,
+        theme.borderLeft0x,
+        theme.borderRight0x,
         theme.borderHair,
         style,
       ]}>
