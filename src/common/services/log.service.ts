@@ -16,7 +16,7 @@ class LogService {
 
   info(...args) {
     if (__DEV__) {
-      console.log(...args);
+      console.info(...args);
     }
     if (!settingsStore.appLog) {
       return;
@@ -32,6 +32,7 @@ class LogService {
   }
 
   error(...args) {
+    console.error(...args);
     // deviceLog.error(...args);
   }
 

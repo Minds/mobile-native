@@ -574,7 +574,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   private onMetricsUpdate(event: string) {
-    console.log('[ActivityModel] metrics update ============>', event);
+    logService.log('[ActivityModel] metrics update', event);
 
     try {
       const metricsEvent: MetricsChangedEvent = JSON.parse(event);
@@ -588,7 +588,7 @@ export default class ActivityModel extends BaseModel {
         }
       });
     } catch (e) {
-      console.error(e, event);
+      logService.error(e, event);
       return;
     }
   }
@@ -597,18 +597,36 @@ export default class ActivityModel extends BaseModel {
    * listens to metrics updates
    */
   private listenForMetrics(): void {
-    console.log('listenForMetrics');
-
+    logService.info(
+      'listening for metrics',
+      this.guid,
+      'message',
+      this.message.slice(0, 20),
+      'from',
+      this.ownerObj?.username,
+    );
     socketService.join(this.metricsRoom);
-    socketService.subscribe(this.metricsRoom, this.onMetricsUpdate);
+    socketService.subscribe(this.metricsRoom, event =>
+      this.onMetricsUpdate(event),
+    );
   }
 
   /**
    * unlistens from metrics updates
    */
   private unlistenFromMetrics(): void {
+    logService.info(
+      'unlistening from metrics',
+      this.guid,
+      'message',
+      this.message.slice(0, 20),
+      'from',
+      this.ownerObj?.username,
+    );
     socketService.leave(this.metricsRoom);
-    socketService.unsubscribe(this.metricsRoom, this.onMetricsUpdate);
+    socketService.unsubscribe(this.metricsRoom, event =>
+      this.onMetricsUpdate(event),
+    );
   }
 }
 
