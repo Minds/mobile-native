@@ -570,7 +570,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   private get metricsRoom() {
-    return `entity:metrics:${this.guid}`;
+    return `entity:metrics:${this.entity_guid || this.guid}`;
   }
 
   private onMetricsUpdate(event: string) {
