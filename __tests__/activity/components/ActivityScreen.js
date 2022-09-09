@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { render, waitFor } from '@testing-library/react-native';
+import { render, waitFor, screen } from '@testing-library/react-native';
 
 import ActivityScreen from '../../../src/newsfeed/ActivityScreen';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
@@ -84,17 +84,15 @@ describe('Activity screen component', () => {
         ActivityModel.create(route.params.entity),
       );
 
-      const { toJSON, getByA11yLabel } = render(
-        <ActivityScreen navigation={navigation} route={route} />,
-      );
+      render(<ActivityScreen navigation={navigation} route={route} />);
 
-      await waitFor(() => getByA11yLabel('touchableTextCopy'), {
+      await waitFor(() => screen.getAllByLabelText('touchableTextCopy'), {
         timeout: 4000,
         interval: 100,
       });
 
       // should show the activity
-      await expect(toJSON()).toMatchSnapshot();
+      await expect(screen.toJSON()).toMatchSnapshot();
 
       done();
     } catch (e) {

@@ -2,6 +2,35 @@
 
 Minds Mobile
 
+## 4.28.0 - 2022-09-02
+
+### Changed
+
+- Improve performance by lazy loading screens
+- Subscribers you know list
+- Animated counter
+- Allow media in quoted posts & fix posts alignments
+- Reset notifications count when opening the notifications tab
+- Scroll to top the notifications screen when refreshing
+- Fix random zoomed images on Android
+- Fix photo edit crash on Android
+- Fix push notification navigation re-handled when switching users
+- Update permissions package and remove legacy permissions on Android
+- Reset boosts service when switching users
+- Fix inconsistent spacing on the cash onboarding
+- Fix header re-render on the feeds (FlashList issue)
+- Add blur to avatar for NSFW channels
+- Refactor old modals & selector components to use the new bottom sheet
+- Removed old feature flags and code cleanup
+- Add phone number validation on the bank account screen
+- Fix layout of the bank account screen
+- Fix scroll on iOS and check box on the bank account screen
+- Fix selector and keyboard interaction on bank account screen
+- Fix See Latest button arrow color
+- Fix channel screen reset when navigating back from a post (only on root navigation)
+- Add validation to username inputs
+- Add attributes to growthbook
+
 ## 4.27.0 - 2022-08-19
 
 ### Changed

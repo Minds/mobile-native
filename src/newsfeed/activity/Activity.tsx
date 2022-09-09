@@ -36,6 +36,7 @@ import {
   textStyle,
 } from './styles';
 import MText from '../../common/components/MText';
+import SupermindBorderView from '~/common/components/supermind/SupermindBorderView';
 
 const FONT_THRESHOLD = 300;
 
@@ -272,8 +273,13 @@ export default class Activity extends Component<PropsType> {
         );
       }
 
+      const Container: any =
+        this.props.entity.supermind && this.props.entity.supermind.is_reply
+          ? SupermindBorderView
+          : QuoteContainer;
+
       return (
-        <View style={remindContainerStyle}>
+        <Container>
           <Activity
             ref={this.setRemind}
             hideTabs={true}
@@ -284,7 +290,7 @@ export default class Activity extends Component<PropsType> {
             hydrateOnNav={true}
             showOnlyContent={this.props.showOnlyContent}
           />
-        </View>
+        </Container>
       );
     }
   }
@@ -366,8 +372,6 @@ export default class Activity extends Component<PropsType> {
               {this.props.entity.perma_url || this.props.entity.remind_object
                 ? message
                 : undefined}
-              {this.showRemind()}
-              {this.props.entity.remind_deleted && <DeletedRemind />}
               <MediaView
                 ref={this.setMediaViewRef}
                 entity={entity}
@@ -375,6 +379,8 @@ export default class Activity extends Component<PropsType> {
                 imageStyle={theme.flexContainer}
                 autoHeight={this.props.autoHeight}
               />
+              {this.showRemind()}
+              {this.props.entity.remind_deleted && <DeletedRemind />}
               {!(
                 this.props.entity.perma_url ||
                 this.props.entity.remind_object ||
@@ -394,3 +400,7 @@ export default class Activity extends Component<PropsType> {
     );
   }
 }
+
+const QuoteContainer = ({ children }) => (
+  <View style={remindContainerStyle}>{children}</View>
+);

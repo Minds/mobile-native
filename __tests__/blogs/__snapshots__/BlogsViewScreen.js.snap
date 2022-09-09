@@ -142,6 +142,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             >
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {
@@ -530,6 +531,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
+                        selectable={false}
                         style={
                           Array [
                             Object {
@@ -718,6 +720,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
+                        selectable={false}
                         style={
                           Array [
                             Object {
@@ -752,6 +755,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Text
                   allowFontScaling={false}
                   onPress={[Function]}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -824,6 +828,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -1732,6 +1737,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -1757,34 +1763,6 @@ exports[`blog view screen component should renders correctly 1`] = `
             </View>
           </View>
         </View>
-        <Modal
-          animationType="none"
-          deviceHeight={null}
-          deviceWidth={null}
-          hardwareAccelerated={false}
-          hideModalContentWhileAnimating={false}
-          onBackdropPress={[Function]}
-          onModalHide={[Function]}
-          onModalWillHide={[Function]}
-          onModalWillShow={[Function]}
-          onRequestClose={[Function]}
-          onSwipeComplete={[Function]}
-          panResponderThreshold={4}
-          scrollHorizontal={false}
-          scrollOffset={0}
-          scrollOffsetMax={0}
-          scrollTo={null}
-          supportedOrientations={
-            Array [
-              "portrait",
-              "landscape",
-            ]
-          }
-          swipeDirection="down"
-          swipeThreshold={100}
-          transparent={true}
-          visible={false}
-        />
       </View>
     </View>
   </RCTSafeAreaView>

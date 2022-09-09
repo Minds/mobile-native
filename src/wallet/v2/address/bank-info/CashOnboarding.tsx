@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import CountrySelector, {
   allowedCountries,
 } from '../../../../common/components/CountrySelector';
@@ -71,12 +71,7 @@ const CashOnboarding = observer(
               theme.borderTop,
               theme.borderBottom,
             ]}>
-            <MText
-              style={[
-                theme.colorSecondaryText,
-                theme.fontL,
-                theme.marginBottom2x,
-              ]}>
+            <MText style={[theme.colorSecondaryText, theme.fontL]}>
               {i18n.t('wallet.bank.phoneNumber')}
             </MText>
             <PhoneInput
@@ -113,7 +108,7 @@ const CashOnboarding = observer(
               />
             </View>
           )}
-          <View style={theme.marginVertical3x}>
+          <View style={theme.marginBottom3x}>
             <SettingInput
               placeholder={friendlyFormKeys.street}
               onChangeText={localStore.setAddress}
@@ -189,13 +184,8 @@ const phoneInputStyles = ThemedStyles.create({
   flagButtonStyle: [{ justifyContent: 'flex-start', width: 20 }],
 });
 
-const styles = StyleSheet.create({
-  phoneContainer: {
-    paddingTop: 15,
-    paddingBottom: 20,
-    paddingLeft: 20,
-    marginVertical: 15,
-  },
+const styles = ThemedStyles.create({
+  phoneContainer: ['marginVertical3x', 'paddingVertical3x', 'paddingLeft3x'],
   phoneInput: {
     flexBasis: 0,
     flexGrow: 1,

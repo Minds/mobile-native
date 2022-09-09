@@ -44,6 +44,11 @@ export default class ActivityModel extends BaseModel {
   @observable edited: '0' | '1' = '0';
   @observable paywall: true | '1' | '' = '';
 
+  supermind?: {
+    request_guid: string;
+    is_reply: boolean;
+  };
+
   time_updated: string = '';
   // decorated observables
   'is:following': boolean;

@@ -54,7 +54,7 @@
         android:theme="@style/BootTheme"
         android:windowSoftInputMode="adjustResize"
         tools:replace="android:allowBackup"
-        android:requestLegacyExternalStorage="true">
+    >
         <!-- Temporal fix android 12 issues temporal -->
         <activity android:name="com.masteratul.exceptionhandler.DefaultErrorScreen"
                 android:exported="false"
@@ -178,8 +178,8 @@
                 <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
-        <activity android:exported="false" android:name="com.ahmedadeltito.photoeditor.PhotoEditorActivity"/>
-        <activity android:exported="false" android:name="com.yalantis.ucrop.UCropActivity" />
+        <activity android:exported="false" android:name="com.ahmedadeltito.photoeditor.PhotoEditorActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"  />
+        <activity android:exported="false" android:name="com.yalantis.ucrop.UCropActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:exported="false" android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
         <meta-data

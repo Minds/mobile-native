@@ -86,9 +86,7 @@ const AppStack = observer(() => {
         <AppStackNav.Screen
           name="PortraitViewerScreen"
           getComponent={() =>
-            withModalProvider(
-              require('~/portrait/PortraitViewerScreen').default,
-            )
+            require('~/portrait/PortraitViewerScreen').withModal
           }
           options={{
             animation: 'fade_from_bottom',
@@ -114,9 +112,7 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="Channel"
-          getComponent={() =>
-            withModalProvider(require('~/channel/v2/ChannelScreen').default)
-          }
+          getComponent={() => require('~/channel/v2/ChannelScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -139,22 +135,20 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="Activity"
-          getComponent={() =>
-            withModalProvider(require('~/newsfeed/ActivityScreen').default)
-          }
+          getComponent={() => require('~/newsfeed/ActivityScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="GroupView"
           getComponent={() =>
-            withModalProvider(require('~/groups/GroupViewScreen').default)
+            withModalProvider(require('~/groups/GroupViewScreen').withModal)
           }
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
           getComponent={() =>
-            withModalProvider(require('~/blogs/BlogsViewScreen').default)
+            withModalProvider(require('~/blogs/BlogsViewScreen').withModal)
           }
           options={hideHeader}
         />
@@ -464,6 +458,10 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="RelogScreen"
               getComponent={() => require('~/auth/RelogScreen').default}
+            />
+            <RootStackNav.Screen
+              name="TosScreen"
+              getComponent={() => require('~/tos/TosScreen').default}
             />
           </>
         )

@@ -5,6 +5,7 @@ import {
   View,
   ViewStyle,
   Platform,
+  Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -21,6 +22,7 @@ import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnav
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
 import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
+import { IS_IOS } from '~/config/Config';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -172,13 +174,37 @@ class OwnerBlock extends PureComponent<PropsType> {
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
 
+    /**
+     * if defined we use the channel context to get NSFW status
+     * (If a user accepts to see the channel, all the avatars will be unmasked)
+     */
+    const isChannelNSFW = this.context?.channel
+      ? channel.isNSFW() &&
+        !channel.isOwner() &&
+        !this.context.channel.mature_visibility
+      : channel.shouldShowMaskNSFW();
+
+    const blurAvatar =
+      isChannelNSFW &&
+      (this.props.entity.shouldBeBlured()
+        ? this.props.entity.mature_visibility
+        : true);
+
     return (
       <View style={this.containerStyle}>
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._onNavToChannelPress}>
-            <FastImage source={this.avatarSrc} style={styles.avatar} />
+            {blurAvatar ? (
+              <Image
+                source={this.avatarSrc}
+                style={styles.avatar}
+                blurRadius={IS_IOS ? 12 : 7}
+              />
+            ) : (
+              <FastImage source={this.avatarSrc} style={styles.avatar} />
+            )}
           </DebouncedTouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>

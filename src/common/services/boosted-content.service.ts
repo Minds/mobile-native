@@ -31,19 +31,20 @@ class BoostedContentService {
   boosts: Array<ActivityModel> = [];
 
   /**
+   * Interval
+   */
+  interval?: number = undefined;
+
+  /**
    * Reload boosts list
    */
   load = async (): Promise<any> => {
     this.init();
-    if (!sessionService.userLoggedIn) {
+    if (!sessionService.userLoggedIn || sessionService.switchingAccount) {
       return;
     }
     try {
-      const done = await this.feedsService!.setLimit(24)
-        .setOffset(0)
-        .setPaginated(false)
-        .setEndpoint('api/v2/boost/feed')
-        .fetchLocal();
+      const done = await this.feedsService!.setOffset(0).fetchLocal();
 
       if (!done) {
         await this.update();
@@ -62,7 +63,13 @@ class BoostedContentService {
   init() {
     if (!this.feedsService) {
       this.feedsService = new FeedsService();
-      setInterval(() => {
+      this.feedsService
+        .setLimit(24)
+        .setOffset(0)
+        .setPaginated(false)
+        .setEndpoint('api/v2/boost/feed');
+
+      this.interval = setInterval(() => {
         if (sessionService.userLoggedIn) {
           this.update();
         }
@@ -71,8 +78,20 @@ class BoostedContentService {
   }
 
   /**
+   * Clear the service
+   */
+  clear() {
+    this.feedsService?.clear();
+    delete this.feedsService;
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    delete this.interval;
+  }
+
+  /**
    * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel} boosts
+   * @param {Array<ActivityModel>} boosts
    */
   cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
     const cloned = _.cloneDeep(boosts);

@@ -156,6 +156,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -324,6 +325,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     undefined,
                   ]
                 }
+                maxLength={50}
                 onChangeText={[Function]}
                 placeholder=""
                 placeholderTextColor="#444"
@@ -538,6 +540,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             <Text
               allowFontScaling={false}
               onPress={[Function]}
+              selectable={false}
               style={
                 Array [
                   Object {

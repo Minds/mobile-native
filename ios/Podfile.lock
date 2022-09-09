@@ -71,11 +71,11 @@ PODS:
   - MMKV (1.2.10):
     - MMKVCore (~> 1.2.10)
   - MMKVCore (1.2.13)
-  - Permission-Camera (3.0.4):
+  - Permission-Camera (3.6.1):
     - RNPermissions
-  - Permission-Microphone (3.0.4):
+  - Permission-Microphone (3.6.1):
     - RNPermissions
-  - Permission-PhotoLibrary (3.0.4):
+  - Permission-PhotoLibrary (3.6.1):
     - RNPermissions
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -478,9 +478,9 @@ PODS:
     - React-Core
   - RNLocalize (1.4.3):
     - React-Core
-  - RNPermissions (3.0.4):
+  - RNPermissions (3.6.1):
     - React-Core
-  - RNPhotoEditor (1.0.12):
+  - RNPhotoEditor (1.0.13):
     - iOSPhotoEditor
     - React
   - RNReanimated (2.8.0):
@@ -525,8 +525,8 @@ PODS:
     - SnowplowTracker (~> 3.0)
   - RNSVG (12.1.0):
     - React
-  - RNVectorIcons (7.1.0):
-    - React
+  - RNVectorIcons (9.2.0):
+    - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -896,9 +896,9 @@ SPEC CHECKSUMS:
   lottie-react-native: a501112fa980529ccb80b9f3ee117a7f98c6af3a
   MMKV: 76033b9ace2006623308910a3afcc0e25eba3140
   MMKVCore: 3388952ded307e41b3ed8a05892736a236ed1b8e
-  Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
-  Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
-  Permission-PhotoLibrary: 440f206f0d36e5951c4c9b28567f60471fdddfb5
+  Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
+  Permission-Microphone: 48212dd4d28025d9930d583e3c7a56da7268665c
+  Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
@@ -958,8 +958,8 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
-  RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
-  RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
+  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
+  RNPhotoEditor: dae3b766e42ff5c184e74be0a95ff6af107a5ecc
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
@@ -967,7 +967,7 @@ SPEC CHECKSUMS:
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSnowplowTracker: 88c65c2132ed97c0732473948c00c8f4d6473b12
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
-  RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b

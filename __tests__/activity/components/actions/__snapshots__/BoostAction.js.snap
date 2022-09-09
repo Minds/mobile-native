@@ -103,6 +103,7 @@ exports[`Boost action component renders correctly 1`] = `
         >
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {

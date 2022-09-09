@@ -3,19 +3,20 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useRef,
 } from 'react';
-
+import { Icon } from 'react-native-elements';
 import { View, TextStyle } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
+
 import createTranslateStore from './createTranslateStore';
 import Translated from './Translated';
 import translationService from '../../services/translation.service';
 import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import Selector from '../Selector';
 import CenteredLoading from '../CenteredLoading';
-import { showNotification } from '../../../../AppMessages';
+import SelectorV2 from '../SelectorV2';
+import { B2 } from '~/common/ui';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 export interface TranslatePropsType {
   entity: ActivityModel;
@@ -24,78 +25,28 @@ export interface TranslatePropsType {
 
 const Translate = observer(
   forwardRef((props: TranslatePropsType, ref) => {
-    let selectedResolve;
-    const selectPromise = new Promise((resolve, reject) => {
-      selectedResolve = resolve;
-    });
-    const selectorRef = useRef<Selector>(null);
-    const localStore = useLocalStore(createTranslateStore, { selectorRef });
-
-    const showError = useCallback(() => {
-      showNotification(
-        i18n.t('translate.error') + '\n' + i18n.t('pleaseTryAgain'),
-      );
-    }, []);
-
-    const translate = useCallback(
-      async language => {
-        let translatedFrom = null;
-        try {
-          const translation = await translationService.translate(
-            props.entity.guid,
-            language,
-          );
-          for (let field in translation) {
-            if (
-              localStore.translatedFrom === null &&
-              translation[field].source
-            ) {
-              translatedFrom = await translationService.getLanguageName(
-                translation[field].source,
-              );
-            }
-          }
-          localStore.finishTranslation(translation, translatedFrom);
-        } catch (e) {
-          localStore.setTranslating(false);
-          showError();
-        }
-      },
-      [localStore, props.entity.guid, showError],
-    );
+    const localStore = useLocalStore(createTranslateStore);
 
     const languageSelected = useCallback(
       ({ language }) => {
-        localStore.setCurrentAndTranslate(language);
+        localStore.setCurrent(language);
         localStore.isTranslating();
+        localStore.translate(language, props.entity.guid);
       },
-      [localStore],
+      [localStore, props.entity.guid],
     );
-
-    const showPicker = useCallback(async () => {
-      const languages = await translationService.getLanguages();
-
-      const current =
-        localStore.current || i18n.getCurrentLocale() || languages[0].language;
-
-      localStore.setLanguagesAndCurrent(languages, current);
-
-      return await selectPromise;
-    }, [localStore, selectPromise]);
 
     const show = useCallback(async () => {
       const lang = await translationService.getUserDefaultLanguage();
 
       localStore.setShow(true);
 
-      if (!lang) {
-        return await showPicker();
-      } else {
+      if (lang) {
         localStore.isTranslating();
-        translate(lang);
+        localStore.translate(lang, props.entity.guid);
         return lang;
       }
-    }, [localStore, showPicker, translate]);
+    }, [localStore, props.entity.guid]);
 
     /**
      * Imperative functionality of the component
@@ -106,32 +57,55 @@ const Translate = observer(
 
     useEffect(() => {
       const shouldTranslate = async () => {
+        const languages = await translationService.getLanguages();
+
+        const current =
+          localStore.current ||
+          i18n.getCurrentLocale() ||
+          languages[0].language;
+
+        localStore.setLanguagesAndCurrent(languages, current);
         if (localStore.current && localStore.shouldTranslate) {
-          await translate(localStore.current);
-          selectedResolve(localStore.current);
+          localStore.translate(localStore.current, props.entity.guid);
         }
       };
       shouldTranslate();
-    }, [localStore, selectedResolve, translate]);
+    }, [localStore, props.entity.guid]);
 
     return (
       <View>
-        <Selector
-          ref={selectorRef}
-          onItemSelect={languageSelected}
-          backdropOpacity={0.9}
-          title={''}
-          data={localStore.languages}
-          valueExtractor={item => item.name}
-          keyExtractor={item => item.language}
-        />
         {localStore.translating && <CenteredLoading />}
         {localStore.show && !localStore.translating && (
-          <Translated
-            translateStore={localStore}
-            showPicker={showPicker}
-            {...props}
-          />
+          <>
+            <Translated translateStore={localStore} {...props} />
+            {localStore.languages && (
+              <SelectorV2
+                onItemSelect={languageSelected}
+                data={localStore.languages}
+                valueExtractor={item => item.name}
+                keyExtractor={item => item.language}>
+                {show => (
+                  <View style={translationBarStyle}>
+                    <Icon
+                      name="md-globe"
+                      type="ionicon"
+                      style={ThemedStyles.style.paddingRight1x}
+                      color={ThemedStyles.getColor('PrimaryText')}
+                      size={14}
+                    />
+                    <B2 color="secondary" onPress={() => show()}>
+                      {i18n.t('translate.from')}{' '}
+                      <B2 font="bold">
+                        {localStore.translatedFrom}
+                        {'  '}·{'  '}
+                        {i18n.t('translate.changeLanguage')}
+                      </B2>
+                    </B2>
+                  </View>
+                )}
+              </SelectorV2>
+            )}
+          </>
         )}
       </View>
     );
@@ -139,3 +113,9 @@ const Translate = observer(
 );
 
 export default Translate;
+
+const translationBarStyle = ThemedStyles.combine(
+  'rowJustifyStart',
+  'alignCenter',
+  'marginTop3x',
+);

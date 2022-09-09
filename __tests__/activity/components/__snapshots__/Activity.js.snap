@@ -478,10 +478,14 @@ exports[`Activity component renders correctly 1`] = `
       />
       <View
         style={
-          Object {
-            "paddingHorizontal": 20,
-            "paddingVertical": 15,
-          }
+          Array [
+            Object {
+              "paddingHorizontal": 16,
+            },
+            Object {
+              "paddingVertical": 12,
+            },
+          ]
         }
       >
         <ExplicitText

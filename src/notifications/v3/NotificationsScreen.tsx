@@ -56,6 +56,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
+  const listRef = useRef<FlatList>(null);
 
   const store = useApiFetch<NotificationList>('api/v3/notifications/list', {
     params: {
@@ -63,6 +64,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       limit: 15,
       offset: notifications.offset,
     },
+    skip: true,
     updateStrategy: 'merge',
     dataField: 'notifications',
     map,
@@ -83,11 +85,18 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
-    return store.refresh({
-      filter: notifications.filter,
-      limit: 15,
-      offset: notifications.offset,
-    });
+    // scroll to top animated
+    listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+
+    return store
+      .refresh({
+        filter: notifications.filter,
+        limit: 15,
+        offset: notifications.offset,
+      })
+      .then(() => {
+        notifications.setUnread(0);
+      });
   }, [notifications, store]);
 
   /**
@@ -116,6 +125,16 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
     return unsubscribe;
   }, [navigation, onFocus]);
+
+  /**
+   * Initial load and reset count
+   */
+  React.useEffect(() => {
+    // delay initial load to prevent stuttering while the animated blue bar is moving
+    setTimeout(() => {
+      store.fetch().then(() => notifications.setUnread(0));
+    }, 50);
+  }, [notifications, store]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -193,7 +212,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   return (
     <View style={styles.container}>
       <FlatList
-        stickyHeaderIndices={[0]}
+        ref={listRef}
+        stickyHeaderIndices={sticky}
         stickyHeaderHiddenOnScroll={true}
         style={[theme.flexContainer, cleanTop]}
         ListHeaderComponent={
@@ -230,7 +250,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 });
 
 const snapPoints = ['90%'];
-
+const sticky = [0];
 const keyExtractor = (item: NotificationModel, index) =>
   item ? `${item.urn}-${index}` : 'menu';
 
