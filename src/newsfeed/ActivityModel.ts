@@ -599,10 +599,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * listens to metrics updates with 1000ms debounce time
    */
-  private listenForMetricsDebounced = _.debounce(
-    () => this.listenForMetrics(),
-    1000,
-  );
+  private listenForMetricsDebounced = _.debounce(this.listenForMetrics, 1000);
 
   /**
    * listens to metrics updates
