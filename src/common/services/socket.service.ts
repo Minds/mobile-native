@@ -28,11 +28,10 @@ export class SocketService {
 
     logService.info('connecting to ', SOCKET_URI);
     this.socket = SocketIOClient(SOCKET_URI, {
-      // reconnect: true,
       reconnection: true,
       timeout: 30000,
       autoConnect: false,
-      transports: ['websocket'], // importat with RN
+      transports: ['websocket'], // important with RN
     });
 
     this.rooms = [];

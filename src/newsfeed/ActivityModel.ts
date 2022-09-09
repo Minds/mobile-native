@@ -1,7 +1,7 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage, { Source } from 'react-native-fast-image';
 import { FlatList, Alert, Platform } from 'react-native';
-
+import _ from 'lodash';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
@@ -339,7 +339,7 @@ export default class ActivityModel extends BaseModel {
     }
 
     if (visible) {
-      this.listenForMetrics();
+      this.listenForMetricsDebounced();
     } else {
       this.unlistenFromMetrics();
     }
@@ -594,17 +594,17 @@ export default class ActivityModel extends BaseModel {
   }
 
   /**
+   * listens to metrics updates with 1000ms debounce time
+   */
+  private listenForMetricsDebounced = _.debounce(
+    () => this.listenForMetrics(),
+    1000,
+  );
+
+  /**
    * listens to metrics updates
    */
   private listenForMetrics(): void {
-    logService.info(
-      'listening for metrics',
-      this.guid,
-      'message',
-      this.message.slice(0, 20),
-      'from',
-      this.ownerObj?.username,
-    );
     socketService.join(this.metricsRoom);
     socketService.subscribe(this.metricsRoom, event =>
       this.onMetricsUpdate(event),
@@ -615,14 +615,7 @@ export default class ActivityModel extends BaseModel {
    * unlistens from metrics updates
    */
   private unlistenFromMetrics(): void {
-    logService.info(
-      'unlistening from metrics',
-      this.guid,
-      'message',
-      this.message.slice(0, 20),
-      'from',
-      this.ownerObj?.username,
-    );
+    this.listenForMetricsDebounced.cancel();
     socketService.leave(this.metricsRoom);
     socketService.unsubscribe(this.metricsRoom, event =>
       this.onMetricsUpdate(event),
