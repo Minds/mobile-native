@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import { Icon } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import MetaPreview from './MetaPreview';
@@ -229,9 +229,11 @@ export default observer(function ComposeScreen(props) {
   const rightButton = store.isEdit ? (
     i18n.t('save')
   ) : (
-    <Icon
+    <IconButtonNext
       name="send"
-      size={25}
+      size="medium"
+      scale
+      onPress={onPost}
       disabled={!store.isValid}
       color={store.isValid ? 'Link' : 'Icon'}
       style={store.attachment.uploading ? theme.opacity25 : null}
