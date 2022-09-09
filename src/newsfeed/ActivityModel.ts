@@ -28,6 +28,7 @@ import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import socketService from '~/common/services/socket.service';
+import { hasVariation } from '../../ExperimentsProvider';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -338,10 +339,12 @@ export default class ActivityModel extends BaseModel {
       this.remind_object.is_visible = visible;
     }
 
-    if (visible) {
-      this.listenForMetricsDebounced();
-    } else {
-      this.unlistenFromMetrics();
+    if (hasVariation('mob-4424-sockets')) {
+      if (visible) {
+        this.listenForMetricsDebounced();
+      } else {
+        this.unlistenFromMetrics();
+      }
     }
   }
 
