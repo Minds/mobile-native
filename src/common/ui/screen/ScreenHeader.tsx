@@ -13,17 +13,21 @@ export type ScreenHeaderType = {
   back?: boolean;
   backIcon?: IconMapNameType;
   border?: boolean;
+  shadow?: boolean;
   titleType?: TypographyPropsType['type'];
   centerTitle?: boolean;
   onBack?: () => void;
+  onTitlePress?: () => void;
 };
 
 export const ScreenHeader = ({
   title,
   extra,
+  shadow,
   back,
   backIcon = 'chevron-left',
   onBack,
+  onTitlePress,
   border,
   titleType = 'H2',
   centerTitle,
@@ -31,10 +35,10 @@ export const ScreenHeader = ({
 }: ScreenHeaderType & SpacerPropType) => {
   const navigation = useNavigation();
   return (
-    <View style={border ? styles.border : styles.normal}>
+    <View style={border ? styles.border : shadow ? styles.shadow : null}>
       {centerTitle && (
         <View style={styles.titleCenteredContainer}>
-          <Typography type={titleType} font="bold">
+          <Typography type={titleType} font="bold" onPress={onTitlePress}>
             {title}
           </Typography>
         </View>
@@ -44,13 +48,13 @@ export const ScreenHeader = ({
           {back && (
             <IconButton
               name={backIcon}
-              size="large"
+              size={33}
               right="S"
               onPress={onBack || (() => navigation.goBack())}
             />
           )}
           {!centerTitle && (
-            <Typography type={titleType} font="bold">
+            <Typography type={titleType} font="bold" onPress={onTitlePress}>
               {title}
             </Typography>
           )}
@@ -65,5 +69,18 @@ const styles = ThemedStyles.create({
   titleCenteredContainer: ['absoluteFill', 'centered', { minHeight: 55 }],
   border: ['bcolorPrimaryBorder', 'borderBottom1x', { minHeight: 55 }],
   row: ['rowJustifyStart'],
+  shadow: [
+    'bgPrimaryBackground',
+    {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 1,
+      elevation: 2,
+      zIndex: 1000,
+    },
+  ],
 });
-222;

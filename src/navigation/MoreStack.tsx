@@ -124,6 +124,13 @@ export default function () {
         options={hideHeader}
       />
       <MoreStack.Screen
+        name="SupermindConsole"
+        getComponent={() =>
+          require('~/supermind/SupermindConsoleScreen').default
+        }
+        options={hideHeader}
+      />
+      <MoreStack.Screen
         name="BuyTokens"
         getComponent={() => require('~/buy-tokens/BuyTokensScreen').default}
         options={hideHeader}

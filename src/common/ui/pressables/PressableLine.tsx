@@ -7,7 +7,7 @@ export const PressableLine = ({ children, ...props }) => {
   return (
     <TouchableHighlight
       style={ThemedStyles.style.flexContainer}
-      underlayColor={TRANSPARENCY.DARKEN05}
+      underlayColor={TRANSPARENCY.DARKEN10}
       {...props}>
       {/*TouchableHighlight adds a style: undefined that break the layout of Row/Column  */}
       <>{children}</>
