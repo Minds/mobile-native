@@ -73,14 +73,15 @@ const InboundButtons = observer(
     const answer = React.useCallback(() => {
       navigation.navigate('Compose', {
         isRemind: true,
-        supermind: true,
-        mode: composerModes[request.reply_type],
+        supermindObject: request,
+        allowedMode: composerModes[request.reply_type],
         entity: request.entity,
       });
     }, [navigation, request]);
     return (
       <Column space="L" top="XXL">
         <Button
+          testID="acceptButton"
           mode="outline"
           type="action"
           bottom="L"
@@ -89,6 +90,7 @@ const InboundButtons = observer(
           {i18n.t('supermind.acceptOffer')}
         </Button>
         <Button
+          testID="rejectButton"
           mode="outline"
           type="base"
           disabled={request.isLoading > 0}

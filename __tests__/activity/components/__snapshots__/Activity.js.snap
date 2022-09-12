@@ -96,17 +96,6 @@ exports[`Activity component renders correctly 1`] = `
         "quotes": 0,
         "reminds": 0,
         "rowKey": "something0",
-        "shouldBeBlured": [MockFunction] {
-          "calls": Array [
-            Array [],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        },
         "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
@@ -201,17 +190,6 @@ exports[`Activity component renders correctly 1`] = `
         "quotes": 0,
         "reminds": 0,
         "rowKey": "something0",
-        "shouldBeBlured": [MockFunction] {
-          "calls": Array [
-            Array [],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        },
         "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
@@ -312,17 +290,6 @@ exports[`Activity component renders correctly 1`] = `
             "quotes": 0,
             "reminds": 0,
             "rowKey": "something0",
-            "shouldBeBlured": [MockFunction] {
-              "calls": Array [
-                Array [],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
-              ],
-            },
             "subtype": "",
             "thumbnail_src": false,
             "thumbs:down:count": undefined,
@@ -441,17 +408,6 @@ exports[`Activity component renders correctly 1`] = `
             "quotes": 0,
             "reminds": 0,
             "rowKey": "something0",
-            "shouldBeBlured": [MockFunction] {
-              "calls": Array [
-                Array [],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
-              ],
-            },
             "subtype": "",
             "thumbnail_src": false,
             "thumbs:down:count": undefined,
@@ -564,17 +520,6 @@ exports[`Activity component renders correctly 1`] = `
               "quotes": 0,
               "reminds": 0,
               "rowKey": "something0",
-              "shouldBeBlured": [MockFunction] {
-                "calls": Array [
-                  Array [],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
               "subtype": "",
               "thumbnail_src": false,
               "thumbs:down:count": undefined,
@@ -694,17 +639,6 @@ exports[`Activity component renders correctly 1`] = `
               "quotes": 0,
               "reminds": 0,
               "rowKey": "something0",
-              "shouldBeBlured": [MockFunction] {
-                "calls": Array [
-                  Array [],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
               "subtype": "",
               "thumbnail_src": false,
               "thumbs:down:count": undefined,
@@ -808,17 +742,6 @@ exports[`Activity component renders correctly 1`] = `
           "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
-          "shouldBeBlured": [MockFunction] {
-            "calls": Array [
-              Array [],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
-          },
           "subtype": "",
           "thumbnail_src": false,
           "thumbs:down:count": undefined,
