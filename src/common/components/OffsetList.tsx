@@ -86,6 +86,7 @@ export default observer(
       map,
     });
 
+    // if the fetchEndpoint changed, reset pagination and results
     useEffect(() => {
       if (fetchStore.result) {
         fetchStore.setResult(null);
