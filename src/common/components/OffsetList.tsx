@@ -146,7 +146,7 @@ export default observer(
 
     // =====================| RENDERS |=====================>
     const renderItem = useMemo(() => {
-      if (fetchStore.result && fetchStore.result[props.endpointData]) {
+      if (fetchStore.result?.[props.endpointData]) {
         return props.renderItem;
       }
 
