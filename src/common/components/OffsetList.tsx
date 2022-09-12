@@ -86,6 +86,7 @@ export default observer(
       map,
     });
 
+    // if the fetchEndpoint changed, reset pagination and results
     useEffect(() => {
       if (fetchStore.result) {
         fetchStore.setResult(null);
@@ -144,7 +145,7 @@ export default observer(
 
     // =====================| RENDERS |=====================>
     const renderItem = useMemo(() => {
-      if (fetchStore.result && fetchStore.result[props.endpointData]) {
+      if (fetchStore.result?.[props.endpointData]) {
         return props.renderItem;
       }
 
