@@ -9,7 +9,7 @@ import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import AddBankInformation from './AddBankInformation';
-import SuperMindRequest from './SuperMindRequest';
+import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
 type TabModeType = 'inbound' | 'outbound';
@@ -78,8 +78,8 @@ export default function SupermindConsoleScreen({ navigation }) {
   );
 }
 
-const renderSupermindInbound = row => <SuperMindRequest request={row.item} />;
+const renderSupermindInbound = row => <SupermindRequest request={row.item} />;
 const renderSupermindOutbound = row => (
-  <SuperMindRequest request={row.item} outbound />
+  <SupermindRequest request={row.item} outbound />
 );
 const mapRequests = items => SupermindRequestModel.createMany(items);

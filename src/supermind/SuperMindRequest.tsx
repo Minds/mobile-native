@@ -16,13 +16,13 @@ type Props = {
   outbound?: boolean;
 };
 
-export default function SuperMindRequest({ request, outbound }: Props) {
+export default function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
 
   return (
     <Spacer top="XL">
       <View style={borderBottomStyle}>
-        <Row space="L">
+        <Row space="L" align="baseline">
           <SupermindLabel text={` ${request.formattedAmount} offer `} />
           <B2 color="secondary" left="L">
             {i18n.t('expires')}: <B2>{request.formattedExpiration}</B2>

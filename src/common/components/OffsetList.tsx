@@ -90,7 +90,6 @@ export default observer(
       if (fetchStore.result) {
         fetchStore.setResult(null);
         props.offsetPagination ? setPage(1) : setOffset('');
-        // fetchStore.fetch();
       }
     }, [props.fetchEndpoint, fetchStore, props.offsetPagination]);
 
