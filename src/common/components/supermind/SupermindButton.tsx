@@ -14,7 +14,7 @@ type Props = {
 export default function SupermindButton({ entity }: Props) {
   const handlePress = useCallback(() => {
     NavigationService.navigate('Compose', {
-      supermind: true,
+      openSupermindModal: true,
       supermindTargetChannel: entity,
       allowedMode: 'video',
     });

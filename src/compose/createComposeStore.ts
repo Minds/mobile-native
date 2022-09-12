@@ -69,7 +69,15 @@ export default function (props) {
     group: null,
     postToPermaweb: false,
     initialized: false,
+    /**
+     * the supermind request that is built from the SupermindComposeScreen
+     */
     supermindRequest: undefined as SupermindRequestParam,
+    /**
+     * the supermind object which is passed from the SupermindConsole and used for supermind reply functionality.
+     * The existence of this object means the composer is being used to reply to a supermind
+     */
+    supermindObject: undefined as any,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -83,6 +91,7 @@ export default function (props) {
       this.isEdit = params.isEdit;
       this.allowedMode = params.allowedMode;
       this.entity = params.entity || null;
+      this.supermindObject = params.supermindObject;
 
       this.mode = params.mode
         ? params.mode
@@ -114,7 +123,7 @@ export default function (props) {
         this.group = props.route.params.group;
       }
 
-      if (params.supermind) {
+      if (params.openSupermindModal) {
         const channel =
           params.supermindTargetChannel || params.entity?.ownerObj;
         this.openSupermindModal(channel ? { channel } : undefined);
@@ -663,6 +672,9 @@ export default function (props) {
           this.supermindRequest = undefined;
         },
       });
+    },
+    get isSupermindReply() {
+      return Boolean(this.supermindObject);
     },
   };
 }

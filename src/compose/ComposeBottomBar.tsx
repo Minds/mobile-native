@@ -69,15 +69,20 @@ function ComposeBottomBar(props) {
         scale
         onPress={props.onHashtag}
       />
-      <IfFeatureEnabled feature="mobile-supermind">
-        <IconButton
-          name="supermind"
-          style={iconStyle}
-          scale
-          color={props.store.supermindRequest ? 'Link' : 'Icon'}
-          onPress={props.onSupermind}
-        />
-      </IfFeatureEnabled>
+      {
+        // don't allow superminding in the context of a supermind reply
+        !props.store.isSupermindReply && (
+          <IfFeatureEnabled feature="mobile-supermind">
+            <IconButton
+              name="supermind"
+              style={iconStyle}
+              scale
+              color={props.store.supermindRequest ? 'Link' : 'Icon'}
+              onPress={props.onSupermind}
+            />
+          </IfFeatureEnabled>
+        )
+      }
 
       <View style={theme.flexContainer} />
       <IconButton

@@ -22,7 +22,7 @@ export default function SupermindAction({ entity }) {
           isRemind: true,
           entity,
           parentKey: key,
-          supermind: true,
+          openSupermindModal: true,
         })
       }
     />

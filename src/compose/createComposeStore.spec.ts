@@ -52,7 +52,7 @@ describe('createComposeStore', () => {
       navigation: mockedNavigation,
       route: {
         params: {
-          supermind: true,
+          openSupermindModal: true,
         },
       },
     });
@@ -69,7 +69,7 @@ describe('createComposeStore', () => {
       navigation: mockedNavigation,
       route: {
         params: {
-          supermind: true,
+          openSupermindModal: true,
           entity: {
             ownerObj: fakeOwnerObj,
           },
@@ -93,7 +93,7 @@ describe('createComposeStore', () => {
       navigation: mockedNavigation,
       route: {
         params: {
-          supermind: true,
+          openSupermindModal: true,
           entity: {
             supermindTargetChannel: fakeOwnerObj,
           },

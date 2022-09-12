@@ -247,7 +247,11 @@ export default observer(function ComposeScreen(props) {
         <TopBar
           containerStyle={theme.paddingLeft}
           rightText={rightButton}
-          leftComponent={store.supermindRequest && <SupermindLabel />}
+          leftComponent={
+            (store.supermindRequest || store.isSupermindReply) && (
+              <SupermindLabel />
+            )
+          }
           onPressRight={onPost}
           onPressBack={onPressBack}
           store={store}
