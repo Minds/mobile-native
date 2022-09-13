@@ -83,21 +83,26 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       notifications.setOffset(store.result['load-next']);
   };
 
-  const refresh = React.useCallback(() => {
-    notifications.setOffset('');
-    // scroll to top animated
-    listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  const refresh = React.useCallback(
+    (scroll = true) => {
+      notifications.setOffset('');
+      // scroll to top animated
+      if (scroll) {
+        listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+      }
 
-    return store
-      .refresh({
-        filter: notifications.filter,
-        limit: 15,
-        offset: notifications.offset,
-      })
-      .then(() => {
-        notifications.setUnread(0);
-      });
-  }, [notifications, store]);
+      return store
+        .refresh({
+          filter: notifications.filter,
+          limit: 15,
+          offset: notifications.offset,
+        })
+        .then(() => {
+          notifications.setUnread(0);
+        });
+    },
+    [notifications, store],
+  );
 
   /**
    *
