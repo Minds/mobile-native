@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import { useNavigation } from '~/../__mocks__/@react-navigation/native';
 
-import SupermindRequest from './SuperMindRequest';
+import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
 import supermindRequestFaker from '~/../__mocks__/fake/supermind/SupermindRequestFaker';
