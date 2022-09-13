@@ -1,8 +1,8 @@
+// @ts-nocheck
 import apiService from '../common/services/api.service';
 import NavigationService from '../navigation/NavigationService';
 import createComposeStore from './createComposeStore';
 import { SupermindRequestParam } from './SupermindComposeScreen';
-import mindsConfigService from '../common/services/minds-config.service';
 
 jest.mock('../navigation/NavigationService');
 jest.mock('../common/services/minds-config.service', () => ({
