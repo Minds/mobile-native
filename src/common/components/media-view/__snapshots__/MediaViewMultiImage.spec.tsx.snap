@@ -1,0 +1,969 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "marginLeft": 12,
+      "marginTop": 12,
+    }
+  }
+>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 220,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": 0,
+        },
+      ]
+    }
+    testID="image-http://fake.com0"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 220,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 220,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com0",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 220,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": 8,
+          "marginLeft": 8,
+        },
+      ]
+    }
+    testID="image-http://fake.com1"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 220,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 220,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com1",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "marginTop": 12,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "marginLeft": 12,
+      }
+    }
+  >
+    <View
+      activeOpacity={1}
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 228,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {
+            "marginBottom": undefined,
+            "marginLeft": 0,
+          },
+        ]
+      }
+      testID="image-http://fake.com0"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 3,
+              "elevation": 2,
+              "height": 228,
+              "shadowColor": "rgba(0, 0, 0, 0.4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 0,
+              },
+              "shadowOpacity": 0.4,
+              "shadowRadius": 0,
+              "width": 359,
+            },
+            Object {},
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "borderRadius": 3,
+                  "elevation": 2,
+                  "height": 228,
+                  "shadowColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.4,
+                  "shadowRadius": 0,
+                  "width": 359,
+                },
+                Object {},
+              ],
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com0",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+      }
+    }
+  >
+    <View
+      activeOpacity={1}
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {
+            "marginBottom": 8,
+            "marginLeft": 8,
+          },
+        ]
+      }
+      testID="image-http://fake.com1"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 3,
+              "elevation": 2,
+              "height": 110,
+              "shadowColor": "rgba(0, 0, 0, 0.4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 0,
+              },
+              "shadowOpacity": 0.4,
+              "shadowRadius": 0,
+              "width": 359,
+            },
+            Object {},
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "borderRadius": 3,
+                  "elevation": 2,
+                  "height": 110,
+                  "shadowColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.4,
+                  "shadowRadius": 0,
+                  "width": 359,
+                },
+                Object {},
+              ],
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com1",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      activeOpacity={1}
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {
+            "marginBottom": undefined,
+            "marginLeft": 8,
+          },
+        ]
+      }
+      testID="image-http://fake.com2"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 3,
+              "elevation": 2,
+              "height": 110,
+              "shadowColor": "rgba(0, 0, 0, 0.4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 0,
+              },
+              "shadowOpacity": 0.4,
+              "shadowRadius": 0,
+              "width": 359,
+            },
+            Object {},
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "borderRadius": 3,
+                  "elevation": 2,
+                  "height": 110,
+                  "shadowColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.4,
+                  "shadowRadius": 0,
+                  "width": 359,
+                },
+                Object {},
+              ],
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com2",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "marginLeft": 12,
+      "marginTop": 12,
+    }
+  }
+>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 110,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": 0,
+        },
+      ]
+    }
+    testID="image-http://fake.com0"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 110,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com0",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 110,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": 8,
+          "marginLeft": 8,
+        },
+      ]
+    }
+    testID="image-http://fake.com1"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 110,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com1",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 110,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": 0,
+        },
+      ]
+    }
+    testID="image-http://fake.com2"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 110,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com2",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    activeOpacity={1}
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "elevation": 2,
+          "height": 110,
+          "shadowColor": "rgba(0, 0, 0, 0.4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.4,
+          "shadowRadius": 0,
+          "width": 359,
+        },
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": 8,
+        },
+      ]
+    }
+    testID="image-http://fake.com3"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 3,
+            "elevation": 2,
+            "height": 110,
+            "shadowColor": "rgba(0, 0, 0, 0.4)",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 0,
+            "width": 359,
+          },
+          Object {},
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "height": 110,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+                "width": 359,
+              },
+              Object {},
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          onFastImageProgress={[Function]}
+          resizeMode="cover"
+          retry={2}
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "http://fake.com3",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;

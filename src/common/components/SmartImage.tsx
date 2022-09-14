@@ -6,7 +6,6 @@ import { Blurhash } from 'react-native-blurhash';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ActivityModel from '~/newsfeed/ActivityModel';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
@@ -25,7 +24,9 @@ interface SmartImageProps {
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
   thumbBlurRadius?: number;
-  entity?: ActivityModel;
+  blurhash?: boolean;
+  blurred?: boolean;
+  locked?: boolean;
 }
 
 const defaultBlur = Platform.select({ android: 1, ios: 4 });
@@ -101,7 +102,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
               thumbBlurRadius={props.thumbBlurRadius}
               style={props.style}
               thumbnailSource={props.thumbnail as any}
-              entity={props.entity}
+              blurhash={props.blurhash}
             />
           </Delayed>
           {dataSaverEnabled && !withoutDownloadButton && (
@@ -117,9 +118,8 @@ const BlurredThumbnail = ({
   thumbBlurRadius,
   style,
   thumbnailSource,
-  entity,
+  blurhash,
 }) => {
-  const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
   if (blurhash) {
     return (
       <Blurhash
@@ -194,7 +194,7 @@ const createSmartImageStore = props => {
     },
     onLoadEnd() {
       // if the entity should be blurred or was locked, don't remove the overlay
-      if (!props.entity?.shouldBeBlured() && !props.entity?.isLocked()) {
+      if (!props.blurred && !props.locked) {
         this.showOverlay = false;
       }
       this.progress = undefined;
@@ -243,7 +243,7 @@ const createSmartImageStore = props => {
     // shows image if cache exists and shows overlay if it didn't
     async onInit() {
       // if entity was locked, show overlay and return
-      if (props.entity?.isLocked()) {
+      if (props.locked) {
         this.showOverlay = true;
         return;
       }
