@@ -11,6 +11,7 @@ import MenuItem from '../common/components/menus/MenuItem';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { Button, Icon, ModalFullScreen } from '../common/ui';
+import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -66,7 +67,9 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     data?.terms_agreed || false,
   );
   const [paymentMethod, setPaymentMethod] = useState<PaymentType>(
-    data?.payment_options?.payment_type || PaymentType.cash,
+    data?.payment_options?.payment_type || IS_IOS
+      ? PaymentType.token
+      : PaymentType.cash,
   );
   const [cardId, setCardId] = useState<string | undefined>(
     data?.payment_options?.payment_method_id,
@@ -77,7 +80,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       : '10',
   );
   const [errors, setErrors] = useState<any>({});
-  const [tabsDisabled, setTabsDisabled] = useState<any>(false);
+  const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -151,6 +154,10 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
    */
   useEffect(() => {
     if (!channel) {
+      return;
+    }
+
+    if (IS_IOS) {
       return;
     }
 
