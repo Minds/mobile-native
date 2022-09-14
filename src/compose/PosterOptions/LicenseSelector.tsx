@@ -26,7 +26,7 @@ interface LicenseSelectorProps
  */
 const Option = props => {
   const onSelect = useCallback(() => {
-    props.store.attachment.setLicense(props.option.value);
+    props.store.attachments.setLicense(props.option.value);
   }, [props.store, props.option.value]);
 
   return (
@@ -91,7 +91,7 @@ export default observer(function ({}: LicenseSelectorProps) {
           <Option
             option={o}
             store={store}
-            selected={store.attachment.license === o.value}
+            selected={store.attachments.license === o.value}
           />
         ))}
 
@@ -108,7 +108,7 @@ export default observer(function ({}: LicenseSelectorProps) {
           <Option
             option={o}
             store={store}
-            selected={store.attachment.license === o.value}
+            selected={store.attachments.license === o.value}
           />
         ))}
       </BottomSheetScrollView>

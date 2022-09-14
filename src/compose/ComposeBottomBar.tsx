@@ -24,8 +24,7 @@ export default function ComposeBottomBar(props) {
     Keyboard.dismiss();
     navigation.navigate('Capture', {
       onMediaConfirmed: media => {
-        props.store.onMedia(media);
-        props.store.attachment.attachMedia(media, props.store.extra);
+        props.store.attachments.attachMedia(media, props.store.extra);
         return true;
       },
     });

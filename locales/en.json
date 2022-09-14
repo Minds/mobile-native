@@ -296,7 +296,8 @@
     "attach": "Photo & Video Library",
     "takePhoto": "Camera",
     "usePhoto": "Use photo",
-    "useVideo": "Use video"
+    "useVideo": "Use video",
+    "onlyMultiImage": "Only multi-images posts are allowed"
   },
   "channel": {
     "editChannel": "Edit Channel",

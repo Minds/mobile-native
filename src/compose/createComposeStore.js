@@ -1,6 +1,5 @@
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
-import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
@@ -16,6 +15,7 @@ import { Image, Platform } from 'react-native';
 import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
+import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 
 /**
  * Display an error message to the user.
@@ -48,7 +48,7 @@ export default function (props) {
     mode: settingsStore.composerMode,
     videoPoster: null,
     entity: null,
-    attachment: new AttachmentStore(),
+    attachments: new MultiAttachmentStore(),
     nsfw: [],
     tags: [],
     wire_threshold: DEFAULT_MONETIZE,
@@ -65,6 +65,7 @@ export default function (props) {
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
+        this.initialized = true;
         return;
       }
       this.initialized = true;
@@ -89,7 +90,7 @@ export default function (props) {
       if (params.media) {
         this.mode = 'text';
         this.mediaToConfirm = params.media;
-        this.attachment.attachMedia(params.media);
+        this.attachments.attachMedia(params.media);
       }
 
       if (params.text) {
@@ -119,7 +120,7 @@ export default function (props) {
     },
     selectionChanged(e) {
       this.selection = e.nativeEvent.selection;
-      const fontSmall = this.attachment.hasAttachment || this.text.length > 85;
+      const fontSmall = this.attachments.hasAttachment || this.text.length > 85;
 
       measureHeights({
         texts: [this.text.substr(0, this.selection.start)],
@@ -151,16 +152,15 @@ export default function (props) {
       this.wire_threshold = this.entity.wire_threshold || DEFAULT_MONETIZE;
 
       if (this.entity.custom_type === 'batch') {
-        this.attachment.setMedia('image', this.entity.entity_guid);
-        this.mediaToConfirm = {
-          type: 'image',
-          uri: this.entity.custom_data[0].src,
-          width: this.entity.custom_data[0].width,
-          height: this.entity.custom_data[0].height,
-        };
+        this.entity.custom_data?.forEach(m => {
+          this.attachments
+            .addAttachment()
+            .setMedia('image', m.guid, m.src, m.width, m.height);
+        });
       } else if (this.entity.custom_type === 'video') {
-        this.attachment.setMedia('video', this.entity.entity_guid);
-        this.videoPoster = { url: this.entity.custom_data.thumbnail_src };
+        this.attachments
+          .addAttachment()
+          .setMedia('video', this.entity.custom_data?.guid);
       } else if (this.entity.entity_guid || this.entity.perma_url) {
         // Rich embeds (blogs included)
         this.embed.setMeta({
@@ -297,7 +297,7 @@ export default function (props) {
     setText(text) {
       this.text = text;
 
-      if (!this.attachment.hasAttachment && !this.isRemind) {
+      if (!this.attachments.hasAttachment && !this.isRemind) {
         this.embed.richEmbedCheck(text);
       }
     },
@@ -343,15 +343,8 @@ export default function (props) {
       if (this.mediaToConfirm) {
         this.mediaToConfirm = null;
       }
-      if (this.attachment.hasAttachment) {
-        if (this.attachment.uploading) {
-          this.attachment.cancelCurrentUpload();
-        } else {
-          if (deleteMedia) {
-            this.attachment.delete();
-          }
-        }
-        this.attachment.clear();
+      if (this.attachments.hasAttachment) {
+        this.attachments.clear();
       }
       if (this.embed.hasRichEmbed) {
         this.embed.clearRichEmbed();
@@ -420,7 +413,7 @@ export default function (props) {
      * Accept media
      */
     acceptMedia() {
-      this.attachment.attachMedia(this.mediaToConfirm, this.extra);
+      this.attachments.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
     /**
@@ -428,7 +421,7 @@ export default function (props) {
      */
     get isValid() {
       const isEmpty =
-        !this.attachment.hasAttachment &&
+        !this.attachments.hasAttachment &&
         !this.text &&
         (!this.embed.meta || !this.embed.meta.url) &&
         !this.isRemind;
@@ -473,7 +466,7 @@ export default function (props) {
         }
 
         // is uploading?
-        if (this.attachment.hasAttachment && this.attachment.uploading) {
+        if (this.attachments.hasAttachment && this.attachments.uploading) {
           showError(i18n.t('capture.pleaseTryAgain'));
           return false;
         }
@@ -514,9 +507,10 @@ export default function (props) {
 
         newPost.nsfw = this.nsfw || [];
 
-        if (this.attachment.guid) {
-          newPost.entity_guid = this.attachment.guid;
-          newPost.license = this.attachment.license;
+        if (this.attachments.hasAttachment) {
+          newPost.attachment_guids = this.attachments.getAttachmentGuids();
+          newPost.is_rich = false;
+          newPost.license = this.attachments.license;
         }
 
         if (this.embed.meta) {
@@ -525,6 +519,7 @@ export default function (props) {
 
         if (this.group) {
           newPost.container_guid = this.group.guid;
+          2;
           newPost.access_id = this.group.guid;
         }
 
@@ -539,16 +534,19 @@ export default function (props) {
 
         this.setPosting(true);
 
-        const guidParam = this.isEdit ? `/${this.entity.guid}` : '';
+        const reqPromise = this.isEdit
+          ? api.post(`api/v3/newsfeed/activity/${this.entity.guid}`, newPost)
+          : api.put('api/v3/newsfeed/activity', newPost);
 
-        const response = await api.post(`api/v2/newsfeed${guidParam}`, newPost);
-        if (response && response.activity) {
+        const response = await reqPromise;
+
+        if (response) {
           if (this.isEdit) {
-            this.entity.update(response.activity);
+            this.entity.update(response);
             this.entity.setEdited('1');
             return this.entity;
           }
-          return ActivityModel.create(response.activity);
+          return ActivityModel.create(response);
         }
       } catch (e) {
         const message = getNetworkError(e);

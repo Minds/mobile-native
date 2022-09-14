@@ -642,7 +642,7 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const response = await attachmentService.gallery('mixed', false);
+      const response = await attachmentService.gallery('any', false);
 
       if (fn) fn();
 
