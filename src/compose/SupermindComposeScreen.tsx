@@ -234,7 +234,6 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
         />
         {paymentMethod === PaymentType.cash && (
           <StripeCardSelector
-            info="some info about this"
             selectedCardId={cardId}
             onCardSelected={card => {
               setCardId(card.id);
@@ -250,7 +249,6 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           onSelected={setReplyType}
           selected={replyType}
           label="Response Type"
-          info="Some info regarding this input"
           data={[
             {
               value: ReplyType.text,
