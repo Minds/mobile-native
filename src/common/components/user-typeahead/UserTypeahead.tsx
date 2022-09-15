@@ -21,6 +21,9 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import TextInput from '../TextInput';
 import MText from '../MText';
 
+/**
+ * @deprecated please use ChannelSelectScreen
+ */
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
 

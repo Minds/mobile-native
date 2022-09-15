@@ -7,7 +7,6 @@ describe('TwitterSyncScreen', () => {
   test('renders correctly', () => {
     const component = shallow(<TwitterSyncScreen />);
 
-    //@ts-ignore jasmine types overwriting jest types
     expect(component).toMatchSnapshot();
   });
 });

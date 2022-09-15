@@ -25,7 +25,8 @@
       "~ui/*": ["./src/common/ui/*"],
       "~styles": ["./src/styles"],
       "~styles/*": ["./src/styles/*"]
-    }
+    },
+    "types": ["jest"]
   },
   "exclude": [
     "node_modules",

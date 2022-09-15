@@ -1,3 +1,4 @@
+// @ts-nocheck
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
@@ -15,6 +16,8 @@ import { Image, Platform } from 'react-native';
 import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
+import { SupermindRequestParam } from './SupermindComposeScreen';
+import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 
 /**
@@ -46,12 +49,16 @@ export default function (props) {
     isEdit: false,
     accessId: 2,
     mode: settingsStore.composerMode,
+    /**
+     * what compose mode is allowed? photo, video, and null for any
+     */
+    allowedMode: null,
     videoPoster: null,
     entity: null,
     attachments: new MultiAttachmentStore(),
     nsfw: [],
     tags: [],
-    wire_threshold: DEFAULT_MONETIZE,
+    wire_threshold: DEFAULT_MONETIZE as any,
     embed: new RichEmbedStore(),
     text: '',
     title: '',
@@ -62,6 +69,15 @@ export default function (props) {
     group: null,
     postToPermaweb: false,
     initialized: false,
+    /**
+     * the supermind request that is built from the SupermindComposeScreen
+     */
+    supermindRequest: undefined as SupermindRequestParam,
+    /**
+     * the supermind object which is passed from the SupermindConsole and used for supermind reply functionality.
+     * The existence of this object means the composer is being used to reply to a supermind
+     */
+    supermindObject: undefined as any,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -74,7 +90,9 @@ export default function (props) {
       this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
+      this.allowedMode = params.allowedMode;
       this.entity = params.entity || null;
+      this.supermindObject = params.supermindObject;
 
       this.mode = params.mode
         ? params.mode
@@ -102,8 +120,14 @@ export default function (props) {
         this.hydrateFromEntity();
       }
 
-      if (props.route?.params && props.route.params.group) {
+      if (params.group) {
         this.group = props.route.params.group;
+      }
+
+      if (params.openSupermindModal) {
+        const channel =
+          params.supermindTargetChannel || params.entity?.ownerObj;
+        this.openSupermindModal(channel ? { channel } : undefined);
       }
 
       // clear params to avoid repetition
@@ -214,7 +238,7 @@ export default function (props) {
           path: this.mediaToConfirm.uri.replace('file://', ''),
           stickers: ['sticker6', 'sticker9'],
           hiddenControls: ['save', 'share'],
-          onDone: result => {
+          onDone: _result => {
             Image.getSize(
               this.mediaToConfirm.uri,
               (w, h) => {
@@ -483,7 +507,16 @@ export default function (props) {
           time_created: Math.floor(this.time_created / 1000) || null,
         };
 
-        if (this.paywalled) {
+        if (this.supermindRequest) {
+          newPost.supermind_request = {
+            ...this.supermindRequest,
+            receiver_username: this.supermindRequest.channel.username,
+            receiver_guid: this.supermindRequest.channel.guid,
+          };
+        }
+
+        // monetization
+        if (this.paywalled && !this.supermindRequest) {
           newPost.paywall = true;
           newPost.wire_threshold = this.wire_threshold;
         }
@@ -539,14 +572,21 @@ export default function (props) {
 
         const response = await reqPromise;
 
-        if (response) {
-          if (this.isEdit) {
-            this.entity.update(response);
-            this.entity.setEdited('1');
-            return this.entity;
-          }
-          return ActivityModel.create(response);
+        if (!response) {
+          return null;
         }
+
+        if (this.isEdit) {
+          this.entity.update(response);
+          this.entity.setEdited('1');
+          return this.entity;
+        }
+
+        if (response.supermind) {
+          showNotification(i18n.t('supermind.requestSubmitted'), 'success');
+        }
+
+        return ActivityModel.create(response);
       } catch (e) {
         const message = getNetworkError(e);
         if (message) {
@@ -610,6 +650,20 @@ export default function (props) {
           maxHashtags: hashtagService.maxHashtags,
         }),
       );
+    },
+    openSupermindModal(supermindRequest?: Partial<SupermindRequestParam>) {
+      NavigationService.navigate('SupermindCompose', {
+        data: supermindRequest || this.supermindRequest,
+        onSave: (payload: SupermindRequestParam) => {
+          this.supermindRequest = payload;
+        },
+        onClear: () => {
+          this.supermindRequest = undefined;
+        },
+      });
+    },
+    get isSupermindReply() {
+      return Boolean(this.supermindObject);
     },
   };
 }

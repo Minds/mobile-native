@@ -98,7 +98,8 @@ function PosterOptions(props: PosterOptionsType) {
     ? store.wire_threshold.support_tier?.name || 'Plus'
     : '';
 
-  const showMonetize = !store.portraitMode && !store.isRemind;
+  const showMonetize =
+    !store.portraitMode && !store.isRemind && !store.supermindRequest;
 
   const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 

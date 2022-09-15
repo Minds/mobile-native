@@ -2,15 +2,17 @@ import { useKeyboard, useDimensions } from '@react-native-community/hooks';
 import { useState, useEffect, useCallback } from 'react';
 import { InteractionManager } from 'react-native';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
+import UserModel from '../../../channel/UserModel';
 
 export interface AutoCompleteInput {
   text: string;
-  selection: { start: number; end: number };
+  selection?: { start: number; end: number };
   textHeight?: number;
   scrollOffset?: number;
   onScrollToOffset?: (offset: number) => void;
   onTextChange: (text: string) => void;
-  onSelectionChange: (selection: { start: number; end: number }) => void;
+  onChannelSelect?: (channel: UserModel) => void;
+  onSelectionChange?: (selection: { start: number; end: number }) => void;
   onTextInputFocus?: () => void;
 }
 
@@ -21,6 +23,7 @@ const useAutoComplete = ({
   scrollOffset = 0,
   onScrollToOffset,
   onTextChange,
+  onChannelSelect,
   onSelectionChange,
   onTextInputFocus,
 }: AutoCompleteInput) => {
@@ -31,7 +34,7 @@ const useAutoComplete = ({
   const keyboard = useKeyboard();
 
   useEffect(() => {
-    const substr = text.substr(0, selection.start) || '';
+    const substr = (selection ? text.substr(0, selection.start) : text) || '';
 
     /**
      * Distance from top within which we don't have to move the scroll position.
@@ -77,17 +80,19 @@ const useAutoComplete = ({
     [],
   );
   const handleAutoCompleteSelect = useCallback(
-    (selectedText: string) => {
+    (selectedText: string, selectedChannel?: UserModel) => {
       let endword: RegExpMatchArray | null = [''],
-        matchText = text.substr(0, selection.end);
+        matchText = selection ? text.substr(0, selection.end) : text;
 
-      // search end of word
-      if (text.length > selection.end) {
-        endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
-        if (endword) {
-          matchText += endword[0];
-        } else {
-          endword = [''];
+      if (selection) {
+        // search end of word
+        if (text.length > selection.end) {
+          endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
+          if (endword) {
+            matchText += endword[0];
+          } else {
+            endword = [''];
+          }
         }
       }
 
@@ -97,11 +102,16 @@ const useAutoComplete = ({
         new RegExp(`${tag}[a-zA-Z0-9]+$`),
         tag + selectedText + ' ',
       );
-      const postText = text.substr(selection.end + endword[0].length);
+      const postText = selection
+        ? text.substr(selection.end + endword[0].length)
+        : '';
 
       onTextChange(preText + postText);
+      if (selectedChannel) {
+        onChannelSelect?.(selectedChannel);
+      }
 
-      onSelectionChange({
+      onSelectionChange?.({
         start: preText.length,
         end: preText.length,
       });
@@ -112,12 +122,13 @@ const useAutoComplete = ({
       }
     },
     [
+      selection,
       text,
-      selection.end,
       query,
       onTextChange,
       onSelectionChange,
       onTextInputFocus,
+      onChannelSelect,
     ],
   );
 
