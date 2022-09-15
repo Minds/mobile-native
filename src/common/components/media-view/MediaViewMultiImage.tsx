@@ -86,7 +86,7 @@ export default function MediaViewMultiImage({
           blurhash: image.blurhash,
         };
       }),
-    [entity],
+    [entity, imagesLength, width],
   );
 
   const renderImage = (image, index?) => (
