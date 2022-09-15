@@ -6,19 +6,37 @@ import MediaViewMultiImage from './MediaViewMultiImage';
 describe('MediaViewMultiImage', () => {
   it('should render 2 images correctly', async () => {
     const entity = generateFakeMultiImageEntity({ images: 2 });
-    render(<MediaViewMultiImage entity={entity} />);
+    render(
+      <MediaViewMultiImage
+        entity={entity}
+        onImagePress={jest.fn()}
+        onImageLongPress={jest.fn()}
+      />,
+    );
     checkImagesMatch(entity, 2);
     expect(screen.toJSON()).toMatchSnapshot();
   });
   it('should render 3 images correctly', async () => {
     const entity = generateFakeMultiImageEntity({ images: 3 });
-    render(<MediaViewMultiImage entity={entity} />);
+    render(
+      <MediaViewMultiImage
+        entity={entity}
+        onImagePress={jest.fn()}
+        onImageLongPress={jest.fn()}
+      />,
+    );
     checkImagesMatch(entity, 3);
     expect(screen.toJSON()).toMatchSnapshot();
   });
   it('should render 4 images correctly', async () => {
     const entity = generateFakeMultiImageEntity({ images: 4 });
-    render(<MediaViewMultiImage entity={entity} />);
+    render(
+      <MediaViewMultiImage
+        entity={entity}
+        onImagePress={jest.fn()}
+        onImageLongPress={jest.fn()}
+      />,
+    );
     checkImagesMatch(entity, 4);
     expect(screen.toJSON()).toMatchSnapshot();
   });

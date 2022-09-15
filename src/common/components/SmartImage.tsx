@@ -12,7 +12,7 @@ import connectivityService from '../services/connectivity.service';
 import Delayed from './Delayed';
 import RetryableImage from './RetryableImage';
 
-interface SmartImageProps {
+export interface SmartImageProps {
   thumbnail?: Source;
   ignoreDataSaver?: boolean;
   onError?: (e: any) => void;
