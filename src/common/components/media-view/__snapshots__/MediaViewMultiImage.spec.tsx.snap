@@ -81,6 +81,8 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -182,6 +184,8 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -298,6 +302,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -399,6 +405,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -497,6 +505,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -613,6 +623,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -711,6 +723,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -812,6 +826,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
@@ -910,6 +926,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         >
           <FastImageView
+            blurred={false}
+            locked={false}
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}

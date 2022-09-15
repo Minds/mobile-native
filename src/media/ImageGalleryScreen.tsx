@@ -9,7 +9,7 @@ import { ModalFullScreen } from '../common/ui';
 import BottomContent from '../newsfeed/activity/BottomContent';
 import ThemedStyles from '../styles/ThemedStyles';
 
-interface ImageGalleryScreenProps extends React.FunctionComponent {
+interface ImageGalleryScreenProps {
   route: any;
 }
 
