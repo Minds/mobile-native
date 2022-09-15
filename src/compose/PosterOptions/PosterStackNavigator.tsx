@@ -13,6 +13,7 @@ import PosterOptions from './PosterOptions';
 import ScheduleSelector from './ScheduleSelector';
 import TagSelector from './TagSelector';
 import MembershipMonetizeScreen from './monetize/MembershipMonetizeScreen';
+import ComposeSupermindScreen from '../SupermindComposeScreen';
 // import CustomMonetizeScreen from '../compose/PosterOptions/monetize/CustomMonetizeScreen';
 
 export type PosterStackParamList = {
@@ -27,6 +28,7 @@ export type PosterStackParamList = {
   PlusMonetize: {};
   MembershipMonetize: {};
   CustomMonetize: {};
+  ComposeSupermind: {};
 };
 
 const Stack = createStackNavigator<PosterStackParamList>();
@@ -48,6 +50,10 @@ export default function PosterStackNavigator() {
       <Stack.Screen name="LicenseSelector" component={LicenseSelector} />
       <Stack.Screen name="AccessSelector" component={AccessSelector} />
       <Stack.Screen name="PlusMonetize" component={PlusMonetizeScreen} />
+      <Stack.Screen
+        name="ComposeSupermind"
+        component={ComposeSupermindScreen}
+      />
       <Stack.Screen
         name="MembershipMonetize"
         component={MembershipMonetizeScreen}

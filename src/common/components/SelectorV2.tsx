@@ -150,7 +150,11 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
       const isSelected = item => selected === keyExtractor(item);
 
       const onMenuItemPress = () => {
-        onItemSelect(item);
+        if (item.onPress) {
+          item.onPress();
+        } else {
+          onItemSelect(item);
+        }
         close();
       };
 
@@ -163,12 +167,21 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
           key={keyExtractor(item)}
           onPress={onMenuItemPress}
           textStyle={textStyle}
+          iconName={item.iconName}
           title={valueExtractor(item)}
           style={styles.menuItem}
         />
       );
     },
-    [selected, onItemSelect],
+    [
+      theme.colorLink,
+      theme.colorPrimaryText,
+      keyExtractor,
+      valueExtractor,
+      selected,
+      close,
+      onItemSelect,
+    ],
   );
 
   /**

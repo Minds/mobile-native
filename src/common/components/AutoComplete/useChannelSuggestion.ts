@@ -33,7 +33,7 @@ export default function useChannelSuggestion(
   useEffect(() => {
     if (!query) return;
 
-    debouncedFetch(query);
+    debouncedFetch(query.replace('@', ''));
   }, [debouncedFetch, query]);
 
   return fetchStore;
