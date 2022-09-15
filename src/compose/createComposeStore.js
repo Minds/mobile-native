@@ -519,7 +519,6 @@ export default function (props) {
 
         if (this.group) {
           newPost.container_guid = this.group.guid;
-          2;
           newPost.access_id = this.group.guid;
         }
 
