@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Gallery, { RenderItemInfo } from 'react-native-awesome-gallery';
 import FastImage from 'react-native-fast-image';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import api from '../common/services/api.service';
 import { ModalFullScreen } from '../common/ui';
 import BottomContent from '../newsfeed/activity/BottomContent';
@@ -13,7 +14,7 @@ interface ImageGalleryScreenProps {
   route: any;
 }
 
-const TOP_HEADER_HEIGHT = 210;
+const TOP_HEADER_HEIGHT = 200;
 
 export default function ImageGalleryScreen({
   route: {
@@ -21,6 +22,7 @@ export default function ImageGalleryScreen({
   },
 }: ImageGalleryScreenProps) {
   const { width, height } = useDimensions().window;
+  const { top } = useSafeAreaInsets();
   const theme = ThemedStyles.style;
   const images = entity.custom_data;
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -60,7 +62,7 @@ export default function ImageGalleryScreen({
         initialIndex={initialIndex}
         style={theme.bgPrimaryBackground}
         containerDimensions={{
-          height: height - TOP_HEADER_HEIGHT,
+          height: height - TOP_HEADER_HEIGHT - top,
           width,
         }}
         disableVerticalSwipe
