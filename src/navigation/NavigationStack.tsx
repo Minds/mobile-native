@@ -345,6 +345,10 @@ const RootStack = observer(function () {
               name="ViewImage"
               getComponent={() => require('~/media/ViewImageScreen').default}
             />
+            <RootStackNav.Screen
+              name="ImageGallery"
+              getComponent={() => require('~/media/ImageGalleryScreen').default}
+            />
             {/* <RootStackNav.Screen
               name="BlockchainWalletModal"
               component={BlockchainWalletModalScreen}

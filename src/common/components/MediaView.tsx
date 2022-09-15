@@ -67,7 +67,7 @@ export default class MediaView extends Component<PropsType> {
               ignoreDataSaver={this.props.ignoreDataSaver}
               onImageLongPress={this.download}
               fullWidth={!this.props.autoHeight}
-              onImagePress={this.onImagePress}
+              onImagePress={this.navToGallery}
             />
           );
         }
@@ -310,6 +310,17 @@ export default class MediaView extends Component<PropsType> {
         this.props.onPress();
       }
     }
+  };
+
+  /**
+   * Opens ImageGalleryScreen to view the images with the given index being active
+   * @param index - the index of image which was pressed
+   */
+  navToGallery = (index: number) => {
+    NavigationService.navigate('ImageGallery', {
+      entity: this.props.entity,
+      initialIndex: index,
+    });
   };
 }
 
