@@ -7,7 +7,7 @@ import HashtagAutoCompleteList from './HashtagAutoCompleteList';
 import useAutoComplete, { AutoCompleteInput } from './useAutoComplete';
 
 interface AutoCompleteProps extends AutoCompleteInput {
-  onVisible: (visible: boolean) => void;
+  onVisible?: (visible: boolean) => void;
   /**
    * a custom component to use instead of flat list
    */

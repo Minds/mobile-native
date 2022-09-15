@@ -58,6 +58,7 @@
     }
   },
   "supermind": {
+    "requestSubmitted": "Supermind request has been sent.",
     "addBank": "Add your bank information",
     "to": "To @{{name}}",
     "addBankDetail": "Start receiving cash payouts by adding your bank details.",
@@ -1281,6 +1282,7 @@
   "wire": {
     "customDonation": "Custom Donation",
     "selectCredit": "Select a credit card.",
+    "addCard": "Add card.",
     "amountMonth": "{{amount}} / month",
     "noAddress": "This channel has not configured their {{type}} address yet",
     "amountMonthDescription": "THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {{amount}}/MONTH TO @{{name}}",
@@ -1637,5 +1639,8 @@
   "seeMore": "See more",
   "inbound": "Inbound",
   "outbound": "Outbound",
-  "removeFromFeed": "Remove from feed"
+  "removeFromFeed": "Remove from feed",
+  "channelSelect": {
+    "title": "Select a channel"
+  }
 }

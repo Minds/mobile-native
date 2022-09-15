@@ -18,7 +18,6 @@ describe('MutualSubscribers', () => {
     const component = shallow(
       <MutualSubscribers navigation={{}} userGuid="fake" />,
     );
-    //@ts-ignore jasmine types overwriting jest types
     expect(component).toMatchSnapshot();
   });
 });

@@ -978,6 +978,11 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -1263,6 +1268,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "impressions": 0,
         "isOwner": [Function],
         "is_visible": false,
+        "listenForMetricsDebounced": [Function],
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
@@ -1392,6 +1398,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "impressions": 0,
         "isOwner": [Function],
         "is_visible": false,
+        "listenForMetricsDebounced": [Function],
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
@@ -1521,6 +1528,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "impressions": 0,
         "isOwner": [Function],
         "is_visible": false,
+        "listenForMetricsDebounced": [Function],
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
@@ -1650,6 +1658,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "impressions": 0,
         "isOwner": [Function],
         "is_visible": false,
+        "listenForMetricsDebounced": [Function],
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
@@ -1794,6 +1803,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "impressions": 0,
           "isOwner": [Function],
           "is_visible": false,
+          "listenForMetricsDebounced": [Function],
           "mature": false,
           "mature_visibility": false,
           "message": "Message",

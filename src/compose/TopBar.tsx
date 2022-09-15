@@ -5,6 +5,7 @@ import { Flow } from 'react-native-animated-spinkit';
 import { IconButton } from '~ui/icons';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
+import { Spacer } from '../common/ui';
 
 /**
  * Compose Top bar
@@ -27,30 +28,33 @@ export default observer(function (props) {
         onPress={props.onPressBack}
         testID="topbarBack"
       />
+      {props.leftComponent}
       {props.leftText && (
         <MText style={styles.leftText}>{props.leftText}</MText>
       )}
       <View style={theme.flexContainer} />
-      {props.store.posting ? (
-        <View style={styles.dotIndicatorContainerStyle}>
-          <Flow color={ThemedStyles.getColor('SecondaryText')} />
-        </View>
-      ) : (
-        props.rightText && (
+      <Spacer right="L">
+        {props.store.posting ? (
+          <View style={styles.dotIndicatorContainerStyle}>
+            <Flow color={ThemedStyles.getColor('SecondaryText')} />
+          </View>
+        ) : typeof props.rightText === 'string' ? (
           <MText
             style={styles.postButton}
             onPress={props.onPressRight}
             testID="topBarDone">
             {props.rightText}
           </MText>
-        )
-      )}
+        ) : (
+          props.rightText
+        )}
+      </Spacer>
     </View>
   );
 });
 
 const styles = ThemedStyles.create({
-  dotIndicatorContainerStyle: ['rowJustifyEnd', 'marginRight4x'],
+  dotIndicatorContainerStyle: ['rowJustifyEnd'],
   topBar: {
     width: '100%',
     flexDirection: 'row',
@@ -69,7 +73,6 @@ const styles = ThemedStyles.create({
   postButton: {
     textAlign: 'right',
     fontSize: 18,
-    paddingRight: 20,
   },
   back: ['colorIcon', 'paddingLeft2x', 'paddingRight2x'],
 });

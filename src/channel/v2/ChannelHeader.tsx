@@ -227,7 +227,7 @@ const ChannelHeader = withErrorBoundary(
             </View>
           )}
 
-          <Column top="XL2" align={CENTERED ? 'centerBoth' : undefined}>
+          <Column top="XXXL2" align={CENTERED ? 'centerBoth' : undefined}>
             <Row align="centerStart">
               <H4 numberOfLines={1}>
                 {channel ? channel.name : props.channelName}

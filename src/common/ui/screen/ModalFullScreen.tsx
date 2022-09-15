@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/core';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 import { Screen, ScreenHeader } from '~ui';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -13,6 +13,7 @@ type PropsType = {
   extra?: React.ReactNode;
   onBack?: () => void;
   back?: boolean;
+  leftComponent?: React.ReactNode;
 };
 
 /**
@@ -25,6 +26,7 @@ export const ModalFullScreen = ({
   scroll,
   extra,
   back,
+  leftComponent,
   onBack,
 }: PropsType) => {
   const theme = ThemedStyles.style;
@@ -34,6 +36,7 @@ export const ModalFullScreen = ({
   ]);
   return (
     <Screen loading={loading} scroll={scroll} safe>
+      <StatusBar backgroundColor={theme.bgPrimaryBackground.backgroundColor} />
       <ScreenHeader
         title={title}
         extra={extra}
@@ -41,6 +44,7 @@ export const ModalFullScreen = ({
         backIcon="close"
         onBack={onBack || goBackPress}
         back={back}
+        leftComponent={leftComponent}
         border
       />
       <View style={theme.flexContainer}>{children}</View>

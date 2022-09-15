@@ -19,7 +19,7 @@ export interface ChannelAutoCompleteListProps {
   /**
    * when a channel is selected,
    **/
-  onSelect?: (selectedText: string) => void;
+  onSelect?: (selectedText: string, channel: UserModel) => void;
   /**
    * a custom component to use instead of flat list
    */
@@ -45,7 +45,7 @@ function ChannelAutoCompleteList({
       <ChannelListItem
         channel={item}
         hideButtons
-        onPress={user => onSelect?.(user.username)}
+        onPress={user => onSelect?.(user.username, user)}
       />
     ),
     [onSelect],

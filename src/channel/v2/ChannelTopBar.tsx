@@ -67,8 +67,13 @@ const ChannelTopBar = observer(
     const theme = ThemedStyles.style;
     const insets = useSafeAreaInsets();
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
-    const hiddenChannelButtons = useRef(['edit', 'join', 'subscribe', 'boost'])
-      .current;
+    const hiddenChannelButtons = useRef([
+      'edit',
+      'join',
+      'subscribe',
+      'boost',
+      'supermind',
+    ]).current;
     /**
      * shows and hides the background with animation based
      * on the {withBg} prop

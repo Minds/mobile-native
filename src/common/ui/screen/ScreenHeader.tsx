@@ -11,6 +11,7 @@ export type ScreenHeaderType = {
   title: string;
   extra?: ReactNode;
   back?: boolean;
+  leftComponent?: ReactNode;
   backIcon?: IconMapNameType;
   border?: boolean;
   shadow?: boolean;
@@ -25,6 +26,7 @@ export const ScreenHeader = ({
   extra,
   shadow,
   back,
+  leftComponent,
   backIcon = 'chevron-left',
   onBack,
   onTitlePress,
@@ -45,6 +47,7 @@ export const ScreenHeader = ({
       )}
       <Row align="centerBetween" space="L" {...more}>
         <View style={styles.row}>
+          {leftComponent ? leftComponent : null}
           {back && (
             <IconButton
               name={backIcon}

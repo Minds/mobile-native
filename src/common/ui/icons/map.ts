@@ -136,6 +136,14 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'check',
   },
+  'checkbox-marked': {
+    font: 'MaterialCommunityIcons',
+    name: 'checkbox-marked',
+  },
+  'checkbox-blank': {
+    font: 'MaterialCommunityIcons',
+    name: 'checkbox-blank-outline',
+  },
   'plus-circle-outline': {
     font: 'MaterialIcons',
     name: 'add-circle-outline',
