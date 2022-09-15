@@ -25,6 +25,5 @@ test('Tos screen render and accept', async () => {
 
   expect(apiService.post).toHaveBeenCalled();
 
-  //@ts-ignore jasmin is overwriting types
   expect(screen.toJSON()).toMatchSnapshot();
 });
