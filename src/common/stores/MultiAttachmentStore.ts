@@ -39,6 +39,14 @@ export default class MultiAttachmentStore {
   }
 
   /**
+   * Returns an attachment store at index or null
+   * @param index {number}
+   */
+  get(index: number): AttachmentStore | null {
+    return this.attachments[index] || null;
+  }
+
+  /**
    * Get the array of guids
    */
   getAttachmentGuids() {
@@ -86,10 +94,10 @@ export default class MultiAttachmentStore {
    * @param store {AttachmentStore}
    */
   @action
-  async removeMedia(store: AttachmentStore) {
+  removeMedia = async (store: AttachmentStore) => {
     await store.cancelOrDelete();
     this.removeAttachment(store);
-  }
+  };
 
   /**
    * Removes the store from the attachments arrays

@@ -26,18 +26,36 @@ export default observer(function MediaPreview({ store }: PropsType) {
   switch (store.attachments.length) {
     case 1:
       return (
-        <View style={[styles.singlePreview, theme.marginTop2x]}>
-          <MediaPresentation store={store} index={0} />
+        <View style={[styles.singlePreview, theme.marginTop2x, theme.bgAction]}>
+          <MediaPresentation
+            attachment={store.attachments.get(0)}
+            onDelete={store.attachments.removeMedia}
+            isEdit={store.isEdit}
+            portraitMode={store.portraitMode}
+            entity={store.entity}
+          />
         </View>
       );
     case 2:
       return (
         <View style={[theme.rowJustifyStart, theme.marginTop2x]}>
           <View style={[styles.twoPreviews, theme.paddingRightXS]}>
-            <MediaPresentation store={store} index={0} />
+            <MediaPresentation
+              attachment={store.attachments.get(0)}
+              onDelete={store.attachments.removeMedia}
+              isEdit={store.isEdit}
+              portraitMode={store.portraitMode}
+              entity={store.entity}
+            />
           </View>
           <View style={[styles.twoPreviews, theme.paddingLeftXS]}>
-            <MediaPresentation store={store} index={1} />
+            <MediaPresentation
+              attachment={store.attachments.get(1)}
+              onDelete={store.attachments.removeMedia}
+              isEdit={store.isEdit}
+              portraitMode={store.portraitMode}
+              entity={store.entity}
+            />
           </View>
         </View>
       );
@@ -45,14 +63,32 @@ export default observer(function MediaPreview({ store }: PropsType) {
       return (
         <View style={[theme.rowJustifySpaceEvenly, theme.marginTop2x]}>
           <View style={[styles.twoPreviews, theme.marginRightXS]}>
-            <MediaPresentation store={store} index={0} />
+            <MediaPresentation
+              attachment={store.attachments.get(0)}
+              onDelete={store.attachments.removeMedia}
+              isEdit={store.isEdit}
+              portraitMode={store.portraitMode}
+              entity={store.entity}
+            />
           </View>
           <View style={[theme.flexContainer, theme.marginLeftXS]}>
             <View style={[styles.singlePreview, theme.marginBottomXS]}>
-              <MediaPresentation store={store} index={1} />
+              <MediaPresentation
+                attachment={store.attachments.get(1)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
             <View style={[styles.singlePreview, theme.marginTopXS]}>
-              <MediaPresentation store={store} index={2} />
+              <MediaPresentation
+                attachment={store.attachments.get(2)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
           </View>
         </View>
@@ -62,18 +98,42 @@ export default observer(function MediaPreview({ store }: PropsType) {
         <View style={[theme.rowJustifyStart, theme.marginTop2x]}>
           <View style={theme.flexContainer}>
             <View style={[styles.singlePreview, theme.marginBottomXS]}>
-              <MediaPresentation store={store} index={0} />
+              <MediaPresentation
+                attachment={store.attachments.get(0)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
             <View style={[styles.singlePreview, theme.marginTopXS]}>
-              <MediaPresentation store={store} index={1} />
+              <MediaPresentation
+                attachment={store.attachments.get(1)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
           </View>
           <View style={theme.flexContainer}>
             <View style={[styles.singlePreview, theme.marginBottomXS]}>
-              <MediaPresentation store={store} index={2} />
+              <MediaPresentation
+                attachment={store.attachments.get(2)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
             <View style={[styles.singlePreview, theme.marginTopXS]}>
-              <MediaPresentation store={store} index={3} />
+              <MediaPresentation
+                attachment={store.attachments.get(3)}
+                onDelete={store.attachments.removeMedia}
+                isEdit={store.isEdit}
+                portraitMode={store.portraitMode}
+                entity={store.entity}
+              />
             </View>
           </View>
         </View>
@@ -86,77 +146,73 @@ export default observer(function MediaPreview({ store }: PropsType) {
 /**
  * Media Presentation Component
  */
-const MediaPresentation = observer(({ store, index }) => {
-  const attachment = store.attachments.attachments[index];
+const MediaPresentation = observer(
+  ({ attachment, onDelete, isEdit, portraitMode, entity }) => {
+    const isImage = attachment.type.startsWith('image');
 
-  if (!attachment) {
-    return null;
-  }
+    const imageSource = React.useMemo(() => {
+      return { uri: attachment.uri };
+    }, [attachment.uri]);
 
-  const isImage = attachment.type.startsWith('image');
-
-  const imageSource = React.useMemo(() => {
-    return { uri: attachment.uri };
-  }, [attachment.uri]);
-
-  return isImage ? (
-    <View style={styles.image}>
-      {!store.isEdit && !store.portraitMode && (
-        <TouchableOpacity
-          testID="AttachmentDeleteButton"
-          onPress={() => store.attachments.removeMedia(attachment)}
-          style={styles.removeMedia}>
-          <Icon name="close-outline" size={26} style={styles.icon} />
-        </TouchableOpacity>
-      )}
-      <FastImage
-        source={imageSource}
-        style={styles.image}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-      {attachment.uploading && (
-        <Progress.Bar
-          indeterminate={true}
-          progress={attachment.progress}
-          color={ThemedStyles.getColor('Green')}
-          width={null}
-          borderWidth={0}
-          borderRadius={0}
-          useNativeDriver={true}
-          style={styles.progress}
+    return isImage ? (
+      <View style={styles.image}>
+        {!isEdit && !portraitMode && (
+          <TouchableOpacity
+            testID="AttachmentDeleteButton"
+            onPress={() => onDelete(attachment)}
+            style={styles.removeMedia}>
+            <Icon name="close-outline" size={26} style={styles.icon} />
+          </TouchableOpacity>
+        )}
+        <FastImage
+          source={imageSource}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.cover}
         />
-      )}
-    </View>
-  ) : (
-    <>
-      {!store.isEdit && (
-        <TouchableOpacity
-          onPress={() => store.attachments.removeMedia(attachment)}
-          style={styles.removeMedia}>
-          <Icon name="close-outline" size={26} style={styles.icon} />
-        </TouchableOpacity>
-      )}
-      <MindsVideo
-        entity={store.entity}
-        video={attachment}
-        resizeMode={ResizeMode.CONTAIN}
-        autoplay
-      />
-      {attachment.uploading && (
-        <Progress.Bar
-          indeterminate={true}
-          progress={attachment.progress}
-          color={ThemedStyles.getColor('Green')}
-          width={null}
-          borderWidth={0}
-          borderRadius={0}
-          useNativeDriver={true}
-          style={styles.progress}
+        {attachment.uploading && (
+          <Progress.Bar
+            indeterminate={true}
+            progress={attachment.progress}
+            color={ThemedStyles.getColor('Green')}
+            width={null}
+            borderWidth={0}
+            borderRadius={0}
+            useNativeDriver={true}
+            style={styles.progress}
+          />
+        )}
+      </View>
+    ) : (
+      <>
+        {!isEdit && (
+          <TouchableOpacity
+            onPress={() => onDelete(attachment)}
+            style={styles.removeMedia}>
+            <Icon name="close-outline" size={26} style={styles.icon} />
+          </TouchableOpacity>
+        )}
+        <MindsVideo
+          entity={entity}
+          video={attachment}
+          resizeMode={ResizeMode.CONTAIN}
+          autoplay
         />
-      )}
-    </>
-  );
-});
+        {attachment.uploading && (
+          <Progress.Bar
+            indeterminate={true}
+            progress={attachment.progress}
+            color={ThemedStyles.getColor('Green')}
+            width={null}
+            borderWidth={0}
+            borderRadius={0}
+            useNativeDriver={true}
+            style={styles.progress}
+          />
+        )}
+      </>
+    );
+  },
+);
 
 const styles = ThemedStyles.create({
   icon: ['colorIcon'],
@@ -169,16 +225,32 @@ const styles = ThemedStyles.create({
   },
   singlePreview: {
     flex: 1,
+    width: '100%',
     aspectRatio: 3 / 2,
     borderRadius: 2,
-    overflow: 'hidden',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 1.5,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 0.41,
+    elevation: 2,
   },
-  image: ['bgTertiaryBackground', 'flexContainer'],
+  image: ['bgTertiaryBackground', 'flexContainer', 'borderRadius2x'],
   twoPreviews: {
     flex: 1,
     aspectRatio: 3 / 4,
     borderRadius: 2,
-    overflow: 'hidden',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 1.5,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 0.41,
+
+    elevation: 2,
   },
   removeMedia: [
     'bgSecondaryBackground',
