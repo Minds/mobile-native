@@ -4,10 +4,8 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Gallery, { RenderItemInfo } from 'react-native-awesome-gallery';
 import FastImage from 'react-native-fast-image';
-import SmartImage from '../common/components/SmartImage';
 import api from '../common/services/api.service';
 import { ModalFullScreen } from '../common/ui';
-import ActivityActions from '../newsfeed/activity/Actions';
 import BottomContent from '../newsfeed/activity/BottomContent';
 import ThemedStyles from '../styles/ThemedStyles';
 
