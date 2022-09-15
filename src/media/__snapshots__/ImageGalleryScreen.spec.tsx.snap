@@ -150,7 +150,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
     <View
       containerDimensions={
         Object {
-          "height": 1124,
+          "height": 1134,
           "width": 750,
         }
       }
