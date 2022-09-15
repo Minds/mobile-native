@@ -45,9 +45,11 @@ const showError = message => {
  */
 export default observer(function (props) {
   // #region states & variables
-  const { portrait: portraitMode, onMediaConfirmed } =
+  const { portrait: portraitMode, mode: allowedMode, onMediaConfirmed } =
     props.route?.params ?? {};
-  const [mode, setMode] = useState<'photo' | 'video'>('photo');
+  const [mode, setMode] = useState<'photo' | 'video'>(
+    allowedMode === 'video' ? 'video' : 'photo',
+  );
   const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
 
   /**
@@ -275,16 +277,14 @@ export default observer(function (props) {
         extracting={extractEnabled}
       />
     );
-  } else {
-    if (portrait) {
-      bottomBar = (
-        <CameraScreenBottomBar
-          onSetPhotoPress={setModePhoto}
-          onSetVideoPress={setModeVideo}
-          mode={mode}
-        />
-      );
-    }
+  } else if (portrait && !allowedMode) {
+    bottomBar = (
+      <CameraScreenBottomBar
+        onSetPhotoPress={setModePhoto}
+        onSetVideoPress={setModeVideo}
+        mode={mode}
+      />
+    );
   }
   // #endregion
 

@@ -317,6 +317,12 @@ const RootStack = observer(function () {
               getComponent={() => require('~/compose/ComposeScreen').default}
               options={TransitionPresets.ModalPresentationIOS}
             />
+            <RootStackNav.Screen
+              name="SupermindCompose"
+              getComponent={() =>
+                require('~/compose/SupermindComposeScreen').default
+              }
+            />
             {/* Modal screens here */}
             <RootStackNav.Screen
               name="MultiUserScreen"
@@ -466,6 +472,13 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="TosScreen"
               getComponent={() => require('~/tos/TosScreen').default}
+            />
+            <RootStackNav.Screen
+              name="ChannelSelectScreen"
+              getComponent={() =>
+                require('../common/components/AutoComplete/ChannelSelectScreen')
+                  .default
+              }
             />
           </>
         )

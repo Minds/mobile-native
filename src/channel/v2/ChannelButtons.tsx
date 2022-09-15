@@ -20,6 +20,8 @@ import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
 import { Row } from '~ui';
+import SupermindButton from '../../common/components/supermind/SupermindButton';
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 
 type ButtonsType =
   | 'edit'
@@ -28,6 +30,7 @@ type ButtonsType =
   | 'subscribe'
   | 'message'
   | 'join'
+  | 'supermind'
   | 'boost';
 
 export type ChannelButtonsPropsType = {
@@ -69,6 +72,7 @@ const check = {
   subscribe: (store: ChannelStoreType) =>
     !store.channel!.isOwner() && store.channel!.can(FLAG_SUBSCRIBE),
   boost: (store: ChannelStoreType) => store.channel!.isOwner(),
+  supermind: (store: ChannelStoreType) => !store.channel!.isOwner(),
 };
 
 /**
@@ -123,6 +127,11 @@ const ChannelButtons = withErrorBoundary(
           />
         )}
         {showSubscribe && <Subscribe channel={props.store.channel} />}
+        {shouldShow('supermind') && (
+          <IfFeatureEnabled feature="mobile-supermind">
+            <SupermindButton entity={props.store.channel} />
+          </IfFeatureEnabled>
+        )}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}

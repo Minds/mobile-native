@@ -1,7 +1,7 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage, { Source } from 'react-native-fast-image';
 import { FlatList, Alert, Platform } from 'react-native';
-
+import _ from 'lodash';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
@@ -27,6 +27,8 @@ import mindsService from '../common/services/minds-config.service';
 import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
+import socketService from '~/common/services/socket.service';
+import { hasVariation } from '../../ExperimentsProvider';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -332,10 +334,18 @@ export default class ActivityModel extends BaseModel {
   };
 
   @action
-  setVisible(value: boolean) {
-    this.is_visible = value;
+  setVisible(visible: boolean) {
+    this.is_visible = visible;
     if (this.remind_object) {
-      this.remind_object.is_visible = value;
+      this.remind_object.is_visible = visible;
+    }
+
+    if (hasVariation('mob-4424-sockets')) {
+      if (visible) {
+        this.listenForMetricsDebounced();
+      } else {
+        this.unlistenFromMetrics();
+      }
     }
   }
 
@@ -562,6 +572,56 @@ export default class ActivityModel extends BaseModel {
 
     return false;
   }
+
+  private get metricsRoom() {
+    return `entity:metrics:${this.entity_guid || this.guid}`;
+  }
+
+  private onMetricsUpdate(event: string) {
+    logService.log('[ActivityModel] metrics update', event);
+
+    try {
+      const metricsEvent: MetricsChangedEvent = JSON.parse(event);
+
+      runInAction(() => {
+        if (typeof metricsEvent['thumbs:up:count'] === 'number') {
+          this['thumbs:up:count'] = metricsEvent['thumbs:up:count'];
+        }
+        if (typeof metricsEvent['thumbs:down:count'] === 'number') {
+          this['thumbs:down:count'] = metricsEvent['thumbs:down:count'];
+        }
+      });
+    } catch (e) {
+      logService.error(e, event);
+      return;
+    }
+  }
+
+  /**
+   * listens to metrics updates with 1000ms debounce time
+   */
+  private listenForMetricsDebounced = _.debounce(this.listenForMetrics, 1000);
+
+  /**
+   * listens to metrics updates
+   */
+  private listenForMetrics(): void {
+    socketService.join(this.metricsRoom);
+    socketService.subscribe(this.metricsRoom, event =>
+      this.onMetricsUpdate(event),
+    );
+  }
+
+  /**
+   * unlistens from metrics updates
+   */
+  private unlistenFromMetrics(): void {
+    this.listenForMetricsDebounced.cancel();
+    socketService.leave(this.metricsRoom);
+    socketService.unsubscribe(this.metricsRoom, event =>
+      this.onMetricsUpdate(event),
+    );
+  }
 }
 
 /**
@@ -575,3 +635,9 @@ decorate(ActivityModel, {
   'thumbs:down:user_guids': observable,
   'thumbs:up:user_guids': observable,
 });
+
+// Parsed metrics changed event.
+type MetricsChangedEvent = {
+  'thumbs:up:count'?: number;
+  'thumbs:down:count'?: number;
+};

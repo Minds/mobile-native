@@ -84,6 +84,7 @@ const IconButtonNextComponent = ({
         hitSlop={sizeNumeric}
         style={onStyle}
         onPress={handlePress}
+        disabled={more.disabled}
         testID={testID}>
         <View style={styles.wrapper}>
           <IconNext nested {...more} />

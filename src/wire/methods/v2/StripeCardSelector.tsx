@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { View } from 'react-native';
-
-import type { StripeCard } from '../../WireTypes';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import Selector from '../../../common/components/SelectorV2';
-import stripe, { initStripe } from '../../../common/services/stripe.service';
+import { InteractionManager } from 'react-native';
+import { showNotification } from '../../../../AppMessages';
+import InputSelector from '../../../common/components/InputSelectorV2';
 import api, { ApiResponse } from '../../../common/services/api.service';
 import i18n from '../../../common/services/i18n.service';
-import { showNotification } from '../../../../AppMessages';
-import MText from '../../../common/components/MText';
+import stripe, { initStripe } from '../../../common/services/stripe.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import type { StripeCard } from '../../WireTypes';
 
 type PropsType = {
-  onCardSelected: Function;
+  selectedCardId?: string;
+  onCardSelected: (card: StripeCard) => void;
+  info?: string;
+  error?: string;
 };
 
 type StateType = {
@@ -33,12 +33,21 @@ interface IntentResponse extends ApiResponse {
   };
 }
 
-const selectValueExtractor = (item: StripeCard) =>
-  item.card_brand.toUpperCase() +
-  ' ending in ' +
-  item.card_last4 +
-  ' - Exp: ' +
-  item.card_expires;
+const selectValueExtractor = (item: any) => {
+  if (!item) return;
+
+  if (item.name) {
+    return item.name;
+  }
+
+  return (
+    item.card_brand.toUpperCase() +
+    ' ending in ' +
+    item.card_last4 +
+    ' - Exp: ' +
+    item.card_expires
+  );
+};
 const selectIdExtractor = item => item.id;
 
 /**
@@ -77,47 +86,6 @@ export default class StripeCardSelector extends React.PureComponent<
   };
 
   /**
-   * Render
-   */
-  render(): React.ReactNode {
-    const theme = ThemedStyles.style;
-
-    const current = this.state.cards[this.state.current];
-
-    const currentItem = current
-      ? {
-          title: selectValueExtractor(current),
-          icon: { name: 'chevron-down', type: 'material-community' },
-          onPress: () => this.selectorRef.current?.show(current.id),
-        }
-      : null;
-
-    return (
-      <View>
-        <View style={[theme.rowJustifySpaceBetween, theme.padding2x]}>
-          <MText>SELECT CARD</MText>
-          <MText onPress={this.addNewCard}>Add Card</MText>
-        </View>
-        {current && (
-          <>
-            {!!currentItem && <MenuItem item={currentItem} />}
-            <Selector
-              ref={this.selectorRef}
-              onItemSelect={this.selectCard}
-              title={''}
-              data={this.state.cards}
-              valueExtractor={selectValueExtractor}
-              keyExtractor={selectIdExtractor}
-              textStyle={theme.fontXL}
-              backdropOpacity={0.9}
-            />
-          </>
-        )}
-      </View>
-    );
-  }
-
-  /**
    * Load cards
    */
   async loadCards(): Promise<void> {
@@ -127,11 +95,28 @@ export default class StripeCardSelector extends React.PureComponent<
       );
 
       if (result && result.paymentmethods) {
+        let defaultSelectedCard;
         if (this.props.onCardSelected && result.paymentmethods.length > 0) {
-          this.props.onCardSelected(result.paymentmethods[0]);
+          defaultSelectedCard = result.paymentmethods[0];
+
+          if (
+            this.props.selectedCardId &&
+            result.paymentmethods.find(p => p.id === this.props.selectedCardId)
+          ) {
+            defaultSelectedCard = result.paymentmethods.find(
+              p => p.id === this.props.selectedCardId,
+            )!;
+          }
+          this.props.onCardSelected(defaultSelectedCard);
         }
+
+        const cards = result.paymentmethods.reverse();
+
         return this.setState({
-          cards: result.paymentmethods.reverse(),
+          current: defaultSelectedCard
+            ? cards.findIndex(p => p.id === defaultSelectedCard.id)
+            : this.state.current,
+          cards,
           loaded: true,
         });
       }
@@ -146,9 +131,14 @@ export default class StripeCardSelector extends React.PureComponent<
    * Select card
    * @param card
    */
-  selectCard = async (card: StripeCard) => {
-    const index = this.state.cards.findIndex(c => c === card);
+  selectCard = async (card: string) => {
+    const index = this.state.cards.findIndex(
+      c => selectIdExtractor(c) === card,
+    );
+
     if (index < 0) return;
+
+    this.props.onCardSelected?.(this.state.cards[index]);
     this.setState({
       current: index,
     });
@@ -258,5 +248,37 @@ export default class StripeCardSelector extends React.PureComponent<
 
     this.intentKey = '';
     this.loadCards();
+  }
+
+  /**
+   * Render
+   */
+  render(): React.ReactNode {
+    const theme = ThemedStyles.style;
+    const current = this.state.cards[this.state.current];
+
+    return (
+      <InputSelector
+        onSelected={this.selectCard}
+        selected={current ? selectIdExtractor(current) : 'newCard'}
+        label={i18n.t('buyTokensScreen.paymentMethod')}
+        info={this.props.info}
+        data={[
+          ...this.state.cards,
+          {
+            name: i18n.t('wire.addCard'),
+            id: 'newCard',
+            iconName: 'add',
+            onPress: () =>
+              InteractionManager.runAfterInteractions(() => this.addNewCard()),
+          },
+        ]}
+        error={this.props.error}
+        valueExtractor={selectValueExtractor}
+        keyExtractor={selectIdExtractor}
+        textStyle={theme.fontXL}
+        backdropOpacity={0.9}
+      />
+    );
   }
 }

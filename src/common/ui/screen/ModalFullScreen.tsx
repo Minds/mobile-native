@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
 import { MotiView } from 'moti';
 import React from 'react';
-import { View } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+import { StatusBar, View } from 'react-native';
 import { Screen, ScreenHeader } from '~ui';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
   title?: string;
@@ -13,6 +13,7 @@ type PropsType = {
   extra?: React.ReactNode;
   onBack?: () => void;
   back?: boolean;
+  leftComponent?: React.ReactNode;
   borderless?: boolean;
   headerHidden?: boolean;
 };
@@ -27,6 +28,7 @@ export const ModalFullScreen = ({
   scroll,
   extra,
   back,
+  leftComponent,
   onBack,
   borderless,
   headerHidden,
@@ -39,6 +41,7 @@ export const ModalFullScreen = ({
 
   return (
     <Screen loading={loading} scroll={scroll} safe>
+      <StatusBar backgroundColor={theme.bgPrimaryBackground.backgroundColor} />
       <MotiView
         transition={{
           mass: 0.3,
@@ -54,6 +57,7 @@ export const ModalFullScreen = ({
           onBack={onBack || goBackPress}
           back={back}
           border={!borderless}
+          leftComponent={leftComponent}
         />
       </MotiView>
 

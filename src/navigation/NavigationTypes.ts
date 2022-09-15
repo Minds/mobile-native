@@ -11,6 +11,7 @@ import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
 import type GroupModel from '~/groups/GroupModel';
+import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 
 type AnyType = any;
 
@@ -117,6 +118,11 @@ type TwoFactorConfirmationParams = {
 
 export type RootStackParamList = {
   Compose: {};
+  SupermindCompose: {
+    data: SupermindRequestParam;
+    onSave: (payload: SupermindRequestParam) => void;
+    onClear: () => void;
+  };
   TosScreen: {};
   Capture: {
     portrait?: boolean;
@@ -183,6 +189,10 @@ export type RootStackParamList = {
     onCancel?: Function;
   };
   DevTools: {};
+  ChannelSelectScreen: {
+    username: string;
+    onSelect: (channel: UserModel) => void;
+  };
 };
 
 export type AuthStackParamList = {
