@@ -1,7 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import { IconButtonNext } from '~ui/icons';
-import { withSpacer } from '~ui/layout';
-import Counter from './Counter';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -17,8 +15,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../../common/components/bottom-sheet';
-
-const CounterSpaced = withSpacer(Counter);
+import EntityCounter from './EntityCounter';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -131,7 +128,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         onPress={showDropdown}
         extra={
           !hideCount && entity.reminds ? (
-            <CounterSpaced left="XS" count={entity.reminds} />
+            <EntityCounter entity={entity} countProperty="reminds" />
           ) : null
         }
       />
