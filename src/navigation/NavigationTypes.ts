@@ -45,6 +45,7 @@ export type DiscoveryStackParamList = {
 
 export type MoreStackParamList = {
   Drawer: {};
+  SupermindSettingsScreen: {};
   Channel: {};
   Wallet: {
     currency?: string;
