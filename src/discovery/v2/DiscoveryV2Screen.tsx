@@ -13,6 +13,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { InjectItem } from '../../common/components/FeedList';
+import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import DiscoveryTabContent from './DiscoveryTabContent';
@@ -36,6 +37,8 @@ export const DiscoveryV2Screen = withErrorBoundary(
       false,
     );
     const store = useDiscoveryV2Store();
+
+    const listRef = React.useRef<FeedList<any>>(null);
 
     // inject items in the store the first time
     if (!store.trendingFeed.injectItems) {
@@ -110,6 +113,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     useEffect(() => {
       const unsubscribe = navigation.getParent().addListener('tabPress', () => {
         if (shouldRefreshOnTabPress) {
+          listRef.current?.scrollToTop();
           store.refreshActiveTab();
         }
       });
@@ -140,6 +144,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="top">
               <FeedListSticky
+                ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
                 navigation={navigation}
@@ -162,6 +167,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="trending-tags">
               <FeedListSticky
+                ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
                 navigation={navigation}
@@ -172,6 +178,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="boosts">
               <FeedListSticky
+                ref={listRef}
                 header={header}
                 feedStore={store.boostFeed}
                 navigation={navigation}
