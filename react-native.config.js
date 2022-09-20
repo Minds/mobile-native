@@ -5,6 +5,11 @@ module.exports = {
         android: null,
       },
     },
+    '@stripe/stripe-react-native': {
+      platforms: {
+        ios: null, // disable ios platform, other platforms will still autolink if provided
+      },
+    },
   },
   project: {
     ios: {},
