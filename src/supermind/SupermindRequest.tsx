@@ -67,9 +67,7 @@ const composerModes = [null, 'photo', 'video'];
 const InboundButtons = observer(
   ({ request }: { request: SupermindRequestModel }) => {
     const navigation = useNavigation();
-    if (request.status !== SupermindRequestStatus.CREATED) {
-      return null;
-    }
+
     const answer = React.useCallback(() => {
       navigation.navigate('Compose', {
         isRemind: true,
@@ -78,6 +76,11 @@ const InboundButtons = observer(
         entity: request.entity,
       });
     }, [navigation, request]);
+
+    if (request.status !== SupermindRequestStatus.CREATED) {
+      return null;
+    }
+
     return (
       <Column space="L" top="XXL">
         <Button

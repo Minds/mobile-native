@@ -70,10 +70,12 @@ export default class SupermindRequestModel extends BaseModel {
    * Returns the humanized difference
    */
   get formattedExpiration() {
-    const now = moment((this.created_timestamp + this.expiry_threshold) * 1000);
-    const date = moment(this.created_timestamp * 1000);
-    const diff = moment.duration(date.diff(now));
-    return diff.humanize();
+    const expire = moment(
+      (this.created_timestamp + this.expiry_threshold) * 1000,
+    );
+    const date = moment();
+    const diff = moment.duration(date.diff(expire));
+    return diff.asMinutes() < 0 ? diff.humanize() : 'Expired';
   }
 
   @action
