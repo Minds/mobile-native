@@ -1,5 +1,6 @@
 //@ts-nocheck
-import stripe from 'tipsi-stripe';
+// Temporal solution as we are migrating to the official stripe SDK
+// import stripe from 'tipsi-stripe';
 import mindsConfigService from './minds-config.service';
 
 let intialized = false;
@@ -10,10 +11,13 @@ export const initStripe = async () => {
 
   const settings = mindsConfigService.getSettings();
 
-  await stripe.setOptions({
-    publishableKey: settings.stripe_key,
-    //androidPayMode: 'test', // Android only
-  });
+  // await stripe.setOptions({
+  //   publishableKey: settings.stripe_key,
+  //   //androidPayMode: 'test', // Android only
+  // });
 };
 
-export default stripe;
+export default {
+  paymentRequestWithCardForm: (arg: any) => ({} as any),
+  confirmSetupIntent: (arg: any) => ({} as any),
+};

@@ -204,7 +204,6 @@ export default class StripeCardSelector extends React.PureComponent<
       if (!intent) return;
 
       await initStripe();
-
       const paymentMethod = await stripe.paymentRequestWithCardForm({
         requiredBillingAddressFields: 'full',
       });
@@ -213,7 +212,6 @@ export default class StripeCardSelector extends React.PureComponent<
         paymentMethodId: paymentMethod.id,
         clientSecret: this.intentKey,
       };
-
       const { setupIntent, error } = await stripe.confirmSetupIntent(params);
 
       if (error) {

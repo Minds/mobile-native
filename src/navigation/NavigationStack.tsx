@@ -31,6 +31,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
+import ComposeScreen from '~/compose/ComposeScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -314,7 +315,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="Compose"
-              getComponent={() => require('~/compose/ComposeScreen').default}
+              component={ComposeScreen}
               options={TransitionPresets.ModalPresentationIOS}
             />
             <RootStackNav.Screen
