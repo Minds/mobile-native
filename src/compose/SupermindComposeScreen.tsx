@@ -8,6 +8,7 @@ import InputBase from '../common/components/InputBase';
 import InputContainer from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { Button, Icon, ModalFullScreen } from '../common/ui';
@@ -15,7 +16,6 @@ import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
