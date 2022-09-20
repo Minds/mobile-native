@@ -15507,6 +15507,13 @@ react-native-animated-spinkit@^1.5.2:
   resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
   integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
 
+react-native-awesome-gallery@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-gallery/-/react-native-awesome-gallery-0.3.5.tgz#58b8fe3573a7154b5530aa7d2cdd9aa4ad348d66"
+  integrity sha512-oMY0to9mLYyUK7F4ibx5S/GUiB83m3hqpM8THlGulCGr6QcVfX6ZJklNHYYaWCziBIavjXY6Igyq39WrrQOhhw==
+  dependencies:
+    react-native-redash "^16.0.8"
+
 react-native-blurhash@^1.1.10:
   version "1.1.10"
   resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.10.tgz#3969af24ebab098976cba90d100ba157760d3132"
@@ -15947,7 +15954,7 @@ react-native-redash@^14.2.3:
     normalize-svg-path "^1.0.1"
     parse-svg-path "^0.1.2"
 
-react-native-redash@^16.1.1:
+react-native-redash@^16.0.8, react-native-redash@^16.1.1:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.3.0.tgz#a9112ff1b0e0b506a2e2ae50967597e73b69d343"
   integrity sha512-dhmeYbQ/usGzxZSGZmzmRuIFF2LrtJUKqgseKgf9Jdj0JQ7VM20m/LqTg60+wjxeiyAh2D/vKsQ2U7rMkuoplQ==
