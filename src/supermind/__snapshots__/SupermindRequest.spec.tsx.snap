@@ -151,7 +151,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               ]
             }
           >
-            7 days
+            Expired
           </Text>
         </Text>
       </View>
@@ -888,7 +888,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               ]
             }
           >
-            7 days
+            Expired
           </Text>
         </Text>
       </View>
