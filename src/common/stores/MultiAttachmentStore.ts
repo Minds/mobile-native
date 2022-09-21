@@ -123,10 +123,12 @@ export default class MultiAttachmentStore {
    * Clears all the attachments (deleting from server or canceling the requests)
    */
   @action
-  clear() {
-    this.attachments.forEach(attachment => {
-      attachment.cancelOrDelete();
-    });
+  clear(deleteMedia: boolean = true) {
+    if (deleteMedia) {
+      this.attachments.forEach(attachment => {
+        attachment.cancelOrDelete();
+      });
+    }
     this.attachments = [];
     this.license = DEFAULT_LICENSE;
   }

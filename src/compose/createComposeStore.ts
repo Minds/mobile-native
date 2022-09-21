@@ -368,7 +368,7 @@ export default function (props) {
         this.mediaToConfirm = null;
       }
       if (this.attachments.hasAttachment) {
-        this.attachments.clear();
+        this.attachments.clear(deleteMedia);
       }
       if (this.embed.hasRichEmbed) {
         this.embed.clearRichEmbed();
