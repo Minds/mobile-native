@@ -49,9 +49,7 @@ export default function SupermindRequest({ request, outbound }: Props) {
           </>
         )}
       </B2>
-      {outbound ? (
-        <OutboundButtons request={request} />
-      ) : (
+      {outbound ? null : ( //<OutboundButtons request={request} /> removed temporarily
         <InboundButtons request={request} />
       )}
     </Spacer>
@@ -108,21 +106,21 @@ const InboundButtons = observer(
 /**
  * Outbound buttons
  */
-const OutboundButtons = observer(
-  ({ request }: { request: SupermindRequestModel }) => {
-    if (request.status !== SupermindRequestStatus.CREATED) {
-      return null;
-    }
-    return (
-      <Column space="L" top="XXL">
-        <Button
-          mode="outline"
-          type="base"
-          disabled={request.isLoading > 0}
-          onPress={() => request.revoke()}>
-          {i18n.t('supermind.cancelOffer')}
-        </Button>
-      </Column>
-    );
-  },
-);
+// const OutboundButtons = observer(
+//   ({ request }: { request: SupermindRequestModel }) => {
+//     if (request.status !== SupermindRequestStatus.CREATED) {
+//       return null;
+//     }
+//     return (
+//       <Column space="L" top="XXL">
+//         <Button
+//           mode="outline"
+//           type="base"
+//           disabled={request.isLoading > 0}
+//           onPress={() => request.revoke()}>
+//           {i18n.t('supermind.cancelOffer')}
+//         </Button>
+//       </Column>
+//     );
+//   },
+// );
