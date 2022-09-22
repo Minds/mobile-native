@@ -28,7 +28,6 @@ exports[`Comment action component renders correctly 1`] = `
           "parent_guid": "838106762591510528",
           "perma_url": false,
           "rowKey": "something0",
-          "shouldBeBlured": [MockFunction],
           "thumbnail_src": false,
           "time_created": "1522036284",
           "title": "TITLE",
