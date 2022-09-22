@@ -28,7 +28,9 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       ]
     }
   >
-    <View>
+    <View
+      style={null}
+    >
       <View
         style={
           Object {
