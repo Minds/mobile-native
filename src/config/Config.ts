@@ -60,9 +60,10 @@ export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI =
-  DEV_MODE.isActive && CUSTOM_API_URL
-    ? CUSTOM_API_URL
-    : 'https://www.minds.com/';
+  'https://feat-supermind-wallet-transactions-4417.minds.io/';
+// DEV_MODE.isActive && CUSTOM_API_URL
+//   ? CUSTOM_API_URL
+//   : 'https://www.minds.com/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
@@ -147,6 +148,7 @@ export const MINDS_DEEPLINK = [
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
+  ['supermind/:guid', 'Supermind', 'navigate'],
 ];
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!

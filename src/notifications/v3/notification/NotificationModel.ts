@@ -25,19 +25,20 @@ export default class NotificationModel extends AbstractModel {
 
   // credit to Patrick Roberts https://stackoverflow.com/a/57065680
   isOfNotificationType() {
-    return (notificationsType as readonly string[]).includes(this.type);
+    return this.type in NotificationType;
   }
 
   get Pronoun() {
     switch (this.type) {
-      case 'quote':
+      case NotificationType.quote:
         return 'your';
-      case 'boost_peer_request':
+      case NotificationType.boost_peer_request:
+      case NotificationType.supermind_created:
         return 'a';
-      case 'boost_peer_accepted':
-      case 'boost_peer_rejected':
+      case NotificationType.boost_peer_accepted:
+      case NotificationType.boost_peer_rejected:
         return 'your';
-      case 'wire_received':
+      case NotificationType.wire_received:
         switch (this.data.method) {
           case 'tokens':
             return (
@@ -50,29 +51,38 @@ export default class NotificationModel extends AbstractModel {
             const usd = Math.round(this.data.amount / 100);
             return 'you $' + usd;
         }
-      case 'subscribe':
-      case 'group_queue_add':
-      case 'token_rewards_summary':
+      // eslint-disable-next-line no-fallthrough
+      case NotificationType.subscribe:
+      case NotificationType.group_queue_add:
+      case NotificationType.token_rewards_summary:
+      case NotificationType.supermind_expired:
         return '';
     }
 
-    return this.entity?.owner_guid === sessionService.getUser().guid
+    return this.entity?.owner_guid === sessionService.getUser().guid ||
+      this.to_guid === sessionService.getUser().guid
       ? 'your'
       : 'their';
   }
 
   get Noun() {
     switch (this.type) {
-      case 'wire_received':
-      case 'group_queue_add':
-      case 'token_rewards_summary':
+      case NotificationType.wire_received:
+      case NotificationType.group_queue_add:
+      case NotificationType.token_rewards_summary:
         return '';
-      case 'boost_peer_request':
-      case 'boost_peer_accepted':
-      case 'boost_peer_rejected':
+      case NotificationType.boost_peer_request:
+      case NotificationType.boost_peer_accepted:
+      case NotificationType.boost_peer_rejected:
         return 'boost offer';
-      case 'boost_rejected':
+      case NotificationType.boost_rejected:
         return 'boost';
+      case NotificationType.supermind_created:
+      case NotificationType.supermind_declined:
+      case NotificationType.supermind_accepted:
+      case NotificationType.supermind_expired:
+      case NotificationType.supermind_expire24h:
+        return 'Supermind offer';
     }
     switch (this.entity?.type) {
       case 'comment':
@@ -87,34 +97,55 @@ export default class NotificationModel extends AbstractModel {
   }
 
   get Verb() {
-    const type = this.data && this.data.is_reply ? 'reply' : this.type;
+    const type: NotificationType | 'reply' =
+      this.data && this.data.is_reply ? 'reply' : this.type;
     return i18n.t(`notification.verbs.${type}`, {
       amount: this.data?.tokens_formatted,
     });
   }
 
+  get Subject() {
+    switch (this.type) {
+      case NotificationType.token_rewards_summary:
+    }
+
+    return this.from?.name;
+  }
+
   get hasMerged() {
     return this.merged_count > 0 && this.merged_from[0] !== undefined;
   }
+
+  get isImperative() {
+    switch (this.type) {
+      case NotificationType.supermind_expired:
+        return true;
+      default:
+        return false;
+    }
+  }
 }
 
-const notificationsType = [
-  'vote_up',
-  'vote_down',
-  'comment',
-  'tag',
-  'remind',
-  'quote',
-  'subscribe',
-  'group_queue_add',
-  'group_queue_approve',
-  'group_queue_reject',
-  'wire_received',
-  'boost_peer_request',
-  'boost_peer_accepted',
-  'boost_peer_rejected',
-  'boost_rejected',
-  'token_rewards_summary',
-] as const;
-
-export type NotificationType = typeof notificationsType[number];
+export enum NotificationType {
+  vote_up = 'vote_up',
+  vote_down = 'vote_down',
+  comment = 'comment',
+  tag = 'tag',
+  remind = 'remind',
+  quote = 'quote',
+  subscribe = 'subscribe',
+  group_queue_add = 'group_queue_add',
+  group_queue_approve = 'group_queue_approve',
+  group_queue_reject = 'group_queue_reject',
+  wire_received = 'wire_received',
+  boost_peer_request = 'boost_peer_request',
+  boost_peer_accepted = 'boost_peer_accepted',
+  boost_peer_rejected = 'boost_peer_rejected',
+  boost_rejected = 'boost_rejected',
+  token_rewards_summary = 'token_rewards_summary',
+  supermind_created = 'supermind_created',
+  supermind_declined = 'supermind_declined',
+  supermind_accepted = 'supermind_accepted',
+  supermind_expired = 'supermind_expired',
+  supermind_expire24h = 'supermind_expire24h',
+}

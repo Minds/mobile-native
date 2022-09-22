@@ -219,6 +219,11 @@ const AppStack = observer(() => {
             headerShadowVisible: false,
           }}
         />
+        <AppStackNav.Screen
+          name="Supermind"
+          getComponent={() => require('~/supermind/SupermindScreen').default}
+          options={hideHeader}
+        />
       </AppStackNav.Navigator>
     </>
   );

@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
+import sessionService from '../../../common/services/session.service';
 import type NotificationModel from './NotificationModel';
+import { NotificationType } from './NotificationModel';
 
 const useNotificationRouter = (
   notification: NotificationModel,
@@ -10,12 +12,12 @@ const useNotificationRouter = (
   const router = {
     navigation: navigation,
     navigate: () => {},
-    navToChannel: (user: UserModel) => {
+    navToChannel: (user: UserModel) =>
       navigation.navigate('Channel', {
         guid: user.guid,
         entity: user,
-      });
-    },
+      }),
+    navToOwnChannel: () => router.navToChannel(sessionService.getUser()),
     navToEntity: () => {
       navigator.set(navigation, notification);
       if (
@@ -39,6 +41,31 @@ const useNotificationRouter = (
           default:
             navigator.navTo('Activity');
         }
+      }
+    },
+    navigateToObject: () => {
+      switch (notification.type) {
+        case NotificationType.supermind_created:
+        case NotificationType.supermind_declined:
+        case NotificationType.supermind_expire24h:
+        case NotificationType.supermind_expired:
+          navigation.navigate('Supermind', {
+            params: {
+              guid: notification.data.supermind_guid,
+            },
+          });
+          break;
+        case NotificationType.supermind_accepted:
+          router.navToEntity();
+          break;
+        default:
+          // If the navigation was targeted to us navigate to own channel
+          if (notification.to_guid === sessionService.getUser().guid) {
+            return router.navToOwnChannel();
+          }
+
+          // otherwise navigate to the sender channel
+          return router.navToChannel(notification.from);
       }
     },
   };
