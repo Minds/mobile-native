@@ -32,8 +32,10 @@ export default class AttachmentStore {
   @observable type = '';
   @observable license = 'all-rights-reserved';
 
+  localIdentifier?: string = '';
   guid = '';
   filename? = '';
+  path? = '';
   transcoding = false;
   width: number = 1;
   height: number = 1;
@@ -111,6 +113,8 @@ export default class AttachmentStore {
     this.filename = media.filename;
     this.width = media.width;
     this.height = media.height;
+    this.localIdentifier = media.localIdentifier;
+    this.path = media.path;
 
     try {
       const resizedMedia = await attachmentService.processMedia(media);

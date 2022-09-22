@@ -413,9 +413,17 @@ export default function (props) {
      * Select media from gallery
      */
     async selectFromGallery(mode) {
+      const max = 4 - this.attachments.length;
+
+      if (max === 0) {
+        showNotification(i18n.t('capture.max4Images'));
+        return;
+      }
+
       const response = await attachmentService.gallery(
         mode || this.mode,
-        false,
+        false, // crop
+        max, // max files allowed
       );
 
       if (response) {
@@ -424,15 +432,22 @@ export default function (props) {
     },
     /**
      * On media selected from gallery
-     * @param {object} media
+     * @param {object|Array} media
      */
     async onMediaFromGallery(media) {
-      if (this.portraitMode && media.height < media.width) {
-        showError(i18n.t('capture.mediaPortraitError'));
-        return;
+      if (Array.isArray(media)) {
+        media.forEach(m => {
+          this.attachments.attachMedia(m, this.extra);
+        });
+        this.mode = 'text';
+      } else {
+        if (this.portraitMode && media.height < media.width) {
+          showError(i18n.t('capture.mediaPortraitError'));
+          return;
+        }
+        this.attachments.attachMedia(media, this.extra);
+        this.mode = 'text';
       }
-      this.mediaToConfirm = media;
-      this.acceptMedia();
     },
     /**
      * Accept media

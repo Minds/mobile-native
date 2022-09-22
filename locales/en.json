@@ -273,6 +273,7 @@
   },
   "capture": {
     "discardPost": "Discard this post?",
+    "max4Images": "You may not upload more than 4 images",
     "discardPostDescription": "If you discard you’ll lose this post",
     "keepEditing": "Keep Editing",
     "yesDiscard": "Yes, Discard",

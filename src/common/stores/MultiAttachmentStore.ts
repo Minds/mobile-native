@@ -1,5 +1,6 @@
 import { showNotification } from 'AppMessages';
 import { action, computed, observable } from 'mobx';
+import { IS_IOS } from '~/config/Config';
 import i18n from '../services/i18n.service';
 import AttachmentStore, { Media } from './AttachmentStore';
 
@@ -70,6 +71,9 @@ export default class MultiAttachmentStore {
   @action
   attachMedia(media: Media, extra: any) {
     if (this.attachments.length === this.max) {
+      if (media.type.startsWith('image')) {
+        showNotification(i18n.t('capture.max4Images'));
+      }
       return false;
     }
 
@@ -83,9 +87,28 @@ export default class MultiAttachmentStore {
       return false;
     }
 
+    // check if already exist
+    if (this.mediaExists(media)) {
+      return false;
+    }
+
     const store = this.addAttachment();
     store.attachMedia(media, extra);
     return store;
+  }
+
+  /**
+   * Checks if a media is already attached
+   * @param media {Media}
+   */
+  mediaExists(media: Media): boolean {
+    if (IS_IOS) {
+      return this.attachments.some(
+        a => a.localIdentifier === media.localIdentifier,
+      );
+    } else {
+      return this.attachments.some(a => a.path === media.path);
+    }
   }
 
   /**

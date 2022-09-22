@@ -81,11 +81,12 @@ class ImagePickerService {
   async launchImageLibrary(
     type: MediaType = 'photo',
     crop = true,
+    maxFiles = 1,
   ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkGalleryPermissions();
 
-    const opt = this.buildOptions(type, crop);
+    const opt = this.buildOptions(type, crop, false, maxFiles);
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -201,8 +202,11 @@ class ImagePickerService {
     type: MediaType,
     crop: boolean = true,
     cropperCircleOverlay: boolean = false,
+    maxFiles: number = 1,
   ): Options {
     return {
+      multiple: maxFiles > 1,
+      maxFiles,
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
