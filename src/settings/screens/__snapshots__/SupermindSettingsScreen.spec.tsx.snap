@@ -14,7 +14,9 @@ exports[`Supermind settings should load data and render correctly 1`] = `
     ]
   }
 >
-  <View>
+  <View
+    style={null}
+  >
     <View
       style={
         Object {
@@ -379,6 +381,71 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           size="large"
         />
       </View>
+      <View
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "borderColor": "#414C57",
+            },
+            Object {
+              "borderTopWidth": 0.5,
+            },
+          ]
+        }
+        underlayColor="rgba(0, 0, 0, 0.1)"
+      >
+        <View
+          style={
+            Object {
+              "margin": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#1B85D6",
+                },
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Add your bank information
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Start receiving cash payouts by adding your bank details.
+          </Text>
+        </View>
+      </View>
     </View>
   </RCTScrollView>
 </RCTSafeAreaView>
@@ -398,7 +465,9 @@ exports[`Supermind settings should load data and render correctly 2`] = `
     ]
   }
 >
-  <View>
+  <View
+    style={null}
+  >
     <View
       style={
         Object {
@@ -1056,6 +1125,71 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           </View>
         </View>
       </View>
+      <View
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "borderColor": "#414C57",
+            },
+            Object {
+              "borderTopWidth": 0.5,
+            },
+          ]
+        }
+        underlayColor="rgba(0, 0, 0, 0.1)"
+      >
+        <View
+          style={
+            Object {
+              "margin": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#1B85D6",
+                },
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Add your bank information
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Start receiving cash payouts by adding your bank details.
+          </Text>
+        </View>
+      </View>
     </View>
   </RCTScrollView>
 </RCTSafeAreaView>
@@ -1075,7 +1209,9 @@ exports[`Supermind settings should update the store and submit 1`] = `
     ]
   }
 >
-  <View>
+  <View
+    style={null}
+  >
     <View
       style={
         Object {
@@ -1439,6 +1575,71 @@ exports[`Supermind settings should update the store and submit 1`] = `
           color="#1B85D6"
           size="large"
         />
+      </View>
+      <View
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "borderColor": "#414C57",
+            },
+            Object {
+              "borderTopWidth": 0.5,
+            },
+          ]
+        }
+        underlayColor="rgba(0, 0, 0, 0.1)"
+      >
+        <View
+          style={
+            Object {
+              "margin": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#1B85D6",
+                },
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Add your bank information
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Start receiving cash payouts by adding your bank details.
+          </Text>
+        </View>
       </View>
     </View>
   </RCTScrollView>

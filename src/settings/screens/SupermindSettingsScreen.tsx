@@ -17,6 +17,7 @@ import {
   ScreenHeader,
   ScreenSection,
 } from '~/common/ui';
+import AddBankInformation from '~/supermind/AddBankInformation';
 
 type Settings = {
   min_offchain_tokens: number;
@@ -63,7 +64,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
           </B2>
         </ScreenSection>
         <Inputs fetchStore={fetchStore} store={localStore} />
-        {/* TODO: add bank info component from supermind console branch */}
+        <AddBankInformation borderTop />
       </ScrollView>
     </Screen>
   );

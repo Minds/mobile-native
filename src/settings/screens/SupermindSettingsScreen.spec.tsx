@@ -8,6 +8,7 @@ import {
 import SupermindSettingsScreen from './SupermindSettingsScreen';
 import apiService from '~/common/services/api.service';
 
+jest.mock('~/common/hooks/use-stores');
 jest.mock('~/common/services/api.service');
 
 const mockedApi = apiService as jest.Mocked<typeof apiService>;
