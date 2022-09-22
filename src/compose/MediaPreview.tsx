@@ -26,7 +26,13 @@ export default observer(function MediaPreview({ store }: PropsType) {
   switch (store.attachments.length) {
     case 1:
       return (
-        <View style={[styles.singlePreview, theme.marginTop2x, theme.bgAction]}>
+        <View
+          style={[
+            styles.singlePreview,
+            theme.marginTop2x,
+            theme.bgAction,
+            theme.fullWidth,
+          ]}>
           <MediaPresentation
             attachment={store.attachments.get(0)}
             onDelete={store.attachments.removeMedia}
@@ -225,7 +231,6 @@ const styles = ThemedStyles.create({
   },
   singlePreview: {
     flex: 1,
-    width: '100%',
     aspectRatio: 3 / 2,
     borderRadius: 2,
     shadowColor: 'black',

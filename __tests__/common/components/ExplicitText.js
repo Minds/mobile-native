@@ -7,26 +7,23 @@ import ExplicitText from '../../../src/common/components/explicit/ExplicitText';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
 import renderer from 'react-test-renderer';
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
 
 describe('Explicit text component', () => {
   let user, comments, entity, screen;
-  beforeEach(() => {
+
+  it('renders correctly', async () => {
     let mockResponse = activitiesServiceFaker().load(1);
-    entity = mockResponse.activities[0];
+    entity = ActivityModel.create(mockResponse.activities[0]);
     entity.mature = true;
     entity.mature_visibility = true;
     entity.decodeHTML = jest.fn();
+    entity.shouldBeBlured = jest.fn();
     entity.toggleMatureVisibility = jest.fn();
     entity.decodeHTML.mockReturnValue('string');
     entity.shouldBeBlured.mockReturnValue(false);
 
     screen = shallow(<ExplicitText entity={entity} />);
-
-    jest.runAllTimers();
-  });
-
-  it('renders correctly', async () => {
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 });

@@ -649,7 +649,9 @@ export default class CommentsStore {
       // nothing selected
       if (!response) return;
 
-      await this.attachment.attachMedia(response);
+      const media = Array.isArray(response) ? response[0] : response;
+
+      await this.attachment.attachMedia(media);
     } catch (err) {
       logService.exception('[CommentsStore] gallery', err);
     }

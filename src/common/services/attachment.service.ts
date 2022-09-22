@@ -1,5 +1,5 @@
 import api, { ApiResponse } from './api.service';
-import imagePicker, { MediaType } from './image-picker.service';
+import imagePicker, { CustomImage, MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import imageManipulatorService from './image-manipulator.service';
@@ -207,15 +207,27 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType: MediaType = 'photo', crop = true) {
-    const response = await imagePicker.launchImageLibrary(mediaType, crop);
+  async gallery(mediaType: MediaType = 'photo', crop = true, maxFiles = 1) {
+    const response = await imagePicker.launchImageLibrary(
+      mediaType,
+      crop,
+      maxFiles,
+    );
 
     if (!response) {
       return null;
     }
 
-    const media = Array.isArray(response) ? response[0] : response;
+    if (Array.isArray(response)) {
+      return response.length > maxFiles
+        ? response.slice(0, maxFiles).map(this.fixMedia)
+        : response.map(this.fixMedia);
+    } else {
+      return this.fixMedia(response);
+    }
+  }
 
+  fixMedia(media: CustomImage) {
     if (!media.type) {
       if (!media.width) {
         media.type = 'video/mp4';
@@ -223,7 +235,6 @@ class AttachmentService {
         media.type = 'image/gif';
       }
     }
-
     return media;
   }
 }

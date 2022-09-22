@@ -15,11 +15,17 @@ exports[`Explicit text component renders correctly 1`] = `
         Object {
           "marginBottom": 4,
         },
-        null,
+        Object {
+          "fontFamily": "Roboto-Black",
+          "fontWeight": "700",
+        },
       ]
     }
   >
     TITLE
+  </Tags>
+  <Tags>
+    Message
   </Tags>
 </View>
 `;

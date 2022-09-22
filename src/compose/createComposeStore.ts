@@ -19,6 +19,7 @@ import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
+import SupermindRequestModel from '../supermind/SupermindRequestModel';
 
 /**
  * Display an error message to the user.
@@ -77,7 +78,7 @@ export default function (props) {
      * the supermind object which is passed from the SupermindConsole and used for supermind reply functionality.
      * The existence of this object means the composer is being used to reply to a supermind
      */
-    supermindObject: undefined as any,
+    supermindObject: undefined as SupermindRequestModel,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -412,9 +413,17 @@ export default function (props) {
      * Select media from gallery
      */
     async selectFromGallery(mode) {
+      const max = 4 - this.attachments.length;
+
+      if (max === 0) {
+        showNotification(i18n.t('capture.max4Images'));
+        return;
+      }
+
       const response = await attachmentService.gallery(
         mode || this.mode,
-        false,
+        false, // crop
+        max, // max files allowed
       );
 
       if (response) {
@@ -423,15 +432,22 @@ export default function (props) {
     },
     /**
      * On media selected from gallery
-     * @param {object} media
+     * @param {object|Array} media
      */
     async onMediaFromGallery(media) {
-      if (this.portraitMode && media.height < media.width) {
-        showError(i18n.t('capture.mediaPortraitError'));
-        return;
+      if (Array.isArray(media)) {
+        media.forEach(m => {
+          this.attachments.attachMedia(m, this.extra);
+        });
+        this.mode = 'text';
+      } else {
+        if (this.portraitMode && media.height < media.width) {
+          showError(i18n.t('capture.mediaPortraitError'));
+          return;
+        }
+        this.attachments.attachMedia(media, this.extra);
+        this.mode = 'text';
       }
-      this.mediaToConfirm = media;
-      this.acceptMedia();
     },
     /**
      * Accept media
@@ -513,6 +529,10 @@ export default function (props) {
             receiver_username: this.supermindRequest.channel.username,
             receiver_guid: this.supermindRequest.channel.guid,
           };
+        }
+
+        if (this.supermindObject) {
+          newPost.supermind_reply_guid = this.supermindObject.guid;
         }
 
         // monetization

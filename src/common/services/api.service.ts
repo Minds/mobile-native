@@ -372,6 +372,7 @@ export class ApiService {
     if (response.status >= 500) {
       logService.info(
         '[ApiService] server error',
+        response.status,
         response.request?.url || url,
       );
       throw new ApiError('Server error ' + response.status, response.status);

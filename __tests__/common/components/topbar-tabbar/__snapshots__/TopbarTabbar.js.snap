@@ -36,10 +36,10 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 8,
+                "marginHorizontal": 12,
               },
               Object {
-                "borderBottomWidth": 4,
+                "borderBottomWidth": 5,
               },
             ],
             undefined,
@@ -49,35 +49,27 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <View
+        <Text
           style={
-            Object {
-              "marginHorizontal": 4,
-            }
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+              },
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#B8C1CA",
-                },
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                },
-                Object {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Tokens
-          </Text>
-        </View>
+          Tokens
+        </Text>
         <View
           style={
             Object {
@@ -117,10 +109,10 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 8,
+                "marginHorizontal": 12,
               },
               Object {
-                "borderBottomWidth": 4,
+                "borderBottomWidth": 5,
               },
             ],
             undefined,
@@ -130,35 +122,27 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <View
+        <Text
           style={
-            Object {
-              "marginHorizontal": 4,
-            }
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+              },
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#B8C1CA",
-                },
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                },
-                Object {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            USD
-          </Text>
-        </View>
+          USD
+        </Text>
         <View
           style={
             Object {
@@ -198,10 +182,10 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 8,
+                "marginHorizontal": 12,
               },
               Object {
-                "borderBottomWidth": 4,
+                "borderBottomWidth": 5,
               },
             ],
             undefined,
@@ -211,35 +195,27 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <View
+        <Text
           style={
-            Object {
-              "marginHorizontal": 4,
-            }
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+              },
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#B8C1CA",
-                },
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                },
-                Object {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Ether
-          </Text>
-        </View>
+          Ether
+        </Text>
         <View
           style={
             Object {
@@ -279,10 +255,10 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 8,
+                "marginHorizontal": 12,
               },
               Object {
-                "borderBottomWidth": 4,
+                "borderBottomWidth": 5,
               },
             ],
             undefined,
@@ -292,35 +268,27 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <View
+        <Text
           style={
-            Object {
-              "marginHorizontal": 4,
-            }
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+              },
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#B8C1CA",
-                },
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                },
-                Object {
-                  "fontSize": 16,
-                  "lineHeight": 24,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Bitcoin
-          </Text>
-        </View>
+          Bitcoin
+        </Text>
         <View
           style={
             Object {
