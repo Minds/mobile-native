@@ -19,6 +19,7 @@ import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
+import SupermindRequestModel from '../supermind/SupermindRequestModel';
 
 /**
  * Display an error message to the user.
@@ -77,7 +78,7 @@ export default function (props) {
      * the supermind object which is passed from the SupermindConsole and used for supermind reply functionality.
      * The existence of this object means the composer is being used to reply to a supermind
      */
-    supermindObject: undefined as any,
+    supermindObject: undefined as SupermindRequestModel,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -513,6 +514,10 @@ export default function (props) {
             receiver_username: this.supermindRequest.channel.username,
             receiver_guid: this.supermindRequest.channel.guid,
           };
+        }
+
+        if (this.supermindObject) {
+          newPost.supermind_reply_guid = this.supermindObject.guid;
         }
 
         // monetization

@@ -30,7 +30,7 @@ export default class AttachmentStore {
   @observable progress = 0;
   @observable uri = '';
   @observable type = '';
-  @observable license = '';
+  @observable license = 'all-rights-reserved';
 
   guid = '';
   filename? = '';
