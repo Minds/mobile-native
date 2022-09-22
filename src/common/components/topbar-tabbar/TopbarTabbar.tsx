@@ -38,8 +38,8 @@ function TopbarTabbar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
   const tabStyle = [
     theme.paddingVertical2x,
-    theme.marginHorizontal2x,
-    theme.borderBottom4x,
+    theme.marginHorizontal3x,
+    theme.borderBottom5x,
   ];
 
   return (
@@ -67,8 +67,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
             ]}>
             <B1
               font="medium"
-              horizontal="XS"
-              color={tab.id === props.current ? 'link' : 'secondary'}>
+              color={tab.id === props.current ? 'primary' : 'secondary'}>
               {tab.title}
             </B1>
             {!!tab.subtitle && <B2 vertical="XXXS">{tab.subtitle}</B2>}
