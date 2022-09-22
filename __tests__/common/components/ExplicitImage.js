@@ -1,28 +1,24 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
 import ExplicitImage from '../../../src/common/components/explicit/ExplicitImage';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
-import renderer from 'react-test-renderer';
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
+
+jest.mock('../../../src/common/services/session.service');
 
 describe('Explicit image component', () => {
-
-  let user, comments, entity, screen;
-  beforeEach(() => {
-
-    let mockResponse = activitiesServiceFaker().load(1);
-    entity = mockResponse.activities[0];
-    entity.mature = true;
-    screen = shallow(
-      <ExplicitImage entity={entity}/>
-    );
-  });
+  let entity, screen;
 
   it('renders correctly', async () => {
-    screen.update();
+    let mockResponse = activitiesServiceFaker().load(1);
+    entity = ActivityModel.create(mockResponse.activities[0]);
+    entity.getUser = jest.fn();
+    entity.mature = true;
+
+    screen = shallow(<ExplicitImage entity={entity} />);
     expect(screen).toMatchSnapshot();
   });
 });

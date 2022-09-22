@@ -1,15 +1,12 @@
 import React, { useCallback } from 'react';
 import { IconButtonNext } from '~ui/icons';
-import Counter from './Counter';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
-import { withSpacer } from '~ui/layout';
 import { GroupContext } from '~/groups/GroupViewScreen';
-
-const CounterSpaced = withSpacer(Counter);
+import EntityCounter from './EntityCounter';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -65,7 +62,7 @@ const CommentsAction = (props: PropsType) => {
       testID={props.testID}
       extra={
         !props.hideCount ? (
-          <CounterSpaced left="XS" count={props.entity['comments:count']} />
+          <EntityCounter entity={props.entity} countProperty="comments:count" />
         ) : null
       }
     />

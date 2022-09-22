@@ -44,6 +44,7 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
+  SupermindConsole: {};
   Drawer: {};
   SupermindSettingsScreen: {};
   Channel: {};

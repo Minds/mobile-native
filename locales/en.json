@@ -57,6 +57,25 @@
       "vote": "You are not allowed to vote this content"
     }
   },
+  "supermind": {
+    "getPaid": "Get paid to reply to your fans.",
+    "setMinimum": "Set your minimum offer amount",
+    "fansCant": "Fans can’t send you Supermind offers for less than your minimum offer amount.",
+    "requestSubmitted": "Supermind request has been sent.",
+    "addBank": "Add your bank information",
+    "to": "To @{{name}}",
+    "addBankDetail": "Start receiving cash payouts by adding your bank details.",
+    "acceptOffer": "Accept Offer",
+    "cancelOffer": "Cancel Offer",
+    "decline": "Decline",
+    "revoked": "revoked",
+    "rejected": "rejected",
+    "replyType": {
+      "0": "Text Reply",
+      "1": "Image Reply",
+      "2": "Video Reply"
+    }
+  },
   "auth": {
     "2faRequired": "2FA required",
     "2faEmailDescription": "Minds just sent a 6-digit authentication code to your registered email address",
@@ -1618,15 +1637,13 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "expires": "Expires",
+  "requirements": "Requirements",
   "seeMore": "See more",
+  "inbound": "Inbound",
+  "outbound": "Outbound",
   "removeFromFeed": "Remove from feed",
   "channelSelect": {
     "title": "Select a channel"
-  },
-  "supermind": {
-    "requestSubmitted": "Supermind request has been sent.",
-    "getPaid": "Get paid to reply to your fans.",
-    "setMinimum": "Set your minimum offer amount",
-    "fansCant": "Fans can’t send you Supermind offers for less than your minimum offer amount."
   }
 }
