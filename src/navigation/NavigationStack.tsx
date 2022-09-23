@@ -140,16 +140,12 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() =>
-            withModalProvider(require('~/groups/GroupViewScreen').withModal)
-          }
+          getComponent={() => require('~/groups/GroupViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          getComponent={() =>
-            withModalProvider(require('~/blogs/BlogsViewScreen').withModal)
-          }
+          getComponent={() => require('~/blogs/BlogsViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
