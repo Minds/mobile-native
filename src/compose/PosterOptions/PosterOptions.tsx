@@ -58,7 +58,7 @@ function PosterOptions(props: PosterOptionsType) {
   const nsfw = store.nsfw.slice();
   const tags = store.tags.slice();
   const time_created = store.time_created!;
-  const license = store.attachment.license;
+  const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
 
