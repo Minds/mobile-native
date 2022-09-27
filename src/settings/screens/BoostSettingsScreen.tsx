@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Linking,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
@@ -18,6 +12,7 @@ import settingsService from '../SettingsService';
 import apiService from '../../common/services/api.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
+import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 /****** Boost Settings *****
  *  disabled_boost === true => viewBoostedContent = false
@@ -164,23 +159,6 @@ const BoostSettingsScreen = observer(() => {
     },
   ] as const;
 
-  const checked = (
-    <Icon
-      name="check"
-      size={16}
-      color={ThemedStyles.getColor('SecondaryText')}
-    />
-  );
-
-  const buttonStyles = [
-    theme.rowJustifySpaceBetween,
-    theme.paddingVertical3x,
-    theme.borderBottom,
-    theme.bcolorPrimaryBorder,
-    theme.paddingHorizontal4x,
-    theme.bgPrimaryBackground,
-  ];
-
   const browserOnly = (
     <MText style={[theme.colorSecondaryText, styles.smallText]}>
       ({i18n.t('browserOnly')})
@@ -193,12 +171,7 @@ const BoostSettingsScreen = observer(() => {
   );
 
   return (
-    <ScrollView
-      style={[
-        theme.bgSecondaryBackground,
-        theme.fullHeight,
-        theme.paddingTop4x,
-      ]}>
+    <ScrollView style={[theme.fullHeight, theme.paddingTop4x]}>
       <MText
         style={[
           theme.colorSecondaryText,
@@ -248,41 +221,16 @@ const BoostSettingsScreen = observer(() => {
               {item.browserOnly && browserOnly}
               {item.mindsPlus && mindsPlusOnly}
             </View>
-            <TouchableOpacity
-              style={[
-                buttonStyles,
-                theme.borderTop,
-                item.disabled ? theme.bgSecondaryBackground : {},
-              ]}
-              onPress={item.disabled ? () => false : () => item.onPress(true)}>
-              <MText
-                style={[
-                  theme.fontL,
-                  item.disabled
-                    ? theme.colorSecondaryText
-                    : theme.colorPrimaryText,
-                ]}>
-                {i18n.t(`settings.boost.${item.enable || 'enable'}`)}
-              </MText>
-              {item.isSelected() && checked}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                buttonStyles,
-                item.disabled ? theme.bgSecondaryBackground : {},
-              ]}
-              onPress={item.disabled ? () => false : () => item.onPress(false)}>
-              <MText
-                style={[
-                  theme.fontL,
-                  item.disabled
-                    ? theme.colorSecondaryText
-                    : theme.colorPrimaryText,
-                ]}>
-                {i18n.t(`settings.boost.${item.disable || 'disable'}`)}
-              </MText>
-              {!item.isSelected() && checked}
-            </TouchableOpacity>
+            <MenuItemOption
+              title={i18n.t(`settings.boost.${item.enable || 'enable'}`)}
+              onPress={item.disabled ? undefined : () => item.onPress(true)}
+              selected={item.isSelected()}
+            />
+            <MenuItemOption
+              title={i18n.t(`settings.boost.${item.disable || 'disable'}`)}
+              onPress={item.disabled ? undefined : () => item.onPress(false)}
+              selected={!item.isSelected()}
+            />
           </View>
         );
       })}
