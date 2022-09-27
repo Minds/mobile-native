@@ -114,7 +114,7 @@ export default function ({
           )}
         </Row>
         {Boolean(subtitle) && (
-          <B2 top="XS" color="secondary" testID={`subtitle-${subtitle}`}>
+          <B2 color="secondary" testID={`subtitle-${subtitle}`}>
             {subtitle}
           </B2>
         )}

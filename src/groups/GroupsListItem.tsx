@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { ListItem } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import React, { useCallback } from 'react';
+import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import ListItemButton from '../common/components/ListItemButton';
+import { Button, Icon } from '../common/ui';
 import GroupModel from './GroupModel';
-import ThemedStyles from '../styles/ThemedStyles';
-import { useNavigation } from '@react-navigation/native';
+
+const HITSLOP = {
+  hitSlop: 10,
+};
 
 type PropsType = {
   group: GroupModel;
@@ -25,29 +25,37 @@ type ButtonPropsType = {
   index?: number;
 };
 
-const Button = observer(({ group, index }: ButtonPropsType) => {
-  const theme = ThemedStyles.style;
+const JoinButton = observer(({ group, index }: ButtonPropsType) => {
   const isMember = group['is:member'];
-  let onPress, iconName, style;
+  let onPress;
   if (isMember) {
     onPress = () => group.leave();
-    iconName = 'check';
-    style = theme.colorLink;
   } else {
     onPress = group.can(FLAG_JOIN, true) ? () => group.join() : () => {};
-    iconName = 'add';
-    style = theme.colorIcon;
   }
+
   return (
-    <ListItemButton onPress={onPress} testID={`suggestedGroup${index}`}>
-      <Icon name={iconName} size={26} style={style} />
-    </ListItemButton>
+    <Button
+      mode="outline"
+      type={isMember ? 'base' : 'action'}
+      size="tiny"
+      onPress={onPress}
+      pressableProps={HITSLOP}
+      testID={`suggestedGroup${index}`}
+      icon={
+        <Icon
+          name={isMember ? 'check' : 'plus'}
+          color="PrimaryText"
+          size="small"
+          horizontal="S"
+        />
+      }
+    />
   );
 });
 
 const GroupsListItem = observer((props: PropsType) => {
   const navigation = useNavigation();
-  const theme = ThemedStyles.style;
   const group = GroupModel.checkOrCreate(props.group);
   const avatarSource = group.getAvatar();
 
@@ -65,33 +73,19 @@ const GroupsListItem = observer((props: PropsType) => {
   }
 
   return (
-    <ListItem
-      underlayColor={ThemedStyles.getColor('SecondaryBackground')}
-      containerStyle={styles.container}
+    <MenuItem
+      avatar={avatarSource?.source}
       title={group.name}
-      titleStyle={[styles.title, theme.colorPrimaryText]}
-      leftAvatar={avatarSource}
       subtitle={i18n.t('groups.listMembersCount', {
         count: abbrev(group['members:count']),
       })}
-      subtitleStyle={[styles.subtitle, theme.colorSecondaryText]}
-      onPress={_onPress}>
-      {!props.hideButton && <Button index={props.index} group={group} />}
-    </ListItem>
+      onPress={_onPress}
+      icon={
+        !props.hideButton && <JoinButton index={props.index} group={group} />
+      }
+      noBorderTop={typeof props.index === 'number' && props.index > 0}
+    />
   );
 });
 
 export default GroupsListItem;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'transparent',
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: '500',
-  },
-  subtitle: {
-    fontSize: 14,
-  },
-});
