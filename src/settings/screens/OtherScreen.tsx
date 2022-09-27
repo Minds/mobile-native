@@ -106,5 +106,5 @@ const menuItemStyle = ThemedStyles.combine(
 );
 const containerStyle = ThemedStyles.combine(
   'flexContainer',
-  'bgSecondaryBackground',
+  'bgPrimaryBackground',
 );
