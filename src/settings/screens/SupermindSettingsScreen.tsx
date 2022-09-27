@@ -48,6 +48,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
             mode="flat"
             type="action"
             testID="save"
+            spinner
             onPress={() => localStore.submit()}>
             {i18n.t('save')}
           </Button>

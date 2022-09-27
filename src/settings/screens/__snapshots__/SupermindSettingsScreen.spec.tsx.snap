@@ -213,7 +213,25 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "top": 0,
                 }
               }
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <ActivityIndicator
+                  color="#FFFFFF"
+                  size="small"
+                />
+              </View>
+            </View>
             <View
               collapsable={false}
               style={
@@ -664,7 +682,25 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "top": 0,
                 }
               }
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <ActivityIndicator
+                  color="#FFFFFF"
+                  size="small"
+                />
+              </View>
+            </View>
             <View
               collapsable={false}
               style={
@@ -1408,7 +1444,25 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "top": 0,
                 }
               }
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <ActivityIndicator
+                  color="#FFFFFF"
+                  size="small"
+                />
+              </View>
+            </View>
             <View
               collapsable={false}
               style={
