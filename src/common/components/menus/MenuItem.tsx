@@ -1,97 +1,146 @@
-import React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import React, { ReactNode, useMemo } from 'react';
+import {
+  StyleProp,
+  TextStyle,
+  TouchableOpacityProps,
+  View,
+  ViewStyle,
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { AvatarSource } from '../../../channel/UserModel';
+import ThemedStyles, {
+  StyleOrCustom,
+  useMemoStyle,
+} from '../../../styles/ThemedStyles';
+import { B1, B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
+import { IconMapNameType } from '../../ui/icons/map';
+import MPressable from '../MPressable';
+import MText from '../MText';
 
-import { ListItem } from 'react-native-elements';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
-
-export type MenuItemItem = {
-  onPress?: () => void;
-  title: string | JSX.Element;
-  content?: JSX.Element;
-  icon?:
-    | {
-        name: string;
-        type?: string;
-        color?: string;
-      }
-    | JSX.Element;
-  noIcon?: boolean;
-};
-
-export type MenuItemPropsType = {
-  item: MenuItemItem;
-  component?: any;
+export type MenuItemProps = {
   containerItemStyle?: StyleProp<ViewStyle>;
-  titleStyle?: TextStyle | Array<TextStyle>;
-  testID?: string;
-};
+  avatar?: AvatarSource;
+  title: string | ReactNode;
+  titleStyle?: StyleProp<TextStyle>;
+  subtitle?: string;
+  icon?: IconMapNameType | ReactNode;
+  iconSize?: IIconSize;
+  iconColor?: IIconColor;
+  borderless?: boolean;
+  label?: string;
+  noBorderTop?: boolean;
+  noIcon?: boolean;
+} & TouchableOpacityProps;
 
 export default function ({
-  item,
-  component,
   containerItemStyle,
+  title,
+  subtitle,
+  onPress,
+  icon,
+  iconSize,
+  iconColor,
+  avatar,
+  borderless,
+  label,
+  noBorderTop,
+  noIcon,
   titleStyle,
-  testID,
-}: MenuItemPropsType) {
-  const theme = ThemedStyles.style;
-
-  // ListItem Container Style
+  ...props
+}: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
     const stylesList: any = [
-      'bgSecondaryBackground',
-      'borderTop1x',
-      'borderBottom1x',
-      'bcolorPrimaryBorder',
-      'padding0x',
+      'rowJustifyStart',
+      'alignCenter',
+      'paddingVertical4x',
       'paddingHorizontal4x',
     ];
-    if (containerItemStyle) stylesList.push(containerItemStyle);
-    return stylesList;
-  }, [containerItemStyle]);
-
-  // icon is element?
-  const isIconElement = item.icon && !('name' in item.icon);
-
-  // ListItem Chevron Style
-  let chevronStyle: undefined | object;
-  if (!item.noIcon && !isIconElement) {
-    chevronStyle = {
-      ...theme.colorIcon,
-      size: 24,
-      type: 'ionicon',
-      name: 'chevron-forward',
-    };
-
-    if (item.icon && !isIconElement) {
-      chevronStyle = { ...chevronStyle, ...item.icon };
+    if (!borderless) {
+      stylesList.push(
+        'borderTopHair',
+        'borderBottomHair',
+        'bcolorPrimaryBorder',
+      );
     }
-  }
+    if (noBorderTop) {
+      stylesList.push('borderTop0x');
+    }
+    if (containerItemStyle) {
+      stylesList.push(containerItemStyle);
+    }
+    return stylesList;
+  }, [containerItemStyle, borderless]);
+
+  const theTitleStyle = useMemoStyle(() => {
+    const stylesList: any[] = ['fontL', 'fontMedium'];
+
+    if (titleStyle) {
+      stylesList.push(titleStyle);
+    }
+
+    return stylesList;
+  }, [titleStyle]);
+
+  const rightIcon = useMemo(() => {
+    if (!icon && onPress) {
+      return <Icon name={'chevron-right'} size={iconSize} color={iconColor} />;
+    }
+
+    if (typeof icon === 'string') {
+      return (
+        <Icon
+          name={icon as IconMapNameType}
+          size={iconSize}
+          color={iconColor}
+        />
+      );
+    }
+
+    return icon;
+  }, [icon, iconColor, iconSize, onPress]);
 
   return (
-    <ListItem
-      Component={component}
-      onPress={item.onPress}
-      containerStyle={containerStyle}
-      underlayColor="transparent"
-      testID={testID}>
-      <ListItem.Content>
-        {Boolean(item.title) && (
-          <ListItem.Title style={[baseTitleStyle, titleStyle]}>
-            {item.title}
-          </ListItem.Title>
+    <MPressable {...props} onPress={onPress} style={containerStyle}>
+      {avatar && <FastImage source={avatar} style={styles.avatar} />}
+      <Column flex right={rightIcon ? 'XXL' : undefined}>
+        <Row align="centerBetween">
+          <MText style={theTitleStyle} numberOfLines={1}>
+            {title}
+          </MText>
+          {Boolean(label) && (
+            <B2
+              color="secondary"
+              numberOfLines={1}
+              right={rightIcon ? 'M' : undefined}>
+              {label}
+            </B2>
+          )}
+        </Row>
+        {Boolean(subtitle) && (
+          <B2 top="XS" color="secondary" testID={`subtitle-${subtitle}`}>
+            {subtitle}
+          </B2>
         )}
-        {item.content}
-      </ListItem.Content>
-      {chevronStyle && <ListItem.Chevron {...chevronStyle} />}
-      {isIconElement && item.icon}
-    </ListItem>
+      </Column>
+      {Boolean(rightIcon) && !noIcon && (
+        <View style={styles.rightIcon}>{rightIcon}</View>
+      )}
+    </MPressable>
   );
 }
 
-const baseTitleStyle = ThemedStyles.combine(
-  {
-    paddingVertical: 15,
-    fontSize: 17,
+const styles = ThemedStyles.create({
+  avatar: [
+    {
+      height: 40,
+      width: 40,
+      borderRadius: 20,
+    },
+    'bgTertiaryBackground',
+    'marginRight4x',
+  ],
+  rightIcon: {
+    position: 'absolute',
+    right: 15,
   },
-  'colorPrimaryText',
-);
+});

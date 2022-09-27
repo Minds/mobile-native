@@ -13,6 +13,8 @@ import MText from '../../common/components/MText';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import MenuItem from '../../common/components/menus/MenuItem';
+import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 const licenses = LICENSES.filter(l => l.selectable);
 
@@ -30,21 +32,12 @@ const Option = props => {
   }, [props.store, props.option.value]);
 
   return (
-    <TouchableOpacity
-      style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}>
-      <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
-        {props.option.text}
-      </MText>
-      {props.selected && (
-        <MIcon
-          name="check"
-          size={23}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      )}
-    </TouchableOpacity>
+    <MenuItemOption
+      title={props.option.text}
+      selected={props.selected}
+      onPress={onSelect}
+      noBorderTop={props.noBorderTop}
+    />
   );
 };
 
@@ -104,11 +97,12 @@ export default observer(function ({}: LicenseSelectorProps) {
           ]}>
           {i18n.t('capture.otherLicenses').toUpperCase()}
         </MText>
-        {licenses.slice(2).map(o => (
+        {licenses.slice(2).map((o, i) => (
           <Option
             option={o}
             store={store}
             selected={store.attachment.license === o.value}
+            noBorderTop={i > 0}
           />
         ))}
       </BottomSheetScrollView>

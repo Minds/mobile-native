@@ -269,6 +269,46 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
   },
+  'login-variant': {
+    font: 'MaterialCommunityIcons',
+    name: 'login-variant',
+  },
+  logout: {
+    font: 'MaterialIcons',
+    name: 'logout',
+  },
+  'ios-flag-outline': {
+    font: 'IonIcon',
+    name: 'ios-flag-outline',
+  },
+  'share-social': {
+    font: 'IonIcon',
+    name: 'share-social',
+  },
+  'remove-circle': {
+    font: 'IonIcon',
+    name: 'ios-remove-circle-outline',
+  },
+  'add-circle': {
+    font: 'IonIcon',
+    name: 'ios-add-circle-outline',
+  },
+  'radio-button-on': {
+    font: 'MaterialIcons',
+    name: 'radio-button-on',
+  },
+  'radio-button-off': {
+    font: 'MaterialIcons',
+    name: 'radio-button-off',
+  },
+  'md-checkmark': {
+    font: 'IonIcon',
+    name: 'md-checkmark',
+  },
+  checkmark: {
+    font: 'IonIcon',
+    name: 'checkmark',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

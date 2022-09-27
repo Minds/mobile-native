@@ -7,10 +7,10 @@ import FitScrollView from '../common/components/FitScrollView';
 import InputBase from '../common/components/InputBase';
 import InputContainer from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
-import MenuItem from '../common/components/menus/MenuItem';
+import MenuItemOption from '../common/components/menus/MenuItemOption';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
-import { Button, Icon, ModalFullScreen } from '../common/ui';
+import { Button, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
@@ -22,12 +22,14 @@ const showError = (error: string) =>
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
 
+// eslint-disable-next-line no-shadow
 export enum ReplyType {
   text = 0,
   image = 1,
   video = 2,
 }
 
+// eslint-disable-next-line no-shadow
 enum PaymentType {
   cash = 0,
   token = 1,
@@ -278,42 +280,21 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
             theme.bgPrimaryBackground,
             { borderBottomWidth: 0 },
           ]}
-          item={{
-            onPress: () => setRequireTwitter(val => !val),
-            title: 'Require the reply to be posted to @ottman on Twitter',
-            icon: (
-              <Icon
-                size={30}
-                name={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
-                color={requireTwitter ? 'Link' : 'Icon'}
-              />
-            ),
-          }}
+          onPress={() => setRequireTwitter(val => !val)}
+          title={'Require the reply to be posted to @ottman on Twitter'}
+          icon={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
+          iconSize={30}
+          iconColor={
+            requireTwitter ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
+          }
         /> */}
-        <MenuItem
-          containerItemStyle={styles.termsContainer}
-          item={{
-            onPress: () => setTermsAgreed(val => !val),
-            title: 'I agree to the Terms',
-            icon: (
-              <Icon
-                size={30}
-                name={termsAgreed ? 'checkbox-marked' : 'checkbox-blank'}
-                color={
-                  termsAgreed ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
-                }
-              />
-            ),
-          }}
+        <MenuItemOption
+          onPress={() => setTermsAgreed(val => !val)}
+          title="I agree to the Terms"
+          selected={termsAgreed}
+          mode="checkbox"
         />
       </FitScrollView>
     </ModalFullScreen>
   );
 }
-
-const styles = ThemedStyles.create({
-  termsContainer: [
-    'bgPrimaryBackground',
-    { borderTopWidth: 0, borderBottomWidth: 0 },
-  ],
-});

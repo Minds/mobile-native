@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
-
 import AuthService from '../auth/AuthService';
-import MenuItem, { MenuItemItem } from '../common/components/menus/MenuItem';
+import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
 import { isNetworkError } from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
 import openUrlService from '../common/services/open-url.service';
@@ -55,7 +54,7 @@ const setDarkMode = () => {
   }
 };
 
-type Item = MenuItemItem & { screen?: string; params?: any };
+type Item = MenuItemProps & { screen?: string; params?: any };
 
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
@@ -154,10 +153,7 @@ const SettingsScreen = observer(({ navigation }) => {
   secondSection.push({
     title: i18n.t('settings.logout'),
     onPress: () => AuthService.logout(),
-    icon: {
-      name: 'login-variant',
-      type: 'material-community',
-    },
+    icon: 'login-variant',
   });
 
   const firstSectionItems = firstSection.map(
@@ -178,33 +174,17 @@ const SettingsScreen = observer(({ navigation }) => {
   return (
     <Screen safe>
       <ScrollView
-        style={containerStyle}
+        style={theme.flexContainer}
         contentContainerStyle={theme.paddingBottom4x}>
         <HiddenTap>
           <ScreenHeader title={i18n.t('moreScreen.settings')} />
         </HiddenTap>
-        <View style={[innerWrapper, theme.bgSecondaryBackground]}>
-          {firstSectionItems.map((item, index) => (
-            <MenuItem
-              item={item}
-              containerItemStyle={
-                index > 0
-                  ? menuItemStyle
-                  : ThemedStyles.style.bgSecondaryBackground
-              }
-            />
-          ))}
-        </View>
-        <View style={[innerWrapper, theme.marginTop7x]}>
+        {firstSectionItems.map((item, index) => (
+          <MenuItem noBorderTop={index > 0} {...item} />
+        ))}
+        <View style={theme.marginTop7x}>
           {secondSectionItems.map((item, index) => (
-            <MenuItem
-              item={item}
-              containerItemStyle={
-                index > 0
-                  ? menuItemStyle
-                  : ThemedStyles.style.bgSecondaryBackground
-              }
-            />
+            <MenuItem noBorderTop={index > 0} {...item} />
           ))}
         </View>
       </ScrollView>
@@ -213,17 +193,3 @@ const SettingsScreen = observer(({ navigation }) => {
 });
 
 export default SettingsScreen;
-
-const innerWrapper = ThemedStyles.combine(
-  'borderTopHair',
-  'borderBottomHair',
-  'bcolorPrimaryBorder',
-);
-const menuItemStyle = ThemedStyles.combine(
-  'borderTop0x',
-  'bgSecondaryBackground',
-);
-const containerStyle = ThemedStyles.combine(
-  'flexContainer',
-  'bgPrimaryBackground',
-);

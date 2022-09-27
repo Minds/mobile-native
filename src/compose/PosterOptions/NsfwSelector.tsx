@@ -1,9 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import _ from 'lodash';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
@@ -12,6 +10,7 @@ import MText from '../../common/components/MText';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 /**
  * Nsfw Option
@@ -23,21 +22,11 @@ const NsfwOption = props => {
   }, [props.store, props.option.value]);
 
   return (
-    <TouchableOpacity
-      style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}>
-      <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
-        {props.option.label}
-      </MText>
-      {props.option.selected && (
-        <MIcon
-          name="check"
-          size={23}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      )}
-    </TouchableOpacity>
+    <MenuItemOption
+      title={props.option.label}
+      selected={props.option.selected}
+      onPress={onSelect}
+    />
   );
 };
 

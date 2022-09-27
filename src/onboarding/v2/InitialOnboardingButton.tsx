@@ -85,7 +85,7 @@ export default observer(function InitialOnboardingButton() {
   return (
     // <Pulse repeat={2}>
     <Spacer bottom="S">
-      <MenuItem item={item} titleStyle={theme.bold} testID="startOnboarding" />
+      <MenuItem {...item} titleStyle={theme.bold} testID="startOnboarding" />
     </Spacer>
     // </Pulse>
   );

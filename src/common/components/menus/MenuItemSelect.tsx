@@ -1,27 +1,23 @@
 import React, { useCallback } from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { Icon } from '../ui';
-import InputBase from './InputBase';
-import Selector from './SelectorV2';
+import { TextStyle } from 'react-native';
+import { B2 } from '../../ui';
+import Selector from '../SelectorV2';
+import MenuItem, { MenuItemProps } from './MenuItem';
 
-type PropsType = {
+type MenuItemSelectProps = MenuItemProps & {
   data: Array<any>;
   valueExtractor: (value: any) => any;
   keyExtractor: (value: any) => any;
   onSelected: (value: any) => any;
-  selectTitle?: string;
-  label: string;
   selected: any;
-  textStyle?: TextStyle | TextStyle[];
-  backdropOpacity?: number;
-  containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
-  mainContainerStyle?: StyleProp<ViewStyle>;
   info?: string;
   error?: string;
+  selectTitle?: string;
+  textStyle?: TextStyle | TextStyle[];
+  backdropOpacity?: number;
 };
 
-const InputSelector = (props: PropsType) => {
+export default function MenuItemSelect(props: MenuItemSelectProps) {
   const onSelected = useCallback(
     item => {
       props.onSelected(props.keyExtractor(item));
@@ -47,19 +43,12 @@ const InputSelector = (props: PropsType) => {
       textStyle={props.textStyle}
       backdropOpacity={props.backdropOpacity}>
       {show => (
-        <InputBase
+        <MenuItem
+          {...props}
           onPress={() => show(props.selected)}
-          style={props.containerStyle}
-          label={props.label}
-          labelStyle={props.labelStyle}
-          info={props.info}
-          error={props.error}
-          value={getValueOf(props.selected)}
-          icon={<Icon name="chevron-down" />}
+          icon={<B2 color="primary">{getValueOf(props.selected)}</B2>}
         />
       )}
     </Selector>
   );
-};
-
-export default InputSelector;
+}

@@ -226,7 +226,7 @@ export default function () {
           require('~/notifications/v3/settings/email/EmailNotificationsSettings')
             .default
         }
-        options={{ title: i18n.t('settings.pushNotification') }}
+        options={{ title: i18n.t('settings.emailNotifications') }}
       />
       <MoreStack.Screen
         name="DataSaverScreen"

@@ -2,7 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
-import MenuItem from '../../../common/components/menus/MenuItem';
+import MenuItem, {
+  MenuItemProps,
+} from '../../../common/components/menus/MenuItem';
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
@@ -23,11 +25,11 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
 
   const navigation = useNavigation();
 
-  const walletActions = [
+  const walletActions: MenuItemProps[] = [
     {
       title: i18n.t('wallet.leanMore'),
       onPress: navToTokens,
-      noIcon: true,
+      icon: 'external-link',
     },
   ];
 
@@ -37,7 +39,6 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
       onPress: () => {
         navigation.navigate('WalletWithdrawal');
       },
-      noIcon: true,
     });
   }
 
@@ -60,7 +61,7 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
       <TokensChart timespan={walletStore.chart} />
       <MenuSubtitle>{i18n.t('wallet.walletActions')}</MenuSubtitle>
       {walletActions.map((item, i) => (
-        <MenuItem item={item} key={i} />
+        <MenuItem {...item} key={i} />
       ))}
     </>
   );

@@ -296,7 +296,7 @@ export default class UserModel extends BaseModel {
    * Get avatar source
    * @param {string} size
    */
-  getAvatarSource(size = 'medium') {
+  getAvatarSource(size = 'medium'): AvatarSource {
     return {
       uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
       headers: api.buildHeaders(),
@@ -412,3 +412,8 @@ export default class UserModel extends BaseModel {
     this.liquidity_spot_opt_out = liquidity_spot_opt_out;
   }
 }
+
+export type AvatarSource = {
+  uri: string;
+  headers?: any;
+};

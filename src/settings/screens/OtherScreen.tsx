@@ -12,7 +12,7 @@ function useNavCallback(screen) {
   }, [screen]);
 }
 
-export default function ({ navigation }) {
+export default function () {
   const contentAdmin = [
     /*{
       title: i18n.t('settings.otherOptions.a1'),
@@ -91,7 +91,7 @@ const generateSection = (title, items) => (
     <MenuSubtitle>{title}</MenuSubtitle>
     {items.map((item, i) => (
       <MenuItem
-        item={item}
+        {...item}
         i={i}
         containerItemStyle={i > 0 ? menuItemStyle : firstMenuItemStyle}
       />
