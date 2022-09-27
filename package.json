@@ -88,6 +88,7 @@
     "react-native": "0.68.2",
     "react-native-animated-numbers": "^0.4.1",
     "react-native-animated-spinkit": "^1.5.2",
+    "react-native-awesome-gallery": "^0.3.5",
     "react-native-blurhash": "^1.1.10",
     "react-native-bootsplash": "^4.1.5",
     "react-native-calendars": "^1.1268.0",

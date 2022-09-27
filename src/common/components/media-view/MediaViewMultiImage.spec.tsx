@@ -1,6 +1,6 @@
-// @ts-nocheck
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaViewMultiImage from './MediaViewMultiImage';
 
 describe('MediaViewMultiImage', () => {
@@ -43,7 +43,7 @@ describe('MediaViewMultiImage', () => {
 });
 
 const checkImagesMatch = (entity, length) => {
-  let images = [];
+  let images: any[] = [];
   entity.custom_data.map(image => {
     const i = screen.getByTestId('image-' + image.src);
     if (i) {
@@ -55,7 +55,7 @@ const checkImagesMatch = (entity, length) => {
 };
 
 const generateFakeMultiImageEntity = (
-  { images, blurred, locked } = { images: 2 },
+  { images, blurred = false, locked = false } = { images: 2 },
 ) => {
   return {
     shouldBeBlured: () => blurred,
@@ -68,5 +68,5 @@ const generateFakeMultiImageEntity = (
         ...image,
         src: image.src + index,
       })),
-  };
+  } as ActivityModel;
 };

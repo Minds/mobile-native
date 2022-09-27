@@ -8,7 +8,7 @@ import { IconMapNameType } from '../icons/map';
 import { Typography, TypographyPropsType } from '../typography/Typography';
 
 export type ScreenHeaderType = {
-  title: string;
+  title?: string;
   extra?: ReactNode;
   back?: boolean;
   leftComponent?: ReactNode;
@@ -38,7 +38,7 @@ export const ScreenHeader = ({
   const navigation = useNavigation();
   return (
     <View style={border ? styles.border : shadow ? styles.shadow : null}>
-      {centerTitle && (
+      {centerTitle && Boolean(title) && (
         <View style={styles.titleCenteredContainer}>
           <Typography type={titleType} font="bold" onPress={onTitlePress}>
             {title}
@@ -56,7 +56,7 @@ export const ScreenHeader = ({
               onPress={onBack || (() => navigation.goBack())}
             />
           )}
-          {!centerTitle && (
+          {!centerTitle && Boolean(title) && (
             <Typography type={titleType} font="bold" onPress={onTitlePress}>
               {title}
             </Typography>
