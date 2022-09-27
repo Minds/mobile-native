@@ -22,6 +22,7 @@ import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
+import { useFeature } from '@growthbook/growthbook-react';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -67,7 +68,7 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-const getOptionsList = navigation => {
+const getOptionsList = (navigation, supermindFeatureFlag) => {
   const hasRewards = sessionService.getUser().rewards;
 
   let list = [
@@ -78,6 +79,14 @@ const getOptionsList = navigation => {
         navigation.navigate('PlusDiscoveryScreen');
       },
     },
+    supermindFeatureFlag.on
+      ? {
+          name: 'Supermind',
+          onPress: () => {
+            navigation.navigate('SupermindConsole');
+          },
+        }
+      : null,
     {
       name: i18n.t('moreScreen.wallet'),
       icon: 'bank',
@@ -138,6 +147,7 @@ const getOptionsList = navigation => {
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
+  const supermindFeatureFlag = useFeature('mobile-supermind');
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
@@ -148,7 +158,7 @@ export default function Drawer(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
-  const optionsList = getOptionsList(props.navigation);
+  const optionsList = getOptionsList(props.navigation, supermindFeatureFlag);
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
     <Screen safe>

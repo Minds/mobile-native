@@ -1,5 +1,5 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
+import Cancelable from 'promise-cancelable';
 import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
 
@@ -9,6 +9,17 @@ import i18n from '../services/i18n.service';
 import mindsConfigService from '../services/minds-config.service';
 import { showNotification } from '../../../AppMessages';
 import { UserError } from '../UserError';
+import { ApiResponse } from '../services/api.service';
+
+export type Media = {
+  uri: string;
+  type: string;
+  path?: string;
+  localIdentifier?: string;
+  filename?: string;
+  width: number;
+  height: number;
+};
 
 /**
  * Attachment Store
@@ -19,13 +30,23 @@ export default class AttachmentStore {
   @observable progress = 0;
   @observable uri = '';
   @observable type = '';
-  @observable license = '';
+  @observable license = 'all-rights-reserved';
 
+  localIdentifier?: string = '';
   guid = '';
-  fileName = null;
+  filename? = '';
+  path? = '';
   transcoding = false;
-  width: 1;
-  height: 1;
+  width: number = 1;
+  height: number = 1;
+
+  onClear?: (s: AttachmentStore) => void;
+
+  uploadPromise?: Promise<ApiResponse> | Cancelable;
+
+  constructor(onClear?: (s: AttachmentStore) => void) {
+    this.onClear = onClear;
+  }
 
   /**
    * Attach media
@@ -33,7 +54,7 @@ export default class AttachmentStore {
    * @param {object} extra
    */
   @action
-  async attachMedia(media, extra = null) {
+  async attachMedia(media: Media, extra: any = null) {
     if (this.transcoding) {
       return;
     }
@@ -89,9 +110,11 @@ export default class AttachmentStore {
 
     this.uri = media.uri;
     this.type = media.type;
-    this.fileName = media.fileName;
+    this.filename = media.filename;
     this.width = media.width;
     this.height = media.height;
+    this.localIdentifier = media.localIdentifier;
+    this.path = media.path;
 
     try {
       const resizedMedia = await attachmentService.processMedia(media);
@@ -110,14 +133,16 @@ export default class AttachmentStore {
 
       const result = await uploadPromise;
       // ignore canceled
-      if ((uploadPromise.isCanceled && uploadPromise.isCanceled()) || !result) {
+      if (uploadPromise.isCanceled?.() || !result) {
         return;
       }
       this.guid = result.guid;
     } catch (err) {
       this.clear();
       if (!(err instanceof UserError)) {
-        showNotification(err.message || i18n.t('uploadFailed'));
+        showNotification(
+          err instanceof Error ? err.message : i18n.t('uploadFailed'),
+        );
       }
     } finally {
       this.setUploading(false);
@@ -204,11 +229,13 @@ export default class AttachmentStore {
   }
 
   @action
-  setMedia(type, guid, uri = '') {
+  setMedia(type, guid, uri = '', width = 0, height = 0) {
     this.type = type;
     this.guid = guid;
     this.uri = uri;
     this.hasAttachment = Boolean(guid);
+    this.width = width;
+    this.height = height;
   }
 
   @action
@@ -218,8 +245,8 @@ export default class AttachmentStore {
     this.type = '';
     this.uri = '';
     this.hasAttachment = false;
-    this.checkingVideoLength = false;
     this.uploading = false;
     this.progress = 0;
+    this.onClear?.(this);
   }
 }

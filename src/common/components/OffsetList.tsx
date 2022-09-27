@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react';
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -39,19 +41,21 @@ type PropsType = {
   offsetPagination?: boolean;
 };
 
-type FetchResponseType = {
-  status: string;
-  'load-next': string | number;
-};
+type FetchResponseType =
+  | {
+      status: string;
+      'load-next': string | number;
+    }
+  | Array<any>;
 
 export default observer(
   // TODO: add ref types
-  forwardRef(function OffsetList<T>(props: PropsType, ref: any) {
+  forwardRef(function OffsetList(props: PropsType, ref: any) {
     // =====================| STATES & VARIABLES |=====================>
-    type ApiFetchType = FetchResponseType & T;
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>('');
     const [page, setPage] = useState<number>(1);
+    const listRef = React.useRef<FlatList>(null);
     const offsetField = props.offsetField || 'offset';
     const opts = {
       limit: 12,
@@ -75,22 +79,26 @@ export default observer(
       [props],
     );
 
-    const {
-      result,
-      loading,
-      error,
-      fetch,
-      refresh,
-      refreshing,
-    } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
+    const fetchStore = useApiFetch<FetchResponseType>(props.fetchEndpoint, {
       params: opts,
       dataField: props.endpointData,
       updateStrategy: 'merge',
       map,
     });
+
+    // if the fetchEndpoint changed, reset pagination and results
+    useEffect(() => {
+      if (fetchStore.result) {
+        fetchStore.setResult(null);
+        props.offsetPagination ? setPage(1) : setOffset('');
+      }
+    }, [props.fetchEndpoint, fetchStore, props.offsetPagination]);
+
     const data = useMemo(() => {
-      if (result) {
-        return result[props.endpointData].slice();
+      if (fetchStore.result) {
+        return Array.isArray(fetchStore.result)
+          ? fetchStore.result.slice()
+          : fetchStore.result[props.endpointData].slice();
       }
 
       if (props.placeholderCount) {
@@ -100,20 +108,24 @@ export default observer(
       }
 
       return [];
-    }, [result, props.placeholderCount, props.endpointData]);
+    }, [fetchStore.result, props.placeholderCount, props.endpointData]);
 
-    // =====================| METHODS |=====================>
+    // =====================| PROVIDED METHODS |=====================>
     useImperativeHandle(ref, () => ({
-      refreshList: () => refresh(),
+      refreshList: () => fetchStore.refresh(),
+      scrollToTop: () =>
+        listRef.current?.scrollToOffset({ offset: 0, animated: true }),
     }));
 
+    // =====================| METHODS |=====================>
+
     const _refresh = React.useCallback(() => {
-      setOffset('');
-      refresh();
-    }, [refresh]);
+      props.offsetPagination ? setPage(1) : setOffset('');
+      fetchStore.refresh();
+    }, [props.offsetPagination, fetchStore]);
 
     const onFetchMore = useCallback(() => {
-      if (loading) {
+      if (fetchStore.loading) {
         return;
       }
 
@@ -121,19 +133,29 @@ export default observer(
         return setPage(oldPage => oldPage + 1);
       }
 
-      if (result?.['load-next']) {
-        setOffset(result['load-next']);
+      if (fetchStore.result?.['load-next']) {
+        setOffset(fetchStore.result['load-next']);
       }
-    }, [loading, result, props.offsetPagination, hasMore]);
+    }, [
+      fetchStore.loading,
+      fetchStore.result,
+      props.offsetPagination,
+      hasMore,
+    ]);
 
     // =====================| RENDERS |=====================>
     const renderItem = useMemo(() => {
-      if (result && result[props.endpointData]) {
+      if (fetchStore.result?.[props.endpointData]) {
         return props.renderItem;
       }
 
       return props.renderPlaceholder || props.renderItem;
-    }, [result, props.endpointData, props.renderPlaceholder, props.renderItem]);
+    }, [
+      fetchStore,
+      props.endpointData,
+      props.renderPlaceholder,
+      props.renderItem,
+    ]);
 
     /**
      * if it was loading and we already had some results,
@@ -141,21 +163,27 @@ export default observer(
      **/
     const loadingFooter = useMemo(
       () =>
-        loading && !refreshing && result?.[props.endpointData] ? (
+        fetchStore.loading &&
+        !fetchStore.refreshing &&
+        fetchStore.result?.[props.endpointData] ? (
           <View style={theme.paddingVertical2x}>
             <ActivityIndicator size={30} />
           </View>
-        ) : undefined,
+        ) : (
+          !props.placeholderCount &&
+          fetchStore.loading &&
+          !fetchStore.result && <CenteredLoading />
+        ),
       [
-        loading,
-        refreshing,
-        result,
+        fetchStore.loading,
+        fetchStore.refreshing,
+        fetchStore.result,
         props.endpointData,
         theme.paddingVertical2x,
       ],
     );
 
-    if (error && !loading) {
+    if (fetchStore.error && !fetchStore.loading) {
       return (
         <MText
           style={[
@@ -164,21 +192,18 @@ export default observer(
             theme.fontL,
             theme.marginVertical4x,
           ]}
-          onPress={() => fetch()}>
+          onPress={() => fetchStore.fetch()}>
           {i18n.t('error') + '\n'}
           <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
         </MText>
       );
     }
 
-    if (!props.placeholderCount && loading && !result) {
-      return <CenteredLoading />;
-    }
-
     const List = props.ListComponent || FlatList;
 
     return (
       <List
+        ref={listRef}
         ListHeaderComponent={props.header}
         data={data}
         renderItem={renderItem}
@@ -186,7 +211,7 @@ export default observer(
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={_refresh}
-        refreshing={refreshing}
+        refreshing={fetchStore.refreshing}
         contentContainerStyle={props.contentContainerStyle}
         style={props.style || listStyle}
       />

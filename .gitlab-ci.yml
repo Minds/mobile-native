@@ -464,6 +464,7 @@ release:codepush-ios:
   stage: release
   tags: [minds-ci]
   before_script:
+    - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
   script:
@@ -481,6 +482,7 @@ release:codepush-android:
   stage: release
   tags: [minds-ci]
   before_script:
+    - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
   script:
