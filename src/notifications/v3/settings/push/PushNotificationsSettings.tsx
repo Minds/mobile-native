@@ -49,7 +49,6 @@ const PushNotificationsSettings = ({}: PropsType) => {
               title={setting.notificationGroup}
               value={setting.enabled}
               onChange={setting.toggleEnabled}
-              titleStyle={itemTextStyleMedium}
             />
           );
         })}

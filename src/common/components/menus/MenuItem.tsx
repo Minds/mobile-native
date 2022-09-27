@@ -8,11 +8,8 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { AvatarSource } from '../../../channel/UserModel';
-import ThemedStyles, {
-  StyleOrCustom,
-  useMemoStyle,
-} from '../../../styles/ThemedStyles';
-import { B1, B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import { B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
 import { IconMapNameType } from '../../ui/icons/map';
 import MPressable from '../MPressable';
 import MText from '../MText';

@@ -1,9 +1,7 @@
 import React, { FC, useCallback } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
@@ -13,11 +11,9 @@ import MText from '../../common/components/MText';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
-import MenuItem from '../../common/components/menus/MenuItem';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 const licenses = LICENSES.filter(l => l.selectable);
-
 interface LicenseSelectorProps
   extends FC,
     StackScreenProps<PosterStackParamList, 'LicenseSelector'> {}
@@ -108,17 +104,4 @@ export default observer(function ({}: LicenseSelectorProps) {
       </BottomSheetScrollView>
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  optsContainer: {
-    marginBottom: 10,
-  },
-  optsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
 });

@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
@@ -62,17 +62,4 @@ export default observer(function ({}: AccessSelectorProps) {
       </ScrollView>
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  optsContainer: {
-    marginBottom: 10,
-  },
-  optsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
 });
