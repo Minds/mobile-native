@@ -180,6 +180,7 @@ export type RootStackParamList = {
     code: string;
   };
   ViewImage: {};
+  ImageGallery: {};
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
   MultiUserRegister: {};

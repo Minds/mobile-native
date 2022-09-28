@@ -1766,9 +1766,14 @@ exports[`Activity screen component renders correctly  1`] = `
       CommentsStore {
         "attachment": AttachmentStore {
           "cancelOrDelete": [Function],
-          "fileName": null,
+          "filename": "",
           "guid": "",
+          "height": 1,
+          "localIdentifier": "",
+          "onClear": undefined,
+          "path": "",
           "transcoding": false,
+          "width": 1,
         },
         "comments": Array [],
         "embed": RichEmbedStore {

@@ -71,7 +71,7 @@ export default observer(function ComposeScreen(props) {
   );
   const showEmbed = store.embed.hasRichEmbed && store.embed.meta;
   const fontSize =
-    store.attachment.hasAttachment || store.text.length > 85
+    store.attachments.hasAttachment || store.text.length > 85
       ? theme.fontXL
       : theme.fontXXL;
   const textStyle = useMemoStyle(
@@ -83,7 +83,7 @@ export default observer(function ComposeScreen(props) {
     ],
     [fontSize, localStore.height],
   );
-  const placeholder = store.attachment.hasAttachment
+  const placeholder = store.attachments.hasAttachment
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
   const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
@@ -115,7 +115,7 @@ export default observer(function ComposeScreen(props) {
    * On post press
    */
   const onPost = useCallback(async () => {
-    if (store.attachment.uploading) {
+    if (store.attachments.uploading) {
       return;
     }
     const isEdit = store.isEdit;
@@ -137,7 +137,7 @@ export default observer(function ComposeScreen(props) {
   }, []);
 
   const onPressBack = useCallback(() => {
-    if (store.attachment.hasAttachment || store.embed.hasRichEmbed) {
+    if (store.attachments.hasAttachment || store.embed.hasRichEmbed) {
       Keyboard.dismiss();
 
       showConfirm();
@@ -236,7 +236,7 @@ export default observer(function ComposeScreen(props) {
       onPress={onPost}
       disabled={!store.isValid}
       color={store.isValid ? 'Link' : 'Icon'}
-      style={store.attachment.uploading ? theme.opacity25 : null}
+      style={store.attachments.uploading ? theme.opacity25 : null}
     />
   );
   // #endregion
@@ -277,7 +277,7 @@ export default observer(function ComposeScreen(props) {
             <View style={useStyle('flexContainer', 'marginRight2x')}>
               {!store.noText && (
                 <>
-                  {store.attachment.hasAttachment && (
+                  {store.attachments.hasAttachment && (
                     <TitleInput store={store} />
                   )}
                   {/*
@@ -303,23 +303,25 @@ export default observer(function ComposeScreen(props) {
                   </TextInput>
                 </>
               )}
-              <MediaPreview store={store} />
-              {store.isRemind && <RemindPreview entity={store.entity} />}
-              {
-                // @ts-ignore
-                store.isEdit && store.entity?.remind_object && (
-                  // @ts-ignore
-                  <RemindPreview entity={store.entity.remind_object} />
-                )
-              }
-              {showEmbed && (
-                <MetaPreview
-                  meta={store.embed.meta}
-                  onRemove={store.embed.clearRichEmbed}
-                  isEdit={store.isEdit}
-                />
-              )}
             </View>
+          </View>
+          <View style={theme.marginHorizontal2x}>
+            <MediaPreview store={store} />
+            {store.isRemind && <RemindPreview entity={store.entity} />}
+            {
+              // @ts-ignore
+              store.isEdit && store.entity?.remind_object && (
+                // @ts-ignore
+                <RemindPreview entity={store.entity.remind_object} />
+              )
+            }
+            {showEmbed && (
+              <MetaPreview
+                meta={store.embed.meta}
+                onRemove={store.embed.clearRichEmbed}
+                isEdit={store.isEdit}
+              />
+            )}
           </View>
         </ScrollView>
 

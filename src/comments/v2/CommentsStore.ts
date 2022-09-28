@@ -642,14 +642,16 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const response = await attachmentService.gallery('mixed', false);
+      const response = await attachmentService.gallery('any', false);
 
       if (fn) fn();
 
       // nothing selected
       if (!response) return;
 
-      await this.attachment.attachMedia(response);
+      const media = Array.isArray(response) ? response[0] : response;
+
+      await this.attachment.attachMedia(media);
     } catch (err) {
       logService.exception('[CommentsStore] gallery', err);
     }

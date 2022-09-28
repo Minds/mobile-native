@@ -2,10 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import FastImage from 'react-native-fast-image';
 import { Dimensions } from 'react-native';
-import SmartImage from '../common/components/SmartImage';
-import ThemedStyles from '../styles/ThemedStyles';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { useDimensions } from '@react-native-community/hooks';
+
+import SmartImage from '../common/components/SmartImage';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Image preview with max and min aspect ratio support
@@ -32,11 +33,7 @@ export default observer(function (props) {
         height: '100%',
         width: '100%',
       }
-    : {
-        aspectRatio,
-        width: '100%',
-        borderRadius: 10,
-      };
+    : null;
 
   // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
   const uri = props.image.uri || props.image.path;

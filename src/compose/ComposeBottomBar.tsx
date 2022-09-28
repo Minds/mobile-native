@@ -26,8 +26,7 @@ function ComposeBottomBar(props) {
     navigation.navigate('Capture', {
       mode: props.store.allowedMode,
       onMediaConfirmed: media => {
-        props.store.onMedia(media);
-        props.store.attachment.attachMedia(media, props.store.extra);
+        props.store.attachments.attachMedia(media, props.store.extra);
         return true;
       },
     });
