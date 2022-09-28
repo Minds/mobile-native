@@ -11,6 +11,7 @@ import {
   AVATAR_SIZE_DEFAULT,
   UNIT,
 } from '~styles/Tokens';
+import { toJS } from 'mobx';
 
 export const Avatar = withSpacer(
   ({
@@ -29,7 +30,7 @@ export const Avatar = withSpacer(
 
     const avatar = (
       <View style={border && styles[border]}>
-        <FastImage source={source} style={styles[size]} />
+        <FastImage source={toJS(source)} style={styles[size]} />
         {iconView}
         {children}
       </View>

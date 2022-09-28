@@ -46,9 +46,16 @@ const getTypeLabel = (type: string, currency: currencyType) => {
     boost: i18n.t('wallet.transactions.onchainBoost'),
     pro_earning: i18n.t('wallet.transactions.proEarningsFilter'),
     payout: i18n.t('wallet.transactions.payoutsFilter'),
+    'onchain:supermind': i18n.t('wallet.transactions.supermindOffer'),
+    'offchain:supermind': i18n.t('wallet.transactions.supermindOffer'),
+    supermind: i18n.t('wallet.transactions.supermindOffer'),
   };
 
-  return currency !== 'tokens' && type === 'wire' ? 'Wire' : typeLabels[type];
+  if (type === 'wire' && currency !== 'tokens') {
+    return 'Wire';
+  }
+
+  return typeLabels[type];
 };
 
 const getTypeStringAndIcon = (
@@ -71,7 +78,10 @@ const getTypeStringAndIcon = (
     case 'boost':
       avatar = <AvatarIcon name="trending-up" />;
       typeString = (
-        <B2>{`${getTypeLabel(entity.contract, currency)}ed Content`}</B2>
+        <B2>{`${getTypeLabel(
+          entity.contract || entity.superType,
+          currency,
+        )}ed Content`}</B2>
       );
       break;
     case 'purchase':
@@ -80,7 +90,9 @@ const getTypeStringAndIcon = (
       break;
     case 'withdraw':
       avatar = <AvatarIcon name="arrow-right" />;
-      typeString = <B2>{getTypeLabel(entity.contract, currency)}</B2>;
+      typeString = (
+        <B2>{getTypeLabel(entity.contract || entity.superType, currency)}</B2>
+      );
       break;
     case 'payout':
       avatar = <AvatarIcon name="arrow-right" />;
@@ -90,6 +102,7 @@ const getTypeStringAndIcon = (
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = <B2>{i18n.t('wallet.transactions.payoutsFilter')}</B2>;
       break;
+    case 'supermind':
     case 'wire':
       const otherUser = entity.otherUser || {
         avatar: undefined as any,
@@ -99,9 +112,10 @@ const getTypeStringAndIcon = (
       avatar = <Avatar size="tiny" source={otherUser.avatar} right="M" />;
       typeString = (
         <Row flexWrap>
-          <B2>{`${getTypeLabel(entity.contract, currency)} ${
-            otherUser.isSender ? 'from ' : 'to '
-          }`}</B2>
+          <B2>{`${getTypeLabel(
+            entity.contract || entity.superType,
+            currency,
+          )} ${otherUser.isSender ? 'from ' : 'to '}`}</B2>
           <B2
             color="link"
             onPress={() =>
