@@ -102,14 +102,14 @@ const Inputs = observer(
           placeholder={i18n.t('usd')}
           keyboardType="numeric"
           onChangeText={v => {
-            store.setCash(parseFloat(v));
+            store.setCash(parseFloat(v) || 0);
           }}
           value={store.cash.toString()}
         />
       </>
     ) : (
       <ErrorLoading
-        tryAgain={() => fetchStore.fetch() || 0}
+        tryAgain={() => fetchStore.fetch()}
         message={i18n.t('errorMessage')}
       />
     ),

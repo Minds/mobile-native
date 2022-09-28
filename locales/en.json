@@ -739,7 +739,7 @@
     "account": "Account",
     "network": "Network",
     "security": "Security",
-    "billing": "Billing",
+    "billing": "Payments",
     "invalidPassword": "Insecure password",
     "passwordsNotMatch": "Passwords should match",
     "passwordFormatMinCharacters": "8 or more characters",

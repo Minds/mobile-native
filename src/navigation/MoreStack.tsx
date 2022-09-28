@@ -25,10 +25,6 @@ export default function () {
       onPress: () => navigation.push('SettingsEmail'),
     },
     {
-      title: 'Supermind',
-      onPress: () => navigation.push('SupermindSettingsScreen'),
-    },
-    {
       title: i18n.t('settings.accountOptions.2'),
       onPress: () => navigation.push('LanguageScreen'),
     },
@@ -78,19 +74,27 @@ export default function () {
     },
   ];
 
-  let BillingScreenOptions;
-  if (!IS_IOS) {
-    BillingScreenOptions = navigation => [
-      {
-        title: i18n.t('settings.billingOptions.1'),
-        onPress: () => navigation.push('PaymentMethods'),
-      },
-      {
-        title: i18n.t('settings.billingOptions.2'),
-        onPress: () => navigation.push('RecurringPayments'),
-      },
-    ];
-  }
+  const BillingScreenOptions = !IS_IOS
+    ? navigation => [
+        {
+          title: i18n.t('settings.billingOptions.1'),
+          onPress: () => navigation.push('PaymentMethods'),
+        },
+        {
+          title: i18n.t('settings.billingOptions.2'),
+          onPress: () => navigation.push('RecurringPayments'),
+        },
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
+      ]
+    : navigation => [
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
+      ];
 
   return (
     <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
