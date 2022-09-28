@@ -58,6 +58,9 @@
     }
   },
   "supermind": {
+    "getPaid": "Get paid to reply to your fans.",
+    "setMinimum": "Set your minimum offer amount",
+    "fansCant": "Fans can’t send you Supermind offers for less than your minimum offer amount.",
     "requestSubmitted": "Supermind request has been sent.",
     "addBank": "Add your bank information",
     "to": "To @{{name}}",

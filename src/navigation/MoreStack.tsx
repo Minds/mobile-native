@@ -25,6 +25,10 @@ export default function () {
       onPress: () => navigation.push('SettingsEmail'),
     },
     {
+      title: 'Supermind',
+      onPress: () => navigation.push('SupermindSettingsScreen'),
+    },
+    {
       title: i18n.t('settings.accountOptions.2'),
       onPress: () => navigation.push('LanguageScreen'),
     },
@@ -290,6 +294,13 @@ export default function () {
           require('~/settings/screens/AutoplaySettingsScreen').default
         }
         options={{ title: i18n.t('settings.accountOptions.7') }}
+      />
+      <MoreStack.Screen
+        name="SupermindSettingsScreen"
+        getComponent={() =>
+          require('~/settings/screens/SupermindSettingsScreen').default
+        }
+        options={{ headerShown: false }}
       />
       <MoreStack.Screen
         name="BoostSettingsScreen"
