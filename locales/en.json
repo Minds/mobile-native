@@ -74,6 +74,12 @@
       "0": "Text Reply",
       "1": "Image Reply",
       "2": "Video Reply"
+    },
+    "filter": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "expired": "Expired",
+      "failed": "Failed"
     }
   },
   "auth": {

@@ -5,6 +5,7 @@ type PropsType = {
   title: string;
   iconSize?: number;
   selected: boolean;
+  testID?: string;
   onPress?: () => void;
 };
 

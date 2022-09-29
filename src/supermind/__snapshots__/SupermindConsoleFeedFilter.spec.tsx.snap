@@ -1,0 +1,787 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SupermindFeedFilter should render 1`] = `
+Array [
+  <View
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        },
+        undefined,
+      ]
+    }
+    testID="FilterToggle"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#AEB0B8",
+          },
+          Object {
+            "fontFamily": "Material Design Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      󰈶
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "paddingLeft": 4,
+            },
+            Object {
+              "fontSize": 15,
+            },
+            undefined,
+          ],
+        ]
+      }
+    >
+      Accepted
+    </Text>
+  </View>,
+  <Modal
+    backdropComponent={[Function]}
+    backgroundComponent={null}
+    contentHeight={null}
+    enablePanDownToClose={true}
+    handleComponent={[Function]}
+    handleHeight={null}
+    hardwareAccelerated={false}
+    onAnimate={[Function]}
+    snapPoints={null}
+    stackBehavior="push"
+    style={
+      Array [
+        Object {
+          "shadowColor": "#000000",
+        },
+        Object {
+          "elevation": 16,
+          "shadowOffset": Object {
+            "height": -3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.58,
+          "shadowRadius": 4,
+        },
+      ]
+    }
+    topInset={0}
+    visible={true}
+  >
+    <View
+      onLayout={null}
+      style={
+        Array [
+          Array [
+            Object {
+              "backgroundColor": "#1E242A",
+            },
+          ],
+          Object {
+            "paddingBottom": 24,
+          },
+        ]
+      }
+    >
+      <RCTScrollView>
+        <View>
+          <View
+            style={
+              Object {
+                "marginBottom": 16,
+                "marginLeft": 20,
+                "marginTop": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Filter Supermind Offers
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="PendingRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Pending
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="AcceptedRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Accepted
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="ExpiredRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Expired
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="FailedRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Failed
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 16,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "marginHorizontal": 16,
+                "marginTop": 16,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignSelf": "stretch",
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "transparent",
+                      "borderRadius": 100,
+                      "flexDirection": "column",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                    },
+                    undefined,
+                    Object {
+                      "minHeight": 42,
+                      "paddingHorizontal": 24,
+                      "paddingVertical": 2,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#3f4b56",
+                      "borderColor": "transparent",
+                      "borderRadius": 100,
+                      "borderWidth": 1,
+                      "bottom": 0,
+                      "justifyContent": "center",
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "backgroundColor": "rgba(0, 0, 0, 0.1)",
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "scale": 1,
+                        },
+                      ],
+                    }
+                  }
+                >
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Medium",
+                        },
+                        Object {
+                          "fontSize": 18,
+                          "lineHeight": 24,
+                        },
+                        Object {
+                          "textAlign": "left",
+                        },
+                      ]
+                    }
+                  >
+                    Close
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+  </Modal>,
+]
+`;

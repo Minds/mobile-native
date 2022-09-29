@@ -17,7 +17,7 @@ const BottomSheetScrollView = (props: any) => <ScrollView {...props} />;
 const BottomSheetFlatList = (props: any) => <FlatList {...props} />;
 
 const useBottomSheet = jest.fn();
-const useBottomSheetModal = jest.fn();
+const useBottomSheetModal = () => ({ dismiss: jest.fn(), present: jest.fn() });
 const useBottomSheetSpringConfigs = jest.fn();
 const useBottomSheetTimingConfigs = jest.fn();
 const useBottomSheetInternal = jest.fn();

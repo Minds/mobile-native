@@ -9,6 +9,9 @@ import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import AddBankInformation from './AddBankInformation';
+import SupermindConsoleFeedFilter, {
+  SupermindFilterType,
+} from './SupermindConsoleFeedFilter';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
@@ -17,7 +20,10 @@ type TabModeType = 'inbound' | 'outbound';
 export default function SupermindConsoleScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>('inbound');
+  const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
   const listRef = React.useRef<any>(null);
+
+  //TODO: change the endpoint when the filter change
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -57,6 +63,13 @@ export default function SupermindConsoleScreen({ navigation }) {
               onChange={mode => setMode(mode)}
               current={mode}
               tabStyle={theme.paddingVertical}
+              right={
+                <SupermindConsoleFeedFilter
+                  value={filter}
+                  onFilterChange={setFilter}
+                  containerStyles={filterContainerStyle}
+                />
+              }
             />
             <AddBankInformation />
           </>
@@ -83,3 +96,8 @@ const renderSupermindOutbound = row => (
   <SupermindRequest request={row.item} outbound />
 );
 const mapRequests = items => SupermindRequestModel.createMany(items);
+
+const filterContainerStyle = ThemedStyles.combine(
+  'paddingTop2x',
+  'paddingRight4x',
+);
