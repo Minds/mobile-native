@@ -528,7 +528,7 @@
       "boost_peer_accepted": "accepted",
       "boost_peer_rejected": "declined",
       "supermind_created": "sent you",
-      "supermind_declined": "has declined",
+      "supermind_rejected": "has declined",
       "supermind_accepted": "replied to",
       "supermind_expired": "Don't forget to review",
       "supermind_expire24h": "missed",

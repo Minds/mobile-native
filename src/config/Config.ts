@@ -60,10 +60,9 @@ export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI =
-  'https://feat-supermind-wallet-transactions-4417.minds.io/';
-// DEV_MODE.isActive && CUSTOM_API_URL
-//   ? CUSTOM_API_URL
-//   : 'https://www.minds.com/';
+  DEV_MODE.isActive && CUSTOM_API_URL
+    ? CUSTOM_API_URL
+    : 'https://www.minds.com/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;

@@ -4,12 +4,11 @@ import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import i18n from '../../../common/services/i18n.service';
 import sessionService from '../../../common/services/session.service';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
 
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
   data: any;
-  entity!: ActivityModel;
+  entity!: any;
   entity_urn!: string;
   from!: UserModel;
   from_guid!: string;
@@ -25,7 +24,7 @@ export default class NotificationModel extends AbstractModel {
 
   // credit to Patrick Roberts https://stackoverflow.com/a/57065680
   isOfNotificationType() {
-    return this.type in NotificationType;
+    return Object.values(NotificationType).includes(this.type);
   }
 
   get Pronoun() {
@@ -144,7 +143,7 @@ export enum NotificationType {
   boost_rejected = 'boost_rejected',
   token_rewards_summary = 'token_rewards_summary',
   supermind_created = 'supermind_created',
-  supermind_declined = 'supermind_declined',
+  supermind_declined = 'supermind_rejected',
   supermind_accepted = 'supermind_accepted',
   supermind_expired = 'supermind_expired',
   supermind_expire24h = 'supermind_expire24h',
