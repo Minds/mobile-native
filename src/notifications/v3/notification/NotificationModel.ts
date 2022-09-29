@@ -106,6 +106,7 @@ export default class NotificationModel extends AbstractModel {
   get Subject() {
     switch (this.type) {
       case NotificationType.token_rewards_summary:
+        return '';
     }
 
     return this.from?.name;

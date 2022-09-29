@@ -91,26 +91,6 @@ exports[`Notifications component renders correctly 1`] = `
           ]
         }
       >
-        <MText
-          onPress={[Function]}
-          style={
-            Array [
-              Object {
-                "fontSize": 15,
-                "lineHeight": 18,
-              },
-              Object {
-                "fontFamily": "Roboto-Medium",
-                "fontWeight": "500",
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
-            ]
-          }
-        >
-          Minds 
-        </MText>
         <Merged
           notification={
             NotificationModel {
