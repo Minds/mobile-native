@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   ItemPropsType,
   ExtendedEntity,
@@ -63,7 +63,7 @@ const getTypeStringAndIcon = (
   currency: currencyType,
   navigation: any,
 ) => {
-  let typeString: JSX.Element, avatar: JSX.Element;
+  let typeString: ReactNode, avatar: ReactNode | null;
   switch (entity.superType) {
     case 'reward':
       avatar = <AvatarIcon name="star-outline" />;
@@ -104,25 +104,25 @@ const getTypeStringAndIcon = (
       break;
     case 'supermind':
     case 'wire':
-      const otherUser = entity.otherUser || {
-        avatar: undefined as any,
-        username: '',
-        isSender: false,
-      };
-      avatar = <Avatar size="tiny" source={otherUser.avatar} right="M" />;
+      const otherUser = entity.otherUser;
+      if (otherUser) {
+        avatar = <Avatar size="tiny" source={otherUser.avatar} right="M" />;
+      }
       typeString = (
         <Row flexWrap>
           <B2>{`${getTypeLabel(
             entity.contract || entity.superType,
             currency,
-          )} ${otherUser.isSender ? 'from ' : 'to '}`}</B2>
-          <B2
-            color="link"
-            onPress={() =>
-              navigation.push('Channel', { username: otherUser.username })
-            }>
-            {'@' + otherUser.username}
-          </B2>
+          )} ${otherUser ? (otherUser.isSender ? 'from ' : 'to ') : ''}`}</B2>
+          {Boolean(otherUser) && (
+            <B2
+              color="link"
+              onPress={() =>
+                navigation.push('Channel', { username: otherUser!.username })
+              }>
+              {'@' + otherUser!.username}
+            </B2>
+          )}
         </Row>
       );
       break;
