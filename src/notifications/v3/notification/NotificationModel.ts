@@ -8,7 +8,7 @@ import sessionService from '../../../common/services/session.service';
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
   data: any;
-  entity!: any;
+  entity!: Record<string, unknown>;
   entity_urn!: string;
   from!: UserModel;
   from_guid!: string;
