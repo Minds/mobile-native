@@ -122,7 +122,7 @@ export function SupermindOnboardingOverlay(props: SupermindOnboardingProps) {
 }
 
 export const useSupermindOnboarding = (type: SupermindOnboardingType) => {
-  const id = `supermind:onboarding6:${type}` as DismissIdentifier;
+  const id = `supermind:onboarding:${type}` as DismissIdentifier;
   const { dismissal } = useLegacyStores();
 
   return [!dismissal.isDismissed(id), () => dismissal.dismiss(id)] as [
