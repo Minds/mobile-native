@@ -1,5 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
 import _ from 'lodash';
+import { observer } from 'mobx-react';
+import { AnimatePresence } from 'moti';
 import React, { useCallback, useEffect, useState } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
@@ -10,12 +12,16 @@ import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
-import { Button, Icon, ModalFullScreen } from '../common/ui';
+import { Button, Icon, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
+import {
+  SupermindOnboardingOverlay,
+  useSupermindOnboarding,
+} from './SupermindOnboarding';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -53,7 +59,7 @@ interface SupermindComposeScreen {
  * Compose Screen
  * @param {Object} props
  */
-export default function SupermindComposeScreen(props: SupermindComposeScreen) {
+function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
   const data: SupermindRequestParam | undefined = props.route?.params?.data;
   const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
@@ -81,6 +87,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
   );
   const [errors, setErrors] = useState<any>({});
   const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
+  const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -173,16 +180,32 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     <ModalFullScreen
       title={'Supermind'}
       leftComponent={
-        <Button mode="flat" size="small" onPress={onBack}>
-          {i18nService.t('searchBar.clear')}
-        </Button>
+        onboarding ? (
+          <IconButton name="close" size="large" onPress={onBack} />
+        ) : (
+          <Button mode="flat" size="small" onPress={onBack}>
+            {i18nService.t('searchBar.clear')}
+          </Button>
+        )
       }
       extra={
-        <Button mode="flat" size="small" type="action" onPress={onSave}>
-          {i18nService.t('done')}
-        </Button>
+        onboarding ? (
+          <Button
+            mode="flat"
+            size="small"
+            type="action"
+            onPress={dismissOnboarding}>
+            {i18nService.t('continue')}
+          </Button>
+        ) : (
+          <Button mode="flat" size="small" type="action" onPress={onSave}>
+            {i18nService.t('done')}
+          </Button>
+        )
       }>
-      <FitScrollView keyboardShouldPersistTaps="handled">
+      <FitScrollView
+        keyboardShouldPersistTaps="handled"
+        style={ThemedStyles.style.flexContainer}>
         {!tabsDisabled && (
           <TopbarTabbar
             current={paymentMethod}
@@ -307,9 +330,20 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           }}
         />
       </FitScrollView>
+
+      <AnimatePresence>
+        {onboarding && (
+          <SupermindOnboardingOverlay
+            type="consumer"
+            onDismiss={dismissOnboarding}
+          />
+        )}
+      </AnimatePresence>
     </ModalFullScreen>
   );
 }
+
+export default observer(SupermindComposeScreen);
 
 const styles = ThemedStyles.create({
   termsContainer: [
