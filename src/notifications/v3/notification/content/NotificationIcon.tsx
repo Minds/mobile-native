@@ -24,7 +24,7 @@ const notificationIconsTypes: {
   boost_peer_rejected: { name: 'attach-money', type: 'material' },
   boost_rejected: { name: 'attach-money', type: 'material' },
   supermind_created: { name: 'tips-and-updates', type: 'material' },
-  supermind_declined: { name: 'tips-and-updates', type: 'material' },
+  supermind_rejected: { name: 'tips-and-updates', type: 'material' },
   supermind_accepted: { name: 'tips-and-updates', type: 'material' },
   supermind_expired: { name: 'tips-and-updates', type: 'material' },
   supermind_expire24h: { name: 'tips-and-updates', type: 'material' },

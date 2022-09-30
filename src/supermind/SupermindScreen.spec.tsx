@@ -7,6 +7,7 @@ import SupermindScreen from './SupermindScreen';
 jest.mock('../common/services/api.service');
 jest.mock('./SupermindRequest', () => () => 'SupermindRequest');
 
+const mockedApi = apiService as jest.Mocked<typeof apiService>;
 const guid = 'fakeGuid';
 
 describe('SupermindScreen', () => {
@@ -22,7 +23,7 @@ describe('SupermindScreen', () => {
         }
       />,
     );
-    apiService.get.mockResolvedValue(supermindRequestFaker());
+    mockedApi.get.mockResolvedValue(supermindRequestFaker() as any);
     expect(apiService.get).toHaveBeenCalledWith(
       '/api/v3/supermind/' + guid,
       expect.anything(),
