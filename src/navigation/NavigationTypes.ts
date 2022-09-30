@@ -46,6 +46,7 @@ export type DiscoveryStackParamList = {
 export type MoreStackParamList = {
   SupermindConsole: {};
   Drawer: {};
+  SupermindSettingsScreen: {};
   Channel: {};
   Wallet: {
     currency?: string;
@@ -180,6 +181,7 @@ export type RootStackParamList = {
     code: string;
   };
   ViewImage: {};
+  ImageGallery: {};
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
   MultiUserRegister: {};

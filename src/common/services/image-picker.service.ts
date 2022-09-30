@@ -8,14 +8,9 @@ export interface CustomImage extends Image {
   type: string;
 }
 
-// add missing property of the image type
-interface PatchImage extends Image {
-  sourceURL?: string;
-}
-
-type mediaType = 'photo' | 'video' | 'any';
-type imagePromise = false | PatchImage | PatchImage[];
-export type customImagePromise = false | CustomImage | CustomImage[];
+export type MediaType = 'photo' | 'video' | 'any';
+type ImagePromise = false | Image | Image[];
+export type CustomImageResponse = false | CustomImage | CustomImage[];
 
 /**
  * Image picker service
@@ -69,7 +64,7 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
+  async launchCamera(type: MediaType = 'photo'): Promise<CustomImageResponse> {
     // check or ask for permissions
     await this.checkCameraPermissions();
 
@@ -84,13 +79,14 @@ class ImagePickerService {
    * @param {string} type photo or video
    */
   async launchImageLibrary(
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     crop = true,
-  ): Promise<customImagePromise> {
+    maxFiles = 1,
+  ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkGalleryPermissions();
 
-    const opt = this.buildOptions(type, crop);
+    const opt = this.buildOptions(type, crop, false, maxFiles);
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -100,11 +96,11 @@ class ImagePickerService {
    */
   async show(
     title: string,
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     cropperCircleOverlay: boolean = false,
     width,
     height,
-  ): Promise<customImagePromise> {
+  ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkGalleryPermissions();
 
@@ -127,12 +123,12 @@ class ImagePickerService {
    */
   async showCamera(
     title: string,
-    type: mediaType = 'photo',
+    type: MediaType = 'photo',
     cropperCircleOverlay: boolean = false,
     front: boolean = false,
     width,
     height,
-  ): Promise<customImagePromise> {
+  ): Promise<CustomImageResponse> {
     // check permissions
     await this.checkCameraPermissions();
 
@@ -152,8 +148,8 @@ class ImagePickerService {
   }
 
   async returnCustom(
-    promise: Promise<imagePromise>,
-  ): Promise<customImagePromise> {
+    promise: Promise<ImagePromise>,
+  ): Promise<CustomImageResponse> {
     try {
       const response = await promise;
 
@@ -162,7 +158,7 @@ class ImagePickerService {
       }
 
       if (Array.isArray(response)) {
-        return response.map((image: PatchImage) =>
+        return response.map((image: Image) =>
           Object.assign(
             {
               uri: image.path.startsWith('/')
@@ -203,11 +199,14 @@ class ImagePickerService {
    * @param {string} type
    */
   buildOptions(
-    type: mediaType,
+    type: MediaType,
     crop: boolean = true,
     cropperCircleOverlay: boolean = false,
+    maxFiles: number = 1,
   ): Options {
     return {
+      multiple: maxFiles > 1,
+      maxFiles,
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,

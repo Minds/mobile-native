@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
-import { Alert, StyleProp, View, ViewStyle } from 'react-native';
+import {
+  Alert,
+  ImageURISource,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -19,6 +25,7 @@ import openUrlService from '../services/open-url.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentModel from '../../comments/v2/CommentModel';
 import { showNotification } from '../../../AppMessages';
+import MediaViewMultiImage from './media-view/MediaViewMultiImage';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -52,8 +59,20 @@ export default class MediaView extends Component<PropsType> {
       type = 'image';
     }
     switch (type) {
-      case 'image':
       case 'batch':
+        if (this.props.entity.custom_data?.length > 1) {
+          return (
+            <MediaViewMultiImage
+              entity={this.props.entity}
+              ignoreDataSaver={this.props.ignoreDataSaver}
+              onImageLongPress={this.download}
+              fullWidth={!this.props.autoHeight}
+              onImagePress={this.navToGallery}
+            />
+          );
+        }
+      // eslint-disable-next-line no-fallthrough
+      case 'image':
         return (
           <MediaViewImage
             ignoreDataSaver={this.props.ignoreDataSaver}
@@ -110,8 +129,8 @@ export default class MediaView extends Component<PropsType> {
   /**
    * Prompt user to download
    */
-  download = () => {
-    const source = this.props.entity.getThumbSource('xlarge');
+  download = (imageSource?: ImageURISource) => {
+    const source = imageSource || this.props.entity.getThumbSource('xlarge');
     if (!source || !source.uri) {
       return;
     }
@@ -235,7 +254,9 @@ export default class MediaView extends Component<PropsType> {
       this.props.entity.attachment_guid;
     }
 
-    if (!media) return null;
+    if (!media) {
+      return null;
+    }
 
     return (
       <View style={this.props.containerStyle}>
@@ -289,6 +310,17 @@ export default class MediaView extends Component<PropsType> {
         this.props.onPress();
       }
     }
+  };
+
+  /**
+   * Opens ImageGalleryScreen to view the images with the given index being active
+   * @param index - the index of image which was pressed
+   */
+  navToGallery = (index: number) => {
+    NavigationService.navigate('ImageGallery', {
+      entity: this.props.entity,
+      initialIndex: index,
+    });
   };
 }
 

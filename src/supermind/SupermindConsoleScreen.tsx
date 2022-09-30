@@ -41,7 +41,7 @@ export default function SupermindConsoleScreen({ navigation }) {
         extra={
           <IconButton
             name="settings"
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() => navigation.navigate('SupermindSettingsScreen')}
           />
         }
         back

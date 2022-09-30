@@ -1,20 +1,20 @@
 import { RouteProp } from '@react-navigation/core';
 import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
+import { RefundTermsMenuItem, TopbarTabbar } from '~/common/components';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
-import FitScrollView from '~/common/components/FitScrollView';
-import InputBase from '~/common/components/InputBase';
-import InputContainer from '~/common/components/InputContainer';
-import InputSelectorV2 from '~/common/components/InputSelectorV2';
-import { RefundTermsMenuItem, TopbarTabbar } from '~/common/components';
-import i18nService from '~/common/services/i18n.service';
-import { Button, ModalFullScreen } from '~/common/ui';
+import FitScrollView from '../common/components/FitScrollView';
+import InputBase from '../common/components/InputBase';
+import InputContainer from '../common/components/InputContainer';
+import InputSelectorV2 from '../common/components/InputSelectorV2';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
+import i18nService from '../common/services/i18n.service';
+import { Button, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);

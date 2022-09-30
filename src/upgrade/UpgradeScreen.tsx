@@ -3,12 +3,10 @@ import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, View, Platform } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import i18n from '~/common/services/i18n.service';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
-
-import { UserError } from '~/common/UserError';
-import FitScrollView from '~/common/components/FitScrollView';
-import { useStores } from '~/common/hooks/use-stores';
+import i18n from '../common/services/i18n.service';
+import { UserError } from '../common/UserError';
+import FitScrollView from '../common/components/FitScrollView';
+import { useStores } from '../common/hooks/use-stores';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
@@ -19,6 +17,7 @@ import {
 } from './types';
 import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import { Button, Column, H3 } from '~ui';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';

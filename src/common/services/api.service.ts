@@ -581,7 +581,7 @@ export class ApiService {
     lease: { presigned_url: string },
     file: any,
     progress: (event: Event) => any,
-  ) {
+  ): Cancelable<ApiResponse> {
     return new Cancelable((resolve, reject, onCancel) => {
       let xhr = new XMLHttpRequest();
 
