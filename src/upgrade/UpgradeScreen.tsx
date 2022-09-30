@@ -1,14 +1,14 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, View, Platform } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import i18n from '../common/services/i18n.service';
+import i18n from '~/common/services/i18n.service';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
-import { UserError } from '../common/UserError';
-import FitScrollView from '../common/components/FitScrollView';
-import { useStores } from '../common/hooks/use-stores';
+import { UserError } from '~/common/UserError';
+import FitScrollView from '~/common/components/FitScrollView';
+import { useStores } from '~/common/hooks/use-stores';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
@@ -22,6 +22,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import { Button, Column, H3 } from '~ui';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { RefundTermsMenuItem } from '~/common/components';
 
 const isIos = Platform.OS === 'ios';
 
@@ -36,6 +37,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
   const { height } = useDimensions().window;
+  const [termsAgreed, setTermsAgreed] = useState(false);
   const { onComplete, pro } = route.params;
 
   const complete = useCallback(
@@ -123,12 +125,17 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
                   <StripeCardSelector onCardSelected={localStore.setCard} />
                 </View>
               )}
+              <RefundTermsMenuItem
+                termsAgreed={termsAgreed}
+                onToggleTerms={setTermsAgreed}
+              />
               <Button
                 mode="outline"
                 type="action"
-                top="L2"
+                vertical="L"
                 horizontal="L"
                 loading={localStore.loading}
+                disabled={!termsAgreed}
                 onPress={confirmSend}
                 spinner>
                 {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}

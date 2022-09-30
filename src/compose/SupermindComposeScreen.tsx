@@ -3,14 +3,13 @@ import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
-import FitScrollView from '../common/components/FitScrollView';
-import InputBase from '../common/components/InputBase';
-import InputContainer from '../common/components/InputContainer';
-import InputSelectorV2 from '../common/components/InputSelectorV2';
-import MenuItem from '../common/components/menus/MenuItem';
-import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
-import i18nService from '../common/services/i18n.service';
-import { Button, Icon, ModalFullScreen } from '../common/ui';
+import FitScrollView from '~/common/components/FitScrollView';
+import InputBase from '~/common/components/InputBase';
+import InputContainer from '~/common/components/InputContainer';
+import InputSelectorV2 from '~/common/components/InputSelectorV2';
+import { RefundTermsMenuItem, TopbarTabbar } from '~/common/components';
+import i18nService from '~/common/services/i18n.service';
+import { Button, ModalFullScreen } from '~/common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
@@ -178,7 +177,12 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
         </Button>
       }
       extra={
-        <Button mode="flat" size="small" type="action" onPress={onSave}>
+        <Button
+          disabled={!termsAgreed}
+          mode="flat"
+          size="small"
+          type="action"
+          onPress={onSave}>
           {i18nService.t('done')}
         </Button>
       }>
@@ -273,47 +277,11 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        {/* <MenuItem
-          containerItemStyle={[
-            theme.bgPrimaryBackground,
-            { borderBottomWidth: 0 },
-          ]}
-          item={{
-            onPress: () => setRequireTwitter(val => !val),
-            title: 'Require the reply to be posted to @ottman on Twitter',
-            icon: (
-              <Icon
-                size={30}
-                name={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
-                color={requireTwitter ? 'Link' : 'Icon'}
-              />
-            ),
-          }}
-        /> */}
-        <MenuItem
-          containerItemStyle={styles.termsContainer}
-          item={{
-            onPress: () => setTermsAgreed(val => !val),
-            title: 'I agree to the Terms',
-            icon: (
-              <Icon
-                size={30}
-                name={termsAgreed ? 'checkbox-marked' : 'checkbox-blank'}
-                color={
-                  termsAgreed ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
-                }
-              />
-            ),
-          }}
+        <RefundTermsMenuItem
+          termsAgreed={termsAgreed}
+          onToggleTerms={setTermsAgreed}
         />
       </FitScrollView>
     </ModalFullScreen>
   );
 }
-
-const styles = ThemedStyles.create({
-  termsContainer: [
-    'bgPrimaryBackground',
-    { borderTopWidth: 0, borderBottomWidth: 0 },
-  ],
-});

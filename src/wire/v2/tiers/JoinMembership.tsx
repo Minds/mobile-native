@@ -1,28 +1,26 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
-import capitalize from '../../../common/helpers/capitalize';
+import capitalize from '~/common/helpers/capitalize';
 import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
-// import Button from '../../../common/components/Button';
-import i18n from '../../../common/services/i18n.service';
-import { UserError } from '../../../common/UserError';
-import supportTiersService from '../../../common/services/support-tiers.service';
+import i18n from '~/common/services/i18n.service';
+import { UserError } from '~/common/UserError';
+import supportTiersService from '~/common/services/support-tiers.service';
 import type { SupportTiersType } from '../../WireTypes';
 import UserModel from '../../../channel/UserModel';
 import { Flow } from 'react-native-animated-spinkit';
-import Selector from '../../../common/components/SelectorV2';
-import MenuItem, {
-  MenuItemItem,
-} from '../../../common/components/menus/MenuItem';
+import Selector from '~/common/components/SelectorV2';
+import MenuItem, { MenuItemItem } from '~/common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
-import MText from '../../../common/components/MText';
+import MText from '~/common/components/MText';
 import { Button } from '~ui';
+import { RefundTermsMenuItem } from '~/common/components';
 
 const isIos = Platform.OS === 'ios';
 
@@ -105,6 +103,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
   const tiers = route.params ? route.params.tiers : undefined;
+  const [termsAgreed, setTermsAgreed] = useState(false);
   const selectorRef = useRef<any>(null);
   const { onComplete } = route.params;
   /**
@@ -329,12 +328,16 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                   {i18n.t('membership.alreadyMember')}
                 </MText>
               )}
+              <RefundTermsMenuItem
+                termsAgreed={termsAgreed}
+                onToggleTerms={setTermsAgreed}
+              />
               <Button
-                top="L"
+                vertical="L"
                 type="action"
                 mode="outline"
                 onPress={confirmSend}
-                disabled={!!store.currentTier?.subscription_urn}
+                disabled={!!store.currentTier?.subscription_urn || !termsAgreed}
                 spinner
                 loading={store.loading}>
                 {payText}

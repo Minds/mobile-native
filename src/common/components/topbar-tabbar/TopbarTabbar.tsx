@@ -34,7 +34,7 @@ export const topbarTabbarRef = React.createRef<ScrollView>();
 /**
  * Tab bar
  */
-function TopbarTabbar<T>(props: PropsType<T>) {
+export function TopbarTabbar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
   const tabStyle = [
     theme.paddingVertical2x,

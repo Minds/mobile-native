@@ -1,24 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import HeaderComponent from '../../common/components/HeaderComponent';
-import UserNamesComponent from '../../common/components/UserNamesComponent';
+import HeaderComponent from '~/common/components/HeaderComponent';
+import UserNamesComponent from '~/common/components/UserNamesComponent';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import HeaderTabsComponent from '../../common/components/HeaderTabsComponent';
+import HeaderTabsComponent from '~/common/components/HeaderTabsComponent';
 import TokensForm from './TokensForm';
 import UsdForm from './UsdForm';
 import WireStore from '../WireStore';
-import i18n from '../../common/services/i18n.service';
-import logService from '../../common/services/log.service';
-import api from '../../common/services/api.service';
-import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
+import i18n from '~/common/services/i18n.service';
+import logService from '~/common/services/log.service';
+import api from '~/common/services/api.service';
+import toFriendlyCrypto from '~/common/helpers/toFriendlyCrypto';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
-import { storages } from '../../common/services/storage/storages.service';
-import MText from '../../common/components/MText';
+import { storages } from '~/common/services/storage/storages.service';
+import MText from '~/common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
+import { RefundTermsMenuItem } from '~/common/components';
 
 const isIos = Platform.OS === 'ios';
 
@@ -152,6 +153,7 @@ export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 const FabScreen = observer(({ route, navigation }) => {
   const wc = useWalletConnect();
   const store = useLocalStore(createFabScreenStore, { wc });
+  const [termsAgreed, setTermsAgreed] = useState(false);
 
   const tabList = [
     {
@@ -211,6 +213,10 @@ const FabScreen = observer(({ route, navigation }) => {
             {store.tab === 'tokens' && <TokensForm store={store} />}
             {store.tab === 'usd' && <UsdForm store={store} />}
           </View>
+          <RefundTermsMenuItem
+            termsAgreed={termsAgreed}
+            onToggleTerms={setTermsAgreed}
+          />
         </View>
       </ScrollView>
     </DismissKeyboard>
