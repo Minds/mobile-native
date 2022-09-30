@@ -9,6 +9,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
+import { useFeature } from '@growthbook/growthbook-react';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -19,14 +20,11 @@ const WalletOptions = () => ({
 });
 
 export default function () {
+  const supermindFeatureFlag = useFeature('mobile-supermind');
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
       onPress: () => navigation.push('SettingsEmail'),
-    },
-    {
-      title: 'Supermind',
-      onPress: () => navigation.push('SupermindSettingsScreen'),
     },
     {
       title: i18n.t('settings.accountOptions.2'),
@@ -78,19 +76,31 @@ export default function () {
     },
   ];
 
-  let BillingScreenOptions;
-  if (!IS_IOS) {
-    BillingScreenOptions = navigation => [
-      {
-        title: i18n.t('settings.billingOptions.1'),
-        onPress: () => navigation.push('PaymentMethods'),
-      },
-      {
-        title: i18n.t('settings.billingOptions.2'),
-        onPress: () => navigation.push('RecurringPayments'),
-      },
-    ];
-  }
+  const BillingScreenOptions = !IS_IOS
+    ? navigation => [
+        {
+          title: i18n.t('settings.billingOptions.1'),
+          onPress: () => navigation.push('PaymentMethods'),
+        },
+        {
+          title: i18n.t('settings.billingOptions.2'),
+          onPress: () => navigation.push('RecurringPayments'),
+        },
+        supermindFeatureFlag.on
+          ? {
+              title: 'Supermind',
+              onPress: () => navigation.push('SupermindSettingsScreen'),
+            }
+          : null,
+      ]
+    : navigation => [
+        supermindFeatureFlag.on
+          ? {
+              title: 'Supermind',
+              onPress: () => navigation.push('SupermindSettingsScreen'),
+            }
+          : null,
+      ];
 
   return (
     <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
