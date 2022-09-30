@@ -5,10 +5,10 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
-import StripeCardSelector from '../methods/StripeCardSelector';
 import { styles } from './TokensForm';
 import InputContainer from '../../common/components/InputContainer';
 import MText from '../../common/components/MText';
+import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 
 type propsType = {
   store: FabScreenStore;
@@ -34,13 +34,9 @@ const UsdForm = observer(({ store }: propsType) => {
         testID="fabTokensInput"
       />
       <View style={theme.paddingHorizontal4x}>
-        <LabeledComponent
-          label="Select Card"
-          wrapperStyle={theme.marginBottom4x}>
-          <ScrollView contentContainerStyle={scrollviewStyle}>
-            <StripeCardSelector onCardSelected={store.setCard} />
-          </ScrollView>
-        </LabeledComponent>
+        <ScrollView contentContainerStyle={scrollviewStyle}>
+          <StripeCardSelector onCardSelected={store.setCard} />
+        </ScrollView>
 
         <LabeledComponent label="Repeat Payment Monthly">
           <CheckBox
@@ -55,13 +51,7 @@ const UsdForm = observer(({ store }: propsType) => {
   );
 });
 
-const scrollviewStyle = ThemedStyles.combine(
-  'paddingHorizontal2x',
-  'columnAlignCenter',
-  'alignCenter',
-  'flexContainer',
-  'paddingTop2x',
-);
+const scrollviewStyle = ThemedStyles.combine('paddingTop2x');
 
 const textStyle = ThemedStyles.combine(
   'colorPrimaryText',
