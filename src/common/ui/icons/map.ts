@@ -19,6 +19,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'info-outline',
   },
+  supermind: {
+    font: 'MaterialIcons',
+    name: 'tips-and-updates',
+  },
   warning: {
     font: 'MaterialIcons',
     name: 'warning',
@@ -131,6 +135,14 @@ const ICON_MAP = {
   check: {
     font: 'MaterialCommunityIcons',
     name: 'check',
+  },
+  'checkbox-marked': {
+    font: 'MaterialCommunityIcons',
+    name: 'checkbox-marked',
+  },
+  'checkbox-blank': {
+    font: 'MaterialCommunityIcons',
+    name: 'checkbox-blank-outline',
   },
   'plus-circle-outline': {
     font: 'MaterialIcons',

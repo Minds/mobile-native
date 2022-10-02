@@ -1,13 +1,20 @@
-//@ts-nocheck
-import api from './api.service';
-import imagePicker from './image-picker.service';
+import api, { ApiResponse } from './api.service';
+import imagePicker, { CustomImage, MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
-import { showNotification } from '../../../AppMessages';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
+import { Media } from '../stores/AttachmentStore';
+
+type S3Response = {
+  lease: {
+    presigned_url: string;
+    media_type: string;
+    guid: string;
+  };
+} & ApiResponse;
 
 /**
  * Attachment service
@@ -18,12 +25,16 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  attachMedia(media, extra, onProgress = null) {
+  attachMedia(
+    media: Media,
+    extra: any,
+    onProgress?: (number) => void,
+  ): Cancelable<any> | Promise<any> {
     const file = {
       uri: media.uri,
       path: media.path || null,
       type: media.type,
-      name: media.fileName || 'test',
+      name: media.filename || 'test',
     };
 
     const progress = e => {
@@ -34,15 +45,11 @@ class AttachmentService {
       }
     };
 
-    let promise;
-
     if (file.type.includes('video')) {
-      promise = this.uploadToS3(file, progress);
+      return this.uploadToS3(file, progress);
     } else {
-      promise = api.upload('api/v1/media/', file, extra, progress);
+      return api.upload('api/v1/media/', file, extra, progress);
     }
-
-    return promise;
   }
 
   /**
@@ -110,7 +117,9 @@ class AttachmentService {
    */
   uploadToS3(file, progress) {
     return new Cancelable(async (resolve, reject, onCancel) => {
-      const response = await api.put(`api/v2/media/upload/prepare/video`);
+      const response = await api.put<S3Response>(
+        'api/v2/media/upload/prepare/video',
+      );
       // upload file to s3
       const uploadPromise = api
         .uploadToS3(response.lease, file, progress)
@@ -160,9 +169,12 @@ class AttachmentService {
     const response = await imagePicker.launchCamera('video');
 
     if (response) {
+      // we only use the first one if it is an array
+      const video = Array.isArray(response) ? response[0] : response;
+
       return {
-        uri: response.uri,
-        path: response.path,
+        uri: video.uri,
+        path: video.path,
         type: 'video/mp4',
         fileName: 'image.mp4',
       };
@@ -178,9 +190,11 @@ class AttachmentService {
     const response = await imagePicker.launchCamera('photo');
 
     if (response) {
+      // we only use the first one if it is an array
+      const image = Array.isArray(response) ? response[0] : response;
       return {
-        uri: response.uri,
-        path: response.path,
+        uri: image.uri,
+        path: image.path,
         type: 'image/jpeg',
         fileName: 'image.jpg',
       };
@@ -193,33 +207,35 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType = 'photo', crop = true) {
-    const response = await imagePicker.launchImageLibrary(mediaType, crop);
+  async gallery(mediaType: MediaType = 'photo', crop = true, maxFiles = 1) {
+    const response = await imagePicker.launchImageLibrary(
+      mediaType,
+      crop,
+      maxFiles,
+    );
 
     if (!response) {
       return null;
     }
 
-    if (response.didCancel) {
-      return null;
-    } else if (response.error) {
-      showNotification(response.error);
-      return null;
+    if (Array.isArray(response)) {
+      return response.length > maxFiles
+        ? response.slice(0, maxFiles).map(this.fixMedia)
+        : response.map(this.fixMedia);
     } else {
-      if (!response.type) {
-        if (!response.width) {
-          response.type = 'video/mp4';
-        } else if (response.uri.includes('.gif')) {
-          response.type = 'image/gif';
-        }
-      }
-      // if (Platform.OS === 'ios') {
-      //   response.uri =
-      //     '~' + response.uri.substring(response.uri.indexOf('/Documents'));
-      // }
-
-      return response;
+      return this.fixMedia(response);
     }
+  }
+
+  fixMedia(media: CustomImage) {
+    if (!media.type) {
+      if (!media.width) {
+        media.type = 'video/mp4';
+      } else if (media.uri.includes('.gif')) {
+        media.type = 'image/gif';
+      }
+    }
+    return media;
   }
 }
 

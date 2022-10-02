@@ -1,11 +1,12 @@
-import { useFeature } from '@growthbook/growthbook-react';
+import { IfFeatureEnabled, useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default function ComposeBottomBar(props) {
+function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const mediaQuoteFF = useFeature('mobile-5645-media-quotes');
@@ -23,17 +24,16 @@ export default function ComposeBottomBar(props) {
   const onCameraPress = useCallback(() => {
     Keyboard.dismiss();
     navigation.navigate('Capture', {
+      mode: props.store.allowedMode,
       onMediaConfirmed: media => {
-        props.store.onMedia(media);
-        props.store.attachment.attachMedia(media, props.store.extra);
+        props.store.attachments.attachMedia(media, props.store.extra);
         return true;
       },
     });
   }, [navigation, props.store]);
-  const onGalleryPress = useCallback(
-    () => props.store.selectFromGallery('any'),
-    [props.store],
-  );
+  const onGalleryPress = useCallback(() => {
+    props.store.selectFromGallery(props.store.allowedMode);
+  }, [props.store]);
 
   return (
     <View style={styles.bottomBar}>
@@ -54,7 +54,7 @@ export default function ComposeBottomBar(props) {
           onPress={onCameraPress}
         />
       )}
-      {!props.store.isGroup() && (
+      {!props.store.isGroup() && !props.store.supermindRequest && (
         <IconButton
           name="money"
           style={iconStyle}
@@ -68,6 +68,21 @@ export default function ComposeBottomBar(props) {
         scale
         onPress={props.onHashtag}
       />
+      {
+        // don't allow superminding in the context of a supermind reply
+        !props.store.isSupermindReply && (
+          <IfFeatureEnabled feature="mobile-supermind">
+            <IconButton
+              name="supermind"
+              style={iconStyle}
+              scale
+              color={props.store.supermindRequest ? 'Link' : 'Icon'}
+              onPress={props.onSupermind}
+            />
+          </IfFeatureEnabled>
+        )
+      }
+
       <View style={theme.flexContainer} />
       <IconButton
         name="cog"
@@ -79,6 +94,8 @@ export default function ComposeBottomBar(props) {
     </View>
   );
 }
+
+export default observer(ComposeBottomBar);
 
 const styles = ThemedStyles.create({
   bottomBar: [

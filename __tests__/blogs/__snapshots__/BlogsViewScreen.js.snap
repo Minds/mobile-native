@@ -142,6 +142,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             >
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {
@@ -530,6 +531,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
+                        selectable={false}
                         style={
                           Array [
                             Object {
@@ -718,6 +720,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     >
                       <Text
                         allowFontScaling={false}
+                        selectable={false}
                         style={
                           Array [
                             Object {
@@ -752,6 +755,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Text
                   allowFontScaling={false}
                   onPress={[Function]}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -824,6 +828,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -937,6 +942,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "last_save": "1524843907",
               "last_updated": "1524838665",
               "license": "attribution-noncommercial-cc",
+              "listenForMetricsDebounced": [Function],
               "mature": false,
               "mature_visibility": false,
               "message": "",
@@ -1118,6 +1124,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "last_save": "1524843907",
               "last_updated": "1524838665",
               "license": "attribution-noncommercial-cc",
+              "listenForMetricsDebounced": [Function],
               "mature": false,
               "mature_visibility": false,
               "message": "",
@@ -1299,6 +1306,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "last_save": "1524843907",
               "last_updated": "1524838665",
               "license": "attribution-noncommercial-cc",
+              "listenForMetricsDebounced": [Function],
               "mature": false,
               "mature_visibility": false,
               "message": "",
@@ -1482,6 +1490,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "last_save": "1524843907",
               "last_updated": "1524838665",
               "license": "attribution-noncommercial-cc",
+              "listenForMetricsDebounced": [Function],
               "mature": false,
               "mature_visibility": false,
               "message": "",
@@ -1732,6 +1741,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {

@@ -36,6 +36,7 @@ import {
   textStyle,
 } from './styles';
 import MText from '../../common/components/MText';
+import SupermindBorderView from '~/common/components/supermind/SupermindBorderView';
 
 const FONT_THRESHOLD = 300;
 
@@ -52,6 +53,7 @@ type PropsType = {
   storeUserTap?: boolean;
   showOnlyContent?: boolean;
   borderless?: boolean;
+  hideMetrics?: boolean;
 };
 
 /**
@@ -194,6 +196,106 @@ export default class Activity extends Component<PropsType> {
     showNotification(i18n.t('copied'), 'info');
   };
 
+  setMediaViewRef = o => {
+    this.mediaView = o;
+  };
+
+  /**
+   * Pause video if exist
+   */
+  pauseVideo() {
+    this.mediaView?.pauseVideo();
+  }
+
+  /**
+   * Play video if exist
+   */
+  playVideo(sound) {
+    this.mediaView?.playVideo(sound);
+  }
+
+  /**
+   * Show translation
+   */
+  showTranslate = async () => {
+    if (this.translate.current) {
+      //@ts-ignore
+      const lang = await this.translate.current?.show();
+      if (this.remind && lang) this.remind.showTranslate();
+    } else {
+      if (this.remind) this.remind.showTranslate();
+    }
+  };
+
+  /**
+   * Show Owner
+   */
+  showOwner() {
+    const rightToolbar: React.ReactNode = (
+      <ActivityActionSheet
+        entity={this.props.entity}
+        navigation={this.props.navigation}
+        onTranslate={this.showTranslate}
+        testID={
+          this.props.entity.text === 'e2eTest' ? 'ActivityMoreButton' : ''
+        }
+      />
+    );
+    return (
+      <OwnerBlock
+        entity={this.props.entity}
+        navigation={this.props.navigation}
+        rightToolbar={this.props.hideTabs ? null : rightToolbar}
+        storeUserTap={this.props.storeUserTap}
+      />
+    );
+  }
+
+  /**
+   * Show remind activity
+   */
+  showRemind() {
+    const remind_object = this.props.entity.remind_object;
+
+    if (remind_object && !this.props.hideRemind) {
+      if (blockListService.has(remind_object.owner_guid)) {
+        return (
+          <View style={remindBlockContainerStyle}>
+            <MText style={styles.blockedNoticeDesc}>
+              {i18n.t('activity.remindBlocked')}
+              <MText
+                onPress={this.navToRemindChannel}
+                style={ThemedStyles.style.bold}>
+                {' '}
+                @{remind_object.ownerObj.username}
+              </MText>
+            </MText>
+          </View>
+        );
+      }
+
+      const Container: any =
+        this.props.entity.supermind && this.props.entity.supermind.is_reply
+          ? SupermindBorderView
+          : QuoteContainer;
+
+      return (
+        <Container>
+          <Activity
+            ref={this.setRemind}
+            hideTabs={true}
+            entity={remind_object}
+            navigation={this.props.navigation}
+            isReminded={true}
+            parentMature={this.props.entity.shouldBeBlured()}
+            hydrateOnNav={true}
+            showOnlyContent={this.props.showOnlyContent}
+          />
+        </Container>
+      );
+    }
+  }
+
   /**
    * Render
    */
@@ -292,105 +394,15 @@ export default class Activity extends Component<PropsType> {
               entity={entity}
               showOnlyContent={this.props.showOnlyContent}
               hideTabs={this.props.hideTabs}
+              hideMetrics={this.props.hideMetrics}
             />
           </Pressable>
         )}
       </View>
     );
   }
-
-  setMediaViewRef = o => {
-    this.mediaView = o;
-  };
-
-  /**
-   * Pause video if exist
-   */
-  pauseVideo() {
-    this.mediaView?.pauseVideo();
-  }
-
-  /**
-   * Play video if exist
-   */
-  playVideo(sound) {
-    this.mediaView?.playVideo(sound);
-  }
-
-  /**
-   * Show translation
-   */
-  showTranslate = async () => {
-    if (this.translate.current) {
-      //@ts-ignore
-      const lang = await this.translate.current?.show();
-      if (this.remind && lang) this.remind.showTranslate();
-    } else {
-      if (this.remind) this.remind.showTranslate();
-    }
-  };
-
-  /**
-   * Show Owner
-   */
-  showOwner() {
-    const rightToolbar: React.ReactNode = (
-      <ActivityActionSheet
-        entity={this.props.entity}
-        navigation={this.props.navigation}
-        onTranslate={this.showTranslate}
-        testID={
-          this.props.entity.text === 'e2eTest' ? 'ActivityMoreButton' : ''
-        }
-      />
-    );
-    return (
-      <OwnerBlock
-        entity={this.props.entity}
-        navigation={this.props.navigation}
-        rightToolbar={this.props.hideTabs ? null : rightToolbar}
-        storeUserTap={this.props.storeUserTap}
-      />
-    );
-  }
-
-  /**
-   * Show remind activity
-   */
-  showRemind() {
-    const remind_object = this.props.entity.remind_object;
-
-    if (remind_object && !this.props.hideRemind) {
-      if (blockListService.has(remind_object.owner_guid)) {
-        return (
-          <View style={remindBlockContainerStyle}>
-            <MText style={styles.blockedNoticeDesc}>
-              {i18n.t('activity.remindBlocked')}
-              <MText
-                onPress={this.navToRemindChannel}
-                style={ThemedStyles.style.bold}>
-                {' '}
-                @{remind_object.ownerObj.username}
-              </MText>
-            </MText>
-          </View>
-        );
-      }
-
-      return (
-        <View style={remindContainerStyle}>
-          <Activity
-            ref={this.setRemind}
-            hideTabs={true}
-            entity={remind_object}
-            navigation={this.props.navigation}
-            isReminded={true}
-            parentMature={this.props.entity.shouldBeBlured()}
-            hydrateOnNav={true}
-            showOnlyContent={this.props.showOnlyContent}
-          />
-        </View>
-      );
-    }
-  }
 }
+
+const QuoteContainer = ({ children }) => (
+  <View style={remindContainerStyle}>{children}</View>
+);

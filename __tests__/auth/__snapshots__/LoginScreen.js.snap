@@ -17,14 +17,13 @@ exports[`LoginScreen component should renders correctly 1`] = `
   <View
     style={
       Array [
+        undefined,
         Object {
-          "borderColor": "#414C57",
-        },
-        Object {
-          "borderBottomWidth": 1,
-        },
-        Object {
-          "minHeight": 55,
+          "transform": Array [
+            Object {
+              "translateY": 0,
+            },
+          ],
         },
       ]
     }
@@ -33,17 +32,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
+            "borderColor": "#414C57",
           },
           Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
+            "borderBottomWidth": 1,
           },
           Object {
             "minHeight": 55,
@@ -51,135 +43,159 @@ exports[`LoginScreen component should renders correctly 1`] = `
         ]
       }
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-            },
-            Object {
-              "fontFamily": "Roboto-Bold",
-            },
-            Object {
-              "fontSize": 24,
-              "lineHeight": 32,
-            },
-            Object {
-              "textAlign": "left",
-            },
-          ]
-        }
-      >
-        Login
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-          "margin": 16,
-        }
-      }
-    >
       <View
         style={
           Array [
             Object {
-              "flexDirection": "row",
-              "justifyContent": "flex-start",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "alignSelf": "center",
+              "justifyContent": "center",
+            },
+            Object {
+              "minHeight": 55,
             },
           ]
         }
       >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "fontFamily": "Roboto-Bold",
+              },
+              Object {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
+          }
+        >
+          Login
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 16,
+          }
+        }
+      >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-              "marginRight": 8,
-              "position": "relative",
-            }
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-start",
+              },
+            ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 9.333333333333332,
-                "left": 9.333333333333332,
-                "right": 9.333333333333332,
-                "top": 9.333333333333332,
-              }
-            }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "alignItems": "center",
                 "justifyContent": "center",
+                "marginRight": 8,
+                "position": "relative",
               }
             }
           >
             <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 9.333333333333332,
+                  "left": 9.333333333333332,
+                  "right": 9.333333333333332,
+                  "top": 9.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
                   "alignItems": "center",
-                  "flexDirection": "row",
                   "justifyContent": "center",
                 }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 28,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 28,
-                    },
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
                 }
               >
-                <Text
-                  allowFontScaling={false}
+                <View
                   style={
                     Array [
                       Object {
-                        "color": "#AEB0B8",
-                        "fontSize": 25.76,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 28,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 28,
                       },
-                      Object {},
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
                     ]
                   }
                 >
-                  
-                </Text>
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#AEB0B8",
+                          "fontSize": 25.76,
+                        },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
         </View>
+        <View />
       </View>
-      <View />
     </View>
   </View>
   <View
@@ -326,8 +342,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 }
                 maxLength={50}
                 onChangeText={[Function]}
-                placeholder=""
-                placeholderTextColor="#444"
+                placeholderTextColor="#797B82"
                 returnKeyType="done"
                 style={
                   Array [
@@ -492,8 +507,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     }
                     multiline={false}
                     onChangeText={[Function]}
-                    placeholder=""
-                    placeholderTextColor="#444"
+                    placeholderTextColor="#797B82"
                     returnKeyType="done"
                     secureTextEntry={true}
                     style={
@@ -539,6 +553,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             <Text
               allowFontScaling={false}
               onPress={[Function]}
+              selectable={false}
               style={
                 Array [
                   Object {

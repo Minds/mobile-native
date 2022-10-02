@@ -11,10 +11,12 @@ export interface PostStore<T> extends FetchStore<T> {
   post: (object?) => Promise<any>;
 }
 
-type FetchResponseType = {
-  status: string;
-  'load-next': string | number;
-};
+type FetchResponseType =
+  | {
+      status: string;
+      'load-next': string | number;
+    }
+  | Array<any>;
 
 type ApiFetchType = FetchResponseType;
 
@@ -27,25 +29,30 @@ const mergeState = (dataField: string, map = defaultMap) => (
   newData: ApiFetchType,
   oldData: ApiFetchType,
 ) =>
-  ({
-    ...newData,
-    [dataField]: [
-      ...(oldData ? oldData[dataField] : []),
-      ...map(newData && newData[dataField] ? newData[dataField] : []),
-    ],
-  } as ApiFetchType);
+  dataField
+    ? ({
+        ...newData,
+        [dataField]: [
+          ...(oldData ? oldData[dataField] : []),
+          ...map(newData && newData[dataField] ? newData[dataField] : []),
+        ],
+      } as ApiFetchType)
+    : [...(oldData ? (oldData as Array<any>) : []), ...map(newData || [])];
 
 /**
  * a function that replaces the state with the new state
  */
-const replaceState = (dataField: string, map = defaultMap) => (
-  newData: any,
-) => ({
-  ...newData,
-  [dataField]: [
-    ...map(newData && newData[dataField] ? newData[dataField] : []),
-  ],
-});
+const replaceState = (dataField: string, map = defaultMap) => (newData: any) =>
+  dataField
+    ? {
+        ...newData,
+        [dataField]: [
+          ...map(newData && newData[dataField] ? newData[dataField] : []),
+        ],
+      }
+    : newData
+    ? map(newData)
+    : [];
 
 type MethodType = 'get' | 'post' | 'put' | 'delete';
 
@@ -93,14 +100,10 @@ export interface FetchStore<T> {
   refreshing?: boolean;
 }
 
-const createStore = ({
-  url,
-  options: hookOptions,
-  method = 'get',
-}: {
+const createStore = (storeOptions: {
   url: string;
   options?: FetchOptions;
-  method?: MethodType;
+  method: MethodType;
 }) => ({
   retryTimer: <any>null,
   retryCount: 0,
@@ -120,14 +123,17 @@ const createStore = ({
   },
   hydrate(params: any, updateState) {
     try {
-      const data = storages.user?.getMap(getCacheKey(url, params));
+      const data = storages.user?.getMap(getCacheKey(storeOptions.url, params));
       if (data) this.setResult(updateState(data, this.result));
     } catch (e) {
       console.error(e);
     }
   },
   persist(params: any) {
-    return storages.user?.setMap(getCacheKey(url, params), this.result);
+    return storages.user?.setMap(
+      getCacheKey(storeOptions.url, params),
+      this.result,
+    );
   },
   setResult(v: any) {
     this.result = v;
@@ -143,7 +149,7 @@ const createStore = ({
   },
   async fetch(data?: object, retry = false, opts: FetchOptions = {}) {
     if (!data) {
-      data = hookOptions?.params || {};
+      data = storeOptions.options?.params || {};
     }
     let {
       updateState,
@@ -158,7 +164,7 @@ const createStore = ({
         offsetField: 'load-next',
         dataField: 'entities',
       },
-      hookOptions,
+      storeOptions.options,
       opts,
     );
     this.clearRetryTimer(!retry);
@@ -182,10 +188,10 @@ const createStore = ({
     this.setLoading(true);
     this.setError(null);
     try {
-      const result = await apiService[method](
-        url,
+      const result = await apiService[storeOptions.method](
+        storeOptions.url,
         data,
-        method === 'get' ? this : undefined,
+        storeOptions.method === 'get' ? this : undefined,
       );
 
       // hack to remove the offset if the result was empty
@@ -201,14 +207,16 @@ const createStore = ({
       }
     } catch (err) {
       this.setError(err);
-      if (hookOptions?.retry !== undefined && !isAbort(err)) {
+      if (storeOptions.options?.retry !== undefined && !isAbort(err)) {
         if (
-          hookOptions.retry > 0 ? this.retryCount < hookOptions?.retry : true
+          storeOptions.options.retry > 0
+            ? this.retryCount < storeOptions.options?.retry
+            : true
         ) {
           this.retryCount++;
           this.retryTimer = setTimeout(() => {
             this.fetch(data, true);
-          }, hookOptions?.retryDelay || 3000);
+          }, storeOptions.options?.retryDelay || 3000);
         }
       }
       throw err;
@@ -246,6 +254,7 @@ export default function useApiFetch<T>(
 ): FetchStore<T> {
   const store: FetchStore<T> = useLocalStore(createStore, {
     url,
+    method: 'get',
     options,
   });
   const observableParams = useAsObservableSource(options.params || {});

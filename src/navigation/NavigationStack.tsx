@@ -140,16 +140,12 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() =>
-            withModalProvider(require('~/groups/GroupViewScreen').withModal)
-          }
+          getComponent={() => require('~/groups/GroupViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          getComponent={() =>
-            withModalProvider(require('~/blogs/BlogsViewScreen').withModal)
-          }
+          getComponent={() => require('~/blogs/BlogsViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -317,6 +313,12 @@ const RootStack = observer(function () {
               getComponent={() => require('~/compose/ComposeScreen').default}
               options={TransitionPresets.ModalPresentationIOS}
             />
+            <RootStackNav.Screen
+              name="SupermindCompose"
+              getComponent={() =>
+                require('~/compose/SupermindComposeScreen').default
+              }
+            />
             {/* Modal screens here */}
             <RootStackNav.Screen
               name="MultiUserScreen"
@@ -344,6 +346,10 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="ViewImage"
               getComponent={() => require('~/media/ViewImageScreen').default}
+            />
+            <RootStackNav.Screen
+              name="ImageGallery"
+              getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
             {/* <RootStackNav.Screen
               name="BlockchainWalletModal"
@@ -462,6 +468,13 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="TosScreen"
               getComponent={() => require('~/tos/TosScreen').default}
+            />
+            <RootStackNav.Screen
+              name="ChannelSelectScreen"
+              getComponent={() =>
+                require('../common/components/AutoComplete/ChannelSelectScreen')
+                  .default
+              }
             />
           </>
         )

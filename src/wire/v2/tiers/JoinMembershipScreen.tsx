@@ -8,7 +8,7 @@ import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import type { SupportTiersType } from '../../WireTypes';
+import type { SupportTiersType } from '../../../wire/WireTypes';
 import JoinMembership from './JoinMembership';
 
 const isIos = Platform.OS === 'ios';

@@ -57,6 +57,27 @@
       "vote": "You are not allowed to vote this content"
     }
   },
+  "supermind": {
+    "getPaid": "Get paid to reply to your fans.",
+    "setMinimum": "Set your minimum offer amount",
+    "fansCant": "Fans can’t send you Supermind offers for less than your minimum offer amount.",
+    "requestSubmitted": "Supermind request has been sent.",
+    "addBank": "Add your bank information",
+    "to": "To @{{name}}",
+    "addBankDetail": "Start receiving cash payouts by adding your bank details.",
+    "acceptOffer": "Accept Offer",
+    "cancelOffer": "Cancel Offer",
+    "decline": "Decline",
+    "revoked": "revoked",
+    "rejected": "rejected",
+    "minimum": "Must be a minimum of {{value}}",
+    "maxTwoDecimals": "Must have less than 2 decimals",
+    "replyType": {
+      "0": "Text Reply",
+      "1": "Image Reply",
+      "2": "Video Reply"
+    }
+  },
   "auth": {
     "2faRequired": "2FA required",
     "2faEmailDescription": "Minds just sent a 6-digit authentication code to your registered email address",
@@ -257,6 +278,7 @@
   },
   "capture": {
     "discardPost": "Discard this post?",
+    "max4Images": "You may not upload more than 4 images",
     "discardPostDescription": "If you discard you’ll lose this post",
     "keepEditing": "Keep Editing",
     "yesDiscard": "Yes, Discard",
@@ -296,7 +318,8 @@
     "attach": "Photo & Video Library",
     "takePhoto": "Camera",
     "usePhoto": "Use photo",
-    "useVideo": "Use video"
+    "useVideo": "Use video",
+    "onlyMultiImage": "Only multi-images posts are allowed"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -718,7 +741,7 @@
     "account": "Account",
     "network": "Network",
     "security": "Security",
-    "billing": "Billing",
+    "billing": "Payments",
     "invalidPassword": "Insecure password",
     "passwordsNotMatch": "Passwords should match",
     "passwordFormatMinCharacters": "8 or more characters",
@@ -1266,6 +1289,7 @@
   "wire": {
     "customDonation": "Custom Donation",
     "selectCredit": "Select a credit card.",
+    "addCard": "Add card.",
     "amountMonth": "{{amount}} / month",
     "noAddress": "This channel has not configured their {{type}} address yet",
     "amountMonthDescription": "THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {{amount}}/MONTH TO @{{name}}",
@@ -1617,6 +1641,13 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "expires": "Expires",
+  "requirements": "Requirements",
   "seeMore": "See more",
-  "removeFromFeed": "Remove from feed"
+  "inbound": "Inbound",
+  "outbound": "Outbound",
+  "removeFromFeed": "Remove from feed",
+  "channelSelect": {
+    "title": "Select a channel"
+  }
 }
