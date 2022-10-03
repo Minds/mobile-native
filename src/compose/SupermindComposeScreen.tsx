@@ -1,4 +1,5 @@
 import { RouteProp } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { showNotification } from '../../AppMessages';
@@ -21,6 +22,7 @@ const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
+type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
 export enum ReplyType {
   text = 0,
@@ -47,6 +49,7 @@ export interface SupermindRequestParam {
 
 interface SupermindComposeScreen {
   route?: PasswordConfirmation;
+  navigation: Navigation;
 }
 
 /**
@@ -109,7 +112,12 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
-    NavigationService.goBack();
+
+    if (props.route?.params?.closeComposerOnClear) {
+      props.navigation.pop(2);
+    } else {
+      props.navigation.goBack();
+    }
   }, [props.route]);
 
   const onSave = useCallback(() => {
