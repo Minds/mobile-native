@@ -76,7 +76,8 @@
       "0": "Text Reply",
       "1": "Image Reply",
       "2": "Video Reply"
-    }
+    },
+    "postUnavailable": "Post is unavailable"
   },
   "auth": {
     "2faRequired": "2FA required",
