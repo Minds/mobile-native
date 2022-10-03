@@ -2,7 +2,25 @@
 
 Minds Mobile
 
-## 4.28.0 - 2022-09-02
+## 4.29.0 - 2022-09-30
+
+### Changed
+
+- Multi-image support
+- Multi-image gallery
+- Official stripe SDK
+- Supermind creation
+- Supermind settings
+- Supermind console
+- Live metrics
+- Fix notifications not loading when changing tabs
+- Fix scroll issues after refresh on discovery
+- Fix feed performance due to animated counters
+- Fix auto scroll to comments
+- Fix comments input on blog and groups
+- Fix codepush issue on iOS
+
+## 4.28.0 - 2022-09-13
 
 ### Changed
 
