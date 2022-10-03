@@ -122,7 +122,8 @@ export default observer(
     const _refresh = React.useCallback(() => {
       props.offsetPagination ? setPage(1) : setOffset('');
       fetchStore.refresh();
-    }, [props.offsetPagination, fetchStore]);
+      props.onRefresh?.();
+    }, [props.offsetPagination, fetchStore, props.onRefresh]);
 
     const onFetchMore = useCallback(() => {
       if (fetchStore.loading) {

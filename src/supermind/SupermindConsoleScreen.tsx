@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import OffsetList from '~/common/components/OffsetList';
 
 import TopbarTabbar, {
@@ -8,6 +8,8 @@ import i18n from '~/common/services/i18n.service';
 
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import FeedStore from '../common/stores/FeedStore';
+import SeeLatestPostsButton from '../newsfeed/SeeLatestPostsButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
@@ -18,7 +20,13 @@ export default function SupermindConsoleScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>('inbound');
   const listRef = React.useRef<any>(null);
-
+  const feedStore = useMemo(() => {
+    const _feedStore = new FeedStore().setCountEndpoint(
+      'api/v3/newsfeed/subscribed/latest/count',
+    );
+    _feedStore.feedsService.feedLastFetchedAt = Date.now();
+    return _feedStore;
+  }, []);
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
       {
@@ -33,11 +41,16 @@ export default function SupermindConsoleScreen({ navigation }) {
     [],
   );
 
+  const scrollToTopAndRefresh = useCallback(() => {
+    listRef.current?.scrollToTop();
+    listRef.current?.refreshList();
+  }, [listRef]);
+
   return (
     <Screen safe>
       <ScreenHeader
         title="Supermind"
-        onTitlePress={() => listRef.current?.scrollToTop()}
+        onTitlePress={scrollToTopAndRefresh}
         extra={
           <IconButton
             name="settings"
@@ -54,7 +67,7 @@ export default function SupermindConsoleScreen({ navigation }) {
             <TopbarTabbar
               titleStyle={theme.fontXL}
               tabs={tabs}
-              onChange={mode => setMode(mode)}
+              onChange={setMode}
               current={mode}
               tabStyle={theme.paddingVertical}
             />
@@ -73,6 +86,11 @@ export default function SupermindConsoleScreen({ navigation }) {
           mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
         }
         endpointData=""
+        onRefresh={() => feedStore.clearNewPostsCount()}
+      />
+      <SeeLatestPostsButton
+        feedStore={feedStore}
+        onPress={scrollToTopAndRefresh}
       />
     </Screen>
   );
