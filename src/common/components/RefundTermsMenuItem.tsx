@@ -1,7 +1,8 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import MenuItem from './menus/MenuItem';
 import { Icon } from '../ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import i18n from '../services/i18n.service';
 
 type RefundTermsProps = {
   termsAgreed: boolean;
@@ -12,7 +13,7 @@ type RefundTermsProps = {
 export function RefundTermsMenuItem({
   termsAgreed,
   onToggleTerms,
-  title = 'I understand this transaction is non-refundable once the recipient approves my offer',
+  title = i18n.t('wallet.transactions.refundTerms'),
 }: RefundTermsProps) {
   return (
     <MenuItem
@@ -32,9 +33,6 @@ export function RefundTermsMenuItem({
   );
 }
 
-const styles = ThemedStyles.create({
-  termsContainer: [
-    'bgPrimaryBackground',
-    { borderTopWidth: 0, borderBottomWidth: 0 },
-  ],
+const styles = StyleSheet.create({
+  termsContainer: { borderTopWidth: 0, borderBottomWidth: 0 },
 });

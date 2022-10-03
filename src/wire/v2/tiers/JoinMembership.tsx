@@ -334,6 +334,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               />
               <Button
                 vertical="L"
+                horizontal="L"
                 type="action"
                 mode="outline"
                 onPress={confirmSend}
@@ -364,7 +365,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
 
 const styles = ThemedStyles.create({
   alreadyAMemberText: ['fontL', 'colorAlert'],
-  alreadyAMemberWrapper: ['padding4x', 'marginTop2x'],
+  alreadyAMemberWrapper: ['paddingVertical4x', 'marginTop2x'],
   stripeCardSelectorWrapper: ['marginTop6x', 'marginHorizontal3x'],
   headerContainer: [
     'rowJustifyCenter',
