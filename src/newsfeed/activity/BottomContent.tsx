@@ -51,7 +51,12 @@ const BottomContent = (props: PropsType) => {
 
   return (
     <>
-      {!props.hideMetrics && <ActivityMetrics entity={props.entity} />}
+      {!props.hideMetrics && (
+        <ActivityMetrics
+          entity={props.entity}
+          hideSupermindLabel={props.hideTabs}
+        />
+      )}
       <Actions
         onPressComment={onPressComment}
         entity={props.entity}
