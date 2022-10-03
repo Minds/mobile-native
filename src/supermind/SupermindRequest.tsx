@@ -19,6 +19,10 @@ type Props = {
 export default function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
 
+  if (!request.entity) {
+    return null;
+  }
+
   return (
     <Spacer top="XL">
       <View style={borderBottomStyle}>
