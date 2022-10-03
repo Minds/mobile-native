@@ -86,7 +86,7 @@ export default function SupermindConsoleScreen({ navigation }) {
           mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
         }
         endpointData=""
-        onRefresh={() => feedStore.clearNewPostsCount()}
+        onRefresh={feedStore.refreshNewPostsCount}
       />
       <SeeLatestPostsButton
         feedStore={feedStore}

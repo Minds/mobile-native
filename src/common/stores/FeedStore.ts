@@ -729,7 +729,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     return () => clearInterval(this.newPostInterval);
   }
 
-  public clearNewPostsCount = () => {
+  public refreshNewPostsCount = () => {
     this.feedsService.feedLastFetchedAt = Date.now();
     this.newPostsCount = 0;
   };
