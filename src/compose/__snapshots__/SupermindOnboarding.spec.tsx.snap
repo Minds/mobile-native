@@ -267,7 +267,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           ]
         }
       >
-        You’ll make a new public post that the target creator can reply to.
+        You'll make a new public post that the target creator can reply to.
          
       </Text>
     </View>
