@@ -79,6 +79,10 @@ export default function (props) {
      * The existence of this object means the composer is being used to reply to a supermind
      */
     supermindObject: undefined as SupermindRequestModel,
+    /**
+     * The onSave from route params, called after submitting
+     */
+    onSaveCallback: undefined as () => void,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -94,6 +98,7 @@ export default function (props) {
       this.allowedMode = params.allowedMode;
       this.entity = params.entity || null;
       this.supermindObject = params.supermindObject;
+      this.onSaveCallback = params.onSave;
 
       this.mode = params.mode
         ? params.mode
@@ -159,6 +164,7 @@ export default function (props) {
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
 
+      this.onSaveCallback?.();
       popToTop();
       this.clear(false);
 

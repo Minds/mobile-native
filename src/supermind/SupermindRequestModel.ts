@@ -104,4 +104,9 @@ export default class SupermindRequestModel extends BaseModel {
       this.isLoading = 0;
     }
   }
+
+  @action
+  async setStatus(status: SupermindRequestStatus) {
+    this.status = status;
+  }
 }
