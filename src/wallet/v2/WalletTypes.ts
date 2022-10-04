@@ -11,6 +11,7 @@ export type TokensOptions =
 export type UsdOptions = 'earnings' | 'transactions' | 'settings';
 
 export interface StripeDetails {
+  loaded: boolean;
   bankAccount?: any;
   totalBalance?: any;
   pendingBalance?: { amount: number };
