@@ -77,7 +77,44 @@
       "1": "Image Reply",
       "2": "Video Reply"
     },
-    "postUnavailable": "Post is unavailable"
+    "postUnavailable": "Post is unavailable",
+    "onboarding": {
+      "producer": {
+        "title": "Get paid to reply to your fans.",
+        "steps": {
+          "1": {
+            "title": "How to earn",
+            "subtitle": "Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.",
+            "seeTerms": "See terms and conditions."
+          },
+          "2": {
+            "title": "It's your content",
+            "subtitle": "Your replies are public for all of your followers, so everyone benefits from the interaction."
+          },
+          "3": {
+            "title": "Limitations",
+            "subtitle": "Once you accept an offer, your reply can't be deleted. And NSFW content is currently not supported with Supermind."
+          }
+        }
+      },
+      "consumer": {
+        "title": "Get replies from your favorite creators by sending them paid offers.",
+        "steps": {
+          "1": {
+            "title": "Set an offer amount",
+            "subtitle": "Send an offer of cash or tokens. The creator earns the offer amount when they reply."
+          },
+          "2": {
+            "title": "Prompt with a public post",
+            "subtitle": "You'll make a new public post that the target creator can reply to."
+          },
+          "3": {
+            "title": "Get a reply",
+            "subtitle": "Creators have 7 days to reply to your post. You will not be charged if they do not reply."
+          }
+        }
+      }
+    }
   },
   "auth": {
     "2faRequired": "2FA required",
@@ -535,6 +572,11 @@
       "boost_peer_request": "sent you",
       "boost_peer_accepted": "accepted",
       "boost_peer_rejected": "declined",
+      "supermind_created": "sent you",
+      "supermind_rejected": "has declined",
+      "supermind_accepted": "replied to",
+      "supermind_expired": "Don't forget to review",
+      "supermind_expire24h": "missed",
       "boost_rejected": "is unable to approve",
       "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
     }
