@@ -8,7 +8,7 @@ import sessionService from '../../../common/services/session.service';
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
   data: any;
-  entity!: Record<string, unknown>;
+  entity!: Record<string, any>;
   entity_urn!: string;
   from!: UserModel;
   from_guid!: string;
@@ -64,7 +64,7 @@ export default class NotificationModel extends AbstractModel {
       : 'their';
   }
 
-  get Noun() {
+  get Noun(): string {
     switch (this.type) {
       case NotificationType.wire_received:
       case NotificationType.group_queue_add:
@@ -87,7 +87,7 @@ export default class NotificationModel extends AbstractModel {
       case 'comment':
         return 'comment';
       case 'object':
-        return this.entity?.subtype;
+        return this.entity?.subtype as string;
       case 'user':
         return 'you';
       default:
