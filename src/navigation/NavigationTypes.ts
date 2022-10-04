@@ -12,6 +12,7 @@ import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
 import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
+import SupermindRequestModel from '../supermind/SupermindRequestModel';
 
 type AnyType = any;
 
@@ -209,6 +210,10 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Supermind: {
+    guid: string;
+    supermindRequest?: SupermindRequestModel;
+  };
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
