@@ -52,6 +52,10 @@ export default class UserModel extends BaseModel {
   dob?: string;
   liquidity_spot_opt_out?: boolean;
   subscriber: boolean = false;
+  supermind_settings?: {
+    min_cash?: number;
+    min_offchain_tokens?: number;
+  };
 
   tags: Array<string> = [];
   groupsCount: number = 0;
