@@ -56,11 +56,13 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
    */
   const scrollToFocusedComment = useCallback((comments: CommentModel[]) => {
     const index = comments.findIndex(c => c.focused);
-    ref.current?.scrollToIndex({
-      index,
-      viewPosition: 0,
-      animated: true,
-    });
+    if (index >= 0) {
+      ref.current?.scrollToIndex({
+        index,
+        viewPosition: 0,
+        animated: true,
+      });
+    }
   }, []);
 
   /**
