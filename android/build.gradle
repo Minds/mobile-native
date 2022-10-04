@@ -80,9 +80,6 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 23
-                    manifestPlaceholders = [
-                        tipsiStripeRedirectScheme: "mindsapp"
-                    ]
                 }
             }
         }

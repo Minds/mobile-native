@@ -343,7 +343,7 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-slider (3.0.3):
     - React
-  - react-native-webview (11.14.0):
+  - react-native-webview (11.23.1):
     - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
@@ -461,7 +461,7 @@ PODS:
     - React-Core
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (2.4.2):
+  - RNGestureHandler (2.6.1):
     - React-Core
   - RNImageColors (1.3.1):
     - React-Core
@@ -930,7 +930,7 @@ SPEC CHECKSUMS:
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
   react-native-safe-area-context: eec048ba481a7ec7b1bf9d7b7a78fb1103f4806d
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
-  react-native-webview: d70bc760daaa0e2667dec569b93014882565819c
+  react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -953,7 +953,7 @@ SPEC CHECKSUMS:
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFlashList: 5318fc0772902ffa55170b35caa95ad5a69da3ef
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
-  RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
+  RNGestureHandler: 28ad20bf02257791f7f137b31beef34b9549f54b
   RNImageColors: 5bb550d397934b18a55b8beec2af683bb9432898
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
@@ -977,6 +977,6 @@ SPEC CHECKSUMS:
   VisionCamera: 476081b3788235857202394f25cd0503269cb4af
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
-PODFILE CHECKSUM: d66cfc638086e5fbca4db45b974672da3a66ae38
+PODFILE CHECKSUM: 5b42fbf01a10e18626d06502ebba1a750dde8da5
 
 COCOAPODS: 1.11.3

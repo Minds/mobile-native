@@ -8,6 +8,7 @@ import InputContainer from '~/common/components/InputContainer';
 import useApiFetch, { FetchStore } from '~/common/hooks/useApiFetch';
 import apiService from '~/common/services/api.service';
 import i18n from '~/common/services/i18n.service';
+import mindsConfigService from '~/common/services/minds-config.service';
 
 import {
   B1,
@@ -33,8 +34,12 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
    */
   React.useEffect(() => {
     if (fetchStore.result) {
-      localStore.setCash(fetchStore.result.min_cash);
-      localStore.setTokens(fetchStore.result.min_offchain_tokens);
+      localStore.setCash(fetchStore.result.min_cash.toString());
+      localStore.setTokens(fetchStore.result.min_offchain_tokens.toString());
+      const config = mindsConfigService.getSettings();
+      if (config.min_thresholds) {
+        localStore.setThresholds(config.min_thresholds);
+      }
     }
   }, [fetchStore.result, localStore]);
 
@@ -49,6 +54,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
             type="action"
             testID="save"
             spinner
+            disabled={Boolean(localStore.cashError || localStore.tokenError)}
             onPress={() => localStore.submit()}>
             {i18n.t('save')}
           </Button>
@@ -90,9 +96,10 @@ const Inputs = observer(
           testID="tokensInput"
           placeholder={i18n.t('tokens')}
           onChangeText={v => {
-            store.setTokens(parseFloat(v) || 0);
+            store.setTokens(v);
           }}
           keyboardType="numeric"
+          error={store.tokenError}
           value={store.tokens.toString()}
           noBottomBorder
           autoFocus
@@ -101,38 +108,69 @@ const Inputs = observer(
           testID="cashInput"
           placeholder={i18n.t('usd')}
           keyboardType="numeric"
+          error={store.cashError}
           onChangeText={v => {
-            store.setCash(parseFloat(v));
+            store.setCash(v);
           }}
           value={store.cash.toString()}
         />
       </>
     ) : (
       <ErrorLoading
-        tryAgain={() => fetchStore.fetch() || 0}
+        tryAgain={() => fetchStore.fetch()}
         message={i18n.t('errorMessage')}
       />
     ),
 );
+
+type Thresholds = { min_cash: number; min_offchain_tokens: number };
 
 /**
  * Local store
  */
 const createStore = ({ navigation }) => {
   return {
-    tokens: 1,
-    cash: 10,
-    setCash(v: number) {
-      this.cash = v;
+    tokens: '1',
+    cash: '10',
+    cashError: '',
+    tokenError: '',
+    min_thresholds: { min_cash: 10, min_offchain_tokens: 1 },
+    setThresholds(thresholds: Thresholds) {
+      this.min_thresholds = thresholds;
     },
-    setTokens(v: number) {
+    setCash(v: string) {
+      this.cash = v;
+      this.cashError = '';
+      this.cashError = this.validateInput(v, this.min_thresholds.min_cash);
+    },
+    validateInput(value: string, minimum: number) {
+      const numericValue = parseFloat(value) || 0;
+      if (value === '') {
+        return i18n.t('auth.fieldRequired');
+      }
+      if (numericValue < minimum) {
+        return i18n.t('supermind.minimum', {
+          value: minimum,
+        });
+      }
+      if (value.includes('.') && value.split('.')[1].length > 2) {
+        return i18n.t('supermind.maxTwoDecimals');
+      }
+      return '';
+    },
+    setTokens(v: string) {
       this.tokens = v;
+      this.tokenError = '';
+      this.tokenError = this.validateInput(
+        v,
+        this.min_thresholds.min_offchain_tokens,
+      );
     },
     async submit() {
       try {
         await apiService.post('api/v3/supermind/settings', {
-          min_cash: this.cash,
-          min_offchain_tokens: this.tokens,
+          min_cash: parseFloat(this.cash),
+          min_offchain_tokens: parseFloat(this.tokens),
         });
       } catch (error) {
         if (error instanceof Error) {

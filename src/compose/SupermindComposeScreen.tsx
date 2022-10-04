@@ -10,6 +10,7 @@ import InputBase from '../common/components/InputBase';
 import InputContainer from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { Button, Icon, IconButton, ModalFullScreen } from '../common/ui';

@@ -5,7 +5,7 @@ module.exports = {
         android: null,
       },
     },
-    'tipsi-stripe': {
+    '@stripe/stripe-react-native': {
       platforms: {
         ios: null, // disable ios platform, other platforms will still autolink if provided
       },

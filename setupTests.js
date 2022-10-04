@@ -100,3 +100,7 @@ jest.mock('react-native-system-setting', () => {
 jest.mock('react-native-silent-switch');
 jest.mock('react-native-mmkv-storage');
 global.__reanimatedWorkletInit = jest.fn();
+
+jest.mock('@stripe/stripe-react-native', () =>
+  require('@stripe/stripe-react-native/jest/mock.js'),
+);

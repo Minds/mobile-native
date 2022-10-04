@@ -948,6 +948,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             <TextInput
               autoCapitalize="none"
               autoFocus={true}
+              error=""
               keyboardAppearance="dark"
               keyboardType="numeric"
               labelStyle={
@@ -1103,6 +1104,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             </View>
             <TextInput
               autoCapitalize="none"
+              error=""
               keyboardAppearance="dark"
               keyboardType="numeric"
               labelStyle={
