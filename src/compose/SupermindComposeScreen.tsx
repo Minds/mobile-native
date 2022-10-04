@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -83,7 +83,9 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       : '10',
   );
   const [errors, setErrors] = useState<any>({});
-  const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
+
+  // hide payment method tabs
+  const tabsDisabled = IS_IOS;
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -155,27 +157,6 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     termsAgreed,
     props.route,
   ]);
-
-  /**
-   * A user can only pay in cash where the producer has
-   * a bank account connected to their minds account
-   */
-  useEffect(() => {
-    if (!channel) {
-      return;
-    }
-
-    if (IS_IOS) {
-      return;
-    }
-
-    if (!channel.merchant) {
-      setPaymentMethod(PaymentType.token);
-      setTabsDisabled(true);
-    } else {
-      setTabsDisabled(false);
-    }
-  }, [channel]);
 
   return (
     <ModalFullScreen
