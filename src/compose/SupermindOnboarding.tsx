@@ -4,6 +4,7 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
+import i18n from '../common/services/i18n.service';
 import openUrlService from '../common/services/open-url.service';
 import { DismissIdentifier } from '../common/stores/DismissalStore';
 import { B2, Column, H4, Icon, Row } from '../common/ui';
@@ -12,52 +13,45 @@ import ThemedStyles from '../styles/ThemedStyles';
 
 const onboardingTypes = {
   producer: {
-    title: 'Get paid to reply to your fans.',
+    title: i18n.t('supermind.onboarding.producer.title'),
     steps: [
       {
-        title: 'How to earn',
-        description:
-          'Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.',
+        title: i18n.t('supermind.onboarding.producer.steps.1.title'),
+        description: i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
         icon: 'money',
         link: {
-          title: 'See terms and conditions.',
+          title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
           onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
         },
       },
       {
-        title: "It's your content",
-        description:
-          'Your replies are public for all of your followers, so everyone benefits from the interaction.',
+        title: i18n.t('supermind.onboarding.producer.steps.2.title'),
+        description: i18n.t('supermind.onboarding.producer.steps.2.subtitle'),
         icon: 'sms',
       },
       {
-        title: 'Limitations',
-        description:
-          "Once you accept an offer, your reply can't be deleted. And NSFW content is currently not supported with Supermind.",
+        title: i18n.t('supermind.onboarding.producer.steps.3.title'),
+        description: i18n.t('supermind.onboarding.producer.steps.3.subtitle'),
         icon: 'delete',
       },
     ],
   },
   consumer: {
-    title:
-      'Get replies from your favorite creators by sending them paid offers.',
+    title: i18n.t('supermind.onboarding.consumer.title'),
     steps: [
       {
-        title: 'Set an offer amount',
-        description:
-          'Send an offer of cash or tokens. The creator earns the offer amount when they reply.',
+        title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.1.title'),
         icon: 'money',
       },
       {
-        title: 'Prompt with a public post',
-        description:
-          'You’ll make a new public post that the target creator can reply to.',
+        title: i18n.t('supermind.onboarding.consumer.steps.2.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.2.title'),
         icon: 'sms',
       },
       {
-        title: 'Get a reply',
-        description:
-          'Creators have 7 days to reply to your post. You will not be charged if they do not reply.',
+        title: i18n.t('supermind.onboarding.consumer.steps.3.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.3.title'),
         icon: 'date-range',
       },
     ],

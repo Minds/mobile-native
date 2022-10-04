@@ -190,15 +190,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         )
       }
       extra={
-        onboarding ? (
-          <Button
-            mode="flat"
-            size="small"
-            type="action"
-            onPress={dismissOnboarding}>
-            {i18nService.t('continue')}
-          </Button>
-        ) : (
+        !onboarding && (
           <Button mode="flat" size="small" type="action" onPress={onSave}>
             {i18nService.t('done')}
           </Button>
