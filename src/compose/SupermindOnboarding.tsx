@@ -41,17 +41,17 @@ const onboardingTypes = {
     steps: [
       {
         title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.1.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
         icon: 'money',
       },
       {
         title: i18n.t('supermind.onboarding.consumer.steps.2.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.2.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.2.subtitle'),
         icon: 'sms',
       },
       {
         title: i18n.t('supermind.onboarding.consumer.steps.3.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.3.title'),
+        description: i18n.t('supermind.onboarding.consumer.steps.3.subtitle'),
         icon: 'date-range',
       },
     ],

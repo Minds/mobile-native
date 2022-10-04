@@ -18,7 +18,6 @@ import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
