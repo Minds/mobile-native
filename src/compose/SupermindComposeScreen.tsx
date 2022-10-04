@@ -77,10 +77,17 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
   const [cardId, setCardId] = useState<string | undefined>(
     data?.payment_options?.payment_method_id,
   );
+
+  const { min_cash = 0, min_offchain_tokens = 0 } =
+    channel?.supermind_settings ?? {};
+
+  const minValue =
+    paymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
+
   const [offer, setOffer] = useState(
     data?.payment_options?.amount
       ? String(data?.payment_options?.amount)
-      : '10',
+      : `${minValue}`,
   );
   const [errors, setErrors] = useState<any>({});
 
@@ -95,10 +102,11 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     if (paymentMethod === PaymentType.cash && !cardId) {
       err.card = 'Card is required';
     }
-    if (!offer || !Number(offer) || Number.isNaN(Number(offer))) {
+    const oferValue = Number(offer ?? '');
+    if (Number.isNaN(oferValue)) {
       err.offer = 'Offer is not valid';
-    } else if (offer && Number(offer) < 10) {
-      err.offer = 'Offer must be greater than 10';
+    } else if (oferValue < minValue) {
+      err.offer = `Offer must be greater than ${minValue}`;
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -110,7 +118,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       setErrors(err);
     }
     return !hasErrors;
-  }, [cardId, channel, offer, paymentMethod, termsAgreed]);
+  }, [cardId, channel, offer, paymentMethod, termsAgreed, minValue]);
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
@@ -120,7 +128,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     } else {
       props.navigation.goBack();
     }
-  }, [props.route]);
+  }, [props.route, props.navigation]);
 
   const onSave = useCallback(() => {
     if (!validate()) {
@@ -213,7 +221,7 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
               offer: '',
             }));
           }}
-          hint="Min: 10"
+          hint={`Min: ${minValue}`}
           value={offer}
           error={errors.offer}
           inputType="number"
