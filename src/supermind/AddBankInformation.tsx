@@ -7,10 +7,14 @@ import i18nService from '~/common/services/i18n.service';
 import { B2, PressableLine, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 
+type PropsType = {
+  borderTop?: boolean;
+};
+
 /**
  * Add bank information banner
  */
-function AddBankInformation() {
+function AddBankInformation({ borderTop = false }: PropsType) {
   const { wallet } = useStores();
   const navigation = useNavigation();
 
@@ -19,7 +23,7 @@ function AddBankInformation() {
   }
   return (
     <PressableLine
-      style={borderBottomStyle}
+      style={borderTop ? borderTopStyle : borderBottomStyle}
       onPress={() =>
         navigation.navigate('BankInfoScreen', { walletStore: wallet })
       }>
@@ -38,4 +42,8 @@ export default observer(AddBankInformation);
 export const borderBottomStyle = ThemedStyles.combine(
   'bcolorPrimaryBorder',
   'borderBottomHair',
+);
+export const borderTopStyle = ThemedStyles.combine(
+  'bcolorPrimaryBorder',
+  'borderTopHair',
 );

@@ -17,14 +17,13 @@ exports[`Tos screen render and accept 1`] = `
   <View
     style={
       Array [
+        undefined,
         Object {
-          "borderColor": "#414C57",
-        },
-        Object {
-          "borderBottomWidth": 1,
-        },
-        Object {
-          "minHeight": 55,
+          "transform": Array [
+            Object {
+              "translateY": 0,
+            },
+          ],
         },
       ]
     }
@@ -33,17 +32,10 @@ exports[`Tos screen render and accept 1`] = `
       style={
         Array [
           Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
+            "borderColor": "#414C57",
           },
           Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
+            "borderBottomWidth": 1,
           },
           Object {
             "minHeight": 55,
@@ -51,49 +43,72 @@ exports[`Tos screen render and accept 1`] = `
         ]
       }
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-            },
-            Object {
-              "fontFamily": "Roboto-Bold",
-            },
-            Object {
-              "fontSize": 24,
-              "lineHeight": 32,
-            },
-            Object {
-              "textAlign": "left",
-            },
-          ]
-        }
-      >
-        TOS Update
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-          "margin": 16,
-        }
-      }
-    >
       <View
         style={
           Array [
             Object {
-              "flexDirection": "row",
-              "justifyContent": "flex-start",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "alignSelf": "center",
+              "justifyContent": "center",
+            },
+            Object {
+              "minHeight": 55,
             },
           ]
         }
-      />
-      <View />
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "fontFamily": "Roboto-Bold",
+              },
+              Object {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
+          }
+        >
+          TOS Update
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 16,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-start",
+              },
+            ]
+          }
+        />
+        <View />
+      </View>
     </View>
   </View>
   <View

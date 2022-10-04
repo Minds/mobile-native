@@ -932,19 +932,46 @@ exports[`Activity screen component renders correctly  1`] = `
                 </View>
                 <View
                   style={
-                    Object {
-                      "marginLeft": 4,
-                    }
-                  }
-                >
-                  <View
-                    style={
+                    Array [
                       Object {
                         "flexDirection": "row",
                         "justifyContent": "center",
-                      }
+                      },
+                      Object {
+                        "marginLeft": 4,
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        Object {
+                          "fontFamily": "Roboto",
+                        },
+                        Array [
+                          Array [
+                            Object {
+                              "color": "#AEB0B8",
+                            },
+                            Object {
+                              "fontSize": 14,
+                            },
+                            Object {
+                              "fontFamily": "Roboto-Medium",
+                              "fontWeight": "500",
+                            },
+                          ],
+                          undefined,
+                        ],
+                      ]
                     }
-                  />
+                  >
+                    
+                  </Text>
                 </View>
               </View>
             </View>
@@ -1739,9 +1766,14 @@ exports[`Activity screen component renders correctly  1`] = `
       CommentsStore {
         "attachment": AttachmentStore {
           "cancelOrDelete": [Function],
-          "fileName": null,
+          "filename": "",
           "guid": "",
+          "height": 1,
+          "localIdentifier": "",
+          "onClear": undefined,
+          "path": "",
           "transcoding": false,
+          "width": 1,
         },
         "comments": Array [],
         "embed": RichEmbedStore {

@@ -24,12 +24,9 @@ export default class ExplicitImage extends Component<
   };
 
   render() {
+    const entity = this.props.entity;
     // do not show image if it is mature
-    if (
-      this.props.entity &&
-      this.props.entity.shouldBeBlured() &&
-      !this.props.entity.mature_visibility
-    ) {
+    if (entity && entity.shouldBeBlured() && !entity.mature_visibility) {
       return <View style={overlayStyle} />;
     }
 
@@ -43,10 +40,10 @@ export default class ExplicitImage extends Component<
     return (
       <SmartImage
         {...this.props}
-        ignoreDataSaver={
-          this.props.ignoreDataSaver ||
-          Boolean(this.props.entity && this.props.entity.paywall)
-        }
+        blurhash={entity?.custom_data?.[0]?.blurhash || entity?.blurhash}
+        blurred={entity?.shouldBeBlured()}
+        locked={entity?.isLocked()}
+        ignoreDataSaver={this.props.ignoreDataSaver || Boolean(entity?.paywall)}
       />
     );
   }

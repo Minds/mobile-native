@@ -80,6 +80,7 @@ describe('createComposeStore', () => {
     expect(NavigationService.navigate).toHaveBeenCalledWith(
       'SupermindCompose',
       {
+        closeComposerOnClear: true,
         data: { channel: fakeOwnerObj },
         onSave: expect.any(Function),
         onClear: expect.any(Function),
@@ -104,6 +105,7 @@ describe('createComposeStore', () => {
     expect(NavigationService.navigate).toHaveBeenCalledWith(
       'SupermindCompose',
       {
+        closeComposerOnClear: true,
         data: { channel: fakeOwnerObj },
         onSave: expect.any(Function),
         onClear: expect.any(Function),

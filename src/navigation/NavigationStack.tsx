@@ -140,16 +140,12 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() =>
-            withModalProvider(require('~/groups/GroupViewScreen').withModal)
-          }
+          getComponent={() => require('~/groups/GroupViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          getComponent={() =>
-            withModalProvider(require('~/blogs/BlogsViewScreen').withModal)
-          }
+          getComponent={() => require('~/blogs/BlogsViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -355,6 +351,10 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="ViewImage"
               getComponent={() => require('~/media/ViewImageScreen').default}
+            />
+            <RootStackNav.Screen
+              name="ImageGallery"
+              getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
             {/* <RootStackNav.Screen
               name="BlockchainWalletModal"

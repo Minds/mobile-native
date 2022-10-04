@@ -1,6 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -8,6 +9,7 @@ import InputBase from '../common/components/InputBase';
 import InputContainer from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { Button, Icon, ModalFullScreen } from '../common/ui';
@@ -15,12 +17,12 @@ import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
+type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
 export enum ReplyType {
   text = 0,
@@ -47,6 +49,7 @@ export interface SupermindRequestParam {
 
 interface SupermindComposeScreen {
   route?: PasswordConfirmation;
+  navigation: Navigation;
 }
 
 /**
@@ -80,7 +83,9 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       : '10',
   );
   const [errors, setErrors] = useState<any>({});
-  const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
+
+  // hide payment method tabs
+  const tabsDisabled = IS_IOS;
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -109,7 +114,12 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
-    NavigationService.goBack();
+
+    if (props.route?.params?.closeComposerOnClear) {
+      props.navigation.pop(2);
+    } else {
+      props.navigation.goBack();
+    }
   }, [props.route]);
 
   const onSave = useCallback(() => {
@@ -147,27 +157,6 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     termsAgreed,
     props.route,
   ]);
-
-  /**
-   * A user can only pay in cash where the producer has
-   * a bank account connected to their minds account
-   */
-  useEffect(() => {
-    if (!channel) {
-      return;
-    }
-
-    if (IS_IOS) {
-      return;
-    }
-
-    if (!channel.merchant) {
-      setPaymentMethod(PaymentType.token);
-      setTabsDisabled(true);
-    } else {
-      setTabsDisabled(false);
-    }
-  }, [channel]);
 
   return (
     <ModalFullScreen
