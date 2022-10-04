@@ -52,9 +52,11 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
             entity.txMoment = moment(entity.timestamp * 1000).local();
             entity.displayTime = entity.txMoment.format('hh:mm a');
             entity.date = i18n.date(entity.txMoment, 'nameDay');
-            entity.otherUser = entity.contract.includes('wire')
-              ? this.getUser(entity)
-              : null;
+            entity.otherUser =
+              entity.contract.includes('wire') ||
+              entity.contract.includes('supermind')
+                ? this.getUser(entity)
+                : null;
             entity.delta = this.getDelta(entity.contract, entity.amount);
 
             const isWithdrawal = entity.contract.includes('withdraw');
@@ -103,7 +105,7 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
     getUser(entity: ExtendedEntity) {
       const selfUsername = this.user.me.username,
         isSender =
-          entity.sender.username.toLowerCase() !== selfUsername.toLowerCase(),
+          entity.sender?.username.toLowerCase() !== selfUsername.toLowerCase(),
         eUser = UserModel.checkOrCreate(
           isSender ? entity.sender : entity.receiver,
         );

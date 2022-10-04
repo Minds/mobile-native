@@ -1135,7 +1135,8 @@
       "offchainBoost": "Off-Chain Boost",
       "onchainBoost": "On-Chain Boost",
       "proEarningsFilter": "Pro Earnings",
-      "payoutsFilter": "Payouts"
+      "payoutsFilter": "Payouts",
+      "supermindOffer": "Supermind Offer"
     },
     "phoneValidationMessage": "To start earning rewards, you will need to enter a unique phone number.",
     "phoneVerification": "Phone Verification",
