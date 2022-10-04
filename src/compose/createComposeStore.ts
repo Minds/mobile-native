@@ -128,7 +128,7 @@ export default function (props) {
       if (params.openSupermindModal) {
         const channel =
           params.supermindTargetChannel || params.entity?.ownerObj;
-        this.openSupermindModal(channel ? { channel } : undefined);
+        this.openSupermindModal(channel ? { channel } : undefined, true);
       }
 
       // clear params to avoid repetition
@@ -671,9 +671,13 @@ export default function (props) {
         }),
       );
     },
-    openSupermindModal(supermindRequest?: Partial<SupermindRequestParam>) {
+    openSupermindModal(
+      supermindRequest?: Partial<SupermindRequestParam>,
+      closeComposerOnClear?: boolean,
+    ) {
       NavigationService.navigate('SupermindCompose', {
         data: supermindRequest || this.supermindRequest,
+        closeComposerOnClear,
         onSave: (payload: SupermindRequestParam) => {
           this.supermindRequest = payload;
         },

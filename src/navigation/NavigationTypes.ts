@@ -122,6 +122,7 @@ export type RootStackParamList = {
   Compose: {};
   SupermindCompose: {
     data: SupermindRequestParam;
+    closeComposerOnClear?: boolean;
     onSave: (payload: SupermindRequestParam) => void;
     onClear: () => void;
   };

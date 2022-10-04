@@ -1,8 +1,9 @@
 import { RouteProp } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -27,6 +28,7 @@ const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
+type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
 export enum ReplyType {
   text = 0,
@@ -53,6 +55,7 @@ export interface SupermindRequestParam {
 
 interface SupermindComposeScreen {
   route?: PasswordConfirmation;
+  navigation: Navigation;
 }
 
 /**
@@ -86,8 +89,10 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       : '10',
   );
   const [errors, setErrors] = useState<any>({});
-  const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
+
+  // hide payment method tabs
+  const tabsDisabled = IS_IOS;
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -116,8 +121,13 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
-    NavigationService.goBack();
-  }, [props.route]);
+
+    if (props.route?.params?.closeComposerOnClear) {
+      props.navigation.pop(2);
+    } else {
+      props.navigation.goBack();
+    }
+  }, [props.navigation, props.route]);
 
   const onSave = useCallback(() => {
     if (!validate()) {
@@ -154,27 +164,6 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     termsAgreed,
     props.route,
   ]);
-
-  /**
-   * A user can only pay in cash where the producer has
-   * a bank account connected to their minds account
-   */
-  useEffect(() => {
-    if (!channel) {
-      return;
-    }
-
-    if (IS_IOS) {
-      return;
-    }
-
-    if (!channel.merchant) {
-      setPaymentMethod(PaymentType.token);
-      setTabsDisabled(true);
-    } else {
-      setTabsDisabled(false);
-    }
-  }, [channel]);
 
   return (
     <ModalFullScreen
