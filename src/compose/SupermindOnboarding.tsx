@@ -1,6 +1,6 @@
 import { MotiView } from 'moti';
-import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React, { useEffect } from 'react';
+import { Keyboard, StyleProp, View, ViewStyle } from 'react-native';
 import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
