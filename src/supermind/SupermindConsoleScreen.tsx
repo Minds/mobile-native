@@ -1,13 +1,17 @@
+import { observer } from 'mobx-react';
+import { AnimatePresence } from 'moti';
 import React from 'react';
 import OffsetList from '~/common/components/OffsetList';
-
 import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
-
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import {
+  SupermindOnboardingOverlay,
+  useSupermindOnboarding,
+} from '../compose/SupermindOnboarding';
 import AddBankInformation from './AddBankInformation';
 import SupermindConsoleFeedFilter, {
   SupermindFilterType,
@@ -17,11 +21,12 @@ import SupermindRequestModel from './SupermindRequestModel';
 
 type TabModeType = 'inbound' | 'outbound';
 
-export default function SupermindConsoleScreen({ navigation }) {
+function SupermindConsoleScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>('inbound');
   const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
   const listRef = React.useRef<any>(null);
+  const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
 
   //TODO: change the endpoint when the filter change
 
@@ -45,10 +50,12 @@ export default function SupermindConsoleScreen({ navigation }) {
         title="Supermind"
         onTitlePress={() => listRef.current?.scrollToTop()}
         extra={
-          <IconButton
-            name="settings"
-            onPress={() => navigation.navigate('SupermindSettingsScreen')}
-          />
+          !onboarding && (
+            <IconButton
+              name="settings"
+              onPress={() => navigation.navigate('SupermindSettingsScreen')}
+            />
+          )
         }
         back
         shadow
@@ -67,7 +74,7 @@ export default function SupermindConsoleScreen({ navigation }) {
                 <SupermindConsoleFeedFilter
                   value={filter}
                   onFilterChange={setFilter}
-                  containerStyles={filterContainerStyle}
+                  containerStyles={styles.filterContainer}
                 />
               }
             />
@@ -87,9 +94,21 @@ export default function SupermindConsoleScreen({ navigation }) {
         }
         endpointData=""
       />
+
+      <AnimatePresence>
+        {onboarding && (
+          <SupermindOnboardingOverlay
+            type="producer"
+            onDismiss={dismissOnboarding}
+            style={styles.onboardingOverlay}
+          />
+        )}
+      </AnimatePresence>
     </Screen>
   );
 }
+
+export default observer(SupermindConsoleScreen);
 
 const renderSupermindInbound = row => <SupermindRequest request={row.item} />;
 const renderSupermindOutbound = row => (
@@ -97,7 +116,9 @@ const renderSupermindOutbound = row => (
 );
 const mapRequests = items => SupermindRequestModel.createMany(items);
 
-const filterContainerStyle = ThemedStyles.combine(
-  'paddingTop2x',
-  'paddingRight4x',
-);
+const styles = ThemedStyles.create({
+  onboardingOverlay: {
+    marginTop: 125,
+  },
+  filterContainer: ['paddingTop2x', 'paddingRight4x'],
+});

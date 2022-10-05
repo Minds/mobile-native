@@ -6,6 +6,7 @@ import ReadMore from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
+import { NotificationType } from '../NotificationModel';
 import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
 
 type PropsType = {
@@ -20,6 +21,15 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   const isEntityComment = notification.entity?.type === 'comment';
   const isNoCommentEntity =
     notification.entity && notification.entity?.type !== 'comment';
+
+  switch (notification.type) {
+    case NotificationType.supermind_created:
+    case NotificationType.supermind_declined:
+    case NotificationType.supermind_accepted:
+    case NotificationType.supermind_expired:
+    case NotificationType.supermind_expire24h:
+      return null;
+  }
 
   if (
     entityIsUser ||

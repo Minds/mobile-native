@@ -147,6 +147,7 @@ export const MINDS_DEEPLINK = [
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
+  ['supermind/:guid', 'Supermind', 'navigate'],
 ];
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!

@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-
 import { useStores } from '~/common/hooks/use-stores';
+
 import i18nService from '~/common/services/i18n.service';
 import { B2, PressableLine, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import useStripeAccount from '~/wallet/hooks/useStripeAccount';
 
 type PropsType = {
   borderTop?: boolean;
@@ -15,10 +16,11 @@ type PropsType = {
  * Add bank information banner
  */
 function AddBankInformation({ borderTop = false }: PropsType) {
+  const stripe = useStripeAccount();
   const { wallet } = useStores();
   const navigation = useNavigation();
 
-  if (wallet.stripeDetails.hasBank) {
+  if (!stripe.loaded || stripe.hasBank) {
     return null;
   }
   return (
