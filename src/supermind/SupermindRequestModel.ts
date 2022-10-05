@@ -78,6 +78,17 @@ export default class SupermindRequestModel extends BaseModel {
     return diff.asMinutes() < 0 ? diff.humanize() : 'Expired';
   }
 
+  /**
+   * returns true if expired or false otherwise
+   */
+  isExpired() {
+    const expire = moment(
+      (this.created_timestamp + this.expiry_threshold) * 1000,
+    );
+    const date = moment();
+    return expire.isBefore(date);
+  }
+
   @action
   async revoke() {
     try {

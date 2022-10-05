@@ -130,29 +130,7 @@ exports[`SupermindRequest should render inbound 1`] = `
             ]
           }
         >
-          Expires
-          : 
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                },
-                Object {
-                  "fontFamily": "Roboto",
-                },
-                Object {
-                  "fontSize": 14,
-                  "lineHeight": 20,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Expired
-          </Text>
+          Expired
         </Text>
       </View>
     </View>
@@ -867,29 +845,7 @@ exports[`SupermindRequest should render outbound 1`] = `
             ]
           }
         >
-          Expires
-          : 
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                },
-                Object {
-                  "fontFamily": "Roboto",
-                },
-                Object {
-                  "fontSize": 14,
-                  "lineHeight": 20,
-                },
-                Object {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Expired
-          </Text>
+          Expired
         </Text>
       </View>
     </View>

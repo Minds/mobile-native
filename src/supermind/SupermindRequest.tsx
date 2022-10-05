@@ -24,9 +24,7 @@ export default function SupermindRequest({ request, outbound }: Props) {
       <View style={borderBottomStyle}>
         <Row space="L" align="baseline">
           <SupermindLabel text={` ${request.formattedAmount} offer `} />
-          <B2 color="secondary" left="L">
-            {i18n.t('expires')}: <B2>{request.formattedExpiration}</B2>
-          </B2>
+          <Status request={request} />
         </Row>
       </View>
       {request.entity ? (
@@ -65,6 +63,49 @@ export default function SupermindRequest({ request, outbound }: Props) {
 
 // Composer mode based on request_type
 const composerModes = [null, 'photo', 'video'];
+
+/**
+ * Status label
+ */
+const Status = ({ request }: { request: SupermindRequestModel }) => {
+  let body: React.ReactNode = null;
+  switch (request.status) {
+    case SupermindRequestStatus.CREATED:
+      body = !request.isExpired() ? (
+        <>
+          {i18n.t('expires')}: <B2>{request.formattedExpiration}</B2>
+        </>
+      ) : (
+        i18n.t('supermind.status.expired')
+      );
+      break;
+    case SupermindRequestStatus.ACCEPTED:
+      body = i18n.t('supermind.status.accepted');
+      break;
+
+    case SupermindRequestStatus.REVOKED:
+      body = i18n.t('supermind.status.revoked');
+      break;
+
+    case SupermindRequestStatus.REJECTED:
+      body = i18n.t('supermind.status.rejected');
+      break;
+
+    case SupermindRequestStatus.FAILED_PAYMENT:
+      body = i18n.t('supermind.status.paymentFailed');
+      break;
+
+    case SupermindRequestStatus.FAILED:
+      body = i18n.t('supermind.status.failed');
+      break;
+  }
+
+  return (
+    <B2 color="secondary" left="L">
+      {body}
+    </B2>
+  );
+};
 
 /**
  * Inbound buttons
