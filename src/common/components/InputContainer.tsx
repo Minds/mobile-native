@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, StyleSheet, ViewStyle, Pressable } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Input, { PropsType as InputPropsType } from './Input';
@@ -8,10 +8,26 @@ export interface InputContainerPropsType extends InputPropsType {
   containerStyle?: ViewStyle | Array<ViewStyle>;
 }
 
-const InputContainer = (props: InputContainerPropsType) => {
+export interface InputContainerImperativeHandle {
+  focus: () => void;
+}
+
+const InputContainer = (
+  props: InputContainerPropsType,
+  ref: React.Ref<InputContainerImperativeHandle>,
+) => {
   const theme = ThemedStyles.style;
   const { style, noBottomBorder, ...otherProps } = props;
-  const ref = React.useRef<Input>(null);
+  const inputRef = React.useRef<Input>(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus: () => inputRef.current?.focus(),
+    }),
+    [inputRef],
+  );
+
   return (
     <View
       style={[
@@ -23,9 +39,9 @@ const InputContainer = (props: InputContainerPropsType) => {
         theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}>
-      <Pressable onPress={() => ref.current?.focus()}>
+      <Pressable onPress={() => inputRef.current?.focus()}>
         <Input
-          ref={ref}
+          ref={inputRef}
           style={[
             styles.input,
             theme.paddingLeft0x,
@@ -46,7 +62,7 @@ const InputContainer = (props: InputContainerPropsType) => {
   );
 };
 
-export default InputContainer;
+export default forwardRef(InputContainer);
 
 const styles = StyleSheet.create({
   input: {
