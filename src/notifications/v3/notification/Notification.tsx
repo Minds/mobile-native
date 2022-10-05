@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { View, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -16,7 +16,6 @@ import ContentPreview from './content/ContentPreview';
 import useNotificationRouter from './useNotificationRouter';
 import Merged from './content/Merged';
 import type Notification from './NotificationModel';
-import sessionService from '../../../common/services/session.service';
 import i18n from '../../../common/services/i18n.service';
 import MText from '../../../common/components/MText';
 
@@ -29,17 +28,10 @@ const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 const NotificationItem = observer(
   ({ notification, onShowSubscribers }: PropsType) => {
     const fromUser = notification.from;
-    const toGuid = notification.to_guid;
     const avatarSrc = React.useMemo(() => {
       return fromUser.getAvatarSource();
     }, [fromUser]);
     const router = useNotificationRouter(notification, onShowSubscribers);
-    const user = sessionService.getUser();
-
-    const navToOwnChannel = React.useCallback(() => router.navToChannel(user), [
-      user,
-      router,
-    ]);
 
     const navToFromChannel = React.useCallback(
       () => router.navToChannel(fromUser),
@@ -50,20 +42,19 @@ const NotificationItem = observer(
       return null;
     }
 
-    const navToChannel = useCallback(() => {
-      // If the navigation was targeted to us navigate to own channel
-      if (toGuid === user.guid) return navToOwnChannel();
-
-      // otherwise navigate to the sender channel
-      return navToFromChannel();
-    }, [toGuid, user, router]);
-
     const Noun =
       notification.Noun !== '' ? (
-        <MText style={bodyTextImportantStyle} onPress={navToChannel}>
+        <MText style={bodyTextImportantStyle} onPress={router.navigateToObject}>
           {notification.Noun}
         </MText>
       ) : null;
+    const Subject = notification.Subject ? (
+      <MText style={bodyTextImportantStyle} onPress={navToFromChannel}>
+        {(notification.isImperative ? ' ' : '') +
+          notification.Subject +
+          (notification.isImperative ? "'s " : ' ')}
+      </MText>
+    ) : null;
 
     return (
       <TouchableOpacity style={containerStyle} onPress={router.navToEntity}>
@@ -85,15 +76,10 @@ const NotificationItem = observer(
           </View>
           <View style={styles.bodyContainer}>
             <MText style={bodyTextStyle}>
-              {notification.type !== 'token_rewards_summary' && (
-                <MText
-                  style={bodyTextImportantStyle}
-                  onPress={navToFromChannel}>
-                  {fromUser.name + ' '}
-                </MText>
-              )}
+              {!notification.isImperative && Subject}
               <Merged notification={notification} router={router} />
               {notification.Verb}
+              {notification.isImperative && Subject}
               {notification.Pronoun ? ` ${notification.Pronoun}` : ''} {Noun}
             </MText>
           </View>

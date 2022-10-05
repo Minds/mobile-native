@@ -1,6 +1,10 @@
 import { RouteProp } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import { AnimatePresence } from 'moti';
+import React, { useCallback, useState } from 'react';
+import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -11,16 +15,21 @@ import MenuItem from '../common/components/menus/MenuItem';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
-import { Button, Icon, ModalFullScreen } from '../common/ui';
+import { Button, Icon, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
+import {
+  SupermindOnboardingOverlay,
+  useSupermindOnboarding,
+} from './SupermindOnboarding';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
 
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
+type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
 export enum ReplyType {
   text = 0,
@@ -47,13 +56,14 @@ export interface SupermindRequestParam {
 
 interface SupermindComposeScreen {
   route?: PasswordConfirmation;
+  navigation: Navigation;
 }
 
 /**
  * Compose Screen
  * @param {Object} props
  */
-export default function SupermindComposeScreen(props: SupermindComposeScreen) {
+function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
   const data: SupermindRequestParam | undefined = props.route?.params?.data;
   const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
@@ -74,13 +84,23 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
   const [cardId, setCardId] = useState<string | undefined>(
     data?.payment_options?.payment_method_id,
   );
+
+  const { min_cash = 0, min_offchain_tokens = 0 } =
+    channel?.supermind_settings ?? {};
+
+  const minValue =
+    paymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
+
   const [offer, setOffer] = useState(
     data?.payment_options?.amount
       ? String(data?.payment_options?.amount)
-      : '10',
+      : `${minValue}`,
   );
   const [errors, setErrors] = useState<any>({});
-  const [tabsDisabled, setTabsDisabled] = useState<any>(IS_IOS);
+  const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
+
+  // hide payment method tabs
+  const tabsDisabled = IS_IOS;
 
   const validate = useCallback(() => {
     const err: any = {};
@@ -90,10 +110,13 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     if (paymentMethod === PaymentType.cash && !cardId) {
       err.card = 'Card is required';
     }
-    if (!offer || !Number(offer) || Number.isNaN(Number(offer))) {
+    const oferValue = Number(offer ?? '');
+    if (Number.isNaN(oferValue)) {
       err.offer = 'Offer is not valid';
-    } else if (offer && Number(offer) < 10) {
-      err.offer = 'Offer must be greater than 10';
+    } else if (oferValue < minValue) {
+      err.offer = `Offer must be greater than ${minValue}`;
+    } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
+      err.offer = i18nService.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -105,12 +128,17 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
       setErrors(err);
     }
     return !hasErrors;
-  }, [cardId, channel, offer, paymentMethod, termsAgreed]);
+  }, [cardId, channel, offer, paymentMethod, termsAgreed, minValue]);
 
   const onBack = useCallback(() => {
     props.route?.params?.onClear();
-    NavigationService.goBack();
-  }, [props.route]);
+
+    if (props.route?.params?.closeComposerOnClear) {
+      props.navigation.pop(2);
+    } else {
+      props.navigation.goBack();
+    }
+  }, [props.navigation, props.route]);
 
   const onSave = useCallback(() => {
     if (!validate()) {
@@ -148,41 +176,28 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
     props.route,
   ]);
 
-  /**
-   * A user can only pay in cash where the producer has
-   * a bank account connected to their minds account
-   */
-  useEffect(() => {
-    if (!channel) {
-      return;
-    }
-
-    if (IS_IOS) {
-      return;
-    }
-
-    if (!channel.merchant) {
-      setPaymentMethod(PaymentType.token);
-      setTabsDisabled(true);
-    } else {
-      setTabsDisabled(false);
-    }
-  }, [channel]);
-
   return (
     <ModalFullScreen
       title={'Supermind'}
       leftComponent={
-        <Button mode="flat" size="small" onPress={onBack}>
-          {i18nService.t('searchBar.clear')}
-        </Button>
+        onboarding ? (
+          <IconButton name="close" size="large" onPress={onBack} />
+        ) : (
+          <Button mode="flat" size="small" onPress={onBack}>
+            {i18nService.t('searchBar.clear')}
+          </Button>
+        )
       }
       extra={
-        <Button mode="flat" size="small" type="action" onPress={onSave}>
-          {i18nService.t('done')}
-        </Button>
+        !onboarding && (
+          <Button mode="flat" size="small" type="action" onPress={onSave}>
+            {i18nService.t('done')}
+          </Button>
+        )
       }>
-      <FitScrollView keyboardShouldPersistTaps="handled">
+      <FitScrollView
+        keyboardShouldPersistTaps="handled"
+        style={ThemedStyles.style.flexContainer}>
         {!tabsDisabled && (
           <TopbarTabbar
             current={paymentMethod}
@@ -218,16 +233,18 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           })`}
           autofocus={Boolean(data?.channel)}
           onChangeText={value => {
-            setOffer(value);
-            setErrors(err => ({
-              ...err,
-              offer: '',
-            }));
+            if (/\d+\.?\d*$/.test(value) || value === '') {
+              // remove leading 0
+              setOffer(value.length > 1 ? value.replace(/^0+/, '') : value);
+              setErrors(err => ({
+                ...err,
+                offer: '',
+              }));
+            }
           }}
-          hint="Min: 10"
+          hint={`Min: ${minValue}`}
           value={offer}
           error={errors.offer}
-          inputType="number"
           autoCorrect={false}
           containerStyle={theme.paddingTop4x}
           returnKeyType="next"
@@ -292,9 +309,12 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
         /> */}
         <MenuItem
           containerItemStyle={styles.termsContainer}
+          titleStyle={styles.termsText}
           item={{
             onPress: () => setTermsAgreed(val => !val),
             title: 'I agree to the Terms',
+            onTitlePress: () =>
+              openUrlService.open('https://www.minds.com/p/monetization-terms'),
             icon: (
               <Icon
                 size={30}
@@ -307,11 +327,23 @@ export default function SupermindComposeScreen(props: SupermindComposeScreen) {
           }}
         />
       </FitScrollView>
+
+      <AnimatePresence>
+        {onboarding && (
+          <SupermindOnboardingOverlay
+            type="consumer"
+            onDismiss={dismissOnboarding}
+          />
+        )}
+      </AnimatePresence>
     </ModalFullScreen>
   );
 }
 
+export default observer(SupermindComposeScreen);
+
 const styles = ThemedStyles.create({
+  termsText: { textDecorationLine: 'underline' },
   termsContainer: [
     'bgPrimaryBackground',
     { borderTopWidth: 0, borderBottomWidth: 0 },

@@ -11,7 +11,6 @@ import {
   PlatformIOSStatic,
 } from 'react-native';
 // import PerformanceScreen from '../performance/PerformanceScreen';
-import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
@@ -31,6 +30,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import NotificationsStack from '../navigation/NotificationsStack';
 // import navigationService from '../navigation/NavigationService';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -199,7 +199,7 @@ const Tabs = observer(function ({ navigation }) {
         />
         <Tab.Screen
           name="Notifications"
-          component={NotificationsScreen}
+          component={NotificationsStack}
           options={notificationOptions}
         />
         <Tab.Screen name="More" component={MoreStack} options={moreOptions} />
