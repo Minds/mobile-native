@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React, { useCallback, useState } from 'react';
+import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -114,6 +115,8 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       err.offer = 'Offer is not valid';
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
+    } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
+      err.offer = i18nService.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -230,16 +233,18 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           })`}
           autofocus={Boolean(data?.channel)}
           onChangeText={value => {
-            setOffer(value);
-            setErrors(err => ({
-              ...err,
-              offer: '',
-            }));
+            if (/\d+\.?\d*$/.test(value) || value === '') {
+              // remove leading 0
+              setOffer(value.length > 1 ? value.replace(/^0+/, '') : value);
+              setErrors(err => ({
+                ...err,
+                offer: '',
+              }));
+            }
           }}
           hint={`Min: ${minValue}`}
           value={offer}
           error={errors.offer}
-          inputType="number"
           autoCorrect={false}
           containerStyle={theme.paddingTop4x}
           returnKeyType="next"
@@ -304,9 +309,12 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         /> */}
         <MenuItem
           containerItemStyle={styles.termsContainer}
+          titleStyle={styles.termsText}
           item={{
             onPress: () => setTermsAgreed(val => !val),
             title: 'I agree to the Terms',
+            onTitlePress: () =>
+              openUrlService.open('https://www.minds.com/p/monetization-terms'),
             icon: (
               <Icon
                 size={30}
@@ -335,6 +343,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 export default observer(SupermindComposeScreen);
 
 const styles = ThemedStyles.create({
+  termsText: { textDecorationLine: 'underline' },
   termsContainer: [
     'bgPrimaryBackground',
     { borderTopWidth: 0, borderBottomWidth: 0 },
