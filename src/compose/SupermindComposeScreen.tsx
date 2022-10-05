@@ -309,6 +309,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         /> */}
         <MenuItem
           containerItemStyle={styles.termsContainer}
+          titleStyle={styles.termsText}
           item={{
             onPress: () => setTermsAgreed(val => !val),
             title: 'I agree to the Terms',
@@ -342,6 +343,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 export default observer(SupermindComposeScreen);
 
 const styles = ThemedStyles.create({
+  termsText: { textDecorationLine: 'underline' },
   termsContainer: [
     'bgPrimaryBackground',
     { borderTopWidth: 0, borderBottomWidth: 0 },
