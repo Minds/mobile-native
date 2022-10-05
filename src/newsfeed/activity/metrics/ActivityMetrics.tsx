@@ -18,6 +18,7 @@ import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 type PropsType = {
   entity: ActivityModel;
   fullDate?: boolean;
+  hideSupermindLabel?: boolean;
 };
 
 /**
@@ -72,7 +73,8 @@ export default class ActivityMetrics extends Component<PropsType> {
           </View>
         ) : undefined}
         {lockType !== null && <LockTag type={lockType} />}
-        {Boolean(this.props.entity.supermind) && <SupermindLabel />}
+        {Boolean(this.props.entity.supermind) &&
+          !this.props.hideSupermindLabel && <SupermindLabel />}
       </View>
     );
   }

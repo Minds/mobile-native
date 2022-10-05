@@ -29,13 +29,20 @@ export default function SupermindRequest({ request, outbound }: Props) {
           </B2>
         </Row>
       </View>
-      <Activity
-        entity={request.entity}
-        navigation={navigation}
-        hideMetrics
-        hideTabs
-        borderless
-      />
+      {request.entity ? (
+        <Activity
+          entity={request.entity}
+          navigation={navigation}
+          hideMetrics
+          hideTabs
+          borderless
+        />
+      ) : (
+        <B2 color="secondary" left="L" vertical="L">
+          {i18n.t('supermind.postUnavailable')}
+        </B2>
+      )}
+
       <B2 color={request.receiver_entity ? 'primary' : 'secondary'} left="L">
         {request.receiver_entity
           ? i18n.t('supermind.to', { name: request.receiver_entity.username }) +
@@ -72,6 +79,7 @@ const InboundButtons = observer(
         supermindObject: request,
         allowedMode: composerModes[request.reply_type],
         entity: request.entity,
+        onSave: () => request.setStatus(SupermindRequestStatus.ACCEPTED),
       });
     }, [navigation, request]);
 

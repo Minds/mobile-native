@@ -15,7 +15,7 @@ export type Entity = {
   failed: boolean;
   guid: string;
   receiver: UserModel;
-  sender: UserModel;
+  sender?: UserModel;
   timestamp: number;
   tx: string;
   user: UserModel;
