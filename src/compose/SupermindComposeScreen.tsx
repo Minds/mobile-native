@@ -243,7 +243,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           placeholder={`Offer (${
             paymentMethod === PaymentType.cash ? 'USD' : 'Token'
           })`}
-          autofocus={Boolean(data?.channel) && !onboarding}
+          autoFocus={Boolean(data?.channel) && !onboarding}
           onChangeText={value => {
             setOffer(value);
             setErrors(err => ({
