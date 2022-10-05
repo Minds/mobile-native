@@ -77,6 +77,14 @@
       "1": "Image Reply",
       "2": "Video Reply"
     },
+    "status": {
+      "accepted": "Accepted",
+      "expired": "Expired",
+      "revoked": "Revoked",
+      "rejected": "Declined",
+      "paymentFailed": "Payment Failed",
+      "failed": "Unknown Error"
+    },
     "postUnavailable": "Post is unavailable",
     "onboarding": {
       "producer": {

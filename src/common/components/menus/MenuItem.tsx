@@ -7,6 +7,7 @@ import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 export type MenuItemItem = {
   onPress?: () => void;
   title: string | JSX.Element;
+  onTitlePress?: () => void;
   content?: JSX.Element;
   icon?:
     | {
@@ -76,7 +77,9 @@ export default function ({
       testID={testID}>
       <ListItem.Content>
         {Boolean(item.title) && (
-          <ListItem.Title style={[baseTitleStyle, titleStyle]}>
+          <ListItem.Title
+            style={[baseTitleStyle, titleStyle]}
+            onPress={item.onTitlePress}>
             {item.title}
           </ListItem.Title>
         )}
