@@ -16,8 +16,8 @@ import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
-import i18nService from '../common/services/i18n.service';
-import { Button, Icon, IconButton, ModalFullScreen } from '../common/ui';
+import i18n from '../common/services/i18n.service';
+import { B2, Button, Icon, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
@@ -119,7 +119,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
     } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
-      err.offer = i18nService.t('supermind.maxTwoDecimals');
+      err.offer = i18n.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -198,14 +198,14 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           <IconButton name="close" size="large" onPress={onBack} />
         ) : (
           <Button mode="flat" size="small" onPress={onBack}>
-            {i18nService.t('searchBar.clear')}
+            {i18n.t('searchBar.clear')}
           </Button>
         )
       }
       extra={
         !onboarding && (
           <Button mode="flat" size="small" type="action" onPress={onSave}>
-            {i18nService.t('done')}
+            {i18n.t('done')}
           </Button>
         )
       }>
@@ -218,10 +218,10 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
             onChange={setPaymentMethod}
             containerStyle={theme.paddingTop}
             tabs={[
-              { id: PaymentType.cash, title: i18nService.t('wallet.cash') },
+              { id: PaymentType.cash, title: i18n.t('wallet.cash') },
               {
                 id: PaymentType.token,
-                title: i18nService.t('analytics.tokens.title'),
+                title: i18n.t('analytics.tokens.title'),
               },
             ]}
           />
@@ -341,6 +341,9 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
             ),
           }}
         />
+        <B2 color="secondary" horizontal="L" top="S">
+          {i18n.t('supermind.7daysToReply')}
+        </B2>
       </FitScrollView>
 
       <AnimatePresence>

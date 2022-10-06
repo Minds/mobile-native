@@ -72,6 +72,7 @@
     "rejected": "rejected",
     "minimum": "Must be a minimum of {{value}}",
     "maxTwoDecimals": "Must have less than 2 decimals",
+    "7daysToReply": "The recipient will have up to 7 days to reply. You may cancel the offer at anytime",
     "replyType": {
       "0": "Text Reply",
       "1": "Image Reply",
