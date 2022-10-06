@@ -94,7 +94,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       return store
         .refresh({
           filter: notifications.filter,
-          limit: 15,
           offset: notifications.offset,
         })
         .then(() => {
