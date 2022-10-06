@@ -163,9 +163,10 @@ export default observer(function ComposeScreen(props) {
     optionsRef.current.show();
   }, []);
 
-  const handleSupermindPress = useCallback(() => store.openSupermindModal(), [
-    store,
-  ]);
+  const handleSupermindPress = useCallback(() => {
+    Keyboard.dismiss();
+    store.openSupermindModal();
+  }, [store]);
 
   const onScrollHandler = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) =>
@@ -217,11 +218,12 @@ export default observer(function ComposeScreen(props) {
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
+        if (!props.route?.params?.openSupermindModal) {
+          inputRef.current?.focus();
         }
       }, 300);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputRef]);
   // #endregion
 

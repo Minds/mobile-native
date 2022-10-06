@@ -3,12 +3,15 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
 import InputBase from '../common/components/InputBase';
-import InputContainer from '../common/components/InputContainer';
+import InputContainer, {
+  InputContainerImperativeHandle,
+} from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
 import MenuItem from '../common/components/menus/MenuItem';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
@@ -65,6 +68,7 @@ interface SupermindComposeScreen {
 function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
   const data: SupermindRequestParam | undefined = props.route?.params?.data;
+  const offerRef = useRef<InputContainerImperativeHandle>(null);
   const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
   const [replyType, setReplyType] = useState<ReplyType>(
     data?.reply_type ?? ReplyType.text,
@@ -114,6 +118,8 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       err.offer = 'Offer is not valid';
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
+    } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
+      err.offer = i18nService.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -173,6 +179,17 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     props.route,
   ]);
 
+  /**
+   * Handles dismissing the onboarding modal
+   */
+  const handleOnboardingDismiss = useCallback(() => {
+    dismissOnboarding();
+    // if the channel was filled in, focus on the offer input
+    if (data?.channel) {
+      offerRef.current?.focus();
+    }
+  }, [data, dismissOnboarding]);
+
   return (
     <ModalFullScreen
       title={'Supermind'}
@@ -225,21 +242,24 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           error={errors.username}
         />
         <InputContainer
+          ref={offerRef}
           placeholder={`Offer (${
             paymentMethod === PaymentType.cash ? 'USD' : 'Token'
           })`}
-          autofocus={Boolean(data?.channel)}
+          autoFocus={Boolean(data?.channel) && !onboarding}
           onChangeText={value => {
-            setOffer(value);
-            setErrors(err => ({
-              ...err,
-              offer: '',
-            }));
+            if (/\d+\.?\d*$/.test(value) || value === '') {
+              // remove leading 0
+              setOffer(value.length > 1 ? value.replace(/^0+/, '') : value);
+              setErrors(err => ({
+                ...err,
+                offer: '',
+              }));
+            }
           }}
           hint={`Min: ${minValue}`}
           value={offer}
           error={errors.offer}
-          inputType="number"
           autoCorrect={false}
           containerStyle={theme.paddingTop4x}
           returnKeyType="next"
@@ -304,9 +324,12 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         /> */}
         <MenuItem
           containerItemStyle={styles.termsContainer}
+          titleStyle={styles.termsText}
           item={{
             onPress: () => setTermsAgreed(val => !val),
             title: 'I agree to the Terms',
+            onTitlePress: () =>
+              openUrlService.open('https://www.minds.com/p/monetization-terms'),
             icon: (
               <Icon
                 size={30}
@@ -324,7 +347,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         {onboarding && (
           <SupermindOnboardingOverlay
             type="consumer"
-            onDismiss={dismissOnboarding}
+            onDismiss={handleOnboardingDismiss}
           />
         )}
       </AnimatePresence>
@@ -335,6 +358,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 export default observer(SupermindComposeScreen);
 
 const styles = ThemedStyles.create({
+  termsText: { textDecorationLine: 'underline' },
   termsContainer: [
     'bgPrimaryBackground',
     { borderTopWidth: 0, borderBottomWidth: 0 },
