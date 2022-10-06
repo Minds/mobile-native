@@ -183,7 +183,135 @@ Array [
                 ],
               ]
             }
-            testID="PendingRadio"
+            testID="allRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              All
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="pendingRadio"
           >
             <View
               style={
@@ -311,7 +439,7 @@ Array [
                 ],
               ]
             }
-            testID="AcceptedRadio"
+            testID="acceptedRadio"
           >
             <View
               style={
@@ -439,7 +567,7 @@ Array [
                 ],
               ]
             }
-            testID="ExpiredRadio"
+            testID="revokedRadio"
           >
             <View
               style={
@@ -521,7 +649,7 @@ Array [
                 ]
               }
             >
-              Expired
+              Revoked
             </Text>
           </View>
           <View
@@ -567,7 +695,135 @@ Array [
                 ],
               ]
             }
-            testID="FailedRadio"
+            testID="declinedRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Declined
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="failedRadio"
           >
             <View
               style={
@@ -650,6 +906,262 @@ Array [
               }
             >
               Failed
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="paymentFailedRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Payment Failed
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                    },
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
+                    Object {
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="expiredRadio"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "width": 25,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "marginRight": 16,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "overflow": "hidden",
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "#B8C1CA",
+                          },
+                          Object {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                      testID="iconIcon"
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Expired
             </Text>
           </View>
           <View

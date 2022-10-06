@@ -34,23 +34,38 @@ describe('SupermindFeedFilter', () => {
     );
 
     // press accepted
-    fireEvent.press(screen.getByTestId('AcceptedRadio'));
+    fireEvent.press(screen.getByTestId('acceptedRadio'));
 
     expect(onFilterChange).toBeCalledWith('accepted');
 
     // press failed
-    fireEvent.press(screen.getByTestId('FailedRadio'));
+    fireEvent.press(screen.getByTestId('failedRadio'));
 
     expect(onFilterChange).toBeCalledWith('failed');
 
     // press expired
-    fireEvent.press(screen.getByTestId('ExpiredRadio'));
+    fireEvent.press(screen.getByTestId('expiredRadio'));
 
     expect(onFilterChange).toBeCalledWith('expired');
 
     // press pending
-    fireEvent.press(screen.getByTestId('PendingRadio'));
+    fireEvent.press(screen.getByTestId('pendingRadio'));
 
     expect(onFilterChange).toBeCalledWith('pending');
+
+    // press revoked
+    fireEvent.press(screen.getByTestId('revokedRadio'));
+
+    expect(onFilterChange).toBeCalledWith('revoked');
+
+    // press declined
+    fireEvent.press(screen.getByTestId('declinedRadio'));
+
+    expect(onFilterChange).toBeCalledWith('declined');
+
+    // press paymentFailed
+    fireEvent.press(screen.getByTestId('paymentFailedRadio'));
+
+    expect(onFilterChange).toBeCalledWith('paymentFailed');
   });
 });

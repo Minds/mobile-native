@@ -6,7 +6,7 @@ import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { SectionTitle, RadioButton } from '~/common/components/bottom-sheet';
 import { Spacer } from '~ui';
 import BaseFeedFilter from '~/common/components/feed-filters/BaseFeedFilter';
-import i18nService from '~/common/services/i18n.service';
+import i18n from '~/common/services/i18n.service';
 
 const filters = {
   all: 'all',
@@ -45,18 +45,14 @@ const SupermindConsoleFeedFilter = ({
   };
 
   return (
-    <BaseFeedFilter
-      label={i18nService.t(`supermind.filter.${value}`)}
-      {...otherProps}>
-      <SectionTitle>Filter Supermind Offers</SectionTitle>
+    <BaseFeedFilter label={i18n.t(`supermind.filter.${value}`)} {...otherProps}>
+      <SectionTitle>{i18n.t('supermind.filterTitle')}</SectionTitle>
       {Object.keys(filters).map((key, index) => (
         <RadioButton
           key={index}
           testID={`${key}Radio`}
-          title={i18nService.t(
-            `supermind.filter.${key as SupermindFilterType}`,
-          )}
-          onPress={() => onChange('pending')}
+          title={i18n.t(`supermind.filter.${key as SupermindFilterType}`)}
+          onPress={() => onChange(key)}
           selected={value === key}
         />
       ))}
