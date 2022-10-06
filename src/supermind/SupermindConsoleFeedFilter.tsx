@@ -8,11 +8,22 @@ import { Spacer } from '~ui';
 import BaseFeedFilter from '~/common/components/feed-filters/BaseFeedFilter';
 import i18nService from '~/common/services/i18n.service';
 
-export type SupermindFilterType = 'pending' | 'accepted' | 'expired' | 'failed';
+const filters = {
+  all: 'all',
+  pending: 'pending',
+  accepted: 'accepted',
+  revoked: 'revoked',
+  declined: 'declined',
+  failed: 'failed',
+  paymentFailed: 'paymentFailed',
+  expired: 'expired',
+};
+
+export type SupermindFilterType = keyof typeof filters;
 
 type PropsType = {
   hideLabel?: boolean;
-  onFilterChange: (value: SupermindFilterType) => void;
+  onFilterChange: (filter: SupermindFilterType) => void;
   value: SupermindFilterType;
   containerStyles?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
@@ -28,8 +39,8 @@ const SupermindConsoleFeedFilter = ({
 }: PropsType) => {
   const { dismiss } = useBottomSheetModal();
 
-  const onChange = v => {
-    onFilterChange(v);
+  const onChange = filter => {
+    onFilterChange(filter);
     dismiss();
   };
 
@@ -38,30 +49,17 @@ const SupermindConsoleFeedFilter = ({
       label={i18nService.t(`supermind.filter.${value}`)}
       {...otherProps}>
       <SectionTitle>Filter Supermind Offers</SectionTitle>
-      <RadioButton
-        testID="PendingRadio"
-        title="Pending"
-        onPress={() => onChange('pending')}
-        selected={value === 'pending'}
-      />
-      <RadioButton
-        title="Accepted"
-        testID="AcceptedRadio"
-        onPress={() => onChange('accepted')}
-        selected={value === 'accepted'}
-      />
-      <RadioButton
-        title="Expired"
-        testID="ExpiredRadio"
-        onPress={() => onChange('expired')}
-        selected={value === 'expired'}
-      />
-      <RadioButton
-        title="Failed"
-        testID="FailedRadio"
-        onPress={() => onChange('failed')}
-        selected={value === 'failed'}
-      />
+      {Object.keys(filters).map((key, index) => (
+        <RadioButton
+          key={index}
+          testID={`${key}Radio`}
+          title={i18nService.t(
+            `supermind.filter.${key as SupermindFilterType}`,
+          )}
+          onPress={() => onChange('pending')}
+          selected={value === key}
+        />
+      ))}
       <Spacer top="L" />
     </BaseFeedFilter>
   );

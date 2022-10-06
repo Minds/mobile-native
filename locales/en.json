@@ -78,9 +78,13 @@
       "2": "Video Reply"
     },
     "filter": {
+      "all": "All",
       "pending": "Pending",
       "accepted": "Accepted",
+      "revoked": "Revoked",
+      "declined": "Declined",
       "expired": "Expired",
+      "paymentFailed": "Payment Failed",
       "failed": "Failed"
     },
     "status": {

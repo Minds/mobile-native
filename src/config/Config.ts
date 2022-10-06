@@ -62,7 +62,7 @@ export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
-    : 'https://www.minds.com/';
+    : 'https://feat-supermind-console-filters.minds.io/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;

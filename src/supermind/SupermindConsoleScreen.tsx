@@ -21,14 +21,27 @@ import SupermindRequestModel from './SupermindRequestModel';
 
 type TabModeType = 'inbound' | 'outbound';
 
+const filterValues: Record<SupermindFilterType, string> = {
+  all: '',
+  pending: '1',
+  accepted: '2',
+  revoked: '3',
+  declined: '4',
+  failed: '6',
+  paymentFailed: '5',
+  expired: '7',
+};
+
 function SupermindConsoleScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>('inbound');
-  const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
+  const [filter, setFilter] = React.useState<SupermindFilterType>('all');
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
 
-  //TODO: change the endpoint when the filter change
+  const filterParam = filterValues[filter]
+    ? `?status=${filterValues[filter]}`
+    : '';
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -85,8 +98,8 @@ function SupermindConsoleScreen({ navigation }) {
         map={mapRequests}
         fetchEndpoint={
           mode === 'inbound'
-            ? 'api/v3/supermind/inbox'
-            : 'api/v3/supermind/outbox'
+            ? `api/v3/supermind/inbox${filterParam}`
+            : `api/v3/supermind/outbox${filterParam}`
         }
         offsetPagination
         renderItem={
