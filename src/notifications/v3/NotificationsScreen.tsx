@@ -58,13 +58,15 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const interactionsBottomSheetRef = useRef<any>();
   const listRef = useRef<FlatList>(null);
 
+  const params = {
+    filter: notifications.filter,
+    limit: 15,
+    offset: notifications.offset,
+  };
+
   const store = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params: {
-      filter: notifications.filter,
-      limit: 15,
-      offset: notifications.offset,
-    },
-    skip: true,
+    params,
+    skip: false,
     updateStrategy: 'merge',
     dataField: 'notifications',
     map,
@@ -91,16 +93,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         listRef.current?.scrollToOffset({ animated: true, offset: 0 });
       }
 
-      return store
-        .refresh({
-          filter: notifications.filter,
-          offset: notifications.offset,
-        })
-        .then(() => {
-          notifications.setUnread(0);
-        });
+      return store.refresh(params).then(() => {
+        notifications.setUnread(0);
+      });
     },
-    [notifications, store],
+    [notifications, params, store],
   );
 
   /**
@@ -212,6 +209,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   }, []);
 
   const data = store.result?.notifications || [];
+
+  console.log('store', data.length);
 
   return (
     <View style={styles.container}>
