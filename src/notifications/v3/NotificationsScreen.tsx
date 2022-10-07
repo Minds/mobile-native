@@ -210,8 +210,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const data = store.result?.notifications || [];
 
-  console.log('store', data.length);
-
   return (
     <View style={styles.container}>
       <FlatList
