@@ -1,9 +1,10 @@
 import React from 'react';
-import { Linking, ScrollView } from 'react-native';
+import { Linking } from 'react-native';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { Screen } from '../../common/ui';
+import FitScrollView from '../../common/components/FitScrollView';
 
 type PropsType = {};
 
@@ -167,33 +168,26 @@ type Options<T extends number> = typeof items[T]['options'][number];
 
 const ResourcesScreen = ({}: PropsType) => {
   return (
-    <ScrollView style={styles.container}>
-      {items.map((item: Items, index) => (
-        <>
-          <MenuSubtitle>
-            {i18n.t(`settings.${item.id}.title`).toUpperCase()}
-          </MenuSubtitle>
-          {item.options.map((option: Options<typeof index>, i) => (
-            <MenuItem
-              item={{
-                //@ts-ignore TODO: solve this nested type error
-                title: i18n.t(`settings.${item.id}.${option.id}`),
-                onPress: option.onPress,
-                noIcon: true,
-              }}
-              containerItemStyle={
-                i > 0 ? ThemedStyles.style.borderTop0x : undefined
-              }
-            />
-          ))}
-        </>
-      ))}
-    </ScrollView>
+    <Screen>
+      <FitScrollView>
+        {items.map((item: Items, index) => (
+          <>
+            <MenuSubtitle>
+              {i18n.t(`settings.${item.id}.title`).toUpperCase()}
+            </MenuSubtitle>
+            {item.options.map((option: Options<typeof index>, i) => (
+              <MenuItem
+                // @ts-ignore
+                title={i18n.t(`settings.${item.id}.${option.id}`)}
+                onPress={option.onPress}
+                noBorderTop={i > 0}
+              />
+            ))}
+          </>
+        ))}
+      </FitScrollView>
+    </Screen>
   );
 };
-
-const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgPrimaryBackground'],
-});
 
 export default ResourcesScreen;

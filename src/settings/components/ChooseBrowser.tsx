@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { SectionTitle } from '~/common/components/bottom-sheet';
 import SectionSubtitle from '~/common/components/bottom-sheet/SectionSubtitle';
-import MenuOption from '~/common/components/menus/MenuOption';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import i18n from '~/common/services/i18n.service';
 import openUrlService from '~/common/services/open-url.service';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -47,8 +47,8 @@ const ChooseBrowser = (props: PropsType) => {
           {i18n.t('settings.chooseBrowserDescription')}
         </SectionTitle>
       </View>
-      <MenuOption item={store.optionInApp} selected={store.browser === 0} />
-      <MenuOption item={store.optionDefault} selected={store.browser === 1} />
+      <MenuItemOption {...store.optionInApp} selected={store.browser === 0} />
+      <MenuItemOption {...store.optionDefault} selected={store.browser === 1} />
       <View style={ThemedStyles.style.paddingTop6x}>
         <SectionSubtitle>
           {i18n.t('settings.chooseBrowserHint')}

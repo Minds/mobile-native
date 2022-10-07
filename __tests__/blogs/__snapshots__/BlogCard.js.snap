@@ -23,10 +23,10 @@ exports[`blog card component should renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Array [
+        undefined,
         Object {
           "backgroundColor": undefined,
         },
-        undefined,
       ]
     }
   >

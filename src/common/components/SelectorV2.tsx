@@ -11,7 +11,11 @@ import React, {
 import { Keyboard, TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BottomSheetModal, BottomSheetButton, MenuItem } from './bottom-sheet';
+import {
+  BottomSheetModal,
+  BottomSheetButton,
+  BottomSheetMenuItem,
+} from './bottom-sheet';
 import i18n from '../../common/services/i18n.service';
 import { LinearGradient } from 'expo-linear-gradient';
 import MText from './MText';
@@ -163,7 +167,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
         : theme.colorPrimaryText;
 
       return (
-        <MenuItem
+        <BottomSheetMenuItem
           key={keyExtractor(item)}
           onPress={onMenuItemPress}
           textStyle={textStyle}
@@ -241,7 +245,13 @@ const gradientHeight = 100;
 const styles = ThemedStyles.create({
   menuItem: ['paddingHorizontal5x', 'rowJustifyCenter'],
   flatList: { maxHeight: 300, overflow: 'scroll' },
-  title: ['colorPrimaryText', 'fontXXL', 'centered', 'marginLeft5x'],
+  title: [
+    'colorPrimaryText',
+    'fontXXL',
+    'centered',
+    'marginLeft5x',
+    'marginBottom2x',
+  ],
   linear: {
     height: gradientHeight,
     width: '100%',

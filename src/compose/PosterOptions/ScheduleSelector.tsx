@@ -1,9 +1,7 @@
 import React, { FC, useCallback, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment-timezone';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
@@ -14,6 +12,7 @@ import DateTimePicker from '~/common/components/controls/DateTimePicker';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 interface ScheduleSelectorProps
   extends FC,
@@ -65,26 +64,21 @@ export default observer(function ({}: ScheduleSelectorProps) {
         ]}>
         {i18n.t('activity.scheduled')}
       </MText>
-      <TouchableOpacity
-        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={onNow}>
-        <MText style={[theme.flexContainer, theme.fontL]}>
-          {i18n.t('now')}
-        </MText>
-        {!store.time_created && (
-          <MIcon name="check" size={23} style={theme.colorPrimaryText} />
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={localStore.showPicker}>
-        <MText style={[theme.flexContainer, theme.fontL]}>
-          {i18n.t('capture.customTime')}
-        </MText>
-        {store.time_created && (
-          <MText>{current.format('ddd MMM Do YYYY h.mma')}</MText>
-        )}
-      </TouchableOpacity>
+      <MenuItemOption
+        title={i18n.t('now')}
+        onPress={onNow}
+        selected={!store.time_created}
+      />
+      <MenuItemOption
+        title={i18n.t('capture.customTime')}
+        onPress={localStore.showPicker}
+        label={
+          store.time_created
+            ? current.format('ddd MMM Do YYYY h.mma')
+            : undefined
+        }
+        selected={Boolean(store.time_created)}
+      />
       <DateTimePicker
         ref={dateTimePickerRef}
         date={store.time_created}
@@ -93,15 +87,4 @@ export default observer(function ({}: ScheduleSelectorProps) {
       />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  optsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    height: 55,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
 });

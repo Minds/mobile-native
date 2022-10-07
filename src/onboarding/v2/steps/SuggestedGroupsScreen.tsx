@@ -47,9 +47,14 @@ export default observer(function SuggestedGroupsScreen() {
           {listStore.loading && <CenteredLoading />}
           {listStore.entities
             .slice()
-            .map(group =>
+            .map((group, index) =>
               group instanceof GroupModel ? (
-                <GroupsListItem group={group} key={group.guid} noNavigate />
+                <GroupsListItem
+                  index={index}
+                  group={group}
+                  key={group.guid}
+                  noNavigate
+                />
               ) : null,
             )}
         </ScrollView>

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, SectionList, SectionListData } from 'react-native';
+import { View, SectionList, SectionListData } from 'react-native';
 import { ComponentsStyle } from '../../../styles/Components';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -57,7 +57,6 @@ export const DiscoveryTagsList = withErrorBoundary(
       };
 
       const renderItem = ({ item }) => {
-        const theme = ThemedStyles.style;
         let postsCount = item.posts_count
           ? `${item.posts_count} ${i18n.t('discovery.posts')}`
           : '';
@@ -66,31 +65,20 @@ export const DiscoveryTagsList = withErrorBoundary(
           : '';
         return (
           <MenuItem
-            item={{
-              onPress: () =>
-                navigation.push('DiscoverySearch', {
-                  query: '#' + item.value,
-                  plus: plus,
-                }),
-              title: (
-                <>
-                  <MText style={styles.title}>#{item.value}</MText>
-                  {(postsCount !== '' || votesCount !== '') && (
-                    <MText
-                      style={[
-                        theme.colorSecondaryText,
-                        theme.fontM,
-                        theme.fontNormal,
-                      ]}>
-                      {`\n${postsCount || ''} ${
-                        postsCount && votesCount ? '·' : ''
-                      } ${votesCount || ''}`}
-                    </MText>
-                  )}
-                </>
-              ),
-            }}
-            containerItemStyle={theme.bgPrimaryBackground}
+            onPress={() =>
+              navigation.push('DiscoverySearch', {
+                query: '#' + item.value,
+                plus: plus,
+              })
+            }
+            title={`#${item.value}`}
+            subtitle={
+              postsCount !== '' || votesCount !== ''
+                ? `${postsCount || ''} ${postsCount && votesCount ? '·' : ''} ${
+                    votesCount || ''
+                  }`
+                : ''
+            }
           />
         );
       };
@@ -108,13 +96,12 @@ export const DiscoveryTagsList = withErrorBoundary(
           <View
             style={[
               ThemedStyles.style.rowJustifyStart,
-              ThemedStyles.style.bgPrimaryBackground,
               ThemedStyles.style.padding4x,
             ]}>
             <View style={ThemedStyles.style.flexContainer} />
             <MText
               onPress={() => ref.current?.present()}
-              style={ThemedStyles.style.colorTertiaryText}>
+              style={ThemedStyles.style.colorSecondaryText}>
               Manage Tags
             </MText>
             <DiscoveryTagsManager ref={ref} />
@@ -145,7 +132,7 @@ export const DiscoveryTagsList = withErrorBoundary(
        */
 
       return (
-        <View style={ThemedStyles.style.flexContainer}>
+        <View style={styles.container}>
           <SectionList
             renderItem={renderItem}
             ListHeaderComponent={header}
@@ -170,20 +157,14 @@ export const DiscoveryTagsList = withErrorBoundary(
   ),
 );
 
-const styles = StyleSheet.create({
-  container: {
-    borderBottomWidth: StyleSheet.hairlineWidth * 2,
-    flexDirection: 'row',
-    display: 'flex',
-    alignItems: 'center',
-  },
+const styles = ThemedStyles.create({
+  container: ['flexContainer'],
   centered: {
     alignSelf: 'center',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-    lineHeight: 38,
   },
   thumbnail: {
     width: 100,
