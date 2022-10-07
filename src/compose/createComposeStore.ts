@@ -79,6 +79,10 @@ export default function (props) {
      * The existence of this object means the composer is being used to reply to a supermind
      */
     supermindObject: undefined as SupermindRequestModel,
+    /**
+     * The onSave from route params, called after submitting
+     */
+    onSaveCallback: undefined as () => void,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -94,6 +98,7 @@ export default function (props) {
       this.allowedMode = params.allowedMode;
       this.entity = params.entity || null;
       this.supermindObject = params.supermindObject;
+      this.onSaveCallback = params.onSave;
 
       this.mode = params.mode
         ? params.mode
@@ -128,7 +133,7 @@ export default function (props) {
       if (params.openSupermindModal) {
         const channel =
           params.supermindTargetChannel || params.entity?.ownerObj;
-        this.openSupermindModal(channel ? { channel } : undefined);
+        this.openSupermindModal(channel ? { channel } : undefined, true);
       }
 
       // clear params to avoid repetition
@@ -159,6 +164,7 @@ export default function (props) {
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
 
+      this.onSaveCallback?.();
       popToTop();
       this.clear(false);
 
@@ -671,9 +677,13 @@ export default function (props) {
         }),
       );
     },
-    openSupermindModal(supermindRequest?: Partial<SupermindRequestParam>) {
+    openSupermindModal(
+      supermindRequest?: Partial<SupermindRequestParam>,
+      closeComposerOnClear?: boolean,
+    ) {
       NavigationService.navigate('SupermindCompose', {
         data: supermindRequest || this.supermindRequest,
+        closeComposerOnClear,
         onSave: (payload: SupermindRequestParam) => {
           this.supermindRequest = payload;
         },

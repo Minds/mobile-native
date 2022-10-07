@@ -1,6 +1,52 @@
 {
   "versions": [
     {
+      "version": "4.28.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.28.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.28.0",
+      "changelog": [
+        "Improve performance by lazy loading screens",
+        "Subscribers you know list",
+        "Animated counter",
+        "Allow media in quoted posts & fix posts alignments",
+        "Reset notifications count when opening the notifications tab",
+        "Scroll to top the notifications screen when refreshing",
+        "Fix random zoomed images on Android",
+        "Fix photo edit crash on Android",
+        "Fix push notification navigation re-handled when switching users",
+        "Update permissions package and remove legacy permissions on Android",
+        "Reset boosts service when switching users",
+        "Fix inconsistent spacing on the cash onboarding",
+        "Fix header re-render on the feeds (FlashList issue)",
+        "Add blur to avatar for NSFW channels",
+        "Refactor old modals & selector components to use the new bottom sheet",
+        "Removed old feature flags and code cleanup",
+        "Add phone number validation on the bank account screen",
+        "Fix layout of the bank account screen",
+        "Fix scroll on iOS and check box on the bank account screen",
+        "Fix selector and keyboard interaction on bank account screen",
+        "Fix See Latest button arrow color",
+        "Fix channel screen reset when navigating back from a post (only on root navigation)",
+        "Add validation to username inputs",
+        "Add attributes to growthbook"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "94c074e667831463a553254cd40daab1"
+        },
+        {
+          "type": "sha256",
+          "value": "5712b9af3ed457046bae5e7da1e0d193591f4928e9f8fe6bad30e078a33ebfd6"
+        },
+        {
+          "type": "sha512",
+          "value": "92dd26f034c7dd3e8df1c84fc0e17ebfa1ddf587d3ec7251cef8b064ea50238ec874be3058cd7b0fefa6f7f68628c6af83497528f278c266ec8b357ff9177cf2"
+        }
+      ]
+    },
+    {
       "version": "4.26.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-4.26.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.26.0",

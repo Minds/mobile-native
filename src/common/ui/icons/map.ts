@@ -269,6 +269,18 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
   },
+  sms: {
+    font: 'MaterialIcons',
+    name: 'sms',
+  },
+  'date-range': {
+    font: 'MaterialIcons',
+    name: 'date-range',
+  },
+  delete: {
+    font: 'MaterialIcons',
+    name: 'delete',
+  },
   'login-variant': {
     font: 'MaterialCommunityIcons',
     name: 'login-variant',

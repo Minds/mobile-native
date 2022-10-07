@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SupermindScreen should render correctly 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": "#1F252C",
+      },
+    ]
+  }
+>
+  <RCTScrollView>
+    <View>
+      <View
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 16,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "marginRight": 8,
+                  "position": "relative",
+                }
+              }
+            >
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                hitSlop={
+                  Object {
+                    "bottom": 9.333333333333332,
+                    "left": 9.333333333333332,
+                    "right": 9.333333333333332,
+                    "top": 9.333333333333332,
+                  }
+                }
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 28,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 28,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#AEB0B8",
+                            "fontSize": 28,
+                          },
+                          Object {},
+                          Object {
+                            "fontFamily": "Material Design Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰅁
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Bold",
+                  },
+                  Object {
+                    "fontSize": 24,
+                    "lineHeight": 32,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Supermind
+            </Text>
+          </View>
+          <View />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "flex": 1,
+            "justifyContent": "center",
+            "minHeight": 100,
+          }
+        }
+      >
+        <ActivityIndicator
+          color="#1B85D6"
+          size="large"
+        />
+      </View>
+    </View>
+  </RCTScrollView>
+</RCTSafeAreaView>
+`;

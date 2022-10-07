@@ -3,7 +3,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
-import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -23,6 +22,7 @@ import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
 import MText from '../../../common/components/MText';
 import { Button } from '~ui';
+import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
 
 const isIos = Platform.OS === 'ios';
 

@@ -101,6 +101,7 @@ class DeeplinksRouter {
       } else {
         Linking.openURL(url.replace('https://www.', 'https://mobile.'));
       }
+      return true;
     }
     return !!route;
   }

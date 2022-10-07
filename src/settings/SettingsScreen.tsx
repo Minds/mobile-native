@@ -12,11 +12,7 @@ import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
-import {
-  DEV_MODE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { DEV_MODE, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -83,15 +79,12 @@ const SettingsScreen = observer(({ navigation }) => {
       screen: 'Security',
       params: {},
     },
-  ];
-
-  if (!IS_IOS) {
-    firstSection.push({
+    {
       title: i18n.t('settings.billing'),
       screen: 'Billing',
       params: {},
-    });
-  }
+    },
+  ];
 
   if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
     firstSection.push({

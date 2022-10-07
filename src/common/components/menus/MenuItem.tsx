@@ -26,6 +26,7 @@ export type MenuItemProps = {
   borderless?: boolean;
   label?: string;
   noBorderTop?: boolean;
+  onTitlePress?: () => void;
   noIcon?: boolean;
 } & TouchableOpacityProps;
 

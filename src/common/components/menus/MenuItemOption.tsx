@@ -29,7 +29,13 @@ export default function MenuItemOption(props: MenuItemOptionProps) {
       {...props}
       icon={icon}
       noIcon={!props.mode && !props.selected}
-      iconColor={props.selected ? 'IconActive' : props.iconColor}
+      iconColor={
+        props.iconColor
+          ? props.iconColor
+          : props.selected
+          ? 'IconActive'
+          : undefined
+      }
     />
   );
 }

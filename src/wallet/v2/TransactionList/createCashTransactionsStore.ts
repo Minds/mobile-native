@@ -48,7 +48,9 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
         tx.date = txMoment.format('ddd MMM Do');
         tx.delta = this.getDelta(tx);
         tx.otherUser =
-          tx.superType.includes('wire') && tx.customer_user
+          (tx.superType.includes('wire') ||
+            tx.superType.includes('supermind')) &&
+          tx.customer_user
             ? this.getUser(tx)
             : null;
       });

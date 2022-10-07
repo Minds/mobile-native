@@ -158,8 +158,8 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
           item.onPress();
         } else {
           onItemSelect(item);
+          close();
         }
-        close();
       };
 
       const textStyle = isSelected(item)
