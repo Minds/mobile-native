@@ -40,13 +40,13 @@ const MultiUserScreen = ({}: PropsType) => {
         <LoggedUsersList />
         <View style={theme.marginTop10x}>
           <MenuItem
-            item={options.create}
             containerItemStyle={theme.bgPrimaryBackgroundHighlight}
+            {...options.create}
           />
           <MenuItem
-            item={options.login}
             containerItemStyle={menuStyle}
             testID="multiUserLogin"
+            {...options.login}
           />
         </View>
       </FitScrollView>

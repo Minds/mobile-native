@@ -6,12 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 const keyExtractor = (item, index) => index.toString();
 
 const renderItem = item => (
-  <MenuItem
-    item={item.item}
-    containerItemStyle={
-      item.index > 0 ? styles.menuItemStyle : styles.firstMenuItemStyle
-    }
-  />
+  <MenuItem noBorderTop={item.index > 0} {...item.item} />
 );
 
 export default function ({ navigation, route }) {
@@ -39,6 +34,4 @@ const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   innerWrapper: ['borderBottomHair', 'bcolorPrimaryBorder'],
   list: ['bgPrimaryBackground', 'paddingTop4x'],
-  firstMenuItemStyle: ['bgSecondaryBackground'],
-  menuItemStyle: ['bgSecondaryBackground', 'borderTop0x'],
 });

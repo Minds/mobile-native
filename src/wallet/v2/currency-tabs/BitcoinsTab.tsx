@@ -44,10 +44,8 @@ const BitcoinsTab = observer(({ walletStore, navigation }: PropsType) => {
       )}
 
       <MenuItem
-        item={{
-          title: address || i18n.t('wallet.bitcoins.add'),
-          onPress: () => navigation.push('BtcAddressScreen', { walletStore }),
-        }}
+        title={address || i18n.t('wallet.bitcoins.add')}
+        onPress={() => navigation.push('BtcAddressScreen', { walletStore })}
       />
     </ScrollView>
   );

@@ -3,14 +3,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import i18nService from '~/common/services/i18n.service';
 import {
   BottomSheetButton,
+  BottomSheetMenuItem,
+  BottomSheetMenuItemProps,
   BottomSheetModal,
   BottomSheetModalHandle,
-  MenuItem,
 } from './';
-import { MenuItemProps } from './MenuItem';
 
 export interface MenuSheetProps {
-  items: MenuItemProps[];
+  items: BottomSheetMenuItemProps[];
 }
 
 /**
@@ -37,7 +37,7 @@ export default function MenuSheet({
       </TouchableOpacity>
       <BottomSheetModal ref={ref}>
         {items.map((item, i) => (
-          <MenuItem
+          <BottomSheetMenuItem
             {...item}
             onPress={() => {
               item.onPress?.();

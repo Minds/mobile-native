@@ -5,7 +5,7 @@ import {
   BottomSheetButton,
 } from '../../../common/components/bottom-sheet';
 import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
-import { BottomSheetSectionList, TouchableOpacity } from '@gorhom/bottom-sheet';
+import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
@@ -115,24 +115,15 @@ const DiscoveryTagsManager = (props: Props, ref) => {
 
     return (
       <MenuItem
-        component={TouchableOpacity}
-        containerItemStyle={ThemedStyles.style.bgPrimaryBackgroundHighlight}
-        item={{
-          title: '#' + tag.value,
-          onPress: () => {
-            if (selected) {
-              store.deselectTag(tag);
-            } else {
-              store.selectTag(tag);
-            }
-          },
-          icon: selected
-            ? {
-                name: 'ios-remove-circle-outline',
-                type: 'ionicon',
-              }
-            : { name: 'ios-add-circle-outline', type: 'ionicon' },
+        title={`#${tag.value}`}
+        onPress={() => {
+          if (selected) {
+            store.deselectTag(tag);
+          } else {
+            store.selectTag(tag);
+          }
         }}
+        icon={selected ? 'remove-circle' : 'add-circle'}
       />
     );
   };

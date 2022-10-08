@@ -5,7 +5,6 @@ import CountrySelector, {
   allowedCountries,
 } from '../../../../common/components/CountrySelector';
 import MenuItem from '../../../../common/components/menus/MenuItem';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import SettingInput from '../../../../common/components/SettingInput';
 import i18n from '../../../../common/services/i18n.service';
@@ -148,26 +147,13 @@ const CashOnboarding = observer(
           </View>
           <View>
             <MenuItem
-              item={{
-                onPress: localStore.setStripeAgree,
-                title: friendlyFormKeys.stripeAgree,
-                icon: (
-                  <Icon
-                    size={30}
-                    name={
-                      localStore.stripeAgree
-                        ? 'checkbox-outline'
-                        : 'square-outline'
-                    }
-                    style={
-                      localStore.stripeAgree
-                        ? theme.colorIcon
-                        : theme.colorIconDisabled
-                    }
-                  />
-                ),
-                noIcon: !localStore.stripeAgree,
-              }}
+              onPress={localStore.setStripeAgree}
+              title={friendlyFormKeys.stripeAgree}
+              icon={
+                localStore.stripeAgree ? 'checkbox-outline' : 'square-outline'
+              }
+              iconColor={localStore.stripeAgree ? 'Icon' : 'IconDisabled'}
+              noIcon={!localStore.stripeAgree}
             />
           </View>
         </DismissKeyboard>
