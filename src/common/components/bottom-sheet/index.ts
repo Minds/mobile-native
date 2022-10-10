@@ -1,4 +1,4 @@
-import BottomSheet from './BottomSheet';
+import BottomSheet, { PropsType } from './BottomSheet';
 import BottomSheetModal, { BottomSheetModalHandle } from './BottomSheetModal';
 import BottomSheetButton from './BottomSheetButton';
 import BottomSheetMenuItem, {
@@ -6,6 +6,7 @@ import BottomSheetMenuItem, {
 } from './BottomSheetMenuItem';
 import RadioButton from './RadioButton';
 import SectionTitle from './SectionTitle';
+import { pushBottomSheet } from './BottomSheetScreen';
 
 export {
   BottomSheet,
@@ -14,5 +15,11 @@ export {
   RadioButton,
   SectionTitle,
   BottomSheetButton,
+  pushBottomSheet,
 };
-export type { BottomSheetModalHandle, BottomSheetMenuItemProps };
+
+export type {
+  BottomSheetModalHandle,
+  BottomSheetMenuItemProps,
+  PropsType as BottomSheetProps,
+};

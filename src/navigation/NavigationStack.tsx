@@ -516,6 +516,18 @@ const RootStack = observer(function () {
         }
         options={modalOptions}
       />
+      <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        name="BottomSheet"
+        getComponent={() =>
+          require('../common/components/bottom-sheet/BottomSheetScreen').default
+        }
+        options={{
+          ...modalOptions,
+          cardOverlayEnabled: false,
+          animationEnabled: false,
+        }}
+      />
     </RootStackNav.Navigator>
   );
 });

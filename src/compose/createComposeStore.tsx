@@ -20,6 +20,7 @@ import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
+import { confirm } from '../common/components/Confirm';
 
 /**
  * Display an error message to the user.
@@ -538,6 +539,16 @@ export default function (props) {
         }
 
         if (this.supermindObject) {
+          if (
+            !(await confirm({
+              title: 'Confirm reply',
+              description:
+                'Are you sure you want to post this reply? Once posted your reply cannot be deleted.',
+            }))
+          ) {
+            return;
+          }
+
           newPost.supermind_reply_guid = this.supermindObject.guid;
         }
 
