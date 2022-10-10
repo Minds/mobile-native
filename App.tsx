@@ -204,3 +204,7 @@ class App extends Component<Props> {
 }
 
 export default App;
+
+if (__DEV__) {
+  import('tron');
+}
