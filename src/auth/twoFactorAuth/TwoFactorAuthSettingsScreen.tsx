@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Platform, View } from 'react-native';
-
+import { View } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -76,29 +75,24 @@ const TwoFactorAuthSettingsScreen = observer(() => {
         <>
           {items.map(item => (
             <MenuItem
-              item={{
-                onPress: () => {
-                  if (localStore.has2faEnabled || item.id === 'email') {
-                    return false;
-                  }
-                  localStore.setSelected(item.id);
-                  confirmPassword();
-                },
-                title: <ItemTitle id={item.id} enabled={item.enabled} />,
-                noIcon: localStore.has2faEnabled || item.id === 'email',
-              }}
-              titleStyle={styles.titleContainer}
+              onPress={
+                localStore.has2faEnabled || item.id === 'email'
+                  ? undefined
+                  : () => {
+                      localStore.setSelected(item.id);
+                      confirmPassword();
+                    }
+              }
+              title={<ItemTitle id={item.id} enabled={item.enabled} />}
             />
           ))}
           {localStore.has2faEnabled && (
             <MenuItem
-              item={{
-                onPress: () => {
-                  localStore.setSelected('disable');
-                  confirmPassword();
-                },
-                title: i18n.t('settings.TFADisable'),
+              onPress={() => {
+                localStore.setSelected('disable');
+                confirmPassword();
               }}
+              title={i18n.t('settings.TFADisable')}
             />
           )}
         </>
@@ -149,10 +143,6 @@ const ItemTitle = ({ id, enabled }: OptionDef) => {
 const styles = ThemedStyles.create({
   optDescription: ['colorSecondaryText', 'fontL'],
   row: ['rowJustifyStart', 'marginBottom2x'],
-  titleContainer: {
-    marginTop: Platform.select({ ios: 20, android: 10 }),
-    paddingTop: 0,
-  },
   error: ['fontXL', 'textCenter', 'paddingVertical4x'],
   description: [
     'fontL',

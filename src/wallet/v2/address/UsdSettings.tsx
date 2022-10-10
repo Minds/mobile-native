@@ -63,12 +63,12 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
       {hasBankInfo && (
         <Spacer bottom="XL2">
           <MenuItem
-            item={{
-              title: hasBankAccount
+            title={
+              hasBankAccount
                 ? walletStore.wallet.cash.label
-                : i18n.t('wallet.bank.complete'),
-              onPress: navToBankScreen,
-            }}
+                : i18n.t('wallet.bank.complete')
+            }
+            onPress={navToBankScreen}
           />
         </Spacer>
       )}
@@ -79,10 +79,8 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
             <B2 color="secondary">{i18n.t('wallet.usd.leaveDescription')}</B2>
           </Spacer>
           <MenuItem
-            item={{
-              title: i18n.t('wallet.usd.leaveButton'),
-              onPress: confirm,
-            }}
+            title={i18n.t('wallet.usd.leaveButton')}
+            onPress={confirm}
           />
         </>
       )}

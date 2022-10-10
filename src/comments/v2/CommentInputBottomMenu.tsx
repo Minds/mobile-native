@@ -9,9 +9,9 @@ import { StyleProp, ViewStyle } from 'react-native';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
+  BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
-import { MenuItemProps } from '../../common/components/bottom-sheet/MenuItem';
 
 type PropsType = {
   store: CommentsStore;
@@ -41,10 +41,10 @@ export default observer(function CommentInputBottomMenu({
     ref.current?.present();
   }, [beforeSelect]);
 
-  const dismissOptions: Array<MenuItemProps> = React.useMemo(() => {
-    const actions: Array<MenuItemProps> = [];
+  const dismissOptions: Array<BottomSheetMenuItemProps> = React.useMemo(() => {
+    const actions: Array<BottomSheetMenuItemProps> = [];
 
-    const setExplicit: MenuItemProps = {
+    const setExplicit: BottomSheetMenuItemProps = {
       title: i18n.t('setExplicit'),
       onPress: () => {
         store.toggleMature();
@@ -54,7 +54,7 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
-    const removeExplicit: MenuItemProps = {
+    const removeExplicit: BottomSheetMenuItemProps = {
       title: i18n.t('removeExplicit'),
       onPress: () => {
         store.toggleMature();
@@ -64,7 +64,7 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
-    const openGallery: MenuItemProps = {
+    const openGallery: BottomSheetMenuItemProps = {
       title: i18n.t('capture.attach'),
       onPress: () => {
         const fn = () => {
@@ -77,7 +77,7 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
-    const openPhoto: MenuItemProps = {
+    const openPhoto: BottomSheetMenuItemProps = {
       title: i18n.t('capture.takePhoto'),
       onPress: () => {
         close();
@@ -105,7 +105,7 @@ export default observer(function CommentInputBottomMenu({
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
       <BottomSheetModal ref={ref}>
         {dismissOptions.map((a, i) => (
-          <MenuItem {...a} key={i} />
+          <BottomSheetMenuItem {...a} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
       </BottomSheetModal>

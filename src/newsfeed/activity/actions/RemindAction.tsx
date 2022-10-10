@@ -13,7 +13,7 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '../../../common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
 
@@ -135,7 +135,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       {shown && (
         <BottomSheetModal ref={ref} autoShow>
           {reminded ? (
-            <MenuItem
+            <BottomSheetMenuItem
               onPress={undo}
               title={i18n.t('undoRemind')}
               iconName="undo"
@@ -143,13 +143,13 @@ export default function ({ entity, hideCount }: PropsTypes) {
             />
           ) : (
             <>
-              <MenuItem
+              <BottomSheetMenuItem
                 onPress={remind}
                 title={i18n.t('capture.remind')}
                 iconName="repeat"
                 iconType="material"
               />
-              <MenuItem
+              <BottomSheetMenuItem
                 onPress={quote}
                 title={i18n.t('quote')}
                 iconName="edit"

@@ -15,7 +15,7 @@ import { actionsContainerStyle } from './styles';
 import {
   BottomSheetButton,
   BottomSheetModal,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
 
 type PropsType = {
@@ -82,13 +82,13 @@ export default observer(function ShareAction({ entity }: PropsType) {
       />
       {localStore.menuShown && (
         <BottomSheetModal ref={ref} autoShow>
-          <MenuItem
+          <BottomSheetMenuItem
             onPress={localStore.sendTo}
             title={i18n.t('sendTo')}
             iconName="repeat"
             iconType="material"
           />
-          <MenuItem
+          <BottomSheetMenuItem
             title={i18n.t('share')}
             onPress={localStore.share}
             iconName="edit"

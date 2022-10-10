@@ -4,14 +4,13 @@ import { ScrollView, View } from 'react-native';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { useStores } from '../../../../common/hooks/use-stores';
-import MenuItem from '../../../../common/components/menus/MenuItem';
 import type EmailNotificationsSettingModel from './EmailNotificationsSettingModel';
-import InputSelector from '../../../../common/components/InputSelector';
-import Toggle from '../../../../common/components/Toggle';
 import MText from '../../../../common/components/MText';
 import Empty from '~/common/components/Empty';
 import { Button } from '~/common/ui';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import MenuItemToggle from '../../../../common/components/menus/MenuItemToggle';
+import MenuItemSelect from '../../../../common/components/menus/MenuItemSelect';
 
 type PropsType = {};
 
@@ -26,7 +25,6 @@ const topicsWithSelector = ['unread_notifications', 'top_posts'];
 type frecuencyOptionType = { frecuency: string; label: string };
 
 const EmailNotificationsSettings = ({}: PropsType) => {
-  const theme = ThemedStyles.style;
   const { notifications } = useStores();
   React.useEffect(() => {
     if (notifications.pushNotificationsSettings === null) {
@@ -68,13 +66,14 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                   return (
                     <>
                       {!isSelector && (
-                        <MenuItem
-                          item={{
-                            title: setting.topic,
-                            icon: <SettingToggle setting={setting} />,
-                          }}
-                          containerItemStyle={theme.bgPrimaryBackground}
-                          titleStyle={itemTextStyleMedium}
+                        <MenuItemToggle
+                          title={setting.topic}
+                          value={setting.value !== '' && setting.value !== '0'}
+                          onChange={() =>
+                            setting.toggleValue(
+                              setting.value === '1' ? '' : '1',
+                            )
+                          }
                         />
                       )}
                       {isSelector && (
@@ -111,23 +110,6 @@ const EmailNotificationsSettings = ({}: PropsType) => {
   );
 };
 
-const SettingToggle = observer(
-  ({ setting }: { setting: EmailNotificationsSettingModel | undefined }) => {
-    if (!setting) {
-      return null;
-    }
-    const value = setting.value !== '' && setting.value !== '0';
-    return (
-      <Toggle
-        onValueChange={() =>
-          setting.toggleValue(setting.value === '1' ? '' : '1')
-        }
-        value={value}
-      />
-    );
-  },
-);
-
 const NotificationSelector = observer(
   ({
     setting,
@@ -145,36 +127,24 @@ const NotificationSelector = observer(
         : setting.value === '1'
         ? 'periodically'
         : setting.value;
+
     return (
-      <>
-        <InputSelector
-          selectTitle={i18n.t('notificationSettings.frecuency')}
-          label={setting.topic}
-          data={frecuencyOptions}
-          valueExtractor={item => item.label}
-          keyExtractor={item => item.frecuency}
-          onSelected={(frecuency: string) => {
-            setting.toggleValue(frecuency === 'never' ? '' : frecuency);
-          }}
-          selected={parsedSettingValue}
-          containerStyle={selectorContainer}
-          textStyle={itemTextStyleMedium}
-          labelStyle={itemTextStyleMedium}
-          mainContainerStyle={selectorMainContainer}
-          backdropOpacity={0.99}
-        />
-      </>
+      <MenuItemSelect
+        selectTitle={i18n.t('notificationSettings.frecuency')}
+        title={setting.topic}
+        data={frecuencyOptions}
+        valueExtractor={item => item.label}
+        keyExtractor={item => item.frecuency}
+        onSelected={(frecuency: string) =>
+          setting.toggleValue(frecuency === 'never' ? '' : frecuency)
+        }
+        selected={parsedSettingValue}
+        backdropOpacity={0.99}
+      />
     );
   },
 );
 
-const selectorContainer = ThemedStyles.combine(
-  'bgPrimaryBackground',
-  'borderLeft0x',
-  'borderRight0x',
-);
-
-const selectorMainContainer = ThemedStyles.combine('paddingTop0x');
 export const titleStyle = ThemedStyles.combine(
   'fontMedium',
   'fontL',
@@ -183,18 +153,8 @@ export const titleStyle = ThemedStyles.combine(
   'marginTop8x',
   'paddingLeft4x',
 );
-
-export const itemTextStyle = ThemedStyles.combine('fontL', 'colorPrimaryText');
-
-export const itemTextStyleMedium = ThemedStyles.combine(
-  'fontMedium',
-  'fontL',
-  'colorPrimaryText',
-);
-
 export const containerStyle = ThemedStyles.combine(
   'flexContainer',
-  'bgSecondaryBackground',
   'paddingVertical2x',
 );
 
