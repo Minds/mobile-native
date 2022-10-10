@@ -60,7 +60,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const params = {
     filter: notifications.filter,
-    limit: 10,
+    limit: 15,
     offset: notifications.offset,
   };
 
