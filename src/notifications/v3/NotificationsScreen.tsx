@@ -60,7 +60,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const params = {
     filter: notifications.filter,
-    limit: 15,
+    limit: 10,
     offset: notifications.offset,
   };
 
@@ -126,16 +126,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
     return unsubscribe;
   }, [navigation, onFocus]);
-
-  /**
-   * Initial load and reset count
-   */
-  React.useEffect(() => {
-    // delay initial load to prevent stuttering while the animated blue bar is moving
-    setTimeout(() => {
-      store.fetch().then(() => notifications.setUnread(0));
-    }, 50);
-  }, [notifications, store]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
