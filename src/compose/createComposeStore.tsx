@@ -553,7 +553,11 @@ export default function (props) {
         }
 
         // monetization
-        if (this.paywalled && !this.supermindRequest) {
+        if (
+          this.paywalled &&
+          !this.supermindRequest &&
+          !this.isSupermindReply
+        ) {
           newPost.paywall = true;
           newPost.wire_threshold = this.wire_threshold;
         }
@@ -563,7 +567,11 @@ export default function (props) {
           newPost.remind_guid = this.entity.guid;
         }
 
-        if (this.postToPermaweb) {
+        if (
+          this.postToPermaweb &&
+          !this.supermindRequest &&
+          !this.isSupermindReply
+        ) {
           if (this.paywalled) {
             showError(i18n.t('permaweb.cannotMonetize'));
             return false;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
@@ -25,7 +24,7 @@ export default function Confirm({
         <H2 align="center" bottom="L">
           {title}
         </H2>
-        {Boolean(description) && <B1>{description}</B1>}
+        {!!description && <B1>{description}</B1>}
       </Spacer>
       <BottomSheetButton
         action
@@ -40,7 +39,7 @@ export default function Confirm({
 }
 
 export const confirm = (
-  props: Omit<ConfirmProps, 'onConfirm'>,
+  props: Omit<ConfirmProps, 'onConfirm' | 'onCancel'>,
 ): Promise<boolean> => {
   return new Promise(resolve =>
     pushBottomSheet({

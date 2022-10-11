@@ -13,10 +13,7 @@ import { TwoFactorType } from '../common/services/api.service';
 import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
-import {
-  BottomSheetScreenParams,
-  BottomSheetScreenProps,
-} from '../common/components/bottom-sheet/BottomSheetScreen';
+import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
 
 type AnyType = any;
 
