@@ -31,8 +31,8 @@ export default function BottomSheetScreen({
   const { component, ...props } = route.params;
 
   const handleClose = useCallback(() => {
-    navigation.goBack();
     props?.onClose?.();
+    navigation.goBack();
   }, [navigation, props]);
 
   return (
