@@ -122,9 +122,13 @@ export default class BaseModel extends AbstractModel {
     const childs = this.childModels();
 
     Object.getOwnPropertyNames(data).forEach(key => {
-      if (childs[key] && this[key] && this[key].update) {
-        // we update the child model
-        this[key].update(data[key]);
+      if (childs[key] && data[key]) {
+        // if the child model exist we update the data or we create it otherwise
+        if (this[key] && this[key].update) {
+          this[key].update(data[key]);
+        } else {
+          this[key] = childs[key].create(data[key]);
+        }
       } else {
         // we assign the property
         this[key] = data[key];
