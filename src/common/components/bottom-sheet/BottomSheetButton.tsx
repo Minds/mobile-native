@@ -7,6 +7,7 @@ interface PropsType {
   onPress: () => void;
   testID?: string;
   loading?: boolean;
+  solid?: boolean;
   disabled?: boolean;
 }
 
@@ -16,6 +17,7 @@ export default function BottomSheetButton({
   action,
   loading,
   testID,
+  solid,
 }: PropsType) {
   return (
     <Button
@@ -24,7 +26,7 @@ export default function BottomSheetButton({
       onPress={onPress}
       testID={testID}
       loading={loading}
-      mode={action ? 'outline' : 'solid'}
+      mode={action ? (solid ? 'solid' : 'outline') : 'solid'}
       type={action ? 'action' : undefined}>
       {text}
     </Button>

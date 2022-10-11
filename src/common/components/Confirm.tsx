@@ -22,13 +22,14 @@ export default function Confirm({
   return (
     <SafeAreaView edges={['bottom']} style={ThemedStyles.style.flexContainer}>
       <Spacer horizontal="L" bottom="S">
-        <H2 align="center" bottom="M">
+        <H2 align="center" bottom="L">
           {title}
         </H2>
         {Boolean(description) && <B1>{description}</B1>}
       </Spacer>
       <BottomSheetButton
         action
+        solid
         text={i18nService.t('confirm')}
         onPress={onConfirm}
       />
