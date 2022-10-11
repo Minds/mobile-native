@@ -541,9 +541,8 @@ export default function (props) {
         if (this.supermindObject) {
           if (
             !(await confirm({
-              title: 'Confirm reply',
-              description:
-                'Are you sure you want to post this reply? Once posted your reply cannot be deleted.',
+              title: i18n.t('supermind.confirm.title'),
+              description: i18n.t('supermind.confirm.description'),
             }))
           ) {
             return;

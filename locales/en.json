@@ -122,6 +122,10 @@
           }
         }
       }
+    },
+    "confirm": {
+      "title": "Confirm reply",
+      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted."
     }
   },
   "auth": {
