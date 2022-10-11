@@ -2,7 +2,13 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import React, { forwardRef, useCallback } from 'react';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import { Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
@@ -29,9 +35,10 @@ export const renderBackdrop = backdropProps => (
  * The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
  */
 const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
+  const bottomSheetRef = useRef<BottomSheetMethods>(null);
+
   const { onAnimateHandler } = useBackHandler(
-    // @ts-ignore
-    useCallback(() => ref?.current?.close(), [ref]),
+    useCallback(() => bottomSheetRef.current?.close(), [bottomSheetRef]),
     props,
   );
 
@@ -40,9 +47,11 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
     [],
   );
 
+  useImperativeHandle(ref, () => bottomSheetRef.current!, [bottomSheetRef]);
+
   return (
     <BottomSheet
-      ref={ref}
+      ref={bottomSheetRef}
       index={-1}
       containerHeight={windowHeight}
       topInset={StatusBar.currentHeight || 0}
