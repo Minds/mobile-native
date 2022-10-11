@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react';
 import React, {
   forwardRef,
@@ -151,7 +150,7 @@ export default observer(
 
       return props.renderPlaceholder || props.renderItem;
     }, [
-      fetchStore,
+      fetchStore.result,
       props.endpointData,
       props.renderPlaceholder,
       props.renderItem,
@@ -179,6 +178,7 @@ export default observer(
         fetchStore.refreshing,
         fetchStore.result,
         props.endpointData,
+        props.placeholderCount,
         theme.paddingVertical2x,
       ],
     );
