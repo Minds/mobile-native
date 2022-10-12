@@ -17,7 +17,7 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   const isDismissed = dismissal.isDismissed('top-highlights');
 
   const shouldRender =
-    Boolean(newsfeed.highlightsStore.entities.length) && isDismissed;
+    Boolean(newsfeed.highlightsStore.entities.length) && !isDismissed;
 
   if (!shouldRender) {
     return null;
