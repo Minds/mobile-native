@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -7,7 +7,9 @@ import createLoginStore from './createLoginStore';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
 import sessionService from '../../common/services/session.service';
-import InputContainer from '../../common/components/InputContainer';
+import InputContainer, {
+  InputContainerImperativeHandle,
+} from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
@@ -27,6 +29,7 @@ type PropsType = {
  */
 export default observer(function LoginForm(props: PropsType) {
   const localStore = useLocalStore(createLoginStore, { props });
+  const passwordRef = useRef<InputContainerImperativeHandle>(null);
 
   const theme = ThemedStyles.style;
 
@@ -67,7 +70,10 @@ export default observer(function LoginForm(props: PropsType) {
       testID="usernameLoginInput"
       autoCorrect={false}
       noBottomBorder
+      onSubmitEditing={passwordRef.current?.focus}
       keyboardType="default"
+      returnKeyLabel="Next"
+      returnKeyType="next"
       maxLength={50}
       error={
         localStore.showErrors && !localStore.username
@@ -84,13 +90,17 @@ export default observer(function LoginForm(props: PropsType) {
         {usernameInput}
         <View style={theme.marginBottom4x}>
           <PasswordInput
+            ref={passwordRef}
             placeholder={i18n.t('auth.password')}
             autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
             value={localStore.password}
             testID="userPasswordInput"
+            returnKeyLabel="Submit"
+            returnKeyType="send"
             autoFocus={props.relogin}
+            onSubmitEditing={localStore.onLoginPress}
             error={
               localStore.showErrors && !localStore.password
                 ? i18n.t('auth.fieldRequired')

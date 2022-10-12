@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
@@ -15,10 +15,12 @@ import { Button } from '~ui';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
 import apiService from '~/common/services/api.service';
+import { InputContainerImperativeHandle } from '~/common/components/InputContainer';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
-
+  const newPasswordRef = useRef<InputContainerImperativeHandle>(null);
+  const confirmPasswordRef = useRef<InputContainerImperativeHandle>(null);
   const navigation = useNavigation();
 
   const store = useLocalStore(() => ({
@@ -130,7 +132,7 @@ export default observer(function () {
         showNotification(err.message, 'danger');
       }
     }
-  }, [store]);
+  }, [navigation, store]);
 
   /**
    * Set save button on header right
@@ -143,47 +145,54 @@ export default observer(function () {
     ),
   });
 
-  const subContainer = !store.passwordFocused ? [theme.paddingTop7x] : [];
-
   return (
     <KeyboardAwareScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingTop3x}>
-      {!store.passwordFocused && (
+      {!store.passwordFocused ? (
         <PasswordInput
           placeholder={i18n.t('settings.currentPassword')}
           onChangeText={store.setCurrentPassword}
+          onSubmitEditing={newPasswordRef.current?.focus}
           value={store.currentPassword}
+          returnKeyLabel="Next"
+          returnKeyType="next"
           testID={'currentPasswordInput'}
           error={store.currentPasswordError}
+          style={[theme.paddingBottom7x]}
         />
+      ) : (
+        <View style={[theme.paddingLeft3x]}>
+          <PasswordValidator password={store.newPassword} />
+        </View>
       )}
-      <View style={subContainer}>
-        {store.passwordFocused && (
-          <View style={[theme.paddingLeft3x]}>
-            <PasswordValidator password={store.newPassword} />
-          </View>
-        )}
-        <PasswordInput
-          placeholder={i18n.t('settings.newPassword')}
-          onChangeText={store.setNewPassword}
-          value={store.newPassword}
-          testID={'newPasswordInput'}
-          onFocus={store.newPasswordFocus}
-          onBlur={store.newPasswordBlurred}
-          error={store.newPasswordError}
-          noBottomBorder={true}
-        />
+      <PasswordInput
+        ref={newPasswordRef}
+        placeholder={i18n.t('settings.newPassword')}
+        onChangeText={store.setNewPassword}
+        onSubmitEditing={confirmPasswordRef.current?.focus}
+        value={store.newPassword}
+        returnKeyLabel="Next"
+        returnKeyType="next"
+        testID={'newPasswordInput'}
+        onFocus={store.newPasswordFocus}
+        onBlur={store.newPasswordBlurred}
+        error={store.newPasswordError}
+        noBottomBorder={true}
+      />
 
-        <PasswordInput
-          placeholder={i18n.t('settings.confirmNewPassword')}
-          onChangeText={store.setConfirmationPassword}
-          value={store.confirmationPassword}
-          error={store.confirmationPasswordError}
-          testID={'confirmationPasswordPasswordInput'}
-          onBlur={store.newPasswordBlurred}
-        />
-      </View>
+      <PasswordInput
+        ref={confirmPasswordRef}
+        placeholder={i18n.t('settings.confirmNewPassword')}
+        onChangeText={store.setConfirmationPassword}
+        onSubmitEditing={confirmPassword}
+        returnKeyLabel="Submit"
+        returnKeyType="send"
+        value={store.confirmationPassword}
+        error={store.confirmationPasswordError}
+        testID={'confirmationPasswordPasswordInput'}
+        onBlur={store.newPasswordBlurred}
+      />
     </KeyboardAwareScrollView>
   );
 });
