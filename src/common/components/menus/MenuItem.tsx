@@ -28,6 +28,11 @@ export type MenuItemProps = {
   noBorderTop?: boolean;
   onTitlePress?: () => void;
   noIcon?: boolean;
+  /**
+   * Whether the title can be multiline
+   * @default false
+   */
+  multiLine?: boolean;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -44,6 +49,7 @@ export default function ({
   noBorderTop,
   noIcon,
   titleStyle,
+  multiLine,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -100,9 +106,11 @@ export default function ({
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
       {avatar && <FastImage source={avatar} style={styles.avatar} />}
-      <Column flex right={rightIcon ? 'XXL' : undefined}>
+      <Column flex right={rightIcon ? 'L2' : undefined}>
         <Row align="centerBetween">
-          <MText style={theTitleStyle} numberOfLines={1}>
+          <MText
+            style={theTitleStyle}
+            numberOfLines={multiLine ? undefined : 1}>
             {title}
           </MText>
           {Boolean(label) && (
