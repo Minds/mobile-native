@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { ReactNode, useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import {
   BottomSheetButton,
@@ -17,6 +17,7 @@ interface NewsfeedHeaderProps {
   withoutIcon?: any;
   small?: boolean;
   shadow?: boolean;
+  endIcon?: ReactNode;
 }
 
 const NewsfeedHeader = ({
@@ -25,6 +26,7 @@ const NewsfeedHeader = ({
   onFeedTypeChange,
   small,
   shadow,
+  endIcon,
 }: NewsfeedHeaderProps) => {
   const bottomSheetRef = useRef<any>(undefined);
   const withoutIcon = !onFeedTypeChange;
@@ -87,13 +89,15 @@ const NewsfeedHeader = ({
     <View style={style}>
       <Typo>{feedTitle}</Typo>
 
-      {!withoutIcon && (
-        <IconButtonNext
-          name="tune"
-          color={feedType === 'top' ? 'Link' : 'Icon'}
-          onPress={onPresentModal}
-        />
-      )}
+      {endIcon
+        ? endIcon
+        : !withoutIcon && (
+            <IconButtonNext
+              name="tune"
+              color={feedType === 'top' ? 'Link' : 'Icon'}
+              onPress={onPresentModal}
+            />
+          )}
 
       <BottomSheetModal
         title={sheetTitle}
