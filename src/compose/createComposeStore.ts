@@ -82,7 +82,7 @@ export default function (props) {
     /**
      * The onSave from route params, called after submitting
      */
-    onSaveCallback: undefined as () => void,
+    onSaveCallback: undefined as (entity: ActivityModel) => void,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -164,7 +164,7 @@ export default function (props) {
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
 
-      this.onSaveCallback?.();
+      this.onSaveCallback?.(entity);
       popToTop();
       this.clear(false);
 

@@ -103,6 +103,11 @@ export default class SupermindRequestModel extends BaseModel {
   }
 
   @action
+  setReplyGuid(guid: string) {
+    this.reply_activity_guid = guid;
+  }
+
+  @action
   async revoke() {
     try {
       this.isLoading = 2;

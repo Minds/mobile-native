@@ -122,7 +122,10 @@ const InboundButtons = observer(
         supermindObject: request,
         allowedMode: composerModes[request.reply_type],
         entity: request.entity,
-        onSave: () => request.setStatus(SupermindRequestStatus.ACCEPTED),
+        onSave: entity => {
+          request.setStatus(SupermindRequestStatus.ACCEPTED);
+          request.setReplyGuid(entity.guid);
+        },
       });
     }, [navigation, request]);
 
