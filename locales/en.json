@@ -68,6 +68,7 @@
     "acceptOffer": "Accept Offer",
     "cancelOffer": "Cancel Offer",
     "decline": "Decline",
+    "viewReply": "View reply",
     "revoked": "revoked",
     "rejected": "rejected",
     "minimum": "Must be a minimum of {{value}}",

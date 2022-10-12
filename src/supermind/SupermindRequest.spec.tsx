@@ -7,6 +7,7 @@ import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
 import supermindRequestFaker from '~/../__mocks__/fake/supermind/SupermindRequestFaker';
+import { SupermindRequestStatus } from './types';
 
 // mock dependencies
 jest.mock('@react-navigation/native');
@@ -43,6 +44,9 @@ describe('SupermindRequest', () => {
   it('should navigate to composer', async () => {
     const request = SupermindRequestModel.create(supermindRequestFaker());
 
+    // update the timestamp (if it is expired the button is hidden)
+    request.created_timestamp = Math.floor(Date.now() / 1000);
+
     render(<SupermindRequest request={request} />);
 
     fireEvent.press(screen.getByTestId('acceptButton'));
@@ -53,6 +57,9 @@ describe('SupermindRequest', () => {
   it('should reject a request', async () => {
     const request = SupermindRequestModel.create(supermindRequestFaker());
 
+    // update the timestamp (if it is expired the button is hidden)
+    request.created_timestamp = Math.floor(Date.now() / 1000);
+
     request.reject = jest.fn();
 
     render(<SupermindRequest request={request} />);
@@ -60,5 +67,20 @@ describe('SupermindRequest', () => {
     fireEvent.press(screen.getByTestId('rejectButton'));
 
     expect(request.reject).toHaveBeenCalled();
+  });
+
+  it('should view a reply', async () => {
+    const request = SupermindRequestModel.create(supermindRequestFaker());
+
+    request.status = SupermindRequestStatus.ACCEPTED;
+    request.reply_activity_guid = '111';
+
+    request.viewReply = jest.fn();
+
+    render(<SupermindRequest request={request} />);
+
+    fireEvent.press(screen.getByTestId('viewButton'));
+
+    expect(request.viewReply).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 
@@ -9,7 +10,6 @@ import SupermindRequestModel from './SupermindRequestModel';
 import { B2, Button, Column, Row, Spacer } from '~/common/ui';
 import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import { SupermindRequestStatus } from './types';
-import { observer } from 'mobx-react';
 
 type Props = {
   request: SupermindRequestModel;
@@ -54,7 +54,9 @@ export default function SupermindRequest({ request, outbound }: Props) {
           </>
         )}
       </B2>
-      {outbound ? null : ( //<OutboundButtons request={request} /> removed temporarily
+      {outbound ? (
+        <OutboundButtons request={request} />
+      ) : (
         <InboundButtons request={request} />
       )}
     </Spacer>
@@ -124,29 +126,31 @@ const InboundButtons = observer(
       });
     }, [navigation, request]);
 
-    if (request.status !== SupermindRequestStatus.CREATED) {
-      return null;
-    }
-
     return (
       <Column space="L" top="XXL">
-        <Button
-          testID="acceptButton"
-          mode="outline"
-          type="action"
-          bottom="L"
-          onPress={answer}
-          disabled={request.isLoading > 0}>
-          {i18n.t('supermind.acceptOffer')}
-        </Button>
-        <Button
-          testID="rejectButton"
-          mode="outline"
-          type="base"
-          disabled={request.isLoading > 0}
-          onPress={() => request.reject()}>
-          {i18n.t('supermind.decline')}
-        </Button>
+        {request.status === SupermindRequestStatus.CREATED &&
+          !request.isExpired() && (
+            <>
+              <Button
+                testID="acceptButton"
+                mode="outline"
+                type="action"
+                bottom="L"
+                onPress={answer}
+                disabled={request.isLoading > 0}>
+                {i18n.t('supermind.acceptOffer')}
+              </Button>
+              <Button
+                testID="rejectButton"
+                mode="outline"
+                type="base"
+                disabled={request.isLoading > 0}
+                onPress={() => request.reject()}>
+                {i18n.t('supermind.decline')}
+              </Button>
+            </>
+          )}
+        <SuperMindViewButton request={request} />
       </Column>
     );
   },
@@ -155,21 +159,42 @@ const InboundButtons = observer(
 /**
  * Outbound buttons
  */
-// const OutboundButtons = observer(
-//   ({ request }: { request: SupermindRequestModel }) => {
-//     if (request.status !== SupermindRequestStatus.CREATED) {
-//       return null;
-//     }
-//     return (
-//       <Column space="L" top="XXL">
-//         <Button
-//           mode="outline"
-//           type="base"
-//           disabled={request.isLoading > 0}
-//           onPress={() => request.revoke()}>
-//           {i18n.t('supermind.cancelOffer')}
-//         </Button>
-//       </Column>
-//     );
-//   },
-// );
+const OutboundButtons = observer(
+  ({ request }: { request: SupermindRequestModel }) => {
+    return (
+      <Column space="L" top="XXL">
+        {/* {request.status === SupermindRequestStatus.CREATED && (
+          <Button
+            mode="outline"
+            type="base"
+            disabled={request.isLoading > 0}
+            onPress={() => request.revoke()}>
+            {i18n.t('supermind.cancelOffer')}
+          </Button>
+        )} */}
+        <SuperMindViewButton request={request} />
+      </Column>
+    );
+  },
+);
+
+/**
+ * Supermind view reply button
+ */
+const SuperMindViewButton = ({
+  request,
+}: {
+  request: SupermindRequestModel;
+}) => {
+  return request.status === SupermindRequestStatus.ACCEPTED &&
+    Boolean(request.reply_activity_guid) ? (
+    <Button
+      testID="viewButton"
+      mode="outline"
+      type="base"
+      disabled={request.isLoading > 0}
+      onPress={() => request.viewReply()}>
+      {i18n.t('supermind.viewReply')}
+    </Button>
+  ) : null;
+};
