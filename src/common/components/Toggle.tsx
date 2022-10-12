@@ -1,12 +1,13 @@
 import React from 'react';
-import { Switch } from 'react-native';
+import { StyleProp, Switch, ViewStyle } from 'react-native';
 
 type PropsType = {
   onValueChange: (value: boolean) => void;
   value: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
-const Toggle = ({ onValueChange, value }: PropsType) => {
+const Toggle = ({ onValueChange, value, style }: PropsType) => {
   return (
     <Switch
       trackColor={{ false: '#767577', true: '#1B85D6' }}
@@ -14,6 +15,7 @@ const Toggle = ({ onValueChange, value }: PropsType) => {
       ios_backgroundColor="#767577"
       onValueChange={onValueChange}
       value={value}
+      style={style}
     />
   );
 };

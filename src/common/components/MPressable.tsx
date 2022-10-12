@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Platform, Pressable } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
@@ -21,16 +21,18 @@ const MPressable = ({ ...props }) => {
           onPressIn: () => setPressed(true),
           onPressOut: () => setPressed(false),
           style: [
+            props.style,
             {
               backgroundColor: pressed
                 ? ThemedStyles.getColor('SecondaryBackground')
+                : props.style
+                ? StyleSheet.flatten(props.style).backgroundColor
                 : undefined,
             },
-            props.style,
           ],
         },
       }),
-    [pressed],
+    [pressed, props.style],
   );
 
   return <Pressable {...props} {...platformSpecificProps} />;

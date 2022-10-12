@@ -63,10 +63,6 @@ const MonetizeScreen = observer(({}: PropsType) => {
     store.wire_threshold && store.wire_threshold.support_tier,
   );
 
-  const checkIcon = (
-    <MIcon name="check" size={24} style={theme.colorSecondaryText} />
-  );
-
   return (
     <Wrapper store={store}>
       <MText
@@ -79,45 +75,37 @@ const MonetizeScreen = observer(({}: PropsType) => {
         {i18n.t('capture.paywallDescription')}
       </MText>
       <MenuItem
-        item={{
-          onPress: () => store.clearWireThreshold(),
-          title: i18n.t('monetize.none'),
-          icon: !isActive ? checkIcon : undefined,
-          noIcon: isActive,
-        }}
+        onPress={() => store.clearWireThreshold()}
+        title={i18n.t('monetize.none')}
+        icon={!isActive ? 'check' : undefined}
         containerItemStyle={theme.bgPrimaryBackground}
         testID="monetizeNone"
       />
       <View style={theme.marginTop4x}>
         <MenuSubtitle>{i18n.t('monetize.options')}</MenuSubtitle>
         <MenuItem
-          item={{
-            onPress: useNavCallback('PlusMonetize', store, navigation),
-            title: i18n.t('monetize.plus'),
-            icon: <IconItem isActive={isPlusSelected} />,
-          }}
+          onPress={useNavCallback('PlusMonetize', store, navigation)}
+          title={i18n.t('monetize.plus')}
+          icon={<IconItem isActive={isPlusSelected} />}
           containerItemStyle={theme.bgPrimaryBackground}
           testID="monetizePlus"
         />
         <MenuItem
-          item={{
-            onPress: () =>
-              NavigationService.navigate('MembershipMonetize', {
-                store,
-                useForSelection: true,
-              }),
-            title: i18n.t('monetize.memberships'),
-            icon: <IconItem isActive={isMemembsershipSelected} />,
-          }}
+          onPress={() =>
+            NavigationService.navigate('MembershipMonetize', {
+              store,
+              useForSelection: true,
+            })
+          }
+          title={i18n.t('monetize.memberships')}
+          icon={<IconItem isActive={isMemembsershipSelected} />}
           containerItemStyle={theme.bgPrimaryBackground}
           testID="monetizeMemberships"
         />
         {/* <MenuItem
-          item={{
-            onPress: useNavCallback('CustomMonetize', store),
-            title: i18n.t('monetize.custom'),
-            icon: <IconItem isActive={isCustomSelected} />,
-          }}
+          onPress={useNavCallback('CustomMonetize', store)}
+          title={i18n.t('monetize.custom')}
+          icon={<IconItem isActive={isCustomSelected} />}
           containerItemStyle={theme.bgPrimaryBackground}
           testID="monetizeCustom"
         /> */}

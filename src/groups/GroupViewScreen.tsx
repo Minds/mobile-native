@@ -34,11 +34,12 @@ import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
-import MenuItem, {
-  MenuItemProps,
-} from '../common/components/bottom-sheet/MenuItem';
 import type GroupModel from './GroupModel';
 import withModalProvider from '~/navigation/withModalProvide';
+import {
+  BottomSheetMenuItem,
+  BottomSheetMenuItemProps,
+} from '../common/components/bottom-sheet';
 
 export const GroupContext = React.createContext<GroupModel | null>(null);
 
@@ -255,7 +256,7 @@ export default class GroupViewScreen extends Component {
    */
   memberMenuPress = member => {
     const group = this.props.groupView.group;
-    const memberActions: Array<MenuItemProps> = [];
+    const memberActions: Array<BottomSheetMenuItemProps> = [];
     const imOwner = group['is:owner'];
     const imModerator = group['is:moderator'];
 
@@ -404,7 +405,7 @@ export default class GroupViewScreen extends Component {
           separator: ' ',
         })}>
         {this.state.memberActions.map((o, i) => (
-          <MenuItem {...o} key={i} />
+          <BottomSheetMenuItem {...o} key={i} />
         ))}
       </BottomSheetModal>
     ) : null;

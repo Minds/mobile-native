@@ -43,11 +43,14 @@ const Fonts = {
   Feather,
 };
 
+export type IIconSize = UIIconSizeType | number | string;
+export type IIconColor = ColorsNameType;
+
 export interface IIcon extends UIBaseType {
   color?: ColorsNameType;
   activeColor?: ColorsNameType;
   name: IconMapNameType;
-  size?: UIIconSizeType | number | string;
+  size?: IIconSize;
   style?: ViewStyle | any;
   active?: boolean;
   disabled?: boolean;

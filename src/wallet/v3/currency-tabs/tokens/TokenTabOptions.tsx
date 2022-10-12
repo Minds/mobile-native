@@ -10,7 +10,7 @@ import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '../../../../common/components/bottom-sheet';
 import { IS_IOS, ONCHAIN_ENABLED } from '../../../../config/Config';
 
@@ -86,7 +86,7 @@ const TokenTabOptions = observer((props: PropsType) => {
       <IconButton left="S" name="more" onPress={show} />
       <BottomSheetModal ref={ref}>
         {dismissOptions.map((b, i) => (
-          <MenuItem {...b} key={i} />
+          <BottomSheetMenuItem {...b} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
       </BottomSheetModal>

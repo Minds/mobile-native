@@ -29,10 +29,10 @@ export default class PushNotificationsSettingModel {
     return translation;
   }
 
-  toggleEnabled() {
+  toggleEnabled = () => {
     this._toggleEnabled();
     this.toggle();
-  }
+  };
 
   async toggle() {
     try {

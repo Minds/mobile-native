@@ -7,7 +7,7 @@ type PropsType = {
 
 const MenuSubtitle = ({ children }: PropsType) => {
   return (
-    <B3 font="medium" color="secondary" horizontal="L" top="L" bottom="S">
+    <B3 font="medium" color="secondary" horizontal="L" top="XXXL" bottom="S">
       {children}
     </B3>
   );

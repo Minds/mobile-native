@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from './MenuItem';
+import BottomSheetMenuItem from './BottomSheetMenuItem';
 
 type PropsType = {
   title: string;
@@ -13,7 +13,7 @@ type PropsType = {
  */
 export default function CheckButton(props: PropsType) {
   return (
-    <MenuItem
+    <BottomSheetMenuItem
       {...props}
       iconName={props.selected ? 'checkbox-outline' : 'square-outline'}
       iconType="ionicon"

@@ -784,6 +784,7 @@
     "passwordChanged": "Password changed successfully.",
     "keyGenerated": "Keys regenerated successfully!",
     "pushNotification": "Push Notifications",
+    "emailNotifications": "Email Notifications",
     "regenerateKey": "Regenerate messenger keys",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",

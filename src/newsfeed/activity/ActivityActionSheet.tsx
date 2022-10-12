@@ -16,7 +16,7 @@ import { showNotification } from '../../../AppMessages';
 import {
   BottomSheetButton,
   BottomSheetModal,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
@@ -448,7 +448,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         {this.state.shown && (
           <BottomSheetModal ref={this.ref} autoShow>
             {this.state.options.map((a, i) => (
-              <MenuItem {...a} key={i} />
+              <BottomSheetMenuItem {...a} key={i} />
             ))}
             <BottomSheetButton
               text={i18n.t('cancel')}
@@ -458,13 +458,13 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         )}
         {this.state.shareMenuShown && (
           <BottomSheetModal ref={this.shareMenuRef} autoShow>
-            <MenuItem
+            <BottomSheetMenuItem
               onPress={this.sendTo}
               title={i18n.t('sendTo')}
               iconName="repeat"
               iconType="material"
             />
-            <MenuItem
+            <BottomSheetMenuItem
               title={i18n.t('share')}
               onPress={this.share}
               iconName="edit"

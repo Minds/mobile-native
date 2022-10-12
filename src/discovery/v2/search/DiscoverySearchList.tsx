@@ -57,7 +57,7 @@ export const DiscoverySearchList = observer((props: Props) => {
           );
           break;
         case 'group':
-          entity = <GroupsListItem group={row.item} />;
+          entity = <GroupsListItem index={row.index} group={row.item} />;
           break;
         default:
           entity = (

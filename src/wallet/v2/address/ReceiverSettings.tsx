@@ -43,7 +43,7 @@ const ReceiverSettings = observer(
         </MenuSubtitle>
         <View style={innerWrapper}>
           {receiverSettingsOptions.map(item => (
-            <MenuItem item={item} />
+            <MenuItem {...item} />
           ))}
         </View>
       </Spacer>

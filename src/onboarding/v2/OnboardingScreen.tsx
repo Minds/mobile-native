@@ -12,7 +12,7 @@ import {
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
 import { InjectItem } from '~/common/components/FeedList';
-import MenuItem from '~/common/components/menus/MenuItem';
+import MenuItem, { MenuItemProps } from '~/common/components/menus/MenuItem';
 import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
 
@@ -173,15 +173,13 @@ export default observer(function OnboardingScreen() {
     },
   }).current;
 
-  const steps = progressStore.result
+  const steps: (MenuItemProps | null)[] = progressStore.result
     ? progressStore.result.steps.map(s =>
         stepsMapping[s.id]
           ? {
               title: stepsMapping[s.id].title,
-              is_completed: s.is_completed,
-              icon: s.is_completed
-                ? { name: 'checkmark', color: ThemedStyles.getColor('Link') }
-                : undefined,
+              icon: s.is_completed ? 'checkmark' : undefined,
+              iconColor: s.is_completed ? 'Link' : undefined,
               onPress:
                 stepsMapping[s.id].onPress ||
                 (() =>
@@ -258,18 +256,19 @@ export default observer(function OnboardingScreen() {
             />
           </BottomSheetModal>
         )}
-        {steps.map(item =>
+        {steps.map((item, i) =>
           item ? (
             <MenuItem
-              item={item}
+              {...item}
               titleStyle={
                 [
-                  item.is_completed
+                  item.iconColor
                     ? theme.colorSecondaryText
                     : theme.colorPrimaryText,
-                  item.is_completed ? theme.strikeThrough : null,
+                  item.iconColor ? theme.strikeThrough : null,
                 ] as TextStyle
               }
+              noBorderTop={i > 0}
             />
           ) : null,
         )}
