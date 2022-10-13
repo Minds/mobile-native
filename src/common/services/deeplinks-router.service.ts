@@ -11,7 +11,13 @@ class DeeplinksRouter {
   /**
    * Routes
    */
-  routes: any[] = [];
+  routes: {
+    type: string;
+    screen: string;
+    params: string[];
+    routeParams: Record<string, any>;
+    re: RegExp;
+  }[] = [];
 
   /**
    * Constructor
@@ -107,7 +113,7 @@ class DeeplinksRouter {
   }
 
   nestedScreen(data, params) {
-    const o: any = {
+    const o: Record<string, any> = {
       screen: data.shift(),
     };
     if (data.length > 0) {
