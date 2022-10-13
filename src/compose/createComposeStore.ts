@@ -427,7 +427,7 @@ export default function (props) {
       }
 
       const response = await attachmentService.gallery(
-        mode || this.mode,
+        mode || 'any',
         false, // crop
         max, // max files allowed
       );
