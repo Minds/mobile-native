@@ -68,6 +68,7 @@ function SupermindConsoleScreen({
           !onboarding && (
             <IconButton
               name="settings"
+              // @ts-ignore
               onPress={() => navigation.navigate('SupermindSettingsScreen')}
             />
           )
