@@ -80,7 +80,7 @@ export default class MediaView extends Component<PropsType> {
             autoHeight={this.props.autoHeight}
             style={this.props.imageStyle}
             onImageDoublePress={this.navToZoomView}
-            onImageLongPress={this.download}
+            onImageLongPress={() => this.download()}
             onImagePress={this.onImagePress}
           />
         );
@@ -113,7 +113,7 @@ export default class MediaView extends Component<PropsType> {
           entity={this.props.entity}
           small={this.props.smallEmbed}
           onImageDoublePress={this.navToZoomView}
-          onImageLongPress={this.download}
+          onImageLongPress={() => this.download()}
           onImagePress={this.onImagePress}
         />
       );
