@@ -3,8 +3,16 @@ import apiService from '../common/services/api.service';
 import NavigationService from '../navigation/NavigationService';
 import createComposeStore from './createComposeStore';
 import { SupermindRequestParam } from './SupermindComposeScreen';
+import { confirm } from '../common/components/Confirm';
+import api from '../common/services/api.service';
 
 jest.mock('../navigation/NavigationService');
+jest.mock('../common/components/Confirm');
+jest.mock('../common/services/api.service');
+
+const mockedApi = api as jest.Mocked<typeof apiService>;
+const mockedConfirm = confirm as jest.Mock<typeof confirm>;
+
 jest.mock('../common/services/minds-config.service', () => ({
   settings: {
     plus: {
@@ -26,6 +34,10 @@ describe('createComposeStore', () => {
       route: {},
     });
     store.onScreenFocused();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should have the correct default values', () => {
@@ -95,9 +107,7 @@ describe('createComposeStore', () => {
       route: {
         params: {
           openSupermindModal: true,
-          entity: {
-            supermindTargetChannel: fakeOwnerObj,
-          },
+          supermindTargetChannel: fakeOwnerObj,
         },
       },
     });
@@ -113,8 +123,8 @@ describe('createComposeStore', () => {
     );
   });
 
-  it('should submit a supermind', () => {
-    const fakeReq = createASupermind();
+  it('should submit a supermind', async () => {
+    const fakeReq = await createASupermind();
     expect(apiService.put).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
@@ -149,7 +159,48 @@ describe('createComposeStore', () => {
     );
   });
 
-  const createASupermind = () => {
+  it('should reply to a supermind correctly', async () => {
+    const supermindGuid = 'supermindFakeGuid';
+    mockedConfirm.mockReturnValue(true);
+    store = createComposeStore({
+      navigation: mockedNavigation,
+      route: {
+        params: {
+          supermindObject: {
+            guid: supermindGuid,
+          },
+        },
+      },
+    });
+    store.onScreenFocused();
+    await createASupermind();
+    expect(apiService.put).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        supermind_reply_guid: supermindGuid,
+      }),
+    );
+  });
+
+  it('should not reply to a supermind if user didnt confirm', async () => {
+    const supermindGuid = 'supermindFakeGuid';
+    mockedConfirm.mockReturnValue(false);
+    store = createComposeStore({
+      navigation: mockedNavigation,
+      route: {
+        params: {
+          supermindObject: {
+            guid: supermindGuid,
+          },
+        },
+      },
+    });
+    store.onScreenFocused();
+    await createASupermind();
+    expect(apiService.put).not.toHaveBeenCalled();
+  });
+
+  const createASupermind = async () => {
     const fakeSupermindRequest = {
       channel: {
         guid: 'fakeGuid',
@@ -166,10 +217,9 @@ describe('createComposeStore', () => {
 
     store.supermindRequest = fakeSupermindRequest;
     store.text = 'fake post';
+    mockedApi.put.mockReturnValueOnce({ supermind: true });
 
-    jest.spyOn(apiService, 'put');
-    apiService.put.mockReturnValueOnce({ supermind: true });
-    store.submit();
+    await store.submit();
     return fakeSupermindRequest;
   };
 });

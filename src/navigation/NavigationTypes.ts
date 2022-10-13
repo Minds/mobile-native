@@ -13,6 +13,7 @@ import { TwoFactorType } from '../common/services/api.service';
 import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
+import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
 
 type AnyType = any;
 
@@ -183,6 +184,7 @@ export type RootStackParamList = {
     code: string;
   };
   ViewImage: {};
+  BottomSheet: BottomSheetScreenParams;
   ImageGallery: {};
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
