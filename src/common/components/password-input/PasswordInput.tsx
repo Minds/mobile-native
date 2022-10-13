@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { ColorValue, View } from 'react-native';
 import Tooltip from '../Tooltip';
 import PasswordValidator from './PasswordValidator';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import InputContainer, { InputContainerPropsType } from '../InputContainer';
+import InputContainer, {
+  InputContainerImperativeHandle,
+  InputContainerPropsType,
+} from '../InputContainer';
 import i18n from '../../services/i18n.service';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { IS_IOS } from '../../../config/Config';
@@ -13,13 +16,20 @@ type PropsType = {
   showValidator?: boolean;
 } & InputContainerPropsType;
 
-const PasswordInput = ({
-  showValidator = false,
-  tooltipBackground,
-  ...props
-}: PropsType) => {
+const PasswordInput = (
+  { showValidator = false, tooltipBackground, ...props }: PropsType,
+  ref: React.Ref<InputContainerImperativeHandle>,
+): JSX.Element => {
   const theme = ThemedStyles.style;
+  const inputRef = React.useRef<InputContainerImperativeHandle>(null);
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus: () => inputRef.current?.focus(),
+    }),
+    [inputRef],
+  );
   const [showPassword, setShowPassword] = React.useState(false);
 
   const toggle = () => setShowPassword(!showPassword);
@@ -35,6 +45,7 @@ const PasswordInput = ({
         </Tooltip>
       )}
       <InputContainer
+        ref={inputRef}
         placeholder={i18n.t('auth.password')}
         secureTextEntry={!showPassword}
         multiline={false}
@@ -50,7 +61,7 @@ const PasswordInput = ({
   );
 };
 
-export default PasswordInput;
+export default forwardRef(PasswordInput);
 
 const validatorText = ThemedStyles.combine('colorPrimaryText');
 

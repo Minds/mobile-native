@@ -343,7 +343,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 maxLength={50}
                 onChangeText={[Function]}
                 placeholderTextColor="#797B82"
-                returnKeyType="done"
+                returnKeyLabel="Next"
+                returnKeyType="next"
                 style={
                   Array [
                     Object {
@@ -507,8 +508,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     }
                     multiline={false}
                     onChangeText={[Function]}
+                    onSubmitEditing={[Function]}
                     placeholderTextColor="#797B82"
-                    returnKeyType="done"
+                    returnKeyLabel="Submit"
+                    returnKeyType="send"
                     secureTextEntry={true}
                     style={
                       Array [
