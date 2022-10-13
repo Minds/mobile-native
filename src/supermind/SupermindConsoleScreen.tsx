@@ -1,3 +1,5 @@
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React from 'react';
@@ -12,15 +14,34 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
+import { MoreStackParamList } from '../navigation/NavigationTypes';
 import AddBankInformation from './AddBankInformation';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
 type TabModeType = 'inbound' | 'outbound';
+type SupermindConsoleScreenRouteProp = RouteProp<
+  MoreStackParamList,
+  'SupermindConsole'
+>;
+type SupermindConsoleScreenNavigationProp = StackNavigationProp<
+  MoreStackParamList,
+  'SupermindConsole'
+>;
 
-function SupermindConsoleScreen({ navigation }) {
+interface SupermindConsoleScreenProps {
+  navigation: SupermindConsoleScreenNavigationProp;
+  route: SupermindConsoleScreenRouteProp;
+}
+
+function SupermindConsoleScreen({
+  navigation,
+  route,
+}: SupermindConsoleScreenProps) {
   const theme = ThemedStyles.style;
-  const [mode, setMode] = React.useState<TabModeType>('inbound');
+  const [mode, setMode] = React.useState<TabModeType>(
+    route.params.tab || 'inbound',
+  );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
 
