@@ -67,9 +67,10 @@ export default class MultiAttachmentStore {
    * Attach an image/video
    * @param media {Media}
    * @param extra extra data for the request
+   * @param ignoreRepeated {boolean} ignore repeated images
    */
   @action
-  attachMedia(media: Media, extra: any) {
+  attachMedia(media: Media, extra: any, ignoreRepeated: boolean = false) {
     if (this.attachments.length === this.max) {
       if (media.type.startsWith('image')) {
         showNotification(i18n.t('capture.max4Images'));
@@ -88,7 +89,7 @@ export default class MultiAttachmentStore {
     }
 
     // check if already exist
-    if (this.mediaExists(media)) {
+    if (!ignoreRepeated && this.mediaExists(media)) {
       return false;
     }
 
