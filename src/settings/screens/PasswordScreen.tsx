@@ -155,7 +155,7 @@ export default observer(function () {
           onChangeText={store.setCurrentPassword}
           onSubmitEditing={newPasswordRef.current?.focus}
           value={store.currentPassword}
-          returnKeyLabel="Next"
+          returnKeyLabel={i18n.t('auth.nextLabel')}
           returnKeyType="next"
           testID={'currentPasswordInput'}
           error={store.currentPasswordError}
@@ -172,7 +172,7 @@ export default observer(function () {
         onChangeText={store.setNewPassword}
         onSubmitEditing={confirmPasswordRef.current?.focus}
         value={store.newPassword}
-        returnKeyLabel="Next"
+        returnKeyLabel={i18n.t('auth.nextLabel')}
         returnKeyType="next"
         testID={'newPasswordInput'}
         onFocus={store.newPasswordFocus}
@@ -186,7 +186,7 @@ export default observer(function () {
         placeholder={i18n.t('settings.confirmNewPassword')}
         onChangeText={store.setConfirmationPassword}
         onSubmitEditing={confirmPassword}
-        returnKeyLabel="Submit"
+        returnKeyLabel={i18n.t('auth.submitLabel')}
         returnKeyType="send"
         value={store.confirmationPassword}
         error={store.confirmationPasswordError}

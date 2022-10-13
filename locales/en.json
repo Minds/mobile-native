@@ -172,7 +172,9 @@
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
     "rateLimit": "Too many attempts, please try again later",
-    "newPassword": "Create a new password. You’ll use this to access your account."
+    "newPassword": "Create a new password. You’ll use this to access your account.",
+    "nextLabel": "Next",
+    "submitLabel": "Submit"
   },
   "multiUser": {
     "switchChannel": "Switch Account",

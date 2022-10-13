@@ -219,7 +219,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         autofocus
         autoCorrect={false}
         returnKeyType="next"
-        returnKeyLabel="Next"
+        returnKeyLabel={i18n.t('auth.nextLabel')}
         keyboardType="default"
         autoComplete="username-new"
         textContentType="username"
@@ -237,7 +237,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         keyboardType="email-address"
         textContentType="emailAddress"
         returnKeyType="next"
-        returnKeyLabel="Next"
+        returnKeyLabel={i18n.t('auth.nextLabel')}
         testID="emailInput"
         error={
           !store.showErrors
@@ -258,7 +258,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         onChangeText={store.setPassword}
         value={store.password}
         testID="passwordInput"
-        returnKeyLabel="Submit"
+        returnKeyLabel={i18n.t('auth.submitLabel')}
         returnKeyType="send"
         onFocus={store.focus}
         onBlur={store.blur}

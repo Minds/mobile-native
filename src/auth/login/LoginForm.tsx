@@ -72,7 +72,7 @@ export default observer(function LoginForm(props: PropsType) {
       noBottomBorder
       onSubmitEditing={passwordRef.current?.focus}
       keyboardType="default"
-      returnKeyLabel="Next"
+      returnKeyLabel={i18n.t('auth.nextLabel')}
       returnKeyType="next"
       maxLength={50}
       error={
@@ -97,7 +97,7 @@ export default observer(function LoginForm(props: PropsType) {
             onChangeText={localStore.setPassword}
             value={localStore.password}
             testID="userPasswordInput"
-            returnKeyLabel="Submit"
+            returnKeyLabel={i18n.t('auth.submitLabel')}
             returnKeyType="send"
             autoFocus={props.relogin}
             onSubmitEditing={localStore.onLoginPress}
