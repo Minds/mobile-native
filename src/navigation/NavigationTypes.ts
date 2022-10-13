@@ -46,7 +46,9 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
-  SupermindConsole: {};
+  SupermindConsole: {
+    tab: 'inbound' | 'outbound';
+  };
   Drawer: {};
   SupermindSettingsScreen: {};
   Channel: {};
