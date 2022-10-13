@@ -399,7 +399,7 @@ export default class CommentsStore {
       comment.attachment_guid = this.attachment.guid;
     }
 
-    if (this.embed.meta) {
+    if (this.embed.meta && !this.attachment.hasAttachment) {
       Object.assign(comment, this.embed.meta);
     }
 
