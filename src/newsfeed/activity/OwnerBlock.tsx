@@ -100,12 +100,8 @@ class OwnerBlock extends PureComponent<PropsType> {
    */
   _navToGroup = () => {
     if (this.props.navigation) {
-      let groupGuid;
-      try {
-        groupGuid = this.props.route.params.group
-          ? this.props.route.params.group.guid
-          : this.props.route.params.guid;
-      } catch {}
+      const { group, guid } = this.props.route.params ?? {};
+      const groupGuid = group?.guid ?? guid;
       if (
         this.props.entity.containerObj &&
         groupGuid === this.props.entity.containerObj.guid

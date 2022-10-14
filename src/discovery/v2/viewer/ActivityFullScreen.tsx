@@ -285,7 +285,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   return (
-    <GroupContext.Provider value={route.params.group || null}>
+    <GroupContext.Provider value={route.params?.group || null}>
       <View style={containerStyle}>
         <View style={theme.flexContainer}>
           {ownerBlockShadow}

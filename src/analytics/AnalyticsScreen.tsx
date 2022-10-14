@@ -30,7 +30,7 @@ const AnalyticsScreen = observer(
       [],
     );
     React.useEffect(() => {
-      if (route.params && route.params.type) {
+      if (route.params?.type) {
         _onTabBarChange(route.params.type as TAnalyticsTabs);
       }
     }, [_onTabBarChange, route]);

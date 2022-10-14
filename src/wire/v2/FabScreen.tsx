@@ -167,7 +167,7 @@ const FabScreen = observer(({ route, navigation }) => {
     });
   }
 
-  const owner = route.params.owner;
+  const { owner } = route.params ?? {};
 
   useEffect(() => {
     if (!store.loaded) {

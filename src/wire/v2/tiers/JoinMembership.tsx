@@ -104,7 +104,7 @@ const createJoinMembershipStore = ({ tiers }) => ({
 const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
-  const tiers = route.params ? route.params.tiers : undefined;
+  const { tiers } = route.params ?? {};
   const selectorRef = useRef<any>(null);
   const { onComplete } = route.params;
   /**
