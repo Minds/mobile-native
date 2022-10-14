@@ -79,13 +79,15 @@ export default class BlogCard extends PureComponent<PropsType> {
   render() {
     const blog = this.props.entity;
     const channel = this.props.entity.ownerObj;
-    const image = blog.getBannerSource();
+    const image = blog.getBannerSource?.();
     const title = this.cleanTitle(blog.title);
     const theme = ThemedStyles.style;
     const showOnlyContent = this.props.showOnlyContent;
+
     if (showOnlyContent) {
       return this.renderOnlyContent(image, title);
     }
+
     return (
       <View style={theme.bgSecondaryBackground}>
         <MPressable onPress={this.navToBlog}>

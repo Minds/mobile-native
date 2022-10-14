@@ -15,11 +15,11 @@ import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import sessionService from '../../common/services/session.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import { MenuItemProps } from '../../common/components/bottom-sheet/MenuItem';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
+  BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import NavigationService from '~/navigation/NavigationService';
@@ -60,8 +60,8 @@ export default function CommentBottomMenu({
     }
   }, [shown]);
 
-  const dismissOptions: Array<MenuItemProps> = React.useMemo(() => {
-    const actions: Array<MenuItemProps> = [
+  const dismissOptions: Array<BottomSheetMenuItemProps> = React.useMemo(() => {
+    const actions: Array<BottomSheetMenuItemProps> = [
       {
         title: i18n.t('translate.translate'),
         iconName: 'translate',
@@ -73,7 +73,7 @@ export default function CommentBottomMenu({
       },
     ];
 
-    const deleteOpt: MenuItemProps = {
+    const deleteOpt: BottomSheetMenuItemProps = {
       title: i18n.t('delete'),
       iconName: 'delete',
       iconType: 'material-community',
@@ -106,7 +106,7 @@ export default function CommentBottomMenu({
       },
     };
 
-    const setExplicit: MenuItemProps = {
+    const setExplicit: BottomSheetMenuItemProps = {
       title: i18n.t('setExplicit'),
       iconName: 'explicit',
       iconType: 'material',
@@ -115,7 +115,7 @@ export default function CommentBottomMenu({
         close();
       },
     };
-    const removeExplicit: MenuItemProps = {
+    const removeExplicit: BottomSheetMenuItemProps = {
       title: i18n.t('removeExplicit'),
       iconName: 'explicit',
       iconType: 'material',
@@ -189,7 +189,7 @@ export default function CommentBottomMenu({
       {shown && (
         <BottomSheetModal ref={ref} autoShow>
           {dismissOptions.map((a, i) => (
-            <MenuItem {...a} key={i} />
+            <BottomSheetMenuItem {...a} key={i} />
           ))}
           <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
         </BottomSheetModal>

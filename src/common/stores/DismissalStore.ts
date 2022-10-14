@@ -6,6 +6,8 @@ const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 export type DismissIdentifier =
   | 'top-highlights'
   | 'channel-recommendation:feed'
+  | 'supermind:onboarding:consumer'
+  | 'supermind:onboarding:producer'
   | 'channel-recommendation:channel';
 
 type DismissItem = {

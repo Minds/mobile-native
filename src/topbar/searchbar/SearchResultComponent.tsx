@@ -48,10 +48,8 @@ const SearchResultComponent = observer(
             return (
               <MenuItem
                 containerItemStyle={styles.historyItem}
-                item={{
-                  onPress: () => localStore.setSearchesAndQueryDiscovery(item),
-                  title: item,
-                }}
+                onPress={() => localStore.setSearchesAndQueryDiscovery(item)}
+                title={item}
               />
             );
           }

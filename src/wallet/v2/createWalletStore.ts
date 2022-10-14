@@ -34,6 +34,7 @@ export type PricesType = {
 };
 
 const defaultStripeDetails = <StripeDetails>{
+  loaded: false,
   hasAccount: false,
   hasBank: false,
   pendingBalanceSplit: 0,
@@ -235,7 +236,12 @@ const createWalletStore = () => ({
     try {
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
+      this.stripeDetails.loaded = true;
     } catch (e) {
+      // mark as loaded if it doesn't have an account
+      if (e instanceof Error && e.message === 'Account not found') {
+        this.stripeDetails.loaded = true;
+      }
       logService.exception(e);
     }
     return this.stripeDetails;

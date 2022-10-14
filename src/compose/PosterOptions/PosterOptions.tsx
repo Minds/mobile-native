@@ -1,46 +1,21 @@
 import React, { FC, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import {
   getAccessText,
   getLicenseText,
 } from '~/common/services/list-options.service';
-import MText from '../../common/components/MText';
-import MPressable from '~/common/components/MPressable';
 import TopBar from '../TopBar';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from './PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
+import MenuItem from '../../common/components/menus/MenuItem';
 
 const height = 83;
-
-/**
- * Item
- */
-const Item = props => {
-  return (
-    <MPressable
-      style={styles.row}
-      onPress={props.onPress}
-      testID={props.testID}>
-      <MText style={styles.optionTitle}>{props.title}</MText>
-      <MText style={styles.optionDescription} numberOfLines={1}>
-        {props.description}
-      </MText>
-      <MIcon
-        size={20}
-        name="chevron-right"
-        style={ThemedStyles.style.colorIcon}
-      />
-    </MPressable>
-  );
-};
 
 export function useNavCallback(screen, store, navigation) {
   return useCallback(() => {
@@ -58,7 +33,7 @@ function PosterOptions(props: PosterOptionsType) {
   const nsfw = store.nsfw.slice();
   const tags = store.tags.slice();
   const time_created = store.time_created!;
-  const license = store.attachment.license;
+  const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
 
@@ -118,54 +93,56 @@ function PosterOptions(props: PosterOptionsType) {
         backIconSize="large"
         store={store}
       />
-      <Item
+      <MenuItem
         title="Tag"
-        description={tags.slice(0, 4).map(t => `#${t} `)}
+        label={String(tags.slice(0, 4).map(t => `#${t} `))}
         onPress={onTagPress}
       />
-      <Item
+      <MenuItem
         title={i18n.t('nsfw.button')}
-        description={
-          nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
-        }
+        label={nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')}
         onPress={onNsfwPress}
         testID="nsfwButton"
+        noBorderTop
       />
       {showSchedule && (
-        <Item
+        <MenuItem
           title={i18n.t('capture.schedule')}
-          description={
-            time_created ? moment(time_created).calendar() : i18n.t('now')
-          }
+          label={time_created ? moment(time_created).calendar() : i18n.t('now')}
           onPress={onSchedulePress}
+          noBorderTop
         />
       )}
       {showMonetize && (
-        <Item
+        <MenuItem
           title={i18n.t('monetize.title')}
-          description={monetizeDesc}
+          label={monetizeDesc}
           onPress={onMonetizePress}
           testID="monetizeButton"
+          noBorderTop
         />
       )}
       {showPermaweb && (
-        <Item
+        <MenuItem
           title={i18n.t('permaweb.title')}
-          description={permawebDesc}
+          label={permawebDesc || ''}
           onPress={onPermawebPress}
           testID="permawebButton"
+          noBorderTop
         />
       )}
-      <Item
+      <MenuItem
         title="License"
-        description={getLicenseText(license)}
+        label={getLicenseText(license)}
         onPress={onLicensePress}
+        noBorderTop
       />
       {!store.group && (
-        <Item
+        <MenuItem
           title="Visibility"
-          description={getAccessText(accessId)}
+          label={getAccessText(accessId)}
           onPress={onPressVisibility}
+          noBorderTop
         />
       )}
     </View>

@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
+import sessionService from '../../../common/services/session.service';
 import type NotificationModel from './NotificationModel';
+import { NotificationType } from './NotificationModel';
 
 const useNotificationRouter = (
   notification: NotificationModel,
@@ -10,35 +12,75 @@ const useNotificationRouter = (
   const router = {
     navigation: navigation,
     navigate: () => {},
-    navToChannel: (user: UserModel) => {
+    navToChannel: (user: UserModel) =>
       navigation.navigate('Channel', {
         guid: user.guid,
         entity: user,
-      });
-    },
+      }),
+    navToOwnChannel: () => router.navToChannel(sessionService.getUser()),
     navToEntity: () => {
       navigator.set(navigation, notification);
-      if (
-        ['token_rewards_summary', 'wire_received'].includes(notification.type)
-      ) {
-        navigator.navTo('Tabs');
-      } else if (notification.type === 'subscribe') {
-        if (!notification.hasMerged) {
-          router.navToChannel(notification.from);
-        } else {
-          showSubscribersModal();
-        }
-      } else {
-        switch (notification.entity.type) {
-          case 'group':
-            navigator.navTo('GroupView');
-            break;
-          case 'user':
-            navigator.navTo('Channel');
-            break;
-          default:
-            navigator.navTo('Activity');
-        }
+
+      switch (notification.type) {
+        case NotificationType.token_rewards_summary:
+        case NotificationType.wire_received:
+          navigator.navTo('Tabs');
+          break;
+        case NotificationType.subscribe:
+          if (!notification.hasMerged) {
+            router.navToChannel(notification.from);
+          } else {
+            showSubscribersModal();
+          }
+          break;
+        case NotificationType.supermind_created:
+        case NotificationType.supermind_declined:
+        case NotificationType.supermind_expire24h:
+        case NotificationType.supermind_expired:
+          router.navigateToObject();
+          break;
+        case NotificationType.supermind_accepted:
+          navigator.navTo('Activity');
+          break;
+        default:
+          switch (notification.entity.type) {
+            case 'group':
+              navigator.navTo('GroupView');
+              break;
+            case 'user':
+              navigator.navTo('Channel');
+              break;
+            default:
+              navigator.navTo('Activity');
+          }
+      }
+    },
+    navigateToObject: () => {
+      switch (notification.type) {
+        case NotificationType.supermind_created:
+        case NotificationType.supermind_declined:
+        case NotificationType.supermind_expire24h:
+        case NotificationType.supermind_expired:
+          if (!notification.entity?.guid) {
+            console.error('Entity has no guid');
+            return null;
+          }
+
+          navigation.navigate('Supermind', {
+            guid: notification.entity.guid,
+          });
+          break;
+        case NotificationType.supermind_accepted:
+          router.navToEntity();
+          break;
+        default:
+          // If the navigation was targeted to us navigate to own channel
+          if (notification.to_guid === sessionService.getUser().guid) {
+            return router.navToOwnChannel();
+          }
+
+          // otherwise navigate to the sender channel
+          return router.navToChannel(notification.from);
       }
     },
   };
@@ -54,17 +96,24 @@ const navigator = {
   set(navigation, notification) {
     this.navigation = navigation;
     this.notification = notification;
+    let activityParams;
 
-    const activityParams =
-      this.notification.entity?.type === 'comment'
-        ? {
-            guid: this.notification.entity.entity_guid,
-            hydrate: true,
-          }
-        : {
-            entity: this.notification.entity,
-            hydrate: true,
-          };
+    if (this.notification.entity?.type === 'comment') {
+      activityParams = {
+        guid: this.notification.entity.entity_guid,
+        hydrate: true,
+      };
+    } else if (this.notification.type === NotificationType.supermind_accepted) {
+      activityParams = {
+        guid: this.notification.entity.activity_guid,
+        hydrate: false,
+      };
+    } else {
+      activityParams = {
+        entity: this.notification.entity,
+        hydrate: true,
+      };
+    }
 
     this.params = {
       Activity: activityParams,

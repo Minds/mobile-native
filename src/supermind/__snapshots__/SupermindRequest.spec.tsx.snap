@@ -1,0 +1,957 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SupermindRequest should render inbound 1`] = `
+<View
+  style={
+    Object {
+      "marginTop": 20,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderColor": "#414C57",
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "baseline",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "margin": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderRadius": 3,
+            "height": 22,
+            "overflow": "hidden",
+          }
+        }
+      >
+        <ExpoLinearGradient
+          colors={
+            Array [
+              "#2B52E8",
+              "#5238ED",
+              "#9B0FA8",
+            ]
+          }
+          end={
+            Object {
+              "x": 1,
+              "y": 0,
+            }
+          }
+          locations={
+            Array [
+              0,
+              0.4,
+              1,
+            ]
+          }
+          start={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginHorizontal": 4,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+               1 token offer 
+            </Text>
+          </View>
+        </ExpoLinearGradient>
+      </View>
+      <View
+        style={
+          Object {
+            "marginLeft": 16,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto",
+              },
+              Object {
+                "fontSize": 14,
+                "lineHeight": 20,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
+          }
+        >
+          Expired
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "overflow": "visible",
+        },
+        Object {
+          "backgroundColor": "#1F252C",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderBottomWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#414C57",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingHorizontal": 16,
+            "paddingVertical": 13,
+          }
+        }
+      >
+        <View
+          onPress={[Function]}
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderRadius": 18.5,
+                  "height": 37,
+                  "width": 37,
+                },
+              ]
+            }
+          >
+            <FastImageView
+              resizeMode="cover"
+              source={
+                Object {
+                  "headers": Object {
+                    "App-Version": "3.8.0",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Pragma": "no-cache",
+                    "no-cache": "1",
+                  },
+                  "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "marginLeft": 10,
+              "paddingRight": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+              }
+            }
+          >
+            <View
+              pointerEvents="box-none"
+              style={
+                Array [
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "flex-start",
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                ]
+              }
+            >
+              <Text
+                accessible={true}
+                focusable={true}
+                hitSlop={
+                  Object {
+                    "bottom": 4,
+                    "left": 4,
+                    "right": 4,
+                    "top": 4,
+                  }
+                }
+                numberOfLines={1}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Bold",
+                    },
+                    Object {
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "textAlign": "left",
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        />
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onLayout={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="ActivityView"
+    >
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+            "minHeight": 150,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "paddingHorizontal": 16,
+              },
+              Object {
+                "paddingVertical": 12,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              selectable={true}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Array [
+                      Object {
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                    Object {
+                      "marginBottom": 4,
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Black",
+                      "fontWeight": "700",
+                    },
+                  ],
+                ]
+              }
+            >
+              TITLE
+            </Text>
+            <Text
+              selectable={true}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "fontSize": 18,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Medium",
+                      "fontWeight": "500",
+                    },
+                  ],
+                ]
+              }
+            >
+              Message
+            </Text>
+          </View>
+          <View />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginLeft": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#B8C1CA",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Object {
+            "fontSize": 14,
+            "lineHeight": 20,
+          },
+          Object {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Requirements: 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Object {
+              "fontSize": 14,
+              "lineHeight": 20,
+            },
+            Object {
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        Image Reply
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "margin": 16,
+        "marginTop": 24,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SupermindRequest should render outbound 1`] = `
+<View
+  style={
+    Object {
+      "marginTop": 20,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderColor": "#414C57",
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "baseline",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "margin": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderRadius": 3,
+            "height": 22,
+            "overflow": "hidden",
+          }
+        }
+      >
+        <ExpoLinearGradient
+          colors={
+            Array [
+              "#2B52E8",
+              "#5238ED",
+              "#9B0FA8",
+            ]
+          }
+          end={
+            Object {
+              "x": 1,
+              "y": 0,
+            }
+          }
+          locations={
+            Array [
+              0,
+              0.4,
+              1,
+            ]
+          }
+          start={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginHorizontal": 4,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Medium",
+                  },
+                  Object {
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                  },
+                  Object {
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+               1 token offer 
+            </Text>
+          </View>
+        </ExpoLinearGradient>
+      </View>
+      <View
+        style={
+          Object {
+            "marginLeft": 16,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontFamily": "Roboto",
+              },
+              Object {
+                "fontSize": 14,
+                "lineHeight": 20,
+              },
+              Object {
+                "textAlign": "left",
+              },
+            ]
+          }
+        >
+          Expired
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "overflow": "visible",
+        },
+        Object {
+          "backgroundColor": "#1F252C",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderBottomWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#414C57",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingHorizontal": 16,
+            "paddingVertical": 13,
+          }
+        }
+      >
+        <View
+          onPress={[Function]}
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderRadius": 18.5,
+                  "height": 37,
+                  "width": 37,
+                },
+              ]
+            }
+          >
+            <FastImageView
+              resizeMode="cover"
+              source={
+                Object {
+                  "headers": Object {
+                    "App-Version": "3.8.0",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Pragma": "no-cache",
+                    "no-cache": "1",
+                  },
+                  "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "marginLeft": 10,
+              "paddingRight": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+              }
+            }
+          >
+            <View
+              pointerEvents="box-none"
+              style={
+                Array [
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "flex-start",
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                ]
+              }
+            >
+              <Text
+                accessible={true}
+                focusable={true}
+                hitSlop={
+                  Object {
+                    "bottom": 4,
+                    "left": 4,
+                    "right": 4,
+                    "top": 4,
+                  }
+                }
+                numberOfLines={1}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Bold",
+                    },
+                    Object {
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "textAlign": "left",
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        />
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onLayout={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="ActivityView"
+    >
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+            "minHeight": 150,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "paddingHorizontal": 16,
+              },
+              Object {
+                "paddingVertical": 12,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              selectable={true}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Array [
+                      Object {
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                    Object {
+                      "marginBottom": 4,
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Black",
+                      "fontWeight": "700",
+                    },
+                  ],
+                ]
+              }
+            >
+              TITLE
+            </Text>
+            <Text
+              selectable={true}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "fontSize": 18,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Medium",
+                      "fontWeight": "500",
+                    },
+                  ],
+                ]
+              }
+            >
+              Message
+            </Text>
+          </View>
+          <View />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginLeft": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#B8C1CA",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Object {
+            "fontSize": 14,
+            "lineHeight": 20,
+          },
+          Object {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Requirements: 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Object {
+              "fontSize": 14,
+              "lineHeight": 20,
+            },
+            Object {
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        Image Reply
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "margin": 16,
+        "marginTop": 24,
+      }
+    }
+  />
+</View>
+`;

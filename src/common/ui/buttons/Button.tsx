@@ -36,7 +36,7 @@ export type ButtonPropsType = {
   shouldAnimateChanges?: boolean;
   loading?: boolean;
   children?: React.ReactNode;
-  onPress?: (release: any) => void;
+  onPress?: () => void;
   testID?: string;
   accessibilityLabel?: string;
   icon?: React.ReactNode;
@@ -163,7 +163,7 @@ export const ButtonComponent = ({
     hideActive();
   };
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (shouldBreak(2, disabled, stateRef.current)) {
       return;
     }
@@ -176,9 +176,13 @@ export const ButtonComponent = ({
     if (spinner) {
       showSpinner();
     }
-    onPress(() => {
-      hideSpinner();
-    });
+
+    try {
+      await onPress();
+    } catch (error) {
+      console.log(error);
+    }
+    hideSpinner();
     frameThrower(4, () => {
       stateRef.current.pressing = false;
     });

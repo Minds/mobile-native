@@ -14,7 +14,8 @@ import BottomContent from '../../../src/newsfeed/activity/BottomContent';
 import MediaView from '../../../src/common/components/MediaView';
 
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
-import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
+
+jest.mock('../../../src/common/services/session.service');
 
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 jest.mock(
@@ -46,13 +47,10 @@ describe('Activity component', () => {
   });
 
   it('renders correctly', async () => {
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 
   it('should have a Media View', async () => {
-    screen.update();
-
     expect(screen.find(MediaView)).toHaveLength(1);
   });
 

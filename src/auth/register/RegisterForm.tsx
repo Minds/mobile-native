@@ -4,7 +4,9 @@ import { Linking, ScrollView, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
 import { debounce } from 'lodash';
-import InputContainer from '../../common/components/InputContainer';
+import InputContainer, {
+  InputContainerImperativeHandle,
+} from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import validatePassword from '../../common/helpers/validatePassword';
@@ -38,6 +40,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const captchaRef = useRef<any>(null);
   const friendlyCaptchaRef = useRef<any>(null);
   const scrollViewRef = useRef<ScrollView>();
+  const emailRef = useRef<InputContainerImperativeHandle>(null);
+  const passwordRef = useRef<InputContainerImperativeHandle>(null);
   const friendlyCaptchaEnabled = useFeature('mob-4231-captcha').on;
 
   const store = useLocalStore(() => ({
@@ -207,6 +211,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <InputContainer
         placeholder={i18n.t('auth.username')}
         onChangeText={store.setUsername}
+        onSubmitEditing={emailRef.current?.focus}
         value={store.username}
         testID="usernameRegisterInput"
         error={store.usernameError}
@@ -214,14 +219,17 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         autofocus
         autoCorrect={false}
         returnKeyType="next"
+        returnKeyLabel={i18n.t('auth.nextLabel')}
         keyboardType="default"
         autoComplete="username-new"
         textContentType="username"
         maxLength={50}
       />
       <InputContainer
+        ref={emailRef}
         placeholder={i18n.t('auth.email')}
         onChangeText={store.setEmail}
+        onSubmitEditing={passwordRef.current?.focus}
         value={store.email}
         autoComplete="email"
         autoCorrect={false}
@@ -229,6 +237,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         keyboardType="email-address"
         textContentType="emailAddress"
         returnKeyType="next"
+        returnKeyLabel={i18n.t('auth.nextLabel')}
         testID="emailInput"
         error={
           !store.showErrors
@@ -243,11 +252,14 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         onBlur={store.emailInputBlur}
       />
       <PasswordInput
+        ref={passwordRef}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         showValidator={Boolean(store.password) && store.focused}
         onChangeText={store.setPassword}
         value={store.password}
         testID="passwordInput"
+        returnKeyLabel={i18n.t('auth.submitLabel')}
+        returnKeyType="send"
         onFocus={store.focus}
         onBlur={store.blur}
         textContentType="newPassword"

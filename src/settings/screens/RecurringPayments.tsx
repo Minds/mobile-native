@@ -87,15 +87,13 @@ const RecurringPayments = () => {
       {subscriptions.slice().map((subscription: SubscriptionType) => {
         return (
           <MenuItem
-            item={{
-              title: getTitle(subscription),
-              icon: (
-                <Button
-                  text={i18n.t('cancel')}
-                  onPress={() => cancel(subscription.id)}
-                />
-              ),
-            }}
+            title={getTitle(subscription)}
+            icon={
+              <Button
+                text={i18n.t('cancel')}
+                onPress={() => cancel(subscription.id)}
+              />
+            }
           />
         );
       })}

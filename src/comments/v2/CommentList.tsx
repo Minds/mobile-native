@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -15,6 +15,7 @@ import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
+import CommentModel from './CommentModel';
 
 // types
 type PropsType = {
@@ -50,6 +51,32 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     }, [props.store, provider]),
   );
 
+  /**
+   * Scrolls to focused comment
+   */
+  const scrollToFocusedComment = useCallback((comments: CommentModel[]) => {
+    const index = comments.findIndex(c => c.focused);
+    if (index >= 0) {
+      ref.current?.scrollToIndex({
+        index,
+        viewPosition: 0,
+        animated: true,
+      });
+    }
+  }, []);
+
+  /**
+   * in case we attempted to scroll to an index that was out of the viewport, the flatlist
+   * raises and error. In this case we're scrolling as far down as possible, then we attempt
+   * to scroll to index again.
+   */
+  const handleScrollToIndexFailed = useCallback(() => {
+    setTimeout(() => {
+      ref.current?.scrollToEnd();
+      scrollToFocusedComment(props.store.comments);
+    }, 0);
+  }, [props.store.comments, scrollToFocusedComment]);
+
   React.useEffect(() => {
     // the value is cleared after the first load
     const focusedCommentUrn = props.store?.focusedCommentUrn;
@@ -64,20 +91,13 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             entity: props.store.entity,
           });
         } else {
-          const index = props.store.comments.findIndex(c => c.focused);
-          if (index && index > 0) {
-            setTimeout(() => {
-              ref.current?.scrollToIndex({
-                index,
-                viewPosition: 0,
-                animated: true,
-              });
-            }, 600);
-          }
+          setTimeout(() => {
+            scrollToFocusedComment(props.store.comments);
+          }, 600);
         }
       }
     });
-  }, [navigation, props.store, provider]);
+  }, [navigation, props.store, provider, scrollToFocusedComment]);
 
   const renderItem = React.useCallback(
     (row: any): React.ReactElement => {
@@ -143,6 +163,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         onEndReached={loadMore}
         renderItem={renderItem}
         style={styles.list}
+        onScrollToIndexFailed={handleScrollToIndexFailed}
         contentContainerStyle={styles.listContainer}
       />
       <CommentInput key="commentInput" />

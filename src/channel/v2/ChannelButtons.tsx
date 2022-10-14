@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import type { GestureResponderEvent } from 'react-native';
 import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
@@ -22,6 +21,7 @@ import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type ButtonsType =
   | 'edit'
@@ -35,7 +35,7 @@ type ButtonsType =
 
 export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
-  onEditPress: (ev: GestureResponderEvent) => void;
+  onEditPress: () => void;
   onSearchChannelPressed: () => void;
   notShow?: Array<ButtonsType>;
   containerStyle?: any;
@@ -129,7 +129,10 @@ const ChannelButtons = withErrorBoundary(
         {showSubscribe && <Subscribe channel={props.store.channel} />}
         {shouldShow('supermind') && (
           <IfFeatureEnabled feature="mobile-supermind">
-            <SupermindButton entity={props.store.channel} />
+            <SupermindButton
+              entity={props.store.channel}
+              style={ThemedStyles.style.marginLeft2x}
+            />
           </IfFeatureEnabled>
         )}
         {shouldShow('more') && (

@@ -13,10 +13,13 @@ import ActivityModel from './ActivityModel';
 
 const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   const navigation = useNavigation();
+  const { newsfeed, dismissal } = useLegacyStores();
+  const isDismissed = dismissal.isDismissed('top-highlights');
 
-  const { newsfeed } = useLegacyStores();
+  const shouldRender =
+    Boolean(newsfeed.highlightsStore.entities.length) && !isDismissed;
 
-  if (!newsfeed.highlightsStore.entities.length) {
+  if (!shouldRender) {
     return null;
   }
 

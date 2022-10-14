@@ -23,17 +23,28 @@ const notificationIconsTypes: {
   boost_peer_accepted: { name: 'attach-money', type: 'material' },
   boost_peer_rejected: { name: 'attach-money', type: 'material' },
   boost_rejected: { name: 'attach-money', type: 'material' },
+  supermind_created: { name: 'tips-and-updates', type: 'material' },
+  supermind_rejected: { name: 'tips-and-updates', type: 'material' },
+  supermind_accepted: { name: 'tips-and-updates', type: 'material' },
+  supermind_expired: { name: 'tips-and-updates', type: 'material' },
+  supermind_expire24h: { name: 'tips-and-updates', type: 'material' },
 };
 
-const NotificationIcon = ({ type }: { type: NotificationType }) => (
-  <SmallCircleButton
-    name={notificationIconsTypes[type].name}
-    type={notificationIconsTypes[type].type}
-    reverseColor={'#FFFF'}
-    color={ThemedStyles.getColor('Link')}
-    size={10}
-    style={styles.notificationIconStyle}
-  />
-);
+const NotificationIcon = ({ type }: { type: NotificationType }) => {
+  if (!notificationIconsTypes[type]) {
+    return null;
+  }
+
+  return (
+    <SmallCircleButton
+      name={notificationIconsTypes[type].name}
+      type={notificationIconsTypes[type].type}
+      reverseColor={'#FFFF'}
+      color={ThemedStyles.getColor('Link')}
+      size={10}
+      style={styles.notificationIconStyle}
+    />
+  );
+};
 
 export default NotificationIcon;

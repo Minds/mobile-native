@@ -140,16 +140,12 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() =>
-            withModalProvider(require('~/groups/GroupViewScreen').withModal)
-          }
+          getComponent={() => require('~/groups/GroupViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          getComponent={() =>
-            withModalProvider(require('~/blogs/BlogsViewScreen').withModal)
-          }
+          getComponent={() => require('~/blogs/BlogsViewScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -218,6 +214,11 @@ const AppStack = observer(() => {
             },
             headerShadowVisible: false,
           }}
+        />
+        <AppStackNav.Screen
+          name="Supermind"
+          getComponent={() => require('~/supermind/SupermindScreen').default}
+          options={hideHeader}
         />
       </AppStackNav.Navigator>
     </>
@@ -350,6 +351,10 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="ViewImage"
               getComponent={() => require('~/media/ViewImageScreen').default}
+            />
+            <RootStackNav.Screen
+              name="ImageGallery"
+              getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
             {/* <RootStackNav.Screen
               name="BlockchainWalletModal"
@@ -510,6 +515,18 @@ const RootStack = observer(function () {
           require('~/auth/reset-password/ResetPasswordScreen').default
         }
         options={modalOptions}
+      />
+      <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        name="BottomSheet"
+        getComponent={() =>
+          require('../common/components/bottom-sheet/BottomSheetScreen').default
+        }
+        options={{
+          ...modalOptions,
+          cardOverlayEnabled: false,
+          animationEnabled: false,
+        }}
       />
     </RootStackNav.Navigator>
   );

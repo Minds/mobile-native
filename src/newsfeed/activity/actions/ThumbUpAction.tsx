@@ -5,17 +5,14 @@ import { Icon } from '~ui/icons';
 // import withClass from '~ui/withClass';
 import { UISizing } from '~styles/Tokens';
 // import { frameThrower } from '~ui/helpers';
-import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import PressableScale from '~/common/components/PressableScale';
-import { withSpacer } from '~ui/layout';
 import { IconMapNameType } from '~/common/ui/icons/map';
-
-const CounterSpaced = withSpacer(Counter);
+import EntityCounter from './EntityCounter';
 
 // prevent double tap in touchable
 const PressableScaleCustom = withPreventDoubleTap(PressableScale);
@@ -151,7 +148,6 @@ class ThumbUpAction extends Component<PropsType> {
    */
   render() {
     const entity = this.props.entity;
-    const count = entity[`thumbs:${this.direction}:count`];
     const canVote = entity.can(FLAG_VOTE);
     const Touchable = this.props.touchableComponent || PressableScaleCustom;
 
@@ -168,11 +164,10 @@ class ThumbUpAction extends Component<PropsType> {
             name={this.iconName}
             down={this.direction !== 'up'}
           />
-          {count && !this.props.hideCount ? (
-            <CounterSpaced
-              left="XS"
-              count={count}
-              testID={`Thumb ${this.direction} count`}
+          {!this.props.hideCount ? (
+            <EntityCounter
+              entity={entity}
+              countProperty={`thumbs:${this.direction}:count`}
             />
           ) : undefined}
         </View>

@@ -11,7 +11,7 @@ import { observer } from 'mobx-react';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '../../common/components/bottom-sheet';
 import { Platform } from 'react-native';
 import { useStores } from '../../common/hooks/use-stores';
@@ -225,7 +225,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   return (
     <BottomSheetModal ref={ref}>
       {options.map((b, i) => (
-        <MenuItem {...b} key={i} />
+        <BottomSheetMenuItem {...b} key={i} />
       ))}
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </BottomSheetModal>

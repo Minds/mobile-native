@@ -3,7 +3,6 @@ stages:
   - build
   - upload
   - release
-  - release_store
   - qa
 
 variables:
@@ -434,9 +433,9 @@ release:production:
       - $CI_RC_NIGHTLY_TESTS == "true"
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
-release_store:google_play:
+release:google_play:
   image: circleci/android:api-30-node
-  stage: release_store
+  stage: release
   tags: [minds-ci]
   before_script:
     - yarn install --frozen-lockfile
@@ -464,6 +463,7 @@ release:codepush-ios:
   stage: release
   tags: [minds-ci]
   before_script:
+    - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
   script:
@@ -481,6 +481,7 @@ release:codepush-android:
   stage: release
   tags: [minds-ci]
   before_script:
+    - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
   script:

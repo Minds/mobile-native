@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -15,6 +15,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import MenuItem from '../../common/components/menus/MenuItem';
 
 /**
  * Tag row
@@ -25,21 +26,7 @@ const TagRow = props => {
     props.store.removeTag(props.tag);
   }, [props.store, props.tag]);
 
-  return (
-    <View style={[styles.tagRow, ThemedStyles.style.bcolorPrimaryBorder]}>
-      <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontXL]}>
-        #{props.tag}
-      </MText>
-      <TouchableOpacity onPress={onDelete}>
-        <MIcon
-          name="close"
-          size={23}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      </TouchableOpacity>
-    </View>
-  );
+  return <MenuItem title={`#${props.tag}`} onPress={onDelete} icon="close" />;
 };
 
 interface TagSelectorProps

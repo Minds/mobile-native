@@ -122,13 +122,14 @@ const CommentInput = observer((onShow, onDismiss) => {
             onPress={hideInput}
           />
           <MediaPreview attachment={provider.store.attachment} />
-          {provider.store.embed.meta && (
-            <MetaPreview
-              meta={provider.store.embed.meta}
-              onRemove={provider.store.embed.clearRichEmbed}
-              containerStyle={styles.meta}
-            />
-          )}
+          {!provider.store.attachment.hasAttachment &&
+            provider.store.embed.meta && (
+              <MetaPreview
+                meta={provider.store.embed.meta}
+                onRemove={provider.store.embed.clearRichEmbed}
+                containerStyle={styles.meta}
+              />
+            )}
           <Animated.View
             style={[
               theme.absoluteFill,

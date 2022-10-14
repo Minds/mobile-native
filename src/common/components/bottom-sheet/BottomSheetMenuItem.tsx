@@ -6,7 +6,7 @@ import MPressable from '../MPressable';
 import MText from '../MText';
 import { B1 } from '~ui';
 
-export type MenuItemProps = {
+export type BottomSheetMenuItemProps = {
   title: string | JSX.Element;
   iconName?: string;
   iconType?: IconType;
@@ -17,7 +17,7 @@ export type MenuItemProps = {
   textStyle?: any;
 };
 
-const MenuItem = ({
+const BottomSheetMenuItem = ({
   iconName,
   iconType,
   title,
@@ -26,7 +26,7 @@ const MenuItem = ({
   style,
   textStyle,
   testID = '',
-}: MenuItemProps) => {
+}: BottomSheetMenuItemProps) => {
   iconSize = iconSize || 24;
 
   const txtStyle = useStyle(styles.menuText, textStyle);
@@ -57,7 +57,7 @@ const MenuItem = ({
   );
 };
 
-export default MenuItem;
+export default BottomSheetMenuItem;
 
 const styles = ThemedStyles.create({
   iconContainer: [{ width: 25 }, 'alignCenter', 'marginRight4x'],

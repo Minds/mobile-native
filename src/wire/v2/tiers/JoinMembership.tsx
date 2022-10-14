@@ -3,7 +3,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
-import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
@@ -16,13 +15,14 @@ import UserModel from '../../../channel/UserModel';
 import { Flow } from 'react-native-animated-spinkit';
 import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
-  MenuItemItem,
+  MenuItemProps,
 } from '../../../common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
 import MText from '../../../common/components/MText';
 import { Button } from '~ui';
 import Switch from '~/common/components/controls/Switch';
+import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
 
 const isIos = Platform.OS === 'ios';
 
@@ -54,10 +54,10 @@ const createJoinMembershipStore = ({ tiers }) => ({
   payMethod: 'tokens' as payMethod,
   loading: false,
   loadingData: !tiers,
-  get currentItem(): MenuItemItem {
+  get currentItem(): MenuItemProps {
     return {
       title: this.currentTier ? capitalize(this.currentTier.name) : '',
-      icon: { name: 'chevron-down', type: 'material-community' },
+      icon: 'chevron-down',
     };
   },
   setUser(user: UserModel) {
@@ -299,7 +299,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
             </View>
           )}
           <View style={theme.paddingTop4x}>
-            {!!store.currentTier && <MenuItem item={store.currentItem} />}
+            {!!store.currentTier && <MenuItem {...item} />}
           </View>
           <View style={theme.paddingHorizontal4x}>
             {!!store.currentTier?.description && (

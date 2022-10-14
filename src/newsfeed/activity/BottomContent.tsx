@@ -14,6 +14,7 @@ type PropsType = {
   showOnlyContent?: boolean;
   entity: ActivityModel;
   hideTabs?: boolean;
+  hideMetrics?: boolean;
 };
 
 const BottomContent = (props: PropsType) => {
@@ -50,7 +51,12 @@ const BottomContent = (props: PropsType) => {
 
   return (
     <>
-      <ActivityMetrics entity={props.entity} />
+      {!props.hideMetrics && (
+        <ActivityMetrics
+          entity={props.entity}
+          hideSupermindLabel={props.hideTabs}
+        />
+      )}
       <Actions
         onPressComment={onPressComment}
         entity={props.entity}

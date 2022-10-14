@@ -9,6 +9,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
+import { useFeature } from '@growthbook/growthbook-react';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -19,6 +20,7 @@ const WalletOptions = () => ({
 });
 
 export default function () {
+  const supermindFeatureFlag = useFeature('mobile-supermind');
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -74,19 +76,31 @@ export default function () {
     },
   ];
 
-  let BillingScreenOptions;
-  if (!IS_IOS) {
-    BillingScreenOptions = navigation => [
-      {
-        title: i18n.t('settings.billingOptions.1'),
-        onPress: () => navigation.push('PaymentMethods'),
-      },
-      {
-        title: i18n.t('settings.billingOptions.2'),
-        onPress: () => navigation.push('RecurringPayments'),
-      },
-    ];
-  }
+  const BillingScreenOptions = !IS_IOS
+    ? navigation => [
+        {
+          title: i18n.t('settings.billingOptions.1'),
+          onPress: () => navigation.push('PaymentMethods'),
+        },
+        {
+          title: i18n.t('settings.billingOptions.2'),
+          onPress: () => navigation.push('RecurringPayments'),
+        },
+        supermindFeatureFlag.on
+          ? {
+              title: 'Supermind',
+              onPress: () => navigation.push('SupermindSettingsScreen'),
+            }
+          : null,
+      ]
+    : navigation => [
+        supermindFeatureFlag.on
+          ? {
+              title: 'Supermind',
+              onPress: () => navigation.push('SupermindSettingsScreen'),
+            }
+          : null,
+      ];
 
   return (
     <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
@@ -121,6 +135,13 @@ export default function () {
       <MoreStack.Screen
         name="Settings"
         getComponent={() => require('~/settings/SettingsScreen').default}
+        options={hideHeader}
+      />
+      <MoreStack.Screen
+        name="SupermindConsole"
+        getComponent={() =>
+          require('~/supermind/SupermindConsoleScreen').default
+        }
         options={hideHeader}
       />
       <MoreStack.Screen
@@ -219,7 +240,7 @@ export default function () {
           require('~/notifications/v3/settings/email/EmailNotificationsSettings')
             .default
         }
-        options={{ title: i18n.t('settings.pushNotification') }}
+        options={{ title: i18n.t('settings.emailNotifications') }}
       />
       <MoreStack.Screen
         name="DataSaverScreen"
@@ -283,6 +304,13 @@ export default function () {
           require('~/settings/screens/AutoplaySettingsScreen').default
         }
         options={{ title: i18n.t('settings.accountOptions.7') }}
+      />
+      <MoreStack.Screen
+        name="SupermindSettingsScreen"
+        getComponent={() =>
+          require('~/settings/screens/SupermindSettingsScreen').default
+        }
+        options={{ headerShown: false }}
       />
       <MoreStack.Screen
         name="BoostSettingsScreen"

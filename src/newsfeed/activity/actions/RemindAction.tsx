@@ -1,7 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import { IconButtonNext } from '~ui/icons';
-import { withSpacer } from '~ui/layout';
-import Counter from './Counter';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -15,10 +13,9 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '../../../common/components/bottom-sheet';
-
-const CounterSpaced = withSpacer(Counter);
+import EntityCounter from './EntityCounter';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -131,14 +128,14 @@ export default function ({ entity, hideCount }: PropsTypes) {
         onPress={showDropdown}
         extra={
           !hideCount && entity.reminds ? (
-            <CounterSpaced left="XS" count={entity.reminds} />
+            <EntityCounter entity={entity} countProperty="reminds" />
           ) : null
         }
       />
       {shown && (
         <BottomSheetModal ref={ref} autoShow>
           {reminded ? (
-            <MenuItem
+            <BottomSheetMenuItem
               onPress={undo}
               title={i18n.t('undoRemind')}
               iconName="undo"
@@ -146,13 +143,13 @@ export default function ({ entity, hideCount }: PropsTypes) {
             />
           ) : (
             <>
-              <MenuItem
+              <BottomSheetMenuItem
                 onPress={remind}
                 title={i18n.t('capture.remind')}
                 iconName="repeat"
                 iconType="material"
               />
-              <MenuItem
+              <BottomSheetMenuItem
                 onPress={quote}
                 title={i18n.t('quote')}
                 iconName="edit"

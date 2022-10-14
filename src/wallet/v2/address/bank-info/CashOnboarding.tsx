@@ -4,8 +4,6 @@ import { View } from 'react-native';
 import CountrySelector, {
   allowedCountries,
 } from '../../../../common/components/CountrySelector';
-import MenuItem from '../../../../common/components/menus/MenuItem';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import SettingInput from '../../../../common/components/SettingInput';
 import i18n from '../../../../common/services/i18n.service';
@@ -14,6 +12,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DismissKeyboard from '../../../../common/components/DismissKeyboard';
 import PhoneInput from 'react-native-phone-number-input';
 import MText from '../../../../common/components/MText';
+import { B1 } from '../../../../common/ui';
+import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
+import openUrlService from '../../../../common/services/open-url.service';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -147,27 +148,34 @@ const CashOnboarding = observer(
             />
           </View>
           <View>
-            <MenuItem
-              item={{
-                onPress: localStore.setStripeAgree,
-                title: friendlyFormKeys.stripeAgree,
-                icon: (
-                  <Icon
-                    size={30}
-                    name={
-                      localStore.stripeAgree
-                        ? 'checkbox-outline'
-                        : 'square-outline'
-                    }
-                    style={
-                      localStore.stripeAgree
-                        ? theme.colorIcon
-                        : theme.colorIconDisabled
-                    }
-                  />
-                ),
-                noIcon: !localStore.stripeAgree,
-              }}
+            <MenuItemOption
+              onPress={localStore.setStripeAgree}
+              multiLine
+              borderless
+              title={
+                <B1>
+                  {i18n.t('wallet.bank.agree')}{' '}
+                  <MText
+                    style={styles.link}
+                    onPress={() =>
+                      openUrlService.open('https://stripe.com/legal')
+                    }>
+                    {i18n.t('wallet.bank.ssa')}
+                  </MText>
+                  <B1> {i18n.t('and')} </B1>
+                  <MText
+                    style={styles.link}
+                    onPress={() =>
+                      openUrlService.open(
+                        'https://www.minds.com/p/monetization-terms',
+                      )
+                    }>
+                    {i18n.t('wallet.bank.mmt')}
+                  </MText>
+                </B1>
+              }
+              selected={localStore.stripeAgree}
+              mode="checkbox"
             />
           </View>
         </DismissKeyboard>
@@ -192,6 +200,7 @@ const styles = ThemedStyles.create({
     marginLeft: 0,
     paddingRight: 10,
   },
+  link: [{ textDecorationLine: 'underline' }, 'colorLink'],
 });
 
 export default CashOnboarding;

@@ -98,6 +98,7 @@ export default class ActivityModel extends BaseModel {
   permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
+  blurhash?: string;
 
   /**
    * Mature visibility flag

@@ -1,16 +1,15 @@
 import React, { FC, useCallback } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { observer } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import { ACCESS } from '~/common/services/list-options.service';
-import MText from '../../common/components/MText';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 interface AccessSelectorProps
   extends FC,
@@ -26,21 +25,11 @@ const Option = props => {
   }, [props.store, props.option.value]);
 
   return (
-    <TouchableOpacity
-      style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}>
-      <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
-        {props.option.text}
-      </MText>
-      {props.selected && (
-        <MIcon
-          name="check"
-          size={23}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      )}
-    </TouchableOpacity>
+    <MenuItemOption
+      title={props.option.text}
+      onPress={onSelect}
+      selected={props.selected}
+    />
   );
 };
 
@@ -73,17 +62,4 @@ export default observer(function ({}: AccessSelectorProps) {
       </ScrollView>
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  optsContainer: {
-    marginBottom: 10,
-  },
-  optsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
 });

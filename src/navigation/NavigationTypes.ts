@@ -12,6 +12,8 @@ import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
 import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
+import SupermindRequestModel from '../supermind/SupermindRequestModel';
+import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
 
 type AnyType = any;
 
@@ -44,7 +46,11 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
+  SupermindConsole: {
+    tab: 'inbound' | 'outbound';
+  };
   Drawer: {};
+  SupermindSettingsScreen: {};
   Channel: {};
   Wallet: {
     currency?: string;
@@ -120,6 +126,7 @@ export type RootStackParamList = {
   Compose: {};
   SupermindCompose: {
     data: SupermindRequestParam;
+    closeComposerOnClear?: boolean;
     onSave: (payload: SupermindRequestParam) => void;
     onClear: () => void;
   };
@@ -179,6 +186,8 @@ export type RootStackParamList = {
     code: string;
   };
   ViewImage: {};
+  BottomSheet: BottomSheetScreenParams;
+  ImageGallery: {};
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
   MultiUserRegister: {};
@@ -205,6 +214,10 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Supermind: {
+    guid: string;
+    supermindRequest?: SupermindRequestModel;
+  };
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
