@@ -103,7 +103,7 @@ const ICON_MAP = {
     name: 'account-box-multiple',
   },
   'chat-off': {
-    font: 'MaterialCommunityIcons',
+    font: 'MaterialIcons',
     name: 'speaker-notes-off',
     top: 2,
   },
