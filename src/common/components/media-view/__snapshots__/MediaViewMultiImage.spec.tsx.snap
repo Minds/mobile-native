@@ -23,6 +23,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -86,7 +87,6 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -126,6 +126,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -189,7 +190,6 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -244,6 +244,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -307,7 +308,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -347,6 +347,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -410,7 +411,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -447,6 +447,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
     />
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -510,7 +511,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -565,6 +565,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -628,7 +629,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -665,6 +665,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     />
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -728,7 +729,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -768,6 +768,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
   >
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -831,7 +832,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={
@@ -868,6 +868,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     />
     <View
       activeOpacity={1}
+      onLongPress={[Function]}
       onPress={[Function]}
       style={
         Object {
@@ -931,7 +932,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             onFastImageError={[Function]}
             onFastImageLoadEnd={[Function]}
             onFastImageProgress={[Function]}
-            onImageLongPress={[Function]}
             resizeMode="cover"
             retry={2}
             source={

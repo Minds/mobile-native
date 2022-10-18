@@ -633,7 +633,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             ]
           }
         >
-          Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.
+          Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 15% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.
            
           <Text
             onPress={[Function]}
