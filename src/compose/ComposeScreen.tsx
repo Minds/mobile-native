@@ -40,6 +40,7 @@ import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import onImageInput from '~/common/helpers/onImageInput';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
+import { confirm } from '~/common/components/Confirm';
 
 const { width } = Dimensions.get('window');
 
@@ -118,6 +119,20 @@ export default observer(function ComposeScreen(props) {
     if (store.attachments.uploading) {
       return;
     }
+    const { channel: targetChannel, payment_options } =
+      store.supermindRequest ?? {};
+
+    if (
+      targetChannel?.name &&
+      payment_options?.amount &&
+      !(await confirm({
+        title: i18n.t('supermind.confirmNoRefund.title'),
+        description: i18n.t('supermind.confirmNoRefund.offerDescription'),
+      }))
+    ) {
+      return;
+    }
+
     const isEdit = store.isEdit;
     const entity = await store.submit();
 
@@ -171,7 +186,7 @@ export default observer(function ComposeScreen(props) {
   const onScrollHandler = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) =>
       setScrollOffsetDebounced(e.nativeEvent.contentOffset.y),
-    [],
+    [setScrollOffsetDebounced],
   );
 
   const onAutoCompleteShown = useCallback(

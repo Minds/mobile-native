@@ -128,6 +128,11 @@
     "confirm": {
       "title": "Confirm reply",
       "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted."
+    },
+    "confirmNoRefund": {
+      "title": "Confirm Offer",
+      "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
+      "description": "I understand this transaction is non-refundable."
     }
   },
   "auth": {

@@ -55,10 +55,12 @@ export default function InputBase({
             </MText>
           )}
         </Row>
-        <MText
-          style={[theme.colorPrimaryText, theme.fontL, theme.marginBottom]}>
-          {value}
-        </MText>
+        {value ? (
+          <MText
+            style={[theme.colorPrimaryText, theme.fontL, theme.marginBottom]}>
+            {value}
+          </MText>
+        ) : undefined}
       </Column>
 
       <Column align="centerEnd">
