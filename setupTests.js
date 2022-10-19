@@ -16,6 +16,13 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
+jest.mock('~/config/Version', () => ({
+  Version: {
+    VERSION: '3.8.0',
+    BUILD: 111,
+  },
+}));
+
 jest.mock('@react-native-cookies/cookies', () => ({
   set: jest.fn(),
   clearByName: jest.fn(),
