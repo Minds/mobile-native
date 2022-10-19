@@ -23,6 +23,7 @@ import MText from '../../../common/components/MText';
 import { Button } from '~ui';
 import Switch from '~/common/components/controls/Switch';
 import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
+import { confirm } from '~/common/components/Confirm';
 
 const isIos = Platform.OS === 'ios';
 
@@ -216,6 +217,14 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
 
   const confirmSend = useCallback(async () => {
     if (!store.currentTier) {
+      return;
+    }
+    if (
+      !(await confirm({
+        title: i18n.t('supermind.confirmNoRefund.title'),
+        description: i18n.t('supermind.confirmNoRefund.description'),
+      }))
+    ) {
       return;
     }
     store.setLoading(true);

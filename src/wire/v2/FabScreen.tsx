@@ -19,6 +19,7 @@ import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext'
 import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
+import { confirm } from '~/common/components/Confirm';
 
 const isIos = Platform.OS === 'ios';
 
@@ -72,12 +73,21 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
         delete this.errors.amount;
       }
     },
-    confirmSend() {
+    async confirmSend() {
       if (
         Number(this.wire.amount) === 0 ||
         Number.isNaN(Number(this.wire.amount))
       ) {
         this.errors.amount = i18n.t('validation.amount');
+        return;
+      }
+
+      if (
+        !(await confirm({
+          title: i18n.t('supermind.confirmNoRefund.title'),
+          description: i18n.t('supermind.confirmNoRefund.description'),
+        }))
+      ) {
         return;
       }
 

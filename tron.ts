@@ -3,7 +3,7 @@ import Reactotron from 'reactotron-react-native';
 
 Reactotron.configure({
   name: 'Minds',
-  host: Platform.OS === 'android' ? '192.178.1.120' : 'localhost',
+  host: Platform.OS === 'android' ? '192.168.1.120' : 'localhost',
   port: 9090,
 })
   .useReactNative({
