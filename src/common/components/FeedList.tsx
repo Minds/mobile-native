@@ -90,6 +90,7 @@ export type FeedListPropsType<T extends BaseModel> = {
    * refreshing state. overwrites the feedList's refreshing
    */
   refreshing?: boolean;
+  hideFooterSpinner?: boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
@@ -261,7 +262,9 @@ export class FeedList<T extends BaseModel> extends Component<
    * Load feed data
    */
   loadMore = () => {
-    if (this.props.feedStore.errorLoading) return;
+    if (this.props.feedStore.errorLoading) {
+      return;
+    }
     this.props.feedStore.loadMore();
   };
 
@@ -371,7 +374,7 @@ export class FeedList<T extends BaseModel> extends Component<
           ref={this.listRef}
           key={feedStore.isTiled ? 't' : 'f'}
           ListHeaderComponent={header}
-          ListFooterComponent={this.getFooter}
+          ListFooterComponent={!this.props.hideFooterSpinner && this.getFooter}
           drawDistance={drawAhead}
           data={items}
           renderItem={renderRow}

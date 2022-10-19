@@ -66,21 +66,15 @@ const ChannelHeader = withErrorBoundary(
     /** Whether the channel recommendation widget should be shown after channel is subscribed */
     const shouldRenderChannelRecommendation =
       !ownChannel && Boolean(props.store?.feedStore.entities.length);
-    const tabs: Array<TabType<ChannelTabType>> = ownChannel
-      ? [
-          { id: 'feed', title: i18n.t('feed') },
-          { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
-          // { id: 'shop', title: 'Shop' },
-          { id: 'about', title: i18n.t('about') },
-        ]
-      : [
-          { id: 'feed', title: i18n.t('feed') },
-          props.store?.tiers?.length && !IS_IOS
-            ? { id: 'memberships', title: i18n.t('settings.otherOptions.b1') }
-            : (null as any),
-          // { id: 'shop', title: 'Shop' },
-          { id: 'about', title: i18n.t('about') },
-        ].filter(Boolean);
+    const tabs: Array<TabType<ChannelTabType>> = [
+      { id: 'feed', title: i18n.t('feed') },
+      { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+      { id: 'about', title: i18n.t('about') },
+    ];
+    // remove membership tab
+    if (!ownChannel && (IS_IOS || !props.store?.tiers?.length)) {
+      tabs.splice(1, 1);
+    }
     const bottomBarInnerWrapper = useMemoStyle(
       [
         'borderBottom',
@@ -193,8 +187,6 @@ const ChannelHeader = withErrorBoundary(
               />
             );
           }
-        default:
-          return <View />;
       }
     };
 

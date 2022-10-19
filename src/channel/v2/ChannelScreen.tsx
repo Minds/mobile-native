@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Platform, StatusBar, StatusBarStyle, View } from 'react-native';
 import React, {
   useCallback,
@@ -178,7 +179,7 @@ const ChannelScreen = observer((props: PropsType) => {
    * text color of topbar contents such as name and icons
    **/
   const textColor =
-    textStyle == 'dark-content'
+    textStyle === 'dark-content'
       ? ThemedStyles.getColor('Black')
       : ThemedStyles.getColor('White');
 
@@ -198,7 +199,7 @@ const ChannelScreen = observer((props: PropsType) => {
     return () => {
       ActivityModel.events.removeListener('newPost', p);
     };
-  }, [store]);
+  }, [props.route.params, store]);
 
   /**
    * TODO: describe what this does
@@ -233,7 +234,9 @@ const ChannelScreen = observer((props: PropsType) => {
       const delta = y - offset.value;
       offset.value = y;
 
-      if (!topBarAnimationEnabled.current) return;
+      if (!topBarAnimationEnabled.current) {
+        return;
+      }
 
       /**
        * If the scroll had a down direction, hide the topbar
@@ -456,6 +459,7 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
+        hideFooterSpinner
         header={
           <ChannelHeader
             store={store}
