@@ -74,7 +74,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   navigation: any;
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
-  hideItems?: boolean;
+  hideContent?: boolean;
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
   placeholder?:
@@ -90,7 +90,6 @@ export type FeedListPropsType<T extends BaseModel> = {
    * refreshing state. overwrites the feedList's refreshing
    */
   refreshing?: boolean;
-  hideFooterSpinner?: boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
@@ -361,7 +360,7 @@ export class FeedList<T extends BaseModel> extends Component<
       renderRow = renderActivity || this.renderActivity;
     }
 
-    const items: Array<any> = !this.props.hideItems
+    const items: Array<any> = !this.props.hideContent
       ? feedStore.entities.slice()
       : [];
 
@@ -374,7 +373,7 @@ export class FeedList<T extends BaseModel> extends Component<
           ref={this.listRef}
           key={feedStore.isTiled ? 't' : 'f'}
           ListHeaderComponent={header}
-          ListFooterComponent={!this.props.hideFooterSpinner && this.getFooter}
+          ListFooterComponent={!this.props.hideContent ? this.getFooter : null}
           drawDistance={drawAhead}
           data={items}
           renderItem={renderRow}
@@ -394,7 +393,7 @@ export class FeedList<T extends BaseModel> extends Component<
           getItemType={this.getType}
           onEndReachedThreshold={5} // 5 times the visible list height
           numColumns={feedStore.isTiled ? 3 : 1}
-          ListEmptyComponent={!this.props.hideItems ? this.empty : null}
+          ListEmptyComponent={!this.props.hideContent ? this.empty : null}
           viewabilityConfig={this.viewOpts}
           onViewableItemsChanged={this.onViewableItemsChanged}
           scrollEventThrottle={16}

@@ -459,7 +459,6 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
-        hideFooterSpinner
         header={
           <ChannelHeader
             store={store}
@@ -473,7 +472,7 @@ const ChannelScreen = observer((props: PropsType) => {
         navigation={props.navigation}
         emptyMessage={emptyMessage}
         style={theme.flexContainer}
-        hideItems={store.tab !== 'feed'}
+        hideContent={store.tab !== 'feed'}
       />
 
       <Animated.View style={topBarAnimatedViewStyle}>
