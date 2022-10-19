@@ -37,8 +37,8 @@ export default class AttachmentStore {
   filename? = '';
   path? = '';
   transcoding = false;
-  width: number = 1;
-  height: number = 1;
+  @observable width: number = 1;
+  @observable height: number = 1;
 
   onClear?: (s: AttachmentStore) => void;
 
