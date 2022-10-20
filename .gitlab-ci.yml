@@ -139,7 +139,7 @@ build:ios_production:
 
 # Android common build steps
 .prepare_build_android: &prepare_build_android
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   stage: build
   tags: [minds-ci]
   interruptible: true
@@ -212,7 +212,7 @@ build:android_mr_production:
 
 # Cleanup APK from merged MRs
 build:cleanup:
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   tags: [minds-ci]
   when: manual
   stage: build
@@ -434,7 +434,7 @@ release:production:
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
 release:google_play:
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
   before_script:
