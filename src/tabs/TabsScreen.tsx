@@ -58,7 +58,7 @@ const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabBar = ({ state, descriptors, navigation }) => {
+const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
   const barAnimatedStyle = useAnimatedStyle(() => ({
@@ -139,7 +139,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
         );
       })}
 
-      <Animated.View style={[styles.bar, barAnimatedStyle]} />
+      {!disableTabIndicator && (
+        <Animated.View style={[styles.bar, barAnimatedStyle]} />
+      )}
     </View>
   );
 };
@@ -239,11 +241,10 @@ const styles = ThemedStyles.create({
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
 const moreOptions = {
   tabBarTestID: 'Messenger tab button',
-  unmountOnBlur: true,
 };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
-const tabBar = props => <TabBar {...props} />;
+const tabBar = props => <TabBar disableTabIndicator {...props} />;
 
 const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
