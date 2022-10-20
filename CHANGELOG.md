@@ -2,6 +2,39 @@
 
 Minds Mobile
 
+## 4.29.1 - 2022-10-19
+
+### Changed
+
+- Fix keyboard handling on supermind onboarding
+- Add view reply to supermind
+- Hide supermind buttons if expired
+- Fix supermind deeplinks
+- Fix disabled comment action
+- Fix images download
+- Fix In-composer camera issue with multi-image iOS
+- Add notice to supermind composer
+- Supermind reply confirmation modal
+- Fix attach videos to posts
+- Refactor: Harmonizing list views
+- Dismissible top highlights
+- Fix does not load more than 15 notifications
+- Fix Offset list rendering
+- Improve Login/register with Keyboard handling
+- Add Reactrotron debug support
+- Fix blank screen when tapping on the quoted post of a supermind
+- Increase Tabs hitSlop + tab stripe indicator does not align on iPad
+- Add terms and agreement links to bank info screen minds
+- Fix embed link and media attachment on comments
+- Update bottom sheet package
+- Fix app crash on supermind console
+- Fix able to monetize quote posts
+- Clearly communicate refund policy on payment screens
+- Fix fetch hook and list component issues (pagination & repeated items)
+- Fix supermind onboarding scroll
+- Fix media preview single image style
+- Fix spinner always on on user membership tab
+
 ## 4.29.0 - 2022-09-30
 
 ### Changed

@@ -476,6 +476,7 @@ release:codepush-ios:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
   only:
     - /^patch-*/
+    - master
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -494,6 +495,7 @@ release:codepush-android:
     - appcenter codepush release-react -a Minds/Minds -d Production
   only:
     - /^patch-*/
+    - master
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
