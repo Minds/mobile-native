@@ -88,7 +88,7 @@
     "pusher-js": "^7.0.2",
     "react": "18.0.0",
     "react-hooks-testing-library": "^0.6.0",
-    "react-native": "0.69.5",
+    "react-native": "0.69.6",
     "react-native-animated-numbers": "^0.4.1",
     "react-native-animated-spinkit": "^1.5.2",
     "react-native-awesome-gallery": "^0.3.5",
