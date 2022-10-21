@@ -1,0 +1,14 @@
+diff --git a/node_modules/hygen/dist/logger.js b/node_modules/hygen/dist/logger.js
+index 312f112..036c45d 100644
+--- a/node_modules/hygen/dist/logger.js
++++ b/node_modules/hygen/dist/logger.js
+@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ const chalk_1 = __importDefault(require("chalk"));
+ // chalk 4.1.2 doesn't type template property
+-const { yellow, red, green, magenta, template } = chalk_1.default;
++const { yellow, red, green, magenta } = chalk_1.default;
++const template = require('chalk/source/templates');
+ class Logger {
+     constructor(log) {
+         this.log = log;
