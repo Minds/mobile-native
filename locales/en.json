@@ -1137,6 +1137,11 @@
       "one": "Reward",
       "other": "Rewards"
     },
+    "activity": {
+      "oneDay": "Active one day over the past seven days",
+      "threeDay": "Active three days over the past seven days",
+      "sixDay": "Active six day over the past seven days"
+    },
     "completeStep": "Please complete the step in your wallet app",
     "connectFirst": "Connect the wallet first",
     "verified": "Your On-chain address is now setup and verified",

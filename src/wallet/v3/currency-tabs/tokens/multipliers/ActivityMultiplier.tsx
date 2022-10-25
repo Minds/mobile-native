@@ -4,21 +4,18 @@ import { Tooltip } from 'react-native-elements';
 import MText from '../../../../../common/components/MText';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import { B3 } from '~ui';
+import i18n from '~/common/services/i18n.service';
 
 const ToolTipText = () => (
   <View>
     <MText style={styles.tooltipTitle}>Casual · 1x</MText>
-    <MText style={styles.tooltipText}>
-      Active one day over the past seven days
-    </MText>
+    <MText style={styles.tooltipText}>{i18n.t('wallet.activity.oneDay')}</MText>
     <MText style={styles.tooltipTitle}>Core · 2x</MText>
     <MText style={styles.tooltipText}>
-      Active three days over the past seven days
+      {i18n.t('wallet.activity.threeDay')}
     </MText>
     <MText style={styles.tooltipTitle}>Hardcore · 3x</MText>
-    <MText style={styles.tooltipText}>
-      Active six days over the past six days
-    </MText>
+    <MText style={styles.tooltipText}>{i18n.t('wallet.activity.sixDay')}</MText>
   </View>
 );
 
