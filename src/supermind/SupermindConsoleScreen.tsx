@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React from 'react';
+import React, { useCallback } from 'react';
 import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
   TabType,
@@ -16,6 +16,7 @@ import {
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
+import SeeLatestButton from '../newsfeed/SeeLatestButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
@@ -45,6 +46,10 @@ function SupermindConsoleScreen({
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
+  const scrollToTopAndRefresh = useCallback(() => {
+    listRef.current?.scrollToTop();
+    return listRef.current?.refreshList();
+  }, [listRef]);
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -103,6 +108,13 @@ function SupermindConsoleScreen({
           mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
         }
         endpointData=""
+      />
+
+      <SeeLatestButton
+        countEndpoint={`api/v3/supermind/${
+          mode === 'inbound' ? 'inbox' : 'outbox'
+        }/count`}
+        onPress={scrollToTopAndRefresh}
       />
 
       <AnimatePresence>
