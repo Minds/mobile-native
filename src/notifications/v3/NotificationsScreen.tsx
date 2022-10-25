@@ -53,7 +53,6 @@ const map = data => {
 };
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
   const listRef = useRef<FlatList>(null);
@@ -76,6 +75,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const cleanTop = React.useRef({
     marginTop: insets && insets.top ? insets.top - 5 : 0,
     flexGrow: 1,
+    flex: 1,
   }).current;
 
   const onFetchMore = () => {
@@ -206,7 +206,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         ref={listRef}
         stickyHeaderIndices={sticky}
         stickyHeaderHiddenOnScroll={true}
-        style={[theme.flexContainer, cleanTop]}
+        style={cleanTop}
         ListHeaderComponent={
           <View>
             <Topbar title="Notifications" navigation={navigation} noInsets />
