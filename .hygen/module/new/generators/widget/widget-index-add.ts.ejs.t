@@ -7,4 +7,4 @@ inject: true
 before: "end-of-widget-list"
 skip_if: export \{ <%%= CamelName%>Widget,
 ---
-export { <%%= CamelName%>Widget } from './<%%= camelName%>.widget'
+export { <%%= CamelName%>Widget } from './<%%= camelName%>.widget';

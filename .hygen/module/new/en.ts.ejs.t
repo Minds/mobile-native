@@ -1,8 +1,8 @@
 ---
 to: "<%= absPath%>/locales/en.ts"
 ---
-export type TranslationType = typeof en
+export type TranslationType = typeof en;
 
-const en = {}
+const en = {};
 
-export default en
+export default en;

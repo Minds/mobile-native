@@ -1,5 +1,5 @@
 ---
-to: "src/app/sdk/<%=changeCase.camelCase(info.title.replace('10x',''))%>.ts"
+to: "src/app/sdk/<%=changeCase.camelCase(info.title.replace('minds',''))%>.ts"
 ---
 /**
  * <%= info.title%>
@@ -19,17 +19,17 @@ to: "src/app/sdk/<%=changeCase.camelCase(info.title.replace('10x',''))%>.ts"
  * <%- removeMarkdown(description)%>
  */
 <%
-  const contentType = extractContentType(requestBody?.content)
+  const contentType = extractContentType(requestBody?.content);
   if (contentType) {
-    types.push(contentType)
+    types.push(contentType);
   }
-  const payload = getPayload(contentType)
-  const queryParams = extractParams(parameters) 
-  const params = [...queryParams, payload].filter(n => n).join(', ')
-  const responseType = extractResponse(responses)
-  const responseStatus = extractStatus(responses)
+  const payload = getPayload(contentType);
+  const queryParams = extractParams(parameters) ;
+  const params = [...queryParams, payload].filter(n => n).join(', ');
+  const responseType = extractResponse(responses);
+  const responseStatus = extractStatus(responses);
   if (responseType) {
-    types.push(responseType)
+    types.push(responseType);
   }
 -%>
 export const <%= changeCase.camelCase(operationId)%> = (<%- params%>): Promise<%-`<${responseType || 'boolean'}>`%> =>
@@ -42,9 +42,9 @@ export const <%= changeCase.camelCase(operationId)%> = (<%- params%>): Promise<%
 <%} -%>
 <% });%>
 <% }); %>
-import { ApiConnector } from 'api-connector'
+import { ApiConnector } from 'services/api';
 import {
 <% [...new Set(types)].forEach(function(type) { -%>
   <%=type%>,
 <%})-%>
-} from './<%=changeCase.camelCase(info.title.replace('10x',''))%>.types'
+} from './<%=changeCase.camelCase(info.title.replace('minds',''))%>.types';

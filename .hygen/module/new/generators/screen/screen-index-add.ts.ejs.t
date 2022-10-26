@@ -7,4 +7,4 @@ inject: true
 before: "end-of-screen-list"
 skip_if: export \{ <%%= CamelName%>Screen,
 ---
-export { <%%= CamelName%>Screen } from './<%%= dashName%>/<%%= camelName%>.screen'
+export { <%%= CamelName%>Screen } from './<%%= dashName%>/<%%= camelName%>.screen';

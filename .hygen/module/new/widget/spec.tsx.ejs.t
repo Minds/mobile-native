@@ -2,15 +2,15 @@
 to: "<%=widget ? `${absPath}/widgets/${camelName}.widget.spec.tsx` : null %>"
 ---
 
-import React from 'react'
-import { render, cleanup, waitFor, RenderAPI } from '@testing-library/react-native'
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
-import { <%=CamelName%>Widget } from './<%=camelName%>.widget'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import * as eva from '@eva-design/eva'
-import { useTranslation } from 'modules/locales'
-import { renderHook } from '@testing-library/react-hooks'
-import { AppIconsPack } from 'modules/theme'
+import React from 'react';
+import { render, cleanup, waitFor, RenderAPI } from '@testing-library/react-native';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { <%=CamelName%>Widget } from './<%=camelName%>.widget';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as eva from '@eva-design/eva';
+import { useTranslation } from 'utils/locales';
+import { renderHook } from '@testing-library/react-hooks';
+import { AppIconsPack } from 'modules/theme';
 
 <% if (api) { -%>
 /**
@@ -30,15 +30,15 @@ jest.mock('./<%=camelName%>.logic', () => ({
       },
     }
   },
-}))
+}));
 <% } -%>
 
 describe('<%=CamelName%>Widget tests', () => {
-  let component: RenderAPI
-  let t: (key: string) => string
+  let component: RenderAPI;
+  let t: (key: string) => string;
   beforeEach(async () => {
-    const { result } = renderHook(() => useTranslation('<%=camelName%>Module'))
-    t = result.current.t
+    const { result } = renderHook(() => useTranslation('<%=camelName%>Module'));
+    t = result.current.t;
     component = await waitFor(() =>
       render(
         <ApplicationProvider {...eva} theme={eva.light}>
@@ -52,14 +52,14 @@ describe('<%=CamelName%>Widget tests', () => {
     )
   })
   afterEach(() => {
-    cleanup()
-  })
+    cleanup();
+  });
   it('<%=CamelName%>Widget snapshot', async () => {
-    expect(component.toJSON).toMatchSnapshot()
-  })
+    expect(component.toJSON).toMatchSnapshot();
+  });
 
   it('renders the main title correctly ', async () => {
-    const heading = component.getByText(t('<%=CamelName%>'))
-    expect(heading).toBeTruthy()
-  })
-})
+    const heading = component.getByText(t('<%=CamelName%>'));
+    expect(heading).toBeTruthy();
+  });
+});

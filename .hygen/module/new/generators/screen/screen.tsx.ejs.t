@@ -4,28 +4,28 @@ to: "<%= `${absPath}/.hygen/screen/new/screen.tsx.ejs.t` %>"
 ---
 to: <%%= `${relPath}/${camelName}.screen.tsx`%>
 ---
-import React from 'react'
-import { View } from 'react-native'
-import { ScreenWrapper, Text } from 'components/.'
-import { globalStyles } from 'styles/.'
-import { useTranslation } from 'modules/locales'
+import React from 'react';
+import { View } from 'react-native';
+import { ScreenWrapper, Text } from 'components/.';
+import { globalStyles } from 'styles/.';
+import { useTranslation } from 'utils/locales';
 <%% if (api) { -%>
-import { use<%%=PluralName%> } from './<%%= camelName%>.logic'
+import { use<%%=PluralName%> } from './<%%= camelName%>.logic';
 <%% } -%>
 <%% if (store) { -%>
-import { use<%=CamelName%>Store } from '../../store'
+import { use<%=CamelName%>Store } from '../../store';
 <%% } -%>
 <%% if (assets) { -%>
-import { <%%=CamelName%> } from './assets'
+import { <%%=CamelName%> } from './assets';
 <%% } -%>
 
 export function <%%= CamelName%>Screen(): JSX.Element {
-  const { t } = useTranslation('<%= camelName%>Module')
+  const { t } = useTranslation('<%= camelName%>Module');
 <%% if (api) { -%>
-  const { <%%=pluralName%>, wrapperHandle } = use<%%=PluralName%>()
+  const { <%%=pluralName%>, wrapperHandle } = use<%%=PluralName%>();
 <%% } -%>
 <%% if (store) { -%>
-  const [get<%=CamelName%>Store, set<%=CamelName%>Store] = use<%=CamelName%>Store()
+  const [get<%=CamelName%>Store, set<%=CamelName%>Store] = use<%=CamelName%>Store();
 <%% } -%>
 
   return (
@@ -44,5 +44,5 @@ export function <%%= CamelName%>Screen(): JSX.Element {
       ))}
 <%% } -%>
     </ScreenWrapper>
-  )
+  );
 }

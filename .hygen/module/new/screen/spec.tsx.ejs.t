@@ -1,15 +1,15 @@
 ---
 to: <%= absPath %>/screens/<%= dashName%>/<%= camelName%>.spec.tsx
 ---
-import React from 'react'
-import { render, cleanup, waitFor, RenderAPI } from '@testing-library/react-native'
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
-import { <%=CamelName%>Screen } from './<%=camelName%>.screen'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import * as eva from '@eva-design/eva'
-import { useTranslation } from 'modules/locales'
-import { renderHook } from '@testing-library/react-hooks'
-import { AppIconsPack } from 'modules/theme'
+import React from 'react';
+import { render, cleanup, waitFor, RenderAPI } from '@testing-library/react-native';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { <%=CamelName%>Screen } from './<%=camelName%>.screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as eva from '@eva-design/eva';
+import { useTranslation } from 'utils/locales';
+import { renderHook } from '@testing-library/react-hooks';
+import { AppIconsPack } from 'modules/theme';
 
 <% if (api) { -%>
 /**
@@ -28,15 +28,15 @@ jest.mock('./<%=camelName%>.logic', () => ({
       },
     }
   },
-}))
+}));
 <% } -%>
 
 describe('<%=CamelName%>Screen tests', () => {
-  let component: RenderAPI
-  let t: (key: string) => string
+  let component: RenderAPI;
+  let t: (key: string) => string;
   beforeEach(async () => {
-    const { result } = renderHook(() => useTranslation('<%=camelName%>Module'))
-    t = result.current.t
+    const { result } = renderHook(() => useTranslation('<%=camelName%>Module'));
+    t = result.current.t;
     component = await waitFor(() =>
       render(
         <ApplicationProvider {...eva} theme={eva.light}>
@@ -47,17 +47,17 @@ describe('<%=CamelName%>Screen tests', () => {
           </SafeAreaProvider>
         </ApplicationProvider>,
       ),
-    )
-  })
+    );
+  });
   afterEach(() => {
-    cleanup()
-  })
+    cleanup();
+  });
   it('<%=CamelName%>Screen snapshot', async () => {
-    expect(component.toJSON).toMatchSnapshot()
-  })
+    expect(component.toJSON).toMatchSnapshot();
+  });
 
   it('renders the main title correctly ', async () => {
-    const heading = component.getByText(t('Hello <%=CamelName%>'))
-    expect(heading).toBeTruthy()
-  })
-})
+    const heading = component.getByText(t('Hello <%=CamelName%>'));
+    expect(heading).toBeTruthy();
+  });
+});

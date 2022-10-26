@@ -13,6 +13,6 @@ export async function get<%%= PluralName%>(param: string): Promise<unknown> {
     ApiConnector.getInstance()
       .get(`/v1/<%%= pluralName%>/${param}`)
       .then((result) => result?.data),
-  )
-  return response
+  );
+  return response;
 }

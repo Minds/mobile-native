@@ -26,7 +26,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "jsx": "react-native",
-    "lib": ["es6"],
+    "lib": ["es6", "es2019"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
@@ -38,7 +38,20 @@
       "~ui": ["./src/common/ui"],
       "~ui/*": ["./src/common/ui/*"],
       "~styles": ["./src/styles"],
-      "~styles/*": ["./src/styles/*"]
+      "~styles/*": ["./src/styles/*"],
+
+      "app": ["src/app"],
+      "assets": ["src/assets"],
+      "assets/*": ["src/assets/*"],
+      "components": ["src/components"],
+      "components/*": ["src/components/*"],
+      "modules/*": ["src/modules/*"],
+      "services": ["src/services"],
+      "services/*": ["src/services/*"],
+      "styles": ["src/styles"],
+      "styles/*": ["src/styles/*"],
+      "utils": ["src/utils"],
+      "utils/*": ["src/utils/*"]
     },
     "types": ["jest"]
   },
