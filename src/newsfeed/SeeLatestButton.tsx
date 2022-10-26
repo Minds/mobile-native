@@ -87,10 +87,13 @@ const useWatchForUpdates = (countEndpoint: string) => {
     }, NEWSFEED_NEW_POST_POLL_INTERVAL);
 
     return () => clearInterval(newPostInterval.current);
-  }, [fetchCount]);
+  }, [fetchCount, countEndpoint]);
 
   return {
     count: count && count > 0 ? count : 0,
-    resetCount: () => setCount(undefined),
+    resetCount: () => {
+      previousCount.current = 0;
+      setCount(undefined);
+    },
   };
 };
