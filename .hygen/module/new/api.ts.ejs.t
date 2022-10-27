@@ -1,7 +1,7 @@
 ---
 to: "<%=api ? `${absPath}/api/index.ts` : null %>"
 ---
-import axios from 'axios';
+import api, { ApiResponse } from 'services/api';
 
 export type <%= CamelName%> = {
   title: string;
@@ -9,13 +9,9 @@ export type <%= CamelName%> = {
 };
 
 export const get<%= PluralName%> = (param: string) =>
-  axios
-    .get<<%= CamelName%>[]>(`/v1/<%= pluralName%>/${param}`)
-    .then(result => result?.data);
+  api.get<ApiResponse & <%= CamelName%>[]>(`/v1/<%= pluralName%>/${param}`);
 
 export const create<%=CamelName%> = (params: <%= CamelName%>) =>
-  axios
-    .post<<%= CamelName%>>('/v1/<%= pluralName%>', { ...params })
-    .then(result => result?.data);
+  api.post<ApiResponse & <%= CamelName%>>('/v1/<%= pluralName%>', { ...params });
 
 // end-of-api-methods - HYGEN
