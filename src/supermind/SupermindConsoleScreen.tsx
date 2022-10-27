@@ -41,7 +41,7 @@ function SupermindConsoleScreen({
 }: SupermindConsoleScreenProps) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>(
-    route.params?.tab || 'inbound',
+    route.params?.tab ?? 'inbound',
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');

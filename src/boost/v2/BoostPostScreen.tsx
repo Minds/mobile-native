@@ -35,7 +35,7 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
   const localStore = useLocalStore(createBoostStore, {
     wc,
     wallet: wallet.wallet,
-    entity: route.params.entity,
+    entity: route.params?.entity,
   });
   useEffect(() => {
     wallet.loadOffchainAndReceiver();

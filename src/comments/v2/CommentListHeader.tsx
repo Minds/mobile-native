@@ -19,10 +19,7 @@ export default observer(function CommentListHeader(props: {
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
 
-  const title =
-    route.params && route.params.title
-      ? route.params.title
-      : i18n.t('comments.comments');
+  const { title = i18n.t('comments.comments') } = route.params ?? {};
 
   const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
 

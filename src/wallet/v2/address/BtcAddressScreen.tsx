@@ -26,14 +26,14 @@ type PropsType = {
 
 const BtcAddressScreen = observer(({ navigation, route }: PropsType) => {
   const theme = ThemedStyles.style;
-  const walletStore = route.params.walletStore;
+  const { walletStore } = route.params ?? {};
 
-  const [address, setAddress] = useState(walletStore.wallet.btc.address);
+  const [address, setAddress] = useState(walletStore?.wallet.btc.address);
   const [loading, setLoading] = useState(false);
 
   const save = useCallback(async () => {
     setLoading(true);
-    const success = await walletStore.setBtcAccount(address);
+    const success = await walletStore?.setBtcAccount(address);
     setLoading(false);
     if (success) {
       navigation.goBack();

@@ -47,9 +47,11 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   const portraitStore = useStores().portrait;
   const ref = React.useRef<ICarouselInstance>(null);
 
+  const { index = 0 } = props.route.params ?? {};
+
   const store = useLocalStore(() => ({
-    unseenMode: portraitStore.items[props.route.params.index].unseen,
-    index: props.route.params.index,
+    index,
+    unseenMode: portraitStore.items[index].unseen,
     items: portraitStore.items,
     setIndex(v) {
       store.index = v;
@@ -127,16 +129,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   const animationStyle = usePortraitAnimation(height, width);
 
   const renderItem = useCallback(
-    ({ index, animationValue, item }) => {
-      return (
-        <CustomItem
-          index={index}
-          animationValue={animationValue}
-          item={item}
-          store={store}
-        />
-      );
-    },
+    itemProps => <CustomItem {...itemProps} store={store} />,
     [store],
   );
 
@@ -147,7 +140,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         ref={ref}
         vertical={false}
         windowSize={3}
-        defaultIndex={props.route.params.index}
+        defaultIndex={index}
         pagingEnabled={true}
         onSnapToItem={store.setIndex}
         width={width}
@@ -180,7 +173,7 @@ export const useCarouselFocusEffect = (effect: Function) => {
     if (focused) {
       effect();
     }
-  }, [focused]);
+  }, [effect, focused]);
 };
 
 type ItemProps = {

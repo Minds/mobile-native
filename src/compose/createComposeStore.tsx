@@ -128,7 +128,7 @@ export default function (props) {
       }
 
       if (params.group) {
-        this.group = props.route.params.group;
+        this.group = props.route.params?.group;
       }
 
       if (params.openSupermindModal) {

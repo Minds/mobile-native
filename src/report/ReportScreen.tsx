@@ -53,7 +53,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
    */
   componentDidMount() {
     const navigation = this.props.navigation;
-
+    const { goBack, entity } = this.props.route.params ?? {};
     navigation.setOptions({
       title: i18n.t('report'),
       headerLeft: () => {
@@ -62,11 +62,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
             name="chevron-left"
             size={38}
             style={ThemedStyles.style.colorLink}
-            onPress={() => {
-              if (this.props.route.params && this.props.route.params.goBack)
-                return this.props.route.params.goBack();
-              navigation.goBack();
-            }}
+            onPress={() => (goBack ? goBack() : navigation.goBack())}
           />
         );
       },
@@ -75,9 +71,8 @@ export default class ReportScreen extends Component<PropsType, StateType> {
       },
     });
 
-    this.setState({
-      entity: this.props.route.params.entity,
-    });
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ entity });
     this.loadReasons();
     this.props.navigation.setParams({
       confirmAndSubmit: this.confirmAndSubmit.bind(this),
@@ -200,11 +195,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
           <View>
             <Button
               title={i18n.t('settings.submit')}
-              onPress={
-                this.props.route.params.confirmAndSubmit
-                  ? this.props.route.params.confirmAndSubmit
-                  : () => null
-              }
+              onPress={this.props.route.params?.confirmAndSubmit}
             />
           </View>
         ),
@@ -314,7 +305,9 @@ export default class ReportScreen extends Component<PropsType, StateType> {
    * Render
    */
   render() {
-    if (!this.state.reasons) return <CenteredLoading />;
+    if (!this.state.reasons) {
+      return <CenteredLoading />;
+    }
 
     const theme = ThemedStyles.style;
     const showTitle = this.state.reason && this.state.reason.hasMore;
