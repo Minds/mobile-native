@@ -2,8 +2,8 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Linking } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Switch from 'react-native-switch-pro';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import Switch from '~/common/components/controls/Switch';
 import InputContainer from '~/common/components/InputContainer';
 import delay from '~/common/helpers/delay';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
@@ -93,23 +93,18 @@ function TwitterSyncScreen() {
   /**
    * triggers on input blur
    **/
-  const onDiscoverableChange = useCallback(
-    (cb: (success: boolean) => void) => {
-      updateAccount({ discoverable: !discoverable })
-        .then(() => {
-          setDiscoverable(!discoverable);
-          cb(true);
-        })
-        .catch(() => {
-          showNotification(
-            i18n.t('settings.twitterSync.notifs.error.update'),
-            'danger',
-          );
-          cb(false);
-        });
-    },
-    [discoverable, updateAccount],
-  );
+  const onDiscoverableChange = useCallback(() => {
+    updateAccount({ discoverable: !discoverable })
+      .then(() => {
+        setDiscoverable(!discoverable);
+      })
+      .catch(() => {
+        showNotification(
+          i18n.t('settings.twitterSync.notifs.error.update'),
+          'danger',
+        );
+      });
+  }, [discoverable, updateAccount]);
 
   /**
    * connects account
@@ -175,7 +170,7 @@ function TwitterSyncScreen() {
               {i18n.t('settings.twitterSync.discoverable')}
             </B1>
 
-            <Switch value={discoverable} onAsyncPress={onDiscoverableChange} />
+            <Switch value={discoverable} onChange={onDiscoverableChange} />
           </Row>
         </ScreenSection>
 

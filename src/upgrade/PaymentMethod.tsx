@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import Switch from 'react-native-switch-pro';
 import { UpgradeStoreType } from './createUpgradeStore';
 import MText from '../common/components/MText';
+import Switch from '~/common/components/controls/Switch';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -24,11 +24,7 @@ const PaymentMethod = ({ store }: PropsType) => {
       <MText style={switchTextStyle}>{i18n.t('usd')}</MText>
       <Switch
         value={store.method === 'tokens'}
-        onSyncPress={store.setMethod}
-        circleColorActive={ThemedStyles.getColor('SecondaryText')}
-        circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-        backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-        backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
+        onChange={store.setMethod}
         style={theme.marginHorizontal2x}
       />
       <MText style={switchTextStyle}>Tokens</MText>

@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { View, StyleSheet, TextStyle, TextInputProps } from 'react-native';
+import { View, TextStyle, TextInputProps } from 'react-native';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -8,7 +8,6 @@ import TextInput from './TextInput';
 import MText from './MText';
 import ErrorBoundary from './ErrorBoundary';
 import DatePickerInput from './controls/DatePickerInput';
-import { B1 } from '../ui';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
