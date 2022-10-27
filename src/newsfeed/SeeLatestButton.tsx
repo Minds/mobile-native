@@ -72,11 +72,14 @@ const useWatchForUpdates = (countEndpoint: string) => {
   const { fetch: fetchCount } = useApiFetch<{ count: number }>(countEndpoint, {
     skip: true,
   });
-
-  useEffect(() => {
+  const resetCount = () => {
     clearInterval(newPostInterval.current);
     setCount(0);
     previousCount.current = 0;
+  };
+
+  useEffect(() => {
+    resetCount();
     newPostInterval.current = setInterval(async () => {
       const data = await fetchCount();
       if (previousCount.current && data.count) {
@@ -91,9 +94,6 @@ const useWatchForUpdates = (countEndpoint: string) => {
 
   return {
     count: count && count > 0 ? count : 0,
-    resetCount: () => {
-      previousCount.current = 0;
-      setCount(undefined);
-    },
+    resetCount,
   };
 };
