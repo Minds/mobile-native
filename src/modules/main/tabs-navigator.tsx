@@ -1,20 +1,20 @@
+/* eslint-disable no-shadow */
 import React from 'react';
-import { Animated, ViewStyle } from 'react-native';
+import { Animated, ViewStyle, Text } from 'react-native';
 import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import {
   BottomNavigationTab,
-  Divider,
   BottomNavigation,
+  Icon,
+  IconStyle,
   useTheme,
-} from '@ui-kitten/components';
+} from 'components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'utils/locales';
-import { Icon, IconStyle, Text } from 'components/.';
-import { SubscriptionPickerBottomSheet } from './widgets/subscriptionPickerBottomSheet';
 import { renderNavigationTab, renderTabScreens } from './modules';
+import { useTranslation } from 'react-i18next';
 
 const ROOT_ROUTES: string[] = ['Home', 'Payments', 'Hub'];
 
@@ -40,7 +40,6 @@ export function TabsNavigator(): React.ReactElement {
         tabBar={props => <BottomTabBar {...props} />}>
         {renderTabScreens(BottomTab.Screen as React.ComponentType)}
       </BottomTab.Navigator>
-      <SubscriptionPickerBottomSheet />
     </>
   );
 }
@@ -55,7 +54,7 @@ function BottomTabBar({
   const transforms = useVisibilityAnimation(!tabBarStyle);
   const safeAreaInsets = useSafeAreaInsets();
   const theme = useTheme();
-  const { t } = useTranslation('mainContainer');
+  const { t } = useTranslation('mainModule');
   const bottomTabStyle = !tabBarStyle
     ? ({ display: 'none' } as ViewStyle)
     : { backgroundColor: theme['background-basic-color-1'] };
@@ -79,7 +78,6 @@ function BottomTabBar({
         animatedStyle,
         { backgroundColor: theme['background-basic-color-1'] },
       ]}>
-      <Divider />
       <BottomNavigation
         appearance="noIndicator"
         selectedIndex={index}

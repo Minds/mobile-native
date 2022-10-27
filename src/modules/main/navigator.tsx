@@ -5,7 +5,7 @@ import {
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import { TabsNavigator } from './tabs-navigator';
-import { ErrorGlobalWrapper } from 'components/.';
+import { ErrorGlobalWrapper } from 'components';
 import { RegisterDeviceScreen } from './screens/registerDevice/registerDevice.screen';
 import {
   LandingScreen,

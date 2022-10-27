@@ -1,52 +1,27 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { ReactElement } from 'react';
 import { PathConfigMap } from '@react-navigation/native';
-import { BottomNavigationTabProps } from '@ui-kitten/components';
+// import { BottomNavigationTabProps } from '@ui-kitten/components';
 
 import { WidgetWrapper } from 'components/widgetWrapper';
-import { useTranslation } from 'utils/locales';
+import { useTranslation } from './locales';
 import { loadingMainTasks } from './loadingTasks';
-import { Task } from 'src/types';
 
 import * as HomeComponents from './screens/home/home.screen';
 import * as HubComponents from './screens/hub/hub.screen';
-import * as AccountComponents from 'modules/account';
-import * as HelpComponents from 'modules/help';
-import * as PaymentsComponents from 'modules/payments';
-import * as SpendingComponents from 'modules/spending';
-import * as NotificationsComponents from 'modules/notifications';
-import * as ProfileComponents from 'modules/profile';
-import * as SettingsComponents from 'modules/settings';
-import * as DocumentsComponents from 'modules/documents';
-import * as StatementsComponents from 'modules/statements';
-import * as ThemeComponents from 'modules/theme';
-import * as CardsComponents from 'modules/cards';
-import * as LoanComponents from 'modules/loan';
-import * as OverdraftComponents from 'modules/overdraft';
-import * as SweepsComponents from 'modules/sweeps';
-import * as MultipartyComponents from 'modules/multiparty';
-import * as TestComponents from 'modules/test';
+// import * as ProfileComponents from 'modules/profile';
+// import * as NotificationsComponents from 'modules/notifications';
+// import * as SettingsComponents from 'modules/settings';
 // end-of-modules-import - HYGEN
 
+// eslint-disable-next-line prettier/prettier
 const modules = Object.assign(
   {},
   HomeComponents,
   HubComponents,
-  AccountComponents,
-  HelpComponents,
-  PaymentsComponents,
-  SpendingComponents,
-  NotificationsComponents,
-  ProfileComponents,
-  SettingsComponents,
-  DocumentsComponents,
-  StatementsComponents,
-  ThemeComponents,
-  CardsComponents,
-  LoanComponents,
-  OverdraftComponents,
-  SweepsComponents,
-  MultipartyComponents,
-  TestComponents,
+  // NotificationsComponents,
+  // ProfileComponents,
+  // SettingsComponents,
 ); // end-of-modules - HYGEN
 
 const SIZE = 3;
@@ -63,33 +38,13 @@ const tabs: Tab[] = [
     iconName: 'nav-home',
   },
   {
-    name: 'Payments',
-    iconName: 'nav-payments',
+    name: 'Profile',
+    iconName: 'person',
+    group: 'Settings',
   },
   {
     name: 'Hub',
     iconName: 'nav-hub',
-  },
-  {
-    name: 'Account',
-    iconName: 'accounts',
-  },
-  {
-    name: 'Spending',
-    iconName: 'list',
-  },
-  {
-    name: 'Cards',
-    iconName: 'cards',
-  },
-  {
-    name: 'Help',
-    iconName: 'chat',
-  },
-  {
-    name: 'Profile',
-    iconName: 'person',
-    group: 'Settings',
   },
   {
     name: 'Settings',
@@ -102,38 +57,8 @@ const tabs: Tab[] = [
     iconName: 'bell',
   },
   {
-    name: 'Documents',
-    iconName: 'documents',
-    group: 'Settings',
-  },
-  {
-    name: 'Statements',
-    iconName: 'accounts',
-    group: 'Settings',
-  },
-  {
     name: 'Theme',
     iconName: 'theme',
-  },
-  {
-    name: 'Overdraft',
-    iconName: 'settings',
-  },
-  {
-    name: 'Loan',
-    iconName: 'loans',
-  },
-  {
-    name: 'Sweeps',
-    iconName: 'settings',
-  },
-  {
-    name: 'Multiparty',
-    iconName: 'settings',
-  },
-  {
-    name: 'Test',
-    iconName: 'settings',
   },
 ]; // end-of-tab-list - HYGEN
 
@@ -153,7 +78,7 @@ export const renderTabScreens = (Screen: React.ComponentType): JSX.Element => {
   );
 };
 
-export const preLoadingTasks = (): Task[] => [
+export const preLoadingTasks = (): any[] => [
   ...loadingMainTasks(),
   ...tabs
     .map(({ name }) => modules[`loadingTasksFrom${name}`]?.() ?? [])
@@ -163,11 +88,11 @@ export const preLoadingTasks = (): Task[] => [
 type Callback = (
   item: { name: string; iconName: string },
   index: number,
-) => ReactElement<BottomNavigationTabProps> | JSX.Element;
+) => ReactElement<any> | JSX.Element;
 
 export const renderNavigationTab = (
   callback: Callback,
-): ReactElement<BottomNavigationTabProps>[] => {
+): ReactElement<any>[] => {
   return tabs.slice(0, SIZE).map(callback);
 };
 
@@ -186,7 +111,7 @@ function groupsFrom<T extends { name: string; group?: string }>(
 }
 
 export function renderHubWidgets(): JSX.Element {
-  const { t } = useTranslation('mainContainer');
+  const { t } = useTranslation();
   return (
     <>
       {groupsFrom(tabs.slice(SIZE)).map(([section, list], index) => (
@@ -211,16 +136,9 @@ export const config: Config = {
   screens: {
     Main: {
       screens: {
-        Payments: modules.Payments,
-        Spending: modules.Spending,
-        Help: modules.Help,
-        Account: modules.Account,
-        Cards: modules.Cards,
-        Loan: modules.Loan,
-        Overdraft: modules.Overdraft,
-        Multiparty: modules.Multiparty,
-        Test: modules['Test'],
-        Test: modules['Test'],
+        // Notifications: modules.Notifications,
+        // Profile: modules.Profile,
+        // Settings: modules.Settings,
       }, // end-of-config-links - HYGEN
     },
   },
