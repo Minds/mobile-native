@@ -11,6 +11,8 @@ type Storages = {
   user: MMKVInstance | null;
   userPortrait: MMKVInstance | null;
   userCache: MMKVInstance | null;
+  api: MMKVInstance | null;
+  pushToken: MMKVInstance | null;
 };
 
 export const storages: Storages = {
@@ -19,6 +21,8 @@ export const storages: Storages = {
   user: null,
   userPortrait: null,
   userCache: null,
+  api: null,
+  pushToken: null,
 };
 
 /**
@@ -52,8 +56,12 @@ export function createUserStore(guid: string) {
   storages.user?.clearMemoryCache();
   storages.userCache?.clearMemoryCache();
   storages.userPortrait?.clearMemoryCache();
+  storages.api?.clearMemoryCache();
+  storages.pushToken?.clearMemoryCache();
 
   storages.user = createStorage(`user_${guid}`);
   storages.userCache = createStorage(`user_cache_${guid}`);
   storages.userPortrait = createStorage(`user_port_${guid}`);
+  storages.api = createStorage(`api_${guid}`);
+  storages.pushToken = createStorage(`push_token_${guid}`);
 }
