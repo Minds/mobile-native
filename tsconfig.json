@@ -51,6 +51,7 @@
     "ios",
     "__mocks__",
     "__tests__",
+    "e2e",
     ".jest",
     "./react-native.config.js",
     "./setupTests.js",

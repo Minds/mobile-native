@@ -18,7 +18,7 @@ export type DateRangePickerPropsType = {
   minimumDate?: Date;
   onConfirm(startDate: Date, endDate: Date): void;
   containerStyle?: ViewStyle | ViewStyle[];
-  inputComponent: ({ text: string }) => JSX.Element;
+  inputComponent: ({ text }) => JSX.Element;
 };
 
 function generateDateRange(startDate, endDate) {
