@@ -3,7 +3,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
-import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
@@ -22,6 +21,7 @@ import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
 import MText from '../../../common/components/MText';
 import { Button } from '~ui';
+import Switch from '~/common/components/controls/Switch';
 import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
 import { confirm } from '~/common/components/Confirm';
 
@@ -301,11 +301,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               <MText style={switchTextStyle}>USD</MText>
               <Switch
                 value={store.payMethod === 'tokens'}
-                onSyncPress={store.setPayMethod}
-                circleColorActive={ThemedStyles.getColor('SecondaryText')}
-                circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-                backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-                backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
+                onChange={store.setPayMethod}
                 style={theme.marginHorizontal2x}
               />
               <MText style={switchTextStyle}>{'Tokens'}</MText>

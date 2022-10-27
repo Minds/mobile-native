@@ -7,9 +7,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import SaveButton from '../../common/components/SaveButton';
 import supportTiersService from '../../common/services/support-tiers.service';
-import Switch from 'react-native-switch-pro';
 import { UserError } from '../../common/UserError';
 import MText from '../../common/components/MText';
+import Switch from '~/common/components/controls/Switch';
 
 type PropsType = {
   route: any;
@@ -142,11 +142,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
           </MText>
           <Switch
             value={localStore.support_tier.has_usd}
-            onSyncPress={localStore.setHasUsd}
-            circleColorActive={ThemedStyles.getColor('SecondaryText')}
-            circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-            backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-            backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
+            onChange={localStore.setHasUsd}
           />
         </View>
       </View>

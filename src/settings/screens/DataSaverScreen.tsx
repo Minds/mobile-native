@@ -2,8 +2,8 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 
 import { StyleSheet, View } from 'react-native';
+import Switch from '~/common/components/controls/Switch';
 
-import Switch from 'react-native-switch-pro';
 import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -33,7 +33,7 @@ export default observer(function DataSaverScreen() {
           </MText>
           <Switch
             value={settingsStore.dataSaverMode}
-            onSyncPress={setDataSaverMode}
+            onChange={setDataSaverMode}
           />
         </View>
         <MText
@@ -47,15 +47,16 @@ export default observer(function DataSaverScreen() {
           <MText style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.dataSaverDisableOnWifi')}
           </MText>
-          <Switch
-            value={
-              settingsStore.dataSaverMode
-                ? settingsStore.dataSaverModeDisablesOnWiFi
-                : false
-            }
-            onSyncPress={setDataSaverModeDisablesOnWiFi}
-            disabled={!settingsStore.dataSaverMode}
-          />
+          {settingsStore.dataSaverMode && (
+            <Switch
+              value={
+                settingsStore.dataSaverMode
+                  ? settingsStore.dataSaverModeDisablesOnWiFi
+                  : false
+              }
+              onChange={setDataSaverModeDisablesOnWiFi}
+            />
+          )}
         </View>
         <MText
           style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>

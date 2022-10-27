@@ -18,7 +18,6 @@ import { withSearchResultStore } from '../../common/hooks/withStores';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import { NavigationProp } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
-import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnavigationv5';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
 import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
@@ -38,9 +37,7 @@ type PropsType = {
   searchResultStore: SearchResultStoreType;
 };
 
-const getLastRoute = (
-  navigation: NavigationProp<any>,
-): NavigationRouteV5 | null => {
+const getLastRoute = (navigation: NavigationProp<any>) => {
   const routes = navigation.getState?.().routes;
 
   if (!routes) {

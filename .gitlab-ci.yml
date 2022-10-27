@@ -51,7 +51,7 @@ test:jest:
 
 ### BUILD STAGE
 .prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   tags: [shared-macos-amd64]
   artifacts:
     name: 'Minds IPA'
@@ -77,9 +77,15 @@ build:ios_mr:
   <<: *prepare_build_ios
   stage: build
   interruptible: true
+  artifacts:
+    expire_in: 1 day
+    when: on_failure
+    public: false
+    paths:
+      - ios/ios-job.log
   script:
     - export ENVFILE=".env.review"
-    - fastlane buildrelease
+    - fastlane buildrelease | tee -a ios-job.log
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
     - cd ..
     - *delete_browserstack
@@ -498,7 +504,7 @@ release:codepush-android:
 
 # iOS Release candidate to TestFlight
 release:ios_rc_testflight:
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
   dependencies:
@@ -518,7 +524,7 @@ release:ios_rc_testflight:
 
 # iOS production to TestFlight
 release:ios_prod_testflight:
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
   dependencies:

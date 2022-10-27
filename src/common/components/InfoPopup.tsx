@@ -1,10 +1,9 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { Tooltip } from 'react-native-elements';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// workaround for android
-import Tooltip from 'rne-modal-tooltip';
 import MText from './MText';
 
 export default class InfoPopup extends Component {
