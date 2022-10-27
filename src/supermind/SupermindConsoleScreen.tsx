@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useCallback } from 'react';
+import React from 'react';
 import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
   TabType,
@@ -46,10 +46,10 @@ function SupermindConsoleScreen({
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
-  const scrollToTopAndRefresh = useCallback(() => {
+  const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
     return listRef.current?.refreshList();
-  }, [listRef]);
+  };
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
