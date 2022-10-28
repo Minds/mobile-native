@@ -119,7 +119,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         <InitialOnboardingButton />
         <PortraitContentBar />
         <TopInFeedNotice />
-        <IfFeatureEnabled feature="mob-4472-in-app-verific3ation">
+        <IfFeatureEnabled feature="mob-4472-in-app-verification">
           <InAppVerificationPrompt />
         </IfFeatureEnabled>
         <NewsfeedHeader
