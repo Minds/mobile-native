@@ -626,7 +626,7 @@ export default function (props) {
           return this.entity;
         }
 
-        if (response.supermind) {
+        if (this.supermindRequest) {
           showNotification(i18n.t('supermind.requestSubmitted'), 'success');
         }
 
