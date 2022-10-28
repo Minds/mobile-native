@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FitScrollView from '~/common/components/FitScrollView';
 import LoadingOverlay from '~/common/components/LoadingOverlay';
 import ThemedStyles from '~/styles/ThemedStyles';
