@@ -29,6 +29,13 @@ const setSensor = ({ sensor, collection, loading }: SensorParams) =>
     });
   });
 
+/**
+ * The sensors data collection is triggered by the mounting of the component using the hook.
+ * When isLoading becomes false, the sensorsData is ready to be used.
+ * USAGE:
+ *      const { isLoading, sensorsData } = useThreeAxisSensor();
+ * @returns { isLoading: boolean, sensorsData: string[] }
+ */
 export const useThreeAxisSensor = () => {
   const [isLoading, setIsLoading] = useState(false);
 
