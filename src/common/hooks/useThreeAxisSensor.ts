@@ -11,6 +11,7 @@ type SensorParams = {
 const SAMPLING_INTERVAL = 500; // milliseconds
 const STOP_AFTER = 4000; // milliseconds
 
+let sensorTimeout;
 const setSensor = ({ sensor, collection, loading }: SensorParams) =>
   sensor.isAvailableAsync().then(found => {
     if (!found) {
@@ -21,7 +22,7 @@ const setSensor = ({ sensor, collection, loading }: SensorParams) =>
     sensor.addListener(sensorData => {
       collection.push(JSON.stringify(sensorData));
       if (collection.length === 1) {
-        setTimeout(() => {
+        sensorTimeout = setTimeout(() => {
           sensor.removeAllListeners();
           loading?.(false);
         }, STOP_AFTER);
@@ -55,6 +56,9 @@ export const useThreeAxisSensor = () => {
     });
     return () => {
       [Accelerometer, Gyroscope].forEach(sensor => sensor.removeAllListeners());
+      if (sensorTimeout) {
+        clearTimeout(sensorTimeout);
+      }
     };
   }, []);
   return {
