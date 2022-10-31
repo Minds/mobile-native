@@ -2,18 +2,19 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import type { TextInput as TextInputType } from 'react-native';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import TextInput from '../../../common/components/TextInput';
 import MText from '../../../common/components/MText';
-import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import Switch from '~/common/components/controls/Switch';
 
 interface PropsType
   extends FC,
@@ -153,13 +154,7 @@ const CustomMonetizeScreen = observer(({}: PropsType) => {
                 </MText>
                 <Switch
                   value={localStore.has_usd}
-                  onSyncPress={localStore.setHasUsd}
-                  circleColorActive={ThemedStyles.getColor('SecondaryText')}
-                  circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-                  backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-                  backgroundInactive={ThemedStyles.getColor(
-                    'TertiaryBackground',
-                  )}
+                  onChange={localStore.setHasUsd}
                 />
               </View>
             </View>

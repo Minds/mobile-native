@@ -15,21 +15,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
 >
   <RCTScrollView
     ListEmptyComponent={
-      <View
-        style={
-          Array [
-            Object {
-              "marginVertical": 32,
-            },
-            Object {
-              "flexGrow": 1,
-            },
-          ]
-        }
-      >
-        <EmptyList
-          text="You have no notifications"
-        />
+      <View>
+        <NotificationPlaceHolder />
+        <NotificationPlaceHolder />
+        <NotificationPlaceHolder />
+        <NotificationPlaceHolder />
+        <NotificationPlaceHolder />
+        <NotificationPlaceHolder />
       </View>
     }
     ListHeaderComponent={
@@ -43,8 +35,16 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "tabPress",
                     [Function],
                   ],
+                  Array [
+                    "tabPress",
+                    [Function],
+                  ],
                 ],
                 "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
                   Object {
                     "type": "return",
                     "value": undefined,
@@ -124,15 +124,11 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       ]
     }
     style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "flexGrow": 1,
-          "marginTop": 0,
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexGrow": 1,
+        "marginTop": 0,
+      }
     }
     viewabilityConfig={
       Object {
@@ -1399,60 +1395,2820 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       </View>
       <View
         onLayout={[Function]}
-        style={
-          Array [
-            Object {
-              "marginVertical": 32,
-            },
-            Object {
-              "flexGrow": 1,
-            },
-          ]
-        }
       >
         <View
           style={
-            Array [
-              Object {
-                "justifyContent": "center",
-              },
-              Object {
-                "flex": 1,
-              },
-              Object {
-                "alignItems": "center",
-              },
-              Object {
-                "paddingBottom": 16,
-              },
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
           }
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                },
-                Object {
-                  "fontFamily": "Roboto",
-                },
-                Array [
-                  Object {
-                    "fontSize": 18,
-                  },
-                  Object {
-                    "textAlign": "center",
-                  },
-                  Object {
-                    "color": "#B8C1CA",
-                  },
-                ],
-              ]
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
             }
           >
-            You have no notifications
-          </Text>
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "marginHorizontal": 12,
+              "marginVertical": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "minHeight": 40,
+                "minWidth": 40,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 99999,
+                    "height": 40,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginLeft": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 4,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "minHeight": 15,
+                    "minWidth": "70%",
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 15,
+                        "left": 0,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "top": 0,
+                        "width": "70%",
+                      },
+                      Object {
+                        "backgroundColor": "#323C3F",
+                        "opacity": 1,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "opacity": 0,
+                          "transform": Array [],
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            },
+                            Object {
+                              "width": 0,
+                            },
+                          ],
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "translateX": 0,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                    >
+                      <ExpoLinearGradient
+                        colors={
+                          Array [
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                            "#323C3F",
+                            "#1E242A",
+                          ]
+                        }
+                        end={
+                          Array [
+                            1,
+                            1,
+                          ]
+                        }
+                        start={
+                          Array [
+                            0.1,
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 13,
+                  "minHeight": 13,
+                  "minWidth": "50%",
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                pointerEvents="none"
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 13,
+                      "left": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "50%",
+                    },
+                    Object {
+                      "backgroundColor": "#323C3F",
+                      "opacity": 1,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "opacity": 0,
+                        "transform": Array [],
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          },
+                          Object {
+                            "width": 0,
+                          },
+                        ],
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                  >
+                    <ExpoLinearGradient
+                      colors={
+                        Array [
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                          "#323C3F",
+                          "#1E242A",
+                        ]
+                      }
+                      end={
+                        Array [
+                          1,
+                          1,
+                        ]
+                      }
+                      start={
+                        Array [
+                          0.1,
+                          1,
+                        ]
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": 13,
+                "minHeight": 13,
+                "minWidth": 50,
+              }
+            }
+          >
+            <View
+              onLayout={[Function]}
+              pointerEvents="none"
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 13,
+                    "left": 0,
+                    "overflow": "hidden",
+                    "position": "absolute",
+                    "top": 0,
+                    "width": 50,
+                  },
+                  Object {
+                    "backgroundColor": "#323C3F",
+                    "opacity": 1,
+                    "transform": Array [],
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [],
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                        Object {
+                          "width": 0,
+                        },
+                      ],
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <ExpoLinearGradient
+                    colors={
+                      Array [
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                        "#323C3F",
+                        "#1E242A",
+                      ]
+                    }
+                    end={
+                      Array [
+                        1,
+                        1,
+                      ]
+                    }
+                    start={
+                      Array [
+                        0.1,
+                        1,
+                      ]
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </View>

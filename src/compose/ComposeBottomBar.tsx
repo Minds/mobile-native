@@ -26,7 +26,7 @@ function ComposeBottomBar(props) {
     navigation.navigate('Capture', {
       mode: props.store.allowedMode,
       onMediaConfirmed: media => {
-        props.store.attachments.attachMedia(media, props.store.extra);
+        props.store.attachments.attachMedia(media, props.store.extra, true);
         return true;
       },
     });
@@ -54,14 +54,16 @@ function ComposeBottomBar(props) {
           onPress={onCameraPress}
         />
       )}
-      {!props.store.isGroup() && !props.store.supermindRequest && (
-        <IconButton
-          name="money"
-          style={iconStyle}
-          scale
-          onPress={props.onMoney}
-        />
-      )}
+      {!props.store.isGroup() &&
+        !props.store.isRemind &&
+        !props.store.supermindRequest && (
+          <IconButton
+            name="money"
+            style={iconStyle}
+            scale
+            onPress={props.onMoney}
+          />
+        )}
       <IconButton
         name="hashtag"
         style={iconStyle}

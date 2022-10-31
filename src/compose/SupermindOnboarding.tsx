@@ -1,6 +1,7 @@
 import { MotiView } from 'moti';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
+import FitScrollView from '~/common/components/FitScrollView';
 import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
@@ -72,7 +73,7 @@ export default function SupermindOnboarding({
   onDismiss,
 }: SupermindOnboardingProps) {
   return (
-    <View style={[styles.container, style]}>
+    <FitScrollView style={style} contentContainerStyle={styles.container}>
       <H4 bottom="XL2" left="S">
         {onboardingTypes[type].title}
       </H4>
@@ -100,7 +101,7 @@ export default function SupermindOnboarding({
         title="Continue"
         onPress={onDismiss}
       />
-    </View>
+    </FitScrollView>
   );
 }
 
@@ -132,12 +133,7 @@ const exit = {
 };
 
 const styles = ThemedStyles.create({
-  container: [
-    'paddingHorizontal4x',
-    'paddingTop6x',
-    'paddingBottom6x',
-    'flexContainer',
-  ],
+  container: ['paddingHorizontal4x', 'paddingTop6x', 'paddingBottom6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
   link: [
     'colorSecondaryText',

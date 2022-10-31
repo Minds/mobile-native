@@ -23,28 +23,26 @@ type PropsType = {
 
 const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
-  const store = route.params.store;
+  const { store } = route.params ?? {};
   const navigation = useNavigation();
 
   const onComplete = () => {
-    store.setLoading(false);
-    store.setAuthEnabled('app');
-    store.setAppCode('');
-    navigation.navigate('RecoveryCodesScreen', {
-      store: store,
-    });
+    store?.setLoading(false);
+    store?.setAuthEnabled('app');
+    store?.setAppCode('');
+    navigation.navigate('RecoveryCodesScreen', { store });
   };
 
   const onContinue = () => {
-    if (store.appCode === '') {
+    if (store?.appCode === '') {
       showNotification(
         "You must enter the your authentication app's code",
         'warning',
       );
       return;
     }
-    store.setLoading(true);
-    store.submitCode(onComplete);
+    store?.setLoading(true);
+    store?.submitCode(onComplete);
   };
 
   navigation.setOptions({
@@ -56,20 +54,20 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   useEffect(() => {
     const loadSecret = async () => {
       try {
-        store.setLoading(true);
-        await store.fetchSecret();
+        store?.setLoading(true);
+        await store?.fetchSecret();
       } catch (err) {
         if (err instanceof Error) {
           showNotification(err.message, 'warning');
         }
       } finally {
-        store.setLoading(false);
+        store?.setLoading(false);
       }
     };
     loadSecret();
   }, [store]);
 
-  if (store.loading) {
+  if (store?.loading) {
     return <CenteredLoading />;
   }
 
@@ -85,10 +83,10 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
           theme.paddingHorizontal4x,
           theme.marginBottom7x,
         ]}>
-        <MText style={styles.smallTitle}>{store.secret}</MText>
+        <MText style={styles.smallTitle}>{store?.secret}</MText>
         <TouchableOpacity
           style={[theme.rowJustifyStart, theme.centered]}
-          onPress={store.copySecret}>
+          onPress={store?.copySecret}>
           <Icon
             name="content-copy"
             color={ThemedStyles.getColor('PrimaryText')}
@@ -104,8 +102,8 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
         labelStyle={theme.colorPrimaryText}
         style={theme.colorPrimaryText}
         placeholder={i18n.t('settings.TFAEnterCode')}
-        onChangeText={store.setAppCode}
-        value={store.appCode}
+        onChangeText={store?.setAppCode}
+        value={store?.appCode}
       />
     </ScrollView>
   );

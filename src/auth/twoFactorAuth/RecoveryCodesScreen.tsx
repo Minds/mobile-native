@@ -22,7 +22,7 @@ type PropsType = {
 const RecoveryCodesScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  const store = route.params.store;
+  const { store } = route.params ?? {};
 
   const navigation = useNavigation();
 
@@ -62,7 +62,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           </MText>
           <TouchableOpacity
             style={[theme.rowJustifyStart, theme.centered]}
-            onPress={store.copyRecoveryCode}>
+            onPress={store?.copyRecoveryCode}>
             <Icon
               name="content-copy"
               color={ThemedStyles.getColor('PrimaryText')}
@@ -74,7 +74,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <MText style={styles.textCode}>{store.recoveryCode}</MText>
+          <MText style={styles.textCode}>{store?.recoveryCode}</MText>
         </View>
       </View>
     </View>

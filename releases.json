@@ -1,6 +1,41 @@
 {
   "versions": [
     {
+      "version": "4.29.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.29.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.29.0",
+      "changelog": [
+        "Multi-image support",
+        "Multi-image gallery",
+        "Official stripe SDK",
+        "Supermind creation",
+        "Supermind settings",
+        "Supermind console",
+        "Live metrics",
+        "Fix notifications not loading when changing tabs",
+        "Fix scroll issues after refresh on discovery",
+        "Fix feed performance due to animated counters",
+        "Fix auto scroll to comments",
+        "Fix comments input on blog and groups",
+        "Fix codepush issue on iOS"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "98b572b60509e7306745f26ae85d4b3c"
+        },
+        {
+          "type": "sha256",
+          "value": "072002d1f2c4e593feb599300741695059c62c714068682aa594cce5e44b81d3"
+        },
+        {
+          "type": "sha512",
+          "value": "2379aefadba5acc6d9df5feeb80a9d2dc55fbfb14e6123260db1e458d7f27592721615c96ca22a405d83dec7bf1f8f9aac71f93662413c0677f1d9c1153a54fe"
+        }
+      ]
+    },
+    {
       "version": "4.26.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-4.26.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.26.0",

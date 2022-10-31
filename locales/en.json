@@ -69,10 +69,12 @@
     "acceptOffer": "Accept Offer",
     "cancelOffer": "Cancel Offer",
     "decline": "Decline",
+    "viewReply": "View reply",
     "revoked": "revoked",
     "rejected": "rejected",
     "minimum": "Must be a minimum of {{value}}",
     "maxTwoDecimals": "Must have less than 2 decimals",
+    "7daysToReply": "The recipient will have up to 7 days to reply. You may cancel the offer at anytime",
     "replyType": {
       "0": "Text Reply",
       "1": "Image Reply",
@@ -103,7 +105,7 @@
         "steps": {
           "1": {
             "title": "How to earn",
-            "subtitle": "Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.",
+            "subtitle": "Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 15% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.",
             "seeTerms": "See terms and conditions."
           },
           "2": {
@@ -133,6 +135,15 @@
           }
         }
       }
+    },
+    "confirm": {
+      "title": "Confirm reply",
+      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted."
+    },
+    "confirmNoRefund": {
+      "title": "Confirm Offer",
+      "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
+      "description": "I understand this transaction is non-refundable."
     }
   },
   "auth": {
@@ -183,7 +194,9 @@
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
     "rateLimit": "Too many attempts, please try again later",
-    "newPassword": "Create a new password. You’ll use this to access your account."
+    "newPassword": "Create a new password. You’ll use this to access your account.",
+    "nextLabel": "Next",
+    "submitLabel": "Submit"
   },
   "multiUser": {
     "switchChannel": "Switch Account",
@@ -794,6 +807,7 @@
     "passwordChanged": "Password changed successfully.",
     "keyGenerated": "Keys regenerated successfully!",
     "pushNotification": "Push Notifications",
+    "emailNotifications": "Email Notifications",
     "regenerateKey": "Regenerate messenger keys",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
@@ -1134,6 +1148,11 @@
       "one": "Reward",
       "other": "Rewards"
     },
+    "activity": {
+      "oneDay": "Active one day over the past seven days",
+      "threeDay": "Active three days over the past seven days",
+      "sixDay": "Active six day over the past seven days"
+    },
     "completeStep": "Please complete the step in your wallet app",
     "connectFirst": "Connect the wallet first",
     "verified": "Your On-chain address is now setup and verified",
@@ -1245,6 +1264,7 @@
       "sortCode": "Routing Number / Sort Code",
       "agree": "I have read and agree to the",
       "ssa": "Stripe Services Agreement",
+      "mmt": "Minds Monetization Terms",
       "phoneNumber": "Phone Number",
       "hkid": "Hong Kong Identity Card (HKID)",
       "nric": "National Registration Identity Card (NRIC)",

@@ -94,14 +94,7 @@ exports[`Activity screen component renders correctly  1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 13.333333333333332,
-                "left": 13.333333333333332,
-                "right": 13.333333333333332,
-                "top": 13.333333333333332,
-              }
-            }
+            hitSlop={13.333333333333332}
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -276,9 +269,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     },
                   ]
                 }
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -313,14 +304,7 @@ exports[`Activity screen component renders correctly  1`] = `
               accessible={true}
               collapsable={false}
               focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 9.333333333333332,
-                  "left": 9.333333333333332,
-                  "right": 9.333333333333332,
-                  "top": 9.333333333333332,
-                }
-              }
+              hitSlop={9.333333333333332}
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
@@ -540,7 +524,6 @@ exports[`Activity screen component renders correctly  1`] = `
               ]
             }
           >
-            
             Mar 25 2018 · 20:51
           </Text>
         </View>
@@ -837,14 +820,7 @@ exports[`Activity screen component renders correctly  1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 6.666666666666666,
-                "left": 6.666666666666666,
-                "right": 6.666666666666666,
-                "top": 6.666666666666666,
-              }
-            }
+            hitSlop={6.666666666666666}
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -969,9 +945,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         ],
                       ]
                     }
-                  >
-                    
-                  </Text>
+                  />
                 </View>
               </View>
             </View>
@@ -1013,14 +987,7 @@ exports[`Activity screen component renders correctly  1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 6.666666666666666,
-                "left": 6.666666666666666,
-                "right": 6.666666666666666,
-                "top": 6.666666666666666,
-              }
-            }
+            hitSlop={6.666666666666666}
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -1141,14 +1108,7 @@ exports[`Activity screen component renders correctly  1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 6.666666666666666,
-                "left": 6.666666666666666,
-                "right": 6.666666666666666,
-                "top": 6.666666666666666,
-              }
-            }
+            hitSlop={6.666666666666666}
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -1768,12 +1728,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "cancelOrDelete": [Function],
           "filename": "",
           "guid": "",
-          "height": 1,
           "localIdentifier": "",
           "onClear": undefined,
           "path": "",
           "transcoding": false,
-          "width": 1,
         },
         "comments": Array [],
         "embed": RichEmbedStore {

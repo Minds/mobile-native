@@ -127,7 +127,7 @@ export default observer(function (props: PropsType) {
 
     let unlisten;
 
-    if (route.params && route.params.start) {
+    if (route.params?.start) {
       unlisten = when(
         () => store.ready,
         () => {

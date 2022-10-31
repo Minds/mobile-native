@@ -5,6 +5,8 @@ import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 
+export const CODEPUSH_VERSION = '4.29.1';
+
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
@@ -147,6 +149,22 @@ export const MINDS_DEEPLINK = [
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
+  [
+    'supermind/inbox',
+    'More/SupermindConsole',
+    'navigate',
+    {
+      tab: 'inbound',
+    },
+  ],
+  [
+    'supermind/outbox',
+    'More/SupermindConsole',
+    'navigate',
+    {
+      tab: 'outbound',
+    },
+  ],
   ['supermind/:guid', 'Supermind', 'navigate'],
 ];
 

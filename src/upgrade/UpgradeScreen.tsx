@@ -21,6 +21,7 @@ import StripeCardSelector from '../common/components/stripe-card-selector/Stripe
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import { Button, Column, H3 } from '~ui';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { confirm } from '~/common/components/Confirm';
 
 const isIos = Platform.OS === 'ios';
 
@@ -78,6 +79,14 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   );
 
   const confirmSend = useCallback(async () => {
+    if (
+      !(await confirm({
+        title: i18n.t('supermind.confirmNoRefund.title'),
+        description: i18n.t('supermind.confirmNoRefund.description'),
+      }))
+    ) {
+      return;
+    }
     localStore.setLoading(true);
     payWith(localStore.method);
   }, [localStore, payWith]);
@@ -118,9 +127,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
               {!isIos && <PaymentMethod store={localStore} />}
               <PlanOptions store={localStore} pro={pro} />
               {localStore.method === 'usd' && (
-                <View style={theme.marginTop6x}>
-                  <StripeCardSelector onCardSelected={localStore.setCard} />
-                </View>
+                <StripeCardSelector onCardSelected={localStore.setCard} />
               )}
               <Button
                 mode="outline"

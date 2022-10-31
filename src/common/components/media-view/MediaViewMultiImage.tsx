@@ -49,7 +49,7 @@ export default function MediaViewMultiImage({
           locked: entity?.isLocked(),
           blurred: entity?.shouldBeBlured(),
           onPress: () => onImagePress(index),
-          onImageLongPress: () => onImageLongPress(source),
+          onLongPress: () => onImageLongPress(source),
           ignoreDataSaver,
           blurhash: image.blurhash,
         };

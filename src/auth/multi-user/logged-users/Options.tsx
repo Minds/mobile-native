@@ -4,9 +4,9 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import {
   BottomSheetModal,
   BottomSheetButton,
-  MenuItem,
+  BottomSheetMenuItem,
+  BottomSheetMenuItemProps,
 } from '../../../common/components/bottom-sheet';
-import { MenuItemProps } from '../../../common/components/bottom-sheet/MenuItem';
 import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -30,8 +30,8 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
   const show = React.useCallback(() => {
     ref.current?.present();
   }, []);
-  const userOptions: Array<MenuItemProps> = React.useMemo(() => {
-    const actions: Array<MenuItemProps> = [
+  const userOptions: Array<BottomSheetMenuItemProps> = React.useMemo(() => {
+    const actions: Array<BottomSheetMenuItemProps> = [
       {
         title: i18n.t('settings.logout'),
         iconName: 'logout',
@@ -66,7 +66,7 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
       <BottomSheetModal ref={ref}>
         <MText style={styles.username}>@{username}</MText>
         {userOptions.map((a, i) => (
-          <MenuItem {...a} key={i} />
+          <BottomSheetMenuItem {...a} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
       </BottomSheetModal>

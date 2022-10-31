@@ -3,7 +3,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
-import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
@@ -16,13 +15,15 @@ import UserModel from '../../../channel/UserModel';
 import { Flow } from 'react-native-animated-spinkit';
 import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
-  MenuItemItem,
+  MenuItemProps,
 } from '../../../common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
 import MText from '../../../common/components/MText';
 import { Button } from '~ui';
+import Switch from '~/common/components/controls/Switch';
 import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
+import { confirm } from '~/common/components/Confirm';
 
 const isIos = Platform.OS === 'ios';
 
@@ -54,10 +55,10 @@ const createJoinMembershipStore = ({ tiers }) => ({
   payMethod: 'tokens' as payMethod,
   loading: false,
   loadingData: !tiers,
-  get currentItem(): MenuItemItem {
+  get currentItem(): MenuItemProps {
     return {
       title: this.currentTier ? capitalize(this.currentTier.name) : '',
-      icon: { name: 'chevron-down', type: 'material-community' },
+      icon: 'chevron-down',
     };
   },
   setUser(user: UserModel) {
@@ -104,7 +105,7 @@ const createJoinMembershipStore = ({ tiers }) => ({
 const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
-  const tiers = route.params ? route.params.tiers : undefined;
+  const { tiers } = route.params ?? {};
   const selectorRef = useRef<any>(null);
   const { onComplete } = route.params;
   /**
@@ -218,6 +219,14 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     if (!store.currentTier) {
       return;
     }
+    if (
+      !(await confirm({
+        title: i18n.t('supermind.confirmNoRefund.title'),
+        description: i18n.t('supermind.confirmNoRefund.description'),
+      }))
+    ) {
+      return;
+    }
     store.setLoading(true);
     if (store.payMethod === 'usd') {
       if (!store.currentTier.has_usd) {
@@ -292,18 +301,14 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               <MText style={switchTextStyle}>USD</MText>
               <Switch
                 value={store.payMethod === 'tokens'}
-                onSyncPress={store.setPayMethod}
-                circleColorActive={ThemedStyles.getColor('SecondaryText')}
-                circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-                backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-                backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
+                onChange={store.setPayMethod}
                 style={theme.marginHorizontal2x}
               />
               <MText style={switchTextStyle}>{'Tokens'}</MText>
             </View>
           )}
           <View style={theme.paddingTop4x}>
-            {!!store.currentTier && <MenuItem item={store.currentItem} />}
+            {!!store.currentTier && <MenuItem {...item} />}
           </View>
           <View style={theme.paddingHorizontal4x}>
             {!!store.currentTier?.description && (

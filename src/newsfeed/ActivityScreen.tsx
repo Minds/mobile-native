@@ -106,7 +106,7 @@ const ActivityScreen = observer((props: PropsType) => {
   return (
     <ActivityFullScreen
       entity={store.entityStore.entity}
-      noBottomInset={props.route.params.noBottomInset}
+      noBottomInset={props.route.params?.noBottomInset}
     />
   );
 });

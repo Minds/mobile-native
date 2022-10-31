@@ -160,9 +160,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -181,6 +178,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="allRadio"
@@ -288,9 +288,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -309,6 +306,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="pendingRadio"
@@ -416,9 +416,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -437,6 +434,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="acceptedRadio"
@@ -544,9 +544,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -565,6 +562,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="revokedRadio"
@@ -672,9 +672,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -693,6 +690,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="declinedRadio"
@@ -800,9 +800,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -821,6 +818,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="failedRadio"
@@ -928,9 +928,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -949,6 +946,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="paymentFailedRadio"
@@ -1056,9 +1056,6 @@ Array [
             onStartShouldSetResponder={[Function]}
             style={
               Array [
-                Object {
-                  "backgroundColor": undefined,
-                },
                 Array [
                   Array [
                     Object {
@@ -1077,6 +1074,9 @@ Array [
                   ],
                   undefined,
                 ],
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
             testID="expiredRadio"

@@ -1,3 +1,5 @@
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React from 'react';
@@ -7,11 +9,13 @@ import TopbarTabbar, {
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
+import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
+import { MoreStackParamList } from '../navigation/NavigationTypes';
 import AddBankInformation from './AddBankInformation';
 import SupermindConsoleFeedFilter, {
   SupermindFilterType,
@@ -20,6 +24,14 @@ import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
 type TabModeType = 'inbound' | 'outbound';
+type SupermindConsoleScreenRouteProp = RouteProp<
+  MoreStackParamList,
+  'SupermindConsole'
+>;
+type SupermindConsoleScreenNavigationProp = StackNavigationProp<
+  MoreStackParamList,
+  'SupermindConsole'
+>;
 
 const filterValues: Record<SupermindFilterType, string> = {
   all: '',
@@ -32,9 +44,19 @@ const filterValues: Record<SupermindFilterType, string> = {
   expired: '7',
 };
 
-function SupermindConsoleScreen({ navigation }) {
+interface SupermindConsoleScreenProps {
+  navigation: SupermindConsoleScreenNavigationProp;
+  route: SupermindConsoleScreenRouteProp;
+}
+
+function SupermindConsoleScreen({
+  navigation,
+  route,
+}: SupermindConsoleScreenProps) {
   const theme = ThemedStyles.style;
-  const [mode, setMode] = React.useState<TabModeType>('inbound');
+  const [mode, setMode] = React.useState<TabModeType>(
+    route.params?.tab ?? 'inbound',
+  );
   const [filter, setFilter] = React.useState<SupermindFilterType>('all');
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
@@ -66,6 +88,7 @@ function SupermindConsoleScreen({ navigation }) {
           !onboarding && (
             <IconButton
               name="settings"
+              // @ts-ignore
               onPress={() => navigation.navigate('SupermindSettingsScreen')}
             />
           )
@@ -131,7 +154,7 @@ const mapRequests = items => SupermindRequestModel.createMany(items);
 
 const styles = ThemedStyles.create({
   onboardingOverlay: {
-    marginTop: 125,
+    marginTop: IS_IOS ? 125 : 70,
   },
   filterContainer: ['paddingTop2x', 'paddingRight4x'],
 });

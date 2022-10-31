@@ -1,4 +1,4 @@
-import { reaction } from 'mobx';
+import { IReactionDisposer, reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useEffect } from 'react';
 import apiService, { isAbort } from '../services/api.service';
@@ -82,9 +82,12 @@ export interface FetchOptions {
 
 export interface FetchStore<T> {
   retryTimer: any;
+  reactionDisposal: IReactionDisposer | null;
   loading: boolean;
   result: T | null | undefined;
   error: any;
+  reaction: (observableParams: object) => void;
+  disposeReaction: () => void;
   setResult: (v: any) => void;
   clearRetryTimer: (boolean) => void;
   setLoading: (v: boolean) => void;
@@ -111,6 +114,22 @@ const createStore = (storeOptions: {
   refreshing: false,
   result: <any>undefined,
   error: null,
+  reactionDisposal: <IReactionDisposer | null>null,
+  reaction(observableParams: object) {
+    // dispose previous action
+    this.reactionDisposal?.();
+    // add a reaction to param changes
+    this.reactionDisposal = reaction(
+      () => ({ ...observableParams }),
+      params => this.fetch(params),
+      {
+        fireImmediately: true,
+      },
+    );
+  },
+  disposeReaction() {
+    this.reactionDisposal?.();
+  },
   clearRetryTimer(clearCount: boolean) {
     if (this.retryTimer !== undefined) {
       //@ts-ignore
@@ -265,9 +284,9 @@ export default function useApiFetch<T>(
 
   useEffect(() => {
     if (!options.skip) {
-      reaction(() => ({ ...observableParams }), store.fetch, {
-        fireImmediately: true,
-      });
+      store.reaction(observableParams);
+    } else {
+      store.disposeReaction();
     }
   }, [observableParams, store, url, options.skip]);
 

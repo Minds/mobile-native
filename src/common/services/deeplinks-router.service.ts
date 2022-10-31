@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
@@ -12,13 +11,19 @@ class DeeplinksRouter {
   /**
    * Routes
    */
-  routes = [];
+  routes: {
+    type: string;
+    screen: string;
+    params: string[];
+    routeParams: Record<string, any>;
+    re: RegExp;
+  }[] = [];
 
   /**
    * Constructor
    */
   constructor() {
-    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2]));
+    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2], r[3]));
   }
 
   /**
@@ -48,7 +53,7 @@ class DeeplinksRouter {
    * @param {string} url     ex: newsfeed/:guid
    * @param {string} screen  name of the screen
    */
-  add(url, screen, type) {
+  add(url, screen, type, routeParams) {
     const re = /:(\w+)/gi;
 
     const params = (url.match(re) || []).map(s => s.substr(1));
@@ -57,6 +62,7 @@ class DeeplinksRouter {
       type: type || 'push',
       screen,
       params,
+      routeParams,
       re: new RegExp('^' + url.replace(re, '([^/]+?)') + '(/?$|/?\\?)'),
     });
   }
@@ -107,7 +113,7 @@ class DeeplinksRouter {
   }
 
   nestedScreen(data, params) {
-    const o = {
+    const o: Record<string, any> = {
       screen: data.shift(),
     };
     if (data.length > 0) {
@@ -139,7 +145,7 @@ class DeeplinksRouter {
 
         return {
           screen: route.screen,
-          params: { ...params, ...urlParams },
+          params: { ...params, ...urlParams, ...route.routeParams },
           type: route.type,
         };
       }

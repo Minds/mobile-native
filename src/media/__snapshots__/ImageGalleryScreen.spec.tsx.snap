@@ -65,14 +65,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
               accessible={true}
               collapsable={false}
               focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 9.333333333333332,
-                  "left": 9.333333333333332,
-                  "right": 9.333333333333332,
-                  "top": 9.333333333333332,
-                }
-              }
+              hitSlop={9.333333333333332}
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}

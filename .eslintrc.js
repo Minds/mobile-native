@@ -3,4 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'detox'],
+  globals: {
+    JSX: 'readonly',
+  },
 };

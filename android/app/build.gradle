@@ -316,35 +316,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
 
-    // I manually linked this package to fix the build errors ignoring the following packages
-    // implementation(project(':react-native-jitsi-meet')) {
-    //   exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
-    //   exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
-    //   exclude group: 'com.facebook.react', module:'react-native-webview'
-    // //   exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
-    //   exclude group: 'com.facebook.react', module:'react-native-vector-icons'
-    //   exclude group: 'com.facebook.react', module:'react-native-svg'
-    //   exclude group: 'com.facebook',module:'hermes'
-    // //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
-    //   exclude group: 'com.google.firebase'
-    // }
-
     implementation project(':react-native-fs')
     implementation project(':react-native-exception-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
-    // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    // implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    // implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
-    // implementation 'com.facebook.fresco:animated-gif:1.10.0'
-    // implementation 'com.facebook.fresco:animated-webp:1.10.0'
-    // implementation 'com.facebook.fresco:webpsupport:1.10.0'
-    // implementation 'com.facebook.fresco:fresco:1.10.0'
+
 
     if (enableHermes) {
-        def hermesPath = "../../node_modules/hermes-engine/android/";
-        debugImplementation files(hermesPath + "hermes-debug.aar")
-        releaseImplementation files(hermesPath + "hermes-release.aar")
+        // Solve crash due to missing hermes library
+        //noinspection GradleDynamicVersion
+        implementation("com.facebook.react:hermes-engine:+") { // From node_modules
+            exclude group:'com.facebook.fbjni'
+        }
     } else {
         implementation jscFlavor
     }

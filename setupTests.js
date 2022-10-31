@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -14,6 +15,13 @@ const XMLHttpRequest = {
 global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
+
+jest.mock('~/config/Version', () => ({
+  Version: {
+    VERSION: '3.8.0',
+    BUILD: 111,
+  },
+}));
 
 jest.mock('@react-native-cookies/cookies', () => ({
   set: jest.fn(),

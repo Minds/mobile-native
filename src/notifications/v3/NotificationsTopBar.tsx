@@ -6,6 +6,7 @@ import TopBarButtonTabBar, {
 import { StyleSheet } from 'react-native';
 import { NotificationsStore } from './createNotificationsStore';
 import i18n from '~/common/services/i18n.service';
+import { runInAction } from 'mobx';
 
 type PropsType = {
   store: NotificationsStore;
@@ -79,10 +80,11 @@ const NotificationsTopBar = observer(
       setOption(option: NotificationsTabOptions) {
         this.option = option;
         setResult(null);
-        store.setOffset('');
-        store.setFilter(option === 'all' ? '' : option);
-        store.setSilentRefresh(true);
-        refresh(false).finally(() => store.setSilentRefresh(false));
+        runInAction(() => {
+          store.setOffset('');
+          store.setFilter(option === 'all' ? '' : option);
+          store.setSilentRefresh(true);
+        });
       },
     }));
 

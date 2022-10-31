@@ -13,11 +13,12 @@ import InputContainer, {
   InputContainerImperativeHandle,
 } from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
-import MenuItem from '../common/components/menus/MenuItem';
+import MenuItemOption from '../common/components/menus/MenuItemOption';
+import MText from '../common/components/MText';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
-import { Button, Icon, IconButton, ModalFullScreen } from '../common/ui';
+import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import { RootStackParamList } from '../navigation/NavigationTypes';
@@ -33,12 +34,14 @@ const showError = (error: string) =>
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
 type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
+// eslint-disable-next-line no-shadow
 export enum ReplyType {
   text = 0,
   image = 1,
   video = 2,
 }
 
+// eslint-disable-next-line no-shadow
 enum PaymentType {
   cash = 0,
   token = 1,
@@ -310,37 +313,38 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
             theme.bgPrimaryBackground,
             { borderBottomWidth: 0 },
           ]}
-          item={{
-            onPress: () => setRequireTwitter(val => !val),
-            title: 'Require the reply to be posted to @ottman on Twitter',
-            icon: (
-              <Icon
-                size={30}
-                name={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
-                color={requireTwitter ? 'Link' : 'Icon'}
-              />
-            ),
-          }}
+          onPress={() => setRequireTwitter(val => !val)}
+          title={'Require the reply to be posted to @ottman on Twitter'}
+          icon={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
+          iconSize={30}
+          iconColor={
+            requireTwitter ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
+          }
         /> */}
-        <MenuItem
-          containerItemStyle={styles.termsContainer}
-          titleStyle={styles.termsText}
-          item={{
-            onPress: () => setTermsAgreed(val => !val),
-            title: 'I agree to the Terms',
-            onTitlePress: () =>
-              openUrlService.open('https://www.minds.com/p/monetization-terms'),
-            icon: (
-              <Icon
-                size={30}
-                name={termsAgreed ? 'checkbox-marked' : 'checkbox-blank'}
-                color={
-                  termsAgreed ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
+        <MenuItemOption
+          onPress={() => setTermsAgreed(val => !val)}
+          title={
+            <B1>
+              I agree to the{' '}
+              <MText
+                onPress={() =>
+                  openUrlService.open(
+                    'https://www.minds.com/p/monetization-terms',
+                  )
                 }
-              />
-            ),
-          }}
+                style={{ textDecorationLine: 'underline' }}>
+                Terms
+              </MText>
+            </B1>
+          }
+          selected={termsAgreed}
+          mode="checkbox"
+          iconColor={errors.termsAgreed ? 'Alert' : undefined}
+          borderless
         />
+        <B2 color="secondary" horizontal="L" top="S">
+          {i18nService.t('supermind.7daysToReply')}
+        </B2>
       </FitScrollView>
 
       <AnimatePresence>
@@ -356,11 +360,3 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 }
 
 export default observer(SupermindComposeScreen);
-
-const styles = ThemedStyles.create({
-  termsText: { textDecorationLine: 'underline' },
-  termsContainer: [
-    'bgPrimaryBackground',
-    { borderTopWidth: 0, borderBottomWidth: 0 },
-  ],
-});

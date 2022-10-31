@@ -20,6 +20,7 @@ import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
+import { confirm } from '../common/components/Confirm';
 
 /**
  * Display an error message to the user.
@@ -82,7 +83,7 @@ export default function (props) {
     /**
      * The onSave from route params, called after submitting
      */
-    onSaveCallback: undefined as () => void,
+    onSaveCallback: undefined as (entity: ActivityModel) => void,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -127,7 +128,7 @@ export default function (props) {
       }
 
       if (params.group) {
-        this.group = props.route.params.group;
+        this.group = props.route.params?.group;
       }
 
       if (params.openSupermindModal) {
@@ -164,7 +165,7 @@ export default function (props) {
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
 
-      this.onSaveCallback?.();
+      this.onSaveCallback?.(entity);
       popToTop();
       this.clear(false);
 
@@ -427,7 +428,7 @@ export default function (props) {
       }
 
       const response = await attachmentService.gallery(
-        mode || this.mode,
+        mode || 'any',
         false, // crop
         max, // max files allowed
       );
@@ -538,11 +539,24 @@ export default function (props) {
         }
 
         if (this.supermindObject) {
+          if (
+            !(await confirm({
+              title: i18n.t('supermind.confirm.title'),
+              description: i18n.t('supermind.confirm.description'),
+            }))
+          ) {
+            return;
+          }
+
           newPost.supermind_reply_guid = this.supermindObject.guid;
         }
 
         // monetization
-        if (this.paywalled && !this.supermindRequest) {
+        if (
+          this.paywalled &&
+          !this.supermindRequest &&
+          !this.isSupermindReply
+        ) {
           newPost.paywall = true;
           newPost.wire_threshold = this.wire_threshold;
         }
@@ -552,7 +566,11 @@ export default function (props) {
           newPost.remind_guid = this.entity.guid;
         }
 
-        if (this.postToPermaweb) {
+        if (
+          this.postToPermaweb &&
+          !this.supermindRequest &&
+          !this.isSupermindReply
+        ) {
           if (this.paywalled) {
             showError(i18n.t('permaweb.cannotMonetize'));
             return false;
@@ -608,7 +626,7 @@ export default function (props) {
           return this.entity;
         }
 
-        if (response.supermind) {
+        if (this.supermindRequest) {
           showNotification(i18n.t('supermind.requestSubmitted'), 'success');
         }
 

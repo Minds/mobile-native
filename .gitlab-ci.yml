@@ -51,7 +51,7 @@ test:jest:
 
 ### BUILD STAGE
 .prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   tags: [shared-macos-amd64]
   artifacts:
     name: 'Minds IPA'
@@ -77,9 +77,15 @@ build:ios_mr:
   <<: *prepare_build_ios
   stage: build
   interruptible: true
+  artifacts:
+    expire_in: 1 day
+    when: on_failure
+    public: false
+    paths:
+      - ios/ios-job.log
   script:
     - export ENVFILE=".env.review"
-    - fastlane buildrelease
+    - fastlane buildrelease | tee -a ios-job.log
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
     - cd ..
     - *delete_browserstack
@@ -139,7 +145,7 @@ build:ios_production:
 
 # Android common build steps
 .prepare_build_android: &prepare_build_android
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   stage: build
   tags: [minds-ci]
   interruptible: true
@@ -212,7 +218,7 @@ build:android_mr_production:
 
 # Cleanup APK from merged MRs
 build:cleanup:
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   tags: [minds-ci]
   when: manual
   stage: build
@@ -434,7 +440,7 @@ release:production:
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
 release:google_play:
-  image: circleci/android:api-30-node
+  image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
   before_script:
@@ -470,6 +476,7 @@ release:codepush-ios:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
   only:
     - /^patch-*/
+    - master
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -488,6 +495,7 @@ release:codepush-android:
     - appcenter codepush release-react -a Minds/Minds -d Production
   only:
     - /^patch-*/
+    - master
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -496,7 +504,7 @@ release:codepush-android:
 
 # iOS Release candidate to TestFlight
 release:ios_rc_testflight:
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
   dependencies:
@@ -516,7 +524,7 @@ release:ios_rc_testflight:
 
 # iOS production to TestFlight
 release:ios_prod_testflight:
-  image: macos-12-xcode-13
+  image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
   dependencies:

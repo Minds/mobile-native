@@ -37,6 +37,6 @@ export const Screen = ({
 
 const styles = ThemedStyles.create({
   primary: ['flexContainer', 'bgPrimaryBackground'],
-  secondary: ['flexContainer', 'bgPrimaryBackground'],
-  tertiary: ['flexContainer', 'bgPrimaryBackground'],
+  secondary: ['flexContainer', 'bgSecondaryBackground'],
+  tertiary: ['flexContainer', 'bgTertiaryBackground'],
 });

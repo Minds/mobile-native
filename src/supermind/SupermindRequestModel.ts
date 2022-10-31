@@ -13,6 +13,7 @@ import {
 import i18nService from '~/common/services/i18n.service';
 import { action, observable } from 'mobx';
 import UserModel from '~/channel/UserModel';
+import NavigationService from '~/navigation/NavigationService';
 
 /**
  * Supermind request model
@@ -32,6 +33,7 @@ export default class SupermindRequestModel extends BaseModel {
   twitter_required: boolean = false;
   reply_type: SupermindRequestReplyType = 0;
   entity!: ActivityModel;
+  @observable reply_activity_guid?: string;
 
   /**
    * Receiver channel (populated only for outbound)
@@ -87,6 +89,22 @@ export default class SupermindRequestModel extends BaseModel {
     );
     const date = moment();
     return expire.isBefore(date);
+  }
+
+  /**
+   * Navigates to the single activity screen with the reply
+   */
+  viewReply() {
+    if (this.reply_activity_guid) {
+      NavigationService.navigate('Activity', {
+        guid: this.reply_activity_guid,
+      });
+    }
+  }
+
+  @action
+  setReplyGuid(guid: string) {
+    this.reply_activity_guid = guid;
   }
 
   @action

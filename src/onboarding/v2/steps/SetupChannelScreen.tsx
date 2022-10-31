@@ -30,7 +30,7 @@ import { IS_IOS } from '~/config/Config';
 import {
   BottomSheetButton,
   BottomSheetModal,
-  MenuItem,
+  BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -198,7 +198,7 @@ export default observer(function SetupChannelScreen() {
       </DismissKeyboard>
       {store.showAvatarPicker && (
         <BottomSheetModal ref={ref} autoShow>
-          <MenuItem
+          <BottomSheetMenuItem
             onPress={async () => {
               await channelStore.upload('avatar', true, () =>
                 store.hidePicker(),
@@ -209,7 +209,7 @@ export default observer(function SetupChannelScreen() {
             iconName="camera"
             iconType="ionicon"
           />
-          <MenuItem
+          <BottomSheetMenuItem
             onPress={async () => {
               await channelStore.upload('avatar', false, () =>
                 store.hidePicker(),

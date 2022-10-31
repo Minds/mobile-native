@@ -53,18 +53,19 @@ const map = data => {
 };
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
   const listRef = useRef<FlatList>(null);
 
+  const params = {
+    filter: notifications.filter,
+    limit: 15,
+    offset: notifications.offset,
+  };
+
   const store = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params: {
-      filter: notifications.filter,
-      limit: 15,
-      offset: notifications.offset,
-    },
-    skip: true,
+    params,
+    skip: false,
     updateStrategy: 'merge',
     dataField: 'notifications',
     map,
@@ -74,6 +75,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const cleanTop = React.useRef({
     marginTop: insets && insets.top ? insets.top - 5 : 0,
     flexGrow: 1,
+    flex: 1,
   }).current;
 
   const onFetchMore = () => {
@@ -91,17 +93,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         listRef.current?.scrollToOffset({ animated: true, offset: 0 });
       }
 
-      return store
-        .refresh({
-          filter: notifications.filter,
-          limit: 15,
-          offset: notifications.offset,
-        })
-        .then(() => {
-          notifications.setUnread(0);
-        });
+      return store.refresh(params).then(() => {
+        notifications.setUnread(0);
+      });
     },
-    [notifications, store],
+    [notifications, params, store],
   );
 
   /**
@@ -130,16 +126,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
     return unsubscribe;
   }, [navigation, onFocus]);
-
-  /**
-   * Initial load and reset count
-   */
-  React.useEffect(() => {
-    // delay initial load to prevent stuttering while the animated blue bar is moving
-    setTimeout(() => {
-      store.fetch().then(() => notifications.setUnread(0));
-    }, 50);
-  }, [notifications, store]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -220,7 +206,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         ref={listRef}
         stickyHeaderIndices={sticky}
         stickyHeaderHiddenOnScroll={true}
-        style={[theme.flexContainer, cleanTop]}
+        style={cleanTop}
         ListHeaderComponent={
           <View>
             <Topbar title="Notifications" navigation={navigation} noInsets />

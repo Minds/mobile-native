@@ -32,9 +32,7 @@ const Setup = ({ user, walletStore, navigation }) => {
         </MText>
       ),
       onPress: () => showPhoneValidator(),
-      icon: user.rewards
-        ? { name: 'md-checkmark', type: 'ionicon' }
-        : undefined,
+      icon: user.rewards ? 'md-checkmark' : undefined,
       noIcon: !user.rewards,
     },
     {
@@ -48,9 +46,7 @@ const Setup = ({ user, walletStore, navigation }) => {
           navigation.navigate('UpgradeScreen', { onComplete, pro: false });
         }
       },
-      icon: walletStore.wallet.receiver.address
-        ? { name: 'md-checkmark', type: 'ionicon' }
-        : undefined,
+      icon: walletStore.wallet.receiver.address ? 'md-checkmark' : undefined,
       noIcon: !user.plus,
     },
   ];
@@ -61,7 +57,7 @@ const Setup = ({ user, walletStore, navigation }) => {
       </MText>
       {walletSetup.map((item, i) => (
         <MenuItem
-          item={item}
+          {...item}
           key={i}
           containerItemStyle={theme.bgPrimaryBackground}
         />

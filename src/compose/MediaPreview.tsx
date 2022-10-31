@@ -8,6 +8,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
 import FastImage from 'react-native-fast-image';
+import { useDimensions } from '@react-native-community/hooks';
 
 type PropsType = {
   store: any;
@@ -17,6 +18,8 @@ type PropsType = {
  * Media Preview component with support for up to 4 images/videos
  */
 export default observer(function MediaPreview({ store }: PropsType) {
+  const { width, height } = useDimensions().window;
+
   if (!store.attachments.hasAttachment) {
     return null;
   }
@@ -25,13 +28,28 @@ export default observer(function MediaPreview({ store }: PropsType) {
 
   switch (store.attachments.length) {
     case 1:
+      const attachment = store.attachments.get(0);
+      let aspectRatio = attachment.width / attachment.height;
+      /**
+       * Image's min aspect ratio (max height)
+       * Same value as the post image's MIN_ASPECT_RATIO_FIXED
+       */
+      const minAspectRatio = width / height;
+
+      if (aspectRatio < minAspectRatio) {
+        aspectRatio = minAspectRatio;
+      }
+
       return (
         <View
           style={[
-            styles.singlePreview,
+            styles.preview,
             theme.marginTop2x,
             theme.bgAction,
             theme.fullWidth,
+            {
+              aspectRatio,
+            },
           ]}>
           <MediaPresentation
             attachment={store.attachments.get(0)}
@@ -229,23 +247,8 @@ const styles = ThemedStyles.create({
     right: 0,
     height: 5,
   },
-  singlePreview: {
+  preview: {
     flex: 1,
-    aspectRatio: 3 / 2,
-    borderRadius: 2,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 1.5,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 0.41,
-    elevation: 2,
-  },
-  image: ['bgTertiaryBackground', 'flexContainer', 'borderRadius2x'],
-  twoPreviews: {
-    flex: 1,
-    aspectRatio: 3 / 4,
     borderRadius: 2,
     shadowColor: 'black',
     shadowOffset: {
@@ -256,6 +259,23 @@ const styles = ThemedStyles.create({
     shadowRadius: 0.41,
 
     elevation: 2,
+  },
+  image: ['bgTertiaryBackground', 'flexContainer', 'borderRadius2x'],
+  get singlePreview() {
+    return [
+      this.preview,
+      {
+        aspectRatio: 3 / 2,
+      },
+    ];
+  },
+  get twoPreviews() {
+    return [
+      this.preview,
+      {
+        aspectRatio: 3 / 4,
+      },
+    ];
   },
   removeMedia: [
     'bgSecondaryBackground',

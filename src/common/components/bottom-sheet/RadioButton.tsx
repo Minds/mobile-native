@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from './MenuItem';
+import BottomSheetMenuItem from './BottomSheetMenuItem';
 
 type PropsType = {
   title: string;
@@ -11,7 +11,7 @@ type PropsType = {
 
 export default function RadioButton(props: PropsType) {
   return (
-    <MenuItem
+    <BottomSheetMenuItem
       {...props}
       iconName={props.selected ? 'ios-radio-button-on' : 'ios-radio-button-off'}
       iconType="ionicon"

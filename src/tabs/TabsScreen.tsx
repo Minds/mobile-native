@@ -10,7 +10,6 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
-// import PerformanceScreen from '../performance/PerformanceScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
@@ -19,7 +18,6 @@ import ComposeIcon from '../compose/ComposeIcon';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-// import sessionService from '../common/services/session.service';
 import PressableScale from '~/common/components/PressableScale';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
@@ -31,7 +29,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
-// import navigationService from '../navigation/NavigationService';
+import { IconMapNameType } from '~/common/ui/icons/map';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -46,7 +44,7 @@ export type TabParamList = {
 };
 
 const { width } = Dimensions.get('screen');
-
+const tabWidth = (width - 40) / 5;
 const shadowOpt = {
   width,
   color: '#000000',
@@ -60,13 +58,14 @@ const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabBar = ({ state, descriptors, navigation }) => {
+const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
   const barAnimatedStyle = useAnimatedStyle(() => ({
+    width: tabWidth,
     transform: [
       {
-        translateX: withSpring(((width - 40) / 5) * state.index, {
+        translateX: withSpring(tabWidth * state.index, {
           mass: 0.2,
         }),
       },
@@ -134,15 +133,15 @@ const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={
-              focused ? styles.buttonContainerFocused : styles.buttonContainer
-            }>
+            style={styles.buttonContainer}>
             {icon}
           </Component>
         );
       })}
 
-      <Animated.View style={[styles.bar, barAnimatedStyle]} />
+      {!disableTabIndicator && (
+        <Animated.View style={[styles.bar, barAnimatedStyle]} />
+      )}
     </View>
   );
 };
@@ -214,30 +213,14 @@ const styles = ThemedStyles.create({
     height: 44,
   },
   buttonContainer: {
-    paddingTop: 17,
     flex: 1,
-    alignContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
     justifyContent: 'center',
-    height: 35,
-    marginBottom: IS_IOS ? 20 : 10,
-  },
-  buttonContainerFocused: {
-    paddingTop: 17,
-    flex: 1,
-    alignContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    height: 35,
-    marginBottom: IS_IOS ? 20 : 10,
   },
   bar: {
     position: 'absolute',
     top: 0,
     left: 20,
-    width: 70,
     height: 4,
     backgroundColor: '#1B85D6',
   },
@@ -248,62 +231,44 @@ const styles = ThemedStyles.create({
       shadowOffset: { width: 0, height: -1 },
       shadowOpacity: 0.2,
       shadowRadius: 4,
-      paddingLeft: 20,
-      paddingRight: 20,
+      paddingHorizontal: 20,
+      height: IS_IOS ? 80 : 60,
     },
     'bcolorPrimaryBorder',
   ],
 });
 
-// const navToChannel = () =>
-//   navigationService.push('Channel', { entity: sessionService.getUser() });
-
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
 const moreOptions = {
   tabBarTestID: 'Messenger tab button',
-  unmountOnBlur: true,
 };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
-const tabBar = props => <TabBar {...props} />;
-// const userOptions = {
-//   tabBarTestID: 'CaptureTabButton',
-//   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
-// };
+const tabBar = props => <TabBar disableTabIndicator {...props} />;
+
+const iconFromRoute: Record<string, IconMapNameType> = {
+  More: 'menu',
+  Newsfeed: 'home',
+  User: 'user',
+  Discovery: 'search',
+  Performance: 'dev',
+};
+
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
-    let iconName;
-
-    switch (route.name) {
-      case 'More':
-        iconName = 'menu';
-        break;
-      case 'Newsfeed':
-        iconName = 'home';
-        break;
-      case 'User':
-        iconName = 'user';
-        break;
-      case 'Discovery':
-        iconName = 'search';
-        break;
-
-      case 'Performance':
-        iconName = 'dev';
-        break;
-
-      case 'Notifications':
-        return <NotificationIcon active={focused} />;
-      case 'CaptureTab':
-        return <ComposeIcon style={styles.compose} />;
+    if (route.name === 'Notifications') {
+      return <NotificationIcon active={focused} />;
+    }
+    if (route.name === 'CaptureTab') {
+      return <ComposeIcon style={styles.compose} />;
     }
 
     return (
       <Icon
         size="large"
         active={focused}
-        name={iconName}
+        name={iconFromRoute[route.name]}
         activeColor="PrimaryText"
       />
     );

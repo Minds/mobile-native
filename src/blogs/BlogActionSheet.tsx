@@ -10,11 +10,11 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import type BlogModel from './BlogModel';
 import {
-  MenuItem,
+  BottomSheetMenuItem,
   BottomSheetModal,
   BottomSheetButton,
+  BottomSheetMenuItemProps,
 } from '../common/components/bottom-sheet';
-import { MenuItemProps } from '../common/components/bottom-sheet/MenuItem';
 
 type PropsType = {
   entity: BlogModel;
@@ -57,7 +57,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
    * Get the options array based on the permissions
    */
   getOptions() {
-    let options: Array<MenuItemProps> = [];
+    let options: Array<BottomSheetMenuItemProps> = [];
     const entity = this.props.entity;
 
     // if is not the owner
@@ -131,7 +131,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
         {this.state.shown && (
           <BottomSheetModal ref={this.ref} autoShow>
             {this.state.options.map((a, i) => (
-              <MenuItem {...a} key={i} />
+              <BottomSheetMenuItem {...a} key={i} />
             ))}
             <BottomSheetButton
               text={i18n.t('cancel')}

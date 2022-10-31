@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { Icon } from '../ui';
 import InputBase from './InputBase';
@@ -22,8 +22,6 @@ type PropsType = {
 };
 
 const InputSelector = (props: PropsType) => {
-  let selectorRef = useRef<any>(null);
-
   const onSelected = useCallback(
     item => {
       props.onSelected(props.keyExtractor(item));
@@ -41,7 +39,6 @@ const InputSelector = (props: PropsType) => {
 
   return (
     <Selector
-      ref={selectorRef}
       onItemSelect={onSelected}
       title={props.selectTitle || ''}
       data={props.data}
