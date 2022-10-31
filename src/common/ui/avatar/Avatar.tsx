@@ -56,6 +56,13 @@ const styles = ThemedStyles.create({
     { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
     'bcolorAvatarCircled',
   ],
+  heavy: [
+    {
+      borderWidth: UNIT.XS,
+      borderRadius: AVATAR_SIZE.large,
+      borderColor: ThemedStyles.getColor('PrimaryText'),
+    },
+  ],
   primary: [
     {
       borderWidth: UNIT.XXS,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, IconButton, H2 } from '~ui';
+import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import sessionService from '~/common/services/session.service';
 
 type PropsType = {
   navigation: any;
@@ -21,6 +22,8 @@ type PropsType = {
 };
 
 export const Topbar = observer((props: PropsType) => {
+  const { navigation, title, noInsets, shadowLess, showBack } = props;
+  const channel = sessionService.getUser();
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
@@ -29,7 +32,7 @@ export const Topbar = observer((props: PropsType) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return animatedContext &&
-      !props.shadowLess &&
+      !shadowLess &&
       animatedContext.scrollY.value > animatedContext.headerHeight &&
       animatedContext.headerHeight !== animatedContext.translationY.value
       ? {
@@ -52,8 +55,8 @@ export const Topbar = observer((props: PropsType) => {
   }, [animatedContext, bgColor]);
 
   const container = React.useRef({
-    paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
-    height: Platform.select({ ios: props.noInsets ? 60 : 100, android: 60 }),
+    paddingTop: !noInsets && insets && insets.top ? insets.top - 5 : 0,
+    height: Platform.select({ ios: noInsets ? 60 : 100, android: 60 }),
     display: 'flex',
     flexDirection: 'row',
   }).current as ViewStyle;
@@ -67,33 +70,50 @@ export const Topbar = observer((props: PropsType) => {
     }
   });
 
+  const handleChannelNav = () => {
+    navigation.push('Channel', { entity: channel });
+  };
+
+  const avatar = channel.getAvatarSource?.('medium') ?? {};
+
   return (
     <Animated.View style={animatedStyle}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            {props.showBack && (
+            {showBack && (
               <IconButton
                 name="chevron-left"
                 size="huge"
                 right="S"
                 color="Icon"
-                onPress={() => props.navigation.goBack()}
+                onPress={() => navigation.goBack()}
               />
             )}
-            {!!props.title ? (
-              <H2>{props.title}</H2>
+            {title ? (
+              <H2>{title}</H2>
             ) : (
-              <Image
-                resizeMode="contain"
-                source={
-                  ThemedStyles.theme
-                    ? require('../assets/logos/logo-white.png')
-                    : require('../assets/logos/logo.png')
-                }
-                style={styles.logo}
-              />
+              <>
+                <View style={{ width: 5 }} />
+                <Avatar
+                  source={avatar}
+                  border={'heavy'}
+                  size="small"
+                  onPress={handleChannelNav}
+                />
+                <View style={styles.logoWrapper}>
+                  <Image
+                    resizeMode="contain"
+                    source={
+                      ThemedStyles.theme
+                        ? require('../assets/logos/logo-white.png')
+                        : require('../assets/logos/logo.png')
+                    }
+                    style={styles.logo}
+                  />
+                </View>
+              </>
             )}
           </View>
           <View style={styles.topbarRight}>
@@ -102,8 +122,7 @@ export const Topbar = observer((props: PropsType) => {
                 <ChatIcon />
               </PressableScale>
             </Spacer>
-            <PressableScale
-              onPress={() => props.navigation.navigate('SearchScreen')}>
+            <PressableScale onPress={() => navigation.navigate('SearchScreen')}>
               <IconCircled size="small" name="search" color="PrimaryText" />
             </PressableScale>
           </View>
@@ -122,6 +141,11 @@ export const styles = StyleSheet.create({
     height: 36,
     width: 105,
   },
+  logoWrapper: {
+    marginLeft: 28,
+    flexGrow: 1,
+    alignItems: 'center',
+  },
   shadow: {
     zIndex: 999,
     shadowColor: '#000',
@@ -139,17 +163,16 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   topbarLeft: {
+    flex: 1,
     flexGrow: 1,
     marginLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
   topbarRight: {
-    width: 75,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingRight: 4,
-    marginRight: 15,
+    marginRight: 16,
   },
 });
