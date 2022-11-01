@@ -56,7 +56,7 @@ const styles = ThemedStyles.create({
     { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
     'bcolorAvatarCircled',
   ],
-  inverse: {
+  white: {
     borderWidth: UNIT.XXS,
     borderRadius: AVATAR_SIZE.large,
     borderColor: ThemedStyles.getColor('White'),

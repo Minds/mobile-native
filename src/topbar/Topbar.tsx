@@ -95,10 +95,10 @@ export const Topbar = observer((props: PropsType) => {
               <H2>{title}</H2>
             ) : (
               <>
-                <View style={{ width: 5 }} />
+                <View style={styles.leftSpacer} />
                 <Avatar
                   source={avatar}
-                  border={'inverse'}
+                  border={'white'}
                   size="small"
                   onPress={handleChannelNav}
                 />
@@ -174,5 +174,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginRight: 16,
+  },
+  leftSpacer: {
+    width: 5,
   },
 });
