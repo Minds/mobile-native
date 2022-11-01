@@ -23,7 +23,7 @@ const Header = () => {
       <PressableScale
         onPress={() => navigation.push('Capture', { portrait: true })}>
         <View style={styles.addCircle}>
-          <Icon size={'huge'} name="plus" color="White" />
+          <Icon size={'huge'} name="plus" color="PrimaryText" />
         </View>
       </PressableScale>
       <B3 top="XS">{i18nService.t('newMoment')}</B3>
@@ -134,7 +134,7 @@ const styles = ThemedStyles.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    'bgAvatarActive',
+    'bgBaseBackground',
   ],
   listContainerStyle: [
     'paddingLeft2x',
