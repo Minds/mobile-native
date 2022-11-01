@@ -98,7 +98,7 @@ export const Topbar = observer((props: PropsType) => {
                 <View style={{ width: 5 }} />
                 <Avatar
                   source={avatar}
-                  border={'heavy'}
+                  border={'inverse'}
                   size="small"
                   onPress={handleChannelNav}
                 />

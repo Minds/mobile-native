@@ -8,8 +8,8 @@ import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
-import sessionService from '~/common/services/session.service';
-import { Row } from '~/common/ui';
+import PressableScale from '~/common/components/PressableScale';
+import { B3, Icon, Row } from '~/common/ui';
 import i18nService from '~/common/services/i18n.service';
 import Placeholder from '~/common/components/Placeholder';
 
@@ -18,22 +18,16 @@ import Placeholder from '~/common/components/Placeholder';
  */
 const Header = () => {
   const navigation = useNavigation<any>();
-  const user = sessionService.getUser();
-
-  const nav = useCallback(
-    () => navigation.push('Capture', { portrait: true }),
-    [navigation],
-  );
-
   return (
-    <Row containerStyle={ThemedStyles.style.flexContainer}>
-      <PortraitContentBarItem
-        avatarUrl={user.getAvatarSource()}
-        withPlus
-        onPress={nav}
-        title={i18nService.t('newMoment')}
-      />
-    </Row>
+    <View style={styles.addContainer}>
+      <PressableScale
+        onPress={() => navigation.push('Capture', { portrait: true })}>
+        <View style={styles.addCircle}>
+          <Icon size={'huge'} name="plus" color="White" />
+        </View>
+      </PressableScale>
+      <B3 top="XS">{i18nService.t('newMoment')}</B3>
+    </View>
   );
 };
 
@@ -125,13 +119,22 @@ const styles = ThemedStyles.create({
     height: 80,
     alignSelf: 'center',
   },
+  addContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+  },
   addCircle: [
     {
+      marginHorizontal: 12,
+      marginBottom: 2,
       height: AVATAR_SIZE.medium,
       width: AVATAR_SIZE.medium,
       borderRadius: AVATAR_SIZE.medium / 2,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    'bgTertiaryBackground',
+    'bgIconActive',
   ],
   listContainerStyle: [
     'paddingLeft2x',
