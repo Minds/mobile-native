@@ -1671,14 +1671,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 6.666666666666666,
-                "left": 6.666666666666666,
-                "right": 6.666666666666666,
-                "top": 6.666666666666666,
-              }
-            }
+            hitSlop={6.666666666666666}
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}

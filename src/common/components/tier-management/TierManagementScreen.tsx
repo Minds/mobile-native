@@ -34,7 +34,7 @@ const TierManagementScreen = observer(
   ({ route, navigation, tierStore }: PropsType) => {
     const localStore = useLocalStore(createTierManagementStore);
 
-    const useForSelection: boolean = !!route.params.useForSelection;
+    const useForSelection = !!route.params?.useForSelection;
 
     useEffect(() => {
       const getTiers = async () => {

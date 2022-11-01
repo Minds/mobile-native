@@ -281,9 +281,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                     },
                   ]
                 }
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -761,9 +759,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                     },
                   ]
                 }
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>

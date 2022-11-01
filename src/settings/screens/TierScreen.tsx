@@ -7,9 +7,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import SaveButton from '../../common/components/SaveButton';
 import supportTiersService from '../../common/services/support-tiers.service';
-import Switch from 'react-native-switch-pro';
 import { UserError } from '../../common/UserError';
 import MText from '../../common/components/MText';
+import Switch from '~/common/components/controls/Switch';
 
 type PropsType = {
   route: any;
@@ -75,8 +75,8 @@ const createTierStore = () => {
 
 const TierScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const tier: SupportTiersType | boolean = route.params.tier;
-  const tierManagementStore = route.params.tierManagementStore;
+  const tier: SupportTiersType | boolean = route.params?.tier ?? false;
+  const tierManagementStore = route.params?.tierManagementStore;
 
   let isNew = true;
 
@@ -98,10 +98,10 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
 
   const save = useCallback(async () => {
     localStore.setSaving(true);
-    const tier = await localStore.saveTier();
+    const savedTier = await localStore.saveTier();
     localStore.setSaving(false);
-    if (isNew && tier && tierManagementStore) {
-      tierManagementStore.addTier(tier);
+    if (isNew && savedTier && tierManagementStore) {
+      tierManagementStore.addTier(savedTier);
     }
     navigation.goBack();
   }, [localStore, navigation, tierManagementStore, isNew]);
@@ -142,11 +142,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
           </MText>
           <Switch
             value={localStore.support_tier.has_usd}
-            onSyncPress={localStore.setHasUsd}
-            circleColorActive={ThemedStyles.getColor('SecondaryText')}
-            circleColorInactive={ThemedStyles.getColor('SecondaryText')}
-            backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
-            backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
+            onChange={localStore.setHasUsd}
           />
         </View>
       </View>

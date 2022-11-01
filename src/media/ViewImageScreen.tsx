@@ -17,7 +17,7 @@ export default class ViewImageScreen extends Component {
   constructor(props) {
     super(props);
 
-    const entity = this.props.route.params.entity;
+    const { entity } = this.props.route.params ?? {};
     const custom_data = entity.custom_data;
 
     let width = Dimensions.get('window').width;
@@ -46,7 +46,7 @@ export default class ViewImageScreen extends Component {
   }
 
   getSource() {
-    return this.props.route.params.source;
+    return this.props.route.params?.source;
   }
 
   onSwipeDown = () => {
@@ -62,7 +62,7 @@ export default class ViewImageScreen extends Component {
         <ImageViewer
           onSwipeDown={this.onSwipeDown}
           source={source}
-          urn={this.props.route.params.entity.urn}
+          urn={this.props.route.params?.entity.urn}
           width={this.state.width}
           height={this.state.height}
         />

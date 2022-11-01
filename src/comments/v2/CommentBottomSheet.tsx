@@ -57,21 +57,22 @@ const Stack = createStackNavigator();
 
 const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
+  const { comment, entity, open } = route.params ?? {};
 
   useBackHandler(() => {
     navigation.goBack();
     return true;
   });
   const store = React.useMemo(() => {
-    const s = new CommentsStore(route.params.entity);
-    s.setParent(route.params.comment);
-    return s;
-  }, [route.params.comment, route.params.entity]);
+    const commentStore = new CommentsStore(entity);
+    commentStore.setParent(comment);
+    return commentStore;
+  }, [comment, entity]);
   React.useEffect(() => {
-    if (route.params.open) {
+    if (open) {
       store.setShowInput(true);
     }
-  }, []);
+  }, [open, store]);
 
   return <CommentList store={store} navigation={navigation} />;
 };

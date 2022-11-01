@@ -11,7 +11,7 @@ type PropsType = {
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
   const onLogin = React.useCallback(() => {
-    route.params?.onLogin && route.params.onLogin(navigation);
+    route.params?.onLogin?.(navigation);
   }, [navigation, route.params]);
   return (
     <ModalFullScreen back title={i18n.t('auth.login')}>

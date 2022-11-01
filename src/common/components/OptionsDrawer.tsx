@@ -3,31 +3,26 @@ import { View, FlatList } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-const keyExtractor = (item, index) => index.toString();
+const keyExtractor = (_, index) => `_${index}`;
 
 const renderItem = item => (
   <MenuItem noBorderTop={item.index > 0} {...item.item} />
 );
 
 export default function ({ navigation, route }) {
-  if (!route.params.options) {
-    return null;
-  }
-
-  const list = route.params.options(navigation, route).filter(r => r);
-
-  return (
+  const { options } = route.params ?? {};
+  return options ? (
     <View style={styles.container}>
       <View style={styles.innerWrapper}>
         <FlatList
-          data={list}
+          data={options(navigation, route).filter(Boolean)}
           renderItem={renderItem}
           style={styles.list}
           keyExtractor={keyExtractor}
         />
       </View>
     </View>
-  );
+  ) : null;
 }
 
 const styles = ThemedStyles.create({

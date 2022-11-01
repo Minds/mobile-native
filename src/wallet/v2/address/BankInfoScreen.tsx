@@ -28,7 +28,7 @@ type PropsType = {
 };
 
 const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
-  const walletStore = route.params.walletStore;
+  const { walletStore } = route.params ?? {};
 
   const localStore = useLocalStore(createBankInfoStore, walletStore);
 
@@ -62,19 +62,33 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
     try {
       localStore.setLoading(true);
 
+      const {
+        country,
+        firstName,
+        lastName,
+        dob,
+        phoneNumber,
+        ssn,
+        personalIdNumber,
+        street,
+        city,
+        state,
+        postCode,
+      } = walletStore?.stripeDetails ?? {};
+
       const form = {
-        country: walletStore.stripeDetails.country,
-        firstName: walletStore.stripeDetails.firstName,
-        lastName: walletStore.stripeDetails.lastName,
+        country,
+        firstName,
+        lastName,
         gender: '',
-        dob: walletStore.stripeDetails.dob,
-        phoneNumber: walletStore.stripeDetails.phoneNumber,
-        ssn: walletStore.stripeDetails.ssn,
-        personalIdNumber: walletStore.stripeDetails.personalIdNumber,
-        street: walletStore.stripeDetails.street,
-        city: walletStore.stripeDetails.city,
-        state: walletStore.stripeDetails.state,
-        postCode: walletStore.stripeDetails.postCode,
+        dob,
+        phoneNumber,
+        ssn,
+        personalIdNumber,
+        street,
+        city,
+        state,
+        postCode,
         stripeAgree: localStore.stripeAgree,
       };
 
@@ -104,12 +118,13 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
   const saveBank = useCallback(async () => {
     try {
       localStore.setLoading(true);
-
+      const { country, accountNumber, routingNumber, phoneNumber } =
+        walletStore?.stripeDetails ?? {};
       const form = {
-        country: walletStore.stripeDetails.country,
-        accountNumber: walletStore.stripeDetails.accountNumber,
-        routingNumber: walletStore.stripeDetails.routingNumber,
-        phoneNumber: walletStore.stripeDetails.phoneNumber,
+        country,
+        accountNumber,
+        routingNumber,
+        phoneNumber,
       };
 
       Object.keys(form).forEach(key => {
@@ -121,7 +136,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
           throw new UserError(msg);
         }
       });
-      await walletStore.addStripeBank(form);
+      await walletStore?.addStripeBank(form);
       navigation.goBack();
     } catch (err) {
       if (!isUserError(err) && err instanceof Error) {

@@ -2,11 +2,11 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import Switch from 'react-native-switch-pro';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
 import sessionService from '~/common/services/session.service';
+import Switch from '~/common/components/controls/Switch';
 
 export default function () {
   const theme = ThemedStyles.style;
@@ -70,7 +70,7 @@ export default function () {
           style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}>
           {i18n.t('settings.showMatureContent')}
         </MText>
-        <Switch value={matureContent} onSyncPress={save} />
+        <Switch value={matureContent} onChange={save} />
       </View>
     </View>
   );

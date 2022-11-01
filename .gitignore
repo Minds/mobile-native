@@ -36,6 +36,7 @@ local.properties
 # node.js
 #
 node_modules/
+ios/.xcode.env.local
 
 # BUCK
 buck-out/

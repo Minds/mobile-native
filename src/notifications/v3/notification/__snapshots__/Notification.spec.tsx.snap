@@ -204,7 +204,6 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         >
            Fake user's 
         </Text>
-        
          
         <Text
           onPress={[Function]}

@@ -60,35 +60,22 @@ const WalletScreen = observer((props: PropsType) => {
 
   useEffect(() => {
     store.loadWallet();
-    if (props.route.params && props.route.params.currency) {
-      store.setCurrent(
-        props.route.params.currency === 'cash' ? 'usd' : 'tokens',
-      );
-      if (props.route.params.section) {
-        if (props.route.params.currency === 'cash') {
-          if (
-            ['earnings', 'transactions', 'settings'].includes(
-              props.route.params.section,
-            )
-          ) {
-            usdTabStore.setOption(props.route.params.section as UsdOptions);
-          }
-        } else {
-          if (
-            [
-              'rewards',
-              'balance',
-              'transactions',
-              'settings',
-              'earnings',
-            ].includes(props.route.params.section)
-          ) {
-            tokenTabStore.setOption(
-              props.route.params.section as TokensOptions,
-            );
-          }
-        }
-      }
+    const { currency, section } = props.route.params ?? {};
+    if (!currency || !section) {
+      return;
+    }
+    store.setCurrent(currency === 'cash' ? 'usd' : 'tokens');
+    if (
+      currency === 'cash' &&
+      ['earnings', 'transactions', 'settings'].includes(section)
+    ) {
+      usdTabStore.setOption(section as UsdOptions);
+    } else if (
+      ['earnings', 'transactions', 'settings', 'rewards', 'balance'].includes(
+        section,
+      )
+    ) {
+      tokenTabStore.setOption(section as TokensOptions);
     }
   }, [props.route.params, store, tokenTabStore, usdTabStore]);
 
