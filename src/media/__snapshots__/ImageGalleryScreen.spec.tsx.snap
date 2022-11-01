@@ -1,19 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ImageGalleryScreen should render correctly 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "backgroundColor": "#1F252C",
-      },
-    ]
-  }
->
+<View>
   <View
     style={
       Array [
@@ -186,5 +174,5 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       }
     />
   </View>
-</RCTSafeAreaView>
+</View>
 `;

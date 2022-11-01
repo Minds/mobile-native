@@ -8,12 +8,14 @@ type propsType = {
   text?: string;
   spinner?: boolean;
   style?: TextStyle | TextStyle[];
+  disabled?: boolean;
 };
 
-const SaveButton = ({ onPress, text, spinner, style }: propsType) => {
+const SaveButton = ({ onPress, text, spinner, style, disabled }: propsType) => {
   return (
     <Spacer containerStyle={style}>
       <Button
+        disabled={disabled}
         onPress={onPress}
         spinner={spinner}
         mode="flat"

@@ -315,6 +315,7 @@ export type AppStackParamList = {
   };
   MultiUserScreen: {};
   TopNewsfeed: {};
+  InAppVerification: {};
 };
 
 // types for channel edit screens

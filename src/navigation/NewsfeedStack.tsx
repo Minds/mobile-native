@@ -35,6 +35,14 @@ export default function () {
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
       />
+      <NewsfeedStack.Screen
+        name="InAppVerification"
+        getComponent={() =>
+          require('~/in-app-verification').InAppVerificationStack
+        }
+        options={hideHeader}
+        initialParams={{ noBottomInset: true }}
+      />
     </NewsfeedStack.Navigator>
   );
 }
