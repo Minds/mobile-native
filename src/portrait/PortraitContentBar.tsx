@@ -134,7 +134,7 @@ const styles = ThemedStyles.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    'bgIconActive',
+    'bgAvatarActive',
   ],
   listContainerStyle: [
     'paddingLeft2x',
