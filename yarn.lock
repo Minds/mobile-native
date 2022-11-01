@@ -11560,6 +11560,14 @@ expo-modules-core@0.11.5:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-sensors@~11.4.0:
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-11.4.0.tgz#9794df759d0b946ec5d5b551b0036c63aada18af"
+  integrity sha512-49en5PJLjphYClHdhanqTu8zj4cpX4Mc/TJQjamonJAqWm2EA1Hg8TVh3XN3J3TFnmZaG8AwWbQG4R8wXmjOmg==
+  dependencies:
+    "@expo/config-plugins" "~5.0.0"
+    invariant "^2.2.4"
+
 expo@^46.0.10:
   version "46.0.10"
   resolved "https://registry.yarnpkg.com/expo/-/expo-46.0.10.tgz#a352057489474279b0207cc6b01540edc04e1806"

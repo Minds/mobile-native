@@ -38,6 +38,8 @@ PODS:
   - ExpoModulesCore (0.11.5):
     - React-Core
     - ReactCommon/turbomodule/core
+  - EXSensors (11.4.0):
+    - ExpoModulesCore
   - FBLazyVector (0.69.6)
   - FBReactNativeSpec (0.69.6):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -630,6 +632,7 @@ DEPENDENCIES:
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
+  - EXSensors (from `../node_modules/expo-sensors/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (= 0.169.0)
@@ -798,6 +801,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-linear-gradient/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
+  EXSensors:
+    :path: "../node_modules/expo-sensors/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -986,6 +991,7 @@ SPEC CHECKSUMS:
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
   ExpoLinearGradient: 1a3af07c6dab3c612967a294836df9ae717431df
   ExpoModulesCore: 5a973701f4400d70254bc836305228731c829010
+  EXSensors: a34fb0d416eae3ecaaab43ec64dca0854227d3bf
   FBLazyVector: 739d2f9719faecb463c7aa191591af31c8c94182
   FBReactNativeSpec: 957de82f66e31f2f14bbec34e37242282fdd26de
   Flipper: 55f10244ce1a82d4adc1cb817bc492f11e22f6ff
