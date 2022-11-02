@@ -54,10 +54,8 @@ const TokensTab = observer(({ route }: { route: any }) => {
   useEffect(() => {
     wallet.loadPrices();
     if (
-      route.params &&
-      route.params.subtype &&
       ['supply', 'transactions', 'liquidity', 'rewards'].includes(
-        route.params.subtype,
+        route.params?.subtype,
       )
     ) {
       store.setOption(capitalize(route.params.subtype) as TokensOptions);

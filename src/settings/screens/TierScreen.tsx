@@ -75,8 +75,8 @@ const createTierStore = () => {
 
 const TierScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const tier: SupportTiersType | boolean = route.params.tier;
-  const tierManagementStore = route.params.tierManagementStore;
+  const tier: SupportTiersType | boolean = route.params?.tier ?? false;
+  const tierManagementStore = route.params?.tierManagementStore;
 
   let isNew = true;
 
@@ -98,10 +98,10 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
 
   const save = useCallback(async () => {
     localStore.setSaving(true);
-    const tier = await localStore.saveTier();
+    const savedTier = await localStore.saveTier();
     localStore.setSaving(false);
-    if (isNew && tier && tierManagementStore) {
-      tierManagementStore.addTier(tier);
+    if (isNew && savedTier && tierManagementStore) {
+      tierManagementStore.addTier(savedTier);
     }
     navigation.goBack();
   }, [localStore, navigation, tierManagementStore, isNew]);

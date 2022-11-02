@@ -30,12 +30,12 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   });
 
   useEffect(() => {
-    const q = decodeURIComponent(props.route.params?.q || '');
-    const query = props.route.params.query || q;
-    if (props.route.params.f) {
-      store.setAlgorithm(props.route.params.f);
+    const q = decodeURIComponent(props.route.params?.q ?? '');
+    const { query = q, f, plus } = props.route.params ?? {};
+    if (f) {
+      store.setAlgorithm(f);
     }
-    store.setQuery(query, props.route.params.plus);
+    store.setQuery(query, plus);
   }, [store, props.route.params]);
 
   return (

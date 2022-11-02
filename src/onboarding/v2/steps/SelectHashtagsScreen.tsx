@@ -30,7 +30,7 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
     let unsubscribe;
 
     // prevent leaving the screen if it is the initial screen
-    if (route && route.params && route.params.initial) {
+    if (route.params?.initial) {
       unsubscribe = navigation.addListener('beforeRemove', e => {
         if (hashtag.suggested.filter(s => s.selected).length >= 3) {
           return;
@@ -49,15 +49,13 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
       // refresh in-feed notices when leaving the screen
       inFeedNoticesService.load();
 
-      if (route && route.params && route.params.initial) {
-        if (redirectExperiment.on) {
-          navigation.navigate('Tabs', {
-            screen: 'Discovery',
-          });
-        }
+      if (route.params?.initial && redirectExperiment.on) {
+        navigation.navigate('Tabs', {
+          screen: 'Discovery',
+        });
       }
     };
-  }, [hashtag, navigation, route]);
+  }, [hashtag, navigation, redirectExperiment.on, route]);
 
   const onPress = () => {
     if (hashtag.suggested.filter(s => s.selected).length >= 3) {

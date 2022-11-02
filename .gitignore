@@ -36,8 +36,6 @@ local.properties
 # node.js
 #
 node_modules/
-npm-debug.log
-yarn-error.log
 ios/.xcode.env.local
 
 # BUCK
@@ -74,3 +72,6 @@ sentry.properties
 
 !/.githooks
 !/.husky
+
+apps/
+*.log

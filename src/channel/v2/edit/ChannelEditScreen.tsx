@@ -61,13 +61,10 @@ const createEditChannelStore = () => ({
 });
 
 const Avatar = observer(({ route }: PropsType) => {
-  const store = route.params.store;
+  const { store } = route.params ?? {};
   const avatarSource = store.channel?.getAvatarSource();
 
-  const onAvatarUpload = useCallback(
-    () => route.params.store.upload('avatar'),
-    [route.params.store],
-  );
+  const onAvatarUpload = useCallback(() => store?.upload('avatar'), [store]);
 
   const inside = (
     <View style={styles.tapOverlayView}>
@@ -98,18 +95,15 @@ const Avatar = observer(({ route }: PropsType) => {
 });
 
 const Banner = observer(({ route }: PropsType) => {
-  const store = route.params.store;
-  const bannerSource = store.channel?.getBannerSource();
+  const { store } = route.params ?? {};
+  const bannerSource = store?.channel?.getBannerSource();
 
-  const onBannerUpload = useCallback(
-    () => route.params.store.upload('banner'),
-    [route.params.store],
-  );
+  const onBannerUpload = useCallback(() => store?.upload('banner'), [store]);
 
   const inside = (
     <View style={styles.tapOverlayView}>
-      {store.uploading && store.bannerProgress ? (
-        <Progress.Pie progress={store.bannerProgress} size={36} />
+      {store?.uploading && store?.bannerProgress ? (
+        <Progress.Pie progress={store?.bannerProgress} size={36} />
       ) : (
         <SmallCircleButton
           name="camera"
@@ -129,7 +123,7 @@ const Banner = observer(({ route }: PropsType) => {
   );
 });
 
-const Bio = observer(({ route, navigation, store }: PropsType) => (
+const Bio = observer(({ store }: PropsType) => (
   <InputContainer
     placeholder={i18n.t('channel.edit.bio')}
     onChangeText={store.setBriefDescription}
@@ -184,10 +178,11 @@ const ChannelEditScreen = (props: PropsType) => {
   const store = useLocalStore(createEditChannelStore);
 
   const listRef = React.useRef<any>(null);
+  const { store: routeStore } = route.params ?? {};
 
   const save = useCallback(async () => {
     store.setLoaded(false);
-    await route.params.store.save({
+    await routeStore?.save({
       name: store.displayName,
       city: store.city,
       dob: store.dob,
@@ -195,14 +190,13 @@ const ChannelEditScreen = (props: PropsType) => {
     });
     store.setLoaded(true);
     navigation.goBack();
-  }, [store, navigation, route.params.store]);
+  }, [store, routeStore, navigation]);
 
   useEffect(() => {
-    const params = route.params;
-    if (params) {
-      store.initialLoad(params.store);
+    if (routeStore) {
+      store.initialLoad(routeStore);
     }
-  }, [route, store]);
+  }, [routeStore, store]);
 
   /**
    * Set save button on header right
@@ -225,15 +219,17 @@ const ChannelEditScreen = (props: PropsType) => {
             : undefined,
         headerHideBackButton: Platform.OS === 'ios',
       }),
-    [navigation, save],
+    [navigation, save, theme.colorPrimaryText],
   );
 
+  /**
+   * ANY PARTICULAR REASON FOR 2 IDENTICAL EFFECTS?
+   */
   useEffect(() => {
-    const params = route.params;
-    if (params) {
-      store.initialLoad(params.store);
+    if (routeStore) {
+      store.initialLoad(routeStore);
     }
-  }, [route, store]);
+  }, [routeStore, store]);
 
   const onFocusLocation = useDebouncedCallback(
     () => {

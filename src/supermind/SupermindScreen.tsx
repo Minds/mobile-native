@@ -18,12 +18,11 @@ export default observer(function SupermindScreen({
   route,
 }: SupermindScreenProps) {
   const navigation = useNavigation();
-  let { supermind, loading, error } = useSupermind(route.params.guid);
+  const { supermindRequest, guid } = route.params ?? {};
+  let { supermind, loading, error } = useSupermind(guid);
 
-  if (!supermind && route.params.supermindRequest) {
-    supermind = SupermindRequestModel.checkOrCreate(
-      route.params.supermindRequest,
-    );
+  if (!supermind && supermindRequest) {
+    supermind = SupermindRequestModel.checkOrCreate(supermindRequest);
   }
 
   if (error && !supermind) {
@@ -35,8 +34,11 @@ export default observer(function SupermindScreen({
     <Screen safe>
       <ScrollView>
         <ScreenHeader title="Supermind" back />
-        {!supermind && loading && <CenteredLoading />}
-        {supermind && <SupermindRequest request={supermind} />}
+        {supermind ? (
+          <SupermindRequest request={supermind} />
+        ) : (
+          loading && <CenteredLoading />
+        )}
       </ScrollView>
     </Screen>
   );

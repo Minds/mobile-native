@@ -1721,5 +1721,36 @@
   "removeFromFeed": "Remove from feed",
   "channelSelect": {
     "title": "Select a channel"
+  },
+  "inAppVerification": {
+    "notice": {
+      "title": "Verify account",
+      "description": "Before getting down to business on Minds, we ask that you please verify your account."
+    },
+    "onboarding": {
+      "title": "A privacy protecting human detector",
+      "description": "Most apps require creepy amounts of personal data to verify your location and prevent spam. Not Minds.",
+      "step1": {
+        "title": "Step 1",
+        "description": "Write down the code we send you."
+      },
+      "step2": {
+        "title": "Step 2",
+        "description": "Take a photo of the code."
+      },
+      "step3": {
+        "title": "Step 3",
+        "description": "That's it. Now you can earn tokens and other rewards.."
+      }
+    },
+    "codeRequest": {
+      "title": "Write down the code we send you.",
+      "description": "Once you're ready your camera will open and you will take a photo of the code.",
+      "description2": "Yes, it really is that simple."
+    },
+    "confirmation": {
+      "title": "You're all set.",
+      "description": "Now you can earn tokens and rewards."
+    }
   }
 }

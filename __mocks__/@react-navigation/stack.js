@@ -2,7 +2,10 @@ export default {
   Header: {},
 };
 
-export const createStackNavigator = jest.fn();
+export const createStackNavigator = () => ({
+  Stack: jest.fn(),
+  Navigator: jest.fn(),
+});
 export const Header = {
   HEIGHT: 80,
 };

@@ -16,6 +16,7 @@ import {
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
+import SeeLatestButton from '../newsfeed/SeeLatestButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
@@ -41,10 +42,14 @@ function SupermindConsoleScreen({
 }: SupermindConsoleScreenProps) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>(
-    route.params?.tab || 'inbound',
+    route.params?.tab ?? 'inbound',
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
+  const scrollToTopAndRefresh = () => {
+    listRef.current?.scrollToTop();
+    return listRef.current?.refreshList();
+  };
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -103,6 +108,13 @@ function SupermindConsoleScreen({
           mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
         }
         endpointData=""
+      />
+
+      <SeeLatestButton
+        countEndpoint={`api/v3/supermind/${
+          mode === 'inbound' ? 'inbox' : 'outbox'
+        }/count`}
+        onPress={scrollToTopAndRefresh}
       />
 
       <AnimatePresence>

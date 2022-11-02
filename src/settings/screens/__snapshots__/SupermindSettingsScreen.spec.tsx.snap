@@ -1,19 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Supermind settings should load data and render correctly 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "backgroundColor": "#1F252C",
-      },
-    ]
-  }
->
+<View>
   <View
     style={null}
   >
@@ -394,23 +382,11 @@ exports[`Supermind settings should load data and render correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`Supermind settings should load data and render correctly 2`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "backgroundColor": "#1F252C",
-      },
-    ]
-  }
->
+<View>
   <View
     style={null}
   >
@@ -1086,23 +1062,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       </View>
     </View>
   </RCTScrollView>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`Supermind settings should update the store and submit 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "backgroundColor": "#1F252C",
-      },
-    ]
-  }
->
+<View>
   <View
     style={null}
   >
@@ -1483,5 +1447,5 @@ exports[`Supermind settings should update the store and submit 1`] = `
       </View>
     </View>
   </RCTScrollView>
-</RCTSafeAreaView>
+</View>
 `;

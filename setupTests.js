@@ -113,5 +113,7 @@ jest.mock('@stripe/stripe-react-native', () =>
   require('@stripe/stripe-react-native/jest/mock.js'),
 );
 
+jest.mock('expo-sensors', () => jest.fn());
+
 import ri18n from 'utils/locales';
 ri18n.init();

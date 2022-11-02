@@ -187,6 +187,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Object {
                       "alignItems": "center",
+                      "flex": 1,
                       "flexDirection": "row",
                       "flexGrow": 1,
                       "marginLeft": 16,
@@ -221,9 +222,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "flex-end",
-                      "marginRight": 15,
-                      "paddingRight": 4,
-                      "width": 75,
+                      "marginRight": 16,
                     }
                   }
                 >
