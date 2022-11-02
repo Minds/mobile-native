@@ -1162,7 +1162,8 @@
     "usd": {
       "bankInfo": "Bank Information",
       "bankInfoDescription": "Add your bank account details where monthly USD rewards are deposited",
-      "add": "Add your bank details",
+      "add": "Create Cash Account",
+      "complete": "Complete step",
       "leave": "Leave Monetization Program",
       "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
       "leaveButton": "Leave Monetization Program",
@@ -1179,6 +1180,28 @@
         "plusActivity": "Your account's activity level to determine your multiplier",
         "proPageviews": "Your total earnings for registered pageviews on your content or channel",
         "proReferrals": "Your total earning for active users you have referred."
+      },
+      "restrictedReasons": {
+        "platform_paused": {
+          "title": "Cash Account Restricted",
+          "description": "Your account is temporarily restricted by the Admin team. Please contact support for more information"
+        },
+        "requirements.past_due": {
+          "title": "Your cash account is currently restricted",
+          "description": "Additional verification information is required to enable payout or charge capabilities on your account"
+        },
+        "requirements.pending_verification": {
+          "title": "Verifying cash account",
+          "description": "You're account is currently being verified. Check again later"
+        },
+        "under_review": {
+          "title": "Under review",
+          "description": "You're cash account is under review by Stripe, our service provider"
+        },
+        "other": {
+          "title": "Your cash account is currently restricted",
+          "description": "You are currently not able to accept any cash payments. Contact support for more details"
+        }
       }
     },
     "transactions": {
