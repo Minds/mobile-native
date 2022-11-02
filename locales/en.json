@@ -1162,7 +1162,8 @@
     "usd": {
       "bankInfo": "Bank Information",
       "bankInfoDescription": "Add your bank account details where monthly USD rewards are deposited",
-      "add": "Create Cash Account",
+      "add": "Add your bank details",
+      "createAccount": "Create Cash Account",
       "complete": "Complete step",
       "leave": "Leave Monetization Program",
       "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
@@ -1186,11 +1187,11 @@
           "title": "Cash Account Restricted",
           "description": "Your account is temporarily restricted by the Admin team. Please contact support for more information"
         },
-        "requirements.past_due": {
+        "past_due": {
           "title": "Your cash account is currently restricted",
           "description": "Additional verification information is required to enable payout or charge capabilities on your account"
         },
-        "requirements.pending_verification": {
+        "pending_verification": {
           "title": "Verifying cash account",
           "description": "You're account is currently being verified. Check again later"
         },

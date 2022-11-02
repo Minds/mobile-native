@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
-import { B1 } from '../../../common/ui';
+import { B1, B2 } from '../../../common/ui';
 import useStripeConnect from './useStripeConnect';
 
 // TODO: show Update Your Details if experiment active => https://gitlab.com/minds/front/-/merge_requests/2095/diffs#4e532d4a1a8dd6851e1b77c29f9de2ad6a48c9fa_47_50
@@ -34,7 +34,9 @@ const StripeConnectButton = () => {
       {!!restricted && (
         <>
           <B1 color="danger">{restrictedTitle}</B1>
-          <B1>{restrictedDescription}</B1>
+          <B2 color="secondary" bottom="L">
+            {restrictedDescription}
+          </B2>
         </>
       )}
       <Button
@@ -42,7 +44,9 @@ const StripeConnectButton = () => {
         loading={loading}
         onPress={account ? openStripe : createAccount}
         text={
-          account ? i18n.t('wallet.usd.complete') : i18n.t('wallet.usd.add')
+          account
+            ? i18n.t('wallet.usd.complete')
+            : i18n.t('wallet.usd.createAccount')
         }
       />
     </>
@@ -61,18 +65,14 @@ const restriectedMapping: {
   },
   // Requirements past due
   'requirements.past_due': {
-    title: i18n.t('wallet.usd.restrictedReasons.requirements.past_due.title'),
-    description: i18n.t(
-      'wallet.usd.restrictedReasons.requirements.past_due.title',
-    ),
+    title: i18n.t('wallet.usd.restrictedReasons.past_due.title'),
+    description: i18n.t('wallet.usd.restrictedReasons.past_due.description'),
   },
   // Requirements pending verification
   'requirements.pending_verification': {
-    title: i18n.t(
-      'wallet.usd.restrictedReasons.requirements.pending_verification.title',
-    ),
+    title: i18n.t('wallet.usd.restrictedReasons.pending_verification.title'),
     description: i18n.t(
-      'wallet.usd.restrictedReasons.requirements.pending_verification.description',
+      'wallet.usd.restrictedReasons.pending_verification.description',
     ),
   },
   // Requirements pending verification
