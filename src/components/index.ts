@@ -1,6 +1,6 @@
-export { ErrorGlobalWrapper } from './errorGlobalWrapper';
-export { ErrorSuspense } from './errorSuspense';
-export { Widget } from './widget';
+export { ErrorGlobalWrapper } from './ErrorGlobalWrapper';
+export { ErrorSuspense } from './ErrorSuspense';
+export { Widget } from './Widget';
 
 export type LoadingWrapper = {
   loadingStart: () => void;

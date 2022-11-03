@@ -3,7 +3,7 @@ PODS:
   - Bolts/Tasks (1.9.0)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
-  - CodePush (7.0.4):
+  - CodePush (7.0.5):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.12)
     - React-Core
@@ -977,7 +977,7 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  CodePush: b51b7ac64c07d4eacfc8cc5750a1dd28adbf2528
+  CodePush: ef496b6fd053012e985e3d4a0ab9f9dbf2739eac
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: e418d737a036e788510f2c4ad6c10a7d54d18586
   EXAV: 596506c9bee54ad52f2f3b625cdaeb9d9f2dd6b7

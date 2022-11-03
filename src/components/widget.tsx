@@ -3,7 +3,7 @@ import {
   DefaultErrorFallback,
   DefaultSuspenseFallback,
   ErrorSuspense,
-} from './errorSuspense';
+} from './ErrorSuspense';
 
 type WidgetProps = {
   title?: string;
