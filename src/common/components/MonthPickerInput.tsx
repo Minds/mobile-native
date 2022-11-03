@@ -36,9 +36,7 @@ const MonthPickerInput = observer((props: PropsType) => {
 
   return (
     <>
-      <PressableLine
-        onPress={localStore.openPicker}
-        containerStyle={props.containerStyle}>
+      <PressableLine onPress={localStore.openPicker}>
         <HairlineRow flex>
           <Row align="centerStart" flex space="L">
             <Column stretch>
