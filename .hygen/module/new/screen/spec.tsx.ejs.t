@@ -1,5 +1,5 @@
 ---
-to: <%= absPath %>/screens/<%= dashName%>/<%= camelName%>.spec.tsx
+to: <%= absPath %>/screens/<%= dashName%>/<%= CamelName%>Screen.spec.tsx
 ---
 import React from 'react';
 import {
@@ -9,7 +9,7 @@ import {
   RenderAPI,
 } from '@testing-library/react-native';
 import { useTranslation } from 'react-i18next';
-import { <%=CamelName%>Screen } from './<%=camelName%>.screen';
+import { <%=CamelName%>Screen } from './<%=CamelName%>Screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { renderHook } from '@testing-library/react-hooks';
 

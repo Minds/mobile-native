@@ -1,12 +1,12 @@
 ---
-to: "<%=widget ? `${absPath}/widgets/${camelName}.widget.tsx` : null %>"
+to: "<%=widget ? `${absPath}/widgets/${CamelName}Widget.tsx` : null %>"
 ---
 import React from 'react';
 import { Button, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Widget } from 'components';
-import { <%= SingularName%>, use<%= PluralName%> } from './<%= camelName%>.logic';
+import { <%= SingularName%>, use<%= PluralName%> } from './<%= CamelName%>Widget.logic';
 
 export function <%= CamelName%>Widget(): JSX.Element {
   const navigation = useNavigation();

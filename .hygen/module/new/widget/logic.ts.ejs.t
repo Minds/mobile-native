@@ -1,5 +1,5 @@
 ---
-to: "<%=widget ? `${absPath}/widgets/${camelName}.logic.ts` : null %>"
+to: "<%=widget ? `${absPath}/widgets/${CamelName}Widget.logic.ts` : null %>"
 ---
 import { useQueryApi } from 'services/hooks';
 import { get<%= PluralName%> } from '../api/';

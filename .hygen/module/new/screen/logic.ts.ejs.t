@@ -1,5 +1,5 @@
 ---
-to: "<%=api ? `${absPath}/screens/${dashName}/${camelName}.logic.ts` : null %>"
+to: "<%=api ? `${absPath}/screens/${dashName}/${CamelName}Screen.logic.ts` : null %>"
 ---
 import React, { useEffect, useRef, useState } from 'react';
 import { LoadingWrapper } from 'components/.';

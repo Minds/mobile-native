@@ -1,5 +1,5 @@
 ---
-to: "<%=absPath%>/widgets/hub<%=CamelName%>.widget.tsx"
+to: "<%=absPath%>/widgets/Hub<%=CamelName%>Widget.tsx"
 ---
 import React from 'react';
 import { Button } from 'react-native';

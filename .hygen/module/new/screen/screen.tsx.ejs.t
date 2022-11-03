@@ -1,5 +1,5 @@
 ---
-to: <%= `${absPath}/screens/${dashName}/${camelName}.screen.tsx`%>
+to: <%= `${absPath}/screens/${dashName}/${CamelName}Screen.tsx`%>
 ---
 import React from 'react';
 import { ScrollView, Text } from 'react-native';

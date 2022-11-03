@@ -1,5 +1,5 @@
 ---
-to: "<%=widget ? `${absPath}/widgets/${camelName}.widget.spec.tsx` : null %>"
+to: "<%=widget ? `${absPath}/widgets/${CamelName}Widget.spec.tsx` : null %>"
 ---
 import React from 'react';
 import {
@@ -8,7 +8,7 @@ import {
   waitFor,
   RenderAPI,
 } from '@testing-library/react-native';
-import { <%=CamelName%>Widget } from './<%=camelName%>.widget';
+import { <%=CamelName%>Widget } from './<%=CamelName%>Widget';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { renderHook } from '@testing-library/react-hooks';
