@@ -10,7 +10,7 @@ import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
 import { createUserStore } from '~/common/services/storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
-import { ApiService } from '.';
+import { ApiService } from './api.service';
 import analyticsService from '~/common/services/analytics.service';
 
 export class TokenExpiredError extends Error {}
