@@ -1,6 +1,9 @@
+import { useNavigation } from '@react-navigation/core';
+import { InteractionManager } from 'react-native';
 import { showNotification } from '../../../../AppMessages';
 import useApiFetch, { useApiCall } from '../../../common/hooks/useApiFetch';
-import openUrlService from '../../../common/services/open-url.service';
+import i18nService from '../../../common/services/i18n.service';
+import { MINDS_URI } from '../../../config/Config';
 
 interface StripeAccount {
   id: string;
@@ -27,9 +30,11 @@ interface StripeConnectOnboardingResponse {
 }
 
 export default function useStripeConnect() {
+  const navigation = useNavigation();
   const {
     result: account,
     loading: accountLoading,
+    refresh: refreshAccount,
   } = useApiFetch<StripeAccount>('api/v3/payments/stripe/connect/account');
   const {
     fetch: getRedirectUrl,
@@ -47,7 +52,19 @@ export default function useStripeConnect() {
   const openStripe = async () => {
     try {
       const { redirect_url } = await getRedirectUrl();
-      openUrlService.openLinkInInAppBrowser(redirect_url);
+      navigation.navigate('WebView', {
+        url: redirect_url,
+        redirectUrl: MINDS_URI + 'wallet/cash/settings',
+        onRedirect: () => {
+          refreshAccount();
+          InteractionManager.runAfterInteractions(() => {
+            showNotification(
+              i18nService.t('wallet.usd.setupSuccess'),
+              'success',
+            );
+          });
+        },
+      });
     } catch (e) {
       console.error(e);
       showNotification(

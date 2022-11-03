@@ -377,6 +377,12 @@ export default function () {
         name="AppInfo"
         getComponent={() => require('~/settings/screens/AppInfoScreen').default}
       />
+      <MoreStack.Screen
+        name="WebView"
+        getComponent={() =>
+          require('~/common/components/WebViewScreen').default
+        }
+      />
     </MoreStack.Navigator>
   );
 }

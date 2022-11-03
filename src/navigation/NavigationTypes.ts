@@ -46,6 +46,11 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
+  WebView: {
+    url: string;
+    redirectUrl?: string;
+    onRedirect?: () => void;
+  };
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };

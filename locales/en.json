@@ -1203,7 +1203,8 @@
           "title": "Your cash account is currently restricted",
           "description": "You are currently not able to accept any cash payments. Contact support for more details"
         }
-      }
+      },
+      "setupSuccess": "Cash account set up successfully"
     },
     "transactions": {
       "transaction": "Transaction",
@@ -1776,5 +1777,6 @@
       "title": "You're all set.",
       "description": "Now you can earn tokens and rewards."
     }
-  }
+  },
+  "failedTryAgain": "Sorry, failed to load. please try again"
 }
