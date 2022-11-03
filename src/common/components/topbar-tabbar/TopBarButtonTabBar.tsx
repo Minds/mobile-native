@@ -8,6 +8,7 @@ export type ButtonTabType<T> = {
   id: T;
   title?: string;
   icon?: { name: string; type: string; subtitle?: string };
+  testID?: string;
 };
 
 type PropsType<T> = {

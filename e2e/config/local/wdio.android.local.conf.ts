@@ -24,7 +24,10 @@ config.capabilities = [
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',
     // The path to the app
-    'appium:app': join(process.cwd(), './apps/Minds.apk'),
+    'appium:app': join(
+      process.cwd(),
+      process.env.DEV_APK ? './apps/Minds-dev.apk' : './apps/Minds.apk',
+    ),
     'appium:appWaitActivity': 'com.minds.mobile.MainActivity',
     'appium:newCommandTimeout': 240,
   },

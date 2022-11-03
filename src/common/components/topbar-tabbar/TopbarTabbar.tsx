@@ -14,6 +14,7 @@ export type TabType<T> = {
   id: T;
   title: string;
   subtitle?: string;
+  testID?: string;
 };
 
 type PropsType<T> = {
@@ -58,6 +59,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
           <TouchableOpacity
             onPress={() => props.onChange(tab.id)}
             key={i}
+            testID={tab.testID}
             style={[
               tabStyle,
               props.tabStyle,

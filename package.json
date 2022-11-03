@@ -25,9 +25,11 @@
     "test:real:android": "wdio run e2e/test/conf/wdio.android.conf.js",
     "e2e:android:browserstack": "wdio e2e/config/browserstack/wdio.android.bs.conf.ts",
     "e2e:ios:browserstack": "wdio e2e/config/browserstack/wdio.ios.bs.conf.ts",
-    "e2e:android:local": "concurrently \"appium --allow-cors\" \"wdio e2e/config/local/wdio.android.local.conf.ts\"",
-    "e2e:ios:local": "concurrently \"appium --allow-cors\" \"wdio e2e/config/local/wdio.ios.local.conf.ts\"",
-    "download:apk:rc": "./download-rc-apk.sh"
+    "e2e:android:local": "wdio e2e/config/local/wdio.android.local.conf.ts",
+    "e2e:ios:local": "wdio e2e/config/local/wdio.ios.local.conf.ts",
+    "download:apk:rc": "./download-rc-apk.sh",
+    "build:apk:dev": "./generate-dev-apk.sh",
+    "appium": "appium"
   },
   "dependencies": {
     "@bigbee.dev/react-native-measure-text-size": "^1.0.0",
@@ -196,7 +198,6 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "browserstack-local": "^1.5.1",
     "chai": "^4.3.6",
-    "concurrently": "^7.5.0",
     "cucumber": "^6.0.7",
     "dotenv": "^16.0.3",
     "enzyme": "^3.11.0",

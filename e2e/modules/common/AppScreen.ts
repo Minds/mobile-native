@@ -1,3 +1,5 @@
+import { selectElement } from '../../helpers/Utils';
+
 export default class AppScreen {
   private selector: string;
 
@@ -11,7 +13,7 @@ export default class AppScreen {
    * @param {boolean} isShown
    */
   async waitForIsShown(isShown = true): Promise<boolean | void> {
-    return $(this.selector).waitForDisplayed({
+    return selectElement('id', this.selector).waitForDisplayed({
       reverse: !isShown,
     });
   }

@@ -49,7 +49,11 @@ const UsdTab = observer(
     const options: Array<ButtonTabType<UsdOptions>> = [
       { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
       { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
-      { id: 'settings', title: i18n.t('moreScreen.settings') },
+      {
+        id: 'settings',
+        title: i18n.t('moreScreen.settings'),
+        testID: 'UsdTab:settings',
+      },
     ];
 
     let body;
