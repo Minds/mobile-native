@@ -1,9 +1,11 @@
 import { ReactNode } from 'react';
 import { UISpacingPropType } from '~styles/Tokens';
 import { ViewStyle } from 'react-native';
+import { SpacingType } from '../helpers';
 
 export type SpacerPropType = {
   containerStyle?: ViewStyle | ViewStyle[];
+  spacingType?: SpacingType;
   children?: ReactNode;
 } & UISpacingPropType;
 
@@ -35,4 +37,4 @@ export type ColumnPropType = {
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
   stretch?: boolean;
-};
+} & SpacerPropType;

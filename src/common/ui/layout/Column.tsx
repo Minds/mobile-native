@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Spacer } from '~ui/layout';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { ColumnPropType, SpacerPropType } from './types';
+import { ColumnPropType } from './types';
 
 export const Column = ({
   align,
@@ -11,7 +11,7 @@ export const Column = ({
   containerStyle,
   background,
   ...more
-}: ColumnPropType & SpacerPropType) => {
+}: ColumnPropType) => {
   const style: ViewStyle = StyleSheet.flatten([
     styles.container,
     align && styles[align],

@@ -97,9 +97,7 @@ function SupermindConsoleScreen({
               tabStyle={theme.paddingVertical}
             />
             {isStripeConnectFeatureOn ? (
-              <Column background="secondary">
-                <StripeConnectButton top="M" bottom="L" />
-              </Column>
+              <StripeConnectButton background="secondary" top="M" bottom="L" />
             ) : (
               <AddBankInformation />
             )}

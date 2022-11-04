@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
-import { B1, B2, Spacer, SpacerPropType } from '../../../common/ui';
+import { B1, B2, Column, ColumnPropType } from '../../../common/ui';
 import useStripeConnect from './useStripeConnect';
 
-type StripeConnectButtonProps = SpacerPropType & {};
+type StripeConnectButtonProps = ColumnPropType & {};
 
 // TODO: show Update Your Details if experiment active => https://gitlab.com/minds/front/-/merge_requests/2095/diffs#4e532d4a1a8dd6851e1b77c29f9de2ad6a48c9fa_47_50
 
@@ -18,6 +19,16 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
     openStripe,
     createAccount,
   } = useStripeConnect();
+
+  // if user had an account and it wasn't restricted, we don't need to render anything
+  if (account && !restricted) {
+    return null;
+  }
+
+  // don't show an empty state
+  if (!account && loading) {
+    return null;
+  }
 
   const restrictedMapping: {
     [k: string]: { title: string; description: string };
@@ -62,7 +73,7 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
     : {};
 
   return (
-    <Spacer horizontal="L" {...props}>
+    <Column spacingType="padding" horizontal="L" {...props}>
       {!!restricted && (
         <>
           <B1 color="danger">{title}</B1>
@@ -82,7 +93,7 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
             : i18n.t('wallet.usd.createAccount')
         }
       />
-    </Spacer>
+    </Column>
   );
 };
 

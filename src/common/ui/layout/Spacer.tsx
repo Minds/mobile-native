@@ -13,19 +13,23 @@ export const Spacer = ({
   space,
   containerStyle,
   children,
+  spacingType,
   ...viewProps
 }: SpacerPropType & Omit<ViewProps, 'style'>) => {
   const styleList: ViewStyle = useMemo(() => {
     const styles: ViewStyle[] | any = [];
-    const spacing: ViewStyle = getSpacingStylesNext({
-      top,
-      left,
-      right,
-      bottom,
-      horizontal,
-      vertical,
-      space,
-    });
+    const spacing: ViewStyle = getSpacingStylesNext(
+      {
+        top,
+        left,
+        right,
+        bottom,
+        horizontal,
+        vertical,
+        space,
+      },
+      spacingType,
+    );
 
     if (spacing) {
       styles.push(spacing);
@@ -36,7 +40,17 @@ export const Spacer = ({
     }
 
     return StyleSheet.flatten(styles);
-  }, [top, left, right, bottom, horizontal, vertical, containerStyle, space]);
+  }, [
+    top,
+    left,
+    right,
+    bottom,
+    horizontal,
+    vertical,
+    containerStyle,
+    space,
+    spacingType,
+  ]);
 
   return (
     <View style={styleList} {...viewProps}>

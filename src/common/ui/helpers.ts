@@ -47,7 +47,12 @@ export const getClosestSize = (size: number, options: any[]) => {
     });
 };
 
-export const getSpacingStylesNext = (props: any) => {
+export type SpacingType = 'margin' | 'padding';
+
+export const getSpacingStylesNext = (
+  props: any,
+  spacingType: SpacingType = 'margin',
+) => {
   const styles: any = {};
   if (!(props && typeof props === 'object')) {
     return styles;
@@ -73,7 +78,7 @@ export const getSpacingStylesNext = (props: any) => {
       continue;
     }
 
-    styles[`margin${capitalizeFirst(key)}`] = unit;
+    styles[`${spacingType}${capitalizeFirst(key)}`] = unit;
   }
 
   return styles;
