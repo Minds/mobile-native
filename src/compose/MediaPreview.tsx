@@ -174,9 +174,15 @@ const MediaPresentation = observer(
   ({ attachment, onDelete, isEdit, portraitMode, entity }) => {
     const isImage = attachment.type.startsWith('image');
 
-    const imageSource = React.useMemo(() => {
-      return { uri: attachment.uri };
+    const mediaSource = React.useMemo(() => {
+      return {
+        uri: attachment.uri,
+      };
     }, [attachment.uri]);
+
+    if (!mediaSource.uri) {
+      return null;
+    }
 
     return isImage ? (
       <View style={styles.image}>
@@ -189,7 +195,7 @@ const MediaPresentation = observer(
           </TouchableOpacity>
         )}
         <FastImage
-          source={imageSource}
+          source={mediaSource}
           style={styles.image}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -217,7 +223,7 @@ const MediaPresentation = observer(
         )}
         <MindsVideo
           entity={entity}
-          video={attachment}
+          video={mediaSource}
           resizeMode={ResizeMode.CONTAIN}
           autoplay
         />
