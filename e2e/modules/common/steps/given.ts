@@ -6,7 +6,7 @@ import LoginScreen from '../../login/LoginScreen';
 import MoreScreen from '../../more/MoreScreen';
 import SettingsScreen from '../../settings/SettingsScreen';
 import WelcomeScreen from '../../welcome/WelcomeScreen';
-import { SCREENS } from '../navigator';
+import { SCREENS } from '../screens';
 import TabBar from './../components/TabBar';
 
 // common "Given" steps

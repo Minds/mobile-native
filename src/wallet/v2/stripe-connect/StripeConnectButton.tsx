@@ -16,16 +16,53 @@ const StripeConnectButton = () => {
     openStripe,
     createAccount,
   } = useStripeConnect();
+
+  const restrictedMapping: {
+    [k: string]: { title: string; description: string };
+  } = {
+    // Admins suspended
+    platform_paused: {
+      title: i18n.t('wallet.usd.restrictedReasons.platform_paused.title'),
+      description: i18n.t(
+        'wallet.usd.restrictedReasons.platform_paused.description',
+      ),
+    },
+    // Requirements past due
+    'requirements.past_due': {
+      title: i18n.t('wallet.usd.restrictedReasons.past_due.title'),
+      description: i18n.t('wallet.usd.restrictedReasons.past_due.description'),
+    },
+    // Requirements pending verification
+    'requirements.pending_verification': {
+      title: i18n.t('wallet.usd.restrictedReasons.pending_verification.title'),
+      description: i18n.t(
+        'wallet.usd.restrictedReasons.pending_verification.description',
+      ),
+    },
+    // Requirements pending verification
+    under_review: {
+      title: i18n.t('wallet.usd.restrictedReasons.under_review.title'),
+      description: i18n.t(
+        'wallet.usd.restrictedReasons.under_review.description',
+      ),
+    },
+    // Other reason
+    other: {
+      title: i18n.t('wallet.usd.restrictedReasons.other.title'),
+      description: i18n.t('wallet.usd.restrictedReasons.other.description'),
+    },
+  };
+
   let restrictedTitle = '';
   let restrictedDescription = '';
 
   if (restricted) {
-    if (restrictedReason && restriectedMapping[restrictedReason]) {
-      restrictedTitle = restriectedMapping[restrictedReason].title;
-      restrictedDescription = restriectedMapping[restrictedReason].description;
+    if (restrictedReason && restrictedMapping[restrictedReason]) {
+      restrictedTitle = restrictedMapping[restrictedReason].title;
+      restrictedDescription = restrictedMapping[restrictedReason].description;
     } else {
-      restrictedTitle = restriectedMapping.other.title;
-      restrictedDescription = restriectedMapping.other.description;
+      restrictedTitle = restrictedMapping.other.title;
+      restrictedDescription = restrictedMapping.other.description;
     }
   }
 
@@ -52,42 +89,6 @@ const StripeConnectButton = () => {
       />
     </>
   );
-};
-
-const restriectedMapping: {
-  [k: string]: { title: string; description: string };
-} = {
-  // Admins suspended
-  platform_paused: {
-    title: i18n.t('wallet.usd.restrictedReasons.platform_paused.title'),
-    description: i18n.t(
-      'wallet.usd.restrictedReasons.platform_paused.description',
-    ),
-  },
-  // Requirements past due
-  'requirements.past_due': {
-    title: i18n.t('wallet.usd.restrictedReasons.past_due.title'),
-    description: i18n.t('wallet.usd.restrictedReasons.past_due.description'),
-  },
-  // Requirements pending verification
-  'requirements.pending_verification': {
-    title: i18n.t('wallet.usd.restrictedReasons.pending_verification.title'),
-    description: i18n.t(
-      'wallet.usd.restrictedReasons.pending_verification.description',
-    ),
-  },
-  // Requirements pending verification
-  under_review: {
-    title: i18n.t('wallet.usd.restrictedReasons.under_review.title'),
-    description: i18n.t(
-      'wallet.usd.restrictedReasons.under_review.description',
-    ),
-  },
-  // Other reason
-  other: {
-    title: i18n.t('wallet.usd.restrictedReasons.other.title'),
-    description: i18n.t('wallet.usd.restrictedReasons.other.description'),
-  },
 };
 
 export default observer(StripeConnectButton);

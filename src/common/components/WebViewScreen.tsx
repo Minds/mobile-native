@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation } from '@react-navigation/core';
+import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import WebView, { WebViewNavigation } from 'react-native-webview';
@@ -16,10 +16,13 @@ type WebViewScreenNavigationProp = StackNavigationProp<
 
 type WebViewScreenProps = {
   route: WebViewScreenRouteProp;
+  navigation: WebViewScreenNavigationProp;
 };
 
-export default function WebViewScreen({ route }: WebViewScreenProps) {
-  const navigation = useNavigation<WebViewScreenNavigationProp>();
+export default function WebViewScreen({
+  route,
+  navigation,
+}: WebViewScreenProps) {
   if (!route.params) return;
 
   return (
