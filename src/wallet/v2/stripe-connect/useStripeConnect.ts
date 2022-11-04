@@ -81,7 +81,7 @@ export default function useStripeConnect() {
      * If the stripe account is in a restricted state
      * https://stripe.com/docs/connect/identity-verification-api for disabled_reasons
      */
-    restricted: !!account?.requirements.disabled_reason,
+    restricted: !!account?.requirements?.disabled_reason,
     /**
      * If payments are enabled or not. Ie. they can accept money.
      */
@@ -94,7 +94,7 @@ export default function useStripeConnect() {
     /**
      * Maps the reason of a restricted state
      */
-    restrictedReason: account?.requirements.disabled_reason,
+    restrictedReason: account?.requirements?.disabled_reason,
     /**
      * creates the stripe account in the backend
      */
