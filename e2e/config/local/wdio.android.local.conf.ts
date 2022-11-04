@@ -23,13 +23,8 @@ config.capabilities = [
     'appium:platformVersion': '12.0',
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',
-    'appium:resetOnSessionStartOnly': true,
-    'appium:noReset': true,
     // The path to the app
-    'appium:app': join(
-      process.cwd(),
-      process.env.DEV_APK ? './apps/Minds-dev.apk' : './apps/Minds.apk',
-    ),
+    'appium:app': join(process.cwd(), './apps/Minds.apk'),
     'appium:appWaitActivity': 'com.minds.mobile.MainActivity',
     'appium:newCommandTimeout': 240,
   },

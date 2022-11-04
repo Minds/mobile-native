@@ -5,5 +5,5 @@ mkdir apps
 # build
 cd android
 ./gradlew assembleDebug
-mv app/build/outputs/apk/debug/app-debug.apk ../apps/Minds-dev.apk
+mv app/build/outputs/apk/debug/app-debug.apk ../apps/Minds.apk
 cd ..

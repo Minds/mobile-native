@@ -27,8 +27,7 @@
     "e2e:ios:browserstack": "wdio e2e/config/browserstack/wdio.ios.bs.conf.ts",
     "e2e:android:local": "wdio e2e/config/local/wdio.android.local.conf.ts",
     "e2e:ios:local": "wdio e2e/config/local/wdio.ios.local.conf.ts",
-    "download:apk:rc": "./download-rc-apk.sh",
-    "build:apk:dev": "./generate-dev-apk.sh",
+    "build:dev:apk": "./generate-dev-apk.sh",
     "appium": "appium"
   },
   "dependencies": {

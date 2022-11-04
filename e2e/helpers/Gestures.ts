@@ -148,7 +148,7 @@ class Gestures {
       },
     ]);
     // Add a pause, just to make sure the swipe is done
-    await driver.pause(1000);
+    await driver.pause(500);
   }
 
   /**

@@ -24,7 +24,7 @@ Given(/^I'm logged in$/, async () => {
     username: targetChannel.username,
     password: targetChannel.password,
   });
-  await HomeScreen.waitForIsShown();
+  return HomeScreen.waitForIsShown();
 });
 
 Given(/^I navigate to the (.+) screen$/, async (screen: string) => {

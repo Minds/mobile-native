@@ -82,35 +82,39 @@ const GrowthbookDev = () => {
           <H3>Experiments</H3>
         </Row>
       </ScreenSection>
-      {Object.entries(experiments).map(([name, experiment]) => {
-        return (
-          <ExperimentItem
-            titleColor="secondary"
-            name={name}
-            experiment={experiment}
-            isForced={forcedVars[name] !== undefined}
-            result={experiments[name].result}
-            onSelectValue={v => selectExperimentValue(name, v.value)}
-          />
-        );
-      })}
+      {Object.entries(experiments)
+        .reverse() // reverse so the more recent experiments are on top
+        .map(([name, experiment]) => {
+          return (
+            <ExperimentItem
+              titleColor="secondary"
+              name={name}
+              experiment={experiment}
+              isForced={forcedVars[name] !== undefined}
+              result={experiments[name].result}
+              onSelectValue={v => selectExperimentValue(name, v.value)}
+            />
+          );
+        })}
 
       <ScreenSection vertical="L">
         <H3>Feature Flags</H3>
       </ScreenSection>
 
-      {Object.entries(allFeatures).map(([name, feature]) => {
-        return (
-          <FeatureItem
-            titleColor="secondary"
-            name={name}
-            feature={feature.feature}
-            result={feature.result}
-            isForced={forcedFeatureValues[name] !== undefined}
-            onSelectValue={v => selectFeatureValue(name, v.value)}
-          />
-        );
-      }) || null}
+      {Object.entries(allFeatures)
+        .reverse() // reverse so the more recent features are on top
+        .map(([name, feature]) => {
+          return (
+            <FeatureItem
+              titleColor="secondary"
+              name={name}
+              feature={feature.feature}
+              result={feature.result}
+              isForced={forcedFeatureValues[name] !== undefined}
+              onSelectValue={v => selectFeatureValue(name, v.value)}
+            />
+          );
+        }) || null}
       <Attributes attr={attr} />
     </>
   );
