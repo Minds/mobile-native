@@ -8,15 +8,17 @@ import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
-import { IconButton, Screen, ScreenHeader } from '~/common/ui';
+import { Column, IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
 import SeeLatestButton from '../newsfeed/SeeLatestButton';
+import StripeConnectButton from '../wallet/v2/stripe-connect/StripeConnectButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
@@ -46,6 +48,7 @@ function SupermindConsoleScreen({
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
+  const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
     return listRef.current?.refreshList();
@@ -93,7 +96,13 @@ function SupermindConsoleScreen({
               current={mode}
               tabStyle={theme.paddingVertical}
             />
-            <AddBankInformation />
+            {isStripeConnectFeatureOn ? (
+              <Column background="secondary">
+                <StripeConnectButton top="M" bottom="L" />
+              </Column>
+            ) : (
+              <AddBankInformation />
+            )}
           </>
         }
         contentContainerStyle={ThemedStyles.style.paddingTop2x}

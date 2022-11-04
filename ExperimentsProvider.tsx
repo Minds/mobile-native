@@ -1,5 +1,9 @@
 import React from 'react';
-import { GrowthBook, GrowthBookProvider } from '@growthbook/growthbook-react';
+import {
+  GrowthBook,
+  GrowthBookProvider,
+  useFeature as useGrowthbookFeature,
+} from '@growthbook/growthbook-react';
 import DeviceInfo from 'react-native-device-info';
 
 import analyticsService from '~/common/services/analytics.service';
@@ -58,8 +62,17 @@ export function updateGrowthBookAttributes() {
   }
 }
 
+export function useIsFeatureOn(feature: keyof typeof FEATURES) {
+  const on = useGrowthbookFeature(feature).on;
+  return FEATURES[feature] ?? on;
+}
+
 export default function ExperimentsProvider({ children }) {
   return (
     <GrowthBookProvider growthbook={growthbook}>{children}</GrowthBookProvider>
   );
 }
+
+export const FEATURES = {
+  'mob-stripe-connect-4587': undefined,
+};
