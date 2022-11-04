@@ -121,6 +121,7 @@ build:ios_production:
   <<: *prepare_build_ios
   stage: build
   interruptible: true
+  when: manual
   script:
     - *getiosversion
     - fastlane buildrelease
@@ -132,6 +133,7 @@ build:ios_production:
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -168,10 +170,14 @@ build:androidproduction:
   script:
     - bundle exec fastlane assemble_build
     - *move_apk
+  rules:
+    - if: $CI_COMMIT_BRANCH == "test/cimanual"
+      when: manual
   only:
     refs:
       - develop
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -253,9 +259,11 @@ build:androidproduction-playstore:
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
     - *move_apk
+  when: manual
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -298,6 +306,7 @@ upload:s3:oss: # Upload to S3
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -315,6 +324,7 @@ upload:browserstack:oss: # Upload to Browserstack
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -331,6 +341,7 @@ upload:s3:playstore: # Upload to S3
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -347,6 +358,7 @@ upload:browserstack:playstore: # Upload to Browserstack
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -419,6 +431,7 @@ release:production:
   only:
     refs:
       - master
+      - /^test-*/
   before_script:
     - node -v
     - yarn install
@@ -452,6 +465,7 @@ release:google_play:
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -471,6 +485,7 @@ release:codepush-ios:
   only:
     - /^patch-*/
     - master
+    - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -490,6 +505,7 @@ release:codepush-android:
   only:
     - /^patch-*/
     - master
+    - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -531,6 +547,7 @@ release:ios_prod_testflight:
   only:
     refs:
       - master
+      - /^test-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
