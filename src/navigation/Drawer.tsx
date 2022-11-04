@@ -133,6 +133,7 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
+      testID: 'Drawer:settings',
       onPress: () => {
         navigation.navigate('Settings');
       },

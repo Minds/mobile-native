@@ -4,6 +4,7 @@ Feature: Wallet screen
 
     Background:
         Given I'm logged in
+        And the mob-stripe-connect-4587 feature is active
         And I navigate to the Wallet screen
 
     Scenario: I can see a button to connect my stripe cash account

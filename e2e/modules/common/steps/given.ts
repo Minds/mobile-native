@@ -1,9 +1,13 @@
 import { Given } from '@cucumber/cucumber';
 import { context } from '../../../data/Context';
+import DevToolsScreen from '../../dev-tools/DevToolsScreen';
 import HomeScreen from '../../home/HomeScreen';
 import LoginScreen from '../../login/LoginScreen';
+import MoreScreen from '../../more/MoreScreen';
+import SettingsScreen from '../../settings/SettingsScreen';
 import WelcomeScreen from '../../welcome/WelcomeScreen';
 import { SCREENS } from '../navigator';
+import TabBar from './../components/TabBar';
 
 // common "Given" steps
 
@@ -33,4 +37,17 @@ Given(/^I navigate to the (.+) screen$/, async (screen: string) => {
   }
 
   return SCREENS[screen]();
+});
+
+Given(/the (.+) feature is active/, async (feature: string) => {
+  if (!HomeScreen.isDisplayed()) {
+    throw new Error(
+      'User must be logged in and in the home page to change experiments',
+    );
+  }
+
+  await TabBar.openMore();
+  await MoreScreen.openSettings();
+  await SettingsScreen.openDevTools();
+  return DevToolsScreen.toggleFeature(feature);
 });

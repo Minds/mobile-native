@@ -13,11 +13,16 @@ class ActionHelper {
     driver.launchApp();
   }
 
+  static async restartApp() {
+    return driver.launchApp();
+  }
+
   static switchToNativeContext() {
     browser.switchContext('NATIVE_APP');
   }
 
   static pause(seconds: number) {
+    // eslint-disable-next-line wdio/no-pause
     browser.pause(seconds * 1000);
   }
 

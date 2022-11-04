@@ -1,5 +1,6 @@
 import { selectElement } from '../../helpers/Utils';
 import AppScreen from '../common/AppScreen';
+import SettingsScreen from '../settings/SettingsScreen';
 
 class MoreScreen extends AppScreen {
   constructor() {
@@ -10,8 +11,17 @@ class MoreScreen extends AppScreen {
     return selectElement('id', 'Drawer:wallet');
   }
 
+  get settings() {
+    return selectElement('id', 'Drawer:settings');
+  }
+
   openWallet() {
     return this.wallet.click();
+  }
+
+  async openSettings() {
+    await this.settings.click();
+    return SettingsScreen.waitForIsShown();
   }
 }
 

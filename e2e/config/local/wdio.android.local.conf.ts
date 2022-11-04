@@ -23,6 +23,8 @@ config.capabilities = [
     'appium:platformVersion': '12.0',
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',
+    'appium:resetOnSessionStartOnly': true,
+    'appium:noReset': true,
     // The path to the app
     'appium:app': join(
       process.cwd(),

@@ -13,6 +13,10 @@ class WalletScreen extends AppScreen {
   get cashSettings() {
     return selectElement('id', 'UsdTab:settings');
   }
+
+  get StripeConnectButton() {
+    return selectElement('id', 'StripeConnectButton');
+  }
 }
 
 export default new WalletScreen();

@@ -40,6 +40,7 @@ const StripeConnectButton = () => {
         </>
       )}
       <Button
+        testID="StripeConnectButton"
         action
         loading={loading}
         onPress={account ? openStripe : createAccount}

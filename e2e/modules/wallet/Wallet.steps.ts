@@ -10,6 +10,5 @@ When(/I switch to the Settings tab/, () => {
 });
 
 Then(/I should see the stripe connect button/, () => {
-  // TODO experiments
-  return true;
+  return WalletScreen.StripeConnectButton.isDisplayed();
 });

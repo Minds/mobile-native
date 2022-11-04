@@ -17,4 +17,8 @@ export default class AppScreen {
       reverse: !isShown,
     });
   }
+
+  async isDisplayed(): Promise<boolean | void> {
+    return selectElement('id', this.selector).isDisplayed();
+  }
 }

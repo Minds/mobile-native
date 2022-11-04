@@ -247,6 +247,7 @@ const FeatureItem = ({
               keyExtractor={d => d.value}>
               {show => (
                 <B1
+                  testID={`${name}:select`}
                   color={isForced ? 'link' : 'secondary'}
                   onPress={() => show(name)}>
                   {JSON.stringify(result.value)}
