@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { B1, B2, Column, ColumnPropType } from '../../../common/ui';

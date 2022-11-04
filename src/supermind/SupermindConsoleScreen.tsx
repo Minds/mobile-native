@@ -8,7 +8,7 @@ import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
-import { Column, IconButton, Screen, ScreenHeader } from '~/common/ui';
+import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
