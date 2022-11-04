@@ -55,26 +55,19 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
     },
   };
 
-  let restrictedTitle = '';
-  let restrictedDescription = '';
-
-  if (restricted) {
-    if (restrictedReason && restrictedMapping[restrictedReason]) {
-      restrictedTitle = restrictedMapping[restrictedReason].title;
-      restrictedDescription = restrictedMapping[restrictedReason].description;
-    } else {
-      restrictedTitle = restrictedMapping.other.title;
-      restrictedDescription = restrictedMapping.other.description;
-    }
-  }
+  const { title = '', description = '' } = restrictedReason
+    ? restrictedReason in restrictedMapping
+      ? restrictedMapping[restrictedReason]
+      : restrictedMapping.other
+    : {};
 
   return (
     <Spacer horizontal="L" {...props}>
       {!!restricted && (
         <>
-          <B1 color="danger">{restrictedTitle}</B1>
+          <B1 color="danger">{title}</B1>
           <B2 color="secondary" bottom="L">
-            {restrictedDescription}
+            {description}
           </B2>
         </>
       )}
