@@ -133,7 +133,8 @@
       "title": "Confirm Offer",
       "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
       "description": "I understand this transaction is non-refundable."
-    }
+    },
+    "supermind": "Supermind"
   },
   "auth": {
     "2faRequired": "2FA required",

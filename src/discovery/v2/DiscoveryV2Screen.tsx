@@ -69,6 +69,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
         { id: 'your-tags', title: i18n.t('discovery.yourTags') },
         { id: 'trending-tags', title: i18n.t('discovery.trending') },
         { id: 'boosts', title: i18n.t('boosted') },
+        { id: 'superminds', title: i18n.t('supermind.supermind') },
       ],
       [i18n.locale],
     );
@@ -181,6 +182,18 @@ export const DiscoveryV2Screen = withErrorBoundary(
                 ref={listRef}
                 header={header}
                 feedStore={store.boostFeed}
+                navigation={navigation}
+                emptyMessage={emptyBoosts}
+              />
+            </DiscoveryTabContent>
+          );
+        case 'superminds':
+          return (
+            <DiscoveryTabContent key="superminds">
+              <FeedListSticky
+                ref={listRef}
+                header={header}
+                feedStore={store.supermindsFeed}
                 navigation={navigation}
                 emptyMessage={emptyBoosts}
               />

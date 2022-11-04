@@ -7,7 +7,8 @@ export type TDiscoveryV2Tabs =
   | 'foryou'
   | 'your-tags'
   | 'trending-tags'
-  | 'boosts';
+  | 'boosts'
+  | 'superminds';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   top: 0,
@@ -15,6 +16,7 @@ const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   'your-tags': 2,
   'trending-tags': 3,
   boosts: 4,
+  superminds: 5,
 };
 
 export type TDiscoveryTrendsTrend = {};
@@ -42,6 +44,7 @@ export default class DiscoveryV2Store {
   trendingFeed: FeedStore;
   allFeed: FeedStore;
   topFeed: FeedStore;
+  supermindsFeed: FeedStore;
 
   constructor(plus: boolean = false) {
     this.boostFeed = new FeedStore(true);
@@ -82,6 +85,11 @@ export default class DiscoveryV2Store {
     if (plus) {
       this.activeTabId = 'foryou';
     }
+
+    this.supermindsFeed = new FeedStore()
+      .setEndpoint('api/v3/newsfeed/superminds')
+      .setInjectBoost(false)
+      .setLimit(15);
   }
 
   @action
