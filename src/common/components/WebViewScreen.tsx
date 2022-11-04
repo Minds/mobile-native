@@ -25,6 +25,21 @@ export default function WebViewScreen({
 }: WebViewScreenProps) {
   if (!route.params) return;
 
+  /**
+   * Looks for a path matching redirectUrl, calls onRedirect, and navigates back
+   */
+  const handleNavigationStateChange = route.params.redirectUrl
+    ? (event: WebViewNavigation) => {
+        if (event.url === route.params.redirectUrl) {
+          route.params.onRedirect?.();
+          navigation.goBack();
+          return false;
+        }
+
+        return true;
+      }
+    : undefined;
+
   return (
     <Screen>
       <WebView
@@ -37,19 +52,7 @@ export default function WebViewScreen({
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
-        onNavigationStateChange={
-          !route.params.redirectUrl
-            ? undefined
-            : (event: WebViewNavigation) => {
-                if (event.url === route.params.redirectUrl) {
-                  route.params.onRedirect?.();
-                  navigation.goBack();
-                  return false;
-                }
-
-                return true;
-              }
-        }
+        onNavigationStateChange={handleNavigationStateChange}
         startInLoadingState={true}
         renderLoading={() => <CenteredLoading />}
         renderError={() => <B1>{i18n.t('failedTryAgain')}</B1>}
