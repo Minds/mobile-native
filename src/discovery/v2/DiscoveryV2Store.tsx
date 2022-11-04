@@ -96,7 +96,7 @@ export default class DiscoveryV2Store {
   setTabId(id: TDiscoveryV2Tabs) {
     // set animation direction based on current and target tabs
     this.direction = tabIndex[id] > tabIndex[this.activeTabId] ? 1 : 0;
-    if (tabIndex)
+    if (tabIndex) {
       switch (id) {
         case 'top':
           this.topFeed.fetchRemoteOrLocal();
@@ -107,6 +107,9 @@ export default class DiscoveryV2Store {
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
           break;
+        case 'superminds':
+          this.supermindsFeed.fetchRemoteOrLocal();
+          break;
         case 'foryou':
           if (id === this.activeTabId) {
             // already on tab
@@ -114,6 +117,8 @@ export default class DiscoveryV2Store {
           }
           break;
       }
+    }
+
     this.activeTabId = id;
   }
 
