@@ -23,6 +23,7 @@ import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import FeedListSticky from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
+import { useFeature } from '@growthbook/growthbook-react';
 
 interface Props {
   navigation: any;
@@ -37,7 +38,9 @@ export const DiscoveryV2Screen = withErrorBoundary(
       false,
     );
     const store = useDiscoveryV2Store();
-
+    const isSupermindsGlobalFeedOn = useFeature(
+      'mob-4482-global-supermind-feed',
+    ).on;
     const listRef = React.useRef<FeedList<any>>(null);
 
     // inject items in the store the first time
@@ -63,14 +66,17 @@ export const DiscoveryV2Screen = withErrorBoundary(
     const navigation = props.navigation;
 
     const tabs = React.useMemo(
-      () => [
-        { id: 'top', title: i18n.t('discovery.top') },
-        { id: 'foryou', title: i18n.t('discovery.justForYou') },
-        { id: 'your-tags', title: i18n.t('discovery.yourTags') },
-        { id: 'trending-tags', title: i18n.t('discovery.trending') },
-        { id: 'boosts', title: i18n.t('boosted') },
-        { id: 'superminds', title: i18n.t('supermind.supermind') },
-      ],
+      () =>
+        [
+          { id: 'top', title: i18n.t('discovery.top') },
+          { id: 'foryou', title: i18n.t('discovery.justForYou') },
+          { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+          { id: 'trending-tags', title: i18n.t('discovery.trending') },
+          { id: 'boosts', title: i18n.t('boosted') },
+          isSupermindsGlobalFeedOn
+            ? { id: 'superminds', title: i18n.t('supermind.supermind') }
+            : null,
+        ].filter(Boolean) as { id: string; title: string }[],
       [i18n.locale],
     );
 
