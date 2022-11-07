@@ -24,6 +24,7 @@ type PropsType<T> = {
   subtitleStyle?: StyleProp<TextStyle>;
   tabStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  right?: React.ReactNode;
 };
 
 /**
@@ -74,6 +75,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      {props.right}
     </View>
   );
 }
