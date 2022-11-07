@@ -1,10 +1,10 @@
-import React, { Suspense, useState } from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Text, View } from 'react-native';
+import { Button, View } from 'react-native';
+import ErrorBoundary from '~/common/components/ErrorBoundary';
 
 export type ErrorSuspenseProps = {
-  ErrorFallback?: React.ComponentType<FallbackProps>;
+  // ErrorFallback?: React.ComponentType<FallbackProps>;
   SuspenseFallback?: NonNullable<React.ReactNode> | null;
   children: React.ReactChildren | React.ReactNode | React.ReactNode[];
   onReset?: () => void;
@@ -17,39 +17,39 @@ export type ErrorSuspenseProps = {
 };
 export function ErrorSuspense(props: ErrorSuspenseProps): JSX.Element {
   const {
-    ErrorFallback = DefaultErrorFallback,
+    // ErrorFallback = DefaultErrorFallback,
     SuspenseFallback = DefaultSuspenseFallback,
     children,
   } = props;
-  const [reset, setReset] = useState(false);
+  // const [reset, setReset] = useState(false);
 
-  const onReset = () => {
-    setReset(false);
-    props.onReset?.();
-  };
+  // const onReset = () => {
+  //   setReset(false);
+  //   props.onReset?.();
+  // };
 
   return (
     <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={onReset}
-      onError={props.onError}
-      resetKeys={[reset]}>
+      // onReset={onReset}
+      // onError={props.onError}
+      // resetKeys={[reset]}
+      message="An error occurred">
       <Suspense fallback={SuspenseFallback}>{children}</Suspense>
     </ErrorBoundary>
   );
 }
 
-export function DefaultErrorFallback({
-  resetErrorBoundary,
-}: FallbackProps): JSX.Element {
-  const { t } = useTranslation('mainModule');
-  return (
-    <View>
-      <Text>{t('Please tap to retry')}</Text>
-      <Button title={t('Something went wrong')} onPress={resetErrorBoundary} />
-    </View>
-  );
-}
+// export function DefaultErrorFallback({
+//   resetErrorBoundary,
+// }: FallbackProps): JSX.Element {
+//   const { t } = useTranslation('mainModule');
+//   return (
+//     <View>
+//       <Text>{t('Please tap to retry')}</Text>
+//       <Button title={t('Something went wrong')} onPress={resetErrorBoundary} />
+//     </View>
+//   );
+// }
 
 export function DefaultSuspenseFallback(): JSX.Element {
   const { t } = useTranslation('mainModule');

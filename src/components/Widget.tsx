@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  DefaultErrorFallback,
-  DefaultSuspenseFallback,
-  ErrorSuspense,
-} from './ErrorSuspense';
+import { DefaultSuspenseFallback, ErrorSuspense } from './ErrorSuspense';
 
 type WidgetProps = {
   title?: string;
@@ -15,7 +11,7 @@ export function Widget(props: WidgetProps): JSX.Element {
   const { children, ...rest } = props;
   const errorSuspenseProps = {
     SuspenseFallback: DefaultSuspenseFallback,
-    ErrorFallback: DefaultErrorFallback,
+    // ErrorFallback: DefaultErrorFallback,
     children,
     ...rest,
   };
