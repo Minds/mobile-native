@@ -58,6 +58,7 @@
     }
   },
   "supermind": {
+    "filterTitle": "Filter Supermind Offers",
     "getPaid": "Get paid to reply to your fans.",
     "setMinimum": "Set your minimum offer amount",
     "fansCant": "Fans can’t send you Supermind offers for less than your minimum offer amount.",
@@ -78,6 +79,16 @@
       "0": "Text Reply",
       "1": "Image Reply",
       "2": "Video Reply"
+    },
+    "filter": {
+      "all": "All",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "revoked": "Revoked",
+      "declined": "Declined",
+      "expired": "Expired",
+      "paymentFailed": "Payment Failed",
+      "failed": "Failed"
     },
     "status": {
       "accepted": "Accepted",

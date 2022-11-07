@@ -18,6 +18,9 @@ import {
 import { MoreStackParamList } from '../navigation/NavigationTypes';
 import SeeLatestButton from '../newsfeed/SeeLatestButton';
 import AddBankInformation from './AddBankInformation';
+import SupermindConsoleFeedFilter, {
+  SupermindFilterType,
+} from './SupermindConsoleFeedFilter';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
 
@@ -30,6 +33,17 @@ type SupermindConsoleScreenNavigationProp = StackNavigationProp<
   MoreStackParamList,
   'SupermindConsole'
 >;
+
+const filterValues: Record<SupermindFilterType, string> = {
+  all: '',
+  pending: '1',
+  accepted: '2',
+  revoked: '3',
+  declined: '4',
+  failed: '6',
+  paymentFailed: '5',
+  expired: '7',
+};
 
 interface SupermindConsoleScreenProps {
   navigation: SupermindConsoleScreenNavigationProp;
@@ -44,12 +58,17 @@ function SupermindConsoleScreen({
   const [mode, setMode] = React.useState<TabModeType>(
     route.params?.tab ?? 'inbound',
   );
+  const [filter, setFilter] = React.useState<SupermindFilterType>('all');
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
     return listRef.current?.refreshList();
   };
+
+  const filterParam = filterValues[filter]
+    ? `?status=${filterValues[filter]}`
+    : '';
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -92,6 +111,13 @@ function SupermindConsoleScreen({
               onChange={mode => setMode(mode)}
               current={mode}
               tabStyle={theme.paddingVertical}
+              right={
+                <SupermindConsoleFeedFilter
+                  value={filter}
+                  onFilterChange={setFilter}
+                  containerStyles={styles.filterContainer}
+                />
+              }
             />
             <AddBankInformation />
           </>
@@ -100,8 +126,8 @@ function SupermindConsoleScreen({
         map={mapRequests}
         fetchEndpoint={
           mode === 'inbound'
-            ? 'api/v3/supermind/inbox'
-            : 'api/v3/supermind/outbox'
+            ? `api/v3/supermind/inbox${filterParam}`
+            : `api/v3/supermind/outbox${filterParam}`
         }
         offsetPagination
         renderItem={
@@ -142,4 +168,5 @@ const styles = ThemedStyles.create({
   onboardingOverlay: {
     marginTop: IS_IOS ? 125 : 70,
   },
+  filterContainer: ['paddingTop2x', 'paddingRight4x'],
 });
