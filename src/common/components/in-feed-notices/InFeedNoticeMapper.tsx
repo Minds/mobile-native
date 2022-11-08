@@ -4,6 +4,7 @@ import BuildAlgorithmNotice from './notices/BuildAlgorithmNotice';
 import TagsNotice from './notices/TagsNotice';
 import SetupChannelNotice from './notices/SetupChannelNotice';
 import VerifyUniquenessNotice from './notices/VerifyUniquenessNotice';
+import PendingSupermindNotice from './notices/PendingSupermindNotice';
 
 type PropsType = {
   noticeName: string;
@@ -14,6 +15,8 @@ type PropsType = {
  */
 export default function InFeedNoticeMapper({ noticeName }: PropsType) {
   switch (noticeName) {
+    case 'supermind-pending':
+      return <PendingSupermindNotice />;
     case 'verify-email':
       return <EmailVerifyNotice />;
     case 'build-your-algorithm':
