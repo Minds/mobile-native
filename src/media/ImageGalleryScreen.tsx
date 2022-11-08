@@ -1,4 +1,5 @@
 import { useDimensions } from '@react-native-community/hooks';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { MotiView } from 'moti';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -7,11 +8,13 @@ import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import api from '../common/services/api.service';
 import { ModalFullScreen } from '../common/ui';
+import { RootStackParamList } from '../navigation/NavigationTypes';
 import BottomContent from '../newsfeed/activity/BottomContent';
 import ThemedStyles from '../styles/ThemedStyles';
 
 interface ImageGalleryScreenProps {
   route: any;
+  navigation: StackNavigationProp<RootStackParamList, 'ImageGallery'>;
 }
 
 const TOP_HEADER_HEIGHT = 200;
@@ -20,6 +23,7 @@ export default function ImageGalleryScreen({
   route: {
     params: { entity, initialIndex },
   },
+  navigation,
 }: ImageGalleryScreenProps) {
   const { width, height } = useDimensions().window;
   const { top } = useSafeAreaInsets();
@@ -34,6 +38,10 @@ export default function ImageGalleryScreen({
       setControlsVisible(false);
     }
   }, []);
+
+  const handleSwipeToClose = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
 
   const renderItem = useCallback(
     ({ item, setImageDimensions }: RenderItemInfo<any>) => {
@@ -65,11 +73,8 @@ export default function ImageGalleryScreen({
           height: height - TOP_HEADER_HEIGHT - top,
           width,
         }}
-        disableVerticalSwipe
+        onSwipeToClose={handleSwipeToClose}
         onScaleChange={handleOnScaleChange}
-        onIndexChange={newIndex => {
-          console.log(newIndex);
-        }}
         renderItem={renderItem}
       />
 
