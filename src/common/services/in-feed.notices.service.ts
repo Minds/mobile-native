@@ -33,6 +33,7 @@ const DISMISS_DURATION = 60 * 24 * 60 * 60 * 1000; // 60 days
 export class InFeedNoticesService {
   @observable.shallow data: null | FormattedNotices = null;
   @observable dismissed: Dismissed = {};
+  loading = false;
 
   constructor() {
     // We init the service on login
@@ -124,7 +125,11 @@ export class InFeedNoticesService {
    * Load the notices from the server
    */
   async load() {
+    if (this.loading) {
+      return;
+    }
     try {
+      this.loading = true;
       const response = await apiService.get<InFeedResponse>(
         'api/v3/feed-notices',
       );
@@ -135,6 +140,8 @@ export class InFeedNoticesService {
       }
     } catch (error) {
       logService.exception('[InFeedNoticesService]', error);
+    } finally {
+      this.loading = false;
     }
   }
 

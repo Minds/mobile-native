@@ -205,6 +205,9 @@
     "sessionExpired": "Logged out"
   },
   "inFeedNotices": {
+    "pendingSupermind": "You have Supermind offers",
+    "pendingSupermindDescription": "Reply to your fans to claim cash or tokens before your pending offers expire.",
+    "pendingSupermindButton": "Let's go ",
     "verifyEmail": "Verify email",
     "verifyEmailDescription": "Before getting down to business on Minds, can we please ask that you verify your email address. (P.S. Check your spam folder 📥)",
     "updatePreferences": "Update your preferences",
