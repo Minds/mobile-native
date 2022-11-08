@@ -77,7 +77,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
             ? { id: 'superminds', title: i18n.t('supermind.supermind') }
             : null,
         ].filter(Boolean) as { id: string; title: string }[],
-      [i18n.locale],
+      [i18n.locale, isSupermindsGlobalFeedOn],
     );
 
     const emptyBoosts = React.useMemo(
