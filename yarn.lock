@@ -19463,10 +19463,10 @@ react-native-vector-icons@msantang78/react-native-vector-icons:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native-vision-camera@^2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.14.1.tgz#6b9fecd5c5976167b8e8752455be24cd12c3d84f"
-  integrity sha512-zs8HAuD3pL+T/ngaDUxbvhoqR90b85ab3nm4tO4OCSBDUFhzgDoDXDm+BDhsyQaF0p05Kaskf+rkqCVBI0WEgg==
+react-native-vision-camera@^2.15.2:
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.15.2.tgz#96a17c8b4e557df317734897853a861e0cfbc3ed"
+  integrity sha512-pkVj0r2nbZaj3+bB9CGPNistCUyoCgS2SmawzugrZs5oMlFWlgZYuJj+6s3Q98xTGgV/8/ST0njohB6soDi0VA==
 
 react-native-webview@^11.14.0:
   version "11.23.1"
@@ -22635,6 +22635,11 @@ verror@^1.10.0, verror@^1.9.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+vision-camera-ocr@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vision-camera-ocr/-/vision-camera-ocr-1.0.0.tgz#f1ab41b10ed52533bca088139c698de2b6141f8b"
+  integrity sha512-CHk4D39RK6KGwVx76iObUhRk43h94sTeiBAsXp8BE2GbXVzZeY4vZxsR0w75Nw8nYv4/71aOF0XYuYHGv6uV7w==
 
 vlq@^1.0.0:
   version "1.0.1"

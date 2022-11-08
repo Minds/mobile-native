@@ -1,17 +1,15 @@
-import { useNavigation } from '@react-navigation/core';
-import React, { useEffect } from 'react';
+import React from 'react';
+
 import { Screen } from '../../common/ui';
-import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
+import OcrCamera from '../components/OcrCamera';
+import { InAppVerificationStackScreenProps } from '../InAppVerificationStack';
 
-type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationCamera'>;
+type Props = InAppVerificationStackScreenProps<'InAppVerificationCamera'>;
 
-export default function InAppVerificationCameraScreen() {
-  const navigation = useNavigation<NavigationProp>();
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('InAppVerificationConfirmation');
-    }, 1500);
-  }, [navigation]);
-
-  return <Screen safe></Screen>;
+export default function InAppVerificationCameraScreen({ route }: Props) {
+  return (
+    <Screen safe>
+      <OcrCamera code={route.params.code} />
+    </Screen>
+  );
 }
