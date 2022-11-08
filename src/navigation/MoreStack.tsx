@@ -379,9 +379,7 @@ export default function () {
       />
       <MoreStack.Screen
         name="WebView"
-        getComponent={() =>
-          require('~/common/components/WebViewScreen').default
-        }
+        getComponent={() => require('~/common/screens/WebViewScreen').default}
       />
     </MoreStack.Navigator>
   );

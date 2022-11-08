@@ -6,7 +6,7 @@ import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
 import { B1, Screen } from '../ui';
-import CenteredLoading from './CenteredLoading';
+import CenteredLoading from '../components/CenteredLoading';
 
 type WebViewScreenRouteProp = RouteProp<MoreStackParamList, 'WebView'>;
 type WebViewScreenNavigationProp = StackNavigationProp<
@@ -48,7 +48,7 @@ export default function WebViewScreen({
         }}
         scrollEnabled={true}
         mixedContentMode="compatibility"
-        style={[ThemedStyles.style.bgSecondaryBackground]}
+        style={ThemedStyles.style.bgSecondaryBackground}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
