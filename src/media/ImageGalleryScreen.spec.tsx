@@ -11,6 +11,7 @@ describe('ImageGalleryScreen', () => {
     const entity = generateFakeMultiImageEntity({ images: 2 });
     render(
       <ImageGalleryScreen
+        navigation={{} as any}
         route={{
           params: {
             entity,
