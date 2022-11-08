@@ -1,5 +1,6 @@
 stages:
   - test
+  - pushrelease
   - build
   - upload
   - release
@@ -127,6 +128,7 @@ build:ios_production:
   <<: *prepare_build_ios
   stage: build
   interruptible: true
+  when: manual
   script:
     - *getiosversion
     - fastlane buildrelease
@@ -174,14 +176,13 @@ build:androidproduction:
   script:
     - bundle exec fastlane assemble_build
     - *move_apk
-  only:
-    refs:
-      - develop
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
+      when: never
 
 # Production build for QA of MR
 build:android_mr_production:
@@ -259,6 +260,7 @@ build:androidproduction-playstore:
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - bundle exec fastlane assemble_build
     - *move_apk
+  when: manual
   only:
     refs:
       - master
@@ -464,9 +466,9 @@ release:google_play:
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
 ## CodePush releases
-release:codepush-ios:
+pushrelease:codepush-ios:
   image: node:14.19.1
-  stage: release
+  stage: pushrelease
   tags: [minds-ci]
   before_script:
     - npm install -g patch-package
@@ -477,15 +479,16 @@ release:codepush-ios:
   only:
     - /^patch-*/
     - master
+  allow_failure: true
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
       - $CI_PROD_NIGHTLY_TESTS == "true"
   when: manual
 
-release:codepush-android:
+pushrelease:codepush-android:
   image: node:14.19.1
-  stage: release
+  stage: pushrelease
   tags: [minds-ci]
   before_script:
     - npm install -g patch-package
@@ -496,6 +499,7 @@ release:codepush-android:
   only:
     - /^patch-*/
     - master
+  allow_failure: true
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
