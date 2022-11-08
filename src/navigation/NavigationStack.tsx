@@ -349,10 +349,6 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              name="ViewImage"
-              getComponent={() => require('~/media/ViewImageScreen').default}
-            />
-            <RootStackNav.Screen
               name="ImageGallery"
               getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
