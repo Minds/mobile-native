@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { runOnJS } from 'react-native-reanimated';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text, LayoutChangeEvent, Dimensions } from 'react-native';
-import { scanOCR } from 'vision-camera-ocr';
-import { useFrameProcessor, Camera } from 'react-native-vision-camera';
+import { Camera } from 'react-native-vision-camera';
 
 import ThemedStyles from '~styles/ThemedStyles';
-import { createOcrStore, OcrStoreType, useCamera } from './OcrCamera.logic';
+import { OcrStoreType, useOcrCamera } from './OcrCamera.logic';
 import CodeMessage from './CodeMessage';
 import i18n from '~/common/services/i18n.service';
 
@@ -21,35 +19,7 @@ type PropsType = {
 const TARGET_WIDTH_RATIO = 0.65;
 
 function OcrCamera({ code }: PropsType) {
-  const store: OcrStoreType = useLocalStore(createOcrStore, { code });
-
-  const { camera, device, format } = useCamera();
-
-  const frameProcessor = useFrameProcessor(
-    frame => {
-      'worklet';
-      if (store.status === 'running') {
-        const data = scanOCR(frame);
-        runOnJS(store.validate)(data);
-      }
-    },
-    [store.status],
-  );
-
-  React.useEffect(() => {
-    store.requestPermission();
-  }, [store]);
-
-  React.useEffect(() => {
-    if (store.hasPermission && camera.current) {
-      // wait for the camera to be ready
-      const timer = setTimeout(() => {
-        store.setCamera(camera.current);
-        store.startRecording();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [store.hasPermission, store, camera]);
+  const { store, camera, device, format, frameProcessor } = useOcrCamera(code);
 
   return device !== undefined && store.hasPermission && format ? (
     <View style={ThemedStyles.style.flexContainer}>

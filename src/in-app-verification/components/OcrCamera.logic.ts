@@ -1,11 +1,15 @@
+import { useLocalStore } from 'mobx-react';
 import React from 'react';
 import { LayoutRectangle } from 'react-native';
+import { runOnJS } from 'react-native-reanimated';
 import {
   Camera,
   CameraDeviceFormat,
   useCameraDevices,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
-import { OCRFrame } from 'vision-camera-ocr';
+import { OCRFrame, scanOCR } from 'vision-camera-ocr';
+
 import logService from '~/common/services/log.service';
 import { IS_IOS } from '~/config/Config';
 
@@ -168,3 +172,36 @@ export const useCamera = () => {
 
   return { format, camera, device };
 };
+
+export function useOcrCamera(code: string) {
+  const store: OcrStoreType = useLocalStore(createOcrStore, { code });
+  const { camera, device, format } = useCamera();
+
+  const frameProcessor = useFrameProcessor(
+    frame => {
+      'worklet';
+      if (store.status === 'running') {
+        const data = scanOCR(frame);
+        runOnJS(store.validate)(data);
+      }
+    },
+    [store.status],
+  );
+
+  React.useEffect(() => {
+    store.requestPermission();
+  }, [store]);
+
+  React.useEffect(() => {
+    if (store.hasPermission && camera.current) {
+      // wait for the camera to be ready
+      const timer = setTimeout(() => {
+        store.setCamera(camera.current);
+        store.startRecording();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [store.hasPermission, store, camera]);
+
+  return { store, camera, device, format, frameProcessor };
+}
