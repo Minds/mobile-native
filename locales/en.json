@@ -1038,7 +1038,8 @@
           "connect": "Your Twitter account is now synced"
         }
       }
-    }
+    },
+    "profile": "Profile"
   },
   "comingSoon": {
     "try": "Try the canary app at",
