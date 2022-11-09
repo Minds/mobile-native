@@ -1,15 +1,17 @@
 import React, { useCallback } from 'react';
+import { Alert, View } from 'react-native';
+import { B1, B2, H3, Spacer } from '~ui';
+import { useIsFeatureOn } from '../../../../ExperimentsProvider';
+import Button from '../../../common/components/Button';
+import MenuItem from '../../../common/components/menus/MenuItem';
+import i18n from '../../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
 } from '../../v3/WalletScreen';
-import { View, Alert } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import i18n from '../../../common/services/i18n.service';
-import Button from '../../../common/components/Button';
-import { H3, B2, B1, Spacer } from '~ui';
+import StripeConnectButton from '../stripe-connect/StripeConnectButton';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -22,7 +24,7 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
   const hasBankInfo =
     walletStore.wallet.cash.address !== null &&
     walletStore.wallet.cash.address !== '';
-
+  const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
   const hasBankAccount = walletStore.stripeDetails.hasBank;
 
   const navToBankScreen = () =>
@@ -52,24 +54,32 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
               {i18n.t('wallet.usd.bankInfoDescription')}
             </B1>
             <Spacer top="XXL">
-              <Button
-                onPress={navToBankScreen}
-                text={i18n.t('wallet.usd.add')}
-              />
+              {isStripeConnectFeatureOn ? (
+                <StripeConnectButton />
+              ) : (
+                <Button
+                  onPress={navToBankScreen}
+                  text={i18n.t('wallet.usd.add')}
+                />
+              )}
             </Spacer>
           </View>
         )}
       </Spacer>
       {hasBankInfo && (
         <Spacer bottom="XL2">
-          <MenuItem
-            title={
-              hasBankAccount
-                ? walletStore.wallet.cash.label
-                : i18n.t('wallet.bank.complete')
-            }
-            onPress={navToBankScreen}
-          />
+          {isStripeConnectFeatureOn ? (
+            <StripeConnectButton />
+          ) : (
+            <MenuItem
+              title={
+                hasBankAccount
+                  ? walletStore.wallet.cash.label
+                  : i18n.t('wallet.bank.complete')
+              }
+              onPress={navToBankScreen}
+            />
+          )}
         </Spacer>
       )}
       {hasBankInfo && (

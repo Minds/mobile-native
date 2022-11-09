@@ -11,12 +11,14 @@ import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
 import SeeLatestButton from '../newsfeed/SeeLatestButton';
+import StripeConnectButton from '../wallet/v2/stripe-connect/StripeConnectButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindConsoleFeedFilter, {
   SupermindFilterType,
@@ -61,6 +63,7 @@ function SupermindConsoleScreen({
   const [filter, setFilter] = React.useState<SupermindFilterType>('all');
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
+  const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
     return listRef.current?.refreshList();
@@ -119,7 +122,11 @@ function SupermindConsoleScreen({
                 />
               }
             />
-            <AddBankInformation />
+            {isStripeConnectFeatureOn ? (
+              <StripeConnectButton background="secondary" top="M" bottom="L" />
+            ) : (
+              <AddBankInformation />
+            )}
           </>
         }
         contentContainerStyle={ThemedStyles.style.paddingTop2x}

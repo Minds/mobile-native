@@ -1,9 +1,12 @@
 import React from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableHighlight, TouchableHighlightProps } from 'react-native';
 import { TRANSPARENCY } from '~/styles/Tokens';
 import ThemedStyles from '~/styles/ThemedStyles';
 
-export const PressableLine = ({ children, ...props }) => {
+export const PressableLine = ({
+  children,
+  ...props
+}: TouchableHighlightProps) => {
   return (
     <TouchableHighlight
       style={ThemedStyles.style.flexContainer}

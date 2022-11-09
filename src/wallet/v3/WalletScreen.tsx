@@ -55,6 +55,7 @@ const WalletScreen = observer((props: PropsType) => {
     {
       id: 'usd',
       title: i18n.t('wallet.cash'),
+      testID: 'WalletScreen:cash',
     },
   ];
 

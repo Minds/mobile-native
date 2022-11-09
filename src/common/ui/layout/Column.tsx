@@ -1,27 +1,30 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Spacer } from '~ui/layout';
-import { ColumnPropType, SpacerPropType } from './types';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import { ColumnPropType } from './types';
 
 export const Column = ({
   align,
   flex,
   stretch,
   containerStyle,
+  background,
   ...more
-}: ColumnPropType & SpacerPropType) => {
+}: ColumnPropType) => {
   const style: ViewStyle = StyleSheet.flatten([
     styles.container,
     align && styles[align],
     flex && styles.flex,
     stretch && styles.stretch,
+    background && styles[background],
     containerStyle && containerStyle,
   ]);
 
   return <Spacer containerStyle={style} {...more} />;
 };
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   container: {
     flexDirection: 'column',
   },
@@ -44,4 +47,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexGrow: 1,
   },
+  primary: ['flexContainer', 'bgPrimaryBackground'],
+  secondary: ['flexContainer', 'bgSecondaryBackground'],
+  tertiary: ['flexContainer', 'bgTertiaryBackground'],
 });

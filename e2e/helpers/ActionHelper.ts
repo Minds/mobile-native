@@ -10,7 +10,16 @@ class ActionHelper {
   }
 
   static launchApp() {
-    driver.launchApp();
+    return driver.launchApp();
+  }
+
+  static goBack() {
+    return driver.back();
+  }
+
+  static async restartApp() {
+    await driver.terminateApp('com.minds.mobile');
+    await driver.activateApp('com.minds.mobile');
   }
 
   static switchToNativeContext() {
@@ -18,7 +27,8 @@ class ActionHelper {
   }
 
   static pause(seconds: number) {
-    browser.pause(seconds * 1000);
+    // eslint-disable-next-line wdio/no-pause
+    return browser.pause(seconds * 1000);
   }
 
   static isVisible(locator: string) {

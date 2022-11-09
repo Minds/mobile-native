@@ -140,6 +140,7 @@ const SettingsScreen = observer(({ navigation }) => {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',
+      testID: 'SettingsScreen:DevTools',
     });
   }
 
@@ -167,6 +168,7 @@ const SettingsScreen = observer(({ navigation }) => {
   return (
     <Screen safe>
       <ScrollView
+        testID="SettingsScreen"
         style={theme.flexContainer}
         contentContainerStyle={theme.paddingBottom4x}>
         <HiddenTap>

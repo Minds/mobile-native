@@ -90,6 +90,7 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
     {
       name: i18n.t('moreScreen.wallet'),
       icon: 'bank',
+      testID: 'Drawer:wallet',
       onPress: () => {
         navigation.navigate('Wallet');
       },
@@ -132,6 +133,7 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
+      testID: 'Drawer:settings',
       onPress: () => {
         navigation.navigate('Settings');
       },
@@ -193,6 +195,7 @@ const DrawerList = ({ list, small }) => {
         name={l.name}
         icon={l.icon}
         onPress={l.onPress}
+        testID={l.testID}
       />
     ),
   );
@@ -223,10 +226,22 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   );
 };
 
-const DrawerNavItem = ({ icon, name, onPress, small }) => {
+const DrawerNavItem = ({
+  icon,
+  name,
+  onPress,
+  small,
+  testID,
+}: {
+  icon;
+  name;
+  onPress;
+  small;
+  testID?;
+}) => {
   const T = small ? B1 : H3;
   return (
-    <PressableLine onPress={onPress}>
+    <PressableLine testID={testID} onPress={onPress}>
       <Row align="centerStart" flex left="XL" vertical="M">
         <T font={small ? 'regular' : 'bold'}>{name}</T>
       </Row>

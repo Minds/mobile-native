@@ -127,14 +127,16 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
       setTimeout(() => {
         if (item) {
           const itemToScrollTo = data.find(i => keyExtractor(i) === item);
-          flatListRef.current?.scrollToIndex({
-            animated: true,
-            index: data.indexOf(itemToScrollTo || 0),
-          });
+          if (itemToScrollTo) {
+            flatListRef.current?.scrollToIndex({
+              animated: true,
+              index: data.indexOf(itemToScrollTo) || 0,
+            });
+          }
         }
       }, 500);
     },
-    [selected, flatListRef, data],
+    [data, keyExtractor],
   );
 
   /**

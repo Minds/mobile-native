@@ -72,6 +72,7 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
             isCurrent ? theme.bgLink : theme.bgTransparent,
           ]}
           textStyle={[styles.text, !isCurrent ? theme.colorSecondaryText : {}]}
+          testID={tab.testID}
         />
       );
     }
@@ -80,6 +81,7 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
       return (
         <TouchableOpacity
           onPress={() => onChange(tab.id)}
+          testID={tab.testID}
           style={touchableContainer}>
           <TabTitle isCurrent={isCurrent} title={tab.title} />
         </TouchableOpacity>
@@ -90,7 +92,8 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
       return (
         <PressableScale
           onPress={() => onChange(tab.id)}
-          style={[styles.iconContainer, touchableContainer]}>
+          style={[styles.iconContainer, touchableContainer]}
+          testID={tab.testID}>
           <View style={theme.alignCenter}>
             <Icon name={tab.icon.name} active={isCurrent} />
           </View>
