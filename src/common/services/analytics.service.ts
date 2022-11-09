@@ -124,6 +124,9 @@ export class AnalyticsService {
    * Sets the user id
    */
   setUserId(userId: string) {
+    if (!userId) {
+      return;
+    }
     this.tracker?.setUserId(userId);
     this.userId = userId;
     CookieManager.set('https://www.minds.com', {
