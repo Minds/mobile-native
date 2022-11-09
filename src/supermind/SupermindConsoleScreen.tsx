@@ -60,7 +60,7 @@ function SupermindConsoleScreen({
   const [mode, setMode] = React.useState<TabModeType>(
     route.params?.tab ?? 'inbound',
   );
-  const [filter, setFilter] = React.useState<SupermindFilterType>('all');
+  const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
