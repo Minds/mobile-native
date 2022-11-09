@@ -62,9 +62,8 @@ export function updateGrowthBookAttributes() {
   }
 }
 
-export function useIsFeatureOn(feature: keyof typeof FEATURES) {
-  const on = useGrowthbookFeature(feature).on;
-  return FEATURES[feature] ?? on;
+export function useIsFeatureOn(feature: FeatureID) {
+  return useGrowthbookFeature(feature).on;
 }
 
 export default function ExperimentsProvider({ children }) {
@@ -73,6 +72,4 @@ export default function ExperimentsProvider({ children }) {
   );
 }
 
-export const FEATURES = {
-  'mob-stripe-connect-4587': undefined,
-};
+export type FeatureID = 'mob-stripe-connect-4587';
