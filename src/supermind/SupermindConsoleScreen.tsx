@@ -139,7 +139,7 @@ function SupermindConsoleScreen({
       <SeeLatestButton
         countEndpoint={`api/v3/supermind/${
           mode === 'inbound' ? 'inbox' : 'outbox'
-        }/count`}
+        }/count${filterParam}`}
         onPress={scrollToTopAndRefresh}
       />
 
