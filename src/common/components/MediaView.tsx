@@ -79,7 +79,7 @@ export default class MediaView extends Component<PropsType> {
             entity={this.props.entity}
             autoHeight={this.props.autoHeight}
             style={this.props.imageStyle}
-            onImageDoublePress={this.navToZoomView}
+            onImageDoublePress={this.navToGallery}
             onImageLongPress={() => this.download()}
             onImagePress={this.onImagePress}
           />
@@ -112,7 +112,7 @@ export default class MediaView extends Component<PropsType> {
           openLink={this.openLink}
           entity={this.props.entity}
           small={this.props.smallEmbed}
-          onImageDoublePress={this.navToZoomView}
+          onImageDoublePress={this.navToGallery}
           onImageLongPress={() => this.download()}
           onImagePress={this.onImagePress}
         />
@@ -156,16 +156,6 @@ export default class MediaView extends Component<PropsType> {
       showNotification(i18n.t('errorDownloading'), 'danger', 3000);
       logService.exception('[MediaView] runDownload', e);
     }
-  };
-
-  /**
-   * Navigate to zoom view
-   */
-  navToZoomView = () => {
-    NavigationService.navigate('ViewImage', {
-      entity: this.props.entity,
-      source: this.props.entity.getThumbSource('xlarge'),
-    });
   };
 
   /**
@@ -316,7 +306,7 @@ export default class MediaView extends Component<PropsType> {
    * Opens ImageGalleryScreen to view the images with the given index being active
    * @param index - the index of image which was pressed
    */
-  navToGallery = (index: number) => {
+  navToGallery = (index: number = 0) => {
     NavigationService.navigate('ImageGallery', {
       entity: this.props.entity,
       initialIndex: index,

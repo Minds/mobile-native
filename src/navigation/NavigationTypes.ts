@@ -185,7 +185,6 @@ export type RootStackParamList = {
     username: string;
     code: string;
   };
-  ViewImage: {};
   BottomSheet: BottomSheetScreenParams;
   ImageGallery: {};
   RecoveryCodeUsedScreen: {};

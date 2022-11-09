@@ -348,10 +348,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('imageViewer'),
         onPress: () => {
           this.hideActionSheet();
-          const source = this.props.entity.getThumbSource('xlarge');
-          this.props.navigation.navigate('ViewImage', {
+          this.props.navigation.navigate('ImageGallery', {
             entity: this.props.entity,
-            source,
           });
         },
       });
