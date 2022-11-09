@@ -141,7 +141,7 @@ const styles = ThemedStyles.create({
     'rowJustifyStart',
     'bgPrimaryBackground',
   ],
-  containerStyle: ['borderBottom6x', 'bcolorBaseBackground', 'fullWidth'],
+  containerStyle: ['borderBottom1x', 'bcolorBaseBackground', 'fullWidth'],
 });
 
 export default PortraitContentBar;
