@@ -147,9 +147,8 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
           },
         ]
       }
-      disableVerticalSwipe={true}
-      onIndexChange={[Function]}
       onScaleChange={[Function]}
+      onSwipeToClose={[Function]}
       renderItem={[Function]}
       style={
         Object {
