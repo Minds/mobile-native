@@ -238,7 +238,10 @@ const styles = ThemedStyles.create({
   ],
 });
 
-const notificationOptions = { tabBarTestID: 'Notifications tab button' };
+const notificationOptions = {
+  tabBarTestID: 'Notifications tab button',
+  lazy: false,
+};
 const moreOptions = {
   tabBarTestID: 'Messenger tab button',
 };

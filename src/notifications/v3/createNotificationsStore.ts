@@ -33,8 +33,8 @@ const createNotificationsStore = () => ({
       if (token) {
         // load count on session start
         this.loadUnreadCount();
-        // start polling for count every 10 seconds
-        this.startPollCount();
+        // TODO: notifications should be handled from push notifications listener
+        // this.startPollCount();
 
         this.listen();
 

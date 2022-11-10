@@ -208,14 +208,14 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         stickyHeaderHiddenOnScroll={true}
         style={cleanTop}
         ListHeaderComponent={
-          <View>
+          <>
             <Topbar title="Notifications" navigation={navigation} noInsets />
             <NotificationsTopBar
               store={notifications}
               setResult={store.setResult}
               refresh={refresh}
             />
-          </View>
+          </>
         }
         scrollEnabled={!store.refreshing}
         data={data.slice()}

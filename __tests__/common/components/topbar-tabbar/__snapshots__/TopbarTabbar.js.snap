@@ -20,11 +20,17 @@ exports[`renders correctly 1`] = `
 >
   <RCTScrollView
     contentContainerStyle={
-      Object {
-        "marginHorizontal": 8,
-      }
+      Array [
+        Object {
+          "marginHorizontal": 8,
+        },
+        Object {
+          "paddingRight": 16,
+        },
+      ]
     }
     horizontal={true}
+    showsHorizontalScrollIndicator={false}
   >
     <View>
       <View

@@ -116,17 +116,17 @@ export const createStore = (): WCStore => ({
       chainId: 1,
       pollingInterval: DEEPLINK_DELAY_MS,
     });
+    // TODO: do we really need this?
+    // this.connectionPoller = setInterval(() => {
+    //   provider.connector.sendCustomRequest({ method: 'ping' });
 
-    this.connectionPoller = setInterval(() => {
-      provider.connector.sendCustomRequest({ method: 'ping' });
-
-      console.log(
-        '[WalletConnect.connectionPoller]',
-        provider.connected,
-        provider.connectCallbacks,
-        provider,
-      );
-    }, 5000);
+    //   console.log(
+    //     '[WalletConnect.connectionPoller]',
+    //     provider.connected,
+    //     provider.connectCallbacks,
+    //     provider,
+    //   );
+    // }, 5000);
 
     // open wallet using deep linking
     provider.connector.on('display_uri', (err, payload) => {

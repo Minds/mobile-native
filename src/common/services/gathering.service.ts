@@ -21,7 +21,8 @@ class GatheringService {
    * Start keep alive pooling
    */
   startKeepAlive() {
-    this.keepAliveInterval = setInterval(this.keepAlive, 5000);
+    // TODO: what is this method for?
+    // this.keepAliveInterval = setInterval(this.keepAlive, 5000);
   }
 
   /**
