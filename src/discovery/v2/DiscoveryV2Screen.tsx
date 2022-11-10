@@ -77,6 +77,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
             ? { id: 'superminds', title: i18n.t('supermind.supermind') }
             : null,
         ].filter(Boolean) as { id: string; title: string }[],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       [i18n.locale, isSupermindsGlobalFeedOn],
     );
 
@@ -102,19 +103,16 @@ export const DiscoveryV2Screen = withErrorBoundary(
     );
 
     const header = (
-      <>
-        <Topbar title="Discovery" navigation={navigation} noInsets shadowLess />
-        <View style={styles.header}>
-          <InitialOnboardingButton />
-          <TopbarTabbar
-            current={store.activeTabId}
-            onChange={tabId => {
-              store.setTabId(tabId as TDiscoveryV2Tabs);
-            }}
-            tabs={tabs}
-          />
-        </View>
-      </>
+      <View style={[styles.header]}>
+        <InitialOnboardingButton />
+        <TopbarTabbar
+          current={store.activeTabId}
+          onChange={tabId => {
+            store.setTabId(tabId as TDiscoveryV2Tabs);
+          }}
+          tabs={tabs}
+        />
+      </View>
     );
 
     useEffect(() => {
@@ -213,6 +211,12 @@ export const DiscoveryV2Screen = withErrorBoundary(
     return (
       <Screen safe>
         <View style={ThemedStyles.style.flexContainer}>
+          <Topbar
+            title="Discovery"
+            navigation={navigation}
+            noInsets
+            shadowLess
+          />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
       </Screen>
@@ -222,6 +226,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
-  header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth'],
+  header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth', 'marginTopXXXL2'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
 });
