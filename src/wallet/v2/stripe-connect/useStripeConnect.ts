@@ -98,7 +98,10 @@ export default function useStripeConnect() {
     /**
      * creates the stripe account in the backend
      */
-    createAccount: () => createAccount(),
+    createAccount: async () => {
+      await createAccount();
+      return openStripe();
+    },
     /**
      * opens stripe in the in-app-browser
      */
