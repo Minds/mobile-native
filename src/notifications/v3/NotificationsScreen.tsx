@@ -11,12 +11,12 @@ import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
 import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
-import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 import MText from '../../common/components/MText';
 import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
 
 type PropsType = {
   navigation?: any;
@@ -153,16 +153,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     }
 
     if (store.loading || store.refreshing) {
-      return (
-        <View>
-          <NotificationPlaceHolder />
-          <NotificationPlaceHolder />
-          <NotificationPlaceHolder />
-          <NotificationPlaceHolder />
-          <NotificationPlaceHolder />
-          <NotificationPlaceHolder />
-        </View>
-      );
+      return <ActivityIndicator style={styles.spinner} />;
     }
     return (
       <View style={styles.errorContainerStyle}>
@@ -253,4 +244,5 @@ const styles = ThemedStyles.create({
   errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],
   errorText: ['colorLink', 'marginTop2x'],
+  spinner: ['marginTop12x'],
 });

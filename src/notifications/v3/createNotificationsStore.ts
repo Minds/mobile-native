@@ -33,16 +33,11 @@ const createNotificationsStore = () => ({
       if (token) {
         // load count on session start
         this.loadUnreadCount();
-        // TODO: notifications should be handled from push notifications listener
-        // this.startPollCount();
-
         this.listen();
-
         this.loadPushNotificationsSettings();
         this.loadMailNotificationsSettings();
       } else {
         this.unlisten();
-        this.stopPollCount();
       }
     });
   },
@@ -76,17 +71,6 @@ const createNotificationsStore = () => ({
       }
     } catch (err) {
       logService.exception('[NotificationsStore] unread-count', err);
-    }
-  },
-  startPollCount() {
-    this.pollInterval = setInterval(() => {
-      this.loadUnreadCount();
-    }, 30000);
-  },
-  stopPollCount() {
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
-      this.pollInterval = null;
     }
   },
   async markAsRead(notification: NotificationModel): Promise<void> {
@@ -142,7 +126,6 @@ const createNotificationsStore = () => ({
     this.silentRefresh = false;
     this.filter = '';
     this.unlisten();
-    this.stopPollCount();
     this.setUnread(0);
   },
 });

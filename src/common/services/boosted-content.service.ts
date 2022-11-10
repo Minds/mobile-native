@@ -68,12 +68,6 @@ class BoostedContentService {
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v2/boost/feed');
-      // TODO: to hook the update to another event, such as scroll or focus.
-      // this.interval = setInterval(() => {
-      //   if (sessionService.userLoggedIn) {
-      //     this.update();
-      //   }
-      // }, 60000);
     }
   }
 

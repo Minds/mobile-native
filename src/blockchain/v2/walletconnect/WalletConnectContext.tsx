@@ -181,8 +181,8 @@ export const createStore = (): WCStore => ({
           },
         );
         console.log(subscribeOpts, response);
-      } catch (err) {
-        console.error('[WalletConnect]: bridge subscribe', err);
+      } catch (error) {
+        console.error('[WalletConnect]: bridge subscribe', error);
       }
 
       // const pushSubscription: IPushSubscription = {
