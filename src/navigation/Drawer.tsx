@@ -69,9 +69,15 @@ const getOptionsSmallList = navigation => {
 };
 
 const getOptionsList = (navigation, supermindFeatureFlag) => {
-  const hasRewards = sessionService.getUser().rewards;
-
+  const channel = sessionService.getUser();
   let list = [
+    {
+      name: i18n.t('settings.profile'),
+      icon: 'user',
+      onPress: () => {
+        navigation.push('Channel', { entity: channel });
+      },
+    },
     {
       name: i18n.t('wire.lock.plus'),
       icon: 'queue',
@@ -103,7 +109,7 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
             const navToBuyTokens = () => {
               navigation.navigate('BuyTokens');
             };
-            if (!hasRewards) {
+            if (!channel?.rewards) {
               await requirePhoneValidation();
               navToBuyTokens();
             } else {
