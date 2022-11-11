@@ -84,6 +84,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               "setSilentRefresh": [Function],
               "setUnread": [Function],
               "silentRefresh": false,
+              "startPollCount": [Function],
+              "stopPollCount": [Function],
               "unlisten": [Function],
               "unread": 0,
             }

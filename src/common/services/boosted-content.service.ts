@@ -68,6 +68,12 @@ class BoostedContentService {
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v2/boost/feed');
+
+      this.interval = setInterval(() => {
+        if (sessionService.userLoggedIn) {
+          this.update();
+        }
+      }, 60000);
     }
   }
 
