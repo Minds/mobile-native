@@ -27,7 +27,7 @@ import { PortalProvider } from '@gorhom/portal';
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
@@ -112,9 +112,10 @@ class App extends Component<Props> {
     // set global audio settings for the app
     Audio.setAudioModeAsync({
       playsInSilentModeIOS: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      interruptionModeIOS: InterruptionModeIOS.DoNotMix,
       shouldDuckAndroid: false,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+      staysActiveInBackground: true,
     });
   }
 
