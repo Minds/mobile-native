@@ -12,7 +12,8 @@ export default function InAppVerificationCodeRequestScreen() {
   const navigation = useNavigation<NavigationProp>();
 
   const onContinue = () => {
-    navigation.navigate('InAppVerificationCamera');
+    //TODO: Replace with the code received from the push notification
+    navigation.navigate('InAppVerificationCamera', { code: '345892' });
   };
 
   return (

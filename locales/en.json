@@ -1763,6 +1763,33 @@
     "title": "Select a channel"
   },
   "inAppVerification": {
+    "messages": {
+      "running": {
+        "title": "Capture Code",
+        "detail": "Align and center your 6-digit code in the rectangular area above to verify your account.",
+        "action": "Resend code"
+      },
+      "timeout": {
+        "title": "Timed out",
+        "detail": "We noticed you weren't able to align the code. Make sure to center the code in the box.",
+        "action": "Try Again"
+      },
+      "error": {
+        "title": "Error",
+        "detail": "An error occurred, please try again.",
+        "action": "Try Again"
+      },
+      "success": {
+        "title": "Success",
+        "detail": "Congrats you successfully aligned and verified your code.",
+        "action": "Continue"
+      },
+      "valid": {
+        "title": "Processing",
+        "detail": "Please wait...",
+        "action": ""
+      }
+    },
     "notice": {
       "title": "Verify account",
       "description": "Before getting down to business on Minds, we ask that you please verify your account."
