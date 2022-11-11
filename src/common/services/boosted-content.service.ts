@@ -36,6 +36,11 @@ class BoostedContentService {
   interval?: number = undefined;
 
   /**
+   * whether the feed is updating
+   */
+  updating = false;
+
+  /**
    * Reload boosts list
    */
   load = async (): Promise<any> => {
@@ -68,12 +73,6 @@ class BoostedContentService {
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v2/boost/feed');
-
-      this.interval = setInterval(() => {
-        if (sessionService.userLoggedIn) {
-          this.update();
-        }
-      }, 60000);
     }
   }
 
@@ -109,8 +108,13 @@ class BoostedContentService {
    * Update boosted content from server
    */
   async update() {
-    await this.feedsService!.fetch();
-    this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
+    try {
+      this.updating = true;
+      await this.feedsService!.fetch();
+      this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
+    } finally {
+      this.updating = false;
+    }
   }
 
   /**
@@ -121,6 +125,11 @@ class BoostedContentService {
 
     if (this.offset >= this.boosts.length) {
       this.offset = 0;
+      if (!this.updating) {
+        this.update().then(() => {
+          this.offset = 0;
+        });
+      }
     }
 
     return this.boosts[this.offset];
