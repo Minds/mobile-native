@@ -142,6 +142,7 @@ const createNotificationsStore = () => ({
     this.silentRefresh = false;
     this.filter = '';
     this.unlisten();
+    this.stopPollCount();
     this.setUnread(0);
   },
 });
