@@ -78,7 +78,6 @@ const useWatchForUpdates = (countEndpoint: string) => {
     previousCount.current = 0;
   };
 
-  // TODO: Is it possible to hook this to another event instead of setInterval?
   useEffect(() => {
     resetCount();
     newPostInterval.current = setInterval(async () => {
