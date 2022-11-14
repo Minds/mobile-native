@@ -313,7 +313,7 @@ dependencies {
 
 
     platform('com.google.firebase:firebase-bom:28.0.1')
-        implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation project(':reactnativenotifications')
     // implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
 
