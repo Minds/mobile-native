@@ -42,11 +42,6 @@ class WalletStore {
   isOnboardingShown!: boolean;
 
   @action
-  clockTick(): void {
-    this.overview.nextPayout--;
-  }
-
-  @action
   async refresh(force: boolean = false): Promise<void> {
     if ((this.refreshing || this.loaded) && !force) {
       return;
@@ -73,9 +68,6 @@ class WalletStore {
 
     const overview = await walletService.getContributionsOverview();
 
-    // next payout clock
-    this.interval && clearInterval(this.interval);
-    this.interval = setInterval(() => this.clockTick(), 1000);
     this.overview = overview;
     this.balance = balance;
     this.addresses = addresses;
