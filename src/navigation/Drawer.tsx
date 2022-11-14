@@ -19,21 +19,26 @@ import {
 } from '~ui';
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
-import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
 import { useFeature } from '@growthbook/growthbook-react';
+import { MoreStackParamList } from './NavigationTypes';
+import { NavigationProp } from '@react-navigation/native';
+
+type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
-const navigateToHelp = async () => {
+const navigateToHelp = async (navigation: Navigation) => {
   try {
     const response = await apiService.get<any>('api/v3/helpdesk/zendesk', {
       returnUrl: 'true',
     });
     if (response && response.url) {
-      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+      navigation.navigate('WebView', {
+        url: unescape(response.url),
+      });
     }
   } catch (err) {
     console.log(err);
@@ -50,7 +55,7 @@ const getOptionsSmallList = navigation => {
     {
       name: i18n.t('help'),
       onPress: () => {
-        navigateToHelp();
+        navigateToHelp(navigation);
       },
     },
     {
