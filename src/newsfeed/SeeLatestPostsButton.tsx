@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import Animated, { FadeInUp, useAnimatedStyle } from 'react-native-reanimated';
@@ -21,6 +22,8 @@ const SeeLatestPostsButton = ({
   feedStore,
   onPress,
 }: SeeLatestPostsButtonProps) => {
+  const navigation = useNavigation();
+
   const context = useFeedListContext();
 
   const scrollY = context?.scrollY;
@@ -42,13 +45,13 @@ const SeeLatestPostsButton = ({
   });
 
   // TODO: find a way to avoid setInterval
-  // React.useEffect(() => {
-  //   const disposeWatcher = feedStore.watchForUpdates(() =>
-  //     navigation.isFocused(),
-  //   );
+  React.useEffect(() => {
+    const disposeWatcher = feedStore.watchForUpdates(() =>
+      navigation.isFocused(),
+    );
 
-  //   return () => disposeWatcher();
-  // }, [feedStore, navigation]);
+    return () => disposeWatcher();
+  }, [feedStore, navigation]);
 
   if (!feedStore.newPostsCount) {
     return null;

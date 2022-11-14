@@ -103,7 +103,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     );
 
     const header = (
-      <View style={[styles.header]}>
+      <View style={styles.header}>
         <InitialOnboardingButton />
         <TopbarTabbar
           current={store.activeTabId}

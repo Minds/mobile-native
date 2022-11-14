@@ -109,17 +109,16 @@ export default observer(function OnboardingScreen() {
       if (progressStore && progressStore.result && !progressStore.loading) {
         progressStore.fetch();
       }
-      // TODO: is it really necessary? already hooked on focus.
-      // const interval = setInterval(() => {
-      //   if (progressStore && progressStore.result && !progressStore.loading) {
-      //     progressStore.fetch();
-      //   }
-      // }, 3000);
-      // return () => {
-      //   if (interval) {
-      //     clearInterval(interval);
-      //   }
-      // };
+      const interval = setInterval(() => {
+        if (progressStore && progressStore.result && !progressStore.loading) {
+          progressStore.fetch();
+        }
+      }, 3000);
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
     }, [progressStore]),
   );
 

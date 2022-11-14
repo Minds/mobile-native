@@ -53,7 +53,6 @@ export type WCStore = {
   chainId: number | null;
   accounts: string[] | null;
   address: string | null;
-  connectionPoller: any;
   setWeb3: (newValue: WCStore['web3']) => void;
   setProvider: (newValue: WCStore['provider']) => void;
   setConnected: (newValue: WCStore['connected']) => void;
@@ -79,7 +78,6 @@ export const createStore = (): WCStore => ({
   address: null,
   modalVisible: false,
   selectedWallet: undefined,
-  connectionPoller: null,
   async showModal() {
     this.modalVisible = true;
 
@@ -98,8 +96,6 @@ export const createStore = (): WCStore => ({
     this.selectedWallet = wallet;
   },
   setupProvider() {
-    clearInterval(this.connectionPoller);
-
     // Provider should have a clean slate
     this.setProvider(null);
     this.setWeb3(null);
@@ -116,17 +112,6 @@ export const createStore = (): WCStore => ({
       chainId: 1,
       pollingInterval: DEEPLINK_DELAY_MS,
     });
-    // TODO: do we really need this?
-    // this.connectionPoller = setInterval(() => {
-    //   provider.connector.sendCustomRequest({ method: 'ping' });
-
-    //   console.log(
-    //     '[WalletConnect.connectionPoller]',
-    //     provider.connected,
-    //     provider.connectCallbacks,
-    //     provider,
-    //   );
-    // }, 5000);
 
     // open wallet using deep linking
     provider.connector.on('display_uri', (err, payload) => {
