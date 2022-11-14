@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Animated, { FadeInUp, useAnimatedStyle } from 'react-native-reanimated';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
@@ -44,8 +44,7 @@ const SeeLatestPostsButton = ({
     };
   });
 
-  // TODO: find a way to avoid setInterval
-  React.useEffect(() => {
+  useEffect(() => {
     const disposeWatcher = feedStore.watchForUpdates(() =>
       navigation.isFocused(),
     );
