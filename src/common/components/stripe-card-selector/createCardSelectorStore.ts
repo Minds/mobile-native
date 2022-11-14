@@ -91,11 +91,11 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
 
         const cards = result.paymentmethods.reverse();
 
+        this.setCards(cards);
+        this.setLoaded(true);
         if (defaultSelectedCard) {
           this.selectCard(defaultSelectedCard);
         }
-        this.setCards(cards);
-        this.setLoaded(true);
       }
     } catch (err) {
       console.log(err);

@@ -9,7 +9,12 @@ module.exports = {
         legacy: true,
       },
     ],
-    'react-native-reanimated/plugin',
+    [
+      'react-native-reanimated/plugin',
+      {
+        globals: ['__scanOCR'],
+      },
+    ],
     [
       'module-resolver',
       {

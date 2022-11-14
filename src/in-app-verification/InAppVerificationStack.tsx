@@ -2,6 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
+  StackScreenProps,
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
@@ -9,9 +10,15 @@ import React from 'react';
 export type InAppVerificationStackParamList = {
   InAppVerificationOnboarding: undefined;
   InAppVerificationCodeRequest: undefined;
-  InAppVerificationCamera: undefined;
+  InAppVerificationCamera: {
+    code: string;
+  };
   InAppVerificationConfirmation: undefined;
 };
+
+export type InAppVerificationStackScreenProps<
+  S extends keyof InAppVerificationStackParamList
+> = StackScreenProps<InAppVerificationStackParamList, S>;
 
 export type InAppVerificationStackRouteProp<
   S extends keyof InAppVerificationStackParamList
