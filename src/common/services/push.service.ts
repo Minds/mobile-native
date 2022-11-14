@@ -103,6 +103,20 @@ export class PushService {
   requestNotificationPermission() {
     return this.push.requestPermission();
   }
+
+  /**
+   * Registers a listener for received foreground push
+   */
+  registerOnNotificationReceived(callback: (notification) => void) {
+    this.push.registerOnNotificationReceived(callback);
+  }
+
+  /**
+   * Unregisters a listener for received foreground push
+   */
+  unregisterOnNotificationReceived(callback: (notification) => void) {
+    this.push.unregisterOnNotificationReceived(callback);
+  }
 }
 
 export default new PushService();

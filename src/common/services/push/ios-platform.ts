@@ -44,6 +44,20 @@ export default class IosPlatfom extends AbstractPlatform {
     );
   }
 
+  registerOnNotificationReceived(callback: (notification) => void) {
+    NotificationsIOS.addEventListener(
+      'notificationReceivedForeground',
+      callback,
+    );
+  }
+
+  unregisterOnNotificationReceived(callback: (notification) => void) {
+    NotificationsIOS.removeEventListener(
+      'notificationReceivedForeground',
+      callback,
+    );
+  }
+
   /**
    * Set app badge
    * @param {integer} num
