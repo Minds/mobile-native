@@ -23,6 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
+import { useIsChatHidden } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -199,7 +200,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'translate',
         iconType: 'material',
         onPress: () => {
-          if (this.props.onTranslate) this.props.onTranslate();
+          if (this.props.onTranslate) {
+            this.props.onTranslate();
+          }
           this.hideActionSheet();
         },
       });
@@ -434,50 +437,61 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   render() {
     return (
-      <>
-        <IconButtonNext
-          scale
-          name="more"
-          size="large"
-          onPress={this.showActionSheet}
-          testID={this.props.testID}
-          // left="XS"
-        />
-        {this.state.shown && (
-          <BottomSheetModal ref={this.ref} autoShow>
-            {this.state.options.map((a, i) => (
-              <BottomSheetMenuItem {...a} key={i} />
-            ))}
-            <BottomSheetButton
-              text={i18n.t('cancel')}
-              onPress={this.hideActionSheet}
+      <ChatHiddenHoc>
+        {isChatHidden => (
+          <>
+            <IconButtonNext
+              scale
+              name="more"
+              size="large"
+              onPress={this.showActionSheet}
+              testID={this.props.testID}
+              // left="XS"
             />
-          </BottomSheetModal>
-        )}
-        {this.state.shareMenuShown && (
-          <BottomSheetModal ref={this.shareMenuRef} autoShow>
-            <BottomSheetMenuItem
-              onPress={this.sendTo}
-              title={i18n.t('sendTo')}
-              iconName="repeat"
-              iconType="material"
-            />
-            <BottomSheetMenuItem
-              title={i18n.t('share')}
-              onPress={this.share}
-              iconName="edit"
-              iconType="material"
-            />
+            {this.state.shown && (
+              <BottomSheetModal ref={this.ref} autoShow>
+                {this.state.options.map((a, i) => (
+                  <BottomSheetMenuItem {...a} key={i} />
+                ))}
+                <BottomSheetButton
+                  text={i18n.t('cancel')}
+                  onPress={this.hideActionSheet}
+                />
+              </BottomSheetModal>
+            )}
+            {this.state.shareMenuShown && (
+              <BottomSheetModal ref={this.shareMenuRef} autoShow>
+                {isChatHidden ? null : (
+                  <BottomSheetMenuItem
+                    onPress={this.sendTo}
+                    title={i18n.t('sendTo')}
+                    iconName="repeat"
+                    iconType="material"
+                  />
+                )}
+                <BottomSheetMenuItem
+                  title={i18n.t('share')}
+                  onPress={this.share}
+                  iconName="edit"
+                  iconType="material"
+                />
 
-            <BottomSheetButton
-              text={i18n.t('cancel')}
-              onPress={this.hideShareMenu}
-            />
-          </BottomSheetModal>
+                <BottomSheetButton
+                  text={i18n.t('cancel')}
+                  onPress={this.hideShareMenu}
+                />
+              </BottomSheetModal>
+            )}
+          </>
         )}
-      </>
+      </ChatHiddenHoc>
     );
   }
 }
 
 export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
+
+function ChatHiddenHoc({ children }: any) {
+  const isChatHidden = useIsChatHidden();
+  return children(isChatHidden);
+}

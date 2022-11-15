@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   GrowthBook,
   GrowthBookProvider,
@@ -10,7 +10,8 @@ import analyticsService from '~/common/services/analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import { IS_IOS, IS_REVIEW } from '~/config/Config';
+import { ANDROID_CHAT_APP, IS_IOS, IS_REVIEW } from '~/config/Config';
+import SendIntentAndroid from 'react-native-send-intent';
 
 export const growthbook = new GrowthBook({
   trackingCallback: (experiment, result) => {
@@ -73,3 +74,16 @@ export default function ExperimentsProvider({ children }) {
 }
 
 export type FeatureID = 'mob-stripe-connect-4587' | 'mob-4630-hide-chat-icon';
+
+export function useIsChatHidden() {
+  const isFlagOn = useIsFeatureOn('mob-4630-hide-chat-icon');
+  const [isHidden, setIsHidden] = useState(isFlagOn);
+  useEffect(() => {
+    if (!IS_IOS) {
+      SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed =>
+        setIsHidden(!installed || isHidden),
+      );
+    }
+  }, [isHidden]);
+  return isHidden;
+}

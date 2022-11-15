@@ -15,6 +15,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import { Platform } from 'react-native';
 import { useStores } from '../../common/hooks/use-stores';
+import { useIsChatHidden } from 'ExperimentsProvider';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -30,7 +31,7 @@ const getOptions = (
   channel: UserModel,
   isSubscribedToTier: boolean,
   onSearchChannelPressed: () => void,
-  openChat: () => void,
+  openChat,
   navigation,
   ref: any,
 ) => {
@@ -55,7 +56,7 @@ const getOptions = (
     options.push(shareOption);
   }
 
-  if (!channel.isOwner()) {
+  if (!channel.isOwner() && openChat) {
     options.push({
       iconName: 'message-outline',
       iconType: 'material-community',
@@ -184,30 +185,35 @@ type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const navigation = useNavigation<NavigationType>();
   const { chat } = useStores();
+  const isChatHidden = useIsChatHidden();
 
   /**
    * Opens chat
    **/
-  const openChat = useCallback(() => {
-    if (!props.channel) return null;
+  const openChat = isChatHidden
+    ? undefined
+    : useCallback(() => {
+        if (!props.channel) {
+          return null;
+        }
 
-    if (Platform.OS === 'android') {
-      try {
-        chat.checkAppInstalled().then(installed => {
-          if (!installed) {
-            return;
+        if (Platform.OS === 'android') {
+          try {
+            chat.checkAppInstalled().then(installed => {
+              if (!installed) {
+                return;
+              }
+              if (props.channel) {
+                chat.directMessage(props.channel.guid);
+              }
+            });
+          } catch (error) {
+            console.log(error);
           }
-          if (props.channel) {
-            chat.directMessage(props.channel.guid);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      chat.directMessage(props.channel.guid);
-    }
-  }, [chat, props.channel]);
+        } else {
+          chat.directMessage(props.channel.guid);
+        }
+      }, [chat, props.channel]);
 
   const options = getOptions(
     props.channel,

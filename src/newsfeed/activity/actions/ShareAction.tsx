@@ -17,6 +17,7 @@ import {
   BottomSheetModal,
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
+import { useIsChatHidden } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,6 +26,7 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
+  const isChatHidden = useIsChatHidden();
   // store
   const localStore = useLocalStore(() => ({
     menuShown: false,
@@ -82,12 +84,14 @@ export default observer(function ShareAction({ entity }: PropsType) {
       />
       {localStore.menuShown && (
         <BottomSheetModal ref={ref} autoShow>
-          <BottomSheetMenuItem
-            onPress={localStore.sendTo}
-            title={i18n.t('sendTo')}
-            iconName="repeat"
-            iconType="material"
-          />
+          {isChatHidden ? null : (
+            <BottomSheetMenuItem
+              onPress={localStore.sendTo}
+              title={i18n.t('sendTo')}
+              iconName="repeat"
+              iconType="material"
+            />
+          )}
           <BottomSheetMenuItem
             title={i18n.t('share')}
             onPress={localStore.share}

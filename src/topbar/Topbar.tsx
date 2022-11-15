@@ -12,7 +12,7 @@ import ChatIcon from '~/chat/ChatIcon';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsChatHidden } from 'ExperimentsProvider';
 
 type PropsType = {
   navigation: any;
@@ -23,7 +23,7 @@ type PropsType = {
 };
 
 export const Topbar = observer((props: PropsType) => {
-  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
+  const isChatHidden = useIsChatHidden();
 
   const { navigation, title, noInsets, shadowLess, showBack } = props;
   const channel = sessionService.getUser();
