@@ -1,4 +1,4 @@
-import { MotiView } from '@motify/components';
+import { MotiView } from 'moti';
 import React from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { debounce } from 'lodash';

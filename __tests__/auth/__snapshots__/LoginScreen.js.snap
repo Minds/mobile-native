@@ -4,16 +4,13 @@ exports[`LoginScreen component should renders correctly 1`] = `
 <View>
   <View
     style={
-      Array [
-        undefined,
-        Object {
-          "transform": Array [
-            Object {
-              "translateY": 0,
-            },
-          ],
-        },
-      ]
+      Object {
+        "transform": Array [
+          Object {
+            "translateY": 0,
+          },
+        ],
+      }
     }
   >
     <View

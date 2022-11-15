@@ -53,8 +53,9 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         props.containerStyle,
       ]}>
       <ScrollView
-        contentContainerStyle={theme.marginHorizontal2x}
+        contentContainerStyle={[theme.marginHorizontal2x, theme.paddingRight4x]}
         horizontal
+        showsHorizontalScrollIndicator={false}
         ref={topbarTabbarRef}>
         {props.tabs.map((tab, i) => (
           <TouchableOpacity

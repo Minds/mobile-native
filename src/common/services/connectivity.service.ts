@@ -55,11 +55,12 @@ class ConnectivityService {
   handleConnectivityChange = connectionInfo => {
     this.connectionInfo = connectionInfo;
 
-    if (this.connectionInfo.type != 'none') {
-      this.startConnectivityCheck();
-    } else {
-      this.stopConnectivityCheck();
-    }
+    // TODO: if needed, we can add an inteceptor for axios timeout error.
+    // if (this.connectionInfo.type != 'none') {
+    //   this.startConnectivityCheck();
+    // } else {
+    //   this.stopConnectivityCheck();
+    // }
 
     console.log('Connection change, type: ' + connectionInfo.type);
   };

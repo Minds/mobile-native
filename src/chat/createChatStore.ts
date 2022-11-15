@@ -58,7 +58,9 @@ const createChatStore = () => ({
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }
-    this.polling = setInterval(this.loadCount, 15000);
+    this.reset();
+    // TODO: to hook to another event if needed.
+    // this.polling = setInterval(this.loadCount, 15000);
     this.loadCount();
   },
   async loadCount(): Promise<void> {
