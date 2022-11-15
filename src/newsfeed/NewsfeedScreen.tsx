@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import Topbar from '~/topbar/Topbar';
 import { View } from 'react-native';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 
 import { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
@@ -179,9 +179,13 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <FeedListSticky
             stickyHeaderIndices={isLatest ? sticky : undefined}
             overrideItemLayout={overrideItemLayout}
-            onMomentumScrollEnd={debounce(
+            onMomentumScrollEnd={throttle(
               () => newsfeed.latestFeedStore.checkForUpdates(),
-              500,
+              15000,
+              {
+                leading: false,
+                trailing: true,
+              },
             )}
             bottomComponent={
               isLatest ? (

@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React from 'react';
@@ -134,9 +134,16 @@ function SupermindConsoleScreen({
           </>
         }
         contentContainerStyle={ThemedStyles.style.paddingTop2x}
-        onMomentumScrollEnd={debounce(() => {
-          seeLatestRef.current?.checkForUpdates();
-        }, 500)}
+        onMomentumScrollEnd={throttle(
+          () => {
+            seeLatestRef.current?.checkForUpdates();
+          },
+          15000,
+          {
+            leading: false,
+            trailing: true,
+          },
+        )}
         map={mapRequests}
         fetchEndpoint={
           mode === 'inbound'
