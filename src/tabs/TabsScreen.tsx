@@ -245,6 +245,7 @@ const notificationOptions = {
 };
 const moreOptions = {
   tabBarTestID: 'Messenger tab button',
+  lazy: false,
 };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
