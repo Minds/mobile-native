@@ -4,13 +4,16 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
 <View>
   <View
     style={
-      Object {
-        "transform": Array [
-          Object {
-            "translateY": -100,
-          },
-        ],
-      }
+      Array [
+        undefined,
+        Object {
+          "transform": Array [
+            Object {
+              "translateY": -100,
+            },
+          ],
+        },
+      ]
     }
   >
     <View

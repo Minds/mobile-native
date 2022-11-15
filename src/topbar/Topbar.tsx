@@ -12,6 +12,7 @@ import ChatIcon from '~/chat/ChatIcon';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   navigation: any;
@@ -22,6 +23,8 @@ type PropsType = {
 };
 
 export const Topbar = observer((props: PropsType) => {
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
+
   const { navigation, title, noInsets, shadowLess, showBack } = props;
   const channel = sessionService.getUser();
   const { wallet } = useStores();
@@ -102,7 +105,11 @@ export const Topbar = observer((props: PropsType) => {
                   size="small"
                   onPress={handleChannelNav}
                 />
-                <View style={styles.logoWrapper}>
+                <View
+                  style={[
+                    styles.logoWrapper,
+                    isChatHidden && styles.noMarginLeft,
+                  ]}>
                   <Image
                     resizeMode="contain"
                     source={
@@ -118,9 +125,11 @@ export const Topbar = observer((props: PropsType) => {
           </View>
           <View style={styles.topbarRight}>
             <Spacer right="L">
-              <PressableScale onPress={() => chatModal.current?.showModal()}>
-                <ChatIcon />
-              </PressableScale>
+              {isChatHidden ? null : (
+                <PressableScale onPress={() => chatModal.current?.showModal()}>
+                  <ChatIcon />
+                </PressableScale>
+              )}
             </Spacer>
             <PressableScale onPress={() => navigation.navigate('SearchScreen')}>
               <IconCircled size="small" name="search" color="PrimaryText" />
@@ -177,5 +186,8 @@ export const styles = StyleSheet.create({
   },
   leftSpacer: {
     width: 5,
+  },
+  noMarginLeft: {
+    marginLeft: 0,
   },
 });
