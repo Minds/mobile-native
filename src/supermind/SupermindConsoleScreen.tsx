@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { debounce } from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React from 'react';
@@ -17,7 +18,9 @@ import {
   useSupermindOnboarding,
 } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
-import SeeLatestButton from '../newsfeed/SeeLatestButton';
+import SeeLatestButton, {
+  SeeLatestButtonHandle,
+} from '../newsfeed/SeeLatestButton';
 import StripeConnectButton from '../wallet/v2/stripe-connect/StripeConnectButton';
 import AddBankInformation from './AddBankInformation';
 import SupermindConsoleFeedFilter, {
@@ -62,6 +65,7 @@ function SupermindConsoleScreen({
   );
   const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
   const listRef = React.useRef<any>(null);
+  const seeLatestRef = React.useRef<SeeLatestButtonHandle>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
   const scrollToTopAndRefresh = () => {
@@ -130,6 +134,9 @@ function SupermindConsoleScreen({
           </>
         }
         contentContainerStyle={ThemedStyles.style.paddingTop2x}
+        onMomentumScrollEnd={debounce(() => {
+          seeLatestRef.current?.checkForUpdates();
+        }, 500)}
         map={mapRequests}
         fetchEndpoint={
           mode === 'inbound'
@@ -144,6 +151,7 @@ function SupermindConsoleScreen({
       />
 
       <SeeLatestButton
+        ref={seeLatestRef}
         countEndpoint={`api/v3/supermind/${
           mode === 'inbound' ? 'inbox' : 'outbox'
         }/count${filterParam}`}

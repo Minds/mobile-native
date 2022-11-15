@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import {
   FlatList,
+  FlatListProps,
   ListRenderItem,
   StyleProp,
   View,
@@ -38,7 +39,7 @@ type PropsType = {
   placeholderCount?: number;
   renderPlaceholder?: () => JSX.Element;
   offsetPagination?: boolean;
-};
+} & Pick<FlatListProps<unknown>, 'onMomentumScrollEnd'>;
 
 type FetchResponseType =
   | {
@@ -209,6 +210,7 @@ export default observer(
         data={data}
         renderItem={renderItem}
         ListFooterComponent={loadingFooter}
+        onMomentumScrollEnd={props.onMomentumScrollEnd}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={_refresh}

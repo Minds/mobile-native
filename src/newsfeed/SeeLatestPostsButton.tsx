@@ -1,6 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Animated, { FadeInUp, useAnimatedStyle } from 'react-native-reanimated';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
@@ -22,8 +21,6 @@ const SeeLatestPostsButton = ({
   feedStore,
   onPress,
 }: SeeLatestPostsButtonProps) => {
-  const navigation = useNavigation();
-
   const context = useFeedListContext();
 
   const scrollY = context?.scrollY;
@@ -43,14 +40,6 @@ const SeeLatestPostsButton = ({
       right: 0,
     };
   });
-
-  useEffect(() => {
-    const disposeWatcher = feedStore.watchForUpdates(() =>
-      navigation.isFocused(),
-    );
-
-    return () => disposeWatcher();
-  }, [feedStore, navigation]);
 
   if (!feedStore.newPostsCount) {
     return null;

@@ -174,9 +174,6 @@ export const GOOGLE_PLAY_STORE =
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
 
-// in ms
-export const NEWSFEED_NEW_POST_POLL_INTERVAL = 30000;
-
 export const CAPTCHA_ENABLED_ENDPOINTS = [
   {
     url: /api\/v1\/votes\/.*\/up/,

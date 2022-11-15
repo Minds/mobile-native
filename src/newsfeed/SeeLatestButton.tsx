@@ -1,10 +1,17 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import Animated, { FadeInUp, useAnimatedStyle } from 'react-native-reanimated';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
 import { Button, Icon } from '~/common/ui';
-import { IS_IOS, NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 import useApiFetch from '../common/hooks/useApiFetch';
 
 interface SeeLatestButtonProps {
@@ -12,14 +19,27 @@ interface SeeLatestButtonProps {
   countEndpoint: string;
 }
 
+export interface SeeLatestButtonHandle {
+  /**
+   * Checks for updates from server and updates the count
+   * @returns count
+   */
+  checkForUpdates: () => Promise<number>;
+}
+
 const additionalTop = IS_IOS ? 160 : 150;
 
 /**
  * A prompt that appears in a feed and shows how many new posts are there
  */
-const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
+const SeeLatestButton: ForwardRefRenderFunction<
+  SeeLatestButtonHandle,
+  SeeLatestButtonProps
+> = ({ onPress, countEndpoint }, ref) => {
   const context = useFeedListContext();
-  const { count, resetCount } = useWatchForUpdates(countEndpoint);
+  const { count, resetCount, checkForUpdates } = useWatchForUpdates(
+    countEndpoint,
+  );
   const scrollY = context?.scrollY;
   const style = useAnimatedStyle(() => {
     const margin = additionalTop - (IS_IOS ? 70 : 60);
@@ -37,6 +57,10 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
     };
   });
   const handleOnPress = () => onPress?.().then(() => resetCount());
+
+  useImperativeHandle(ref, () => ({
+    checkForUpdates,
+  }));
 
   if (!count) {
     return null;
@@ -63,7 +87,7 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
   );
 };
 
-export default observer(SeeLatestButton);
+export default observer(forwardRef(SeeLatestButton));
 
 const useWatchForUpdates = (countEndpoint: string) => {
   const previousCount = useRef<number>();
@@ -72,28 +96,31 @@ const useWatchForUpdates = (countEndpoint: string) => {
   const { fetch: fetchCount } = useApiFetch<{ count: number }>(countEndpoint, {
     skip: true,
   });
+
   const resetCount = () => {
     clearInterval(newPostInterval.current);
     setCount(0);
     previousCount.current = 0;
   };
 
-  useEffect(() => {
-    resetCount();
-    newPostInterval.current = setInterval(async () => {
-      const data = await fetchCount();
-      if (previousCount.current && data.count) {
-        setCount(data.count - previousCount.current);
-      } else {
-        previousCount.current = data.count;
-      }
-    }, NEWSFEED_NEW_POST_POLL_INTERVAL);
+  const checkForUpdates = async () => {
+    const data = await fetchCount();
+    if (previousCount.current && data.count) {
+      setCount(data.count - previousCount.current);
+    } else {
+      previousCount.current = data.count;
+    }
 
-    return () => clearInterval(newPostInterval.current);
-  }, [fetchCount, countEndpoint]);
+    return data.count;
+  };
+
+  useEffect(() => {
+    checkForUpdates();
+  });
 
   return {
     count: count && count > 0 ? count : 0,
     resetCount,
+    checkForUpdates,
   };
 };

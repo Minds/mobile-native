@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from 'mobx';
+import { observable, action } from 'mobx';
 
 import logService from '../services/log.service';
 import Viewed from './Viewed';
@@ -10,7 +10,6 @@ import BaseModel from '../BaseModel';
 import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
 import { isAbort } from '../services/api.service';
-import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
 
 enum FeedAction {
@@ -710,22 +709,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {() => boolean} hasFocus - A function that returns whether the screen has focus or not?
    * @returns { Function } a function to remove the watcher
    */
-  public watchForUpdates(hasFocus: () => boolean): () => void {
-    clearInterval(this.newPostInterval);
-    this.newPostInterval = setInterval(async () => {
-      if (!hasFocus()) {
-        return;
-      }
+  public async checkForUpdates(): Promise<number> {
+    const count = await this.feedsService.count(
+      this.feedsService.feedLastFetchedAt,
+    );
 
-      const count = await this.feedsService.count(
-        this.feedsService.feedLastFetchedAt,
-      );
-
-      runInAction(() => {
-        this.newPostsCount = count;
-      });
-    }, NEWSFEED_NEW_POST_POLL_INTERVAL);
-
-    return () => clearInterval(this.newPostInterval);
+    this.newPostsCount = count;
+    return this.newPostsCount;
   }
 }
