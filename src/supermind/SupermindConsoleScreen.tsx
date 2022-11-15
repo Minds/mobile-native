@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { debounce, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React from 'react';

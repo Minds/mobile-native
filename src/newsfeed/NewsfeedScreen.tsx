@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import Topbar from '~/topbar/Topbar';
 import { View } from 'react-native';
-import { debounce, throttle } from 'lodash';
+import { throttle } from 'lodash';
 
 import { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
