@@ -43,7 +43,7 @@ describe('Boost action bar component', () => {
 
   it('renders the expected views', async () => {
     screen.update();
-    expect(screen.find(View)).toHaveLength(5);
+    expect(screen.find(View)).toHaveLength(6);
   });
 
   it('renders the expected text', async () => {

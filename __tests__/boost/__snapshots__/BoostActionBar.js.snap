@@ -1,61 +1,103 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Boost action bar component renders correctly 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "borderBottomWidth": 6,
-      },
-      Object {
-        "borderColor": "#3f4b56",
-      },
-      Object {
-        "alignItems": "stretch",
-        "display": "flex",
-        "flexDirection": "row",
-        "padding": 4,
-        "paddingBottom": 16,
-      },
-    ]
-  }
->
-  <View />
-  <View />
+<Fragment>
   <View
-    key="bid"
     style={
-      Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "flex": 1,
-        "flexDirection": "column",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "borderColor": "#3f4b56",
+        },
+        Object {
+          "alignItems": "stretch",
+          "display": "flex",
+          "flexDirection": "row",
+          "padding": 4,
+          "paddingBottom": 16,
+        },
+      ]
     }
   >
-    <Themed.Icon
-      color="rgb(96, 125, 139)"
-      name="bank"
-      size={20}
+    <View />
+    <View />
+    <View
+      key="bid"
       style={
         Object {
-          "marginBottom": 4,
-        }
-      }
-      type="material-community"
-    />
-    <MText
-      style={
-        Object {
-          "fontSize": 11,
-          "marginTop": 4,
+          "alignContent": "center",
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "column",
+          "justifyContent": "center",
         }
       }
     >
-      $1.00
-    </MText>
+      <Icon
+        allowFontScaling={false}
+        name="bank"
+        size={20}
+        style={
+          Array [
+            Object {
+              "marginBottom": 4,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ]
+        }
+      />
+      <MText
+        style={
+          Object {
+            "fontSize": 11,
+            "marginTop": 4,
+          }
+        }
+      >
+        $1.00
+      </MText>
+    </View>
+    <View />
+    <View
+      key="time"
+      style={
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "column",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Icon
+        allowFontScaling={false}
+        name="clock"
+        size={20}
+        style={
+          Array [
+            Object {
+              "marginBottom": 4,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ]
+        }
+      />
+      <MText
+        numberOfLines={1}
+        style={
+          Object {
+            "fontSize": 11,
+            "marginTop": 4,
+          }
+        }
+      >
+        Mar 26, 2018
+      </MText>
+    </View>
   </View>
-  <View />
-</View>
+</Fragment>
 `;
