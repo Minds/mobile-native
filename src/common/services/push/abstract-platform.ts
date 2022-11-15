@@ -35,4 +35,7 @@ export default class AbstractPlatform {
   }
 
   requestPermission(): void;
+
+  registerOnNotificationReceived(callback: (notification) => void);
+  unregisterOnNotificationReceived(callback: (notification) => void);
 }

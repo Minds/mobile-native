@@ -6,20 +6,21 @@ import {
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';
 import sessionService from '../session.service';
+import EventEmitter from 'eventemitter3';
 
 /**
  * Android Platform
  */
 export default class AndroidPlatfom extends AbstractPlatform {
+  events: EventEmitter = new EventEmitter();
+
   /**
    * Init push service
    */
   init() {
-    NotificationsAndroid.setNotificationReceivedListener(notification => {
-      logService.log('Notification received', notification);
-      //NotificationsAndroid.localNotification(notification.data);
-    });
-
+    NotificationsAndroid.setNotificationReceivedListener(
+      this.handleForegroundNotification,
+    );
     NotificationsAndroid.setRegistrationTokenUpdateListener(deviceToken => {
       this.token = deviceToken;
       sessionService.deviceToken = deviceToken;
@@ -27,6 +28,21 @@ export default class AndroidPlatfom extends AbstractPlatform {
         this.registerToken();
       }
     });
+  }
+
+  /**
+   * Handles the global foreground and sends it to the listeners
+   */
+  private handleForegroundNotification = notification => {
+    this.events.emit('foreground', notification);
+  };
+
+  registerOnNotificationReceived(callback: (notification) => void) {
+    this.events.addListener('foreground', callback);
+  }
+
+  unregisterOnNotificationReceived(callback: (notification) => void) {
+    this.events.removeListener('foreground', callback);
   }
 
   /**

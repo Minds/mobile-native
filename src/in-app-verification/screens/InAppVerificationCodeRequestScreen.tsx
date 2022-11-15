@@ -1,20 +1,42 @@
-import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import FitScrollView from '../../common/components/FitScrollView';
-import SaveButton from '../../common/components/SaveButton';
-import i18n from '../../common/services/i18n.service';
-import { B1, Column, H3, Screen, ScreenHeader } from '../../common/ui';
-import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
+import deviceInfo from 'react-native-device-info';
 
-type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationCodeRequest'>;
+import i18n from '~/common/services/i18n.service';
+import { InAppVerificationStackScreenProps } from '../InAppVerificationStack';
+import apiService from '~/common/services/__mocks__/api.service';
+import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
+import SaveButton from '~/common/components/SaveButton';
+import FitScrollView from '~/common/components/FitScrollView';
+import { IS_IOS } from '~/config/Config';
+import { showNotification } from 'AppMessages';
 
-export default function InAppVerificationCodeRequestScreen() {
-  const navigation = useNavigation<NavigationProp>();
+type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
+
+export default function InAppVerificationCodeRequestScreen({
+  navigation,
+}: PropsType) {
+  const [code, setCode] = React.useState('');
 
   const onContinue = () => {
-    //TODO: Replace with the code received from the push notification
-    navigation.navigate('InAppVerificationCamera', { code: '345892' });
+    if (code) {
+      navigation.navigate('InAppVerificationCamera', { code });
+    }
   };
+
+  React.useEffect(() => {
+    deviceInfo.getUniqueId().then(async deviceId => {
+      const response = await apiService.post(
+        `/api/v3/verification/${deviceId}`,
+        {
+          device_type: IS_IOS ? 'ios' : 'android',
+        },
+      );
+      if (response?.code) {
+        showNotification(`Verification code: ${response.code}`, 'info', 0);
+        setCode(response.code);
+      }
+    });
+  }, []);
 
   return (
     <Screen safe>
@@ -23,7 +45,13 @@ export default function InAppVerificationCodeRequestScreen() {
         centerTitle
         border
         back
-        extra={<SaveButton onPress={onContinue} text={i18n.t('continue')} />}
+        extra={
+          <SaveButton
+            onPress={onContinue}
+            text={i18n.t('continue')}
+            disabled={!code}
+          />
+        }
       />
       <FitScrollView>
         <Column space="L" top="XXL">
