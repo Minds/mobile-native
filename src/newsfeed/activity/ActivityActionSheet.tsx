@@ -23,7 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { useIsChatHidden } from 'ExperimentsProvider';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -34,6 +34,7 @@ type PropsType = {
     bottom: number;
   };
   channel?: UserModel;
+  isChatHidden?: boolean;
 };
 
 type StateType = {
@@ -401,7 +402,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           type: SendIntentAndroid.TEXT_PLAIN,
           package: ANDROID_CHAT_APP,
         });
-      } else {
+      } else if (!this.props.isChatHidden) {
         Linking.openURL('market://details?id=com.minds.chat');
       }
     } catch (error) {
@@ -437,61 +438,57 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   render() {
     return (
-      <ChatHiddenHoc>
-        {isChatHidden => (
-          <>
-            <IconButtonNext
-              scale
-              name="more"
-              size="large"
-              onPress={this.showActionSheet}
-              testID={this.props.testID}
-              // left="XS"
+      <>
+        <IconButtonNext
+          scale
+          name="more"
+          size="large"
+          onPress={this.showActionSheet}
+          testID={this.props.testID}
+          // left="XS"
+        />
+        {this.state.shown && (
+          <BottomSheetModal ref={this.ref} autoShow>
+            {this.state.options.map((a, i) => (
+              <BottomSheetMenuItem {...a} key={i} />
+            ))}
+            <BottomSheetButton
+              text={i18n.t('cancel')}
+              onPress={this.hideActionSheet}
             />
-            {this.state.shown && (
-              <BottomSheetModal ref={this.ref} autoShow>
-                {this.state.options.map((a, i) => (
-                  <BottomSheetMenuItem {...a} key={i} />
-                ))}
-                <BottomSheetButton
-                  text={i18n.t('cancel')}
-                  onPress={this.hideActionSheet}
-                />
-              </BottomSheetModal>
-            )}
-            {this.state.shareMenuShown && (
-              <BottomSheetModal ref={this.shareMenuRef} autoShow>
-                {isChatHidden ? null : (
-                  <BottomSheetMenuItem
-                    onPress={this.sendTo}
-                    title={i18n.t('sendTo')}
-                    iconName="repeat"
-                    iconType="material"
-                  />
-                )}
-                <BottomSheetMenuItem
-                  title={i18n.t('share')}
-                  onPress={this.share}
-                  iconName="edit"
-                  iconType="material"
-                />
-
-                <BottomSheetButton
-                  text={i18n.t('cancel')}
-                  onPress={this.hideShareMenu}
-                />
-              </BottomSheetModal>
-            )}
-          </>
+          </BottomSheetModal>
         )}
-      </ChatHiddenHoc>
+        {this.state.shareMenuShown && (
+          <BottomSheetModal ref={this.shareMenuRef} autoShow>
+            <BottomSheetMenuItem
+              onPress={this.sendTo}
+              title={i18n.t('sendTo')}
+              iconName="repeat"
+              iconType="material"
+            />
+            <BottomSheetMenuItem
+              title={i18n.t('share')}
+              onPress={this.share}
+              iconName="edit"
+              iconType="material"
+            />
+
+            <BottomSheetButton
+              text={i18n.t('cancel')}
+              onPress={this.hideShareMenu}
+            />
+          </BottomSheetModal>
+        )}
+      </>
     );
   }
 }
 
-export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
+const withHiddenChat = WrappedComponent => props => {
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
+  return <WrappedComponent {...{ ...props, isChatHidden }} />;
+};
 
-function ChatHiddenHoc({ children }: any) {
-  const isChatHidden = useIsChatHidden();
-  return children(isChatHidden);
-}
+export default withSafeAreaInsets(
+  withChannelContext(withHiddenChat(ActivityActionSheet)),
+);

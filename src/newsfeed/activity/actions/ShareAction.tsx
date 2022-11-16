@@ -17,7 +17,7 @@ import {
   BottomSheetModal,
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
-import { useIsChatHidden } from 'ExperimentsProvider';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -26,7 +26,7 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
-  const isChatHidden = useIsChatHidden();
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
   // store
   const localStore = useLocalStore(() => ({
     menuShown: false,
@@ -62,7 +62,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
             type: SendIntentAndroid.TEXT_PLAIN,
             package: ANDROID_CHAT_APP,
           });
-        } else {
+        } else if (!isChatHidden) {
           Linking.openURL('market://details?id=com.minds.chat');
         }
       } catch (error) {
@@ -84,14 +84,12 @@ export default observer(function ShareAction({ entity }: PropsType) {
       />
       {localStore.menuShown && (
         <BottomSheetModal ref={ref} autoShow>
-          {isChatHidden ? null : (
-            <BottomSheetMenuItem
-              onPress={localStore.sendTo}
-              title={i18n.t('sendTo')}
-              iconName="repeat"
-              iconType="material"
-            />
-          )}
+          <BottomSheetMenuItem
+            onPress={localStore.sendTo}
+            title={i18n.t('sendTo')}
+            iconName="repeat"
+            iconType="material"
+          />
           <BottomSheetMenuItem
             title={i18n.t('share')}
             onPress={localStore.share}
