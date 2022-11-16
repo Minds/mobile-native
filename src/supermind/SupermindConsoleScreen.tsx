@@ -60,13 +60,25 @@ function SupermindConsoleScreen({
   const [mode, setMode] = React.useState<TabModeType>(
     route.params?.tab ?? 'inbound',
   );
-  const [filter, setFilter] = React.useState<SupermindFilterType>('pending');
+  const [filter, setFilter] = React.useState<SupermindFilterType>(
+    route.params?.tab === 'inbound' ? 'pending' : 'all',
+  );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
+
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
     return listRef.current?.refreshList();
+  };
+
+  const handleModeChange = (selectedMode: TabModeType) => {
+    setMode(selectedMode);
+    if (selectedMode === 'inbound') {
+      setFilter('pending');
+    } else {
+      setFilter('all');
+    }
   };
 
   const filterParam = filterValues[filter]
@@ -111,7 +123,7 @@ function SupermindConsoleScreen({
             <TopbarTabbar
               titleStyle={theme.fontXL}
               tabs={tabs}
-              onChange={mode => setMode(mode)}
+              onChange={handleModeChange}
               current={mode}
               tabStyle={theme.paddingVertical}
               right={
