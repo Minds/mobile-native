@@ -23,6 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -33,6 +34,7 @@ type PropsType = {
     bottom: number;
   };
   channel?: UserModel;
+  isChatHidden?: boolean;
 };
 
 type StateType = {
@@ -199,7 +201,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'translate',
         iconType: 'material',
         onPress: () => {
-          if (this.props.onTranslate) this.props.onTranslate();
+          if (this.props.onTranslate) {
+            this.props.onTranslate();
+          }
           this.hideActionSheet();
         },
       });
@@ -398,7 +402,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           type: SendIntentAndroid.TEXT_PLAIN,
           package: ANDROID_CHAT_APP,
         });
-      } else {
+      } else if (!this.props.isChatHidden) {
         Linking.openURL('market://details?id=com.minds.chat');
       }
     } catch (error) {
@@ -480,4 +484,11 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   }
 }
 
-export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
+const withHiddenChat = WrappedComponent => props => {
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
+  return <WrappedComponent {...{ ...props, isChatHidden }} />;
+};
+
+export default withSafeAreaInsets(
+  withChannelContext(withHiddenChat(ActivityActionSheet)),
+);

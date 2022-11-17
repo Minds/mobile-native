@@ -17,6 +17,7 @@ import {
   BottomSheetModal,
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,6 +26,7 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
   // store
   const localStore = useLocalStore(() => ({
     menuShown: false,
@@ -60,7 +62,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
             type: SendIntentAndroid.TEXT_PLAIN,
             package: ANDROID_CHAT_APP,
           });
-        } else {
+        } else if (!isChatHidden) {
           Linking.openURL('market://details?id=com.minds.chat');
         }
       } catch (error) {

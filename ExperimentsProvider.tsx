@@ -72,4 +72,4 @@ export default function ExperimentsProvider({ children }) {
   );
 }
 
-export type FeatureID = 'mob-stripe-connect-4587';
+export type FeatureID = 'mob-stripe-connect-4587' | 'mob-4630-hide-chat-icon';

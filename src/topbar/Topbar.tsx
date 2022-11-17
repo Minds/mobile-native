@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
 import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
@@ -12,6 +12,9 @@ import ChatIcon from '~/chat/ChatIcon';
 import { useFeedListContext } from '~/common/components/FeedListSticky';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
+import { useIsFeatureOn } from 'ExperimentsProvider';
+import SendIntentAndroid from 'react-native-send-intent';
+import { ANDROID_CHAT_APP } from '~/config/Config';
 
 type PropsType = {
   navigation: any;
@@ -29,6 +32,7 @@ export const Topbar = observer((props: PropsType) => {
   const insets = useSafeAreaInsets();
   const animatedContext = useFeedListContext();
   const bgColor = ThemedStyles.getColor('PrimaryBackground');
+  const isChatIconHidden = useChatIconState();
 
   const animatedStyle = useAnimatedStyle(() => {
     return animatedContext &&
@@ -102,7 +106,11 @@ export const Topbar = observer((props: PropsType) => {
                   size="small"
                   onPress={handleChannelNav}
                 />
-                <View style={styles.logoWrapper}>
+                <View
+                  style={[
+                    styles.logoWrapper,
+                    isChatIconHidden && styles.noMarginLeft,
+                  ]}>
                   <Image
                     resizeMode="contain"
                     source={
@@ -118,9 +126,11 @@ export const Topbar = observer((props: PropsType) => {
           </View>
           <View style={styles.topbarRight}>
             <Spacer right="L">
-              <PressableScale onPress={() => chatModal.current?.showModal()}>
-                <ChatIcon />
-              </PressableScale>
+              {isChatIconHidden ? null : (
+                <PressableScale onPress={() => chatModal.current?.showModal()}>
+                  <ChatIcon />
+                </PressableScale>
+              )}
             </Spacer>
             <PressableScale onPress={() => navigation.navigate('SearchScreen')}>
               <IconCircled size="small" name="search" color="PrimaryText" />
@@ -178,4 +188,23 @@ export const styles = StyleSheet.create({
   leftSpacer: {
     width: 5,
   },
+  noMarginLeft: {
+    marginLeft: 0,
+  },
 });
+
+const useChatIconState = () => {
+  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
+  const [isChatIconHidden, setChatIconHidden] = useState(false);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
+        if (!installed) {
+          setChatIconHidden(isChatHidden);
+        }
+      });
+    }
+  }, [isChatHidden]);
+  return isChatIconHidden;
+};
