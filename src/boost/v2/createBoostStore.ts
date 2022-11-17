@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import web3Util from 'web3-utils';
 
 import { showNotification } from '../../../AppMessages';
@@ -28,7 +29,10 @@ const createBoostStore = ({
   const store = {
     boostType: boostType ?? ('channel' as BoostType),
     loading: false,
-    payment: 'tokens' as 'tokens' | 'onchain' | 'cash',
+    payment: Platform.select({
+      ios: 'tokens',
+      default: 'cash',
+    }) as 'tokens' | 'onchain' | 'cash',
     boostOfferTarget: null as UserModel | null,
     selectedPaymentMethod: wallet.offchain as WalletCurrency,
     selectedCardId: undefined as string | undefined,

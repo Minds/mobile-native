@@ -10,6 +10,7 @@ import TopbarTabbar, {
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { useStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
+import { IS_IOS } from '../../config/Config';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
 import ThemedStyles from '../../styles/ThemedStyles';
 import BoostTab from './BoostTab';
@@ -51,13 +52,16 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
       title={i18n.t('boosts.boostPost')}
       source={require('../../assets/boostBG.png')}>
       <DismissKeyboard>
-        <View style={theme.marginTop2x}>
-          <TopbarTabbar
-            tabs={tabs}
-            onChange={localStore.setPayment}
-            current={localStore.payment}
-          />
-        </View>
+        {!IS_IOS && (
+          <View style={theme.marginTop2x}>
+            <TopbarTabbar
+              tabs={tabs}
+              onChange={localStore.setPayment}
+              current={localStore.payment}
+            />
+          </View>
+        )}
+
         <BoostTab localStore={localStore} />
       </DismissKeyboard>
     </ModalScreen>
