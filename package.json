@@ -84,7 +84,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mobx-utils": "^5.5.7",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.33",
     "moti": "^0.20.0",
     "node-libs-react-native": "^1.2.1",
