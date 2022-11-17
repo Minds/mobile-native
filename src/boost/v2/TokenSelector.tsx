@@ -13,7 +13,7 @@ type PropsType = {
   localStore: BoostStoreType;
 };
 
-const BoostPayment = observer(({ localStore }: PropsType) => {
+const TokenSelector = observer(({ localStore }: PropsType) => {
   const theme = ThemedStyles.style;
   const selectorRef = useRef<any>(null);
 
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BoostPayment;
+export default TokenSelector;

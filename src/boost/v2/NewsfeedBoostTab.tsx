@@ -6,7 +6,7 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import BoostButton from './BoostButton';
 import BoostInput from './BoostInput';
-import BoostPayment from './BoostPayment';
+import BoostPayment from './TokenSelector';
 import { BoostStoreType } from './createBoostStore';
 
 type PropsType = {

@@ -9,7 +9,7 @@ import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import BoostButton from './BoostButton';
 import BoostInput from './BoostInput';
-import BoostPayment from './BoostPayment';
+import BoostPayment from './TokenSelector';
 import createBoostStore from './createBoostStore';
 
 const BoostChannelScreen = observer(() => {

@@ -11,23 +11,27 @@ import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
 
-export type boostType = 'channel' | 'post' | 'offer';
+export type BoostType = 'channel' | 'post' | 'offer';
+export type Payment = 'tokens' | 'onchain' | 'cash';
 
 const createBoostStore = ({
   wc,
   wallet,
   entity,
+  boostType,
 }: {
   wc: WCStore;
   wallet: Wallet;
   entity: UserModel | ActivityModel;
+  boostType?: BoostType;
 }) => {
   const store = {
-    boostType: 'channel' as boostType,
+    boostType: boostType ?? ('channel' as BoostType),
     loading: false,
-    payment: 'tokens' as 'tokens' | 'onchain',
+    payment: 'tokens' as 'tokens' | 'onchain' | 'cash',
     boostOfferTarget: null as UserModel | null,
     selectedPaymentMethod: wallet.offchain as WalletCurrency,
+    selectedCardId: undefined as string | undefined,
     amountViews: '1000',
     amountTokens: '1',
     target: null,
@@ -69,7 +73,7 @@ const createBoostStore = ({
         }
       }
     },
-    setBoostType(value: boostType) {
+    setBoostType(value: BoostType) {
       this.boostType = value;
     },
     get paymentMethods() {
@@ -86,6 +90,9 @@ const createBoostStore = ({
         case 'offer':
           return i18n.t('boosts.boostOffer');
       }
+    },
+    setPayment(payment: Payment) {
+      this.payment = payment;
     },
     setPaymentMethod(walletCurrency: WalletCurrency) {
       this.payment =
@@ -109,45 +116,51 @@ const createBoostStore = ({
       return { guid, checksum };
     },
     async buildPaymentMethod(guid, checksum) {
-      if (this.payment === 'onchain') {
-        try {
-          await wc.connect();
-        } catch (error) {
-          throw new Error('Connect your wallet first');
-        }
-        if (!wc.web3 || !wc.address) {
-          throw new Error('Connect your wallet first');
-        }
+      switch (this.payment) {
+        case 'cash':
+          return {
+            method: 'cash',
+            payment_method_id: this.selectedCardId,
+          };
+        case 'onchain':
+          try {
+            await wc.connect();
+          } catch (error) {
+            throw new Error('Connect your wallet first');
+          }
+          if (!wc.web3 || !wc.address) {
+            throw new Error('Connect your wallet first');
+          }
 
-        if (!this.boostOfferTarget?.eth_wallet) {
-          throw new Error('This user does not have an on-chain account');
-        }
+          if (!this.boostOfferTarget?.eth_wallet) {
+            throw new Error('This user does not have an on-chain account');
+          }
 
-        const boostService = new BlockchainBoostService(wc.web3, wc);
-        return {
-          method: 'onchain',
-          txHash:
-            this.boostType !== 'offer'
-              ? await boostService.create(
-                  guid,
-                  this.amountTokens,
-                  checksum,
-                  wc.address,
-                )
-              : await boostService.createPeer(
-                  this.boostOfferTarget?.eth_wallet,
-                  guid,
-                  this.amountTokens,
-                  checksum,
-                  wc.address,
-                ),
-          address: wc.address,
-        };
-      } else {
-        return {
-          method: 'offchain',
-          address: 'offchain',
-        };
+          const boostService = new BlockchainBoostService(wc.web3, wc);
+          return {
+            method: 'onchain',
+            txHash:
+              this.boostType !== 'offer'
+                ? await boostService.create(
+                    guid,
+                    this.amountTokens,
+                    checksum,
+                    wc.address,
+                  )
+                : await boostService.createPeer(
+                    this.boostOfferTarget?.eth_wallet,
+                    guid,
+                    this.amountTokens,
+                    checksum,
+                    wc.address,
+                  ),
+            address: wc.address,
+          };
+        case 'tokens':
+          return {
+            method: 'offchain',
+            address: 'offchain',
+          };
       }
     },
     get endpoint() {
@@ -162,7 +175,7 @@ const createBoostStore = ({
       try {
         await apiService.post(this.endpoint, {
           guid,
-          bidType: 'tokens',
+          bidType: this.payment === 'cash' ? 'cash' : 'tokens',
           impressions: this.amountViews,
           paymentMethod: await this.buildPaymentMethod(guid, checksum),
           checksum,
@@ -196,7 +209,12 @@ const createBoostStore = ({
       }
     },
     async makeBoost() {
+      if (!this.validateRequest()) {
+        return;
+      }
+
       try {
+        this.loading = true;
         const response = await this.prepare();
         switch (this.boostType) {
           case 'channel':
@@ -216,9 +234,19 @@ const createBoostStore = ({
         this.loading = false;
       }
     },
+    validateRequest() {
+      if (this.payment === 'cash' && !this.selectedCardId) {
+        // TODO: show a toast
+        return false;
+      }
+
+      return true;
+    },
     boost() {
       this.makeBoost();
-      this.loading = true;
+    },
+    setSelectedCardId(cardId: string) {
+      this.selectedCardId = cardId;
     },
   };
   return store;
