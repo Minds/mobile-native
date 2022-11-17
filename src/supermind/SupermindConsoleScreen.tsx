@@ -61,7 +61,7 @@ function SupermindConsoleScreen({
     route.params?.tab ?? 'inbound',
   );
   const [filter, setFilter] = React.useState<SupermindFilterType>(
-    route.params?.tab === 'inbound' ? 'pending' : 'all',
+    route.params?.tab === 'outbound' ? 'all' : 'pending',
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
