@@ -243,9 +243,7 @@ const notificationOptions = {
   tabBarTestID: 'Notifications tab button',
   lazy: false,
 };
-const moreOptions = {
-  tabBarTestID: 'Messenger tab button',
-};
+const moreOptions = { tabBarTestID: 'Messenger tab button' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar disableTabIndicator {...props} />;
