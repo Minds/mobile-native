@@ -2,6 +2,34 @@
 
 Minds Mobile
 
+## 4.30.0 - 2022-11-16
+
+### Changed
+
+- See latest in supermind console
+- Pending supermind in-feed notice
+- Supermind global feed
+- Supermind console filter
+- Allow playing videos while the app is in the background
+- Swipe-to-close added to the image gallery
+- Improve bottom navigation performance
+- New stripe connect flow
+- Smaller divider line between stories
+- Add the profile item in the app menu
+- Add avatar to the home feed header
+- Deprecate zoom view for image gallery
+- in-app-verification base screens, OCR video/photo capture, device ID, and sensor reading
+- Open helpdesk in webview to solve image upload issues
+- Fix all unguarded route.params occurrences
+- Fix card selector not firing default value
+- Push notifications interceptor support added
+- Updated android push notification library
+- Updated react native notifications fork
+- React native updated to 0.69
+- Improve boost service refresh strategy
+- New modules folder architecture
+- Improved e2e testing
+
 ## 4.29.1 - 2022-10-19
 
 ### Changed
