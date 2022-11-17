@@ -9,7 +9,9 @@ export const initStripe = async () => {
 
   const settings = mindsConfigService.getSettings();
 
-  await stripeInit({
-    publishableKey: settings.stripe_key,
-  });
+  if (settings.stripe_key) {
+    await stripeInit({
+      publishableKey: settings.stripe_key,
+    });
+  }
 };
