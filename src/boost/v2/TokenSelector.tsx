@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import i18n from '../../common/services/i18n.service';
 import Selector from '../../common/components/SelectorV2';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BoostStoreType } from './createBoostStore';
+import type { BoostStoreType } from './createBoostStore';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { WalletCurrency } from '../../wallet/v2/WalletTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

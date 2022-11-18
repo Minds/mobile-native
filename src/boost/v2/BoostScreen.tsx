@@ -18,24 +18,22 @@ import createBoostStore from './createBoostStore';
 
 type BoostTabType = 'cash' | 'tokens';
 
-type BoostPostScreenRouteProp = RouteProp<
-  RootStackParamList,
-  'BoostPostScreen'
->;
+type BoostScreenRouteProp = RouteProp<RootStackParamList, 'BoostScreen'>;
 
-type PropsType = {
-  route: BoostPostScreenRouteProp;
+type BoostScreenProps = {
+  route: BoostScreenRouteProp;
 };
 
-const BoostPostScreen = observer(({ route }: PropsType) => {
+const BoostScreen = observer(({ route }: BoostScreenProps) => {
+  const { entity, boostType } = route.params || {};
   const theme = ThemedStyles.style;
   const wallet = useStores().wallet;
   const wc = useWalletConnect();
   const localStore = useLocalStore(createBoostStore, {
     wc,
     wallet: wallet.wallet,
-    entity: route.params?.entity,
-    boostType: 'post',
+    entity: entity,
+    boostType,
   });
 
   const tabs: Array<TabType<BoostTabType>> = [
@@ -43,13 +41,19 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     { id: 'tokens', title: i18n.t('tokens') },
   ];
 
+  const titleMapping = {
+    channel: i18n.t('boosts.boostChannel'),
+    post: i18n.t('boosts.boostPost'),
+    offer: i18n.t('boosts.boostOffer'),
+  };
+
   useEffect(() => {
     wallet.loadOffchainAndReceiver();
   }, [wallet]);
 
   return (
     <ModalScreen
-      title={i18n.t('boosts.boostPost')}
+      title={titleMapping[boostType]}
       source={require('../../assets/boostBG.png')}>
       <DismissKeyboard>
         {!IS_IOS && (
@@ -68,4 +72,4 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
   );
 });
 
-export default BoostPostScreen;
+export default BoostScreen;

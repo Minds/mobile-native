@@ -27,7 +27,7 @@ const createBoostStore = ({
   boostType?: BoostType;
 }) => {
   const store = {
-    boostType: boostType ?? ('channel' as BoostType),
+    boostType: boostType ?? ('post' as BoostType),
     loading: false,
     payment: Platform.select({
       ios: 'tokens',

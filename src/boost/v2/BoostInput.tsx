@@ -5,7 +5,7 @@ import InputContainer from '../../common/components/InputContainer';
 import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BoostStoreType } from './createBoostStore';
+import type { BoostStoreType } from './createBoostStore';
 
 type PropsType = {
   localStore: BoostStoreType;

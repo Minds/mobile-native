@@ -34,7 +34,7 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Open boost screen
    */
   openBoost = () => {
-    this.props.navigation.push('BoostPostScreen', {
+    this.props.navigation.push('BoostScreen', {
       entity: this.props.entity,
     });
   };
