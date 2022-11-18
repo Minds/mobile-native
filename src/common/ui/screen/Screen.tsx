@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FitScrollView from '~/common/components/FitScrollView';
 import LoadingOverlay from '~/common/components/LoadingOverlay';
+import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export type ScreenPropType = {
@@ -33,7 +34,10 @@ export const Screen = ({
     );
   }
 
-  return <Renderer style={styles[background]}>{children}</Renderer>;
+  const noIOSPadding = IS_IOS ? { paddingBottom: -35 } : undefined;
+  return (
+    <Renderer style={[styles[background], noIOSPadding]}>{children}</Renderer>
+  );
 };
 
 const styles = ThemedStyles.create({
