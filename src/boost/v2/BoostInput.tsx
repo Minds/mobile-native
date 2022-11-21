@@ -51,8 +51,14 @@ const BoostInput = observer(({ localStore }: PropsType) => {
           theme.fontLM,
         ]}>
         {localStore.payment === 'cash'
-          ? '1.25 USD = 1000 views'
-          : '1 token = 1000 views'}
+          ? i18n.t('boosts.boostCashViews', {
+              amount: '1.25',
+              views: '1000',
+            })
+          : i18n.t('boosts.boostTokenViews', {
+              amount: '1',
+              views: '1000',
+            })}
       </MText>
     </View>
   );
