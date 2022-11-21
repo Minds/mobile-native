@@ -72,4 +72,8 @@ export default function ExperimentsProvider({ children }) {
   );
 }
 
-export type FeatureID = 'mob-stripe-connect-4587' | 'mob-4630-hide-chat-icon';
+export type FeatureID =
+  | 'mobile-supermind'
+  | 'mob-stripe-connect-4587'
+  | 'mob-4630-hide-chat-icon'
+  | 'mob-4637-ios-hide-minds-superminds';

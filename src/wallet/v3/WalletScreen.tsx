@@ -25,6 +25,7 @@ import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -46,18 +47,22 @@ const WalletScreen = observer((props: PropsType) => {
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
+  const isIosMindsHidden = useIsFeatureOn('mob-4637-ios-hide-minds-superminds');
 
   const tabs: Array<TabType<CurrencyType>> = [
     {
       id: 'tokens',
       title: i18n.t('tokens'),
     },
-    {
+  ];
+
+  if (!isIosMindsHidden) {
+    tabs.push({
       id: 'usd',
       title: i18n.t('wallet.cash'),
       testID: 'WalletScreen:cash',
-    },
-  ];
+    });
+  }
 
   useEffect(() => {
     store.loadWallet();
@@ -93,33 +98,26 @@ const WalletScreen = observer((props: PropsType) => {
     ]),
   );
 
-  let body;
-  if (store.wallet.loaded) {
-    switch (store.currency) {
-      case 'tokens':
-        body = (
-          <TokensTab
-            walletStore={store}
-            navigation={props.navigation}
-            store={tokenTabStore}
-          />
-        );
-        break;
-      case 'usd':
-        body = (
-          <UsdTab
-            walletStore={store}
-            navigation={props.navigation}
-            route={props.route}
-            usdTabStore={usdTabStore}
-            tokensTabStore={tokenTabStore}
-          />
-        );
-        break;
-    }
-  } else {
-    body = <CenteredLoading />;
-  }
+  const body = {
+    tokens: (
+      <TokensTab
+        walletStore={store}
+        navigation={props.navigation}
+        store={tokenTabStore}
+      />
+    ),
+    usd: (
+      <UsdTab
+        walletStore={store}
+        navigation={props.navigation}
+        route={props.route}
+        usdTabStore={usdTabStore}
+        tokensTabStore={tokenTabStore}
+      />
+    ),
+    loading: <CenteredLoading />,
+  };
+
   return (
     <Screen safe>
       <ScreenHeader title={i18n.t('wallet.wallet')} extra={<TokenPrice />} />
@@ -130,7 +128,7 @@ const WalletScreen = observer((props: PropsType) => {
         current={store.currency}
         tabStyle={theme.paddingVertical}
       />
-      {body}
+      {store.wallet.loaded ? body[store.currency] : body.loading}
     </Screen>
   );
 });

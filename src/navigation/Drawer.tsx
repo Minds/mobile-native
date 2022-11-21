@@ -21,7 +21,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useFeature } from '@growthbook/growthbook-react';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 import { NavigationProp } from '@react-navigation/native';
 
@@ -73,7 +73,12 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-const getOptionsList = (navigation, supermindFeatureFlag) => {
+type Flags = Record<'isSupermindFeature' | 'isIosMindsHidden', boolean>;
+
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, isSupermindFeature }: Flags,
+) => {
   const channel = sessionService.getUser();
   let list = [
     {
@@ -83,14 +88,16 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
         navigation.push('Channel', { entity: channel });
       },
     },
-    {
-      name: i18n.t('wire.lock.plus'),
-      icon: 'queue',
-      onPress: () => {
-        navigation.navigate('PlusDiscoveryScreen');
-      },
-    },
-    supermindFeatureFlag.on
+    !isIosMindsHidden
+      ? {
+          name: i18n.t('wire.lock.plus'),
+          icon: 'queue',
+          onPress: () => {
+            navigation.navigate('PlusDiscoveryScreen');
+          },
+        }
+      : null,
+    !isIosMindsHidden && isSupermindFeature
       ? {
           name: 'Supermind',
           onPress: () => {
@@ -160,7 +167,9 @@ const getOptionsList = (navigation, supermindFeatureFlag) => {
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
-  const supermindFeatureFlag = useFeature('mobile-supermind');
+  const isSupermindFeature = useIsFeatureOn('mobile-supermind');
+  const isIosMindsHidden =
+    useIsFeatureOn('mob-4637-ios-hide-minds-superminds') && IS_IOS;
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
@@ -171,7 +180,10 @@ export default function Drawer(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
-  const optionsList = getOptionsList(props.navigation, supermindFeatureFlag);
+  const optionsList = getOptionsList(props.navigation, {
+    isSupermindFeature,
+    isIosMindsHidden,
+  });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
     <Screen safe>
@@ -238,7 +250,6 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
 };
 
 const DrawerNavItem = ({
-  icon,
   name,
   onPress,
   small,
