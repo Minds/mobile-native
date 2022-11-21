@@ -54,7 +54,8 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
   return (
     <ModalScreen
       title={titleMapping[boostType]}
-      source={require('../../assets/boostBG.png')}>
+      source={require('../../assets/boostBG.png')}
+      testID="BoostScreen">
       <DismissKeyboard>
         {!IS_IOS && (
           <View style={theme.marginTop2x}>

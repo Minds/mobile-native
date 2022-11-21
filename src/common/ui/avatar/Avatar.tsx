@@ -21,6 +21,7 @@ export const Avatar = withSpacer(
     icon,
     onPress,
     children,
+    testID,
   }: any) => {
     let iconView: any = null;
 
@@ -29,7 +30,7 @@ export const Avatar = withSpacer(
     }
 
     const avatar = (
-      <View style={border && styles[border]}>
+      <View testID={testID} style={border && styles[border]}>
         <FastImage
           source={isObservable(source) ? toJS(source) : source}
           style={styles[size]}

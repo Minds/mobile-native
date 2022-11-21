@@ -173,7 +173,7 @@ const Tabs = observer(function ({ navigation }) {
         <Tab.Screen
           name="Newsfeed"
           component={NewsfeedStack}
-          options={{ tabBarTestID: 'Menu tab button' }}
+          options={{ tabBarTestID: 'Tabs:Newsfeed' }}
         />
         {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
         <Tab.Screen
@@ -243,7 +243,7 @@ const notificationOptions = {
   tabBarTestID: 'Notifications tab button',
   lazy: false,
 };
-const moreOptions = { tabBarTestID: 'Messenger tab button' };
+const moreOptions = { tabBarTestID: 'Tabs:More' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar disableTabIndicator {...props} />;
