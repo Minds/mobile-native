@@ -18,15 +18,15 @@ const BoostTab = ({ localStore }: BoostTabProps) => {
   const theme = ThemedStyles.style;
   const mapping: Record<BoostType, { title: string; description: string }> = {
     post: {
-      title: 'Newsfeed',
+      title: i18n.t('boosts.tabNewsfeed'),
       description: i18n.t('boosts.feedsDescription'),
     },
     channel: {
-      title: 'Channel',
+      title: i18n.t('boosts.boostChannel'),
       description: i18n.t('boosts.feedsDescription'),
     },
     offer: {
-      title: 'Offer',
+      title: i18n.t('boosts.tabOffers'),
       description: i18n.t('boosts.feedsDescription'),
     },
   };
