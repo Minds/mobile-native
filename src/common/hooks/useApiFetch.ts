@@ -1,6 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { IReactionDisposer, reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import apiService, { isAbort } from '../services/api.service';
 import { storages } from '../services/storage/storages.service';
 
@@ -60,6 +61,14 @@ export interface FetchOptions {
   updateState?: (newData: any, oldData: any) => any;
   params?: object;
   persist?: boolean;
+  /**
+   * fetch/refresh on focus
+   */
+  refreshOnFocus?: boolean;
+  /**
+   * Initial fetch on focus instead of on mount
+   */
+  loadOnFocus?: boolean;
   retry?: number;
   retryDelay?: number;
   /**
@@ -121,9 +130,11 @@ const createStore = (storeOptions: {
     // add a reaction to param changes
     this.reactionDisposal = reaction(
       () => ({ ...observableParams }),
-      params => this.fetch(params),
+      params => {
+        this.fetch(params);
+      },
       {
-        fireImmediately: true,
+        fireImmediately: !storeOptions.options?.loadOnFocus, // do not run initial load if we want to do it on focus
       },
     );
   },
@@ -277,6 +288,21 @@ export default function useApiFetch<T>(
     options,
   });
   const observableParams = useAsObservableSource(options.params || {});
+
+  useFocusEffect(
+    useCallback(() => {
+      if (options.refreshOnFocus && !store.loading) {
+        if (store.result) {
+          store.refresh(observableParams);
+        } else {
+          store.fetch(observableParams);
+        }
+      } else if (!store.result && !store.loading && options.loadOnFocus) {
+        console.log('FOCUS LOADING');
+        store.fetch(observableParams);
+      }
+    }, [options.refreshOnFocus, options.loadOnFocus, store, observableParams]),
+  );
 
   useEffect(() => {
     return () => store.clearRetryTimer(true);
