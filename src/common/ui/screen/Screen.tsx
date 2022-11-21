@@ -34,9 +34,10 @@ export const Screen = ({
     );
   }
 
-  const noIOSPadding = IS_IOS ? { paddingBottom: -35 } : undefined;
   return (
-    <Renderer style={[styles[background], noIOSPadding]}>{children}</Renderer>
+    <Renderer edges={IS_IOS ? ['top'] : undefined} style={[styles[background]]}>
+      {children}
+    </Renderer>
   );
 };
 
