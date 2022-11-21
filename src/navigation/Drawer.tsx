@@ -73,11 +73,11 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isSupermindFeature' | 'isIosMindsHidden', boolean>;
+type Flags = Record<'isSupermindFeatureOn' | 'isIosMindsHidden', boolean>;
 
 const getOptionsList = (
   navigation,
-  { isIosMindsHidden, isSupermindFeature }: Flags,
+  { isIosMindsHidden, isSupermindFeatureOn }: Flags,
 ) => {
   const channel = sessionService.getUser();
   let list = [
@@ -97,7 +97,7 @@ const getOptionsList = (
           },
         }
       : null,
-    !isIosMindsHidden && isSupermindFeature
+    !isIosMindsHidden && isSupermindFeatureOn
       ? {
           name: 'Supermind',
           onPress: () => {
@@ -167,7 +167,7 @@ const getOptionsList = (
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
-  const isSupermindFeature = useIsFeatureOn('mobile-supermind');
+  const isSupermindFeatureOn = useIsFeatureOn('mobile-supermind');
   const isIosMindsHidden =
     useIsFeatureOn('mob-4637-ios-hide-minds-superminds') && IS_IOS;
 
@@ -181,7 +181,7 @@ export default function Drawer(props) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const optionsList = getOptionsList(props.navigation, {
-    isSupermindFeature,
+    isSupermindFeatureOn,
     isIosMindsHidden,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
