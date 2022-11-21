@@ -72,6 +72,12 @@ export default function ExperimentsProvider({ children }) {
   );
 }
 
+export const useIsIOSFeatureOn = (feature: FeatureID) =>
+  useGrowthbookFeature(feature).on && IS_IOS;
+
+export const useIsAndroidFeatureOn = (feature: FeatureID) =>
+  useGrowthbookFeature(feature).on && !IS_IOS;
+
 export type FeatureID =
   | 'mobile-supermind'
   | 'mob-stripe-connect-4587'

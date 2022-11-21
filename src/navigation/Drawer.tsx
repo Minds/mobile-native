@@ -21,7 +21,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 import { NavigationProp } from '@react-navigation/native';
 
@@ -168,8 +168,9 @@ const getOptionsList = (
 export default function Drawer(props) {
   const channel = sessionService.getUser();
   const isSupermindFeatureOn = useIsFeatureOn('mobile-supermind');
-  const isIosMindsHidden =
-    useIsFeatureOn('mob-4637-ios-hide-minds-superminds') && IS_IOS;
+  const isIosMindsHidden = useIsIOSFeatureOn(
+    'mob-4637-ios-hide-minds-superminds',
+  );
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });

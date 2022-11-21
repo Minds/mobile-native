@@ -25,8 +25,7 @@ import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
-import { useIsFeatureOn } from 'ExperimentsProvider';
-import { IS_IOS } from '~/config/Config';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -48,8 +47,9 @@ const WalletScreen = observer((props: PropsType) => {
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
-  const isIosMindsHidden =
-    useIsFeatureOn('mob-4637-ios-hide-minds-superminds') && IS_IOS;
+  const isIosMindsHidden = useIsIOSFeatureOn(
+    'mob-4637-ios-hide-minds-superminds',
+  );
 
   const tabs: Array<TabType<CurrencyType>> = [
     {
