@@ -18,6 +18,7 @@ exports[`Activity screen component renders correctly  1`] = `
       },
     ]
   }
+  testID="ActivityScreen"
 >
   <View
     style={
