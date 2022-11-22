@@ -30,6 +30,7 @@ import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
 import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
 import { InAppVerificationPrompt } from '../in-app-verification';
+import { IS_IOS } from '~/config/Config';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -172,7 +173,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const isLatest = newsfeed.feedType === 'latest';
 
   return (
-    <Screen safe>
+    <Screen safe onlyTopEdge={IS_IOS}>
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>
           <FeedListSticky

@@ -233,7 +233,6 @@ const styles = ThemedStyles.create({
       shadowRadius: 4,
       paddingHorizontal: 20,
       height: IS_IOS ? 80 : 60,
-      marginTop: IS_IOS ? -35 : 0,
     },
     'bcolorPrimaryBorder',
   ],

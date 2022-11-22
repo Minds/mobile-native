@@ -11,6 +11,7 @@ export type ScreenPropType = {
   loading?: boolean;
   background?: 'primary' | 'secondary' | 'tertiary';
   children?: ReactNode;
+  onlyTopEdge?: boolean;
 };
 
 export const Screen = ({
@@ -19,6 +20,7 @@ export const Screen = ({
   scroll,
   loading,
   background = 'primary',
+  onlyTopEdge,
 }: ScreenPropType) => {
   const Renderer = safe ? SafeAreaView : View;
 
@@ -33,7 +35,13 @@ export const Screen = ({
     );
   }
 
-  return <Renderer style={styles[background]}>{children}</Renderer>;
+  return (
+    <Renderer
+      edges={onlyTopEdge ? ['top'] : undefined}
+      style={[styles[background]]}>
+      {children}
+    </Renderer>
+  );
 };
 
 const styles = ThemedStyles.create({
