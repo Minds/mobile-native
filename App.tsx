@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 //@ts-nocheck
 /**
  * Minds mobile app
@@ -6,8 +7,15 @@
  * @format
  */
 
-import React, { Component } from 'react';
+import React, {
+  Component,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
 import {
+  AppState,
   BackHandler,
   Platform,
   Linking,
@@ -50,6 +58,7 @@ import 'react-native-image-keyboard';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
+import RNEventSource from './RNEventSource';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -185,6 +194,12 @@ class App extends Component<Props> {
                             message="An error occurred"
                             containerStyle={ThemedStyles.style.centered}>
                             <WCContextProvider>
+                              <Notifications
+                                userId={'1234'}
+                                messageReceived={({ data }) => {
+                                  console.log(JSON.parse(data));
+                                }}
+                              />
                               <NavigationStack
                                 key={ThemedStyles.theme + i18n.locale}
                               />
@@ -208,4 +223,72 @@ export default App;
 
 if (__DEV__) {
   require('tron');
+}
+
+const BACKEND = 'http://localhost:3000/sse';
+
+type NotificationsProps = {
+  userId: string;
+  messageReceived?: (message: Message) => void;
+};
+
+type Message = {
+  data?: string;
+  lastEventId?: string;
+  origin?: string;
+};
+
+function Notifications(props: NotificationsProps): JSX.Element {
+  const [appState, setAppState] = useState(AppState.currentState);
+  const eventSource = useRef<RNEventSource>();
+  const streamStarted = useRef<boolean>();
+
+  useEffect(() => {
+    AppState.addEventListener('change', nextAppState => {
+      const inactive = /inactive|background/;
+      const active = /active/;
+      if (appState.match(inactive) && nextAppState.match(active)) {
+        startStream();
+      }
+      if (appState.match(active) && nextAppState.match(inactive)) {
+        endStream();
+      }
+      setAppState(nextAppState);
+    });
+    startStream();
+
+    return () => {
+      endStream();
+    };
+  }, [appState, startStream]);
+
+  const requestStreamWithBackend = (userId: string) =>
+    new RNEventSource(`${BACKEND}/${userId}`);
+
+  const startStream = useCallback(() => {
+    if (streamStarted.current) {
+      return;
+    }
+    try {
+      const { userId, messageReceived } = props;
+      eventSource.current = requestStreamWithBackend(userId);
+      eventSource.current.addEventListener('message', message => {
+        messageReceived?.(message);
+      });
+      streamStarted.current = true;
+    } catch (e) {
+      console.log('startstream error', e);
+    }
+  }, [props]);
+
+  const endStream = () => {
+    // if (!eventSource.current) {
+    //   return;
+    // }
+    eventSource.current?.removeAllListeners();
+    eventSource.current?.close();
+    streamStarted.current = false;
+  };
+
+  return null;
 }
