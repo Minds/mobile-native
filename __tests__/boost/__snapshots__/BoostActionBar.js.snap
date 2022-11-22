@@ -17,8 +17,6 @@ exports[`Boost action bar component renders correctly 1`] = `
     ]
   }
 >
-  <View />
-  <View />
   <View
     key="bid"
     style={
@@ -57,7 +55,6 @@ exports[`Boost action bar component renders correctly 1`] = `
       $1.00
     </MText>
   </View>
-  <View />
   <View
     key="time"
     style={
