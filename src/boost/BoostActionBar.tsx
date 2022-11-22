@@ -1,5 +1,4 @@
-//@ts-nocheck
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 
 import { TouchableHighlight, View } from 'react-native';
 
@@ -13,25 +12,33 @@ import token from '../common/helpers/token';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
-import { B2 } from '~/common/ui';
+import type BoostModel from './BoostModel';
+import type BoostStore from './BoostStore';
+import type UserStore from '~/auth/UserStore';
+
+type PropsType = {
+  entity: BoostModel;
+  boost: BoostStore;
+  user: UserStore;
+};
 
 @inject('user', 'boost')
 @observer
-export default class BoostActionBar extends Component {
+export default class BoostActionBar extends Component<PropsType> {
   render() {
-    let actions = null;
-    if (this.props.entity.currency !== 'tokens') actions = this.renderActions();
+    let actions: ReactElement[] | null = null;
+    if (this.props.entity.currency !== 'tokens') {
+      actions = this.renderActions();
+    }
     return (
-      <>
-        <View style={styles.container}>
-          {this.renderTarget()}
-          {this.renderViews()}
-          {this.renderBid()}
-          {this.renderStatus()}
-          {this.renderTime()}
-          {actions}
-        </View>
-      </>
+      <View style={styles.container}>
+        {this.renderTarget()}
+        {this.renderViews()}
+        {this.renderBid()}
+        {this.renderStatus()}
+        {this.renderTime()}
+        {actions}
+      </View>
     );
   }
 
@@ -58,9 +65,7 @@ export default class BoostActionBar extends Component {
           {'@' + this.props.entity.destination.username}
         </MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderViews() {
@@ -71,9 +76,7 @@ export default class BoostActionBar extends Component {
           {this.props.entity.impressions + ' views'}
         </MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderStatus() {
@@ -82,9 +85,7 @@ export default class BoostActionBar extends Component {
         <MCIcon name="timer-sand-empty" size={20} style={styles.icon} />
         <MText style={styles.value}>{this.props.entity.state}</MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderBid() {
@@ -92,21 +93,16 @@ export default class BoostActionBar extends Component {
       <View style={ThemedStyles.style.flexColumnCentered} key="bid">
         <MCIcon name="bank" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {(this.props.entity.bidType === 'offchain' ||
-            this.props.entity.bidType === 'onchain' ||
-            this.props.entity.bidType === 'peer' ||
-            this.props.entity.bidType === 'tokens') &&
-            token(this.props.entity.bid, 18) + ' Tokens'}
-          {(this.props.entity.bidType === 'usd' ||
-            this.props.entity.bidType === 'money') &&
+          {['offchain', 'onchain', 'peer', 'tokens'].includes(
+            this.props.entity.bidType,
+          ) && token(this.props.entity.bid, 18) + ' Tokens'}
+          {['usd', 'money'].includes(this.props.entity.bidType) &&
             '$' + (this.props.entity.bid / 100).toFixed(2)}
           {this.props.entity.bidType === 'points' &&
             this.props.entity.bid + ' points'}
         </MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderScheduled() {
@@ -121,14 +117,17 @@ export default class BoostActionBar extends Component {
       <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
         <MCIcon name="clock" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {i18n.date(this.props.entity.time_created * 1000, 'datetime')}
+          {i18n.date(
+            parseInt(this.props.entity.time_created, 10) * 1000,
+            'datetime',
+          )}
         </MText>
       </View>
     );
   }
 
   renderActions() {
-    let buttons = [];
+    let buttons: ReactElement[] = [];
     if (this.canRevoke()) {
       buttons.push(
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">

@@ -6,14 +6,11 @@ import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
 import { setViewed, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
-import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
-import { showNotification } from './../../AppMessages';
-import i18n from '~/common/services/i18n.service';
 
 /**
  * Base model
@@ -27,7 +24,6 @@ export default class BaseModel extends AbstractModel {
   ownerObj!: UserModel;
   mature: boolean = false;
   pending?: '0' | '1';
-  state?: 'rejected' | 'accepted' | 'revoked';
   time_created!: string;
   urn: string = '';
   wire_totals?: {
@@ -255,40 +251,6 @@ export default class BaseModel extends AbstractModel {
       this.mature = value;
     } catch (err) {
       this.mature = !value;
-      logService.exception('[BaseModel]', err);
-      throw err;
-    }
-  }
-
-  @action
-  async reject() {
-    try {
-      await rejectBoost(this.guid);
-      this.state = 'rejected';
-    } catch (err) {
-      logService.exception('[BaseModel]', err);
-      throw err;
-    }
-  }
-
-  @action
-  async accept() {
-    try {
-      await acceptBoost(this.guid);
-      this.state = 'accepted';
-    } catch (err) {
-      logService.exception('[BaseModel]', err);
-      throw err;
-    }
-  }
-
-  @action
-  async revoke(filter) {
-    try {
-      await revokeBoost(this.guid, filter);
-      this.state = 'revoked';
-      showNotification(i18n.t('notification.boostRevoked'), 'success');
-    } catch (err) {
       logService.exception('[BaseModel]', err);
       throw err;
     }
