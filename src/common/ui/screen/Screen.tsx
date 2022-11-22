@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FitScrollView from '~/common/components/FitScrollView';
 import LoadingOverlay from '~/common/components/LoadingOverlay';
-import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export type ScreenPropType = {
@@ -12,6 +11,7 @@ export type ScreenPropType = {
   loading?: boolean;
   background?: 'primary' | 'secondary' | 'tertiary';
   children?: ReactNode;
+  onlyTopEdge?: boolean;
 };
 
 export const Screen = ({
@@ -20,6 +20,7 @@ export const Screen = ({
   scroll,
   loading,
   background = 'primary',
+  onlyTopEdge,
 }: ScreenPropType) => {
   const Renderer = safe ? SafeAreaView : View;
 
@@ -35,7 +36,9 @@ export const Screen = ({
   }
 
   return (
-    <Renderer edges={IS_IOS ? ['top'] : undefined} style={[styles[background]]}>
+    <Renderer
+      edges={onlyTopEdge ? ['top'] : undefined}
+      style={[styles[background]]}>
       {children}
     </Renderer>
   );
