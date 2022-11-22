@@ -10,7 +10,6 @@ import { runInAction } from 'mobx';
 
 type PropsType = {
   store: NotificationsStore;
-  setResult: Function;
   refresh: Function;
 };
 
@@ -73,44 +72,39 @@ const options: Array<ButtonTabType<NotificationsTabOptions>> = [
   },
 ];
 
-const NotificationsTopBar = observer(
-  ({ store, setResult, refresh }: PropsType) => {
-    const localStore = useLocalStore(() => ({
-      option: 'all' as NotificationsTabOptions,
-      setOption(option: NotificationsTabOptions) {
-        this.option = option;
-        setResult(null);
-        runInAction(() => {
-          store.setOffset('');
-          store.setFilter(option === 'all' ? '' : option);
-          store.setSilentRefresh(true);
-        });
-      },
-    }));
+const NotificationsTopBar = observer(({ store, refresh }: PropsType) => {
+  const localStore = useLocalStore(() => ({
+    option: 'all' as NotificationsTabOptions,
+    setOption(option: NotificationsTabOptions) {
+      this.option = option;
+      runInAction(() => {
+        store.setFilter(option === 'all' ? '' : option);
+      });
+    },
+  }));
 
-    const onChange = useCallback(
-      id => {
-        if (localStore.option === id) {
-          refresh();
-          return;
-        }
+  const onChange = useCallback(
+    id => {
+      if (localStore.option === id) {
+        refresh();
+        return;
+      }
 
-        localStore.setOption(id);
-      },
-      [refresh, localStore],
-    );
+      localStore.setOption(id);
+    },
+    [refresh, localStore],
+  );
 
-    return (
-      <TopBarButtonTabBar
-        tabs={options}
-        current={localStore.option}
-        onChange={onChange}
-        buttonCmp={'Touchable'}
-        scrollViewContainerStyle={styles.scrollViewContainerStyle}
-      />
-    );
-  },
-);
+  return (
+    <TopBarButtonTabBar
+      tabs={options}
+      current={localStore.option}
+      onChange={onChange}
+      buttonCmp={'Touchable'}
+      scrollViewContainerStyle={styles.scrollViewContainerStyle}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   scrollViewContainerStyle: {

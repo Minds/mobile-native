@@ -30,25 +30,29 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         <Memo(wrappedComponent)
           navigation={
             Object {
-              "addListener": [MockFunction] {
+              "getParent": [MockFunction] {
                 "calls": Array [
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
-                  Array [
-                    "tabPress",
-                    [Function],
-                  ],
+                  Array [],
                 ],
                 "results": Array [
                   Object {
                     "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
+                    "value": Object {
+                      "addListener": [MockFunction] {
+                        "calls": Array [
+                          Array [
+                            "tabPress",
+                            [Function],
+                          ],
+                        ],
+                        "results": Array [
+                          Object {
+                            "type": "return",
+                            "value": undefined,
+                          },
+                        ],
+                      },
+                    },
                   },
                 ],
               },
@@ -61,7 +65,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         />
         <Memo(wrappedComponent)
           refresh={[Function]}
-          setResult={[Function]}
           store={
             Object {
               "filter": "",
@@ -73,14 +76,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               "loaded": false,
               "mailsNotificationsSettings": Array [],
               "markAsRead": [Function],
-              "offset": "",
               "onSocket": [Function],
               "pollInterval": null,
               "pushNotificationsSettings": Array [],
               "reset": [Function],
               "setFilter": [Function],
               "setLoaded": [Function],
-              "setOffset": [Function],
               "setSilentRefresh": [Function],
               "setUnread": [Function],
               "silentRefresh": false,
