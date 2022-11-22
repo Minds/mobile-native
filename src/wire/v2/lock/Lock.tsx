@@ -11,6 +11,7 @@ import type { LockType } from '../../../types/Common';
 import currency from '../../../common/helpers/currency';
 import BlogModel from '../../../blogs/BlogModel';
 import MText from '../../../common/components/MText';
+import { IS_IOS } from '~/config/Config';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -38,7 +39,9 @@ const getTextForBlocked = (
       message = `Join @${username}'s ${support_tier.name} Membership to see this post`;
       break;
     case 'plus':
-      message = 'Join Minds+ to view this post';
+      message = IS_IOS
+        ? 'Minds+ is not available on this platform'
+        : 'Join Minds+ to view this post';
       break;
     case 'paywall':
       message = `Join @${username}'s Custom Membership for ${currency(

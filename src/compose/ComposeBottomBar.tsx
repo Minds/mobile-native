@@ -1,5 +1,6 @@
 import { IfFeatureEnabled, useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
@@ -10,6 +11,9 @@ function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const mediaQuoteFF = useFeature('mobile-5645-media-quotes');
+  const isIosMindsHidden = useIsIOSFeatureOn(
+    'mob-4637-ios-hide-minds-superminds',
+  );
 
   const allowMedia =
     !props.store.isEdit && (mediaQuoteFF.on || !props.store.isRemind);
@@ -56,7 +60,8 @@ function ComposeBottomBar(props) {
       )}
       {!props.store.isGroup() &&
         !props.store.isRemind &&
-        !props.store.supermindRequest && (
+        !props.store.supermindRequest &&
+        !isIosMindsHidden && (
           <IconButton
             name="money"
             style={iconStyle}
@@ -72,7 +77,7 @@ function ComposeBottomBar(props) {
       />
       {
         // don't allow superminding in the context of a supermind reply
-        !props.store.isSupermindReply && (
+        !props.store.isSupermindReply && !isIosMindsHidden && (
           <IfFeatureEnabled feature="mobile-supermind">
             <IconButton
               name="supermind"
