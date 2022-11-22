@@ -33,9 +33,12 @@ import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
 import friendlyCaptchaInterceptor from './friendly-captcha.interceptor';
 
+type FieldError = { field: string; message: string };
+
 export interface ApiResponse {
   status: 'success' | 'error';
   message?: string;
+  errors?: FieldError[];
   errorId?: string;
 }
 
@@ -52,10 +55,12 @@ export class ApiError extends Error {
   errId: string = '';
   status: number = 0;
   headers: any = null;
+  errors?: FieldError[];
 
-  constructor(message, status) {
+  constructor(message: string, status: number, errors?: FieldError[]) {
     super(message);
     this.status = status;
+    this.errors = errors;
   }
 }
 
@@ -364,7 +369,12 @@ export class ApiService {
     if (data && data.status && data.status !== 'success') {
       const msg = data && data.message ? data.message : 'Server error';
       const errId = data && data.errorId ? data.errorId : '';
-      const apiError = new ApiError(msg, response.status);
+
+      const apiError = new ApiError(
+        msg,
+        response.status,
+        response.data?.errors,
+      );
       apiError.errId = errId;
       apiError.headers = response.headers;
       throw apiError;
