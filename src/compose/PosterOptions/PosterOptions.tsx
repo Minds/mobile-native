@@ -14,6 +14,7 @@ import { PosterStackParamList } from './PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 
 const height = 83;
 
@@ -36,6 +37,9 @@ function PosterOptions(props: PosterOptionsType) {
   const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
+  const isIosMindsHidden = useIsIOSFeatureOn(
+    'mob-4637-ios-hide-minds-superminds',
+  );
 
   const onTagPress = useNavCallback('TagSelector', store, props.navigation);
   const onNsfwPress = useNavCallback('NsfwSelector', store, props.navigation);
@@ -113,7 +117,7 @@ function PosterOptions(props: PosterOptionsType) {
           noBorderTop
         />
       )}
-      {showMonetize && (
+      {showMonetize && !isIosMindsHidden && (
         <MenuItem
           title={i18n.t('monetize.title')}
           label={monetizeDesc}
