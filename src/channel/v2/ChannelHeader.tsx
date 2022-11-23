@@ -72,7 +72,7 @@ const ChannelHeader = withErrorBoundary(
       { id: 'about', title: i18n.t('about') },
     ];
     // remove membership tab
-    if (!ownChannel && (IS_IOS || !props.store?.tiers?.length)) {
+    if (IS_IOS || !props.store?.tiers?.length) {
       tabs.splice(1, 1);
     }
     const bottomBarInnerWrapper = useMemoStyle(
