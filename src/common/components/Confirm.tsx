@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { IS_SHORT_PHONE } from '~/config/Config';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
 import { B1, H2, Spacer } from '../ui';
@@ -57,7 +58,7 @@ export const confirm = (
         />
       ),
       onClose: () => resolve(false),
-      snapPoints: ['35%'],
+      snapPoints: [IS_SHORT_PHONE ? '40%' : '35%'],
     }),
   );
 };

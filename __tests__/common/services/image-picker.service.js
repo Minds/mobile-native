@@ -21,6 +21,12 @@ jest.mock('react-native', () => ({
   Platform: {
     OS: 'android',
   },
+  Dimensions: {
+    get: () => ({
+      width: 1080,
+      height: 1920,
+    }),
+  },
 }));
 
 /**
