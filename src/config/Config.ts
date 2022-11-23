@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { storages } from '~/common/services/storage/storages.service';
-import { Dimensions, Platform, PlatformIOSStatic } from 'react-native';
+import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
@@ -11,9 +11,6 @@ export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
 export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
-// check for screen ratio for short phones: iPhone 7/8, Pixel XL, Pixel, Pixel2, Nexus
-const { width, height } = Dimensions.get('window');
-export const IS_SHORT_PHONE = height / width < 1.9;
 
 // we should check how to use v2 before enable it again
 export const LIQUIDITY_ENABLED = false;

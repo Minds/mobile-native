@@ -1,6 +1,5 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IS_SHORT_PHONE } from '~/config/Config';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
 import { B1, H2, Spacer } from '../ui';
@@ -11,6 +10,11 @@ interface ConfirmProps {
   description?: string;
   onConfirm: () => void;
   onCancel: () => void;
+  onLayout?: ({
+    nativeEvent: {
+      layout: { height },
+    },
+  }: any) => void;
 }
 
 export default function Confirm({
@@ -18,9 +22,13 @@ export default function Confirm({
   description,
   onConfirm,
   onCancel,
+  onLayout,
 }: ConfirmProps) {
   return (
-    <SafeAreaView edges={['bottom']} style={ThemedStyles.style.flexContainer}>
+    <SafeAreaView
+      edges={['bottom']}
+      style={ThemedStyles.style.flexContainer}
+      onLayout={onLayout}>
       <Spacer horizontal="L" bottom="S">
         <H2 align="center" bottom="L">
           {title}
@@ -44,9 +52,10 @@ export const confirm = (
 ): Promise<boolean> => {
   return new Promise(resolve =>
     pushBottomSheet({
-      component: bottomSheetRef => (
+      component: (bottomSheetRef, handleContentLayout) => (
         <Confirm
           {...props}
+          onLayout={handleContentLayout}
           onConfirm={() => {
             resolve(true);
             bottomSheetRef.close();
@@ -58,7 +67,6 @@ export const confirm = (
         />
       ),
       onClose: () => resolve(false),
-      snapPoints: [IS_SHORT_PHONE ? '40%' : '35%'],
     }),
   );
 };

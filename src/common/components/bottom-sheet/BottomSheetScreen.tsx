@@ -1,4 +1,7 @@
-import { useBottomSheet } from '@gorhom/bottom-sheet';
+import {
+  useBottomSheet,
+  useBottomSheetDynamicSnapPoints,
+} from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { ReactNode, useCallback } from 'react';
@@ -14,7 +17,14 @@ type BottomSheetScreenNavigationProp = StackNavigationProp<
 >;
 
 export type BottomSheetScreenParams = {
-  component: (ref: BottomSheetMethods) => ReactNode;
+  component: (
+    ref: BottomSheetMethods,
+    handleContentLayout: ({
+      nativeEvent: {
+        layout: { height },
+      },
+    }: any) => void,
+  ) => ReactNode;
 } & Omit<BottomSheetProps, 'children'>;
 
 export interface BottomSheetScreenProps {
@@ -28,30 +38,50 @@ export default function BottomSheetScreen({
   route,
   navigation,
 }: BottomSheetScreenProps) {
-  const { component, ...props } = route.params;
+  const { component, snapPoints, ...props } = route.params;
 
   const handleClose = useCallback(() => {
     props?.onClose?.();
     navigation.goBack();
   }, [navigation, props]);
 
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(
+    (snapPoints as (string | number)[]) ?? ['CONTENT_HEIGHT'],
+  );
+
   return (
     <BottomSheet
       index={0}
       enableContentPanningGesture={true}
+      handleHeight={animatedHandleHeight}
+      contentHeight={animatedContentHeight}
+      snapPoints={animatedSnapPoints}
       {...props}
       onClose={handleClose}>
-      <BottomSheetInnerContainer component={component} />
+      <BottomSheetInnerContainer
+        component={component}
+        handleContentLayout={handleContentLayout}
+      />
     </BottomSheet>
   );
 }
 
 const BottomSheetInnerContainer = ({
   component,
-}: Pick<BottomSheetScreenParams, 'component'>) => {
+  handleContentLayout,
+}: Pick<BottomSheetScreenParams, 'component'> | any) => {
   const bottomSheet = useBottomSheet();
 
-  return <View style={styles.container}>{component(bottomSheet)}</View>;
+  return (
+    <View style={styles.container}>
+      {component(bottomSheet, handleContentLayout)}
+    </View>
+  );
 };
 
 export const pushBottomSheet = (params: BottomSheetScreenParams) => {
