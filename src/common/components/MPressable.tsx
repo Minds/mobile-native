@@ -35,7 +35,13 @@ const MPressable = ({ ...props }) => {
     [pressed, props.style],
   );
 
-  return <Pressable {...props} {...platformSpecificProps} />;
+  return (
+    <Pressable
+      disabled={!props.onPress}
+      {...props}
+      {...platformSpecificProps}
+    />
+  );
 };
 
 export default MPressable;

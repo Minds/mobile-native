@@ -15,6 +15,7 @@ interface InputBaseProps {
   info?: string;
   error?: string;
   icon?: React.ReactNode;
+  borderless?: boolean;
 }
 
 export default function InputBase({
@@ -26,6 +27,7 @@ export default function InputBase({
   info,
   icon,
   error,
+  borderless,
 }: InputBaseProps) {
   const theme = ThemedStyles.style;
 
@@ -41,7 +43,7 @@ export default function InputBase({
         theme.bcolorPrimaryBorder,
         theme.borderLeft0x,
         theme.borderRight0x,
-        theme.borderHair,
+        !borderless && theme.borderHair,
         style,
       ]}>
       <Column flex>

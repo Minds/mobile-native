@@ -205,6 +205,7 @@ export type RootStackParamList = {
     username: string;
     onSelect: (channel: UserModel) => void;
   };
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 export type AuthStackParamList = {

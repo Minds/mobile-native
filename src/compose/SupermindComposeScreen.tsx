@@ -13,6 +13,7 @@ import InputContainer, {
   InputContainerImperativeHandle,
 } from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
+import Link from '../common/components/Link';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
 import MText from '../common/components/MText';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
@@ -326,15 +327,9 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           title={
             <B1>
               I agree to the{' '}
-              <MText
-                onPress={() =>
-                  openUrlService.open(
-                    'https://www.minds.com/p/monetization-terms',
-                  )
-                }
-                style={{ textDecorationLine: 'underline' }}>
+              <Link url="https://www.minds.com/p/monetization-terms">
                 Terms
-              </MText>
+              </Link>
             </B1>
           }
           selected={termsAgreed}
