@@ -17,6 +17,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import SupermindAction from './actions/SupermindAction';
 import { useFeature } from '@growthbook/growthbook-react';
 import ShareAction from './actions/ShareAction';
+import { IS_IOS } from '~/config/Config';
 
 type PropsType = {
   entity: ActivityModel;
@@ -58,7 +59,9 @@ export const Actions = observer((props: PropsType) => {
           />
           <RemindAction entity={entity} hideCount={props.hideCount} />
 
-          {supermindFeatureFlag.off && <ShareAction entity={entity} />}
+          {(supermindFeatureFlag.off || IS_IOS) && (
+            <ShareAction entity={entity} />
+          )}
 
           {!isOwner && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />
@@ -68,7 +71,7 @@ export const Actions = observer((props: PropsType) => {
             <BoostAction entity={entity} navigation={navigation} />
           )}
 
-          {supermindFeatureFlag.on && !isOwner && (
+          {supermindFeatureFlag.on && !isOwner && !IS_IOS && (
             <SupermindAction entity={entity} />
           )}
         </View>
