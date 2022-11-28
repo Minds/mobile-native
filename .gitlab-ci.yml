@@ -93,10 +93,7 @@ build:ios_mr:
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
   only:
     refs:
-      - /^feat-*/
-      - /^fix-*/
-      - /^chore-*/
-      - /^refactor-*/
+      - /^native-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -128,7 +125,6 @@ build:ios_production:
   <<: *prepare_build_ios
   stage: build
   interruptible: true
-  when: manual
   script:
     - *getiosversion
     - fastlane buildrelease
@@ -137,13 +133,10 @@ build:ios_production:
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
 
 # Android common build steps
 .prepare_build_android: &prepare_build_android
@@ -177,10 +170,12 @@ build:androidproduction:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
     - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
       when: never
 
@@ -208,10 +203,7 @@ build:android_mr_production:
     on_stop: build:cleanup
   only:
     refs:
-      - /^feat-*/
-      - /^fix-*/
-      - /^chore-*/
-      - /^refactor-*/
+      - /^native-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -243,10 +235,7 @@ build:cleanup:
     - *delete_browserstack
   only:
     refs:
-      - /^feat-*/
-      - /^fix-*/
-      - /^chore-*/
-      - /^refactor-*/
+      - /^native-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -261,14 +250,10 @@ build:androidproduction-playstore:
     - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
     - bundle exec fastlane assemble_build
     - *move_apk
-  when: manual
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
 
 ### UPLOAD STAGE
 .upload_s3: &upload_s3
@@ -304,15 +289,17 @@ upload:s3:oss: # Upload to S3
     - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
+      when: never
 
-upload:browserstack:oss: # Upload to Browserstack
+upload:browserstack:oss: # Upload full APK to Browserstack
   <<: *upload_browserstack
   before_script:
     - *getversion
@@ -320,14 +307,11 @@ upload:browserstack:oss: # Upload to Browserstack
     - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
   dependencies:
     - build:androidproduction
-  allow_failure: true
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
 
 # Upload production builds (play-store version)
 upload:s3:playstore: # Upload to S3
@@ -337,13 +321,11 @@ upload:s3:playstore: # Upload to S3
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
   dependencies:
     - build:androidproduction-playstore
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
 
 upload:browserstack:playstore: # Upload to Browserstack
   <<: *upload_browserstack
@@ -353,13 +335,11 @@ upload:browserstack:playstore: # Upload to Browserstack
     - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
   dependencies:
     - build:androidproduction-playstore
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
 
 # Upload production RC (develop branch)
 upload:s3:oss:rc: # Upload to S3
@@ -385,7 +365,6 @@ upload:browserstack:oss:rc: # Upload to Browserstack
     - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
-  allow_failure: true
   only:
     refs:
       - develop
@@ -405,10 +384,7 @@ upload:browserstack:mr:
     - build:android_mr_production
   only:
     refs:
-      - /^feat-*/
-      - /^fix-*/
-      - /^chore-*/
-      - /^refactor-*/
+      - /^native-*/
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
@@ -424,10 +400,10 @@ release:production:
   dependencies:
     - build:androidproduction
     - upload:s3:oss
-  when: manual
-  only:
-    refs:
-      - master
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
   before_script:
     - node -v
     - yarn install
@@ -437,10 +413,6 @@ release:production:
     - echo "Releasing Minds-$APPVERSION.apk"
     - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
 
 release:google_play:
   image: msantang78/ci-mobile-android:latest
@@ -457,14 +429,10 @@ release:google_play:
     - bundle exec fastlane supply --apk ../$APK_NAME
   dependencies:
     - build:androidproduction-playstore
-  when: manual
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
 
 ## CodePush releases
 pushrelease:codepush-ios:
@@ -477,15 +445,10 @@ pushrelease:codepush-ios:
     - yarn install
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
-  only:
-    - /^patch-*/
-    - master
-  allow_failure: true
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-  when: manual
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+      changes:
+        - master
 
 pushrelease:codepush-android:
   image: node:14.19.1
@@ -497,15 +460,10 @@ pushrelease:codepush-android:
     - yarn install
   script:
     - appcenter codepush release-react -a Minds/Minds -d Production
-  only:
-    - /^patch-*/
-    - master
-  allow_failure: true
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-  when: manual
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+      changes:
+        - master
 
 # iOS Release candidate to TestFlight
 release:ios_rc_testflight:
@@ -535,17 +493,13 @@ release:ios_prod_testflight:
   dependencies:
     - build:ios_production
   interruptible: true
-  when: manual
   script:
     - cd ios
     - fastlane upload_testflight
-  only:
-    refs:
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
 
 # Run QA WebdriverIO Browserstack Tests
 .wdio_tests: &wdio_tests
