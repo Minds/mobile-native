@@ -111,6 +111,7 @@ export type MoreStackParamList = {
   };
   ChooseBrowser: {};
   DevTools: {};
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 type TwoFactorConfirmationParams = {
@@ -320,6 +321,7 @@ export type AppStackParamList = {
   MultiUserScreen: {};
   TopNewsfeed: {};
   InAppVerification: {};
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 // types for channel edit screens

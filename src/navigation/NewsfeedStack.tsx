@@ -43,6 +43,11 @@ export default function () {
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
       />
+      <NewsfeedStack.Screen
+        name="BoostScreenV2"
+        getComponent={() => require('~/modules/boost').BoostStack}
+        options={hideHeader}
+      />
     </NewsfeedStack.Navigator>
   );
 }

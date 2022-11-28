@@ -1,11 +1,11 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
-import { BoostType } from '../../boost/v2/createBoostStore';
+import { boostType } from '../../boost/v2/createBoostStore';
 import UserModel from '../../channel/UserModel';
 import ActivityModel from '../../newsfeed/ActivityModel';
 
 type BoostStoreParams = {
-  boostType: BoostType;
+  boostType: boostType;
   entity: UserModel | ActivityModel;
 };
 
