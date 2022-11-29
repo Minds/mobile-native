@@ -184,3 +184,22 @@ export const CAPTCHA_ENABLED_ENDPOINTS = [
     origin: 'vote_up',
   },
 ];
+
+/**
+ * used to measure the user's interaction with the app
+ */
+export const USAGE_SCORES = {
+  viewPost: 0.1,
+  appSession: 1,
+  upvote: 2,
+  downvote: -1,
+  remind: 3,
+  createPost: 5,
+  comment: 5,
+};
+
+/**
+ * if user's usage score increased beyond this threshold, they will
+ * get prompted to rate the app
+ */
+export const RATING_APP_SCORE_THRESHOLD = 20;

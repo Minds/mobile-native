@@ -21,6 +21,7 @@ import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { confirm } from '../common/components/Confirm';
+import storeRatingService from '../services/store-rating.service';
 
 /**
  * Display an error message to the user.
@@ -625,6 +626,8 @@ export default function (props) {
           this.entity.setEdited('1');
           return this.entity;
         }
+
+        storeRatingService.track('createPost', true);
 
         if (this.supermindRequest) {
           showNotification(i18n.t('supermind.requestSubmitted'), 'success');

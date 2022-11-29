@@ -152,6 +152,7 @@
     "react-native-share-menu": "^6.0.0",
     "react-native-silent-switch": "msantang78/react-native-silent-switch",
     "react-native-snap-carousel": "^3.8.2",
+    "react-native-store-review": "^0.3.0",
     "react-native-svg": "^12.1.0",
     "react-native-system-setting": "^1.7.6",
     "react-native-tab-view": "^3.1.1",

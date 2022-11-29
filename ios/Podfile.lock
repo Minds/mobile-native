@@ -647,6 +647,8 @@ PODS:
   - RNSnowplowTracker (1.2.1):
     - React-Core
     - SnowplowTracker (~> 3.0)
+  - RNStoreReview (0.3.0):
+    - React-Core
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (9.2.0):
@@ -794,6 +796,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNShareMenu (from `../node_modules/react-native-share-menu`)
   - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker`)"
+  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - vision-camera-ocr (from `../node_modules/vision-camera-ocr`)
@@ -1032,6 +1035,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share-menu"
   RNSnowplowTracker:
     :path: "../node_modules/@snowplow/react-native-tracker"
+  RNStoreReview:
+    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1054,7 +1059,7 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CodePush: ef496b6fd053012e985e3d4a0ab9f9dbf2739eac
-  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
+  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   EXApplication: e418d737a036e788510f2c4ad6c10a7d54d18586
   EXAV: 596506c9bee54ad52f2f3b625cdaeb9d9f2dd6b7
   EXConstants: 7c44785d41d8e959d527d23d29444277a4d1ee73
@@ -1081,7 +1086,7 @@ SPEC CHECKSUMS:
   FlipperKit: 1868c4faed64da1c779da268417515127dbde450
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
+  glog: 476ee3e89abb49e07f822b48323c51c57124b572
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
@@ -1108,7 +1113,7 @@ SPEC CHECKSUMS:
   Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Protobuf: 02524ec14183fe08fb259741659e79683788158b
-  RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
+  RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 54bff6aa61efd9598ab59d2a823c382b4fe13d27
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
   RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
@@ -1175,6 +1180,7 @@ SPEC CHECKSUMS:
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSnowplowTracker: 88c65c2132ed97c0732473948c00c8f4d6473b12
+  RNStoreReview: 18cf6adbd193eadb049d2f6c37ef2ab3d5a28706
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
@@ -1189,6 +1195,6 @@ SPEC CHECKSUMS:
   Yoga: 0b84a956f7393ef1f37f3bb213c516184e4a689d
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cb358b8be853ffb5ace41a3401194ce0721de1b3
+PODFILE CHECKSUM: b3aad2fe2c34bf0342ed93736b65129c71a3197f
 
 COCOAPODS: 1.11.3

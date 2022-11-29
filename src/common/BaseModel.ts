@@ -11,6 +11,7 @@ import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
+import storeRatingService from '../services/store-rating.service';
 
 /**
  * Base model
@@ -176,7 +177,7 @@ export default class BaseModel extends AbstractModel {
    * @param {string} direction
    */
   @action
-  async toggleVote(direction) {
+  async toggleVote(direction: 'up' | 'down') {
     const voted = direction === 'up' ? this.votedUp : this.votedDown;
     const delta = voted ? -1 : 1;
 
@@ -202,6 +203,11 @@ export default class BaseModel extends AbstractModel {
 
     try {
       await vote(this.guid, direction, params);
+      if (direction === 'up') {
+        storeRatingService.track('upvote', true);
+      } else {
+        storeRatingService.track('downvote');
+      }
     } catch (err) {
       if (!voted) {
         this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
