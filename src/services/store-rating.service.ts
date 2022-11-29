@@ -1,11 +1,15 @@
+import moment from 'moment';
 import { InteractionManager } from 'react-native';
 import * as StoreReview from 'react-native-store-review';
 import { storages } from '../common/services/storage/storages.service';
 import { USAGE_SCORES, RATING_APP_SCORE_THRESHOLD } from '../config/Config';
 
 const SCORES_KEY = 'APP_SCORES';
+const LAST_PROMPTED_AT_KEY = 'STORE_RATING_LAST_PROMPTED_AT';
 
 class StoreRatingService {
+  lastPromptedAt: number | null =
+    storages.app.getInt(LAST_PROMPTED_AT_KEY) || null;
   points = storages.app.getInt(SCORES_KEY) || 0;
 
   track(key: keyof typeof USAGE_SCORES, prompt = false) {
@@ -23,11 +27,20 @@ class StoreRatingService {
   }
 
   get shouldPrompt() {
+    if (
+      this.lastPromptedAt &&
+      moment().isBefore(moment(this.lastPromptedAt).add({ days: 30 }))
+    ) {
+      return false;
+    }
+
     return this.points > RATING_APP_SCORE_THRESHOLD;
   }
 
   prompt() {
     StoreReview.requestReview();
+    this.lastPromptedAt = Date.now();
+    storages.app.setInt(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
   }
 }
 
