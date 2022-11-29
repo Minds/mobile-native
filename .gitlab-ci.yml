@@ -1,6 +1,7 @@
 stages:
   - test
   - pushrelease
+  - pushrelease_prod
   - build
   - upload
   - release
@@ -444,7 +445,7 @@ pushrelease:codepush-ios:
     - npm install -g appcenter-cli
     - yarn install
   script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
   rules:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
@@ -459,11 +460,46 @@ pushrelease:codepush-android:
     - npm install -g appcenter-cli
     - yarn install
   script:
+    - appcenter codepush release-react -a Minds/Minds -d Staging
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
+      changes:
+        - master
+
+## CodePush releases
+pushrelease_prod:codepush-ios:
+  image: node:14.19.1
+  stage: pushrelease_prod
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
+      changes:
+        - master
+      when: manual
+    - when: never
+
+pushrelease_prod:codepush-android:
+  image: node:14.19.1
+  stage: pushrelease_prod
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
     - appcenter codepush release-react -a Minds/Minds -d Production
   rules:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
         - master
+      when: manual
+    - when: never
 
 # iOS Release candidate to TestFlight
 release:ios_rc_testflight:
