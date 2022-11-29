@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { InteractionManager } from 'react-native';
-import * as StoreReview from 'react-native-store-review';
+import * as StoreReview from 'expo-store-review';
 import { storages } from '../common/services/storage/storages.service';
 import { USAGE_SCORES, RATING_APP_SCORE_THRESHOLD } from '../config/Config';
 
@@ -37,10 +37,20 @@ class StoreRatingService {
     return this.points > RATING_APP_SCORE_THRESHOLD;
   }
 
-  prompt() {
-    StoreReview.requestReview();
-    this.lastPromptedAt = Date.now();
-    storages.app.setInt(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+  async prompt() {
+    if (!(await StoreReview.hasAction())) {
+      return false;
+    }
+
+    if (!(await StoreReview.isAvailableAsync())) {
+      return false;
+    }
+
+    if (await StoreReview.hasAction()) {
+      await StoreReview.requestReview();
+      this.lastPromptedAt = Date.now();
+      storages.app.setInt(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+    }
   }
 }
 

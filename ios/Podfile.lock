@@ -40,6 +40,8 @@ PODS:
     - ReactCommon/turbomodule/core
   - EXSensors (11.4.0):
     - ExpoModulesCore
+  - EXStoreReview (5.3.0):
+    - ExpoModulesCore
   - FBLazyVector (0.69.7)
   - FBReactNativeSpec (0.69.7):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -647,8 +649,6 @@ PODS:
   - RNSnowplowTracker (1.2.1):
     - React-Core
     - SnowplowTracker (~> 3.0)
-  - RNStoreReview (0.3.0):
-    - React-Core
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (9.2.0):
@@ -695,6 +695,7 @@ DEPENDENCIES:
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSensors (from `../node_modules/expo-sensors/ios`)
+  - EXStoreReview (from `../node_modules/expo-store-review/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (= 0.169.0)
@@ -796,7 +797,6 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNShareMenu (from `../node_modules/react-native-share-menu`)
   - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker`)"
-  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - vision-camera-ocr (from `../node_modules/vision-camera-ocr`)
@@ -880,6 +880,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core/ios"
   EXSensors:
     :path: "../node_modules/expo-sensors/ios"
+  EXStoreReview:
+    :path: "../node_modules/expo-store-review/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -1035,8 +1037,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share-menu"
   RNSnowplowTracker:
     :path: "../node_modules/@snowplow/react-native-tracker"
-  RNStoreReview:
-    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1073,6 +1073,7 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: 1a3af07c6dab3c612967a294836df9ae717431df
   ExpoModulesCore: 5a973701f4400d70254bc836305228731c829010
   EXSensors: a34fb0d416eae3ecaaab43ec64dca0854227d3bf
+  EXStoreReview: cbb6b2202bb6f831cd3234d9d8b995cec0eb32f2
   FBLazyVector: 6b7f5692909b4300d50e7359cdefbcd09dd30faa
   FBReactNativeSpec: affcf71d996f6b0c01f68883482588297b9d5e6e
   Flipper: 55f10244ce1a82d4adc1cb817bc492f11e22f6ff
@@ -1180,7 +1181,6 @@ SPEC CHECKSUMS:
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSnowplowTracker: 88c65c2132ed97c0732473948c00c8f4d6473b12
-  RNStoreReview: 18cf6adbd193eadb049d2f6c37ef2ab3d5a28706
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
