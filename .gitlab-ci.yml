@@ -134,7 +134,7 @@ build:ios_production:
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
 
@@ -170,7 +170,7 @@ build:androidproduction:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
       when: on_success
@@ -251,7 +251,7 @@ build:androidproduction-playstore:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
 
@@ -290,13 +290,13 @@ upload:s3:oss: # Upload to S3
   dependencies:
     - build:androidproduction
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run for tags that ends on .0 (major, minor releases)
       changes:
         - master
       when: on_success
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
       when: on_success
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
       when: never
 
 upload:browserstack:oss: # Upload full APK to Browserstack
@@ -308,7 +308,7 @@ upload:browserstack:oss: # Upload full APK to Browserstack
   dependencies:
     - build:androidproduction
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
       when: on_success
@@ -322,7 +322,7 @@ upload:s3:playstore: # Upload to S3
   dependencies:
     - build:androidproduction-playstore
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
       when: on_success
@@ -336,7 +336,7 @@ upload:browserstack:playstore: # Upload to Browserstack
   dependencies:
     - build:androidproduction-playstore
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
       when: on_success
@@ -401,7 +401,7 @@ release:production:
     - build:androidproduction
     - upload:s3:oss
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
   before_script:
@@ -430,7 +430,7 @@ release:google_play:
   dependencies:
     - build:androidproduction-playstore
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
 
@@ -446,7 +446,7 @@ pushrelease:codepush-ios:
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
   rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
         - master
 
@@ -461,7 +461,7 @@ pushrelease:codepush-android:
   script:
     - appcenter codepush release-react -a Minds/Minds -d Production
   rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
         - master
 
@@ -497,7 +497,7 @@ release:ios_prod_testflight:
     - cd ios
     - fastlane upload_testflight
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
       changes:
         - master
 
