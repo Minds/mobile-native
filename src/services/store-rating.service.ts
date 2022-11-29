@@ -46,11 +46,9 @@ class StoreRatingService {
       return false;
     }
 
-    if (await StoreReview.hasAction()) {
-      await StoreReview.requestReview();
-      this.lastPromptedAt = Date.now();
-      storages.app.setInt(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
-    }
+    await StoreReview.requestReview();
+    this.lastPromptedAt = Date.now();
+    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
   }
 }
 
