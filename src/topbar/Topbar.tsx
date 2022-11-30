@@ -105,6 +105,7 @@ export const Topbar = observer((props: PropsType) => {
                   border={'white'}
                   size="small"
                   onPress={handleChannelNav}
+                  testID="Topbar:Avatar"
                 />
                 <View
                   style={[

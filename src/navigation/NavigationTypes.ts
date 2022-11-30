@@ -14,6 +14,7 @@ import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
+import type { BoostType } from '../boost/v2/createBoostStore';
 
 type AnyType = any;
 
@@ -162,8 +163,7 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
-  BoostChannelScreen: {};
-  BoostPostScreen: { entity: ActivityModel };
+  BoostScreen: { entity: ActivityModel; boostType: BoostType };
   UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
@@ -244,8 +244,7 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
-  BoostChannelScreen: {};
-  BoostPostScreen: { entity: ActivityModel };
+  BoostScreen: { entity: ActivityModel; boostType: BoostType };
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Tabs: {};

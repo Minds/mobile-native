@@ -2,11 +2,11 @@ import { selectElement } from '../../../helpers/Utils';
 
 class TabBar {
   get newsfeedTabIcon() {
-    return selectElement('id', 'Menu tab button');
+    return selectElement('id', 'Tabs:Newsfeed');
   }
 
   get moreTabIcon() {
-    return selectElement('id', 'Messenger tab button');
+    return selectElement('id', 'Tabs:More');
   }
 
   async openMore() {

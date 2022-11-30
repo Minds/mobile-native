@@ -75,7 +75,10 @@ const getOptions = (
       iconType: 'material-community',
       title: i18n.t('boosts.boostChannel'),
       onPress: () => {
-        navigation.navigate('BoostChannelScreen', {});
+        navigation.navigate('BoostScreen', {
+          entity: channel,
+          boostType: 'channel',
+        });
         ref.current.dismiss();
       },
     });

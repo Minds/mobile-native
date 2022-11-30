@@ -411,15 +411,8 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              name="BoostChannelScreen"
-              getComponent={() =>
-                require('~/boost/v2/BoostChannelScreen').default
-              }
-              options={modalOptions}
-            />
-            <RootStackNav.Screen
-              name="BoostPostScreen"
-              getComponent={() => require('~/boost/v2/BoostPostScreen').default}
+              name="BoostScreen"
+              getComponent={() => require('~/boost/v2/BoostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen

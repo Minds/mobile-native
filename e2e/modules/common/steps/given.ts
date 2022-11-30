@@ -27,7 +27,7 @@ Given(/^I'm logged in$/, async () => {
   return HomeScreen.waitForIsShown();
 });
 
-Given(/^I navigate to the (.+) screen$/, async (screen: string) => {
+Given(/^I navigate to (.+) screen$/, async (screen: string) => {
   if (!SCREENS[screen]) {
     throw new Error(
       `The screen ${screen} is not supported. Supported screens are ${Object.keys(
