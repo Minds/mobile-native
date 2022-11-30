@@ -31,6 +31,7 @@ import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice
 import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
 import { InAppVerificationPrompt } from '../in-app-verification';
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
+import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
@@ -174,7 +175,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const isLatest = newsfeed.feedType === 'latest';
 
   return (
-    <Screen safe>
+    <Screen safe onlyTopEdge={IS_IOS}>
       <PrefetchNotifications tabs={prefetch} />
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>

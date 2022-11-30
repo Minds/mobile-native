@@ -24,6 +24,7 @@ import ChannelRecommendation from '~/common/components/ChannelRecommendation/Cha
 import FeedListSticky from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
 import { useFeature } from '@growthbook/growthbook-react';
+import { IS_IOS } from '~/config/Config';
 
 interface Props {
   navigation: any;
@@ -209,7 +210,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     };
 
     return (
-      <Screen safe>
+      <Screen safe onlyTopEdge={IS_IOS}>
         <View style={ThemedStyles.style.flexContainer}>
           <Topbar
             title="Discovery"

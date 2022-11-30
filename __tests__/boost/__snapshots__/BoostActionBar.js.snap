@@ -5,9 +5,6 @@ exports[`Boost action bar component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "borderBottomWidth": 6,
-      },
-      Object {
         "borderColor": "#3f4b56",
       },
       Object {
@@ -20,8 +17,6 @@ exports[`Boost action bar component renders correctly 1`] = `
     ]
   }
 >
-  <View />
-  <View />
   <View
     key="bid"
     style={
@@ -34,16 +29,20 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
     }
   >
-    <Themed.Icon
-      color="rgb(96, 125, 139)"
+    <Icon
+      allowFontScaling={false}
       name="bank"
       size={20}
       style={
-        Object {
-          "marginBottom": 4,
-        }
+        Array [
+          Object {
+            "marginBottom": 4,
+          },
+          Object {
+            "color": "#B8C1CA",
+          },
+        ]
       }
-      type="material-community"
     />
     <MText
       style={
@@ -56,6 +55,44 @@ exports[`Boost action bar component renders correctly 1`] = `
       $1.00
     </MText>
   </View>
-  <View />
+  <View
+    key="time"
+    style={
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Icon
+      allowFontScaling={false}
+      name="clock"
+      size={20}
+      style={
+        Array [
+          Object {
+            "marginBottom": 4,
+          },
+          Object {
+            "color": "#B8C1CA",
+          },
+        ]
+      }
+    />
+    <MText
+      numberOfLines={1}
+      style={
+        Object {
+          "fontSize": 11,
+          "marginTop": 4,
+        }
+      }
+    >
+      Mar 26, 2018
+    </MText>
+  </View>
 </View>
 `;

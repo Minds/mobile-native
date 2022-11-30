@@ -2,7 +2,7 @@ import AppScreen from '../common/AppScreen';
 
 class HomeScreen extends AppScreen {
   constructor() {
-    super('Menu tab button');
+    super('Tabs:Newsfeed');
   }
 }
 

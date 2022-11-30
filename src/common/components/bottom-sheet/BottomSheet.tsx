@@ -10,6 +10,7 @@ import React, {
   useRef,
 } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
+import { SharedValue } from 'react-native-reanimated';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
 
@@ -17,7 +18,7 @@ const { height: windowHeight } = Dimensions.get('window');
 const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
 
 export interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
-  snapPoints?: Array<number | string>;
+  snapPoints?: (string | number)[] | SharedValue<(string | number)[]>;
   onVisibilityChange?: (visible: boolean) => void;
 }
 

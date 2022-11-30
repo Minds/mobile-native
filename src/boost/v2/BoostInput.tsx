@@ -5,7 +5,7 @@ import InputContainer from '../../common/components/InputContainer';
 import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BoostStoreType } from './createBoostStore';
+import type { BoostStoreType } from './createBoostStore';
 
 type PropsType = {
   localStore: BoostStoreType;
@@ -34,7 +34,9 @@ const BoostInput = observer(({ localStore }: PropsType) => {
         {...commonProps}
       />
       <InputContainer
-        placeholder={i18n.t('tokens')}
+        placeholder={
+          localStore.payment === 'cash' ? i18n.t('usd') : i18n.t('tokens')
+        }
         onChangeText={localStore.setAmountTokens}
         value={localStore.amountTokens.toString()}
         {...commonProps}
@@ -48,7 +50,15 @@ const BoostInput = observer(({ localStore }: PropsType) => {
           theme.colorSecondaryText,
           theme.fontLM,
         ]}>
-        1 token = 1000 views
+        {localStore.payment === 'cash'
+          ? i18n.t('boosts.boostCashViews', {
+              amount: '1.25',
+              views: '1000',
+            })
+          : i18n.t('boosts.boostTokenViews', {
+              amount: '1',
+              views: '1000',
+            })}
       </MText>
     </View>
   );

@@ -286,7 +286,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   return (
     <GroupContext.Provider value={route.params?.group || null}>
-      <View style={containerStyle}>
+      <View testID="ActivityScreen" style={containerStyle}>
         <View style={theme.flexContainer}>
           {ownerBlockShadow}
           <ScrollView

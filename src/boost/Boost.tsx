@@ -1,13 +1,13 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
 import BlogCard from '../blogs/BlogCard';
 import VideoCard from '../media/VideoCard';
 import ImageCard from '../media/ImageCard';
-
 import Activity from '../newsfeed/activity/Activity';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
@@ -15,6 +15,9 @@ import UserModel from '../channel/UserModel';
 import GroupCard from '../groups/card/GroupCard';
 import GroupModel from '../groups/GroupModel';
 import MText from '../common/components/MText';
+import { B2 } from '~/common/ui';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 /**
  * Boost console item
@@ -28,8 +31,22 @@ export default class Boost extends Component {
       <View style={styles.container}>
         {this.renderEntity()}
         {this.showBoostActionBar()}
+        {this.renderReason()}
       </View>
     );
+  }
+
+  renderReason() {
+    return this.props.boost.rejection_reason !== null ? (
+      <View style={styles.rejection}>
+        <IonIcon name="warning" style={styles.icon} size={18} />
+        <B2>
+          {i18n.t(
+            `boosts.rejectionReasons.${this.props.boost.rejection_reason}`,
+          )}
+        </B2>
+      </View>
+    ) : null;
   }
 
   showBoostActionBar() {
@@ -100,10 +117,20 @@ export default class Boost extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderBottomColor: '#EEE',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+const styles = ThemedStyles.create({
+  icon: ['colorSecondaryText', 'paddingRight'],
+  rejection: [
+    'padding2x',
+    'rowJustifyCenter',
+    'bcolorPrimaryBorder',
+    'centered',
+    'borderTop',
+    'fullWidth',
+  ],
+  container: [
+    'borderBottom6x',
+    'flexContainer',
+    'borderBottom3x',
+    'bcolorPrimaryBorder',
+  ],
 });

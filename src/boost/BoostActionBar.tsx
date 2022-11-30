@@ -1,33 +1,58 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-
-import { Icon } from 'react-native-elements';
+import React, { Component, ReactElement } from 'react';
 
 import { TouchableHighlight, View } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
+import type BoostModel from './BoostModel';
+import type BoostStore from './BoostStore';
+import type UserStore from '~/auth/UserStore';
+
+type PropsType = {
+  entity: BoostModel;
+  boost: BoostStore;
+  user: UserStore;
+};
 
 @inject('user', 'boost')
 @observer
-export default class BoostActionBar extends Component {
+export default class BoostActionBar extends Component<PropsType> {
   render() {
-    let actions = null;
-    if (this.props.entity.currency !== 'tokens') actions = this.renderActions();
+    let actions: ReactElement[] | null = null;
+    if (this.props.entity.currency !== 'tokens') {
+      actions = this.renderActions();
+    }
     return (
       <View style={styles.container}>
         {this.renderTarget()}
         {this.renderViews()}
         {this.renderBid()}
         {this.renderStatus()}
+        {this.renderTime()}
         {actions}
+      </View>
+    );
+  }
+
+  renderTime() {
+    const date = i18n.date(
+      parseInt(this.props.entity.time_created, 10) * 1000,
+      'friendly',
+    );
+    return (
+      <View style={ThemedStyles.style.flexColumnCentered} key="time">
+        <MCIcon name="clock" size={20} style={styles.icon} />
+        <MText style={styles.value} numberOfLines={1}>
+          {date}
+        </MText>
       </View>
     );
   }
@@ -35,117 +60,74 @@ export default class BoostActionBar extends Component {
   renderTarget() {
     return this.props.entity.destination ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="target">
-        <IonIcon
-          color="rgb(96, 125, 139)"
-          name="md-person"
-          size={20}
-          style={styles.icon}
-        />
+        <IonIcon name="md-person" size={20} style={styles.icon} />
         <MText style={styles.value} numberOfLines={1}>
           {'@' + this.props.entity.destination.username}
         </MText>
       </View>
-    ) : (
-      <View></View>
-    );
+    ) : null;
   }
 
   renderViews() {
     return this.props.entity.impressions ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="views">
-        <Icon
-          color="rgb(96, 125, 139)"
-          type="material-community"
-          name="eye"
-          size={20}
-          style={styles.icon}
-        />
+        <MCIcon name="eye" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {this.props.entity.impressions + ' views'}
         </MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderStatus() {
     return this.props.entity.state ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="status">
-        <Icon
-          type="material-community"
-          color="rgb(96, 125, 139)"
-          name="clock"
-          size={20}
-          style={styles.icon}
-        />
+        <MCIcon name="timer-sand-empty" size={20} style={styles.icon} />
         <MText style={styles.value}>{this.props.entity.state}</MText>
       </View>
-    ) : (
-      <View />
-    );
+    ) : null;
   }
 
   renderBid() {
     return this.props.entity.bid ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="bid">
-        <Icon
-          type="material-community"
-          color="rgb(96, 125, 139)"
-          name="bank"
-          size={20}
-          style={styles.icon}
-        />
+        <MCIcon name="bank" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {(this.props.entity.bidType == 'offchain' ||
-            this.props.entity.bidType == 'onchain' ||
-            this.props.entity.bidType == 'peer' ||
-            this.props.entity.bidType == 'tokens') &&
-            token(this.props.entity.bid, 18) + ' Tokens'}
-          {(this.props.entity.bidType == 'usd' ||
-            this.props.entity.bidType == 'money') &&
+          {['offchain', 'onchain', 'peer', 'tokens'].includes(
+            this.props.entity.bidType,
+          ) && token(this.props.entity.bid, 18) + ' Tokens'}
+          {['usd', 'money'].includes(this.props.entity.bidType) &&
             '$' + (this.props.entity.bid / 100).toFixed(2)}
-          {this.props.entity.bidType == 'points' &&
+          {this.props.entity.bidType === 'points' &&
             this.props.entity.bid + ' points'}
         </MText>
       </View>
-    ) : (
-      <View></View>
-    );
+    ) : null;
   }
 
   renderScheduled() {
     return this.props.entity.scheduledTs ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
-        <Icon
-          type="material-community"
-          color="rgb(96, 125, 139)"
-          name="alarm"
-          size={20}
-          style={styles.icon}
-        />
+        <MCIcon name="alarm" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {i18n.date(this.props.entity.scheduledTs * 1000)}
         </MText>
       </View>
     ) : (
       <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
-        <Icon
-          type="material-community"
-          color="rgb(96, 125, 139)"
-          name="clock"
-          size={20}
-          style={styles.icon}
-        />
+        <MCIcon name="clock" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {i18n.date(this.props.entity.time_created * 1000, 'datetime')}
+          {i18n.date(
+            parseInt(this.props.entity.time_created, 10) * 1000,
+            'datetime',
+          )}
         </MText>
       </View>
     );
   }
 
   renderActions() {
-    let buttons = [];
+    let buttons: ReactElement[] = [];
     if (this.canRevoke()) {
       buttons.push(
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
@@ -251,7 +233,6 @@ export default class BoostActionBar extends Component {
 
 const styles = ThemedStyles.create({
   container: [
-    'borderBottom6x',
     'bcolorBaseBackground',
     {
       display: 'flex',
@@ -261,9 +242,7 @@ const styles = ThemedStyles.create({
       paddingBottom: 16,
     },
   ],
-  icon: {
-    marginBottom: 4,
-  },
+  icon: ['marginBottom', 'colorSecondaryText'],
   value: {
     fontSize: 11,
     marginTop: 4,
