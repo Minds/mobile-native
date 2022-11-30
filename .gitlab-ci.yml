@@ -446,10 +446,9 @@ pushrelease:codepush-ios:
     - yarn install
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
-  rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
-      changes:
-        - master
+  only:
+    refs:
+      - master
 
 pushrelease:codepush-android:
   image: node:14.19.1
@@ -461,10 +460,9 @@ pushrelease:codepush-android:
     - yarn install
   script:
     - appcenter codepush release-react -a Minds/Minds -d Staging
-  rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
-      changes:
-        - master
+  only:
+    refs:
+      - master
 
 ## CodePush releases
 pushrelease_prod:codepush-ios:
@@ -481,8 +479,6 @@ pushrelease_prod:codepush-ios:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
         - master
-      when: manual
-    - when: never
 
 pushrelease_prod:codepush-android:
   image: node:14.19.1
@@ -498,8 +494,6 @@ pushrelease_prod:codepush-android:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
       changes:
         - master
-      when: manual
-    - when: never
 
 # iOS Release candidate to TestFlight
 release:ios_rc_testflight:
