@@ -84,6 +84,7 @@ const getOptionsList = (
     {
       name: i18n.t('settings.profile'),
       icon: 'user',
+      testID: 'Drawer:channel',
       onPress: () => {
         navigation.push('Channel', { entity: channel });
       },

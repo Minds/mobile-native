@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BoostStoreType } from './createBoostStore';
+import type { BoostStoreType } from './createBoostStore';
 
 type PropsType = {
   localStore: BoostStoreType;

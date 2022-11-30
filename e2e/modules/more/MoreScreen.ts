@@ -7,6 +7,10 @@ class MoreScreen extends AppScreen {
     super('Drawer:wallet');
   }
 
+  get channel() {
+    return selectElement('id', 'Drawer:channel');
+  }
+
   get wallet() {
     return selectElement('id', 'Drawer:wallet');
   }
@@ -17,6 +21,10 @@ class MoreScreen extends AppScreen {
 
   openWallet() {
     return this.wallet.click();
+  }
+
+  openChannel() {
+    return this.channel.click();
   }
 
   async openSettings() {

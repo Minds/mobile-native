@@ -454,6 +454,7 @@ const ChannelScreen = observer((props: PropsType) => {
       />
 
       <FeedList
+        testID={'ChannelScreen:FeedList'}
         ref={feedRef}
         feedStore={store.feedStore}
         renderActivity={renderActivity}

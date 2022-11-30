@@ -4,7 +4,11 @@ import TabBar from './components/TabBar';
 const SCREENS: { [k: string]: () => Promise<boolean | void> } = {
   Wallet: async () => {
     await TabBar.openMore();
-    await MoreScreen.openWallet();
+    return MoreScreen.openWallet();
+  },
+  'My Channel': async () => {
+    await TabBar.openMore();
+    return MoreScreen.openChannel();
   },
 };
 

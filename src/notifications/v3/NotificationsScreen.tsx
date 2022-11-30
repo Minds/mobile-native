@@ -2,14 +2,14 @@ import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import NotificationsTopBar from './NotificationsTopBar';
-import useApiFetch from '../../common/hooks/useApiFetch';
+import NotificationsTopBar, {
+  NotificationsTabOptions,
+} from './NotificationsTopBar';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
 import { useStores } from '../../common/hooks/use-stores';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
-import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import MText from '../../common/components/MText';
 import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
@@ -17,6 +17,10 @@ import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
+
+import { useInfiniteFeedQuery } from '~/services';
+import { fetchNotificationsPage } from './api';
+import PrefetchNotifications from './PrefetchNotifications';
 
 type PropsType = {
   navigation?: any;
@@ -28,48 +32,17 @@ const viewabilityConfig = {
   waitForInteraction: false,
 };
 
-type NotificationList = {
-  status: string;
-  notifications: NotificationModel[];
-  'load-next': string;
-};
-
-const map = data => {
-  if (data) {
-    return data.map((notification: NotificationModel) => {
-      notification = NotificationModel.create(notification);
-      if (notification.from) {
-        notification.from = UserModel.create(notification.from);
-      }
-      if (notification.merged_from && notification.merged_from.length > 0) {
-        notification.merged_from = UserModel.createMany(
-          notification.merged_from,
-        );
-      }
-      return notification;
-    });
-  }
-  return [];
-};
-
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const { notifications } = useStores();
   const interactionsBottomSheetRef = useRef<any>();
   const listRef = useRef<FlatList>(null);
 
-  const params = {
-    filter: notifications.filter,
-    limit: 15,
-    offset: notifications.offset,
-  };
-
-  const store = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params,
-    skip: false,
-    updateStrategy: 'merge',
-    dataField: 'notifications',
-    map,
-  });
+  const [query, notificationsList] = useInfiniteFeedQuery(
+    ['notifications', notifications.filter],
+    async ({ pageParam = '' }) =>
+      fetchNotificationsPage(pageParam, notifications.filter),
+    { refetchOnMount: 'always' }, // update notifications on mount (since they are prefetched)
+  );
 
   const insets = useSafeAreaInsets();
   const cleanTop = React.useRef({
@@ -78,54 +51,25 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     flex: 1,
   }).current;
 
-  const onFetchMore = () => {
-    !store.loading &&
-      store.result &&
-      store.result['load-next'] &&
-      notifications.setOffset(store.result['load-next']);
-  };
-
   const refresh = React.useCallback(
     (scroll = true) => {
-      notifications.setOffset('');
       // scroll to top animated
       if (scroll) {
         listRef.current?.scrollToOffset({ animated: true, offset: 0 });
       }
-
-      return store.refresh(params).then(() => {
+      return query.refetch().then(() => {
         notifications.setUnread(0);
       });
     },
-    [notifications, params, store],
+    [notifications, query],
   );
 
-  /**
-   *
-   */
-  const onFocus = React.useCallback(
-    (silentRefresh = true) => {
-      // only refresh if the data is already loaded (even empty array)
-      if (store.result === undefined) {
-        return;
-      }
-      // only refresh if we already have notifications
-      notifications.setSilentRefresh(silentRefresh);
-      refresh().finally(() => notifications.setSilentRefresh(false));
-    },
-    // Be extra careful with the dependencies here, it may cause too many refresh or an infinite loop
-    [notifications, refresh, store],
-  );
-
-  // const isFocused = navigation.isFocused();
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener(
-      //@ts-ignore
-      'tabPress',
-      () => navigation.isFocused() && onFocus(false),
-    );
+    const unsubscribe = navigation
+      .getParent()
+      .addListener('tabPress', () => navigation.isFocused() && refresh());
     return unsubscribe;
-  }, [navigation, onFocus]);
+  }, [navigation, query, refresh]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -141,7 +85,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 
   const ListEmptyComponent = React.useMemo(() => {
-    if (store.error && !store.loading && !store.refreshing) {
+    if (query.error && !query.isLoading && !query.isRefetching) {
       return (
         <View style={styles.errorContainerStyle}>
           <MText style={styles.errorStyle} onPress={refresh}>
@@ -152,7 +96,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
 
-    if (store.loading || store.refreshing) {
+    if (query.isLoading || query.isRefetching) {
       return <ActivityIndicator style={styles.spinner} />;
     }
     return (
@@ -163,10 +107,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       </View>
     );
   }, [
-    store.error,
-    store.loading,
-    store.refreshing,
     notifications.filter,
+    query.error,
+    query.isLoading,
+    query.isRefetching,
     refresh,
   ]);
 
@@ -189,10 +133,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     );
   }, []);
 
-  const data = store.result?.notifications || [];
-
   return (
     <View style={styles.container}>
+      <PrefetchNotifications tabs={prefetch} />
       <FlatList
         ref={listRef}
         stickyHeaderIndices={sticky}
@@ -201,20 +144,16 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         ListHeaderComponent={
           <>
             <Topbar title="Notifications" navigation={navigation} noInsets />
-            <NotificationsTopBar
-              store={notifications}
-              setResult={store.setResult}
-              refresh={refresh}
-            />
+            <NotificationsTopBar store={notifications} refresh={refresh} />
           </>
         }
-        scrollEnabled={!store.refreshing}
-        data={data.slice()}
+        scrollEnabled={!query.isRefetching}
+        data={notificationsList}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        onEndReached={onFetchMore}
+        onEndReached={() => query.fetchNextPage()}
         onRefresh={refresh}
-        refreshing={store.refreshing && !notifications.silentRefresh}
+        refreshing={query.isRefetching && query.isFetchedAfterMount}
         onViewableItemsChanged={onViewableItemsChanged}
         // contentContainerStyle={}
         viewabilityConfig={viewabilityConfig}
@@ -230,6 +169,14 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     </View>
   );
 });
+
+const prefetch: NotificationsTabOptions[] = [
+  'comments',
+  'reminds',
+  'subscriptions',
+  'tags',
+  'votes',
+];
 
 const snapPoints = ['90%'];
 const sticky = [0];
