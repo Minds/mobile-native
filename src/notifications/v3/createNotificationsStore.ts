@@ -16,7 +16,6 @@ export type FilterType = '' | NotificationsTabOptions;
 const createNotificationsStore = () => ({
   unread: 0,
   filter: '' as FilterType,
-  offset: '',
   pollInterval: null as Timeout | null,
   pushNotificationsSettings: [] as PushNotificationsSettingModel[] | null, // null when failed to load
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[] | null, // null when failed to load
@@ -45,9 +44,6 @@ const createNotificationsStore = () => ({
         this.stopPollCount();
       }
     });
-  },
-  setOffset(offset: string) {
-    this.offset = offset;
   },
   setFilter(filter: FilterType) {
     this.filter = filter;

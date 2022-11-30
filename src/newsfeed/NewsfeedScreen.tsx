@@ -30,7 +30,9 @@ import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
 import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
 import { InAppVerificationPrompt } from '../in-app-verification';
+import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
+import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -174,6 +176,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
 
   return (
     <Screen safe onlyTopEdge={IS_IOS}>
+      <PrefetchNotifications tabs={prefetch} />
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>
           <FeedListSticky
@@ -203,5 +206,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     </Screen>
   );
 });
+
+const prefetch: NotificationsTabOptions[] = ['all'];
 
 export default withErrorBoundary(NewsfeedScreen);

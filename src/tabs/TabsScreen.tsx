@@ -240,7 +240,7 @@ const styles = ThemedStyles.create({
 
 const notificationOptions = {
   tabBarTestID: 'Notifications tab button',
-  lazy: false,
+  lazy: true,
 };
 const moreOptions = { tabBarTestID: 'Tabs:More' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
