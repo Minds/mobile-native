@@ -45,7 +45,11 @@ import appInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
-import { CODE_PUSH_KEY } from '~/config/Config';
+import {
+  CODE_PUSH_PROD_KEY,
+  CODE_PUSH_STAGING_KEY,
+  IS_REVIEW,
+} from '~/config/Config';
 import 'react-native-image-keyboard';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
@@ -85,17 +89,16 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
-    // Check for codepush update and restart app immediately if necessary
-    codePush.sync(
-      CODE_PUSH_KEY
-        ? {
-            installMode: codePush.InstallMode.ON_NEXT_RESTART, // install updates on app restart
-            deploymentKey: CODE_PUSH_KEY,
-          }
-        : {
-            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE, // install mandatory updates immediately
-          },
-    );
+    codePush.getUpdateMetadata(metadata => {
+      if (metadata) {
+        codePush.sync();
+      } else {
+        // if no codepush was applied, apply the default codepush deployment based on environment
+        codePush.sync({
+          deploymentKey: IS_REVIEW ? CODE_PUSH_STAGING_KEY : CODE_PUSH_PROD_KEY,
+        });
+      }
+    });
   }
 
   /**
