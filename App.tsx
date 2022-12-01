@@ -94,7 +94,7 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
-    codePush.getUpdateMetadata(metadata => {
+    codePush.getUpdateMetadata().then(metadata => {
       if (metadata) {
         codePush.sync();
       } else {
