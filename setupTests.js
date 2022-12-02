@@ -41,6 +41,10 @@ jest.mock('react-native-localize');
 // );
 // jest.mock('@snowplow/react-native-tracker');
 // jest.mock('mobx-react', () => require('mobx-react/custom'));
+jest.mock('@react-native-community/netinfo', () => ({
+  configure: jest.fn(),
+  addEventListener: jest.fn(),
+}));
 
 jest.mock('./AppStores');
 jest.mock('./AppMessageProvider');

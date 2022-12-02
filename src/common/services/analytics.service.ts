@@ -97,12 +97,10 @@ export class AnalyticsService {
     }
 
     this.tracker.setSubjectData({
-      screenWidth: screen.width,
-      screenHeight: screen.height,
+      screenResolution: [screen.width, screen.height],
       language: i18nService.locale,
       useragent,
-      viewportWidth: window.width,
-      viewportHeight: window.height,
+      screenViewport: [window.width, window.height],
     });
   }
 

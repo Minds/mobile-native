@@ -78,7 +78,9 @@ export class AppInitManager {
     }
 
     // clear cosine cache of blurhash
-    Blurhash.clearCosineCache();
+    if (Platform.OS === 'android') {
+      Blurhash.clearCosineCache();
+    }
   }
 
   updateMindsConfigAndInitGrowthbook() {
