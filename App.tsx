@@ -95,13 +95,14 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
     codePush.getUpdateMetadata().then(metadata => {
-      if (metadata) {
-        codePush.sync();
-      } else {
-        // if no codepush was applied, apply the default codepush deployment based on environment
+      // using the deploymentKey from the active update makes sure
+      // switching environments works
+      if (metadata?.deploymentKey) {
         codePush.sync({
-          deploymentKey: IS_REVIEW ? CODE_PUSH_STAGING_KEY : CODE_PUSH_PROD_KEY,
+          deploymentKey: metadata.deploymentKey,
         });
+      } else {
+        codePush.sync();
       }
     });
   }
