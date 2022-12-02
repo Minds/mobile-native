@@ -50,11 +50,6 @@ import appInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
-import {
-  CODE_PUSH_PROD_KEY,
-  CODE_PUSH_STAGING_KEY,
-  IS_REVIEW,
-} from '~/config/Config';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
