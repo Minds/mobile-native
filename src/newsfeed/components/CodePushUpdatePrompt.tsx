@@ -1,7 +1,8 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import codePush from 'react-native-code-push';
-import { B2, Button, Icon, Row } from '../../common/ui';
+import BaseNotice from '../../common/components/in-feed-notices/notices/BaseNotice';
+import i18nService from '../../common/services/i18n.service';
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
@@ -12,18 +13,25 @@ export default function CodePushUpdatePrompt() {
 
   useFocusEffect(
     useCallback(() => {
-      codePush
-        .sync({
-          installMode: codePush.InstallMode.ON_NEXT_RESTART,
-          mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
-        })
-        .then(() => {
-          codePush.getUpdateMetadata().then(data => {
-            if (data?.isPending) {
-              setUpdateAvailable(true);
-            }
+      codePush.getUpdateMetadata().then(data => {
+        if (!data?.deploymentKey) return;
+
+        codePush
+          .sync({
+            installMode: codePush.InstallMode.ON_NEXT_RESTART,
+            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
+            deploymentKey: data.deploymentKey,
+          })
+          .then(() => {
+            codePush
+              .getUpdateMetadata(codePush.UpdateState.PENDING)
+              .then(data => {
+                if (data?.isPending) {
+                  setUpdateAvailable(true);
+                }
+              });
           });
-        });
+      });
     }, []),
   );
 
@@ -32,12 +40,12 @@ export default function CodePushUpdatePrompt() {
   }
 
   return (
-    <Row>
-      <Icon name="add-circle" />
-      <B2>New update available</B2>
-      <Button type="action" mode="solid" onPress={() => codePush.restartApp()}>
-        Restart
-      </Button>
-    </Row>
+    <BaseNotice
+      title={i18nService.t('codePush.prompt.title')}
+      description={i18nService.t('codePush.prompt.description')}
+      btnText={i18nService.t('codePush.prompt.action')}
+      iconName="warning"
+      onPress={() => codePush.restartApp()}
+    />
   );
 }
