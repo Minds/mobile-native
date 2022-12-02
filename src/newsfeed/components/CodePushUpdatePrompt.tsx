@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import codePush from 'react-native-code-push';
 import BaseNotice from '../../common/components/in-feed-notices/notices/BaseNotice';
 import i18nService from '../../common/services/i18n.service';
@@ -16,29 +16,23 @@ export default function CodePushUpdatePrompt() {
       codePush.getUpdateMetadata().then(data => {
         if (!data?.deploymentKey) return;
 
-        if (data.isPending) {
-          setUpdateAvailable(true);
-          return;
-        }
-
-        codePush
-          .sync({
-            installMode: codePush.InstallMode.ON_NEXT_RESTART,
-            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
-            deploymentKey: data.deploymentKey,
-          })
-          .then(() => {
-            codePush
-              .getUpdateMetadata(codePush.UpdateState.PENDING)
-              .then(data => {
-                if (data?.isPending) {
-                  setUpdateAvailable(true);
-                }
-              });
-          });
+        codePush.sync({
+          installMode: codePush.InstallMode.ON_NEXT_RESTART,
+          mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
+          deploymentKey: data.deploymentKey,
+        });
       });
     }, []),
   );
+
+  useEffect(() => {
+    codePush.getUpdateMetadata(codePush.UpdateState.PENDING).then(data => {
+      if (data?.isPending) {
+        setUpdateAvailable(true);
+        return;
+      }
+    });
+  }, []);
 
   if (!updateAvailable) {
     return null;

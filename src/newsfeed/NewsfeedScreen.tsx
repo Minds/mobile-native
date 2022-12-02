@@ -119,10 +119,10 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     // common prepend components
     const prepend = new InjectItem(0, 'prepend', () => (
       <View>
-        <CodePushUpdatePrompt />
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar />
+        <CodePushUpdatePrompt />
         <TopInFeedNotice />
         <IfFeatureEnabled feature="mob-4472-in-app-verification">
           <InAppVerificationPrompt />
