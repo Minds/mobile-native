@@ -11,6 +11,9 @@ import i18nService from '../../common/services/i18n.service';
 export default function CodePushUpdatePrompt() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
+  /**
+   * Syncs codepush on newsfeed screen focus
+   */
   useFocusEffect(
     useCallback(() => {
       codePush.getUpdateMetadata().then(data => {
@@ -25,6 +28,10 @@ export default function CodePushUpdatePrompt() {
     }, []),
   );
 
+  /**
+   * only check whether we have an update or not when the component is rendered
+   * for the first time
+   */
   useEffect(() => {
     codePush.getUpdateMetadata(codePush.UpdateState.PENDING).then(data => {
       if (data?.isPending) {
