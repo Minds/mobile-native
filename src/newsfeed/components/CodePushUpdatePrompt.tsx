@@ -16,6 +16,11 @@ export default function CodePushUpdatePrompt() {
       codePush.getUpdateMetadata().then(data => {
         if (!data?.deploymentKey) return;
 
+        if (data.isPending) {
+          setUpdateAvailable(true);
+          return;
+        }
+
         codePush
           .sync({
             installMode: codePush.InstallMode.ON_NEXT_RESTART,
