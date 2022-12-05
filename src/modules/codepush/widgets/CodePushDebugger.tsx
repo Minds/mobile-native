@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import codePush, { LocalPackage, RemotePackage } from 'react-native-code-push';
+import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
 import { B2, Button, Column, H3 } from '~/common/ui';
 import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
 import { Version } from '~/config/Version';
 import ThemedStyles from '~/styles/ThemedStyles';
-import MenuItemSelect from '../../common/components/menus/MenuItemSelect';
+import { codePush } from '../';
+import MenuItemSelect from '../../../common/components/menus/MenuItemSelect';
 
 const CodePushDebugger = () => {
   const {
