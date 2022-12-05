@@ -2,6 +2,19 @@
 
 Minds Mobile
 
+## 4.30.1 - 2022-12-05
+
+### Changed
+
+- Prefetch notifications and enable the lazy rendering of the screen
+- Implement react-query and a infinite feed hook
+- Add cash support for boosts
+- Improve supermind error messages
+- Add date and rejection reason to boost console
+- Code-push in dev-tools
+- Fix re-login
+- Fix supermind cancel button getting truncated
+
 ## 4.30.0 - 2022-11-16
 
 ### Changed
