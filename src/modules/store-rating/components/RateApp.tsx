@@ -47,7 +47,7 @@ export default function RateApp({
 
 export const rateApp = (
   props?: Omit<RateAppProps, 'onConfirm' | 'onCancel'>,
-): Promise<boolean> => {
+): Promise<boolean | null> => {
   return new Promise(resolve =>
     pushBottomSheet({
       component: (bottomSheetRef, handleContentLayout) => (
@@ -64,7 +64,7 @@ export const rateApp = (
           }}
         />
       ),
-      onClose: () => resolve(false),
+      onClose: () => resolve(null),
     }),
   );
 };

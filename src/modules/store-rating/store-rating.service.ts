@@ -54,13 +54,19 @@ class StoreRatingService {
   }
 
   async prompt() {
-    if (await rateApp()) {
-      this.redirectToStore();
-    } else {
-      this.openFeedbackForm();
-    }
+    const rated = await rateApp();
     this.lastPromptedAt = Date.now();
     storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+
+    if (rated === null) {
+      return null;
+    }
+
+    if (rated) {
+      this.redirectToStore();
+    } else if (rated === false) {
+      this.openFeedbackForm();
+    }
   }
 
   async promptNatively() {
