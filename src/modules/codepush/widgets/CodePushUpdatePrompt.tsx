@@ -1,8 +1,8 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { codePush } from '../';
-import BaseNotice from '../../../common/components/in-feed-notices/notices/BaseNotice';
-import i18nService from '../../../common/services/i18n.service';
+import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
+import i18nService from '~/common/services/i18n.service';
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
