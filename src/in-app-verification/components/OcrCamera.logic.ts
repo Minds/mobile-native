@@ -2,26 +2,47 @@ import { useLocalStore } from 'mobx-react';
 import React from 'react';
 import { LayoutRectangle } from 'react-native';
 import { runOnJS } from 'react-native-reanimated';
+import { Accelerometer, Gyroscope, ThreeAxisMeasurement } from 'expo-sensors';
+import * as Location from 'expo-location';
+
 import {
   Camera,
   CameraDeviceFormat,
+  PhotoFile,
   useCameraDevices,
   useFrameProcessor,
+  VideoFile,
 } from 'react-native-vision-camera';
 import { OCRFrame, scanOCR } from 'vision-camera-ocr';
 
 import logService from '~/common/services/log.service';
 import { IS_IOS } from '~/config/Config';
+import { showNotification } from 'AppMessages';
+import NavigationService from '~/navigation/NavigationService';
+import { api } from '../api';
 
 export const TARGET_WIDTH_RATIO = 0.65;
 const TIMEOUT = 6000;
+const SAMPLING_INTERVAL = 200;
 
-type StatusType = 'valid' | 'success' | 'error' | 'timeout' | 'running';
+type StatusType =
+  | 'uploading'
+  | 'success'
+  | 'error'
+  | 'timeout'
+  | 'running'
+  | 'permissionError';
 
 /**
  * Local store
  */
-export const createOcrStore = ({ code }: { code: string }) => ({
+export const createOcrStore = ({
+  code,
+  deviceId,
+}: {
+  code: string;
+  deviceId: string;
+}) => ({
   hasPermission: false,
   pixelRatioX: 0,
   pixelRatioY: 0,
@@ -32,66 +53,169 @@ export const createOcrStore = ({ code }: { code: string }) => ({
   status: 'running' as StatusType,
   camera: <Camera | null>null,
   timeout: <null | number>null,
+  accelerometer: <Array<ThreeAxisMeasurement>>[],
+  gyroscope: <Array<ThreeAxisMeasurement>>[],
+  location: <string | null>null,
   /**
    * execute action based on the status
    */
   action() {
     switch (this.status) {
       case 'running':
-        console.log('Resend code here');
+        this.resendCode();
         break;
       case 'error':
       case 'timeout':
         this.startRecording();
         this.status = 'running';
         break;
-      case 'valid':
-        console.log('continue');
+      case 'success':
+        console.log('User Validated!');
+        break;
+      case 'permissionError':
+        this.requestPermission();
+        break;
     }
   },
+  setLocation(lat: number, long: number) {
+    this.location = `${lat},${long}`;
+  },
   async requestPermission() {
-    const status = await Camera.requestCameraPermission();
-    this.hasPermission = status === 'authorized';
+    const cameraStatus = await Camera.requestCameraPermission();
+    let {
+      status: geoStatus,
+    } = await Location.requestForegroundPermissionsAsync();
+
+    this.hasPermission =
+      cameraStatus === 'authorized' && geoStatus === 'granted';
+
+    if (!this.hasPermission) {
+      this.status = 'permissionError';
+    }
+
     return this.hasPermission;
   },
-  clearTimeout() {
+  clear() {
     if (this.timeout !== null) {
       clearTimeout(this.timeout);
     }
+    this.untrackSensors();
   },
   setCamera(camera: Camera | null) {
     this.camera = camera;
   },
+  trackSensors() {
+    this.accelerometer = [];
+    this.gyroscope = [];
+    Accelerometer.setUpdateInterval(SAMPLING_INTERVAL);
+    Gyroscope.setUpdateInterval(SAMPLING_INTERVAL);
+    Accelerometer.addListener(sensorData => {
+      this.accelerometer.push(sensorData);
+    });
+    Gyroscope.addListener(sensorData => {
+      this.gyroscope.push(sensorData);
+    });
+  },
+  untrackSensors() {
+    Accelerometer.removeAllListeners();
+    Gyroscope.removeAllListeners();
+  },
+  async getLocation() {
+    if (this.hasPermission) {
+      const location = await Location.getCurrentPositionAsync({});
+      if (location.mocked) {
+        showNotification('Mocked location is not allowed for the verification');
+        NavigationService.goBack();
+        return;
+      }
+      this.setLocation(location.coords.latitude, location.coords.longitude);
+    }
+  },
+  async submit(camImage: PhotoFile, camVideo: VideoFile) {
+    this.status = 'uploading';
+
+    const image = {
+      uri: 'file://' + camImage.path,
+      path: 'file://' + camImage.path,
+      name: 'image.jpg',
+      type: 'image/jpeg',
+    };
+
+    const video = {
+      uri: camVideo.path,
+      path: camVideo.path,
+      name: 'video.mp4',
+      type: 'video/mp4',
+    };
+
+    if (this.location) {
+      return await api.submitVerification(
+        deviceId,
+        image,
+        video,
+        JSON.stringify({
+          gyro: this.gyroscope,
+          acel: this.accelerometer,
+        }),
+        this.location,
+      );
+    } else {
+      showNotification('We failed to get your location', 'warning');
+    }
+  },
+  resendCode() {
+    NavigationService.navigate({
+      name: 'InAppVerificationCodeRequest',
+      params: { requestAgain: true },
+    });
+  },
   startRecording() {
-    this.status = 'running';
-    this.clearTimeout();
+    this.clear();
+    this.trackSensors();
+
+    // we delay the OCR to give time to record at least 1.5 seconds
     this.timeout = setTimeout(() => {
-      this.status = 'timeout';
-      this.camera?.stopRecording();
-    }, TIMEOUT);
+      this.status = 'running';
+      this.timeout = setTimeout(
+        () => {
+          this.status = 'timeout';
+          this.camera?.stopRecording();
+        },
+
+        TIMEOUT,
+      );
+    }, 1500);
+
     this.camera?.startRecording({
       onRecordingError: error => {
         this.status = 'error';
-        this.clearTimeout();
+        this.clear();
         console.log('Camera Error', error);
       },
       onRecordingFinished: async video => {
-        this.clearTimeout();
-        if (this.status === 'running') {
+        this.clear();
+        if (this.status === 'running' && this.camera) {
           try {
-            const image = await (IS_IOS
-              ? this.camera?.takePhoto({ flash: 'off' })
+            const image: PhotoFile = await (IS_IOS
+              ? this.camera.takePhoto({ flash: 'off' })
               : // The camera is slower on android so we use a snapshot
-                this.camera?.takeSnapshot({
+                this.camera.takeSnapshot({
                   quality: 85,
                   skipMetadata: true,
                   flash: 'off',
                 }));
-            console.log('Validated', code);
-            console.log('Video', video);
-            console.log('Image', image);
-            this.status = 'valid';
+
+            const response = await this.submit(image, video);
+
+            if (response.status === 1) {
+              this.status = 'success';
+            } else {
+              this.status = 'error';
+            }
+
+            console.log('VERIFICATION', response);
           } catch (error) {
+            console.log(error);
             logService.exception(error);
             this.status = 'error';
           }
@@ -126,17 +250,32 @@ export const createOcrStore = ({ code }: { code: string }) => ({
         // allow an error margin of a 10% of the width of the target area
         const threshold = this.targetWidth / 10;
 
+        const text = block.text.replace(' ', '');
+
         if (
           Math.abs(block.frame.x - this.targetCenterX) < threshold &&
           Math.abs(block.frame.y - this.targetCenterY) < threshold &&
           Math.abs(block.frame.width - this.targetWidth) < threshold * 2 &&
-          code === block.text
+          this.similar(text)
         ) {
           // if code is valid stop the video recording
           this.camera?.stopRecording();
           return true;
         }
       });
+    }
+    return false;
+  },
+  similar(text: string): boolean {
+    if (text.length === code.length) {
+      let eq = 0;
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === code[i]) {
+          eq++;
+        }
+      }
+      // allow two different characters in the code
+      return eq >= code.length - 2;
     }
     return false;
   },
@@ -173,8 +312,8 @@ export const useCamera = () => {
   return { format, camera, device };
 };
 
-export function useOcrCamera(code: string) {
-  const store: OcrStoreType = useLocalStore(createOcrStore, { code });
+export function useOcrCamera(code: string, deviceId: string) {
+  const store: OcrStoreType = useLocalStore(createOcrStore, { code, deviceId });
   const { camera, device, format } = useCamera();
 
   const frameProcessor = useFrameProcessor(
@@ -190,10 +329,13 @@ export function useOcrCamera(code: string) {
 
   React.useEffect(() => {
     store.requestPermission();
+    return () => store.clear();
   }, [store]);
 
   React.useEffect(() => {
     if (store.hasPermission && camera.current) {
+      // get geolocation
+      store.getLocation();
       // wait for the camera to be ready
       const timer = setTimeout(() => {
         store.setCamera(camera.current);

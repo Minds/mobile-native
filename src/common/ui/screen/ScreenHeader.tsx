@@ -40,7 +40,7 @@ export const ScreenHeader = ({
     <View style={border ? styles.border : shadow ? styles.shadow : null}>
       {Boolean(title) && centerTitle && (
         <View style={styles.titleCenteredContainer}>
-          <Typography type={titleType} font="bold" onPress={onTitlePress}>
+          <Typography type={titleType} font="bold" onPress={onTitlePress} flat>
             {title}
           </Typography>
         </View>

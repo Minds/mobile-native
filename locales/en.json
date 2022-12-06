@@ -1785,12 +1785,22 @@
         "detail": "An error occurred, please try again.",
         "action": "Try Again"
       },
+      "permissionError": {
+        "title": "Permissions",
+        "detail": "Please grant camera & geo-location permissions to proceed with the verification",
+        "action": "Try Again"
+      },
+      "codeReqError": {
+        "title": "Sorry!",
+        "detail": "The code request has failed.",
+        "action": "Please try again"
+      },
       "success": {
         "title": "Success",
         "detail": "Congrats you successfully aligned and verified your code.",
         "action": "Continue"
       },
-      "valid": {
+      "uploading": {
         "title": "Processing",
         "detail": "Please wait...",
         "action": ""

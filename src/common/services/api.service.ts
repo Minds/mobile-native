@@ -628,7 +628,7 @@ export class ApiService {
   }
 
   /**
-   * Upload file
+   * Upload files
    * @param {string} url
    * @param {object} file
    * @param {object} data
@@ -636,15 +636,22 @@ export class ApiService {
    */
   upload(
     url: string,
-    file: any,
+    files: {
+      [key: string]: any;
+    },
     data: any | null = null,
-    progress: (event: Event) => any,
+    progress?: (event: Event) => any,
   ) {
     var formData = new FormData();
-    formData.append('file', file);
 
-    for (var key in data) {
-      formData.append(key, data[key]);
+    if (data) {
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    for (const key in files) {
+      formData.append(key, files[key]);
     }
 
     return new Cancelable((resolve, reject, onCancel) => {
@@ -680,6 +687,7 @@ export class ApiService {
           }
           resolve(response);
         } else {
+          console.log('Upload Error', xhr.status, xhr.responseText);
           reject(new UserError('Upload failed'));
         }
       };

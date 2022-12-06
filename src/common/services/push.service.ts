@@ -117,6 +117,13 @@ export class PushService {
   unregisterOnNotificationReceived(callback: (notification) => void) {
     this.push.unregisterOnNotificationReceived(callback);
   }
+
+  /**
+   * Get the device's push token if it is allowed
+   */
+  getToken() {
+    return this.push.token;
+  }
 }
 
 export default new PushService();

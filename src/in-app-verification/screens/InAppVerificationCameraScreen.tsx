@@ -9,7 +9,7 @@ type Props = InAppVerificationStackScreenProps<'InAppVerificationCamera'>;
 export default function InAppVerificationCameraScreen({ route }: Props) {
   return (
     <Screen safe>
-      <OcrCamera code={route.params.code} />
+      <OcrCamera code={route.params.code} deviceId={route.params.deviceId} />
     </Screen>
   );
 }

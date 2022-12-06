@@ -11716,6 +11716,10 @@ expo-linking@^3.2.3:
     invariant "^2.2.4"
     qs "^6.9.1"
     url-parse "^1.5.9"
+expo-location@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-15.0.1.tgz#b132b8b50ce4d2dd9257b7b66cec44beeba253a4"
+  integrity sha512-GOAP24m8fMahFcBT75H07f2+IQAOCOdNTzb8Ci/19NZ+Y/CY2lIvb55V8zu7Gn0+76FKPb7XC3ebQaq4ctn1QA==
 
 expo-modules-autolinking@0.10.3:
   version "0.10.3"

@@ -75,6 +75,7 @@
     "expo-image-manipulator": "^10.4.0",
     "expo-linear-gradient": "^11.4.0",
     "expo-linking": "^3.2.3",
+    "expo-location": "^15.0.1",
     "expo-sensors": "~11.4.0",
     "expo-store-review": "^5.3.0",
     "i18n-js": "^3.8.0",
