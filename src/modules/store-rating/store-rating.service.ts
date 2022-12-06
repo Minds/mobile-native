@@ -59,6 +59,8 @@ class StoreRatingService {
     } else {
       this.openFeedbackForm();
     }
+    this.lastPromptedAt = Date.now();
+    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
   }
 
   async promptNatively() {
