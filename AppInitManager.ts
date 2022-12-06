@@ -21,7 +21,7 @@ import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
-import storeRatingService from './src/services/store-rating.service';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * App initialization manager

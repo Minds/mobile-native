@@ -16,7 +16,7 @@ import {
   BottomSheetMenuItem,
 } from '../../../common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
-import storeRatingService from '../../../services/store-rating.service';
+import { storeRatingService } from 'modules/store-rating';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;

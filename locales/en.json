@@ -1821,5 +1821,8 @@
       "description": "Now you can earn tokens and rewards."
     }
   },
-  "failedTryAgain": "Sorry, failed to load. please try again"
+  "failedTryAgain": "Sorry, failed to load. please try again",
+  "storeRating": {
+    "prompt": "Are you enjoying Minds?"
+  }
 }

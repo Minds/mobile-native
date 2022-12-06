@@ -23,7 +23,7 @@ import type GroupModel from '../../groups/GroupModel';
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import { isNetworkError } from '../../common/services/api.service';
-import storeRatingService from '../../services/store-rating.service';
+import { storeRatingService } from 'modules/store-rating';
 
 const COMMENTS_PAGE_SIZE = 12;
 

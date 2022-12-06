@@ -1,8 +1,14 @@
-import moment from 'moment';
-import { InteractionManager } from 'react-native';
 import * as StoreReview from 'expo-store-review';
-import { storages } from '../common/services/storage/storages.service';
-import { USAGE_SCORES, RATING_APP_SCORE_THRESHOLD } from '../config/Config';
+import moment from 'moment';
+import { InteractionManager, Linking } from 'react-native';
+import openUrlService from '../../common/services/open-url.service';
+import { storages } from '../../common/services/storage/storages.service';
+import {
+  RATING_APP_SCORE_THRESHOLD,
+  STORE_LINK,
+  USAGE_SCORES,
+} from '../../config/Config';
+import { rateApp } from './components/RateApp';
 
 const SCORES_KEY = 'APP_SCORES';
 const LAST_PROMPTED_AT_KEY = 'STORE_RATING_LAST_PROMPTED_AT';
@@ -29,7 +35,7 @@ class StoreRatingService {
   get shouldPrompt() {
     if (
       this.lastPromptedAt &&
-      moment().isBefore(moment(this.lastPromptedAt).add({ days: 30 }))
+      moment().isBefore(moment(this.lastPromptedAt).add({ days: 120 }))
     ) {
       return false;
     }
@@ -37,7 +43,25 @@ class StoreRatingService {
     return this.points > RATING_APP_SCORE_THRESHOLD;
   }
 
+  async redirectToStore() {
+    Linking.openURL(STORE_LINK);
+  }
+
+  async openFeedbackForm() {
+    openUrlService.openLinkInInAppBrowser(
+      'https://mindsdotcom.typeform.com/app-feedback',
+    );
+  }
+
   async prompt() {
+    if (await rateApp()) {
+      this.redirectToStore();
+    } else {
+      this.openFeedbackForm();
+    }
+  }
+
+  async promptNatively() {
     if (!(await StoreReview.hasAction())) {
       return false;
     }

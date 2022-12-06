@@ -11,7 +11,7 @@ import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
 import MetadataService from './services/metadata.service';
-import storeRatingService from '../services/store-rating.service';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * Base model

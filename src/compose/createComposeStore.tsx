@@ -21,7 +21,7 @@ import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { confirm } from '../common/components/Confirm';
-import storeRatingService from '../services/store-rating.service';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * Display an error message to the user.
