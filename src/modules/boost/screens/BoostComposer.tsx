@@ -27,10 +27,18 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
   const textMapping = {
     cash: {
+      totalSpend: t('${{amount}} over {{duration}} days', {
+        amount: boostStore.amount,
+        duration: boostStore.duration,
+      }),
       minBudget: `$${boostStore.config.min.cash.toLocaleString()}`,
       maxBudget: `$${boostStore.config.max.cash.toLocaleString()}`,
     },
     offchain_tokens: {
+      totalSpend: t('{{amount}} tokens over {{duration}} days', {
+        amount: boostStore.amount,
+        duration: boostStore.duration,
+      }),
       minBudget: t('tokenWithCount', {
         count: boostStore.config.min.offchain_tokens,
       }),
@@ -39,6 +47,10 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       }),
     },
     onchain_tokens: {
+      totalSpend: t('{{amount}} tokens over {{duration}} days', {
+        amount: boostStore.amount,
+        duration: boostStore.duration,
+      }),
       minBudget: t('tokenWithCount', {
         count: boostStore.config.min.onchain_tokens,
       }),
@@ -83,15 +95,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         />
         <Column align="centerBoth" vertical="L">
           <H2 bottom="S" top="M">
-            {t(
-              boostStore.paymentType === 'cash'
-                ? 'usdTotalSpend'
-                : 'tokenTotalSpend',
-              {
-                amount: boostStore.total,
-                duration: boostStore.duration,
-              },
-            )}
+            {textMapping[boostStore.paymentType].totalSpend}
           </H2>
           <B1 bottom="L2" color="secondary">
             {t('Total Spend')}
