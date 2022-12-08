@@ -25,6 +25,29 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
 
+  const textMapping = {
+    cash: {
+      minBudget: `$${boostStore.config.min.cash.toLocaleString()}`,
+      maxBudget: `$${boostStore.config.max.cash.toLocaleString()}`,
+    },
+    offchain_tokens: {
+      minBudget: t('tokenWithCount', {
+        count: boostStore.config.min.offchain_tokens,
+      }),
+      maxBudget: t('tokenWithCount', {
+        count: boostStore.config.max.offchain_tokens,
+      }),
+    },
+    onchain_tokens: {
+      minBudget: t('tokenWithCount', {
+        count: boostStore.config.min.onchain_tokens,
+      }),
+      maxBudget: t('tokenWithCount', {
+        count: boostStore.config.max.onchain_tokens,
+      }),
+    },
+  };
+
   const onNext = () => {
     navigation.push('BoostReview');
   };
@@ -52,7 +75,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             {
               id: 'offchain_tokens',
               title: t('Token'),
-              testID: 'BoostComposerScreen:tab:cash',
+              testID: 'BoostComposerScreen:tab:token',
             },
           ]}
           onChange={id => boostStore.setPaymentType(id as IPaymentType)}
@@ -86,12 +109,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             currentValue={boostStore.amount}
             maximumRangeValue={boostStore.config.max[boostStore.paymentType]}
             minimumRangeValue={boostStore.config.min[boostStore.paymentType]}
-            minimumStepLabel={String(
-              boostStore.config.min[boostStore.paymentType],
-            )}
-            maximumStepLabel={Number(
-              boostStore.config.max[boostStore.paymentType],
-            ).toLocaleString()}
+            minimumStepLabel={textMapping[boostStore.paymentType].minBudget}
+            maximumStepLabel={textMapping[boostStore.paymentType].maxBudget}
             onAnswer={boostStore.setAmount}
           />
         </Column>
@@ -106,8 +125,12 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             currentValue={boostStore.duration}
             maximumRangeValue={boostStore.config.duration.max}
             minimumRangeValue={boostStore.config.duration.min}
-            maximumStepLabel={`${boostStore.config.duration.max} days`} // TODO: localize
-            minimumStepLabel={`${boostStore.config.duration.min} day`} // TODO: localize
+            maximumStepLabel={t('dayWithCount', {
+              count: boostStore.config.duration.max,
+            })}
+            minimumStepLabel={t('dayWithCount', {
+              count: boostStore.config.duration.min,
+            })}
             onAnswer={boostStore.setDuration}
           />
         </Column>
