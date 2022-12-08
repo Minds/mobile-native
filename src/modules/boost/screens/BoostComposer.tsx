@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import { confirm } from '../../../common/components/Confirm';
 import FitScrollView from '../../../common/components/FitScrollView';
 import Slider from '../../../common/components/Slider';
 import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
@@ -25,6 +26,10 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
 
+  const swapConfirmationTitle = t('Are you sure you want to use tokens?');
+  const swapConfirmationDescription = t(
+    'You will receive more views when using cash.',
+  );
   const textMapping = {
     cash: {
       totalSpend: t('${{amount}} over {{duration}} days', {
@@ -60,6 +65,21 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   };
 
+  const handlePaymentTypeChange = async id => {
+    if (id !== 'cash' && !boostStore.confirmedToUseToken) {
+      if (
+        !(await confirm({
+          title: swapConfirmationTitle,
+          description: swapConfirmationDescription,
+        }))
+      ) {
+        return;
+      }
+      boostStore.setConfirmedToUseToken(true);
+    }
+    boostStore.setPaymentType(id as IPaymentType);
+  };
+
   const onNext = () => {
     navigation.push('BoostReview');
   };
@@ -90,7 +110,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
               testID: 'BoostComposerScreen:tab:token',
             },
           ]}
-          onChange={id => boostStore.setPaymentType(id as IPaymentType)}
+          onChange={handlePaymentTypeChange}
           current={boostStore.paymentType}
         />
         <Column align="centerBoth" vertical="L">
