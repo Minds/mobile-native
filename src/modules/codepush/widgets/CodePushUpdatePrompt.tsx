@@ -1,8 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { codePush } from '../';
+import React, { useEffect, useState } from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
 import i18nService from '~/common/services/i18n.service';
+import { codePush } from '../';
+import useDebouncedCallback, {
+  useThrottledCallback,
+} from '../../../common/hooks/useDebouncedCallback';
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
@@ -15,17 +18,21 @@ export default function CodePushUpdatePrompt() {
    * Syncs codepush on newsfeed screen focus
    */
   useFocusEffect(
-    useCallback(() => {
-      codePush.getUpdateMetadata().then(data => {
-        if (!data?.deploymentKey) return;
+    useThrottledCallback(
+      () => {
+        codePush.getUpdateMetadata().then(data => {
+          if (!data?.deploymentKey) return;
 
-        codePush.sync({
-          installMode: codePush.InstallMode.ON_NEXT_RESTART,
-          mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
-          deploymentKey: data.deploymentKey,
+          codePush.sync({
+            installMode: codePush.InstallMode.ON_NEXT_RESTART,
+            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
+            deploymentKey: data.deploymentKey,
+          });
         });
-      });
-    }, []),
+      },
+      5 * 60 * 1000,
+      [],
+    ),
   );
 
   /**
