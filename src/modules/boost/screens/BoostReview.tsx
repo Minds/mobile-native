@@ -59,7 +59,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   return (
     <Screen safe>
-      <ScreenHeader title={title} back />
+      <ScreenHeader title={title} back shadow />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
@@ -101,12 +101,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         </Column>
         <HairlineRow />
 
-        <B2
-          color="secondary"
-          horizontal="L"
-          vertical="L"
-          bottom="XXXL2"
-          align="justify">
+        <B2 color="secondary" horizontal="L" vertical="L" align="justify">
           {t('boostDescription')}
         </B2>
 

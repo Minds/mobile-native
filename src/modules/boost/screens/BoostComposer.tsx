@@ -14,6 +14,7 @@ import {
   Screen,
   ScreenHeader,
 } from '../../../common/ui';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { useTranslation } from '../locales';
 import { BoostStackScreenProps } from '../navigator';
@@ -37,9 +38,11 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             : t('boostPost')
         }
         back
+        shadow
       />
       <FitScrollView>
         <TopbarTabbar
+          containerStyle={ThemedStyles.style.marginTop}
           tabs={[
             {
               id: 'cash',
@@ -56,7 +59,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           current={boostStore.paymentType}
         />
         <Column align="centerBoth" vertical="L">
-          <H2 bottom="S">
+          <H2 bottom="S" top="M">
             {t(
               boostStore.paymentType === 'cash'
                 ? 'usdTotalSpend'
@@ -75,7 +78,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           <B1 color="secondary">{t('Estimated reach')}</B1>
         </Column>
 
-        <Column top="L" horizontal="XL">
+        <Column top="L" horizontal="L2">
           <H3>{t('Daily budget')}</H3>
           <Slider
             stepSize={1}
@@ -95,7 +98,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
         <HairlineRow />
 
-        <Column top="L2" horizontal="XL">
+        <Column top="L" horizontal="L2">
           <H3>{t('Duration')}</H3>
           <Slider
             stepSize={1}
@@ -115,7 +118,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           color="secondary"
           horizontal="L"
           vertical="L"
-          bottom="XL2"
+          bottom="XL"
           align="justify">
           {t('estimatedReachDescription')}
         </B2>

@@ -41,6 +41,7 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
             : t('boostPost')
         }
         back
+        shadow
       />
 
       <Column align="centerBoth" vertical="XL2">
@@ -52,14 +53,14 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
 
       <HairlineRow />
 
-      <Column vertical="L">
+      <Column vertical="L" horizontal="M" top="L2">
         <H3 horizontal="L" bottom="S">
           {t('Audience')}
         </H3>
         <MenuItemOption
           title={t('Safe')}
           subtitle={t(
-            'These Boosts are suitable if your kids or grandma saw them.',
+            'Content that is suitable if your kids or grandma saw it.',
           )}
           borderless
           mode="radio"
@@ -67,8 +68,10 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
           onPress={() => boostStore.setAudience('safe')}
         />
         <MenuItemOption
-          title={t('Mature')}
-          subtitle={t('These Boosts are suitable for more mature audiences.')}
+          title={t('Controversial')}
+          subtitle={t(
+            "Content that's political in nature or likely to be upsetting/controversial to a family-friendly audience.          ",
+          )}
           borderless
           mode="radio"
           selected={boostStore.audience === 'mature'}
