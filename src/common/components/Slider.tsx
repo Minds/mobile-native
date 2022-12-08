@@ -56,6 +56,4 @@ const styles = ThemedStyles.create({
   text: [{ fontSize: 13 }, 'fontMedium', 'colorSecondaryText'],
 });
 
-const trackStyle = { height: 1 };
-
 export default Slider;
