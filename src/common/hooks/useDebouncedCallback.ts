@@ -11,14 +11,10 @@ export default function useDebouncedCallback(
 }
 
 export function useThrottledCallback(fn: any, time: number = 300, deps: any[]) {
-  const throttled = useRef(
+  return useCallback(
     throttle(fn, time, {
       trailing: false,
     }),
-  ).current;
-  return useCallback(
-    (...args) => throttled(...args),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [time, ...deps],
   );
 }
