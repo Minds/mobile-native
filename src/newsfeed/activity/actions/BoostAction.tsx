@@ -35,7 +35,7 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Open boost screen
    */
   openBoost = () => {
-    if (hasVariation('mob-4638-boost-v2')) {
+    if (hasVariation('mob-4638-boost-v3')) {
       this.props.navigation.push('BoostScreenV2', {
         entity: this.props.entity,
       });

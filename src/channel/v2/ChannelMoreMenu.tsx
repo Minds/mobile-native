@@ -75,7 +75,7 @@ const getOptions = (
       iconType: 'material-community',
       title: i18n.t('boosts.boostChannel'),
       onPress: () => {
-        if (hasVariation('mob-4638-boost-v2')) {
+        if (hasVariation('mob-4638-boost-v3')) {
           navigation.navigate('BoostScreenV2', {
             entity: channel,
             boostType: 'channel',
