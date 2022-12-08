@@ -232,7 +232,6 @@ const AuthStack = function () {
       <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
       <TransparentLayer />
       <AuthStackNav.Navigator
-        headerMode="none"
         // @ts-ignore
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen

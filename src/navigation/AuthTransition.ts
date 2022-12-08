@@ -27,6 +27,7 @@ const AuthTransition = {
     open: animSpec,
     close: animSpec,
   },
+  headerShown: false,
   cardStyleInterpolator: function ({
     current,
     next,

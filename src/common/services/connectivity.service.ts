@@ -2,16 +2,11 @@
 import NetInfo from '@react-native-community/netinfo';
 import { observable, action, computed } from 'mobx';
 
-import {
-  CONECTIVITY_CHECK_INTERVAL,
-  CONECTIVITY_CHECK_URI,
-} from '../../config/Config';
-
 /**
  * Connectivity service
  */
 class ConnectivityService {
-  @observable isInternetReachable = true;
+  @observable isInternetReachable = false;
 
   @observable connectionInfo = {
     type: 'unknown',
@@ -29,24 +24,15 @@ class ConnectivityService {
    * Constructor
    */
   constructor() {
-    // add listener
+    NetInfo.configure({
+      reachabilityUrl: 'https://1.1.1.1/cdn-cgi/trace',
+      reachabilityTest: async response => response.status === 200,
+      reachabilityLongTimeout: 120 * 1000, // 120s
+      reachabilityShortTimeout: 60 * 1000, // 60s
+      reachabilityRequestTimeout: 300 * 1000, // 300s
+    });
     NetInfo.addEventListener(this.handleConnectivityChange);
   }
-
-  /**
-   * Init
-   */
-  @action
-  init = async () => {
-    // get initial connection (call twice to fix a bug)
-    await NetInfo.getConnectionInfo();
-    const connectionInfo = await NetInfo.getConnectionInfo();
-
-    this.connectionInfo = connectionInfo;
-    console.log('Initial connection, type: ' + connectionInfo.type);
-
-    return connectionInfo;
-  };
 
   /**
    * Connectivity changes handler
@@ -54,66 +40,15 @@ class ConnectivityService {
   @action
   handleConnectivityChange = connectionInfo => {
     this.connectionInfo = connectionInfo;
-
-    // TODO: if needed, we can add an inteceptor for axios timeout error.
-    // if (this.connectionInfo.type != 'none') {
-    //   this.startConnectivityCheck();
-    // } else {
-    //   this.stopConnectivityCheck();
-    // }
-
-    console.log('Connection change, type: ' + connectionInfo.type);
+    if (__DEV__) {
+      console.log('Connection change, type: ' + connectionInfo.type);
+    }
+    this.setisInternetReachable(connectionInfo.isConnected);
   };
 
   @action
   setisInternetReachable(value) {
     this.isInternetReachable = value;
-  }
-
-  /**
-   * Start connectivity check
-   */
-  async startConnectivityCheck() {
-    // clear previous interval
-    this.stopConnectivityCheck();
-    // create interval
-    this.checkInterval = setInterval(async () => {
-      this.setisInternetReachable(await this.checkInternet());
-    }, CONECTIVITY_CHECK_INTERVAL);
-    // check immediately
-    this.setisInternetReachable(await this.checkInternet());
-  }
-
-  /**
-   * Stop connectivity check
-   */
-  stopConnectivityCheck() {
-    if (this.checkInterval) clearInterval(this.checkInterval);
-  }
-
-  /**
-   * Check connectivity fetching only headers
-   */
-  checkInternet() {
-    return new Promise(resolve => {
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('HEAD', CONECTIVITY_CHECK_URI, true);
-        xhr.timeout = 3000;
-        xhr.onload = function () {
-          resolve(true);
-        };
-        xhr.onerror = function () {
-          resolve(false);
-        };
-        xhr.ontimeout = function () {
-          resolve(false);
-        };
-        xhr.send(null);
-      } catch (e) {
-        resolve(false);
-      }
-    });
   }
 }
 
