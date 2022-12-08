@@ -233,7 +233,7 @@ const AuthStack = function () {
       <TransparentLayer />
       <AuthStackNav.Navigator
         // @ts-ignore
-        screenOptions={{ ...AuthTransition, headerShown: false }}>
+        screenOptions={AuthTransition}>
         <AuthStackNav.Screen
           name="Welcome"
           getComponent={() => require('~/auth/WelcomeScreen').default}
