@@ -31,17 +31,15 @@ const Slider = ({ onAnswer, ...props }: PropsType) => {
             ? props.currentValue
             : props.defaultValue
         }
-        // onSlidingComplete={onAnswer}
         onValueChange={onAnswer}
-        thumbTintColor={ThemedStyles.getColor('Link')}
+        thumbTintColor={ThemedStyles.getColor('PrimaryText')}
         minimumValue={props.minimumRangeValue || 0}
         allowTouchTrack={false}
         step={props.stepSize}
-        trackStyle={trackStyle}
         maximumValue={props.maximumRangeValue || 100}
         thumbTouchSize={THUMB_TOUCH_SIZE}
         maximumTrackTintColor={ThemedStyles.getColor('PrimaryBorder')}
-        minimumTrackTintColor={ThemedStyles.getColor('PrimaryBorder')}
+        minimumTrackTintColor={ThemedStyles.getColor('Link')}
       />
       <View style={styles.textContainer} pointerEvents="none">
         <MText style={styles.text}>{props.minimumStepLabel}</MText>

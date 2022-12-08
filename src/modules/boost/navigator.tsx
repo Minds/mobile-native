@@ -6,6 +6,7 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
+import { useStores } from '../../common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
 
 export type BoostStackParamList = {
@@ -28,11 +29,17 @@ export type BoostStackNavigationProp<
 
 const { Navigator, Screen } = createStackNavigator<BoostStackParamList>();
 
-export default function BoostStack({ route }: { route: RouteProp<any> }) {
-  const { entity, boostType } = route.params || {};
+export default function BoostStack({
+  route,
+}: {
+  route: RouteProp<any>;
+  navigation: StackNavigationProp<any>;
+}) {
+  const wallet = useStores().wallet;
+  const { entity, boostType = 'post' } = route.params || {};
 
   return (
-    <BoostStoreProvider boostType={boostType} entity={entity}>
+    <BoostStoreProvider boostType={boostType} entity={entity} wallet={wallet}>
       <Navigator screenOptions={defaultScreenOptions}>
         <Screen
           name="BoostAudienceSelector"

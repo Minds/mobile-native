@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import { showNotification } from '../../../../AppMessages';
 import MenuItemOption from '../../../common/components/menus/MenuItemOption';
 import {
   B1,
@@ -20,6 +21,12 @@ type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'
 function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
+
+  if (!boostStore.config) {
+    showNotification('Boost config not found', 'danger');
+    navigation.goBack();
+    return null;
+  }
 
   const onNext = () => {
     navigation.push('BoostComposer');

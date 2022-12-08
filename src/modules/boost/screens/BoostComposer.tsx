@@ -1,5 +1,8 @@
+import { observer } from 'mobx-react';
 import React from 'react';
-import { BoostStackScreenProps } from '../navigator';
+import FitScrollView from '../../../common/components/FitScrollView';
+import Slider from '../../../common/components/Slider';
+import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
 import {
   B1,
   B2,
@@ -11,11 +14,9 @@ import {
   Screen,
   ScreenHeader,
 } from '../../../common/ui';
-import Slider from '../../../common/components/Slider';
-import FitScrollView from '../../../common/components/FitScrollView';
-import { useBoostStore } from '../boost.store';
-import { observer } from 'mobx-react-lite';
+import { IPaymentType, useBoostStore } from '../boost.store';
 import { useTranslation } from '../locales';
+import { BoostStackScreenProps } from '../navigator';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -38,6 +39,22 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         back
       />
       <FitScrollView>
+        <TopbarTabbar
+          tabs={[
+            {
+              id: 'cash',
+              title: t('Cash'),
+              testID: 'BoostComposerScreen:tab:cash',
+            },
+            {
+              id: 'offchain_tokens',
+              title: t('Token'),
+              testID: 'BoostComposerScreen:tab:cash',
+            },
+          ]}
+          onChange={id => boostStore.setPaymentType(id as IPaymentType)}
+          current={boostStore.paymentType}
+        />
         <Column align="centerBoth" vertical="L">
           <H2 bottom="S">
             {t(
@@ -54,7 +71,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             {t('Total Spend')}
           </B1>
 
-          <H2 bottom="S">400 - 2,000</H2>
+          <H2 bottom="S">{t('Unknown')}</H2>
           <B1 color="secondary">{t('Estimated reach')}</B1>
         </Column>
 
@@ -64,10 +81,14 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             stepSize={1}
             defaultValue={1}
             currentValue={boostStore.amount}
-            maximumRangeValue={5000}
-            minimumRangeValue={1}
-            minimumStepLabel={'2'}
-            maximumStepLabel={Number(5000).toLocaleString()}
+            maximumRangeValue={boostStore.config.max[boostStore.paymentType]}
+            minimumRangeValue={boostStore.config.min[boostStore.paymentType]}
+            minimumStepLabel={String(
+              boostStore.config.min[boostStore.paymentType],
+            )}
+            maximumStepLabel={Number(
+              boostStore.config.max[boostStore.paymentType],
+            ).toLocaleString()}
             onAnswer={boostStore.setAmount}
           />
         </Column>
@@ -80,10 +101,10 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             stepSize={1}
             defaultValue={1}
             currentValue={boostStore.duration}
-            maximumRangeValue={30}
-            minimumRangeValue={1}
-            minimumStepLabel={'1 day'}
-            maximumStepLabel={'30 days'}
+            maximumRangeValue={boostStore.config.duration.max}
+            minimumRangeValue={boostStore.config.duration.min}
+            maximumStepLabel={`${boostStore.config.duration.max} days`} // TODO: localize
+            minimumStepLabel={`${boostStore.config.duration.min} day`} // TODO: localize
             onAnswer={boostStore.setDuration}
           />
         </Column>
