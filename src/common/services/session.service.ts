@@ -498,6 +498,10 @@ export class SessionService {
       );
       this.sessions[index] = sessionData;
 
+      // update the current auth tokens
+      this.setToken(data.access_token);
+      this.setRefreshToken(data.refresh_token);
+
       this.setSessionExpired(false);
       // persist data
       this.persistSessionsArray();
