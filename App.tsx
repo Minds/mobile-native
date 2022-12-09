@@ -18,7 +18,6 @@ import {
   AppStateStatus,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
-import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -59,6 +58,7 @@ import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
+import { codePush } from 'modules/codepush';
 
 YellowBox.ignoreWarnings(['']);
 

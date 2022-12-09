@@ -1823,5 +1823,12 @@
       "description": "Now you can earn tokens and rewards."
     }
   },
-  "failedTryAgain": "Sorry, failed to load. please try again"
+  "failedTryAgain": "Sorry, failed to load. please try again",
+  "codePush": {
+    "prompt": {
+      "title": "New update available",
+      "description": "There is a newer version of the app available. Would you like to update now?",
+      "action": "Restart"
+    }
+  }
 }
