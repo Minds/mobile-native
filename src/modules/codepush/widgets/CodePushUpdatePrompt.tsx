@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
 import i18nService from '~/common/services/i18n.service';
 import { codePush } from '../';
-import useDebouncedCallback, {
-  useThrottledCallback,
-} from '../../../common/hooks/useDebouncedCallback';
+import { useThrottledCallback } from '../../../common/hooks/useDebouncedCallback';
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if

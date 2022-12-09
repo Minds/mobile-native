@@ -1,6 +1,6 @@
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 
 export default function useDebouncedCallback(
   fn: any,
