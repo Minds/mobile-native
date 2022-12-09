@@ -137,7 +137,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
                 ? `$${value.toLocaleString()}`
                 : value.toLocaleString()
             }
-            // steps={boostStore.config.bid_increments[boostStore.paymentType]}
+            steps={boostStore.config.bid_increments[boostStore.paymentType]}
             floatingLabel
           />
         </Column>
