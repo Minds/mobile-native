@@ -38,8 +38,8 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
-            ? t('boostChannel')
-            : t('boostPost')
+            ? t('Boost Channel')
+            : t('Boost Post')
         }
         back
         shadow

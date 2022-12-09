@@ -26,10 +26,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
 
-  const swapConfirmationTitle = t('Are you sure you want to use tokens?');
-  const swapConfirmationDescription = t(
-    'You will receive more views when using cash.',
-  );
   const textMapping = {
     cash: {
       totalSpend: t('${{amount}} over {{duration}} days', {
@@ -69,8 +65,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     if (id !== 'cash' && !boostStore.confirmedToUseToken) {
       if (
         !(await confirm({
-          title: swapConfirmationTitle,
-          description: swapConfirmationDescription,
+          title: t('Are you sure you want to use tokens?'),
+          description: t('You will receive more views when using cash.'),
         }))
       ) {
         return;
@@ -89,8 +85,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
-            ? t('boostChannel')
-            : t('boostPost')
+            ? t('Boost Channel')
+            : t('Boost Post')
         }
         back
         shadow
@@ -175,7 +171,9 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           vertical="L"
           bottom="XL"
           align="justify">
-          {t('estimatedReachDescription')}
+          {t(
+            "Estimated reach is appoximate and your boost will appear in the sidebar across the site. Actual reach for this boost may vary and can't be guaranteed.",
+          )}
         </B2>
 
         <Button

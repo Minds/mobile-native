@@ -29,7 +29,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     value: Math.round(Number(boostStore.wallet?.balance) || 0),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
-  const successMessage = t('Boost created successfully');
   const textMapping = {
     cash: {
       budgetDescription: t('${{amount}} per day for {{duration}} days', {
@@ -47,11 +46,11 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     },
   };
   const title =
-    boostStore.boostType === 'channel' ? t('boostChannel') : t('boostPost');
+    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
   const handleCreate = () => {
     return boostStore.createBoost()?.then(() => {
-      showNotification(successMessage);
+      showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
     });
@@ -102,7 +101,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         <HairlineRow />
 
         <B2 color="secondary" horizontal="L" vertical="L" align="justify">
-          {t('boostDescription')}
+          {t(
+            'Once your Boost is approved, your post can not be edited or deleted until the Boost duration is completed. Approved boosts cannot be refunded.',
+          )}
         </B2>
 
         <Button
