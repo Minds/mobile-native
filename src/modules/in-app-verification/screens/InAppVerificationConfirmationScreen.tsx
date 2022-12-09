@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import FitScrollView from '../../common/components/FitScrollView';
-import SaveButton from '../../common/components/SaveButton';
-import i18n from '../../common/services/i18n.service';
-import { B1, Column, H3, Screen, ScreenHeader } from '../../common/ui';
+import FitScrollView from '~/common/components/FitScrollView';
+import SaveButton from '~/common/components/SaveButton';
+import i18n from '~/common/services/i18n.service';
+import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationConfirmation'>;

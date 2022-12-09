@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import BaseNotice from '../../common/components/in-feed-notices/notices/BaseNotice';
-import i18n from '../../common/services/i18n.service';
+import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
+import i18n from '~/common/services/i18n.service';
 
 export default function InAppVerificationPrompt() {
   const navigation = useNavigation();

@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import FitScrollView from '../../common/components/FitScrollView';
-import MenuItemOption from '../../common/components/menus/MenuItemOption';
-import MText from '../../common/components/MText';
-import SaveButton from '../../common/components/SaveButton';
-import i18n from '../../common/services/i18n.service';
-import openUrlService from '../../common/services/open-url.service';
-import { B1, Column, H3, Screen, ScreenHeader } from '../../common/ui';
-import ThemedStyles from '../../styles/ThemedStyles';
+import FitScrollView from '~/common/components/FitScrollView';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
+import MText from '~/common/components/MText';
+import SaveButton from '~/common/components/SaveButton';
+import i18n from '~/common/services/i18n.service';
+import openUrlService from '~/common/services/open-url.service';
+import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
+import ThemedStyles from '~/styles/ThemedStyles';
 import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationOnboarding'>;

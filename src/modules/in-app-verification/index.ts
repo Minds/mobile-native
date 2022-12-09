@@ -1,4 +1,4 @@
 import InAppVerificationStack from './InAppVerificationStack';
-import InAppVerificationPrompt from './components/InAppVerificationPrompt';
+import InAppVerificationPrompt from './widgets/InAppVerificationPrompt';
 
 export { InAppVerificationStack, InAppVerificationPrompt };

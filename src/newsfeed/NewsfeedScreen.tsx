@@ -29,7 +29,7 @@ import { ChannelRecommendationProvider } from '~/common/components/ChannelRecomm
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
 import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeedNotice';
-import { InAppVerificationPrompt } from '../in-app-verification';
+import { InAppVerificationPrompt } from 'modules/in-app-verification';
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
