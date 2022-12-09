@@ -1,4 +1,5 @@
 import * as StoreReview from 'expo-store-review';
+import debounce from 'lodash/debounce';
 import moment from 'moment';
 import { InteractionManager, Linking } from 'react-native';
 import openUrlService from '../../common/services/open-url.service';
@@ -18,6 +19,10 @@ class StoreRatingService {
     storages.app.getInt(LAST_PROMPTED_AT_KEY) || null;
   points = storages.app.getInt(SCORES_KEY) || 0;
 
+  constructor() {
+    this.debouncedSetStorage = debounce(this.debouncedSetStorage, 2000);
+  }
+
   track(key: keyof typeof USAGE_SCORES, prompt = false) {
     this.points += USAGE_SCORES[key];
 
@@ -29,7 +34,7 @@ class StoreRatingService {
       }, 500);
     }
 
-    storages.app.setIntAsync(SCORES_KEY, this.points);
+    this.debouncedSetStorage(SCORES_KEY, this.points);
   }
 
   get shouldPrompt() {
@@ -81,6 +86,10 @@ class StoreRatingService {
     await StoreReview.requestReview();
     this.lastPromptedAt = Date.now();
     storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+  }
+
+  debouncedSetStorage(key: string, value: any) {
+    storages.app.setIntAsync(key, value);
   }
 }
 
