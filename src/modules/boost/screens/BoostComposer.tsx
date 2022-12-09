@@ -33,7 +33,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const textMapping = {
     cash: {
       totalSpend: t('${{amount}} over {{duration}} days', {
-        amount: boostStore.amount,
+        amount: boostStore.amount * boostStore.duration,
         duration: boostStore.duration,
       }),
       minBudget: `$${boostStore.config.min.cash.toLocaleString()}`,
@@ -41,7 +41,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
     offchain_tokens: {
       totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: boostStore.amount,
+        amount: boostStore.amount * boostStore.duration,
         duration: boostStore.duration,
       }),
       minBudget: t('tokenWithCount', {
@@ -53,7 +53,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
     onchain_tokens: {
       totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: boostStore.amount,
+        amount: boostStore.amount * boostStore.duration,
         duration: boostStore.duration,
       }),
       minBudget: t('tokenWithCount', {
@@ -136,6 +136,13 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             minimumStepLabel={textMapping[boostStore.paymentType].minBudget}
             maximumStepLabel={textMapping[boostStore.paymentType].maxBudget}
             onAnswer={boostStore.setAmount}
+            formatValue={value =>
+              boostStore.paymentType === 'cash'
+                ? `$${value.toLocaleString()}`
+                : value.toLocaleString()
+            }
+            // steps={boostStore.config.bid_increments[boostStore.paymentType]}
+            floatingLabel
           />
         </Column>
 
@@ -156,6 +163,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
               count: boostStore.config.duration.min,
             })}
             onAnswer={boostStore.setDuration}
+            floatingLabel
           />
         </Column>
 
