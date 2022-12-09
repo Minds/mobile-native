@@ -27,6 +27,7 @@ export default function useOnboardingProgress(updateState?: any) {
     persist: true,
     params: {},
     updateState,
+    noPreload: true,
   });
 
   return store;
