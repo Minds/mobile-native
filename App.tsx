@@ -18,7 +18,6 @@ import {
   AppStateStatus,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
-import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -50,15 +49,11 @@ import appInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
-import {
-  CODE_PUSH_PROD_KEY,
-  CODE_PUSH_STAGING_KEY,
-  IS_REVIEW,
-} from '~/config/Config';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
+import { codePush } from 'modules/codepush';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -95,13 +90,14 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
     codePush.getUpdateMetadata().then(metadata => {
-      if (metadata) {
-        codePush.sync();
-      } else {
-        // if no codepush was applied, apply the default codepush deployment based on environment
+      // using the deploymentKey from the active update makes sure
+      // switching environments works
+      if (metadata?.deploymentKey) {
         codePush.sync({
-          deploymentKey: IS_REVIEW ? CODE_PUSH_STAGING_KEY : CODE_PUSH_PROD_KEY,
+          deploymentKey: metadata.deploymentKey,
         });
+      } else {
+        codePush.sync();
       }
     });
   }

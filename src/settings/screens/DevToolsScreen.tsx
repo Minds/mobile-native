@@ -14,7 +14,7 @@ import {
 } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
-import CodePushDebugger from '../components/CodePushDebugger';
+import { CodePushDebugger } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
 
 const DevToolsScreen = () => {

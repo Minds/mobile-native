@@ -33,6 +33,7 @@ import { InAppVerificationPrompt } from '../in-app-verification';
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
+import { CodePushUpdatePrompt } from 'modules/codepush';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -121,6 +122,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar />
+        <CodePushUpdatePrompt />
         <TopInFeedNotice />
         <IfFeatureEnabled feature="mob-4472-in-app-verification">
           <InAppVerificationPrompt />
