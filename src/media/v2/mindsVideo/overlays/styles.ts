@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'black',
   },
   floatingVolume: {
     opacity: 0.8,

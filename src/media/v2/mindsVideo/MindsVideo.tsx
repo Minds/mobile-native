@@ -102,7 +102,9 @@ const MindsVideo = observer((props: PropsType) => {
   const inProgressOverlay = localStore.inProgress && <InProgress />;
 
   // Show Error overlay if not in progress and error
-  const errorOverlay = !localStore.inProgress && localStore.error && <Error />;
+  const errorOverlay = !localStore.inProgress && localStore.error && (
+    <Error localStore={localStore} />
+  );
 
   // Show Transcoding overlay if onError and isTranscoding Service -> true
   const transCodingOverlay = localStore.transcoding && <Transcoding />;
@@ -120,7 +122,7 @@ const MindsVideo = observer((props: PropsType) => {
     <TouchableWithoutFeedback
       onPress={localStore.openControlOverlay}
       style={[theme.flexContainer, props.containerStyle]}>
-      <View style={[theme.flexContainer, theme.bgBlack]}>
+      <View style={containerStyle}>
         {localStore.showThumbnail && (
           <RetryableImage
             style={theme.positionAbsolute}
@@ -144,5 +146,7 @@ const MindsVideo = observer((props: PropsType) => {
     </TouchableWithoutFeedback>
   );
 });
+
+const containerStyle = ThemedStyles.combine('flexContainer', 'bgBlack');
 
 export default MindsVideo;
