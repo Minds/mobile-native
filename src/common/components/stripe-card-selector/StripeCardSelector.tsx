@@ -9,7 +9,7 @@ import { StripeCard } from '../../../wire/WireTypes';
 import i18n from '../../services/i18n.service';
 import { Row } from '../../ui';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
-import InputSelector from '../InputSelectorV2';
+import InputSelector, { InputSelectorProps } from '../InputSelectorV2';
 import createCardSelectorStore, {
   selectIdExtractor,
   selectValueExtractor,
@@ -20,10 +20,14 @@ type StripeCardSelectorProps = {
   onCardSelected: (card: StripeCard) => void;
   info?: string;
   error?: string;
-};
+} & Pick<InputSelectorProps, 'containerStyle' | 'borderless'>;
 
 const StripeCardSelector = observer(
-  ({ onCardSelected, selectedCardId }: StripeCardSelectorProps) => {
+  ({
+    onCardSelected,
+    selectedCardId,
+    ...inputSelectorProps
+  }: StripeCardSelectorProps) => {
     const store = useLocalStore(createCardSelectorStore, {
       onCardSelected,
       selectedCardId,
@@ -66,6 +70,7 @@ const StripeCardSelector = observer(
     return (
       <>
         <InputSelector
+          {...inputSelectorProps}
           onSelected={store.selectCard}
           selected={store.currentCardId}
           label={i18n.t('buyTokensScreen.paymentMethod')}

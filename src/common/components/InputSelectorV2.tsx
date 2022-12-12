@@ -4,7 +4,7 @@ import { Icon } from '../ui';
 import InputBase from './InputBase';
 import Selector from './SelectorV2';
 
-type PropsType = {
+export type InputSelectorProps = {
   data: Array<any>;
   valueExtractor: (value: any) => any;
   keyExtractor: (value: any) => any;
@@ -19,9 +19,10 @@ type PropsType = {
   mainContainerStyle?: StyleProp<ViewStyle>;
   info?: string;
   error?: string;
+  borderless?: boolean;
 };
 
-const InputSelector = (props: PropsType) => {
+const InputSelector = (props: InputSelectorProps) => {
   const onSelected = useCallback(
     item => {
       props.onSelected(props.keyExtractor(item));
@@ -49,10 +50,11 @@ const InputSelector = (props: PropsType) => {
       {show => (
         <InputBase
           onPress={() => show(props.selected)}
-          style={props.containerStyle}
+          style={[{ minHeight: 90 }, props.containerStyle]}
           label={props.label}
           labelStyle={props.labelStyle}
           info={props.info}
+          borderless={props.borderless}
           error={props.error}
           value={getValueOf(props.selected)}
           icon={<Icon name="chevron-down" />}

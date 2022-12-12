@@ -469,6 +469,11 @@ const RootStack = observer(function () {
                   .default
               }
             />
+            <RootStackNav.Screen
+              name="BoostScreenV2"
+              getComponent={() => require('~/modules/boost').BoostStack}
+              options={modalOptions}
+            />
           </>
         )
       ) : (
