@@ -69,6 +69,10 @@ export interface FetchOptions {
    * Initial fetch on focus instead of on mount
    */
   loadOnFocus?: boolean;
+  /**
+   * avoid initial data preload
+   */
+  noPreload?: boolean;
   retry?: number;
   retryDelay?: number;
   /**
@@ -134,7 +138,9 @@ const createStore = (storeOptions: {
         this.fetch(params);
       },
       {
-        fireImmediately: !storeOptions.options?.loadOnFocus, // do not run initial load if we want to do it on focus
+        fireImmediately:
+          !storeOptions.options?.loadOnFocus &&
+          !storeOptions.options?.noPreload, // do not run initial load if we want to do it on focus
       },
     );
   },
@@ -154,7 +160,9 @@ const createStore = (storeOptions: {
   hydrate(params: any, updateState) {
     try {
       const data = storages.user?.getMap(getCacheKey(storeOptions.url, params));
-      if (data) this.setResult(updateState(data, this.result));
+      if (data) {
+        this.setResult(updateState(data, this.result));
+      }
     } catch (e) {
       console.error(e);
     }
