@@ -214,7 +214,7 @@ export class FeedList<T extends BaseModel> extends Component<
   /**
    * Get footer
    */
-  getFooter = (): React.ReactElement | null => {
+  getFooter = observer((): React.ReactElement | null => {
     if (this.props.placeholder && !this.props.feedStore.loaded) {
       return this.getPlaceholder();
     }
@@ -229,7 +229,7 @@ export class FeedList<T extends BaseModel> extends Component<
       return this.getErrorLoading();
     }
     return null;
-  };
+  });
 
   /**
    * Get error loading component

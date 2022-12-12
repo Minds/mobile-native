@@ -40,8 +40,8 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
       localStore.setCash(fetchStore.result.min_cash.toString());
       localStore.setTokens(fetchStore.result.min_offchain_tokens.toString());
       const config = mindsConfigService.getSettings();
-      if (config.min_thresholds) {
-        localStore.setThresholds(config.min_thresholds);
+      if (config.supermind?.min_thresholds) {
+        localStore.setThresholds(config.supermind.min_thresholds);
       }
     }
   }, [fetchStore.result, localStore]);

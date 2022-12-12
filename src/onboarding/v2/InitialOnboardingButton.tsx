@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import SettingsStore from '../../settings/SettingsStore';
 // import Pulse from '~/common/components/animations/Pulse';
 import { Spacer } from '~/common/ui';
+import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 
 let shownOnce = false;
 /**
@@ -25,24 +26,27 @@ export default observer(function InitialOnboardingButton() {
   const progressStore = useOnboardingProgress();
 
   useFocusEffect(
-    React.useCallback(() => {
-      if (
-        SettingsStore.ignoreOnboarding &&
-        SettingsStore.ignoreOnboarding.isAfter(moment())
-      ) {
-        return;
-      }
-
-      if (progressStore.result && !progressStore.loading) {
-        progressStore.fetch();
-      }
-      // reload in 3 seconds (the post check has some delay)
-      setTimeout(() => {
-        if (progressStore && progressStore.result && !progressStore.loading) {
+    useDebouncedCallback(
+      () => {
+        if (
+          SettingsStore.ignoreOnboarding &&
+          SettingsStore.ignoreOnboarding.isAfter(moment())
+        ) {
+          return;
+        }
+        if (!progressStore.loading) {
           progressStore.fetch();
         }
-      }, 3000);
-    }, [progressStore]),
+        // reload in 3 seconds (the post check has some delay)
+        setTimeout(() => {
+          if (progressStore && !progressStore.loading) {
+            progressStore.fetch();
+          }
+        }, 3000);
+      },
+      120 * 1000,
+      [progressStore],
+    ),
   );
 
   useEffect(() => {
