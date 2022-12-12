@@ -33,7 +33,7 @@ export const growthbook = new GrowthBook({
  * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
  * @returns { boolean } - true if params reflect current variation.
  */
-export function hasVariation(featureKey: string, variation: string = 'on') {
+export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
   const featureResult = growthbook.feature(featureKey);
   return featureResult[variation];
 }
@@ -80,6 +80,10 @@ export const useIsAndroidFeatureOn = (feature: FeatureID) =>
 
 export type FeatureID =
   | 'mobile-supermind'
-  | 'mob-stripe-connect-4587'
   | 'mob-4630-hide-chat-icon'
-  | 'mob-4637-ios-hide-minds-superminds';
+  | 'mob-4637-ios-hide-minds-superminds'
+  | 'mob-stripe-connect-4587'
+  | 'mob-4638-boost-v3'
+  | 'mob-minds-3119-captcha-for-engagement'
+  | 'mob-4424-sockets'
+  | 'minds-3055-email-codes';

@@ -381,6 +381,11 @@ export default function () {
         name="WebView"
         getComponent={() => require('~/common/screens/WebViewScreen').default}
       />
+      <MoreStack.Screen
+        name="BoostScreenV2"
+        getComponent={() => require('~/modules/boost').BoostStack}
+        options={{ headerShown: false }}
+      />
     </MoreStack.Navigator>
   );
 }

@@ -15,7 +15,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import { Platform } from 'react-native';
 import { useStores } from '../../common/hooks/use-stores';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -75,10 +75,17 @@ const getOptions = (
       iconType: 'material-community',
       title: i18n.t('boosts.boostChannel'),
       onPress: () => {
-        navigation.navigate('BoostScreen', {
-          entity: channel,
-          boostType: 'channel',
-        });
+        if (hasVariation('mob-4638-boost-v3')) {
+          navigation.navigate('BoostScreenV2', {
+            entity: channel,
+            boostType: 'channel',
+          });
+        } else {
+          navigation.navigate('BoostScreen', {
+            entity: channel,
+            boostType: 'channel',
+          });
+        }
         ref.current.dismiss();
       },
     });
