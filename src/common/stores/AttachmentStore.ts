@@ -144,6 +144,7 @@ export default class AttachmentStore {
           err instanceof Error ? err.message : i18n.t('uploadFailed'),
         );
       }
+      throw err;
     } finally {
       this.setUploading(false);
     }
