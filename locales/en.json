@@ -1807,8 +1807,8 @@
       }
     },
     "notice": {
-      "title": "Verify account",
-      "description": "Before getting down to business on Minds, we ask that you please verify your account."
+      "title": "Verify Account",
+      "description": "Please verify your channel with the privacy-preserving human detector in order to be eligible for rewards."
     },
     "onboarding": {
       "title": "A privacy protecting human detector",
@@ -1823,7 +1823,7 @@
       },
       "step3": {
         "title": "Step 3",
-        "description": "That's it. Now you can earn tokens and other rewards.."
+        "description": "That's it. Now you can earn tokens and other rewards."
       }
     },
     "codeRequest": {

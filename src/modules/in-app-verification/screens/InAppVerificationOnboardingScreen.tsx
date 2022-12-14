@@ -22,7 +22,7 @@ export default function InAppVerificationOnboardingScreen() {
   return (
     <Screen safe>
       <ScreenHeader
-        title="Verify Account"
+        title={i18n.t('inAppVerification.notice.title')}
         centerTitle
         border
         back
@@ -64,10 +64,7 @@ export default function InAppVerificationOnboardingScreen() {
                     'https://www.minds.com/p/monetization-terms',
                   )
                 }
-                style={{
-                  textDecorationLine: 'underline',
-                  color: ThemedStyles.style.colorLink.color,
-                }}>
+                style={ThemedStyles.style.link}>
                 Terms
               </MText>
             </B1>
