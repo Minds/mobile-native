@@ -16,6 +16,7 @@ import {
   BottomSheetMenuItem,
 } from '../../../common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
+import { storeRatingService } from 'modules/store-rating';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -105,6 +106,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       .then(activity => {
         // append the entity to the feed
         newsfeed.feedStore.prepend(activity);
+        storeRatingService.track('remind', true);
 
         showNotification(i18n.t('postReminded'), 'success');
       })

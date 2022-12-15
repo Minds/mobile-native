@@ -21,6 +21,7 @@ import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * App initialization manager
@@ -43,6 +44,8 @@ export class AppInitManager {
     sessionService.onLogout(this.onLogout);
 
     openUrlService.init();
+
+    storeRatingService.track('appSession');
 
     try {
       logService.info('[App] init session');

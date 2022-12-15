@@ -20,6 +20,7 @@ jest.mock('react-native', () => ({
   },
   Platform: {
     OS: 'android',
+    select: obj => 'android',
   },
 }));
 
