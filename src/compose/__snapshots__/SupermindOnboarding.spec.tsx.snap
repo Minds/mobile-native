@@ -47,7 +47,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           ]
         }
       >
-        Get replies from your favorite creators by sending them paid offers.
+        Get replies from your favorite creators by sending them token offers.
       </Text>
     </View>
     <View
@@ -155,7 +155,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             ]
           }
         >
-          Send an offer of cash or tokens. The creator earns the offer amount when they reply.
+          Send an offer of tokens. The creator earns the offer amount when they reply.
            
         </Text>
       </View>
@@ -633,7 +633,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             ]
           }
         >
-          Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 15% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.
+          Fans send offers, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction. See terms & conditions.
            
           <Text
             onPress={[Function]}

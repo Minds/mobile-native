@@ -2,6 +2,7 @@ import { MotiView } from 'moti';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import FitScrollView from '~/common/components/FitScrollView';
+import { IS_IOS } from '~/config/Config';
 import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
@@ -18,7 +19,9 @@ const onboardingTypes = {
     steps: [
       {
         title: i18n.t('supermind.onboarding.producer.steps.1.title'),
-        description: i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
+        description: IS_IOS
+          ? i18n.t('supermind.onboarding.producer.steps.1.subtitle-iOS')
+          : i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
         icon: 'money',
         link: {
           title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
@@ -38,11 +41,15 @@ const onboardingTypes = {
     ],
   },
   consumer: {
-    title: i18n.t('supermind.onboarding.consumer.title'),
+    title: IS_IOS
+      ? i18n.t('supermind.onboarding.consumer.title-iOS')
+      : i18n.t('supermind.onboarding.consumer.title'),
     steps: [
       {
         title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
+        description: IS_IOS
+          ? i18n.t('supermind.onboarding.consumer.steps.1.subtitle-iOS')
+          : i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
         icon: 'money',
       },
       {

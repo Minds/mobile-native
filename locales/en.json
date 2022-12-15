@@ -106,6 +106,7 @@
           "1": {
             "title": "How to earn",
             "subtitle": "Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 15% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.",
+            "subtitle-iOS": "Fans send offers, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction. See terms & conditions.",
             "seeTerms": "See terms and conditions."
           },
           "2": {
@@ -120,10 +121,12 @@
       },
       "consumer": {
         "title": "Get replies from your favorite creators by sending them paid offers.",
+        "title-iOS": "Get replies from your favorite creators by sending them token offers.",
         "steps": {
           "1": {
             "title": "Set an offer amount",
-            "subtitle": "Send an offer of cash or tokens. The creator earns the offer amount when they reply."
+            "subtitle": "Send an offer of cash or tokens. The creator earns the offer amount when they reply.",
+            "subtitle-iOS": "Send an offer of tokens. The creator earns the offer amount when they reply."
           },
           "2": {
             "title": "Prompt with a public post",
