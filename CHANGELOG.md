@@ -2,6 +2,14 @@
 
 Minds Mobile
 
+## 4.31.0 - 2022-12-16
+
+### Changed
+
+- Rate app implementation
+- Token supermind added to iOS with updated texts
+- Improved error handling for video uploads
+
 ## 4.30.2 - 2022-12-13
 
 ### Changed
