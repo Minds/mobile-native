@@ -14,6 +14,7 @@ import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
+import type { BoostType } from '../boost/v2/createBoostStore';
 
 type AnyType = any;
 
@@ -110,6 +111,7 @@ export type MoreStackParamList = {
   };
   ChooseBrowser: {};
   DevTools: {};
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 type TwoFactorConfirmationParams = {
@@ -162,8 +164,7 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
-  BoostChannelScreen: {};
-  BoostPostScreen: { entity: ActivityModel };
+  BoostScreen: { entity: ActivityModel; boostType: BoostType };
   UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
@@ -205,6 +206,7 @@ export type RootStackParamList = {
     username: string;
     onSelect: (channel: UserModel) => void;
   };
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 export type AuthStackParamList = {
@@ -244,8 +246,7 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
-  BoostChannelScreen: {};
-  BoostPostScreen: { entity: ActivityModel };
+  BoostScreen: { entity: ActivityModel; boostType: BoostType };
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Tabs: {};
@@ -320,6 +321,7 @@ export type AppStackParamList = {
   MultiUserScreen: {};
   TopNewsfeed: {};
   InAppVerification: {};
+  BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
 };
 
 // types for channel edit screens

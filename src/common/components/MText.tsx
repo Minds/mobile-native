@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 import ThemedStyles from '~styles/ThemedStyles';
 
-/**
- * Base font with default family and color
- */
-const MText = ({
-  style,
-  ...p
-}: TextProps & {
+export type MTextProps = TextProps & {
   children:
-    | (string | Element)[]
+    | (string | ReactNode)[]
     | string
     | string[]
     | number
     | undefined
-    | Element
+    | ReactNode
     | null;
-}) => {
+};
+
+/**
+ * Base font with default family and color
+ */
+const MText = ({ style, ...p }: MTextProps) => {
   const defaultStyle = [
     ThemedStyles.style.colorPrimaryText,
     styles.text,

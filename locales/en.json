@@ -337,7 +337,9 @@
     "boostPost": "Boost Post",
     "boostOffer": "Make Offer",
     "paymentMethod": "PAYMENT METHOD",
-    "targetChannel": "Target Channel"
+    "targetChannel": "Target Channel",
+    "boostCashViews": "{{amount}} USD = {{views}} views",
+    "boostTokenViews": "{{amount}} token = {{views}} views"
   },
   "translate": {
     "from": "translated from",
@@ -1824,5 +1826,12 @@
   "failedTryAgain": "Sorry, failed to load. please try again",
   "storeRating": {
     "prompt": "Are you enjoying Minds?"
+  },
+  "codePush": {
+    "prompt": {
+      "title": "New update available",
+      "description": "There is a newer version of the app available. Would you like to update now?",
+      "action": "Restart"
+    }
   }
 }

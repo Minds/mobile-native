@@ -14,6 +14,7 @@ import {
 } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { CodePushDebugger } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
 
 const DevToolsScreen = () => {
@@ -25,9 +26,7 @@ const DevToolsScreen = () => {
   const [canary, setCanary] = useState(
     storages.app.getBool(CANARY_KEY) || false,
   );
-
   const inputRef = React.useRef<any>();
-
   const theme = ThemedStyles.style;
 
   const setApiURLCallback = () => {
@@ -92,10 +91,12 @@ const DevToolsScreen = () => {
               Change
             </Button>
           </Row>
+
           <B2 align="center" color="tertiary">
             Requires restart
           </B2>
         </ScreenSection>
+        <CodePushDebugger />
         <GrowthbookDev />
       </ScrollView>
     </ModalContainer>

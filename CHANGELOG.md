@@ -2,6 +2,33 @@
 
 Minds Mobile
 
+## 4.30.2 - 2022-12-13
+
+### Changed
+
+- Boosts v3 creation flow (disabled behind a FF)
+- Added a loading indicator when loading stripe data
+- Use supermind thresholds from the server
+- Fix infinite loading state on the feeds
+- Fix reproduction of previous video when the new one fail to load
+- Add a retry option when video loading fails
+- Codepush update prompt added
+- Reduce the number of API request for the onboarding state
+- Hide wallet connect option
+
+## 4.30.1 - 2022-12-05
+
+### Changed
+
+- Prefetch notifications and enable the lazy rendering of the screen
+- Implement react-query and a infinite feed hook
+- Add cash support for boosts
+- Improve supermind error messages
+- Add date and rejection reason to boost console
+- Code-push in dev-tools
+- Fix re-login
+- Fix supermind cancel button getting truncated
+
 ## 4.30.0 - 2022-11-16
 
 ### Changed

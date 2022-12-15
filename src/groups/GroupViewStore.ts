@@ -236,7 +236,6 @@ class GroupViewStore {
       this.group.guid,
       user.guid,
     );
-    console.log(result);
     if (!!result.done) {
       user['is:moderator'] = true;
     }

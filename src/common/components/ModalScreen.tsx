@@ -13,16 +13,19 @@ type PropsType = {
   title: string;
   source: ImageSourcePropType;
   children: React.ReactNode;
+  testID?: string;
 };
 
-const ModalScreen = ({ children, ...props }: PropsType) => {
+const ModalScreen = ({ children, testID, ...props }: PropsType) => {
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
   const cleanTop = insets.top
     ? { marginTop: insets.top + 50 }
     : { marginTop: 50 };
   return (
-    <View style={[styles.container, theme.bgPrimaryBackground, cleanTop]}>
+    <View
+      testID={testID}
+      style={[styles.container, theme.bgPrimaryBackground, cleanTop]}>
       <ModalHeader {...props} />
       <ScrollView contentContainerStyle={theme.paddingBottom3x}>
         {children}

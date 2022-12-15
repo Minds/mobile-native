@@ -18,19 +18,21 @@ type PropsType = {
 };
 
 const ReceiverSettings = observer(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ navigation, onchainStore, connectWallet, walletStore }: PropsType) => {
     const theme = ThemedStyles.style;
     const innerWrapper = [theme.borderBottomHair, theme.bcolorPrimaryBorder];
     const btcAddress = walletStore.wallet.btc.address;
     const receiverSettingsOptions = [
-      {
-        title: i18n.t(
-          `wallet.${
-            onchainStore.result?.address ? 'alternateReceiver' : 'connect'
-          }`,
-        ),
-        onPress: connectWallet,
-      },
+      // Disabled for now (wallet connect is unreliable)
+      // {
+      //   title: i18n.t(
+      //     `wallet.${
+      //       onchainStore.result?.address ? 'alternateReceiver' : 'connect'
+      //     }`,
+      //   ),
+      //   onPress: connectWallet,
+      // },
       {
         title: i18n.t(`wallet.bitcoins.${btcAddress ? 'update' : 'setup'}`),
         onPress: () => navigation.push('BtcAddressScreen', { walletStore }),

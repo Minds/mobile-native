@@ -12,7 +12,7 @@ Reactotron.configure({
     storybook: true,
     networking: {
       // ignoreContentTypes: /^(image)\/.*$/i,
-      ignoreUrls: /http?:\/\/[127.0.0.1|192.168.1.{d}2]/,
+      ignoreUrls: /http?:\/\/[127.0.0.1|localhost|192.168.100.{d}2]/,
     },
   })
   .connect();
@@ -43,5 +43,6 @@ const tronOptions = (args: (string | undefined)[]) => ({
     : JSON.stringify(args?.[0])
   ).slice(0, 96),
 });
+const log = (name: string) => Reactotron.display({ name, important: true });
 
-export { Reactotron };
+export { Reactotron, log };

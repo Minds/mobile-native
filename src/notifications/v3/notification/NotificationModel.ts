@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import type UserModel from '../../../channel/UserModel';
+import UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import i18n from '../../../common/services/i18n.service';
@@ -21,6 +21,12 @@ export default class NotificationModel extends AbstractModel {
   type!: NotificationType;
   urn!: string;
   uuid!: string;
+
+  childModels() {
+    return {
+      from: UserModel,
+    };
+  }
 
   // credit to Patrick Roberts https://stackoverflow.com/a/57065680
   isOfNotificationType() {

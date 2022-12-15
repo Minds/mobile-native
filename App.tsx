@@ -14,9 +14,10 @@ import {
   UIManager,
   RefreshControl,
   YellowBox,
+  AppState,
+  AppStateStatus,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
-import codePush from 'react-native-code-push';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -24,10 +25,13 @@ import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Orientation from 'react-native-orientation-locker';
 import { PortalProvider } from '@gorhom/portal';
+import 'react-native-image-keyboard';
+import { focusManager } from '@tanstack/react-query';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
@@ -45,11 +49,11 @@ import appInitManager from './AppInitManager';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
-import { CODE_PUSH_KEY } from '~/config/Config';
-import 'react-native-image-keyboard';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
+import { QueryProvider } from '~/services';
+import { codePush } from 'modules/codepush';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -85,17 +89,17 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
-    // Check for codepush update and restart app immediately if necessary
-    codePush.sync(
-      CODE_PUSH_KEY
-        ? {
-            installMode: codePush.InstallMode.ON_NEXT_RESTART, // install updates on app restart
-            deploymentKey: CODE_PUSH_KEY,
-          }
-        : {
-            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE, // install mandatory updates immediately
-          },
-    );
+    codePush.getUpdateMetadata().then(metadata => {
+      // using the deploymentKey from the active update makes sure
+      // switching environments works
+      if (metadata?.deploymentKey) {
+        codePush.sync({
+          deploymentKey: metadata.deploymentKey,
+        });
+      } else {
+        codePush.sync();
+      }
+    });
   }
 
   /**
@@ -117,12 +121,21 @@ class App extends Component<Props> {
       interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
       staysActiveInBackground: true,
     });
+
+    // send focus states to react query
+    this.stateSubscription = AppState.addEventListener(
+      'change',
+      (status: AppStateStatus) => {
+        focusManager.setFocused(status === 'active');
+      },
+    );
   }
 
   /**
    * On component will unmount
    */
   componentWillUnmount() {
+    this.stateSubscription?.remove();
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
     if (this.ShareReceiveListener) {
@@ -176,25 +189,28 @@ class App extends Component<Props> {
               onReady={appInitManager.onNavigatorReady}
               onStateChange={NavigationService.onStateChange}>
               <StoresProvider>
-                <Provider key="app" {...stores}>
-                  <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                    <FriendlyCaptchaProvider ref={setFriendlyCaptchaReference}>
-                      <PortalProvider>
-                        <BottomSheetModalProvider>
-                          <ErrorBoundary
-                            message="An error occurred"
-                            containerStyle={ThemedStyles.style.centered}>
-                            <WCContextProvider>
-                              <NavigationStack
-                                key={ThemedStyles.theme + i18n.locale}
-                              />
-                            </WCContextProvider>
-                          </ErrorBoundary>
-                        </BottomSheetModalProvider>
-                      </PortalProvider>
-                    </FriendlyCaptchaProvider>
-                  </AppMessageProvider>
-                </Provider>
+                <QueryProvider>
+                  <Provider key="app" {...stores}>
+                    <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                      <FriendlyCaptchaProvider
+                        ref={setFriendlyCaptchaReference}>
+                        <PortalProvider>
+                          <BottomSheetModalProvider>
+                            <ErrorBoundary
+                              message="An error occurred"
+                              containerStyle={ThemedStyles.style.centered}>
+                              <WCContextProvider>
+                                <NavigationStack
+                                  key={ThemedStyles.theme + i18n.locale}
+                                />
+                              </WCContextProvider>
+                            </ErrorBoundary>
+                          </BottomSheetModalProvider>
+                        </PortalProvider>
+                      </FriendlyCaptchaProvider>
+                    </AppMessageProvider>
+                  </Provider>
+                </QueryProvider>
               </StoresProvider>
             </NavigationContainer>
           )}

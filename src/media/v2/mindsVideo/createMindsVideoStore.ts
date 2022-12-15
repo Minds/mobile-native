@@ -1,4 +1,5 @@
 import type { AVPlaybackSourceObject, AVPlaybackStatus, Video } from 'expo-av';
+import Cancelable from 'promise-cancelable';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 
@@ -32,7 +33,7 @@ const createMindsVideoStore = ({
     currentSeek: <number | null>null,
     duration: 0,
     transcoding: false,
-    initPromise: <null | Promise<void>>null,
+    initPromise: <null | Cancelable<void>>null,
     error: false,
     inProgress: false,
     showFullControls: false,
@@ -66,6 +67,9 @@ const createMindsVideoStore = ({
       this.showFullControls = false;
       this.showOverlay = false;
       this.fullScreen = false;
+      if (this.initPromise) {
+        this.initPromise.cancel();
+      }
       this.initPromise = null;
     },
     setForceHideOverlay(forceHideOverlay: boolean) {
@@ -255,7 +259,7 @@ const createMindsVideoStore = ({
     /**
      * Play the current video and activate the player
      */
-    async play(sound: boolean | undefined) {
+    async play(sound?: boolean) {
       // check pay walled content
       if (this.entity && this.entity.paywall) {
         await this.entity.unlockOrPay();
@@ -269,7 +273,12 @@ const createMindsVideoStore = ({
       }
 
       if (!this.video) {
-        await this.init();
+        try {
+          await this.init();
+        } catch (error) {
+          // if the init fail we cancel the reproduction
+          return;
+        }
       }
 
       this.setShowOverlay(false);
@@ -337,52 +346,61 @@ const createMindsVideoStore = ({
     /**
      * init the video
      */
-    init(): Promise<void> {
+    async init(): Cancelable<void> {
       if (!this.initPromise) {
-        this.initPromise = this._init().catch(_ => {
-          this.initPromise = null;
-        });
+        this.error = false;
+        this.initPromise = this._init();
       }
-      return this.initPromise;
+      try {
+        await this.initPromise;
+        this.initPromise = null;
+      } catch (error) {
+        this.initPromise = null;
+        this.error = true;
+        throw error;
+      }
     },
 
     /**
      * Prefetch the sources and the video
      */
-    async _init(): Promise<void> {
-      if ((!this.sources || this.sources.length === 0) && this.entity) {
-        try {
-          const videoObj: any = await attachmentService.getVideo(
-            this.entity.attachments && this.entity.attachments.attachment_guid
-              ? this.entity.attachments.attachment_guid
-              : this.entity.entity_guid || this.entity.guid,
-          );
+    _init(): Cancelable<void> {
+      return new Cancelable(async (resolve, reject) => {
+        if ((!this.sources || this.sources.length === 0) && this.entity) {
+          try {
+            const videoObj: any = await attachmentService.getVideo(
+              this.entity.attachments && this.entity.attachments.attachment_guid
+                ? this.entity.attachments.attachment_guid
+                : this.entity.entity_guid || this.entity.guid,
+            );
 
-          if (videoObj && videoObj.entity.transcoding_status) {
-            this.transcoding =
-              videoObj.entity.transcoding_status !== 'completed';
-            if (this.transcoding) {
-              return;
+            if (videoObj && videoObj.entity.transcoding_status) {
+              this.transcoding =
+                videoObj.entity.transcoding_status !== 'completed';
+              if (this.transcoding) {
+                return;
+              }
             }
-          }
 
-          this.setSources(
-            videoObj.sources.filter(
-              v =>
-                [
-                  'video/mp4',
-                  'video/hls',
-                  'application/vnd.apple.mpegURL',
-                ].indexOf(v.type) > -1,
-            ),
-          );
-        } catch (error) {
-          if (error instanceof Error) {
-            logService.exception('[MindsVideo]', error);
+            this.setSources(
+              videoObj.sources.filter(
+                v =>
+                  [
+                    'video/mp4',
+                    'video/hls',
+                    'application/vnd.apple.mpegURL',
+                  ].indexOf(v.type) > -1,
+              ),
+            );
+          } catch (error) {
+            if (error instanceof Error) {
+              logService.exception('[MindsVideo]', error);
+            }
+            reject(error);
           }
-          throw error;
         }
-      }
+        resolve();
+      });
     },
   };
   return store;

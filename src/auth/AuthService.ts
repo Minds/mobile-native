@@ -109,8 +109,6 @@ class AuthService {
     if (!isFirstLogin) {
       session.setSwitchingAccount(true);
       this.sessionLogout(newUser);
-    } else {
-      // NavigationService.goBack();
     }
 
     await api.clearCookies();
@@ -260,10 +258,8 @@ class AuthService {
    */
   async tryToRelog(onLogin?: Function) {
     const onCancel = async () => {
-      if (session.sessionExpired) {
-        console.log('[AuthService] tryToRelog: session expired');
-        this.logoutSession();
-      }
+      console.log('[AuthService] tryToRelog: session expired');
+      this.logoutSession();
     };
 
     NavigationService.navigate('RelogScreen', {

@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React, { useCallback, useRef, useState } from 'react';
-import openUrlService from '~/common/services/open-url.service';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -13,8 +12,8 @@ import InputContainer, {
   InputContainerImperativeHandle,
 } from '../common/components/InputContainer';
 import InputSelectorV2 from '../common/components/InputSelectorV2';
+import Link from '../common/components/Link';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
-import MText from '../common/components/MText';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
@@ -326,15 +325,9 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           title={
             <B1>
               I agree to the{' '}
-              <MText
-                onPress={() =>
-                  openUrlService.open(
-                    'https://www.minds.com/p/monetization-terms',
-                  )
-                }
-                style={{ textDecorationLine: 'underline' }}>
+              <Link url="https://www.minds.com/p/monetization-terms">
                 Terms
-              </MText>
+              </Link>
             </B1>
           }
           selected={termsAgreed}

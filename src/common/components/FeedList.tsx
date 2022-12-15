@@ -96,6 +96,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
   onEndReached?: () => void;
+  testID?: string;
 };
 
 /**
@@ -213,7 +214,7 @@ export class FeedList<T extends BaseModel> extends Component<
   /**
    * Get footer
    */
-  getFooter = (): React.ReactElement | null => {
+  getFooter = observer((): React.ReactElement | null => {
     if (this.props.placeholder && !this.props.feedStore.loaded) {
       return this.getPlaceholder();
     }
@@ -228,7 +229,7 @@ export class FeedList<T extends BaseModel> extends Component<
       return this.getErrorLoading();
     }
     return null;
-  };
+  });
 
   /**
    * Get error loading component
@@ -367,7 +368,7 @@ export class FeedList<T extends BaseModel> extends Component<
     const AnimatedFlashList = this.AnimatedFlashList;
 
     return (
-      <View style={containerStyle}>
+      <View testID={this.props.testID} style={containerStyle}>
         <AnimatedFlashList
           estimatedItemSize={450}
           ref={this.listRef}

@@ -4,7 +4,7 @@ import i18n from '../../../common/services/i18n.service';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
-} from '../WalletScreen';
+} from '../../v3/WalletScreen';
 import { WalletStoreType } from '../createWalletStore';
 import { observer } from 'mobx-react';
 import { ScrollView, StyleSheet, View } from 'react-native';

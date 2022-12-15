@@ -232,7 +232,6 @@ const AuthStack = function () {
       <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
       <TransparentLayer />
       <AuthStackNav.Navigator
-        headerMode="none"
         // @ts-ignore
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen
@@ -411,15 +410,8 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              name="BoostChannelScreen"
-              getComponent={() =>
-                require('~/boost/v2/BoostChannelScreen').default
-              }
-              options={modalOptions}
-            />
-            <RootStackNav.Screen
-              name="BoostPostScreen"
-              getComponent={() => require('~/boost/v2/BoostPostScreen').default}
+              name="BoostScreen"
+              getComponent={() => require('~/boost/v2/BoostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen
@@ -476,6 +468,11 @@ const RootStack = observer(function () {
                 require('../common/components/AutoComplete/ChannelSelectScreen')
                   .default
               }
+            />
+            <RootStackNav.Screen
+              name="BoostScreenV2"
+              getComponent={() => require('~/modules/boost').BoostStack}
+              options={modalOptions}
             />
           </>
         )
