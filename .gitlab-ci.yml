@@ -113,13 +113,11 @@ build:ios_release_candidate:
     - *delete_browserstack
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-  only:
-    refs:
-      - develop
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
 
 # Build iOS for master branch
 build:ios_production:
@@ -175,6 +173,8 @@ build:androidproduction:
       changes:
         - master
       when: on_success
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
     - if: $CI_COMMIT_BRANCH == "develop"
       when: on_success
     - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
@@ -350,13 +350,11 @@ upload:s3:oss:rc: # Upload to S3
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
   dependencies:
     - build:androidproduction
-  only:
-    refs:
-      - develop
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
 
 upload:browserstack:oss:rc: # Upload to Browserstack
   <<: *upload_browserstack
@@ -366,13 +364,11 @@ upload:browserstack:oss:rc: # Upload to Browserstack
     - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
-  only:
-    refs:
-      - develop
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
 
 # Upload MR builds to browserstack
 upload:browserstack:mr:
@@ -510,6 +506,7 @@ release:ios_rc_testflight:
   only:
     refs:
       - develop
+      - master
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
