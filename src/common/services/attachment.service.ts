@@ -117,27 +117,30 @@ class AttachmentService {
    */
   uploadToS3(file, progress) {
     return new Cancelable(async (resolve, reject, onCancel) => {
-      const response = await api.put<S3Response>(
-        'api/v2/media/upload/prepare/video',
-      );
-      // upload file to s3
-      const uploadPromise = api
-        .uploadToS3(response.lease, file, progress)
-        .then(async () => {
-          // complete upload and wait for status
-          const { status } = await api.put(
-            `api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`,
-          );
+      try {
+        const response = await api.put<S3Response>(
+          'api/v2/media/upload/prepare/video',
+        );
 
-          // if false is returned, upload fails message will be showed
-          return status === 'success' ? { guid: response.lease.guid } : false;
+        // upload file to s3
+        const uploadPromise = api.uploadToS3(response.lease, file, progress);
+        // handle cancel
+        onCancel(cb => {
+          uploadPromise.cancel();
+          cb();
         });
-      // handle cancel
-      onCancel(cb => {
-        uploadPromise.cancel();
-        cb();
-      });
-      resolve(uploadPromise);
+        // await upload
+        await uploadPromise;
+
+        const { status } = await api.put(
+          `api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`,
+        );
+
+        // if false is returned, upload fails message will be showed
+        resolve(status === 'success' ? { guid: response.lease.guid } : false);
+      } catch (error) {
+        reject(error);
+      }
     }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
