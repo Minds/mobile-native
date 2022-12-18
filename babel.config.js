@@ -1,5 +1,7 @@
 const path = require('path');
 
+process.env.TAMAGUI_TARGET = 'native';
+
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
@@ -7,6 +9,20 @@ module.exports = {
       '@babel/plugin-proposal-decorators',
       {
         legacy: true,
+      },
+    ],
+    [
+      'transform-inline-environment-variables',
+      {
+        include: 'TAMAGUI_TARGET',
+      },
+    ],
+    [
+      '@tamagui/babel-plugin',
+      {
+        exclude: /node_modules/,
+        config: './tamagui.config.ts',
+        components: ['minds', 'tamagui'],
       },
     ],
     [
@@ -34,6 +50,7 @@ module.exports = {
           services: path.resolve(__dirname, 'src/services'),
           styles: path.resolve(__dirname, 'src/styles'),
           utils: path.resolve(__dirname, 'src/utils'),
+          minds: path.resolve(__dirname, 'packages/design-system/src'),
         },
       },
     ],

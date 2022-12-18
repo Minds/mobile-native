@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/config/buttonThemes.ts"],
+  "sourcesContent": ["import { createSemanticTheme } from './semanticTheme';\n\nexport const buttonThemes = {\n  dark_Button: createSemanticTheme('basic'),\n  light_Button: createSemanticTheme('basic'),\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,2BAAoC;AAE7B,MAAM,eAAe;AAAA,EAC1B,iBAAa,0CAAoB,OAAO;AAAA,EACxC,kBAAc,0CAAoB,OAAO;AAC3C;",
+  "names": []
+}

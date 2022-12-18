@@ -50,7 +50,9 @@
       "styles": ["src/styles"],
       "styles/*": ["src/styles/*"],
       "utils": ["src/utils"],
-      "utils/*": ["src/utils/*"]
+      "utils/*": ["src/utils/*"],
+      "minds": ["packages/design-system/src"],
+      "minds/*": ["packages/design-system/src/*"]
     },
     "types": ["jest"]
   },

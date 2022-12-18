@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/Text.tsx"],
+  "sourcesContent": ["import { styled } from '@tamagui/core';\nimport { Paragraph } from '@tamagui/text';\n\nexport const Text = styled(Paragraph, {\n  tag: 'span',\n  name: 'Text',\n  fontFamily: '$body',\n  size: '$b',\n  // margin: 0,\n  variants: {\n    type: {\n      black: {\n        fontWeight: '900',\n      },\n      bold: {\n        fontWeight: '700',\n      },\n      medium: {\n        fontWeight: '500',\n      },\n      regular: {\n        fontWeight: '400',\n      },\n    },\n  } as const,\n  defaultVariants: {\n    fontWeight: '400',\n  },\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAuB;AACvB,kBAA0B;AAEnB,MAAM,WAAO,oBAAO,uBAAW;AAAA,EACpC,KAAK;AAAA,EACL,MAAM;AAAA,EACN,YAAY;AAAA,EACZ,MAAM;AAAA,EAEN,UAAU;AAAA,IACR,MAAM;AAAA,MACJ,OAAO;AAAA,QACL,YAAY;AAAA,MACd;AAAA,MACA,MAAM;AAAA,QACJ,YAAY;AAAA,MACd;AAAA,MACA,QAAQ;AAAA,QACN,YAAY;AAAA,MACd;AAAA,MACA,SAAS;AAAA,QACP,YAAY;AAAA,MACd;AAAA,IACF;AAAA,EACF;AAAA,EACA,iBAAiB;AAAA,IACf,YAAY;AAAA,EACd;AACF,CAAC;",
+  "names": []
+}

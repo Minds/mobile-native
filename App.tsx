@@ -54,6 +54,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
+import { UIProvider } from 'minds';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -195,17 +196,22 @@ class App extends Component<Props> {
                       <FriendlyCaptchaProvider
                         ref={setFriendlyCaptchaReference}>
                         <PortalProvider>
-                          <BottomSheetModalProvider>
-                            <ErrorBoundary
-                              message="An error occurred"
-                              containerStyle={ThemedStyles.style.centered}>
-                              <WCContextProvider>
-                                <NavigationStack
-                                  key={ThemedStyles.theme + i18n.locale}
-                                />
-                              </WCContextProvider>
-                            </ErrorBoundary>
-                          </BottomSheetModalProvider>
+                          <UIProvider
+                            defaultTheme={
+                              ThemedStyles.theme === 0 ? 'dark' : 'light'
+                            }>
+                            <BottomSheetModalProvider>
+                              <ErrorBoundary
+                                message="An error occurred"
+                                containerStyle={ThemedStyles.style.centered}>
+                                <WCContextProvider>
+                                  <NavigationStack
+                                    key={ThemedStyles.theme + i18n.locale}
+                                  />
+                                </WCContextProvider>
+                              </ErrorBoundary>
+                            </BottomSheetModalProvider>
+                          </UIProvider>
                         </PortalProvider>
                       </FriendlyCaptchaProvider>
                     </AppMessageProvider>
