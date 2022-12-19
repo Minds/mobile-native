@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/index.ts"],
-  "sourcesContent": ["export * from './tamagui.config';\nexport * from './Provider';\nexport * from './Text';\nexport * from './View';\nexport * from './Button';\n"],
-  "mappings": ";;;;;;;;;;;;;;;AAAA;AAAA;AAAA,wBAAc,6BAAd;AACA,wBAAc,uBADd;AAEA,wBAAc,mBAFd;AAGA,wBAAc,mBAHd;AAIA,wBAAc,qBAJd;",
-  "names": []
-}

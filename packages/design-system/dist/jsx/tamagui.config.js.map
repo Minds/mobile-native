@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/tamagui.config.ts"],
-  "sourcesContent": ["import { createTamagui } from '@tamagui/core';\n// import * as ReactNative from 'react-native';\n// setupReactNative(ReactNative);\n\nimport { shorthands } from '@tamagui/shorthands';\nimport { animations } from './config/animation';\nimport { media } from './config/media';\nimport { themes } from './config/themes';\nimport { tokens } from './config/tokens';\nimport { fonts } from './config/fonts';\n\nexport const config = createTamagui({\n  // shouldAddPrefersColorThemes: true,\n  // themeClassNameOnRoot: true,\n  animations,\n  shorthands,\n  media,\n  themes,\n  tokens,\n  fonts,\n});\n\nexport type AppConfig = typeof config;\n\ndeclare module '@tamagui/core' {\n  // overrides TamaguiCustomConfig so your custom types work everywhere you import `tamagui`\n  interface TamaguiCustomConfig extends AppConfig {}\n  type ThemeFallbackValue = {};\n}\n\nexport default config;\n"],
-  "mappings": "AAAA,SAAS,qBAAqB;AAI9B,SAAS,kBAAkB;AAC3B,SAAS,kBAAkB;AAC3B,SAAS,aAAa;AACtB,SAAS,cAAc;AACvB,SAAS,cAAc;AACvB,SAAS,aAAa;AAEf,MAAM,SAAS,cAAc;AAAA,EAGlC;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACF,CAAC;AAUD,IAAO,yBAAQ;",
-  "names": []
-}

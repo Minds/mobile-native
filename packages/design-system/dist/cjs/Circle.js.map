@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/Circle.tsx"],
-  "sourcesContent": ["import { GetProps, Stack, styled } from '@tamagui/core';\n\nexport const Circle = styled(Stack, {\n  alignItems: 'center',\n  justifyContent: 'center',\n  borderRadius: '$12',\n  overflow: 'hidden',\n  backgroundColor: '$background-alternative-color-4',\n  variants: {\n    size: {\n      '...size': (size, { tokens }) => {\n        return {\n          width: tokens.size[size] ?? size,\n          height: tokens.size[size] ?? size,\n        };\n      },\n    },\n  } as const,\n});\nexport type CircleProps = GetProps<typeof Circle>;\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAwC;AAEjC,MAAM,aAAS,oBAAO,mBAAO;AAAA,EAClC,YAAY;AAAA,EACZ,gBAAgB;AAAA,EAChB,cAAc;AAAA,EACd,UAAU;AAAA,EACV,iBAAiB;AAAA,EACjB,UAAU;AAAA,IACR,MAAM;AAAA,MACJ,WAAW,CAAC,MAAM,EAAE,OAAO,MAAM;AAC/B,eAAO;AAAA,UACL,OAAO,OAAO,KAAK,SAAS;AAAA,UAC5B,QAAQ,OAAO,KAAK,SAAS;AAAA,QAC/B;AAAA,MACF;AAAA,IACF;AAAA,EACF;AACF,CAAC;",
-  "names": []
-}

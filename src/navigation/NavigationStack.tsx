@@ -266,6 +266,7 @@ const defaultScreenOptions: StackNavigationOptions = {
 const RootStack = observer(function () {
   const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
+  const tamagui = true;
   const shouldShowEmailVerification =
     !is_email_confirmed &&
     !sessionService.switchingAccount &&
@@ -275,7 +276,16 @@ const RootStack = observer(function () {
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
-        shouldShowEmailVerification ? (
+        tamagui ? (
+          <RootStackNav.Screen
+            name="StoryBook"
+            getComponent={() => require('modules/storybook').default}
+            options={{
+              title: 'TAMAGUI',
+              ...TransitionPresets.RevealFromBottomAndroid,
+            }}
+          />
+        ) : shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}

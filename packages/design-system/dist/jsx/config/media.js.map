@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/config/media.ts"],
-  "sourcesContent": ["import { createMedia } from '@tamagui/react-native-media-driver';\n\nexport const media = createMedia({\n  xs: { maxWidth: 320 },\n  sm: { maxWidth: 480 },\n  md: { maxWidth: 640 },\n  lg: { maxWidth: 960 },\n  xl: { maxWidth: 1024 },\n  gtXs: { minWidth: 320 + 1 },\n  gtSm: { minWidth: 480 + 1 },\n  gtMd: { minWidth: 640 + 1 },\n  gtLg: { minWidth: 960 + 1 },\n  gtXl: { minWidth: 1024 + 1 },\n  short: { maxHeight: 480 },\n  tall: { minHeight: 820 },\n  hoverNone: { hover: 'none' },\n  pointerCoarse: { pointer: 'coarse' },\n});\n"],
-  "mappings": "AAAA,SAAS,mBAAmB;AAErB,MAAM,QAAQ,YAAY;AAAA,EAC/B,IAAI,EAAE,UAAU,IAAI;AAAA,EACpB,IAAI,EAAE,UAAU,IAAI;AAAA,EACpB,IAAI,EAAE,UAAU,IAAI;AAAA,EACpB,IAAI,EAAE,UAAU,IAAI;AAAA,EACpB,IAAI,EAAE,UAAU,KAAK;AAAA,EACrB,MAAM,EAAE,UAAU,MAAM,EAAE;AAAA,EAC1B,MAAM,EAAE,UAAU,MAAM,EAAE;AAAA,EAC1B,MAAM,EAAE,UAAU,MAAM,EAAE;AAAA,EAC1B,MAAM,EAAE,UAAU,MAAM,EAAE;AAAA,EAC1B,MAAM,EAAE,UAAU,OAAO,EAAE;AAAA,EAC3B,OAAO,EAAE,WAAW,IAAI;AAAA,EACxB,MAAM,EAAE,WAAW,IAAI;AAAA,EACvB,WAAW,EAAE,OAAO,OAAO;AAAA,EAC3B,eAAe,EAAE,SAAS,SAAS;AACrC,CAAC;",
-  "names": []
-}

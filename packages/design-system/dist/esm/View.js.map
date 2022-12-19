@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/View.ts"],
-  "sourcesContent": ["import { styled, Stack } from '@tamagui/core';\n\nexport const Layout = styled(Stack, {\n  tag: 'layout',\n  backgroundColor: '$background',\n  flex: 1,\n});\n\nexport { Stack as View };\n"],
-  "mappings": "AAAA,SAAS,QAAQ,aAAa;AAEvB,MAAM,SAAS,OAAO,OAAO;AAAA,EAClC,KAAK;AAAA,EACL,iBAAiB;AAAA,EACjB,MAAM;AACR,CAAC;",
-  "names": []
-}

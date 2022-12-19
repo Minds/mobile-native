@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/config/animation.ts"],
-  "sourcesContent": ["import { createAnimations } from '@tamagui/animations-react-native';\n\nexport const animations = createAnimations({\n  bouncy: {\n    type: 'spring',\n    damping: 10,\n    mass: 0.9,\n    stiffness: 100,\n  },\n  lazy: {\n    type: 'spring',\n    damping: 20,\n    stiffness: 60,\n  },\n  slow: {\n    type: 'spring',\n    damping: 15,\n    stiffness: 40,\n  },\n  quick: {\n    type: 'spring',\n    damping: 20,\n    mass: 1.2,\n    stiffness: 250,\n  },\n  tooltip: {\n    type: 'spring',\n    damping: 10,\n    mass: 0.9,\n    stiffness: 100,\n  },\n});\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qCAAiC;AAE1B,MAAM,iBAAa,iDAAiB;AAAA,EACzC,QAAQ;AAAA,IACN,MAAM;AAAA,IACN,SAAS;AAAA,IACT,MAAM;AAAA,IACN,WAAW;AAAA,EACb;AAAA,EACA,MAAM;AAAA,IACJ,MAAM;AAAA,IACN,SAAS;AAAA,IACT,WAAW;AAAA,EACb;AAAA,EACA,MAAM;AAAA,IACJ,MAAM;AAAA,IACN,SAAS;AAAA,IACT,WAAW;AAAA,EACb;AAAA,EACA,OAAO;AAAA,IACL,MAAM;AAAA,IACN,SAAS;AAAA,IACT,MAAM;AAAA,IACN,WAAW;AAAA,EACb;AAAA,EACA,SAAS;AAAA,IACP,MAAM;AAAA,IACN,SAAS;AAAA,IACT,MAAM;AAAA,IACN,WAAW;AAAA,EACb;AACF,CAAC;",
-  "names": []
-}

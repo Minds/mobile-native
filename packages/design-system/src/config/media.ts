@@ -1,7 +1,7 @@
 import { createMedia } from '@tamagui/react-native-media-driver';
 
 export const media = createMedia({
-  xs: { maxWidth: 320 },
+  xs: { minWidth: 100, maxWidth: 320 },
   sm: { maxWidth: 480 },
   md: { maxWidth: 640 },
   lg: { maxWidth: 960 },
