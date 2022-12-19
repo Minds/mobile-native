@@ -7588,6 +7588,7 @@ export declare const config: import('@tamagui/core').TamaguiInternalConfig<
 export type AppConfig = typeof config;
 declare module '@tamagui/core' {
   interface TamaguiCustomConfig extends AppConfig {}
+  type ThemeFallbackValue = {};
 }
 export default config;
 //# sourceMappingURL=tamagui.config.d.ts.map

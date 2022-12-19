@@ -23,7 +23,6 @@ var __toCommonJS = mod =>
 var src_exports = {};
 module.exports = __toCommonJS(src_exports);
 __reExport(src_exports, require('./tamagui.config'), module.exports);
-__reExport(src_exports, require('./Circle'), module.exports);
 __reExport(src_exports, require('./Provider'), module.exports);
 __reExport(src_exports, require('./Text'), module.exports);
 __reExport(src_exports, require('./View'), module.exports);
