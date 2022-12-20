@@ -37,7 +37,8 @@ export default class Boost extends Component {
   }
 
   renderReason() {
-    return this.props.boost.rejection_reason !== null ? (
+    return this.props.boost.rejection_reason &&
+      this.props.boost.rejection_reason >= 0 ? (
       <View style={styles.rejection}>
         <IonIcon name="warning" style={styles.icon} size={18} />
         <B2>
