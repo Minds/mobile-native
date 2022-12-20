@@ -7,4 +7,5 @@ export default {
   upload: jest.fn(),
   delete: jest.fn(),
   clearCookies: jest.fn(),
+  buildAuthorizationHeader: jest.fn(),
 };

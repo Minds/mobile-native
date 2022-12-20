@@ -144,6 +144,7 @@ export const MINDS_DEEPLINK = [
   ['channels/:username', 'Channel'],
   ['blog/:filter', 'BlogList'],
   ['blog/view/:guid', 'BlogView'],
+  ['composer', 'Compose', 'navigate'],
   [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
   ['wallet/:currency/:section', 'More/Wallet', 'navigate'],

@@ -3,6 +3,7 @@ import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
+import apiService from './api.service';
 
 /**
  * Deeplinks router
@@ -39,7 +40,7 @@ class DeeplinksRouter {
    */
   parseQueryParams(url) {
     let regex = /[?&]([^=#]+)=([^&#]*)/g,
-      params = {},
+      params: any = {},
       match;
 
     while ((match = regex.exec(url))) {
@@ -88,9 +89,26 @@ class DeeplinksRouter {
     if (url.endsWith('/')) {
       url = url.substr(0, url.length - 1);
     }
-    const route = this._getUrlRoute(url, cleanURL);
+    const route = this.getUrlRoute(url, cleanURL);
+
+    const params = this.parseQueryParams(cleanURL);
+
+    // open deeplinks in a webview
+    if (
+      params &&
+      params.webview === '1' &&
+      url.startsWith('https://www.minds.com/' || url.startsWith('mindsapp://'))
+    ) {
+      navigationService.navigate('WebView', {
+        url: url.replace('mindsapp://', 'https://www.minds.com/'),
+        headers: apiService.buildAuthorizationHeader(),
+      });
+      return true;
+    }
 
     if (route && route.screen !== 'Redirect') {
+      this.handleUtmParams(url, route);
+
       const screens = route.screen.split('/');
       if (screens.length === 1) {
         navigationService[route.type](route.screen, route.params);
@@ -110,6 +128,15 @@ class DeeplinksRouter {
       return true;
     }
     return !!route;
+  }
+
+  /**
+   * Handles the UTM campaign forwarding the request to the backend
+   */
+  private handleUtmParams(url: string, route: Route) {
+    if (route.params?.utm_campaign) {
+      apiService.get(url);
+    }
   }
 
   nestedScreen(data, params) {
@@ -134,7 +161,7 @@ class DeeplinksRouter {
   /**
    * Get route for given url
    */
-  _getUrlRoute(url, cleanURL) {
+  private getUrlRoute(url, cleanURL) {
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];
       const match = route.re.exec(cleanURL);
@@ -145,7 +172,7 @@ class DeeplinksRouter {
 
         return {
           screen: route.screen,
-          params: { ...params, ...urlParams, ...route.routeParams },
+          params: { ...params, ...urlParams, ...route.routeParams } as any,
           type: route.type,
         };
       }
@@ -164,5 +191,7 @@ class DeeplinksRouter {
     });
   }
 }
+
+type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
 
 export default new DeeplinksRouter();

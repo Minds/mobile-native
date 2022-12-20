@@ -439,8 +439,8 @@ export class ApiService {
     return headers;
   }
 
-  buildAuthorizationHeader(token: string) {
-    return { Authorization: `Bearer ${token}` };
+  buildAuthorizationHeader(token?: string) {
+    return { Authorization: `Bearer ${token || this.accessToken}` };
   }
 
   /**

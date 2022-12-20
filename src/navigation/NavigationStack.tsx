@@ -84,6 +84,10 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="WebView"
+          getComponent={() => require('~/common/screens/WebViewScreen').default}
+        />
+        <AppStackNav.Screen
           name="PortraitViewerScreen"
           getComponent={() =>
             require('~/portrait/PortraitViewerScreen').withModal
