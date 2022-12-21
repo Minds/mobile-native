@@ -145,7 +145,7 @@ const InitialEmailVerificationScreen = () => {
   );
   return (
     <CodeConfirmScreen
-      onBack={localStore.cancel}
+      onBack={AuthService.justRegistered ? undefined : localStore.cancel}
       title={i18n.t('onboarding.verifyEmailAddress')}
       onVerify={localStore.submit}
       description={i18n.t('auth.2faEmailDescription')}
