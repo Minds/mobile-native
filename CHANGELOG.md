@@ -2,6 +2,19 @@
 
 Minds Mobile
 
+## 4.31.1 - 2022-12-22
+
+### Changed
+
+- Deeplink to the composer
+- Forward UTM codes to the backend when handling a deeplink
+- Optional webview deeplink handler 
+- Fix error tapping the group name
+- Fix boost console rejection message
+- Fix video player controls hiding the video
+- Fix two taps required to open the full-screen video player
+- Pause previous video when opening the full-screen video player
+
 ## 4.31.0 - 2022-12-16
 
 ### Changed
