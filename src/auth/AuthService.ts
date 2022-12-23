@@ -271,11 +271,11 @@ class AuthService {
   /**
    * Unregister the push token for a session index
    */
-  unregisterTokenFrom(index: number) {
+  async unregisterTokenFrom(index: number) {
     try {
       const deviceToken = sessionService.deviceToken;
       if (deviceToken) {
-        return sessionService.apiServiceInstances[index].delete(
+        return await sessionService.apiServiceInstances[index].delete(
           `api/v3/notifications/push/token/${deviceToken}`,
         );
       }
