@@ -7,6 +7,7 @@ import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
 import NavigationService from '../navigation/NavigationService';
 import sessionService from './../common/services/session.service';
 import i18n from '../common/services/i18n.service';
+import { showNotification } from 'AppMessages';
 
 export type TFA = 'sms' | 'totp';
 
@@ -179,9 +180,31 @@ class AuthService {
   }
 
   /**
+   * Disable channel
+   */
+  async disable() {
+    try {
+      await this.logout(() => api.delete('api/v1/channel'));
+    } catch (e) {
+      showNotification('Error disabling the channel');
+    }
+  }
+
+  /**
+   * Delete channel
+   */
+  async delete(password) {
+    try {
+      await this.logout(() => api.post('api/v2/settings/delete', { password }));
+    } catch (e) {
+      showNotification('Error deleting the channel');
+    }
+  }
+
+  /**
    * Logout user
    */
-  async logout(): Promise<boolean> {
+  async logout(preLogoutCallBack?: () => void): Promise<boolean> {
     this.justRegistered = false;
     try {
       if (session.sessionsCount > 0) {
@@ -193,6 +216,10 @@ class AuthService {
 
       // delete device token first
       await this.unregisterTokenFrom(sessionService.activeIndex);
+
+      if (preLogoutCallBack) {
+        await preLogoutCallBack();
+      }
 
       api.post('api/v3/oauth/revoke');
 
