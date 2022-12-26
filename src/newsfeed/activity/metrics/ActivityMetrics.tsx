@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { Icon } from 'react-native-elements';
+
 import _ from 'lodash';
 
-import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import i18n from '../../../common/services/i18n.service';
-import i18nService from '../../../common/services/i18n.service';
-import abbrev from '../../../common/helpers/abbrev';
-import LockTag from '../../../wire/v2/lock/LockTag';
-import type { SupportTiersType } from '../../../wire/WireTypes';
-import { getLockType } from '../../../wire/v2/lock/Lock';
-import MText from '../../../common/components/MText';
+import ThemedStyles from '~/styles/ThemedStyles';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import i18n from '~/common/services/i18n.service';
+import abbrev from '~/common/helpers/abbrev';
+import LockTag from '~/wire/v2/lock/LockTag';
+import type { SupportTiersType } from '~/wire/WireTypes';
+import { getLockType } from '~/wire/v2/lock/Lock';
+import MText from '~/common/components/MText';
 import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 
 type PropsType = {
@@ -31,7 +30,6 @@ export default class ActivityMetrics extends Component<PropsType> {
    */
   render() {
     const entity = this.props.entity;
-    const theme = ThemedStyles.style;
 
     const support_tier: SupportTiersType | null =
       entity.wire_threshold &&
@@ -57,21 +55,6 @@ export default class ActivityMetrics extends Component<PropsType> {
           {date}
         </MText>
 
-        {this.props.entity.boosted ? (
-          <View style={boostedContainerStyle}>
-            <Icon
-              type="ionicon"
-              name="md-trending-up"
-              size={18}
-              style={theme.marginRight}
-              color={ThemedStyles.getColor('Link')}
-            />
-
-            <MText style={boostedTextStyle}>
-              {i18nService.t('boosted').toUpperCase()}
-            </MText>
-          </View>
-        ) : undefined}
         {lockType !== null && <LockTag type={lockType} />}
         {Boolean(this.props.entity.supermind) &&
           !this.props.hideSupermindLabel && <SupermindLabel />}
@@ -90,15 +73,4 @@ const textStyle = ThemedStyles.combine(
   'colorSecondaryText',
   'fontM',
   'paddingVertical',
-);
-
-const boostedTextStyle = ThemedStyles.combine(
-  'marginRight2x',
-  'colorLink',
-  'fontS',
-);
-
-const boostedContainerStyle = ThemedStyles.combine(
-  'rowJustifyStart',
-  'centered',
 );
