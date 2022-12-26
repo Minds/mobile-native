@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 import i18n from '../../common/services/i18n.service';
 import { B1 } from '../../common/ui';
@@ -16,6 +17,7 @@ type BoostTabProps = {
 
 const BoostTab = ({ localStore }: BoostTabProps) => {
   const theme = ThemedStyles.style;
+  const [accepted, setAccepted] = React.useState(false);
   const mapping: Record<BoostType, { title: string; description: string }> = {
     post: {
       title: i18n.t('boosts.tabNewsfeed'),
@@ -42,10 +44,21 @@ const BoostTab = ({ localStore }: BoostTabProps) => {
         </B1>
         <BoostInput localStore={localStore} />
         {localStore.payment === 'cash' ? (
-          <StripeCardSelector
-            selectedCardId={localStore.selectedCardId}
-            onCardSelected={card => localStore.setSelectedCardId(card.id)}
-          />
+          <>
+            <StripeCardSelector
+              selectedCardId={localStore.selectedCardId}
+              onCardSelected={card => localStore.setSelectedCardId(card.id)}
+            />
+            <MenuItemOption
+              onPress={() => localStore.toggleNonRefundable()}
+              multiLine
+              title={<B1>{i18n.t('boosts.nonRefundable')}</B1>}
+              selected={localStore.nonRefundableAccepted}
+              mode="checkbox"
+              iconColor={localStore.nonRefundableError ? 'Alert' : undefined}
+              borderless
+            />
+          </>
         ) : (
           <TokenSelector localStore={localStore} />
         )}
