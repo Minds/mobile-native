@@ -9,9 +9,11 @@ import React from 'react';
 
 export type InAppVerificationStackParamList = {
   InAppVerificationOnboarding: undefined;
-  InAppVerificationCodeRequest: {
-    requestAgain?: boolean;
-  };
+  InAppVerificationCodeRequest:
+    | {
+        requestAgain?: boolean;
+      }
+    | undefined;
   InAppVerificationCamera: {
     code: string;
     deviceId: string;

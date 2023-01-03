@@ -16,7 +16,7 @@ export default function InAppVerificationOnboardingScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [termsAgreed, setTermsAgreed] = useState(false);
   const onContinue = () => {
-    navigation.navigate('InAppVerificationCodeRequest', {});
+    navigation.navigate('InAppVerificationCodeRequest');
   };
 
   return (
