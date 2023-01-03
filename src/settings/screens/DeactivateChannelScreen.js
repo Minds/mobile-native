@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { ScrollView, Alert } from 'react-native';
 import { Button, ScreenSection, B1 } from '~ui';
-import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import AuthService from '~/auth/AuthService';
 
 /**
  * Delete Channel Screen
@@ -15,7 +15,7 @@ export default class DeactivateChannelScreen extends Component {
       i18n.t('attention'),
       i18n.t('settings.disableChannelConfirm'),
       [
-        { text: i18n.t('yes'), onPress: () => SettingsService.disable() },
+        { text: i18n.t('yes'), onPress: () => AuthService.disable() },
         { text: i18n.t('no') },
       ],
       { cancelable: false },
