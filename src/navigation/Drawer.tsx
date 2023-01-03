@@ -24,6 +24,9 @@ import { IS_IOS } from '~/config/Config';
 import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 import { NavigationProp } from '@react-navigation/native';
+import { api } from '~/modules/in-app-verification/api';
+import CameraRoll from '@react-native-community/cameraroll';
+import permissionsService from '~/common/services/permissions.service';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -147,6 +150,39 @@ const getOptionsList = (
       icon: 'group',
       onPress: () => {
         navigation.navigate('GroupsList');
+      },
+    },
+    {
+      name: 'Verify account',
+      icon: 'group',
+      onPress: async () => {
+        console.log(await permissionsService.readExternalStorage());
+        const photos = await CameraRoll.getPhotos({
+          first: 1,
+          assetType: 'Photos',
+        });
+
+        // use the same file as video and image
+        const image = photos.edges[0].node;
+        const video = photos.edges[0].node;
+
+        try {
+          const result = await api.submitVerification(
+            'fakeDeviceID',
+            image,
+            video,
+            '[{}]',
+            '-31.719078, -60.533184',
+          );
+          console.log('RESULT', result);
+        } catch (error) {
+          console.log('Failed', error);
+        }
+
+        // navigation.navigate('InAppVerification', {
+        //   screen: 'InAppVerificationCamera',
+        //   params: { code: 234444 },
+        // });
       },
     },
     {
