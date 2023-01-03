@@ -269,7 +269,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
           ]
         }
       >
-        Sep 20
+        Sep 20, 2022
       </Text>
       <View
         style={
@@ -563,7 +563,7 @@ exports[`Notification An offer expires 1`] = `
           ]
         }
       >
-        Sep 20
+        Sep 20, 2022
       </Text>
       <View
         style={
@@ -857,7 +857,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
           ]
         }
       >
-        Sep 20
+        Sep 20, 2022
       </Text>
       <View
         style={
@@ -1151,7 +1151,7 @@ exports[`Notification Receiver declines an offer 1`] = `
           ]
         }
       >
-        Sep 20
+        Sep 20, 2022
       </Text>
       <View
         style={
@@ -1445,7 +1445,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
           ]
         }
       >
-        Sep 20
+        Sep 20, 2022
       </Text>
       <View
         style={
