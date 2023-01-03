@@ -285,7 +285,7 @@
   "boosts": {
     "emptyList": "There is no boosts to display",
     "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
-    "nonRefundable":"I understand this cash transaction is non-refundable once the boost is approved",
+    "nonRefundable": "I understand this cash transaction is non-refundable once the boost is approved",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",
