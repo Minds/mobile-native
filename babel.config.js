@@ -22,7 +22,7 @@ module.exports = {
       {
         exclude: /node_modules/,
         config: './tamagui.config.ts',
-        components: ['minds', 'tamagui'],
+        components: ['@minds/ui', 'tamagui'],
       },
     ],
     [
@@ -50,7 +50,7 @@ module.exports = {
           services: path.resolve(__dirname, 'src/services'),
           styles: path.resolve(__dirname, 'src/styles'),
           utils: path.resolve(__dirname, 'src/utils'),
-          minds: path.resolve(__dirname, 'packages/design-system/src'),
+          '@minds/ui': path.resolve(__dirname, 'packages/design-system/src'),
         },
       },
     ],

@@ -54,7 +54,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
-import { UIProvider } from 'minds';
+import { UIProvider } from '@minds/ui';
 
 YellowBox.ignoreWarnings(['']);
 

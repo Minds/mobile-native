@@ -1,5 +1,5 @@
 {
-  "name": "minds",
+  "name": "@minds/ui",
   "version": "1.0.0",
   "license": "MIT",
   "types": "./types/index.d.ts",
@@ -15,21 +15,21 @@
     "*.css"
   ],
   "dependencies": {
-    "@tamagui/animations-react-native": "^1.0.1-rc.1.5",
-    "@tamagui/core": "^1.0.1-rc.1.5",
-    "@tamagui/font-size": "1.0.1-rc.2",
-    "@tamagui/get-button-sized": "1.0.1-rc.2",
-    "@tamagui/helpers-tamagui": "1.0.1-rc.2",
-    "@tamagui/react-native-media-driver": "1.0.1-rc.2",
-    "@tamagui/shorthands": "^1.0.1-rc.1.5",
-    "@tamagui/stacks": "1.0.1-rc.2",
-    "@tamagui/text": "1.0.1-rc.2"
+    "@tamagui/animations-react-native": "^1.0.2",
+    "@tamagui/core": "^1.0.2",
+    "@tamagui/font-size": "1.0.2",
+    "@tamagui/get-button-sized": "1.0.2",
+    "@tamagui/helpers-tamagui": "1.0.2",
+    "@tamagui/react-native-media-driver": "1.0.2",
+    "@tamagui/shorthands": "^1.0.2",
+    "@tamagui/stacks": "1.0.2",
+    "@tamagui/text": "1.0.2"
   },
   "scripts": {
     "build": "tamagui-build",
     "watch": "tamagui-build --watch"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.0.1-rc.1.5"
+    "@tamagui/build": "^1.0.2"
   }
 }

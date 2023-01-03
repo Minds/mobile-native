@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, View } from 'minds';
-import { Theme } from '@tamagui/core';
+import { Button, View, Theme } from '@minds/ui';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';

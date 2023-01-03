@@ -27,7 +27,6 @@ export function UIProvider({
             mt="$6"
             mb="$2"
             mx="$3"
-            // theme={'primary'}
             onPress={() =>
               setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
             }>

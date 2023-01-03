@@ -1,3 +1,3 @@
-import { config } from 'minds';
+import { config } from '@minds/ui';
 
 export default config;
