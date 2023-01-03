@@ -228,11 +228,11 @@ export const createOcrStore = ({
 
     // on iOS we can use the format size, on android we need to fallback to the real frame size returned by the OCR processor
     if (IS_IOS) {
-      this.pixelRatioX = layout.width / format.photoHeight;
-      this.pixelRatioY = layout.height / format.photoWidth;
-      this.targetCenterX = format.photoHeight / 2;
-      this.targetCenterY = format.photoWidth / 2;
-      this.targetWidth = format.photoHeight * TARGET_WIDTH_RATIO;
+      this.pixelRatioX = layout.width / format.videoHeight;
+      this.pixelRatioY = layout.height / format.videoWidth;
+      this.targetCenterX = format.videoHeight / 2;
+      this.targetCenterY = format.videoWidth / 2;
+      this.targetWidth = format.videoHeight * TARGET_WIDTH_RATIO;
     }
   },
   validate(data: OCRFrame): boolean {
@@ -253,8 +253,10 @@ export const createOcrStore = ({
         const text = block.text.replace(' ', '');
 
         if (
-          Math.abs(block.frame.x - this.targetCenterX) < threshold &&
-          Math.abs(block.frame.y - this.targetCenterY) < threshold &&
+          Math.abs(block.frame.boundingCenterX - this.targetCenterX) <
+            threshold &&
+          Math.abs(block.frame.boundingCenterY - this.targetCenterY) <
+            threshold &&
           Math.abs(block.frame.width - this.targetWidth) < threshold * 2 &&
           this.similar(text)
         ) {
