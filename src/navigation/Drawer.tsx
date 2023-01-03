@@ -171,7 +171,7 @@ const getOptionsList = (
             'fakeDeviceID',
             image,
             video,
-            '[{}]',
+            '{"gyro":[{"x": 1, "y": 1, "z": 1}], acel:[{"x": 1, "y": 1, "z": 1}]}',
             '-31.719078, -60.533184',
           );
           console.log('RESULT', result);
