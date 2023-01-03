@@ -17,7 +17,6 @@ type BoostTabProps = {
 
 const BoostTab = ({ localStore }: BoostTabProps) => {
   const theme = ThemedStyles.style;
-  const [accepted, setAccepted] = React.useState(false);
   const mapping: Record<BoostType, { title: string; description: string }> = {
     post: {
       title: i18n.t('boosts.tabNewsfeed'),
