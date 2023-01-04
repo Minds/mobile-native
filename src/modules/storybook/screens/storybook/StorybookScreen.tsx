@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Text, Theme } from '@minds/ui';
+import { Button, View, Text } from '@minds/ui';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -7,24 +7,16 @@ import { useNavigation } from '@react-navigation/native';
 export function StorybookScreen(): JSX.Element {
   const { navigate, goBack } = useNavigation();
   return (
-    <View p={'$2'}>
-      <View backgroundColor="$background" br={'$4'} mt="$2" fd="row">
+    <View f={1} p={'$2'}>
+      <View f={1} backgroundColor="$background" br={'$4'} mt="$2" fd="row">
         <Texts type="black" />
         <Texts type="bold" />
         <Texts type="medium" />
         <Texts />
       </View>
-      <Theme inverse>
-        <View backgroundColor="$background" br={'$4'} mt="$2" fd="row">
-          <Texts type="black" />
-          <Texts type="bold" />
-          <Texts type="medium" />
-          <Texts />
-        </View>
-      </Theme>
-      <View fd={'row'} mt="$3" space>
+      <View fd={'row'} mt="$3" mb={'$5'} space>
         <Button circular onPress={goBack}>
-          {'<<'}
+          {'<'}
         </Button>
         <Button f={1} theme="success" onPress={() => navigate('Buttons')}>
           Next
@@ -41,7 +33,16 @@ function Texts({
 }): JSX.Element {
   const { t } = useTranslation('storybookModule');
   return (
-    <View f={1} p="$3" br="$5" space>
+    <View f={1} p="$1" br="$5" space>
+      <Text size="$xl1" type={type}>
+        {t('X1')}
+      </Text>
+      <Text size="$xl2" type={type}>
+        {t('X2')}
+      </Text>
+      <Text size="$xl3" type={type}>
+        {t('X3')}
+      </Text>
       <Text size="$h1" type={type}>
         {t('H1')}
       </Text>

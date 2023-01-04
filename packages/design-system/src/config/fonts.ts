@@ -2,45 +2,51 @@
 import { createFont } from '@tamagui/core';
 import { useFonts } from 'expo-font';
 
-const regularFont = 'Roboto-Regular';
-const mediumFont = 'Roboto-Medium';
-const boldFont = 'Roboto-Bold';
-const blackFont = 'Roboto-Black';
-const italicFont = 'Roboto-italic';
+const regularFont = 'Inter-Regular';
+const mediumFont = 'Inter-Medium';
+const boldFont = 'Inter-Bold';
+const blackFont = 'Inter-Black';
 
 const body = createFont({
   family: regularFont,
   size: {
-    b3: 13,
+    b3: 12,
     b2: 14,
     b1: 16,
     b: 16,
     h4: 18,
-    h3: 20,
-    h2: 24,
-    h1: 30,
+    h3: 23,
+    h2: 28,
+    h1: 34,
+    xl3: 40,
+    xl2: 48,
+    xl1: 64,
   },
   lineHeight: {
-    b3: 16,
+    b3: 17,
     b2: 20,
-    b1: 24,
-    b: 24,
-    h4: 28,
-    h3: 28,
-    h2: 32,
-    h1: 36,
+    b1: 22,
+    b: 22,
+    h4: 27,
+    h3: 32,
+    h2: 39,
+    h1: 48,
+    xl3: 48,
+    xl2: 58,
+    xl1: 72,
   },
   letterSpacing: {
     b: 0,
+    h1: -0.16,
   },
   weight: {
     b: '400',
   },
   face: {
-    '400': { normal: regularFont, italic: italicFont },
-    '500': { normal: mediumFont, italic: italicFont },
-    '700': { normal: boldFont, italic: italicFont },
-    '900': { normal: blackFont, italic: italicFont },
+    '400': { normal: regularFont },
+    '500': { normal: mediumFont },
+    '700': { normal: boldFont },
+    '900': { normal: blackFont },
   },
 });
 
@@ -50,9 +56,8 @@ export const fonts = {
 
 export const useFontsLoaded = () =>
   useFonts({
-    'Roboto-Regular': require('../assets/Roboto/Roboto-Regular.ttf'),
-    'Roboto-Medium': require('../assets/Roboto/Roboto-Medium.ttf'),
-    'Roboto-Bold': require('../assets/Roboto/Roboto-Bold.ttf'),
-    'Roboto-Black': require('../assets/Roboto/Roboto-Black.ttf'),
-    'Roboto-Italic': require('../assets/Roboto/Roboto-Italic.ttf'),
+    'Inter-Regular': require('../assets/Inter/Inter-Regular.ttf'),
+    'Inter-Medium': require('../assets/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../assets/Inter/Inter-Bold.ttf'),
+    'Inter-Black': require('../assets/Inter/Inter-Black.ttf'),
   });
