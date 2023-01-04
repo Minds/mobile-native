@@ -34,9 +34,11 @@ type StatusType =
   | 'permissionError';
 
 /**
- * Local store
+ * Verification camera store
+ *
+ * OCR recognition, video/image capture, and sensors recording
  */
-export const createOcrStore = ({
+export const createVerificationStore = ({
   code,
   deviceId,
 }: {
@@ -44,6 +46,7 @@ export const createOcrStore = ({
   deviceId: string;
 }) => ({
   hasPermission: false,
+  enabledOCR: false,
   pixelRatioX: 0,
   pixelRatioY: 0,
   targetCenterX: 0,
@@ -67,7 +70,6 @@ export const createOcrStore = ({
       case 'error':
       case 'timeout':
         this.startRecording();
-        this.status = 'running';
         break;
       case 'success':
         console.log('User Validated!');
@@ -96,6 +98,7 @@ export const createOcrStore = ({
     return this.hasPermission;
   },
   clear() {
+    this.enabledOCR = false;
     if (this.timeout !== null) {
       clearTimeout(this.timeout);
     }
@@ -122,7 +125,9 @@ export const createOcrStore = ({
   },
   async getLocation() {
     if (this.hasPermission) {
-      const location = await Location.getCurrentPositionAsync({});
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
       if (location.mocked) {
         showNotification('Mocked location is not allowed for the verification');
         NavigationService.goBack();
@@ -170,12 +175,13 @@ export const createOcrStore = ({
     });
   },
   startRecording() {
+    this.status = 'running';
     this.clear();
     this.trackSensors();
 
     // we delay the OCR to give time to record at least 1.5 seconds
     this.timeout = setTimeout(() => {
-      this.status = 'running';
+      this.enabledOCR = true;
       this.timeout = setTimeout(
         () => {
           this.status = 'timeout';
@@ -184,44 +190,46 @@ export const createOcrStore = ({
 
         TIMEOUT,
       );
-    }, 1500);
+    }, 1700);
 
-    this.camera?.startRecording({
-      onRecordingError: error => {
-        this.status = 'error';
-        this.clear();
-        console.log('Camera Error', error);
-      },
-      onRecordingFinished: async video => {
-        this.clear();
-        if (this.status === 'running' && this.camera) {
-          try {
-            const image: PhotoFile = await (IS_IOS
-              ? this.camera.takePhoto({ flash: 'off' })
-              : // The camera is slower on android so we use a snapshot
-                this.camera.takeSnapshot({
-                  quality: 85,
-                  skipMetadata: true,
-                  flash: 'off',
-                }));
+    setTimeout(() => {
+      this.camera?.startRecording({
+        onRecordingError: error => {
+          this.status = 'error';
+          this.clear();
+          console.log('Camera Error', error);
+        },
+        onRecordingFinished: async video => {
+          this.clear();
+          if (this.status === 'running' && this.camera) {
+            try {
+              const image: PhotoFile = await (IS_IOS
+                ? this.camera.takePhoto({ flash: 'off' })
+                : // The camera is slower on android so we use a snapshot
+                  this.camera.takeSnapshot({
+                    quality: 85,
+                    skipMetadata: true,
+                    flash: 'off',
+                  }));
 
-            const response = await this.submit(image, video);
+              const response = await this.submit(image, video);
 
-            if (response.status === 1) {
-              this.status = 'success';
-            } else {
+              if (response.status === 1) {
+                this.status = 'success';
+              } else {
+                this.status = 'error';
+              }
+
+              console.log('VERIFICATION', response);
+            } catch (error) {
+              console.log(error);
+              logService.exception(error);
               this.status = 'error';
             }
-
-            console.log('VERIFICATION', response);
-          } catch (error) {
-            console.log(error);
-            logService.exception(error);
-            this.status = 'error';
           }
-        }
-      },
-    });
+        },
+      });
+    }, 250);
   },
   setLayout(layout: LayoutRectangle, format: CameraDeviceFormat) {
     this.layout = layout;
@@ -243,6 +251,10 @@ export const createOcrStore = ({
       this.targetCenterX = data.result.height / 2;
       this.targetCenterY = data.result.width / 2;
       this.targetWidth = data.result.height * TARGET_WIDTH_RATIO;
+    }
+
+    if (!this.enabledOCR) {
+      return false;
     }
 
     if (data.result.blocks.length) {
@@ -283,7 +295,7 @@ export const createOcrStore = ({
   },
 });
 
-export type OcrStoreType = ReturnType<typeof createOcrStore>;
+export type VerificationStoreType = ReturnType<typeof createVerificationStore>;
 
 /**
  * Camera and format logic hook
@@ -314,17 +326,18 @@ export const useCamera = () => {
   return { format, camera, device };
 };
 
-export function useOcrCamera(code: string, deviceId: string) {
-  const store: OcrStoreType = useLocalStore(createOcrStore, { code, deviceId });
+export function useVerificationCamera(code: string, deviceId: string) {
+  const store: VerificationStoreType = useLocalStore(createVerificationStore, {
+    code,
+    deviceId,
+  });
   const { camera, device, format } = useCamera();
 
   const frameProcessor = useFrameProcessor(
     frame => {
       'worklet';
-      if (store.status === 'running') {
-        const data = scanOCR(frame);
-        runOnJS(store.validate)(data);
-      }
+      const data = scanOCR(frame);
+      runOnJS(store.validate)(data);
     },
     [store.status],
   );
@@ -337,12 +350,14 @@ export function useOcrCamera(code: string, deviceId: string) {
   React.useEffect(() => {
     if (store.hasPermission && camera.current) {
       // get geolocation
+
       store.getLocation();
       // wait for the camera to be ready
       const timer = setTimeout(() => {
         store.setCamera(camera.current);
         store.startRecording();
       }, 2000);
+
       return () => clearTimeout(timer);
     }
   }, [store.hasPermission, store, camera]);

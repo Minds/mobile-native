@@ -6,7 +6,10 @@ import { View, LayoutChangeEvent, Dimensions } from 'react-native';
 import { Camera } from 'react-native-vision-camera';
 
 import ThemedStyles from '~styles/ThemedStyles';
-import { OcrStoreType, useOcrCamera } from './OcrCamera.logic';
+import {
+  VerificationStoreType,
+  useVerificationCamera,
+} from './VerificationCamera.logic';
 import CodeMessage from './CodeMessage';
 import i18n from '~/common/services/i18n.service';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
@@ -21,14 +24,17 @@ type PropsType = {
 const TARGET_WIDTH_RATIO = 0.65;
 
 function OcrCamera({ code, deviceId }: PropsType) {
-  const { store, camera, device, format, frameProcessor } = useOcrCamera(
-    code,
-    deviceId,
-  );
+  const {
+    store,
+    camera,
+    device,
+    format,
+    frameProcessor,
+  } = useVerificationCamera(code, deviceId);
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      {device !== undefined && store.hasPermission && format && (
+      {device && store.hasPermission && format && (
         <View style={ThemedStyles.style.flexContainer}>
           <Camera
             ref={camera}
@@ -37,6 +43,7 @@ function OcrCamera({ code, deviceId }: PropsType) {
             device={device}
             format={format}
             orientation="portrait"
+            photo={true}
             video={true}
             audio={false}
             isActive={store.status === 'running'}
@@ -58,7 +65,7 @@ function OcrCamera({ code, deviceId }: PropsType) {
   );
 }
 
-const TargetFrame = observer(({ store }: { store: OcrStoreType }) => {
+const TargetFrame = observer(({ store }: { store: VerificationStoreType }) => {
   return (
     <View style={styles.rectangleContainer}>
       <View
