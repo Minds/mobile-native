@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { showNotification } from '../../../../AppMessages';
-import FitScrollView from '../../../common/components/FitScrollView';
-import Link from '../../../common/components/Link';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
+import { showNotification } from '../../../../../AppMessages';
+import FitScrollView from '../../../../common/components/FitScrollView';
+import Link from '../../../../common/components/Link';
+import MenuItem from '../../../../common/components/menus/MenuItem';
+import StripeCardSelector from '../../../../common/components/stripe-card-selector/StripeCardSelector';
 import {
   B1,
   B2,
@@ -14,10 +14,10 @@ import {
   HairlineRow,
   Screen,
   ScreenHeader,
-} from '../../../common/ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+} from '../../../../common/ui';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import { useBoostStore } from '../boost.store';
-import { useTranslation } from '../locales';
+import { useTranslation } from '../../locales';
 import { BoostStackScreenProps } from '../navigator';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;

@@ -1,10 +1,14 @@
-import BaseModel from '../common/BaseModel';
-import UserModel from '../channel/UserModel';
+import BaseModel from '~/common/BaseModel';
 import { action, extendObservable } from 'mobx';
 import logService from '~/common/services/log.service';
-import { acceptBoost, rejectBoost, revokeBoost } from './BoostService';
+import {
+  acceptBoost,
+  rejectBoost,
+  revokeBoost,
+} from '../boost-console/boost-console.api';
 import { showNotification } from 'AppMessages';
 import i18n from '~/common/services/i18n.service';
+import UserModel from '../../../channel/UserModel';
 
 /**
  * User model

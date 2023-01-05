@@ -1,12 +1,12 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
-import { showNotification } from '../../../AppMessages';
-import type { BoostType } from '../../boost/v2/createBoostStore';
-import UserModel from '../../channel/UserModel';
-import apiService from '../../common/services/api.service';
-import mindsConfigService from '../../common/services/minds-config.service';
-import ActivityModel from '../../newsfeed/ActivityModel';
-import type { WalletStoreType } from '../../wallet/v2/createWalletStore';
+import { showNotification } from '../../../../AppMessages';
+import type { BoostType } from '../../../boost/legacy/createBoostStore';
+import UserModel from '../../../channel/UserModel';
+import apiService from '../../../common/services/api.service';
+import mindsConfigService from '../../../common/services/minds-config.service';
+import ActivityModel from '../../../newsfeed/ActivityModel';
+import type { WalletStoreType } from '../../../wallet/v2/createWalletStore';
 
 type BoostStoreParams = {
   boostType: BoostType;

@@ -415,7 +415,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="BoostScreen"
-              getComponent={() => require('~/boost/v2/BoostScreen').default}
+              getComponent={() => require('~/boost/legacy/BoostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen
@@ -475,7 +475,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="BoostScreenV2"
-              getComponent={() => require('~/modules/boost').BoostStack}
+              getComponent={() => require('~/modules/boost').BoostComposerStack}
               options={modalOptions}
             />
           </>

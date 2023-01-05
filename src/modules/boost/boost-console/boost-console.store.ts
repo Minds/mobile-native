@@ -1,23 +1,19 @@
-//@ts-nocheck
-import { observable, action } from 'mobx';
-
-import OffsetListStore from '../common/stores/OffsetListStore';
-
-import BoostModel from './BoostModel';
-import BoostService from './BoostService';
-import logService from '../common/services/log.service';
-import { isAbort, isNetworkError } from '../common/services/api.service';
+import { action, observable } from 'mobx';
+import { isAbort, isNetworkError } from '~/common/services/api.service';
+import logService from '~/common/services/log.service';
+import OffsetListStore from '~/common/stores/OffsetListStore';
+import { hasVariation } from '../../../../ExperimentsProvider';
+import BoostModel from '../models/BoostModel';
+import { getBoosts, getBoostsV3 } from './boost-console.api';
 
 /**
  * Boosts Store
  */
-class BoostStore {
+class BoostConsoleStore {
   /**
    * Boost list store
    */
-  list: OffsetListStore;
-
-  service: BoostService;
+  list = new OffsetListStore();
 
   /**
    * Boosts list filter
@@ -31,14 +27,6 @@ class BoostStore {
   @observable loading = false;
 
   /**
-   * Store constructor
-   */
-  constructor() {
-    this.list = new OffsetListStore();
-    this.service = new BoostService();
-  }
-
-  /**
    * Load boost list
    */
   async loadList(refresh = false) {
@@ -49,11 +37,12 @@ class BoostStore {
 
     try {
       const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
-      const feed = await this.service.getBoosts(
-        this.list.offset,
-        this.filter,
-        peer_filter,
-      );
+      let feed: any = null; // TODO: any
+      if (hasVariation('mob-4638-boost-v3')) {
+        feed = await getBoostsV3(this.list.offset);
+      } else {
+        feed = await getBoosts(this.list.offset, this.filter, peer_filter);
+      }
       this.assignRowKeys(feed);
       feed.entities = BoostModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
@@ -111,4 +100,4 @@ class BoostStore {
   }
 }
 
-export default BoostStore;
+export default BoostConsoleStore;

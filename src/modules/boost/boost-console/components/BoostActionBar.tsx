@@ -1,30 +1,27 @@
+import { inject, observer } from 'mobx-react';
 import React, { Component, ReactElement } from 'react';
-
 import { TouchableHighlight, View } from 'react-native';
-
-import { observer, inject } from 'mobx-react';
-
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import { ComponentsStyle } from '../styles/Components';
-import token from '../common/helpers/token';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
-import MText from '../common/components/MText';
-import type BoostModel from './BoostModel';
-import type BoostStore from './BoostStore';
 import type UserStore from '~/auth/UserStore';
+import MText from '~/common/components/MText';
+import token from '~/common/helpers/token';
+import i18n from '~/common/services/i18n.service';
+import { ComponentsStyle } from '~/styles/Components';
+import ThemedStyles from '~/styles/ThemedStyles';
+import type BoostModel from '../../models/BoostModel';
+import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 
 type PropsType = {
   entity: BoostModel;
-  boost: BoostStore;
-  user: UserStore;
+  user?: UserStore;
 };
 
-@inject('user', 'boost')
+@inject('user')
 @observer
 export default class BoostActionBar extends Component<PropsType> {
+  static contextType = BoostConsoleStoreContext;
+
   render() {
     let actions: ReactElement[] | null = null;
     if (this.props.entity.currency !== 'tokens') {
@@ -133,7 +130,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => {
-              this.props.entity.revoke(this.props.boost.filter);
+              this.props.entity.revoke(this.context.filter);
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
@@ -227,7 +224,7 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 
   isIncoming(boost) {
-    return boost.destination.guid === this.props.user.me.guid;
+    return boost.destination.guid === this.props.user?.me.guid;
   }
 }
 
