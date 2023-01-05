@@ -23,7 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -189,6 +189,24 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
             await this.props.entity.toggleAllowComments();
           } catch (err) {
             this.showError();
+          }
+        },
+      });
+    } else {
+      options.push({
+        title: 'Boost',
+        iconName: 'trending-up',
+        iconType: 'material-community',
+        onPress: async () => {
+          this.hideActionSheet();
+          if (hasVariation('mob-4638-boost-v3')) {
+            this.props.navigation.push('BoostScreenV2', {
+              entity: this.props.entity,
+            });
+          } else {
+            this.props.navigation.push('BoostScreen', {
+              entity: this.props.entity,
+            });
           }
         },
       });
