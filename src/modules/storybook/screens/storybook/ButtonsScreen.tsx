@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Theme } from '@minds/ui';
+import { Button, View } from '@minds/ui';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -7,22 +7,19 @@ import { useNavigation } from '@react-navigation/native';
 export function ButtonsScreen(): JSX.Element {
   const { goBack } = useNavigation();
   return (
-    <View p={'$2'}>
-      <View backgroundColor="$background" br={'$4'} mt="$2" fd="row">
+    <View f={1} p={'$2'}>
+      <View f={1} backgroundColor="$background" br={'$4'} mt="$2" fd="row">
         <Buttons />
-        <Buttons />
+        <Buttons disabled />
       </View>
-      <Theme inverse>
-        <View backgroundColor="$background" br={'$4'} mt="$2" fd="row">
-          <Buttons />
-          <Buttons />
-        </View>
-      </Theme>
-      <View fd={'row'} mt="$3" space>
+      <View fd={'row'} my="$5" mx="$2" space>
         <Button circular onPress={goBack}>
-          {'<<'}
+          {'<'}
         </Button>
-        <Button f={1} theme="success">
+        <Button f={1} size={'$3.5'} theme="primary">
+          Next
+        </Button>
+        <Button f={1} size={'$4'} theme="primary">
           Next
         </Button>
       </View>
@@ -30,16 +27,23 @@ export function ButtonsScreen(): JSX.Element {
   );
 }
 
-function Buttons(): JSX.Element {
+function Buttons({ disabled = false }: { disabled?: boolean }): JSX.Element {
   const { t } = useTranslation('storybookModule');
   return (
-    <View f={1} p="$3" br="$5" space={'$4'}>
-      <Button>{t('Minds')}</Button>
-      <Button theme={'info'}>{t('Info')}</Button>
-      <Button theme={'success'}>{t('Success')}</Button>
-      <Button theme={'warning'}>{t('Warning')}</Button>
-      <Button theme={'danger'}>{t('Danger')}</Button>
-      <Button disabled>{t('Disabled')}</Button>
+    <View f={1} p="$3" br="$5" space={'$3'}>
+      <Button disabled={disabled}>{t('Default')}</Button>
+      <Button disabled={disabled} theme={'primary'}>
+        {t('Primary')}
+      </Button>
+      <Button disabled={disabled} themeInverse theme={'primary'}>
+        {t('Primary Inv')}
+      </Button>
+      <Button disabled={disabled} theme={'warning'}>
+        {t('Warning')}
+      </Button>
+      <Button disabled={disabled} theme={'primary'}>
+        Outline
+      </Button>
     </View>
   );
 }

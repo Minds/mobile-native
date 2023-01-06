@@ -10,6 +10,12 @@ const blackFont = 'Inter-Black';
 const body = createFont({
   family: regularFont,
   size: {
+    // for buttons
+    3: 14, // S
+    3.5: 16, // M
+    4: 19, // L
+    5: 19, // XL
+
     b3: 12,
     b2: 14,
     b1: 16,
@@ -23,6 +29,12 @@ const body = createFont({
     xl1: 64,
   },
   lineHeight: {
+    // for buttons
+    3: 20, // S
+    3.5: 22, // M
+    4: 28, // L
+    5: 28, // XL
+
     b3: 17,
     b2: 20,
     b1: 22,
@@ -38,6 +50,7 @@ const body = createFont({
   letterSpacing: {
     b: 0,
     h1: -0.16,
+    5: 0.16,
   },
   weight: {
     b: '400',

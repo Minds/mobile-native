@@ -18,7 +18,7 @@ export function StorybookScreen(): JSX.Element {
         <Button circular onPress={goBack}>
           {'<'}
         </Button>
-        <Button f={1} theme="success" onPress={() => navigate('Buttons')}>
+        <Button f={1} theme="primary" onPress={() => navigate('Buttons')}>
           Next
         </Button>
       </View>

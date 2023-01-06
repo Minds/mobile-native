@@ -49,8 +49,8 @@ const light = createTheme<BaseTheme>({
 const allThemes = {
   dark,
   light,
-  ...buttonThemes,
   ...sematicThemes,
+  ...buttonThemes,
 };
 
 type ThemeName = keyof typeof allThemes;

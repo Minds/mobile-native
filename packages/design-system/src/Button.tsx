@@ -69,6 +69,7 @@ export const ButtonFrame = styled(ThemeableStack, {
   alignItems: 'center',
   flexWrap: 'nowrap',
   flexDirection: 'row',
+  borderRadius: 100_000,
 
   // if we wanted this only when pressable = true, we'd need to merge variants?
   cursor: 'pointer',
@@ -89,20 +90,16 @@ export const ButtonFrame = styled(ThemeableStack, {
     size: {
       '...size': getButtonSized,
     },
-
-    active: {
-      true: {
-        hoverStyle: {
-          backgroundColor: '$background',
-        },
-      },
+    caliber: {
+      xl: (_, extra) => getButtonSized('$5', extra),
+      l: (_, extra) => getButtonSized('$4', extra),
+      m: (_, extra) => getButtonSized('$3.5', extra),
+      s: (_, extra) => getButtonSized('$3', extra),
     },
-
     disabled: {
       true: {
         pointerEvents: 'none',
-        backgroundColor: '$backgroundDisabled',
-        opacity: 0.65,
+        opacity: 0.5,
       },
     },
   } as const,
@@ -112,12 +109,8 @@ export const ButtonFrame = styled(ThemeableStack, {
   },
 });
 
-// see TODO breaking types
-// type x = GetProps<typeof ButtonFrame>
-// type y = x['size']
-
 export const ButtonText = styled(SizableText, {
-  color: '$color',
+  name: NAME,
   userSelect: 'none',
   cursor: 'pointer',
   // flexGrow 1 leads to inconsistent native style where text pushes to start of view
@@ -125,9 +118,10 @@ export const ButtonText = styled(SizableText, {
   flexShrink: 1,
   ellipse: true,
 
-  size: '$b',
-  fontFamily: '$body',
-  fontWeight: '500',
+  defaultVariants: {
+    fontWeight: '700',
+    // size: '$3.5',
+  },
 });
 
 export function useButton(
@@ -146,6 +140,7 @@ export function useButton(
     scaleIcon = 1,
     scaleSpace = 0.66,
     separator,
+    caliber,
 
     // text props
     color,
@@ -161,9 +156,9 @@ export function useButton(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const isNested = isRSC ? false : useContext(ButtonNestingContext);
   const mediaActiveProps = useMediaPropsActive(props);
-  const size = mediaActiveProps.size || '$b';
+  const size = mediaActiveProps.size || '$3.5';
   const iconSize =
-    (typeof size === 'number' ? size * 0.5 : getFontSize('$b')) * scaleIcon;
+    (typeof size === 'number' ? size * 0.5 : getFontSize('$3.5')) * scaleIcon;
   const getThemedIcon = useGetThemedIcon({ size: iconSize, color });
   const [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon);
   const spaceSize = getVariableValue(iconSize) * scaleSpace;
@@ -203,6 +198,7 @@ export function useButton(
           }
         : {}),
       ...rest,
+      caliber,
       children: isRSC ? (
         inner
       ) : (

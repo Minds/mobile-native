@@ -1,14 +1,14 @@
-import { createTheme, Variable } from '@tamagui/core';
+import { Variable } from '@tamagui/core';
 
 import { tokens } from './tokens';
 
 const semanticNames = [
   'basic',
   'primary',
-  'info',
-  'success',
   'warning',
-  'danger',
+  // 'info',
+  // 'success',
+  // 'danger',
 ] as const;
 type SemanticName = typeof semanticNames[number];
 
@@ -24,45 +24,43 @@ export type SimpleTheme = {
   borderColorPress: string | Variable<any> | Variable<string>;
   borderColorHover: string | Variable<any> | Variable<string>;
 
-  color: string | Variable<any> | Variable<string>;
-  colorFocus: string | Variable<any> | Variable<string>;
-  colorPress: string | Variable<any> | Variable<string>;
-  colorHover: string | Variable<any> | Variable<string>;
+  color?: string | Variable<any> | Variable<string>;
+  colorAlt?: string | Variable<any> | Variable<string>;
+  colorFocus?: string | Variable<any> | Variable<string>;
+  colorPress?: string | Variable<any> | Variable<string>;
+  colorHover?: string | Variable<any> | Variable<string>;
 };
 
-export const createSemanticTheme = (theme: SemanticName): SimpleTheme =>
-  createTheme({
-    background: tokens.color[`color-${theme}-500`],
-    backgroundPress: tokens.color[`color-${theme}-600`],
-    backgroundFocus: tokens.color[`color-${theme}-700`],
-    backgroundHover: tokens.color[`color-${theme}-800`],
-    backgroundDisabled: tokens.color[`color-${theme}-transparent-500`],
+export const createSemanticTheme = (theme: SemanticName): SimpleTheme => ({
+  background: tokens.color[`color-${theme}-500`],
+  backgroundPress: tokens.color[`color-${theme}-600`],
+  backgroundFocus: tokens.color[`color-${theme}-700`],
+  backgroundHover: tokens.color[`color-${theme}-800`],
+  backgroundDisabled: tokens.color[`color-${theme}-transparent-500`],
 
-    borderColor: tokens.color[`color-${theme}-500`],
-    borderColorPress: tokens.color[`color-${theme}-600`],
-    borderColorFocus: tokens.color[`color-${theme}-700`],
-    borderColorHover: tokens.color[`color-${theme}-800`],
+  borderColor: tokens.color[`color-${theme}-500`],
+  borderColorPress: tokens.color[`color-${theme}-600`],
+  borderColorFocus: tokens.color[`color-${theme}-500`],
+  borderColorHover: tokens.color[`color-${theme}-800`],
 
-    color: tokens.color[`color-basic-${theme === 'basic' ? '800' : '100'}`],
-    colorFocus:
-      tokens.color[`color-basic-${theme === 'basic' ? '700' : '200'}`],
-    colorPress:
-      tokens.color[`color-basic-${theme === 'basic' ? '800' : '300'}`],
-    colorHover:
-      tokens.color[`color-basic-${theme === 'basic' ? '900' : '400'}`],
-  });
+  color: tokens.color['color-basic-900'],
+  colorAlt: tokens.color['color-basic-800'],
+  colorFocus: tokens.color['color-basic-200'],
+  colorPress: tokens.color['color-basic-300'],
+  colorHover: tokens.color['color-basic-400'],
+});
 
 export const sematicThemes = {
   dark_basic: createSemanticTheme('basic'),
   light_basic: createSemanticTheme('basic'),
-  dark_primary: createSemanticTheme('primary'),
-  light_primary: createSemanticTheme('primary'),
-  dark_info: createSemanticTheme('info'),
-  light_info: createSemanticTheme('info'),
-  dark_success: createSemanticTheme('success'),
-  light_success: createSemanticTheme('success'),
-  dark_warning: createSemanticTheme('warning'),
-  light_warning: createSemanticTheme('warning'),
-  dark_danger: createSemanticTheme('danger'),
-  light_danger: createSemanticTheme('danger'),
+  // dark_primary: createSemanticTheme('primary'),
+  // light_primary: createSemanticTheme('primary'),
+  // dark_warning: createSemanticTheme('warning'),
+  // light_warning: createSemanticTheme('warning'),
+  // dark_info: createSemanticTheme('info'),
+  // light_info: createSemanticTheme('info'),
+  // dark_success: createSemanticTheme('success'),
+  // light_success: createSemanticTheme('success'),
+  // dark_danger: createSemanticTheme('danger'),
+  // light_danger: createSemanticTheme('danger'),
 };
