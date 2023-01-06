@@ -1,4 +1,3 @@
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
