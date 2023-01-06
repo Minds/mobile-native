@@ -1,5 +1,6 @@
-import { useLayout } from '@react-native-community/hooks';
+import { useDimensions, useLayout } from '@react-native-community/hooks';
 import React, { useContext, useEffect, useState } from 'react';
+import deviceInfoModule from 'react-native-device-info';
 import Animated, {
   SharedValue,
   useAnimatedScrollHandler,
@@ -65,6 +66,7 @@ function FeedListSticky<T extends BaseModel>(
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
   const { header, ...otherProps } = props;
+  const { width } = useDimensions().window;
 
   /**
    * headerHeight - set by the header layout
@@ -112,9 +114,13 @@ function FeedListSticky<T extends BaseModel>(
     },
   });
 
-  const contentStyle = React.useMemo(() => ({ paddingTop: headerHeight }), [
-    headerHeight,
-  ]);
+  const contentStyle = React.useMemo(
+    () => ({
+      paddingTop: headerHeight,
+      paddingHorizontal: deviceInfoModule.isTablet() ? (width - 600) / 2 : 0,
+    }),
+    [headerHeight, width],
+  );
 
   return (
     <Context.Provider value={{ translationY, scrollY, headerHeight }}>
