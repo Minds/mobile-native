@@ -95,14 +95,9 @@ const createMindsVideoStore = ({
         headers: apiService.buildHeaders(),
       });
     },
-    setFullScreen(fullSCreen: boolean) {
-      this.fullScreen = fullSCreen;
-    },
     toggleFullScreen() {
-      this.fullScreen = !this.fullScreen;
-      if (this.fullScreen) {
-        this.player?.presentFullscreenPlayer();
-      }
+      videoPlayerService.setCurrent(this.player);
+      this.player?.presentFullscreenPlayer();
     },
     setInProgress(inProgress: boolean) {
       this.inProgress = inProgress;

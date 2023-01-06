@@ -32,6 +32,13 @@ export type InternalStackParamList = {
   Onboarding: {};
 };
 
+type WebViewParams = {
+  url: string;
+  headers?: { [key: string]: string };
+  redirectUrl?: string;
+  onRedirect?: () => void;
+};
+
 export type DiscoveryStackParamList = {
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   Discovery: {};
@@ -47,11 +54,7 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
-  WebView: {
-    url: string;
-    redirectUrl?: string;
-    onRedirect?: () => void;
-  };
+  WebView: WebViewParams;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };
@@ -225,6 +228,7 @@ export type AppStackParamList = {
     guid: string;
     supermindRequest?: SupermindRequestModel;
   };
+  WebView: WebViewParams;
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;

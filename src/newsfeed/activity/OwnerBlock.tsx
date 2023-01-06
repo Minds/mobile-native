@@ -31,7 +31,6 @@ type PropsType = {
   leftToolbar?: React.ReactNode;
   containerStyle?: ViewStyle | Array<ViewStyle>;
   navigation: any;
-  route?: any;
   children?: React.ReactNode;
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
@@ -97,7 +96,8 @@ class OwnerBlock extends PureComponent<PropsType> {
    */
   _navToGroup = () => {
     if (this.props.navigation) {
-      const { group, guid } = this.props.route.params ?? {};
+      const route = getLastRoute(this.props.navigation);
+      const { group, guid } = route?.params ?? {};
       const groupGuid = group?.guid ?? guid;
       if (
         this.props.entity.containerObj &&

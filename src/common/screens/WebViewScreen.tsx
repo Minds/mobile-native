@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import WebView, { WebViewNavigation } from 'react-native-webview';
+import WebView, { WebViewNavigation, WebViewProps } from 'react-native-webview';
 import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
@@ -40,12 +40,15 @@ export default function WebViewScreen({
       }
     : undefined;
 
+  const source: WebViewProps['source'] = { uri: route.params.url };
+  if (route.params.headers) {
+    source.headers = route.params.headers;
+  }
+
   return (
     <Screen>
       <WebView
-        source={{
-          uri: route.params.url,
-        }}
+        source={source}
         scrollEnabled={true}
         mixedContentMode="compatibility"
         style={ThemedStyles.style.bgSecondaryBackground}

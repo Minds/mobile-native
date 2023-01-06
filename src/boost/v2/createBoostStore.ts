@@ -29,6 +29,8 @@ const createBoostStore = ({
   const store = {
     boostType: boostType ?? ('post' as BoostType),
     loading: false,
+    nonRefundableAccepted: false,
+    nonRefundableError: false,
     payment: Platform.select({
       ios: 'tokens',
       default: 'cash',
@@ -55,6 +57,10 @@ const createBoostStore = ({
     },
     isSearchingTarget: false,
     allowedTypes: {},
+    toggleNonRefundable() {
+      this.nonRefundableError = false;
+      this.nonRefundableAccepted = !this.nonRefundableAccepted;
+    },
     setAmountViews(value: string) {
       this.amountViews = value;
       const aV = parseFloat(this.amountViews);
@@ -247,6 +253,10 @@ const createBoostStore = ({
       return true;
     },
     boost() {
+      if (this.payment === 'cash' && !this.nonRefundableAccepted) {
+        this.nonRefundableError = true;
+        return;
+      }
       this.makeBoost();
     },
     setSelectedCardId(cardId: string) {
