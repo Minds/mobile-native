@@ -2,13 +2,21 @@
 
 Minds Mobile
 
+## 4.31.2 - 2023-01-06
+
+### Changed
+
+- Added a non refundable checkbox in cash boost
+- Fix logout after deactivating an account
+- Hide the close button for the 2FA after the register screen
+
 ## 4.31.1 - 2022-12-22
 
 ### Changed
 
 - Deeplink to the composer
 - Forward UTM codes to the backend when handling a deeplink
-- Optional webview deeplink handler 
+- Optional webview deeplink handler
 - Fix error tapping the group name
 - Fix boost console rejection message
 - Fix video player controls hiding the video
