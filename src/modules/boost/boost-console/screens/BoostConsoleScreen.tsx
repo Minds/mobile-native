@@ -1,3 +1,4 @@
+import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
@@ -8,10 +9,13 @@ import MText from '~/common/components/MText';
 import i18n from '~/common/services/i18n.service';
 import { ComponentsStyle } from '~/styles/Components';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { Button } from '~ui';
+import { Button, Screen, ScreenHeader } from '~ui';
+import { hasVariation } from '../../../../../ExperimentsProvider';
 import BoostConsoleStore from '../boost-console.store';
 import Boost from '../components/Boost';
 import BoostTabBar from '../components/BoostTabBar';
+import BoostTabBarV3 from '../components/v3/BoostTabBar';
+import BoostV3 from '../components/v3/Boost';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 
 interface BoostConsoleScreenProps {
@@ -84,27 +88,35 @@ export default class BoostConsoleScreen extends Component<BoostConsoleScreenProp
 
     const tabs = (
       <View>
-        <BoostTabBar />
+        {hasVariation('mob-4638-boost-v3') ? (
+          <BoostTabBarV3 />
+        ) : (
+          <BoostTabBar />
+        )}
       </View>
     );
+
     return (
       <BoostConsoleStoreContext.Provider value={this.boostConsoleStore}>
-        <FlatList
-          ListHeaderComponent={tabs}
-          ListEmptyComponent={empty}
-          data={this.boostConsoleStore.list.entities.slice()}
-          renderItem={this.renderBoost}
-          keyExtractor={item => item.rowKey}
-          onRefresh={this.refresh}
-          refreshing={this.boostConsoleStore.list.refreshing}
-          onEndReached={this.loadFeed}
-          onEndReachedThreshold={0}
-          style={[
-            theme.bgPrimaryBackground,
-            theme.flexContainer,
-            theme.marginTop3x,
-          ]}
-        />
+        <Screen safe>
+          <ScreenHeader title={i18n.t('settings.boostConsole')} back />
+          <FlatList
+            ListHeaderComponent={tabs}
+            ListEmptyComponent={empty}
+            data={this.boostConsoleStore.list.entities.slice()}
+            renderItem={this.renderBoost}
+            keyExtractor={item => item.rowKey}
+            onRefresh={this.refresh}
+            refreshing={this.boostConsoleStore.list.refreshing}
+            onEndReached={this.loadFeed}
+            onEndReachedThreshold={0}
+            style={[
+              theme.bgPrimaryBackground,
+              theme.flexContainer,
+              theme.marginTop3x,
+            ]}
+          />
+        </Screen>
       </BoostConsoleStoreContext.Provider>
     );
   }
@@ -128,6 +140,10 @@ export default class BoostConsoleScreen extends Component<BoostConsoleScreenProp
    */
   renderBoost = row => {
     const boost = row.item;
+    if (hasVariation('mob-4638-boost-v3')) {
+      return <BoostV3 boost={boost} navigation={this.props.navigation} />;
+    }
+
     return <Boost boost={boost} navigation={this.props.navigation} />;
   };
 }

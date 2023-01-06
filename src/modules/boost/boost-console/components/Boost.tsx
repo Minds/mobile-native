@@ -56,7 +56,7 @@ export default class Boost extends Component<BoostProps> {
   }
 
   showBoostActionBar() {
-    return <BoostActionBar entity={this.props.boost} />;
+    return <BoostActionBar boost={this.props.boost} />;
   }
 
   renderEntity() {

@@ -4,6 +4,7 @@ import logService from '~/common/services/log.service';
 import OffsetListStore from '~/common/stores/OffsetListStore';
 import { hasVariation } from '../../../../ExperimentsProvider';
 import BoostModel from '../models/BoostModel';
+import BoostModelV3 from '../models/BoostModelV3';
 import { getBoosts, getBoostsV3 } from './boost-console.api';
 
 /**
@@ -18,7 +19,7 @@ class BoostConsoleStore {
   /**
    * Boosts list filter
    */
-  @observable filter = 'peer';
+  @observable filter = 'newsfeed';
   @observable peer_filter = 'inbox';
 
   /**
@@ -40,11 +41,13 @@ class BoostConsoleStore {
       let feed: any = null; // TODO: any
       if (hasVariation('mob-4638-boost-v3')) {
         feed = await getBoostsV3(this.list.offset);
+        this.assignRowKeys(feed);
+        feed.entities = BoostModelV3.createMany(feed.entities);
       } else {
         feed = await getBoosts(this.list.offset, this.filter, peer_filter);
+        this.assignRowKeys(feed);
+        feed.entities = BoostModel.createMany(feed.entities);
       }
-      this.assignRowKeys(feed);
-      feed.entities = BoostModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
     } catch (err) {
       // ignore aborts

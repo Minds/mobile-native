@@ -183,7 +183,7 @@ export default function () {
       <MoreStack.Screen
         name="BoostConsole"
         getComponent={() => require('~/modules/boost').BoostConsoleScreen}
-        options={{ title: i18n.t('settings.boostConsole') }}
+        options={hideHeader}
       />
       <MoreStack.Screen
         name="Other"

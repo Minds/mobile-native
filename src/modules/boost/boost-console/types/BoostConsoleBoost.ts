@@ -1,7 +1,13 @@
 import BaseModel from '../../../../common/BaseModel';
 
 export enum BoostStatus {
-  pending,
+  PENDING = 1,
+  APPROVED = 2,
+  REJECTED = 3,
+  REFUND_IN_PROGRESS = 4,
+  REFUND_PROCESSED = 5,
+  FAILED = 6,
+  REPORTED = 7,
 }
 
 export enum BoostPaymentMethod {

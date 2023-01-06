@@ -4,6 +4,7 @@ import api, {
 } from '~/common/services/api.service';
 import i18n from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
+import { hasVariation } from '../../../../ExperimentsProvider';
 import { BoostConsoleBoost } from './types/BoostConsoleBoost';
 
 type BoostsResponse = {
@@ -53,17 +54,25 @@ export async function getBoostsV3(offset) {
 }
 
 export function revokeBoost(guid, filter) {
+  if (hasVariation('mob-4638-boost-v3')) {
+    return api.post(`api/v3/boosts/${guid}/cancel`);
+  }
+
   return api.delete('api/v2/boost/' + filter + '/' + guid + '/revoke');
 }
 
 export function rejectBoost(guid) {
+  if (hasVariation('mob-4638-boost-v3')) {
+    return api.post(`api/v3/boosts/${guid}/reject`);
+  }
+
   return api.delete('api/v2/boost/peer/' + guid);
 }
 
 export function acceptBoost(guid) {
-  return api.put('api/v2/boost/peer/' + guid);
-}
+  if (hasVariation('mob-4638-boost-v3')) {
+    return api.post(`api/v3/boosts/${guid}/approve`);
+  }
 
-export function getRates() {
-  return api.get('api/v2/boost/rates');
+  return api.put('api/v2/boost/peer/' + guid);
 }

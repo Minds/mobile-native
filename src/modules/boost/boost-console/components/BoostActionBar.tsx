@@ -13,7 +13,7 @@ import type BoostModel from '../../models/BoostModel';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 
 type PropsType = {
-  entity: BoostModel;
+  boost: BoostModel;
   user?: UserStore;
 };
 
@@ -24,9 +24,10 @@ export default class BoostActionBar extends Component<PropsType> {
 
   render() {
     let actions: ReactElement[] | null = null;
-    if (this.props.entity.currency !== 'tokens') {
+    if (this.props.boost.currency !== 'tokens') {
       actions = this.renderActions();
     }
+
     return (
       <View style={styles.container}>
         {this.renderTarget()}
@@ -41,7 +42,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
   renderTime() {
     const date = i18n.date(
-      parseInt(this.props.entity.time_created, 10) * 1000,
+      parseInt(this.props.boost.time_created, 10) * 1000,
       'friendly',
     );
     return (
@@ -55,59 +56,59 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 
   renderTarget() {
-    return this.props.entity.destination ? (
+    return this.props.boost.destination ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="target">
         <IonIcon name="md-person" size={20} style={styles.icon} />
         <MText style={styles.value} numberOfLines={1}>
-          {'@' + this.props.entity.destination.username}
+          {'@' + this.props.boost.destination.username}
         </MText>
       </View>
     ) : null;
   }
 
   renderViews() {
-    return this.props.entity.impressions ? (
+    return this.props.boost.impressions ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="views">
         <MCIcon name="eye" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {this.props.entity.impressions + ' views'}
+          {this.props.boost.impressions + ' views'}
         </MText>
       </View>
     ) : null;
   }
 
   renderStatus() {
-    return this.props.entity.state ? (
+    return this.props.boost.state ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="status">
         <MCIcon name="timer-sand-empty" size={20} style={styles.icon} />
-        <MText style={styles.value}>{this.props.entity.state}</MText>
+        <MText style={styles.value}>{this.props.boost.state}</MText>
       </View>
     ) : null;
   }
 
   renderBid() {
-    return this.props.entity.bid ? (
+    return this.props.boost.bid ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="bid">
         <MCIcon name="bank" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {['offchain', 'onchain', 'peer', 'tokens'].includes(
-            this.props.entity.bidType,
-          ) && token(this.props.entity.bid, 18) + ' Tokens'}
-          {['usd', 'money'].includes(this.props.entity.bidType) &&
-            '$' + (this.props.entity.bid / 100).toFixed(2)}
-          {this.props.entity.bidType === 'points' &&
-            this.props.entity.bid + ' points'}
+            this.props.boost.bidType,
+          ) && token(this.props.boost.bid, 18) + ' Tokens'}
+          {['usd', 'money'].includes(this.props.boost.bidType) &&
+            '$' + (this.props.boost.bid / 100).toFixed(2)}
+          {this.props.boost.bidType === 'points' &&
+            this.props.boost.bid + ' points'}
         </MText>
       </View>
     ) : null;
   }
 
   renderScheduled() {
-    return this.props.entity.scheduledTs ? (
+    return this.props.boost.scheduledTs ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
         <MCIcon name="alarm" size={20} style={styles.icon} />
         <MText style={styles.value}>
-          {i18n.date(this.props.entity.scheduledTs * 1000)}
+          {i18n.date(this.props.boost.scheduledTs * 1000)}
         </MText>
       </View>
     ) : (
@@ -115,7 +116,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <MCIcon name="clock" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {i18n.date(
-            parseInt(this.props.entity.time_created, 10) * 1000,
+            parseInt(this.props.boost.time_created, 10) * 1000,
             'datetime',
           )}
         </MText>
@@ -130,7 +131,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => {
-              this.props.entity.revoke(this.context.filter);
+              this.props.boost.revoke(this.context.filter);
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
@@ -148,7 +149,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="reject">
           <TouchableHighlight
             onPress={() => {
-              this.props.entity.reject();
+              this.props.boost.reject();
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
@@ -169,7 +170,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="accept">
           <TouchableHighlight
             onPress={() => {
-              this.props.entity.accept();
+              this.props.boost.accept();
             }}
             underlayColor="transparent"
             style={ComponentsStyle.bluebutton}>
@@ -190,26 +191,26 @@ export default class BoostActionBar extends Component<PropsType> {
 
   canReject() {
     return (
-      this.props.entity.state === 'created' &&
-      this.getBoostType(this.props.entity) === 'p2p' &&
-      this.isIncoming(this.props.entity)
+      this.props.boost.state === 'created' &&
+      this.getBoostType(this.props.boost) === 'p2p' &&
+      this.isIncoming(this.props.boost)
     );
   }
 
   canRevoke() {
     return (
-      this.props.entity.state === 'created' &&
-      ((this.getBoostType(this.props.entity) === 'p2p' &&
-        !this.isIncoming(this.props.entity)) ||
-        this.getBoostType(this.props.entity) !== 'p2p')
+      this.props.boost.state === 'created' &&
+      ((this.getBoostType(this.props.boost) === 'p2p' &&
+        !this.isIncoming(this.props.boost)) ||
+        this.getBoostType(this.props.boost) !== 'p2p')
     );
   }
 
   canAccept() {
     return (
-      this.props.entity.state === 'created' &&
-      this.getBoostType(this.props.entity) === 'p2p' &&
-      this.isIncoming(this.props.entity)
+      this.props.boost.state === 'created' &&
+      this.getBoostType(this.props.boost) === 'p2p' &&
+      this.isIncoming(this.props.boost)
     );
   }
 
@@ -223,7 +224,7 @@ export default class BoostActionBar extends Component<PropsType> {
     return false;
   }
 
-  isIncoming(boost) {
+  isIncoming(boost: BoostModel) {
     return boost.destination.guid === this.props.user?.me.guid;
   }
 }
