@@ -98,7 +98,7 @@ function useCodeRequestStore(
       if (token) {
         try {
           store.deviceId = store.deviceId || (await deviceInfo.getUniqueId());
-          api.requestCode(store.deviceId, token);
+          await api.requestCode(store.deviceId, token);
         } catch (error) {
           logService.exception(error);
           store.error = 'codeReqError';
