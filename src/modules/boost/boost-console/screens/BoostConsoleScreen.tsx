@@ -97,7 +97,7 @@ export default class BoostConsoleScreen extends Component<BoostConsoleScreenProp
 
     return (
       <BoostConsoleStoreContext.Provider value={this.boostConsoleStore}>
-        <Screen safe>
+        <Screen safe onlyTopEdge>
           <ScreenHeader title={i18n.t('settings.boostConsole')} back />
           <FlatList
             ListHeaderComponent={tabs}

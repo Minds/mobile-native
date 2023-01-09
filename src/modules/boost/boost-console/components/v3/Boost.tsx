@@ -73,12 +73,12 @@ function Boost({ boost, navigation }: BoostProps) {
         );
     }
     return (
-      <MText>
+      <B1 horizontal="L" vertical="L" color="secondary">
         {t('Entity {{type}} {{subtype}} not supported', {
           type: entity.type,
           subtype: entity.subtype,
         })}
-      </MText>
+      </B1>
     );
   };
 

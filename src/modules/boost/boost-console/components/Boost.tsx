@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MText from '~/common/components/MText';
 import i18n from '~/common/services/i18n.service';
-import { B2 } from '~/common/ui';
+import { B1, B2 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
@@ -120,9 +120,9 @@ export default class Boost extends Component<BoostProps> {
         }
     }
     return (
-      <MText>
+      <B1 space="L">
         Entity {entity.type} {entity.subtype} not supported
-      </MText>
+      </B1>
     );
   }
 }
