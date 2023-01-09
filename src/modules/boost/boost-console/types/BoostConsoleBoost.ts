@@ -1,4 +1,4 @@
-import BaseModel from '../../../../common/BaseModel';
+import BaseModel from '~/common/BaseModel';
 
 export enum BoostStatus {
   PENDING = 1,

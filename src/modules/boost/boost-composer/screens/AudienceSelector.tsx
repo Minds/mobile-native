@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { showNotification } from '../../../../../AppMessages';
-import FitScrollView from '../../../../common/components/FitScrollView';
-import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
+import FitScrollView from '~/common/components/FitScrollView';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import {
   B1,
   Button,
@@ -12,7 +12,7 @@ import {
   HairlineRow,
   Screen,
   ScreenHeader,
-} from '../../../../common/ui';
+} from '~/common/ui';
 import { useBoostStore } from '../boost.store';
 import { useTranslation } from '../../locales';
 import { BoostStackScreenProps } from '../navigator';

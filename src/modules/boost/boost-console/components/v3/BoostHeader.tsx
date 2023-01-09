@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { B1, B2, Row } from '../../../../../common/ui';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
+import { B1, B2, Row } from '~/common/ui';
+import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../../locales';
 import BoostModel from '../../../models/BoostModelV3';
 import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';

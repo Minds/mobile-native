@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import React, { ReactElement } from 'react';
+import { showNotification } from '~/../AppMessages';
 import type UserStore from '~/auth/UserStore';
+import { confirm } from '~/common/components/Confirm';
 import i18n from '~/common/services/i18n.service';
 import { B1, Button, Column, Row } from '~/common/ui';
-import { showNotification } from '../../../../../../AppMessages';
-import { confirm } from '../../../../../common/components/Confirm';
 import { useTranslation } from '../../../locales';
 import type BoostModel from '../../../models/BoostModelV3';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
