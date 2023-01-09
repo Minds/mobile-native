@@ -1,58 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
-import {
-  ButtonNestingContext,
-  GetProps,
-  TamaguiElement,
-  ThemeableProps,
-  getVariableValue,
-  isRSC,
-  spacedChildren,
-  styled,
-  themeable,
-  useMediaPropsActive,
-} from '@tamagui/core';
-import { getFontSize } from '@tamagui/font-size';
+import React, { forwardRef } from 'react';
+import { TamaguiElement, styled, themeable, GetProps } from '@tamagui/core';
 import { getButtonSized } from '@tamagui/get-button-sized';
-import { useGetThemedIcon } from '@tamagui/helpers-tamagui';
 import { ThemeableStack } from '@tamagui/stacks';
-import {
-  SizableText,
-  TextParentStyles,
-  wrapChildrenInText,
-} from '@tamagui/text';
-import { FunctionComponent, forwardRef, useContext } from 'react';
-
-type ButtonIconProps = { color?: string; size?: number };
-type IconProp = JSX.Element | FunctionComponent<ButtonIconProps> | null;
-
-export type ButtonProps = Omit<TextParentStyles, 'TextComponent'> &
-  GetProps<typeof ButtonFrame> &
-  ThemeableProps & {
-    /**
-     * add icon before, passes color and size automatically if Component
-     */
-    icon?: IconProp;
-    /**
-     * add icon after, passes color and size automatically if Component
-     */
-    iconAfter?: IconProp;
-    /**
-     * adjust icon relative to size
-     */
-    /**
-     * default: -1
-     */
-    scaleIcon?: number;
-    /**
-     * make the spacing elements flex
-     */
-    spaceFlex?: number | boolean;
-    /**
-     * adjust internal space relative to icon size
-     */
-    scaleSpace?: number;
-  };
+import { SizableText } from '@tamagui/text';
+import { ButtonProps, useButton } from './buttonHelpers';
 
 const NAME = 'Button';
 
@@ -90,7 +41,7 @@ export const ButtonFrame = styled(ThemeableStack, {
     size: {
       '...size': getButtonSized,
     },
-    caliber: {
+    bSize: {
       xl: (_, extra) => getButtonSized('$5', extra),
       l: (_, extra) => getButtonSized('$4', extra),
       m: (_, extra) => getButtonSized('$3.5', extra),
@@ -118,105 +69,34 @@ export const ButtonText = styled(SizableText, {
   flexShrink: 1,
   ellipse: true,
 
+  variants: {
+    bSize: {
+      xl: {
+        size: '$5',
+      },
+      l: {
+        size: '$4',
+      },
+      m: {
+        size: '$3.5',
+      },
+      s: {
+        size: '$3',
+      },
+    },
+  } as const,
   defaultVariants: {
-    fontWeight: '700',
-    // size: '$3.5',
+    size: '$3.5',
   },
 });
 
-export function useButton(
-  props: ButtonProps,
-  { Text = ButtonText }: { Text: any } = { Text: ButtonText },
-) {
-  // careful not to desctructure and re-order props, order is important
-  const {
-    children,
-    icon,
-    iconAfter,
-    noTextWrap,
-    theme: themeName,
-    space,
-    spaceFlex,
-    scaleIcon = 1,
-    scaleSpace = 0.66,
-    separator,
-    caliber,
-
-    // text props
-    color,
-    fontWeight,
-    letterSpacing,
-    fontSize,
-    fontFamily,
-    textAlign,
-    textProps,
-    ...rest
-  } = props;
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const isNested = isRSC ? false : useContext(ButtonNestingContext);
-  const mediaActiveProps = useMediaPropsActive(props);
-  const size = mediaActiveProps.size || '$3.5';
-  const iconSize =
-    (typeof size === 'number' ? size * 0.5 : getFontSize('$3.5')) * scaleIcon;
-  const getThemedIcon = useGetThemedIcon({ size: iconSize, color });
-  const [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon);
-  const spaceSize = getVariableValue(iconSize) * scaleSpace;
-  const contents = wrapChildrenInText(Text, mediaActiveProps);
-  const inner =
-    themedIcon || themedIconAfter
-      ? spacedChildren({
-          // a bit arbitrary but scaling to font size is necessary so long as button does
-          space: spaceSize,
-          spaceFlex,
-          separator,
-          direction:
-            props.flexDirection === 'column' ||
-            props.flexDirection === 'column-reverse'
-              ? 'vertical'
-              : 'horizontal',
-          children: [themedIcon, contents, themedIconAfter],
-        })
-      : contents;
-
-  return {
-    spaceSize,
-    isNested,
-    props: {
-      ...(props.disabled && {
-        // in rnw - false still has keyboard tabIndex, undefined = not actually focusable
-        focusable: undefined,
-        // even with tabIndex unset, it will keep focusStyle on web so disable it here
-        focusStyle: {
-          borderColor: '$background',
-        },
-      }),
-      // fixes SSR issue + DOM nesting issue of not allowing button in button
-      ...(isNested
-        ? {
-            tag: 'span',
-          }
-        : {}),
-      ...rest,
-      caliber,
-      children: isRSC ? (
-        inner
-      ) : (
-        <ButtonNestingContext.Provider value={true}>
-          {inner}
-        </ButtonNestingContext.Provider>
-      ),
-    },
-  };
-}
-
-const ButtonComponent = forwardRef<TamaguiElement, ButtonProps>(function Button(
-  props,
-  ref,
-) {
-  const { props: buttonProps } = useButton(props);
-  return <ButtonFrame {...buttonProps} ref={ref} />;
-});
+type ButtonFrameProps = GetProps<typeof ButtonFrame>;
+const ButtonComponent = forwardRef<TamaguiElement, ButtonFrameProps>(
+  (props, ref) => {
+    const { props: buttonProps } = useButton(props as ButtonProps, ButtonText);
+    return <ButtonFrame {...buttonProps} ref={ref} />;
+  },
+);
 
 export const buttonStaticConfig = {
   inlineProps: new Set([

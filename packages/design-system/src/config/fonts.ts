@@ -50,9 +50,10 @@ const body = createFont({
   letterSpacing: {
     b: 0,
     h1: -0.16,
-    5: 0.16,
+    4: 0.16,
   },
   weight: {
+    3: '700',
     b: '400',
   },
   face: {

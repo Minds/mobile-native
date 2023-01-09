@@ -16,10 +16,11 @@ export function ButtonsScreen(): JSX.Element {
         <Button circular onPress={goBack}>
           {'<'}
         </Button>
-        <Button f={1} size={'$3.5'} theme="primary">
+        <Button f={1}>Next</Button>
+        <Button f={1} bSize="m" theme="primary">
           Next
         </Button>
-        <Button f={1} size={'$4'} theme="primary">
+        <Button f={1} bSize="xl" theme="primary">
           Next
         </Button>
       </View>

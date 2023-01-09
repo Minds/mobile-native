@@ -16,8 +16,8 @@ export function StorybookNavigator(): JSX.Element {
     <ErrorGlobalWrapper>
       <ThemeWrapper>
         <Navigator screenOptions={{ headerShown: false }}>
-          <Screen name="Buttons" component={ButtonsScreen} />
           <Screen name="Storybook" component={StorybookScreen} />
+          <Screen name="Buttons" component={ButtonsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>
       </ThemeWrapper>
