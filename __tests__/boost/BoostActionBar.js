@@ -6,10 +6,10 @@ import UserStore from '../../src/auth/UserStore';
 
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';
 
-import BoostActionBar from '../../src/boost/BoostActionBar';
+import BoostActionBar from '../../src/modules/boost/boost-console/components/BoostActionBar';
 import MText from '../../src/common/components/MText';
 // prevent double tap in touchable
-jest.mock('../../src/boost/BoostStore');
+jest.mock('../../src/modules/boost/boost-composer/boost.store');
 jest.mock('../../src/auth/UserStore');
 
 describe('Boost action bar component', () => {
@@ -26,8 +26,7 @@ describe('Boost action bar component', () => {
     const userStore = new UserStore();
     screen = shallow(
       <BoostActionBar.wrappedComponent
-        entity={entity}
-        boost={boost}
+        boost={entity}
         user={userStore}
         navigation={navigation}
       />,
@@ -39,11 +38,6 @@ describe('Boost action bar component', () => {
   it('renders correctly', async () => {
     screen.update();
     expect(screen).toMatchSnapshot();
-  });
-
-  it('renders the expected views', async () => {
-    screen.update();
-    expect(screen.find(View)).toHaveLength(3);
   });
 
   it('renders the expected text', async () => {

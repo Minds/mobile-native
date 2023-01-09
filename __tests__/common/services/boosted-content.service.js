@@ -1,5 +1,4 @@
-import boostedContentService from '../../../src/common/services/boosted-content.service';
-import FeedsService from '../../../src/common/services/feeds.service';
+import boostedContentService from '../../../src/modules/boost/services/boosted-content.service';
 import blockListService from '../../../src/common/services/block-list.service';
 import sessionService from '../../../src/common/services/session.service';
 
