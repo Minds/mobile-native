@@ -17,10 +17,10 @@ export function ButtonsScreen(): JSX.Element {
           {'<'}
         </Button>
         <Button f={1}>Next</Button>
-        <Button f={1} bSize="xl" theme="primary">
+        <Button f={1} sSize="l" theme="primary">
           Next
         </Button>
-        <Button f={1} bSize="xl" theme="primary">
+        <Button f={1} sSize="xl" theme="primary">
           Next
         </Button>
       </View>

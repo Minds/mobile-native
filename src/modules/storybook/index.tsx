@@ -2,13 +2,14 @@ import React, { ReactNode, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { PathConfig } from '@react-navigation/native';
-import { Button, Layout, Theme } from '@minds/ui';
+import { Button, Layout, Theme, View } from '@minds/ui';
 import { ErrorGlobalWrapper } from 'components';
 // prettier-ignore
 import {
   StorybookScreen,
   ButtonsScreen,
 } from './screens'; // end-of-screen-list HYGEN
+import { storages } from '~/common/services/storage/storages.service';
 
 const { Navigator, Screen } = createStackNavigator();
 export function StorybookNavigator(): JSX.Element {
@@ -38,16 +39,18 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
   return (
     <Theme name={theme}>
       <Layout>
-        <Button
-          circular
-          mt="$7"
-          mb="$2"
-          mx="$3"
-          onPress={() =>
-            setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
-          }>
-          {theme === 'dark' ? 'L' : 'D'}
-        </Button>
+        <View mt="$7" mx="$3" mb="$2" fd={'row'} jc="space-between">
+          <Button
+            circular
+            onPress={() =>
+              setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
+            }>
+            {theme === 'dark' ? 'L' : 'D'}
+          </Button>
+          <Button onPress={() => storages.app.setBool('storybook', false)}>
+            close
+          </Button>
+        </View>
         {children}
       </Layout>
       <StatusBar

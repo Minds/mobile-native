@@ -41,7 +41,7 @@ export const ButtonFrame = styled(ThemeableStack, {
     size: {
       '...size': getButtonSized,
     },
-    bSize: {
+    sSize: {
       xl: (_, extra) => getButtonSized('$5', extra),
       l: (_, extra) => getButtonSized('$4', extra),
       m: (_, extra) => getButtonSized('$3.5', extra),
@@ -70,7 +70,7 @@ export const ButtonText = styled(SizableText, {
   ellipse: true,
 
   variants: {
-    bSize: {
+    sSize: {
       xl: {
         size: '$5',
       },

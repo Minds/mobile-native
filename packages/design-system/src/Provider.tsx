@@ -15,7 +15,7 @@ export function UIProvider({
     <TamaguiProvider
       config={config}
       disableInjectCSS
-      defaultTheme={'light'}
+      defaultTheme={'dark'}
       {...rest}>
       {children}
     </TamaguiProvider>
