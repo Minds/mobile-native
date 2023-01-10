@@ -245,9 +245,6 @@
     "react-devtools-core": "4.13.0",
     "react-native-gesture-handler": "^2.4.2"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged"
