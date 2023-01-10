@@ -232,7 +232,7 @@ const appContainerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   {
     paddingHorizontal: deviceInfo.isTablet()
-      ? (Dimensions.get('window').width - 690) / 2
+      ? (Dimensions.get('window').width - 530) / 2
       : 0,
   },
 );
