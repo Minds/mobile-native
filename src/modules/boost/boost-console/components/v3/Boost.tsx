@@ -24,68 +24,10 @@ interface BoostProps {
  * Boost console item
  */
 function Boost({ boost, navigation }: BoostProps) {
-  const { t } = useTranslation();
-
-  const renderEntity = () => {
-    const entity = boost.entity;
-
-    if (!entity) {
-      return null;
-    }
-
-    switch (entity.type) {
-      case 'activity':
-        return (
-          <Activity
-            entity={ActivityModel.create(entity)}
-            hideTabs={true}
-            navigation={navigation}
-            borderless
-          />
-        );
-      case 'user':
-        const user = UserModel.create(entity);
-        return (
-          <Column>
-            <MPressable
-              onPress={() =>
-                // @ts-ignore TODO: better types
-                navigation.push('Channel', {
-                  guid: user.guid,
-                  entity: user,
-                })
-              }>
-              <Row vertical="M" horizontal="L" align="centerBoth">
-                <Avatar source={user.getAvatarSource()} size={'small'} />
-                <Column align="centerStart" left="M" flex>
-                  <B1 font="bold">{user.name}</B1>
-                  <B1>@{user.username}</B1>
-                </Column>
-                <ChannelBadges channel={user} />
-              </Row>
-            </MPressable>
-
-            <Row horizontal="L" bottom="M">
-              <B1 color="secondary">{user.briefdescription}</B1>
-            </Row>
-          </Column>
-        );
-    }
-
-    return (
-      <B1 horizontal="L" vertical="L" color="secondary">
-        {t('Entity {{type}} {{subtype}} not supported', {
-          type: entity.type,
-          subtype: entity.subtype,
-        })}
-      </B1>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <BoostHeader boost={boost} />
-      {renderEntity()}
+      <BoostEntity boost={boost} navigation={navigation} />
       {boost.boost_status === BoostStatus.REJECTED ? (
         <Rejection />
       ) : (
@@ -94,6 +36,68 @@ function Boost({ boost, navigation }: BoostProps) {
     </View>
   );
 }
+
+const BoostEntity = ({ boost, navigation }: BoostProps) => {
+  const { t } = useTranslation();
+  const entity = boost.entity;
+
+  if (!entity) {
+    return null;
+  }
+
+  const renderActivity = () => (
+    <Activity
+      entity={ActivityModel.create(entity)}
+      hideTabs={true}
+      navigation={navigation}
+      borderless
+    />
+  );
+
+  const renderUser = () => {
+    const user = UserModel.create(entity);
+    return (
+      <Column>
+        <MPressable
+          onPress={() =>
+            navigation.navigate('Channel', {
+              guid: user.guid,
+              entity: user,
+            })
+          }>
+          <Row vertical="M" horizontal="L" align="centerBoth">
+            <Avatar source={user.getAvatarSource()} size={'small'} />
+            <Column align="centerStart" left="M" flex>
+              <B1 font="bold">{user.name}</B1>
+              <B1>@{user.username}</B1>
+            </Column>
+            <ChannelBadges channel={user} />
+          </Row>
+        </MPressable>
+
+        <Row horizontal="L" bottom="M">
+          <B1 color="secondary">{user.briefdescription}</B1>
+        </Row>
+      </Column>
+    );
+  };
+
+  switch (entity.type) {
+    case 'activity':
+      return renderActivity();
+    case 'user':
+      return renderUser();
+    default:
+      return (
+        <B1 horizontal="L" vertical="L" color="secondary">
+          {t('Entity {{type}} {{subtype}} not supported', {
+            type: entity.type,
+            subtype: entity.subtype,
+          })}
+        </B1>
+      );
+  }
+};
 
 const Rejection = () => {
   const { t } = useTranslation();
