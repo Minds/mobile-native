@@ -4,17 +4,19 @@ import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import MText from '~/common/components/MText';
 import SaveButton from '~/common/components/SaveButton';
-import i18n from '~/common/services/i18n.service';
 import openUrlService from '~/common/services/open-url.service';
 import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
+import { useTranslation } from '../locales';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationOnboarding'>;
 
 export default function InAppVerificationOnboardingScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [termsAgreed, setTermsAgreed] = useState(false);
+  const { t } = useTranslation();
+
   const onContinue = () => {
     navigation.navigate('InAppVerificationCodeRequest');
   };
@@ -22,7 +24,7 @@ export default function InAppVerificationOnboardingScreen() {
   return (
     <Screen safe>
       <ScreenHeader
-        title={i18n.t('inAppVerification.notice.title')}
+        title={t('Verify Account')}
         centerTitle
         border
         back
@@ -30,34 +32,36 @@ export default function InAppVerificationOnboardingScreen() {
           <SaveButton
             disabled={!termsAgreed}
             onPress={onContinue}
-            text={i18n.t('continue')}
+            text={t('Continue')}
           />
         }
       />
       <FitScrollView>
         <Column space="L" top="XXL">
-          <H3 bottom="M">{i18n.t('inAppVerification.onboarding.title')}</H3>
+          <H3 bottom="M">{t('A privacy protecting human detector')}</H3>
           <B1 color="secondary" bottom="XL2">
-            {i18n.t('inAppVerification.onboarding.description')}
+            {t(
+              'Most apps require creepy amounts of personal data to verify your location and prevent spam. Not Minds.',
+            )}
           </B1>
-          <H3>{i18n.t('inAppVerification.onboarding.step1.title')}</H3>
+          <H3>{t('Step 1')}</H3>
           <B1 color="secondary" bottom="XL">
-            {i18n.t('inAppVerification.onboarding.step1.description')}
+            {t('Write down the code we send you.')}
           </B1>
-          <H3>{i18n.t('inAppVerification.onboarding.step2.title')}</H3>
+          <H3>{t('Step 2')}</H3>
           <B1 color="secondary" bottom="XL">
-            {i18n.t('inAppVerification.onboarding.step2.description')}
+            {t('Take a photo of the code.')}
           </B1>
-          <H3>{i18n.t('inAppVerification.onboarding.step3.title')}</H3>
+          <H3>{t('Step 3')}</H3>
           <B1 color="secondary">
-            {i18n.t('inAppVerification.onboarding.step3.description')}
+            {t("That's it. Now you can earn tokens and other rewards.")}
           </B1>
         </Column>
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
           title={
             <B1>
-              I agree to the{' '}
+              {t('I agree to the ')}
               <MText
                 onPress={() =>
                   openUrlService.open(
@@ -65,7 +69,7 @@ export default function InAppVerificationOnboardingScreen() {
                   )
                 }
                 style={ThemedStyles.style.link}>
-                Terms
+                {t('Terms')}
               </MText>
             </B1>
           }

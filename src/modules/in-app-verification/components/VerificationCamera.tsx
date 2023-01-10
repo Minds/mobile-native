@@ -11,8 +11,8 @@ import {
   useVerificationCamera,
 } from './VerificationCamera.logic';
 import CodeMessage from './CodeMessage';
-import i18n from '~/common/services/i18n.service';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
+import { useTranslation } from '../locales';
 
 const { width } = Dimensions.get('window');
 
@@ -31,6 +31,8 @@ function OcrCamera({ code, deviceId }: PropsType) {
     format,
     frameProcessor,
   } = useVerificationCamera(code, deviceId);
+
+  const { t } = useTranslation();
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
@@ -56,9 +58,9 @@ function OcrCamera({ code, deviceId }: PropsType) {
         </View>
       )}
       <CodeMessage
-        title={i18n.t(`inAppVerification.messages.${store.status}.title`)}
-        detail={i18n.t(`inAppVerification.messages.${store.status}.detail`)}
-        action={i18n.t(`inAppVerification.messages.${store.status}.action`)}
+        title={t(`messages.${store.status}.title`)}
+        detail={t(`messages.${store.status}.detail`)}
+        action={t(`messages.${store.status}.action`)}
         onPress={() => store.action()}
       />
     </View>

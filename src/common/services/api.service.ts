@@ -56,6 +56,7 @@ export class ApiError extends Error {
   status: number = 0;
   headers: any = null;
   errors?: FieldError[];
+  errorId?: string;
 
   constructor(message: string, status: number, errors?: FieldError[]) {
     super(message);
@@ -672,7 +673,7 @@ export class ApiService {
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);
       xhr.onload = () => {
-        if (xhr.status === 200 || xhr.status === 403) {
+        if (xhr.status >= 200 && xhr.status <= 399) {
           let response: ApiResponse;
           try {
             response = JSON.parse(xhr.responseText);
@@ -688,7 +689,7 @@ export class ApiService {
           resolve(response);
         } else {
           console.log('Upload Error', xhr.status, xhr.responseText);
-          reject(new UserError('Upload failed'));
+          reject(new ApiError('Upload failed', xhr.status));
         }
       };
       xhr.onerror = function () {

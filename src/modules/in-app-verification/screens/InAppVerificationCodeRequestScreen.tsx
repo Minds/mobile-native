@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import deviceInfo from 'react-native-device-info';
 import { observer, useLocalStore } from 'mobx-react';
 
-import i18n from '~/common/services/i18n.service';
 import { InAppVerificationStackScreenProps } from '../InAppVerificationStack';
 import { B1, Button, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import SaveButton from '~/common/components/SaveButton';
@@ -12,6 +11,7 @@ import pushService from '~/common/services/push.service';
 import usePushNotificationListener from '~/common/hooks/usePushNotificationListener';
 import logService from '~/common/services/log.service';
 import { api } from '../api';
+import { useTranslation } from '../locales';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
@@ -20,18 +20,19 @@ export default observer(function InAppVerificationCodeRequestScreen({
   route,
 }: PropsType) {
   const store = useCodeRequestStore(navigation, route);
+  const { t } = useTranslation();
 
-  const title = i18n.t(
+  const title = t(
     store.error
-      ? `inAppVerification.messages.${store.error}.title`
-      : 'inAppVerification.codeRequest.title',
+      ? `messages.${store.error}.title`
+      : 'Write down the code we send you.',
   );
-  const detail = i18n.t(
+  const detail = t(
     store.error
-      ? `inAppVerification.messages.${store.error}.detail`
-      : 'inAppVerification.codeRequest.description',
+      ? `messages.${store.error}.detail`
+      : "Once you're ready your camera will open and you will take a photo of the code.",
   );
-  const detail2 = i18n.t('inAppVerification.codeRequest.description2');
+  const detail2 = t('Yes, it really is that simple.');
 
   return (
     <Screen safe>
@@ -43,7 +44,7 @@ export default observer(function InAppVerificationCodeRequestScreen({
         extra={
           <SaveButton
             onPress={store.onContinue}
-            text={i18n.t('continue')}
+            text={t('Continue')}
             disabled={!store.code}
           />
         }
@@ -63,7 +64,7 @@ export default observer(function InAppVerificationCodeRequestScreen({
               mode="flat"
               type="action"
               onPress={() => store.requestCode()}>
-              {i18n.t(`inAppVerification.messages.${store.error}.action`)}
+              {t(`inAppVerification.messages.${store.error}.action`)}
             </Button>
           )}
         </Column>
