@@ -4,8 +4,8 @@ import {
 } from 'react-i18next';
 import i18n from 'utils/locales';
 
-import en from './es';
-import es from './en';
+import en from './en';
+import es from './es';
 
 const NAME_SPACE = 'mainModule';
 
