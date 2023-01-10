@@ -1,7 +1,5 @@
 export type TranslationType = typeof en;
 
-const en = {
-  Continue: 'Continue',
-};
+const en = {};
 
 export default en;

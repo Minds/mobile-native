@@ -3,7 +3,7 @@ import {
   UseTranslationOptions,
 } from 'react-i18next';
 import i18n from 'utils/locales';
-import 'modules/common/locales';
+import 'services/commonLocale';
 
 import en from './en';
 
