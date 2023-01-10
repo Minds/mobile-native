@@ -12,7 +12,7 @@ import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
-import boostedContentService from '~/modules/boost/services/boosted-content.service';
+import { boostedContentService } from 'modules/boost';
 import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';

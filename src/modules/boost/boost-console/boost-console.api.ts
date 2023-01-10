@@ -14,13 +14,10 @@ type BoostsResponse = {
 
 export async function getBoosts(offset, filter, peer_filter) {
   try {
-    const data: any = await api.get(
-      'api/v2/boost/' + filter + '/' + peer_filter,
-      {
-        offset: offset,
-        limit: 15,
-      },
-    );
+    const data: any = await api.get(`api/v2/boost/${filter}/${peer_filter}`, {
+      offset: offset,
+      limit: 15,
+    });
 
     return {
       entities: data.boosts || [],
@@ -58,7 +55,7 @@ export function revokeBoost(guid, filter) {
     return api.post(`api/v3/boosts/${guid}/cancel`);
   }
 
-  return api.delete('api/v2/boost/' + filter + '/' + guid + '/revoke');
+  return api.delete(`api/v2/boost/${filter}/${guid}/revoke`);
 }
 
 export function rejectBoost(guid) {

@@ -182,7 +182,7 @@ export default function () {
       />
       <MoreStack.Screen
         name="BoostConsole"
-        getComponent={() => require('~/modules/boost').BoostConsoleScreen}
+        getComponent={() => require('modules/boost').BoostConsoleScreen}
         options={hideHeader}
       />
       <MoreStack.Screen
@@ -383,7 +383,7 @@ export default function () {
       />
       <MoreStack.Screen
         name="BoostScreenV2"
-        getComponent={() => require('~/modules/boost').BoostComposerStack}
+        getComponent={() => require('modules/boost').BoostComposerStack}
         options={{ headerShown: false }}
       />
     </MoreStack.Navigator>

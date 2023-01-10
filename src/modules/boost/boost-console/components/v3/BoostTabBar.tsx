@@ -3,24 +3,25 @@ import React from 'react';
 import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
-import i18n from '~/common/services/i18n.service';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { useTranslation } from '../../../locales';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 
 interface BoostTabBarProps {}
 
 function BoostTabBar({}: BoostTabBarProps) {
+  const { t } = useTranslation();
   const theme = ThemedStyles.style;
   const boostConsoleStore = useBoostConsoleStore();
 
   const tabs: Array<TabType<string>> = [
     {
       id: 'newsfeed',
-      title: i18n.t('boosts.tabNewsfeed'),
+      title: t('Feed'),
     },
     {
       id: 'content',
-      title: i18n.t('boosts.tabSidebar'),
+      title: t('Sidebar'),
     },
   ];
 

@@ -31,19 +31,19 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
           onPress={async () => {
             if (
               await confirm({
-                title: 'Revoke boost',
-                description: 'Are you sure you want to revoke this boost?',
+                title: t('Revoke boost'),
+                description: t('Are you sure you want to revoke this boost?'),
               })
             ) {
               boost.revoke(boostConsoleStore.filter).catch(() => {
                 showNotification(
-                  'Something went wrong while revoking boost',
+                  t('Something went wrong while revoking boost'),
                   'danger',
                 );
               });
             }
           }}>
-          <B1>{i18n.t('revoke')}</B1>
+          <B1>{t('Revoke')}</B1>
         </Button>,
       );
     }

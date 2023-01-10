@@ -45,7 +45,7 @@ export default function () {
       />
       <NewsfeedStack.Screen
         name="BoostScreenV2"
-        getComponent={() => require('~/modules/boost').BoostComposerStack}
+        getComponent={() => require('modules/boost').BoostComposerStack}
         options={hideHeader}
       />
     </NewsfeedStack.Navigator>

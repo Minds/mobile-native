@@ -71,6 +71,7 @@ function Boost({ boost, navigation }: BoostProps) {
           </Column>
         );
     }
+
     return (
       <B1 horizontal="L" vertical="L" color="secondary">
         {t('Entity {{type}} {{subtype}} not supported', {
