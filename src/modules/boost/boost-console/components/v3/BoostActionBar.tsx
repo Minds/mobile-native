@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import type UserStore from '~/auth/UserStore';
 import { confirm } from '~/common/components/Confirm';
@@ -20,36 +20,6 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
   const { t } = useTranslation();
   const revokable = boost.boost_status === BoostStatus.PENDING;
   const date = i18n.date(boost.created_timestamp * 1000, 'friendly');
-
-  function renderActions() {
-    let buttons: ReactElement[] = [];
-
-    if (revokable) {
-      buttons.push(
-        <Button
-          bottom="S"
-          onPress={async () => {
-            if (
-              await confirm({
-                title: t('Revoke boost'),
-                description: t('Are you sure you want to revoke this boost?'),
-              })
-            ) {
-              boost.revoke(boostConsoleStore.filter).catch(() => {
-                showNotification(
-                  t('Something went wrong while revoking boost'),
-                  'danger',
-                );
-              });
-            }
-          }}>
-          <B1>{t('Revoke')}</B1>
-        </Button>,
-      );
-    }
-
-    return buttons;
-  }
 
   return (
     <Column horizontal="L" bottom="L">
@@ -77,7 +47,27 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
           <B1 color="secondary">{date}</B1>
         </Column>
       </Row>
-      {renderActions()}
+      {!!revokable && (
+        <Button
+          bottom="S"
+          onPress={async () => {
+            if (
+              await confirm({
+                title: t('Revoke boost'),
+                description: t('Are you sure you want to revoke this boost?'),
+              })
+            ) {
+              boost.revoke(boostConsoleStore.filter).catch(() => {
+                showNotification(
+                  t('Something went wrong while revoking boost'),
+                  'danger',
+                );
+              });
+            }
+          }}>
+          <B1>{t('Revoke')}</B1>
+        </Button>
+      )}
     </Column>
   );
 }
