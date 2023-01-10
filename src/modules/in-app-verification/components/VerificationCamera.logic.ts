@@ -20,14 +20,19 @@ import { IS_IOS } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import NavigationService from '~/navigation/NavigationService';
 import { api } from '../api';
+import { ApiError } from '~/common/services/api.service';
 
 export const TARGET_WIDTH_RATIO = 0.65;
 const TIMEOUT = 6000;
 const SAMPLING_INTERVAL = 200;
 
+const VerificationRequestExpiredException =
+  'Minds::Core::Verification::Exceptions::VerificationRequestExpiredException';
+
 type StatusType =
   | 'uploading'
   | 'success'
+  | 'expired'
   | 'error'
   | 'timeout'
   | 'running'
@@ -64,6 +69,7 @@ export const createVerificationStore = ({
    */
   action() {
     switch (this.status) {
+      case 'expired':
       case 'running':
         this.resendCode();
         break;
@@ -72,7 +78,10 @@ export const createVerificationStore = ({
         this.startRecording();
         break;
       case 'success':
-        console.log('User Validated!');
+        // return to the newsfeed
+        NavigationService.navigate({
+          name: 'Newsfeed',
+        });
         break;
       case 'permissionError':
         this.requestPermission();
@@ -212,18 +221,18 @@ export const createVerificationStore = ({
                     flash: 'off',
                   }));
 
-              const response = await this.submit(image, video);
-
-              if (response.status === 1) {
-                this.status = 'success';
-              } else {
-                this.status = 'error';
+              // 200 means it is valid
+              await this.submit(image, video);
+              this.status = 'success';
+            } catch (error) {
+              logService.exception('VerificationCamera[upload]', error);
+              if (
+                error instanceof ApiError &&
+                error.errorId === VerificationRequestExpiredException
+              ) {
+                this.status = 'expired';
               }
 
-              console.log('VERIFICATION', response);
-            } catch (error) {
-              console.log(error);
-              logService.exception(error);
               this.status = 'error';
             }
           }
