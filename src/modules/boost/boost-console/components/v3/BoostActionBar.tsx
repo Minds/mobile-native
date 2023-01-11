@@ -24,11 +24,11 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
   return (
     <Column horizontal="L" bottom="L">
       <Row flex>
-        <Column flex>
+        {/* <Column flex>
           <B1 font="bold" right="M">
             {t('Estimated reach')}
           </B1>
-        </Column>
+        </Column> */}
         <Column flex>
           <B1 font="bold">{t('Results')}</B1>
         </Column>
@@ -37,9 +37,9 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
         </Column>
       </Row>
       <Row flex bottom="L">
-        <Column flex>
+        {/* <Column flex>
           <B1 />
-        </Column>
+        </Column> */}
         <Column flex>
           <B1 color="secondary">{boost.entity?.impressions ?? ''}</B1>
         </Column>

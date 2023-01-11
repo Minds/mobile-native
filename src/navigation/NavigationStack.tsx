@@ -224,6 +224,11 @@ const AppStack = observer(() => {
           getComponent={() => require('~/supermind/SupermindScreen').default}
           options={hideHeader}
         />
+        <AppStackNav.Screen
+          name="BoostConsole"
+          getComponent={() => require('modules/boost').BoostConsoleScreen}
+          options={hideHeader}
+        />
       </AppStackNav.Navigator>
     </>
   );

@@ -2,12 +2,10 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import { FlatList, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { Button, Screen, ScreenHeader } from '~ui';
+import { B1, Button, Icon, IconButton, Screen, ScreenHeader } from '~ui';
 import { hasVariation } from '../../../../../ExperimentsProvider';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
@@ -29,6 +27,7 @@ function BoostConsoleScreen({
   navigation,
 }: BoostConsoleScreenProps) {
   const { t } = useTranslation();
+  const { location: boostLocation, filter } = route?.params || {};
   const boostConsoleStore = useRef(new BoostConsoleStore()).current;
   let empty;
 
@@ -47,13 +46,16 @@ function BoostConsoleScreen({
   };
 
   useEffect(() => {
-    const { filter } = route.params ?? {};
-    if (filter) {
-      boostConsoleStore.setFilter(filter);
+    if (boostLocation) {
+      boostConsoleStore.setFilter(boostLocation);
+    } else {
+      if (filter) {
+        boostConsoleStore.setFilter(filter);
+      }
     }
 
     boostConsoleStore.loadList(!!guid);
-  }, [boostConsoleStore, guid, route.params]);
+  }, [boostConsoleStore, boostLocation, guid, filter]);
 
   /**
    * Render row
@@ -71,14 +73,16 @@ function BoostConsoleScreen({
     empty = <CenteredLoading />;
   }
 
-  if (boostConsoleStore.list.loaded && !boostConsoleStore.list.refreshing) {
+  if (
+    boostConsoleStore.list.loaded &&
+    !boostConsoleStore.list.refreshing &&
+    boostConsoleStore.feedFilter === 'all'
+  ) {
     empty = (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Icon name="trending-up" size={72} color="#444" />
-          <MText style={ComponentsStyle.emptyComponentMessage}>
-            {t("You don't have any boosts")}
-          </MText>
+          <Icon name="boost" size={72} />
+          <B1>{t("You don't have any boosts")}</B1>
           <Button
             onPress={() => navigation.navigate('Compose')}
             type="action"
@@ -102,7 +106,21 @@ function BoostConsoleScreen({
   return (
     <BoostConsoleStoreContext.Provider value={boostConsoleStore}>
       <Screen safe onlyTopEdge>
-        <ScreenHeader title={t('Boost Console')} back />
+        <ScreenHeader
+          title={t('Boost Console')}
+          back
+          extra={
+            <IconButton
+              name="cog"
+              onPress={() =>
+                navigation.navigate('More', {
+                  screen: 'BoostSettingsScreen',
+                  initial: false,
+                })
+              }
+            />
+          }
+        />
         <FlatList
           ListHeaderComponent={tabs}
           ListEmptyComponent={empty}

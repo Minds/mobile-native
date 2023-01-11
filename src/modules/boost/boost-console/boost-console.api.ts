@@ -5,7 +5,7 @@ import api, {
 import i18n from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
 import { hasVariation } from '../../../../ExperimentsProvider';
-import { BoostConsoleBoost } from './types/BoostConsoleBoost';
+import { BoostConsoleBoost, BoostStatus } from './types/BoostConsoleBoost';
 
 type BoostsResponse = {
   boosts: BoostConsoleBoost[];
@@ -31,11 +31,17 @@ export async function getBoosts(offset, filter, peer_filter) {
   }
 }
 
-export async function getBoostsV3(offset) {
+export async function getBoostsV3(
+  offset,
+  location: 'newsfeed' | 'sidebar',
+  status?: BoostStatus,
+) {
   try {
     const data = await api.get<BoostsResponse>('api/v3/boosts/', {
       offset: offset,
       limit: 15,
+      status,
+      location: location === 'newsfeed' ? 1 : 2,
     });
 
     return {

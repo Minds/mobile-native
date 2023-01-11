@@ -4,8 +4,10 @@ import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { Row } from '../../../../../common/ui';
 import { useTranslation } from '../../../locales';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
+import FeedFilter from './FeedFilter';
 
 interface BoostTabBarProps {}
 
@@ -20,18 +22,23 @@ function BoostTabBar({}: BoostTabBarProps) {
       title: t('Feed'),
     },
     {
-      id: 'content',
+      id: 'sidebar',
       title: t('Sidebar'),
     },
   ];
 
   return (
-    <TopbarTabbar
-      titleStyle={theme.bold}
-      tabs={tabs}
-      onChange={boostConsoleStore.setFilter}
-      current={boostConsoleStore.filter}
-    />
+    <Row flex align="centerEnd">
+      <TopbarTabbar
+        titleStyle={theme.bold}
+        tabs={tabs}
+        onChange={boostConsoleStore.setFilter}
+        current={boostConsoleStore.filter}
+        containerStyle={{ borderBottomWidth: 0, flex: 1 }}
+      />
+
+      <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+    </Row>
   );
 }
 

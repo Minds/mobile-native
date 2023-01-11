@@ -6,6 +6,7 @@ import { hasVariation } from '../../../../ExperimentsProvider';
 import BoostModel from '../models/BoostModel';
 import BoostModelV3 from '../models/BoostModelV3';
 import { getBoosts, getBoostsV3 } from './boost-console.api';
+import { BoostStatus } from './types/BoostConsoleBoost';
 
 /**
  * Boosts Store
@@ -19,8 +20,9 @@ class BoostConsoleStore {
   /**
    * Boosts list filter
    */
-  @observable filter = 'newsfeed';
+  @observable filter: 'newsfeed' | 'sidebar' = 'newsfeed';
   @observable peer_filter = 'inbox';
+  @observable feedFilter: 'all' | BoostStatus = 'all';
 
   /**
    * List loading
@@ -37,10 +39,15 @@ class BoostConsoleStore {
     this.loading = true;
 
     try {
+      // @ts-ignore
       const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
       let feed: any = null; // TODO: any
       if (hasVariation('mob-4638-boost-v3')) {
-        feed = await getBoostsV3(this.list.offset);
+        feed = await getBoostsV3(
+          this.list.offset,
+          this.filter,
+          this.feedFilter === 'all' ? undefined : this.feedFilter,
+        );
         this.assignRowKeys(feed);
         feed.entities = BoostModelV3.createMany(feed.entities);
       } else {
@@ -95,9 +102,17 @@ class BoostConsoleStore {
   }
 
   @action
+  setFeedFilter(filter: 'all' | BoostStatus) {
+    this.feedFilter = filter;
+    this.list.clearList();
+    this.loadList();
+  }
+
+  @action
   reset() {
     this.list = new OffsetListStore();
     this.filter = 'newsfeed';
+    this.feedFilter = 'all';
     this.peer_filter = 'inbox';
     this.loading = false;
   }

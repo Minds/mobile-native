@@ -8,6 +8,9 @@ export enum BoostStatus {
   REFUND_PROCESSED = 5,
   FAILED = 6,
   REPORTED = 7,
+  PENDING_ONCHAIN_CONFIRMATION = 8,
+  COMPLETED = 9,
+  CANCELLED = 10,
 }
 
 export enum BoostPaymentMethod {

@@ -66,7 +66,9 @@ export type MoreStackParamList = {
     section?: string;
   };
   PlusDiscoveryScreen: {};
-  BoostConsole: {};
+  BoostConsole: {
+    location?: string;
+  };
   GroupsList: {};
   Settings: {};
   Analytics: {};
@@ -223,6 +225,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  BoostConsole: {
+    location?: string;
+  };
   Supermind: {
     guid: string;
     supermindRequest?: SupermindRequestModel;
