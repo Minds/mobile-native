@@ -225,6 +225,13 @@ const AppStack = observer(() => {
           getComponent={() => require('~/supermind/SupermindScreen').default}
           options={hideHeader}
         />
+        <AppStackNav.Screen
+          name="Referrals"
+          getComponent={() => require('~/referral/ReferralsScreen').default}
+          options={{
+            title: 'Invite Friends',
+          }}
+        />
       </AppStackNav.Navigator>
     </>
   );

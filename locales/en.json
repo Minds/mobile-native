@@ -221,7 +221,10 @@
     "userDescription": "Let the Minds community know who you are by decking out your channel page. This step is required to join the token rewards program.",
     "userButton": "Setup my channel",
     "uniquenessTitle": "You're invited! Join rewards",
-    "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content."
+    "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content.",
+    "inviteFriendsTitle": "Invite Friends",
+    "inviteFriendsDescription": "Minds gets better with friends. Share your referral link to invite them to join. If they earn money on Minds, you'll earn a 5% referral fee.",
+    "inviteFriendsAction": "Invite Friend"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",

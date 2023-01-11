@@ -13,6 +13,7 @@ apiService.get.mockResolvedValue({
   notices: [
     { key: 'verify-email', location: 'top', should_show: false },
     { key: 'build-your-algorithm', location: 'inline', should_show: true },
+    { key: 'invite-friends', location: 'inline', should_show: true },
   ],
 });
 
@@ -57,6 +58,7 @@ describe('InFeedNoticesService', () => {
     // formatted data
     expect(service.data).toEqual({
       'build-your-algorithm': { location: 'inline', should_show: true },
+      'invite-friends': { location: 'inline', should_show: true },
     });
 
     onLogoutCB();
