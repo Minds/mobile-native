@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
 import { B1, B2, Row } from '~/common/ui';
@@ -12,6 +13,12 @@ interface BoostHeader {
 
 export default function BoostHeader({ boost }: BoostHeader) {
   const { t } = useTranslation();
+  const tillExpiration =
+    boost.approved_timestamp && boost.boost_status === BoostStatus.APPROVED
+      ? moment(boost.approved_timestamp * 1000)
+          .add({ days: boost.duration_days })
+          .fromNow()
+      : null;
 
   const cashLabel = t('${{amount}} over {{duration}} days', {
     amount: boost.payment_amount,
@@ -41,11 +48,18 @@ export default function BoostHeader({ boost }: BoostHeader) {
             : tokenLabel}
         </B2>
       </View>
-      <B1 left="L">{boostStatusText[boost.boost_status]}</B1>
+      {!!tillExpiration && <B1 color="secondary">{t('Ends: ')}</B1>}
+      <B1>{tillExpiration || boostStatusText[boost.boost_status]}</B1>
     </Row>
   );
 }
 
 const styles = ThemedStyles.create({
-  rectangle: ['borderRadius4x', 'bgLink', 'padding', 'alignSelfStart'],
+  rectangle: [
+    'borderRadius4x',
+    'bgLink',
+    'padding',
+    'alignSelfStart',
+    'marginRight2x',
+  ],
 });
