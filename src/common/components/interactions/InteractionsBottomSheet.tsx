@@ -140,21 +140,18 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
         .fetch();
     },
     get endpoint() {
-      switch (store.interaction) {
-        case 'upVotes':
-        case 'downVotes':
-          return `api/v3/votes/list/${entity.guid}`;
-        case 'subscribers':
-          return `api/v3/subscriptions/graph/${entity.guid}/subscribers`;
-        case 'channelSubscribers':
-          return 'api/v1/subscribe/subscribers/' + entity.guid;
-        case 'channelSubscriptions':
-          return `api/v3/subscriptions/graph/${entity.guid}/subscriptions`;
-        case 'subscribersYouKnow':
-          return 'api/v3/subscriptions/relational/also-subscribe-to';
-        default:
-          return 'api/v3/newsfeed';
-      }
+      return (
+        {
+          upVotes: `api/v3/votes/list/${entity.guid}`,
+          downVotes: `api/v3/votes/list/${entity.guid}`,
+          subscribers: `api/v3/subscriptions/graph/${entity.guid}/subscribers`,
+          channelSubscribers: `api/v1/subscribe/subscribers/${entity.guid}`,
+          channelSubscriptions: `api/v3/subscriptions/graph/${entity.guid}/subscriptions`,
+          subscribersYouKnow:
+            'api/v3/subscriptions/relational/also-subscribe-to',
+          default: 'api/v3/newsfeed',
+        }[store.interaction] || 'api/v3/newsfeed'
+      );
     },
     get opts() {
       const opts: any = {
@@ -183,20 +180,14 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       return opts;
     },
     get offsetField() {
-      let offsetField: string | undefined = 'next-page';
-      switch (store.interaction) {
-        case 'subscribers':
-          offsetField = 'from_timestamp';
-          break;
-        case 'channelSubscribers':
-        case 'channelSubscriptions':
-          offsetField = undefined;
-          break;
-        case 'subscribersYouKnow':
-          offsetField = 'offset';
-          break;
-      }
-      return offsetField;
+      return (
+        {
+          subscribers: 'from_timestamp',
+          channelSubscribers: undefined,
+          channelSubscriptions: undefined,
+          subscribersYouKnow: 'offset',
+        }[store.interaction] || 'next-page'
+      );
     },
     setOffset(offset: any) {
       this.offset = offset;
@@ -211,7 +202,6 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     store.interaction === 'subscribersYouKnow';
   let dataField = isVote ? 'votes' : 'entities';
   if (
-    // store.interaction === 'channelSubscriptions' ||
     store.interaction === 'channelSubscribers' ||
     store.interaction === 'subscribersYouKnow'
   ) {
