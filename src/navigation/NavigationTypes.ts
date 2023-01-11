@@ -212,6 +212,7 @@ export type RootStackParamList = {
     onSelect: (channel: UserModel) => void;
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  StoryBook: {};
 };
 
 export type AuthStackParamList = {
