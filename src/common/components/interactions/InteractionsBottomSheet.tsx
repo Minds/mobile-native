@@ -19,6 +19,8 @@ import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
 import MText from '../MText';
 import { useNavigation } from '@react-navigation/core';
+import FeedStore from '~/common/stores/FeedStore';
+import FeedList from '../FeedList';
 
 type Interactions =
   | 'upVotes'
@@ -66,6 +68,17 @@ export interface InteractionsActionSheetHandles {
   hide(): void;
 }
 
+const getTitle = (interaction: Interactions) => {
+  switch (interaction) {
+    case 'channelSubscribers':
+      return i18n.t('subscribers');
+    case 'channelSubscriptions':
+      return i18n.t('subscriptions');
+    default:
+      return i18n.t(`interactions.${interaction}`, { count: 2 });
+  }
+};
+
 /**
  * Interactions Action Sheet
  * @param props
@@ -96,6 +109,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const entity = props.entity;
   const offsetListRef = useRef<any>();
   const store = useLocalStore(() => ({
+    feedStore: new FeedStore(),
     visible: false,
     interaction: 'upVotes' as Interactions,
     offset: '' as any,
@@ -119,23 +133,25 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
     setInteraction(interaction: Interactions) {
       store.interaction = interaction;
+      this.feedStore
+        .setEndpoint(`api/v3/subscriptions/graph/${entity.guid}/subscriptions`)
+        .setLimit(12)
+        .clear()
+        .fetch();
     },
     get endpoint() {
-      switch (store.interaction) {
-        case 'upVotes':
-        case 'downVotes':
-          return `api/v3/votes/list/${entity.guid}`;
-        case 'subscribers':
-          return `api/v3/subscriptions/graph/${entity.guid}/subscribers`;
-        case 'channelSubscribers':
-          return 'api/v1/subscribe/subscribers/' + entity.guid;
-        case 'channelSubscriptions':
-          return 'api/v1/subscribe/subscriptions/' + entity.guid;
-        case 'subscribersYouKnow':
-          return 'api/v3/subscriptions/relational/also-subscribe-to';
-        default:
-          return 'api/v3/newsfeed';
-      }
+      return (
+        {
+          upVotes: `api/v3/votes/list/${entity.guid}`,
+          downVotes: `api/v3/votes/list/${entity.guid}`,
+          subscribers: `api/v3/subscriptions/graph/${entity.guid}/subscribers`,
+          channelSubscribers: `api/v1/subscribe/subscribers/${entity.guid}`,
+          channelSubscriptions: `api/v3/subscriptions/graph/${entity.guid}/subscriptions`,
+          subscribersYouKnow:
+            'api/v3/subscriptions/relational/also-subscribe-to',
+          default: 'api/v3/newsfeed',
+        }[store.interaction] || 'api/v3/newsfeed'
+      );
     },
     get opts() {
       const opts: any = {
@@ -164,20 +180,14 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       return opts;
     },
     get offsetField() {
-      let offsetField: string | undefined = 'next-page';
-      if (store.interaction === 'subscribers') {
-        offsetField = 'from_timestamp';
-      }
-      if (
-        store.interaction === 'channelSubscribers' ||
-        store.interaction === 'channelSubscriptions'
-      ) {
-        offsetField = undefined;
-      }
-      if (store.interaction === 'subscribersYouKnow') {
-        offsetField = 'offset';
-      }
-      return offsetField;
+      return (
+        {
+          subscribers: 'from_timestamp',
+          channelSubscribers: undefined,
+          channelSubscriptions: undefined,
+          subscribersYouKnow: 'offset',
+        }[store.interaction] || 'next-page'
+      );
     },
     setOffset(offset: any) {
       this.offset = offset;
@@ -192,7 +202,6 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     store.interaction === 'subscribersYouKnow';
   let dataField = isVote ? 'votes' : 'entities';
   if (
-    store.interaction === 'channelSubscriptions' ||
     store.interaction === 'channelSubscribers' ||
     store.interaction === 'subscribersYouKnow'
   ) {
@@ -253,27 +262,18 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     [keepOpen],
   );
 
-  const title = useMemo(() => {
-    switch (store.interaction) {
-      case 'channelSubscribers':
-        return i18n.t('subscribers');
-      case 'channelSubscriptions':
-        return i18n.t('subscriptions');
-      default:
-        return i18n.t(`interactions.${store.interaction}`, { count: 2 });
-    }
-  }, [store.interaction]);
-
   // =====================| RENDERS |=====================>
   const Header = useCallback(
     () => (
       <Handle>
         <View style={styles.navbarContainer}>
-          <MText style={styles.titleStyle}>{capitalize(title)}</MText>
+          <MText style={styles.titleStyle}>
+            {store.visible ? capitalize(getTitle(store.interaction)) : ''}
+          </MText>
         </View>
       </Handle>
     ),
-    [store.interaction, title],
+    [store.interaction, store.visible],
   );
 
   const footer = (
@@ -311,22 +311,33 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       <View style={styles.container}>
         {store.visible && (
           <>
-            <OffsetList
-              ref={offsetListRef}
-              fetchEndpoint={store.endpoint}
-              endpointData={dataField}
-              params={store.opts}
-              placeholderCount={placeholderCount}
-              renderPlaceholder={renderPlaceholder}
-              // focusHook={useFocusEffect}
-              map={isVote ? mapUser : isChannels ? mapSubscriber : mapActivity}
-              renderItem={
-                isVote || isChannels ? renderItemUser : renderItemActivity
-              }
-              offsetPagination={store.interaction === 'subscribersYouKnow'}
-              offsetField={store.offsetField}
-              contentContainerStyle={styles.contentContainerStyle}
-            />
+            {store.interaction !== 'channelSubscriptions' ? (
+              <OffsetList
+                ref={offsetListRef}
+                fetchEndpoint={store.endpoint}
+                endpointData={dataField}
+                params={store.opts}
+                placeholderCount={placeholderCount}
+                renderPlaceholder={renderPlaceholder}
+                // focusHook={useFocusEffect}
+                map={
+                  isVote ? mapUser : isChannels ? mapSubscriber : mapActivity
+                }
+                renderItem={
+                  isVote || isChannels ? renderItemUser : renderItemActivity
+                }
+                offsetPagination={store.interaction === 'subscribersYouKnow'}
+                offsetField={store.offsetField}
+                contentContainerStyle={styles.contentContainerStyle}
+              />
+            ) : (
+              <FeedList
+                estimatedItemSize={50}
+                feedStore={store.feedStore}
+                navigation={navigation}
+                renderActivity={renderItemUser}
+              />
+            )}
             {footer}
           </>
         )}
