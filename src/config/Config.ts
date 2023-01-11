@@ -216,3 +216,5 @@ export const STORE_LINK = Platform.select({
   ios: APP_STORE_LINK,
   android: PLAY_STORE_LINK,
 }) as string;
+
+export const isStoryBookOn = storages.app.getBool('storybook');
