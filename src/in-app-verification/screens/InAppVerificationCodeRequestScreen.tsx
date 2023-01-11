@@ -25,7 +25,7 @@ export default function InAppVerificationCodeRequestScreen({
 
   React.useEffect(() => {
     deviceInfo.getUniqueId().then(async deviceId => {
-      const response = await apiService.post(
+      const response = await apiService.post<{ code: string }>(
         `/api/v3/verification/${deviceId}`,
         {
           device_type: IS_IOS ? 'ios' : 'android',
