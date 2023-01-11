@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
+  View,
   Linking,
   UIManager,
   RefreshControl,
@@ -56,7 +57,6 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
-import { View } from 'moti';
 
 YellowBox.ignoreWarnings(['']);
 
