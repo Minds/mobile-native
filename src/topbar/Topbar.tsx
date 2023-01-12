@@ -43,17 +43,10 @@ export const Topbar = observer((props: PropsType) => {
           backgroundColor: bgColor,
           zIndex: 999,
           shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 1.5,
-          },
-          shadowOpacity: 0.35,
-          shadowRadius: 1.41,
-          elevation: 3,
         }
       : {
-          zIndex: 999,
           backgroundColor: bgColor,
+          zIndex: 999,
           shadowColor: 'transparent',
         };
   }, [animatedContext, bgColor]);
@@ -81,7 +74,7 @@ export const Topbar = observer((props: PropsType) => {
   const avatar = channel.getAvatarSource?.('medium') ?? {};
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View style={[styles.shadow, animatedStyle]}>
       <TabChatPreModal ref={chatModal} />
       <View style={container}>
         <View style={styles.topbar}>
@@ -159,12 +152,11 @@ export const styles = StyleSheet.create({
   },
   shadow: {
     zIndex: 999,
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1.5,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.35,
     shadowRadius: 1.41,
     elevation: 3,
   },
