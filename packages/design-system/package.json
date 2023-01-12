@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "types": "./types/index.d.ts",
-  "main": "dist/cjs",
+  "main": "src/index.ts",
   "module": "dist/esm",
   "module:jsx": "dist/jsx",
   "files": [
