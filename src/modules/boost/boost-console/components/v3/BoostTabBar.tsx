@@ -4,7 +4,7 @@ import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { Row } from '../../../../../common/ui';
+import { Row } from '~/common/ui';
 import { useTranslation } from '../../../locales';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 import FeedFilter from './FeedFilter';
@@ -34,12 +34,16 @@ function BoostTabBar({}: BoostTabBarProps) {
         tabs={tabs}
         onChange={boostConsoleStore.setFilter}
         current={boostConsoleStore.filter}
-        containerStyle={{ borderBottomWidth: 0, flex: 1 }}
+        containerStyle={styles.tabbar}
       />
 
       <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
     </Row>
   );
 }
+
+const styles = ThemedStyles.create({
+  tabbar: { borderBottomWidth: 0, flex: 1 },
+});
 
 export default observer(BoostTabBar);

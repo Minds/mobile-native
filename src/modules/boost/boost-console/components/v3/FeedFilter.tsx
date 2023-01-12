@@ -35,8 +35,7 @@ function FeedFilter({ containerStyles }: { containerStyles: ViewStyle }) {
         onPress: () => {
           dismiss();
           InteractionManager.runAfterInteractions(() => {
-            // @ts-ignore
-            boostConsoleStore.setFeedFilter(f);
+            boostConsoleStore.setFeedFilter(f as 'all' | BoostStatus);
           });
         },
         selected: boostConsoleStore.feedFilter === f,
