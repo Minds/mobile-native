@@ -33,8 +33,8 @@ export default function BoostHeader({ boost }: BoostHeader) {
     [BoostStatus.PENDING]: t('Pending'),
     [BoostStatus.APPROVED]: t('Approved'),
     [BoostStatus.REJECTED]: t('Rejected'),
-    [BoostStatus.REFUND_IN_PROGRESS]: t('Refund in progress'),
-    [BoostStatus.REFUND_PROCESSED]: t('Refunded'),
+    [BoostStatus.REFUND_IN_PROGRESS]: t('Refund in Progress'),
+    [BoostStatus.REFUND_PROCESSED]: t('Refund Completed'),
     [BoostStatus.FAILED]: t('Failed'),
     [BoostStatus.REPORTED]: t('Reported'),
   };
