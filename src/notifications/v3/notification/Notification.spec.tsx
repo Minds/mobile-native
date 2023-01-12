@@ -4,12 +4,8 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
-import { hasVariation } from '../../../../ExperimentsProvider';
 
 jest.mock('../../../common/services/session.service');
-jest.mock('../../../../ExperimentsProvider');
-
-const mockedHasVariation = hasVariation as jest.Mock<typeof hasVariation>;
 
 const name = 'Fake user';
 
