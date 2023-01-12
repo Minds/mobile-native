@@ -8,14 +8,19 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 
-const NewsfeedStack = createNativeStackNavigator<AppStackParamList>();
+type NewsfeedStackParamList = Pick<
+  AppStackParamList,
+  'TopNewsfeed' | 'Channel' | 'Activity' | 'InAppVerification' | 'BoostScreenV2'
+> & { MainFeed: AppStackParamList['Newsfeed'] };
+
+const NewsfeedStack = createNativeStackNavigator<NewsfeedStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
   return (
     <NewsfeedStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <NewsfeedStack.Screen
-        name="Newsfeed"
+        name="MainFeed"
         component={NewsfeedScreen}
         options={hideHeader}
       />
