@@ -1,4 +1,5 @@
 import { observable } from 'mobx';
+import { hasVariation } from '../../../../ExperimentsProvider';
 import UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -61,6 +62,13 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.group_queue_add:
       case NotificationType.token_rewards_summary:
       case NotificationType.supermind_expired:
+      case NotificationType.boost_rejected:
+        if (hasVariation('mob-4638-boost-v3')) {
+          return '';
+        }
+        break;
+      case NotificationType.boost_accepted:
+      case NotificationType.boost_completed:
         return '';
     }
 
@@ -75,12 +83,17 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.wire_received:
       case NotificationType.group_queue_add:
       case NotificationType.token_rewards_summary:
+      case NotificationType.boost_accepted:
+      case NotificationType.boost_completed:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
       case NotificationType.boost_peer_rejected:
         return 'boost offer';
       case NotificationType.boost_rejected:
+        if (hasVariation('mob-4638-boost-v3')) {
+          return '';
+        }
         return 'boost';
       case NotificationType.supermind_created:
       case NotificationType.supermind_declined:
@@ -102,8 +115,11 @@ export default class NotificationModel extends AbstractModel {
   }
 
   get Verb() {
-    const type: NotificationType | 'reply' =
+    let type: NotificationType | 'reply' | 'boost_rejected_v2' =
       this.data && this.data.is_reply ? 'reply' : this.type;
+    if (type === NotificationType.boost_rejected) {
+      type = 'boost_rejected_v2';
+    }
     return i18n.t(`notification.verbs.${type}`, {
       amount: this.data?.tokens_formatted,
     });
@@ -112,6 +128,13 @@ export default class NotificationModel extends AbstractModel {
   get Subject() {
     switch (this.type) {
       case NotificationType.token_rewards_summary:
+      case NotificationType.boost_rejected:
+        if (hasVariation('mob-4638-boost-v3')) {
+          return '';
+        }
+        break;
+      case NotificationType.boost_accepted:
+      case NotificationType.boost_completed:
         return '';
     }
 
@@ -147,7 +170,9 @@ export enum NotificationType {
   boost_peer_request = 'boost_peer_request',
   boost_peer_accepted = 'boost_peer_accepted',
   boost_peer_rejected = 'boost_peer_rejected',
+  boost_accepted = 'boost_accepted',
   boost_rejected = 'boost_rejected',
+  boost_completed = 'boost_completed',
   token_rewards_summary = 'token_rewards_summary',
   supermind_created = 'supermind_created',
   supermind_declined = 'supermind_rejected',
