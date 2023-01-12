@@ -12,6 +12,7 @@ import { OCRFrame, scanOCR } from 'vision-camera-ocr';
 
 import logService from '~/common/services/log.service';
 import { IS_IOS } from '~/config/Config';
+import { Timeout } from '~/types/Common';
 
 export const TARGET_WIDTH_RATIO = 0.65;
 const TIMEOUT = 6000;
@@ -31,7 +32,7 @@ export const createOcrStore = ({ code }: { code: string }) => ({
   layout: null as null | LayoutRectangle,
   status: 'running' as StatusType,
   camera: <Camera | null>null,
-  timeout: <null | number>null,
+  timeout: <null | Timeout>null,
   /**
    * execute action based on the status
    */

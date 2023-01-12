@@ -30,11 +30,6 @@ class BoostedContentService {
   boosts: Array<ActivityModel> = [];
 
   /**
-   * Interval
-   */
-  interval?: number = undefined;
-
-  /**
    * whether the feed is updating
    */
   updating = false;
@@ -85,10 +80,6 @@ class BoostedContentService {
   clear() {
     this.feedsService?.clear();
     delete this.feedsService;
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-    delete this.interval;
   }
 
   /**
