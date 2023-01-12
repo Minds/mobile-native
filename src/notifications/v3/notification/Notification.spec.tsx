@@ -4,8 +4,12 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
+import { hasVariation } from '../../../../ExperimentsProvider';
 
 jest.mock('../../../common/services/session.service');
+jest.mock('../../../../ExperimentsProvider');
+
+const mockedHasVariation = hasVariation as jest.Mock<typeof hasVariation>;
 
 const name = 'Fake user';
 
@@ -86,6 +90,45 @@ describe('Notification', () => {
     expect(await screen.findByText(name)).toBeTruthy();
     expect(await screen.findByText('missed your')).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  test('Boost accepted', async () => {
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.boost_accepted,
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(await screen.findByText('Your Boost is now running')).toBeTruthy();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  test('Boost complete', async () => {
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.boost_completed,
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(await screen.findByText('Your Boost is complete')).toBeTruthy();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  test('Boost rejected', async () => {
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.boost_rejected,
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(await screen.findByText('Your Boost was rejected')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
 });

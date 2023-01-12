@@ -66,7 +66,6 @@ export default class NotificationModel extends AbstractModel {
         if (hasVariation('mob-4638-boost-v3')) {
           return '';
         }
-        break;
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
         return '';
@@ -132,7 +131,6 @@ export default class NotificationModel extends AbstractModel {
         if (hasVariation('mob-4638-boost-v3')) {
           return '';
         }
-        break;
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
         return '';

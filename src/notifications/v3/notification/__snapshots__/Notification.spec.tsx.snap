@@ -587,6 +587,934 @@ exports[`Notification An offer expires 1`] = `
 </View>
 `;
 
+exports[`Notification Boost accepted 1`] = `
+<View
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": "#414C57",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <View
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 18.5,
+                "height": 37,
+                "width": 37,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            resizeMode="cover"
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+      <View>
+        <View
+          style={
+            Object {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#1B85D6",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFF",
+                      "fontSize": 10,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                󰔵
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Your Boost is now running
+         
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Sep 20, 2022
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "#1B85D6",
+              "borderRadius": 20,
+              "height": 10,
+              "marginLeft": 8,
+              "width": 10,
+            },
+            Object {
+              "backgroundColor": "#1B85D6",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 24,
+        "paddingLeft": 0,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "overflow": "visible",
+          },
+          Object {
+            "borderWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#3f4b56",
+          },
+          Object {
+            "backgroundColor": "#1F252C",
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onLayout={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="ActivityView"
+      >
+        <View
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "padding": 1,
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Notification Boost complete 1`] = `
+<View
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": "#414C57",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <View
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 18.5,
+                "height": 37,
+                "width": 37,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            resizeMode="cover"
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+      <View>
+        <View
+          style={
+            Object {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#1B85D6",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFF",
+                      "fontSize": 10,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                󰔵
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Your Boost is complete
+         
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Sep 20, 2022
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "#1B85D6",
+              "borderRadius": 20,
+              "height": 10,
+              "marginLeft": 8,
+              "width": 10,
+            },
+            Object {
+              "backgroundColor": "#1B85D6",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 24,
+        "paddingLeft": 0,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "overflow": "visible",
+          },
+          Object {
+            "borderWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#3f4b56",
+          },
+          Object {
+            "backgroundColor": "#1F252C",
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onLayout={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="ActivityView"
+      >
+        <View
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "padding": 1,
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Notification Boost rejected 1`] = `
+<View
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": "#414C57",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <View
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 18.5,
+                "height": 37,
+                "width": 37,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            resizeMode="cover"
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+      <View>
+        <View
+          style={
+            Object {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#1B85D6",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFF",
+                      "fontSize": 10,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                󰔵
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Your Boost was rejected
+         
+        <Text
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "fontFamily": "Roboto",
+              },
+              Array [
+                Object {
+                  "fontSize": 15,
+                  "lineHeight": 18,
+                },
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                  "fontWeight": "500",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
+            ]
+          }
+        >
+          boost
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              Object {
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        Sep 20, 2022
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "#1B85D6",
+              "borderRadius": 20,
+              "height": 10,
+              "marginLeft": 8,
+              "width": 10,
+            },
+            Object {
+              "backgroundColor": "#1B85D6",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 24,
+        "paddingLeft": 0,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "overflow": "visible",
+          },
+          Object {
+            "borderWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#3f4b56",
+          },
+          Object {
+            "backgroundColor": "#1F252C",
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onLayout={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="ActivityView"
+      >
+        <View
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "padding": 1,
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`Notification Receiver accepts an offer 1`] = `
 <View
   onPress={[Function]}
