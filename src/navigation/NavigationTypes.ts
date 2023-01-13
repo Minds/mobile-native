@@ -327,6 +327,7 @@ export type AppStackParamList = {
   TopNewsfeed: {};
   InAppVerification: {};
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  Referrals: {};
 };
 
 // types for channel edit screens
