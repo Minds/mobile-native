@@ -32,8 +32,6 @@ import {
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
-import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
   MoreStackParamList,
