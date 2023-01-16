@@ -6,7 +6,10 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useFeedListContext } from '~/common/components/FeedListSticky';
+import {
+  ScrollDirection,
+  useFeedListContext,
+} from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
 import { Button, Icon } from '~/common/ui';
 import { IS_IOS, NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
@@ -70,7 +73,7 @@ export const useSeeLatestStyle = (count: number, top?: number) => {
   const timeOutRef = useRef<Timeout>();
 
   const dismissed = useDerivedValue(() => {
-    return dismissible && scrollDirection.value === 2;
+    return dismissible && scrollDirection.value === ScrollDirection.down;
   }, [scrollDirection, dismissible]);
 
   useEffect(() => {

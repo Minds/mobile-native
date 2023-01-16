@@ -43,11 +43,17 @@ export const Context = React.createContext<
   | {
       translationY: SharedValue<number>;
       scrollY: SharedValue<number>;
-      scrollDirection: SharedValue<number>;
+      scrollDirection: SharedValue<ScrollDirection>;
       headerHeight: number;
     }
   | undefined
 >(undefined);
+const MIN_SCROLL_THRESHOLD = 5;
+export enum ScrollDirection {
+  neutral = 0,
+  up = 1,
+  down = 2,
+}
 
 /**
  * Use Feed List Context hook
@@ -66,7 +72,9 @@ function FeedListSticky<T extends BaseModel>(
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
-  const scrollDirection = useSharedValue(0);
+  const scrollDirection = useSharedValue<ScrollDirection>(
+    ScrollDirection.neutral,
+  );
   const { header, ...otherProps } = props;
 
   /**
@@ -95,8 +103,13 @@ function FeedListSticky<T extends BaseModel>(
           }
         }
       }
-      if (Math.abs(event.contentOffset.y - scrollY.value) > 5) {
-        scrollDirection.value = event.contentOffset.y > scrollY.value ? 2 : 1;
+      if (
+        Math.abs(event.contentOffset.y - scrollY.value) > MIN_SCROLL_THRESHOLD
+      ) {
+        scrollDirection.value =
+          event.contentOffset.y > scrollY.value
+            ? ScrollDirection.down
+            : ScrollDirection.up;
       }
       scrollY.value = event.contentOffset.y;
     },
