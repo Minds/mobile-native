@@ -14,7 +14,14 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
     }
   >
     <View
-      style={null}
+      style={
+        Array [
+          null,
+          Object {
+            "zIndex": 1,
+          },
+        ]
+      }
     >
       <View
         style={

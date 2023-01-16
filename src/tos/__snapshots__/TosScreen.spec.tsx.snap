@@ -16,14 +16,19 @@ exports[`Tos screen render and accept 1`] = `
     <View
       style={
         Array [
+          Array [
+            Object {
+              "borderColor": "#414C57",
+            },
+            Object {
+              "borderBottomWidth": 1,
+            },
+            Object {
+              "minHeight": 55,
+            },
+          ],
           Object {
-            "borderColor": "#414C57",
-          },
-          Object {
-            "borderBottomWidth": 1,
-          },
-          Object {
-            "minHeight": 55,
+            "zIndex": 1,
           },
         ]
       }
