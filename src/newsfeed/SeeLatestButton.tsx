@@ -20,6 +20,7 @@ interface SeeLatestButtonProps {
 
 const additionalTop = 163;
 const DISMISS_TIMEOUT = 5000;
+const TOP_HIDDEN_OFFSET = -500;
 
 /**
  * A prompt that appears in a feed and shows how many new posts are there
@@ -94,9 +95,12 @@ export const useSeeLatestStyle = (count: number, top?: number) => {
       : 0;
 
     return {
-      top: withTiming(dismissed.value ? -500 : topDistance - translateY, {
-        duration: 300,
-      }),
+      top: withTiming(
+        dismissed.value ? TOP_HIDDEN_OFFSET : topDistance - translateY,
+        {
+          duration: 300,
+        },
+      ),
       position: 'absolute',
       left: 0,
       right: 0,
