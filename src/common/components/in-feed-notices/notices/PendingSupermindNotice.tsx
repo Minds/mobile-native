@@ -13,7 +13,7 @@ function PendingSupermindNotice() {
 
   // on button press
   const onPress = () => {
-    navigation.navigate('More', { screen: 'SupermindConsole' });
+    navigation.navigate('More', { screen: 'SupermindConsole', initial: false });
   };
 
   return (
