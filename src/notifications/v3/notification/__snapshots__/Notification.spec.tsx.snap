@@ -1364,34 +1364,6 @@ exports[`Notification Boost rejected 1`] = `
       >
         Your Boost was rejected
          
-        <Text
-          onPress={[Function]}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
-              Array [
-                Object {
-                  "fontSize": 15,
-                  "lineHeight": 18,
-                },
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                  "fontWeight": "500",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                },
-              ],
-            ]
-          }
-        >
-          boost
-        </Text>
       </Text>
     </View>
     <View

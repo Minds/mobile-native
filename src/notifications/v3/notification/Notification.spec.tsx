@@ -7,6 +7,10 @@ import NotificationModel, { NotificationType } from './NotificationModel';
 
 jest.mock('../../../common/services/session.service');
 
+jest.mock('../../../../ExperimentsProvider', () => ({
+  hasVariation: jest.fn().mockResolvedValue(true),
+}));
+
 const name = 'Fake user';
 
 describe('Notification', () => {
