@@ -59,10 +59,12 @@ export default observer(SeeLatestButton);
 
 export const useSeeLatestStyle = (count: number, top?: number) => {
   const context = useFeedListContext();
-  const scrollY = context?.scrollY || { value: 0 };
-  const translationY = context?.translationY || { value: 0 };
+  const {
+    scrollY = { value: 0 },
+    translationY = { value: 0 },
+    scrollDirection = { value: 0 },
+  } = context ?? {};
   const topDistance = top || additionalTop;
-  const scrollDirection = context?.scrollDirection || { value: 0 };
   const [dismissible, setDismissible] = useState(false);
   const countAvailable = !!count;
   const timeOutRef = useRef<Timeout>();
