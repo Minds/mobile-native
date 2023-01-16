@@ -25,6 +25,14 @@ import SupermindConsoleFeedFilter, {
 } from './SupermindConsoleFeedFilter';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
+import { Context } from '../common/components/FeedListSticky';
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
+
+import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -66,6 +74,8 @@ function SupermindConsoleScreen({
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
+  const scrollDirection = useSharedValue(0);
+  const scrollY = useSharedValue(0);
 
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToTop();
@@ -80,6 +90,15 @@ function SupermindConsoleScreen({
       setFilter('all');
     }
   };
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      if (Math.abs(event.contentOffset.y - scrollY.value) > 5) {
+        scrollDirection.value = event.contentOffset.y > scrollY.value ? 2 : 1;
+      }
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const filterParam = filterValues[filter]
     ? `?status=${filterValues[filter]}`
@@ -118,6 +137,7 @@ function SupermindConsoleScreen({
       />
       <OffsetList
         ref={listRef}
+        ListComponent={Animated.FlatList}
         header={
           <>
             <TopbarTabbar
@@ -153,14 +173,23 @@ function SupermindConsoleScreen({
           mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
         }
         endpointData=""
+        onScroll={scrollHandler}
       />
 
-      <SeeLatestButton
-        countEndpoint={`api/v3/supermind/${
-          mode === 'inbound' ? 'inbox' : 'outbox'
-        }/count${filterParam}`}
-        onPress={scrollToTopAndRefresh}
-      />
+      <Context.Provider
+        value={{
+          scrollDirection,
+          translationY: { value: -60 },
+          headerHeight: 0,
+          scrollY,
+        }}>
+        <SeeLatestButton
+          countEndpoint={`api/v3/supermind/${
+            mode === 'inbound' ? 'inbox' : 'outbox'
+          }/count${filterParam}`}
+          onPress={scrollToTopAndRefresh}
+        />
+      </Context.Provider>
 
       <AnimatePresence>
         {onboarding && (

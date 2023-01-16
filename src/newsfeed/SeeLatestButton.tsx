@@ -18,7 +18,7 @@ interface SeeLatestButtonProps {
   countEndpoint: string;
 }
 
-const additionalTop = IS_IOS ? 160 : 163;
+const additionalTop = 163;
 const DISMISS_TIMEOUT = 5000;
 
 /**
@@ -26,7 +26,7 @@ const DISMISS_TIMEOUT = 5000;
  */
 const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
   const { count, resetCount } = useWatchForUpdates(countEndpoint);
-  const style = useSeeLatestStyle(count);
+  const style = useSeeLatestStyle(count, 170);
   const handleOnPress = () => onPress?.().then(() => resetCount());
 
   if (!count) {
@@ -56,10 +56,11 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
 
 export default observer(SeeLatestButton);
 
-export const useSeeLatestStyle = (count: number) => {
+export const useSeeLatestStyle = (count: number, top?: number) => {
   const context = useFeedListContext();
   const scrollY = context?.scrollY || { value: 0 };
   const translationY = context?.translationY || { value: 0 };
+  const topDistance = top || additionalTop;
   const scrollDirection = context?.scrollDirection || { value: 0 };
   const [dismissible, setDismissible] = useState(false);
   const countAvailable = !!count;
@@ -84,7 +85,7 @@ export const useSeeLatestStyle = (count: number) => {
   }, [countAvailable]);
 
   return useAnimatedStyle(() => {
-    const margin = additionalTop - (IS_IOS ? 70 : 65);
+    const margin = topDistance - (IS_IOS ? 70 : 65);
 
     let translateY = scrollY
       ? scrollY.value < margin
@@ -93,7 +94,7 @@ export const useSeeLatestStyle = (count: number) => {
       : 0;
 
     return {
-      top: withTiming(dismissed.value ? -500 : additionalTop - translateY, {
+      top: withTiming(dismissed.value ? -500 : topDistance - translateY, {
         duration: 300,
       }),
       position: 'absolute',

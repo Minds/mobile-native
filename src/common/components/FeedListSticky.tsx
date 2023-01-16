@@ -39,7 +39,7 @@ const Header = ({ children, translationY, onHeight }) => {
 /**
  * Context
  */
-const Context = React.createContext<
+export const Context = React.createContext<
   | {
       translationY: SharedValue<number>;
       scrollY: SharedValue<number>;
