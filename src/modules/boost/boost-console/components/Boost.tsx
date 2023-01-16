@@ -16,9 +16,10 @@ import VideoCard from '~/media/VideoCard';
 import Activity from '~/newsfeed/activity/Activity';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import BoostActionBar from './BoostActionBar';
+import BoostModel from '../../models/BoostModel';
 
 interface BoostProps {
-  boost: any;
+  boost: BoostModel;
   navigation: NavigationProp<any>;
 }
 
@@ -46,7 +47,6 @@ export default class Boost extends Component<BoostProps> {
         <IonIcon name="warning" style={styles.icon} size={18} />
         <B2>
           {i18n.t(
-            // @ts-ignore
             `boosts.rejectionReasons.${this.props.boost.rejection_reason}`,
           )}
         </B2>

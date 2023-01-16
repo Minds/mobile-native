@@ -30,15 +30,15 @@ function FeedFilter({ containerStyles }: { containerStyles: ViewStyle }) {
         BoostStatus.APPROVED,
         BoostStatus.COMPLETED,
         BoostStatus.REJECTED,
-      ].map(f => ({
-        title: textMapping[f],
+      ].map(filter => ({
+        title: textMapping[filter],
         onPress: () => {
           dismiss();
           InteractionManager.runAfterInteractions(() => {
-            boostConsoleStore.setFeedFilter(f as 'all' | BoostStatus);
+            boostConsoleStore.setFeedFilter(filter as 'all' | BoostStatus);
           });
         },
-        selected: boostConsoleStore.feedFilter === f,
+        selected: boostConsoleStore.feedFilter === filter,
       })),
     [dismiss, boostConsoleStore, textMapping],
   );
@@ -47,8 +47,8 @@ function FeedFilter({ containerStyles }: { containerStyles: ViewStyle }) {
       title={t('Boost status')}
       label={textMapping[boostConsoleStore.feedFilter]}
       containerStyles={containerStyles}>
-      {options.map((b, i) => (
-        <RadioButton {...b} key={i} />
+      {options.map((props, i) => (
+        <RadioButton {...props} key={i} />
       ))}
       <Spacer top="L" />
     </BaseFeedFilter>

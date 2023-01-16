@@ -21,6 +21,8 @@ export default class BoostModel extends BaseModel {
   bid!: number;
   scheduledTs?: number;
   state?: 'rejected' | 'accepted' | 'revoked' | 'completed' | 'created';
+  rejection_reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 12 | 13 | 14;
+  entity?: any;
 
   constructor() {
     super();

@@ -48,8 +48,11 @@ export default function BoostHeader({ boost }: BoostHeader) {
             : tokenLabel}
         </B2>
       </View>
-      {!!tillExpiration && <B1 color="secondary">{t('Ends: ')}</B1>}
-      <B1>{tillExpiration || boostStatusText[boost.boost_status]}</B1>
+      {tillExpiration ? (
+        <B1 color="secondary">{t('Ends: ') + tillExpiration}</B1>
+      ) : (
+        <B1>{boostStatusText[boost.boost_status]}</B1>
+      )}
     </Row>
   );
 }

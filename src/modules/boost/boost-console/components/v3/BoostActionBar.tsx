@@ -21,14 +21,25 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
   const revokable = boost.boost_status === BoostStatus.PENDING;
   const date = i18n.date(boost.created_timestamp * 1000, 'friendly');
 
+  const revoke = async () => {
+    if (
+      await confirm({
+        title: t('Revoke boost'),
+        description: t('Are you sure you want to revoke this boost?'),
+      })
+    ) {
+      boost.revoke(boostConsoleStore.filter).catch(() => {
+        showNotification(
+          t('Something went wrong while revoking boost'),
+          'danger',
+        );
+      });
+    }
+  };
+
   return (
     <Column horizontal="L" bottom="L">
       <Row flex>
-        {/* <Column flex>
-          <B1 font="bold" right="M">
-            {t('Estimated reach')}
-          </B1>
-        </Column> */}
         <Column flex>
           <B1 font="bold">{t('Results')}</B1>
         </Column>
@@ -37,9 +48,6 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
         </Column>
       </Row>
       <Row flex bottom="L">
-        {/* <Column flex>
-          <B1 />
-        </Column> */}
         <Column flex>
           <B1 color="secondary">{boost.entity?.impressions ?? ''}</B1>
         </Column>
@@ -48,23 +56,7 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
         </Column>
       </Row>
       {!!revokable && (
-        <Button
-          bottom="S"
-          onPress={async () => {
-            if (
-              await confirm({
-                title: t('Revoke boost'),
-                description: t('Are you sure you want to revoke this boost?'),
-              })
-            ) {
-              boost.revoke(boostConsoleStore.filter).catch(() => {
-                showNotification(
-                  t('Something went wrong while revoking boost'),
-                  'danger',
-                );
-              });
-            }
-          }}>
+        <Button bottom="S" onPress={revoke}>
           <B1>{t('Revoke')}</B1>
         </Button>
       )}
