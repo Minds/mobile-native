@@ -20,6 +20,7 @@ const Header = ({ children, translationY, onHeight }) => {
       top: 0,
       width: '100%',
       transform: [{ translateY: -translationY.value }],
+      zIndex: 1,
     };
   });
   const { onLayout, ...layout } = useLayout();
@@ -42,6 +43,7 @@ const Context = React.createContext<
   | {
       translationY: SharedValue<number>;
       scrollY: SharedValue<number>;
+      scrollDirection: SharedValue<number>;
       headerHeight: number;
     }
   | undefined
@@ -64,6 +66,7 @@ function FeedListSticky<T extends BaseModel>(
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
+  const scrollDirection = useSharedValue(0);
   const { header, ...otherProps } = props;
 
   /**
@@ -92,6 +95,9 @@ function FeedListSticky<T extends BaseModel>(
           }
         }
       }
+      if (Math.abs(event.contentOffset.y - scrollY.value) > 5) {
+        scrollDirection.value = event.contentOffset.y > scrollY.value ? 2 : 1;
+      }
       scrollY.value = event.contentOffset.y;
     },
     onBeginDrag() {
@@ -117,7 +123,8 @@ function FeedListSticky<T extends BaseModel>(
   ]);
 
   return (
-    <Context.Provider value={{ translationY, scrollY, headerHeight }}>
+    <Context.Provider
+      value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <FeedList
         ref={ref}
         {...otherProps}
