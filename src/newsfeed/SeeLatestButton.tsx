@@ -81,6 +81,8 @@ export const useSeeLatestStyle = (count: number, top?: number) => {
       timeOutRef.current = setTimeout(() => {
         setDismissible(true);
       }, DISMISS_TIMEOUT);
+    } else {
+      setDismissible(false);
     }
 
     return () => {
