@@ -18,7 +18,7 @@ function SetupChannelNotice() {
     navigation.navigate('SetupChannel');
   }, [navigation]);
 
-  if (!inFeedNoticesService.visible('update-email')) {
+  if (!inFeedNoticesService.visible('setup-channel')) {
     return null;
   }
   return (
