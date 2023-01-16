@@ -20,7 +20,7 @@ const SeeLatestPostsButton = ({
   onPress,
 }: SeeLatestPostsButtonProps) => {
   const navigation = useNavigation();
-  const style = useSeeLatestStyle(2);
+  const style = useSeeLatestStyle(feedStore.newPostsCount);
 
   useEffect(() => {
     const disposeWatcher = feedStore.watchForUpdates(() =>
