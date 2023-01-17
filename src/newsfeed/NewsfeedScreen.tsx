@@ -182,6 +182,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>
           <FeedListSticky
+            listName="Newsfeed"
             stickyHeaderIndices={isLatest ? sticky : undefined}
             overrideItemLayout={overrideItemLayout}
             bottomComponent={

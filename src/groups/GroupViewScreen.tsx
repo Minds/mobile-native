@@ -40,6 +40,7 @@ import {
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
 } from '../common/components/bottom-sheet';
+import { PerformanceListWrapper } from 'services/performance';
 
 export const GroupContext = React.createContext<GroupModel | null>(null);
 
@@ -203,6 +204,7 @@ export default class GroupViewScreen extends Component {
       case 'feed':
         return (
           <FeedList
+            listName="GroupViewFeed"
             feedStore={group.feed}
             header={header}
             navigation={this.props.navigation}
@@ -216,19 +218,21 @@ export default class GroupViewScreen extends Component {
         );
       case 'members':
         return (
-          <FlatList
-            ListHeaderComponent={header}
-            data={group.members.entities.slice()}
-            renderItem={this.renderRow}
-            keyExtractor={item => item.guid}
-            onRefresh={this.refresh}
-            refreshing={group.members.refreshing}
-            onEndReached={this.loadMembers}
-            style={ThemedStyles.style.bgPrimaryBackground}
-            // onEndReachedThreshold={0}
-            initialNumToRender={12}
-            removeClippedSubviews={false}
-          />
+          <PerformanceListWrapper name="MembersList">
+            <FlatList
+              ListHeaderComponent={header}
+              data={group.members.entities.slice()}
+              renderItem={this.renderRow}
+              keyExtractor={item => item.guid}
+              onRefresh={this.refresh}
+              refreshing={group.members.refreshing}
+              onEndReached={this.loadMembers}
+              style={ThemedStyles.style.bgPrimaryBackground}
+              // onEndReachedThreshold={0}
+              initialNumToRender={12}
+              removeClippedSubviews={false}
+            />
+          </PerformanceListWrapper>
         );
       case 'desc':
         const description = entities

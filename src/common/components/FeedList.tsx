@@ -28,6 +28,7 @@ import MText from './MText';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type BaseModel from '../BaseModel';
 import { IS_IOS } from '~/config/Config';
+import { PerformanceFlashListWrapper } from 'services/performance';
 
 export interface InjectItemComponentProps {
   index: number;
@@ -98,6 +99,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   onEndReached?: () => void;
   testID?: string;
   estimatedItemSize?: number;
+  listName?: string;
 };
 
 /**
@@ -370,41 +372,46 @@ export class FeedList<T extends BaseModel> extends Component<
 
     return (
       <View testID={this.props.testID} style={containerStyle}>
-        <AnimatedFlashList
-          estimatedItemSize={this.props.estimatedItemSize || 450}
-          ref={this.listRef}
-          key={feedStore.isTiled ? 't' : 'f'}
-          ListHeaderComponent={header}
-          ListFooterComponent={!this.props.hideContent ? this.getFooter : null}
-          drawDistance={drawAhead}
-          data={items}
-          renderItem={renderRow}
-          keyExtractor={this.keyExtractor}
-          refreshing={this.refreshing} // on Android it throws an invariant error (it shouldn't be necessary as we are using RefreshControl)
-          refreshControl={
-            <RefreshControl
-              refreshing={this.refreshing}
-              onRefresh={this.refresh}
-              progressViewOffset={IS_IOS ? 0 : 80}
-              tintColor={ThemedStyles.getColor('Link')}
-              colors={[ThemedStyles.getColor('Link')]}
-            />
-          }
-          disableAutoLayout={true}
-          onEndReached={this.loadMore}
-          getItemType={this.getType}
-          onEndReachedThreshold={5} // 5 times the visible list height
-          numColumns={feedStore.isTiled ? 3 : 1}
-          ListEmptyComponent={!this.props.hideContent ? this.empty : null}
-          viewabilityConfig={this.viewOpts}
-          onViewableItemsChanged={this.onViewableItemsChanged}
-          scrollEventThrottle={16}
-          keyboardShouldPersistTaps="always"
-          testID="feedlistCMP"
-          {...passThroughProps}
-          keyboardDismissMode="on-drag"
-          onScroll={this.props.onScroll}
-        />
+        <PerformanceFlashListWrapper
+          name={this.props.listName ?? this.props.testID}>
+          <AnimatedFlashList
+            estimatedItemSize={this.props.estimatedItemSize || 450}
+            ref={this.listRef}
+            key={feedStore.isTiled ? 't' : 'f'}
+            ListHeaderComponent={header}
+            ListFooterComponent={
+              !this.props.hideContent ? this.getFooter : null
+            }
+            drawDistance={drawAhead}
+            data={items}
+            renderItem={renderRow}
+            keyExtractor={this.keyExtractor}
+            refreshing={this.refreshing} // on Android it throws an invariant error (it shouldn't be necessary as we are using RefreshControl)
+            refreshControl={
+              <RefreshControl
+                refreshing={this.refreshing}
+                onRefresh={this.refresh}
+                progressViewOffset={IS_IOS ? 0 : 80}
+                tintColor={ThemedStyles.getColor('Link')}
+                colors={[ThemedStyles.getColor('Link')]}
+              />
+            }
+            disableAutoLayout={true}
+            onEndReached={this.loadMore}
+            getItemType={this.getType}
+            onEndReachedThreshold={5} // 5 times the visible list height
+            numColumns={feedStore.isTiled ? 3 : 1}
+            ListEmptyComponent={!this.props.hideContent ? this.empty : null}
+            viewabilityConfig={this.viewOpts}
+            onViewableItemsChanged={this.onViewableItemsChanged}
+            scrollEventThrottle={16}
+            keyboardShouldPersistTaps="always"
+            testID="feedlistCMP"
+            {...passThroughProps}
+            keyboardDismissMode="on-drag"
+            onScroll={this.props.onScroll}
+          />
+        </PerformanceFlashListWrapper>
         {this.props.bottomComponent}
       </View>
     );

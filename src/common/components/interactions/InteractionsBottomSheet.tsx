@@ -332,6 +332,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
               />
             ) : (
               <FeedList
+                listName="InteractionsBottomSheet"
                 estimatedItemSize={50}
                 feedStore={store.feedStore}
                 navigation={navigation}

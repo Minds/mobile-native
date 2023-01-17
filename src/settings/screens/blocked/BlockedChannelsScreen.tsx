@@ -28,6 +28,7 @@ const BlockedChannelsScreen = observer(props => {
   return (
     <View style={theme.flexContainer}>
       <FeedList
+        listName="BlockedChannels"
         feedStore={localStore.feedStore}
         renderActivity={renderRow}
         navigation={props.navigation}

@@ -1,8 +1,6 @@
+//@ts-nocheck
 import React, { useCallback } from 'react';
-import {
-  createBottomTabNavigator,
-  BottomTabNavigationOptions,
-} from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import {
   View,
   Platform,
@@ -30,6 +28,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
+import { createBottomTabNavigator } from 'services/performance';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -56,7 +55,7 @@ const shadowOpt = {
 
 const isPad = (Platform as PlatformIOSStatic).isPad;
 
-const Tab = createBottomTabNavigator<TabParamList>();
+const { Tab, tabBarButton } = createBottomTabNavigator<TabParamList>();
 
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
@@ -173,13 +172,19 @@ const Tabs = observer(function ({ navigation }) {
         <Tab.Screen
           name="Newsfeed"
           component={NewsfeedStack}
-          options={{ tabBarTestID: 'Tabs:Newsfeed' }}
+          options={{
+            tabBarTestID: 'Tabs:Newsfeed',
+            tabBarButton,
+          }}
         />
         {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
         <Tab.Screen
           name="Discovery"
           component={DiscoveryStack}
-          options={discoveryOptions}
+          options={{
+            ...discoveryOptions,
+            tabBarButton,
+          }}
         />
         <Tab.Screen
           name="CaptureTab"
@@ -199,9 +204,19 @@ const Tabs = observer(function ({ navigation }) {
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
-          options={notificationOptions}
+          options={{
+            ...notificationOptions,
+            tabBarButton,
+          }}
         />
-        <Tab.Screen name="More" component={MoreStack} options={moreOptions} />
+        <Tab.Screen
+          name="More"
+          component={MoreStack}
+          options={{
+            ...moreOptions,
+            tabBarButton,
+          }}
+        />
       </Tab.Navigator>
     </View>
   );

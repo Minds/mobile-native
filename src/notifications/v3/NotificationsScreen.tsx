@@ -18,7 +18,8 @@ import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 
-import { useInfiniteFeedQuery } from '~/services';
+import { useInfiniteFeedQuery } from 'services';
+import { PerformanceListWrapper } from 'services/performance';
 import { fetchNotificationsPage } from './api';
 import PrefetchNotifications from './PrefetchNotifications';
 
@@ -136,29 +137,31 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   return (
     <View style={styles.container}>
       <PrefetchNotifications tabs={prefetch} />
-      <FlatList
-        ref={listRef}
-        stickyHeaderIndices={sticky}
-        stickyHeaderHiddenOnScroll={true}
-        style={cleanTop}
-        ListHeaderComponent={
-          <>
-            <Topbar title="Notifications" navigation={navigation} noInsets />
-            <NotificationsTopBar store={notifications} refresh={refresh} />
-          </>
-        }
-        scrollEnabled={!query.isRefetching}
-        data={notificationsList}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        onEndReached={() => query.fetchNextPage()}
-        onRefresh={refresh}
-        refreshing={query.isRefetching && query.isFetchedAfterMount}
-        onViewableItemsChanged={onViewableItemsChanged}
-        // contentContainerStyle={}
-        viewabilityConfig={viewabilityConfig}
-        ListEmptyComponent={ListEmptyComponent}
-      />
+      <PerformanceListWrapper name="NotificationsScreen">
+        <FlatList
+          ref={listRef}
+          stickyHeaderIndices={sticky}
+          stickyHeaderHiddenOnScroll={true}
+          style={cleanTop}
+          ListHeaderComponent={
+            <>
+              <Topbar title="Notifications" navigation={navigation} noInsets />
+              <NotificationsTopBar store={notifications} refresh={refresh} />
+            </>
+          }
+          scrollEnabled={!query.isRefetching}
+          data={notificationsList}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          onEndReached={() => query.fetchNextPage()}
+          onRefresh={refresh}
+          refreshing={query.isRefetching && query.isFetchedAfterMount}
+          onViewableItemsChanged={onViewableItemsChanged}
+          // contentContainerStyle={}
+          viewabilityConfig={viewabilityConfig}
+          ListEmptyComponent={ListEmptyComponent}
+        />
+      </PerformanceListWrapper>
       <InteractionsBottomSheet
         entity={user}
         ref={interactionsBottomSheetRef}

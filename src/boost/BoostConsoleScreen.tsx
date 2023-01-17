@@ -4,6 +4,7 @@ import { FlatList, View } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { PerformanceListWrapper } from 'services/performance';
 
 import Boost from './Boost';
 
@@ -79,22 +80,24 @@ export default class BoostConsoleScreen extends Component {
       </View>
     );
     return (
-      <FlatList
-        ListHeaderComponent={tabs}
-        ListEmptyComponent={empty}
-        data={this.props.boost.list.entities.slice()}
-        renderItem={this.renderBoost}
-        keyExtractor={item => item.rowKey}
-        onRefresh={this.refresh}
-        refreshing={this.props.boost.list.refreshing}
-        onEndReached={this.loadFeed}
-        onEndReachedThreshold={0}
-        style={[
-          theme.bgPrimaryBackground,
-          theme.flexContainer,
-          theme.marginTop3x,
-        ]}
-      />
+      <PerformanceListWrapper name="BoostConsoleScreen">
+        <FlatList
+          ListHeaderComponent={tabs}
+          ListEmptyComponent={empty}
+          data={this.props.boost.list.entities.slice()}
+          renderItem={this.renderBoost}
+          keyExtractor={item => item.rowKey}
+          onRefresh={this.refresh}
+          refreshing={this.props.boost.list.refreshing}
+          onEndReached={this.loadFeed}
+          onEndReachedThreshold={0}
+          style={[
+            theme.bgPrimaryBackground,
+            theme.flexContainer,
+            theme.marginTop3x,
+          ]}
+        />
+      </PerformanceListWrapper>
     );
   }
 

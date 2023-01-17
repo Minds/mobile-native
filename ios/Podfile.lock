@@ -1,4 +1,6 @@
 PODS:
+  - amplitude-react-native (0.7.2):
+    - React-Core
   - Base64 (1.1.2)
   - Bolts/Tasks (1.9.0)
   - boost (1.76.0)
@@ -569,9 +571,15 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.10):
     - React-Core
+  - ReactNativePerformance (4.1.2):
+    - React-Core
+  - ReactNativePerformanceListsProfiler (1.1.0):
+    - React-Core
   - rn-update-apk (4.5.1):
     - React-Core
   - RNBootSplash (4.1.5):
+    - React-Core
+  - RNCAsyncStorage (1.17.11):
     - React-Core
   - RNCClipboard (1.7.0):
     - React-Core
@@ -679,6 +687,7 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
+  - "amplitude-react-native (from `../node_modules/@amplitude/analytics-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -776,8 +785,11 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - "ReactNativePerformance (from `../node_modules/@shopify/react-native-performance`)"
+  - "ReactNativePerformanceListsProfiler (from `../node_modules/@shopify/react-native-performance-lists-profiler`)"
   - rn-update-apk (from `../node_modules/rn-update-apk`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -848,6 +860,8 @@ SPEC REPOS:
     - YogaKit
 
 EXTERNAL SOURCES:
+  amplitude-react-native:
+    :path: "../node_modules/@amplitude/analytics-react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   CodePush:
@@ -995,10 +1009,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/art"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  ReactNativePerformance:
+    :path: "../node_modules/@shopify/react-native-performance"
+  ReactNativePerformanceListsProfiler:
+    :path: "../node_modules/@shopify/react-native-performance-lists-profiler"
   rn-update-apk:
     :path: "../node_modules/rn-update-apk"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNConvertPhAsset:
@@ -1054,6 +1074,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/prscX/photo-editor
 
 SPEC CHECKSUMS:
+  amplitude-react-native: f0d4d19e1fe6c520d70c060c0c556676559b6b4f
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost: a7c83b31436843459a1961bfd74b96033dc77234
@@ -1160,8 +1181,11 @@ SPEC CHECKSUMS:
   ReactCommon: 1e783348b9aa73ae68236271df972ba898560a95
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
+  ReactNativePerformance: ab7dee4c4862623d72c1530a9fc71b55458edf71
+  ReactNativePerformanceListsProfiler: b9f7cfe8d08631fbce8e4729d388a5a3f7f562c2
   rn-update-apk: c9ed556a751a89894351f2f029387fa215ca5658
   RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
+  RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae

@@ -32,6 +32,7 @@
     "appium": "appium"
   },
   "dependencies": {
+    "@amplitude/analytics-react-native": "^0.7.2",
     "@bigbee.dev/react-native-measure-text-size": "^1.0.0",
     "@flyerhq/react-native-android-uri-path": "^2.3.0",
     "@formatjs/intl-getcanonicallocales": "^1.9.1",
@@ -43,6 +44,7 @@
     "@growthbook/growthbook-react": "^0.8.0",
     "@msantang78/react-native-styled-toast": "^1.3.2",
     "@nghinv/react-native-switch": "^0.1.0",
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/cameraroll": "^4.1.2",
@@ -57,6 +59,10 @@
     "@react-navigation/stack": "^6.0.11",
     "@sentry/react-native": "^4.4.0",
     "@shopify/flash-list": "^1.2.1",
+    "@shopify/react-native-performance": "^4.1.2",
+    "@shopify/react-native-performance-lists-profiler": "^1.1.0",
+    "@shopify/react-native-performance-navigation": "^3.0.0",
+    "@shopify/react-native-performance-navigation-bottom-tabs": "^3.0.0",
     "@snowplow/react-native-tracker": "^1.2.1",
     "@stripe/stripe-react-native": "^0.17.0",
     "@tamagui/animations-react-native": "^1.0.3",
