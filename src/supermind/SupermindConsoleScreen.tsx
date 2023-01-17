@@ -30,7 +30,10 @@ import {
   useSharedValue,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
-import { ScrollContext } from '~/common/contexts/scroll.context';
+import {
+  ScrollContext,
+  ScrollDirection,
+} from '~/common/contexts/scroll.context';
 
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -42,6 +45,7 @@ type SupermindConsoleScreenNavigationProp = StackNavigationProp<
   'SupermindConsole'
 >;
 
+const MIN_SCROLL_THRESHOLD = 5;
 const filterValues: Record<SupermindFilterType, string> = {
   all: '',
   pending: '1',
@@ -91,8 +95,13 @@ function SupermindConsoleScreen({
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
-      if (Math.abs(event.contentOffset.y - scrollY.value) > 5) {
-        scrollDirection.value = event.contentOffset.y > scrollY.value ? 2 : 1;
+      if (
+        Math.abs(event.contentOffset.y - scrollY.value) > MIN_SCROLL_THRESHOLD
+      ) {
+        scrollDirection.value =
+          event.contentOffset.y > scrollY.value
+            ? ScrollDirection.down
+            : ScrollDirection.up;
       }
       scrollY.value = event.contentOffset.y;
     },
