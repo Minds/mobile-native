@@ -6,12 +6,9 @@ exports[`SupermindScreen should render correctly 1`] = `
     <View>
       <View
         style={
-          Array [
-            null,
-            Object {
-              "zIndex": 1,
-            },
-          ]
+          Object {
+            "zIndex": 1,
+          }
         }
       >
         <View
