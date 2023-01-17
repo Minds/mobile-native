@@ -6,13 +6,13 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {
-  ScrollDirection,
-  useFeedListContext,
-} from '~/common/components/FeedListSticky';
 import i18nService from '~/common/services/i18n.service';
 import { Button, Icon } from '~/common/ui';
 import { IS_IOS, NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
+import {
+  ScrollDirection,
+  useScrollContext,
+} from '~/common/contexts/scroll.context';
 import useApiFetch from '../common/hooks/useApiFetch';
 import { Timeout } from '../types/Common';
 
@@ -61,7 +61,7 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
 export default observer(SeeLatestButton);
 
 export const useSeeLatestStyle = (count: number, top?: number) => {
-  const context = useFeedListContext();
+  const context = useScrollContext();
   const {
     scrollY = { value: 0 },
     translationY = { value: 0 },

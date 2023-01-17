@@ -1,13 +1,13 @@
 import { useLayout } from '@react-native-community/hooks';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Animated, {
-  SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import type BaseModel from '../BaseModel';
+import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
 import FeedList, { FeedListPropsType } from './FeedList';
 
 /**
@@ -36,31 +36,7 @@ const Header = ({ children, translationY, onHeight }) => {
   );
 };
 
-/**
- * Context
- */
-export const Context = React.createContext<
-  | {
-      translationY: SharedValue<number>;
-      scrollY: SharedValue<number>;
-      scrollDirection: SharedValue<ScrollDirection>;
-      headerHeight: number;
-    }
-  | undefined
->(undefined);
 const MIN_SCROLL_THRESHOLD = 5;
-export enum ScrollDirection {
-  neutral = 0,
-  up = 1,
-  down = 2,
-}
-
-/**
- * Use Feed List Context hook
- */
-export const useFeedListContext = () => {
-  return useContext(Context);
-};
 
 /**
  * Feed list with reanimated sticky header
@@ -136,7 +112,7 @@ function FeedListSticky<T extends BaseModel>(
   ]);
 
   return (
-    <Context.Provider
+    <ScrollContext.Provider
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <FeedList
         ref={ref}
@@ -152,7 +128,7 @@ function FeedListSticky<T extends BaseModel>(
           </>
         }
       />
-    </Context.Provider>
+    </ScrollContext.Provider>
   );
 }
 

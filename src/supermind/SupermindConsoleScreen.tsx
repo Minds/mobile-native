@@ -25,12 +25,12 @@ import SupermindConsoleFeedFilter, {
 } from './SupermindConsoleFeedFilter';
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
-import { Context } from '../common/components/FeedListSticky';
 import {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import { ScrollContext } from '~/common/contexts/scroll.context';
 
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -174,7 +174,7 @@ function SupermindConsoleScreen({
         onScroll={scrollHandler}
       />
 
-      <Context.Provider
+      <ScrollContext.Provider
         value={{
           scrollDirection,
           translationY: { value: -60 },
@@ -187,7 +187,7 @@ function SupermindConsoleScreen({
           }/count${filterParam}`}
           onPress={scrollToTopAndRefresh}
         />
-      </Context.Provider>
+      </ScrollContext.Provider>
 
       <AnimatePresence>
         {onboarding && (
