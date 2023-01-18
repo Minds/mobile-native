@@ -37,7 +37,10 @@ export const ScreenHeader = ({
 }: ScreenHeaderType & SpacerPropType) => {
   const navigation = useNavigation();
   return (
-    <View style={border ? styles.border : shadow ? styles.shadow : null}>
+    <View
+      style={
+        border ? styles.border : shadow ? styles.shadow : styles.container
+      }>
       {Boolean(title) && centerTitle && (
         <View style={styles.titleCenteredContainer}>
           <Typography type={titleType} font="bold" onPress={onTitlePress}>
@@ -69,8 +72,15 @@ export const ScreenHeader = ({
 };
 
 const styles = ThemedStyles.create({
+  container: {
+    zIndex: 1,
+  },
   titleCenteredContainer: ['absoluteFill', 'centered', { minHeight: 55 }],
-  border: ['bcolorPrimaryBorder', 'borderBottom1x', { minHeight: 55 }],
+  border: [
+    'bcolorPrimaryBorder',
+    'borderBottom1x',
+    { minHeight: 55, zIndex: 1 },
+  ],
   row: ['rowJustifyStart'],
   shadow: [
     'bgPrimaryBackground',
