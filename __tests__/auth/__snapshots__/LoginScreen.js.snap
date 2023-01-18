@@ -24,7 +24,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
           },
           Object {
             "minHeight": 55,
-            "zIndex": 1,
           },
         ]
       }
