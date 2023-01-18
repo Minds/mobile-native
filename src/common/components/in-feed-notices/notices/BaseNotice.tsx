@@ -52,7 +52,7 @@ export default function BaseNotice({
           {description}
         </B2>
         <View style={styles.buttonContainer}>
-          <Button size="medium" type="action" onPress={onPress}>
+          <Button fit size="medium" type="action" onPress={onPress}>
             {btnText}
           </Button>
           {Boolean(btnSecondaryText) && (
