@@ -2,6 +2,21 @@
 
 Minds Mobile
 
+## 4.31.3 - 2023-01-18
+
+### Changed
+
+- Allow boosting all posts
+- Improved layout for tablets
+- Boost v3 notification
+- Pending supermind notice navigation fixes
+- Fix setup channel in-feed notice not shown
+- in-feed notice invite your friends
+- Base design module created using Tamagui
+- Fix different subscribers list between web & mobile
+- Fix issues on the interaction bottom sheet
+- Moved boosted label to the top of the posts
+
 ## 4.31.2 - 2023-01-06
 
 ### Changed
