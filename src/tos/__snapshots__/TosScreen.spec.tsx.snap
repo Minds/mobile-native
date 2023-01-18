@@ -24,7 +24,6 @@ exports[`Tos screen render and accept 1`] = `
           },
           Object {
             "minHeight": 55,
-            "zIndex": 1,
           },
         ]
       }

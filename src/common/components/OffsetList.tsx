@@ -10,8 +10,6 @@ import React, {
 import {
   FlatList,
   ListRenderItem,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   StyleProp,
   View,
   ViewStyle,
@@ -40,7 +38,6 @@ type PropsType = {
   placeholderCount?: number;
   renderPlaceholder?: () => JSX.Element;
   offsetPagination?: boolean;
-  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
 type FetchResponseType =
@@ -215,7 +212,6 @@ export default observer(
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={_refresh}
-        onScroll={props.onScroll}
         refreshing={fetchStore.refreshing}
         contentContainerStyle={props.contentContainerStyle}
         style={props.style || listStyle}
