@@ -19,12 +19,14 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { useTranslation } from '../locales';
 import { BoostStackScreenProps } from '../navigator';
+import useBoostInsights from '../hooks/useBoostInsights';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
+  const { insights } = useBoostInsights(boostStore);
 
   const textMapping = {
     cash: {
@@ -117,7 +119,11 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             {t('Total Spend')}
           </B1>
 
-          <H2 bottom="S">{t('Unknown')}</H2>
+          <H2 bottom="S">
+            {insights
+              ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
+              : t('Unknown')}
+          </H2>
           <B1 color="secondary">{t('Estimated reach')}</B1>
         </Column>
 
