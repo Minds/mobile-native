@@ -29,6 +29,7 @@
     "e2e:ios:local": "wdio e2e/config/local/wdio.ios.local.conf.ts",
     "build:dev:apk": "./generate-dev-apk.sh",
     "build:design": "cd packages/design-system && yarn && yarn tamagui-build && cd ../../ && yarn && npx pod-install",
+    "prepush": "yarn tsc && yarn test",
     "appium": "appium"
   },
   "dependencies": {
