@@ -252,8 +252,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged",
-      "pre-push": "yarn tsc && yarn test"
+      "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged"
     }
   }
 }
