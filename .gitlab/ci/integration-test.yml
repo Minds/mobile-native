@@ -1,0 +1,73 @@
+# Run QA WebdriverIO Browserstack Tests
+.wdio_tests: &wdio_tests
+  - yarn install --frozen-lockfile
+  - yarn run test:real:ios
+  - yarn run test:real:android
+
+qa:rc:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
+
+qa:rc:nightly:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
+    - *wdio_tests
+  only:
+    refs:
+      - /^develop$/
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
+
+qa:prod:nightly:
+  image: node:14.19.2
+  stage: qa
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  allow_failure: true
+  script:
+    - export BROWSERSTACK_IOS_APP_ID="IOS_PRODUCTION"
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_PRODUCTION"
+    - *wdio_tests
+  only:
+    refs:
+      - /^master$/
+    variables:
+      - $CI_PROD_NIGHTLY_TESTS == "true"
+  artifacts:
+    when: always
+    paths:
+      - wdioLogs
