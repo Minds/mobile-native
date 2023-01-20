@@ -14,7 +14,13 @@ variables:
     - 'echo "Deleting browserstack credentials..."'
     - node tasks/deleteBrowserstackFile.js $TARGET_NAME
 
-include: '.gitlab/ci/**.yml'
+include:
+  - local: .gitlab/ci/test.yml
+  - local: .gitlab/ci/release.yml
+  - local: .gitlab/ci/build.yml
+  - local: .gitlab/ci/upload.yml
+  - local: .gitlab/ci/integration-test.yml
+  - local: .gitlab/ci/maintenance.yml
 
 stages:
   - test
