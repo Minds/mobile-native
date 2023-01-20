@@ -9,6 +9,7 @@ else
     echo "New line characters are forbiden in en.json, please split the lines in different translation terms."
     exit 1
   else
+    yarn tsc && yart test
     exit 0
   fi
 fi
