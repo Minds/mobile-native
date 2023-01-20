@@ -6,12 +6,14 @@ import {
 } from '@shopify/react-native-performance';
 import { ListsProfiler } from '@shopify/react-native-performance-lists-profiler';
 
-import { IS_PERFMON_ENABLED } from '~/config/Config';
 import * as Sentry from '@sentry/react-native';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 export function PerformanceProvider({
   children,
 }: React.PropsWithChildren<any>) {
+  const IS_PERFMON_ENABLED = useIsFeatureOn('mob-4708-performance-monitoring');
+
   const onReportPrepared = useCallback((report: RenderPassReport) => {
     Sentry.captureMessage('minds_performance_report', {
       extra: (report as unknown) as Record<string, any>,
