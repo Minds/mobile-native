@@ -17,6 +17,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import FloatingInput from '../../../common/components/FloatingInput';
 import { Spacer } from '~/common/ui';
+import { showNotification } from 'AppMessages';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -35,7 +36,14 @@ const createStore = () => ({
   setValue(v: string) {
     this.inputValue = v;
   },
-  createTag() {
+  createTag(): boolean {
+    if (this.inputValue.length < 3) {
+      if (!this.inputValue) {
+        return true;
+      }
+      showNotification('A tag should have at least 3 characters');
+      return false;
+    }
     const selectedIndex = this.selected.findIndex(
       t => t.value === this.inputValue,
     );
@@ -43,6 +51,7 @@ const createStore = () => ({
       this.selected.push({ value: this.inputValue });
     }
     this.inputValue = '';
+    return true;
   },
   setTags(selected, other) {
     this.selected = selected;
@@ -136,8 +145,9 @@ const DiscoveryTagsManager = (props: Props, ref) => {
   }, [discoveryV2, ref, store]);
 
   const onCreate = useCallback(() => {
-    store.createTag();
-    inputRef.current?.hide();
+    if (store.createTag()) {
+      inputRef.current?.hide();
+    }
   }, [store]);
 
   const onAdd = useCallback(() => {
