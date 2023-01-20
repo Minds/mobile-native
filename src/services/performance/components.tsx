@@ -1,9 +1,5 @@
 import React from 'react';
-import { ViewProps } from 'react-native';
-import {
-  ReactNavigationPerformanceView,
-  useProfiledNavigation,
-} from '@shopify/react-native-performance-navigation';
+import { useProfiledNavigation } from '@shopify/react-native-performance-navigation';
 import {
   ParamListBase,
   useNavigation as useNativeNavigation,
@@ -11,7 +7,6 @@ import {
 import {
   BottomTabBarButtonProps,
   createBottomTabNavigator as createNativeBottomTabNavigator,
-  // BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
 import { createProfiledBottomTabNavigator } from '@shopify/react-native-performance-navigation-bottom-tabs';
 import {
@@ -24,19 +19,6 @@ import { IS_PERFMON_ENABLED } from '~/config/Config';
 export const useNavigation = IS_PERFMON_ENABLED
   ? useProfiledNavigation
   : useNativeNavigation;
-
-type PerformanceViewProps = React.PropsWithChildren<any> &
-  ViewProps & {
-    screenName?: string;
-    interactive?: boolean;
-  };
-
-export const View = (props: PerformanceViewProps) =>
-  IS_PERFMON_ENABLED ? (
-    <ReactNavigationPerformanceView {...props} />
-  ) : (
-    <View {...props} />
-  );
 
 type ParamListBaseAlt = {
   [key: string]: { [key: string]: unknown } | {} | undefined;

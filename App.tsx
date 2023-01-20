@@ -55,7 +55,7 @@ import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
-import { QueryProvider } from '~/services';
+import { QueryProvider } from 'services';
 import { codePush } from 'modules/codepush';
 import { UIProvider } from '@minds/ui';
 import { PerformanceProvider } from 'services/performance';

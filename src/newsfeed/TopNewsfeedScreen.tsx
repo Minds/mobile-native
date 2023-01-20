@@ -3,12 +3,13 @@ import FeedList from '~/common/components/FeedList';
 import i18nService from '~/common/services/i18n.service';
 import MetadataService from '~/common/services/metadata.service';
 import FeedStore from '~/common/stores/FeedStore';
+import { PerformanceView } from 'services/performance';
 import Topbar from '~/topbar/Topbar';
 
 const TopNewsfeedScreen: FC<any> = ({ navigation }) => {
   const feedStore = useTopFeed();
   return (
-    <>
+    <PerformanceView screenName="TopNewsfeedScreen" interactive>
       <Topbar
         navigation={navigation}
         title={i18nService.t('newsfeed.topPosts')}
@@ -19,7 +20,7 @@ const TopNewsfeedScreen: FC<any> = ({ navigation }) => {
         feedStore={feedStore}
         navigation={navigation}
       />
-    </>
+    </PerformanceView>
   );
 };
 

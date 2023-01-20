@@ -81,7 +81,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   };
 
   return (
-    <Screen safe>
+    <Screen screenName="BoostComposerScreen" safe>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'

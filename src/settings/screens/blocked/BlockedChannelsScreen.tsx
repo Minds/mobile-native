@@ -7,6 +7,7 @@ import createBlockedChannelsStore from './createBlockedChannelsStore';
 import i18n from '../../../common/services/i18n.service';
 import BlockedChannel, { Row } from './BlockedChannel';
 import MText from '../../../common/components/MText';
+import { PerformanceView } from 'services/performance';
 
 const BlockedChannelsScreen = observer(props => {
   const theme = ThemedStyles.style;
@@ -26,21 +27,23 @@ const BlockedChannelsScreen = observer(props => {
   });
 
   return (
-    <View style={theme.flexContainer}>
-      <FeedList
-        listName="BlockedChannels"
-        feedStore={localStore.feedStore}
-        renderActivity={renderRow}
-        navigation={props.navigation}
-        emptyMessage={
-          <View style={[theme.centered, theme.marginTop4x]}>
-            <MText>{i18n.t('settings.noBlockedChannels')}</MText>
-          </View>
-        }
-        style={[theme.bgPrimaryBackground, theme.flexContainer]}
-        onRefresh={onRefresh}
-      />
-    </View>
+    <PerformanceView screenName="BlockedChannelsScreen" interactive>
+      <View style={theme.flexContainer}>
+        <FeedList
+          listName="BlockedChannels"
+          feedStore={localStore.feedStore}
+          renderActivity={renderRow}
+          navigation={props.navigation}
+          emptyMessage={
+            <View style={[theme.centered, theme.marginTop4x]}>
+              <MText>{i18n.t('settings.noBlockedChannels')}</MText>
+            </View>
+          }
+          style={[theme.bgPrimaryBackground, theme.flexContainer]}
+          onRefresh={onRefresh}
+        />
+      </View>
+    </PerformanceView>
   );
 });
 

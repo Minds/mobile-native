@@ -19,9 +19,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 
 import { useInfiniteFeedQuery } from 'services';
-import { PerformanceListWrapper } from 'services/performance';
 import { fetchNotificationsPage } from './api';
 import PrefetchNotifications from './PrefetchNotifications';
+import { PerformanceView } from 'services/performance';
 
 type PropsType = {
   navigation?: any;
@@ -135,9 +135,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <PrefetchNotifications tabs={prefetch} />
-      <PerformanceListWrapper name="NotificationsScreen">
+    <PerformanceView screenName="NotificationsScreen" interactive>
+      <View style={styles.container}>
+        <PrefetchNotifications tabs={prefetch} />
+        {/* <PerformanceListWrapper name="NotificationsList"> */}
         <FlatList
           ref={listRef}
           stickyHeaderIndices={sticky}
@@ -161,15 +162,17 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           viewabilityConfig={viewabilityConfig}
           ListEmptyComponent={ListEmptyComponent}
         />
-      </PerformanceListWrapper>
-      <InteractionsBottomSheet
-        entity={user}
-        ref={interactionsBottomSheetRef}
-        withoutInsets
-        snapPoints={snapPoints}
-        keepOpen={false}
-      />
-    </View>
+        {/* </PerformanceListWrapper> */}
+
+        <InteractionsBottomSheet
+          entity={user}
+          ref={interactionsBottomSheetRef}
+          withoutInsets
+          snapPoints={snapPoints}
+          keepOpen={false}
+        />
+      </View>
+    </PerformanceView>
   );
 });
 
@@ -189,7 +192,15 @@ const keyExtractor = (item: NotificationModel, index) =>
 export default NotificationsScreen;
 
 const styles = ThemedStyles.create({
-  containerStyle: { flexGrow: 1 },
+  containerStyle: {
+    // flexGrow: 1,
+    // flex: 1,
+    borderColor: 'white',
+    borderWidth: 2,
+    height: 300,
+    width: 300,
+    padding: 30,
+  },
   container: ['bgPrimaryBackground', 'flexContainer'],
   errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],

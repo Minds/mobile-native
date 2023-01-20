@@ -47,7 +47,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
   }, [fetchStore.result, localStore]);
 
   return (
-    <Screen safe>
+    <Screen screenName="SupermindsSettings" safe>
       <ScreenHeader
         title="Supermind"
         back

@@ -46,7 +46,7 @@ export default function WebViewScreen({
   }
 
   return (
-    <Screen>
+    <Screen screenName="WebViewScreen">
       <WebView
         source={source}
         scrollEnabled={true}

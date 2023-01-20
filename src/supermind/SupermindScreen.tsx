@@ -31,7 +31,7 @@ export default observer(function SupermindScreen({
   }
 
   return (
-    <Screen safe>
+    <Screen screenName="SupermindsScreen" safe>
       <ScrollView>
         <ScreenHeader title="Supermind" back />
         {supermind ? (

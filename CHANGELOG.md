@@ -2,6 +2,10 @@
 
 Minds Mobile
 
+### Unreleased Changes
+
+- added performance monitoring with @shopify/react-native-performance
+
 ## 4.31.2 - 2023-01-06
 
 ### Changed

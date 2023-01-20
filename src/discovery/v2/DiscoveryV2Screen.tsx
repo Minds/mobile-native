@@ -214,7 +214,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     };
 
     return (
-      <Screen safe onlyTopEdge={IS_IOS}>
+      <Screen screenName="DiscoveryV2Screen" safe onlyTopEdge={IS_IOS}>
         <View style={ThemedStyles.style.flexContainer}>
           <Topbar
             title="Discovery"

@@ -100,7 +100,7 @@ function SupermindConsoleScreen({
   );
 
   return (
-    <Screen safe>
+    <Screen screenName="SupermindsConsole" safe>
       <ScreenHeader
         title="Supermind"
         onTitlePress={() => listRef.current?.scrollToTop()}

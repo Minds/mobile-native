@@ -90,7 +90,7 @@ const UsdTab = observer(
     const isTransactions = usdTabStore.option === 'transactions';
 
     return (
-      <Screen scroll={!isTransactions}>
+      <Screen screenName="UsdTab" scroll={!isTransactions}>
         <Column top="XL" flex>
           <Row horizontal="M" bottom="XXL">
             <Tooltip

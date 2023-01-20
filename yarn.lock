@@ -2,53 +2,6 @@
 # yarn lockfile v1
 
 
-"@amplitude/analytics-client-common@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@amplitude/analytics-client-common/-/analytics-client-common-0.5.2.tgz#5a5d20389cfb97b0bc3f8111f1f480433ebe4cec"
-  integrity sha512-PPgjs+11p4y0p7s9q/a9uhi2oUEwgcLDRpvlkRuaGefdu+kL+ZFyrtiQ1Xlimev3q16D9qDi1hggo5OusJgikA==
-  dependencies:
-    "@amplitude/analytics-connector" "^1.4.5"
-    "@amplitude/analytics-core" "^0.11.2"
-    "@amplitude/analytics-types" "^0.14.0"
-    tslib "^2.4.1"
-
-"@amplitude/analytics-connector@^1.4.5":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@amplitude/analytics-connector/-/analytics-connector-1.4.6.tgz#60a66eaf0bcdcd17db4f414ff340c69e63116a72"
-  integrity sha512-6jD2pOosRD4y8DT8StUCz7yTd5ZDkdOU9/AWnlWKM5qk90Mz7sdZrdZ9H7sA/L3yOJEpQOYZgQplQdWWUzyWug==
-  dependencies:
-    "@amplitude/ua-parser-js" "0.7.31"
-
-"@amplitude/analytics-core@^0.11.2":
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/@amplitude/analytics-core/-/analytics-core-0.11.2.tgz#ea9c9de0bb17ec9769e9cacbc2b0c55f20e4d40e"
-  integrity sha512-4yOzFc4IwGI7uRvBJIebxjpvG0peyf6zVcfuCRbkPXPz6HgUpssuseJsapdNKGGL+8oAtMA12EDQF5kIfFVvbA==
-  dependencies:
-    "@amplitude/analytics-types" "^0.14.0"
-    tslib "^2.4.1"
-
-"@amplitude/analytics-react-native@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@amplitude/analytics-react-native/-/analytics-react-native-0.7.2.tgz#fceb38166d33ce05f77391be6e14807e165807f3"
-  integrity sha512-vJVlM7yO7vCgBXrEmsk7dhMzJoTYAGPBopVn/liLjvNOQ9GK7i9CwcYbiLph2poXpEiWEwBqnzg/WcHT9EpfeQ==
-  dependencies:
-    "@amplitude/analytics-client-common" "^0.5.2"
-    "@amplitude/analytics-core" "^0.11.2"
-    "@amplitude/analytics-types" "^0.14.0"
-    "@amplitude/ua-parser-js" "^0.7.31"
-    "@react-native-async-storage/async-storage" "^1.17.11"
-    tslib "^2.4.1"
-
-"@amplitude/analytics-types@^0.14.0":
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/@amplitude/analytics-types/-/analytics-types-0.14.0.tgz#06848235e52fe1d46a6e04bbc5d14090bdde15e3"
-  integrity sha512-O3E/KHyWCb4HAlYevqgCzqQdS+0LhbJV2IeVGox2eyCge+/lGwtGdJV2rJNWcoGf3p+BhnbqJBlhkPMs12iniA==
-
-"@amplitude/ua-parser-js@0.7.31", "@amplitude/ua-parser-js@^0.7.31":
-  version "0.7.31"
-  resolved "https://registry.yarnpkg.com/@amplitude/ua-parser-js/-/ua-parser-js-0.7.31.tgz#749bf7cb633cfcc7ff3c10805bad7c5f6fbdbc61"
-  integrity sha512-+z8UGRaj13Pt5NDzOnkTBy49HE2CX64jeL0ArB86HAtilpnfkPB7oqkigN7Lf2LxscMg4QhFD7mmCfedh3rqTg==
-
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -4990,13 +4943,6 @@
   dependencies:
     enc-utils "^3.0.0"
     randombytes "^2.1.0"
-
-"@react-native-async-storage/async-storage@^1.17.11":
-  version "1.17.11"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.17.11.tgz#7ec329c1b9f610e344602e806b04d7c928a2341d"
-  integrity sha512-bzs45n5HNcDq6mxXnSsOHysZWn1SbbebNxldBXCQs8dSvF8Aor9KCdpm+TpnnGweK3R6diqsT8lFhX77VX0NFw==
-  dependencies:
-    merge-options "^3.0.4"
 
 "@react-native-clipboard/clipboard@^1.7.0":
   version "1.7.0"
@@ -16959,13 +16905,6 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-merge-options@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-3.0.4.tgz#84709c2aa2a4b24c1981f66c179fe5565cc6dbb7"
-  integrity sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==
-  dependencies:
-    is-plain-obj "^2.1.0"
-
 merge-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
@@ -22936,7 +22875,7 @@ tslib@^2.1.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
-tslib@^2.3.1, tslib@^2.4.1:
+tslib@^2.3.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
   integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==

@@ -5,29 +5,24 @@ import {
   LogLevel,
 } from '@shopify/react-native-performance';
 import { ListsProfiler } from '@shopify/react-native-performance-lists-profiler';
-import { init, track } from '@amplitude/analytics-react-native';
 
 import { IS_PERFMON_ENABLED } from '~/config/Config';
 import * as Sentry from '@sentry/react-native';
-
-init('KzXvNgAkRLNfYXlFXpGlJ_rTTv_4zMpj');
 
 export function PerformanceProvider({
   children,
 }: React.PropsWithChildren<any>) {
   const onReportPrepared = useCallback((report: RenderPassReport) => {
-    // send report to analytics
-    Sentry.captureMessage('minds_performance', {
+    Sentry.captureMessage('minds_performance_report', {
       extra: (report as unknown) as Record<string, any>,
     });
-    console.log('====================================');
-    console.log('|             REPORT               |');
-    console.log('====================================');
-    track('minds_performance', report);
   }, []);
 
   const onInteractiveCallback = useCallback((TTI: number, listName: string) => {
     if (TTI > 0) {
+      Sentry.captureMessage('minds_list_performance', {
+        extra: { listName, TTI },
+      });
       console.log(`${listName}'s TTI: ${TTI}`);
     }
   }, []);
@@ -35,25 +30,32 @@ export function PerformanceProvider({
   const onBlankAreaCallback = useCallback(
     (offsetStart: number, offsetEnd: number, listName: string) => {
       if (offsetStart > 0 || offsetEnd > 0) {
+        Sentry.captureMessage('minds_list_performance', {
+          extra: { listName, offsetStart, offsetEnd },
+        });
         console.log(
-          `Blank area for ${listName}: ${Math.max(offsetStart, offsetEnd)}`,
+          `Blank area for ${listName}: offset: [${offsetStart}, ${offsetEnd}]`,
         );
       }
     },
     [],
   );
 
-  return IS_PERFMON_ENABLED ? (
+  const errorHandler = useCallback((error: Error) => {
+    console.log(`PerformanceProfiler ERROR: ${error}`);
+  }, []);
+
+  return (
     <PerformanceProfiler
+      enabled={IS_PERFMON_ENABLED}
       onReportPrepared={onReportPrepared}
-      logLevel={LogLevel.Debug}>
+      errorHandler={errorHandler}
+      logLevel={LogLevel.Info}>
       <ListsProfiler
         onInteractive={onInteractiveCallback}
         onBlankArea={onBlankAreaCallback}>
         {children}
       </ListsProfiler>
     </PerformanceProfiler>
-  ) : (
-    children
   );
 }

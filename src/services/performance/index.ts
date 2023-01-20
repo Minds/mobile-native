@@ -1,7 +1,8 @@
+export { PerformanceMeasureView as PerformanceView } from '@shopify/react-native-performance';
+
 export { PerformanceProvider } from './provider';
 export {
   useNavigation,
-  View,
   createBottomTabNavigator,
   PerformanceListWrapper,
   PerformanceFlashListWrapper,

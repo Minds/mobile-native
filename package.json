@@ -32,7 +32,6 @@
     "appium": "appium"
   },
   "dependencies": {
-    "@amplitude/analytics-react-native": "^0.7.2",
     "@bigbee.dev/react-native-measure-text-size": "^1.0.0",
     "@flyerhq/react-native-android-uri-path": "^2.3.0",
     "@formatjs/intl-getcanonicallocales": "^1.9.1",
@@ -44,7 +43,6 @@
     "@growthbook/growthbook-react": "^0.8.0",
     "@msantang78/react-native-styled-toast": "^1.3.2",
     "@nghinv/react-native-switch": "^0.1.0",
-    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/cameraroll": "^4.1.2",
