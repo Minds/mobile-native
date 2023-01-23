@@ -1,13 +1,13 @@
 import { useLayout } from '@react-native-community/hooks';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Animated, {
-  SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import type BaseModel from '../BaseModel';
+import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
 import FeedList, { FeedListPropsType } from './FeedList';
 
 /**
@@ -20,6 +20,7 @@ const Header = ({ children, translationY, onHeight }) => {
       top: 0,
       width: '100%',
       transform: [{ translateY: -translationY.value }],
+      zIndex: 1,
     };
   });
   const { onLayout, ...layout } = useLayout();
@@ -35,24 +36,7 @@ const Header = ({ children, translationY, onHeight }) => {
   );
 };
 
-/**
- * Context
- */
-const Context = React.createContext<
-  | {
-      translationY: SharedValue<number>;
-      scrollY: SharedValue<number>;
-      headerHeight: number;
-    }
-  | undefined
->(undefined);
-
-/**
- * Use Feed List Context hook
- */
-export const useFeedListContext = () => {
-  return useContext(Context);
-};
+const MIN_SCROLL_THRESHOLD = 5;
 
 /**
  * Feed list with reanimated sticky header
@@ -64,6 +48,9 @@ function FeedListSticky<T extends BaseModel>(
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
+  const scrollDirection = useSharedValue<ScrollDirection>(
+    ScrollDirection.neutral,
+  );
   const { header, ...otherProps } = props;
 
   /**
@@ -92,6 +79,14 @@ function FeedListSticky<T extends BaseModel>(
           }
         }
       }
+      if (
+        Math.abs(event.contentOffset.y - scrollY.value) > MIN_SCROLL_THRESHOLD
+      ) {
+        scrollDirection.value =
+          event.contentOffset.y > scrollY.value
+            ? ScrollDirection.down
+            : ScrollDirection.up;
+      }
       scrollY.value = event.contentOffset.y;
     },
     onBeginDrag() {
@@ -117,7 +112,8 @@ function FeedListSticky<T extends BaseModel>(
   ]);
 
   return (
-    <Context.Provider value={{ translationY, scrollY, headerHeight }}>
+    <ScrollContext.Provider
+      value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <FeedList
         ref={ref}
         {...otherProps}
@@ -132,7 +128,7 @@ function FeedListSticky<T extends BaseModel>(
           </>
         }
       />
-    </Context.Provider>
+    </ScrollContext.Provider>
   );
 }
 
