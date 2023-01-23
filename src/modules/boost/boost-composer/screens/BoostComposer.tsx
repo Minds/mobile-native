@@ -19,7 +19,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
-import useBoostInsights from '../hooks/useBoostInsights';
+import useBoostInsights from '../../hooks/useBoostInsights';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
