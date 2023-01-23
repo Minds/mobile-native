@@ -3,7 +3,11 @@
 exports[`Supermind settings should load data and render correctly 1`] = `
 <View>
   <View
-    style={null}
+    style={
+      Object {
+        "zIndex": 1,
+      }
+    }
   >
     <View
       style={
@@ -388,7 +392,11 @@ exports[`Supermind settings should load data and render correctly 1`] = `
 exports[`Supermind settings should load data and render correctly 2`] = `
 <View>
   <View
-    style={null}
+    style={
+      Object {
+        "zIndex": 1,
+      }
+    }
   >
     <View
       style={
@@ -1068,7 +1076,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
 exports[`Supermind settings should update the store and submit 1`] = `
 <View>
   <View
-    style={null}
+    style={
+      Object {
+        "zIndex": 1,
+      }
+    }
   >
     <View
       style={

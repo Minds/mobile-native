@@ -5,7 +5,11 @@ exports[`SupermindScreen should render correctly 1`] = `
   <RCTScrollView>
     <View>
       <View
-        style={null}
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
       >
         <View
           style={

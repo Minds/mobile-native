@@ -6,6 +6,12 @@ Minds Mobile
 
 - added performance monitoring with @shopify react-native-performance
   
+## 4.31.4 (2023-01-23)
+
+### changed (1 change)
+
+- [(feat) add boost insight estimated reach to boost composer](minds/mobile-native@4a15f2d34f098e4afcd2b11cfd97050620bb6ec2) ([merge request](minds/mobile-native!2058))
+
 ## 4.31.3 - 2023-01-18
 
 ### Changed
