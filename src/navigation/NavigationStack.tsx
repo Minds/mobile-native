@@ -226,6 +226,13 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="Referrals"
+          getComponent={() => require('~/referral/ReferralsScreen').default}
+          options={{
+            title: 'Invite Friends',
+          }}
+        />
+        <AppStackNav.Screen
           name="BoostConsole"
           getComponent={() => require('modules/boost').BoostConsoleScreen}
           options={hideHeader}

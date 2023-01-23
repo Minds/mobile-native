@@ -20,7 +20,7 @@ export const ButtonFrame = styled(ThemeableStack, {
   alignItems: 'center',
   flexWrap: 'nowrap',
   flexDirection: 'row',
-  borderRadius: 100_000,
+  borderRadius: 10000,
 
   // if we wanted this only when pressable = true, we'd need to merge variants?
   cursor: 'pointer',

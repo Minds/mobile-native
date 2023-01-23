@@ -36,8 +36,7 @@ import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
-import { remindContainerStyle } from '~/newsfeed/activity/styles';
-import SupermindBorderView from '~/common/components/supermind/SupermindBorderView';
+import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -236,13 +235,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
   let remind: null | React.ReactNode = null;
 
   if (hasRemind) {
-    const Container: any =
-      props.entity.supermind && props.entity.supermind.is_reply
-        ? SupermindBorderView
-        : QuoteContainer;
-
     remind = hasRemind ? (
-      <Container>
+      <ActivityContainer entity={entity}>
         <Activity
           ref={remindRef}
           hideTabs={true}
@@ -251,7 +245,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           isReminded={true}
           hydrateOnNav={true}
         />
-      </Container>
+      </ActivityContainer>
     ) : null;
   }
 
@@ -445,7 +439,3 @@ const contentFitStyle = ThemedStyles.combine(
   styles.content,
 );
 const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
-
-const QuoteContainer = ({ children }) => (
-  <View style={remindContainerStyle}>{children}</View>
-);
