@@ -10,10 +10,9 @@ export default function ActivityContainer({
 }: React.PropsWithChildren<{
   entity: ActivityModel;
 }>) {
-  const Container: any =
-    entity?.supermind?.is_reply
-      ? SupermindBorderView
-      : QuoteContainer;
+  const Container: any = entity?.supermind?.is_reply
+    ? SupermindBorderView
+    : QuoteContainer;
 
   return <Container>{children}</Container>;
 }
