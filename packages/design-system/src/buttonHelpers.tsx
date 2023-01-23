@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FunctionComponent, useContext } from 'react';
-
+import { getButtonSized } from '@tamagui/get-button-sized';
 import {
   ButtonNestingContext,
   FontSizeTokens,
@@ -16,14 +16,19 @@ import { getFontSize } from '@tamagui/font-size';
 import { useGetThemedIcon } from '@tamagui/helpers-tamagui';
 import { TextParentStyles, wrapChildrenInText } from '@tamagui/text';
 import { ThemeableStack } from '@tamagui/stacks';
+import { VariantSpreadExtras } from '@tamagui/core';
 
 type ButtonIconProps = { color?: string; size?: number };
 type IconProp = JSX.Element | FunctionComponent<ButtonIconProps> | null;
+
+export type ButtonType = 'primary' | 'secondary' | 'warning';
+
 export type ButtonProps = Omit<TextParentStyles, 'TextComponent'> &
   // GetProps<typeof ButtonFrame> &
   GetProps<typeof ThemeableStack> &
   ThemeableProps & {
     size?: SizeTokens;
+
     /**
      * add icon before, passes color and size automatically if Component
      */
@@ -51,7 +56,29 @@ export type ButtonProps = Omit<TextParentStyles, 'TextComponent'> &
      * semantic size for buttons to propagate to Text
      */
     sSize?: any;
+
+    /**
+     * Semantic type
+     */
+    type?: ButtonType;
+    /**
+     * Base mode
+     */
+    base?: boolean;
+    /**
+     * outline mode
+     */
+    outline?: boolean;
   };
+
+export function getButtonStyle(
+  val: SizeTokens | number,
+  variants: VariantSpreadExtras<any>,
+): ReturnType<typeof getButtonSized> {
+  const style = getButtonSized(val, variants);
+  style.borderRadius = 10000; //round buttons
+  return style;
+}
 
 export function useButton(propsIn: ButtonProps, Text: any) {
   // careful not to desctructure and re-order props, order is important
@@ -60,7 +87,6 @@ export function useButton(propsIn: ButtonProps, Text: any) {
     icon,
     iconAfter,
     noTextWrap,
-    theme: themeName,
     space,
     spaceFlex,
     scaleIcon = 1,
@@ -81,12 +107,12 @@ export function useButton(propsIn: ButtonProps, Text: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const isNested = isRSC ? false : useContext(ButtonNestingContext);
   const propsActive = useMediaPropsActive(propsIn);
-  if (rest.sSize) {
-    propsActive.textProps = {
-      ...propsActive.textProps,
-      sSize: rest.sSize,
-    } as typeof propsActive.textProps;
-  }
+
+  propsActive.textProps = {
+    ...propsActive.textProps,
+    ...(propsIn.sSize && { sSize: propsIn.sSize }),
+    ...(propsIn.type && { type: propsIn.type }),
+  };
 
   const size = propsActive.size ?? '$3.5';
   const iconSize =

@@ -1,59 +1,58 @@
 import { createTheme } from '@tamagui/core';
 import { tokens } from './tokens';
 
-import { sematicThemes, SimpleTheme } from './semanticTheme';
 import { buttonThemes } from './buttonThemes';
 
 const { color } = tokens;
 
 const dark = createTheme({
-  ...color,
-  background: color['color-basic-800'],
-  backgroundFocus: color['color-basic-900'],
-  backgroundPress: color['color-basic-1000'],
-  backgroundHover: color['color-basic-1100'],
+  background: color['grey-800'],
+  backgroundFocus: color['grey-900'],
+  backgroundPress: color['grey-1000'],
+  backgroundHover: color['grey-1100'],
 
-  borderColor: color['color-basic-800'],
-  borderColorFocus: color['color-basic-900'],
-  borderColorPress: color['color-basic-1000'],
-  borderColorHover: color['color-basic-1100'],
+  borderColor: color['grey-800'],
+  borderColorFocus: color['grey-900'],
+  borderColorPress: color['grey-1000'],
+  borderColorHover: color['grey-1100'],
 
-  color: color['color-basic-100'],
-  colorFocus: color['color-basic-200'],
-  colorPress: color['color-basic-300'],
-  colorHover: color['color-basic-400'],
-  colorDisabled: color['color-basic-transparent-600'],
+  colorTextPrimary: color['grey-100'],
+  colorTextSecondary: color['grey-400'],
+  colorTextTertiary: color['grey-600'],
+
+  color: color['grey-100'],
+  colorFocus: color['grey-200'],
+  colorPress: color['grey-300'],
+  colorHover: color['grey-400'],
+  colorDisabled: color['grey-transparent-600'],
 });
 
 type BaseTheme = typeof dark;
 
 const light = createTheme<BaseTheme>({
-  ...color,
-  background: color['color-basic-100'],
-  backgroundFocus: color['color-basic-200'],
-  backgroundPress: color['color-basic-300'],
-  backgroundHover: color['color-basic-400'],
+  background: color['grey-100'],
+  backgroundFocus: color['grey-200'],
+  backgroundPress: color['grey-300'],
+  backgroundHover: color['grey-400'],
 
-  borderColor: color['color-basic-100'],
-  borderColorFocus: color['color-basic-200'],
-  borderColorPress: color['color-basic-300'],
-  borderColorHover: color['color-basic-400'],
+  borderColor: color['grey-100'],
+  borderColorFocus: color['grey-200'],
+  borderColorPress: color['grey-300'],
+  borderColorHover: color['grey-400'],
 
-  color: color['color-basic-800'],
-  colorFocus: color['color-basic-900'],
-  colorPress: color['color-basic-1000'],
-  colorHover: color['color-basic-1100'],
-  colorDisabled: color['color-basic-transparent-600'],
+  colorTextPrimary: color['grey-800'],
+  colorTextSecondary: color['grey-600'],
+  colorTextTertiary: color['grey-500'],
+
+  color: color['grey-800'],
+  colorFocus: color['grey-900'],
+  colorPress: color['grey-1000'],
+  colorHover: color['grey-1100'],
+  colorDisabled: color['grey-transparent-600'],
 });
 
-const allThemes = {
+export const themes = {
   dark,
   light,
-  ...sematicThemes,
   ...buttonThemes,
 };
-
-type ThemeName = keyof typeof allThemes;
-type Themes = { [key in ThemeName]: BaseTheme | SimpleTheme };
-
-export const themes: Themes = allThemes;
