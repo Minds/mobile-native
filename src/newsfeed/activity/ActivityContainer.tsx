@@ -11,7 +11,7 @@ export default function ActivityContainer({
   entity: ActivityModel;
 }>) {
   const Container: any =
-    entity.supermind && entity.supermind.is_reply
+    entity?.supermind?.is_reply
       ? SupermindBorderView
       : QuoteContainer;
 
