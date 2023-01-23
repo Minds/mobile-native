@@ -69,7 +69,7 @@ export function rejectBoost(guid) {
     return api.post(`api/v3/boosts/${guid}/reject`);
   }
 
-  return api.delete('api/v2/boost/peer/' + guid);
+  return api.delete(`api/v2/boost/peer/${guid}`);
 }
 
 export function acceptBoost(guid) {
@@ -77,5 +77,5 @@ export function acceptBoost(guid) {
     return api.post(`api/v3/boosts/${guid}/approve`);
   }
 
-  return api.put('api/v2/boost/peer/' + guid);
+  return api.put(`api/v2/boost/peer/${guid}`);
 }
