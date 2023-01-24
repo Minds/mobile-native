@@ -1,0 +1,42 @@
+# Release Full Android
+release:production:
+  image: cimg/aws:2022.06.1
+  stage: release
+  tags: [minds-ci]
+  dependencies:
+    - build:androidproduction
+    - upload:s3:oss
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
+      changes:
+        - master
+      when: manual
+  before_script:
+    - node -v
+    - yarn install
+  script:
+    - !reference [.getversion, script]
+    - cp $APK_NAME Minds-$APPVERSION.apk
+    - echo "Releasing Minds-$APPVERSION.apk"
+    - yarn release-json Minds-$APPVERSION.apk
+    - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
+
+release:google_play:
+  image: msantang78/ci-mobile-android:latest
+  stage: release
+  tags: [minds-ci]
+  before_script:
+    - yarn install --frozen-lockfile
+    - yarn release-json Minds.apk
+    - cd android
+    - bundle install --path=vendor/bundle
+    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
+  script:
+    - echo "Upload to the play store $APK_NAME"
+    - bundle exec fastlane supply --apk ../$APK_NAME
+  dependencies:
+    - build:androidproduction-playstore
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
+      changes:
+        - master

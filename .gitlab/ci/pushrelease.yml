@@ -1,0 +1,96 @@
+## CodePush releases
+pushrelease:codepush-ios:
+  image: node:14.19.1
+  stage: pushrelease
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
+  only:
+    refs:
+      - master
+
+pushrelease:codepush-android:
+  image: node:14.19.1
+  stage: pushrelease
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds -d Staging
+  only:
+    refs:
+      - master
+
+## CodePush releases
+pushrelease_prod:codepush-ios:
+  image: node:14.19.1
+  stage: pushrelease_prod
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
+      changes:
+        - master
+
+pushrelease_prod:codepush-android:
+  image: node:14.19.1
+  stage: pushrelease_prod
+  tags: [minds-ci]
+  before_script:
+    - npm install -g patch-package
+    - npm install -g appcenter-cli
+    - yarn install
+  script:
+    - appcenter codepush release-react -a Minds/Minds -d Production
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
+      changes:
+        - master
+
+# iOS Release candidate to TestFlight
+release:ios_rc_testflight:
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_release_candidate
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - develop
+      - master
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
+      changes:
+        - master
