@@ -45,6 +45,7 @@ export default function (props) {
       start: 0,
       end: 0,
     },
+    scrollOffset: 0,
     textHeight: 26,
     portraitMode: false,
     noText: false,
@@ -149,6 +150,9 @@ export default function (props) {
         portrait: undefined,
         noText: undefined,
       });
+    },
+    setScrollOffset(value: number) {
+      this.scrollOffset = value;
     },
     selectionChanged(e) {
       this.selection = e.nativeEvent.selection;
