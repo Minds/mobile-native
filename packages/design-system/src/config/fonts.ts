@@ -20,7 +20,7 @@ const body = createFont({
     b2: 14,
     b1: 16,
     b: 16,
-    h4: 18,
+    h4: 19,
     h3: 23,
     h2: 28,
     h1: 34,

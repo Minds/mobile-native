@@ -1,29 +1,49 @@
 import React from 'react';
-import { Button, View } from '@minds/ui';
+import { Button, Layout, View } from '@minds/ui';
+import { ScrollView } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { Stack } from '@tamagui/core';
 
 export function ButtonsScreen(): JSX.Element {
   const { goBack } = useNavigation();
   return (
-    <View f={1} p={'$2'}>
-      <View f={1} backgroundColor="$background" br={'$4'} mt="$2" fd="row">
-        <Buttons />
-        <Buttons disabled />
-      </View>
-      <View fd={'row'} my="$5" mx="$2" space>
-        <Button circular onPress={goBack}>
+    <Layout f={1} p={'$4'}>
+      <ScrollView>
+        <Stack f={1} br={'$4'} mt="$2" fd="row">
+          <Buttons />
+          <Buttons disabled />
+        </Stack>
+
+        <ButtonsSizes />
+      </ScrollView>
+      <View fd={'row'} mt="$1" space>
+        <Button circular onPress={goBack} sSize="m">
           {'<'}
         </Button>
         <Button f={1}>Next</Button>
-        <Button f={1} sSize="l" theme="primary">
-          Next
-        </Button>
-        <Button f={1} sSize="xl" theme="primary">
-          Next
-        </Button>
       </View>
+    </Layout>
+  );
+}
+
+function ButtonsSizes() {
+  const { t } = useTranslation('storybookModule');
+  return (
+    <View f={1} p="$3" space="$3">
+      <Button type="primary" sSize="xl" als="center">
+        {t('X Large')}
+      </Button>
+      <Button type="primary" sSize="l" als="center">
+        {t('Large')}
+      </Button>
+      <Button type="primary" sSize="m" als="center">
+        {t('Medium')}
+      </Button>
+      <Button type="primary" sSize="s" als="center">
+        {t('Small')}
+      </Button>
     </View>
   );
 }
@@ -31,19 +51,30 @@ export function ButtonsScreen(): JSX.Element {
 function Buttons({ disabled = false }: { disabled?: boolean }): JSX.Element {
   const { t } = useTranslation('storybookModule');
   return (
-    <View f={1} p="$3" br="$5" space={'$3'}>
-      <Button disabled={disabled}>{t('Default')}</Button>
-      <Button disabled={disabled} theme={'primary'}>
+    <View f={1} p="$4" space="$3">
+      <Button disabled={disabled} sSize="xl" type="primary">
         {t('Primary')}
       </Button>
-      <Button disabled={disabled} themeInverse theme={'primary'}>
-        {t('Primary Inv')}
+      <Button disabled={disabled} type="primary" outline sSize="m">
+        {t('Outline')}
       </Button>
-      <Button disabled={disabled} theme={'warning'}>
+      <Button disabled={disabled} type="primary" base sSize="m">
+        {t('Base')}
+      </Button>
+      <Button disabled={disabled} type="secondary" sSize="m">
+        {t('Secondary')}
+      </Button>
+      <Button disabled={disabled} type="secondary" outline sSize="m">
+        {t('Outline')}
+      </Button>
+      <Button disabled={disabled} type="secondary" base sSize="m">
+        {t('Base')}
+      </Button>
+      <Button disabled={disabled} type="warning" sSize="m">
         {t('Warning')}
       </Button>
-      <Button disabled={disabled} theme={'primary'}>
-        Outline
+      <Button disabled={disabled} type="warning" outline sSize="m">
+        {t('Outline')}
       </Button>
     </View>
   );

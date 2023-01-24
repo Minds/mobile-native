@@ -10,6 +10,7 @@ import {
   ButtonsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { Navigator, Screen } = createStackNavigator();
 export function StorybookNavigator(): JSX.Element {
@@ -39,19 +40,22 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
   return (
     <Theme name={theme}>
       <Layout>
-        <View mt="$7" mx="$3" mb="$2" fd={'row'} jc="space-between">
-          <Button
-            circular
-            onPress={() =>
-              setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
-            }>
-            {theme === 'dark' ? 'L' : 'D'}
-          </Button>
-          <Button onPress={() => storages.app.setBool('storybook', false)}>
-            close
-          </Button>
-        </View>
-        {children}
+        <SafeAreaView style={safeStyle}>
+          <View mt="$1" mx="$3" mb="$1" fd={'row'} jc="space-between">
+            <Button
+              circular
+              sSize="m"
+              onPress={() =>
+                setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
+              }>
+              {theme === 'dark' ? 'L' : 'D'}
+            </Button>
+            <Button onPress={() => storages.app.setBool('storybook', false)}>
+              close
+            </Button>
+          </View>
+          {children}
+        </SafeAreaView>
       </Layout>
       <StatusBar
         barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
@@ -59,6 +63,8 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
     </Theme>
   );
 }
+
+const safeStyle = { flex: 1 };
 
 export { HubStorybookWidget } from './widgets';
 
