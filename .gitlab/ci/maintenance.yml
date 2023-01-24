@@ -1,4 +1,3 @@
-# MAINTENANCE
 maintenance:update_changelog:
   image: alpine/curl
   stage: maintenance

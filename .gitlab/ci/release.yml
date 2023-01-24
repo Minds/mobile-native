@@ -1,16 +1,11 @@
-# Release Full Android
-release:production:
+release:android_production:
+  extends: .only_nonpatch_release_manual
   image: cimg/aws:2022.06.1
   stage: release
   tags: [minds-ci]
   dependencies:
     - build:androidproduction
     - upload:s3:oss
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: manual
   before_script:
     - node -v
     - yarn install
@@ -21,7 +16,8 @@ release:production:
     - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
-release:google_play:
+release:android_google_play:
+  extends: .only_nonpatch_release
   image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
@@ -36,7 +32,34 @@ release:google_play:
     - bundle exec fastlane supply --apk ../$APK_NAME
   dependencies:
     - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
+
+# iOS Release candidate to TestFlight
+release:ios_rc_testflight:
+  extends: .except_nightly
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_release_candidate
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - develop
+      - master
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  extends: .only_nonpatch_release
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  script:
+    - cd ios
+    - fastlane upload_testflight

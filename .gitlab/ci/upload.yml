@@ -27,104 +27,80 @@
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
   <<: *upload_s3
+  extends: .only_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
     - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
       when: on_success
     - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
       when: never
 
-upload:browserstack:oss: # Upload full APK to Browserstack
+# Upload full APK to Browserstack
+upload:browserstack:oss:
   <<: *upload_browserstack
+  extends: .only_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
     - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
   dependencies:
     - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
 
 # Upload production builds (play-store version)
 upload:s3:playstore: # Upload to S3
   <<: *upload_s3
+  extends: .only_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
   dependencies:
     - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
 
-upload:browserstack:playstore: # Upload to Browserstack
+# Upload to Browserstack
+upload:browserstack:playstore:
   <<: *upload_browserstack
+  extends: .only_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
     - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
   dependencies:
     - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
 
 # Upload production RC (develop branch)
 upload:s3:oss:rc: # Upload to S3
   <<: *upload_s3
+  extends: .automatic_develop_manual_master
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
   dependencies:
     - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
 
-upload:browserstack:oss:rc: # Upload to Browserstack
+# Upload to Browserstack
+upload:browserstack:oss:rc:
   <<: *upload_browserstack
+  extends: .automatic_develop_manual_master
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
     - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
   dependencies:
     - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
 
 # Upload MR builds to browserstack
 upload:browserstack:mr:
   <<: *upload_browserstack
+  extends:
+    - .except_nightly
+    - .only_native
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
     - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
   dependencies:
     - build:android_mr_production
-  only:
-    refs:
-      - /^native-*/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"

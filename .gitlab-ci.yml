@@ -13,7 +13,6 @@ include:
 stages:
   - test
   - pushrelease
-  - pushrelease_prod
   - build
   - upload
   - release
@@ -30,3 +29,47 @@ stages:
   script:
     - 'echo "Deleting browserstack credentials..."'
     - node tasks/deleteBrowserstackFile.js $TARGET_NAME
+
+# Run only for tags that ends on .0 (major, minor releases)
+.only_nonpatch_release_manual:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: manual
+
+# Run only for tags that ends on .0 (major, minor releases)
+.only_nonpatch_release:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+
+# Run for tags that ends on .0 (major, minor releases)
+.only_nonpatch_release_success:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
+
+# Run only on nightly jobs
+.except_nightly:
+  except:
+    variables:
+      - $CI_RC_NIGHTLY_TESTS == "true"
+      - $CI_PROD_NIGHTLY_TESTS == "true"
+
+# Run only on native branches
+.only_native:
+  only:
+    refs:
+      - /^native-*/
+
+# Run automatic on develop branch and manually on master
+.automatic_develop_manual_master:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual

@@ -1,5 +1,5 @@
-### TEST STAGE
 test:jest:
+  extends: .except_nightly
   image: node:14.19.2
   stage: test
   interruptible: true
@@ -15,7 +15,3 @@ test:jest:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
     - yarn test --forceExit
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
