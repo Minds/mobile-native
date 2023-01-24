@@ -49,7 +49,7 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
       </Row>
       <Row flex bottom="L">
         <Column flex>
-          <B1 color="secondary">{boost.entity?.impressions ?? ''}</B1>
+          <B1 color="secondary">{boost.summary?.views_delivered ?? ''}</B1>
         </Column>
         <Column flex>
           <B1 color="secondary">{date}</B1>

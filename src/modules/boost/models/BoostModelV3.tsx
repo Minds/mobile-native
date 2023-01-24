@@ -29,6 +29,9 @@ export default class BoostModel extends BaseModel {
   target_location!: BoostTargetLocation;
   target_suitability!: BoostTargetSuitability;
   updated_timestamp?: number | null;
+  summary?: {
+    views_delivered: number;
+  };
 
   constructor() {
     super();
