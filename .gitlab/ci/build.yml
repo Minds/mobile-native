@@ -55,7 +55,7 @@ build:ios_mr:
 # Build iOS RC for develop branch
 build:ios_release_candidate:
   <<: *prepare_build_ios
-  extends: .automatic_develop_manual_master
+  extends: .rule_automatic_develop_manual_master
   stage: build
   interruptible: true
   script:
@@ -70,7 +70,7 @@ build:ios_release_candidate:
 # Build iOS for master branch
 build:ios_production:
   <<: *prepare_build_ios
-  extends: .only_nonpatch_release
+  extends: .rule_nonpatch_release
   stage: build
   interruptible: true
   script:
@@ -110,11 +110,11 @@ build:ios_production:
 # Build Android production Full Version (Higher version code)
 build:androidproduction:
   <<: *prepare_build_android
-  extends: .only_nonpatch_release_success
   script:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
+    - !reference [.rule_nonpatch_release_success, rules]
     - if: $CI_COMMIT_BRANCH == "master"
       when: manual
     - if: $CI_COMMIT_BRANCH == "develop"
@@ -179,7 +179,7 @@ build:cleanup:
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   <<: *prepare_build_android
-  extends: .only_nonpatch_release
+  extends: .rule_nonpatch_release
   script:
     - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"

@@ -27,13 +27,13 @@
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
   <<: *upload_s3
-  extends: .only_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
   rules:
+    - !reference [.rule_nonpatch_release_success, rules]
     - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
       when: on_success
     - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
@@ -42,7 +42,7 @@ upload:s3:oss: # Upload to S3
 # Upload full APK to Browserstack
 upload:browserstack:oss:
   <<: *upload_browserstack
-  extends: .only_nonpatch_release_success
+  extends: .rule_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
@@ -53,7 +53,7 @@ upload:browserstack:oss:
 # Upload production builds (play-store version)
 upload:s3:playstore: # Upload to S3
   <<: *upload_s3
-  extends: .only_nonpatch_release_success
+  extends: .rule_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
@@ -63,7 +63,7 @@ upload:s3:playstore: # Upload to S3
 # Upload to Browserstack
 upload:browserstack:playstore:
   <<: *upload_browserstack
-  extends: .only_nonpatch_release_success
+  extends: .rule_nonpatch_release_success
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
@@ -74,7 +74,7 @@ upload:browserstack:playstore:
 # Upload production RC (develop branch)
 upload:s3:oss:rc: # Upload to S3
   <<: *upload_s3
-  extends: .automatic_develop_manual_master
+  extends: .rule_automatic_develop_manual_master
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
@@ -84,7 +84,7 @@ upload:s3:oss:rc: # Upload to S3
 # Upload to Browserstack
 upload:browserstack:oss:rc:
   <<: *upload_browserstack
-  extends: .automatic_develop_manual_master
+  extends: .rule_automatic_develop_manual_master
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"

@@ -1,5 +1,5 @@
 release:android_production:
-  extends: .only_nonpatch_release_manual
+  extends: .rule_nonpatch_release_manual
   image: cimg/aws:2022.06.1
   stage: release
   tags: [minds-ci]
@@ -17,7 +17,7 @@ release:android_production:
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
 release:android_google_play:
-  extends: .only_nonpatch_release
+  extends: .rule_nonpatch_release
   image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
@@ -53,7 +53,7 @@ release:ios_rc_testflight:
 
 # iOS production to TestFlight
 release:ios_prod_testflight:
-  extends: .only_nonpatch_release
+  extends: .rule_nonpatch_release
   image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
