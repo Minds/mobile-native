@@ -27,6 +27,10 @@ export const growthbook = new GrowthBook({
   },
 });
 
+export function isFeatureOn(featureKey: FeatureID, defaultValue = false) {
+  return growthbook.getFeatureValue(featureKey, defaultValue);
+}
+
 /**
  * Return whether a feature has a given variation state.
  * @param { string } featureKey - growthbook feature key.
@@ -85,5 +89,6 @@ export type FeatureID =
   | 'mob-stripe-connect-4587'
   | 'mob-4638-boost-v3'
   | 'mob-minds-3119-captcha-for-engagement'
+  | 'mob-4722-track-code-push'
   | 'mob-4424-sockets'
   | 'minds-3055-email-codes';

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
 import { B2, Button, Column, H3 } from '~/common/ui';
 import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
 import { Version } from '~/config/Version';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { codePush } from '../';
+import { codePush, logMessage } from '../';
 import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
 
 const CodePushDebugger = () => {
@@ -19,6 +19,14 @@ const CodePushDebugger = () => {
     metadataLoading,
   } = useCodePush();
 
+  const {
+    appVersion,
+    label,
+    description,
+    failedInstall,
+    isFirstRun,
+    isPending,
+  } = metadata ?? {};
   return (
     <>
       <H3 left="L" top="L">
@@ -29,11 +37,10 @@ const CodePushDebugger = () => {
         {metadata ? (
           <>
             <B2 font="bold">Current CodePush Version</B2>
-            <B2>App version: {metadata.appVersion}</B2>
-            <B2>Label: {metadata.label}</B2>
-            {!!metadata.description && (
-              <B2>Description: {metadata.description}</B2>
-            )}
+            <B2>App version: {appVersion}</B2>
+            <B2>Label: {label}</B2>
+            {!!description && <B2>Description: {description}</B2>}
+            <B2>{`failedInstall: ${failedInstall} isFirstRun: ${isFirstRun} isPending: ${isPending}`}</B2>
           </>
         ) : metadataLoading ? (
           <B2>Loading metadata...</B2>
@@ -105,19 +112,38 @@ const CodePushDebugger = () => {
 
 export default CodePushDebugger;
 
+type EventType = Partial<{
+  status: String;
+  updateAvailable: RemotePackage | null;
+  downloadProgress: number;
+  metadata: LocalPackage | null;
+  metadataLoading: boolean;
+}>;
+type EventReducer = (prev: EventType, next: EventType) => EventType;
+
 const useCodePush = () => {
-  const [status, setStatus] = useState('');
-  const [updateAvailable, setUpdateAvailable] = useState<RemotePackage | null>(
-    null,
+  const [event, updateEvent] = useReducer<EventReducer>(
+    (prev, next) => ({ ...prev, ...next }),
+    {
+      status: '',
+      updateAvailable: null,
+      downloadProgress: 0,
+      metadata: null,
+      metadataLoading: false,
+    },
   );
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [metadata, setMetadata] = useState<LocalPackage | null>(null);
-  const [metadataLoading, setMetadataLoading] = useState(false);
+  const { status } = event;
+
+  useEffect(() => {
+    if (status !== '') {
+      logMessage(status, 'CodePush status:');
+    }
+  }, [status]);
 
   const handleVersionMismatch = (remotePackage: RemotePackage) => {
-    setStatus(
-      `Latest update is incompatible with your app version: Current: ${Version.VERSION} Update: ${remotePackage.appVersion}`,
-    );
+    updateEvent({
+      status: `Latest update is incompatible with your app version: Current: ${Version.VERSION} Update: ${remotePackage.appVersion}`,
+    });
   };
 
   const sync = (deploymentKey?: string) => {
@@ -130,74 +156,47 @@ const useCodePush = () => {
             }
           : undefined,
         _status => {
-          switch (_status) {
-            case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-              setStatus('Checking for update...');
-              break;
-            case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-              setStatus('Downloading package...');
-              break;
-            case codePush.SyncStatus.INSTALLING_UPDATE:
-              setStatus('Installing update...');
-              break;
-            case codePush.SyncStatus.SYNC_IN_PROGRESS:
-              setStatus('Sync in progress...');
-              break;
-            case codePush.SyncStatus.UNKNOWN_ERROR:
-              setStatus('Something went wrong');
-              break;
-            case codePush.SyncStatus.UPDATE_IGNORED:
-              setStatus('Update ignored');
-              break;
-            case codePush.SyncStatus.UPDATE_INSTALLED:
-              setStatus('Update installed');
-              break;
-            case codePush.SyncStatus.UP_TO_DATE:
-              setStatus('Up-to-date!');
-              break;
-            default:
-              setStatus(String(_status));
-              break;
-          }
+          updateEvent({ status: statusMapping[_status] ?? `${_status}` });
         },
         ({ receivedBytes, totalBytes }) => {
-          setDownloadProgress(receivedBytes / totalBytes);
+          updateEvent({ downloadProgress: receivedBytes / totalBytes });
         },
         handleVersionMismatch,
       )
-      .catch(() => {
-        setStatus('Something went wrong');
-      });
+      .catch(() => updateEvent({ status: 'Something went wrong' }));
   };
 
   useEffect(() => {
-    setMetadataLoading(true);
+    updateEvent({ metadataLoading: true });
     codePush
       .getUpdateMetadata()
       .then(data => {
+        logMessage(data, 'CodePush UpdateMetadata:');
         if (data) {
-          setMetadata(data);
+          updateEvent({ metadata: data });
           codePush
             .checkForUpdate(data?.deploymentKey, handleVersionMismatch)
-            .then(update => {
-              if (update) {
-                setUpdateAvailable(update);
-              }
-            });
+            .then(update =>
+              update ? updateEvent({ updateAvailable: update }) : undefined,
+            );
         }
       })
-      .finally(() => {
-        setMetadataLoading(false);
-      });
+      .finally(() => updateEvent({ metadataLoading: false }));
   }, []);
-
   return {
-    status,
-    metadata,
+    ...event,
     error: status === 'Something went wrong',
-    downloadProgress,
     sync,
-    updateAvailable,
-    metadataLoading,
   };
+};
+
+const statusMapping = {
+  [codePush.SyncStatus.CHECKING_FOR_UPDATE]: 'Checking for update...',
+  [codePush.SyncStatus.DOWNLOADING_PACKAGE]: 'Downloading package...',
+  [codePush.SyncStatus.INSTALLING_UPDATE]: 'Installing update...',
+  [codePush.SyncStatus.SYNC_IN_PROGRESS]: 'Sync in progress...',
+  [codePush.SyncStatus.UNKNOWN_ERROR]: 'Something went wrong',
+  [codePush.SyncStatus.UPDATE_IGNORED]: 'Update ignored',
+  [codePush.SyncStatus.UPDATE_INSTALLED]: 'Update installed',
+  [codePush.SyncStatus.UP_TO_DATE]: 'Up-to-date!',
 };

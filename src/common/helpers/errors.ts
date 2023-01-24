@@ -12,11 +12,12 @@ export default function shouldReportToSentry(error) {
     isNotTokenExpiredError = !isTokenExpired(error);
 
   return (
-    isError &&
-    isNotNetworkFail &&
-    isNotUserError &&
-    isNotAbort &&
-    isNotTokenExpiredError &&
-    (isNotApiError || error.status === 500)
+    (isError &&
+      isNotNetworkFail &&
+      isNotUserError &&
+      isNotAbort &&
+      isNotTokenExpiredError &&
+      (isNotApiError || error.status === 500)) ||
+    `${error}`.indexOf('CodePush') >= 0
   );
 }
