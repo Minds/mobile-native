@@ -133,7 +133,13 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {};
+  Compose: {
+    openSupermindModal?: boolean;
+    isRemind?: boolean;
+    entity?: ActivityModel;
+    group?: GroupModel;
+    parentKey?: string;
+  };
   SupermindCompose: {
     data: SupermindRequestParam;
     closeComposerOnClear?: boolean;
