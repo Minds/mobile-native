@@ -1,5 +1,5 @@
 import useApiFetch from '../../../common/hooks/useApiFetch';
-import { IBoostAudience, IPaymentType } from '../boost.store';
+import { IBoostAudience, IPaymentType } from '../boost-composer/boost.store';
 
 interface InsightEstimateParams {
   daily_bid: number;

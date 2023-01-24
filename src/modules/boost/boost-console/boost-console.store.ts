@@ -1,42 +1,33 @@
-//@ts-nocheck
-import { observable, action } from 'mobx';
-
-import OffsetListStore from '../common/stores/OffsetListStore';
-
-import BoostModel from './BoostModel';
-import BoostService from './BoostService';
-import logService from '../common/services/log.service';
-import { isAbort, isNetworkError } from '../common/services/api.service';
+import { action, observable } from 'mobx';
+import { isAbort, isNetworkError } from '~/common/services/api.service';
+import logService from '~/common/services/log.service';
+import OffsetListStore from '~/common/stores/OffsetListStore';
+import { hasVariation } from '../../../../ExperimentsProvider';
+import BoostModel from '../models/BoostModel';
+import BoostModelV3 from '../models/BoostModelV3';
+import { getBoosts, getBoostsV3 } from './boost-console.api';
+import { BoostStatus } from './types/BoostConsoleBoost';
 
 /**
  * Boosts Store
  */
-class BoostStore {
+class BoostConsoleStore {
   /**
    * Boost list store
    */
-  list: OffsetListStore;
-
-  service: BoostService;
+  list = new OffsetListStore();
 
   /**
    * Boosts list filter
    */
-  @observable filter = 'peer';
+  @observable filter: 'newsfeed' | 'sidebar' = 'newsfeed';
   @observable peer_filter = 'inbox';
+  @observable feedFilter: 'all' | BoostStatus = 'all';
 
   /**
    * List loading
    */
   @observable loading = false;
-
-  /**
-   * Store constructor
-   */
-  constructor() {
-    this.list = new OffsetListStore();
-    this.service = new BoostService();
-  }
 
   /**
    * Load boost list
@@ -48,14 +39,22 @@ class BoostStore {
     this.loading = true;
 
     try {
+      // @ts-ignore
       const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
-      const feed = await this.service.getBoosts(
-        this.list.offset,
-        this.filter,
-        peer_filter,
-      );
-      this.assignRowKeys(feed);
-      feed.entities = BoostModel.createMany(feed.entities);
+      let feed: any = null; // TODO: any
+      if (hasVariation('mob-4638-boost-v3')) {
+        feed = await getBoostsV3(
+          this.list.offset,
+          this.filter,
+          this.feedFilter === 'all' ? undefined : this.feedFilter,
+        );
+        this.assignRowKeys(feed);
+        feed.entities = BoostModelV3.createMany(feed.entities);
+      } else {
+        feed = await getBoosts(this.list.offset, this.filter, peer_filter);
+        this.assignRowKeys(feed);
+        feed.entities = BoostModel.createMany(feed.entities);
+      }
       this.list.setList(feed, refresh);
     } catch (err) {
       // ignore aborts
@@ -103,12 +102,20 @@ class BoostStore {
   }
 
   @action
+  setFeedFilter(filter: 'all' | BoostStatus) {
+    this.feedFilter = filter;
+    this.list.clearList();
+    this.loadList();
+  }
+
+  @action
   reset() {
     this.list = new OffsetListStore();
     this.filter = 'newsfeed';
+    this.feedFilter = 'all';
     this.peer_filter = 'inbox';
     this.loading = false;
   }
 }
 
-export default BoostStore;
+export default BoostConsoleStore;

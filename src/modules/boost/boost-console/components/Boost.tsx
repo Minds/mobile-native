@@ -1,28 +1,32 @@
-//@ts-nocheck
+import { NavigationProp } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-
-import BoostActionBar from './BoostActionBar';
-import ChannelCard from '../channel/card/ChannelCard';
-import BlogCard from '../blogs/BlogCard';
-import VideoCard from '../media/VideoCard';
-import ImageCard from '../media/ImageCard';
-import Activity from '../newsfeed/activity/Activity';
-import ActivityModel from '../newsfeed/ActivityModel';
-import BlogModel from '../blogs/BlogModel';
-import UserModel from '../channel/UserModel';
-import GroupCard from '../groups/card/GroupCard';
-import GroupModel from '../groups/GroupModel';
-import MText from '../common/components/MText';
-import { B2 } from '~/common/ui';
 import i18n from '~/common/services/i18n.service';
+import { B1, B2 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import BlogCard from '~/blogs/BlogCard';
+import BlogModel from '~/blogs/BlogModel';
+import ChannelCard from '~/channel/card/ChannelCard';
+import UserModel from '~/channel/UserModel';
+import GroupCard from '~/groups/card/GroupCard';
+import GroupModel from '~/groups/GroupModel';
+import ImageCard from '~/media/ImageCard';
+import VideoCard from '~/media/VideoCard';
+import Activity from '~/newsfeed/activity/Activity';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import BoostActionBar from './BoostActionBar';
+import BoostModel from '../../models/BoostModel';
+
+interface BoostProps {
+  boost: BoostModel;
+  navigation: NavigationProp<any>;
+}
 
 /**
  * Boost console item
  */
-export default class Boost extends Component {
+export default class Boost extends Component<BoostProps> {
   /**
    * Render
    */
@@ -51,7 +55,7 @@ export default class Boost extends Component {
   }
 
   showBoostActionBar() {
-    return <BoostActionBar entity={this.props.boost} />;
+    return <BoostActionBar boost={this.props.boost} />;
   }
 
   renderEntity() {
@@ -74,6 +78,7 @@ export default class Boost extends Component {
       case 'user':
         return (
           <ChannelCard
+            // @ts-ignore
             entity={UserModel.create(entity)}
             navigation={this.props.navigation}
           />
@@ -81,6 +86,7 @@ export default class Boost extends Component {
       case 'group':
         return (
           <GroupCard
+            // @ts-ignore
             entity={GroupModel.create(entity)}
             navigation={this.props.navigation}
           />
@@ -97,6 +103,7 @@ export default class Boost extends Component {
           case 'image':
             return (
               <ImageCard
+                // @ts-ignore
                 entity={ActivityModel.create(entity)}
                 navigation={this.props.navigation}
               />
@@ -104,6 +111,7 @@ export default class Boost extends Component {
           case 'video':
             return (
               <VideoCard
+                // @ts-ignore
                 entity={ActivityModel.create(entity)}
                 navigation={this.props.navigation}
               />
@@ -111,9 +119,9 @@ export default class Boost extends Component {
         }
     }
     return (
-      <MText>
+      <B1 space="L">
         Entity {entity.type} {entity.subtype} not supported
-      </MText>
+      </B1>
     );
   }
 }

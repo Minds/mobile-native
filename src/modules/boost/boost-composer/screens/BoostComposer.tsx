@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { confirm } from '../../../common/components/Confirm';
-import FitScrollView from '../../../common/components/FitScrollView';
-import Slider from '../../../common/components/Slider';
-import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
+import { confirm } from '~/common/components/Confirm';
+import FitScrollView from '~/common/components/FitScrollView';
+import Slider from '~/common/components/Slider';
+import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import {
   B1,
   B2,
@@ -14,12 +14,12 @@ import {
   HairlineRow,
   Screen,
   ScreenHeader,
-} from '../../../common/ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+} from '~/common/ui';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
-import { useTranslation } from '../locales';
 import { BoostStackScreenProps } from '../navigator';
-import useBoostInsights from '../hooks/useBoostInsights';
+import useBoostInsights from '../../hooks/useBoostInsights';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
