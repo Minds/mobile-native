@@ -6,7 +6,7 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
-import { useStores } from '../../common/hooks/use-stores';
+import { useStores } from '~/common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
 
 export type BoostStackParamList = {
@@ -29,7 +29,7 @@ export type BoostStackNavigationProp<
 
 const { Navigator, Screen } = createStackNavigator<BoostStackParamList>();
 
-export default function BoostStack({
+export default function BoostComposerStack({
   route,
 }: {
   route: RouteProp<any>;

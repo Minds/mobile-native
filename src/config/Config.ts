@@ -170,6 +170,8 @@ export const MINDS_DEEPLINK = [
     },
   ],
   ['supermind/:guid', 'Supermind', 'navigate'],
+  ['boost/boost-console', 'BoostConsole', 'navigate'],
+  ['boost/console/newsfeed/history', 'BoostConsole', 'navigate'],
 ];
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
