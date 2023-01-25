@@ -5,12 +5,14 @@ import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-
-import { Avatar, B1, B2, Column, Row, Spacer } from '~/common/ui';
+import i18n from '~/common/services/i18n.service';
+import { Avatar, B1, B2, Column, Icon, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import MPressable from '../MPressable';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
+
+const RECOMMANDATIONS_SIZE = 4;
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
@@ -49,6 +51,18 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
               {description}
             </B2>
           )}
+          {channel.boosted && (
+            <Row top="XS">
+              <Icon
+                name="boost"
+                size="tiny"
+                right="XS"
+                top="XXS"
+                color="Link"
+              />
+              <B2 color="link">{i18n.t('boosts.boostedChannel')}</B2>
+            </Row>
+          )}
         </Column>
         <Subscribe
           mini
@@ -80,7 +94,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   visible = true,
   recommendationStore,
 }) => {
-  const [listSize, setListSize] = useState(3);
+  const [listSize, setListSize] = useState(RECOMMANDATIONS_SIZE);
   const recommendation =
     useChannelRecommendationContext() || recommendationStore;
 
@@ -102,7 +116,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
         return;
       }
 
-      if (recommendation.result.entities.length <= 3) {
+      if (recommendation.result.entities.length <= RECOMMANDATIONS_SIZE) {
         return null;
       }
 
@@ -113,8 +127,8 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
           suggestion => suggestion.entity_guid !== subscribedChannel.guid,
         ),
       });
-      if (listSize === 3) {
-        setListSize(5);
+      if (listSize === RECOMMANDATIONS_SIZE) {
+        setListSize(RECOMMANDATIONS_SIZE + 2);
       }
     },
     [recommendation, listSize],
