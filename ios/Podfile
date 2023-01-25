@@ -8,7 +8,7 @@ install! 'cocoapods',
 
 $RNFirebaseAsStaticFramework = true
 
-platform :ios, '12.4'
+platform :ios, '13'
 
 target 'Minds' do
   use_expo_modules!

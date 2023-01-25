@@ -6,9 +6,7 @@ import { BackHandler } from 'react-native';
 import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
 import { View } from 'react-native';
-jest.mock('react-native-orientation-locker', () => ({
-  lockToPortrait: jest.fn(),
-}));
+
 jest.mock('../src/blockchain/v2/walletconnect/modal/registry');
 
 jest.mock(
