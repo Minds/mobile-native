@@ -1,51 +1,30 @@
 import React, { forwardRef } from 'react';
-import { TamaguiElement, styled, themeable, GetProps } from '@tamagui/core';
-import { getButtonSized } from '@tamagui/get-button-sized';
-import { ThemeableStack } from '@tamagui/stacks';
+import { TamaguiElement, styled, themeable } from '@tamagui/core';
+import { YStack } from '@tamagui/stacks';
 import { SizableText } from '@tamagui/text';
-import { ButtonProps, useButton } from './buttonHelpers';
+import { ButtonProps, getButtonStyle, useButton } from './buttonHelpers';
 
 const NAME = 'Button';
 
-export const ButtonFrame = styled(ThemeableStack, {
+export const ButtonFrame = styled(YStack, {
   name: NAME,
   tag: 'button',
-  focusable: true,
-  hoverTheme: true,
-  pressTheme: true,
-  backgrounded: true,
-  borderWidth: 1,
-  borderColor: 'transparent',
   justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'nowrap',
   flexDirection: 'row',
-  borderRadius: 10000,
-
   // if we wanted this only when pressable = true, we'd need to merge variants?
   cursor: 'pointer',
 
-  pressStyle: {
-    borderColor: 'transparent',
-  },
-
-  hoverStyle: {
-    borderColor: 'transparent',
-  },
-
-  focusStyle: {
-    borderColor: '$borderColorFocus',
-  },
-
   variants: {
     size: {
-      '...size': getButtonSized,
+      '...size': getButtonStyle,
     },
     sSize: {
-      xl: (_, extra) => getButtonSized('$5', extra),
-      l: (_, extra) => getButtonSized('$4', extra),
-      m: (_, extra) => getButtonSized('$3.5', extra),
-      s: (_, extra) => getButtonSized('$3', extra),
+      xl: (_, extra) => getButtonStyle('$5', extra),
+      l: (_, extra) => getButtonStyle('$4', extra),
+      m: (_, extra) => getButtonStyle('$3.5', extra),
+      s: (_, extra) => getButtonStyle('$3', extra),
     },
     disabled: {
       true: {
@@ -53,10 +32,77 @@ export const ButtonFrame = styled(ThemeableStack, {
         opacity: 0.5,
       },
     },
+    outline: {
+      true: {
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+      },
+    },
+    base: {
+      true: {
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: 'transparent',
+      },
+    },
+    type: {
+      primary: {
+        backgroundColor: '$backgroundPrimary',
+        borderColor: '$borderColorPrimary',
+        color: '$colorPrimary',
+        focusStyle: {
+          backgroundColor: '$backgroundFocusPrimary',
+          borderColor: '$borderColorFocusPrimary',
+        },
+        pressStyle: {
+          backgroundColor: '$backgroundPressPrimary',
+          borderColor: '$borderColorPressPrimary',
+        },
+        hoverStyle: {
+          backgroundColor: '$backgroundHoverPrimary',
+          borderColor: '$borderColorHoverPrimary',
+        },
+      },
+      secondary: {
+        backgroundColor: '$backgroundSecondary',
+        borderColor: '$borderColorSecondary',
+
+        focusStyle: {
+          backgroundColor: '$backgroundFocusSecondary',
+          borderColor: '$borderColorFocusSecondary',
+        },
+        pressStyle: {
+          backgroundColor: '$backgroundPressSecondary',
+          borderColor: '$borderColorPressSecondary',
+        },
+        hoverStyle: {
+          backgroundColor: '$backgroundHoverSecondary',
+          borderColor: '$borderColorHoverSecondary',
+        },
+      },
+      warning: {
+        backgroundColor: '$backgroundWarning',
+        borderColor: '$borderColorWarning',
+
+        focusStyle: {
+          backgroundColor: '$backgroundFocusWarning',
+          borderColor: '$borderColorFocusWarning',
+        },
+        pressStyle: {
+          backgroundColor: '$backgroundPressWarning',
+          borderColor: '$borderColorPressWarning',
+        },
+        hoverStyle: {
+          backgroundColor: '$backgroundHoverWarning',
+          borderColor: '$borderColorHoverWarning',
+        },
+      },
+    },
   } as const,
 
   defaultVariants: {
-    size: '$3',
+    type: 'primary',
+    sSize: 'm',
   },
 });
 
@@ -84,16 +130,27 @@ export const ButtonText = styled(SizableText, {
         size: '$3',
       },
     },
+    type: {
+      primary: {
+        color: '$colorPrimary',
+      },
+      secondary: {
+        color: '$colorSecondary',
+      },
+      warning: {
+        color: '$colorWarning',
+      },
+    },
   } as const,
   defaultVariants: {
-    size: '$3.5',
+    sSize: 'm',
+    type: 'primary',
   },
 });
 
-type ButtonFrameProps = GetProps<typeof ButtonFrame>;
-const ButtonComponent = forwardRef<TamaguiElement, ButtonFrameProps>(
+const ButtonComponent = forwardRef<TamaguiElement, ButtonProps>(
   (props, ref) => {
-    const { props: buttonProps } = useButton(props as ButtonProps, ButtonText);
+    const { props: buttonProps } = useButton(props, ButtonText);
     return <ButtonFrame {...buttonProps} ref={ref} />;
   },
 );

@@ -5,7 +5,7 @@ import entitiesService from './entities.service';
 import feedsStorage from './storage/feeds.storage';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
-import boostedContentService from './boosted-content.service';
+import { boostedContentService } from 'modules/boost';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';

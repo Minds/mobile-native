@@ -1,5 +1,4 @@
 import newsfeed from '../../newsfeed/NewsfeedStore';
-import boost from '../../boost/BoostStore';
 import user from '../../auth/UserStore';
 import blogs from '../../blogs/BlogsStore';
 import wire from '../../wire/WireStore';
@@ -25,7 +24,6 @@ export function createClassStores() {
     user: new user(),
     blogs: new blogs(),
     wire: new wire(),
-    boost: new boost(),
     groups: new groups(),
     groupView: new groupView(),
     hashtag: new hashtag(),

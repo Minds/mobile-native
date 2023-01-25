@@ -1,0 +1,106 @@
+### UPLOAD STAGE
+.upload_s3: &upload_s3
+  stage: upload
+  tags: [minds-ci]
+  image: cimg/aws:2022.06.1
+  interruptible: true
+  script:
+    - echo "Upload $TARGET_NAME"
+    - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_NAME
+
+.upload_browserstack: &upload_browserstack
+  stage: upload
+  tags: [minds-ci]
+  image: node:14.19.2
+  interruptible: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install --frozen-lockfile
+    - !reference [.delete_browserstack, script]
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
+
+# Upload production builds (Full version)
+upload:s3:oss: # Upload to S3
+  <<: *upload_s3
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME=Minds-$APPVERSION.apk
+  dependencies:
+    - build:androidproduction
+  rules:
+    - !reference [.rule_nonpatch_release_success, rules]
+    - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
+      when: on_success
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
+      when: never
+
+# Upload full APK to Browserstack
+upload:browserstack:oss:
+  <<: *upload_browserstack
+  extends: .rule_nonpatch_release_success
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME=Minds-$APPVERSION.apk
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
+  dependencies:
+    - build:androidproduction
+
+# Upload production builds (play-store version)
+upload:s3:playstore: # Upload to S3
+  <<: *upload_s3
+  extends: .rule_nonpatch_release_success
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
+  dependencies:
+    - build:androidproduction-playstore
+
+# Upload to Browserstack
+upload:browserstack:playstore:
+  <<: *upload_browserstack
+  extends: .rule_nonpatch_release_success
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
+  dependencies:
+    - build:androidproduction-playstore
+
+# Upload production RC (develop branch)
+upload:s3:oss:rc: # Upload to S3
+  <<: *upload_s3
+  extends: .rule_automatic_develop_manual_master
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+  dependencies:
+    - build:androidproduction
+
+# Upload to Browserstack
+upload:browserstack:oss:rc:
+  <<: *upload_browserstack
+  extends: .rule_automatic_develop_manual_master
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+    - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
+  dependencies:
+    - build:androidproduction
+
+# Upload MR builds to browserstack
+upload:browserstack:mr:
+  <<: *upload_browserstack
+  extends:
+    - .except_nightly
+    - .only_native
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
+    - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
+  dependencies:
+    - build:android_mr_production

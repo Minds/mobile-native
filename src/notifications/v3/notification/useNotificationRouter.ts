@@ -39,6 +39,13 @@ const useNotificationRouter = (
         case NotificationType.supermind_expired:
           router.navigateToObject();
           break;
+        case NotificationType.boost_accepted:
+        case NotificationType.boost_completed:
+          navigation.navigate('BoostConsole', {
+            location:
+              notification.data?.boost_location === 2 ? 'sidebar' : undefined,
+          });
+          break;
         case NotificationType.supermind_accepted:
           navigator.navTo('Activity');
           break;

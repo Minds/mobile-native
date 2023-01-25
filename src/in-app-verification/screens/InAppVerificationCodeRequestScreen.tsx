@@ -3,12 +3,12 @@ import deviceInfo from 'react-native-device-info';
 
 import i18n from '~/common/services/i18n.service';
 import { InAppVerificationStackScreenProps } from '../InAppVerificationStack';
-import apiService from '~/common/services/__mocks__/api.service';
 import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import SaveButton from '~/common/components/SaveButton';
 import FitScrollView from '~/common/components/FitScrollView';
 import { IS_IOS } from '~/config/Config';
 import { showNotification } from 'AppMessages';
+import apiService from '~/common/services/api.service';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
@@ -25,7 +25,7 @@ export default function InAppVerificationCodeRequestScreen({
 
   React.useEffect(() => {
     deviceInfo.getUniqueId().then(async deviceId => {
-      const response = await apiService.post(
+      const response = await apiService.post<{ code: string }>(
         `/api/v3/verification/${deviceId}`,
         {
           device_type: IS_IOS ? 'ios' : 'android',

@@ -1,7 +1,7 @@
 import React from 'react';
 import BottomSheetMenuItem from './BottomSheetMenuItem';
 
-type PropsType = {
+export type RadioButtonProps = {
   title: string;
   iconSize?: number;
   selected: boolean;
@@ -9,7 +9,7 @@ type PropsType = {
   onPress?: () => void;
 };
 
-export default function RadioButton(props: PropsType) {
+export default function RadioButton(props: RadioButtonProps) {
   return (
     <BottomSheetMenuItem
       {...props}

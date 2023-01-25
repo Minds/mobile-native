@@ -9,12 +9,12 @@ import useCurrentUser from '../common/hooks/useCurrentUser';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
-import { useFeedListContext } from '~/common/components/FeedListSticky';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP } from '~/config/Config';
+import { useScrollContext } from '../common/contexts/scroll.context';
 
 type PropsType = {
   navigation: any;
@@ -30,15 +30,15 @@ export const Topbar = observer((props: PropsType) => {
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
-  const animatedContext = useFeedListContext();
+  const scrollContext = useScrollContext();
   const bgColor = ThemedStyles.getColor('PrimaryBackground');
   const isChatIconHidden = useChatIconState();
 
   const animatedStyle = useAnimatedStyle(() => {
-    return animatedContext &&
+    return scrollContext &&
       !shadowLess &&
-      animatedContext.scrollY.value > animatedContext.headerHeight &&
-      animatedContext.headerHeight !== animatedContext.translationY.value
+      scrollContext.scrollY.value > scrollContext.headerHeight &&
+      scrollContext.headerHeight !== scrollContext.translationY.value
       ? {
           backgroundColor: bgColor,
           zIndex: 999,
@@ -49,7 +49,7 @@ export const Topbar = observer((props: PropsType) => {
           zIndex: 999,
           shadowColor: 'transparent',
         };
-  }, [animatedContext, bgColor]);
+  }, [scrollContext, bgColor]);
 
   const container = React.useRef({
     paddingTop: !noInsets && insets && insets.top ? insets.top - 5 : 0,

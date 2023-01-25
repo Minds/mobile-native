@@ -1,604 +1,75 @@
-stages:
-  - test
-  - pushrelease
-  - pushrelease_prod
-  - build
-  - upload
-  - release
-  - qa
-
 variables:
   APK_NAME: Minds.apk
 
-# Gets the version of the app parsing the gradle.properties file
-.getversion: &getversion
-  - 'export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`'
+include:
+  - local: .gitlab/ci/build.yml
+  - local: .gitlab/ci/maintenance.yml
+  - local: .gitlab/ci/pushrelease.yml
+  - local: .gitlab/ci/qa.yml
+  - local: .gitlab/ci/release.yml
+  - local: .gitlab/ci/test.yml
+  - local: .gitlab/ci/upload.yml
 
-# Gets the version of the iOS app parsing the project files
-.getiosversion: &getiosversion
-  - export FASTLANE_DISABLE_COLORS=1
-  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
-  - echo "APPVERSION=$APPVERSION"
+stages:
+  - test
+  - pushrelease
+  - build
+  - upload
+  - release
+  - maintenance
+  - qa
+
+# Gets the version of the app parsing the gradle.properties file
+.getversion:
+  script:
+    - 'export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`'
 
 # Delete the build from browserstack
-.delete_browserstack: &delete_browserstack
-  - 'echo "Deleting browserstack credentials..."'
-  - node tasks/deleteBrowserstackFile.js $TARGET_NAME
-
-# Move the apk to the root folder
-.move_apk: &move_apk
-  - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
-
-### TEST STAGE
-test:jest:
-  image: node:14.19.2
-  stage: test
-  interruptible: true
-  tags: [minds-ci]
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .jest/cache/
-  before_script:
-    - yarn install --frozen-lockfile
+.delete_browserstack:
   script:
-    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
-    - yarn tsc
-    - yarn test --forceExit
+    - 'echo "Deleting browserstack credentials..."'
+    - node tasks/deleteBrowserstackFile.js $TARGET_NAME
+
+# Run only for tags that ends on .0 (major, minor releases)
+.rule_nonpatch_release_manual:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: manual
+
+# Run only for tags that ends on .0 (major, minor releases)
+.rule_nonpatch_release:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+
+# Run for tags that ends on .0 (major, minor releases)
+.rule_nonpatch_release_success:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      changes:
+        - master
+      when: on_success
+
+# Run only on nightly jobs
+.except_nightly:
   except:
     variables:
       - $CI_RC_NIGHTLY_TESTS == "true"
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
-### BUILD STAGE
-.prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
-  image: macos-12-xcode-14
-  tags: [shared-macos-amd64]
-  artifacts:
-    name: 'Minds IPA'
-    paths:
-      - 'ios/Minds.ipa'
-    expire_in: 45 days
-    when: on_success
-  before_script:
-    - 'mkdir -p ~/.ssh' # we github to the known_hosts file (fix hanging when cloning secrets repo)
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/load-secure-files/-/raw/main/installer" | bash
-    - mv .secure_files/id_rsa ~/.ssh/id_rsa
-    - echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
-    - eval $(ssh-agent -s)
-    - chmod 700 ~/.ssh
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-add ~/.ssh/id_rsa
-    - yarn install --frozen-lockfile
-    - cd ios
-    - pod install
-
-# Build the QA iOS app for each MR and upload it to browserstack
-build:ios_mr:
-  <<: *prepare_build_ios
-  stage: build
-  interruptible: true
-  artifacts:
-    expire_in: 1 day
-    when: on_failure
-    public: false
-    paths:
-      - ios/ios-job.log
-  script:
-    - export ENVFILE=".env.review"
-    - fastlane buildrelease | tee -a ios-job.log
-    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
-    - cd ..
-    - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
+# Run only on native branches
+.only_native:
   only:
     refs:
       - /^native-*/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
 
-# Build iOS RC for develop branch
-build:ios_release_candidate:
-  <<: *prepare_build_ios
-  stage: build
-  interruptible: true
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
-    - cd ..
-    - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+# Run automatic on develop branch and manually on master
+.rule_automatic_develop_manual_master:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
       when: on_success
     - if: $CI_COMMIT_BRANCH == "master"
       when: manual
-
-# Build iOS for master branch
-build:ios_production:
-  <<: *prepare_build_ios
-  stage: build
-  interruptible: true
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION.ipa
-    - cd ..
-    - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-
-# Android common build steps
-.prepare_build_android: &prepare_build_android
-  image: msantang78/ci-mobile-android:latest
-  stage: build
-  tags: [minds-ci]
-  interruptible: true
-  before_script:
-    # PREPARE
-    - *getversion
-    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
-    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
-    - sudo sysctl fs.inotify.max_user_watches=524288
-    - sudo sysctl -p
-    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
-    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
-    - yarn install --frozen-lockfile
-    - cd android
-    - bundle install --path=vendor/bundle
-  artifacts:
-    name: 'Minds APK'
-    paths:
-      - $APK_NAME
-    expire_in: 45 days
-    when: on_success
-
-# Build Android production Full Version (Higher version code)
-build:androidproduction:
-  <<: *prepare_build_android
-  script:
-    - bundle exec fastlane assemble_build
-    - *move_apk
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
-      when: never
-
-# Production build for QA of MR
-build:android_mr_production:
-  <<: *prepare_build_android
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
-      - android/vendor/bundle
-      - .gradle/caches
-      - .gradle/wrapper
-      - .android/build-cache/
-  script:
-    - cp app/debug.keystore debug.keystore
-    - export ENVFILE=".env.review"
-    - bundle exec fastlane assemble_mr_build
-    - *move_apk
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
-    on_stop: build:cleanup
-  only:
-    refs:
-      - /^native-*/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-
-# Cleanup APK from merged MRs
-build:cleanup:
-  image: msantang78/ci-mobile-android:latest
-  tags: [minds-ci]
-  when: manual
-  stage: build
-  variables:
-    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
-    IPA_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.ipa'
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
-    action: stop
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - export TARGET_NAME=$APK_FILENAME
-    - *delete_browserstack
-    - export TARGET_NAME=$IPA_FILENAME
-    - *delete_browserstack
-  only:
-    refs:
-      - /^native-*/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-
-# Play store version (Lowest version code)
-build:androidproduction-playstore:
-  <<: *prepare_build_android
-  script:
-    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
-    - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
-    - bundle exec fastlane assemble_build
-    - *move_apk
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-
-### UPLOAD STAGE
-.upload_s3: &upload_s3
-  stage: upload
-  tags: [minds-ci]
-  image: cimg/aws:2022.06.1
-  interruptible: true
-  script:
-    - echo "Upload $TARGET_NAME"
-    - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_NAME
-
-.upload_browserstack: &upload_browserstack
-  stage: upload
-  tags: [minds-ci]
-  image: node:14.19.2
-  interruptible: true
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .jest/cache/
-  script:
-    - yarn install --frozen-lockfile
-    - *delete_browserstack
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
-
-# Upload production builds (Full version)
-upload:s3:oss: # Upload to S3
-  <<: *upload_s3
-  before_script:
-    - *getversion
-    - export TARGET_NAME=Minds-$APPVERSION.apk
-  dependencies:
-    - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
-      when: on_success
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
-      when: never
-
-upload:browserstack:oss: # Upload full APK to Browserstack
-  <<: *upload_browserstack
-  before_script:
-    - *getversion
-    - export TARGET_NAME=Minds-$APPVERSION.apk
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
-  dependencies:
-    - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
-
-# Upload production builds (play-store version)
-upload:s3:playstore: # Upload to S3
-  <<: *upload_s3
-  before_script:
-    - *getversion
-    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-  dependencies:
-    - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
-
-upload:browserstack:playstore: # Upload to Browserstack
-  <<: *upload_browserstack
-  before_script:
-    - *getversion
-    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
-  dependencies:
-    - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: on_success
-
-# Upload production RC (develop branch)
-upload:s3:oss:rc: # Upload to S3
-  <<: *upload_s3
-  before_script:
-    - *getversion
-    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-  dependencies:
-    - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
-
-upload:browserstack:oss:rc: # Upload to Browserstack
-  <<: *upload_browserstack
-  before_script:
-    - *getversion
-    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
-  dependencies:
-    - build:androidproduction
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
-
-# Upload MR builds to browserstack
-upload:browserstack:mr:
-  <<: *upload_browserstack
-  before_script:
-    - *getversion
-    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
-  dependencies:
-    - build:android_mr_production
-  only:
-    refs:
-      - /^native-*/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-
-### RELEASE STAGE
-
-# Release Full Android
-release:production:
-  image: cimg/aws:2022.06.1
-  stage: release
-  tags: [minds-ci]
-  dependencies:
-    - build:androidproduction
-    - upload:s3:oss
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-      when: manual
-  before_script:
-    - node -v
-    - yarn install
-  script:
-    - *getversion
-    - cp $APK_NAME Minds-$APPVERSION.apk
-    - echo "Releasing Minds-$APPVERSION.apk"
-    - yarn release-json Minds-$APPVERSION.apk
-    - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
-
-release:google_play:
-  image: msantang78/ci-mobile-android:latest
-  stage: release
-  tags: [minds-ci]
-  before_script:
-    - yarn install --frozen-lockfile
-    - yarn release-json Minds.apk
-    - cd android
-    - bundle install --path=vendor/bundle
-    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
-  script:
-    - echo "Upload to the play store $APK_NAME"
-    - bundle exec fastlane supply --apk ../$APK_NAME
-  dependencies:
-    - build:androidproduction-playstore
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-
-## CodePush releases
-pushrelease:codepush-ios:
-  image: node:14.19.1
-  stage: pushrelease
-  tags: [minds-ci]
-  before_script:
-    - npm install -g patch-package
-    - npm install -g appcenter-cli
-    - yarn install
-  script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
-  only:
-    refs:
-      - master
-
-pushrelease:codepush-android:
-  image: node:14.19.1
-  stage: pushrelease
-  tags: [minds-ci]
-  before_script:
-    - npm install -g patch-package
-    - npm install -g appcenter-cli
-    - yarn install
-  script:
-    - appcenter codepush release-react -a Minds/Minds -d Staging
-  only:
-    refs:
-      - master
-
-## CodePush releases
-pushrelease_prod:codepush-ios:
-  image: node:14.19.1
-  stage: pushrelease_prod
-  tags: [minds-ci]
-  before_script:
-    - npm install -g patch-package
-    - npm install -g appcenter-cli
-    - yarn install
-  script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
-  rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
-      changes:
-        - master
-
-pushrelease_prod:codepush-android:
-  image: node:14.19.1
-  stage: pushrelease_prod
-  tags: [minds-ci]
-  before_script:
-    - npm install -g patch-package
-    - npm install -g appcenter-cli
-    - yarn install
-  script:
-    - appcenter codepush release-react -a Minds/Minds -d Production
-  rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null # Run only for tags that don't end on .0 (patch releases)
-      changes:
-        - master
-
-# iOS Release candidate to TestFlight
-release:ios_rc_testflight:
-  image: macos-12-xcode-14
-  stage: release
-  tags: [shared-macos-amd64]
-  dependencies:
-    - build:ios_release_candidate
-  interruptible: true
-  when: manual
-  script:
-    - cd ios
-    - fastlane upload_testflight
-  only:
-    refs:
-      - develop
-      - master
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-
-# iOS production to TestFlight
-release:ios_prod_testflight:
-  image: macos-12-xcode-14
-  stage: release
-  tags: [shared-macos-amd64]
-  dependencies:
-    - build:ios_production
-  interruptible: true
-  script:
-    - cd ios
-    - fastlane upload_testflight
-  rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/ # Run only for tags that ends on .0 (major, minor releases)
-      changes:
-        - master
-
-# Run QA WebdriverIO Browserstack Tests
-.wdio_tests: &wdio_tests
-  - yarn install --frozen-lockfile
-  - yarn run test:real:ios
-  - yarn run test:real:android
-
-qa:rc:
-  image: node:14.19.2
-  stage: qa
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  allow_failure: true
-  script:
-    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
-    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
-    - *wdio_tests
-  only:
-    refs:
-      - /^develop$/
-  except:
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-  artifacts:
-    when: always
-    paths:
-      - wdioLogs
-
-qa:rc:nightly:
-  image: node:14.19.2
-  stage: qa
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  allow_failure: true
-  script:
-    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
-    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
-    - *wdio_tests
-  only:
-    refs:
-      - /^develop$/
-    variables:
-      - $CI_RC_NIGHTLY_TESTS == "true"
-  artifacts:
-    when: always
-    paths:
-      - wdioLogs
-
-qa:prod:nightly:
-  image: node:14.19.2
-  stage: qa
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  allow_failure: true
-  script:
-    - export BROWSERSTACK_IOS_APP_ID="IOS_PRODUCTION"
-    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_PRODUCTION"
-    - *wdio_tests
-  only:
-    refs:
-      - /^master$/
-    variables:
-      - $CI_PROD_NIGHTLY_TESTS == "true"
-  artifacts:
-    when: always
-    paths:
-      - wdioLogs
