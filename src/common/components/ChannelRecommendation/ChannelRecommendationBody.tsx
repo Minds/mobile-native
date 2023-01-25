@@ -51,18 +51,7 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
               {description}
             </B2>
           )}
-          {channel.boosted && (
-            <Row top="XS">
-              <Icon
-                name="boost"
-                size="tiny"
-                right="XS"
-                top="XXS"
-                color="Link"
-              />
-              <B2 color="link">{i18n.t('boosts.boostedChannel')}</B2>
-            </Row>
-          )}
+          {!!channel.boosted && <BoostedChannelLabel />}
         </Column>
         <Subscribe
           mini
@@ -74,6 +63,13 @@ export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
     </MPressable>
   );
 };
+
+const BoostedChannelLabel = () => (
+  <Row top="XS" align="centerStart">
+    <Icon name="boost" size="tiny" right="XS" color="Link" />
+    <B2 color="link">{i18n.t('boosts.boostedChannel')}</B2>
+  </Row>
+);
 
 export interface ChannelRecommendationProps {
   location: string;
