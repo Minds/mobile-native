@@ -78,10 +78,6 @@ export const createBoostStore = ({
   validate() {
     return true;
   },
-  confirmedToUseToken: false,
-  setConfirmedToUseToken(value: boolean) {
-    this.confirmedToUseToken = value;
-  },
 });
 
 export interface CreateBoostParams {
