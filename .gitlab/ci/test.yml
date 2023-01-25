@@ -1,0 +1,17 @@
+test:jest:
+  extends: .except_nightly
+  image: node:14.19.2
+  stage: test
+  interruptible: true
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  before_script:
+    - yarn install --frozen-lockfile
+  script:
+    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
+    - yarn tsc
+    - yarn test --forceExit
