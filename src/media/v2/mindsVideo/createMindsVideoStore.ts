@@ -1,4 +1,10 @@
-import type { AVPlaybackSourceObject, AVPlaybackStatus, Video } from 'expo-av';
+import {
+  AVPlaybackSourceObject,
+  AVPlaybackStatus,
+  Video,
+  VideoFullscreenUpdate,
+  VideoFullscreenUpdateEvent,
+} from 'expo-av';
 import Cancelable from 'promise-cancelable';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -10,6 +16,8 @@ import videoPlayerService from '../../../common/services/video-player.service';
 import analyticsService from '~/common/services/analytics.service';
 import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
+import { IS_IOS } from '~/config/Config';
+import { Orientation } from '~/services';
 
 export type Source = {
   src: string;
@@ -95,9 +103,20 @@ const createMindsVideoStore = ({
         headers: apiService.buildHeaders(),
       });
     },
+    onFullscreenUpdate(event: VideoFullscreenUpdateEvent) {
+      if (
+        !IS_IOS &&
+        event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS
+      ) {
+        Orientation.lockPortrait();
+      }
+    },
     toggleFullScreen() {
       videoPlayerService.setCurrent(this.player);
       this.player?.presentFullscreenPlayer();
+      if (!IS_IOS) {
+        Orientation.unlock();
+      }
     },
     setInProgress(inProgress: boolean) {
       this.inProgress = inProgress;
