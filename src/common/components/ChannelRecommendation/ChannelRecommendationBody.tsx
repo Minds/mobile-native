@@ -11,8 +11,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import MPressable from '../MPressable';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
-
-const RECOMMANDATIONS_SIZE = 4;
+import { hasVariation } from '../../../../ExperimentsProvider';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
@@ -90,6 +89,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   visible = true,
   recommendationStore,
 }) => {
+  const RECOMMANDATIONS_SIZE = hasVariation('mob-4638-boost-v3') ? 4 : 3;
   const [listSize, setListSize] = useState(RECOMMANDATIONS_SIZE);
   const recommendation =
     useChannelRecommendationContext() || recommendationStore;
