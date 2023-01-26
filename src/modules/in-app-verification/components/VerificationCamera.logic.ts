@@ -21,6 +21,7 @@ import { showNotification } from 'AppMessages';
 import NavigationService from '~/navigation/NavigationService';
 import { api } from '../api';
 import { ApiError } from '~/common/services/api.service';
+import type { Timeout } from '~/types/Common';
 
 export const TARGET_WIDTH_RATIO = 0.65;
 const TIMEOUT = 6000;
@@ -60,7 +61,7 @@ export const createVerificationStore = ({
   layout: null as null | LayoutRectangle,
   status: 'running' as StatusType,
   camera: <Camera | null>null,
-  timeout: <null | number>null,
+  timeout: <Timeout | null>null,
   accelerometer: <Array<ThreeAxisMeasurement>>[],
   gyroscope: <Array<ThreeAxisMeasurement>>[],
   location: <string | null>null,
