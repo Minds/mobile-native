@@ -577,7 +577,7 @@ PODS:
   - RNPhotoEditor (1.0.13):
     - iOSPhotoEditor
     - React
-  - RNReanimated (2.14.1):
+  - RNReanimated (2.14.4):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1143,7 +1143,7 @@ SPEC CHECKSUMS:
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNPhotoEditor: dae3b766e42ff5c184e74be0a95ff6af107a5ecc
-  RNReanimated: 8125b2324ba03108136ab5dd506fc49b2454da24
+  RNReanimated: 6668b0587bebd4b15dd849b99e5a9c70fc12ed95
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: 6386245031a4dc3091523b941de8241c03e7f214
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
