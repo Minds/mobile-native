@@ -89,25 +89,42 @@ const PlusMonetizeScreen = observer(
               theme.fontL,
               theme.paddingVertical2x,
             ]}>
-            {i18n.t('monetize.plusMonetize.submit')}
+            Submit this post to Minds+ Premium Content and earn a share of our
+            revenue based on how it performs.
           </MText>
           <CheckBox
             containerStyle={[theme.checkbox, styles.checkbox]}
             title={
-              <MText style={theme.colorPrimaryText}>
-                {i18n.t('auth.accept')}{' '}
+              <MText style={[theme.colorPrimaryText, theme.fontL]}>
+                I agree to the{' '}
                 <MText
                   style={theme.link}
                   onPress={() =>
-                    Linking.openURL('https://www.minds.com/p/terms')
+                    Linking.openURL(
+                      'https://www.minds.com/p/monetization-terms ',
+                    )
                   }>
-                  {i18n.t('auth.termsAndConditions')}
+                  Minds monetization terms{' '}
                 </MText>
+                and have the rights to monetize this content.
               </MText>
             }
             checked={localStore.agreedTerms}
             onPress={localStore.setAgreedTerms}
           />
+
+          <MText style={[theme.fontL, theme.paddingLeft10x]}>
+            • This content is my original content
+          </MText>
+          <MText
+            style={[theme.fontL, theme.paddingBottom3x, theme.paddingLeft10x]}>
+            • This content is exclusive to Minds+
+          </MText>
+          <MText
+            style={[theme.fontL, theme.paddingVertical2x, theme.paddingLeft7x]}>
+            I understand that violation of these requirements may result in
+            losing the ability to publish Premium Content for Minds+ members.
+          </MText>
         </View>
       </Wrapper>
     );
@@ -120,13 +137,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   checkbox: {
-    marginRight: 0,
+    marginRight: 10,
     marginVertical: 15,
     paddingTop: 0,
-  },
-  switchText: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 15,
   },
 });
 
