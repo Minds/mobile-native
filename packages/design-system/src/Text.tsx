@@ -9,6 +9,17 @@ export const Text = styled(Paragraph, {
   // margin: 0,
   variants: {
     type: {
+      primary: {
+        color: '$colorTextPrimary',
+      },
+      secondary: {
+        color: '$colorTextSecondary',
+      },
+      tertiary: {
+        color: '$colorTextTertiary',
+      },
+    },
+    weight: {
       black: {
         fontWeight: '900',
       },

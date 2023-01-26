@@ -7,6 +7,7 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
+import { IS_IOS } from '~/config/Config';
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -46,7 +47,7 @@ export const createBoostStore = ({
   get total() {
     return this.amount * this.duration;
   },
-  paymentType: 'cash' as IPaymentType,
+  paymentType: (IS_IOS ? 'offchain_tokens' : 'cash') as IPaymentType,
   setPaymentType(paymentType: IPaymentType) {
     this.paymentType = paymentType;
   },

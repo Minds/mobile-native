@@ -1,66 +1,45 @@
-import { Variable } from '@tamagui/core';
-
 import { tokens } from './tokens';
 
-const semanticNames = [
-  'basic',
-  'primary',
-  'warning',
-  // 'info',
-  // 'success',
-  // 'danger',
-] as const;
-type SemanticName = typeof semanticNames[number];
+const { color } = tokens;
 
-export type SimpleTheme = {
-  background: string | Variable<any> | Variable<string>;
-  backgroundFocus: string | Variable<any> | Variable<string>;
-  backgroundPress: string | Variable<any> | Variable<string>;
-  backgroundHover: string | Variable<any> | Variable<string>;
-  backgroundDisabled?: string | Variable<any> | Variable<string>;
+export const createDarkButtonTheme = (
+  variantName: string,
+  colorName: string,
+) => ({
+  [`background${variantName}`]: color[`${colorName}-500`],
+  [`backgroundFocus${variantName}`]: color[`${colorName}-700`],
+  [`backgroundPress${variantName}`]: color[`${colorName}-800`],
+  [`backgroundHover${variantName}`]: color[`${colorName}-800`],
 
-  borderColor: string | Variable<any> | Variable<string>;
-  borderColorFocus: string | Variable<any> | Variable<string>;
-  borderColorPress: string | Variable<any> | Variable<string>;
-  borderColorHover: string | Variable<any> | Variable<string>;
+  [`borderColor${variantName}`]: color[`${colorName}-400`],
+  [`borderColorFocus${variantName}`]: color[`${colorName}-600`],
+  [`borderColorPress${variantName}`]: color[`${colorName}-600`],
+  [`borderColorHover${variantName}`]: color[`${colorName}-800`],
 
-  color?: string | Variable<any> | Variable<string>;
-  colorAlt?: string | Variable<any> | Variable<string>;
-  colorFocus?: string | Variable<any> | Variable<string>;
-  colorPress?: string | Variable<any> | Variable<string>;
-  colorHover?: string | Variable<any> | Variable<string>;
-};
-
-export const createSemanticTheme = (theme: SemanticName): SimpleTheme => ({
-  background: tokens.color[`color-${theme}-500`],
-  backgroundPress: tokens.color[`color-${theme}-600`],
-  backgroundFocus: tokens.color[`color-${theme}-700`],
-  backgroundHover: tokens.color[`color-${theme}-800`],
-  backgroundDisabled: tokens.color[`color-${theme}-transparent-500`],
-
-  borderColor: tokens.color[`color-${theme}-500`],
-  borderColorPress: tokens.color[`color-${theme}-600`],
-  borderColorFocus: tokens.color[`color-${theme}-500`],
-  borderColorHover: tokens.color[`color-${theme}-800`],
-
-  color: tokens.color['color-basic-900'],
-  colorAlt: tokens.color['color-basic-800'],
-  colorFocus: tokens.color['color-basic-200'],
-  colorPress: tokens.color['color-basic-300'],
-  colorHover: tokens.color['color-basic-400'],
+  [`color${variantName}`]: color['grey-200'],
+  [`colorFocus${variantName}`]: color['grey-200'],
+  [`colorPress${variantName}`]: color['grey-200'],
+  [`colorHover${variantName}`]: color['grey-200'],
+  [`colorDisabled${variantName}`]: color['grey-500'],
 });
 
-export const sematicThemes = {
-  dark_basic: createSemanticTheme('basic'),
-  light_basic: createSemanticTheme('basic'),
-  // dark_primary: createSemanticTheme('primary'),
-  // light_primary: createSemanticTheme('primary'),
-  // dark_warning: createSemanticTheme('warning'),
-  // light_warning: createSemanticTheme('warning'),
-  // dark_info: createSemanticTheme('info'),
-  // light_info: createSemanticTheme('info'),
-  // dark_success: createSemanticTheme('success'),
-  // light_success: createSemanticTheme('success'),
-  // dark_danger: createSemanticTheme('danger'),
-  // light_danger: createSemanticTheme('danger'),
-};
+export const createLightButtonTheme = (
+  variantName: string,
+  colorName: string,
+) => ({
+  [`background${variantName}`]: color[`${colorName}-300`],
+  [`backgroundFocus${variantName}`]: color[`${colorName}-400`],
+  [`backgroundPress${variantName}`]: color[`${colorName}-500`],
+  [`backgroundHover${variantName}`]: color[`${colorName}-500`],
+
+  [`borderColor${variantName}`]: color[`${colorName}-400`],
+  [`borderColorFocus${variantName}`]: color[`${colorName}-600`],
+  [`borderColorPress${variantName}`]: color[`${colorName}-600`],
+  [`borderColorHover${variantName}`]: color[`${colorName}-800`],
+
+  [`color${variantName}`]: color['grey-800'],
+  [`colorFocus${variantName}`]: color['grey-800'],
+  [`colorPress${variantName}`]: color['grey-800'],
+  [`colorHover${variantName}`]: color['grey-800'],
+  [`colorDisabled${variantName}`]: color['grey-500'],
+});
