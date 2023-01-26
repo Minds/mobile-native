@@ -7,7 +7,7 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { IS_IOS } from '../../../config/Config';
+import { IS_IOS } from '~/config/Config';
 
 type BoostStoreParams = {
   boostType: BoostType;
