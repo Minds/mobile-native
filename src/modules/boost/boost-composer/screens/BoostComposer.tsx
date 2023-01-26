@@ -20,6 +20,7 @@ import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
+import { IS_IOS } from '../../../../config/Config';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -27,6 +28,22 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
+  const tabs = [
+    {
+      id: 'cash',
+      title: t('Cash'),
+      testID: 'BoostComposerScreen:tab:cash',
+    },
+    {
+      id: 'offchain_tokens',
+      title: t('Token'),
+      testID: 'BoostComposerScreen:tab:token',
+    },
+  ];
+
+  if (IS_IOS) {
+    tabs.shift();
+  }
 
   const textMapping = {
     cash: {
@@ -96,18 +113,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       <FitScrollView>
         <TopbarTabbar
           containerStyle={ThemedStyles.style.marginTop}
-          tabs={[
-            {
-              id: 'cash',
-              title: t('Cash'),
-              testID: 'BoostComposerScreen:tab:cash',
-            },
-            {
-              id: 'offchain_tokens',
-              title: t('Token'),
-              testID: 'BoostComposerScreen:tab:token',
-            },
-          ]}
+          tabs={tabs}
           onChange={handlePaymentTypeChange}
           current={boostStore.paymentType}
         />
