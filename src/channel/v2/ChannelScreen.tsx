@@ -44,6 +44,7 @@ import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import withModalProvider from '~/navigation/withModalProvide';
+import { hasVariation } from '../../../ExperimentsProvider';
 
 const tinycolor = require('tinycolor2');
 
@@ -440,7 +441,11 @@ const ChannelScreen = observer((props: PropsType) => {
     </View>
   );
 
-  if (!store.feedStore.injectItems) {
+  if (
+    !store.feedStore.injectItems &&
+    !store.channel.isOwner() &&
+    hasVariation('mob-4638-boost-v3')
+  ) {
     store.feedStore.setInjectedItems([
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
         <Column background="primary">
