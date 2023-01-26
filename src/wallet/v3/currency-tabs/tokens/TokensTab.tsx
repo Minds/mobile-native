@@ -169,7 +169,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
     store.option === 'transactions' || store.option === 'onchain_transfers';
 
   return (
-    <Screen screenName="TokensTab" scroll={!isScollable}>
+    <Screen name="TokensTab" scroll={!isScollable}>
       <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}

@@ -173,7 +173,7 @@ const SettingsScreen = observer(({ navigation }) => {
   );
 
   return (
-    <Screen screenName="SettingScreen" safe>
+    <Screen name="SettingScreen" safe>
       <ScrollView
         testID="SettingsScreen"
         style={theme.flexContainer}

@@ -16,7 +16,7 @@ export default function InAppVerificationConfirmationScreen() {
   };
 
   return (
-    <Screen screenName="InAppVerificationConfirmationScreen" safe>
+    <Screen name="InAppVerificationConfirmationScreen" safe>
       <ScreenHeader
         title="Confirmation"
         centerTitle

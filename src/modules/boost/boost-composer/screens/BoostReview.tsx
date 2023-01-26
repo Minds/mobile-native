@@ -57,7 +57,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   };
 
   return (
-    <Screen screenName="BoostReviewScreen" safe>
+    <Screen name="BoostReviewScreen" safe>
       <ScreenHeader title={title} back shadow />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">

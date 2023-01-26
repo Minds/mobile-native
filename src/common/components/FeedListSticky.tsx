@@ -115,7 +115,7 @@ function FeedListSticky<T extends BaseModel>(
     <ScrollContext.Provider
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <FeedList
-        listName="FeedListSticky"
+        name="FeedListSticky"
         ref={ref}
         {...otherProps}
         onScroll={scrollHandler}

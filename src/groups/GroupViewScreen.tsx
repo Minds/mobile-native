@@ -204,7 +204,7 @@ export default class GroupViewScreen extends Component {
       case 'feed':
         return (
           <FeedList
-            listName="GroupViewFeed"
+            name="GroupViewFeed"
             feedStore={group.feed}
             header={header}
             navigation={this.props.navigation}

@@ -105,7 +105,7 @@ export const DiscoverySearchList = observer((props: Props) => {
   return (
     <View style={theme.flexContainer}>
       <FeedList
-        listName="DiscoverySearchList"
+        name="DiscoverySearchList"
         feedStore={store.listStore}
         navigation={props.navigation}
         emptyMessage={EmptyPartial}

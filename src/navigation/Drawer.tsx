@@ -188,7 +188,7 @@ export default function Drawer(props) {
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
-    <Screen screenName="Drawer" safe>
+    <Screen name="Drawer" safe>
       <FitScrollView>
         <HairlineSpacer top="XXL">
           <DrawerHeader

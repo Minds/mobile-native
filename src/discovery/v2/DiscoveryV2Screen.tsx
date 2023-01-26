@@ -150,7 +150,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="top">
               <FeedListSticky
-                listName="DiscoveryTop"
+                name="DiscoveryTop"
                 ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
@@ -174,7 +174,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="trending-tags">
               <FeedListSticky
-                listName="DiscoveryTrending"
+                name="DiscoveryTrending"
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
@@ -186,7 +186,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="boosts">
               <FeedListSticky
-                listName="DiscoveryBoosts"
+                name="DiscoveryBoosts"
                 ref={listRef}
                 header={header}
                 feedStore={store.boostFeed}
@@ -199,7 +199,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
           return (
             <DiscoveryTabContent key="superminds">
               <FeedListSticky
-                listName="DiscoverySuperminds"
+                name="DiscoverySuperminds"
                 ref={listRef}
                 header={header}
                 feedStore={store.supermindsFeed}
@@ -214,7 +214,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     };
 
     return (
-      <Screen screenName="DiscoveryV2Screen" safe onlyTopEdge={IS_IOS}>
+      <Screen name="DiscoveryV2Screen" safe onlyTopEdge={IS_IOS}>
         <View style={ThemedStyles.style.flexContainer}>
           <Topbar
             title="Discovery"

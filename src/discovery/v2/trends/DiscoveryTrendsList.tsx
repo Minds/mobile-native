@@ -77,7 +77,7 @@ export const DiscoveryTrendsList = observer(
      */
     return (
       <FeedListSticky
-        listName="DiscoveryTrendsList"
+        name="DiscoveryTrendsList"
         ref={listRef}
         feedStore={store.allFeed}
         header={header}

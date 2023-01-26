@@ -99,7 +99,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   onEndReached?: () => void;
   testID?: string;
   estimatedItemSize?: number;
-  listName?: string;
+  name?: string;
 };
 
 /**
@@ -373,7 +373,7 @@ export class FeedList<T extends BaseModel> extends Component<
     return (
       <View testID={this.props.testID} style={containerStyle}>
         <PerformanceFlashListWrapper
-          name={this.props.listName ?? this.props.testID}>
+          name={this.props.name ?? this.props.testID}>
           <AnimatedFlashList
             estimatedItemSize={this.props.estimatedItemSize || 450}
             ref={this.listRef}

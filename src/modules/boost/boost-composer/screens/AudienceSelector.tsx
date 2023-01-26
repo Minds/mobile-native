@@ -34,7 +34,7 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   };
 
   return (
-    <Screen screenName="AudienceSelectorScreen" safe>
+    <Screen name="AudienceSelectorScreen" safe>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'

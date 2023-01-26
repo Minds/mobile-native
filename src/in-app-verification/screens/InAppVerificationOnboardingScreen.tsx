@@ -20,7 +20,7 @@ export default function InAppVerificationOnboardingScreen() {
   };
 
   return (
-    <Screen screenName="InAppVerificationOnboardingScreen" safe>
+    <Screen name="InAppVerificationOnboardingScreen" safe>
       <ScreenHeader
         title="Verify Account"
         centerTitle

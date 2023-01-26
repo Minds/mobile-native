@@ -13,7 +13,7 @@ export type ScreenPropType = {
   background?: 'primary' | 'secondary' | 'tertiary';
   children?: ReactNode;
   onlyTopEdge?: boolean;
-  screenName?: string;
+  name?: string;
 };
 
 export const Screen = ({
@@ -23,12 +23,12 @@ export const Screen = ({
   loading,
   background = 'primary',
   onlyTopEdge,
-  screenName,
+  name,
 }: ScreenPropType) => {
   const Renderer = safe ? SafeAreaView : View;
 
   return (
-    <PerformanceView screenName={screenName ?? 'Unknown Screen'} interactive>
+    <PerformanceView screenName={name ?? 'Unknown Screen'} interactive>
       <Renderer
         style={[styles[background]]}
         edges={!scroll && onlyTopEdge ? ['top'] : undefined}>

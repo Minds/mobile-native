@@ -21,7 +21,7 @@ const GroupsListScreen = observer(() => {
   );
 
   return (
-    <Screen screenName="GroupsListScreen" safe>
+    <Screen name="GroupsListScreen" safe>
       <ScreenHeader title={i18n.t('discovery.groups')} />
       <OffsetList
         renderItem={renderGroup}

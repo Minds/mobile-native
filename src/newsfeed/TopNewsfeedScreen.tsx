@@ -16,7 +16,7 @@ const TopNewsfeedScreen: FC<any> = ({ navigation }) => {
         showBack
       />
       <FeedList
-        listName="TopNewsfeed"
+        name="TopNewsfeed"
         feedStore={feedStore}
         navigation={navigation}
       />

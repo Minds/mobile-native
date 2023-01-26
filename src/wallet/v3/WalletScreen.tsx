@@ -121,7 +121,7 @@ const WalletScreen = observer((props: PropsType) => {
   };
 
   return (
-    <Screen screenName="WalletScreen" safe>
+    <Screen name="WalletScreen" safe>
       <ScreenHeader title={i18n.t('wallet.wallet')} extra={<TokenPrice />} />
       <TopbarTabbar
         titleStyle={theme.fontXL}

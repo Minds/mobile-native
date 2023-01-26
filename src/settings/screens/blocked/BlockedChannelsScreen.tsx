@@ -30,7 +30,7 @@ const BlockedChannelsScreen = observer(props => {
     <PerformanceView screenName="BlockedChannelsScreen" interactive>
       <View style={theme.flexContainer}>
         <FeedList
-          listName="BlockedChannels"
+          name="BlockedChannels"
           feedStore={localStore.feedStore}
           renderActivity={renderRow}
           navigation={props.navigation}
