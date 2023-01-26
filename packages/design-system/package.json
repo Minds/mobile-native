@@ -1,0 +1,36 @@
+{
+  "name": "@minds/ui",
+  "version": "1.0.0",
+  "license": "MIT",
+  "types": "./types/index.d.ts",
+  "main": "src/index.ts",
+  "module": "dist/esm",
+  "module:jsx": "dist/jsx",
+  "files": [
+    "types",
+    "src",
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@tamagui/animations-react-native": "^1.0.17",
+    "@tamagui/button": "^1.0.17",
+    "@tamagui/core": "^1.0.17",
+    "@tamagui/font-size": "^1.0.17",
+    "@tamagui/get-button-sized": "^1.0.17",
+    "@tamagui/helpers-tamagui": "^1.0.17",
+    "@tamagui/react-native-media-driver": "^1.0.17",
+    "@tamagui/shorthands": "^1.0.17",
+    "@tamagui/stacks": "^1.0.17",
+    "@tamagui/text": "^1.0.17"
+  },
+  "scripts": {
+    "build": "tamagui-build",
+    "watch": "tamagui-build --watch"
+  },
+  "devDependencies": {
+    "@tamagui/build": "^1.0.17"
+  }
+}

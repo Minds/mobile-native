@@ -29,14 +29,13 @@ import {
   containerStyle,
   onlyContentContainerStyle,
   remindBlockContainerStyle,
-  remindContainerStyle,
   remindedContainerStyle,
   shortTextStyle,
   styles,
   textStyle,
 } from './styles';
 import MText from '../../common/components/MText';
-import SupermindBorderView from '~/common/components/supermind/SupermindBorderView';
+import ActivityContainer from './ActivityContainer';
 
 const FONT_THRESHOLD = 300;
 
@@ -274,13 +273,8 @@ export default class Activity extends Component<PropsType> {
         );
       }
 
-      const Container: any =
-        this.props.entity.supermind && this.props.entity.supermind.is_reply
-          ? SupermindBorderView
-          : QuoteContainer;
-
       return (
-        <Container>
+        <ActivityContainer entity={this.props.entity}>
           <Activity
             ref={this.setRemind}
             hideTabs={true}
@@ -291,7 +285,7 @@ export default class Activity extends Component<PropsType> {
             hydrateOnNav={true}
             showOnlyContent={this.props.showOnlyContent}
           />
-        </Container>
+        </ActivityContainer>
       );
     }
   }
@@ -402,7 +396,3 @@ export default class Activity extends Component<PropsType> {
     );
   }
 }
-
-const QuoteContainer = ({ children }) => (
-  <View style={remindContainerStyle}>{children}</View>
-);

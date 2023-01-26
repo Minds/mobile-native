@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { Icon } from 'react-native-elements';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -164,6 +165,23 @@ class OwnerBlock extends PureComponent<PropsType> {
       </HairlineRow>
     ) : null;
 
+    const boosted = this.props.entity.boosted ? (
+      <HairlineRow>
+        <Row horizontal="XL" vertical="S">
+          <Icon
+            type="ionicon"
+            name="md-trending-up"
+            size={18}
+            style={ThemedStyles.style.marginRight}
+            color={ThemedStyles.getColor('Link')}
+          />
+          <B2 font="medium" color="link">
+            {i18nService.t('boosted')}
+          </B2>
+        </Row>
+      </HairlineRow>
+    ) : undefined;
+
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
 
@@ -185,6 +203,7 @@ class OwnerBlock extends PureComponent<PropsType> {
 
     return (
       <View style={this.containerStyle}>
+        {boosted}
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}

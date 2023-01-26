@@ -5,7 +5,7 @@ import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 
-export const CODEPUSH_VERSION = '4.31.1';
+export const CODEPUSH_VERSION = '4.31.3';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -171,6 +171,8 @@ export const MINDS_DEEPLINK = [
     },
   ],
   ['supermind/:guid', 'Supermind', 'navigate'],
+  ['boost/boost-console', 'BoostConsole', 'navigate'],
+  ['boost/console/newsfeed/history', 'BoostConsole', 'navigate'],
 ];
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
@@ -217,3 +219,5 @@ export const STORE_LINK = Platform.select({
   ios: APP_STORE_LINK,
   android: PLAY_STORE_LINK,
 }) as string;
+
+export const isStoryBookOn = storages.app.getBool('storybook');

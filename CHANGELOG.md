@@ -2,13 +2,42 @@
 
 Minds Mobile
 
+## 4.31.4 (2023-01-23)
+
+### changed (1 change)
+
+- [(feat) add boost insight estimated reach to boost composer](minds/mobile-native@4a15f2d34f098e4afcd2b11cfd97050620bb6ec2) ([merge request](minds/mobile-native!2058))
+
+## 4.31.3 - 2023-01-18
+
+### Changed
+
+- Allow boosting all posts
+- Improved layout for tablets
+- Boost v3 notification
+- Pending supermind notice navigation fixes
+- Fix setup channel in-feed notice not shown
+- in-feed notice invite your friends
+- Base design module created using Tamagui
+- Fix different subscribers list between web & mobile
+- Fix issues on the interaction bottom sheet
+- Moved boosted label to the top of the posts
+
+## 4.31.2 - 2023-01-06
+
+### Changed
+
+- Added a non refundable checkbox in cash boost
+- Fix logout after deactivating an account
+- Hide the close button for the 2FA after the register screen
+
 ## 4.31.1 - 2022-12-22
 
 ### Changed
 
 - Deeplink to the composer
 - Forward UTM codes to the backend when handling a deeplink
-- Optional webview deeplink handler 
+- Optional webview deeplink handler
 - Fix error tapping the group name
 - Fix boost console rejection message
 - Fix video player controls hiding the video

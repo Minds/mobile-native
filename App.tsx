@@ -10,12 +10,14 @@ import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
+  View,
   Linking,
   UIManager,
   RefreshControl,
   YellowBox,
   AppState,
   AppStateStatus,
+  Dimensions,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
@@ -28,6 +30,7 @@ import { PortalProvider } from '@gorhom/portal';
 import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+import deviceInfo from 'react-native-device-info';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -54,6 +57,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
+import { UIProvider } from '@minds/ui';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -180,47 +184,64 @@ class App extends Component<Props> {
     const stores = getStores();
 
     return (
-      <ExperimentsProvider>
-        <SafeAreaProvider>
-          {sessionService.ready && (
-            <NavigationContainer
-              ref={setTopLevelNavigator}
-              theme={ThemedStyles.navTheme}
-              onReady={appInitManager.onNavigatorReady}
-              onStateChange={NavigationService.onStateChange}>
-              <StoresProvider>
-                <QueryProvider>
-                  <Provider key="app" {...stores}>
-                    <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                      <FriendlyCaptchaProvider
-                        ref={setFriendlyCaptchaReference}>
-                        <PortalProvider>
-                          <BottomSheetModalProvider>
-                            <ErrorBoundary
-                              message="An error occurred"
-                              containerStyle={ThemedStyles.style.centered}>
-                              <WCContextProvider>
-                                <NavigationStack
-                                  key={ThemedStyles.theme + i18n.locale}
-                                />
-                              </WCContextProvider>
-                            </ErrorBoundary>
-                          </BottomSheetModalProvider>
-                        </PortalProvider>
-                      </FriendlyCaptchaProvider>
-                    </AppMessageProvider>
-                  </Provider>
-                </QueryProvider>
-              </StoresProvider>
-            </NavigationContainer>
-          )}
-        </SafeAreaProvider>
-      </ExperimentsProvider>
+      <View style={appContainerStyle}>
+        <ExperimentsProvider>
+          <SafeAreaProvider>
+            {sessionService.ready && (
+              <NavigationContainer
+                ref={setTopLevelNavigator}
+                theme={ThemedStyles.navTheme}
+                onReady={appInitManager.onNavigatorReady}
+                onStateChange={NavigationService.onStateChange}>
+                <StoresProvider>
+                  <QueryProvider>
+                    <Provider key="app" {...stores}>
+                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                        <FriendlyCaptchaProvider
+                          ref={setFriendlyCaptchaReference}>
+                          <PortalProvider>
+                            <UIProvider
+                              defaultTheme={
+                                ThemedStyles.theme === 0 ? 'dark' : 'light'
+                              }>
+                              <BottomSheetModalProvider>
+                                <ErrorBoundary
+                                  message="An error occurred"
+                                  containerStyle={ThemedStyles.style.centered}>
+                                  <WCContextProvider>
+                                    <NavigationStack
+                                      key={ThemedStyles.theme + i18n.locale}
+                                    />
+                                  </WCContextProvider>
+                                </ErrorBoundary>
+                              </BottomSheetModalProvider>
+                            </UIProvider>
+                          </PortalProvider>
+                        </FriendlyCaptchaProvider>
+                      </AppMessageProvider>
+                    </Provider>
+                  </QueryProvider>
+                </StoresProvider>
+              </NavigationContainer>
+            )}
+          </SafeAreaProvider>
+        </ExperimentsProvider>
+      </View>
     );
   }
 }
 
 export default App;
+
+const appContainerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'bgPrimaryBackground',
+  {
+    paddingHorizontal: deviceInfo.isTablet()
+      ? (Dimensions.get('window').width - 530) / 2
+      : 0,
+  },
+);
 
 if (__DEV__) {
   require('tron');

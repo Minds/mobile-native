@@ -57,9 +57,9 @@ const replaceState = (dataField: string, map = defaultMap) => (newData: any) =>
 
 type MethodType = 'get' | 'post' | 'put' | 'delete';
 
-export interface FetchOptions {
+export interface FetchOptions<P = unknown> {
   updateState?: (newData: any, oldData: any) => any;
-  params?: object;
+  params?: P;
   persist?: boolean;
   /**
    * fetch/refresh on focus
@@ -286,9 +286,9 @@ const createStore = (storeOptions: {
  * @param url string
  * @param options object
  */
-export default function useApiFetch<T>(
+export default function useApiFetch<T, P = unknown>(
   url: string,
-  options: FetchOptions = {},
+  options: FetchOptions<P> = {},
 ): FetchStore<T> {
   const store: FetchStore<T> = useLocalStore(createStore, {
     url,

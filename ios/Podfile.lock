@@ -201,7 +201,7 @@ PODS:
   - Permission-PhotoLibrary (3.6.1):
     - RNPermissions
   - PromisesObjC (2.1.1)
-  - Protobuf (3.21.9)
+  - Protobuf (3.21.11)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion

@@ -3,18 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { InteractionManager } from 'react-native';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import UserModel from '../../../channel/UserModel';
-
-export interface AutoCompleteInput {
-  text: string;
-  selection?: { start: number; end: number };
-  textHeight?: number;
-  scrollOffset?: number;
-  onScrollToOffset?: (offset: number) => void;
-  onTextChange: (text: string) => void;
-  onChannelSelect?: (channel: UserModel) => void;
-  onSelectionChange?: (selection: { start: number; end: number }) => void;
-  onTextInputFocus?: () => void;
-}
+import { AutoCompleteProps } from './AutoComplete';
 
 const useAutoComplete = ({
   text,
@@ -26,22 +15,18 @@ const useAutoComplete = ({
   onChannelSelect,
   onSelectionChange,
   onTextInputFocus,
-}: AutoCompleteInput) => {
+  onVisible,
+}: AutoCompleteProps) => {
   const height = useDimensions().window.height;
   const [query, setQuery] = useState('');
   const [visible, setVisible] = useState(false);
   const setVisibleDebounced = useDebouncedCallback(v => setVisible(v), 100, []);
   const keyboard = useKeyboard();
 
+  useEffect(() => onVisible?.(visible), [visible, onVisible]);
+
   useEffect(() => {
     const substr = (selection ? text.substr(0, selection.start) : text) || '';
-
-    /**
-     * Distance from top within which we don't have to move the scroll position.
-     * in other words, this distance from top is enough to show the popup.
-     * this depends on the device obviously.
-     **/
-    const threshold = (height - keyboard.keyboardHeight) / 3;
 
     const lastItem = substr
       .replace(/\n/g, ' ') // replace with space
@@ -54,6 +39,12 @@ const useAutoComplete = ({
       lastItem.length > 1
     ) {
       setVisibleDebounced(true);
+      /**
+       * Distance from top within which we don't have to move the scroll position.
+       * in other words, this distance from top is enough to show the popup.
+       * this depends on the device obviously.
+       **/
+      const threshold = (height - keyboard.keyboardHeight) / 3;
 
       if (textHeight - scrollOffset > threshold) {
         onScrollToOffset?.(textHeight - 29);
