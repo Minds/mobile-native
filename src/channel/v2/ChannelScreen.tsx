@@ -449,7 +449,7 @@ const ChannelScreen = observer((props: PropsType) => {
     store.feedStore.setInjectedItems([
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
         <Column background="primary">
-          <ChannelRecommendation location="channel" />
+          <ChannelRecommendation location="newsfeed" />
         </Column>
       )),
     ]);
