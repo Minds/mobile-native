@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { confirm } from '../../../common/components/Confirm';
-import FitScrollView from '../../../common/components/FitScrollView';
-import Slider from '../../../common/components/Slider';
-import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
+import { confirm } from '~/common/components/Confirm';
+import FitScrollView from '~/common/components/FitScrollView';
+import Slider from '~/common/components/Slider';
+import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import {
   B1,
   B2,
@@ -14,12 +14,13 @@ import {
   HairlineRow,
   Screen,
   ScreenHeader,
-} from '../../../common/ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+} from '~/common/ui';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
-import { useTranslation } from '../locales';
 import { BoostStackScreenProps } from '../navigator';
-import useBoostInsights from '../hooks/useBoostInsights';
+import useBoostInsights from '../../hooks/useBoostInsights';
+import { IS_IOS } from '~/config/Config';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -27,6 +28,22 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
+  const tabs = [
+    {
+      id: 'cash',
+      title: t('Cash'),
+      testID: 'BoostComposerScreen:tab:cash',
+    },
+    {
+      id: 'offchain_tokens',
+      title: t('Token'),
+      testID: 'BoostComposerScreen:tab:token',
+    },
+  ];
+
+  if (IS_IOS) {
+    tabs.shift();
+  }
 
   const textMapping = {
     cash: {
@@ -83,7 +100,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   };
 
   return (
-    <Screen safe>
+    <Screen safe onlyTopEdge>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -96,18 +113,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       <FitScrollView>
         <TopbarTabbar
           containerStyle={ThemedStyles.style.marginTop}
-          tabs={[
-            {
-              id: 'cash',
-              title: t('Cash'),
-              testID: 'BoostComposerScreen:tab:cash',
-            },
-            {
-              id: 'offchain_tokens',
-              title: t('Token'),
-              testID: 'BoostComposerScreen:tab:token',
-            },
-          ]}
+          tabs={tabs}
           onChange={handlePaymentTypeChange}
           current={boostStore.paymentType}
         />

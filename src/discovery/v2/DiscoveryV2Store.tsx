@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import { hasVariation } from '../../../ExperimentsProvider';
 import apiService from '../../common/services/api.service';
 import FeedStore from '../../common/stores/FeedStore';
 
@@ -54,7 +55,11 @@ export default class DiscoveryV2Store {
       .setMedium('featured-content');
 
     this.boostFeed
-      .setEndpoint('api/v2/boost/feed')
+      .setEndpoint(
+        hasVariation('mob-4638-boost-v3')
+          ? 'api/v3/boosts/feed'
+          : 'api/v2/boost/feed',
+      )
       .setInjectBoost(false)
       .setLimit(15);
 

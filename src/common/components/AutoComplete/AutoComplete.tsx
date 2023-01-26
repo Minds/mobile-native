@@ -1,16 +1,24 @@
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import type { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
+import React from 'react';
+import type { FlatList } from 'react-native';
+
+import type UserModel from '~/channel/UserModel';
 import ChannelAutoCompleteList from './ChannelAutoCompleteList';
 import HashtagAutoCompleteList from './HashtagAutoCompleteList';
-import useAutoComplete, { AutoCompleteInput } from './useAutoComplete';
+import useAutoComplete from './useAutoComplete';
 
-interface AutoCompleteProps extends AutoCompleteInput {
-  onVisible?: (visible: boolean) => void;
-  /**
-   * a custom component to use instead of flat list
-   */
+export interface AutoCompleteProps {
+  text: string;
+  selection?: { start: number; end: number };
+  textHeight?: number;
+  scrollOffset?: number;
+  onScrollToOffset?: (offset: number) => void;
+  onTextChange: (text: string) => void;
+  onChannelSelect?: (channel: UserModel) => void;
+  onSelectionChange?: (selection: { start: number; end: number }) => void;
+  onTextInputFocus?: () => void;
+  onVisible?: (boolean) => void;
   flatListComponent?: FlatList | typeof BottomSheetFlatList;
 }
 
@@ -19,11 +27,7 @@ function AutoComplete(props: AutoCompleteProps) {
     query,
     handleAutoCompleteSelect,
     handleAutoCompleteLoaded,
-    visible,
   } = useAutoComplete(props);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => props.onVisible?.(visible), [visible, props.onVisible]);
 
   if (!query) {
     return null;

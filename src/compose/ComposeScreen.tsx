@@ -1,16 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Dimensions,
   InteractionManager,
   Keyboard,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Platform,
+  ScrollView,
   View,
 } from 'react-native';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
+import FastImage from 'react-native-fast-image';
+import { useBackHandler } from '@react-native-community/hooks';
+import { useFocusEffect } from '@react-navigation/core';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { IconButtonNext } from '~ui/icons';
-import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import MetaPreview from './MetaPreview';
 import TitleInput from './TitleInput';
@@ -18,72 +23,40 @@ import NavigationService from '../navigation/NavigationService';
 import RemindPreview from './RemindPreview';
 import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
 import TopBar from './TopBar';
-import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './ComposeBottomBar';
 import MediaPreview from './MediaPreview';
-import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
-import TextInput from '../common/components/TextInput';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import sessionService from '~/common/services/session.service';
-import FastImage from 'react-native-fast-image';
-import { useBackHandler, useKeyboard } from '@react-native-community/hooks';
 import useComposeStore, { ComposeContext } from './useComposeStore';
-import { useFocusEffect } from '@react-navigation/core';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
-import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
-import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
-import onImageInput from '~/common/helpers/onImageInput';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import { confirm } from '~/common/components/Confirm';
+import { ComposerAutoComplete } from './ComposerAutoComplete';
+import { ComposerTextInput } from './ComposerTextInput';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '~/navigation/NavigationTypes';
 
 const { width } = Dimensions.get('window');
+
+type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
 
 /**
  * Compose Screen
  * @param {Object} props
  */
-export default observer(function ComposeScreen(props) {
-  // #region states & variables
+export default observer(function ComposeScreen(props: ScreenProps) {
+  // ### states & variables
   const store = useComposeStore(props);
-  const localStore = useLocalStore(() => ({
-    height: 50, // input height
-    onSizeChange(e) {
-      // adding 30 to prevent textinput flickering after a new line.
-      // but we should have a logic for this number, maybe the height of the header?
-      localStore.height = e.nativeEvent.contentSize.height + 30;
-    },
-  }));
+  const inputRef = useRef<any>(null);
+
   const theme = ThemedStyles.style;
   const scrollViewRef = useRef<ScrollView>(null);
-  const inputRef = useRef<any>(null);
+
   const optionsRef = useRef<any>(null);
   const confirmRef = useRef<any>(null);
-  const [scrollOffset, setScrollOffset] = useState(0);
-  const setScrollOffsetDebounced = useDebouncedCallback(
-    setScrollOffset,
-    200,
-    [],
-  );
   const showEmbed = store.embed.hasRichEmbed && store.embed.meta;
-  const fontSize =
-    store.attachments.hasAttachment || store.text.length > 85
-      ? theme.fontXL
-      : theme.fontXXL;
-  const textStyle = useMemoStyle(
-    [
-      styles.input,
-      Platform.OS === 'ios'
-        ? fontSize
-        : [fontSize, { height: localStore.height }],
-    ],
-    [fontSize, localStore.height],
-  );
+
   const placeholder = store.attachments.hasAttachment
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
@@ -91,31 +64,9 @@ export default observer(function ComposeScreen(props) {
   const channel = sessionService.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
-  const keyboard = useKeyboard();
-  const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
-  const [scrollViewHeight, setScrollViewHeight] = useState(0);
-  /**
-   * animated style for the popover appearing and disappearing functionality
-   **/
-  const autoCompletePopupAnimatedStyle = useAnimatedStyle(
-    () => ({
-      height: withTiming(
-        autoCompleteVisible
-          ? (scrollViewHeight -
-              (keyboard.keyboardShown ? keyboard.keyboardHeight : 0)) /
-              2
-          : 0,
-      ),
-    }),
-    [autoCompleteVisible, scrollViewHeight, keyboard],
-  );
-  // #endregion
 
-  // #region methods
-  /**
-   * On post press
-   */
-  const onPost = useCallback(async () => {
+  // ### methods
+  const onPressPost = useCallback(async () => {
     if (store.attachments.uploading) {
       return;
     }
@@ -146,20 +97,16 @@ export default observer(function ComposeScreen(props) {
     NavigationService.goBack();
   }, [store]);
 
-  // On press back
-  const showConfirm = React.useCallback(() => {
-    confirmRef.current?.present();
-  }, []);
-
   const onPressBack = useCallback(() => {
     if (store.attachments.hasAttachment || store.embed.hasRichEmbed) {
       Keyboard.dismiss();
 
-      showConfirm();
+      // show confirm
+      confirmRef.current?.present();
     } else {
       discard();
     }
-  }, [discard, store, showConfirm]);
+  }, [discard, store]);
 
   const closeConfirm = React.useCallback(() => {
     confirmRef.current?.dismiss();
@@ -185,43 +132,29 @@ export default observer(function ComposeScreen(props) {
 
   const onScrollHandler = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) =>
-      setScrollOffsetDebounced(e.nativeEvent.contentOffset.y),
-    [setScrollOffsetDebounced],
+      store.setScrollOffset(e.nativeEvent.contentOffset.y),
+    [store],
   );
-
-  const onAutoCompleteShown = useCallback(
-    (visible: boolean) => {
-      setAutoCompleteVisible(visible);
-      if (visible) {
-        setTimeout(() => {
-          InteractionManager.runAfterInteractions(() =>
-            scrollViewRef.current?.scrollTo(store.textHeight + 35),
-          );
-        }, 350);
-      }
-    },
-    [store.textHeight],
-  );
-
-  const handleSelectionChange = useCallback(() => {
-    selection => {
-      store.setSelection(selection);
-      setTimeout(() => {
-        inputRef.current?.setNativeProps({
-          selection: {
-            start: selection.start,
-            end: selection.end,
-          },
-        });
-      });
-    };
-  }, [store]);
 
   const handleTextInputFocus = useCallback(() => inputRef.current?.focus(), []);
   // #endregion
 
   // #region effects
   useFocusEffect(store.onScreenFocused);
+
+  const autofocus = !props.route?.params?.openSupermindModal;
+
+  useEffect(() => {
+    if (autofocus) {
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+          if (inputRef) {
+            inputRef.current?.focus();
+          }
+        }, 300);
+      });
+    }
+  }, [autofocus]);
 
   useBackHandler(
     useCallback(() => {
@@ -230,19 +163,6 @@ export default observer(function ComposeScreen(props) {
     }, [onPressBack]),
   );
 
-  useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        if (!props.route?.params?.openSupermindModal) {
-          inputRef.current?.focus();
-        }
-      }, 300);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputRef]);
-  // #endregion
-
-  // #region renders
   const rightButton = store.isEdit ? (
     i18n.t('save')
   ) : (
@@ -250,13 +170,12 @@ export default observer(function ComposeScreen(props) {
       name="send"
       size="medium"
       scale
-      onPress={onPost}
+      onPress={onPressPost}
       disabled={!store.isValid}
       color={store.isValid ? 'Link' : 'Icon'}
       style={store.attachments.uploading ? theme.opacity25 : null}
     />
   );
-  // #endregion
 
   return (
     <ComposeContext.Provider value={store}>
@@ -269,23 +188,17 @@ export default observer(function ComposeScreen(props) {
               <SupermindLabel />
             )
           }
-          onPressRight={onPost}
+          onPressRight={onPressPost}
           onPressBack={onPressBack}
           store={store}
         />
-
         <ScrollView
           ref={scrollViewRef}
           keyboardShouldPersistTaps={'always'}
           keyboardDismissMode={'none'}
-          onLayout={e =>
-            scrollViewHeight
-              ? null
-              : setScrollViewHeight(e.nativeEvent.layout.height)
-          }
           showsVerticalScrollIndicator={false}
           contentContainerStyle={scrollViewContentContainerStyle}
-          scrollEventThrottle={5}
+          scrollEventThrottle={64}
           onScroll={onScrollHandler}>
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
@@ -297,27 +210,12 @@ export default observer(function ComposeScreen(props) {
                   {store.attachments.hasAttachment && (
                     <TitleInput store={store} />
                   )}
-                  {/*
-                  // @ts-ignore */}
-                  <TextInput
-                    style={textStyle}
-                    onContentSizeChange={localStore.onSizeChange}
+                  <ComposerTextInput
                     ref={inputRef}
-                    scrollEnabled={false}
                     placeholder={placeholder}
-                    placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-                    onChangeText={store.setText}
-                    textAlignVertical="top"
-                    multiline={true}
-                    selectTextOnFocus={false}
-                    underlineColorAndroid="transparent"
-                    onSelectionChange={store.selectionChanged}
-                    onImageChange={onImageInput(store.onMediaFromGallery)}
-                    testID="PostInput">
-                    <Tags navigation={props.navigation} selectable={true}>
-                      {store.text}
-                    </Tags>
-                  </TextInput>
+                    store={store}
+                    navigation={props.navigation}
+                  />
                 </>
               )}
             </View>
@@ -341,28 +239,12 @@ export default observer(function ComposeScreen(props) {
             )}
           </View>
         </ScrollView>
-
-        {/**
-         * Autocomplete popup
-         **/}
-        <Animated.View style={autoCompletePopupAnimatedStyle}>
-          <AutoComplete
-            textHeight={store.textHeight}
-            scrollOffset={scrollOffset}
-            selection={store.selection}
-            onSelectionChange={handleSelectionChange}
-            text={store.text}
-            onTextChange={store.setText}
-            onTextInputFocus={handleTextInputFocus}
-            onScrollToOffset={offset =>
-              scrollViewRef.current?.scrollTo({
-                y: offset,
-              })
-            }
-            onVisible={onAutoCompleteShown}
-          />
-        </Animated.View>
-
+        <ComposerAutoComplete
+          store={store}
+          handleTextInputFocus={handleTextInputFocus}
+          inputRef={inputRef}
+          scrollViewRef={scrollViewRef}
+        />
         {showBottomBar && (
           <KeyboardSpacingView noInset style={styles.bottomBarContainer}>
             <BottomBar
@@ -411,14 +293,6 @@ const styles = ThemedStyles.create({
       },
       shadowOpacity: 0.1,
       shadowRadius: 3.0,
-    },
-  ],
-  input: [
-    'fullWidth',
-    'colorPrimaryText',
-    {
-      textAlignVertical: 'top',
-      paddingTop: 8,
     },
   ],
   remindPreview: {

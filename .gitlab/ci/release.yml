@@ -1,0 +1,65 @@
+release:android_production:
+  extends: .rule_nonpatch_release_manual
+  image: cimg/aws:2022.06.1
+  stage: release
+  tags: [minds-ci]
+  dependencies:
+    - build:androidproduction
+    - upload:s3:oss
+  before_script:
+    - node -v
+    - yarn install
+  script:
+    - !reference [.getversion, script]
+    - cp $APK_NAME Minds-$APPVERSION.apk
+    - echo "Releasing Minds-$APPVERSION.apk"
+    - yarn release-json Minds-$APPVERSION.apk
+    - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
+
+release:android_google_play:
+  extends: .rule_nonpatch_release
+  image: msantang78/ci-mobile-android:latest
+  stage: release
+  tags: [minds-ci]
+  before_script:
+    - yarn install --frozen-lockfile
+    - yarn release-json Minds.apk
+    - cd android
+    - bundle install --path=vendor/bundle
+    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
+  script:
+    - echo "Upload to the play store $APK_NAME"
+    - bundle exec fastlane supply --apk ../$APK_NAME
+  dependencies:
+    - build:androidproduction-playstore
+
+# iOS Release candidate to TestFlight
+release:ios_rc_testflight:
+  extends: .except_nightly
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_release_candidate
+  interruptible: true
+  when: manual
+  script:
+    - cd ios
+    - fastlane upload_testflight
+  only:
+    refs:
+      - develop
+      - master
+
+# iOS production to TestFlight
+release:ios_prod_testflight:
+  extends: .rule_nonpatch_release
+  image: macos-12-xcode-14
+  stage: release
+  tags: [shared-macos-amd64]
+  dependencies:
+    - build:ios_production
+  interruptible: true
+  script:
+    - cd ios
+    - fastlane upload_testflight

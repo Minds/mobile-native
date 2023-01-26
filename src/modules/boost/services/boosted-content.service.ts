@@ -1,12 +1,11 @@
 import _ from 'lodash';
-import FeedsService from './feeds.service';
-import logService from './log.service';
-import blockListService from './block-list.service';
-
-// types
-import type ActivityModel from '../../newsfeed/ActivityModel';
-import sessionService from './session.service';
 import { Platform } from 'react-native';
+import blockListService from '~/common/services/block-list.service';
+import FeedsService from '~/common/services/feeds.service';
+import logService from '~/common/services/log.service';
+import sessionService from '~/common/services/session.service';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import { hasVariation } from '../../../../ExperimentsProvider';
 
 /**
  * Boosted content service
@@ -67,7 +66,11 @@ class BoostedContentService {
         .setLimit(24)
         .setOffset(0)
         .setPaginated(false)
-        .setEndpoint('api/v2/boost/feed');
+        .setEndpoint(
+          hasVariation('mob-4638-boost-v3')
+            ? 'api/v3/boosts/feed'
+            : 'api/v2/boost/feed',
+        );
     }
   }
 

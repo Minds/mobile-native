@@ -1,65 +1,91 @@
 import React from 'react';
-import { Button, View, Text } from '@minds/ui';
+import { Button, View, Text, Layout } from '@minds/ui';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native';
 
 export function StorybookScreen(): JSX.Element {
   const { navigate, goBack } = useNavigation();
   return (
-    <View f={1} p={'$2'}>
-      <View f={1} backgroundColor="$background" br={'$4'} mt="$2" fd="row">
-        <Texts type="black" />
-        <Texts type="bold" />
-        <Texts type="medium" />
-        <Texts />
-      </View>
-      <View fd={'row'} mt="$3" mb={'$5'} space>
-        <Button circular onPress={goBack}>
+    <Layout f={1} p={'$4'}>
+      <ScrollView>
+        <Text size="$h1" textAlign="center">
+          Sizes
+        </Text>
+        <View f={1} br={'$4'} fd="row">
+          <Texts weight="black" />
+          <Texts weight="bold" />
+          <Texts weight="medium" />
+          <Texts />
+        </View>
+        <TextColors />
+      </ScrollView>
+      <View fd={'row'} mt="$1" space>
+        <Button circular onPress={goBack} sSize="m">
           {'<'}
         </Button>
-        <Button f={1} theme="primary" onPress={() => navigate('Buttons')}>
+        <Button f={1} onPress={() => navigate('Buttons')}>
           Next
         </Button>
       </View>
+    </Layout>
+  );
+}
+
+function TextColors() {
+  return (
+    <View f={1} pt="$3" br="$1">
+      <Text size="$h1" textAlign="center">
+        Types
+      </Text>
+      <Text size="$h2" type="primary">
+        Primary
+      </Text>
+      <Text size="$h2" type="secondary">
+        Secondary
+      </Text>
+      <Text size="$h1" type="tertiary">
+        Tertiary
+      </Text>
     </View>
   );
 }
 
 function Texts({
-  type,
+  weight,
 }: {
-  type?: 'black' | 'bold' | 'medium' | 'regular';
+  weight?: 'black' | 'bold' | 'medium' | 'regular';
 }): JSX.Element {
   const { t } = useTranslation('storybookModule');
   return (
-    <View f={1} p="$1" br="$5" space>
-      <Text size="$xl1" type={type}>
+    <View f={1} p="$1" br="$1">
+      <Text size="$xl1" weight={weight}>
         {t('X1')}
       </Text>
-      <Text size="$xl2" type={type}>
+      <Text size="$xl2" weight={weight}>
         {t('X2')}
       </Text>
-      <Text size="$xl3" type={type}>
+      <Text size="$xl3" weight={weight}>
         {t('X3')}
       </Text>
-      <Text size="$h1" type={type}>
+      <Text size="$h1" weight={weight}>
         {t('H1')}
       </Text>
-      <Text size="$h2" type={type}>
+      <Text size="$h2" weight={weight}>
         {t('H2')}
       </Text>
-      <Text size="$h3" type={type}>
+      <Text size="$h3" weight={weight}>
         {t('H3')}
       </Text>
-      <Text size="$h4" type={type}>
+      <Text size="$h4" weight={weight}>
         {t('H4')}
       </Text>
-      <Text type={type}>{t('Body')}</Text>
-      <Text size="$b2" type={type}>
+      <Text weight={weight}>{t('Body')}</Text>
+      <Text size="$b2" weight={weight}>
         {t('Body2')}
       </Text>
-      <Text size="$b3" type={type}>
+      <Text size="$b3" weight={weight}>
         {t('Body3')}
       </Text>
     </View>

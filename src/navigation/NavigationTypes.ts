@@ -14,7 +14,7 @@ import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
-import type { BoostType } from '../boost/v2/createBoostStore';
+import type { BoostType } from '../boost/legacy/createBoostStore';
 
 type AnyType = any;
 
@@ -66,7 +66,9 @@ export type MoreStackParamList = {
     section?: string;
   };
   PlusDiscoveryScreen: {};
-  BoostConsole: {};
+  BoostConsole: {
+    location?: string;
+  };
   GroupsList: {};
   Settings: {};
   Analytics: {};
@@ -133,7 +135,13 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {};
+  Compose: {
+    openSupermindModal?: boolean;
+    isRemind?: boolean;
+    entity?: ActivityModel;
+    group?: GroupModel;
+    parentKey?: string;
+  };
   SupermindCompose: {
     data: SupermindRequestParam;
     closeComposerOnClear?: boolean;
@@ -224,6 +232,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  BoostConsole: {
+    location?: string;
+  };
   Supermind: {
     guid: string;
     supermindRequest?: SupermindRequestModel;

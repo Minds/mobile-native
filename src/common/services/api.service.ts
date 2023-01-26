@@ -493,12 +493,12 @@ export class ApiService {
    * For the get request, we auto-cancel the previous request if another one is made.
    * Very useful if the parameters change often and we are making new calls (like a search or autocomplete)
    */
-  async get<T extends ApiResponse>(
+  async get<T>(
     url: string,
     params: object = {},
     tag: any = null,
     headers: any = null,
-  ): Promise<T> {
+  ): Promise<T & ApiResponse> {
     let opt: any = {};
     if (tag) {
       const source = this.abortTags.get(tag);
@@ -523,11 +523,11 @@ export class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post<T extends ApiResponse>(
+  async post<T>(
     url: string,
     body: any = {},
     headers: any = {},
-  ): Promise<T> {
+  ): Promise<T & ApiResponse> {
     const response = await this.axios.post(this.buildUrl(url), body, {
       headers,
     });
@@ -557,7 +557,7 @@ export class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async put<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
+  async put<T>(url: string, body: any = {}): Promise<T & ApiResponse> {
     const response = await this.axios.put(this.buildUrl(url), body);
 
     return response.data;
@@ -568,11 +568,11 @@ export class ApiService {
    * @param {string} url
    * @param {object} data
    */
-  async delete<T extends ApiResponse>(
+  async delete<T>(
     url: string,
     data: any = {},
     headers: any = {},
-  ): Promise<T> {
+  ): Promise<T & ApiResponse> {
     const response = await this.axios.delete(this.buildUrl(url), {
       data,
       headers,
