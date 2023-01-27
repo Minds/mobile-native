@@ -12,7 +12,7 @@ import type BlogModel from '../blogs/BlogModel';
 import { showNotification } from '../../AppMessages';
 import i18n from '../common/services/i18n.service';
 import withModalProvider from '~/navigation/withModalProvide';
-import { PerformanceView } from 'services/performance';
+import { Screen } from '~/common/ui';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = StackNavigationProp<
@@ -105,12 +105,12 @@ const ActivityScreen = observer((props: PropsType) => {
   }
 
   return (
-    <PerformanceView screenName="ActivityScreen" interactive>
+    <Screen name="ActivityScreen">
       <ActivityFullScreen
         entity={store.entityStore.entity}
         noBottomInset={props.route.params?.noBottomInset}
       />
-    </PerformanceView>
+    </Screen>
   );
 });
 
