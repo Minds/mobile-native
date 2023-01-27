@@ -18,6 +18,6 @@ export default function shouldReportToSentry(error) {
       isNotAbort &&
       isNotTokenExpiredError &&
       (isNotApiError || error.status === 500)) ||
-    `${error}`.indexOf('CodePush') >= 0
+    String(error).indexOf('CodePush') >= 0
   );
 }
