@@ -476,6 +476,7 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
+        distinctBoosts
         header={
           <ChannelHeader
             store={store}
