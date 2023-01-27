@@ -28,6 +28,20 @@ describe('Deep link router', () => {
     });
   });
 
+  it('it should navigate and pass parameters to the supermind screen', () => {
+    deeplinkRouter.navigate(
+      'https://www.minds.com/supermind/1465343727466713101?__e_ct_guid=1408746572459544588&campaign=when&topic=wire_received&state=new',
+    );
+
+    expect(mockedNavigation.navigate).toBeCalledWith('Supermind', {
+      __e_ct_guid: '1408746572459544588',
+      campaign: 'when',
+      guid: '1465343727466713101',
+      state: 'new',
+      topic: 'wire_received',
+    });
+  });
+
   it('it should redirect unhandled links to mobile.minds.com', () => {
     deeplinkRouter.navigate('https://www.minds.com/nonexistent/rute');
 

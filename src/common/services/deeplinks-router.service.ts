@@ -1,6 +1,6 @@
 import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
-import { Linking } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
@@ -76,6 +76,7 @@ class DeeplinksRouter {
     const cleanURL = this.cleanUrl(url);
 
     if (!url || !cleanURL) {
+      logger(`failed with url: ${url}\ncleanURL: ${cleanURL}`);
       return;
     }
 
@@ -86,47 +87,52 @@ class DeeplinksRouter {
       this.navToPasswordReset(url);
       return true;
     }
-    if (url.endsWith('/')) {
-      url = url.substr(0, url.length - 1);
-    }
+    url = url
+      .replace(/\/$/, '')
+      .replace('mindsapp://', 'https://mobile.minds.com/');
     const route = this.getUrlRoute(url, cleanURL);
+    logger(`route: ${JSON.stringify(route)}`);
 
     const params = this.parseQueryParams(cleanURL);
 
     // open deeplinks in a webview
-    if (
-      params &&
-      params.webview === '1' &&
-      url.startsWith('https://www.minds.com/' || url.startsWith('mindsapp://'))
-    ) {
+    if (params?.webview === '1' && url.startsWith('https://www.minds.com/')) {
+      logger(`attempting to navigate to WebView: ${url}`);
       navigationService.navigate('WebView', {
-        url: url.replace('mindsapp://', 'https://www.minds.com/'),
+        url,
         headers: apiService.buildAuthorizationHeader(),
       });
       return true;
     }
 
+    // in-app routing
     if (route && route.screen !== 'Redirect') {
+      logger('attempting to handleUtmParams');
       this.handleUtmParams(url, route);
 
       const screens = route.screen.split('/');
-      if (screens.length === 1) {
-        navigationService[route.type](route.screen, route.params);
-      } else {
-        const screen = screens.shift();
-        const calcParams = this.nestedScreen(screens, route.params);
-        navigationService[route.type](screen, calcParams);
-      }
-    } else if (url !== 'https://www.minds.com') {
-      if (url.startsWith('mindsapp://')) {
-        Linking.openURL(
-          url.replace('mindsapp://', 'https://mobile.minds.com/'),
-        );
-      } else {
-        Linking.openURL(url.replace('https://www.', 'https://mobile.'));
-      }
+      const screen = screens.shift();
+      const calcParams =
+        screens.length === 0
+          ? route.params
+          : this.nestedScreen(screens, route.params);
+
+      logger(
+        `attempting to navigate ${
+          route.type
+        } to ${screen} with ${JSON.stringify(calcParams)}`,
+      );
+      navigationService[route.type](screen, calcParams);
       return true;
     }
+
+    // open browser for any other links in mobile mode
+    if (url !== 'https://www.minds.com') {
+      logger(`attempting to navigate with browser to ${url}`);
+      Linking.openURL(url.replace('https://www.', 'https://mobile.'));
+      return true;
+    }
+    logger(`no routes found for ${url}`);
     return !!route;
   }
 
@@ -195,3 +201,5 @@ class DeeplinksRouter {
 type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
 
 export default new DeeplinksRouter();
+
+const logger = (message: string) => Alert.alert('dl-router', message);
