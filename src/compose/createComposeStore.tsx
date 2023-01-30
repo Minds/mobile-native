@@ -448,11 +448,11 @@ export default function (props) {
      */
     async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
       if (Array.isArray(media)) {
-        media.forEach(m => {
+        media.forEach(mediaItem => {
           this.attachments.attachMedia(
             {
-              ...m,
-              type: m.mime,
+              ...mediaItem,
+              type: mediaItem.mime,
             },
             this.extra,
           );

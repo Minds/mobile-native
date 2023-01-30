@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import permissions from './permissions.service';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -15,29 +14,6 @@ class ImagePickerService {
   /**
    * Check if we have permission or ask the user
    */
-  async checkGalleryPermissions(): Promise<boolean> {
-    let allowed = true;
-
-    if (Platform.OS !== 'ios') {
-      allowed = await (
-        await ImagePicker.requestMediaLibraryPermissionsAsync(true)
-      ).granted;
-      if (!allowed) {
-        allowed = await permissions.readExternalStorage();
-      }
-    } else {
-      allowed = await permissions.checkMediaLibrary(true);
-      if (!allowed) {
-        allowed = await permissions.mediaLibrary();
-      }
-    }
-
-    return allowed;
-  }
-
-  /**
-   * Check if we have permission or ask the user
-   */
   async checkCameraPermissions(): Promise<boolean> {
     let allowed = true;
 
@@ -48,13 +24,6 @@ class ImagePickerService {
     }
 
     return allowed;
-  }
-
-  async checkPermissions(): Promise<boolean> {
-    const camera = await this.checkCameraPermissions();
-    const gallery = await this.checkGalleryPermissions();
-
-    return gallery === true && camera === true;
   }
 
   /**
@@ -128,9 +97,8 @@ class ImagePickerService {
 
   addMime(assets: ImagePickerAsset[]): PickedMedia[] {
     return assets.map(m => {
-      const filename =
-        m.fileName || m.uri.substring(m.uri.lastIndexOf('/') + 1);
-      const fileType = filename.split('.').pop();
+      const filename = m.fileName || m.uri.split('/').pop();
+      const fileType = filename?.split('.').pop() || 'jpg';
       const media: PickedMedia = { ...m, mime: `${m.type}/${fileType}` };
       return media;
     });

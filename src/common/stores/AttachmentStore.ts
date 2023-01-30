@@ -97,15 +97,6 @@ export default class AttachmentStore {
           this.transcoding = false;
         }
       }
-
-      // // fix camera roll gif issue
-      // if (media.type === 'image/jpeg' && media.filename) {
-      //   const extension = media.filename.split('.').pop();
-      //   if (extension && extension.toLowerCase() === 'gif') {
-      //     media.type = 'image/gif';
-      //     media.uri = `assets-library://asset/asset.GIF?id=${media.assetId}&ext=GIF`;
-      //   }
-      // }
     }
 
     this.uri = media.uri;
