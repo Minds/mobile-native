@@ -77,7 +77,7 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
 export default BoostScreen;
 
 import Link from '~/common/components/Link';
-import MText from '~/common/components/MText';
+import { Typography } from '~/common/ui/typography/Typography';
 import openUrlService from '~/common/services/open-url.service';
 import { Icon } from '~/common/ui';
 
@@ -85,10 +85,17 @@ function BoostNote() {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Icon name="info-circle" color="PrimaryText" size={32} />
-        <MText style={styles.h3}>{i18n.t('boosts.boostChangingTitle')}</MText>
+        <Icon
+          name="info-circle"
+          color="PrimaryText"
+          style={styles.icon}
+          size={32}
+        />
+        <Typography type="H3" font="bold">
+          {i18n.t('boosts.boostChangingTitle')}
+        </Typography>
       </View>
-      <MText style={styles.p}>
+      <Typography type="B1">
         {i18n.t('boosts.boostChangingText')}
         <Link
           onPress={() =>
@@ -98,7 +105,7 @@ function BoostNote() {
           }>
           {i18n.t('boosts.boostChangingLink')}
         </Link>
-      </MText>
+      </Typography>
     </View>
   );
 }
@@ -108,18 +115,11 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginHorizontal: 16,
   },
+  icon: {
+    marginRight: 16,
+  },
   title: {
     flexDirection: 'row',
     paddingVertical: 16,
-  },
-  h3: {
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '700',
-    paddingLeft: 16,
-  },
-  p: {
-    fontSize: 13,
-    lineHeight: 16,
   },
 });
