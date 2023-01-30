@@ -139,7 +139,7 @@ export const MINDS_DEEPLINK = [
   ['notifications', 'Notifications', 'navigate'],
   ['notifications/:version', 'Notifications', 'navigate'],
   ['groups/:filter', 'More/GroupsList'],
-  ['newsfeed/:guid', 'Activity'],
+  ['newsfeed/:guid', 'App/Activity'],
   ['media/:guid', 'Activity'],
   ['channels/:username', 'Channel'],
   ['blog/:filter', 'BlogList'],
