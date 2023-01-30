@@ -1726,10 +1726,10 @@ exports[`Activity screen component renders correctly  1`] = `
     commentsStore={
       CommentsStore {
         "attachment": AttachmentStore {
+          "assetId": "",
           "cancelOrDelete": [Function],
           "filename": "",
           "guid": "",
-          "localIdentifier": "",
           "onClear": undefined,
           "path": "",
           "transcoding": false,
