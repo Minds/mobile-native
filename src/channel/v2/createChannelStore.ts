@@ -1,20 +1,18 @@
-import UserModel from '../UserModel';
-import channelsService from '../../common/services/channels.service';
-import FeedStore from '../../common/stores/FeedStore';
-import ChannelService from '../ChannelService';
-import imagePickerService from '../../common/services/image-picker.service';
-import type {
-  CustomImage,
-  CustomImageResponse,
-} from '../../common/services/image-picker.service';
-import sessionService from '../../common/services/session.service';
-import supportTiersService from '../../common/services/support-tiers.service';
-import type { SupportTiersType } from '../../wire/WireTypes';
-import NavigationService from '../../navigation/NavigationService';
-import i18n from '../../common/services/i18n.service';
-import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
 import moment from 'moment';
+
+import UserModel from '../UserModel';
+import channelsService from '~/common/services/channels.service';
+import FeedStore from '~/common/stores/FeedStore';
+import ChannelService from '../ChannelService';
+import imagePickerService from '~/common/services/image-picker.service';
+import sessionService from '~/common/services/session.service';
+import supportTiersService from '~/common/services/support-tiers.service';
+import type { SupportTiersType } from '~/wire/WireTypes';
+import NavigationService from '~/navigation/NavigationService';
+import i18n from '~/common/services/i18n.service';
+import { showNotification } from '~/../AppMessages';
+import { IS_IOS } from '~/config/Config';
 
 type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
@@ -299,57 +297,46 @@ const createChannelStore = () => {
       const isBanner = type === 'banner';
 
       try {
-        const promise = camera
-          ? imagePickerService.showCamera(
-              '',
-              'photo',
-              type === 'avatar',
-              true,
-              isBanner ? 1500 : 1024,
-              isBanner ? 600 : 1024,
-            )
-          : imagePickerService.show(
-              '',
-              'photo',
-              type === 'avatar',
-              isBanner ? 1500 : 1024,
-              isBanner ? 600 : 1024,
-            );
-        await promise
-          .then(async (response: CustomImageResponse) => {
-            let file: CustomImage;
-            if (response !== false && !Array.isArray(response)) {
-              file = response;
-            } else {
-              return false;
-            }
-            if (onImageSelected) {
-              onImageSelected(file);
-            }
-            this.setIsUploading(true);
-            this.setProgress(0, type);
-            this.avatarPath = file.path || file.uri;
-            await ChannelService.upload(
-              type,
-              {
-                uri: file.path || file.uri,
-                type: file.type,
-                name: file.filename || `${type}.jpg`,
-              },
-              e => {
-                this.setProgress(e.loaded / e.total, type);
-              },
-            );
+        const response = camera
+          ? await imagePickerService.launchCamera({
+              type: 'Images',
+              crop: !(IS_IOS && isBanner),
+              front: true,
+              aspect: isBanner ? [15, 6] : [1, 1],
+            })
+          : await imagePickerService.launchImageLibrary({
+              type: 'Images',
+              crop: !(IS_IOS && isBanner),
+              aspect: isBanner ? [15, 6] : [1, 1],
+            });
 
-            if (this.channel) {
-              await this.updateFromRemote('me');
-            }
-            this.setProgress(0, type);
-            this.setIsUploading(false);
-          })
-          .catch(err => {
-            throw err;
-          });
+        const media = response ? response[0] : null;
+        if (!media) {
+          return false;
+        }
+        if (onImageSelected) {
+          onImageSelected(media);
+        }
+        this.setIsUploading(true);
+        this.setProgress(0, type);
+        this.avatarPath = media.uri;
+        await ChannelService.upload(
+          type,
+          {
+            uri: media.uri,
+            type: media.mime,
+            name: media.fileName || `${type}.jpg`,
+          },
+          e => {
+            this.setProgress(e.loaded / e.total, type);
+          },
+        );
+
+        if (this.channel) {
+          await this.updateFromRemote('me');
+        }
+        this.setProgress(0, type);
+        this.setIsUploading(false);
       } catch (error) {
         this.setProgress(0, type);
         this.setIsUploading(false);

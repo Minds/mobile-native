@@ -575,8 +575,8 @@ export default class CommentsStore {
    */
   async video() {
     try {
-      const response = await attachmentService.video();
-      if (response) this.onAttachedMedia(response);
+      const media = await attachmentService.video();
+      if (media) this.onAttachedMedia(media);
     } catch (e) {
       logService.exception(e);
       if (e instanceof Error) {
@@ -590,11 +590,11 @@ export default class CommentsStore {
    */
   async photo(fn?: () => void) {
     try {
-      const response = await attachmentService.photo();
+      const media = await attachmentService.photo();
 
       if (fn) fn();
 
-      if (response) this.onAttachedMedia(response);
+      if (media) this.onAttachedMedia(media);
     } catch (e) {
       logService.exception(e);
       if (e instanceof Error) {
@@ -606,11 +606,11 @@ export default class CommentsStore {
   /**
    * On attached media
    */
-  onAttachedMedia = async response => {
+  onAttachedMedia = async media => {
     const attachment = this.attachment;
 
     try {
-      await attachment.attachMedia(response);
+      await attachment.attachMedia(media);
     } catch (err) {
       logService.exception('[CommentsStore] onAttachedMedia', err);
       showNotification('Oops caught upload error.');
@@ -622,17 +622,17 @@ export default class CommentsStore {
    */
   selectMediaType = async i => {
     try {
-      let response;
+      let media;
       switch (i) {
         case 1:
-          response = await attachmentService.gallery('photo', false);
+          media = await attachmentService.gallery('Images', false);
           break;
         case 2:
-          response = await attachmentService.gallery('video', false);
+          media = await attachmentService.gallery('Videos', false);
           break;
       }
 
-      if (response) this.onAttachedMedia(response);
+      if (media) this.onAttachedMedia({ ...media, type: media.mimme });
     } catch (err) {
       logService.exception('[CommentsStore] selectMediaType', err);
       showNotification('Oops there was an error selecting the media.');
@@ -644,7 +644,7 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const response = await attachmentService.gallery('any', false);
+      const response = await attachmentService.gallery('All', false);
 
       if (fn) fn();
 
@@ -653,7 +653,7 @@ export default class CommentsStore {
 
       const media = Array.isArray(response) ? response[0] : response;
 
-      await this.attachment.attachMedia(media);
+      await this.attachment.attachMedia({ ...media, type: media.mime });
     } catch (err) {
       logService.exception('[CommentsStore] gallery', err);
     }

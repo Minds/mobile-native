@@ -137,7 +137,10 @@ export default observer(function (props) {
    * called after gallery selection is completed. Handles gallery selection
    */
   const handleGallerySelection = useCallback(async () => {
-    const media = await attachmentService.gallery(mode, false);
+    const media = await attachmentService.gallery(
+      mode === 'photo' ? 'Images' : 'Videos',
+      false,
+    );
 
     if (!media) {
       return;

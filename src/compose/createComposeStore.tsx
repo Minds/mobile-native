@@ -22,6 +22,7 @@ import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { confirm } from '../common/components/Confirm';
 import { storeRatingService } from 'modules/store-rating';
+import { PickedMedia } from '~/common/services/image-picker.service';
 
 /**
  * Display an error message to the user.
@@ -433,7 +434,7 @@ export default function (props) {
       }
 
       const response = await attachmentService.gallery(
-        mode || 'any',
+        mode || 'All',
         false, // crop
         max, // max files allowed
       );
@@ -444,12 +445,17 @@ export default function (props) {
     },
     /**
      * On media selected from gallery
-     * @param {object|Array} media
      */
-    async onMediaFromGallery(media) {
+    async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
       if (Array.isArray(media)) {
         media.forEach(m => {
-          this.attachments.attachMedia(m, this.extra);
+          this.attachments.attachMedia(
+            {
+              ...m,
+              type: m.mime,
+            },
+            this.extra,
+          );
         });
         this.mode = 'text';
       } else {
@@ -457,7 +463,13 @@ export default function (props) {
           showError(i18n.t('capture.mediaPortraitError'));
           return;
         }
-        this.attachments.attachMedia(media, this.extra);
+        this.attachments.attachMedia(
+          {
+            ...media,
+            type: media.mime,
+          },
+          this.extra,
+        );
         this.mode = 'text';
       }
     },

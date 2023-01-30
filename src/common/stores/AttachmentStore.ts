@@ -15,7 +15,7 @@ export type Media = {
   uri: string;
   type: string;
   path?: string;
-  localIdentifier?: string;
+  assetId?: string | null;
   filename?: string;
   width: number;
   height: number;
@@ -32,7 +32,7 @@ export default class AttachmentStore {
   @observable type = '';
   @observable license = 'all-rights-reserved';
 
-  localIdentifier?: string = '';
+  assetId?: string | null = '';
   guid = '';
   filename? = '';
   path? = '';
@@ -98,14 +98,14 @@ export default class AttachmentStore {
         }
       }
 
-      // fix camera roll gif issue
-      if (media.type === 'image/jpeg' && media.filename) {
-        const extension = media.filename.split('.').pop();
-        if (extension && extension.toLowerCase() === 'gif') {
-          media.type = 'image/gif';
-          media.uri = `assets-library://asset/asset.GIF?id=${media.localIdentifier}&ext=GIF`;
-        }
-      }
+      // // fix camera roll gif issue
+      // if (media.type === 'image/jpeg' && media.filename) {
+      //   const extension = media.filename.split('.').pop();
+      //   if (extension && extension.toLowerCase() === 'gif') {
+      //     media.type = 'image/gif';
+      //     media.uri = `assets-library://asset/asset.GIF?id=${media.assetId}&ext=GIF`;
+      //   }
+      // }
     }
 
     this.uri = media.uri;
@@ -113,7 +113,7 @@ export default class AttachmentStore {
     this.filename = media.filename;
     this.width = media.width;
     this.height = media.height;
-    this.localIdentifier = media.localIdentifier;
+    this.assetId = media.assetId;
     this.path = media.path;
 
     try {
