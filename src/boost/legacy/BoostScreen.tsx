@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import ModalScreen from '../../common/components/ModalScreen';
@@ -56,6 +56,7 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
       title={titleMapping[boostType]}
       source={require('../../assets/boostBG.png')}
       testID="BoostScreen">
+      <BoostNote />
       <DismissKeyboard>
         {!IS_IOS && (
           <View style={theme.marginTop2x}>
@@ -74,3 +75,51 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
 });
 
 export default BoostScreen;
+
+import Link from '~/common/components/Link';
+import MText from '~/common/components/MText';
+import openUrlService from '~/common/services/open-url.service';
+import { Icon } from '~/common/ui';
+
+function BoostNote() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.title}>
+        <Icon name="info-circle" color="PrimaryText" size={32} />
+        <MText style={styles.h3}>{i18n.t('boosts.boostChangingTitle')}</MText>
+      </View>
+      <MText style={styles.p}>
+        {i18n.t('boosts.boostChangingText')}
+        <Link
+          onPress={() =>
+            openUrlService.openLinkInInAppBrowser(
+              'https://www.minds.com/info/blog/bid-farewell-the-boost-backlog-1445548466339057665',
+            )
+          }>
+          {i18n.t('boosts.boostChangingLink')}
+        </Link>
+      </MText>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 32,
+    marginHorizontal: 16,
+  },
+  title: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+  },
+  h3: {
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '700',
+    paddingLeft: 16,
+  },
+  p: {
+    fontSize: 13,
+    lineHeight: 16,
+  },
+});
