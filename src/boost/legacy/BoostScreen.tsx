@@ -16,6 +16,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import BoostTab from './BoostTab';
 import createBoostStore from './createBoostStore';
 
+import Link from '~/common/components/Link';
+import { Typography } from '~/common/ui/typography/Typography';
+import openUrlService from '~/common/services/open-url.service';
+import { Icon, Row } from '~/common/ui';
+
 type BoostTabType = 'cash' | 'tokens';
 
 type BoostScreenRouteProp = RouteProp<RootStackParamList, 'BoostScreen'>;
@@ -56,6 +61,7 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
       title={titleMapping[boostType]}
       source={require('../../assets/boostBG.png')}
       testID="BoostScreen">
+      <BoostNote />
       <DismissKeyboard>
         {!IS_IOS && (
           <View style={theme.marginTop2x}>
@@ -74,3 +80,37 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
 });
 
 export default BoostScreen;
+
+function BoostNote() {
+  return (
+    <View style={styles.container}>
+      <Row vertical="M">
+        <Icon
+          name="info-circle"
+          color="PrimaryText"
+          style={styles.icon}
+          size={32}
+        />
+        <Typography type="H3" font="bold">
+          {i18n.t('boosts.boostChangingTitle')}
+        </Typography>
+      </Row>
+      <Typography type="B1">
+        {i18n.t('boosts.boostChangingText')}
+        <Link
+          onPress={() =>
+            openUrlService.openLinkInInAppBrowser(
+              'https://www.minds.com/info/blog/bid-farewell-the-boost-backlog-1445548466339057665',
+            )
+          }>
+          {i18n.t('boosts.boostChangingLink')}
+        </Link>
+      </Typography>
+    </View>
+  );
+}
+
+const styles = ThemedStyles.create({
+  container: ['marginTop8x', 'marginHorizontal4x'],
+  icon: ['marginRight4x'],
+});

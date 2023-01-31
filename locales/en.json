@@ -347,7 +347,10 @@
     "targetChannel": "Target Channel",
     "boostCashViews": "{{amount}} USD = {{views}} views",
     "boostTokenViews": "{{amount}} token = {{views}} views",
-    "boostedChannel": "Boosted Channel"
+    "boostedChannel": "Boosted Channel",
+    "boostChangingTitle": "Boost is changing",
+    "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
+    "boostChangingLink": "Read more about the update."
   },
   "translate": {
     "from": "translated from",
