@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import ModalScreen from '../../common/components/ModalScreen';
@@ -79,12 +79,12 @@ export default BoostScreen;
 import Link from '~/common/components/Link';
 import { Typography } from '~/common/ui/typography/Typography';
 import openUrlService from '~/common/services/open-url.service';
-import { Icon } from '~/common/ui';
+import { Icon, Row } from '~/common/ui';
 
 function BoostNote() {
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
+      <Row vertical="M">
         <Icon
           name="info-circle"
           color="PrimaryText"
@@ -94,7 +94,7 @@ function BoostNote() {
         <Typography type="H3" font="bold">
           {i18n.t('boosts.boostChangingTitle')}
         </Typography>
-      </View>
+      </Row>
       <Typography type="B1">
         {i18n.t('boosts.boostChangingText')}
         <Link
@@ -110,16 +110,7 @@ function BoostNote() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    marginHorizontal: 16,
-  },
-  icon: {
-    marginRight: 16,
-  },
-  title: {
-    flexDirection: 'row',
-    paddingVertical: 16,
-  },
+const styles = ThemedStyles.create({
+  container: ['marginTop8x', 'marginHorizontal4x'],
+  icon: ['marginRight4x'],
 });
