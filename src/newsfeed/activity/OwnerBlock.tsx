@@ -21,8 +21,9 @@ import { NavigationProp } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
-import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
+import { B1, B2, B3, Row, HairlineRow, IconNext, HairlineColumn } from '~ui';
 import { IS_IOS } from '~/config/Config';
+import NewsfeedHeader from '../NewsfeedHeader';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -35,6 +36,7 @@ type PropsType = {
   children?: React.ReactNode;
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
+  distinctBoosts?: boolean;
 };
 
 const getLastRoute = (navigation: NavigationProp<any>) => {
@@ -166,7 +168,10 @@ class OwnerBlock extends PureComponent<PropsType> {
     ) : null;
 
     const boosted = this.props.entity.boosted ? (
-      <HairlineRow>
+      <HairlineColumn>
+        {this.props.distinctBoosts && (
+          <NewsfeedHeader title="Boosted Content" borderless />
+        )}
         <Row horizontal="XL" vertical="S">
           <Icon
             type="ionicon"
@@ -179,7 +184,7 @@ class OwnerBlock extends PureComponent<PropsType> {
             {i18nService.t('boosted')}
           </B2>
         </Row>
-      </HairlineRow>
+      </HairlineColumn>
     ) : undefined;
 
     const name =
