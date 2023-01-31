@@ -16,6 +16,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import BoostTab from './BoostTab';
 import createBoostStore from './createBoostStore';
 
+import Link from '~/common/components/Link';
+import { Typography } from '~/common/ui/typography/Typography';
+import openUrlService from '~/common/services/open-url.service';
+import { Icon, Row } from '~/common/ui';
+
 type BoostTabType = 'cash' | 'tokens';
 
 type BoostScreenRouteProp = RouteProp<RootStackParamList, 'BoostScreen'>;
@@ -75,11 +80,6 @@ const BoostScreen = observer(({ route }: BoostScreenProps) => {
 });
 
 export default BoostScreen;
-
-import Link from '~/common/components/Link';
-import { Typography } from '~/common/ui/typography/Typography';
-import openUrlService from '~/common/services/open-url.service';
-import { Icon, Row } from '~/common/ui';
 
 function BoostNote() {
   return (
