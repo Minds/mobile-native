@@ -14,7 +14,6 @@ import {
   Linking,
   UIManager,
   RefreshControl,
-  YellowBox,
   AppState,
   AppStateStatus,
   Dimensions,
@@ -57,8 +56,6 @@ import FriendlyCaptchaProvider, {
 import { Orientation, QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
 import { UIProvider } from '@minds/ui';
-
-YellowBox.ignoreWarnings(['']);
 
 appInitManager.initializeServices();
 

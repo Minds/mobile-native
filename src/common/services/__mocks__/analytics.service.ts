@@ -4,5 +4,6 @@ export default {
   trackScreenViewEvent: jest.fn(),
   trackDeepLinkReceivedEvent: jest.fn(),
   trackViewedContent: jest.fn(),
+  setUserId: jest.fn(),
   trackPageViewEvent: jest.fn(),
 };

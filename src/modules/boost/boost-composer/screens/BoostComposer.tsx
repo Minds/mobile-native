@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { confirm } from '~/common/components/Confirm';
 import FitScrollView from '~/common/components/FitScrollView';
 import Slider from '~/common/components/Slider';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
@@ -20,6 +19,7 @@ import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
+import { IS_IOS } from '~/config/Config';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -27,6 +27,22 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
+  const tabs = [
+    {
+      id: 'cash',
+      title: t('Cash'),
+      testID: 'BoostComposerScreen:tab:cash',
+    },
+    {
+      id: 'offchain_tokens',
+      title: t('Token'),
+      testID: 'BoostComposerScreen:tab:token',
+    },
+  ];
+
+  if (IS_IOS) {
+    tabs.shift();
+  }
 
   const textMapping = {
     cash: {
@@ -64,17 +80,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   };
 
   const handlePaymentTypeChange = async id => {
-    if (id !== 'cash' && !boostStore.confirmedToUseToken) {
-      if (
-        !(await confirm({
-          title: t('Are you sure you want to use tokens?'),
-          description: t('You will receive more views when using cash.'),
-        }))
-      ) {
-        return;
-      }
-      boostStore.setConfirmedToUseToken(true);
-    }
     boostStore.setPaymentType(id as IPaymentType);
   };
 
@@ -83,7 +88,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   };
 
   return (
-    <Screen safe>
+    <Screen safe onlyTopEdge>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -96,18 +101,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       <FitScrollView>
         <TopbarTabbar
           containerStyle={ThemedStyles.style.marginTop}
-          tabs={[
-            {
-              id: 'cash',
-              title: t('Cash'),
-              testID: 'BoostComposerScreen:tab:cash',
-            },
-            {
-              id: 'offchain_tokens',
-              title: t('Token'),
-              testID: 'BoostComposerScreen:tab:token',
-            },
-          ]}
+          tabs={tabs}
           onChange={handlePaymentTypeChange}
           current={boostStore.paymentType}
         />

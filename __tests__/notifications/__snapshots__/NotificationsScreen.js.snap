@@ -159,11 +159,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#1F252C",
-              "shadowColor": "transparent",
-              "zIndex": 999,
-            }
+            Array [
+              Object {
+                "elevation": 3,
+                "shadowOffset": Object {
+                  "height": 1.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.35,
+                "shadowRadius": 1.41,
+                "zIndex": 999,
+              },
+              Object {
+                "backgroundColor": "#1F252C",
+                "shadowColor": "transparent",
+                "zIndex": 999,
+              },
+            ]
           }
         >
           <View

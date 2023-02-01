@@ -77,5 +77,5 @@ getStores.mockReturnValue({
 });
 
 it('renders correctly', () => {
-  const tree = renderer.create(<App />);
+  renderer.create(<App />);
 });
