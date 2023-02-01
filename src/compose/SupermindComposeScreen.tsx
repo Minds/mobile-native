@@ -314,6 +314,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           selected={requireTwitter}
           title={i18nService.t('supermind.requireTwitter')}
           mode="checkbox"
+          multiLine
         />
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
