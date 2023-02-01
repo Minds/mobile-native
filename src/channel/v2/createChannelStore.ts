@@ -15,6 +15,7 @@ import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
 import moment from 'moment';
+import { hasVariation } from 'ExperimentsProvider';
 
 type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
@@ -200,7 +201,7 @@ const createChannelStore = () => {
       if (!this.loaded) {
         this.loaded = true;
         this.feedStore.getScheduledCount(this.channel.guid);
-        if (!this.channel.isOwner()) {
+        if (!this.channel.isOwner() && hasVariation('mob-4638-boost-v3')) {
           this.feedStore.setInjectBoost(true);
         }
       }
