@@ -1,8 +1,9 @@
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'expo-image-picker';
 import service from '../../../src/common/services/image-picker.service';
 
 import androidPermissions from '../../../src/common/services/permissions.service';
 
+jest.mock('expo-image-picker');
 jest.mock('../../../AppMessages', () => ({}));
 jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/i18n.service', () => ({
@@ -27,76 +28,19 @@ jest.mock('react-native', () => ({
 /**
  * Tests
  */
-describe('Session storage service', () => {
-  it('should check if needs to ask for permission', async () => {
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(false);
-
-    service.checkGalleryPermissions();
-
-    expect(androidPermissions.checkReadExternalStorage).toHaveBeenCalled();
-  });
-
-  it('should check if needs to ask for permission', async () => {
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(false);
-
-    await service.checkGalleryPermissions();
-
-    expect(androidPermissions.checkReadExternalStorage).toHaveBeenCalled();
-  });
-
-  it('should check if needs to ask for camera permission', async () => {
-    androidPermissions.checkCamera.mockResolvedValue(-1);
-
-    service.checkCameraPermissions();
-
-    expect(androidPermissions.checkCamera).toHaveBeenCalled();
-  });
-
-  it('should check if needs to ask for camera permission', async () => {
-    androidPermissions.checkCamera.mockResolvedValue(false);
-    androidPermissions.camera.mockResolvedValue(false);
-
-    await service.checkCameraPermissions();
-
-    expect(androidPermissions.checkCamera).toHaveBeenCalled();
-    expect(androidPermissions.camera).toHaveBeenCalled();
-  });
-
-  it('should check if needs to ask for general permissions', async () => {
-    androidPermissions.checkCamera.mockResolvedValue(false);
-    androidPermissions.camera.mockResolvedValue(false);
-
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(false);
-    androidPermissions.readExternalStorage.mockResolvedValue(false);
-
-    await service.checkPermissions();
-
-    expect(androidPermissions.checkCamera).toHaveBeenCalled();
-  });
-
-  it('should check if needs to ask for general permissions', async () => {
-    androidPermissions.checkCamera.mockResolvedValue(true);
-    androidPermissions.camera.mockResolvedValue(true);
-
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
-    androidPermissions.readExternalStorage.mockResolvedValue(true);
-
-    await service.checkPermissions();
-
-    expect(androidPermissions.checkCamera).toHaveBeenCalled();
-  });
-
+describe('Image picker service', () => {
   it('should launch camera', async () => {
     androidPermissions.checkCamera.mockResolvedValue(true);
     androidPermissions.camera.mockResolvedValue(true);
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.openCamera.mockImplementation();
 
-    await service.launchCamera('photo');
+    ImagePicker.launchCameraAsync.mockResolvedValue({ assets: null });
 
-    expect(ImagePicker.openCamera).toHaveBeenCalled();
+    await service.launchCamera({ type: 'Images' });
+
+    expect(ImagePicker.launchCameraAsync).toHaveBeenCalled();
   });
 
   it('should launch gallery picker', async () => {
@@ -105,23 +49,11 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.openPicker.mockImplementation();
 
-    await service.launchImageLibrary();
+    ImagePicker.launchImageLibraryAsync.mockResolvedValue({ assets: null });
 
-    expect(ImagePicker.openPicker).toHaveBeenCalled();
-  });
+    await service.launchImageLibrary({ type: 'Images' });
 
-  it('should launch show', async () => {
-    androidPermissions.checkCamera.mockResolvedValue(true);
-    androidPermissions.camera.mockResolvedValue(true);
-
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
-    androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.openPicker.mockImplementation();
-
-    await service.show();
-
-    expect(ImagePicker.openPicker).toHaveBeenCalled();
+    expect(ImagePicker.launchImageLibraryAsync).toHaveBeenCalled();
   });
 });

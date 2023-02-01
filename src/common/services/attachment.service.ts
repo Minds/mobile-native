@@ -1,5 +1,5 @@
 import api, { ApiResponse } from './api.service';
-import imagePicker, { CustomImage, MediaType } from './image-picker.service';
+import imagePicker, { MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import imageManipulatorService from './image-manipulator.service';
@@ -169,7 +169,7 @@ class AttachmentService {
    * Capture video
    */
   async video() {
-    const response = await imagePicker.launchCamera('video');
+    const response = await imagePicker.launchCamera({ type: 'Videos' });
 
     if (response) {
       // we only use the first one if it is an array
@@ -177,7 +177,7 @@ class AttachmentService {
 
       return {
         uri: video.uri,
-        path: video.path,
+        path: video.uri,
         type: 'video/mp4',
         fileName: 'image.mp4',
       };
@@ -190,14 +190,14 @@ class AttachmentService {
    * Capture photo
    */
   async photo() {
-    const response = await imagePicker.launchCamera('photo');
+    const response = await imagePicker.launchCamera({ type: 'Images' });
 
     if (response) {
       // we only use the first one if it is an array
       const image = Array.isArray(response) ? response[0] : response;
       return {
         uri: image.uri,
-        path: image.path,
+        path: image.uri,
         type: 'image/jpeg',
         fileName: 'image.jpg',
       };
@@ -210,36 +210,33 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType: MediaType = 'photo', crop = true, maxFiles = 1) {
-    const response = await imagePicker.launchImageLibrary(
-      mediaType,
+  async gallery(type: MediaType = 'Images', crop = false, maxFiles = 1) {
+    const response = await imagePicker.launchImageLibrary({
+      type,
       crop,
       maxFiles,
-    );
+    });
 
     if (!response) {
       return null;
     }
 
-    if (Array.isArray(response)) {
-      return response.length > maxFiles
-        ? response.slice(0, maxFiles).map(this.fixMedia)
-        : response.map(this.fixMedia);
-    } else {
-      return this.fixMedia(response);
+    if (response.length === 1) {
+      return response[0];
     }
+    return response.length > maxFiles ? response.slice(0, maxFiles) : response;
   }
 
-  fixMedia(media: CustomImage) {
-    if (!media.type) {
-      if (!media.width) {
-        media.type = 'video/mp4';
-      } else if (media.uri.includes('.gif')) {
-        media.type = 'image/gif';
-      }
-    }
-    return media;
-  }
+  // fixMedia(media: CustomImage) {
+  //   if (!media.type) {
+  //     if (!media.width) {
+  //       media.type = 'video/mp4';
+  //     } else if (media.uri.includes('.gif')) {
+  //       media.type = 'image/gif';
+  //     }
+  //   }
+  //   return media;
+  // }
 }
 
 export default new AttachmentService();

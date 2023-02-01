@@ -12,6 +12,8 @@ describe('Attachment service', () => {
   beforeEach(() => {
     api.upload.mockClear();
     api.delete.mockClear();
+    imagePicker.launchCamera.mockClear();
+    imagePicker.launchImageLibrary.mockClear();
   });
 
   it('should call attach media endpoint', async () => {
@@ -54,8 +56,8 @@ describe('Attachment service', () => {
     expect(api.upload.mock.calls[0][0]).toEqual('api/v1/media/');
   });
 
-  it('should call launchCamera', async () => {
-    const apiResponse = { uri: 'aaaa', path: 'path metheny' };
+  it('should call launchCamera for video', async () => {
+    const apiResponse = { uri: 'fakeuri', path: 'fakeuri' };
 
     imagePicker.launchCamera.mockResolvedValue(apiResponse);
 
@@ -63,8 +65,8 @@ describe('Attachment service', () => {
     const res = await service.video();
 
     expect(res).toEqual({
-      uri: 'aaaa',
-      path: 'path metheny',
+      uri: 'fakeuri',
+      path: 'fakeuri',
       type: 'video/mp4',
       fileName: 'image.mp4',
     });
@@ -78,8 +80,8 @@ describe('Attachment service', () => {
     expect(res).toEqual(null);
   });
 
-  it('should call launchCamera', async () => {
-    const apiResponse = { uri: 'aaaa', path: 'path metheny' };
+  it('should call launchCamera for image', async () => {
+    const apiResponse = { uri: 'fakeuri', path: 'fakeuri' };
 
     imagePicker.launchCamera.mockResolvedValue(apiResponse);
 
@@ -87,8 +89,8 @@ describe('Attachment service', () => {
     const res = await service.photo();
 
     expect(res).toEqual({
-      uri: 'aaaa',
-      path: 'path metheny',
+      uri: 'fakeuri',
+      path: 'fakeuri',
       type: 'image/jpeg',
       fileName: 'image.jpg',
     });
@@ -115,7 +117,7 @@ describe('Attachment service', () => {
   });
 
   it('should call launchImageLibrary', async () => {
-    const apiResponse = { uri: 'aaaa', path: 'path metheny', width: 100 };
+    const apiResponse = { uri: 'fakeuri', path: 'fakeuri', width: 100 };
 
     imagePicker.launchImageLibrary.mockResolvedValue(apiResponse);
 
@@ -123,24 +125,9 @@ describe('Attachment service', () => {
     const res = await service.gallery();
 
     expect(res).toEqual({
-      uri: 'aaaa',
-      path: 'path metheny',
+      uri: 'fakeuri',
+      path: 'fakeuri',
       width: 100,
-    });
-  });
-
-  it('should call launchImageLibrary', async () => {
-    const apiResponse = { uri: 'aaaa', path: 'path metheny' };
-
-    imagePicker.launchImageLibrary.mockResolvedValue(apiResponse);
-
-    // call tested method
-    const res = await service.gallery();
-
-    expect(res).toEqual({
-      uri: 'aaaa',
-      path: 'path metheny',
-      type: 'video/mp4',
     });
   });
 

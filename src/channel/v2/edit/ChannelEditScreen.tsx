@@ -222,15 +222,6 @@ const ChannelEditScreen = (props: PropsType) => {
     [navigation, save, theme.colorPrimaryText],
   );
 
-  /**
-   * ANY PARTICULAR REASON FOR 2 IDENTICAL EFFECTS?
-   */
-  useEffect(() => {
-    if (routeStore) {
-      store.initialLoad(routeStore);
-    }
-  }, [routeStore, store]);
-
   const onFocusLocation = useDebouncedCallback(
     () => {
       listRef.current?.scrollToEnd({ animated: true });

@@ -86,7 +86,9 @@ export default class MultiAttachmentStore {
     if (
       this.length > 0 &&
       (media.type.startsWith('video') ||
-        this.attachments.some(m => m.type.startsWith('video')))
+        this.attachments.some(attachment =>
+          attachment.type.startsWith('video'),
+        ))
     ) {
       showNotification(i18n.t('capture.onlyMultiImage'));
       return false;
@@ -114,10 +116,12 @@ export default class MultiAttachmentStore {
   mediaExists(media: Media): boolean {
     if (IS_IOS) {
       return this.attachments.some(
-        a => a.localIdentifier === media.localIdentifier,
+        attachment => attachment.assetId === media.assetId,
       );
     } else {
-      return this.attachments.some(a => a.path === media.path);
+      return this.attachments.some(
+        attachment => attachment.path === media.path,
+      );
     }
   }
 
