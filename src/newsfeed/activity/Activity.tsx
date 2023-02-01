@@ -53,6 +53,7 @@ type PropsType = {
   showOnlyContent?: boolean;
   borderless?: boolean;
   hideMetrics?: boolean;
+  distinctBoosts?: boolean;
 };
 
 /**
@@ -246,6 +247,7 @@ export default class Activity extends Component<PropsType> {
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}
+        distinctBoosts={this.props.distinctBoosts}
       />
     );
   }

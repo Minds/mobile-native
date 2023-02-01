@@ -15,6 +15,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
   },
+  'info-circle': {
+    font: 'MaterialIcons',
+    name: 'info',
+  },
   'info-outline': {
     font: 'MaterialIcons',
     name: 'info-outline',
