@@ -59,6 +59,7 @@ export default class UserModel extends BaseModel {
 
   tags: Array<string> = [];
   groupsCount: number = 0;
+  boosted?: boolean;
 
   @observable plus: boolean = false;
   plus_method: 'usd' | 'tokens' = 'tokens';
