@@ -57,6 +57,7 @@ export class ApiError extends Error {
   status: number = 0;
   headers: any = null;
   errors?: FieldError[];
+  errorId?: string;
 
   constructor(message: string, status: number, errors?: FieldError[]) {
     super(message);
@@ -633,7 +634,7 @@ export class ApiService {
   }
 
   /**
-   * Upload file
+   * Upload files
    * @param {string} url
    * @param {object} file
    * @param {object} data
@@ -641,15 +642,22 @@ export class ApiService {
    */
   upload(
     url: string,
-    file: any,
+    files: {
+      [key: string]: any;
+    },
     data: any | null = null,
-    progress: (event: Event) => any,
+    progress?: (event: Event) => any,
   ) {
     var formData = new FormData();
-    formData.append('file', file);
 
-    for (var key in data) {
-      formData.append(key, data[key]);
+    if (data) {
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    for (const key in files) {
+      formData.append(key, files[key]);
     }
 
     return new Cancelable((resolve, reject, onCancel) => {
@@ -670,7 +678,7 @@ export class ApiService {
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);
       xhr.onload = () => {
-        if (xhr.status === 200 || xhr.status === 403) {
+        if (xhr.status >= 200 && xhr.status <= 399) {
           let response: ApiResponse;
           try {
             response = JSON.parse(xhr.responseText);
@@ -685,7 +693,8 @@ export class ApiService {
           }
           resolve(response);
         } else {
-          reject(new UserError('Upload failed'));
+          console.log('Upload Error', xhr.status, xhr.responseText);
+          reject(new ApiError('Upload failed', xhr.status));
         }
       };
       xhr.onerror = function () {

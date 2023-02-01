@@ -48,7 +48,7 @@ class AttachmentService {
     if (file.type.includes('video')) {
       return this.uploadToS3(file, progress);
     } else {
-      return api.upload('api/v1/media/', file, extra, progress);
+      return api.upload('api/v1/media/', { file }, extra, progress);
     }
   }
 

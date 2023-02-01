@@ -8,6 +8,7 @@ import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
 // importing directly to use the type
 import enLocale from '../../../locales/en.json';
+import i18next from 'utils/locales';
 
 // get all possible key paths
 type DeepKeys<T> = T extends object
@@ -279,6 +280,9 @@ class I18nService {
     if (store) {
       storages.app.setString('locale', locale);
     }
+
+    i18next.changeLanguage(locale);
+
     // clear translation cache
     if (translate.cache !== undefined && translate.cache.clear !== undefined) {
       translate.cache.clear();

@@ -86,4 +86,5 @@ export type FeatureID =
   | 'mob-4638-boost-v3'
   | 'mob-minds-3119-captcha-for-engagement'
   | 'mob-4424-sockets'
+  | 'mob-4472-in-app-verification'
   | 'minds-3055-email-codes';

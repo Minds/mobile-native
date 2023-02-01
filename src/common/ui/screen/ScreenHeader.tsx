@@ -43,7 +43,7 @@ export const ScreenHeader = ({
       }>
       {Boolean(title) && centerTitle && (
         <View style={styles.titleCenteredContainer}>
-          <Typography type={titleType} font="bold" onPress={onTitlePress}>
+          <Typography type={titleType} font="bold" onPress={onTitlePress} flat>
             {title}
           </Typography>
         </View>

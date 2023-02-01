@@ -38,7 +38,7 @@ export const Screen = ({
   return (
     <Renderer
       edges={onlyTopEdge ? ['top'] : undefined}
-      style={[styles[background]]}>
+      style={styles[background]}>
       {children}
     </Renderer>
   );
