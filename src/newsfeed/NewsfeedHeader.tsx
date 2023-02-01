@@ -18,6 +18,7 @@ interface NewsfeedHeaderProps {
   small?: boolean;
   shadow?: boolean;
   endIcon?: ReactNode;
+  borderless?: boolean;
 }
 
 const NewsfeedHeader = ({
@@ -27,6 +28,7 @@ const NewsfeedHeader = ({
   small,
   shadow,
   endIcon,
+  borderless,
 }: NewsfeedHeaderProps) => {
   const bottomSheetRef = useRef<any>(undefined);
   const withoutIcon = !onFeedTypeChange;
@@ -81,9 +83,10 @@ const NewsfeedHeader = ({
         small ? containerSmallStyle : containerStyle,
         { borderBottomWidth: 0 },
       ]
-    : small
-    ? containerSmallStyle
-    : containerStyle;
+    : [
+        small ? containerSmallStyle : containerStyle,
+        borderless ? { borderBottomWidth: 0 } : null,
+      ];
 
   return (
     <View style={style}>

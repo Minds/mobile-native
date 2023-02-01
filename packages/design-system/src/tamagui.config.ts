@@ -1,6 +1,27 @@
-import { createTamagui } from '@tamagui/core';
-// import * as ReactNative from 'react-native';
-// setupReactNative(ReactNative);
+import { createTamagui, setupReactNative } from '@tamagui/core';
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  TextInput,
+  Pressable,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from 'react-native';
+
+setupReactNative({
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  TextInput,
+  Pressable,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+});
 
 import { shorthands } from '@tamagui/shorthands';
 import { animations } from './config/animation';

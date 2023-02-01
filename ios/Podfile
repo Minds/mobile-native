@@ -8,7 +8,7 @@ install! 'cocoapods',
 
 $RNFirebaseAsStaticFramework = true
 
-platform :ios, '13.0'
+platform :ios, '13'
 
 target 'Minds' do
   use_expo_modules!
@@ -66,7 +66,7 @@ target 'Minds' do
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13'
         config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
       end
       if target.name == "React-Core.common-AccessibilityResources"
@@ -79,7 +79,12 @@ target 'Minds' do
         end
       end
     end
-    react_native_post_install(installer)
+    react_native_post_install(
+      installer,
+      # Set `mac_catalyst_enabled` to `true` in order to apply patches
+      # necessary for Mac Catalyst builds
+      :mac_catalyst_enabled => false
+    )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
@@ -98,7 +103,7 @@ target 'Share' do
   # use_react_native!
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
+  use_react_native!(:path => config[:reactNativePath], :hermes_enabled => true)
 
   use_flipper!({ 'Flipper' => '0.169.0' })
 

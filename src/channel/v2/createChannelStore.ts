@@ -200,6 +200,9 @@ const createChannelStore = () => {
       if (!this.loaded) {
         this.loaded = true;
         this.feedStore.getScheduledCount(this.channel.guid);
+        if (!this.channel.isOwner()) {
+          this.feedStore.setInjectBoost(true);
+        }
       }
     },
     /**

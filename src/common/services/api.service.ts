@@ -17,6 +17,7 @@ export type TwoFactorType = 'sms' | 'email' | 'totp';
 
 import session, { isTokenExpired } from './session.service';
 import {
+  IS_IOS,
   MINDS_API_URI,
   MINDS_CANARY,
   MINDS_STAGING,
@@ -123,7 +124,9 @@ export class ApiService {
         console.log('CookieManager.set =>', done);
       });
     } else {
-      CookieManager.clearByName('https://www.minds.com', 'canary');
+      if (IS_IOS) {
+        CookieManager.clearByName('https://www.minds.com', 'canary');
+      }
     }
     if (MINDS_STAGING) {
       CookieManager.set('https://www.minds.com', {
@@ -134,7 +137,9 @@ export class ApiService {
         console.log('CookieManager.set =>', done);
       });
     } else {
-      CookieManager.clearByName('https://www.minds.com', 'staging');
+      if (IS_IOS) {
+        CookieManager.clearByName('https://www.minds.com', 'staging');
+      }
     }
 
     this.axios =
