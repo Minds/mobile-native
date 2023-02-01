@@ -15,12 +15,14 @@ Minds Mobile
 ### Fixed (1 change)
 
 - [Fix android 13 text input crash](minds/mobile-native@401812d1bce1ca8c84e4ed9b0935c4ecc6709e81) ([merge request](minds/mobile-native!2071))
+- [Supermind border not appearing in portrait mode ](minds/mobile-native!2064) ([merge request](minds/mobile-native!2064))
 
 ### Changed (3 changes)
 
 - [Update minds+ monetization modal](minds/mobile-native@62a55c8b2c84a4b644308e2533498685552f37b0) ([merge request](minds/mobile-native!2078))
 - [Refactor composer to improve the performance](minds/mobile-native@eae5f11973b7fa2597677ba11b01c470035ad516) ([merge request](minds/mobile-native!2071))
 - [(feat) add boost insight estimated reach to boost composer](minds/mobile-native@4a15f2d34f098e4afcd2b11cfd97050620bb6ec2) ([merge request](minds/mobile-native!2058))
+- [Improve see latest UX](minds/mobile-native!2063) ([merge request](minds/mobile-native!2063))
 
 ### Removed (1 change)
 
