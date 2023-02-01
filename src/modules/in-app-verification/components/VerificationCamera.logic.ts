@@ -2,7 +2,12 @@ import { useLocalStore } from 'mobx-react';
 import React from 'react';
 import { LayoutRectangle } from 'react-native';
 import { runOnJS } from 'react-native-reanimated';
-import { Accelerometer, Gyroscope, ThreeAxisMeasurement } from 'expo-sensors';
+import {
+  Accelerometer,
+  Gyroscope,
+  GyroscopeMeasurement,
+  AccelerometerMeasurement,
+} from 'expo-sensors';
 import * as Location from 'expo-location';
 
 import {
@@ -62,8 +67,8 @@ export const createVerificationStore = ({
   status: 'running' as StatusType,
   camera: <Camera | null>null,
   timeout: <Timeout | null>null,
-  accelerometer: <Array<ThreeAxisMeasurement>>[],
-  gyroscope: <Array<ThreeAxisMeasurement>>[],
+  accelerometer: <Array<AccelerometerMeasurement>>[],
+  gyroscope: <Array<GyroscopeMeasurement>>[],
   location: <string | null>null,
   /**
    * execute action based on the status
