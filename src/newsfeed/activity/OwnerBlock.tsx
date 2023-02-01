@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { Icon } from 'react-native-elements';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -20,8 +21,9 @@ import { NavigationProp } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
-import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
+import { B1, B2, B3, Row, HairlineRow, IconNext, HairlineColumn } from '~ui';
 import { IS_IOS } from '~/config/Config';
+import NewsfeedHeader from '../NewsfeedHeader';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -31,10 +33,10 @@ type PropsType = {
   leftToolbar?: React.ReactNode;
   containerStyle?: ViewStyle | Array<ViewStyle>;
   navigation: any;
-  route?: any;
   children?: React.ReactNode;
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
+  distinctBoosts?: boolean;
 };
 
 const getLastRoute = (navigation: NavigationProp<any>) => {
@@ -97,7 +99,8 @@ class OwnerBlock extends PureComponent<PropsType> {
    */
   _navToGroup = () => {
     if (this.props.navigation) {
-      const { group, guid } = this.props.route.params ?? {};
+      const route = getLastRoute(this.props.navigation);
+      const { group, guid } = route?.params ?? {};
       const groupGuid = group?.guid ?? guid;
       if (
         this.props.entity.containerObj &&
@@ -164,6 +167,26 @@ class OwnerBlock extends PureComponent<PropsType> {
       </HairlineRow>
     ) : null;
 
+    const boosted = this.props.entity.boosted ? (
+      <HairlineColumn>
+        {this.props.distinctBoosts && (
+          <NewsfeedHeader title="Boosted Content" borderless />
+        )}
+        <Row horizontal="XL" vertical="S">
+          <Icon
+            type="ionicon"
+            name="md-trending-up"
+            size={18}
+            style={ThemedStyles.style.marginRight}
+            color={ThemedStyles.getColor('Link')}
+          />
+          <B2 font="medium" color="link">
+            {i18nService.t('boosted')}
+          </B2>
+        </Row>
+      </HairlineColumn>
+    ) : undefined;
+
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
 
@@ -185,6 +208,7 @@ class OwnerBlock extends PureComponent<PropsType> {
 
     return (
       <View style={this.containerStyle}>
+        {boosted}
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}

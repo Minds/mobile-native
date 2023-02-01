@@ -149,33 +149,30 @@ export class InFeedNoticesService {
    * Get the inline notice for a given position
    * @param position
    */
-  getInlineNotice(position: number): string | null {
+  getInlineNotice<T = string>(position: number): T | undefined {
     if (this.data !== null && !this.getTopNotice()) {
-      const notices = Object.keys(this.data).filter(
+      const notices: T[] = Object.keys(this.data).filter(
         key => this.data![key].location === 'inline' && this.visible(key),
-      );
-
-      return notices[position - 1] || null;
+      ) as T[];
+      return notices[position - 1];
     }
-    return null;
   }
 
   /**
    * Get the current top notice
    * (first visible top notice)
    */
-  getTopNotice(): string | null {
+  getTopNotice<T = string>(): T | undefined {
     if (this.data !== null) {
-      let topNotice: string | null = null;
+      let topNotice: T | undefined;
       Object.keys(this.data).forEach(key => {
-        const notice = this.data ? this.data[key] : null;
+        const notice = this.data ? this.data[key] : undefined;
         if (notice && notice.location === 'top' && this.visible(key)) {
-          topNotice = key;
+          topNotice = key as T;
         }
       });
       return topNotice;
     }
-    return null;
   }
 
   /**

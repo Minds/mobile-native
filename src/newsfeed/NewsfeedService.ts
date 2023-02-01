@@ -9,6 +9,7 @@ import type ActivityModel from './ActivityModel';
 import type BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
+import { storeRatingService } from 'modules/store-rating';
 
 export default class NewsfeedService {
   async _getFeed(endpoint, offset, limit) {
@@ -130,6 +131,9 @@ export async function setViewed(
       extra,
     );
   }
+
+  storeRatingService.track('viewPost');
+
   return data;
 }
 

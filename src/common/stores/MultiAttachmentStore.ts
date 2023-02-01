@@ -70,7 +70,11 @@ export default class MultiAttachmentStore {
    * @param ignoreRepeated {boolean} ignore repeated images
    */
   @action
-  attachMedia(media: Media, extra: any, ignoreRepeated: boolean = false) {
+  async attachMedia(
+    media: Media,
+    extra: any,
+    ignoreRepeated: boolean = false,
+  ): Promise<AttachmentStore | false> {
     if (this.attachments.length === this.max) {
       if (media.type.startsWith('image')) {
         showNotification(i18n.t('capture.max4Images'));
@@ -94,7 +98,12 @@ export default class MultiAttachmentStore {
     }
 
     const store = this.addAttachment();
-    store.attachMedia(media, extra);
+    try {
+      await store.attachMedia(media, extra);
+    } catch (error) {
+      this.removeAttachment(store);
+      throw error;
+    }
     return store;
   }
 

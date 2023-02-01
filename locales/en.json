@@ -106,6 +106,7 @@
           "1": {
             "title": "How to earn",
             "subtitle": "Fans send offers of cash and tokens, which you earn by simply replying. Minds collects just a 15% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction.",
+            "subtitle-iOS": "Fans send offers, which you earn by simply replying. Minds collects just a 10% platform fee (vs. 30% fees on other platforms), and our payment processor charges a small fee per transaction. See terms & conditions.",
             "seeTerms": "See terms and conditions."
           },
           "2": {
@@ -120,10 +121,12 @@
       },
       "consumer": {
         "title": "Get replies from your favorite creators by sending them paid offers.",
+        "title-iOS": "Get replies from your favorite creators by sending them token offers.",
         "steps": {
           "1": {
             "title": "Set an offer amount",
-            "subtitle": "Send an offer of cash or tokens. The creator earns the offer amount when they reply."
+            "subtitle": "Send an offer of cash or tokens. The creator earns the offer amount when they reply.",
+            "subtitle-iOS": "Send an offer of tokens. The creator earns the offer amount when they reply."
           },
           "2": {
             "title": "Prompt with a public post",
@@ -218,7 +221,10 @@
     "userDescription": "Let the Minds community know who you are by decking out your channel page. This step is required to join the token rewards program.",
     "userButton": "Setup my channel",
     "uniquenessTitle": "You're invited! Join rewards",
-    "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content."
+    "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content.",
+    "inviteFriendsTitle": "Invite Friends",
+    "inviteFriendsDescription": "Minds gets better with friends. Share your referral link to invite them to join. If they earn money on Minds, you'll earn a 5% referral fee.",
+    "inviteFriendsAction": "Invite Friend"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -282,6 +288,7 @@
   "boosts": {
     "emptyList": "There is no boosts to display",
     "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
+    "nonRefundable": "I understand this cash transaction is non-refundable once the boost is approved",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",
@@ -316,7 +323,7 @@
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
     "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
-    "tabNewsfeed": "Newsfeed",
+    "tabNewsfeed": "Feed",
     "tabSidebar": "Sidebar",
     "tabOffers": "Offer",
     "rejectionReasons": {
@@ -339,7 +346,11 @@
     "paymentMethod": "PAYMENT METHOD",
     "targetChannel": "Target Channel",
     "boostCashViews": "{{amount}} USD = {{views}} views",
-    "boostTokenViews": "{{amount}} token = {{views}} views"
+    "boostTokenViews": "{{amount}} token = {{views}} views",
+    "boostedChannel": "Boosted Channel",
+    "boostChangingTitle": "Boost is changing",
+    "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
+    "boostChangingLink": "Read more about the update."
   },
   "translate": {
     "from": "translated from",
@@ -616,6 +627,9 @@
       "supermind_expired": "Don't forget to review",
       "supermind_expire24h": "missed",
       "boost_rejected": "is unable to approve",
+      "boost_rejected_v2": "Your Boost was rejected",
+      "boost_completed": "Your Boost is complete",
+      "boost_accepted": "Your Boost is now running",
       "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
     }
   },
@@ -1824,6 +1838,9 @@
     }
   },
   "failedTryAgain": "Sorry, failed to load. please try again",
+  "storeRating": {
+    "prompt": "Are you enjoying Minds?"
+  },
   "codePush": {
     "prompt": {
       "title": "New update available",

@@ -77,7 +77,7 @@ function ComposeBottomBar(props) {
       />
       {
         // don't allow superminding in the context of a supermind reply
-        !props.store.isSupermindReply && !isIosMindsHidden && (
+        !props.store.isSupermindReply && (
           <IfFeatureEnabled feature="mobile-supermind">
             <IconButton
               name="supermind"

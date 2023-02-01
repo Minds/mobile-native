@@ -27,6 +27,7 @@ import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import MText from '../common/components/MText';
 import { useCarouselFocus } from './PortraitViewerScreen';
+import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 
 type PropsType = {
   entity: ActivityModel;
@@ -195,7 +196,7 @@ const PortraitActivity = observer((props: PropsType) => {
                 <>{lock}</>
               )}
               {hasRemind && (
-                <View style={styles.remind}>
+                <ActivityContainer entity={entity}>
                   <Activity
                     ref={remindRef}
                     hideTabs={true}
@@ -204,7 +205,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     isReminded={true}
                     hydrateOnNav={true}
                   />
-                </View>
+                </ActivityContainer>
               )}
             </>
           )}
@@ -273,22 +274,6 @@ const styles = ThemedStyles.create({
     height: 40,
     width: '100%',
   },
-  remind: [
-    'margin2x',
-    'borderHair',
-    'bcolorPrimaryBackground',
-    {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 2,
-        height: 2,
-      },
-      shadowOpacity: 0.05,
-      shadowRadius: 10,
-
-      elevation: 5,
-    },
-  ],
   touchLeft: {
     position: 'absolute',
     left: 0,

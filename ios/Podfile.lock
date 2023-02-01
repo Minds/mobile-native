@@ -40,6 +40,8 @@ PODS:
     - ReactCommon/turbomodule/core
   - EXSensors (11.4.0):
     - ExpoModulesCore
+  - EXStoreReview (5.3.0):
+    - ExpoModulesCore
   - FBLazyVector (0.69.7)
   - FBReactNativeSpec (0.69.7):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -197,7 +199,7 @@ PODS:
   - Permission-PhotoLibrary (3.6.1):
     - RNPermissions
   - PromisesObjC (2.1.1)
-  - Protobuf (3.21.9)
+  - Protobuf (3.21.11)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -693,6 +695,7 @@ DEPENDENCIES:
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSensors (from `../node_modules/expo-sensors/ios`)
+  - EXStoreReview (from `../node_modules/expo-store-review/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (= 0.169.0)
@@ -877,6 +880,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core/ios"
   EXSensors:
     :path: "../node_modules/expo-sensors/ios"
+  EXStoreReview:
+    :path: "../node_modules/expo-store-review/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -1068,6 +1073,7 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: 1a3af07c6dab3c612967a294836df9ae717431df
   ExpoModulesCore: 5a973701f4400d70254bc836305228731c829010
   EXSensors: a34fb0d416eae3ecaaab43ec64dca0854227d3bf
+  EXStoreReview: cbb6b2202bb6f831cd3234d9d8b995cec0eb32f2
   FBLazyVector: 6b7f5692909b4300d50e7359cdefbcd09dd30faa
   FBReactNativeSpec: affcf71d996f6b0c01f68883482588297b9d5e6e
   Flipper: 55f10244ce1a82d4adc1cb817bc492f11e22f6ff
@@ -1107,7 +1113,7 @@ SPEC CHECKSUMS:
   Permission-Microphone: 48212dd4d28025d9930d583e3c7a56da7268665c
   Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Protobuf: 02524ec14183fe08fb259741659e79683788158b
+  Protobuf: 3acb308a1e208605afd50866b98ec220141bcb8c
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
   RCTRequired: 54bff6aa61efd9598ab59d2a823c382b4fe13d27
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
@@ -1189,6 +1195,6 @@ SPEC CHECKSUMS:
   Yoga: 0b84a956f7393ef1f37f3bb213c516184e4a689d
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cb358b8be853ffb5ace41a3401194ce0721de1b3
+PODFILE CHECKSUM: b3aad2fe2c34bf0342ed93736b65129c71a3197f
 
 COCOAPODS: 1.11.3

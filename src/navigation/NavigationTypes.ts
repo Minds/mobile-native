@@ -14,7 +14,7 @@ import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
-import type { BoostType } from '../boost/v2/createBoostStore';
+import type { BoostType } from '../boost/legacy/createBoostStore';
 
 type AnyType = any;
 
@@ -32,6 +32,13 @@ export type InternalStackParamList = {
   Onboarding: {};
 };
 
+type WebViewParams = {
+  url: string;
+  headers?: { [key: string]: string };
+  redirectUrl?: string;
+  onRedirect?: () => void;
+};
+
 export type DiscoveryStackParamList = {
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   Discovery: {};
@@ -47,11 +54,7 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
-  WebView: {
-    url: string;
-    redirectUrl?: string;
-    onRedirect?: () => void;
-  };
+  WebView: WebViewParams;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };
@@ -63,7 +66,9 @@ export type MoreStackParamList = {
     section?: string;
   };
   PlusDiscoveryScreen: {};
-  BoostConsole: {};
+  BoostConsole: {
+    location?: string;
+  };
   GroupsList: {};
   Settings: {};
   Analytics: {};
@@ -130,7 +135,13 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {};
+  Compose: {
+    openSupermindModal?: boolean;
+    isRemind?: boolean;
+    entity?: ActivityModel;
+    group?: GroupModel;
+    parentKey?: string;
+  };
   SupermindCompose: {
     data: SupermindRequestParam;
     closeComposerOnClear?: boolean;
@@ -207,6 +218,7 @@ export type RootStackParamList = {
     onSelect: (channel: UserModel) => void;
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  StoryBook: {};
 };
 
 export type AuthStackParamList = {
@@ -220,10 +232,14 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  BoostConsole: {
+    location?: string;
+  };
   Supermind: {
     guid: string;
     supermindRequest?: SupermindRequestModel;
   };
+  WebView: WebViewParams;
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
@@ -322,6 +338,7 @@ export type AppStackParamList = {
   TopNewsfeed: {};
   InAppVerification: {};
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  Referrals: {};
 };
 
 // types for channel edit screens

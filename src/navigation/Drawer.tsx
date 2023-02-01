@@ -98,7 +98,7 @@ const getOptionsList = (
           },
         }
       : null,
-    !isIosMindsHidden && isSupermindFeatureOn
+    isSupermindFeatureOn
       ? {
           name: 'Supermind',
           onPress: () => {

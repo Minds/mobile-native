@@ -31,6 +31,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
+import { isStoryBookOn } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -82,6 +83,10 @@ const AppStack = observer(() => {
           name="Tabs"
           component={TabScreenWithModal}
           options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="WebView"
+          getComponent={() => require('~/common/screens/WebViewScreen').default}
         />
         <AppStackNav.Screen
           name="PortraitViewerScreen"
@@ -220,6 +225,18 @@ const AppStack = observer(() => {
           getComponent={() => require('~/supermind/SupermindScreen').default}
           options={hideHeader}
         />
+        <AppStackNav.Screen
+          name="Referrals"
+          getComponent={() => require('~/referral/ReferralsScreen').default}
+          options={{
+            title: 'Invite Friends',
+          }}
+        />
+        <AppStackNav.Screen
+          name="BoostConsole"
+          getComponent={() => require('modules/boost').BoostConsoleScreen}
+          options={hideHeader}
+        />
       </AppStackNav.Navigator>
     </>
   );
@@ -266,6 +283,7 @@ const defaultScreenOptions: StackNavigationOptions = {
 const RootStack = observer(function () {
   const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
+
   const shouldShowEmailVerification =
     !is_email_confirmed &&
     !sessionService.switchingAccount &&
@@ -275,7 +293,16 @@ const RootStack = observer(function () {
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
-        shouldShowEmailVerification ? (
+        isStoryBookOn ? (
+          <RootStackNav.Screen
+            name="StoryBook"
+            getComponent={() => require('modules/storybook').default}
+            options={{
+              title: 'TAMAGUI',
+              ...TransitionPresets.RevealFromBottomAndroid,
+            }}
+          />
+        ) : shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}
@@ -411,7 +438,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="BoostScreen"
-              getComponent={() => require('~/boost/v2/BoostScreen').default}
+              getComponent={() => require('~/boost/legacy/BoostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen
@@ -471,7 +498,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="BoostScreenV2"
-              getComponent={() => require('~/modules/boost').BoostStack}
+              getComponent={() => require('modules/boost').BoostComposerStack}
               options={modalOptions}
             />
           </>

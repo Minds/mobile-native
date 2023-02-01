@@ -97,6 +97,8 @@ export type FeedListPropsType<T extends BaseModel> = {
   refreshControlTintColor?: string;
   onEndReached?: () => void;
   testID?: string;
+  estimatedItemSize?: number;
+  distinctBoosts?: boolean;
 };
 
 /**
@@ -320,6 +322,7 @@ export class FeedList<T extends BaseModel> extends Component<
           <Activity
             entity={entity}
             navigation={this.props.navigation}
+            distinctBoosts={this.props.distinctBoosts}
             autoHeight={false}
           />
         )}
@@ -370,7 +373,7 @@ export class FeedList<T extends BaseModel> extends Component<
     return (
       <View testID={this.props.testID} style={containerStyle}>
         <AnimatedFlashList
-          estimatedItemSize={450}
+          estimatedItemSize={this.props.estimatedItemSize || 450}
           ref={this.listRef}
           key={feedStore.isTiled ? 't' : 'f'}
           ListHeaderComponent={header}

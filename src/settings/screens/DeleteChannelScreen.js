@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { ScrollView, Alert } from 'react-native';
 import { ScreenSection, Button, B1 } from '~ui';
-import SettingsService from '../SettingsService';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
+import AuthService from '~/auth/AuthService';
 
 /**
  * Delete Channel Screen
@@ -17,7 +17,7 @@ export default class DeleteChannelScreen extends Component {
       [
         {
           text: i18n.t('yes'),
-          onPress: () => SettingsService.delete(password),
+          onPress: () => AuthService.delete(password),
         },
         { text: i18n.t('no') },
       ],

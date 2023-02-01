@@ -35,6 +35,10 @@ const DevToolsScreen = () => {
     }
   };
 
+  const [storyBook, setStoryBook] = useState(
+    storages.app.getBool('storybook') || false,
+  );
+
   return (
     <ModalContainer
       title={'Developer Options'}
@@ -90,6 +94,16 @@ const DevToolsScreen = () => {
               type="action">
               Change
             </Button>
+          </Row>
+          <Row align="centerBetween" vertical="L">
+            <B1>StoryBook</B1>
+            <Toggle
+              value={storyBook}
+              onValueChange={val => {
+                setStoryBook(val);
+                storages.app.setBool('storybook', val);
+              }}
+            />
           </Row>
 
           <B2 align="center" color="tertiary">

@@ -12,7 +12,7 @@ import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
-import boostedContentService from './src/common/services/boosted-content.service';
+import { boostedContentService } from 'modules/boost';
 import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
@@ -21,6 +21,7 @@ import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * App initialization manager
@@ -43,6 +44,8 @@ export class AppInitManager {
     sessionService.onLogout(this.onLogout);
 
     openUrlService.init();
+
+    storeRatingService.track('appSession');
 
     try {
       logService.info('[App] init session');

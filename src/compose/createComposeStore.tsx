@@ -21,6 +21,7 @@ import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { confirm } from '../common/components/Confirm';
+import { storeRatingService } from 'modules/store-rating';
 
 /**
  * Display an error message to the user.
@@ -44,6 +45,7 @@ export default function (props) {
       start: 0,
       end: 0,
     },
+    scrollOffset: 0,
     textHeight: 26,
     portraitMode: false,
     noText: false,
@@ -148,6 +150,9 @@ export default function (props) {
         portrait: undefined,
         noText: undefined,
       });
+    },
+    setScrollOffset(value: number) {
+      this.scrollOffset = value;
     },
     selectionChanged(e) {
       this.selection = e.nativeEvent.selection;
@@ -625,6 +630,8 @@ export default function (props) {
           this.entity.setEdited('1');
           return this.entity;
         }
+
+        storeRatingService.track('createPost', true);
 
         if (this.supermindRequest) {
           showNotification(i18n.t('supermind.requestSubmitted'), 'success');
