@@ -7,7 +7,7 @@ import i18n from 'utils/locales';
 import en from './en';
 import es from './es';
 
-const NAME_SPACE = 'mainModule';
+const NAME_SPACE = 'common';
 
 export const useTranslation = (options?: UseTranslationOptions) =>
   useAppTranslation(NAME_SPACE, options);

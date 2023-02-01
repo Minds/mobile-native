@@ -3,15 +3,13 @@ import {
   UseTranslationOptions,
 } from 'react-i18next';
 import i18n from 'utils/locales';
+import 'services/commonLocale';
 
 import en from './en';
-import es from './es';
 
-const NAME_SPACE = 'mainModule';
+const NAME_SPACE = 'InAppVerificationModule';
 
 export const useTranslation = (options?: UseTranslationOptions) =>
-  useAppTranslation(NAME_SPACE, options);
+  useAppTranslation(['common', NAME_SPACE], options);
 
-export default i18n
-  .addResourceBundle('en', NAME_SPACE, en)
-  .addResourceBundle('es', NAME_SPACE, es);
+export default i18n.addResourceBundle('en', NAME_SPACE, en);

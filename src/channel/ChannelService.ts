@@ -17,7 +17,7 @@ class ChannelService {
   }
 
   upload(type, file, progress) {
-    return api.upload(`api/v1/channel/${type}`, file, null, progress);
+    return api.upload(`api/v1/channel/${type}`, { file }, null, progress);
   }
 
   save(data) {

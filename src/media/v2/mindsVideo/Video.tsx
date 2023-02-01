@@ -43,6 +43,7 @@ const ExpoVideo = observer(
         onLoad={localStore.onVideoLoad}
         onError={localStore.onError}
         resizeMode={resizeMode || ResizeMode.CONTAIN}
+        onFullscreenUpdate={localStore.onFullscreenUpdate}
         useNativeControls={false}
         style={theme.flexContainer}
         ref={playbackObject}

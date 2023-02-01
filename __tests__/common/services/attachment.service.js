@@ -49,8 +49,10 @@ describe('Attachment service', () => {
     const res = await service.attachMedia(media);
 
     expect(api.upload.mock.calls.length).toEqual(1);
-    media.name = 'test';
-    expect(api.upload.mock.calls[0][1]).toEqual(media);
+
+    expect(api.upload.mock.calls[0][1]).toEqual({
+      file: { name: 'test', ...media },
+    });
     expect(api.upload.mock.calls[0][0]).toEqual('api/v1/media/');
   });
 

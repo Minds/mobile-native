@@ -157,6 +157,13 @@ const getOptionsList = (
         navigation.navigate('Settings');
       },
     },
+    {
+      name: 'Verify account',
+      icon: 'group',
+      onPress: async () => {
+        navigation.navigate('InAppVerification');
+      },
+    },
   ];
 
   return list;

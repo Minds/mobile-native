@@ -5,7 +5,7 @@ import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 
-export const CODEPUSH_VERSION = '4.31.3';
+export const CODEPUSH_VERSION = '4.31.4';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -68,6 +68,7 @@ export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
     : 'https://www.minds.com/';
+// : 'https://feat-user-verification-2460.minds.io/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;

@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import FeedList from '../../common/components/FeedList';
+import FeedList, { InjectItem } from '../../common/components/FeedList';
 import createChannelStore from './createChannelStore';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ChannelHeader from './ChannelHeader';
@@ -40,10 +40,11 @@ import {
 import AnimatedBanner from './AnimatedBanner';
 import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
 import Empty from '~/common/components/Empty';
-import { B1 } from '~/common/ui';
+import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import withModalProvider from '~/navigation/withModalProvide';
+import { hasVariation } from '../../../ExperimentsProvider';
 
 const tinycolor = require('tinycolor2');
 
@@ -70,6 +71,7 @@ const getColorFromURI = async uri => {
 };
 
 const EASING = Easing.bezier(0.16, 0.4, 0.3, 1) as any; //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
+const RECOMMENDATION_POSITION = 4;
 
 type PropsType = {
   navigation: any;
@@ -439,6 +441,20 @@ const ChannelScreen = observer((props: PropsType) => {
     </View>
   );
 
+  if (
+    !store.feedStore.injectItems &&
+    !store.channel.isOwner() &&
+    hasVariation('mob-4638-boost-v3')
+  ) {
+    store.feedStore.setInjectedItems([
+      new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
+        <Column background="primary">
+          <ChannelRecommendation location="newsfeed" />
+        </Column>
+      )),
+    ]);
+  }
+
   return (
     <ChannelContext.Provider value={channelContext}>
       {Boolean(backgroundColor) && (
@@ -460,6 +476,7 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
+        distinctBoosts
         header={
           <ChannelHeader
             store={store}
