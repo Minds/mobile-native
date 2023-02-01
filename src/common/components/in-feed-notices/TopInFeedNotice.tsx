@@ -1,12 +1,12 @@
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { observer } from 'mobx-react';
-import { NoticeName, noticeMapper } from './notices';
+import { noticeMapper } from './notices';
 
 /**
  * Current top in-feed notice
  */
 function TopInFeedNotice() {
-  const notice = inFeedNoticesService.getTopNotice<NoticeName>();
+  const notice = inFeedNoticesService.getTopNotice();
   return notice ? noticeMapper[notice] : null;
 }
 

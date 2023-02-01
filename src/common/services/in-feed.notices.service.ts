@@ -1,25 +1,25 @@
 import { action, observable, toJS } from 'mobx';
+import {
+  noticeMapper,
+  NoticeName,
+} from '../components/in-feed-notices/notices';
+import analyticsService from './analytics.service';
 import apiService, { ApiResponse } from './api.service';
 import logService from './log.service';
 import sessionService from './session.service';
 import { storages } from './storage/storages.service';
 
-type ResponseNotice = {
-  key: string;
+type Notice = {
+  key: NoticeName;
   location: string;
   should_show: boolean;
 };
 
 interface InFeedResponse extends ApiResponse {
-  notices: Array<ResponseNotice>;
+  notices: Array<Notice>;
 }
 
-type FormattedNotices = {
-  [key: string]: {
-    location: string;
-    should_show: boolean;
-  };
-};
+type Notices = InFeedResponse['notices'];
 
 type Dismissed = {
   [key: string]: string;
@@ -31,7 +31,7 @@ const DISMISS_DURATION = 60 * 24 * 60 * 60 * 1000; // 60 days
  * In feed notices service
  */
 export class InFeedNoticesService {
-  @observable.shallow data: null | FormattedNotices = null;
+  @observable.shallow data: null | Notices = null;
   @observable dismissed: Dismissed = {};
   loading = false;
 
@@ -46,7 +46,7 @@ export class InFeedNoticesService {
    * Init the service
    */
   init() {
-    const stored = this.loadFormattedData();
+    const stored = this.loadStoredData();
 
     if (stored) {
       this.setData(stored);
@@ -67,7 +67,7 @@ export class InFeedNoticesService {
   }
 
   @action
-  setData(data: FormattedNotices) {
+  setData(data: Notices) {
     this.data = data;
   }
 
@@ -82,36 +82,18 @@ export class InFeedNoticesService {
       this.data = data;
     }
   }
-
-  /**
-   * Format data
-   */
-  private formatData(data: Array<ResponseNotice>): FormattedNotices {
-    const formatted = {};
-    data
-      .filter(d => d.should_show) // store enabled ones only for optimization
-      .forEach(item => {
-        formatted[item.key] = {
-          location: item.location,
-          should_show: item.should_show,
-        };
-      });
-
-    return formatted;
-  }
-
   /**
    * Store the notices in local storage
    */
-  private storeFormattedData(data: FormattedNotices) {
-    storages.user?.setMap('IN_FEED_NOTICES', data);
+  private storeData(data: Notices) {
+    storages.user?.setArray('IN_FEED_NOTICES_DATA', data);
   }
 
   /**
    * Load from storage
    */
-  private loadFormattedData(): FormattedNotices | undefined | null {
-    return storages.user?.getMap<FormattedNotices>('IN_FEED_NOTICES');
+  private loadStoredData(): Notices | undefined | null {
+    return storages.user?.getArray('IN_FEED_NOTICES_DATA');
   }
 
   /**
@@ -134,9 +116,8 @@ export class InFeedNoticesService {
         'api/v3/feed-notices',
       );
       if (response.notices) {
-        const data = this.formatData(response.notices);
-        this.storeFormattedData(data);
-        this.setData(data);
+        this.setData(response.notices);
+        this.storeData(response.notices);
       }
     } catch (error) {
       logService.exception('[InFeedNoticesService]', error);
@@ -149,12 +130,17 @@ export class InFeedNoticesService {
    * Get the inline notice for a given position
    * @param position
    */
-  getInlineNotice<T = string>(position: number): T | undefined {
+  getInlineNotice(position: number): NoticeName | undefined {
     if (this.data !== null && !this.getTopNotice()) {
-      const notices: T[] = Object.keys(this.data).filter(
-        key => this.data![key].location === 'inline' && this.visible(key),
-      ) as T[];
-      return notices[position - 1];
+      const notices: Notices = this.data.filter(
+        notice =>
+          notice.location === 'inline' &&
+          notice.should_show &&
+          !this.isDismissed(notice.key),
+      );
+      if (notices.length > position) {
+        return notices[position - 1].key;
+      }
     }
   }
 
@@ -162,16 +148,39 @@ export class InFeedNoticesService {
    * Get the current top notice
    * (first visible top notice)
    */
-  getTopNotice<T = string>(): T | undefined {
+  getTopNotice(): NoticeName | undefined {
     if (this.data !== null) {
-      let topNotice: T | undefined;
-      Object.keys(this.data).forEach(key => {
-        const notice = this.data ? this.data[key] : undefined;
-        if (notice && notice.location === 'top' && this.visible(key)) {
-          topNotice = key as T;
-        }
-      });
-      return topNotice;
+      const topNotice = this.data.find(
+        (notice: Notice) =>
+          notice.should_show &&
+          notice.location === 'top' &&
+          !this.isDismissed(notice.key),
+      );
+
+      return topNotice?.key;
+    }
+  }
+
+  /**
+   * Tracks a a view in the top notice
+   */
+  trackViewTop() {
+    const currentTop = this.getTopNotice();
+    // there is a notice and it is implemented (exists in mapper)
+    if (currentTop && noticeMapper[currentTop]) {
+      analyticsService.trackView(`feed-notice-${currentTop}`);
+    }
+  }
+
+  /**
+   * Tracks a a view in the in feed notice
+   */
+  trackViewInFeed(position) {
+    const notice = this.getInlineNotice(position);
+
+    // there is a notice and it is implemented (exists in mapper)
+    if (notice && noticeMapper[notice]) {
+      analyticsService.trackView(`feed-notice-${notice}`);
     }
   }
 
@@ -199,11 +208,13 @@ export class InFeedNoticesService {
    * @returns boolean
    */
   visible(noticeName: string) {
-    if (this.data && this.data[noticeName]) {
-      // we are only storing should_show = true notices but we check in case that change in the future
-      return this.data[noticeName].should_show && !this.isDismissed(noticeName);
-    }
-    return false;
+    return (
+      this.data &&
+      this.data.some(
+        notice => notice.should_show && notice.key === noticeName,
+      ) &&
+      !this.isDismissed(noticeName)
+    );
   }
 }
 

@@ -60,6 +60,7 @@ export class AnalyticsService {
           installAutotracking: false,
           base64Encoding: true,
           deepLinkContext: true,
+          logLevel: 'debug',
         },
         sessionConfig: {
           foregroundTimeout: 600,
