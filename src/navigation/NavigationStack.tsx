@@ -349,7 +349,10 @@ const RootStack = observer(function () {
               getComponent={() =>
                 require('~/compose/SupermindConfirmation').default
               }
-              options={TransitionPresets.ModalPresentationIOS}
+              options={{
+                ...TransitionPresets.ModalPresentationIOS,
+                gestureEnabled: true,
+              }}
             />
             <RootStackNav.Screen
               name="SupermindCompose"
