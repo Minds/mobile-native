@@ -40,13 +40,16 @@ class OpenURLService {
      * TODO: do not open links such as minds links and youtube
      *       links in the IABrowser. Logic is TBD
      **/
+    // eslint-disable-next-line no-undef
     const excludedURLs = ['youtube.com', 'youtu.be'].map(url => new URL(url));
     return !excludedURLs.find(p => url.includes(String(p)));
   }
 
   async openLinkInInAppBrowser(url) {
+    Alert.alert('open-url', `${url}`);
     try {
       if (await InAppBrowser.isAvailable()) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const result = await InAppBrowser.open(url, {
           // iOS Properties
           dismissButtonStyle: 'cancel',

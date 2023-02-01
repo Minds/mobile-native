@@ -202,4 +202,4 @@ type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
 
 export default new DeeplinksRouter();
 
-const logger = (message: string) => Alert.alert('dl-router', message);
+const logger = (message: string) => Alert.alert('deeplinks-router', message);
