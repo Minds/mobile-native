@@ -24,7 +24,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import Orientation from 'react-native-orientation-locker';
 import { PortalProvider } from '@gorhom/portal';
 import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
@@ -54,7 +53,7 @@ import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
-import { QueryProvider } from '~/services';
+import { Orientation, QueryProvider } from '~/services';
 import { codePush } from 'modules/codepush';
 import { UIProvider } from '@minds/ui';
 
@@ -82,7 +81,7 @@ class App extends Component<Props> {
 
   constructor(props) {
     super(props);
-    Orientation.lockToPortrait();
+    Orientation.lockPortrait();
 
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};

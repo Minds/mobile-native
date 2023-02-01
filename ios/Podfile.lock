@@ -41,6 +41,9 @@ PODS:
     - ReactCommon/turbomodule/core
   - ExpoStoreReview (6.0.0):
     - ExpoModulesCore
+  - EXScreenOrientation (5.0.1):
+    - ExpoModulesCore
+    - React-Core
   - EXSensors (12.0.1):
     - ExpoModulesCore
   - FBLazyVector (0.70.6)
@@ -455,8 +458,6 @@ PODS:
     - React-Core
   - react-native-notifications (3.0.5):
     - React
-  - react-native-orientation-locker (1.5.0):
-    - React-Core
   - react-native-randombytes (3.6.0):
     - React-Core
   - react-native-safe-area-context (4.0.1):
@@ -666,6 +667,7 @@ DEPENDENCIES:
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoStoreReview (from `../node_modules/expo-store-review/ios`)
+  - EXScreenOrientation (from `../node_modules/expo-screen-orientation/ios`)
   - EXSensors (from `../node_modules/expo-sensors/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -728,7 +730,6 @@ DEPENDENCIES:
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-notifications (from `../node_modules/react-native-notifications`)
-  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -853,6 +854,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core"
   ExpoStoreReview:
     :path: "../node_modules/expo-store-review/ios"
+  EXScreenOrientation:
+    :path: "../node_modules/expo-screen-orientation/ios"
   EXSensors:
     :path: "../node_modules/expo-sensors/ios"
   FBLazyVector:
@@ -930,8 +933,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-notifications:
     :path: "../node_modules/react-native-notifications"
-  react-native-orientation-locker:
-    :path: "../node_modules/react-native-orientation-locker"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
@@ -1047,6 +1048,7 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: b40c2133ad57ae105b1b12a319e314463c817f6b
   ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
   ExpoStoreReview: ff6d631f2949eb7e4b2d14146ef6af25a16d770d
+  EXScreenOrientation: 07e5aeff07bce09a2b214981e612d87fd7719997
   EXSensors: c4d17812887f3b8bec1da3c1e501a1d7b02bf19d
   FBLazyVector: 48289402952f4f7a4e235de70a9a590aa0b79ef4
   FBReactNativeSpec: dd1186fd05255e3457baa2f4ca65e94c2cd1e3ac
@@ -1115,7 +1117,6 @@ SPEC CHECKSUMS:
   react-native-mmkv-storage: 8ba3c0216a6df283ece11205b442a3e435aec4e5
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: 641106139721d9ae5e5f343074ce7cf217584da0
-  react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
   react-native-safe-area-context: eec048ba481a7ec7b1bf9d7b7a78fb1103f4806d
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168

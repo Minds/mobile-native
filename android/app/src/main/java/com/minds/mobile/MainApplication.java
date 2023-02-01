@@ -32,7 +32,6 @@ import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import com.minds.mobile.CustomMMKVJSIModulePackage;
 import com.facebook.react.bridge.JSIModulePackage;
-import org.wonday.orientation.OrientationActivityLifecycle;
 import com.microsoft.codepush.react.CodePush;
 
 import com.minds.mobile.newarchitecture.MainApplicationReactNativeHost;
@@ -93,7 +92,6 @@ public class MainApplication extends Application implements ShareApplication, Re
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ReactNativeExceptionHandlerModule.replaceErrorScreenActivityClass(CustomErrorScreen.class);
-    registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance()); 
      ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
 

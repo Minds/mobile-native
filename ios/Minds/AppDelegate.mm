@@ -5,9 +5,9 @@
 #import "RNBootSplash.h"
 #import <RNShareMenu/ShareMenuManager.h>
 #import "ReactNativeExceptionHandler.h"
-#import "Orientation.h"
 #import <CodePush/CodePush.h>
 #import <React/RCTLinkingManager.h>
+#import <React/RCTConvert.h>
 // end custom imports
 
 
@@ -42,7 +42,7 @@
 {
   RCTAppSetupPrepareApp(application);
 
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
 
 #if RCT_NEW_ARCH_ENABLED
   _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
@@ -52,7 +52,7 @@
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
 
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"Minds", launchOptions);
+  UIView *rootView = [self.reactDelegate createRootViewWithBridge:bridge moduleName:@"Minds" initialProperties:nil];
 
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
@@ -61,7 +61,7 @@
   }
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
+  UIViewController *rootViewController = [self.reactDelegate createRootViewController];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
@@ -94,12 +94,8 @@
     // [ReactNativeExceptionHandler releaseExceptionHold]; when you are done to release the UI lock.
   }];
   // end minds packages init
-
+  [super application:application didFinishLaunchingWithOptions:launchOptions];
   return YES;
-}
-
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-  return [Orientation getOrientation];
 }
 
 // minds added methods

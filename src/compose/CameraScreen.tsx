@@ -4,7 +4,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, InteractionManager, StatusBar, View } from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
 import {
@@ -29,6 +28,7 @@ import PermissionsCheck from './PermissionsCheck';
 import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
 import { useBackHandler } from '@react-native-community/hooks';
+import { Orientation } from '~/services';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -86,13 +86,15 @@ export default observer(function (props) {
   const setModeVideo = useCallback(() => setMode('video'), []);
 
   useEffect(() => {
-    Orientation.unlockAllOrientations();
-    return () => Orientation.lockToPortrait();
+    Orientation.unlock();
+    return () => {
+      Orientation.lockPortrait();
+    };
   }, []);
 
   useEffect(() => {
-    if (mediaToConfirm) Orientation.lockToPortrait();
-    else Orientation.unlockAllOrientations();
+    if (mediaToConfirm) Orientation.lockPortrait();
+    else Orientation.unlock();
   }, [mediaToConfirm]);
 
   /**
