@@ -139,7 +139,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
       <Spacer bottom="XL">
         {recommendation?.result?.entities.slice(0, listSize).map(suggestion => (
           <ChannelRecommendationItem
-            key={suggestion.entity_guid}
+            key={suggestion.entity.guid}
             channel={suggestion.entity}
             onSubscribed={onSubscribed}
           />

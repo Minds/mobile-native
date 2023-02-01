@@ -27,18 +27,18 @@ describe('Comment action component', () => {
     //jest.runAllTimers();
   });
 
-  it('renders correctly', async () => {
+  it('renders correctly', () => {
     screen.update();
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have a comment button', async () => {
+  it('should have a comment button', () => {
     screen.update();
 
     expect(screen.find('withSpacer(IconButtonNextComponent)')).toHaveLength(1);
   });
 
-  it('should navigate a thumb on press ', async () => {
+  it('should navigate a thumb on press ', () => {
     navigation.dangerouslyGetState.mockReturnValue({ routes: null });
 
     screen.update();

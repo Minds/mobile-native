@@ -9,7 +9,6 @@ import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
-import sessionService from '../../../src/common/services/session.service';
 import { getStores } from '../../../AppStores';
 import NavigationService from '../../../src/navigation/NavigationService';
 
@@ -24,6 +23,7 @@ getStores.mockReturnValue({
 });
 
 jest.mock('../../../src/auth/AuthService');
+jest.mock('~/common/services/analytics.service');
 
 var mock = new MockAdapter(axios);
 
@@ -355,7 +355,7 @@ describe('api service PUT', () => {
  */
 describe('api service auth refresh', () => {
   beforeAll(() => {
-    session.addSession({
+    return session.addSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -369,8 +369,8 @@ describe('api service auth refresh', () => {
     auth.refreshToken.mockClear();
   });
   it('auth token should be refreshed only once for simultaneous calls', async () => {
-    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
-    sessionService.refreshToken = 'refreshtoken';
+    session.refreshTokenExpires = Date.now() / 1000 + 10000;
+    session.refreshToken = 'refreshtokenfake';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -409,9 +409,9 @@ describe('api service auth refresh', () => {
   });
 
   it('must fail without logout if token refresh fails by connectivity/server error', async () => {
-    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    session.refreshTokenExpires = Date.now() / 1000 + 10000;
     // has session token
-    sessionService.token = 'sometoken';
+    session.token = 'sometoken';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -457,9 +457,9 @@ describe('api service auth refresh', () => {
 
   it('should logout if refresh fails with response is 401', async () => {
     // not expired session token
-    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    session.refreshTokenExpires = Date.now() / 1000 + 10000;
     // has session token
-    sessionService.token = 'sometoken';
+    session.token = 'sometoken';
 
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };

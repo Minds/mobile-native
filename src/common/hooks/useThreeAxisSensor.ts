@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Accelerometer, Gyroscope } from 'expo-sensors';
-import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
 
 type SensorParams = {
-  sensor: ThreeAxisSensor;
+  sensor: typeof Gyroscope | typeof Accelerometer;
   collection: string[];
   loading?: (isLoading: boolean) => void;
 };

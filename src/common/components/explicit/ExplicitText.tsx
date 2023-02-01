@@ -43,33 +43,15 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * Handle dimensions changes
-   */
-  dimensionChange = () => {
-    this.setState({
-      width: Dimensions.get('window').width,
-    });
-  };
-
-  /**
    * constructor
    */
   constructor(props) {
     super(props);
-    Dimensions.addEventListener('change', this.dimensionChange);
 
     const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     this.gradientColors = [startColor, endColor];
-  }
-
-  /**
-   * On component will unmount
-   */
-  componentWillUnmount() {
-    // allways remove listeners on unmount
-    Dimensions.removeEventListener('change', this.dimensionChange);
   }
 
   /**
