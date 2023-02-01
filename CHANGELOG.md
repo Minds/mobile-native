@@ -16,6 +16,7 @@ Minds Mobile
 
 - [Fix android 13 text input crash](minds/mobile-native@401812d1bce1ca8c84e4ed9b0935c4ecc6709e81) ([merge request](minds/mobile-native!2071))
 - [Supermind border not appearing in portrait mode ](minds/mobile-native!2064) ([merge request](minds/mobile-native!2064))
+- [Fix empty tag cration allowed ](minds/mobile-native!2055) ([merge request](minds/mobile-native!2055))
 
 ### Changed (3 changes)
 
