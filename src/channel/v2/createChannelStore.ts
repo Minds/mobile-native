@@ -155,7 +155,6 @@ const createChannelStore = () => {
         .setEndpoint(
           `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
         )
-        .setIsTiled(filter === 'images' || filter === 'videos')
         .setAsActivities(false)
         .clear()
         .fetchRemoteOrLocal();
