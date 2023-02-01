@@ -11,7 +11,6 @@ import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
@@ -195,17 +194,14 @@ export const styles = StyleSheet.create({
 });
 
 const useChatIconState = () => {
-  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
   const [isChatIconHidden, setChatIconHidden] = useState(false);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
       SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
-        if (!installed) {
-          setChatIconHidden(isChatHidden);
-        }
+        setChatIconHidden(installed);
       });
     }
-  }, [isChatHidden]);
+  }, []);
   return isChatIconHidden;
 };

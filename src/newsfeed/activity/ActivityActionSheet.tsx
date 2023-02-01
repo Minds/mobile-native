@@ -23,7 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -502,11 +502,4 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   }
 }
 
-const withHiddenChat = WrappedComponent => props => {
-  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
-  return <WrappedComponent {...{ ...props, isChatHidden }} />;
-};
-
-export default withSafeAreaInsets(
-  withChannelContext(withHiddenChat(ActivityActionSheet)),
-);
+export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));

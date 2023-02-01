@@ -29,8 +29,6 @@ import TransparentLayer from '../common/components/TransparentLayer';
 import withModalProvider from './withModalProvide';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
-import { useFeature } from '@growthbook/growthbook-react';
-import AuthService from '~/auth/AuthService';
 import { isStoryBookOn } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -39,8 +37,6 @@ const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
-// const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
-// const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
 const modalOptions = {
   gestureResponseDistance: 240,
@@ -158,19 +154,6 @@ const AppStack = observer(() => {
           getComponent={() => require('~/wire/v2/FabScreen').default}
           options={hideHeader}
         />
-        {/* <AppStackNav.Screen
-        name="BlockchainWallet"
-        component={BlockchainWalletScreen}
-        options={BlockchainWalletScreen.navigationOptions}
-      />
-      <AppStackNav.Screen
-        name="BlockchainWalletImport"
-        component={BlockchainWalletImportScreen}
-      />
-      <AppStackNav.Screen
-        name="BlockchainWalletDetails"
-        component={BlockchainWalletDetailsScreen}
-      /> */}
         <AppStackNav.Screen
           name="Report"
           getComponent={() => require('~/report/ReportScreen').default}
@@ -281,15 +264,6 @@ const defaultScreenOptions: StackNavigationOptions = {
 };
 
 const RootStack = observer(function () {
-  const codeEmailFF = useFeature('minds-3055-email-codes');
-  const is_email_confirmed = sessionService.getUser()?.email_confirmed;
-
-  const shouldShowEmailVerification =
-    !is_email_confirmed &&
-    !sessionService.switchingAccount &&
-    codeEmailFF.on &&
-    AuthService.justRegistered;
-
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
@@ -302,26 +276,6 @@ const RootStack = observer(function () {
               ...TransitionPresets.RevealFromBottomAndroid,
             }}
           />
-        ) : shouldShowEmailVerification ? (
-          <>
-            <RootStackNav.Screen
-              initialParams={{ mfaType: 'email' }}
-              name="App"
-              getComponent={() =>
-                require('~/auth/InitialEmailVerificationScreen').default
-              }
-              options={TransitionPresets.RevealFromBottomAndroid}
-            />
-            <RootStackNav.Screen
-              name="MultiUserScreen"
-              getComponent={() =>
-                require('~/auth/multi-user/MultiUserScreen').default
-              }
-              options={{
-                title: i18n.t('multiUser.switchChannel'),
-              }}
-            />
-          </>
         ) : (
           <>
             <RootStackNav.Screen
@@ -368,6 +322,7 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
+              navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
               name="ChooseBrowserModal"
               getComponent={() =>
                 require('~/settings/screens/ChooseBrowserModalScreen').default
@@ -378,10 +333,6 @@ const RootStack = observer(function () {
               name="ImageGallery"
               getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
-            {/* <RootStackNav.Screen
-              name="BlockchainWalletModal"
-              component={BlockchainWalletModalScreen}
-            /> */}
             <RootStackNav.Screen
               name="UpgradeScreen"
               getComponent={() => require('~/upgrade/UpgradeScreen').default}

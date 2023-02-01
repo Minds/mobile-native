@@ -19,7 +19,7 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
 
@@ -70,7 +70,9 @@ export class AppInitManager {
             {
               text: 'Yes',
               onPress: () => {
-                if (err instanceof Error) Clipboard.setString(err.stack || '');
+                if (err instanceof Error) {
+                  Clipboard.setString(err.stack || '');
+                }
               },
             },
             { text: 'No' },
@@ -143,11 +145,7 @@ export class AppInitManager {
     // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
     if (this.navReady) {
       // when the experiment is enabled, we don't want to navigate to the initial screen because the navigation is done after the email verification.
-      this.initialNavigationHandling(
-        hasVariation('minds-3055-email-codes')
-          ? Boolean(user.email_confirmed)
-          : true,
-      );
+      this.initialNavigationHandling(true);
     }
   };
 
@@ -181,14 +179,9 @@ export class AppInitManager {
       // handle deep link (if the app is opened by one)
       if (deepLinkUrl) {
         setTimeout(() => {
-          //TODO: remove after we check the push notification issue
-          console.log('[App] Handling deeplink');
           deeplinkService.navigate(deepLinkUrl);
         }, 300);
       }
-
-      //TODO: remove after we check the push notification issue
-      console.log('[App] Handling initial notifications');
 
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();

@@ -15,7 +15,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import { Platform } from 'react-native';
 import { useStores } from '../../common/hooks/use-stores';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -195,7 +195,6 @@ type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const navigation = useNavigation<NavigationType>();
   const { chat } = useStores();
-  const isChatHidden = useIsFeatureOn('mob-4630-hide-chat-icon');
 
   /**
    * Opens chat
@@ -207,7 +206,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
 
     if (Platform.OS === 'android') {
       try {
-        chat.checkAppInstalled(!isChatHidden).then(installed => {
+        chat.checkAppInstalled().then(installed => {
           if (!installed) {
             return;
           }
@@ -221,7 +220,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
     } else {
       chat.directMessage(props.channel.guid);
     }
-  }, [chat, props.channel, isChatHidden]);
+  }, [chat, props.channel]);
 
   const options = getOptions(
     props.channel,

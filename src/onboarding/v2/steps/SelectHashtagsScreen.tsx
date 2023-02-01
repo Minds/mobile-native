@@ -1,4 +1,4 @@
-import { useFeature } from '@growthbook/growthbook-react';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -21,7 +21,7 @@ import ModalContainer from './ModalContainer';
 export default observer(function SelectHashtagsScreen({ navigation, route }) {
   const theme = ThemedStyles.style;
 
-  const redirectExperiment = useFeature('mob-discovery-redirect');
+  const redirectExperiment = useIsFeatureOn('mob-discovery-redirect');
 
   const { hashtag } = useLegacyStores();
 
@@ -49,13 +49,13 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
       // refresh in-feed notices when leaving the screen
       inFeedNoticesService.load();
 
-      if (route.params?.initial && redirectExperiment.on) {
+      if (route.params?.initial && redirectExperiment) {
         navigation.navigate('Tabs', {
           screen: 'Discovery',
         });
       }
     };
-  }, [hashtag, navigation, redirectExperiment.on, route]);
+  }, [hashtag, navigation, redirectExperiment, route]);
 
   const onPress = () => {
     if (hashtag.suggested.filter(s => s.selected).length >= 3) {

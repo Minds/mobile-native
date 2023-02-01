@@ -79,11 +79,8 @@ export const useIsAndroidFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && !IS_IOS;
 
 export type FeatureID =
-  | 'mobile-supermind'
-  | 'mob-4630-hide-chat-icon'
   | 'mob-4637-ios-hide-minds-superminds'
-  | 'mob-stripe-connect-4587'
   | 'mob-4638-boost-v3'
-  | 'mob-minds-3119-captcha-for-engagement'
   | 'mob-4424-sockets'
-  | 'minds-3055-email-codes';
+  | 'mob-discovery-redirect'
+  | 'mob-4472-in-app-verification';

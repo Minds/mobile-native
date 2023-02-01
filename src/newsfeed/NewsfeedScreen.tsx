@@ -1,4 +1,3 @@
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
@@ -34,6 +33,7 @@ import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 import { CodePushUpdatePrompt } from 'modules/codepush';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -71,6 +71,7 @@ const overrideItemLayout = (layout, item, index) => {
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
+  const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
 
   const refreshNewsfeed = useCallback(() => {
     newsfeed.scrollToTop();
@@ -124,9 +125,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         <PortraitContentBar />
         <CodePushUpdatePrompt />
         <TopInFeedNotice />
-        <IfFeatureEnabled feature="mob-4472-in-app-verification">
-          <InAppVerificationPrompt />
-        </IfFeatureEnabled>
+        {inAppVerification ? <InAppVerificationPrompt /> : null}
         <NewsfeedHeader
           feedType={newsfeed.feedType}
           onFeedTypeChange={newsfeed.changeFeedTypeChange}
@@ -186,12 +185,10 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
             overrideItemLayout={overrideItemLayout}
             bottomComponent={
               isLatest ? (
-                <IfFeatureEnabled feature="mob-4193-polling">
-                  <SeeLatestPostsButton
-                    onPress={refreshNewsfeed}
-                    feedStore={newsfeed.latestFeedStore}
-                  />
-                </IfFeatureEnabled>
+                <SeeLatestPostsButton
+                  onPress={refreshNewsfeed}
+                  feedStore={newsfeed.latestFeedStore}
+                />
               ) : undefined
             }
             header={<Topbar noInsets navigation={navigation} />}

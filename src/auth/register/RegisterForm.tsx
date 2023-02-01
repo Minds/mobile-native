@@ -26,7 +26,6 @@ import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingVie
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { useFeature } from '@growthbook/growthbook-react';
 
 type PropsType = {
   // called after registration is finished
@@ -42,7 +41,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const scrollViewRef = useRef<ScrollView>();
   const emailRef = useRef<InputContainerImperativeHandle>(null);
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
-  const friendlyCaptchaEnabled = useFeature('mob-4231-captcha').on;
 
   const store = useLocalStore(() => ({
     focused: false,
@@ -63,10 +61,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       });
       store.usernameTaken = !response.valid;
     }, 300),
-    friendlyCaptchaEnabled,
-    setFriendlyCaptchaEnabled(enabled: boolean) {
-      store.friendlyCaptchaEnabled = enabled;
-    },
     setCaptcha(value: string) {
       this.captcha = value;
     },
@@ -90,9 +84,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           exclusive_promotions: store.exclusivePromotions,
           captcha: store.captcha,
         } as registerParams;
-        if (store.friendlyCaptchaEnabled) {
-          params.friendly_captcha_enabled = true;
-        }
+        params.friendly_captcha_enabled = true;
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
@@ -146,12 +138,11 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         return;
       }
 
-      // use friendly captcha if it was enabled and if the puzzle was solved,
+      // use friendly captchaif the puzzle was solved,
       // otherwise fall back to the legacy captcha
-      if (store.friendlyCaptchaEnabled && this.captcha) {
+      if (this.captcha) {
         return this.register();
       } else {
-        store.setFriendlyCaptchaEnabled(false);
         captchaRef.current?.show();
       }
     },
@@ -271,9 +262,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         }
       />
 
-      {store.friendlyCaptchaEnabled && (
-        <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
-      )}
+      <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
     </View>
   );
 
