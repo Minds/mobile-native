@@ -30,8 +30,8 @@ export default function WebViewScreen({
    */
   const handleNavigationStateChange = route.params.redirectUrl
     ? (event: WebViewNavigation) => {
-        if (event.url === route.params.redirectUrl) {
-          route.params.onRedirect?.();
+        if (event.url.startsWith(route.params.redirectUrl!)) {
+          route.params.onRedirect?.(event);
           navigation.goBack();
           return false;
         }

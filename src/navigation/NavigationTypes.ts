@@ -15,6 +15,9 @@ import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
 import type { BoostType } from '../boost/legacy/createBoostStore';
+import type { WebViewNavigation } from 'react-native-webview';
+import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
+import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
 
 type AnyType = any;
 
@@ -36,7 +39,7 @@ type WebViewParams = {
   url: string;
   headers?: { [key: string]: string };
   redirectUrl?: string;
-  onRedirect?: () => void;
+  onRedirect?: (event: WebViewNavigation) => void;
 };
 
 export type DiscoveryStackParamList = {
@@ -54,6 +57,7 @@ export type DiscoveryStackParamList = {
 };
 
 export type MoreStackParamList = {
+  SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
@@ -142,6 +146,7 @@ export type RootStackParamList = {
     group?: GroupModel;
     parentKey?: string;
   };
+  SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
     data: SupermindRequestParam;
     closeComposerOnClear?: boolean;
