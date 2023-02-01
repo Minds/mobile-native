@@ -67,6 +67,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
               Object {
                 "textAlign": "left",
               },
+              Object {
+                "lineHeight": 26,
+              },
             ]
           }
         >

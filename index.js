@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'; // fix ongesture handler error
 // import 'node-libs-react-native/globals';
 import './global';
 import crypto from 'crypto'; // DO NOT REMOVE!
+import 'intl-pluralrules';
 
 import React from 'react';
 // if (process.env.NODE_ENV === 'development') {

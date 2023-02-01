@@ -67,6 +67,9 @@ exports[`Tos screen render and accept 1`] = `
               Object {
                 "textAlign": "left",
               },
+              Object {
+                "lineHeight": 26,
+              },
             ]
           }
         >
