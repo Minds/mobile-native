@@ -2,6 +2,30 @@
 
 Minds Mobile
 
+## 4.31.4 (2023-02-01)
+
+### Added (5 changes)
+
+- [added 'Boost is changing' note to BoostScreen](minds/mobile-native@0de2b09d8547c7497d151c0d40d003fab4d7df96) ([merge request](minds/mobile-native!2082))
+- [Added channel recommendations in the channel feed](minds/mobile-native@16f655b229ac13d449b816b5c189a41d52655d41) ([merge request](minds/mobile-native!2077))
+- [Added boosts in the channel feed](minds/mobile-native@a71118d543f6f45c27d0b95feb58e1e9e98eb9e4) ([merge request](minds/mobile-native!2077))
+- [Added boosted channel support to recommendations list](minds/mobile-native@2e0ae3bf9970cd0aebc34cc9848070851f9b84f1) ([merge request](minds/mobile-native!2074))
+- [New design system: buttons implementation, semantic color for texts, color and...](minds/mobile-native@90e35dd1de9b524e305714c9871b38222d603683) ([merge request](minds/mobile-native!2066))
+
+### Fixed (1 change)
+
+- [Fix android 13 text input crash](minds/mobile-native@401812d1bce1ca8c84e4ed9b0935c4ecc6709e81) ([merge request](minds/mobile-native!2071))
+
+### Changed (3 changes)
+
+- [Update minds+ monetization modal](minds/mobile-native@62a55c8b2c84a4b644308e2533498685552f37b0) ([merge request](minds/mobile-native!2078))
+- [Refactor composer to improve the performance](minds/mobile-native@eae5f11973b7fa2597677ba11b01c470035ad516) ([merge request](minds/mobile-native!2071))
+- [(feat) add boost insight estimated reach to boost composer](minds/mobile-native@4a15f2d34f098e4afcd2b11cfd97050620bb6ec2) ([merge request](minds/mobile-native!2058))
+
+### Removed (1 change)
+
+- [Removed token confirmation modal when switching to token in boost composer](minds/mobile-native@af6d3d63c072e426acf2a4cfbab6cc1138439fc2) ([merge request](minds/mobile-native!2073))
+
 ## 4.31.3 - 2023-01-18
 
 ### Changed
