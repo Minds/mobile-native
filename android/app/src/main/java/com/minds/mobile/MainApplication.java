@@ -73,7 +73,7 @@ public class MainApplication extends Application implements ShareApplication, Re
   });
 
   private final ReactNativeHost mNewArchitectureNativeHost =
-      new MainApplicationReactNativeHost(this);
+      new ReactNativeHostWrapper(this, new MainApplicationReactNativeHost(this));
 
   @Override
   public ReactNativeHost getReactNativeHost() {
