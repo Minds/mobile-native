@@ -20,7 +20,7 @@ class BoostConsoleStore {
   /**
    * Boosts list filter
    */
-  @observable filter: 'newsfeed' | 'sidebar' = 'newsfeed';
+  @observable filter: 'feed' | 'sidebar' = 'feed';
   @observable peer_filter = 'inbox';
   @observable feedFilter: 'all' | BoostStatus = 'all';
 
@@ -111,7 +111,7 @@ class BoostConsoleStore {
   @action
   reset() {
     this.list = new OffsetListStore();
-    this.filter = 'newsfeed';
+    this.filter = 'feed';
     this.feedFilter = 'all';
     this.peer_filter = 'inbox';
     this.loading = false;

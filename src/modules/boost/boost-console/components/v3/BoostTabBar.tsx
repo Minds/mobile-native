@@ -18,7 +18,7 @@ function BoostTabBar({}: BoostTabBarProps) {
 
   const tabs: Array<TabType<string>> = [
     {
-      id: 'newsfeed',
+      id: 'feed',
       title: t('Feed'),
     },
     {

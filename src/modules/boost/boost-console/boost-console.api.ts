@@ -33,7 +33,7 @@ export async function getBoosts(offset, filter, peer_filter) {
 
 export async function getBoostsV3(
   offset,
-  location: 'newsfeed' | 'sidebar',
+  location: 'feed' | 'sidebar',
   status?: BoostStatus,
 ) {
   try {
@@ -41,7 +41,7 @@ export async function getBoostsV3(
       offset: offset,
       limit: 15,
       status,
-      location: location === 'newsfeed' ? 1 : 2,
+      location: location === 'feed' ? 1 : 2,
     });
 
     return {
