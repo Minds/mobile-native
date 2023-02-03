@@ -115,6 +115,11 @@ const navigator = {
         guid: this.notification.entity.activity_guid,
         hydrate: false,
       };
+    } else if (this.notification.type === NotificationType.boost_rejected) {
+      activityParams = {
+        entity: this.notification.entity.entity,
+        hydrate: true,
+      };
     } else {
       activityParams = {
         entity: this.notification.entity,
