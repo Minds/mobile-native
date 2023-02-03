@@ -5,7 +5,6 @@ const en = {
   dayWithCount_plural: '{{count}} days',
   tokenWithCount: '{{count}} token',
   tokenWithCount_plural: '{{count}} tokens',
-  Mature: 'Controversial',
 };
 
 export default en;
