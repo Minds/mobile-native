@@ -38,7 +38,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLinearGradient (12.0.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.1.1):
+  - ExpoModulesCore (1.0.4):
     - React-Core
     - ReactCommon/turbomodule/core
   - ExpoStoreReview (6.0.0):
@@ -1038,7 +1038,7 @@ SPEC CHECKSUMS:
   ExpoImagePicker: d2a1cea4023008ae2fb0d95f33422b80772cc76e
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
   ExpoLinearGradient: b40c2133ad57ae105b1b12a319e314463c817f6b
-  ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
+  ExpoModulesCore: 8211c89bcc3ba86e2d02c54b1d31f1fa81acb6de
   ExpoStoreReview: ff6d631f2949eb7e4b2d14146ef6af25a16d770d
   EXScreenOrientation: 07e5aeff07bce09a2b214981e612d87fd7719997
   EXSensors: c4d17812887f3b8bec1da3c1e501a1d7b02bf19d
