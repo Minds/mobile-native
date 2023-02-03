@@ -29,6 +29,8 @@ import TransparentLayer from '../common/components/TransparentLayer';
 import withModalProvider from './withModalProvide';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
+import { useFeature } from '@growthbook/growthbook-react';
+import AuthService from '~/auth/AuthService';
 import { isStoryBookOn } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -264,6 +266,15 @@ const defaultScreenOptions: StackNavigationOptions = {
 };
 
 const RootStack = observer(function () {
+  const codeEmailFF = useFeature('minds-3055-email-codes');
+  const is_email_confirmed = sessionService.getUser()?.email_confirmed;
+
+  const shouldShowEmailVerification =
+    !is_email_confirmed &&
+    !sessionService.switchingAccount &&
+    codeEmailFF.on &&
+    AuthService.justRegistered;
+
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
@@ -276,6 +287,26 @@ const RootStack = observer(function () {
               ...TransitionPresets.RevealFromBottomAndroid,
             }}
           />
+        ) : shouldShowEmailVerification ? (
+          <>
+            <RootStackNav.Screen
+              initialParams={{ mfaType: 'email' }}
+              name="App"
+              getComponent={() =>
+                require('~/auth/InitialEmailVerificationScreen').default
+              }
+              options={TransitionPresets.RevealFromBottomAndroid}
+            />
+            <RootStackNav.Screen
+              name="MultiUserScreen"
+              getComponent={() =>
+                require('~/auth/multi-user/MultiUserScreen').default
+              }
+              options={{
+                title: i18n.t('multiUser.switchChannel'),
+              }}
+            />
+          </>
         ) : (
           <>
             <RootStackNav.Screen

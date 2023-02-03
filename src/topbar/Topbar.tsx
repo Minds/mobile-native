@@ -199,7 +199,7 @@ const useChatIconState = () => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
-        setChatIconHidden(installed);
+        setChatIconHidden(!installed);
       });
     }
   }, []);
