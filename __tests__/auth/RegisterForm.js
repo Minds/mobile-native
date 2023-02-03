@@ -88,7 +88,6 @@ describe('RegisterScreen component', () => {
       captcha: '{"jwtToken":"FAFA","clientText":"some45"}',
       email: 'myuser@minds.com',
       exclusive_promotions: true,
-      friendly_captcha_enabled: true,
       password: 'Temp!1234',
       username: 'myuser',
     });

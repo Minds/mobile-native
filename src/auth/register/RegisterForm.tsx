@@ -61,6 +61,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       });
       store.usernameTaken = !response.valid;
     }, 300),
+    friendlyCaptchaEnabled: true,
+    setFriendlyCaptchaEnabled(enabled: boolean) {
+      store.friendlyCaptchaEnabled = enabled;
+    },
     setCaptcha(value: string) {
       this.captcha = value;
     },
@@ -84,7 +88,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           exclusive_promotions: store.exclusivePromotions,
           captcha: store.captcha,
         } as registerParams;
-        params.friendly_captcha_enabled = true;
+        if (store.friendlyCaptchaEnabled) {
+          params.friendly_captcha_enabled = true;
+        }
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
@@ -138,11 +144,12 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         return;
       }
 
-      // use friendly captchaif the puzzle was solved,
+      // use friendly captcha if it was enabled and if the puzzle was solved,
       // otherwise fall back to the legacy captcha
-      if (this.captcha) {
+      if (store.friendlyCaptchaEnabled && this.captcha) {
         return this.register();
       } else {
+        store.setFriendlyCaptchaEnabled(false);
         captchaRef.current?.show();
       }
     },
@@ -262,7 +269,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         }
       />
 
-      <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
+      {store.friendlyCaptchaEnabled && (
+        <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
+      )}
     </View>
   );
 
