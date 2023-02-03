@@ -89,7 +89,8 @@ class BoostConsoleStore {
 
   @action
   setFilter = filter => {
-    this.filter = filter;
+    // for backward compatibility
+    this.filter = filter === 'newsfeed' ? 'feed' : filter;
     this.list.clearList();
     this.loadList();
   };
