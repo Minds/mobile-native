@@ -154,7 +154,7 @@
       "description": "I understand this transaction is non-refundable."
     },
     "supermind": "Supermind",
-    "requireTwitter": "Require reply to be posted on Twitter",
+    "requireTwitter": "Optional: Require reply to be posted on Twitter",
     "twitterConnect": {
       "connectSuccess": "You channel is now connected to your Twitter account",
       "connectFailed": "Something went wrong while connecting to Twitter",
