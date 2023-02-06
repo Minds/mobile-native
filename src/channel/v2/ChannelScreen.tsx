@@ -196,7 +196,7 @@ const ChannelScreen = observer((props: PropsType) => {
     }
 
     const prependPost = e =>
-      store.filter === 'all' &&
+      store.filter !== 'blogs' &&
       store.channel?.isOwner() &&
       store.feedStore.prepend(e);
 
@@ -423,12 +423,14 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      <Button
-        onPress={() => props.navigation.navigate('Compose')}
-        text={i18n.t('channel.createFirstPostAction')}
-        large
-        action
-      />
+      {store.filter !== 'blogs' && (
+        <Button
+          onPress={() => props.navigation.navigate('Compose')}
+          text={i18n.t('channel.createFirstPostAction')}
+          large
+          action
+        />
+      )}
     </Empty>
   ) : (
     <View>
