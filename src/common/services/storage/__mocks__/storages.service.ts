@@ -6,6 +6,8 @@ const mockMMKVApi = () => {
     setString: jest.fn(),
     getMap: jest.fn(),
     setMap: jest.fn(),
+    getArray: jest.fn(),
+    setArray: jest.fn(),
     getInt: jest.fn(),
     setInt: jest.fn(),
   };

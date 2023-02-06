@@ -2,7 +2,7 @@ import { InFeedNoticesService } from './in-feed.notices.service';
 import sessionService from './session.service';
 import apiService from './api.service';
 import { when } from 'mobx';
-import { storages } from './storage/storages.service';
+import { storages } from '~/common/services/storage/storages.service';
 
 jest.mock('~/common/services/api.service');
 jest.mock('~/common/services/session.service');
