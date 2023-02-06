@@ -86,7 +86,7 @@ export default observer(function OnboardingScreen() {
 
     return newData;
   };
-  const progressStore = useOnboardingProgress(updateState);
+  const progressStore = useOnboardingProgress(updateState, false);
 
   const store = useLocalStore(() => ({
     showMenu: false,
