@@ -195,11 +195,14 @@ const ChannelScreen = observer((props: PropsType) => {
       store.initialLoad(params);
     }
 
-    const p = e => store.channel?.isOwner() && store.feedStore.prepend(e);
+    const prependPost = e =>
+      store.filter === 'all' &&
+      store.channel?.isOwner() &&
+      store.feedStore.prepend(e);
 
-    ActivityModel.events.on('newPost', p);
+    ActivityModel.events.on('newPost', prependPost);
     return () => {
-      ActivityModel.events.removeListener('newPost', p);
+      ActivityModel.events.removeListener('newPost', prependPost);
     };
   }, [props.route.params, store]);
 
