@@ -11,7 +11,7 @@ import React from 'react';
 //     trackAllPureComponents: true,
 //   });
 // }
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, Platform, LogBox } from 'react-native';
 import reanimated from 'react-native-reanimated';
 import App from './App';
 import { enableFreeze } from 'react-native-screens';
@@ -20,6 +20,7 @@ process.env.DEBUG === 'tamagui';
 process.env.TAMAGUI_TARGET = 'native';
 process.env.TAMAGUI_ENABLE_DYNAMIC_LOAD = 1;
 process.env.TAMAGUI_DISABLE_WARN_DYNAMIC_LOAD = 1;
+LogBox.ignoreAllLogs();
 
 enableFreeze(true);
 
