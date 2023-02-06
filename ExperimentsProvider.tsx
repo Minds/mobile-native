@@ -85,6 +85,7 @@ export type FeatureID =
   | 'mob-stripe-connect-4587'
   | 'mob-4638-boost-v3'
   | 'mob-minds-3119-captcha-for-engagement'
+  | 'mob-4722-track-code-push'
   | 'mob-4424-sockets'
   | 'mob-4472-in-app-verification'
   | 'minds-3055-email-codes';
