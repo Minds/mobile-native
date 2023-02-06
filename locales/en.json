@@ -323,8 +323,8 @@
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
     "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
-    "tabNewsfeed": "Content",
-    "tabSidebar": "Channel",
+    "tabNewsfeed": "Feed",
+    "tabSidebar": "Sidebar",
     "tabOffers": "Offer",
     "rejectionReasons": {
       "0": "Illegal",
