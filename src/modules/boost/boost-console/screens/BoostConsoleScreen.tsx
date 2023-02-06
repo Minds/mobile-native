@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import { FlatList, View } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import { ComponentsStyle } from '~/styles/Components';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { B1, Button, Icon, IconButton, Screen, ScreenHeader } from '~ui';
+import { H4, IconButton, Screen, ScreenHeader } from '~ui';
 import { hasVariation } from '../../../../../ExperimentsProvider';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
@@ -79,20 +78,8 @@ function BoostConsoleScreen({
     boostConsoleStore.feedFilter === 'all'
   ) {
     empty = (
-      <View style={ComponentsStyle.emptyComponentContainer}>
-        <View style={ComponentsStyle.emptyComponent}>
-          <Icon name="boost" size={72} />
-          <B1>{t("You don't have any boosts")}</B1>
-          <Button
-            onPress={() => navigation.navigate('Compose')}
-            type="action"
-            mode="outline"
-            align="center"
-            top="L"
-            size="large">
-            {t('Create a post')}
-          </Button>
-        </View>
+      <View style={styles.emptyContent}>
+        <H4 color="secondary">{t('No boosts')}</H4>
       </View>
     );
   }
@@ -142,4 +129,5 @@ export default observer(BoostConsoleScreen);
 
 const styles = ThemedStyles.create({
   list: ['bgPrimaryBackground', 'flexContainer', 'marginTop3x'],
+  emptyContent: ['alignCenter', 'marginTop12x'],
 });

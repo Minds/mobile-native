@@ -6,7 +6,6 @@ import FastImage from 'react-native-fast-image';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
-import DoubleTap from '../DoubleTap';
 import MText from '../MText';
 import SmartImage from '../SmartImage';
 import MediaViewImage from './MediaViewImage';
@@ -14,19 +13,16 @@ import MediaViewImage from './MediaViewImage';
 type PropsType = {
   entity: ActivityModel;
   small?: boolean;
-  onImageDoublePress?: () => void;
   onImagePress?: () => void;
   onImageLongPress?: () => void;
   openLink?: () => void;
 };
 const IMG_SIZE = 75;
 const MAX_TITLE_SIZE = 200;
-const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
 export default function EmbedLink({
   entity,
   small,
-  onImageDoublePress,
   onImagePress,
   onImageLongPress,
   openLink,
@@ -44,7 +40,6 @@ export default function EmbedLink({
         {source.uri ? (
           <MediaViewImage
             entity={entity}
-            onImageDoublePress={onImageDoublePress}
             onImagePress={onImagePress}
             onImageLongPress={onImageLongPress}
             style={ThemedStyles.style.bgSecondaryBackground}
@@ -62,8 +57,7 @@ export default function EmbedLink({
 
   return (
     <View style={containerStyle}>
-      <DoubleTapTouchable
-        onDoubleTap={onImageDoublePress}
+      <TouchableOpacity
         onPress={onImagePress}
         onLongPress={onImageLongPress}
         activeOpacity={1}
@@ -73,7 +67,7 @@ export default function EmbedLink({
           source={source}
           resizeMode={FastImage.resizeMode.cover}
         />
-      </DoubleTapTouchable>
+      </TouchableOpacity>
       <TouchableOpacity style={titleContainerStyle} onPress={openLink}>
         <MText numberOfLines={2} style={titleStyle}>
           {title}

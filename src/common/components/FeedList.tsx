@@ -43,6 +43,7 @@ export class InjectItem {
    */
   indexes: number | ((index: number) => boolean);
   type: string;
+  onViewed?: () => void;
   /**
    * the component to render
    */
@@ -52,10 +53,19 @@ export class InjectItem {
     indexes: number | ((index: number) => boolean),
     type: string,
     component: (props: InjectItemComponentProps) => React.ReactElement,
+    onViewed?: () => void,
   ) {
     this.component = component;
     this.type = type;
     this.indexes = indexes;
+
+    this.onViewed = onViewed;
+  }
+
+  sendViewed() {
+    if (this.onViewed) {
+      this.onViewed();
+    }
   }
 }
 const { height } = Dimensions.get('window');
