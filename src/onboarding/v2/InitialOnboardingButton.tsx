@@ -10,7 +10,7 @@ import { observer } from 'mobx-react';
 import SettingsStore from '../../settings/SettingsStore';
 // import Pulse from '~/common/components/animations/Pulse';
 import { Spacer } from '~/common/ui';
-import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
+import { useThrottledCallback } from '~/common/hooks/useDebouncedCallback';
 
 let shownOnce = false;
 /**
@@ -26,7 +26,7 @@ export default observer(function InitialOnboardingButton() {
   const progressStore = useOnboardingProgress();
 
   useFocusEffect(
-    useDebouncedCallback(
+    useThrottledCallback(
       () => {
         if (
           SettingsStore.ignoreOnboarding &&
@@ -44,7 +44,7 @@ export default observer(function InitialOnboardingButton() {
           }
         }, 3000);
       },
-      120 * 1000,
+      2000,
       [progressStore],
     ),
   );
