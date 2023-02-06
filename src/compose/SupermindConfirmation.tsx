@@ -2,13 +2,13 @@ import { useDimensions } from '@react-native-community/hooks';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { InteractionManager, Keyboard } from 'react-native';
-import SmartImage from '../common/components/SmartImage';
-import MenuItemOption from '../common/components/menus/MenuItemOption';
-import i18n from '../common/services/i18n.service';
-import { B1, B2, Button, Column, H3, Screen, ScreenHeader } from '../common/ui';
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import { UNIT } from '../styles/Tokens';
-import FitScrollView from '../common/components/FitScrollView';
+import FitScrollView from '~/common/components/FitScrollView';
+import SmartImage from '~/common/components/SmartImage';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
+import i18n from '~/common/services/i18n.service';
+import { B1, B2, Button, Column, H3, Screen, ScreenHeader } from '~/common/ui';
+import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
+import { UNIT } from '~/styles/Tokens';
 
 export interface SupermindConfirmationRouteParams {
   requiresTwitter?: boolean;
