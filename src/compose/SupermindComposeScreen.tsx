@@ -26,6 +26,7 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
+import { IfHasVariation } from 'ExperimentsProvider';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -308,14 +309,16 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        <MenuItemOption
-          containerItemStyle={styles.twitterMenuItem}
-          onPress={() => setRequireTwitter(val => !val)}
-          selected={requireTwitter}
-          title={i18nService.t('supermind.requireTwitter')}
-          mode="checkbox"
-          multiLine
-        />
+        <IfHasVariation featureKey="mob-twitter-oauth-4715">
+          <MenuItemOption
+            containerItemStyle={styles.twitterMenuItem}
+            onPress={() => setRequireTwitter(val => !val)}
+            selected={requireTwitter}
+            title={i18nService.t('supermind.requireTwitter')}
+            mode="checkbox"
+            multiLine
+          />
+        </IfHasVariation>
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
           title={

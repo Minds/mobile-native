@@ -38,6 +38,21 @@ export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
   return featureResult[variation];
 }
 
+export function IfHasVariation({
+  featureKey,
+  children,
+}: React.PropsWithChildren<{
+  featureKey: FeatureID;
+}>) {
+  const on = useIsFeatureOn(featureKey);
+
+  if (!on) {
+    return null;
+  }
+
+  return <>{children}</>;
+}
+
 /**
  * Update growthbook's attributes and features
  */
