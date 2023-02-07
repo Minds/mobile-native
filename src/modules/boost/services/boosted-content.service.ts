@@ -71,6 +71,11 @@ class BoostedContentService {
             ? 'api/v3/boosts/feed'
             : 'api/v2/boost/feed',
         );
+
+      if (hasVariation('mob-4638-boost-v3')) {
+        this.feedsService.setDataProperty('boosts');
+        this.feedsService.setParams({ location: 1 });
+      }
     }
   }
 
@@ -94,7 +99,9 @@ class BoostedContentService {
       if (Platform.OS === 'ios' && e.nsfw && e.nsfw.length) {
         return false;
       }
-      return !blockListService.has(e.ownerObj.guid);
+      return e.type === 'user'
+        ? false
+        : !blockListService.has(e.ownerObj?.guid);
     });
   }
 

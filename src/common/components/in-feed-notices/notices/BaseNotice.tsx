@@ -13,7 +13,6 @@ type PropsType = {
   onPress: () => void;
   btnSecondaryText?: string;
   onSecondaryPress?: () => void;
-  dismissable?: boolean;
 };
 
 /**

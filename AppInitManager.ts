@@ -118,11 +118,11 @@ export class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    // load boosted content
-    boostedContentService.load();
-
     // update settings for this user and init growthbook
     this.updateMindsConfigAndInitGrowthbook();
+
+    // load boosted content
+    boostedContentService.load();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });

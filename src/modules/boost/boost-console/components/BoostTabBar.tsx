@@ -19,7 +19,7 @@ function BoostTabBar({}: BoostTabBarProps) {
       title: i18n.t('boosts.tabOffers'),
     },
     {
-      id: 'newsfeed',
+      id: 'feed',
       title: i18n.t('boosts.tabNewsfeed'),
     },
     {
