@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx';
-import { hasVariation } from '../../../ExperimentsProvider';
 import apiService from '../../common/services/api.service';
 import FeedStore from '../../common/stores/FeedStore';
 
@@ -25,6 +24,9 @@ export type TDiscoveryTrendsTrend = {};
 export type TDiscoveryTagsTag = {
   value: string;
 };
+
+// TODO: workaround please remove
+const BOOST_V3 = true;
 
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = 'top';
@@ -55,13 +57,14 @@ export default class DiscoveryV2Store {
       .setMedium('featured-content');
 
     this.boostFeed
-      .setEndpoint(
-        hasVariation('mob-4638-boost-v3')
-          ? 'api/v3/boosts/feed'
-          : 'api/v2/boost/feed',
-      )
+      .setEndpoint(BOOST_V3 ? 'api/v3/boosts/feed' : 'api/v2/boost/feed')
       .setInjectBoost(false)
       .setLimit(15);
+
+    if (BOOST_V3) {
+      this.boostFeed.feedsService.setDataProperty('boosts');
+      this.boostFeed.setParams({ location: 1 });
+    }
 
     this.trendingFeed = new FeedStore(true)
       .setEndpoint('api/v2/feeds/global/top/all')
