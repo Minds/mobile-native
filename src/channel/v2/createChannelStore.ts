@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import moment from 'moment';
+import { hasVariation } from 'ExperimentsProvider';
 
 import UserModel from '../UserModel';
 import channelsService from '~/common/services/channels.service';
@@ -153,7 +154,6 @@ const createChannelStore = () => {
         .setEndpoint(
           `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
         )
-        .setIsTiled(filter === 'images' || filter === 'videos')
         .setAsActivities(false)
         .clear()
         .fetchRemoteOrLocal();
@@ -198,7 +198,7 @@ const createChannelStore = () => {
       if (!this.loaded) {
         this.loaded = true;
         this.feedStore.getScheduledCount(this.channel.guid);
-        if (!this.channel.isOwner()) {
+        if (!this.channel.isOwner() && hasVariation('mob-4638-boost-v3')) {
           this.feedStore.setInjectBoost(true);
         }
       }

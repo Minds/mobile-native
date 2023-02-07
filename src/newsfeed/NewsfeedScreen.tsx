@@ -34,6 +34,7 @@ import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 import { CodePushUpdatePrompt } from 'modules/codepush';
+import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -117,19 +118,24 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
    */
   if (!newsfeed.latestFeedStore.injectItems) {
     // common prepend components
-    const prepend = new InjectItem(0, 'prepend', () => (
-      <View>
-        <CheckLanguage />
-        <InitialOnboardingButton />
-        <PortraitContentBar />
-        <CodePushUpdatePrompt />
-        <TopInFeedNotice />
-        <NewsfeedHeader
-          feedType={newsfeed.feedType}
-          onFeedTypeChange={newsfeed.changeFeedTypeChange}
-        />
-      </View>
-    ));
+    const prepend = new InjectItem(
+      0,
+      'prepend',
+      () => (
+        <View>
+          <CheckLanguage />
+          <InitialOnboardingButton />
+          <PortraitContentBar />
+          <CodePushUpdatePrompt />
+          <TopInFeedNotice />
+          <NewsfeedHeader
+            feedType={newsfeed.feedType}
+            onFeedTypeChange={newsfeed.changeFeedTypeChange}
+          />
+        </View>
+      ),
+      () => InFeedNoticesService.trackViewTop(),
+    );
 
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
@@ -149,7 +155,12 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         'end',
         FeedListInvisibleHeader,
       ),
-      new InjectItem(7, 'ilNotice', () => <InlineInFeedNotice position={1} />),
+      new InjectItem(
+        7,
+        'ilNotice',
+        () => <InlineInFeedNotice position={1} />,
+        () => InFeedNoticesService.trackViewInFeed(1),
+      ),
 
       new InjectItem(HIGHLIGHT_POSITION, 'highlightheader', ({ target }) => (
         <TopFeedHighlightsHeader target={target} />
