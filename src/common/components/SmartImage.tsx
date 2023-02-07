@@ -24,7 +24,7 @@ export interface SmartImageProps {
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
   thumbBlurRadius?: number;
-  blurhash?: string;
+  blurhash?: boolean;
   blurred?: boolean;
   locked?: boolean;
 }

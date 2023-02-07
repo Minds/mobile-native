@@ -22,7 +22,6 @@ import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { confirm } from '../common/components/Confirm';
 import { storeRatingService } from 'modules/store-rating';
-import { confirmSupermindReply } from './SupermindConfirmation';
 
 /**
  * Display an error message to the user.
@@ -546,13 +545,14 @@ export default function (props) {
 
         if (this.supermindObject) {
           if (
-            !(await confirmSupermindReply(
-              props.navigation,
-              !!this.supermindObject?.twitter_required,
-            ))
+            !(await confirm({
+              title: i18n.t('supermind.confirm.title'),
+              description: i18n.t('supermind.confirm.description'),
+            }))
           ) {
             return;
           }
+
           newPost.supermind_reply_guid = this.supermindObject.guid;
         }
 

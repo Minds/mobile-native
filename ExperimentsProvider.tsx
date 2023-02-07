@@ -38,21 +38,6 @@ export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
   return featureResult[variation];
 }
 
-export function IfHasVariation({
-  featureKey,
-  children,
-}: React.PropsWithChildren<{
-  featureKey: FeatureID;
-}>) {
-  const on = useIsFeatureOn(featureKey);
-
-  if (!on) {
-    return null;
-  }
-
-  return <>{children}</>;
-}
-
 /**
  * Update growthbook's attributes and features
  */
@@ -101,5 +86,4 @@ export type FeatureID =
   | 'mob-4638-boost-v3'
   | 'mob-minds-3119-captcha-for-engagement'
   | 'mob-4424-sockets'
-  | 'mob-twitter-oauth-4715'
   | 'minds-3055-email-codes';

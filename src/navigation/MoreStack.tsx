@@ -386,13 +386,6 @@ export default function () {
         getComponent={() => require('modules/boost').BoostComposerStack}
         options={{ headerShown: false }}
       />
-      <MoreStack.Screen
-        name="SupermindTwitterConnect"
-        getComponent={() =>
-          require('~/supermind/SupermindTwitterConnectScreen').default
-        }
-        options={{ headerShown: false }}
-      />
     </MoreStack.Navigator>
   );
 }
