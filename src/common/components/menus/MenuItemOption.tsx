@@ -30,7 +30,9 @@ export default function MenuItemOption(props: MenuItemOptionProps) {
       icon={icon}
       noIcon={!props.mode && !props.selected}
       iconColor={
-        props.iconColor
+        props.disabled
+          ? 'IconDisabled'
+          : props.iconColor
           ? props.iconColor
           : props.selected
           ? 'IconActive'
