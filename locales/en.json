@@ -141,30 +141,14 @@
     },
     "confirm": {
       "title": "Confirm reply",
-      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted.",
-      "twitter": {
-        "title": "Post to my Twitter",
-        "description": "This Supermind offer requires posting the reply to Twitter.",
-        "example": "Example of a Twitter preview"
-      }
+      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted."
     },
     "confirmNoRefund": {
       "title": "Confirm Offer",
       "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
       "description": "I understand this transaction is non-refundable."
     },
-    "supermind": "Supermind",
-    "requireTwitter": "Optional: Require reply to be posted on Twitter",
-    "twitterConnect": {
-      "connectSuccess": "You channel is now connected to your Twitter account",
-      "connectFailed": "Something went wrong while connecting to Twitter",
-      "connectConfigFailed": "An unexpected error has occurred getting your twitter configuration",
-      "twitterPermission": {
-        "title": "Twitter Permission",
-        "description": "To accept this Supermind offer, please connect your Twitter account. This will give Minds permission to repost your response on your behalf, but only when you consent.",
-        "connectTwitter": "Connect Twitter"
-      }
-    }
+    "supermind": "Supermind"
   },
   "auth": {
     "2faRequired": "2FA required",

@@ -5,31 +5,13 @@ import createComposeStore from './createComposeStore';
 import { SupermindRequestParam } from './SupermindComposeScreen';
 import { confirm } from '../common/components/Confirm';
 import api from '../common/services/api.service';
-import { confirmSupermindReply } from './SupermindConfirmation';
 
 jest.mock('../navigation/NavigationService');
 jest.mock('../common/components/Confirm');
-jest.mock('./SupermindConfirmation');
-jest.mock('../common/services/api.service', () => ({
-  post: jest.fn(),
-  rawPost: jest.fn(),
-  get: jest.fn(),
-  put: jest.fn(),
-  upload: jest.fn(),
-  delete: jest.fn(),
-  clearCookies: jest.fn(),
-  buildAuthorizationHeader: jest.fn(),
-
-  isApiError: jest.fn(),
-  isNetworkError: jest.fn(),
-  isAbort: jest.fn(),
-}));
+jest.mock('../common/services/api.service');
 
 const mockedApi = api as jest.Mocked<typeof apiService>;
 const mockedConfirm = confirm as jest.Mock<typeof confirm>;
-const mockedConfirmSupermindReply = confirmSupermindReply as jest.Mock<
-  typeof confirmSupermindReply
->;
 
 jest.mock('../common/services/minds-config.service', () => ({
   settings: {
@@ -180,7 +162,6 @@ describe('createComposeStore', () => {
   it('should reply to a supermind correctly', async () => {
     const supermindGuid = 'supermindFakeGuid';
     mockedConfirm.mockReturnValue(true);
-    mockedConfirmSupermindReply.mockReturnValue(true);
     store = createComposeStore({
       navigation: mockedNavigation,
       route: {
@@ -204,7 +185,6 @@ describe('createComposeStore', () => {
   it('should not reply to a supermind if user didnt confirm', async () => {
     const supermindGuid = 'supermindFakeGuid';
     mockedConfirm.mockReturnValue(false);
-    mockedConfirmSupermindReply.mockReturnValue(false);
     store = createComposeStore({
       navigation: mockedNavigation,
       route: {

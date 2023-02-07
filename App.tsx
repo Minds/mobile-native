@@ -93,19 +93,17 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
-    if (!__DEV__) {
-      codePush.getUpdateMetadata().then(metadata => {
-        // using the deploymentKey from the active update makes sure
-        // switching environments works
-        if (metadata?.deploymentKey) {
-          codePush.sync({
-            deploymentKey: metadata.deploymentKey,
-          });
-        } else {
-          codePush.sync();
-        }
-      });
-    }
+    codePush.getUpdateMetadata().then(metadata => {
+      // using the deploymentKey from the active update makes sure
+      // switching environments works
+      if (metadata?.deploymentKey) {
+        codePush.sync({
+          deploymentKey: metadata.deploymentKey,
+        });
+      } else {
+        codePush.sync();
+      }
+    });
   }
 
   /**

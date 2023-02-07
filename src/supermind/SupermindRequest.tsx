@@ -1,15 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
 import React from 'react';
+import { observer } from 'mobx-react';
+import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
-import SupermindLabel from '~/common/components/supermind/SupermindLabel';
+
 import i18n from '~/common/services/i18n.service';
-import { B2, Button, Column, Row, Spacer } from '~/common/ui';
 import Activity from '~/newsfeed/activity/Activity';
-import { hasVariation } from '../../ExperimentsProvider';
 import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
-import { ensureTwitterConnected } from './SupermindTwitterConnectScreen';
+import { B2, Button, Column, Row, Spacer } from '~/common/ui';
+import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import { SupermindRequestStatus } from './types';
 
 type Props = {
@@ -117,15 +116,7 @@ const InboundButtons = observer(
   ({ request }: { request: SupermindRequestModel }) => {
     const navigation = useNavigation();
 
-    const answer = React.useCallback(async () => {
-      if (request.twitter_required && hasVariation('mob-twitter-oauth-4715')) {
-        const connected = await ensureTwitterConnected(navigation);
-
-        if (!connected) {
-          return;
-        }
-      }
-
+    const answer = React.useCallback(() => {
       navigation.navigate('Compose', {
         isRemind: true,
         supermindObject: request,
@@ -149,7 +140,6 @@ const InboundButtons = observer(
                 type="action"
                 bottom="L"
                 onPress={answer}
-                spinner
                 disabled={request.isLoading > 0}>
                 {i18n.t('supermind.acceptOffer')}
               </Button>
