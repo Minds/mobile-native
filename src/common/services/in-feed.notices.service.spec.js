@@ -33,12 +33,12 @@ describe('InFeedNoticesService', () => {
   beforeEach(() => {
     onLoginCB = null;
     onLogoutCB = null;
-    storages.user?.getMap.mockClear();
-    storages.user?.getMap
-      .mockReturnValueOnce({
-        'verify-email': { location: 'top', should_show: true },
-        'build-your-algorithm': { location: 'inline', should_show: false },
-      })
+    storages.user?.getArray.mockClear();
+    storages.user?.getArray
+      .mockReturnValueOnce([
+        { key: 'verify-email', location: 'top', should_show: true },
+        { key: 'build-your-algorithm', location: 'inline', should_show: false },
+      ])
       .mockReturnValueOnce(null);
   });
   test('service instantiation', () => {
@@ -53,13 +53,14 @@ describe('InFeedNoticesService', () => {
 
     // init called
     expect(init).toHaveBeenCalled();
-    expect(storages.user?.getMap).toHaveBeenCalled();
+    expect(storages.user?.getArray).toHaveBeenCalled();
 
     // formatted data
-    expect(service.data).toEqual({
-      'build-your-algorithm': { location: 'inline', should_show: true },
-      'invite-friends': { location: 'inline', should_show: true },
-    });
+    expect(service.data).toEqual([
+      { key: 'verify-email', location: 'top', should_show: false },
+      { key: 'build-your-algorithm', location: 'inline', should_show: true },
+      { key: 'invite-friends', location: 'inline', should_show: true },
+    ]);
 
     onLogoutCB();
 

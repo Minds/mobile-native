@@ -3,13 +3,13 @@
 # https://docs.gitlab.com/ee/api/repositories.html#generate-changelog-data for
 # more information.
 categories:
-  added: Added
-  fixed: Fixed
-  changed: Changed
-  deprecated: Deprecated
-  removed: Removed
-  security: Security
-  performance: Performance
+  added: Features ✨
+  fixed: Fixed 🐛
+  changed: Changed 🔧
+  deprecated: Deprecated ⚠️
+  removed: Removed 🗑️
+  security: Security 🚨
+  performance: Performance 💪
   other: Other
 include_groups:
   - gitlab-org/gitlab-core-team/community-members
@@ -19,18 +19,14 @@ template: |
   ### {{ title }} ({% if single_change %}1 change{% else %}{{ count }} changes{% end %})
 
   {% each entries %}
-  - [{{ title }}]({{ commit.reference }})\
-  {% if author.credit %} by {{ author.reference }}{% end %}\
   {% if commit.trailers.MR %}\
-   ([merge request]({{ commit.trailers.MR }}))\
+  - [{{ title }}]({{ commit.trailers.MR }})\
   {% else %}\
   {% if merge_request %}\
-   ([merge request]({{ merge_request.reference }}))\
+  - [{{ title }}]({{ merge_request.reference }})\
   {% end %}\
-  {% end %}\
-  {% if commit.trailers.EE %}\
-   **GitLab Enterprise Edition**\
   {% end %}
+  {% if author.credit %} by {{ author.reference }}{% end %}\
 
   {% end %}
 
