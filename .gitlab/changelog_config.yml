@@ -3,16 +3,16 @@
 # https://docs.gitlab.com/ee/api/repositories.html#generate-changelog-data for
 # more information.
 categories:
-  added: Added
-  fixed: Fixed
-  changed: Changed
-  deprecated: Deprecated
-  removed: Removed
-  security: Security
-  performance: Performance
+  added: Features ✨
+  fixed: Fixed 🐛
+  changed: Changed 🔧
+  deprecated: Deprecated ⚠️
+  removed: Removed 🗑️
+  security: Security 🚨
+  performance: Performance 💪
   other: Other
 include_groups:
-  - minds
+  - gitlab-org/gitlab-core-team/community-members
 template: |
   {% if categories %}
   {% each categories %}
@@ -25,12 +25,17 @@ template: |
   {% if merge_request %}\
   - [{{ title }}]({{ merge_request.reference }})\
   {% end %}\
+  {% end %}
   {% if author.credit %} by {{ author.reference }}{% end %}\
+
   {% end %}
 
   {% end %}
   {% else %}
   No changes.
   {% end %}
-
+# The tag format for gitlab-org/gitlab is vX.Y.Z(-rcX)-ee. The -ee prefix would
+# be treated as a pre-release identifier, which can result in the wrong tag
+# being used as the starting point of a changelog commit range. The custom regex
+# here is used to ensure we find the correct tag.
 tag_regex: '^v(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$'

@@ -69,7 +69,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         <Column vertical="M">
           <MenuItem
             title={t('Audience')}
-            subtitle={boostStore.audience === 'safe' ? t('Safe') : t('Mature')}
+            subtitle={
+              boostStore.audience === 'safe' ? t('Safe') : t('Controversial')
+            }
             borderless
           />
           <MenuItem

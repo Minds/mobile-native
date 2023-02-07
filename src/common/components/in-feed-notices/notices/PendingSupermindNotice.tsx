@@ -23,7 +23,6 @@ function PendingSupermindNotice() {
       btnText={i18nService.t('inFeedNotices.pendingSupermindButton')}
       iconName="info-outline"
       onPress={onPress}
-      dismissable={false}
     />
   );
 }

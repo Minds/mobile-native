@@ -94,6 +94,16 @@ export default class FeedsService {
   feedLastFetchedAt?: number;
 
   /**
+   * @var {string}
+   */
+  dataProperty: string = 'entities';
+
+  setDataProperty(name: string) {
+    this.dataProperty = name;
+    return this;
+  }
+
+  /**
    * Get entities from the current page
    */
   async getEntities(): Promise<Array<any>> {
@@ -319,16 +329,16 @@ export default class FeedsService {
     const response = await apiService.get(this.endpoint, params, this);
     this.feedLastFetchedAt = fetchTime;
 
-    if (response.entities && response.entities.length) {
-      if (response.entities.length < params.limit) {
+    if (response[this.dataProperty] && response[this.dataProperty].length) {
+      if (response[this.dataProperty].length < params.limit) {
         this.endReached = true;
       }
       if (more) {
         this.feed = this.params.sync
-          ? this.feed.concat(response.entities)
-          : _.difference(response.entities, this.feed);
+          ? this.feed.concat(response[this.dataProperty])
+          : _.difference(response[this.dataProperty], this.feed);
       } else {
-        this.feed = response.entities;
+        this.feed = response[this.dataProperty];
       }
       if (response.fallback_at) {
         this.fallbackAt = response.fallback_at;

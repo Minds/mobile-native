@@ -8,6 +8,11 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
 import { IS_IOS } from '~/config/Config';
+import {
+  DEFAULT_DAILY_CASH_BUDGET,
+  DEFAULT_DAILY_TOKEN_BUDGET,
+  DEFAULT_DURATION,
+} from './boost.constants';
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -38,9 +43,9 @@ export const createBoostStore = ({
       this.tokenAmount = amount;
     }
   },
-  cashAmount: 5,
-  tokenAmount: 5,
-  duration: 1,
+  cashAmount: DEFAULT_DAILY_CASH_BUDGET,
+  tokenAmount: DEFAULT_DAILY_TOKEN_BUDGET,
+  duration: DEFAULT_DURATION,
   setDuration(duration: number) {
     this.duration = duration;
   },
@@ -78,10 +83,6 @@ export const createBoostStore = ({
   },
   validate() {
     return true;
-  },
-  confirmedToUseToken: false,
-  setConfirmedToUseToken(value: boolean) {
-    this.confirmedToUseToken = value;
   },
 });
 

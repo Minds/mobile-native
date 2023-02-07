@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { confirm } from '~/common/components/Confirm';
 import FitScrollView from '~/common/components/FitScrollView';
 import Slider from '~/common/components/Slider';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
@@ -81,17 +80,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   };
 
   const handlePaymentTypeChange = async id => {
-    if (id !== 'cash' && !boostStore.confirmedToUseToken) {
-      if (
-        !(await confirm({
-          title: t('Are you sure you want to use tokens?'),
-          description: t('You will receive more views when using cash.'),
-        }))
-      ) {
-        return;
-      }
-      boostStore.setConfirmedToUseToken(true);
-    }
     boostStore.setPaymentType(id as IPaymentType);
   };
 

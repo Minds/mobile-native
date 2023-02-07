@@ -112,7 +112,6 @@ export default class MediaView extends Component<PropsType> {
           openLink={this.openLink}
           entity={this.props.entity}
           small={this.props.smallEmbed}
-          onImageDoublePress={this.navToGallery}
           onImageLongPress={() => this.download()}
           onImagePress={this.onImagePress}
         />

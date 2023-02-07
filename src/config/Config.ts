@@ -5,7 +5,7 @@ import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 
-export const CODEPUSH_VERSION = '4.31.3';
+export const CODEPUSH_VERSION = '4.31.6';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -139,7 +139,7 @@ export const MINDS_DEEPLINK = [
   ['notifications', 'Notifications', 'navigate'],
   ['notifications/:version', 'Notifications', 'navigate'],
   ['groups/:filter', 'More/GroupsList'],
-  ['newsfeed/:guid', 'Activity'],
+  ['newsfeed/:guid', 'App/Activity'],
   ['media/:guid', 'Activity'],
   ['channels/:username', 'Channel'],
   ['blog/:filter', 'BlogList'],

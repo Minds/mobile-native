@@ -22,12 +22,15 @@ export type OnboardingGroupState = {
 /**
  * Onboarding progress hook
  */
-export default function useOnboardingProgress(updateState?: any) {
+export default function useOnboardingProgress(
+  updateState?: any,
+  noPreload = true,
+) {
   const store = useApiFetch<OnboardingGroupState>('api/v3/onboarding', {
     persist: true,
     params: {},
     updateState,
-    noPreload: true,
+    noPreload,
   });
 
   return store;

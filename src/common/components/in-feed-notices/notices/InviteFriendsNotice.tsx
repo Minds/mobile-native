@@ -25,6 +25,7 @@ function InviteFriendsNotice() {
       btnText={i18nService.t('inFeedNotices.inviteFriendsAction')}
       iconName="info-outline"
       onPress={onPress}
+      onClose={() => inFeedNoticesService.dismiss('invite-friends')}
     />
   );
 }

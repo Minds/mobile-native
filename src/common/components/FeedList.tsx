@@ -44,6 +44,7 @@ export class InjectItem {
    */
   indexes: number | ((index: number) => boolean);
   type: string;
+  onViewed?: () => void;
   /**
    * the component to render
    */
@@ -53,10 +54,19 @@ export class InjectItem {
     indexes: number | ((index: number) => boolean),
     type: string,
     component: (props: InjectItemComponentProps) => React.ReactElement,
+    onViewed?: () => void,
   ) {
     this.component = component;
     this.type = type;
     this.indexes = indexes;
+
+    this.onViewed = onViewed;
+  }
+
+  sendViewed() {
+    if (this.onViewed) {
+      this.onViewed();
+    }
   }
 }
 const { height } = Dimensions.get('window');
@@ -100,6 +110,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   testID?: string;
   estimatedItemSize?: number;
   name?: string;
+  distinctBoosts?: boolean;
 };
 
 /**
@@ -323,6 +334,7 @@ export class FeedList<T extends BaseModel> extends Component<
           <Activity
             entity={entity}
             navigation={this.props.navigation}
+            distinctBoosts={this.props.distinctBoosts}
             autoHeight={false}
           />
         )}
