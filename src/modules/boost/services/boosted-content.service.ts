@@ -74,6 +74,7 @@ class BoostedContentService {
 
       if (hasVariation('mob-4638-boost-v3')) {
         this.feedsService.setDataProperty('boosts');
+        this.feedsService.setParams({ location: 1 });
       }
     }
   }
