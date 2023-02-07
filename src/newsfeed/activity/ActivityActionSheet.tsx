@@ -23,7 +23,8 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { hasVariation } from 'ExperimentsProvider';
+import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
+import { isApiError } from '../../common/services/api.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -393,6 +394,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         this.props.navigation.goBack();
       }
     } catch (err) {
+      if (isApiError(err)) {
+        return this.showError(err?.message);
+      }
       this.showError();
     }
   }
@@ -432,10 +436,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   /**
    * Show an error message
    */
-  showError() {
+  showError(message?: string) {
     showNotification(
-      i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      'warning',
+      message || i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+      'danger',
       2000,
     );
   }
