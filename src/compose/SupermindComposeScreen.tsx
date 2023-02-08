@@ -75,9 +75,6 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
   const [replyType, setReplyType] = useState<ReplyType>(
     data?.reply_type ?? ReplyType.text,
   );
-  // const [requireTwitter, setRequireTwitter] = useState<boolean>(
-  //   data?.twitter_required ?? false,
-  // );
   const [termsAgreed, setTermsAgreed] = useState<boolean>(
     data?.terms_agreed || false,
   );
@@ -307,19 +304,6 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        {/* <MenuItem
-          containerItemStyle={[
-            theme.bgPrimaryBackground,
-            { borderBottomWidth: 0 },
-          ]}
-          onPress={() => setRequireTwitter(val => !val)}
-          title={'Require the reply to be posted to @ottman on Twitter'}
-          icon={requireTwitter ? 'checkbox-marked' : 'checkbox-blank'}
-          iconSize={30}
-          iconColor={
-            requireTwitter ? 'Link' : errors.termsAgreed ? 'Alert' : 'Icon'
-          }
-        /> */}
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
           title={

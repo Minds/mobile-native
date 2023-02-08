@@ -5,6 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -69,16 +70,18 @@ export default function () {
       onPress: useNavCallback('AppInfo'),
     },
   ];
+  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   return (
     <ScrollView style={containerStyle}>
       {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
-      {generateSection(
-        i18n.t('settings.otherOptions.contentMigration'),
-        contentMigration,
-      )}
+      {isTwitterEnabled &&
+        generateSection(
+          i18n.t('settings.otherOptions.contentMigration'),
+          contentMigration,
+        )}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
