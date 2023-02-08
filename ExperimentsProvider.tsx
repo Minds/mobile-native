@@ -33,9 +33,13 @@ export const growthbook = new GrowthBook({
  * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
  * @returns { boolean } - true if params reflect current variation.
  */
-export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
-  const featureResult = growthbook.feature(featureKey);
-  return featureResult[variation];
+export function hasVariation(
+  featureKey: FeatureID | FeatureID[],
+  variation: string = 'on',
+) {
+  return Array.isArray(featureKey)
+    ? featureKey.every(key => growthbook.feature(key)[variation])
+    : growthbook.feature(featureKey)[variation];
 }
 
 export function IfHasVariation({

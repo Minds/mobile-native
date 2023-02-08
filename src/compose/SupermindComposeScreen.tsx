@@ -26,7 +26,7 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
-import { IfHasVariation } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -90,6 +90,11 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
   const [cardId, setCardId] = useState<string | undefined>(
     data?.payment_options?.payment_method_id,
   );
+
+  const isTwitterEnabled = hasVariation([
+    'engine-2503-twitter-feats',
+    'mob-twitter-oauth-4715',
+  ]);
 
   const { min_cash = 0, min_offchain_tokens = 0 } =
     channel?.supermind_settings ?? {};
@@ -309,7 +314,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        <IfHasVariation featureKey="mob-twitter-oauth-4715">
+        {isTwitterEnabled && (
           <MenuItemOption
             containerItemStyle={styles.twitterMenuItem}
             onPress={() => setRequireTwitter(val => !val)}
@@ -318,7 +323,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
             mode="checkbox"
             multiLine
           />
-        </IfHasVariation>
+        )}
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
           title={
