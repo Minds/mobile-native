@@ -23,7 +23,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
 
 type PropsType = {
