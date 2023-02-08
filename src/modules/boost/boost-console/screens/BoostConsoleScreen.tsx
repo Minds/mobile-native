@@ -62,7 +62,7 @@ function BoostConsoleScreen({
   const renderBoost = row => {
     const boost = row.item;
     if (hasVariation('mob-4638-boost-v3')) {
-      return <BoostV3 boost={boost} navigation={navigation} />;
+      return <BoostV3 boost={boost} />;
     }
 
     return <Boost boost={boost} navigation={navigation} />;

@@ -28,6 +28,13 @@ export enum BoostTargetSuitability {
   mature,
 }
 
+export enum BoostRejectionReason {
+  WRONG_AUDIENCE = 1,
+  AGAINST_MINDS_BOOST_POLICY = 2,
+  AGAINST_STRIPE_TERMS_OF_SERVICE = 3,
+  ONCHAIN_PAYMENT_FAILED = 4,
+}
+
 export type BoostConsoleBoost = {
   approved_timestamp: number | null;
   boost_status: BoostStatus;

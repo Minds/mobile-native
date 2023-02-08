@@ -8,6 +8,7 @@ import ActivityModel from '../../../newsfeed/ActivityModel';
 import { revokeBoost } from '../boost-console/boost-console.api';
 import {
   BoostPaymentMethod,
+  BoostRejectionReason,
   BoostStatus,
   BoostTargetLocation,
   BoostTargetSuitability,
@@ -29,6 +30,7 @@ export default class BoostModel extends BaseModel {
   target_location!: BoostTargetLocation;
   target_suitability!: BoostTargetSuitability;
   updated_timestamp?: number | null;
+  rejection_reason?: BoostRejectionReason;
   summary?: {
     views_delivered: number;
   };
