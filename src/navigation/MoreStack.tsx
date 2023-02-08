@@ -9,7 +9,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
-import { useFeature } from '@growthbook/growthbook-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
@@ -21,7 +20,6 @@ const WalletOptions = () => ({
 });
 
 export default function () {
-  const supermindFeatureFlag = useFeature('mobile-supermind');
   const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   const AccountScreenOptions = navigation => [
@@ -89,20 +87,16 @@ export default function () {
           title: i18n.t('settings.billingOptions.2'),
           onPress: () => navigation.push('RecurringPayments'),
         },
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ]
     : navigation => [
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ];
 
   return (
