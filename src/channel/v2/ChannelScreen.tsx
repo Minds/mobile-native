@@ -195,11 +195,14 @@ const ChannelScreen = observer((props: PropsType) => {
       store.initialLoad(params);
     }
 
-    const p = e => store.channel?.isOwner() && store.feedStore.prepend(e);
+    const prependPost = e =>
+      store.filter !== 'blogs' &&
+      store.channel?.isOwner() &&
+      store.feedStore.prepend(e);
 
-    ActivityModel.events.on('newPost', p);
+    ActivityModel.events.on('newPost', prependPost);
     return () => {
-      ActivityModel.events.removeListener('newPost', p);
+      ActivityModel.events.removeListener('newPost', prependPost);
     };
   }, [props.route.params, store]);
 
@@ -420,12 +423,14 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      <Button
-        onPress={() => props.navigation.navigate('Compose')}
-        text={i18n.t('channel.createFirstPostAction')}
-        large
-        action
-      />
+      {store.filter !== 'blogs' && (
+        <Button
+          onPress={() => props.navigation.navigate('Compose')}
+          text={i18n.t('channel.createFirstPostAction')}
+          large
+          action
+        />
+      )}
     </Empty>
   ) : (
     <View>
