@@ -284,6 +284,7 @@ export type AppStackParamList = {
   Boost: {};
   Analytics: {};
   Notifications: {};
+  SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   Channel: {};
   ChannelEdit: {};
   Bio: {
