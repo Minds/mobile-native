@@ -4,12 +4,13 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
+import { hasVariation } from '../../../../ExperimentsProvider';
 
 jest.mock('../../../common/services/session.service');
 
-jest.mock('../../../../ExperimentsProvider', () => ({
-  hasVariation: jest.fn().mockResolvedValue(true),
-}));
+jest.mock('../../../../ExperimentsProvider');
+
+const mockedHasVariation = hasVariation as jest.Mock<boolean>;
 
 const name = 'Fake user';
 
@@ -102,7 +103,9 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
-    expect(await screen.findByText('Your Boost is now running')).toBeTruthy();
+    expect(
+      await screen.findByText('Your Boost is now running', { exact: true }),
+    ).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
 
@@ -115,11 +118,14 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
-    expect(await screen.findByText('Your Boost is complete')).toBeTruthy();
+    expect(
+      await screen.findByText('Your Boost is complete', { exact: true }),
+    ).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
 
   test('Boost rejected', async () => {
+    mockedHasVariation.mockReturnValue(true);
     render(
       <NotificationItem
         notification={createFakeNotification({
@@ -128,7 +134,28 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
-    expect(await screen.findByText('Your Boost was rejected')).toBeTruthy();
+    expect(await screen.findByText(name, { exact: true })).toBeTruthy();
+    expect(
+      await screen.findByText('Your Boost was rejected', { exact: true }),
+    ).toBeTruthy();
+    expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
+
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  test('Boost rejected legacy', async () => {
+    mockedHasVariation.mockReturnValue(false);
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.boost_rejected,
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(
+      await screen.findByText('is unable to approve your', { exact: true }),
+    ).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
 });
