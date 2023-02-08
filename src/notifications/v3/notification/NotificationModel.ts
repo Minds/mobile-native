@@ -62,11 +62,6 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.group_queue_add:
       case NotificationType.token_rewards_summary:
       case NotificationType.supermind_expired:
-      case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
-        break;
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
         return '';
