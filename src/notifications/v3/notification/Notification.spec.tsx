@@ -134,11 +134,9 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
-    expect(await screen.findByText(name, { exact: true })).toBeTruthy();
     expect(
       await screen.findByText('Your Boost was rejected', { exact: true }),
     ).toBeTruthy();
-    expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
 
     expect(screen.toJSON()).toMatchSnapshot();
   });
@@ -153,9 +151,11 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
+    expect(await screen.findByText(name)).toBeTruthy();
     expect(
       await screen.findByText('is unable to approve your', { exact: true }),
     ).toBeTruthy();
+    expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
 });
