@@ -39,8 +39,6 @@ const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
-// const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
-// const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
 const modalOptions = {
   gestureResponseDistance: 240,
@@ -158,19 +156,6 @@ const AppStack = observer(() => {
           getComponent={() => require('~/wire/v2/FabScreen').default}
           options={hideHeader}
         />
-        {/* <AppStackNav.Screen
-        name="BlockchainWallet"
-        component={BlockchainWalletScreen}
-        options={BlockchainWalletScreen.navigationOptions}
-      />
-      <AppStackNav.Screen
-        name="BlockchainWalletImport"
-        component={BlockchainWalletImportScreen}
-      />
-      <AppStackNav.Screen
-        name="BlockchainWalletDetails"
-        component={BlockchainWalletDetailsScreen}
-      /> */}
         <AppStackNav.Screen
           name="Report"
           getComponent={() => require('~/report/ReportScreen').default}
@@ -368,6 +353,7 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
+              navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
               name="ChooseBrowserModal"
               getComponent={() =>
                 require('~/settings/screens/ChooseBrowserModalScreen').default
@@ -378,10 +364,6 @@ const RootStack = observer(function () {
               name="ImageGallery"
               getComponent={() => require('~/media/ImageGalleryScreen').default}
             />
-            {/* <RootStackNav.Screen
-              name="BlockchainWalletModal"
-              component={BlockchainWalletModalScreen}
-            /> */}
             <RootStackNav.Screen
               name="UpgradeScreen"
               getComponent={() => require('~/upgrade/UpgradeScreen').default}

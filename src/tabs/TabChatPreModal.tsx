@@ -11,7 +11,6 @@ import {
   BottomSheetButton,
 } from '~/common/components/bottom-sheet';
 import { useStores } from '~/common/hooks/use-stores';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
 
 export type ChatModalHandle = {
   showModal: () => void;
@@ -24,7 +23,6 @@ export const TabChatPreModal = forwardRef<ChatModalHandle, ChatModalProps>(
     const { chat } = useStores();
     const [isShown, setShown] = useState(false);
     const modalRef: any = useRef();
-    const isChatHidden = useIsAndroidFeatureOn('mob-4630-hide-chat-icon');
 
     useImperativeHandle(
       ref,
@@ -53,7 +51,7 @@ export const TabChatPreModal = forwardRef<ChatModalHandle, ChatModalProps>(
 
     const handleChatOpen = async () => {
       // Check if it is installed; Open the store if it isn't
-      const isInstalled = await chat.checkAppInstalled(!isChatHidden);
+      const isInstalled = await chat.checkAppInstalled();
 
       if (isInstalled) {
         // if it is installed opens the chat

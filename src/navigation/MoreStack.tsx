@@ -9,7 +9,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
-import { useFeature } from '@growthbook/growthbook-react';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -20,7 +19,6 @@ const WalletOptions = () => ({
 });
 
 export default function () {
-  const supermindFeatureFlag = useFeature('mobile-supermind');
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -86,20 +84,16 @@ export default function () {
           title: i18n.t('settings.billingOptions.2'),
           onPress: () => navigation.push('RecurringPayments'),
         },
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ]
     : navigation => [
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ];
 
   return (

@@ -42,7 +42,6 @@ import InteractionsBottomSheet from '../../common/components/interactions/Intera
 import Empty from '~/common/components/Empty';
 import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
 
@@ -439,10 +438,8 @@ const ChannelScreen = observer((props: PropsType) => {
           username: store.channel?.username,
         })}
       </B1>
-      <IfFeatureEnabled feature="mob-4107-channelrecs">
-        <View style={styles.thickBorder} />
-        <ChannelRecommendation channel={store.channel} location="channel" />
-      </IfFeatureEnabled>
+      <View style={styles.thickBorder} />
+      <ChannelRecommendation channel={store.channel} location="channel" />
     </View>
   );
 

@@ -384,6 +384,9 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           size="large"
         />
       </View>
+      <ActivityIndicator
+        color="#B8C1CA"
+      />
     </View>
   </RCTScrollView>
 </View>
@@ -1457,6 +1460,9 @@ exports[`Supermind settings should update the store and submit 1`] = `
           size="large"
         />
       </View>
+      <ActivityIndicator
+        color="#B8C1CA"
+      />
     </View>
   </RCTScrollView>
 </View>

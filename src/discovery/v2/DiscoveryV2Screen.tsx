@@ -23,7 +23,6 @@ import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import FeedListSticky from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
-import { useFeature } from '@growthbook/growthbook-react';
 import { IS_IOS } from '~/config/Config';
 
 interface Props {
@@ -39,9 +38,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
       false,
     );
     const store = useDiscoveryV2Store();
-    const isSupermindsGlobalFeedOn = useFeature(
-      'mob-4482-global-supermind-feed',
-    ).on;
     const listRef = React.useRef<FeedList<any>>(null);
 
     // inject items in the store the first time
@@ -74,12 +70,10 @@ export const DiscoveryV2Screen = withErrorBoundary(
           { id: 'your-tags', title: i18n.t('discovery.yourTags') },
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
           { id: 'boosts', title: i18n.t('boosted') },
-          isSupermindsGlobalFeedOn
-            ? { id: 'superminds', title: i18n.t('supermind.supermind') }
-            : null,
+          { id: 'superminds', title: i18n.t('supermind.supermind') },
         ].filter(Boolean) as { id: string; title: string }[],
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [i18n.locale, isSupermindsGlobalFeedOn],
+      [i18n.locale],
     );
 
     const emptyBoosts = React.useMemo(
