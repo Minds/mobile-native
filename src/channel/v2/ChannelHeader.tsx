@@ -24,7 +24,6 @@ import { B2, Column, H4, Row } from '~ui';
 import { IS_IOS } from '~/config/Config';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import UserModel from '../UserModel';
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import useModelEvent from '~/common/hooks/useModelEvent';
 import MutualSubscribers from '../components/MutualSubscribers';
 
@@ -322,13 +321,11 @@ const ChannelHeader = withErrorBoundary(
         )}
 
         {shouldRenderChannelRecommendation && (
-          <IfFeatureEnabled feature="mob-4107-channelrecs">
-            <ChannelRecommendation
-              channel={channel}
-              visible={interacted}
-              location="channel"
-            />
-          </IfFeatureEnabled>
+          <ChannelRecommendation
+            channel={channel}
+            visible={interacted}
+            location="channel"
+          />
         )}
       </View>
     );

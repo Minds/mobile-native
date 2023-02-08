@@ -21,7 +21,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 import { NavigationProp } from '@react-navigation/native';
 
@@ -73,12 +73,9 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isSupermindFeatureOn' | 'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden', boolean>;
 
-const getOptionsList = (
-  navigation,
-  { isIosMindsHidden, isSupermindFeatureOn }: Flags,
-) => {
+const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
   const channel = sessionService.getUser();
   let list = [
     {
@@ -98,14 +95,12 @@ const getOptionsList = (
           },
         }
       : null,
-    isSupermindFeatureOn
-      ? {
-          name: 'Supermind',
-          onPress: () => {
-            navigation.navigate('SupermindConsole');
-          },
-        }
-      : null,
+    {
+      name: 'Supermind',
+      onPress: () => {
+        navigation.navigate('SupermindConsole');
+      },
+    },
     {
       name: i18n.t('moreScreen.wallet'),
       icon: 'bank',
@@ -168,7 +163,6 @@ const getOptionsList = (
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
-  const isSupermindFeatureOn = useIsFeatureOn('mobile-supermind');
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
@@ -183,7 +177,6 @@ export default function Drawer(props) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const optionsList = getOptionsList(props.navigation, {
-    isSupermindFeatureOn,
     isIosMindsHidden,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);

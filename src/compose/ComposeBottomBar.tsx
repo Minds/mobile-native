@@ -1,4 +1,3 @@
-import { IfFeatureEnabled, useFeature } from '@growthbook/growthbook-react';
 import { useNavigation } from '@react-navigation/native';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { observer } from 'mobx-react';
@@ -10,13 +9,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
-  const mediaQuoteFF = useFeature('mobile-5645-media-quotes');
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
 
-  const allowMedia =
-    !props.store.isEdit && (mediaQuoteFF.on || !props.store.isRemind);
+  const allowMedia = !props.store.isEdit && !props.store.isRemind;
 
   const iconStyle = useMemo(
     () => [
@@ -78,15 +75,13 @@ function ComposeBottomBar(props) {
       {
         // don't allow superminding in the context of a supermind reply
         !props.store.isSupermindReply && (
-          <IfFeatureEnabled feature="mobile-supermind">
-            <IconButton
-              name="supermind"
-              style={iconStyle}
-              scale
-              color={props.store.supermindRequest ? 'Link' : 'Icon'}
-              onPress={props.onSupermind}
-            />
-          </IfFeatureEnabled>
+          <IconButton
+            name="supermind"
+            style={iconStyle}
+            scale
+            color={props.store.supermindRequest ? 'Link' : 'Icon'}
+            onPress={props.onSupermind}
+          />
         )
       }
 

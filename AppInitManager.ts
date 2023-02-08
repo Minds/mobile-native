@@ -70,7 +70,9 @@ export class AppInitManager {
             {
               text: 'Yes',
               onPress: () => {
-                if (err instanceof Error) Clipboard.setString(err.stack || '');
+                if (err instanceof Error) {
+                  Clipboard.setString(err.stack || '');
+                }
               },
             },
             { text: 'No' },
@@ -181,14 +183,9 @@ export class AppInitManager {
       // handle deep link (if the app is opened by one)
       if (deepLinkUrl) {
         setTimeout(() => {
-          //TODO: remove after we check the push notification issue
-          console.log('[App] Handling deeplink');
           deeplinkService.navigate(deepLinkUrl);
         }, 300);
       }
-
-      //TODO: remove after we check the push notification issue
-      console.log('[App] Handling initial notifications');
 
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();

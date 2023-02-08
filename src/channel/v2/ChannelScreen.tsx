@@ -42,7 +42,6 @@ import InteractionsBottomSheet from '../../common/components/interactions/Intera
 import Empty from '~/common/components/Empty';
 import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import { IfFeatureEnabled } from '@growthbook/growthbook-react';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
 
@@ -195,11 +194,14 @@ const ChannelScreen = observer((props: PropsType) => {
       store.initialLoad(params);
     }
 
-    const p = e => store.channel?.isOwner() && store.feedStore.prepend(e);
+    const prependPost = e =>
+      store.filter !== 'blogs' &&
+      store.channel?.isOwner() &&
+      store.feedStore.prepend(e);
 
-    ActivityModel.events.on('newPost', p);
+    ActivityModel.events.on('newPost', prependPost);
     return () => {
-      ActivityModel.events.removeListener('newPost', p);
+      ActivityModel.events.removeListener('newPost', prependPost);
     };
   }, [props.route.params, store]);
 
@@ -420,12 +422,14 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      <Button
-        onPress={() => props.navigation.navigate('Compose')}
-        text={i18n.t('channel.createFirstPostAction')}
-        large
-        action
-      />
+      {store.filter !== 'blogs' && (
+        <Button
+          onPress={() => props.navigation.navigate('Compose')}
+          text={i18n.t('channel.createFirstPostAction')}
+          large
+          action
+        />
+      )}
     </Empty>
   ) : (
     <View>
@@ -434,10 +438,8 @@ const ChannelScreen = observer((props: PropsType) => {
           username: store.channel?.username,
         })}
       </B1>
-      <IfFeatureEnabled feature="mob-4107-channelrecs">
-        <View style={styles.thickBorder} />
-        <ChannelRecommendation channel={store.channel} location="channel" />
-      </IfFeatureEnabled>
+      <View style={styles.thickBorder} />
+      <ChannelRecommendation channel={store.channel} location="channel" />
     </View>
   );
 
