@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useCallback, useReducer, useRef, useState } from 'react';
+import React, { useCallback, useReducer, useRef } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -65,6 +65,8 @@ type SupermindState = {
   termsAgreed?: boolean;
   paymentMethod?: PaymentType;
   cardId?: string;
+  offer?: string;
+  errors?: any;
 };
 type SupermindStateFn = (
   prev: SupermindState,
@@ -86,8 +88,28 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
   const { data, closeComposerOnClear, onClear, onSave } = params ?? {};
   const offerRef = useRef<InputContainerImperativeHandle>(null);
 
+  const { min_cash = 0, min_offchain_tokens = 0 } =
+    data?.channel?.supermind_settings ?? {};
+
+  const defaultPaymentMethod =
+    data?.payment_options?.payment_type ?? IS_IOS
+      ? PaymentType.token
+      : PaymentType.cash;
+
+  const minValue =
+    defaultPaymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
+
   const [
-    { channel, replyType, requireTwitter, termsAgreed, paymentMethod, cardId },
+    {
+      channel,
+      replyType,
+      requireTwitter,
+      termsAgreed,
+      paymentMethod,
+      cardId,
+      offer,
+      errors = {},
+    },
     setState,
   ] = useReducer<SupermindStateFn>(
     (prevState, nextState) => ({ ...prevState, ...nextState }),
@@ -96,11 +118,11 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       replyType: data?.reply_type ?? ReplyType.text,
       requireTwitter: data?.twitter_required ?? false,
       termsAgreed: data?.terms_agreed ?? false,
-      paymentMethod:
-        data?.payment_options?.payment_type ?? IS_IOS
-          ? PaymentType.token
-          : PaymentType.cash,
+      paymentMethod: defaultPaymentMethod,
       cardId: data?.payment_options?.payment_method_id,
+      offer: data?.payment_options?.amount
+        ? String(data?.payment_options?.amount)
+        : `${minValue}`,
     },
   );
 
@@ -109,18 +131,6 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     'mob-twitter-oauth-4715',
   ]);
 
-  const { min_cash = 0, min_offchain_tokens = 0 } =
-    channel?.supermind_settings ?? {};
-
-  const minValue =
-    paymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
-
-  const [offer, setOffer] = useState(
-    data?.payment_options?.amount
-      ? String(data?.payment_options?.amount)
-      : `${minValue}`,
-  );
-  const [errors, setErrors] = useState<any>({});
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
 
   // hide payment method tabs
@@ -139,7 +149,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       err.offer = 'Offer is not valid';
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
-    } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
+    } else if (offer?.includes('.') && offer.split('.')[1].length > 2) {
       err.offer = i18nService.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
@@ -149,7 +159,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 
     if (hasErrors) {
       showError(err[Object.keys(err)[0]]);
-      setErrors(err);
+      setState({ errors: err });
     }
     return !hasErrors;
   }, [cardId, channel, offer, paymentMethod, termsAgreed, minValue]);
@@ -256,10 +266,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
             NavigationService.push('ChannelSelectScreen', {
               onSelect: (channel?: UserModel) => setState({ channel }),
             });
-            setErrors(err => ({
-              ...err,
-              username: '',
-            }));
+            setState({ errors: { ...errors, username: '' } });
           }}
           value={channel ? `@${channel.username}` : '@'}
           error={errors.username}
@@ -273,11 +280,13 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           onChangeText={value => {
             if (/\d+\.?\d*$/.test(value) || value === '') {
               // remove leading 0
-              setOffer(value.length > 1 ? value.replace(/^0+/, '') : value);
-              setErrors(err => ({
-                ...err,
-                offer: '',
-              }));
+              setState({
+                offer: value.length > 1 ? value.replace(/^0+/, '') : value,
+                errors: {
+                  ...errors,
+                  offer: '',
+                },
+              });
             }
           }}
           hint={`Min: ${minValue}`}
@@ -287,10 +296,12 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           containerStyle={theme.paddingTop4x}
           returnKeyType="next"
           onFocus={() =>
-            setErrors(err => ({
-              ...err,
-              offer: '',
-            }))
+            setState({
+              errors: {
+                ...errors,
+                offer: '',
+              },
+            })
           }
           keyboardType="numeric"
         />
@@ -298,11 +309,13 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           <StripeCardSelector
             selectedCardId={cardId}
             onCardSelected={card => {
-              setState({ cardId: card.id });
-              setErrors(err => ({
-                ...err,
-                card: '',
-              }));
+              setState({
+                cardId: card.id,
+                errors: {
+                  ...errors,
+                  card: '',
+                },
+              });
             }}
             error={errors.card}
           />
