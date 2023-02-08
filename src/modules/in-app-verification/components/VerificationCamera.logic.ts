@@ -84,9 +84,8 @@ export const createVerificationStore = ({
         this.startRecording();
         break;
       case 'success':
-        // return to the newsfeed
         NavigationService.navigate({
-          name: 'Newsfeed',
+          name: 'InAppVerificationConfirmation',
         });
         break;
       case 'permissionError':
