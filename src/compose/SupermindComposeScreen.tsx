@@ -26,6 +26,7 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
+import { IfHasVariation } from 'ExperimentsProvider';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -74,6 +75,9 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
   const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
   const [replyType, setReplyType] = useState<ReplyType>(
     data?.reply_type ?? ReplyType.text,
+  );
+  const [requireTwitter, setRequireTwitter] = useState<boolean>(
+    data?.twitter_required ?? false,
   );
   const [termsAgreed, setTermsAgreed] = useState<boolean>(
     data?.terms_agreed || false,
@@ -155,7 +159,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         payment_type: paymentMethod,
       },
       reply_type: replyType,
-      twitter_required: false,
+      twitter_required: requireTwitter,
       terms_agreed: termsAgreed,
     };
 
@@ -175,6 +179,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     paymentMethod,
     replyType,
     termsAgreed,
+    requireTwitter,
     props.route,
   ]);
 
@@ -304,6 +309,16 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
+        <IfHasVariation featureKey="mob-twitter-oauth-4715">
+          <MenuItemOption
+            containerItemStyle={styles.twitterMenuItem}
+            onPress={() => setRequireTwitter(val => !val)}
+            selected={requireTwitter}
+            title={i18nService.t('supermind.requireTwitter')}
+            mode="checkbox"
+            multiLine
+          />
+        </IfHasVariation>
         <MenuItemOption
           onPress={() => setTermsAgreed(val => !val)}
           title={
@@ -337,3 +352,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 }
 
 export default observer(SupermindComposeScreen);
+
+const styles = ThemedStyles.create({
+  twitterMenuItem: ['bgPrimaryBackground', { borderBottomWidth: 0 }],
+});

@@ -21,6 +21,13 @@ export default function () {
         name="Supermind"
         getComponent={() => require('~/supermind/SupermindScreen').default}
       />
+      <NotificationsStack.Screen
+        name="SupermindTwitterConnect"
+        getComponent={() =>
+          require('~/supermind/SupermindTwitterConnectScreen').default
+        }
+        options={{ headerShown: false }}
+      />
     </NotificationsStack.Navigator>
   );
 }

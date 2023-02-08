@@ -33,6 +33,7 @@ export type MenuItemProps = {
    * @default false
    */
   multiLine?: boolean;
+  reversedIcon?: boolean;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -50,6 +51,7 @@ export default function ({
   noIcon,
   titleStyle,
   multiLine,
+  reversedIcon,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -102,11 +104,15 @@ export default function ({
 
     return icon;
   }, [icon, iconColor, iconSize, onPress]);
+  const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
       {avatar && <FastImage source={avatar} style={styles.avatar} />}
-      <Column flex right={rightIcon ? 'L2' : undefined}>
+      {reversedIcon && shouldRenderIcon && (
+        <View style={styles.leftIcon}>{rightIcon}</View>
+      )}
+      <Column flex right={shouldRenderIcon && !reversedIcon ? 'L2' : undefined}>
         <Row align="centerBetween">
           <MText
             style={theTitleStyle}
@@ -117,7 +123,7 @@ export default function ({
             <B2
               color="secondary"
               numberOfLines={1}
-              right={rightIcon ? 'M' : undefined}>
+              right={shouldRenderIcon && !reversedIcon ? 'M' : undefined}>
               {label}
             </B2>
           )}
@@ -128,7 +134,7 @@ export default function ({
           </B2>
         )}
       </Column>
-      {Boolean(rightIcon) && !noIcon && (
+      {!reversedIcon && shouldRenderIcon && (
         <View style={styles.rightIcon}>{rightIcon}</View>
       )}
     </MPressable>
@@ -149,4 +155,5 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     right: 15,
   },
+  leftIcon: ['marginRight4x', 'alignSelfStart'],
 });
