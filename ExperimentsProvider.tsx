@@ -100,4 +100,5 @@ export type FeatureID =
   | 'mob-4472-in-app-verification'
   | 'mob-4637-ios-hide-minds-superminds'
   | 'mob-twitter-oauth-4715'
-  | 'mob-4638-boost-v3';
+  | 'mob-4638-boost-v3'
+  | 'epic-303-boost-partners';
