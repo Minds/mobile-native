@@ -200,7 +200,10 @@ const createChannelStore = () => {
       if (!this.loaded) {
         this.loaded = true;
         this.feedStore.getScheduledCount(this.channel.guid);
-        if (!this.channel.isOwner() && hasVariation('mob-4638-boost-v3')) {
+        if (
+          !this.channel.isOwner() &&
+          hasVariation('epic-303-boost-partners')
+        ) {
           this.feedStore.setInjectBoost(true);
         }
       }
