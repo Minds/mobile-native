@@ -85,7 +85,7 @@ interface SupermindComposeScreen {
 function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
   const { params } = props.route ?? {};
-  const { data, closeComposerOnClear, onClear, onSave } = params ?? {};
+  const { data, closeComposerOnClear, onClear } = params ?? {};
   const offerRef = useRef<InputContainerImperativeHandle>(null);
 
   const { min_cash = 0, min_offchain_tokens = 0 } =
@@ -174,7 +174,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     }
   }, [closeComposerOnClear, onClear, props.navigation]);
 
-  const onValidate = useCallback(() => {
+  const onSave = useCallback(() => {
     if (!validate()) {
       return;
     }
@@ -198,7 +198,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     }
 
     NavigationService.goBack();
-    onSave?.(supermindRequest);
+    params?.onSave?.(supermindRequest);
   }, [
     validate,
     channel,
@@ -209,7 +209,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     termsAgreed,
     requireTwitter,
     data,
-    onSave,
+    params,
   ]);
 
   /**
@@ -237,7 +237,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       }
       extra={
         !onboarding && (
-          <Button mode="flat" size="small" type="action" onPress={onValidate}>
+          <Button mode="flat" size="small" type="action" onPress={onSave}>
             {i18nService.t('done')}
           </Button>
         )
