@@ -81,6 +81,10 @@ export function useIsFeatureOn(feature: FeatureID) {
   return useGrowthbookFeature(feature).on;
 }
 
+export function useFeature(feature: FeatureID) {
+  return useGrowthbookFeature(feature);
+}
+
 export default function ExperimentsProvider({ children }) {
   return (
     <GrowthBookProvider growthbook={growthbook}>{children}</GrowthBookProvider>
@@ -101,4 +105,5 @@ export type FeatureID =
   | 'mob-4637-ios-hide-minds-superminds'
   | 'mob-twitter-oauth-4715'
   | 'mob-4638-boost-v3'
+  | 'minds-3639-plus-notice'
   | 'epic-303-boost-partners';

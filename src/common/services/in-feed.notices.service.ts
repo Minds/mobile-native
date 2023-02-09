@@ -207,7 +207,7 @@ export class InFeedNoticesService {
    * returns true if the notice should be shown
    * @returns boolean
    */
-  visible(noticeName: string) {
+  visible(noticeName: keyof typeof noticeMapper) {
     return (
       this.data &&
       this.data.some(

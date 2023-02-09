@@ -240,7 +240,19 @@
     "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content.",
     "inviteFriendsTitle": "Invite Friends",
     "inviteFriendsDescription": "Minds gets better with friends. Share your referral link to invite them to join. If they earn money on Minds, you'll earn a 5% referral fee.",
-    "inviteFriendsAction": "Invite Friend"
+    "inviteFriendsAction": "Invite Friend",
+    "plusUpgrade": {
+      "title": "Upgrade to Minds+",
+      "description": "Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.",
+      "descriptionVariations": {
+        "1": "Free-thinking content creators like you earn more and grow their reach with Minds+.",
+        "2": "Access exclusive content produced by the Minds+ community.",
+        "3": "Get verified, hide ads, and get the most of your Minds experience",
+        "4": "Support Minds and creators like you."
+      },
+      "action": "Upgrade",
+      "secondaryAction": "Learn more"
+    }
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
