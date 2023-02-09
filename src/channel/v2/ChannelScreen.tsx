@@ -444,7 +444,7 @@ const ChannelScreen = observer((props: PropsType) => {
   if (
     !store.feedStore.injectItems &&
     !store.channel.isOwner() &&
-    hasVariation('mob-4638-boost-v3')
+    hasVariation('epic-303-boost-partners')
   ) {
     store.feedStore.setInjectedItems([
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (

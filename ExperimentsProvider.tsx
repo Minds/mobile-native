@@ -88,4 +88,5 @@ export type FeatureID =
   | 'mob-4722-track-code-push'
   | 'mob-4424-sockets'
   | 'mob-4472-in-app-verification'
-  | 'minds-3055-email-codes';
+  | 'minds-3055-email-codes'
+  | 'epic-303-boost-partners';
