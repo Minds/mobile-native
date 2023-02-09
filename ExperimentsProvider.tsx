@@ -106,4 +106,5 @@ export type FeatureID =
   | 'mob-4637-ios-hide-minds-superminds'
   | 'mob-4638-boost-v3'
   | 'mob-twitter-oauth-4715'
-  | 'engine-2503-twitter-feats';
+  | 'engine-2503-twitter-feats'
+  | 'epic-303-boost-partners';
