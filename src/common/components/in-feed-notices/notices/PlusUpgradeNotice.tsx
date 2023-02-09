@@ -2,19 +2,19 @@ import { useNavigation } from '@react-navigation/native';
 import { useFeature } from 'ExperimentsProvider';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
-import { useLegacyStores } from '~/common/hooks/use-stores';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import openUrlService from '~/common/services/open-url.service';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import InFeedNotice from './BaseNotice';
-import openUrlService from '../../../services/open-url.service';
 
 /**
  * Upgrade to Minds plus Notice
  */
 function PlusUpgradeNotice() {
   const navigation = useNavigation();
-  const { user } = useLegacyStores();
+  const user = useCurrentUser()!;
   const { value: activeExperiment } = useFeature('minds-3639-plus-notice');
   let description = i18n.t('inFeedNotices.plusUpgrade.description');
 
@@ -30,7 +30,7 @@ function PlusUpgradeNotice() {
     navigation.navigate('UpgradeScreen', {
       onComplete: (success: any) => {
         if (success) {
-          user.me.togglePlus();
+          user.togglePlus();
         }
       },
       pro: false,
@@ -39,7 +39,7 @@ function PlusUpgradeNotice() {
 
   if (
     !inFeedNoticesService.visible('plus-upgrade') ||
-    user.me.plus ||
+    user.plus ||
     !PRO_PLUS_SUBSCRIPTION_ENABLED
   ) {
     return null;
