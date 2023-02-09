@@ -2,8 +2,6 @@
 .only_patch_release:
   rules:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
-      changes:
-        - master
 
 # Run only on master
 .only_master:
@@ -39,11 +37,11 @@ pushrelease_prod:ios:
     - .only_patch_release
     - .codepush_base
   script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+    - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
 
 pushrelease_prod:android:
   extends:
     - .only_patch_release
     - .codepush_base
   script:
-    - appcenter codepush release-react -a Minds/Minds -d Production
+    - appcenter codepush release-react -a Minds/Minds -d Staging
