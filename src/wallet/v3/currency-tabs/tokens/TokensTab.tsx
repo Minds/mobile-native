@@ -23,6 +23,9 @@ import i18n from '../../../../common/services/i18n.service';
 import { Screen, Column } from '~ui';
 import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
 import { ONCHAIN_ENABLED } from '~/config/Config';
+import UserModel from '~/channel/UserModel';
+import useModelEvent from '~/common/hooks/useModelEvent';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -109,16 +112,33 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
     }
   }, [onchainStore, walletStore, wc]);
 
+  // connect the wallet after the user is verified
+  useModelEvent(
+    UserModel,
+    'userVerified',
+    () => {
+      connectWallet();
+    },
+    [],
+  );
+
+  const inAppVerificationFF = useIsFeatureOn('mob-4472-in-app-verification');
+
   const mustVerify =
     !sessionService.getUser().rewards && ONCHAIN_ENABLED
       ? () => {
-          const onComplete = () => {
-            connectWallet();
-          };
-          //@ts-ignore
-          navigation.navigate('PhoneValidation', {
-            onComplete,
-          });
+          if (inAppVerificationFF) {
+            //@ts-ignore
+            navigation.navigate('VerifyUniqueness');
+          } else {
+            const onComplete = () => {
+              connectWallet();
+            };
+            //@ts-ignore
+            navigation.navigate('PhoneValidation', {
+              onComplete,
+            });
+          }
         }
       : undefined;
 

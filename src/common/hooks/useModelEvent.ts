@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import BaseModel from '../BaseModel';
 
 /**
@@ -16,5 +16,6 @@ export default function useModelEvent(
     return () => {
       model.events.off(eventName, fn);
     };
-  }, deps);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deps]);
 }

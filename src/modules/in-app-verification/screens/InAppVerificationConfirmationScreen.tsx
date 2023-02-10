@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import UserModel from '~/channel/UserModel';
 import FitScrollView from '~/common/components/FitScrollView';
 import SaveButton from '~/common/components/SaveButton';
 import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
@@ -13,6 +14,9 @@ export default function InAppVerificationConfirmationScreen() {
   const onContinue = () => {
     navigation.popToTop();
     navigation.goBack();
+
+    // fire the user verified event
+    UserModel.events.emit('userVerified');
   };
   const { t } = useTranslation();
 
