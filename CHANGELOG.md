@@ -2,6 +2,32 @@
 
 Minds Mobile
 
+## 4.31.6 (2023-02-08)
+
+### Features ✨ (3 changes)
+
+- [Make invite friends in-feed notice dismissible](minds/mobile-native!2101)
+- [Added support for requiring a Twitter reply when requesting a Supermind](minds/mobile-native!2087)
+- [Track notice viewed in snowplow & fix notices not shown error](minds/mobile-native!2086)
+
+### Fixed 🐛 (7 changes)
+
+- [Fixed discovery boosts with v3](minds/mobile-native!2105)
+- [Fixed the boosted content service to work with v3 endpoint](minds/mobile-native!2104)
+- [Fixed boost service reading FF before it is ready](minds/mobile-native!2102)
+- [Fixed empty onboarding screen & start earning tokens buttons taking 2 minutes to be shown](minds/mobile-native!2098)
+- [Fix white screen when double tapping a link thumbnail](minds/mobile-native!2096)
+- [Fix boost shown in channels even with the FF turned off](minds/mobile-native!2090)
+- [Fix channel's feed render & pagination when filter is image/video](minds/mobile-native!2088)
+
+### Changed 🔧 (5 changes)
+
+- [Fixed text for empty boosts in console](minds/mobile-native!2100)
+- [Changed default boost amounts for token and cash payments](minds/mobile-native!2084)
+- [correct subtitle audience](minds/mobile-native!2097)
+- [rename Newsfeed to Content and Sidebar to Channel in Boost Console](minds/mobile-native!2091)
+- [Fix link in comments opening behind the bottom sheet](minds/mobile-native!2083)
+
 ## 4.31.4 (2023-02-01)
 
 ### Added (5 changes)

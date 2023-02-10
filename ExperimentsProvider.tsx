@@ -33,9 +33,28 @@ export const growthbook = new GrowthBook({
  * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
  * @returns { boolean } - true if params reflect current variation.
  */
-export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
-  const featureResult = growthbook.feature(featureKey);
-  return featureResult[variation];
+export function hasVariation(
+  featureKey: FeatureID | FeatureID[],
+  variation: string = 'on',
+) {
+  return Array.isArray(featureKey)
+    ? featureKey.every(key => growthbook.feature(key)[variation])
+    : growthbook.feature(featureKey)[variation];
+}
+
+export function IfHasVariation({
+  featureKey,
+  children,
+}: React.PropsWithChildren<{
+  featureKey: FeatureID;
+}>) {
+  const on = useIsFeatureOn(featureKey);
+
+  if (!on) {
+    return null;
+  }
+
+  return <>{children}</>;
 }
 
 /**
@@ -66,6 +85,10 @@ export function useIsFeatureOn(feature: FeatureID) {
   return useGrowthbookFeature(feature).on;
 }
 
+export function useFeature(feature: FeatureID) {
+  return useGrowthbookFeature(feature);
+}
+
 export default function ExperimentsProvider({ children }) {
   return (
     <GrowthBookProvider growthbook={growthbook}>{children}</GrowthBookProvider>
@@ -79,14 +102,14 @@ export const useIsAndroidFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && !IS_IOS;
 
 export type FeatureID =
-  | 'mobile-supermind'
-  | 'mob-4630-hide-chat-icon'
-  | 'mob-4637-ios-hide-minds-superminds'
-  | 'mob-stripe-connect-4587'
-  | 'mob-4638-boost-v3'
-  | 'mob-minds-3119-captcha-for-engagement'
-  | 'mob-4722-track-code-push'
+  | 'minds-3055-email-codes'
+  | 'mob-discovery-redirect'
   | 'mob-4424-sockets'
   | 'mob-4472-in-app-verification'
-  | 'minds-3055-email-codes'
+  | 'mob-4637-ios-hide-minds-superminds'
+  | 'mob-4638-boost-v3'
+  | 'mob-4722-track-code-push'
+  | 'mob-twitter-oauth-4715'
+  | 'engine-2503-twitter-feats'
+  | 'minds-3639-plus-notice'
   | 'epic-303-boost-partners';

@@ -26,7 +26,6 @@ import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingVie
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { useFeature } from '@growthbook/growthbook-react';
 
 type PropsType = {
   // called after registration is finished
@@ -42,7 +41,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const scrollViewRef = useRef<ScrollView>();
   const emailRef = useRef<InputContainerImperativeHandle>(null);
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
-  const friendlyCaptchaEnabled = useFeature('mob-4231-captcha').on;
 
   const store = useLocalStore(() => ({
     focused: false,
@@ -63,7 +61,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       });
       store.usernameTaken = !response.valid;
     }, 300),
-    friendlyCaptchaEnabled,
+    friendlyCaptchaEnabled: true,
     setFriendlyCaptchaEnabled(enabled: boolean) {
       store.friendlyCaptchaEnabled = enabled;
     },

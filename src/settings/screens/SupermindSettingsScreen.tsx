@@ -18,8 +18,6 @@ import {
   ScreenHeader,
   ScreenSection,
 } from '~/common/ui';
-import AddBankInformation from '~/supermind/AddBankInformation';
-import { useIsFeatureOn } from '../../../ExperimentsProvider';
 import StripeConnectButton from '../../wallet/v2/stripe-connect/StripeConnectButton';
 
 type Settings = {
@@ -30,7 +28,6 @@ type Settings = {
 export default observer(function SupermindSettingsScreen({ navigation }) {
   const fetchStore = useApiFetch<Settings>('api/v3/supermind/settings');
   const localStore = useLocalStore(createStore, { navigation, fetchStore });
-  const isStripeConnectFeatureOn = useIsFeatureOn('mob-stripe-connect-4587');
 
   /**
    * Sync values with local store
@@ -74,11 +71,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
           </B2>
         </ScreenSection>
         <Inputs fetchStore={fetchStore} store={localStore} />
-        {isStripeConnectFeatureOn ? (
-          <StripeConnectButton top="M" bottom="L" />
-        ) : (
-          <AddBankInformation borderTop />
-        )}
+        <StripeConnectButton top="M" bottom="L" />
       </ScrollView>
     </Screen>
   );

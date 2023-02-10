@@ -34,10 +34,6 @@ upload:s3:oss: # Upload to S3
     - build:androidproduction
   rules:
     - !reference [.rule_nonpatch_release_success, rules]
-    - if: $CI_COMMIT_BRANCH == "develop" # Run on develop
-      when: on_success
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true" # Skip on QA pipes
-      when: never
 
 # Upload full APK to Browserstack
 upload:browserstack:oss:
@@ -74,7 +70,7 @@ upload:browserstack:playstore:
 # Upload production RC (develop branch)
 upload:s3:oss:rc: # Upload to S3
   <<: *upload_s3
-  extends: .rule_automatic_develop_manual_master
+  extends: .rule_automatic_develop
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
@@ -84,7 +80,7 @@ upload:s3:oss:rc: # Upload to S3
 # Upload to Browserstack
 upload:browserstack:oss:rc:
   <<: *upload_browserstack
-  extends: .rule_automatic_develop_manual_master
+  extends: .rule_automatic_develop
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"

@@ -32,7 +32,6 @@ import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
-import friendlyCaptchaInterceptor from './friendly-captcha.interceptor';
 
 type FieldError = { field: string; message: string };
 
@@ -152,7 +151,7 @@ export class ApiService {
       config.headers = this.buildHeaders(config.headers);
       config.timeout = NETWORK_TIMEOUT;
 
-      return friendlyCaptchaInterceptor(config);
+      return config;
     });
 
     this.axios.interceptors.response.use(

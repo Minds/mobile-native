@@ -18,8 +18,9 @@ type BoostActionBarProps = {
 function BoostActionBar({ boost }: BoostActionBarProps) {
   const boostConsoleStore = useBoostConsoleStore();
   const { t } = useTranslation();
+  const date = i18n.date(boost.created_timestamp * 1000);
   const revokable = boost.boost_status === BoostStatus.PENDING;
-  const date = i18n.date(boost.created_timestamp * 1000, 'friendly');
+  const showStats = boost.boost_status === BoostStatus.APPROVED;
 
   const revoke = async () => {
     if (
@@ -39,22 +40,26 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
 
   return (
     <Column horizontal="L" bottom="L">
-      <Row flex>
-        <Column flex>
-          <B1 font="bold">{t('Results')}</B1>
-        </Column>
-        <Column flex>
-          <B1 font="bold">{t('Start date')}</B1>
-        </Column>
-      </Row>
-      <Row flex bottom="L">
-        <Column flex>
-          <B1 color="secondary">{boost.summary?.views_delivered ?? ''}</B1>
-        </Column>
-        <Column flex>
-          <B1 color="secondary">{date}</B1>
-        </Column>
-      </Row>
+      {showStats && (
+        <>
+          <Row flex>
+            <Column flex>
+              <B1 font="bold">{t('Results')}</B1>
+            </Column>
+            <Column flex>
+              <B1 font="bold">{t('Start date')}</B1>
+            </Column>
+          </Row>
+          <Row flex bottom="L">
+            <Column flex>
+              <B1 color="secondary">{boost.summary?.views_delivered ?? ''}</B1>
+            </Column>
+            <Column flex>
+              <B1 color="secondary">{date}</B1>
+            </Column>
+          </Row>
+        </>
+      )}
       {!!revokable && (
         <Button bottom="S" onPress={revoke}>
           <B1>{t('Revoke')}</B1>

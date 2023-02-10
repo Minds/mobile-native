@@ -141,14 +141,30 @@
     },
     "confirm": {
       "title": "Confirm reply",
-      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted."
+      "description": "Are you sure you want to post this reply? Once posted your reply cannot be deleted.",
+      "twitter": {
+        "title": "Post to my Twitter",
+        "description": "This Supermind offer requires posting the reply to Twitter.",
+        "example": "Example of a Twitter preview"
+      }
     },
     "confirmNoRefund": {
       "title": "Confirm Offer",
       "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
       "description": "I understand this transaction is non-refundable."
     },
-    "supermind": "Supermind"
+    "supermind": "Supermind",
+    "requireTwitter": "Optional: Require reply to be posted on Twitter",
+    "twitterConnect": {
+      "connectSuccess": "You channel is now connected to your Twitter account",
+      "connectFailed": "Something went wrong while connecting to Twitter",
+      "connectConfigFailed": "An unexpected error has occurred getting your twitter configuration",
+      "twitterPermission": {
+        "title": "Twitter Permission",
+        "description": "To accept this Supermind offer, please connect your Twitter account. This will give Minds permission to repost your response on your behalf, but only when you consent.",
+        "connectTwitter": "Connect Twitter"
+      }
+    }
   },
   "auth": {
     "2faRequired": "2FA required",
@@ -224,7 +240,19 @@
     "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content.",
     "inviteFriendsTitle": "Invite Friends",
     "inviteFriendsDescription": "Minds gets better with friends. Share your referral link to invite them to join. If they earn money on Minds, you'll earn a 5% referral fee.",
-    "inviteFriendsAction": "Invite Friend"
+    "inviteFriendsAction": "Invite Friend",
+    "plusUpgrade": {
+      "title": "Upgrade to Minds+",
+      "description": "Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.",
+      "descriptionVariations": {
+        "1": "Free-thinking content creators like you earn more and grow their reach with Minds+.",
+        "2": "Access exclusive content produced by the Minds+ community.",
+        "3": "Get verified, hide ads, and get the most of your Minds experience",
+        "4": "Support Minds and creators like you."
+      },
+      "action": "Upgrade",
+      "secondaryAction": "Learn more"
+    }
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -791,6 +819,17 @@
       },
       "16": {
         "label": "Inauthentic engagement"
+      },
+      "17": {
+        "label": "Security",
+        "reasons": {
+          "1": {
+            "label": "Hacked account"
+          }
+        }
+      },
+      "18": {
+        "label": "Violates Premium Content policy"
       }
     },
     "DMCA": "Please submit a DMCA notice to copyright@minds.com.",

@@ -1,12 +1,18 @@
-maintenance:update_changelog:
+.maintenance_base:
   image: alpine/curl
   stage: maintenance
   interruptible: true
   tags: [minds-ci]
-  script:
-    # gets commits from the last tag to the commit which is tagged (including the commit)
-    - 'curl --request POST --header "PRIVATE-TOKEN: $PROJECT_TOKEN" "https://gitlab.com/api/v4/projects/10171280/repository/changelog?from=$(git describe --tags --abbrev=0)&to=$CI_COMMIT_SHA" --data "branch=master&version=$CI_COMMIT_TAG&message=[skip ci] Add changelog for $CI_COMMIT_TAG"'
+  allow_failure: true
+  variables:
+    RELEASE_VERSION: '${CI_COMMIT_TAG:1}'
+    PROJECT_URL: https://gitlab.com/api/v4/projects/10171280
   only:
     refs:
       - /^master$/
       - tags
+
+maintenance:update_changelog:
+  extends: .maintenance_base
+  script:
+    - 'curl --fail --request POST --header "PRIVATE-TOKEN: $PROJECT_BOT" "$PROJECT_URL/repository/changelog" --data "branch=master&version=$RELEASE_VERSION&message=[skip ci] Add changelog for $RELEASE_VERSION"'

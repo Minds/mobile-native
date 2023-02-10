@@ -9,7 +9,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
-import { useFeature } from '@growthbook/growthbook-react';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -20,7 +20,8 @@ const WalletOptions = () => ({
 });
 
 export default function () {
-  const supermindFeatureFlag = useFeature('mobile-supermind');
+  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
+
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -86,20 +87,16 @@ export default function () {
           title: i18n.t('settings.billingOptions.2'),
           onPress: () => navigation.push('RecurringPayments'),
         },
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ]
     : navigation => [
-        supermindFeatureFlag.on
-          ? {
-              title: 'Supermind',
-              onPress: () => navigation.push('SupermindSettingsScreen'),
-            }
-          : null,
+        {
+          title: 'Supermind',
+          onPress: () => navigation.push('SupermindSettingsScreen'),
+        },
       ];
 
   return (
@@ -265,13 +262,15 @@ export default function () {
         options={{ title: i18n.t('settings.otherOptions.b1') }}
         initialParams={{ useForSelection: false }}
       />
-      <MoreStack.Screen
-        name="TwitterSync"
-        getComponent={() =>
-          require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
-        }
-        options={{ title: i18n.t('settings.twitterSync.titleLong') }}
-      />
+      {isTwitterEnabled && (
+        <MoreStack.Screen
+          name="TwitterSync"
+          getComponent={() =>
+            require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
+          }
+          options={{ title: i18n.t('settings.twitterSync.titleLong') }}
+        />
+      )}
       <MoreStack.Screen
         name="DeleteChannel"
         getComponent={() =>
@@ -384,6 +383,13 @@ export default function () {
       <MoreStack.Screen
         name="BoostScreenV2"
         getComponent={() => require('modules/boost').BoostComposerStack}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="SupermindTwitterConnect"
+        getComponent={() =>
+          require('~/supermind/SupermindTwitterConnectScreen').default
+        }
         options={{ headerShown: false }}
       />
     </MoreStack.Navigator>

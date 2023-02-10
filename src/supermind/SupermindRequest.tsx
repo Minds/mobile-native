@@ -1,14 +1,14 @@
-import React from 'react';
-import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 import { View } from 'react-native';
-
+import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import i18n from '~/common/services/i18n.service';
+import { B2, Button, Column, Row, Spacer } from '~/common/ui';
 import Activity from '~/newsfeed/activity/Activity';
+import { hasVariation } from '../../ExperimentsProvider';
 import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
-import { B2, Button, Column, Row, Spacer } from '~/common/ui';
-import SupermindLabel from '~/common/components/supermind/SupermindLabel';
+import { ensureTwitterConnected } from './SupermindTwitterConnectScreen';
 import { SupermindRequestStatus } from './types';
 
 type Props = {
@@ -18,6 +18,29 @@ type Props = {
 
 export default function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
+  const isTwitterEnabled =
+    request.twitter_required && hasVariation('engine-2503-twitter-feats');
+
+  const answer = React.useCallback(async () => {
+    if (isTwitterEnabled && hasVariation('mob-twitter-oauth-4715')) {
+      const connected = await ensureTwitterConnected(navigation);
+
+      if (!connected) {
+        return;
+      }
+    }
+
+    navigation.navigate('Compose', {
+      isRemind: true,
+      supermindObject: request,
+      allowedMode: composerModes[request.reply_type],
+      entity: request.entity,
+      onSave: entity => {
+        request.setStatus(SupermindRequestStatus.ACCEPTED);
+        request.setReplyGuid(entity.guid);
+      },
+    });
+  }, [isTwitterEnabled, navigation, request]);
 
   return (
     <Spacer top="XL">
@@ -47,18 +70,40 @@ export default function SupermindRequest({ request, outbound }: Props) {
             ' · '
           : i18n.t('requirements') + ': '}
         <B2>{i18n.t(`supermind.replyType.${request.reply_type}`)}</B2>
-        {request.twitter_required && (
+        {isTwitterEnabled && (
           <>
             {' · '}
             <B2>Twitter</B2>
           </>
         )}
       </B2>
-      {outbound ? (
-        <OutboundButtons request={request} />
-      ) : (
-        <InboundButtons request={request} />
-      )}
+      <Column space="L" top="XXL">
+        {!outbound &&
+          request.status === SupermindRequestStatus.CREATED &&
+          !request.isExpired() && (
+            <>
+              <Button
+                testID="acceptButton"
+                mode="outline"
+                type="action"
+                bottom="L"
+                onPress={answer}
+                spinner
+                disabled={request.isLoading > 0}>
+                {i18n.t('supermind.acceptOffer')}
+              </Button>
+              <Button
+                testID="rejectButton"
+                mode="outline"
+                type="base"
+                disabled={request.isLoading > 0}
+                onPress={() => request.reject()}>
+                {i18n.t('supermind.decline')}
+              </Button>
+            </>
+          )}
+        <SuperMindViewButton request={request} />
+      </Column>
     </Spacer>
   );
 }
@@ -108,78 +153,6 @@ const Status = ({ request }: { request: SupermindRequestModel }) => {
     </B2>
   );
 };
-
-/**
- * Inbound buttons
- */
-const InboundButtons = observer(
-  ({ request }: { request: SupermindRequestModel }) => {
-    const navigation = useNavigation();
-
-    const answer = React.useCallback(() => {
-      navigation.navigate('Compose', {
-        isRemind: true,
-        supermindObject: request,
-        allowedMode: composerModes[request.reply_type],
-        entity: request.entity,
-        onSave: entity => {
-          request.setStatus(SupermindRequestStatus.ACCEPTED);
-          request.setReplyGuid(entity.guid);
-        },
-      });
-    }, [navigation, request]);
-
-    return (
-      <Column space="L" top="XXL">
-        {request.status === SupermindRequestStatus.CREATED &&
-          !request.isExpired() && (
-            <>
-              <Button
-                testID="acceptButton"
-                mode="outline"
-                type="action"
-                bottom="L"
-                onPress={answer}
-                disabled={request.isLoading > 0}>
-                {i18n.t('supermind.acceptOffer')}
-              </Button>
-              <Button
-                testID="rejectButton"
-                mode="outline"
-                type="base"
-                disabled={request.isLoading > 0}
-                onPress={() => request.reject()}>
-                {i18n.t('supermind.decline')}
-              </Button>
-            </>
-          )}
-        <SuperMindViewButton request={request} />
-      </Column>
-    );
-  },
-);
-
-/**
- * Outbound buttons
- */
-const OutboundButtons = observer(
-  ({ request }: { request: SupermindRequestModel }) => {
-    return (
-      <Column space="L" top="XXL">
-        {/* {request.status === SupermindRequestStatus.CREATED && (
-          <Button
-            mode="outline"
-            type="base"
-            disabled={request.isLoading > 0}
-            onPress={() => request.revoke()}>
-            {i18n.t('supermind.cancelOffer')}
-          </Button>
-        )} */}
-        <SuperMindViewButton request={request} />
-      </Column>
-    );
-  },
-);
 
 /**
  * Supermind view reply button

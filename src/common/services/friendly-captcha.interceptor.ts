@@ -1,13 +1,8 @@
-import { hasVariation } from 'ExperimentsProvider';
 import { CAPTCHA_ENABLED_ENDPOINTS } from '~/config/Config';
 import { friendlyCaptchaReference } from '../components/friendly-captcha/FriendlyCaptchaProvider';
 
 const friendlyCaptchaInterceptor = async config => {
   if (!config.url) {
-    return config;
-  }
-
-  if (!hasVariation('mob-minds-3119-captcha-for-engagement')) {
     return config;
   }
 
@@ -17,11 +12,9 @@ const friendlyCaptchaInterceptor = async config => {
 
   if (endpointConfig) {
     try {
-      console.log('[ApiService] Checking captcha');
       const solution = await friendlyCaptchaReference?.solveAPuzzle(
         endpointConfig.origin,
       );
-      console.log('[ApiService] Captcha solved with solution ', solution);
       // TODO: move to request header once backend supports it
       config.data.puzzle_solution = solution;
     } catch (e) {

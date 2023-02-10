@@ -15,7 +15,6 @@ import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import SupermindAction from './actions/SupermindAction';
-import { useFeature } from '@growthbook/growthbook-react';
 import ShareAction from './actions/ShareAction';
 import { IS_IOS } from '~/config/Config';
 
@@ -28,8 +27,6 @@ type PropsType = {
 
 export const Actions = observer((props: PropsType) => {
   const navigation = useNavigation();
-
-  const supermindFeatureFlag = useFeature('mobile-supermind');
 
   if (props.hideTabs) {
     return null;
@@ -59,9 +56,7 @@ export const Actions = observer((props: PropsType) => {
           />
           <RemindAction entity={entity} hideCount={props.hideCount} />
 
-          {(supermindFeatureFlag.off || IS_IOS) && (
-            <ShareAction entity={entity} />
-          )}
+          {IS_IOS && <ShareAction entity={entity} />}
 
           {!isOwner && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />
@@ -71,9 +66,7 @@ export const Actions = observer((props: PropsType) => {
             <BoostAction entity={entity} navigation={navigation} />
           )}
 
-          {supermindFeatureFlag.on && !isOwner && !IS_IOS && (
-            <SupermindAction entity={entity} />
-          )}
+          {!isOwner && !IS_IOS && <SupermindAction entity={entity} />}
         </View>
       )}
     </View>

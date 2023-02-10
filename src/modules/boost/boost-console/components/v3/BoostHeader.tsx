@@ -29,7 +29,7 @@ export default function BoostHeader({ boost }: BoostHeader) {
     duration: boost.duration_days,
   });
 
-  const boostStatusText = {
+  const boostStatusText: Record<BoostStatus, string> = {
     [BoostStatus.PENDING]: t('Pending'),
     [BoostStatus.APPROVED]: t('Approved'),
     [BoostStatus.REJECTED]: t('Rejected'),
@@ -37,6 +37,11 @@ export default function BoostHeader({ boost }: BoostHeader) {
     [BoostStatus.REFUND_PROCESSED]: t('Refund Completed'),
     [BoostStatus.FAILED]: t('Failed'),
     [BoostStatus.REPORTED]: t('Reported'),
+    [BoostStatus.COMPLETED]: t('Completed'),
+    [BoostStatus.CANCELLED]: t('Cancelled'),
+    [BoostStatus.PENDING_ONCHAIN_CONFIRMATION]: t(
+      'Pending on-chain confirmation',
+    ),
   };
 
   return (
