@@ -96,7 +96,8 @@ const BoostEntity = ({ boost }: BoostProps) => {
     ),
   };
 
-  return renderEntityByType[entity.type ?? 'default']();
+  const renderEntityByTypeFn = renderEntityByType[entity.type ?? 'default'];
+  return renderEntityByTypeFn?.() ?? renderEntityByType.default();
 };
 
 const Rejection = ({ boost }: BoostProps) => {
