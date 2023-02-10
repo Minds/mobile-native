@@ -819,6 +819,17 @@
       },
       "16": {
         "label": "Inauthentic engagement"
+      },
+      "17": {
+        "label": "Security",
+        "reasons": {
+          "1": {
+            "label": "Hacked account"
+          }
+        }
+      },
+      "18": {
+        "label": "Violates Premium Content policy"
       }
     },
     "DMCA": "Please submit a DMCA notice to copyright@minds.com.",
