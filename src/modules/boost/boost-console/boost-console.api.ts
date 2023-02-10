@@ -14,6 +14,10 @@ type BoostsResponse = {
 
 export async function getBoosts(offset, filter, peer_filter) {
   try {
+    if (filter === 'feed') {
+      filter = 'newsfeed';
+    }
+
     const data: any = await api.get(`api/v2/boost/${filter}/${peer_filter}`, {
       offset: offset,
       limit: 15,
