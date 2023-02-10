@@ -33,9 +33,13 @@ export const growthbook = new GrowthBook({
  * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
  * @returns { boolean } - true if params reflect current variation.
  */
-export function hasVariation(featureKey: FeatureID, variation: string = 'on') {
-  const featureResult = growthbook.feature(featureKey);
-  return featureResult[variation];
+export function hasVariation(
+  featureKey: FeatureID | FeatureID[],
+  variation: string = 'on',
+) {
+  return Array.isArray(featureKey)
+    ? featureKey.every(key => growthbook.feature(key)[variation])
+    : growthbook.feature(featureKey)[variation];
 }
 
 export function IfHasVariation({
@@ -103,7 +107,8 @@ export type FeatureID =
   | 'mob-4424-sockets'
   | 'mob-4472-in-app-verification'
   | 'mob-4637-ios-hide-minds-superminds'
-  | 'mob-twitter-oauth-4715'
   | 'mob-4638-boost-v3'
+  | 'mob-twitter-oauth-4715'
+  | 'engine-2503-twitter-feats'
   | 'minds-3639-plus-notice'
   | 'epic-303-boost-partners';

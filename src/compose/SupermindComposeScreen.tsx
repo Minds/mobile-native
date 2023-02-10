@@ -1,9 +1,10 @@
+/* eslint-disable no-shadow */
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useReducer, useRef } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
 import FitScrollView from '../common/components/FitScrollView';
@@ -26,7 +27,7 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
-import { IfHasVariation } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -34,14 +35,12 @@ const showError = (error: string) =>
 type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
 type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
-// eslint-disable-next-line no-shadow
 export enum ReplyType {
   text = 0,
   image = 1,
   video = 2,
 }
 
-// eslint-disable-next-line no-shadow
 enum PaymentType {
   cash = 0,
   token = 1,
@@ -59,6 +58,21 @@ export interface SupermindRequestParam {
   terms_agreed: boolean;
 }
 
+type SupermindState = {
+  channel?: UserModel;
+  replyType?: ReplyType;
+  requireTwitter?: boolean;
+  termsAgreed?: boolean;
+  paymentMethod?: PaymentType;
+  cardId?: string;
+  offer?: string;
+  errors?: any;
+};
+type SupermindStateFn = (
+  prev: SupermindState,
+  next: SupermindState,
+) => SupermindState;
+
 interface SupermindComposeScreen {
   route?: PasswordConfirmation;
   navigation: Navigation;
@@ -70,39 +84,53 @@ interface SupermindComposeScreen {
  */
 function SupermindComposeScreen(props: SupermindComposeScreen) {
   const theme = ThemedStyles.style;
-  const data: SupermindRequestParam | undefined = props.route?.params?.data;
+  const { params } = props.route ?? {};
+  const { data, closeComposerOnClear, onClear } = params ?? {};
   const offerRef = useRef<InputContainerImperativeHandle>(null);
-  const [channel, setChannel] = useState<UserModel | undefined>(data?.channel);
-  const [replyType, setReplyType] = useState<ReplyType>(
-    data?.reply_type ?? ReplyType.text,
-  );
-  const [requireTwitter, setRequireTwitter] = useState<boolean>(
-    data?.twitter_required ?? false,
-  );
-  const [termsAgreed, setTermsAgreed] = useState<boolean>(
-    data?.terms_agreed || false,
-  );
-  const [paymentMethod, setPaymentMethod] = useState<PaymentType>(
-    data?.payment_options?.payment_type || IS_IOS
-      ? PaymentType.token
-      : PaymentType.cash,
-  );
-  const [cardId, setCardId] = useState<string | undefined>(
-    data?.payment_options?.payment_method_id,
-  );
 
   const { min_cash = 0, min_offchain_tokens = 0 } =
-    channel?.supermind_settings ?? {};
+    data?.channel?.supermind_settings ?? {};
+
+  const defaultPaymentMethod =
+    data?.payment_options?.payment_type ?? IS_IOS
+      ? PaymentType.token
+      : PaymentType.cash;
 
   const minValue =
-    paymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
+    defaultPaymentMethod === PaymentType.cash ? min_cash : min_offchain_tokens;
 
-  const [offer, setOffer] = useState(
-    data?.payment_options?.amount
-      ? String(data?.payment_options?.amount)
-      : `${minValue}`,
+  const [
+    {
+      channel,
+      replyType,
+      requireTwitter,
+      termsAgreed,
+      paymentMethod,
+      cardId,
+      offer,
+      errors = {},
+    },
+    setState,
+  ] = useReducer<SupermindStateFn>(
+    (prevState, nextState) => ({ ...prevState, ...nextState }),
+    {
+      channel: data?.channel,
+      replyType: data?.reply_type ?? ReplyType.text,
+      requireTwitter: data?.twitter_required ?? false,
+      termsAgreed: data?.terms_agreed ?? false,
+      paymentMethod: defaultPaymentMethod,
+      cardId: data?.payment_options?.payment_method_id,
+      offer: data?.payment_options?.amount
+        ? String(data?.payment_options?.amount)
+        : `${minValue}`,
+    },
   );
-  const [errors, setErrors] = useState<any>({});
+
+  const isTwitterEnabled = hasVariation([
+    'engine-2503-twitter-feats',
+    'mob-twitter-oauth-4715',
+  ]);
+
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
 
   // hide payment method tabs
@@ -121,7 +149,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       err.offer = 'Offer is not valid';
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
-    } else if (offer.includes('.') && offer.split('.')[1].length > 2) {
+    } else if (offer?.includes('.') && offer.split('.')[1].length > 2) {
       err.offer = i18nService.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
@@ -131,46 +159,46 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
 
     if (hasErrors) {
       showError(err[Object.keys(err)[0]]);
-      setErrors(err);
+      setState({ errors: err });
     }
     return !hasErrors;
   }, [cardId, channel, offer, paymentMethod, termsAgreed, minValue]);
 
   const onBack = useCallback(() => {
-    props.route?.params?.onClear();
+    onClear?.();
 
-    if (props.route?.params?.closeComposerOnClear) {
+    if (closeComposerOnClear) {
       props.navigation.pop(2);
     } else {
       props.navigation.goBack();
     }
-  }, [props.navigation, props.route]);
+  }, [closeComposerOnClear, onClear, props.navigation]);
 
   const onSave = useCallback(() => {
     if (!validate()) {
       return;
     }
 
-    const supermindRequest = {
+    const supermindRequest: SupermindRequestParam = {
       channel: channel!,
       payment_options: {
         amount: Number(offer),
         payment_method_id: cardId!,
-        payment_type: paymentMethod,
+        payment_type: paymentMethod ?? PaymentType.cash,
       },
-      reply_type: replyType,
-      twitter_required: requireTwitter,
-      terms_agreed: termsAgreed,
+      reply_type: replyType ?? ReplyType.text,
+      twitter_required: requireTwitter ?? false,
+      terms_agreed: termsAgreed ?? false,
     };
 
     // if object wasn't dirty, just go back without saving
-    if (_.isEqual(supermindRequest, props.route?.params?.data)) {
+    if (_.isEqual(supermindRequest, data)) {
       NavigationService.goBack();
       return;
     }
 
     NavigationService.goBack();
-    props.route?.params?.onSave(supermindRequest);
+    params?.onSave?.(supermindRequest);
   }, [
     validate,
     channel,
@@ -180,7 +208,8 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
     replyType,
     termsAgreed,
     requireTwitter,
-    props.route,
+    data,
+    params,
   ]);
 
   /**
@@ -219,7 +248,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
         {!tabsDisabled && (
           <TopbarTabbar
             current={paymentMethod}
-            onChange={setPaymentMethod}
+            onChange={paymentMethod => setState({ paymentMethod })}
             containerStyle={theme.paddingTop}
             tabs={[
               { id: PaymentType.cash, title: i18nService.t('wallet.cash') },
@@ -235,12 +264,9 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           label={'Target Channel'}
           onPress={() => {
             NavigationService.push('ChannelSelectScreen', {
-              onSelect: selectedChannel => setChannel(selectedChannel),
+              onSelect: (channel?: UserModel) => setState({ channel }),
             });
-            setErrors(err => ({
-              ...err,
-              username: '',
-            }));
+            setState({ errors: { ...errors, username: '' } });
           }}
           value={channel ? `@${channel.username}` : '@'}
           error={errors.username}
@@ -254,11 +280,13 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           onChangeText={value => {
             if (/\d+\.?\d*$/.test(value) || value === '') {
               // remove leading 0
-              setOffer(value.length > 1 ? value.replace(/^0+/, '') : value);
-              setErrors(err => ({
-                ...err,
-                offer: '',
-              }));
+              setState({
+                offer: value.length > 1 ? value.replace(/^0+/, '') : value,
+                errors: {
+                  ...errors,
+                  offer: '',
+                },
+              });
             }
           }}
           hint={`Min: ${minValue}`}
@@ -268,10 +296,12 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           containerStyle={theme.paddingTop4x}
           returnKeyType="next"
           onFocus={() =>
-            setErrors(err => ({
-              ...err,
-              offer: '',
-            }))
+            setState({
+              errors: {
+                ...errors,
+                offer: '',
+              },
+            })
           }
           keyboardType="numeric"
         />
@@ -279,17 +309,19 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           <StripeCardSelector
             selectedCardId={cardId}
             onCardSelected={card => {
-              setCardId(card.id);
-              setErrors(err => ({
-                ...err,
-                card: '',
-              }));
+              setState({
+                cardId: card.id,
+                errors: {
+                  ...errors,
+                  card: '',
+                },
+              });
             }}
             error={errors.card}
           />
         )}
         <InputSelectorV2
-          onSelected={setReplyType}
+          onSelected={replyType => setState({ replyType })}
           selected={replyType}
           label="Response Type"
           data={[
@@ -309,18 +341,18 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        <IfHasVariation featureKey="mob-twitter-oauth-4715">
+        {isTwitterEnabled && (
           <MenuItemOption
             containerItemStyle={styles.twitterMenuItem}
-            onPress={() => setRequireTwitter(val => !val)}
+            onPress={() => setState({ requireTwitter: !requireTwitter })}
             selected={requireTwitter}
             title={i18nService.t('supermind.requireTwitter')}
             mode="checkbox"
             multiLine
           />
-        </IfHasVariation>
+        )}
         <MenuItemOption
-          onPress={() => setTermsAgreed(val => !val)}
+          onPress={() => setState({ termsAgreed: !termsAgreed })}
           title={
             <B1>
               I agree to the{' '}
