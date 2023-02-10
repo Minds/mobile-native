@@ -35,6 +35,7 @@ import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar'
 import { CodePushUpdatePrompt } from 'modules/codepush';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
+import { InAppVerificationPrompt } from '../modules/in-app-verification';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
