@@ -1829,6 +1829,9 @@
       "action": "Restart"
     },
     "nativePrompt": {
+      "description": "Please update your app in order to enjoy the latest features.",
+      "current": "Current:",
+      "available": "Available:",
       "action": "Download"
     }
   }
