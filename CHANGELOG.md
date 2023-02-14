@@ -2,6 +2,39 @@
 
 Minds Mobile
 
+## 4.32.0 (2023-02-14)
+
+### Features ✨ (5 changes)
+
+- [Added PlusUpgrade top in-feed notice](minds/mobile-native!2115)
+- [Added violated premium content & security report reasons](minds/mobile-native!2116)
+- [Link to boost content policy with rejection message](minds/mobile-native!2111)
+- [Use in-app verification for wallet join rewards](minds/mobile-native!2112)
+
+
+### Fixed 🐛 (5 changes)
+
+- [Fixed an issue where the subject of notifications would get duplicated](minds/mobile-native!2109)
+- [Update react native to 0.70.7 to mitigate the samsung keyboard issues](minds/mobile-native!2106)
+- [Fixed an issue where creating a new post from an empty blogs feed would cause UI inconsistencies](minds/mobile-native!2099)
+- [Fixed navigation issue of rejected superminds' notifications](minds/mobile-native!2093)
+- [Full screen video only works in portrait mode on Android](minds/mobile-native!2075)
+
+### Changed 🔧 (4 changes)
+
+- [Changed timestamp format and stats visibility on Boost Console v2](minds/mobile-native!2118)
+- [Add Twitter FF to deprecate Twitter API](minds/mobile-native!2108)
+- [Refactor image picker using expo package](minds/mobile-native!2081)
+- [(refactor) replace orientation locker package with expo](minds/mobile-native!2075)
+
+### Deprecated ⚠️ (1 change)
+
+- [removed obsolete feature flags](minds/mobile-native!2085)
+
+### Other (1 change)
+
+- [Fix iOS build with new RN and expo versions](minds/mobile-native!2092)
+
 ## 4.31.6 (2023-02-08)
 
 ### Features ✨ (3 changes)
