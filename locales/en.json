@@ -1827,6 +1827,9 @@
       "title": "New update available",
       "description": "There is a newer version of the app available. Would you like to update now?",
       "action": "Restart"
+    },
+    "nativePrompt": {
+      "action": "Download"
     }
   }
 }
