@@ -13,8 +13,14 @@ import { B2 } from '~/common/ui';
 import { IS_FROM_STORE, STORE_LINK } from '~/config/Config';
 import { Version } from '~/config/Version';
 import { codePush } from '../';
+import { CommonReducer } from '../../../types/Common';
 
 const DISMISS_DURATION = 1 * 24 * 60 * 60 * 1000; // one day
+
+type CodePushUpdatePromptState = {
+  updateAvailable?: boolean;
+  nativeUpdate?: RemotePackage;
+};
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
@@ -22,27 +28,16 @@ const DISMISS_DURATION = 1 * 24 * 60 * 60 * 1000; // one day
  */
 function CodePushUpdatePrompt() {
   const { dismissal } = useLegacyStores();
-  const [
-    { message, updateAvailable, nativeUpdateAvailable },
-    setState,
-  ] = useReducer((prev, next) => ({ ...prev, ...next }), {
-    message: null,
-    updateAvailable: null,
-    nativeUpdateAvailable: null,
+  const [{ updateAvailable, nativeUpdate }, setState] = useReducer<
+    CommonReducer<CodePushUpdatePromptState>
+  >((prev, next) => ({ ...prev, ...next }), {
+    updateAvailable: false,
+    nativeUpdate: undefined,
   });
 
   const onVersionMismatch = (remotePackage: RemotePackage) => {
     setState({
-      nativeUpdateAvailable: true,
-      message: (
-        <B2 color="secondary">
-          {i18nService.t('codePush.nativePrompt.description')}{' '}
-          {i18nService.t('codePush.nativePrompt.current')}
-          <B2 color="primary"> {Version.VERSION} </B2>
-          {i18nService.t('codePush.nativePrompt.available')}
-          <B2 color="primary"> {remotePackage.appVersion}</B2>
-        </B2>
-      ),
+      nativeUpdate: remotePackage,
     });
   };
 
@@ -113,11 +108,19 @@ function CodePushUpdatePrompt() {
     );
   }
 
-  if (nativeUpdateAvailable && message) {
+  if (nativeUpdate) {
     return (
       <BaseNotice
         title={i18nService.t('codePush.prompt.title')}
-        description={message}
+        description={
+          <B2 color="secondary">
+            {i18nService.t('codePush.nativePrompt.description')}{' '}
+            {i18nService.t('codePush.nativePrompt.current')}
+            <B2 color="primary"> {Version.VERSION} </B2>
+            {i18nService.t('codePush.nativePrompt.available')}
+            <B2 color="primary"> {nativeUpdate.appVersion}</B2>
+          </B2>
+        }
         btnText={i18nService.t('codePush.nativePrompt.action')}
         iconName="warning"
         onPress={onDownload}
