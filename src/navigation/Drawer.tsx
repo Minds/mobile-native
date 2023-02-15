@@ -21,7 +21,7 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 import { NavigationProp } from '@react-navigation/native';
 
@@ -73,9 +73,12 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden' | 'isVerificationEnabled', boolean>;
 
-const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, isVerificationEnabled }: Flags,
+) => {
   const channel = sessionService.getUser();
   let list = [
     {
@@ -152,13 +155,15 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('Settings');
       },
     },
-    {
-      name: 'Verify account',
-      icon: 'group',
-      onPress: async () => {
-        navigation.navigate('InAppVerification');
-      },
-    },
+    isVerificationEnabled
+      ? {
+          name: 'Verify account',
+          icon: 'group',
+          onPress: async () => {
+            navigation.navigate('InAppVerification');
+          },
+        }
+      : null,
   ];
 
   return list;
@@ -173,6 +178,7 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+  const isVerificationEnabled = useIsFeatureOn('mob-4472-in-app-verification');
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
@@ -185,6 +191,7 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
+    isVerificationEnabled,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
