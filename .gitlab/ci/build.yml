@@ -20,9 +20,6 @@
     - cd ios
     - pod install
 
-.needs_promote:
-  extends: .rule_automatic_nonpatch_manual_patch
-
 # Move the apk to the root folder
 .move_apk: &move_apk
   - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
@@ -73,7 +70,7 @@ build:ios_release_candidate:
 # Build iOS for master branch
 build:ios_production:
   <<: *prepare_build_ios
-  extends: .needs_promote
+  extends: .rule_automatic_nonpatch_manual_patch
   stage: build
   interruptible: true
   script:
@@ -182,7 +179,7 @@ build:cleanup:
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   <<: *prepare_build_android
-  extends: .needs_promote
+  extends: .rule_automatic_nonpatch_manual_patch
   script:
     - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
