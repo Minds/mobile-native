@@ -27,6 +27,7 @@ release:android_google_play:
     - cd android
     - bundle install --path=vendor/bundle
     - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
+  environment: google_play
   script:
     - echo "Upload to the play store $APK_NAME"
     - bundle exec fastlane supply --apk ../$APK_NAME
@@ -39,6 +40,7 @@ release:ios_rc_testflight:
   image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
+  environment: testflight
   dependencies:
     - build:ios_release_candidate
   interruptible: true
@@ -57,6 +59,7 @@ release:ios_prod_testflight:
   image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
+  environment: app_store
   dependencies:
     - build:ios_production
   interruptible: true
