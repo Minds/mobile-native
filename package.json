@@ -145,7 +145,7 @@
     "react-native-localize": "^1.3.0",
     "react-native-material-menu": "^1.1.3",
     "react-native-mmkv-storage": "^0.8.0",
-    "react-native-modal": "^11.10.0",
+    "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-navigation-bar-color": "^2.0.1",
     "react-native-notifications": "Minds/react-native-notifications",
