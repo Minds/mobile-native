@@ -1,16 +1,3 @@
-# Run only for tags that don't end on .0 (patch releases)
-.only_patch_release:
-  rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
-      changes:
-        - master
-
-# Run only on master
-.only_master:
-  only:
-    refs:
-      - master
-
 .codepush_base:
   image: node:14.19.1
   tags: [minds-ci]
@@ -24,6 +11,7 @@ pushrelease_staging:ios:
   extends:
     - .only_master
     - .codepush_base
+  environment: codepush_staging_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
 
@@ -31,19 +19,22 @@ pushrelease_staging:android:
   extends:
     - .only_master
     - .codepush_base
+  environment: codepush_staging_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Staging
 
 pushrelease_prod:ios:
   extends:
-    - .only_patch_release
+    - .rule_patch_release
     - .codepush_base
+  environment: codepush_production_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
 
 pushrelease_prod:android:
   extends:
-    - .only_patch_release
+    - .rule_patch_release
     - .codepush_base
+  environment: codepush_production_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Production

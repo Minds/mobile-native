@@ -70,7 +70,7 @@ build:ios_release_candidate:
 # Build iOS for master branch
 build:ios_production:
   <<: *prepare_build_ios
-  extends: .rule_nonpatch_release
+  extends: .rule_automatic_nonpatch_manual_patch
   stage: build
   interruptible: true
   script:
@@ -114,7 +114,7 @@ build:androidproduction:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - !reference [.rule_nonpatch_release_success, rules]
+    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
     - if: $CI_COMMIT_BRANCH == "master"
       when: manual
     - if: $CI_COMMIT_BRANCH == "develop"
@@ -179,7 +179,7 @@ build:cleanup:
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   <<: *prepare_build_android
-  extends: .rule_nonpatch_release
+  extends: .rule_automatic_nonpatch_manual_patch
   script:
     - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
