@@ -241,7 +241,7 @@ export default class Activity extends Component<PropsType> {
         }
       />
     );
-    return (
+    return this.props.entity.ownerObj ? (
       <OwnerBlock
         entity={this.props.entity}
         navigation={this.props.navigation}
@@ -249,7 +249,7 @@ export default class Activity extends Component<PropsType> {
         storeUserTap={this.props.storeUserTap}
         distinctBoosts={this.props.distinctBoosts}
       />
-    );
+    ) : null;
   }
 
   /**
