@@ -45,7 +45,7 @@ export default function useStripeConnect() {
       skip: true,
     },
   );
-  const { post: createAccount } = useApiCall(
+  const { post: createAccount, loading: createAccountLoading } = useApiCall(
     'api/v3/payments/stripe/connect/account',
   );
 
@@ -74,9 +74,14 @@ export default function useStripeConnect() {
     }
   };
 
+  const createAccountAndOpenStripe = async () => {
+    await createAccount();
+    return openStripe();
+  };
+
   return {
     account,
-    loading: accountLoading || onboardingLoading,
+    loading: accountLoading || onboardingLoading || createAccountLoading,
     /**
      * If the stripe account is in a restricted state
      * https://stripe.com/docs/connect/identity-verification-api for disabled_reasons
@@ -98,7 +103,7 @@ export default function useStripeConnect() {
     /**
      * creates the stripe account in the backend
      */
-    createAccount: () => createAccount(),
+    createAccount: createAccountAndOpenStripe,
     /**
      * opens stripe in the in-app-browser
      */
