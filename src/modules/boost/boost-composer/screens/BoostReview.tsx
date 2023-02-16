@@ -5,6 +5,7 @@ import FitScrollView from '~/common/components/FitScrollView';
 import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
+import number from '~/common/helpers/number';
 import {
   B1,
   B2,
@@ -26,7 +27,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
-    value: Math.round(Number(boostStore.wallet?.balance) || 0),
+    value: number(boostStore.wallet?.balance || 0, 0, 2),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
