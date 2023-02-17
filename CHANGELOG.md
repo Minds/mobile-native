@@ -2,6 +2,19 @@
 
 Minds Mobile
 
+## 4.32.1 (2023-02-17)
+
+### Fixed 🐛 (3 changes)
+
+- [Fixed an issue crashing the registration screen on some devices](minds/mobile-native!2126)
+- [Fixed an issue where creating a cash account didn't navigate correctly](minds/mobile-native!2124)
+- [Fixed an issue where the tokens amount was being incorrectly rounder](minds/mobile-native!2120)
+
+### Changed 🔧 (2 changes)
+
+- [Version bump](minds/mobile-native!2127)
+- [hide in-app verification in drawer, small bugs](minds/mobile-native!2125)
+
 ## 4.32.0 (2023-02-14)
 
 ### Features ✨ (5 changes)
