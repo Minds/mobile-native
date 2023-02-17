@@ -211,9 +211,15 @@ export const USAGE_SCORES = {
  */
 export const RATING_APP_SCORE_THRESHOLD = 20;
 
-const APP_STORE_LINK =
+const APP_STORE_REVIEW_LINK =
   'itms-apps://apps.apple.com/app/id961771928?action=write-review';
+const APP_STORE_LINK = 'itms-apps://apps.apple.com/app/id961771928';
 const PLAY_STORE_LINK = 'market://details?id=com.minds.mobile';
+
+export const STORE_REVIEW_LINK = Platform.select({
+  ios: APP_STORE_REVIEW_LINK,
+  android: PLAY_STORE_LINK,
+}) as string;
 
 export const STORE_LINK = Platform.select({
   ios: APP_STORE_LINK,

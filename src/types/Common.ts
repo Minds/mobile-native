@@ -74,3 +74,5 @@ export interface SocialProfileMeta {
 }
 
 export type Timeout = ReturnType<typeof setTimeout>;
+
+export type CommonReducer<T> = (state: T, action: Partial<T>) => T;

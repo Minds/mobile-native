@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { B2, Button, H3, IconButtonNext, IconNext } from '~/common/ui';
 import { IconNameType } from '~/common/ui/icons/map';
@@ -6,7 +6,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 
 type PropsType = {
   title: string;
-  description: string;
+  description: string | ReactNode;
   iconName: IconNameType;
   btnText: string;
   onClose?: () => void;

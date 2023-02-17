@@ -8,6 +8,7 @@ export type DismissIdentifier =
   | 'channel-recommendation:feed'
   | 'supermind:onboarding:consumer'
   | 'supermind:onboarding:producer'
+  | 'update-prompt'
   | 'channel-recommendation:channel';
 
 type DismissItem = {
