@@ -2,13 +2,6 @@
 
 Minds Mobile
 
-## 4.34.0 (2023-02-17)
-
-### Features ✨ (2 changes)
-
-- [Added an update prompt when the app version is behind the latest version](minds/mobile-native!2123)
-- [Added Supermind receiver label to Supermind console](minds/mobile-native!2121)
-
 ## 4.32.2 (2023-02-17)
 
 No changes.
