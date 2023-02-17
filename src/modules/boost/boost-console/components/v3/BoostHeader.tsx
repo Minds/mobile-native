@@ -1,8 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
-import { B1, B2, Row } from '~/common/ui';
+import { B1, B2, Icon, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
+import type UserModel from '../../../../../channel/UserModel';
 import { useTranslation } from '../../../locales';
 import BoostModel from '../../../models/BoostModelV3';
 import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';
@@ -13,6 +15,7 @@ interface BoostHeader {
 
 export default function BoostHeader({ boost }: BoostHeader) {
   const { t } = useTranslation();
+  const receiverUser = boost.entity?.supermind?.receiver_user;
   const tillExpiration =
     boost.approved_timestamp && boost.boost_status === BoostStatus.APPROVED
       ? moment(boost.approved_timestamp * 1000)
@@ -45,22 +48,46 @@ export default function BoostHeader({ boost }: BoostHeader) {
   };
 
   return (
-    <Row top="M" left="L">
-      <View style={styles.rectangle}>
-        <B2 font="medium" color="white" horizontal="S">
-          {boost.payment_method === BoostPaymentMethod.cash
-            ? cashLabel
-            : tokenLabel}
-        </B2>
-      </View>
-      {tillExpiration ? (
-        <B1 color="secondary">{t('Ends: ') + tillExpiration}</B1>
-      ) : (
-        <B1>{boostStatusText[boost.boost_status]}</B1>
-      )}
-    </Row>
+    <>
+      <Row top="M" left="L">
+        <View style={styles.rectangle}>
+          <B2 font="medium" color="white" horizontal="S">
+            {boost.payment_method === BoostPaymentMethod.cash
+              ? cashLabel
+              : tokenLabel}
+          </B2>
+        </View>
+        {tillExpiration ? (
+          <B1 color="secondary">{t('Ends: ') + tillExpiration}</B1>
+        ) : (
+          <B1>{boostStatusText[boost.boost_status]}</B1>
+        )}
+      </Row>
+      {!!receiverUser && <SupermindTarget channel={receiverUser} />}
+    </>
   );
 }
+
+const SupermindTarget = ({ channel }: { channel: UserModel }) => {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+
+  const navToTarget = () => {
+    navigation.navigate('Channel', {
+      guid: channel.guid,
+      entity: channel,
+    });
+  };
+
+  return (
+    <Row top="S" left="L" align="centerStart">
+      <Icon name="supermind" size="tiny" right="XS" />
+      <B1 onPress={navToTarget} color="secondary">
+        {t('Supermind to @{{user}}', { user: channel.username })}
+      </B1>
+    </Row>
+  );
+};
 
 const styles = ThemedStyles.create({
   rectangle: [
