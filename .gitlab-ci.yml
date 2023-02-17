@@ -2,13 +2,13 @@ variables:
   APK_NAME: Minds.apk
 
 include:
-  - local: .gitlab/ci/build.yml
-  - local: .gitlab/ci/maintenance.yml
-  - local: .gitlab/ci/pushrelease.yml
-  - local: .gitlab/ci/qa.yml
-  - local: .gitlab/ci/release.yml
   - local: .gitlab/ci/test.yml
+  - local: .gitlab/ci/pushrelease.yml
+  - local: .gitlab/ci/build.yml
   - local: .gitlab/ci/upload.yml
+  - local: .gitlab/ci/release.yml
+  - local: .gitlab/ci/maintenance.yml
+  - local: .gitlab/ci/qa.yml
 
 stages:
   - test
@@ -65,6 +65,12 @@ stages:
   only:
     refs:
       - master
+
+# Run only on tags
+.only_tags:
+  only:
+    refs:
+      - tags
 
 # Run only on nightly jobs
 .except_nightly:
