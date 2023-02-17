@@ -56,6 +56,7 @@ import FriendlyCaptchaProvider, {
 import { Orientation, QueryProvider } from '~/services';
 import { codePush, logError, logMessage } from 'modules/codepush';
 import { UIProvider } from '@minds/ui';
+import { PerformanceProvider } from 'services/performance';
 
 appInitManager.initializeServices();
 
@@ -197,31 +198,36 @@ class App extends Component<Props> {
                 onStateChange={NavigationService.onStateChange}>
                 <StoresProvider>
                   <QueryProvider>
-                    <Provider key="app" {...stores}>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                        <FriendlyCaptchaProvider
-                          ref={setFriendlyCaptchaReference}>
-                          <PortalProvider>
-                            <UIProvider
-                              defaultTheme={
-                                ThemedStyles.theme === 0 ? 'dark' : 'light'
-                              }>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
-                                  <WCContextProvider>
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                  </WCContextProvider>
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </UIProvider>
-                          </PortalProvider>
-                        </FriendlyCaptchaProvider>
-                      </AppMessageProvider>
-                    </Provider>
+                    <PerformanceProvider>
+                      <Provider key="app" {...stores}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
+                              <UIProvider
+                                defaultTheme={
+                                  ThemedStyles.theme === 0 ? 'dark' : 'light'
+                                }>
+                                <BottomSheetModalProvider>
+                                  <ErrorBoundary
+                                    message="An error occurred"
+                                    containerStyle={
+                                      ThemedStyles.style.centered
+                                    }>
+                                    <WCContextProvider>
+                                      <NavigationStack
+                                        key={ThemedStyles.theme + i18n.locale}
+                                      />
+                                    </WCContextProvider>
+                                  </ErrorBoundary>
+                                </BottomSheetModalProvider>
+                              </UIProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </Provider>
+                    </PerformanceProvider>
                   </QueryProvider>
                 </StoresProvider>
               </NavigationContainer>

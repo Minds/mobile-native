@@ -221,3 +221,5 @@ export const STORE_LINK = Platform.select({
 }) as string;
 
 export const isStoryBookOn = storages.app.getBool('storybook');
+
+export const IS_PERFMON_ENABLED = true;

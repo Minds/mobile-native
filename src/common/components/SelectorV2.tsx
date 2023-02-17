@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { Keyboard, TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { PerformanceListWrapper } from 'services/performance';
 import ThemedStyles from '../../styles/ThemedStyles';
 import {
   BottomSheetModal,
@@ -209,15 +210,17 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
   // =====================| RENDER |==========================>
   const flatList = (
-    <FlatList
-      data={listData}
-      renderItem={renderItem}
-      extraData={selected}
-      style={styles.flatList}
-      ref={flatListRef}
-      keyExtractor={keyExtractor}
-      onScrollToIndexFailed={onScrollToIndexFailed}
-    />
+    <PerformanceListWrapper name="SelectorV2">
+      <FlatList
+        data={listData}
+        renderItem={renderItem}
+        extraData={selected}
+        style={styles.flatList}
+        ref={flatListRef}
+        keyExtractor={keyExtractor}
+        onScrollToIndexFailed={onScrollToIndexFailed}
+      />
+    </PerformanceListWrapper>
   );
 
   const modal = shown ? (

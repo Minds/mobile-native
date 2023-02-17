@@ -5413,6 +5413,28 @@
     recyclerlistview "4.1.2"
     tslib "2.4.0"
 
+"@shopify/react-native-performance-lists-profiler@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-performance-lists-profiler/-/react-native-performance-lists-profiler-1.1.0.tgz#298d899ac43f83d38356b15c16c6ba109fd6924e"
+  integrity sha512-Jj+9gMQxMqlO4dZFS9HDb8/aI8VraJL67aDrJpV2qWzWr7HUXah96qav3X7+jS0f6YvUDVzpe0cjy6WsVdo3+g==
+
+"@shopify/react-native-performance-navigation-bottom-tabs@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-performance-navigation-bottom-tabs/-/react-native-performance-navigation-bottom-tabs-3.0.0.tgz#80a1a6c3de30525e364e9e2353c27997ca709c4e"
+  integrity sha512-RB+s7xWyqgxvzTQ2SkwtEUkMp0E0GbH0Yum+aDSAiigPYGg7H8iy2g4VY+2FAp4fvNdduMvGwfE6JN2fOim1IQ==
+
+"@shopify/react-native-performance-navigation@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-performance-navigation/-/react-native-performance-navigation-3.0.0.tgz#029735cefd30382239825479869187affa2157ec"
+  integrity sha512-KhXXi3Rau2KWqwAXnW77gGuKEvWcMEmh+B5mdfRd9+oJ9QIoCkLPnnGcZYsMh0t3jFrmLFNmWTqScEB3CxkopQ==
+  dependencies:
+    lodash.isequal "^4.5.0"
+
+"@shopify/react-native-performance@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-performance/-/react-native-performance-4.1.2.tgz#bd111af291b85ee125feaccd54c8e5f237a76ce7"
+  integrity sha512-1Xu2xo+hAxg75iuX5akVqAgc3h/J1ohfi7JKXlGsprP4ylpW7kHMfq/7AstL7FoUC8xcHsTUvUFhoZ94ot8g6Q==
+
 "@sideway/address@^4.1.0":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.1.tgz#9e321e74310963fdf8eebfbee09c7bd69972de4d"

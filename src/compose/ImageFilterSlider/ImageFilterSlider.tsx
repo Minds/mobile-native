@@ -16,6 +16,7 @@ import PressableScale from '~/common/components/PressableScale';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FILTERS, { PhotoFilter } from './filters';
+import { PerformanceListWrapper } from 'services/performance';
 
 const { width, height } = Dimensions.get('window');
 const GALLERY_ITEM_WIDTH = 90;
@@ -272,41 +273,45 @@ export default function ImageFilterSlider({
           resizeMode={image.width > image.height ? 'contain' : 'cover'}
         />
       )}
-      <AnimatedFlatList
-        horizontal
-        ref={swiperRef}
-        pagingEnabled
-        bounces={false}
-        windowSize={3}
-        onMomentumScrollEnd={mainScrollEnd}
-        showsHorizontalScrollIndicator={false}
-        initialNumToRender={3}
-        maxToRenderPerBatch={6}
-        getItemLayout={getItemLayout}
-        scrollEventThrottle={0.1}
-        onScroll={scrollHandler}
-        data={FILTERS}
-        renderItem={renderMainItem}
-      />
-      <FlatList
-        style={styles.gallery}
-        ref={galleryRef}
-        removeClippedSubviews={false}
-        horizontal
-        windowSize={6}
-        showsHorizontalScrollIndicator={false}
-        initialNumToRender={6}
-        data={FILTERS}
-        getItemLayout={getGalleryItemLayout}
-        renderItem={({ item, index }) => (
-          <ItemThumb
-            item={item}
-            active={index === activeIndex}
-            onTap={() => onTapGallery(index)}
-            image={image}
-          />
-        )}
-      />
+      <PerformanceListWrapper name="ImageFilterSliderAnimated">
+        <AnimatedFlatList
+          horizontal
+          ref={swiperRef}
+          pagingEnabled
+          bounces={false}
+          windowSize={3}
+          onMomentumScrollEnd={mainScrollEnd}
+          showsHorizontalScrollIndicator={false}
+          initialNumToRender={3}
+          maxToRenderPerBatch={6}
+          getItemLayout={getItemLayout}
+          scrollEventThrottle={0.1}
+          onScroll={scrollHandler}
+          data={FILTERS}
+          renderItem={renderMainItem}
+        />
+      </PerformanceListWrapper>
+      <PerformanceListWrapper name="ImageFilterSlider">
+        <FlatList
+          style={styles.gallery}
+          ref={galleryRef}
+          removeClippedSubviews={false}
+          horizontal
+          windowSize={6}
+          showsHorizontalScrollIndicator={false}
+          initialNumToRender={6}
+          data={FILTERS}
+          getItemLayout={getGalleryItemLayout}
+          renderItem={({ item, index }) => (
+            <ItemThumb
+              item={item}
+              active={index === activeIndex}
+              onTap={() => onTapGallery(index)}
+              image={image}
+            />
+          )}
+        />
+      </PerformanceListWrapper>
     </View>
   );
 }

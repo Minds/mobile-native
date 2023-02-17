@@ -57,7 +57,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   };
 
   return (
-    <Screen safe onlyTopEdge>
+    <Screen name="BoostReviewScreen" safe onlyTopEdge>
       <ScreenHeader title={title} back shadow />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">

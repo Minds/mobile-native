@@ -8,6 +8,8 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MdIcon from 'react-native-vector-icons/MaterialIcons';
 
+import { PerformanceListWrapper } from 'services/performance';
+
 import Touchable from '../Touchable';
 
 import UserTypeaheadService from './UserTypeaheadService';
@@ -257,15 +259,17 @@ export default class UserTypeahead extends PureComponent {
         backdropOpacity={1}
         onModalShow={this.onModalShow}
         onModalHide={this.onModalHide}>
-        <FlatList
-          keyboardShouldPersistTaps="always"
-          data={this.state.users}
-          ListHeaderComponent={header}
-          ListEmptyComponent={this.EmptyPartial}
-          renderItem={this.ItemPartial}
-          keyExtractor={this.keyExtractor}
-          style={ThemedStyles.style.bgPrimaryBackground}
-        />
+        <PerformanceListWrapper name="UserTypeahead">
+          <FlatList
+            keyboardShouldPersistTaps="always"
+            data={this.state.users}
+            ListHeaderComponent={header}
+            ListEmptyComponent={this.EmptyPartial}
+            renderItem={this.ItemPartial}
+            keyExtractor={this.keyExtractor}
+            style={ThemedStyles.style.bgPrimaryBackground}
+          />
+        </PerformanceListWrapper>
         {/* TODO: Fix double tapping needed to select an item when a TextInput is active */}
       </Modal>
     );

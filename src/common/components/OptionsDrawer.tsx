@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
+import { PerformanceListWrapper } from 'services/performance';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -14,12 +15,14 @@ export default function ({ navigation, route }) {
   return options ? (
     <View style={styles.container}>
       <View style={styles.innerWrapper}>
-        <FlatList
-          data={options(navigation, route).filter(Boolean)}
-          renderItem={renderItem}
-          style={styles.list}
-          keyExtractor={keyExtractor}
-        />
+        <PerformanceListWrapper name="OptionsDrawer">
+          <FlatList
+            data={options(navigation, route).filter(Boolean)}
+            renderItem={renderItem}
+            style={styles.list}
+            keyExtractor={keyExtractor}
+          />
+        </PerformanceListWrapper>
       </View>
     </View>
   ) : null;

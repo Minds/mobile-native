@@ -29,6 +29,7 @@
     "e2e:ios:local": "wdio e2e/config/local/wdio.ios.local.conf.ts",
     "build:dev:apk": "./generate-dev-apk.sh",
     "build:design": "cd packages/design-system && yarn && yarn tamagui-build && cd ../../ && yarn && npx pod-install",
+    "prepush": "yarn tsc && yarn test",
     "appium": "appium"
   },
   "dependencies": {
@@ -57,6 +58,10 @@
     "@react-navigation/stack": "^6.0.11",
     "@sentry/react-native": "^4.4.0",
     "@shopify/flash-list": "^1.2.1",
+    "@shopify/react-native-performance": "^4.1.2",
+    "@shopify/react-native-performance-lists-profiler": "^1.1.0",
+    "@shopify/react-native-performance-navigation": "^3.0.0",
+    "@shopify/react-native-performance-navigation-bottom-tabs": "^3.0.0",
     "@snowplow/react-native-tracker": "^1.2.1",
     "@stripe/stripe-react-native": "^0.17.0",
     "@tamagui/animations-react-native": "^1.0.17",

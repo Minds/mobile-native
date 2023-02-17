@@ -24,6 +24,7 @@ import CommentsStore from './CommentsStore';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Handle from '~/common/components/bottom-sheet/Handle';
 import { BackHandler } from 'react-native';
+import { PerformanceView } from 'services/performance';
 
 const bottomSheetLocalStore = ({ autoOpen }) => ({
   isRendered: Boolean(autoOpen),
@@ -74,7 +75,11 @@ const ScreenReplyComment = ({ navigation }) => {
     }
   }, [open, store]);
 
-  return <CommentList store={store} navigation={navigation} />;
+  return (
+    <PerformanceView screenName="ScreenReplyComment" interactive>
+      <CommentList store={store} navigation={navigation} />
+    </PerformanceView>
+  );
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {

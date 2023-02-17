@@ -18,9 +18,10 @@ import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 
-import { useInfiniteFeedQuery } from '~/services';
+import { useInfiniteFeedQuery } from 'services';
 import { fetchNotificationsPage } from './api';
 import PrefetchNotifications from './PrefetchNotifications';
+import { PerformanceView } from 'services/performance';
 
 type PropsType = {
   navigation?: any;
@@ -134,39 +135,44 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <PrefetchNotifications tabs={prefetch} />
-      <FlatList
-        ref={listRef}
-        stickyHeaderIndices={sticky}
-        stickyHeaderHiddenOnScroll={true}
-        style={cleanTop}
-        ListHeaderComponent={
-          <>
-            <Topbar title="Notifications" navigation={navigation} noInsets />
-            <NotificationsTopBar store={notifications} refresh={refresh} />
-          </>
-        }
-        scrollEnabled={!query.isRefetching}
-        data={notificationsList}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        onEndReached={() => query.fetchNextPage()}
-        onRefresh={refresh}
-        refreshing={query.isRefetching && query.isFetchedAfterMount}
-        onViewableItemsChanged={onViewableItemsChanged}
-        // contentContainerStyle={}
-        viewabilityConfig={viewabilityConfig}
-        ListEmptyComponent={ListEmptyComponent}
-      />
-      <InteractionsBottomSheet
-        entity={user}
-        ref={interactionsBottomSheetRef}
-        withoutInsets
-        snapPoints={snapPoints}
-        keepOpen={false}
-      />
-    </View>
+    <PerformanceView screenName="NotificationsScreen" interactive>
+      <View style={styles.container}>
+        <PrefetchNotifications tabs={prefetch} />
+        {/* <PerformanceListWrapper name="NotificationsList"> */}
+        <FlatList
+          ref={listRef}
+          stickyHeaderIndices={sticky}
+          stickyHeaderHiddenOnScroll={true}
+          style={cleanTop}
+          ListHeaderComponent={
+            <>
+              <Topbar title="Notifications" navigation={navigation} noInsets />
+              <NotificationsTopBar store={notifications} refresh={refresh} />
+            </>
+          }
+          scrollEnabled={!query.isRefetching}
+          data={notificationsList}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          onEndReached={() => query.fetchNextPage()}
+          onRefresh={refresh}
+          refreshing={query.isRefetching && query.isFetchedAfterMount}
+          onViewableItemsChanged={onViewableItemsChanged}
+          // contentContainerStyle={}
+          viewabilityConfig={viewabilityConfig}
+          ListEmptyComponent={ListEmptyComponent}
+        />
+        {/* </PerformanceListWrapper> */}
+
+        <InteractionsBottomSheet
+          entity={user}
+          ref={interactionsBottomSheetRef}
+          withoutInsets
+          snapPoints={snapPoints}
+          keepOpen={false}
+        />
+      </View>
+    </PerformanceView>
   );
 });
 
@@ -186,7 +192,15 @@ const keyExtractor = (item: NotificationModel, index) =>
 export default NotificationsScreen;
 
 const styles = ThemedStyles.create({
-  containerStyle: { flexGrow: 1 },
+  containerStyle: {
+    // flexGrow: 1,
+    // flex: 1,
+    borderColor: 'white',
+    borderWidth: 2,
+    height: 300,
+    width: 300,
+    padding: 30,
+  },
   container: ['bgPrimaryBackground', 'flexContainer'],
   errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],

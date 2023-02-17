@@ -10,6 +10,7 @@ import { DiscoverySearchList } from './DiscoverySearchList';
 import { DiscoveryV2SearchStoreContext } from './DiscoveryV2SearchContext';
 import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 import DiscoveryV2SearchStore from './DiscoveryV2SearchStore';
+import { PerformanceView } from 'services/performance';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -40,14 +41,16 @@ export const DiscoverySearchScreen = observer((props: Props) => {
 
   return (
     <DiscoveryV2SearchStoreContext.Provider value={store}>
-      <View style={theme.flexContainer}>
-        <DiscoverySearchHeader />
+      <PerformanceView screenName="DiscoverySearchScreen" interactive>
+        <View style={theme.flexContainer}>
+          <DiscoverySearchHeader />
 
-        <DiscoverySearchList
-          navigation={navigation}
-          style={theme.flexContainer}
-        />
-      </View>
+          <DiscoverySearchList
+            navigation={navigation}
+            style={theme.flexContainer}
+          />
+        </View>
+      </PerformanceView>
     </DiscoveryV2SearchStoreContext.Provider>
   );
 });

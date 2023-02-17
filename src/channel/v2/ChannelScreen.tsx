@@ -44,6 +44,7 @@ import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
+import { PerformanceView } from 'services/performance';
 
 const tinycolor = require('tinycolor2');
 
@@ -458,67 +459,67 @@ const ChannelScreen = observer((props: PropsType) => {
   }
 
   return (
-    <ChannelContext.Provider value={channelContext}>
-      {Boolean(backgroundColor) && (
-        <StatusBar
-          backgroundColor={backgroundColor}
-          barStyle={statusBarTextStyle}
-        />
-      )}
-
-      <AnimatedBanner
-        parentScrollOffset={offset}
-        bannerSource={store.channel.getBannerSource()}
-      />
-
-      <FeedList
-        testID={'ChannelScreen:FeedList'}
-        ref={feedRef}
-        feedStore={store.feedStore}
-        renderActivity={renderActivity}
-        onScroll={onScroll}
-        refreshControlTintColor={textColor}
-        distinctBoosts
-        header={
-          <ChannelHeader
-            store={store}
-            navigation={props.navigation}
-            route={props.route}
-            onOpenSubscribers={openSubscribers}
-            onOpenSubscriptions={openSubscriptions}
-            onOpenSubscribersYouKnow={openSubscribersYouKnow}
+    <PerformanceView screenName="ChannelScreen" interactive>
+      <ChannelContext.Provider value={channelContext}>
+        {Boolean(backgroundColor) && (
+          <StatusBar
+            backgroundColor={backgroundColor}
+            barStyle={statusBarTextStyle}
           />
-        }
-        navigation={props.navigation}
-        emptyMessage={emptyMessage}
-        style={theme.flexContainer}
-        hideContent={store.tab !== 'feed'}
-      />
-
-      <Animated.View style={topBarAnimatedViewStyle}>
-        <ChannelTopBar
-          withBg={topBarBackgroundVisible}
-          backgroundColor={backgroundColor}
-          textColor={textColor}
-          navigation={props.navigation}
-          store={store}
-          onPress={onTopBarPress}
+        )}
+        <AnimatedBanner
+          parentScrollOffset={offset}
+          bannerSource={store.channel.getBannerSource()}
         />
-      </Animated.View>
+        <FeedList
+          testID={'ChannelScreen:FeedList'}
+          ref={feedRef}
+          feedStore={store.feedStore}
+          renderActivity={renderActivity}
+          onScroll={onScroll}
+          refreshControlTintColor={textColor}
+          distinctBoosts
+          header={
+            <ChannelHeader
+              store={store}
+              navigation={props.navigation}
+              route={props.route}
+              onOpenSubscribers={openSubscribers}
+              onOpenSubscriptions={openSubscriptions}
+              onOpenSubscribersYouKnow={openSubscribersYouKnow}
+            />
+          }
+          navigation={props.navigation}
+          emptyMessage={emptyMessage}
+          style={theme.flexContainer}
+          hideContent={store.tab !== 'feed'}
+        />
 
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscribersActionSheetRef}
-      />
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscriptionsActionSheetRef}
-      />
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscribersYouKnowSheetRef}
-      />
-    </ChannelContext.Provider>
+        <Animated.View style={topBarAnimatedViewStyle}>
+          <ChannelTopBar
+            withBg={topBarBackgroundVisible}
+            backgroundColor={backgroundColor}
+            textColor={textColor}
+            navigation={props.navigation}
+            store={store}
+            onPress={onTopBarPress}
+          />
+        </Animated.View>
+
+        <InteractionsBottomSheet
+          entity={store.channel}
+          ref={subscribersActionSheetRef}
+        />
+        <InteractionsBottomSheet
+          entity={store.channel}
+          ref={subscriptionsActionSheetRef}
+        />
+        <InteractionsBottomSheet
+          entity={store.channel}
+          ref={subscribersYouKnowSheetRef}
+        />
+      </ChannelContext.Provider>
+    </PerformanceView>
   );
 });
 
