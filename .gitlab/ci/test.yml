@@ -1,4 +1,4 @@
-test:jest:
+test:quality:
   extends: .except_nightly
   image: node:14.19.2
   stage: test

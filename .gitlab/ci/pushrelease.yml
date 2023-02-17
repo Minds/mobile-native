@@ -2,6 +2,7 @@
   image: node:14.19.1
   tags: [minds-ci]
   stage: pushrelease
+  needs: ['test:quality']
   before_script:
     - npm install -g patch-package
     - npm install -g appcenter-cli
@@ -9,32 +10,32 @@
 
 pushrelease_staging:ios:
   extends:
-    - .only_master
     - .codepush_base
+    - .only_master
   environment: codepush_staging_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
 
 pushrelease_staging:android:
   extends:
-    - .only_master
     - .codepush_base
+    - .only_master
   environment: codepush_staging_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Staging
 
 pushrelease_prod:ios:
   extends:
-    - .rule_patch_release
     - .codepush_base
+    - .rule_patch_release
   environment: codepush_production_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Production
 
 pushrelease_prod:android:
   extends:
-    - .rule_patch_release
     - .codepush_base
+    - .rule_patch_release
   environment: codepush_production_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Production
