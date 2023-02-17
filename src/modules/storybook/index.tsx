@@ -2,12 +2,13 @@ import React, { ReactNode, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { PathConfig } from '@react-navigation/native';
-import { Button, Layout, Theme, View } from '@minds/ui';
+import { Button, Icons, Layout, Theme, View } from '@minds/ui';
 import { ErrorGlobalWrapper } from 'components';
 // prettier-ignore
 import {
   StorybookScreen,
   ButtonsScreen,
+  IconsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +21,7 @@ export function StorybookNavigator(): JSX.Element {
         <Navigator screenOptions={{ headerShown: false }}>
           <Screen name="Storybook" component={StorybookScreen} />
           <Screen name="Buttons" component={ButtonsScreen} />
+          <Screen name="Icons" component={IconsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>
       </ThemeWrapper>
@@ -43,16 +45,17 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
         <SafeAreaView style={safeStyle}>
           <View mt="$1" mx="$3" mb="$1" fd={'row'} jc="space-between">
             <Button
+              icon={() => <Icons.Lightmode />}
               circular
               sSize="m"
               onPress={() =>
                 setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
-              }>
-              {theme === 'dark' ? 'L' : 'D'}
-            </Button>
-            <Button onPress={() => storages.app.setBool('storybook', false)}>
-              close
-            </Button>
+              }
+            />
+            <Button
+              icon={() => <Icons.Clear />}
+              onPress={() => storages.app.setBool('storybook', false)}
+            />
           </View>
           {children}
         </SafeAreaView>

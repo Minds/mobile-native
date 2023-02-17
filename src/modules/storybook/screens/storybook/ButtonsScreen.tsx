@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Layout, View } from '@minds/ui';
+import { Button, Icons, Layout, View } from '@minds/ui';
 import { ScrollView } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Stack } from '@tamagui/core';
 
 export function ButtonsScreen(): JSX.Element {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
@@ -19,10 +19,13 @@ export function ButtonsScreen(): JSX.Element {
         <ButtonsSizes />
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button circular onPress={goBack} sSize="m">
-          {'<'}
+        <Button icon={() => <Icons.Chevron />} circular onPress={goBack} />
+        <Button
+          iconAfter={() => <Icons.Send />}
+          f={1}
+          onPress={() => navigate('Icons')}>
+          Next
         </Button>
-        <Button f={1}>Next</Button>
       </View>
     </Layout>
   );
