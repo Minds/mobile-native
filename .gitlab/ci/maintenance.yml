@@ -9,7 +9,6 @@
     PROJECT_URL: https://gitlab.com/api/v4/projects/10171280
   only:
     refs:
-      - /^master$/
       - tags
 
 maintenance:update_changelog:

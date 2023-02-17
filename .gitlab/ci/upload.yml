@@ -27,18 +27,17 @@
 # Upload production builds (Full version)
 upload:s3:oss: # Upload to S3
   <<: *upload_s3
+  extends: .only_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:androidproduction
-  rules:
-    - !reference [.rule_nonpatch_release_success, rules]
 
 # Upload full APK to Browserstack
 upload:browserstack:oss:
   <<: *upload_browserstack
-  extends: .rule_nonpatch_release_success
+  extends: .only_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
@@ -49,7 +48,7 @@ upload:browserstack:oss:
 # Upload production builds (play-store version)
 upload:s3:playstore: # Upload to S3
   <<: *upload_s3
-  extends: .rule_nonpatch_release_success
+  extends: .only_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
@@ -59,7 +58,7 @@ upload:s3:playstore: # Upload to S3
 # Upload to Browserstack
 upload:browserstack:playstore:
   <<: *upload_browserstack
-  extends: .rule_nonpatch_release_success
+  extends: .only_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
