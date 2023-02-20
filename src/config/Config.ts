@@ -230,7 +230,7 @@ export const STORE_LINK = Platform.select({
 export const isStoryBookOn = storages.app.getBool('storybook');
 
 export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
   installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
   mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
   minimumBackgroundDuration: 15 * 60, // 15 minutes
