@@ -5,13 +5,14 @@ import * as Progress from 'react-native-progress';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { Column, H2, Screen } from '../../common/ui';
 import codePushStore from './codepush.store';
+import i18nService from '../../common/services/i18n.service';
 
 function CodePushSyncScreen() {
   return (
     <Screen safe>
       <Column top="XXXL2">
         <H2 align="center" bottom="XL">
-          Syncing app bundle
+          {i18nService.t('codePush.syncing')}
         </H2>
         <Progress.Bar
           progress={codePushStore.downloadProgress}

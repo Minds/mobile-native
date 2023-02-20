@@ -1833,6 +1833,7 @@
       "current": "Current:",
       "available": "Available:",
       "action": "Download"
-    }
+    },
+    "syncing": "Syncing app bundle..."
   }
 }

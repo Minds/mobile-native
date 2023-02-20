@@ -1,6 +1,4 @@
 import { action, observable } from 'mobx';
-import { InteractionManager } from 'react-native';
-import RNBootSplash from 'react-native-bootsplash';
 import sessionService from '../../common/services/session.service';
 import { CODEPUSH_DEFAULT_CONFIG } from '../../config/Config';
 import NavigationService from '../../navigation/NavigationService';
@@ -33,7 +31,7 @@ class CodePushStore {
     }
   }
 
-  async syncCodepush() {
+  async syncCodepush(onDownload: () => void) {
     try {
       codePush.clearUpdates();
       const runningMetadata = await codePush.getUpdateMetadata();
@@ -44,9 +42,7 @@ class CodePushStore {
       const syncStatusChangedCallback = status => {
         if (loggedOut && status === codePush.SyncStatus.DOWNLOADING_PACKAGE) {
           NavigationService.navigate('CodePushSync', {});
-          InteractionManager.runAfterInteractions(() => {
-            RNBootSplash.hide({ fade: true });
-          });
+          onDownload();
         }
       };
 
