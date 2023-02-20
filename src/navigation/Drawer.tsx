@@ -1,9 +1,10 @@
 import React from 'react';
+import { NavigationProp } from '@react-navigation/native';
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
-import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
+
 import {
   H2,
   H3,
@@ -21,9 +22,14 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import {
+  hasVariation,
+  useIsFeatureOn,
+  useIsIOSFeatureOn,
+} from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
-import { NavigationProp } from '@react-navigation/native';
+import requireInAppVerification from '~/common/helpers/requireInAppVerification';
+import requirePhoneValidation from '~/common/helpers/requirePhoneValidation';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -121,7 +127,11 @@ const getOptionsList = (
               navigation.navigate('BuyTokens');
             };
             if (!channel?.rewards) {
-              await requirePhoneValidation();
+              if (hasVariation('mob-4472-in-app-verification')) {
+                await requireInAppVerification();
+              } else {
+                await requirePhoneValidation();
+              }
               navToBuyTokens();
             } else {
               navToBuyTokens();
@@ -155,15 +165,6 @@ const getOptionsList = (
         navigation.navigate('Settings');
       },
     },
-    isVerificationEnabled
-      ? {
-          name: 'Verify account',
-          icon: 'group',
-          onPress: async () => {
-            navigation.navigate('InAppVerification');
-          },
-        }
-      : null,
   ];
 
   return list;

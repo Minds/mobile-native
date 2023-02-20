@@ -18,6 +18,7 @@ import type { BoostType } from '../boost/legacy/createBoostStore';
 import type { WebViewNavigation } from 'react-native-webview';
 import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type AnyType = any;
 
@@ -342,7 +343,10 @@ export type AppStackParamList = {
   };
   MultiUserScreen: {};
   TopNewsfeed: {};
-  InAppVerification: {};
+  InAppVerification: {
+    onClose?: () => void;
+    onSuccess?: () => void;
+  };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   Referrals: {};
 };
@@ -358,3 +362,11 @@ export type AboutScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   'About'
 >;
+
+export type AppStackScreenProps<
+  T extends keyof AppStackParamList
+> = NativeStackScreenProps<AppStackParamList, T>;
+
+export type RootStackScreenProps<
+  T extends keyof RootStackParamList
+> = NativeStackScreenProps<RootStackParamList, T>;

@@ -6,7 +6,7 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
-import requirePhoneValidation from '../../common/hooks/requirePhoneValidation';
+import requirePhoneValidation from '../../common/helpers/requirePhoneValidation';
 import { showNotification } from '../../../AppMessages';
 import MText from '../../common/components/MText';
 import Button from '~/common/components/Button';

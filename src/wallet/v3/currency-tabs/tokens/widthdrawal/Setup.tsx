@@ -1,16 +1,32 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import MenuItem from '../../../../../common/components/menus/MenuItem';
-import MText from '../../../../../common/components/MText';
-import requirePhoneValidation from '../../../../../common/hooks/requirePhoneValidation';
-import i18n from '../../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
 
-const showPhoneValidator = async () => {
-  await requirePhoneValidation();
+import MText from '~/common/components/MText';
+import ThemedStyles from '~/styles/ThemedStyles';
+import type UserModel from '~/channel/UserModel';
+import i18n from '~/common/services/i18n.service';
+import { hasVariation } from 'ExperimentsProvider';
+import MenuItem from '~/common/components/menus/MenuItem';
+import { AppStackScreenProps } from '~/navigation/NavigationTypes';
+import requirePhoneValidation from '~/common/helpers/requirePhoneValidation';
+import { WalletStoreType } from '~/wallet/v2/createWalletStore';
+
+const showPhoneValidator = navigation => {
+  if (hasVariation('mob-4472-in-app-verification')) {
+    navigation.navigate('InAppVerification');
+  } else {
+    requirePhoneValidation();
+  }
 };
+
+type PropsType = {
+  user: UserModel;
+  walletStore: WalletStoreType;
+  navigation: AppStackScreenProps<'InAppVerification'>['navigation'];
+};
+
 //TODO: Remove BottomOptions logic and replace it with new Bottomsheets
-const Setup = ({ user, walletStore, navigation }) => {
+const Setup = ({ user, walletStore, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const onComplete = useCallback(
@@ -28,10 +44,10 @@ const Setup = ({ user, walletStore, navigation }) => {
     {
       title: (
         <MText style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
-          {i18n.t('wallet.phoneVerification')}
+          {i18n.t('onboarding.verifyUniqueness')}
         </MText>
       ),
-      onPress: () => showPhoneValidator(),
+      onPress: () => showPhoneValidator(navigation),
       icon: user.rewards ? 'md-checkmark' : undefined,
       noIcon: !user.rewards,
     },
