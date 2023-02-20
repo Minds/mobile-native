@@ -43,6 +43,10 @@ class CodePushStore {
           NavigationService.navigate('CodePushSync', {});
           onDownload();
         }
+
+        if (status === codePush.SyncStatus.UNKNOWN_ERROR) {
+          NavigationService.goBack();
+        }
       };
 
       logMessage(runningMetadata, 'CodePush metadata:');

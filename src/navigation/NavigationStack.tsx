@@ -546,6 +546,7 @@ const RootStack = observer(function () {
         getComponent={() => require('modules/codepush').CodePushSyncScreen}
         options={{
           ...TransitionPresets.ModalFadeTransition,
+          gestureEnabled: false,
         }}
       />
     </RootStackNav.Navigator>

@@ -6,8 +6,11 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { Column, H2, Screen } from '../../common/ui';
 import codePushStore from './codepush.store';
 import i18nService from '../../common/services/i18n.service';
+import usePreventBack from '../../common/hooks/usePreventBack';
 
 function CodePushSyncScreen() {
+  usePreventBack();
+
   return (
     <Screen safe>
       <Column top="XXXL2">
