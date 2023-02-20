@@ -14,8 +14,8 @@ export enum BoostStatus {
 }
 
 export enum BoostPaymentMethod {
-  cash,
-  token,
+  cash = 1,
+  token = 2,
 }
 
 export enum BoostTargetLocation {
