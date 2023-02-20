@@ -75,42 +75,22 @@ const Icon = (props: IconProps) => {
       .toString()
       .replace(/ class=\"[^\"]+\"/g, '')
       .replace(new RegExp('stroke="currentColor"', 'g'), 'stroke={`${color}`}')
+      .replace(new RegExp('stroke="none"', 'g'), 'stroke={`${color}`}')
       .replace(new RegExp('fill="currentColor"', 'g'), 'fill={`${color}`}')
+      .replace(new RegExp('fill="none"', 'g'), 'fill={`${color}`}')
       .replace('width="32"', 'width={size}')
       .replace('height="32"', 'height={size}')
       .replace('otherProps="..."', '{...otherProps}')
       .replace('<svg', '<Svg')
       .replace('</svg', '</Svg')
-      .replace(new RegExp('<circle', 'g'), '<Circle')
-      .replace(new RegExp('</circle', 'g'), '</Circle')
-      .replace(new RegExp('<ellipse', 'g'), '<Ellipse')
-      .replace(new RegExp('</ellipse', 'g'), '</Ellipse')
-      .replace(new RegExp('<g', 'g'), '<G')
-      .replace(new RegExp('</g', 'g'), '</G')
-      .replace(new RegExp('<linear-gradient', 'g'), '<LinearGradient')
-      .replace(new RegExp('</linear-gradient', 'g'), '</LinearGradient')
-      .replace(new RegExp('<radial-gradient', 'g'), '<RadialGradient')
-      .replace(new RegExp('</radial-gradient', 'g'), '</RadialGradient')
       .replace(new RegExp('<path', 'g'), '<Path')
       .replace(new RegExp('</path', 'g'), '</Path')
-      .replace(new RegExp('<line', 'g'), '<Line')
-      .replace(new RegExp('</line', 'g'), '</Line')
-      .replace(new RegExp('<polygon', 'g'), '<Polygon')
-      .replace(new RegExp('</polygon', 'g'), '</Polygon')
-      .replace(new RegExp('<polyline', 'g'), '<Polyline')
-      .replace(new RegExp('</polyline', 'g'), '</Polyline')
-      .replace(new RegExp('<rect', 'g'), '<Rect')
-      .replace(new RegExp('</rect', 'g'), '</Rect')
-      .replace(new RegExp('<symbol', 'g'), '<Symbol')
-      .replace(new RegExp('</symbol', 'g'), '</Symbol')
-      .replace(new RegExp('<text', 'g'), '<Text')
-      .replace(new RegExp('</text', 'g'), '</Text')
-      .replace(new RegExp('<use', 'g'), '<Use')
-      .replace(new RegExp('</use', 'g'), '</Use')
-      .replace(new RegExp('<defs', 'g'), '<Defs')
-      .replace(new RegExp('</defs', 'g'), '</Defs')
-      .replace(new RegExp('<stop', 'g'), '<Stop')
-      .replace(new RegExp('</stop', 'g'), '</Stop')
+      /**
+       * add here if necessary:
+       *    g, linear-gradient, radial-gradient, line, polygon,
+       *    polyline, rect, symbol, text, use, defs, stop
+       * and also add the imports from react-native-svg.
+       */
       .replace(new RegExp('px', 'g'), '')}
   );
 };
