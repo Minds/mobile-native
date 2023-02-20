@@ -540,6 +540,14 @@ const RootStack = observer(function () {
           animationEnabled: false,
         }}
       />
+      <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        name="CodePushSync"
+        getComponent={() => require('modules/codepush').CodePushSyncScreen}
+        options={{
+          ...TransitionPresets.ModalFadeTransition,
+        }}
+      />
     </RootStackNav.Navigator>
   );
 });

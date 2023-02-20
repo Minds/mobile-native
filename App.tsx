@@ -54,8 +54,8 @@ import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
-import { codePush, logError, logMessage } from 'modules/codepush';
 import { UIProvider } from '@minds/ui';
+import codePushStore from './src/modules/codepush/codepush.store';
 
 appInitManager.initializeServices();
 
@@ -90,21 +90,7 @@ class App extends Component<Props> {
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
 
     if (!__DEV__) {
-      codePush
-        .getUpdateMetadata()
-        .then(metadata => {
-          // using the deploymentKey from the active update makes sure
-          // switching environments works
-          logMessage(metadata, 'CodePush metadata:');
-          if (metadata?.deploymentKey) {
-            codePush.sync({
-              deploymentKey: metadata.deploymentKey,
-            });
-          } else {
-            codePush.sync();
-          }
-        })
-        .catch(logError);
+      codePushStore.syncCodepush();
     }
   }
 

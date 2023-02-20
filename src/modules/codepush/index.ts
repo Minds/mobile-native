@@ -3,8 +3,9 @@ import { hasVariation } from 'ExperimentsProvider';
 import codePush from 'react-native-code-push';
 import CodePushDebugger from './widgets/CodePushDebugger';
 import CodePushUpdatePrompt from './widgets/CodePushUpdatePrompt';
+import CodePushSyncScreen from './CodePushSyncScreen';
 
-export { CodePushDebugger, CodePushUpdatePrompt, codePush };
+export { CodePushDebugger, CodePushUpdatePrompt, codePush, CodePushSyncScreen };
 
 export const logMessage = (event: any, prefix = 'CodePush log:') => {
   hasVariation('mob-4722-track-code-push')
