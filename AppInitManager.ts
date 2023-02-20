@@ -22,6 +22,7 @@ import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
+import codePushStore from './src/modules/codepush/codepush.store';
 
 /**
  * App initialization manager
@@ -47,6 +48,10 @@ export class AppInitManager {
 
     storeRatingService.track('appSession');
 
+    if (!__DEV__) {
+      codePushStore.syncCodepush();
+    }
+
     try {
       logService.info('[App] init session');
       const token = await sessionService.init();
@@ -56,7 +61,17 @@ export class AppInitManager {
         this.updateMindsConfigAndInitGrowthbook();
 
         logService.info('[App] there is no active session');
-        RNBootSplash.hide({ fade: true });
+
+        if (await codePushStore.checkForUpdates()) {
+          // the syncCodepush will remove the splash once the SyncScreen is pushed,
+          // but here we will hide the splash screen after a delay as a timeout if
+          // anything goes wrong.
+          setTimeout(() => {
+            RNBootSplash.hide({ fade: true });
+          }, 400);
+        } else {
+          RNBootSplash.hide({ fade: true });
+        }
       } else {
         logService.info('[App] session initialized');
       }

@@ -55,7 +55,6 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
-import codePushStore from './src/modules/codepush/codepush.store';
 
 appInitManager.initializeServices();
 
@@ -88,10 +87,6 @@ class App extends Component<Props> {
     }
     RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
-
-    if (!__DEV__) {
-      codePushStore.syncCodepush();
-    }
   }
 
   /**

@@ -1,4 +1,6 @@
 import { action, observable } from 'mobx';
+import { InteractionManager } from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import sessionService from '../../common/services/session.service';
 import { CODEPUSH_DEFAULT_CONFIG } from '../../config/Config';
 import NavigationService from '../../navigation/NavigationService';
@@ -11,9 +13,24 @@ class CodePushStore {
   @observable
   downloadProgress = 0;
 
-  @action
-  private setDownloadProgress(progress) {
-    this.downloadProgress = progress;
+  /**
+   * Checks codepush for updates using the active deployment key
+   */
+  async checkForUpdates() {
+    try {
+      const runningMetadata = await codePush.getUpdateMetadata();
+      const remotePackage = await codePush.checkForUpdate(
+        runningMetadata?.deploymentKey,
+      );
+
+      if (remotePackage?.failedInstall) {
+        return false;
+      }
+
+      return remotePackage;
+    } catch (e) {
+      logError(e);
+    }
   }
 
   async syncCodepush() {
@@ -27,6 +44,9 @@ class CodePushStore {
       const syncStatusChangedCallback = status => {
         if (loggedOut && status === codePush.SyncStatus.DOWNLOADING_PACKAGE) {
           NavigationService.navigate('CodePushSync', {});
+          InteractionManager.runAfterInteractions(() => {
+            RNBootSplash.hide({ fade: true });
+          });
         }
       };
 
@@ -50,6 +70,11 @@ class CodePushStore {
     } catch (e) {
       logError(e);
     }
+  }
+
+  @action
+  private setDownloadProgress(progress) {
+    this.downloadProgress = progress;
   }
 }
 
