@@ -224,7 +224,7 @@ export type RootStackParamList = {
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   StoryBook: {};
-  CodePushSync: null;
+  CodePushSync: {};
 };
 
 export type AuthStackParamList = {
