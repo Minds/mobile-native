@@ -33,7 +33,6 @@ class CodePushStore {
 
   async syncCodepush(onDownload: () => void) {
     try {
-      codePush.clearUpdates();
       const runningMetadata = await codePush.getUpdateMetadata();
       const runningDeploymentKey = runningMetadata?.deploymentKey;
       const sessions = sessionService.getSessions();
