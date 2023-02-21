@@ -46,16 +46,12 @@ type PropsType = AppStackScreenProps<'InAppVerification'>;
 export default function InAppVerificationStack({ route }: PropsType) {
   useEffect(() => {
     return () => {
-      if (route.params?.onClose) {
-        route.params.onClose();
-      }
+      route.params.onClose?.();
     };
   }, [route.params]);
 
   useModelEvent(UserModel, 'userVerified', () => {
-    if (route.params?.onSuccess) {
-      route.params.onSuccess();
-    }
+    route.params.onSuccess?.();
   });
 
   return (

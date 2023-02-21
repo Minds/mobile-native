@@ -5,19 +5,10 @@ import MText from '~/common/components/MText';
 import ThemedStyles from '~/styles/ThemedStyles';
 import type UserModel from '~/channel/UserModel';
 import i18n from '~/common/services/i18n.service';
-import { hasVariation } from 'ExperimentsProvider';
 import MenuItem from '~/common/components/menus/MenuItem';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
-import requirePhoneValidation from '~/common/helpers/requirePhoneValidation';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
-
-const showPhoneValidator = navigation => {
-  if (hasVariation('mob-4472-in-app-verification')) {
-    navigation.navigate('InAppVerification');
-  } else {
-    requirePhoneValidation();
-  }
-};
+import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
 
 type PropsType = {
   user: UserModel;
@@ -47,7 +38,7 @@ const Setup = ({ user, walletStore, navigation }: PropsType) => {
           {i18n.t('onboarding.verifyUniqueness')}
         </MText>
       ),
-      onPress: () => showPhoneValidator(navigation),
+      onPress: requireUniquenessVerification,
       icon: user.rewards ? 'md-checkmark' : undefined,
       noIcon: !user.rewards,
     },

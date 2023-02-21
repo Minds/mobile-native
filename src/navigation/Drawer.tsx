@@ -22,14 +22,9 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import {
-  hasVariation,
-  useIsFeatureOn,
-  useIsIOSFeatureOn,
-} from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
-import requireInAppVerification from '~/common/helpers/requireInAppVerification';
-import requirePhoneValidation from '~/common/helpers/requirePhoneValidation';
+import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -127,11 +122,7 @@ const getOptionsList = (
               navigation.navigate('BuyTokens');
             };
             if (!channel?.rewards) {
-              if (hasVariation('mob-4472-in-app-verification')) {
-                await requireInAppVerification();
-              } else {
-                await requirePhoneValidation();
-              }
+              await requireUniquenessVerification();
               navToBuyTokens();
             } else {
               navToBuyTokens();
