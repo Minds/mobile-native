@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { IconProps } from '../IconProps';
 import { Svg, Path } from 'react-native-svg';
-import { themed } from '../config/themed';
+import { withTheme } from '../config/withTheme';
 
 const Icon = (props: IconProps) => {
   const { color = 'black', size = 32, ...otherProps } = props;
@@ -23,4 +23,4 @@ const Icon = (props: IconProps) => {
 
 Icon.displayName = 'Adjust';
 
-export const Adjust = memo<IconProps>(themed(Icon));
+export const Adjust = memo<IconProps>(withTheme(Icon));

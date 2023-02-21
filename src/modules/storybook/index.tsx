@@ -45,7 +45,7 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
         <SafeAreaView style={safeStyle}>
           <View mt="$1" mx="$3" mb="$1" fd={'row'} jc="space-between">
             <Button
-              icon={() => <Icons.Lightmode />}
+              icon={Icons.Lightmode}
               circular
               sSize="m"
               onPress={() =>
@@ -53,7 +53,7 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
               }
             />
             <Button
-              icon={() => <Icons.Clear />}
+              icon={Icons.Clear}
               onPress={() => storages.app.setBool('storybook', false)}
             />
           </View>

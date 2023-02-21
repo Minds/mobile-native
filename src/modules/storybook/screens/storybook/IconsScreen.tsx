@@ -24,8 +24,8 @@ export function IconsScreen(): JSX.Element {
         </Stack>
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button icon={() => <Icons.Chevron />} circular onPress={goBack} />
-        <Button iconAfter={() => <Icons.Send />} f={1}>
+        <Button icon={Icons.Chevron} circular onPress={goBack} />
+        <Button iconAfter={Icons.Send} f={1}>
           Next
         </Button>
       </View>

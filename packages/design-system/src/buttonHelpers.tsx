@@ -89,7 +89,7 @@ export function useButton(propsIn: ButtonProps, Text: any) {
     noTextWrap,
     space,
     spaceFlex,
-    scaleIcon = 1,
+    scaleIcon = 2,
     scaleSpace = 0.66,
     separator,
 

@@ -23,7 +23,7 @@ export function StorybookScreen(): JSX.Element {
       </ScrollView>
       <View fd={'row'} mt="$1" space>
         <Button
-          iconAfter={() => <Icons.Send />}
+          iconAfter={Icons.Send}
           f={1}
           onPress={() => navigate('Buttons')}>
           Next

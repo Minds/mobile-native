@@ -8,7 +8,7 @@ import {
 } from '@tamagui/core';
 import React from 'react';
 
-export function themed<A extends React.FC>(Component: A) {
+export function withTheme<A extends React.FC>(Component: A) {
   const wrapped = (propsIn: any) => {
     const props = useMediaPropsActive(propsIn);
     const theme = useTheme();

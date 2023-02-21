@@ -6,7 +6,7 @@ const uppercamelcase = require('uppercamelcase');
 const path = require('path');
 const cheerio = require('cheerio');
 
-const mindsIconsDir = path.join('.', '..', 'minds-icons');
+const mindsIconsDir = path.join('..', '..', 'minds-icons');
 const rootDir = path.join(__dirname, '..');
 
 glob(`${mindsIconsDir}/**.svg`, (err, icons) => {
