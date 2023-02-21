@@ -19,13 +19,13 @@ export enum BoostPaymentMethod {
 }
 
 export enum BoostTargetLocation {
-  newsfeed,
-  sidebar,
+  newsfeed = 1,
+  sidebar = 2,
 }
 
 export enum BoostTargetSuitability {
-  safe,
-  mature,
+  safe = 1,
+  mature = 2,
 }
 
 export enum BoostRejectionReason {
