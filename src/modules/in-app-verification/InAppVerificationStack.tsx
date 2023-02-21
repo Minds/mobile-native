@@ -5,7 +5,10 @@ import {
   StackScreenProps,
   TransitionPresets,
 } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
+import UserModel from '~/channel/UserModel';
+import useModelEvent from '~/common/hooks/useModelEvent';
+import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 
 export type InAppVerificationStackParamList = {
   InAppVerificationOnboarding: undefined;
@@ -38,7 +41,19 @@ const {
   Screen,
 } = createStackNavigator<InAppVerificationStackParamList>();
 
-export default function InAppVerificationStack() {
+type PropsType = AppStackScreenProps<'InAppVerification'>;
+
+export default function InAppVerificationStack({ route }: PropsType) {
+  useEffect(() => {
+    return () => {
+      route.params.onClose?.();
+    };
+  }, [route.params]);
+
+  useModelEvent(UserModel, 'userVerified', () => {
+    route.params.onSuccess?.();
+  });
+
   return (
     <Navigator screenOptions={defaultScreenOptions}>
       <Screen
