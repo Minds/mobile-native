@@ -103,12 +103,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         </Column>
         <HairlineRow />
 
-        <B2 color="secondary" horizontal="L" vertical="L" align="justify">
-          {t(
-            'Once your Boost is approved, your post can not be edited or deleted until the Boost duration is completed. Approved boosts cannot be refunded.',
-          )}
-        </B2>
-
         <Button
           onPress={handleCreate}
           mode="solid"
@@ -117,6 +111,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           disabled={
             boostStore.paymentType === 'cash' && !boostStore.selectedCardId
           }
+          top="XXXL2"
           horizontal="L">
           {title}
         </Button>
@@ -124,12 +119,17 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         <B2
           color="secondary"
           horizontal="L"
-          vertical="L"
+          top="XL"
           bottom="XL2"
-          align="justify">
-          {t("By clicking Boost Channel, you agree to Mind's")}{' '}
+          align="center">
+          {t('By clicking Boost Channel, you agree to Minds')}
+          {'\n'}
+          <Link url="https://www.minds.com/content-policy">
+            {t('Content Policy')}
+          </Link>
+          {t(' and ')}
           <Link url="https://www.minds.com/p/monetization-terms">
-            {t('Terms')}
+            {t('Refund Policy')}
           </Link>
         </B2>
       </FitScrollView>
