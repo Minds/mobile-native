@@ -5,7 +5,7 @@ import NavigationService from '../../navigation/NavigationService';
 import { codePush, logError, logMessage } from './';
 
 /**
- * Boosts Store
+ * CodePush Store
  */
 class CodePushStore {
   @observable
