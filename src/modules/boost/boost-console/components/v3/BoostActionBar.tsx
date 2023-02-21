@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import type UserStore from '~/auth/UserStore';
 import { confirm } from '~/common/components/Confirm';
-import i18n from '~/common/services/i18n.service';
 import { B1, Button, Column, Row } from '~/common/ui';
 import { useTranslation } from '../../../locales';
 import type BoostModel from '../../../models/BoostModelV3';
@@ -18,7 +18,7 @@ type BoostActionBarProps = {
 function BoostActionBar({ boost }: BoostActionBarProps) {
   const boostConsoleStore = useBoostConsoleStore();
   const { t } = useTranslation();
-  const date = i18n.date(boost.created_timestamp * 1000);
+  const date = moment(boost.created_timestamp * 1000).format('M/D/YY h:mma');
   const revokable = boost.boost_status === BoostStatus.PENDING;
   const showStats = boost.boost_status === BoostStatus.APPROVED;
 
