@@ -14,18 +14,18 @@ export enum BoostStatus {
 }
 
 export enum BoostPaymentMethod {
-  cash,
-  token,
+  cash = 1,
+  token = 2,
 }
 
 export enum BoostTargetLocation {
-  newsfeed,
-  sidebar,
+  newsfeed = 1,
+  sidebar = 2,
 }
 
 export enum BoostTargetSuitability {
-  safe,
-  mature,
+  safe = 1,
+  mature = 2,
 }
 
 export enum BoostRejectionReason {
