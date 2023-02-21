@@ -76,6 +76,7 @@ export default function useStripeConnect() {
 
   const createAccountAndOpenStripe = async () => {
     await createAccount();
+    refreshAccount();
     return openStripe();
   };
 

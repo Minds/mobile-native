@@ -14,8 +14,9 @@ import {
 } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { CodePushDebugger } from 'modules/codepush';
+import { CodePushDebugger, codePush } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
+import Link from '../../common/components/Link';
 
 const DevToolsScreen = () => {
   const navigation = useNavigation();
@@ -107,7 +108,7 @@ const DevToolsScreen = () => {
           </Row>
 
           <B2 align="center" color="tertiary">
-            Requires restart
+            Requires <Link onPress={() => codePush.restartApp()}>restart</Link>
           </B2>
         </ScreenSection>
         <CodePushDebugger />
