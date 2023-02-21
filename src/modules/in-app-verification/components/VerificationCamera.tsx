@@ -33,6 +33,7 @@ function OcrCamera({ code, deviceId }: PropsType) {
   } = useVerificationCamera(code, deviceId);
 
   const { t } = useTranslation();
+  const texts = messages(t);
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
@@ -58,9 +59,9 @@ function OcrCamera({ code, deviceId }: PropsType) {
         </View>
       )}
       <CodeMessage
-        title={messages(t)[store.status].title}
-        detail={messages(t)[store.status].detail}
-        action={messages(t)[store.status].action}
+        title={texts[store.status].title}
+        detail={texts[store.status].detail}
+        action={texts[store.status].action}
         onPress={() => store.action()}
       />
     </View>
@@ -113,7 +114,7 @@ const styles = ThemedStyles.create({
   },
 });
 
-const messages = t => ({
+export const messages = t => ({
   running: {
     title: t('Capture Code'),
     detail: t(
@@ -144,11 +145,6 @@ const messages = t => ({
       'Please grant camera & geo-location permissions to proceed with the verification',
     ),
     action: t('Try Again'),
-  },
-  codeReqError: {
-    title: t('Sorry!'),
-    detail: t('The code request has failed.'),
-    action: t('Please try again'),
   },
   success: {
     title: t('Success'),
