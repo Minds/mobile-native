@@ -12,6 +12,7 @@ export type AccordionDataType = {
     width: number;
     height: number;
   };
+  footer?: string;
 };
 
 export type RenderFunction = (
@@ -25,6 +26,7 @@ type PropsType = {
   data: Array<AccordionDataType>;
   headerComponent: RenderFunction;
   contentComponent: RenderFunction;
+  footerComponent?: RenderFunction;
 };
 
 const AccordionSet = observer((props: PropsType) => {
@@ -43,6 +45,7 @@ const AccordionSet = observer((props: PropsType) => {
       activeSections={localStore.activeSections}
       renderHeader={props.headerComponent}
       renderContent={props.contentComponent}
+      renderFooter={props.footerComponent}
       onChange={localStore.onChange}
       touchableComponent={TouchableOpacity}
     />
