@@ -8,6 +8,7 @@
     "start": "react-native start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check-prettier": "yarn prettier --write \"./src/**/*.{ts,tsx,js,json}\" \"./*.{tsx,ts}\"",
+    "quality": "yarn tsc && yarn check-prettier && yarn test",
     "push-locale": "cp locales/en.json ../l10n/mobile-native/Base.json",
     "pull-locale": "cd ../l10n; git pull origin master; cd -; cp ../l10n/mobile-native/locale/*.json locales/",
     "static-analysis": "tsc",
