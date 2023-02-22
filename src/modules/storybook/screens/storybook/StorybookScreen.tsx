@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, View, Text, Layout } from '@minds/ui';
+import { Button, View, Text, Layout, Icons } from '@minds/ui';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
 
 export function StorybookScreen(): JSX.Element {
-  const { navigate, goBack } = useNavigation();
+  const { navigate } = useNavigation();
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
@@ -22,10 +22,10 @@ export function StorybookScreen(): JSX.Element {
         <TextColors />
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button circular onPress={goBack} sSize="m">
-          {'<'}
-        </Button>
-        <Button f={1} onPress={() => navigate('Buttons')}>
+        <Button
+          iconAfter={Icons.Send}
+          f={1}
+          onPress={() => navigate('Buttons')}>
           Next
         </Button>
       </View>
