@@ -13,6 +13,7 @@ import {
 import ThemedStyles from '~/styles/ThemedStyles';
 import Selector from '~/common/components/SelectorV2';
 import PressableScale from '~/common/components/PressableScale';
+import Input from '~/common/components/Input';
 
 /**
  * Growthbook DevTools
@@ -22,6 +23,7 @@ const GrowthbookDev = () => {
     Record<string, any>
   >({});
   const [forcedVars, setForcedVars] = useState<Record<string, number>>({});
+  const [filter, setFilter] = useState('');
 
   const gb = useGrowthBook();
 
@@ -87,6 +89,7 @@ const GrowthbookDev = () => {
         .map(([name, experiment]) => {
           return (
             <ExperimentItem
+              key={`${name}-exp`}
               titleColor="secondary"
               name={name}
               experiment={experiment}
@@ -99,13 +102,16 @@ const GrowthbookDev = () => {
 
       <ScreenSection vertical="L">
         <H3>Feature Flags</H3>
+        <Input onChangeText={setFilter} />
       </ScreenSection>
 
       {Object.entries(allFeatures)
+        .filter(([name]) => name.includes(filter))
         .reverse() // reverse so the more recent features are on top
         .map(([name, feature]) => {
           return (
             <FeatureItem
+              key={`${name}-ff`}
               titleColor="secondary"
               name={name}
               feature={feature.feature}
