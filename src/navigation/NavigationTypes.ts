@@ -239,6 +239,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  SingleBoostConsole: {
+    guid: string;
+  };
   BoostConsole: {
     location?: string;
   };
