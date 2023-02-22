@@ -901,7 +901,6 @@
     "sent": "Verification code sent to",
     "connectWallet": "Connect Wallet",
     "connectBank": "Connect Bank",
-    "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
     "improvedExperience": "Your feed should be livelier!",
     "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
@@ -1445,15 +1444,6 @@
   },
   "help": "帮助",
   "unblock": "取消屏蔽",
-  "buyTokensScreen": {
-    "title": "Buy Tokens",
-    "paymentMethod": "支付方式",
-    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
-    "terms": "I have read and accept the &{link}& for the Minds Token.",
-    "linkText": "Terms Of Sale",
-    "learnMore": "Learn more about tokens",
-    "buy": "继续"
-  },
   "earnScreen": {
     "title": "Earn",
     "increase": "Increase your earnings",

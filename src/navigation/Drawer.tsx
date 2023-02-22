@@ -21,10 +21,8 @@ import {
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
-import { IS_IOS } from '~/config/Config';
 import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
-import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -76,10 +74,7 @@ const getOptionsSmallList = navigation => {
 
 type Flags = Record<'isIosMindsHidden' | 'isVerificationEnabled', boolean>;
 
-const getOptionsList = (
-  navigation,
-  { isIosMindsHidden, isVerificationEnabled }: Flags,
-) => {
+const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
   const channel = sessionService.getUser();
   let list = [
     {
@@ -113,23 +108,6 @@ const getOptionsList = (
         navigation.navigate('Wallet');
       },
     },
-    !IS_IOS
-      ? {
-          name: 'Buy Tokens',
-          icon: 'coins',
-          onPress: async () => {
-            const navToBuyTokens = () => {
-              navigation.navigate('BuyTokens');
-            };
-            if (!channel?.rewards) {
-              await requireUniquenessVerification();
-              navToBuyTokens();
-            } else {
-              navToBuyTokens();
-            }
-          },
-        }
-      : null,
   ];
   list = [
     ...list,
