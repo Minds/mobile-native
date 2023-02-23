@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
 import settingsService from '../SettingsService';
-import apiService from '../../common/services/api.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
@@ -22,6 +21,21 @@ import MenuItemOption from '../../common/components/menus/MenuItemOption';
  *  liquidity_spot_opt_out === 0 => liquiditySpot = true
  */
 
+type BoostChannelType = 'controversial' | 'safe' | 'disable';
+type ItemType = {
+  id:
+    | 'viewBoostedContent'
+    | 'showBoostChannel'
+    | 'boostAutoRotation'
+    | 'openContent'
+    | 'liquiditySpot';
+  tooltip: { width: number; height: number };
+  options: Array<
+    [BoostChannelType | 'enable' | 'disable' | 'optIn' | 'optOut', any]
+  >;
+  [propName: string]: any;
+};
+
 const BoostSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
   const user = sessionService.getUser();
@@ -29,6 +43,7 @@ const BoostSettingsScreen = observer(() => {
   const localStore = useLocalStore(() => ({
     loading: true,
     viewBoostedContent: false,
+    showBoostChannel: 'controversial' as BoostChannelType,
     boostAutoRotation: false,
     openContent: false,
     liquiditySpot: false,
@@ -62,24 +77,25 @@ const BoostSettingsScreen = observer(() => {
 
       user.setLiquiditySpotOptOut(val ? false : true);
     },
+    setShowBoostChannel(value: BoostChannelType) {
+      this.showBoostChannel = value;
+      //TODO: IMPLEMENT WHEN THE BACKEND IS IN PLACE
+      //this.save({ DEFINE_VAR_NAME: val ? 0 : 1 });
+    },
     async showBoost(): Promise<void> {
-      if (user.plus) {
-        try {
-          await apiService.delete('api/v1/plus/boost');
-          showNotification(i18n.t('settings.saved'), 'info');
-        } catch (e) {
-          console.error(e);
-        }
+      try {
+        await settingsService.showBoosts();
+        showNotification(i18n.t('settings.saved'), 'info');
+      } catch (e) {
+        console.error(e);
       }
     },
     async hideBoost(): Promise<void> {
-      if (user.plus) {
-        try {
-          await apiService.put('api/v1/plus/boost');
-          showNotification(i18n.t('settings.saved'), 'info');
-        } catch (e) {
-          console.error(e);
-        }
+      try {
+        await settingsService.hideBoosts();
+        showNotification(i18n.t('settings.saved'), 'info');
+      } catch (e) {
+        console.error(e);
       }
     },
     async save(params) {
@@ -100,10 +116,10 @@ const BoostSettingsScreen = observer(() => {
     return <CenteredLoading />;
   }
 
-  const items = [
+  const items: Array<ItemType> = [
     {
       id: 'viewBoostedContent',
-      isSelected: () => localStore.viewBoostedContent,
+      isSelected: value => localStore.viewBoostedContent === value,
       onPress: (val: boolean) => localStore.setViewBoostedContent(val),
       browserOnly: false,
       mindsPlus: true,
@@ -111,13 +127,31 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
-      enable: undefined,
-      disable: undefined,
+      options: [
+        ['enable', true],
+        ['disable', false],
+      ],
       disabled: !user.plus,
     },
     {
+      id: 'showBoostChannel',
+      isSelected: value => localStore.showBoostChannel === value,
+      onPress: (val: BoostChannelType) => localStore.setShowBoostChannel(val),
+      browserOnly: false,
+      mindsPlus: false,
+      tooltip: {
+        height: 75,
+        width: 220,
+      },
+      options: [
+        ['controversial', 'controversial'],
+        ['safe', 'safe'],
+        ['disable', 'disable'],
+      ],
+    },
+    {
       id: 'boostAutoRotation',
-      isSelected: () => localStore.boostAutoRotation,
+      isSelected: value => localStore.boostAutoRotation === value,
       onPress: (val: boolean) => localStore.setBoostAutoRotation(val),
       browserOnly: true,
       mindsPlus: false,
@@ -125,13 +159,15 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
-      enable: undefined,
-      disable: undefined,
+      options: [
+        ['enable', true],
+        ['disable', false],
+      ],
       disabled: false,
     },
     {
       id: 'openContent',
-      isSelected: () => localStore.openContent,
+      isSelected: value => localStore.openContent === value,
       onPress: (val: boolean) => localStore.setOpenContent(val),
       browserOnly: false,
       mindsPlus: false,
@@ -139,13 +175,15 @@ const BoostSettingsScreen = observer(() => {
         height: 100,
         width: 230,
       },
-      enable: undefined,
-      disable: undefined,
+      options: [
+        ['enable', true],
+        ['disable', false],
+      ],
       disabled: false,
     },
     {
       id: 'liquiditySpot',
-      isSelected: () => localStore.liquiditySpot,
+      isSelected: value => localStore.liquiditySpot === value,
       onPress: (val: boolean) => localStore.setLiquiditySpot(val),
       browserOnly: true,
       mindsPlus: false,
@@ -153,22 +191,13 @@ const BoostSettingsScreen = observer(() => {
         height: 100,
         width: 230,
       },
-      enable: 'optIn',
-      disable: 'optOut',
+      options: [
+        ['optIn', true],
+        ['optOut', false],
+      ],
       disabled: false,
     },
-  ] as const;
-
-  const browserOnly = (
-    <MText style={[theme.colorSecondaryText, styles.smallText]}>
-      ({i18n.t('browserOnly')})
-    </MText>
-  );
-  const mindsPlusOnly = (
-    <MText style={[theme.colorSecondaryText, styles.smallText]}>
-      ({i18n.t('mindsPlusFeature')})
-    </MText>
-  );
+  ];
 
   return (
     <ScrollView style={[theme.fullHeight, theme.paddingTop4x]}>
@@ -188,53 +217,63 @@ const BoostSettingsScreen = observer(() => {
           Boost
         </MText>
       </MText>
-      {items.map(item => {
-        return (
-          <View style={theme.marginBottom7x}>
-            <View
-              style={[
-                theme.rowJustifyStart,
-                theme.marginBottom2x,
-                theme.paddingLeft4x,
-              ]}>
-              <MText style={[styles.text, theme.colorTertiaryText]}>
-                {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
-              </MText>
-              <Tooltip
-                skipAndroidStatusBar={true}
-                withOverlay={false}
-                containerStyle={theme.borderRadius}
-                width={item.tooltip.width}
-                height={item.tooltip.height}
-                backgroundColor={ThemedStyles.getColor('Link')}
-                popover={
-                  <MText style={theme.colorWhite}>
-                    {i18n.t(`settings.boost.${item.id}Tooltip`)}
-                  </MText>
-                }>
-                <Icon
-                  name="information-variant"
-                  size={15}
-                  color={ThemedStyles.getColor('TertiaryText')}
-                />
-              </Tooltip>
-              {item.browserOnly && browserOnly}
-              {item.mindsPlus && mindsPlusOnly}
-            </View>
-            <MenuItemOption
-              title={i18n.t(`settings.boost.${item.enable || 'enable'}`)}
-              onPress={item.disabled ? undefined : () => item.onPress(true)}
-              selected={item.isSelected()}
-            />
-            <MenuItemOption
-              title={i18n.t(`settings.boost.${item.disable || 'disable'}`)}
-              onPress={item.disabled ? undefined : () => item.onPress(false)}
-              selected={!item.isSelected()}
-            />
-          </View>
-        );
-      })}
+      {items.map(item => (
+        <Item item={item} />
+      ))}
     </ScrollView>
+  );
+});
+
+const Item = observer(({ item }: { item: ItemType }) => {
+  const theme = ThemedStyles.style;
+  return (
+    <View style={theme.marginBottom7x}>
+      <View
+        style={[
+          theme.rowJustifyStart,
+          theme.marginBottom2x,
+          theme.paddingLeft4x,
+        ]}>
+        <MText style={[styles.text, theme.colorTertiaryText]}>
+          {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
+        </MText>
+        <Tooltip
+          skipAndroidStatusBar={true}
+          withOverlay={false}
+          containerStyle={theme.borderRadius}
+          width={item.tooltip.width}
+          height={item.tooltip.height}
+          backgroundColor={ThemedStyles.getColor('Link')}
+          popover={
+            <MText style={theme.colorWhite}>
+              {i18n.t(`settings.boost.${item.id}Tooltip`)}
+            </MText>
+          }>
+          <Icon
+            name="information-variant"
+            size={15}
+            color={ThemedStyles.getColor('TertiaryText')}
+          />
+        </Tooltip>
+        {item.browserOnly && (
+          <MText style={[theme.colorSecondaryText, styles.smallText]}>
+            ({i18n.t('browserOnly')})
+          </MText>
+        )}
+        {item.mindsPlus && (
+          <MText style={[theme.colorSecondaryText, styles.smallText]}>
+            ({i18n.t('mindsPlusFeature')})
+          </MText>
+        )}
+      </View>
+      {item.options.map(([name, value]) => (
+        <MenuItemOption
+          title={i18n.t(`settings.boost.${name}`)}
+          onPress={item.disabled ? undefined : () => item.onPress(value)}
+          selected={item.isSelected(value)}
+        />
+      ))}
+    </View>
   );
 });
 
