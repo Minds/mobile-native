@@ -142,6 +142,11 @@ export default function () {
         options={hideHeader}
       />
       <MoreStack.Screen
+        name="BuyTokens"
+        getComponent={() => require('~/buy-tokens/BuyTokensScreen').default}
+        options={hideHeader}
+      />
+      <MoreStack.Screen
         name="Account"
         getComponent={() =>
           require('~/common/components/OptionsDrawer').default

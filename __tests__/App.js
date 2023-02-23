@@ -5,8 +5,14 @@ import { BackHandler } from 'react-native';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
+import { View } from 'react-native';
 
 jest.mock('../src/blockchain/v2/walletconnect/modal/registry');
+
+jest.mock(
+  '../src/buy-tokens/transak-widget/TransakWidget',
+  () => 'TransakWidget',
+);
 
 jest.mock('react-native-exception-handler');
 

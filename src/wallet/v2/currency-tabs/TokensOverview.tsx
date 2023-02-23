@@ -9,6 +9,7 @@ import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
+import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 import { useNavigation } from '@react-navigation/core';
 
 import { B1, B2, Row, Column } from '~ui';
@@ -24,7 +25,13 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
 
   const navigation = useNavigation();
 
-  const walletActions: MenuItemProps[] = [];
+  const walletActions: MenuItemProps[] = [
+    {
+      title: i18n.t('wallet.leanMore'),
+      onPress: navToTokens,
+      icon: 'external-link',
+    },
+  ];
 
   if (ONCHAIN_ENABLED) {
     walletActions.unshift({

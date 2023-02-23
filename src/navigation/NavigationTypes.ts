@@ -78,6 +78,7 @@ export type MoreStackParamList = {
   Settings: {};
   Analytics: {};
   InitialOnboarding: {};
+  BuyTokens: {};
   Account: {};
   Network: {};
   Security: {};

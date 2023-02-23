@@ -73,7 +73,7 @@ const StripeCardSelector = observer(
           {...inputSelectorProps}
           onSelected={store.selectCard}
           selected={store.currentCardId}
-          label={i18n.t('orderReport.paymentMethod')}
+          label={i18n.t('buyTokensScreen.paymentMethod')}
           data={[
             ...store.cards,
             {
