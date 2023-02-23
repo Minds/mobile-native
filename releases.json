@@ -1,6 +1,58 @@
 {
   "versions": [
     {
+      "version": "4.32.1",
+      "href": "https://cdn-assets.minds.com/android/Minds-4.32.1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.32.1",
+      "changelog": [
+        "Fixed an issue crashing the registration screen on some devices",
+        "Fixed an issue where creating a cash account didn't navigate correctly",
+        "Fixed an issue where the tokens amount was being incorrectly rounder",
+        "Version bump",
+        "hide in-app verification in drawer, small bugs"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "ae5fb3320257481254175de559104a7a"
+        },
+        {
+          "type": "sha256",
+          "value": "cb29dd786eb23d0d9c90af73c62c1fd3e8234fc4b1a232f3c51532db1a8bdcd8"
+        },
+        {
+          "type": "sha512",
+          "value": "e50b21eef58c110e023214513235b582937893dad31141c12cce66fd8d6c341742f913a8e65c93cf038d5c7a662e5302472b4533efbdc4ccdf780b1d5b07c121"
+        }
+      ]
+    },
+    {
+      "version": "4.31.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-4.31.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.31.0",
+      "changelog": [
+        "Rate app implementation",
+        "Token supermind added to iOS with updated texts",
+        "Improved error handling for video uploads"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "86d83c06310b05d421f61143809d62ac"
+        },
+        {
+          "type": "sha256",
+          "value": "80553b0f29a29001a7c9c65ebba87b2fa9b60d20a33a4326a5a0eeeea5452290"
+        },
+        {
+          "type": "sha512",
+          "value": "d4f79d4704a3a5b7b275f20de34f7e0a3985145b6c3a34dfbccc48def402770918a1bd76af7257ffa4bcfd3655eebf22a0bf4a4d7a0a6cf0e69d2e77d00cb266"
+        }
+      ]
+    },
+    {
       "version": "4.29.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-4.29.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.29.0",
