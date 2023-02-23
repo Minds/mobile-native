@@ -21,7 +21,7 @@ import {
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
-import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
@@ -72,7 +72,7 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden' | 'isVerificationEnabled', boolean>;
+type Flags = Record<'isIosMindsHidden', boolean>;
 
 const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
   const channel = sessionService.getUser();
@@ -148,8 +148,6 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
-  const isVerificationEnabled = useIsFeatureOn('mob-4472-in-app-verification');
-
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
   };
@@ -161,7 +159,6 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
-    isVerificationEnabled,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
