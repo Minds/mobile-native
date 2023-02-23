@@ -901,7 +901,6 @@
     "sent": "Codice di verifica inviato a",
     "connectWallet": "Collega portafoglio",
     "connectBank": "Collega banca",
-    "buyTokens": "Acquista token",
     "onboardingCompleted": "Ora puoi guadagnare dei token",
     "improvedExperience": "Il tuo feed dovrebbe essere più vivace!",
     "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
@@ -1445,15 +1444,6 @@
   },
   "help": "Aiuto",
   "unblock": "Sblocca",
-  "buyTokensScreen": {
-    "title": "Acquista token",
-    "paymentMethod": "Metodo di Pagamento",
-    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
-    "terms": "I have read and accept the &{link}& for the Minds Token.",
-    "linkText": "Terms Of Sale",
-    "learnMore": "Learn more about tokens",
-    "buy": "Continua"
-  },
   "earnScreen": {
     "title": "Earn",
     "increase": "Increase your earnings",
