@@ -25,7 +25,7 @@ const SingleBoostConsoleScreen = ({ navigation, route }: PropsType) => {
 
   return (
     <Screen safe onlyTopEdge scroll>
-      <ScreenHeader title={t('Boost Console')} back />
+      <ScreenHeader title={t('Boost')} back />
       {store.loading && <CenteredLoading />}
       {store.boost && <BoostV3 boost={store.boost} />}
     </Screen>
