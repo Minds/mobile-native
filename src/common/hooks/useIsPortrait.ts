@@ -13,8 +13,11 @@ export default function useIsPortrait() {
     const subscription = ({ window }) => {
       setOrientation(window.height > window.width);
     };
-    Dimensions.addEventListener('change', subscription);
-    return () => Dimensions.removeEventListener('change', subscription);
+    const dimensionsListener = Dimensions.addEventListener(
+      'change',
+      subscription,
+    );
+    return () => dimensionsListener.remove();
   });
 
   return orientation;
