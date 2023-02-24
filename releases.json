@@ -2,7 +2,7 @@
   "versions": [
     {
       "version": "4.32.1",
-      "href": "https://cdn-assets.minds.com/android/Minds-4.32.1.apk",
+      "href": "https://cdn-assets.minds.com/android/Minds-App-4.32.1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.32.1",
       "changelog": [
         "Fixed an issue crashing the registration screen on some devices",
@@ -15,15 +15,15 @@
       "hashes": [
         {
           "type": "md5",
-          "value": "ae5fb3320257481254175de559104a7a"
+          "value": "fcf74b673987c47097e68d259d154301"
         },
         {
           "type": "sha256",
-          "value": "cb29dd786eb23d0d9c90af73c62c1fd3e8234fc4b1a232f3c51532db1a8bdcd8"
+          "value": "12ecf55afa50d86a6b0473122863951d58a0f7e79f9897929f8fc56a976ea54b"
         },
         {
           "type": "sha512",
-          "value": "e50b21eef58c110e023214513235b582937893dad31141c12cce66fd8d6c341742f913a8e65c93cf038d5c7a662e5302472b4533efbdc4ccdf780b1d5b07c121"
+          "value": "a0b50d5d54e21ebc5499380a2a33ba86d78dbfa24e920a9453a5f5cbb5f13a498eb95936d68dc4ce958972eb1d12cd2f48e659ecc2c87678325cfbdf0986e82b"
         }
       ]
     },
