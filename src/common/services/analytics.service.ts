@@ -10,12 +10,10 @@ import CookieManager from '@react-native-cookies/cookies';
 
 import i18nService from './i18n.service';
 import { Version } from '../../config/Version';
-import type ActivityModel from '../../newsfeed/ActivityModel';
-import type BlogModel from '../../blogs/BlogModel';
-import type GroupModel from '../../groups/GroupModel';
-import type UserModel from '../../channel/UserModel';
 import { storages } from './storage/storages.service';
 import { IS_IOS } from '~/config/Config';
+import BaseModel from '../BaseModel';
+import { Metadata } from './metadata.service';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -27,6 +25,9 @@ export type ContextualizableEntity = {
   access_id: string;
   container_guid?: string;
   owner_guid: string;
+  ownerObj?: {
+    guid: string;
+  };
 };
 
 /**
@@ -200,15 +201,14 @@ export class AnalyticsService {
    * @param entity
    * @param clientMeta
    */
-  trackViewedContent(
-    entity: ActivityModel | BlogModel | GroupModel | UserModel,
-    clientMeta: any,
-  ) {
+  trackEntityView(entity: BaseModel, clientMeta: any) {
     this.tracker?.trackSelfDescribingEvent(
       {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
         data: {
           entity_guid: entity.guid,
+          // @ts-ignore
+          entity_type: entity.type,
           entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
           ...clientMeta,
         },
@@ -219,6 +219,7 @@ export class AnalyticsService {
           data: {
             entity_guid: entity.guid,
             entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
+            // @ts-ignore
             entity_type: entity.type,
             entity_subtype:
               !(
@@ -284,6 +285,20 @@ export class AnalyticsService {
         entity_owner_guid: entity.owner_guid ?? null,
         entity_access_id: entity.access_id ?? null,
         entity_container_guid: entity.container_guid ?? null,
+      },
+    };
+  }
+
+  /**
+   * Build client meta context for a given entity.
+   * @param { ContextualizableEntity } entity - entity to build entity_context for.
+   * @returns { EventContext } - built entity_context.
+   */
+  public buildClientMetaContext(metadata: Metadata): EventContext {
+    return {
+      schema: 'iglu:com.minds/client_meta/jsonschema/1-0-0',
+      data: {
+        ...metadata,
       },
     };
   }

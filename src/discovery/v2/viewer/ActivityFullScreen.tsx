@@ -37,6 +37,8 @@ import InteractionsBar from '../../../common/components/interactions/Interaction
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
+import { withAnalyticsContext } from '~/common/contexts/analytics.context';
+import analyticsService from '~/common/services/analytics.service';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -373,7 +375,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 });
 
-export default ActivityFullScreen;
+export default withAnalyticsContext(() =>
+  analyticsService.buildClientMetaContext({
+    medium: 'single',
+    source: 'single',
+    position: 1,
+  }),
+)(
+  withAnalyticsContext<PropsType>(props =>
+    analyticsService.buildEntityContext(props.entity),
+  )(ActivityFullScreen),
+);
 
 /**
  * Styles

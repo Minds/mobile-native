@@ -9,7 +9,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { DiscoveryV2SearchStoreContext } from './DiscoveryV2SearchContext';
 import { DiscoverySearchHeader } from './DiscoverySearchHeader';
-import DiscoveryV2SearchStore from './DiscoveryV2SearchStore';
+import DiscoveryV2SearchStore, {
+  DiscoveryV2SearchStoreAlgorithm,
+} from './DiscoveryV2SearchStore';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -33,7 +35,7 @@ export const DiscoverySearchScreen = observer((props: Props) => {
     const q = decodeURIComponent(props.route.params?.q ?? '');
     const { query = q, f, plus } = props.route.params ?? {};
     if (f) {
-      store.setAlgorithm(f);
+      store.setAlgorithm(f as DiscoveryV2SearchStoreAlgorithm);
     }
     store.setQuery(query, plus);
   }, [store, props.route.params]);

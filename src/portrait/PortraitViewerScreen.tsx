@@ -15,7 +15,6 @@ import Animated, {
 
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
-import MetadataService from '../common/services/metadata.service';
 import UserContentSwiper from './UserContentSwiper';
 import { useStores } from '../common/hooks/use-stores';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
@@ -35,9 +34,6 @@ type PropsType = {
   route: ActivityFullScreenRouteProp;
   navigation: ActivityFullScreenNavProp;
 };
-
-const metadataService = new MetadataService();
-metadataService.setSource('portrait').setMedium('feed');
 
 /**
  * Portrait content swiper

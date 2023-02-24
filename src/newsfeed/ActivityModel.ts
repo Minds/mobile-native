@@ -539,7 +539,7 @@ export default class ActivityModel extends BaseModel {
         this['is:following'] = !this['is:following'];
       });
     } catch (err) {
-      logService.exception('[OffsetFeedListStore]', err);
+      logService.exception('[ActivityModel]', err);
       throw err;
     }
   }

@@ -14,8 +14,7 @@ import CommentBottomMenu from './CommentBottomMenu';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { useNavigation } from '@react-navigation/native';
-import ThumbUpAction from '../../newsfeed/activity/actions/ThumbUpAction';
-import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
+import ThumbAction from '../../newsfeed/activity/actions/ThumbAction';
 import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
@@ -171,13 +170,17 @@ export default observer(function Comment(props: PropsType) {
             )}
           </View>
           <View style={styles.actionsContainer}>
-            <ThumbUpAction
+            <ThumbAction
               entity={props.comment}
+              direction="up"
+              voted={props.comment.votedUp}
               size="tiny"
               touchableComponent={TouchableOpacity}
             />
-            <ThumbDownAction
+            <ThumbAction
               entity={props.comment}
+              direction="down"
+              voted={props.comment.votedDown}
               size="tiny"
               touchableComponent={TouchableOpacity}
             />

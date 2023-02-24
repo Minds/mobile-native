@@ -1,7 +1,6 @@
-//@ts-nocheck
 import { observable, action, extendObservable } from 'mobx';
 import MetadataService from '../services/metadata.service';
-import Viewed from './Viewed';
+import ViewStore from './ViewStore';
 
 type EntityType = {
   _list: OffsetListStore;
@@ -40,7 +39,7 @@ export default class OffsetListStore {
   /**
    * Viewed store
    */
-  viewed = new Viewed();
+  viewStore = new ViewStore();
 
   /**
    * Response entities
@@ -94,7 +93,7 @@ export default class OffsetListStore {
    * @param {boolean} replace
    */
   @action
-  setList(list, replace = false, callback = undefined) {
+  setList(list, replace = false, callback?: () => void) {
     if (list.entities) {
       if (replace) {
         list.entities.forEach((entity: EntityType, index: number) => {
@@ -110,9 +109,7 @@ export default class OffsetListStore {
         });
       }
     }
-    if (callback && callback instanceof Function) {
-      callback();
-    }
+    callback?.();
     this.loaded = true;
     this.offset = list.offset;
   }

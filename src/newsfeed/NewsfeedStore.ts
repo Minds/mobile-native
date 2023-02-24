@@ -35,9 +35,7 @@ class NewsfeedStore<T extends BaseModel> {
     .setInjectBoost(false)
     .setLimit(12)
     .setPaginated(false) // this endpoint doesn't support pagination!
-    .setMetadata(
-      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
-    );
+    .setMetadata(new MetadataService().setSource('top-feed').setMedium('feed'));
 
   /**
    * Highlight store
@@ -48,7 +46,7 @@ class NewsfeedStore<T extends BaseModel> {
     .setPaginated(false)
     .setLimit(3)
     .setMetadata(
-      new MetadataService().setSource('feed/subscribed').setMedium('top-feed'),
+      new MetadataService().setSource('feed/highlights').setMedium('feed'),
     );
 
   /**
