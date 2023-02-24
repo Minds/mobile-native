@@ -38,7 +38,7 @@ import MText from '../../common/components/MText';
 import ActivityContainer from './ActivityContainer';
 import { withAnalyticsContext } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
-import { useFeedStore } from '~/common/components/FeedList.context';
+import { useFeedStore } from '~/common/contexts/feed-store.context';
 
 const FONT_THRESHOLD = 300;
 

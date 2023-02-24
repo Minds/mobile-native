@@ -28,7 +28,7 @@ import MText from './MText';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type BaseModel from '../BaseModel';
 import { IS_IOS } from '~/config/Config';
-import { withFeedStoreProvider } from './FeedList.context';
+import { withFeedStoreProvider } from '../contexts/feed-store.context';
 
 export interface InjectItemComponentProps {
   index: number;
