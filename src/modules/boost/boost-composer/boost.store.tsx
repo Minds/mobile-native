@@ -13,6 +13,7 @@ import {
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
+import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -27,9 +28,13 @@ export const createBoostStore = ({
 }: BoostStoreParams) => ({
   config: mindsConfigService.getSettings().boost as IBoostConfig,
   entity,
+  insights: null as null | InsightEstimateResponse,
   wallet,
   boostType,
   audience: 'safe' as IBoostAudience,
+  setInsights(insights) {
+    this.insights = insights;
+  },
   setAudience(audience: IBoostAudience) {
     this.audience = audience;
   },
@@ -111,9 +116,11 @@ type IBoostConfig = {
   peer: { max: number; min: number };
 };
 
-export const BoostStoreContext = React.createContext<ReturnType<
-  typeof createBoostStore
-> | null>(null);
+export type BoostStoreType = ReturnType<typeof createBoostStore>;
+
+export const BoostStoreContext = React.createContext<BoostStoreType | null>(
+  null,
+);
 
 export function useBoostStore() {
   return useContext(BoostStoreContext)!;
