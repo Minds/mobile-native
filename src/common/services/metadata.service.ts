@@ -7,8 +7,6 @@ export type MetadataSource =
   | 'feed/subscribed'
   | 'feed/channel'
   | 'feed/highlights'
-  | 'feed/group'
-  | 'feed/discovery/search'
   | 'feed/groups'
   | 'feed/discovery'
   | 'feed/boosts'
@@ -16,22 +14,17 @@ export type MetadataSource =
   | 'search/top'
   | 'search/channels'
   | 'search/groups'
-  | 'search/null'
   | 'single'
   | 'portrait'
   | 'top-feed';
 
 export type MetadataMedium =
   | 'feed'
-  | 'boost-rotator'
   | 'portrait'
-  | 'channel-recs'
   | 'featured-content'
-  | 'single'
-  | 'boost'
-  | 'modal';
+  | 'single';
 
-export type MetadataCampaign = '';
+export type MetadataCampaign = string;
 
 export interface Metadata {
   /**
