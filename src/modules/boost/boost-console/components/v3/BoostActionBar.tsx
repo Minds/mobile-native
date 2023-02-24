@@ -26,6 +26,13 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
     summary,
   } = boost ?? {};
   const date = moment(created_timestamp * 1000).format('M/D/YY h:mma');
+
+  const cpm = (payment_amount * (summary?.views_delivered ?? 0)) / 1000;
+  const cpmLabel = t(
+    payment_method === BoostPaymentMethod.cash ? '${{cpm}}' : '{{cpm}} tokens',
+    { cpm },
+  );
+
   const revokable = boost_status === BoostStatus.PENDING;
   const showStats =
     boost_status === BoostStatus.APPROVED ||
@@ -47,12 +54,6 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
     }
   };
 
-  const cpm = (payment_amount * (summary?.views_delivered ?? 0)) / 1000;
-
-  const cpmLabel = t(
-    payment_method === BoostPaymentMethod.cash ? '${{cpm}}' : '{{cpm}} tokens',
-    { cpm },
-  );
   return (
     <Column horizontal="L" bottom="L">
       {showStats && (
