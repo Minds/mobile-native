@@ -38,7 +38,7 @@ import MText from '../../common/components/MText';
 import ActivityContainer from './ActivityContainer';
 import { withAnalyticsContext } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
-import { useFeedListContext } from '~/common/components/FeedList.context';
+import { useFeedStore } from '~/common/components/FeedList.context';
 
 const FONT_THRESHOLD = 300;
 
@@ -67,7 +67,7 @@ type PropsType = {
   analyticsService.buildEntityContext(props.entity),
 )
 @withAnalyticsContext<PropsType>(props => {
-  const feedStore = useFeedListContext();
+  const feedStore = useFeedStore();
   const clientMetaContext =
     feedStore?.metadataService &&
     analyticsService.buildClientMetaContext(

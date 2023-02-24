@@ -28,7 +28,7 @@ import MText from './MText';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type BaseModel from '../BaseModel';
 import { IS_IOS } from '~/config/Config';
-import { withFeedListProvider } from './FeedList.context';
+import { withFeedStoreProvider } from './FeedList.context';
 
 export interface InjectItemComponentProps {
   index: number;
@@ -116,7 +116,7 @@ export type FeedListPropsType<T extends BaseModel> = {
  * News feed list component
  */
 @observer
-@withFeedListProvider
+@withFeedStoreProvider
 export class FeedList<T extends BaseModel> extends Component<
   FeedListPropsType<T>
 > {
