@@ -40,7 +40,7 @@ const ThumbAction = ({
 
     remoteAction(() => {
       return entity.toggleVote(direction).then(() => {
-        analytics.trackClick('vote:' + direction);
+        analytics.trackClick(`vote:${direction}`);
       });
     });
   };

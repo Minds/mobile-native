@@ -1,6 +1,6 @@
 import { EventContext } from '@snowplow/react-native-tracker';
 import React, { PropsWithChildren, createContext, useContext } from 'react';
-import analyticsService from '../services/analytics.service';
+import analyticsService, { ClickRef } from '../services/analytics.service';
 
 const Context = createContext<EventContext[]>([]);
 
@@ -26,9 +26,10 @@ export const useAnalytics = () => {
   const analyticsContext = useAnalyticsContext();
 
   return {
-    trackClick: (ref: string) => {
+    trackClick: (ref: ClickRef) => {
       return analyticsService.trackClick(ref, analyticsContext);
     },
+    getContexts: () => analyticsContext,
   };
 };
 export function withAnalyticsContext<T>(

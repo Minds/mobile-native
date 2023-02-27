@@ -9,6 +9,7 @@ import type ActivityModel from '../ActivityModel';
 import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import useForceRender from '~/common/hooks/useForceRender';
+import { useAnalytics } from '~/common/contexts/analytics.context';
 
 type PropsType = {
   showOnlyContent?: boolean;
@@ -20,6 +21,7 @@ type PropsType = {
 const BottomContent = (props: PropsType) => {
   const shouldRender = !props.showOnlyContent;
   const commentsRef = React.useRef<BottomSheet>(null);
+  const analytics = useAnalytics();
 
   const forceRender = useForceRender();
 
@@ -36,14 +38,17 @@ const BottomContent = (props: PropsType) => {
 
   const onPressComment = React.useCallback(() => {
     if (!commentsStore.current) {
-      commentsStore.current = new CommentsStore(props.entity);
+      commentsStore.current = new CommentsStore(
+        props.entity,
+        analytics.getContexts(),
+      );
       // we force the render to shown the bottom sheet
       forceRender();
     }
     if (commentsRef.current?.expand) {
       commentsRef.current.expand();
     }
-  }, [props.entity, forceRender]);
+  }, [props.entity, forceRender, analytics]);
 
   if (!shouldRender) {
     return null;

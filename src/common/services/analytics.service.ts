@@ -201,16 +201,16 @@ export class AnalyticsService {
    * @param entity
    * @param clientMeta
    */
-  trackEntityView(entity: BaseModel, clientMeta: any) {
+  trackEntityView(entity: BaseModel, clientMeta: Metadata) {
     this.tracker?.trackSelfDescribingEvent(
       {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
         data: {
+          ...(clientMeta as Record<keyof Metadata, unknown>),
           entity_guid: entity.guid,
           // @ts-ignore
           entity_type: entity.type,
           entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
-          ...clientMeta,
         },
       },
       [
@@ -266,7 +266,7 @@ export class AnalyticsService {
    * @param { EventContext[] } contexts - additional contexts.
    * @returns { void }
    */
-  public trackClick(ref: string, contexts: EventContext[] = []): void {
+  public trackClick(ref: ClickRef, contexts: EventContext[] = []): void {
     return this.trackGenericEvent('click', ref, contexts);
   }
 
@@ -328,3 +328,13 @@ export class AnalyticsService {
 }
 
 export default new AnalyticsService();
+
+export type ClickRef =
+  | 'share'
+  | 'sendTo'
+  | 'comment'
+  | 'vote:up'
+  | 'vote:down'
+  | 'push-notification'
+  | 'video-player-unmuted'
+  | 'remind';
