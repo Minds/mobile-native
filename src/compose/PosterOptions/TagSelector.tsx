@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,11 +11,10 @@ import hashtagService from '../../common/services/hashtag.service';
 import HistoryStore from '../../common/stores/HistoryStore';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MenuItem from '../../common/components/menus/MenuItem';
+import { PosterStackScreenProps } from './PosterStackNavigator';
 
 /**
  * Tag row
@@ -29,14 +28,12 @@ const TagRow = props => {
   return <MenuItem title={`#${props.tag}`} onPress={onDelete} icon="close" />;
 };
 
-interface TagSelectorProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'TagSelector'> {}
+type PropsType = PosterStackScreenProps<'TagSelector'>;
 
 /**
  * Tag selector
  */
-export default observer(function ({}: TagSelectorProps) {
+export default observer(function ({}: PropsType) {
   const theme = ThemedStyles.style;
   const store = useComposeContext();
   const inputRef = useRef<any>(null);
