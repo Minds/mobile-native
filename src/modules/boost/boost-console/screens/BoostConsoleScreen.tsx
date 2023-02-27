@@ -26,7 +26,7 @@ function BoostConsoleScreen({
   navigation,
 }: BoostConsoleScreenProps) {
   const { t } = useTranslation();
-  const { location: boostLocation, filter, boostGuid } = route?.params || {};
+  const { location: boostLocation, filter, boostGuid } = route?.params ?? {};
   const boostConsoleStore = useRef(new BoostConsoleStore()).current;
   let empty;
 
