@@ -6,4 +6,6 @@ export default {
   trackEntityView: jest.fn(),
   setUserId: jest.fn(),
   trackPageViewEvent: jest.fn(),
+  buildEntityContext: jest.fn(),
+  buildClientMetaContext: jest.fn(),
 };

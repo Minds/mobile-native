@@ -35,6 +35,10 @@ jest.mock(
 );
 jest.mock('../../../AppStores');
 
+jest.mock('../../../src/common/contexts/analytics.context', () => ({
+  withAnalyticsContext: mapper => ({ children }) => children,
+}));
+
 describe('Activity component', () => {
   let user, comments, entity, screen;
   beforeEach(() => {
