@@ -10,6 +10,7 @@ import { BoostConsoleBoost, BoostStatus } from './types/BoostConsoleBoost';
 
 type BoostsResponse = {
   boosts: BoostConsoleBoost[];
+  offset?: string;
   has_more: boolean;
 } & ApiResponse;
 
@@ -55,7 +56,7 @@ export async function getBoostsV3(
 
     return {
       entities: data.boosts || [],
-      offset: data['load-next'],
+      offset: data.has_more ? (offset ?? 0) + 15 : 0, // v3 doesn't use offset strings
     };
   } catch (err) {
     if (!isNetworkError(err)) {
