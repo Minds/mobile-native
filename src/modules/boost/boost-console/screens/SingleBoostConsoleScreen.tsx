@@ -14,7 +14,6 @@ type PropsType = AppStackScreenProps<'SingleBoostConsole'>;
 
 const SingleBoostConsoleScreen = ({ navigation, route }: PropsType) => {
   const { t } = useTranslation();
-
   const store = useLocalStore(localStore);
 
   const guid = route.params?.guid;
@@ -39,6 +38,7 @@ function localStore() {
     loading: false,
     boost: null as null | BoostModelV3,
     async load(guid: string) {
+      this.loading = true;
       try {
         this.boost = (await getSingleBoost(guid)) || null;
       } catch (error) {
