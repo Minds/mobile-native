@@ -1,5 +1,5 @@
 import useApiFetch from '../../../common/hooks/useApiFetch';
-import { IBoostAudience, IPaymentType } from '../boost-composer/boost.store';
+import { BoostStoreType } from '../boost-composer/boost.store';
 
 interface InsightEstimateParams {
   daily_bid: number;
@@ -8,33 +8,25 @@ interface InsightEstimateParams {
   audience: 1 | 2;
 }
 
-interface InsightEstimateResponse {
+export interface InsightEstimateResponse {
   cpm: { high: number; low: number };
   views: { high: number; low: number };
 }
 
-export default function useBoostInsights({
-  amount,
-  duration,
-  paymentType,
-  audience,
-}: {
-  amount: number;
-  duration: number;
-  paymentType: IPaymentType;
-  audience: IBoostAudience;
-}) {
+export default function useBoostInsights(boostStore: BoostStoreType) {
   const fetchStore = useApiFetch<
     InsightEstimateResponse,
     InsightEstimateParams
   >('api/v3/boosts/insights/estimate', {
     params: {
-      daily_bid: amount,
-      duration,
-      payment_method: paymentType === 'cash' ? 1 : 2,
-      audience: audience === 'safe' ? 1 : 2,
+      daily_bid: boostStore.amount,
+      duration: boostStore.duration,
+      payment_method: boostStore.paymentType === 'cash' ? 1 : 2,
+      audience: boostStore.audience === 'safe' ? 1 : 2,
     },
   });
+
+  boostStore.setInsights(fetchStore.result);
 
   return {
     insights: fetchStore.result,
