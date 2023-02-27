@@ -16,6 +16,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { PerformanceListWrapper } from 'services/performance';
+
 import ThemedStyles from '../../styles/ThemedStyles';
 import useApiFetch from '../hooks/useApiFetch';
 import i18n from '../services/i18n.service';
@@ -206,20 +208,22 @@ export default observer(
     const List = props.ListComponent || FlatList;
 
     return (
-      <List
-        ref={listRef}
-        ListHeaderComponent={props.header}
-        data={data}
-        renderItem={renderItem}
-        ListFooterComponent={loadingFooter}
-        keyExtractor={keyExtractor}
-        onEndReached={onFetchMore}
-        onRefresh={_refresh}
-        onScroll={props.onScroll}
-        refreshing={fetchStore.refreshing}
-        contentContainerStyle={props.contentContainerStyle}
-        style={props.style || listStyle}
-      />
+      <PerformanceListWrapper name="OffsetList">
+        <List
+          ref={listRef}
+          ListHeaderComponent={props.header}
+          data={data}
+          renderItem={renderItem}
+          ListFooterComponent={loadingFooter}
+          keyExtractor={keyExtractor}
+          onEndReached={onFetchMore}
+          onRefresh={_refresh}
+          onScroll={props.onScroll}
+          refreshing={fetchStore.refreshing}
+          contentContainerStyle={props.contentContainerStyle}
+          style={props.style || listStyle}
+        />
+      </PerformanceListWrapper>
     );
   }),
 );

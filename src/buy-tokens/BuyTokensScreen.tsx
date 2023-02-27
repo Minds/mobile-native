@@ -88,7 +88,7 @@ export default observer(() => {
 
   return (
     <>
-      <Screen safe scroll>
+      <Screen name="BuyTokensScreen" safe scroll>
         <ScreenHeader title={i18n.t('buyTokensScreen.paymentMethod')} />
         <ScreenSection>
           <Row

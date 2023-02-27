@@ -1,5 +1,5 @@
 import UserModel from '~/channel/UserModel';
-import { fetchFeedPage, PageResponse } from '~/services';
+import { fetchFeedPage, PageResponse } from 'services';
 import NotificationModel from './notification/NotificationModel';
 
 const mapToModel = (notification: NotificationModel) => {

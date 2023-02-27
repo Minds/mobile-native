@@ -28,7 +28,6 @@ No changes.
 - [Link to boost content policy with rejection message](minds/mobile-native!2111)
 - [Use in-app verification for wallet join rewards](minds/mobile-native!2112)
 
-
 ### Fixed 🐛 (5 changes)
 
 - [Fixed an issue where the subject of notifications would get duplicated](minds/mobile-native!2109)

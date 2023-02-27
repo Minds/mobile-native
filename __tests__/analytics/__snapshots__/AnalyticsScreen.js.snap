@@ -2,6 +2,7 @@
 
 exports[`AnalyticsScreen component should render correctly 1`] = `
 <Screen
+  name="AnalyticsScreen"
   safe={true}
 >
   <ScreenHeader

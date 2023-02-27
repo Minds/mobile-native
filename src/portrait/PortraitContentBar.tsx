@@ -12,6 +12,7 @@ import PressableScale from '~/common/components/PressableScale';
 import { B3, Icon, Row } from '~/common/ui';
 import i18nService from '~/common/services/i18n.service';
 import Placeholder from '~/common/components/Placeholder';
+import { PerformanceListWrapper } from 'services/performance';
 
 /**
  * Header component
@@ -93,18 +94,20 @@ const PortraitContentBar = observer(() => {
 
   return (
     <View style={styles.containerStyle}>
-      <FlatList
-        // @ts-ignore
-        ref={portraitBarRef}
-        contentContainerStyle={styles.listContainerStyle}
-        style={styles.bar}
-        horizontal={true}
-        ListHeaderComponent={Header}
-        ListEmptyComponent={Empty}
-        renderItem={renderItem}
-        data={store.items.slice()}
-        keyExtractor={keyExtractor}
-      />
+      <PerformanceListWrapper name="PortraitContentBar">
+        <FlatList
+          // @ts-ignore
+          ref={portraitBarRef}
+          contentContainerStyle={styles.listContainerStyle}
+          style={styles.bar}
+          horizontal={true}
+          ListHeaderComponent={Header}
+          ListEmptyComponent={Empty}
+          renderItem={renderItem}
+          data={store.items.slice()}
+          keyExtractor={keyExtractor}
+        />
+      </PerformanceListWrapper>
     </View>
   );
 });

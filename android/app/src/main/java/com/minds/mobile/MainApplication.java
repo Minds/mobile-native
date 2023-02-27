@@ -37,6 +37,7 @@ import com.microsoft.codepush.react.CodePush;
 import com.minds.mobile.newarchitecture.MainApplicationReactNativeHost;
 import com.facebook.react.config.ReactFeatureFlags;
 
+import com.shopify.reactnativeperformance.ReactNativePerformance;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
   
@@ -86,6 +87,7 @@ public class MainApplication extends Application implements ShareApplication, Re
 
   @Override
   public void onCreate() {
+    ReactNativePerformance.onAppStarted();
     super.onCreate();
         // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;

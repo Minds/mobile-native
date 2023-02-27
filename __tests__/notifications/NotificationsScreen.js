@@ -5,6 +5,7 @@ import NotificationsScreen from '../../src/notifications/v3/NotificationsScreen'
 import { StoresProvider } from '../../src/common/hooks/use-stores';
 import { getStores } from '../../AppStores';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PerformanceProfiler } from '@shopify/react-native-performance';
 
 jest.mock('@react-navigation/native');
 jest.mock('react-native-system-setting');
@@ -33,6 +34,14 @@ const Wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
+const TestRenderContext = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <PerformanceProfiler enabled={false} onReportPrepared={() => {}}>
+      {children}
+    </PerformanceProfiler>
+  );
+};
+
 describe('Notifications Screen Component', () => {
   let navigation;
   beforeEach(() => {
@@ -48,7 +57,9 @@ describe('Notifications Screen Component', () => {
     const { toJSON } = render(
       <Wrapper>
         <StoresProvider>
-          <NotificationsScreen navigation={navigation} />
+          <TestRenderContext>
+            <NotificationsScreen navigation={navigation} />
+          </TestRenderContext>
         </StoresProvider>
       </Wrapper>,
     );

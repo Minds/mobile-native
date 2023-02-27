@@ -168,7 +168,7 @@ type Options<T extends number> = typeof items[T]['options'][number];
 
 const ResourcesScreen = ({}: PropsType) => {
   return (
-    <Screen>
+    <Screen name="ResourcesScreen">
       <FitScrollView>
         {items.map((item: Items, index) => (
           <>

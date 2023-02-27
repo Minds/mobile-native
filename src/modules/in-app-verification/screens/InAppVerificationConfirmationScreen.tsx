@@ -21,7 +21,7 @@ export default function InAppVerificationConfirmationScreen() {
   const { t } = useTranslation();
 
   return (
-    <Screen safe>
+    <Screen name="InAppVerificationConfirmationScreen" safe>
       <ScreenHeader
         title="Confirmation"
         centerTitle

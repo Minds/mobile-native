@@ -16,6 +16,7 @@
 #import <React/RCTRootView.h>
 
 #import <React/RCTAppSetupUtils.h>
+#import <ReactNativePerformance/ReactNativePerformance.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -65,6 +66,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  // performance init
+  [ReactNativePerformance onAppStarted];
 
   // minds packages init
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];

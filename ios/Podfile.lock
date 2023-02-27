@@ -542,6 +542,10 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.10):
     - React-Core
+  - ReactNativePerformance (4.1.2):
+    - React-Core
+  - ReactNativePerformanceListsProfiler (1.1.0):
+    - React-Core
   - rn-update-apk (4.5.1):
     - React-Core
   - RNBootSplash (4.1.5):
@@ -741,6 +745,8 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - "ReactNativePerformance (from `../node_modules/@shopify/react-native-performance`)"
+  - "ReactNativePerformanceListsProfiler (from `../node_modules/@shopify/react-native-performance-lists-profiler`)"
   - rn-update-apk (from `../node_modules/rn-update-apk`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -962,6 +968,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/art"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  ReactNativePerformance:
+    :path: "../node_modules/@shopify/react-native-performance"
+  ReactNativePerformanceListsProfiler:
+    :path: "../node_modules/@shopify/react-native-performance-lists-profiler"
   rn-update-apk:
     :path: "../node_modules/rn-update-apk"
   RNBootSplash:
@@ -1127,6 +1137,8 @@ SPEC CHECKSUMS:
   ReactCommon: 0253d197eaa7f6689dcd3e7d5360449ab93e10df
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
+  ReactNativePerformance: ab7dee4c4862623d72c1530a9fc71b55458edf71
+  ReactNativePerformanceListsProfiler: b9f7cfe8d08631fbce8e4729d388a5a3f7f562c2
   rn-update-apk: c9ed556a751a89894351f2f029387fa215ca5658
   RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd

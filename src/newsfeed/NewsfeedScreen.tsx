@@ -188,11 +188,12 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const isLatest = newsfeed.feedType === 'latest';
 
   return (
-    <Screen safe onlyTopEdge={IS_IOS}>
+    <Screen name="NewsfeedScreen" safe onlyTopEdge={IS_IOS}>
       <PrefetchNotifications tabs={prefetch} />
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>
           <FeedListSticky
+            name="Newsfeed"
             stickyHeaderIndices={isLatest ? sticky : undefined}
             overrideItemLayout={overrideItemLayout}
             bottomComponent={

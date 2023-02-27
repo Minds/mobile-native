@@ -93,7 +93,7 @@ const AnalyticsScreen = observer(
     }, [Earnings, Engagement, Token, Traffic, Trending, activeTabId]);
 
     return (
-      <Screen safe>
+      <Screen name="AnalyticsScreen" safe>
         <ScreenHeader title={i18n.t('analytics.title')} />
         <TopbarTabbar
           current={activeTabId}
