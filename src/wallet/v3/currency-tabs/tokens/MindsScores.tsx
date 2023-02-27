@@ -14,6 +14,8 @@ import LiquiditySummary from './LiquiditySummary';
 import { PricesType } from '../../../v2/createWalletStore';
 import { Reward, TokensTabStore } from './createTokensTabStore';
 import { Spacer } from '~ui';
+import MText from '~/common/components/MText';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type PropsType = {
   store: TokensTabStore;
@@ -93,6 +95,9 @@ const renderHeader = (content: AccordionDataType, index, isActive) => (
   />
 );
 
+const renderFooter = ({ footer }: AccordionDataType) =>
+  footer ? <MText style={styles.footerText}>{footer}</MText> : <></>;
+
 const ContentComponent: RenderFunction = (content: AccordionDataType) =>
   content.children;
 
@@ -105,9 +110,12 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
 
   const accordionData: Array<AccordionDataType> = scores.map(reward => ({
     title: i18n.t(`wallet.${reward.reward_type}`),
-    subtitle: (
-      <MindsTokens value={reward.token_amount} mindsPrice={prices.minds} />
-    ),
+    subtitle:
+      reward.reward_type === 'holding' ? (
+        ''
+      ) : (
+        <MindsTokens value={reward.token_amount} mindsPrice={prices.minds} />
+      ),
     children: (
       <AccordionContent
         data={getProcessedData(reward)}
@@ -125,6 +133,10 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
       width: 200,
       height: 80,
     },
+    footer:
+      reward.reward_type === 'holding'
+        ? i18n.t(`wallet.tokens.footers.${reward.reward_type}`)
+        : undefined,
   }));
 
   return (
@@ -133,9 +145,22 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
         data={accordionData}
         headerComponent={renderHeader}
         contentComponent={ContentComponent}
+        footerComponent={renderFooter}
       />
     </Spacer>
   );
+});
+
+const styles = ThemedStyles.create({
+  footerText: [
+    'colorSecondaryText',
+    'marginLeft4x',
+    'marginBottom5x',
+    {
+      fontSize: 13,
+      lineHeight: 16,
+    },
+  ],
 });
 
 export default MindsScores;

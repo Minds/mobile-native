@@ -1,10 +1,9 @@
-import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
+import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
 import { useTranslation } from '../locales';
 
 export default function InAppVerificationPrompt() {
-  const navigation = useNavigation();
   const { t } = useTranslation();
   return (
     <BaseNotice
@@ -14,7 +13,7 @@ export default function InAppVerificationPrompt() {
       )}
       btnText={t('Verify')}
       iconName="warning"
-      onPress={() => navigation.navigate('InAppVerification')}
+      onPress={requireUniquenessVerification}
     />
   );
 }

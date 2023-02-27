@@ -6,7 +6,7 @@ import openUrlService from '../../common/services/open-url.service';
 import { storages } from '../../common/services/storage/storages.service';
 import {
   RATING_APP_SCORE_THRESHOLD,
-  STORE_LINK,
+  STORE_REVIEW_LINK,
   USAGE_SCORES,
 } from '../../config/Config';
 import { rateApp } from './components/RateApp';
@@ -49,7 +49,7 @@ class StoreRatingService {
   }
 
   async redirectToStore() {
-    Linking.openURL(STORE_LINK);
+    Linking.openURL(STORE_REVIEW_LINK);
   }
 
   async openFeedbackForm() {

@@ -222,6 +222,11 @@ const AppStack = observer(() => {
           getComponent={() => require('modules/boost').BoostConsoleScreen}
           options={hideHeader}
         />
+        <AppStackNav.Screen
+          name="SingleBoostConsole"
+          getComponent={() => require('modules/boost').SingleBoostConsoleScreen}
+          options={hideHeader}
+        />
       </AppStackNav.Navigator>
     </>
   );
@@ -538,6 +543,15 @@ const RootStack = observer(function () {
           ...modalOptions,
           cardOverlayEnabled: false,
           animationEnabled: false,
+        }}
+      />
+      <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        name="CodePushSync"
+        getComponent={() => require('modules/codepush').CodePushSyncScreen}
+        options={{
+          ...TransitionPresets.ModalFadeTransition,
+          gestureEnabled: false,
         }}
       />
     </RootStackNav.Navigator>

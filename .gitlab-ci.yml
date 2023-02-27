@@ -2,13 +2,13 @@ variables:
   APK_NAME: Minds.apk
 
 include:
-  - local: .gitlab/ci/build.yml
-  - local: .gitlab/ci/maintenance.yml
-  - local: .gitlab/ci/pushrelease.yml
-  - local: .gitlab/ci/qa.yml
-  - local: .gitlab/ci/release.yml
   - local: .gitlab/ci/test.yml
+  - local: .gitlab/ci/pushrelease.yml
+  - local: .gitlab/ci/build.yml
   - local: .gitlab/ci/upload.yml
+  - local: .gitlab/ci/release.yml
+  - local: .gitlab/ci/maintenance.yml
+  - local: .gitlab/ci/qa.yml
 
 stages:
   - test
@@ -53,6 +53,25 @@ stages:
         - master
       when: on_success
 
+# Run only for tags that don't end on .0 (patch releases)
+.rule_patch_release:
+  rules:
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+      changes:
+        - master
+
+# Run only on master
+.only_master:
+  only:
+    refs:
+      - master
+
+# Run only on tags
+.only_tags:
+  only:
+    refs:
+      - tags
+
 # Run only on nightly jobs
 .except_nightly:
   except:
@@ -72,6 +91,14 @@ stages:
     - if: $CI_COMMIT_BRANCH == "develop"
       when: on_success
     - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
+
+# Run automatic on nonpatch versions and manually on patch versions
+.rule_automatic_nonpatch_manual_patch:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+      when: on_success
+    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
       when: manual
 
 # Run automatic on develop only

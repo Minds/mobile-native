@@ -1,9 +1,10 @@
 import React from 'react';
+import { NavigationProp } from '@react-navigation/native';
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
-import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
+
 import {
   H2,
   H3,
@@ -21,9 +22,9 @@ import {
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
-import { NavigationProp } from '@react-navigation/native';
+import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -73,9 +74,12 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden' | 'isVerificationEnabled', boolean>;
 
-const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, isVerificationEnabled }: Flags,
+) => {
   const channel = sessionService.getUser();
   let list = [
     {
@@ -118,7 +122,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
               navigation.navigate('BuyTokens');
             };
             if (!channel?.rewards) {
-              await requirePhoneValidation();
+              await requireUniquenessVerification();
               navToBuyTokens();
             } else {
               navToBuyTokens();
@@ -152,13 +156,6 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('Settings');
       },
     },
-    {
-      name: 'Verify account',
-      icon: 'group',
-      onPress: async () => {
-        navigation.navigate('InAppVerification');
-      },
-    },
   ];
 
   return list;
@@ -173,6 +170,7 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+  const isVerificationEnabled = useIsFeatureOn('mob-4472-in-app-verification');
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
@@ -185,6 +183,7 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
+    isVerificationEnabled,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (

@@ -17,5 +17,5 @@ export default function useModelEvent(
       model.events.off(eventName, fn);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deps]);
+  }, deps);
 }

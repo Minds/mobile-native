@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import type UserStore from '~/auth/UserStore';
 import { confirm } from '~/common/components/Confirm';
-import i18n from '~/common/services/i18n.service';
 import { B1, Button, Column, Row } from '~/common/ui';
 import { useTranslation } from '../../../locales';
 import type BoostModel from '../../../models/BoostModelV3';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
-import { BoostStatus } from '../../types/BoostConsoleBoost';
+import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';
 
 type BoostActionBarProps = {
   boost: BoostModel;
@@ -18,9 +18,25 @@ type BoostActionBarProps = {
 function BoostActionBar({ boost }: BoostActionBarProps) {
   const boostConsoleStore = useBoostConsoleStore();
   const { t } = useTranslation();
-  const date = i18n.date(boost.created_timestamp * 1000);
-  const revokable = boost.boost_status === BoostStatus.PENDING;
-  const showStats = boost.boost_status === BoostStatus.APPROVED;
+  const {
+    created_timestamp,
+    boost_status,
+    payment_amount,
+    payment_method,
+    summary,
+  } = boost ?? {};
+  const date = moment(created_timestamp * 1000).format('M/D/YY h:mma');
+
+  const cpm = (payment_amount * (summary?.views_delivered ?? 0)) / 1000;
+  const cpmLabel = t(
+    payment_method === BoostPaymentMethod.cash ? '${{cpm}}' : '{{cpm}} tokens',
+    { cpm },
+  );
+
+  const revokable = boost_status === BoostStatus.PENDING;
+  const showStats =
+    boost_status === BoostStatus.APPROVED ||
+    boost_status === BoostStatus.COMPLETED;
 
   const revoke = async () => {
     if (
@@ -47,12 +63,20 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
               <B1 font="bold">{t('Results')}</B1>
             </Column>
             <Column flex>
+              <B1 font="bold">{t('CPM')}</B1>
+            </Column>
+            <Column flex>
               <B1 font="bold">{t('Start date')}</B1>
             </Column>
           </Row>
           <Row flex bottom="L">
             <Column flex>
-              <B1 color="secondary">{boost.summary?.views_delivered ?? ''}</B1>
+              <B1 color="secondary">
+                {boost.summary?.views_delivered ?? ''} {t('views')}
+              </B1>
+            </Column>
+            <Column flex>
+              <B1 color="secondary">{cpmLabel}</B1>
             </Column>
             <Column flex>
               <B1 color="secondary">{date}</B1>

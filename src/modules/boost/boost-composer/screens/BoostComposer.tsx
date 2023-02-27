@@ -172,7 +172,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           bottom="XL"
           align="justify">
           {t(
-            "Estimated reach is appoximate and your boost will appear in the sidebar across the site. Actual reach for this boost may vary and can't be guaranteed.",
+            'Estimated reach is approximate and can fluctuate based on network demand.',
           )}
         </B2>
 

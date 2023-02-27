@@ -48,6 +48,7 @@ export default class ActivityModel extends BaseModel {
   supermind?: {
     request_guid: string;
     is_reply: boolean;
+    receiver_user?: UserModel;
   };
 
   time_updated: string = '';

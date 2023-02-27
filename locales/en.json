@@ -1396,6 +1396,9 @@
         "liquidityDuration": "The number of consecutive days you have provided liquidity.",
         "liquidityMultiplier": "Your score multiplier as determined by duration."
       },
+      "footers": {
+        "holding": "Daily metrics are updated every day at 12:00 AM UTC"
+      },
       "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
       "tokenAmount": "Amount",
       "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
@@ -1827,6 +1830,13 @@
       "title": "New update available",
       "description": "There is a newer version of the app available. Would you like to update now?",
       "action": "Restart"
-    }
+    },
+    "nativePrompt": {
+      "description": "Please update your app in order to enjoy the latest features.",
+      "current": "Current:",
+      "available": "Available:",
+      "action": "Download"
+    },
+    "syncing": "Syncing app bundle..."
   }
 }

@@ -303,7 +303,7 @@ export const createVerificationStore = ({
         }
       }
       // allow two different characters in the code
-      return eq >= code.length - 2;
+      return eq >= code.length - 4;
     }
     return false;
   },

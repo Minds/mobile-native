@@ -5,6 +5,7 @@ import FitScrollView from '~/common/components/FitScrollView';
 import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
+import number from '~/common/helpers/number';
 import {
   B1,
   B2,
@@ -26,7 +27,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
-    value: Math.round(Number(boostStore.wallet?.balance) || 0),
+    value: number(boostStore.wallet?.balance || 0, 0, 2),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
@@ -56,13 +57,20 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     });
   };
 
+  const estimatedReach = boostStore.insights?.views?.low
+    ? `${boostStore.insights?.views?.low?.toLocaleString()} - ${boostStore.insights?.views?.high?.toLocaleString()}`
+    : 'unknown';
+
   return (
     <Screen name="BoostReviewScreen" safe onlyTopEdge>
       <ScreenHeader title={title} back shadow />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
-          <B1 color="secondary">{t('Your estimated reach is unknown')}</B1>
+          <B1 color="secondary">
+            {t('Your estimated reach is ')}
+            {estimatedReach}
+          </B1>
         </Column>
 
         <HairlineRow />
@@ -102,12 +110,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         </Column>
         <HairlineRow />
 
-        <B2 color="secondary" horizontal="L" vertical="L" align="justify">
-          {t(
-            'Once your Boost is approved, your post can not be edited or deleted until the Boost duration is completed. Approved boosts cannot be refunded.',
-          )}
-        </B2>
-
         <Button
           onPress={handleCreate}
           mode="solid"
@@ -116,6 +118,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           disabled={
             boostStore.paymentType === 'cash' && !boostStore.selectedCardId
           }
+          top="XXXL2"
           horizontal="L">
           {title}
         </Button>
@@ -123,12 +126,17 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         <B2
           color="secondary"
           horizontal="L"
-          vertical="L"
+          top="XL"
           bottom="XL2"
-          align="justify">
-          {t("By clicking Boost Channel, you agree to Mind's")}{' '}
+          align="center">
+          {t('By clicking Boost Channel, you agree to Minds')}
+          {'\n'}
+          <Link url="https://www.minds.com/content-policy">
+            {t('Content Policy')}
+          </Link>
+          {t(' and ')}
           <Link url="https://www.minds.com/p/monetization-terms">
-            {t('Terms')}
+            {t('Refund Policy')}
           </Link>
         </B2>
       </FitScrollView>

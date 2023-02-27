@@ -38,7 +38,7 @@ class UpdateService {
   /**
    * Check and update
    */
-  async checkUpdate(stable = true) {
+  async checkUpdate(stable = true, requireConfirmation = true) {
     if (this.downloading) return;
 
     logService.info('[UpdateService] Checking for updates...');
@@ -49,6 +49,17 @@ class UpdateService {
       try {
         if (this.needUpdate(Version.VERSION, last.version)) {
           if (await this.rememberTomorrow()) return;
+
+          const doUpdate = () => {
+            // goto update screen
+            navigationService.navigate('Update');
+            this.version = last.version;
+            this.updateApk(last.href);
+          };
+
+          if (!requireConfirmation) {
+            return doUpdate();
+          }
 
           Alert.alert(
             i18n.t('updateAvailable') + ' v' + last.version,
@@ -66,12 +77,7 @@ class UpdateService {
               },
               {
                 text: i18n.t('yes'),
-                onPress: () => {
-                  // goto update screen
-                  navigationService.navigate('Update');
-                  this.version = last.version;
-                  this.updateApk(last.href);
-                },
+                onPress: doUpdate,
               },
             ],
             { cancelable: false },

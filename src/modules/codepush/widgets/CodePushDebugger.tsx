@@ -147,6 +147,7 @@ const useCodePush = () => {
   };
 
   const sync = (deploymentKey?: string) => {
+    codePush.clearUpdates();
     codePush
       .sync(
         deploymentKey

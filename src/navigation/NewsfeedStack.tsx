@@ -46,7 +46,6 @@ export default function () {
           require('modules/in-app-verification').InAppVerificationStack
         }
         options={hideHeader}
-        initialParams={{ noBottomInset: true }}
       />
       <NewsfeedStack.Screen
         name="BoostScreenV2"

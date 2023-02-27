@@ -143,7 +143,7 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  if (DEV_MODE.isActive) {
+  if (DEV_MODE.isActive || __DEV__) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',

@@ -4,6 +4,7 @@ import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
+import CodePush, { CodePushOptions } from 'react-native-code-push';
 
 export const CODEPUSH_VERSION = '';
 
@@ -211,9 +212,15 @@ export const USAGE_SCORES = {
  */
 export const RATING_APP_SCORE_THRESHOLD = 20;
 
-const APP_STORE_LINK =
+const APP_STORE_REVIEW_LINK =
   'itms-apps://apps.apple.com/app/id961771928?action=write-review';
+const APP_STORE_LINK = 'itms-apps://apps.apple.com/app/id961771928';
 const PLAY_STORE_LINK = 'market://details?id=com.minds.mobile';
+
+export const STORE_REVIEW_LINK = Platform.select({
+  ios: APP_STORE_REVIEW_LINK,
+  android: PLAY_STORE_LINK,
+}) as string;
 
 export const STORE_LINK = Platform.select({
   ios: APP_STORE_LINK,
@@ -223,3 +230,15 @@ export const STORE_LINK = Platform.select({
 export const isStoryBookOn = storages.app.getBool('storybook');
 
 export const IS_PERFMON_ENABLED = true;
+
+export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+  installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+  mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+  minimumBackgroundDuration: 15 * 60, // 15 minutes
+  rollbackRetryOptions: {
+    delayInHours: 4,
+    maxRetryAttempts: 2,
+  },
+  updateDialog: false,
+};

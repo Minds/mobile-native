@@ -66,7 +66,9 @@ export default observer(function DeviceScreen() {
                   <B3 top="XS">{s.ip}</B3>
                   <B3 top="XXS">
                     Last accessed on{' '}
-                    <B3 font="medium">{i18n.date(s.lastActive, 'datetime')}</B3>
+                    <B3 font="medium">
+                      {i18n.date(1000 * s.last_active, 'datetime')}
+                    </B3>
                   </B3>
                 </Column>
                 <Button

@@ -1,3 +1,8 @@
+.build_base:
+  stage: build
+  needs: ['test:quality']
+  interruptible: true
+
 .prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
   image: macos-12-xcode-14
   tags: [shared-macos-amd64]
@@ -20,74 +25,10 @@
     - cd ios
     - pod install
 
-# Move the apk to the root folder
-.move_apk: &move_apk
-  - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
-
-# Gets the version of the iOS app parsing the project files
-.getiosversion: &getiosversion
-  - export FASTLANE_DISABLE_COLORS=1
-  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
-  - echo "APPVERSION=$APPVERSION"
-
-# Build the QA iOS app for each MR and upload it to browserstack
-build:ios_mr:
-  <<: *prepare_build_ios
-  extends:
-    - .except_nightly
-    - .only_native
-  stage: build
-  interruptible: true
-  artifacts:
-    expire_in: 1 day
-    when: on_failure
-    public: false
-    paths:
-      - ios/ios-job.log
-  script:
-    - export ENVFILE=".env.review"
-    - fastlane buildrelease | tee -a ios-job.log
-    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
-
-# Build iOS RC for develop branch
-build:ios_release_candidate:
-  <<: *prepare_build_ios
-  extends: .rule_automatic_develop_manual_master
-  stage: build
-  interruptible: true
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-
-# Build iOS for master branch
-build:ios_production:
-  <<: *prepare_build_ios
-  extends: .rule_nonpatch_release
-  stage: build
-  interruptible: true
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-
 # Android common build steps
 .prepare_build_android: &prepare_build_android
   image: msantang78/ci-mobile-android:latest
-  stage: build
   tags: [minds-ci]
-  interruptible: true
   before_script:
     # PREPARE
     - !reference [.getversion, script]
@@ -107,14 +48,76 @@ build:ios_production:
     expire_in: 45 days
     when: on_success
 
+# Move the apk to the root folder
+.move_apk: &move_apk
+  - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
+
+# Gets the version of the iOS app parsing the project files
+.getiosversion: &getiosversion
+  - export FASTLANE_DISABLE_COLORS=1
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
+  - echo "APPVERSION=$APPVERSION"
+
+# Build the QA iOS app for each MR and upload it to browserstack
+build:ios_mr:
+  <<: *prepare_build_ios
+  extends:
+    - .build_base
+    - .except_nightly
+    - .only_native
+  artifacts:
+    expire_in: 1 day
+    when: on_failure
+    public: false
+    paths:
+      - ios/ios-job.log
+  script:
+    - export ENVFILE=".env.review"
+    - fastlane buildrelease | tee -a ios-job.log
+    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
+    - cd ..
+    - !reference [.delete_browserstack, script]
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
+
+# Build iOS RC for develop branch
+build:ios_release_candidate:
+  <<: *prepare_build_ios
+  extends:
+    - .build_base
+    - .rule_automatic_develop_manual_master
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
+    - cd ..
+    - !reference [.delete_browserstack, script]
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
+
+# Build iOS for master branch
+build:ios_production:
+  <<: *prepare_build_ios
+  extends:
+    - .build_base
+    - .rule_automatic_nonpatch_manual_patch
+  script:
+    - *getiosversion
+    - fastlane buildrelease
+    - export TARGET_NAME=Minds-$APPVERSION.ipa
+    - cd ..
+    - !reference [.delete_browserstack, script]
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+
 # Build Android production Full Version (Higher version code)
 build:androidproduction:
   <<: *prepare_build_android
+  extends: .build_base
   script:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - !reference [.rule_nonpatch_release_success, rules]
+    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
     - if: $CI_COMMIT_BRANCH == "master"
       when: manual
     - if: $CI_COMMIT_BRANCH == "develop"
@@ -126,6 +129,7 @@ build:androidproduction:
 build:android_mr_production:
   <<: *prepare_build_android
   extends:
+    - .build_base
     - .except_nightly
     - .only_native
   variables:
@@ -151,12 +155,12 @@ build:android_mr_production:
 # Cleanup APK from merged MRs
 build:cleanup:
   extends:
+    - .build_base
     - .except_nightly
     - .only_native
   image: msantang78/ci-mobile-android:latest
   tags: [minds-ci]
   when: manual
-  stage: build
   variables:
     APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
     IPA_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.ipa'
@@ -179,7 +183,9 @@ build:cleanup:
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   <<: *prepare_build_android
-  extends: .rule_nonpatch_release
+  extends:
+    - .build_base
+    - .rule_automatic_nonpatch_manual_patch
   script:
     - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"

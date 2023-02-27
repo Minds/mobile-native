@@ -45,7 +45,7 @@ function Boost({ boost }: BoostProps) {
 const BoostEntity = ({ boost }: BoostProps) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const entity = boost.entity;
+  const { boost_status, entity } = boost ?? {};
 
   if (!entity) {
     return null;
@@ -58,6 +58,10 @@ const BoostEntity = ({ boost }: BoostProps) => {
         hideTabs={true}
         navigation={navigation}
         borderless
+        hideMetrics={
+          boost_status === BoostStatus.APPROVED ||
+          boost_status === BoostStatus.COMPLETED
+        }
       />
     ),
     user: () => {

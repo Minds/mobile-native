@@ -25,7 +25,15 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
-  // store
+  const { guid, entity_guid, type, text, urn } = entity ?? {};
+
+  const title = type === 'comment' ? '' : text;
+
+  const requestParams =
+    type === 'comment' ? `${entity_guid}?focusedCommentUrn=${urn}` : guid;
+
+  const sharedLink = `${MINDS_URI}newsfeed/${requestParams}`;
+
   const localStore = useLocalStore(() => ({
     menuShown: false,
     onPress() {
@@ -45,7 +53,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
       ref.current?.dismiss();
     },
     share() {
-      ShareService.share(entity.text, MINDS_URI + 'newsfeed/' + entity.guid);
+      ShareService.share(title, sharedLink);
     },
     async sendTo() {
       ref.current?.dismiss();
@@ -56,7 +64,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
         if (installed) {
           SendIntentAndroid.sendText({
             title: '',
-            text: MINDS_URI + 'newsfeed/' + entity.guid,
+            text: sharedLink,
             type: SendIntentAndroid.TEXT_PLAIN,
             package: ANDROID_CHAT_APP,
           });
