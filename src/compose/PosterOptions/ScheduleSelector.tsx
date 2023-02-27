@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
@@ -9,19 +9,13 @@ import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import { showNotification } from 'AppMessages';
 import DateTimePicker from '~/common/components/controls/DateTimePicker';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
-
-interface ScheduleSelectorProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'ScheduleSelector'> {}
 
 /**
  * NSFW selector
  */
-export default observer(function ({}: ScheduleSelectorProps) {
+export default observer(function () {
   const theme = ThemedStyles.style;
   const store = useComposeContext();
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
