@@ -12,15 +12,16 @@ import type CommentModel from './CommentModel';
 import type CommentsStore from './CommentsStore';
 import CommentBottomMenu from './CommentBottomMenu';
 import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
+import i18n from '~/common/services/i18n.service';
 import { useNavigation } from '@react-navigation/native';
 import ThumbAction from '../../newsfeed/activity/actions/ThumbAction';
-import MediaView from '../../common/components/MediaView';
+import MediaView from '~/common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
-import ReadMore from '../../common/components/ReadMore';
-import Translate from '../../common/components/translate/Translate';
-import MText from '../../common/components/MText';
+import ReadMore from '~/common/components/ReadMore';
+import Translate from '~/common/components/translate/Translate';
+import MText from '~/common/components/MText';
 import NavigationService from '~/navigation/NavigationService';
+import ShareAction from '~/newsfeed/activity/actions/ShareAction';
 
 type PropsType = {
   comment: CommentModel;
@@ -118,7 +119,7 @@ export default observer(function Comment(props: PropsType) {
       entity: props.store.entity,
       open: true,
     });
-  }, [navigation, props.comment, props.store.entity]);
+  }, [navigation, props.comment, props.store]);
 
   const viewReply = React.useCallback(() => {
     navigation.push('ReplyComment', {
@@ -184,6 +185,7 @@ export default observer(function Comment(props: PropsType) {
               size="tiny"
               touchableComponent={TouchableOpacity}
             />
+            <ShareAction entity={props.comment} />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
             {!props.isHeader && (

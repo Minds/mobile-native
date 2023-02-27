@@ -57,13 +57,20 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     });
   };
 
+  const estimatedReach = boostStore.insights?.views?.low
+    ? `${boostStore.insights?.views?.low?.toLocaleString()} - ${boostStore.insights?.views?.high?.toLocaleString()}`
+    : 'unknown';
+
   return (
     <Screen safe onlyTopEdge>
       <ScreenHeader title={title} back shadow />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
-          <B1 color="secondary">{t('Your estimated reach is unknown')}</B1>
+          <B1 color="secondary">
+            {t('Your estimated reach is ')}
+            {estimatedReach}
+          </B1>
         </Column>
 
         <HairlineRow />
