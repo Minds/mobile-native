@@ -222,6 +222,11 @@ const AppStack = observer(() => {
           getComponent={() => require('modules/boost').BoostConsoleScreen}
           options={hideHeader}
         />
+        <AppStackNav.Screen
+          name="SingleBoostConsole"
+          getComponent={() => require('modules/boost').SingleBoostConsoleScreen}
+          options={hideHeader}
+        />
       </AppStackNav.Navigator>
     </>
   );
