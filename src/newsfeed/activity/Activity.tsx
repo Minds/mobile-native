@@ -62,10 +62,6 @@ type PropsType = {
 /**
  * Activity
  */
-@observer
-@withAnalyticsContext<PropsType>(props =>
-  analyticsService.buildEntityContext(props.entity),
-)
 @withAnalyticsContext<PropsType>(props => {
   const feedStore = useFeedStore();
   const clientMetaContext =
@@ -73,8 +69,15 @@ type PropsType = {
     analyticsService.buildClientMetaContext(
       feedStore?.metadataService.getClientMetadata(props.entity),
     );
-  return clientMetaContext;
+
+  const contexts = [analyticsService.buildEntityContext(props.entity)];
+
+  if (clientMetaContext) {
+    contexts.push(clientMetaContext);
+  }
+  return contexts;
 })
+@observer
 export default class Activity extends Component<PropsType> {
   /**
    * Disposer for autoplay reaction

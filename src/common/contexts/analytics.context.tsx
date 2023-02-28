@@ -5,7 +5,7 @@ import analyticsService, { ClickRef } from '../services/analytics.service';
 const Context = createContext<EventContext[]>([]);
 
 interface AnalyticsProviderProps {
-  context?: EventContext | null;
+  context?: EventContext | EventContext[] | null;
 }
 
 export default function AnalyticsProvider({
@@ -14,11 +14,15 @@ export default function AnalyticsProvider({
 }: PropsWithChildren<AnalyticsProviderProps>) {
   const contexts = useAnalyticsContext();
 
-  return (
-    <Context.Provider value={context ? [...contexts, context] : contexts}>
-      {children}
-    </Context.Provider>
-  );
+  const newContexts = [...contexts];
+
+  if (Array.isArray(context)) {
+    newContexts.push(...context);
+  } else if (context) {
+    newContexts.push(context);
+  }
+
+  return <Context.Provider value={newContexts}>{children}</Context.Provider>;
 }
 
 export const useAnalyticsContext = () => useContext(Context);
@@ -33,7 +37,9 @@ export const useAnalytics = () => {
   };
 };
 export function withAnalyticsContext<T>(
-  contextResolver: (props: T) => EventContext | null | undefined,
+  contextResolver: (
+    props: T,
+  ) => EventContext | EventContext[] | null | undefined,
 ) {
   return (WrappedComponent: any) =>
     React.forwardRef((props: T, ref: React.Ref<T>) => (

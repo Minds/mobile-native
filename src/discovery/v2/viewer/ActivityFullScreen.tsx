@@ -379,18 +379,15 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 });
 
-export default withAnalyticsContext<PropsType>(props =>
+export default withAnalyticsContext<PropsType>(props => [
+  analyticsService.buildEntityContext(props.entity),
   analyticsService.buildClientMetaContext({
     medium: 'single',
     source: 'single',
     position: 1,
     campaign: props.entity?.boosted_guid ? props.entity.urn : undefined,
   }),
-)(
-  withAnalyticsContext<PropsType>(props =>
-    analyticsService.buildEntityContext(props.entity),
-  )(ActivityFullScreen),
-);
+])(ActivityFullScreen);
 
 /**
  * Styles
