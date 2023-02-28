@@ -15,6 +15,7 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { IS_IOS } from '~/config/Config';
 
 const height = 83;
 
@@ -102,13 +103,17 @@ function PosterOptions(props: PosterOptionsType) {
         label={String(tags.slice(0, 4).map(t => `#${t} `))}
         onPress={onTagPress}
       />
-      <MenuItem
-        title={i18n.t('nsfw.button')}
-        label={nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')}
-        onPress={onNsfwPress}
-        testID="nsfwButton"
-        noBorderTop
-      />
+      {IS_IOS ? null : (
+        <MenuItem
+          title={i18n.t('nsfw.button')}
+          label={
+            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
+          }
+          onPress={onNsfwPress}
+          testID="nsfwButton"
+          noBorderTop
+        />
+      )}
       {showSchedule && (
         <MenuItem
           title={i18n.t('capture.schedule')}
