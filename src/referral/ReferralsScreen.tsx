@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { navToTokens } from '../buy-tokens/BuyTokensScreen';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
@@ -36,11 +35,6 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
           theme.marginBottom,
         ]}>
         {i18n.t('referrals.description')}
-      </MText>
-      <MText
-        style={[theme.colorLink, theme.marginBottom4x]}
-        onPress={navToTokens}>
-        {i18n.t('wallet.learnMore.title')}
       </MText>
 
       <Input
