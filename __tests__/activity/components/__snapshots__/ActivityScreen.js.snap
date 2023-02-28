@@ -1711,7 +1711,10 @@ exports[`Activity screen component renders correctly  1`] = `
     autoOpen={false}
     commentsStore={
       CommentsStore {
-        "analyticContexts": Array [],
+        "analyticContexts": Array [
+          undefined,
+          undefined,
+        ],
         "attachment": AttachmentStore {
           "assetId": "",
           "cancelOrDelete": [Function],
