@@ -40,7 +40,7 @@ const BottomContent = (props: PropsType) => {
     if (!commentsStore.current) {
       commentsStore.current = new CommentsStore(
         props.entity,
-        analytics.getContexts(),
+        analytics.contexts,
       );
       // we force the render to shown the bottom sheet
       forceRender();

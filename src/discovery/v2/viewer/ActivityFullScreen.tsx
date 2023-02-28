@@ -105,7 +105,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const analytics = useAnalytics();
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(props.entity, analytics.getContexts()),
+    comments: new CommentsStore(props.entity, analytics.contexts),
     scrollViewHeight: 0,
     contentHeight: 0,
     onContentSizeChange(width, height) {

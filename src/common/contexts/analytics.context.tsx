@@ -29,7 +29,7 @@ export const useAnalytics = () => {
     trackClick: (ref: ClickRef) => {
       return analyticsService.trackClick(ref, analyticsContext);
     },
-    getContexts: () => analyticsContext,
+    contexts: analyticsContext,
   };
 };
 export function withAnalyticsContext<T>(
