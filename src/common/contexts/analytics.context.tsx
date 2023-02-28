@@ -4,14 +4,14 @@ import analyticsService, { ClickRef } from '../services/analytics.service';
 
 const Context = createContext<EventContext[]>([]);
 
-interface AnalyticsContextProps {
+interface AnalyticsProviderProps {
   context?: EventContext | null;
 }
 
-export default function AnalyticsContext({
+export default function AnalyticsProvider({
   context,
   children,
-}: PropsWithChildren<AnalyticsContextProps>) {
+}: PropsWithChildren<AnalyticsProviderProps>) {
   const contexts = useAnalyticsContext();
 
   return (
@@ -37,8 +37,8 @@ export function withAnalyticsContext<T>(
 ) {
   return (WrappedComponent: any) =>
     React.forwardRef((props: T, ref: React.Ref<T>) => (
-      <AnalyticsContext context={contextResolver(props)}>
+      <AnalyticsProvider context={contextResolver(props)}>
         <WrappedComponent {...props} ref={ref} />
-      </AnalyticsContext>
+      </AnalyticsProvider>
     )) as any;
 }
