@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconProps } from './IconProps';
 import { Adjust } from './icons/Adjust';
 import { Boost } from './icons/Boost';
@@ -110,14 +111,12 @@ export {
   VerifiedBadge,
   Wallet,
 };
+
 export type IconNames = keyof typeof icons;
-export function Icon({
+
+export const Icon = ({
   name,
   ...props
 }: IconProps & {
   name: IconNames;
-}) {
-  const Component = icons[name];
-  // eslint-disable-next-line react/react-in-jsx-scope
-  return <Component {...props} />;
-}
+}) => React.createElement(icons[name], { ...props });
