@@ -132,6 +132,8 @@ export const ButtonText = styled(SizableText, {
     },
     mode: {
       solid: {},
+      outline: {},
+      base: {},
     },
     type: (type, { props }) =>
       ({
