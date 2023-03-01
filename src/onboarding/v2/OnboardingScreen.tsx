@@ -27,6 +27,8 @@ import useOnboardingProgress, {
   OnboardingGroupState,
 } from './useOnboardingProgress';
 
+import { hasVariation } from 'ExperimentsProvider';
+
 type StepDefinition = {
   screen: string;
   title: string;
@@ -149,6 +151,15 @@ export default observer(function OnboardingScreen() {
     VerifyUniquenessStep: {
       title: i18n.t('onboarding.verifyUniqueness'),
       screen: 'VerifyUniqueness',
+      onPress: () => {
+        if (hasVariation('mob-4472-in-app-verification')) {
+          navigation.navigate('InAppVerification');
+        } else {
+          navigation.navigate('VerifyUniqueness', {
+            mode: 'text',
+          });
+        }
+      },
     },
     SuggestedChannelsStep: {
       title: i18n.t('onboarding.subscribeToChannel'),
