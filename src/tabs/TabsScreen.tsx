@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -30,6 +30,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
+import { pushBottomSheet } from '../common/components/bottom-sheet';
+import ComposeCreateScreen from '../compose/ComposeCreateScreen';
+import { storages } from '../common/services/storage/storages.service';
+import { triggerHaptic } from '../common/services/haptic.service';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -146,6 +150,15 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   );
 };
 
+const navigateToComposeCreate = () =>
+  pushBottomSheet({
+    component: (bottomSheetRef, handleContentLayout) => (
+      <View onLayout={handleContentLayout}>
+        <ComposeCreateScreen />
+      </View>
+    ),
+  });
+
 /**
  * Main tabs
  * @param {Object} props
@@ -153,14 +166,18 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToCapture = useCallback(() => navigation.push('Compose'), [
-    navigation,
-  ]);
+  const handleComposePress = () => {
+    if (storages.user?.getBool('compose:create')) {
+      return navigation.push('Compose');
+    }
 
-  const navToVideoCapture = useCallback(
-    () => navigation.push('Capture', { mode: 'video', start: true }),
-    [navigation],
-  );
+    navigateToComposeCreate();
+  };
+
+  const handleComposeLongPress = () => {
+    triggerHaptic();
+    navigateToComposeCreate();
+  };
 
   return (
     <View style={theme.flexContainer}>
@@ -189,8 +206,9 @@ const Tabs = observer(function ({ navigation }) {
             tabBarButton: props => (
               <DoubleTapSafeTouchable
                 {...props}
-                onPress={navToCapture}
-                onLongPress={navToVideoCapture}
+                onPress={handleComposePress}
+                onLongPress={handleComposeLongPress}
+                delayLongPress={200}
                 testID="CaptureTouchableButton"
               />
             ),

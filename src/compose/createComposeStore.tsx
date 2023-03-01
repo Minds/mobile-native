@@ -12,7 +12,7 @@ import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Image, Platform } from 'react-native';
+import { Image, InteractionManager, Platform } from 'react-native';
 import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
@@ -20,10 +20,10 @@ import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
-import { confirm } from '../common/components/Confirm';
 import { storeRatingService } from 'modules/store-rating';
 import { PickedMedia } from '~/common/services/image-picker.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
+import { hasVariation } from '../../ExperimentsProvider';
 
 /**
  * Display an error message to the user.
@@ -73,6 +73,7 @@ export default function (props) {
     extra: null,
     posting: false,
     group: null,
+    boost: null,
     postToPermaweb: false,
     initialized: false,
     /**
@@ -141,6 +142,8 @@ export default function (props) {
         this.openSupermindModal(channel ? { channel } : undefined, true);
       }
 
+      this.boost = params.boost;
+
       // clear params to avoid repetition
       props.navigation.setParams({
         group: undefined,
@@ -174,6 +177,19 @@ export default function (props) {
 
       this.onSaveCallback?.(entity);
       popToTop();
+
+      if (this.boost) {
+        InteractionManager.runAfterInteractions(() => {
+          NavigationService.navigate(
+            hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
+            {
+              entity: entity,
+              boostType: 'post',
+            },
+          );
+        });
+      }
+
       this.clear(false);
 
       if (!isEdit) {
@@ -402,6 +418,7 @@ export default function (props) {
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
       this.group = null;
+      this.boost = null;
       this.postToPermaweb = false;
     },
     /**

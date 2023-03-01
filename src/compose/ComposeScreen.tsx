@@ -36,10 +36,20 @@ import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigation/NavigationTypes';
+import ActivityModel from '../newsfeed/ActivityModel';
+import GroupModel from '../groups/GroupModel';
 
 const { width } = Dimensions.get('window');
 
 type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
+export type ComposeScreenParams = {
+  openSupermindModal?: boolean;
+  isRemind?: boolean;
+  entity?: ActivityModel;
+  group?: GroupModel;
+  parentKey?: string;
+  boost?: boolean;
+};
 
 /**
  * Compose Screen

@@ -21,6 +21,7 @@ export type MenuItemProps = {
   titleStyle?: StyleProp<TextStyle>;
   subtitle?: string;
   icon?: IconMapNameType | ReactNode;
+  leftIcon?: IconMapNameType | ReactNode;
   iconSize?: IIconSize;
   iconColor?: IIconColor;
   borderless?: boolean;
@@ -42,6 +43,7 @@ export default function ({
   subtitle,
   onPress,
   icon,
+  leftIcon,
   iconSize,
   iconColor,
   avatar,
@@ -104,11 +106,20 @@ export default function ({
 
     return icon;
   }, [icon, iconColor, iconSize, onPress]);
-  const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
+  const shouldRenderIcon = !noIcon;
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
       {avatar && <FastImage source={avatar} style={styles.avatar} />}
+      {leftIcon && (
+        <View style={styles.leftIcon}>
+          <Icon
+            name={leftIcon as IconMapNameType}
+            size={iconSize}
+            color={iconColor}
+          />
+        </View>
+      )}
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>
       )}
