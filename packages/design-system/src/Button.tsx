@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { TamaguiElement, styled, themeable } from '@tamagui/core';
 import { YStack } from '@tamagui/stacks';
 import { SizableText } from '@tamagui/text';
@@ -51,6 +51,10 @@ export const ButtonFrame = styled(YStack, {
         borderWidth: 1,
         borderColor: 'transparent',
       },
+      simple: {
+        backgroundColor: 'transparent',
+        borderWidth: 0,
+      },
     },
     type: {
       primary: {
@@ -102,6 +106,17 @@ export const ButtonFrame = styled(YStack, {
         hoverStyle: {
           backgroundColor: '$backgroundHoverWarning',
           borderColor: '$borderColorHoverWarning',
+        },
+      },
+      basic: {
+        focusStyle: {
+          backgroundColor: '$backgroundFocusBasic',
+        },
+        pressStyle: {
+          backgroundColor: '$backgroundPressBasic',
+        },
+        hoverStyle: {
+          backgroundColor: '$backgroundHoverBasic',
         },
       },
     },

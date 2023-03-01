@@ -11,7 +11,7 @@ export function IconButtonsScreen(): JSX.Element {
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
-        <Text size={'$h3'}>Default size</Text>
+        <Text size={'$h3'}>IconButtons</Text>
         <Stack f={1} fw={'wrap'} br={'$4'} mt="$2" fd="row">
           {Object.keys(icons).map(key => (
             <IconButton key={key} name={key as IconNames} />

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FunctionComponent, useContext } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import { getButtonSized } from '@tamagui/get-button-sized';
 import {
   ButtonNestingContext,
