@@ -25,6 +25,14 @@ export const ButtonFrame = styled(YStack, {
       l: (_, extra) => getButtonStyle('$4', extra),
       m: (_, extra) => getButtonStyle('$3.5', extra),
       s: (_, extra) => getButtonStyle('$3', extra),
+      xs: (_, extra) => getButtonStyle('$2.5', extra),
+    },
+    circular: {
+      true: {
+        size: '$2.5',
+        width: '$2.5',
+        paddingHorizontal: '$0',
+      },
     },
     disabled: {
       true: {

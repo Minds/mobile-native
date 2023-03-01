@@ -76,7 +76,6 @@ export function getButtonStyle(
   variants: VariantSpreadExtras<any>,
 ): ReturnType<typeof getButtonSized> {
   const style = getButtonSized(val, variants);
-  style.borderRadius = 10000; //round buttons
   return style;
 }
 
