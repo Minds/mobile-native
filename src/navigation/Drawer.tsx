@@ -21,7 +21,7 @@ import {
 // import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
-import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
@@ -134,6 +134,15 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('Settings');
       },
     },
+    hasVariation('mob-4472-in-app-verification')
+      ? {
+          name: 'Verify account',
+          icon: 'group',
+          onPress: async () => {
+            navigation.navigate('InAppVerification');
+          },
+        }
+      : null,
   ];
 
   return list;
