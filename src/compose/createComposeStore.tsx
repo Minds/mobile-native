@@ -24,6 +24,8 @@ import { storeRatingService } from 'modules/store-rating';
 import { PickedMedia } from '~/common/services/image-picker.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
 import { hasVariation } from '../../ExperimentsProvider';
+import type GroupModel from '../groups/GroupModel';
+import type { SupportTiersType } from '../wire/WireTypes';
 
 /**
  * Display an error message to the user.
@@ -36,6 +38,13 @@ const showError = message => {
 const DEFAULT_MONETIZE = {
   type: 'tokens',
   min: 0,
+};
+
+export type ComposeAudience = {
+  type: 'public' | 'plus' | 'membership' | 'group';
+  value?: string;
+  tier?: SupportTiersType;
+  group?: GroupModel;
 };
 
 /**
@@ -76,6 +85,7 @@ export default function (props) {
     boost: null,
     postToPermaweb: false,
     initialized: false,
+    audience: { type: 'public' } as ComposeAudience,
     /**
      * the supermind request that is built from the SupermindComposeScreen
      */
@@ -155,6 +165,16 @@ export default function (props) {
         portrait: undefined,
         noText: undefined,
       });
+    },
+    // sets audience to a default value based on entity
+    initAudience() {
+      // TODO:
+    },
+    setAudience(audience: ComposeAudience) {
+      this.audience = audience;
+    },
+    setGroup(group: GroupModel) {
+      this.group = group;
     },
     setScrollOffset(value: number) {
       this.scrollOffset = value;

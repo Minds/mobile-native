@@ -25,7 +25,7 @@ import { Row, Spacer } from '../layout';
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
   type?: 'base' | 'action' | 'warning';
-  size?: 'large' | 'medium' | 'small' | 'tiny';
+  size?: 'large' | 'medium' | 'small' | 'tiny' | 'pill';
   font?: 'regular' | 'medium';
   align?: 'start' | 'end' | 'stretch' | 'center';
   spinner?: boolean;
@@ -363,6 +363,9 @@ const styles = ThemedStyles.create({
   },
   tiny: {
     ...COMMON_BUTTON_STYLES.TINY,
+  },
+  pill: {
+    ...COMMON_BUTTON_STYLES.PILL,
   },
   flat: {
     borderColor: 'transparent',

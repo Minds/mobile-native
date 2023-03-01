@@ -89,4 +89,6 @@ class SupportTiersService {
   }
 }
 
-export default new SupportTiersService();
+const supportTiersService = new SupportTiersService();
+
+export default supportTiersService;

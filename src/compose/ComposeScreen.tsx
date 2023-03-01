@@ -14,7 +14,6 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { IconButtonNext } from '~ui/icons';
 import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import MetaPreview from './MetaPreview';
@@ -22,7 +21,7 @@ import TitleInput from './TitleInput';
 import NavigationService from '../navigation/NavigationService';
 import RemindPreview from './RemindPreview';
 import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
-import TopBar from './TopBar';
+import ComposeTopBar from './ComposeTopBar';
 import BottomBar from './ComposeBottomBar';
 import MediaPreview from './MediaPreview';
 import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
@@ -30,8 +29,6 @@ import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import sessionService from '~/common/services/session.service';
 import useComposeStore, { ComposeContext } from './useComposeStore';
-import SupermindLabel from '../common/components/supermind/SupermindLabel';
-import { confirm } from '~/common/components/Confirm';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -76,32 +73,6 @@ export default observer(function ComposeScreen(props: ScreenProps) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   // ### methods
-  const onPressPost = useCallback(async () => {
-    if (store.attachments.uploading) {
-      return;
-    }
-    const { channel: targetChannel, payment_options } =
-      store.supermindRequest ?? {};
-
-    if (
-      targetChannel?.name &&
-      payment_options?.amount &&
-      !(await confirm({
-        title: i18n.t('supermind.confirmNoRefund.title'),
-        description: i18n.t('supermind.confirmNoRefund.offerDescription'),
-      }))
-    ) {
-      return;
-    }
-
-    const isEdit = store.isEdit;
-    const entity = await store.submit();
-
-    if (entity) {
-      store.onPost(entity, isEdit);
-    }
-  }, [store]);
-
   const discard = useCallback(() => {
     store.clear();
     NavigationService.goBack();
@@ -173,35 +144,10 @@ export default observer(function ComposeScreen(props: ScreenProps) {
     }, [onPressBack]),
   );
 
-  const rightButton = store.isEdit ? (
-    i18n.t('save')
-  ) : (
-    <IconButtonNext
-      name="send"
-      size="medium"
-      scale
-      onPress={onPressPost}
-      disabled={!store.isValid}
-      color={store.isValid ? 'Link' : 'Icon'}
-      style={store.attachments.uploading ? theme.opacity25 : null}
-    />
-  );
-
   return (
     <ComposeContext.Provider value={store}>
       <SafeAreaView style={styles.container}>
-        <TopBar
-          containerStyle={theme.paddingLeft}
-          rightText={rightButton}
-          leftComponent={
-            (store.supermindRequest || store.isSupermindReply) && (
-              <SupermindLabel />
-            )
-          }
-          onPressRight={onPressPost}
-          onPressBack={onPressBack}
-          store={store}
-        />
+        <ComposeTopBar store={store} onPressBack={onPressBack} />
         <ScrollView
           ref={scrollViewRef}
           keyboardShouldPersistTaps={'always'}

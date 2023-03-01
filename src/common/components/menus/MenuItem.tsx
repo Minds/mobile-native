@@ -35,6 +35,7 @@ export type MenuItemProps = {
    */
   multiLine?: boolean;
   reversedIcon?: boolean;
+  avatarSize?: number;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -54,6 +55,7 @@ export default function ({
   titleStyle,
   multiLine,
   reversedIcon,
+  avatarSize,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -106,11 +108,24 @@ export default function ({
 
     return icon;
   }, [icon, iconColor, iconSize, onPress]);
+
+  const avatarStyle = useMemoStyle(() => {
+    const avatarStyles = [styles.avatar];
+    if (avatarSize) {
+      avatarStyles.push({
+        width: avatarSize,
+        height: avatarSize,
+        borderRadius: avatarSize / 2,
+      });
+    }
+    return avatarStyles;
+  }, [avatarSize]);
+
   const shouldRenderIcon = !noIcon;
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
-      {avatar && <FastImage source={avatar} style={styles.avatar} />}
+      {avatar && <FastImage source={avatar} style={avatarStyle} />}
       {leftIcon && (
         <View style={styles.leftIcon}>
           <Icon
