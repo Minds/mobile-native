@@ -1,4 +1,3 @@
-import React from 'react';
 import { TamaguiProvider, TamaguiProviderProps } from '@tamagui/core';
 import config from './tamagui.config';
 import { useFontsLoaded } from './config/fonts';

@@ -84,6 +84,10 @@ export const radius = {
   7: 19,
   8: 22,
   9: 26,
+  $true: 1000,
+  $3: 1000,
+  $4: 1000,
+  $5: 1000,
 };
 
 export const tokens = createTokens({

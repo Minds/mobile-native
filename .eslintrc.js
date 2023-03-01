@@ -6,4 +6,7 @@ module.exports = {
   globals: {
     JSX: 'readonly',
   },
+  rules: {
+    'react/react-in-jsx-scope': 'off',
+  },
 };
