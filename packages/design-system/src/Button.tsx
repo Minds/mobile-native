@@ -32,14 +32,13 @@ export const ButtonFrame = styled(YStack, {
         opacity: 0.5,
       },
     },
-    outline: {
-      true: {
+    mode: {
+      solid: {},
+      outline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
       },
-    },
-    base: {
-      true: {
+      base: {
         backgroundColor: 'transparent',
         borderWidth: 1,
         borderColor: 'transparent',
@@ -102,6 +101,7 @@ export const ButtonFrame = styled(YStack, {
 
   defaultVariants: {
     type: 'primary',
+    mode: 'solid',
     sSize: 'm',
   },
 });
@@ -130,21 +130,29 @@ export const ButtonText = styled(SizableText, {
         size: '$3',
       },
     },
-    type: {
-      primary: {
-        color: '$colorPrimary',
-      },
-      secondary: {
-        color: '$colorSecondary',
-      },
-      warning: {
-        color: '$colorWarning',
-      },
+    mode: {
+      solid: {},
     },
+    type: (type, { props }) =>
+      ({
+        primary: {
+          color:
+            props['mode'] === 'solid'
+              ? '$colorPrimaryInverted'
+              : '$colorPrimary',
+        },
+        secondary: {
+          color: '$colorSecondary',
+        },
+        warning: {
+          color: '$colorWarning',
+        },
+      }[type]),
   } as const,
   defaultVariants: {
     sSize: 'm',
     type: 'primary',
+    mode: 'solid',
   },
 });
 
