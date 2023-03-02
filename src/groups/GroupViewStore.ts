@@ -1,9 +1,6 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 
 import groupsService from './GroupsService';
-
-import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
 import ActivityModel from '../newsfeed/ActivityModel';
@@ -11,6 +8,7 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
+import { InjectItem } from '../common/components/FeedList';
 
 /**
  * Groups store
@@ -19,7 +17,7 @@ class GroupViewStore {
   /**
    * Top members (used to display avatars on top)
    */
-  @observable topMembers = [];
+  @observable topMembers: UserModel[] = [];
   @observable showPosterFab = true;
 
   /**
@@ -32,12 +30,14 @@ class GroupViewStore {
    */
   feed = new FeedStore(true);
 
+  list = new OffsetListStore();
+
   /**
    * Group
    *
    * (Used a ref observable to keep the same object of the list)
    */
-  @observable.ref group = null;
+  @observable.ref group?: GroupModel;
 
   /**
    * Selected tab
@@ -65,9 +65,10 @@ class GroupViewStore {
   @observable search = '';
 
   guid = '';
+  memberSearch = '';
 
   constructor() {
-    this.feed.getMetadataService().setSource('feed/groups').setMedium('feed');
+    this.feed.getMetadataService()?.setSource('feed/groups').setMedium('feed');
   }
 
   /**
@@ -99,6 +100,10 @@ class GroupViewStore {
    * Load feed
    */
   async loadFeed() {
+    if (!this.group) {
+      return;
+    }
+
     await this.feed
       .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
       .setLimit(12)
@@ -107,9 +112,13 @@ class GroupViewStore {
   }
 
   setEntitiesContainerObj() {
-    this.feed.entities.forEach(
-      (activity: ActivityModel) => (activity.containerObj = this.group),
-    );
+    this.feed.entities.forEach(activity => {
+      if (activity instanceof InjectItem) {
+        return;
+      }
+
+      activity.containerObj = this.group;
+    });
   }
 
   /**
@@ -141,7 +150,7 @@ class GroupViewStore {
 
   @action
   async loadTopMembers() {
-    const data = await groupsService.loadMembers(this.guid, '', 6);
+    const data: any = await groupsService.loadMembers(this.guid, '', 6);
     this.topMembers = UserModel.createMany(data.members);
   }
 
@@ -165,7 +174,7 @@ class GroupViewStore {
       : groupsService.loadMembers(this.guid, this.members.offset);
 
     try {
-      const data = await serviceFetch;
+      const data: any = await serviceFetch;
       data.entities = UserModel.createMany(data.members);
       data.offset = data['load-next'];
       this.members.setList(data);
@@ -187,7 +196,7 @@ class GroupViewStore {
       GroupModel.checkOrCreate(defaultGroup),
     );
     this.setGroup(group);
-    this.feed.viewed.clearViewed();
+    this.feed.viewStore.clearViewed();
     return group;
   }
 
@@ -210,9 +219,13 @@ class GroupViewStore {
    * @param {object} user
    */
   async kick(user) {
-    const result = await groupsService.kick(this.group.guid, user.guid);
-    if (!!result.done) {
-      this.members.entities.remove(user);
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.kick(this.group.guid, user.guid);
+    if (result.done) {
+      this.members.remove(user);
     }
   }
 
@@ -221,9 +234,13 @@ class GroupViewStore {
    * @param {object} user
    */
   async ban(user) {
-    const result = await groupsService.ban(this.group.guid, user.guid);
-    if (!!result.done) {
-      this.members.entities.remove(user);
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.ban(this.group.guid, user.guid);
+    if (result.done) {
+      this.members.remove(user);
     }
   }
 
@@ -232,11 +249,15 @@ class GroupViewStore {
    * @param {object} user
    */
   async makeModerator(user) {
-    const result = await groupsService.makeModerator(
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.makeModerator(
       this.group.guid,
       user.guid,
     );
-    if (!!result.done) {
+    if (result.done) {
       user['is:moderator'] = true;
     }
   }
@@ -246,11 +267,15 @@ class GroupViewStore {
    * @param {object} user
    */
   async revokeModerator(user) {
-    const result = await groupsService.revokeModerator(
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.revokeModerator(
       this.group.guid,
       user.guid,
     );
-    if (!!result.done) {
+    if (result.done) {
       user['is:moderator'] = false;
     }
   }
@@ -260,8 +285,15 @@ class GroupViewStore {
    * @param {object} user
    */
   async makeOwner(user) {
-    const result = await groupsService.makeOwner(this.group.guid, user.guid);
-    if (!!result.done) {
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.makeOwner(
+      this.group.guid,
+      user.guid,
+    );
+    if (result.done) {
       user['is:owner'] = true;
     }
   }
@@ -271,8 +303,15 @@ class GroupViewStore {
    * @param {object} user
    */
   async revokeOwner(user) {
-    const result = await groupsService.revokeOwner(this.group.guid, user.guid);
-    if (!!result.done) {
+    if (!this.group) {
+      return;
+    }
+
+    const result: any = await groupsService.revokeOwner(
+      this.group.guid,
+      user.guid,
+    );
+    if (result.done) {
       user['is:owner'] = false;
     }
   }
@@ -281,14 +320,14 @@ class GroupViewStore {
    * Join group
    */
   join = () => {
-    return this.group.join();
+    return this.group?.join();
   };
 
   /**
    * Leave group
    */
   leave = () => {
-    return this.group.leave();
+    return this.group?.leave();
   };
 
   /**
@@ -317,11 +356,9 @@ class GroupViewStore {
    */
   @action
   clear() {
-    // this.list.clearList();
-    this.comments = null;
     this.feed.clear();
     this.members.clearList();
-    this.group = null;
+    this.group = undefined;
     this.tab = 'feed';
     this.search = '';
     this.showSearch = false;
@@ -353,7 +390,7 @@ class GroupViewStore {
   @action
   refresh() {
     this.list.refresh();
-    this.loadFeed(this.guid).finally(() => {
+    this.loadFeed().finally(() => {
       this.list.refreshDone();
     });
   }
@@ -364,16 +401,16 @@ class GroupViewStore {
   @action
   memberRefresh() {
     this.members.refresh();
-    this.loadMembers(this.guid).finally(() => {
+    this.loadMembers().finally(() => {
       this.members.refreshDone();
     });
   }
 
   @action
   reset() {
-    this.list = new OffsetFeedListStore();
+    this.list = new OffsetListStore();
     this.members = new OffsetListStore('shallow');
-    this.group = null;
+    this.group = undefined;
     this.tab = 'feed';
     this.topMembers = [];
     this.search = '';

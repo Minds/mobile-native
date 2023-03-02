@@ -1,17 +1,11 @@
-import 'react-native';
-import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
-
+import React from 'react';
+import 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
-
-import renderer from 'react-test-renderer';
-import ThumbUpAction from '../../../../src/newsfeed/activity/actions/ThumbUpAction';
-
-import withPreventDoubleTap from '../../../../src/common/components/PreventDoubleTap';
-import featuresService from '../../../../src/common/services/features.service';
-import UserStore from '../../../../src/auth/UserStore';
 import ActivityModel from '../../../../src/newsfeed/ActivityModel';
+import ThumbUpAction from '../../../../src/newsfeed/activity/actions/ThumbAction';
+
 jest.mock('../../../../src/auth/UserStore');
 
 describe('Thumb action component', () => {
@@ -25,7 +19,9 @@ describe('Thumb action component', () => {
     entity = ActivityModel.create(activityResponse.activities[0]);
     entity.can = jest.fn(() => true);
 
-    screen = shallow(<ThumbUpAction entity={entity} navigation={navigation} />);
+    screen = shallow(
+      <ThumbUpAction direction="up" entity={entity} navigation={navigation} />,
+    );
   });
 
   it('renders correctly', async () => {
@@ -45,7 +41,9 @@ describe('Thumb action component', () => {
 
     entity.toggleVote = jest.fn();
 
-    screen = shallow(<ThumbUpAction entity={entity} navigation={navigation} />);
+    screen = shallow(
+      <ThumbUpAction direction="up" entity={entity} navigation={navigation} />,
+    );
     screen.update();
     let touchables = screen.find('preventDoubleTap(PressableScale)');
     touchables.at(0).props().onPress();

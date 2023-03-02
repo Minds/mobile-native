@@ -17,6 +17,7 @@ import {
   BottomSheetModal,
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
+import { useAnalytics } from '~/common/contexts/analytics.context';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,6 +26,7 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
+  const analytics = useAnalytics();
   const { guid, entity_guid, type, text, urn } = entity ?? {};
 
   const title = type === 'comment' ? '' : text;
@@ -38,6 +40,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
     menuShown: false,
     onPress() {
       if (Platform.OS === 'ios') {
+        analytics.trackClick('share');
         localStore.share();
       } else {
         if (!localStore.menuShown) {
@@ -53,9 +56,11 @@ export default observer(function ShareAction({ entity }: PropsType) {
       ref.current?.dismiss();
     },
     share() {
+      analytics.trackClick('share');
       ShareService.share(title, sharedLink);
     },
     async sendTo() {
+      analytics.trackClick('sendTo');
       ref.current?.dismiss();
       try {
         const installed = await SendIntentAndroid.isAppInstalled(
