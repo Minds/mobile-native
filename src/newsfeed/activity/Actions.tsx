@@ -4,8 +4,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 
 import { observer } from 'mobx-react';
 
-import ThumbUpAction from './actions/ThumbUpAction';
-import ThumbDownAction from './actions/ThumbDownAction';
+import ThumbAction from './actions/ThumbAction';
 import WireAction from './actions/WireAction';
 import CommentsAction from './actions/CommentsAction';
 import RemindAction from './actions/RemindAction';
@@ -43,8 +42,18 @@ export const Actions = observer((props: PropsType) => {
     <View>
       {entity && (
         <View style={containerStyle}>
-          <ThumbUpAction entity={entity} hideCount={props.hideCount} />
-          <ThumbDownAction entity={entity} hideCount={props.hideCount} />
+          <ThumbAction
+            direction="up"
+            entity={entity}
+            voted={entity.votedUp}
+            hideCount={props.hideCount}
+          />
+          <ThumbAction
+            direction="down"
+            entity={entity}
+            voted={entity.votedDown}
+            hideCount={props.hideCount}
+          />
           <CommentsAction
             // hideCount={props.hideCount}
             entity={entity}

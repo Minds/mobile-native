@@ -57,14 +57,17 @@ const Stack = createStackNavigator();
 
 const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
-  const { comment, entity, open } = route.params ?? {};
+  const { comment, entity, open, parentCommentsStore } = route.params ?? {};
 
   useBackHandler(() => {
     navigation.goBack();
     return true;
   });
   const store = React.useMemo(() => {
-    const commentStore = new CommentsStore(entity);
+    const commentStore = new CommentsStore(
+      entity,
+      parentCommentsStore?.getAnalyticContexts(),
+    );
     commentStore.setParent(comment);
     return commentStore;
   }, [comment, entity]);
@@ -215,7 +218,10 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
           <Stack.Screen
             name="ReplyComment"
             component={ScreenReplyComment}
-            initialParams={{ focusedCommentUrn }}
+            initialParams={{
+              focusedCommentUrn,
+              parentCommentsStore: props.commentsStore,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

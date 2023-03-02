@@ -12,8 +12,8 @@ import { Provider } from 'mobx-react';
 
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 jest.mock(
-  '../../../src/newsfeed/activity/actions/ThumbUpAction',
-  () => 'ThumbUpAction',
+  '../../../src/newsfeed/activity/actions/ThumbAction',
+  () => 'ThumbAction',
 );
 jest.mock(
   '../../../src/newsfeed/activity/actions/WireAction',
@@ -28,10 +28,6 @@ jest.mock('../../../src/common/services/features.service');
 jest.mock(
   '../../../src/newsfeed/activity/actions/RemindAction',
   () => 'RemindAction',
-);
-jest.mock(
-  '../../../src/newsfeed/activity/actions/ThumbDownAction',
-  () => 'ThumbDownAction',
 );
 
 xdescribe('Activity component', () => {
@@ -62,8 +58,7 @@ xdescribe('Activity component', () => {
     screen.update();
 
     // expect(screen.find('WireAction')).toHaveLength(1);
-    expect(screen.find('ThumbUpAction')).toHaveLength(1);
-    expect(screen.find('ThumbDownAction')).toHaveLength(1);
+    expect(screen.find('ThumbAction')).toHaveLength(2);
     expect(screen.find('CommentsAction')).toHaveLength(1);
     expect(screen.find('RemindAction')).toHaveLength(1);
   });
