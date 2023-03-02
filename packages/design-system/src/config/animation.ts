@@ -1,4 +1,4 @@
-import { createAnimations } from '@tamagui/animations-react-native';
+import { createAnimations } from '@tamagui/animations-reanimated';
 
 export const animations = createAnimations({
   bouncy: {
@@ -22,6 +22,10 @@ export const animations = createAnimations({
     damping: 20,
     mass: 1.2,
     stiffness: 250,
+  },
+  quickTime: {
+    type: 'timing',
+    duration: 150,
   },
   tooltip: {
     type: 'spring',
