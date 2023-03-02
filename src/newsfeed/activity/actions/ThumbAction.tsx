@@ -1,29 +1,78 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { Icon } from '~ui/icons';
-// import withClass from '~ui/withClass';
-import { UISizing } from '~styles/Tokens';
-// import { frameThrower } from '~ui/helpers';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
-import { FLAG_VOTE } from '../../../common/Permissions';
-import remoteAction from '../../../common/RemoteAction';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { actionsContainerStyle, actionsContainerWrapper } from './styles';
+import React from 'react';
+import { View } from 'react-native';
 import PressableScale from '~/common/components/PressableScale';
 import { IconMapNameType } from '~/common/ui/icons/map';
+import { UISizing } from '~styles/Tokens';
+import { Icon } from '~ui/icons';
+import { FLAG_VOTE } from '../../../common/Permissions';
+import remoteAction from '../../../common/RemoteAction';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import { useAnalytics } from '~/common/contexts/analytics.context';
+import type ActivityModel from '../../ActivityModel';
 import EntityCounter from './EntityCounter';
+import { actionsContainerStyle, actionsContainerWrapper } from './styles';
+
+export interface ThumbProps {
+  direction: 'up' | 'down';
+  entity: ActivityModel;
+  voted?: boolean;
+  size?: UISizing | string;
+  hideCount?: boolean;
+  touchableComponent?: React.ComponentClass;
+}
+
+const ThumbAction = ({
+  direction = 'up',
+  size = '21',
+  ...props
+}: ThumbProps) => {
+  const entity = props.entity;
+  const canVote = entity.can(FLAG_VOTE);
+  const Touchable = props.touchableComponent || PressableScaleCustom;
+  const voted = !!props.voted;
+  const analytics = useAnalytics();
+
+  const toggleThumb = async () => {
+    if (!entity.can(FLAG_VOTE, true)) {
+      return;
+    }
+
+    remoteAction(() => {
+      return entity.toggleVote(direction).then(() => {
+        analytics.trackClick(`vote:${direction}`);
+      });
+    });
+  };
+
+  return (
+    <Touchable
+      style={actionsContainerStyle}
+      onPress={toggleThumb}
+      testID={`Thumb ${direction} activity button`}>
+      <View style={actionsContainerWrapper}>
+        <AnimatedThumb
+          canVote={canVote}
+          voted={voted}
+          size={size}
+          name={`thumb-${direction}`}
+          down={direction !== 'up'}
+        />
+        {!props.hideCount && (
+          <EntityCounter
+            entity={entity}
+            countProperty={`thumbs:${direction}:count`}
+          />
+        )}
+      </View>
+    </Touchable>
+  );
+};
+
+export default observer(ThumbAction);
 
 // prevent double tap in touchable
 const PressableScaleCustom = withPreventDoubleTap(PressableScale);
-
-type PropsType = {
-  entity: ActivityModel;
-  size: string;
-  hideCount?: boolean;
-  orientation: 'column' | 'row';
-  touchableComponent?: React.ComponentClass;
-};
 
 // const AnimatedIcon: any = motify(withClass(Icon))();
 
@@ -119,78 +168,3 @@ const AnimatedThumb = ({
 
   return <Icon active={active} disabled={disabled} name={name} size={size} />;
 };
-
-/**
- * Thumb Up Action Component
- */
-@observer
-class ThumbUpAction extends Component<PropsType> {
-  /**
-   * Default Props
-   */
-  static defaultProps = {
-    size: 21,
-    orientation: 'row',
-  };
-
-  /**
-   * Thumb direction
-   */
-  direction: 'up' | 'down' = 'up';
-
-  /**
-   * Action Icon
-   */
-  iconName: IconMapNameType = 'thumb-up';
-
-  /**
-   * Render
-   */
-  render() {
-    const entity = this.props.entity;
-    const canVote = entity.can(FLAG_VOTE);
-    const Touchable = this.props.touchableComponent || PressableScaleCustom;
-
-    return (
-      <Touchable
-        style={actionsContainerStyle}
-        onPress={this.toggleThumb}
-        testID={`Thumb ${this.direction} activity button`}>
-        <View style={actionsContainerWrapper}>
-          <AnimatedThumb
-            canVote={canVote}
-            voted={this.voted}
-            size={this.props.size}
-            name={this.iconName}
-            down={this.direction !== 'up'}
-          />
-          {!this.props.hideCount ? (
-            <EntityCounter
-              entity={entity}
-              countProperty={`thumbs:${this.direction}:count`}
-            />
-          ) : undefined}
-        </View>
-      </Touchable>
-    );
-  }
-
-  get voted() {
-    return this.props.entity.votedUp;
-  }
-
-  /**
-   * Toggle thumb
-   */
-  toggleThumb = async () => {
-    if (!this.props.entity.can(FLAG_VOTE, true)) {
-      return;
-    }
-
-    remoteAction(() => {
-      return this.props.entity.toggleVote(this.direction);
-    });
-  };
-}
-
-export default ThumbUpAction;

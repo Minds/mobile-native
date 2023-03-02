@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
-import Viewed from '../common/stores/Viewed';
+import ViewStore from '../common/stores/ViewStore';
 import MetadataService from '../common/services/metadata.service';
 import PortraitPaginator from './PortraitPaginator';
 import { PortraitBarItem } from './createPortraitStore';
@@ -31,7 +31,7 @@ const UserContentSwiper = observer((props: PropsType) => {
 
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
-    viewed: new Viewed(),
+    viewStore: new ViewStore(),
     setIndex(v) {
       if (v < 0 || v >= activities.length) {
         return;
@@ -39,7 +39,7 @@ const UserContentSwiper = observer((props: PropsType) => {
       store.index = v;
       portraitContentService.seen(activities[store.index].urn);
       activities[store.index].seen = true;
-      store.viewed.addViewed(
+      store.viewStore.view(
         activities[store.index],
         metadataService,
         'portrait',
@@ -57,7 +57,7 @@ const UserContentSwiper = observer((props: PropsType) => {
   );
 
   useCarouselFocusEffect(() => {
-    store.viewed.addViewed(
+    store.viewStore.view(
       activities[store.index],
       metadataService,
       'portrait',

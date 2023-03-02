@@ -40,7 +40,7 @@ exports[`Thumb action component renders correctly 1`] = `
       canVote={true}
       down={false}
       name="thumb-up"
-      size={21}
+      size="21"
       voted={false}
     />
     <EntityCounter

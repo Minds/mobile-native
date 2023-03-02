@@ -13,13 +13,14 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import FeedFilter from '../../../common/components/FeedFilter';
+import { DiscoveryV2SearchStoreAlgorithm } from './DiscoveryV2SearchStore';
 
 type NavigationType = StackNavigationProp<
   DiscoveryStackParamList,
   'DiscoverySearch'
 >;
 
-const tabs = [
+const tabs: { id: DiscoveryV2SearchStoreAlgorithm; title: string }[] = [
   { id: 'top', title: 'Top' },
   { id: 'latest', title: 'Latest' },
   { id: 'channels', title: i18n.t('discovery.channels') },

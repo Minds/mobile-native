@@ -17,6 +17,7 @@ import {
 } from '../../../common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
 import { storeRatingService } from 'modules/store-rating';
+import { useAnalytics } from '~/common/contexts/analytics.context';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -41,6 +42,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
   const disabled = !reminded && !entity.can(FLAG_REMIND);
 
   const { newsfeed } = useLegacyStores();
+  const analytics = useAnalytics();
 
   const route = useRoute();
   const navigation = useNavigation<any>();
@@ -106,6 +108,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       .then(activity => {
         // append the entity to the feed
         newsfeed.feedStore.prepend(activity);
+        analytics.trackClick('remind');
         storeRatingService.track('remind', true);
 
         showNotification(i18n.t('postReminded'), 'success');

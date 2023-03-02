@@ -5,13 +5,19 @@ import { storages } from '~/common/services/storage/storages.service';
 import FeedStore from '../../../common/stores/FeedStore';
 import type { DebouncedFunc } from 'lodash';
 
+export type DiscoveryV2SearchStoreAlgorithm =
+  | 'top'
+  | 'latest'
+  | 'channels'
+  | 'groups';
+
 /**
  * Discovery Search Store
  */
 export default class DiscoveryV2SearchStore {
   listStore = new FeedStore(true);
 
-  @observable algorithm: string = 'top';
+  @observable algorithm: DiscoveryV2SearchStoreAlgorithm = 'top';
   @observable query: string = '';
   @observable refreshing: boolean = false;
   @observable filter: string = 'all';
@@ -63,7 +69,7 @@ export default class DiscoveryV2SearchStore {
   };
 
   @action
-  setAlgorithm = (algorithm: string) => {
+  setAlgorithm = (algorithm: DiscoveryV2SearchStoreAlgorithm) => {
     this.listStore.getMetadataService()?.setSource(`search/${algorithm}`);
     this.algorithm = algorithm;
     this.params.algorithm = algorithm;

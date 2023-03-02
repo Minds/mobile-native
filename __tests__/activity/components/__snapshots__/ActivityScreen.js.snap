@@ -655,14 +655,7 @@ exports[`Activity screen component renders correctly  1`] = `
               <View
                 style={
                   Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    },
+                    undefined,
                     Object {},
                   ]
                 }
@@ -674,7 +667,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     Array [
                       Object {
                         "color": "#AEB0B8",
-                        "fontSize": 19.2,
+                        "fontSize": 23.04,
                       },
                       Object {},
                       Object {
@@ -753,14 +746,7 @@ exports[`Activity screen component renders correctly  1`] = `
               <View
                 style={
                   Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    },
+                    undefined,
                     Object {},
                   ]
                 }
@@ -772,7 +758,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     Array [
                       Object {
                         "color": "#AEB0B8",
-                        "fontSize": 19.2,
+                        "fontSize": 23.04,
                       },
                       Object {},
                       Object {
@@ -1725,6 +1711,10 @@ exports[`Activity screen component renders correctly  1`] = `
     autoOpen={false}
     commentsStore={
       CommentsStore {
+        "analyticContexts": Array [
+          undefined,
+          undefined,
+        ],
         "attachment": AttachmentStore {
           "assetId": "",
           "cancelOrDelete": [Function],
