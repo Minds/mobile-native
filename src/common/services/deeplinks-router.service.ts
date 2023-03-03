@@ -4,6 +4,8 @@ import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
+import { codePush } from '../../modules/codepush';
+import codePushStore from '../../modules/codepush/codepush.store';
 
 /**
  * Deeplinks router
@@ -81,6 +83,17 @@ class DeeplinksRouter {
 
     // this will track not only deep links, but navigation initiated from push notifs
     analyticsService.trackDeepLinkReceivedEvent(url);
+
+    if (cleanURL.startsWith('codepush/')) {
+      const deploymentKey = cleanURL.split('codepush/')?.[1];
+      if (deploymentKey) {
+        return codePushStore.syncCodepush({
+          deploymentKey,
+          force: true,
+          clearUpdates: true,
+        });
+      }
+    }
 
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);

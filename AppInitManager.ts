@@ -50,10 +50,12 @@ export class AppInitManager {
     storeRatingService.track('appSession');
 
     if (!__DEV__) {
-      codePushStore.syncCodepush(() => {
-        InteractionManager.runAfterInteractions(() => {
-          RNBootSplash.hide({ fade: true });
-        });
+      codePushStore.syncCodepush({
+        onDownload: () => {
+          InteractionManager.runAfterInteractions(() => {
+            RNBootSplash.hide({ fade: true });
+          });
+        },
       });
     }
 

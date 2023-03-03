@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
+import { IconCircled, Spacer, IconButton, H2, Avatar, Icon } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,6 +14,9 @@ import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
+import { codePush } from '../modules/codepush';
+import { LocalPackage } from 'react-native-code-push';
+import { CodePushCustomIcon } from '../modules/codepush/widgets/CodePushDebugger';
 
 type PropsType = {
   navigation: any;
@@ -113,6 +116,8 @@ export const Topbar = observer((props: PropsType) => {
                     }
                     style={styles.logo}
                   />
+
+                  <CodePushCustomIcon />
                 </View>
               </>
             )}

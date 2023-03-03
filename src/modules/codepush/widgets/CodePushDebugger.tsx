@@ -1,12 +1,16 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
-import { B2, Button, Column, H3 } from '~/common/ui';
+import { B2, Button, Column, H3, Icon } from '~/common/ui';
 import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
 import { Version } from '~/config/Version';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { codePush, logMessage } from '../';
 import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
+import { View } from 'react-native';
+import InfoPopup from '../../../common/components/InfoPopup';
+import { Tooltip } from 'react-native-elements';
+import codePushStore from '../codepush.store';
 
 const CodePushDebugger = () => {
   const {
@@ -189,6 +193,60 @@ const useCodePush = () => {
     error: status === 'Something went wrong',
     sync,
   };
+};
+
+export const CodePushCustomIcon = () => {
+  const [metadata, setMetadata] = useState<LocalPackage | undefined | null>();
+
+  useEffect(() => {
+    codePush.getUpdateMetadata().then(data => {
+      setMetadata(data);
+    });
+  }, []);
+
+  if (!metadata?.deploymentKey) {
+    return null;
+  }
+
+  if (
+    [CODE_PUSH_STAGING_KEY, CODE_PUSH_PROD_KEY].includes(metadata.deploymentKey)
+  ) {
+    return null;
+  }
+
+  return (
+    <View style={ThemedStyles.style.positionAbsoluteTopLeft}>
+      <Tooltip
+        skipAndroidStatusBar={true}
+        overlayColor="rgba(0, 0, 0, 0.7)"
+        containerStyle={ThemedStyles.style.borderRadius}
+        width={300}
+        height={150}
+        backgroundColor={ThemedStyles.getColor('Link')}
+        popover={
+          <>
+            <B2 color="white">You're using a custom app version</B2>
+            {!!metadata.description && (
+              <B2 color="white">Update description: {metadata.description}</B2>
+            )}
+
+            <Button
+              top="S"
+              onPress={() =>
+                codePushStore.syncCodepush({
+                  clearUpdates: true,
+                  force: true,
+                  deploymentKey: CODE_PUSH_PROD_KEY,
+                })
+              }>
+              Revert to Production
+            </Button>
+          </>
+        }>
+        <Icon name="warning" />
+      </Tooltip>
+    </View>
+  );
 };
 
 const statusMapping = {
