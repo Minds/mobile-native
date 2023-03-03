@@ -6,7 +6,6 @@ import { Text } from './Text';
 const TabBarFrame = styled(ScrollView, {
   name: 'TabBar',
   backgroundColor: '$background',
-  height: 40,
   horizontal: true,
   showsHorizontalScrollIndicator: false,
 });
@@ -71,7 +70,7 @@ const AnimatedIndicator = ({
     <Stack
       animation={animation}
       backgroundColor="$action"
-      height={5}
+      height="$0.6"
       width={width}
       y={33}
       x={x}
@@ -83,8 +82,8 @@ const AnimatedIndicator = ({
 const ItemContainer = styled(Stack, {
   name: 'ItemContainer',
   justifyContent: 'center',
-  marginRight: 24,
-  paddingVertical: 8,
+  marginRight: '$5',
+  paddingVertical: '$2',
   variants: {
     active: {
       true: {
