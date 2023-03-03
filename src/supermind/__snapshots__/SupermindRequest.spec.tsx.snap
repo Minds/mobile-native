@@ -38,7 +38,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "height": 22,
+              "height": 24,
             },
           ]
         }
@@ -520,7 +520,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "height": 22,
+              "height": 24,
             },
           ]
         }

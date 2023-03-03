@@ -1,6 +1,7 @@
 import api, { ApiResponse } from './api.service';
 import { SupportTiersType } from '../../wire/WireTypes';
 import { Platform } from 'react-native';
+import useApiFetch from '../hooks/useApiFetch';
 
 interface SupportTiersResponse extends ApiResponse {
   support_tier?: SupportTiersType;
@@ -92,3 +93,14 @@ class SupportTiersService {
 const supportTiersService = new SupportTiersService();
 
 export default supportTiersService;
+
+export const useSupportTiers = () => {
+  const store = useApiFetch<SupportTiersResponse>('api/v3/wire/supporttiers', {
+    persist: true,
+  });
+
+  return {
+    ...store,
+    supportTiers: store.result?.support_tiers || [],
+  };
+};

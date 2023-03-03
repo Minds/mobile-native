@@ -1565,6 +1565,7 @@
       "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "You don’t have any Membership Tiers",
       "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
+      "descriptionLong": "Start earning extra revenue for your content today by making this post exclusive to one of your membership tiers.",
       "setup": "Setup membership tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "Manage"

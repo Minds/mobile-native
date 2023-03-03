@@ -1,7 +1,7 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Dimensions, ScrollView, View } from 'react-native';
 import { confirm } from '../common/components/Confirm';
 import Link from '../common/components/Link';
@@ -12,7 +12,7 @@ import MenuItemOption from '../common/components/menus/MenuItemOption';
 import abbrev from '../common/helpers/abbrev';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import i18n from '../common/services/i18n.service';
-import supportTiersService from '../common/services/support-tiers.service';
+import { useSupportTiers } from '../common/services/support-tiers.service';
 import {
   B1,
   B2,
@@ -28,7 +28,6 @@ import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import { upgradeToPlus } from '../upgrade/UpgradeScreen';
-import type { SupportTiersType } from '../wire/WireTypes';
 import { ComposeAudience } from './createComposeStore';
 import { ComposeStoreType } from './useComposeStore';
 
@@ -46,7 +45,11 @@ interface AudienceSelectorSheetProps {
 const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const navigation = useNavigation();
   const { store, onClose, monetizedOnly } = props;
-  const [supportTiers, setSupportTiers] = useState<SupportTiersType[]>([]);
+  const {
+    supportTiers,
+    loading: supportTiersLoading,
+    refresh,
+  } = useSupportTiers();
   const { user } = useLegacyStores();
   const selected = store.audience;
 
@@ -119,9 +122,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
   useFocusEffect(
     useCallback(() => {
-      supportTiersService
-        .getAllFromUser()
-        .then(tiers => tiers && setSupportTiers(tiers));
+      refresh();
     }, []),
   );
 
@@ -188,7 +189,9 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           {supportTiers.map(tier => (
             <MenuItemOption
               title={tier.name}
-              subtitle={`${tier.description}${'\n'}$${tier.usd}+ / month`}
+              subtitle={`${tier.description}${tier.description ? '\n' : ''}$${
+                tier.usd
+              }+ / month`} // TODO: i18n
               reversedIcon
               borderless
               selected={
@@ -211,11 +214,11 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
               }
             />
           ))}
-          {!supportTiers.length && (
+
+          {!supportTiers.length && !supportTiersLoading && (
             <Column horizontal="XL" top="M">
               <B2 color="secondary">
-                {i18n.t('monetize.membershipMonetize.noTiers')}.{' '}
-                {i18n.t('monetize.membershipMonetize.tiersDescription')}
+                {i18n.t('monetize.membershipMonetize.descriptionLong')}
               </B2>
               <Button
                 align="center"

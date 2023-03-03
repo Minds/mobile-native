@@ -35,12 +35,19 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigation/NavigationTypes';
 import ActivityModel from '../newsfeed/ActivityModel';
 import GroupModel from '../groups/GroupModel';
+import type { ComposeCreateMode } from './createComposeStore';
+import TopBar from './TopBar';
+import SupermindLabel from '../common/components/supermind/SupermindLabel';
+import { IconButtonNext } from '../common/ui';
+import { confirm } from '../common/components/Confirm';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 
 const { width } = Dimensions.get('window');
 
 type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
 export type ComposeScreenParams = {
   openSupermindModal?: boolean;
+  createMode?: ComposeCreateMode;
   isRemind?: boolean;
   entity?: ActivityModel;
   group?: GroupModel;
@@ -56,7 +63,7 @@ export default observer(function ComposeScreen(props: ScreenProps) {
   // ### states & variables
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
-
+  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
   const theme = ThemedStyles.style;
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -73,6 +80,32 @@ export default observer(function ComposeScreen(props: ScreenProps) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   // ### methods
+  const onPressPost = useCallback(async () => {
+    if (store.attachments.uploading) {
+      return;
+    }
+    const { channel: targetChannel, payment_options } =
+      store.supermindRequest ?? {};
+
+    if (
+      targetChannel?.name &&
+      payment_options?.amount &&
+      !(await confirm({
+        title: i18n.t('supermind.confirmNoRefund.title'),
+        description: i18n.t('supermind.confirmNoRefund.offerDescription'),
+      }))
+    ) {
+      return;
+    }
+
+    const isEdit = store.isEdit;
+    const entity = await store.submit();
+
+    if (entity) {
+      store.onPost(entity, isEdit);
+    }
+  }, [store]);
+
   const discard = useCallback(() => {
     store.clear();
     NavigationService.goBack();
@@ -123,7 +156,9 @@ export default observer(function ComposeScreen(props: ScreenProps) {
   // #region effects
   useFocusEffect(store.onScreenFocused);
 
-  const autofocus = !props.route?.params?.openSupermindModal;
+  const autofocus =
+    props.route?.params?.createMode === 'post' ||
+    props.route?.params?.createMode === 'boost';
 
   useEffect(() => {
     if (autofocus) {
@@ -144,10 +179,40 @@ export default observer(function ComposeScreen(props: ScreenProps) {
     }, [onPressBack]),
   );
 
+  const rightButton = store.isEdit ? (
+    i18n.t('save')
+  ) : (
+    <IconButtonNext
+      name="send"
+      size="medium"
+      scale
+      onPress={onPressPost}
+      disabled={!store.isValid}
+      color={store.isValid ? 'Link' : 'Icon'}
+      style={store.attachments.uploading ? theme.opacity25 : null}
+    />
+  );
+
   return (
     <ComposeContext.Provider value={store}>
       <SafeAreaView style={styles.container}>
-        <ComposeTopBar store={store} onPressBack={onPressBack} />
+        {isCreateModalOn ? (
+          <ComposeTopBar store={store} onPressBack={onPressBack} />
+        ) : (
+          <TopBar
+            containerStyle={theme.paddingLeft}
+            rightText={rightButton}
+            leftComponent={
+              (store.supermindRequest || store.isSupermindReply) && (
+                <SupermindLabel />
+              )
+            }
+            onPressRight={onPressPost}
+            onPressBack={onPressBack}
+            store={store}
+          />
+        )}
+
         <ScrollView
           ref={scrollViewRef}
           keyboardShouldPersistTaps={'always'}

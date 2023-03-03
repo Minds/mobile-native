@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -33,6 +33,7 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -155,6 +156,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
+  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
 
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
@@ -164,6 +166,15 @@ const Tabs = observer(function ({ navigation }) {
         navigation.navigate('Compose', { createMode: key });
       },
     });
+
+  const navToComposer = useCallback(() => navigation.push('Compose'), [
+    navigation,
+  ]);
+
+  const navToVideoCapture = useCallback(
+    () => navigation.push('Capture', { mode: 'video', start: true }),
+    [navigation],
+  );
 
   const handleComposePress = () => {
     if (storages.user?.getBool('compose:create')) {
@@ -205,8 +216,10 @@ const Tabs = observer(function ({ navigation }) {
             tabBarButton: props => (
               <DoubleTapSafeTouchable
                 {...props}
-                onPress={handleComposePress}
-                onLongPress={handleComposeLongPress}
+                onPress={isCreateModalOn ? handleComposePress : navToComposer}
+                onLongPress={
+                  isCreateModalOn ? handleComposeLongPress : navToVideoCapture
+                }
                 delayLongPress={200}
                 testID="CaptureTouchableButton"
               />

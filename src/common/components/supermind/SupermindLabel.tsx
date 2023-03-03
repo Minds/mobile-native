@@ -14,7 +14,7 @@ type Props = {
 export default function SupermindLabel({
   text,
   font = 'B2',
-  height = 22,
+  height = 24,
 }: Props) {
   const outerStyle = useMemoStyle(
     () => [styles.outerStyle, { height: height }],

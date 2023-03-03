@@ -40,6 +40,7 @@ export type ButtonPropsType = {
   testID?: string;
   accessibilityLabel?: string;
   icon?: React.ReactNode;
+  reversedIcon?: boolean;
   pressableProps?: PressableProps;
 };
 const shouldBreak = (num, disabled, state) => {
@@ -72,6 +73,7 @@ export const ButtonComponent = ({
   accessibilityLabel,
   icon,
   fit,
+  reversedIcon,
   pressableProps,
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
@@ -255,8 +257,9 @@ export const ButtonComponent = ({
     } else if (icon) {
       content = (
         <Row>
-          {icon ? <Spacer right="XS">{icon}</Spacer> : null}
+          {!reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
           {title}
+          {reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
         </Row>
       );
     } else {

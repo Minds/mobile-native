@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 import MenuItem from '../common/components/menus/MenuItem';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
@@ -8,6 +8,7 @@ import { B2, Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 import ComposeIcon from './ComposeIcon';
 import type { ComposeCreateMode } from './createComposeStore';
+import { IS_IOS } from '../config/Config';
 
 interface ComposeCreateScreenProps {
   selected?: ComposeCreateMode;
@@ -57,14 +58,16 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         onPress={() => navigateToCompose('post')}
         containerItemStyle={ThemedStyles.style.marginTop4x}
       />
-      <MenuItem
-        title={texts.monetizedPost.title}
-        subtitle={texts.monetizedPost.subtitle}
-        leftIcon="money"
-        iconColor={selected === 'monetizedPost' ? 'Link' : undefined}
-        borderless
-        onPress={() => navigateToCompose('monetizedPost')}
-      />
+      {!IS_IOS && (
+        <MenuItem
+          title={texts.monetizedPost.title}
+          subtitle={texts.monetizedPost.subtitle}
+          leftIcon="money"
+          iconColor={selected === 'monetizedPost' ? 'Link' : undefined}
+          borderless
+          onPress={() => navigateToCompose('monetizedPost')}
+        />
+      )}
       <MenuItem
         title={texts.boost.title}
         subtitle={texts.boost.subtitle}
@@ -98,7 +101,8 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
   );
 }
 
-export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) =>
+export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) => {
+  Keyboard.dismiss();
   pushBottomSheet({
     component: (ref, handleContentLayout) => (
       <View onLayout={handleContentLayout}>
@@ -115,6 +119,7 @@ export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) =>
       </View>
     ),
   });
+};
 
 const Compose = () => (
   <View>

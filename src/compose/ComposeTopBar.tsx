@@ -79,7 +79,7 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
     });
 
   return (
-    <Row vertical="S" left="XS" right="L" align="centerBoth">
+    <Row vertical="S" left="XS" right="L" align="centerStart">
       <IconButton
         size={30}
         name="close"
@@ -89,14 +89,17 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
       />
       <Button
         mode="flat"
-        size="tiny"
+        fit
         onPress={handleModePress}
-        top="XS"
-        shouldAnimateChanges={false}>
-        <Row align="centerBoth">
+        shouldAnimateChanges={false}
+        icon={!store.isEdit && <Icon name="chevron-down" color="PrimaryText" />}
+        reversedIcon
+        disabled={store.isEdit}>
+        {store.isEdit ? (
+          <H3 font="regular">Edit Post</H3>
+        ) : (
           <H3 font="regular">{createModeMapping[store.createMode]}</H3>
-          <Icon name="chevron-down" color="PrimaryText" />
-        </Row>
+        )}
       </Button>
       <View style={theme.flexContainer} />
       <AudienceSelector store={store} />
@@ -108,9 +111,9 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
 const createModeMapping: Record<ComposeCreateMode, string | ReactNode> = {
   // TODO: i18n
   boost: 'Boosted Post',
-  monetizedPost: 'Create Post',
-  post: 'Create Post',
-  supermind: <SupermindLabel font="H3" height={25} />,
+  monetizedPost: 'New Post',
+  post: 'New Post',
+  supermind: <SupermindLabel font="H3" height={27} />,
 };
 
 const styles = ThemedStyles.create({
@@ -140,7 +143,6 @@ const styles = ThemedStyles.create({
   postButton: {
     textAlign: 'right',
     fontSize: 16,
-    top: 5,
   },
   back: ['colorIcon', 'paddingLeft2x', 'paddingRight2x'],
 });
