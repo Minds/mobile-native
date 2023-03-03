@@ -212,6 +212,7 @@ export default observer(
         data={data}
         renderItem={renderItem}
         ListFooterComponent={loadingFooter}
+        ListEmptyComponent={props.ListEmptyComponent}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={_refresh}

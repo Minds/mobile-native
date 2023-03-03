@@ -1,0 +1,41 @@
+import { RouteProp } from '@react-navigation/native';
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from '@react-navigation/stack';
+import React from 'react';
+import ComposeScreen from './ComposeScreen';
+
+export type ComposerStackParamList = {
+  Composer: {};
+  BoostScreenV2: {};
+};
+
+const Stack = createStackNavigator<ComposerStackParamList>();
+
+export default function ComposerStack({ route }: { route: RouteProp<any> }) {
+  return (
+    <Stack.Navigator
+      detachInactiveScreens={false}
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+      }}>
+      <Stack.Screen
+        name="Composer"
+        component={ComposeScreen}
+        initialParams={route?.params}
+      />
+      <Stack.Screen
+        name="BoostScreenV2"
+        getComponent={() => require('modules/boost').BoostComposerStack}
+        options={{
+          headerShown: false,
+          presentation: 'card',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+        initialParams={{ popOnBack: true }}
+      />
+    </Stack.Navigator>
+  );
+}

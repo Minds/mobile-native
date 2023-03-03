@@ -30,8 +30,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { pushBottomSheet } from '../common/components/bottom-sheet';
-import ComposeCreateScreen from '../compose/ComposeCreateScreen';
+import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
 
@@ -150,15 +149,6 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   );
 };
 
-const navigateToComposeCreate = () =>
-  pushBottomSheet({
-    component: (bottomSheetRef, handleContentLayout) => (
-      <View onLayout={handleContentLayout}>
-        <ComposeCreateScreen />
-      </View>
-    ),
-  });
-
 /**
  * Main tabs
  * @param {Object} props
@@ -166,17 +156,26 @@ const navigateToComposeCreate = () =>
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
+  const pushComposeCreate = () =>
+    pushComposeCreateScreen({
+      onItemPress: async key => {
+        navigation.goBack();
+        storages.user?.setBool('compose:create', true);
+        navigation.navigate('Compose', { createMode: key });
+      },
+    });
+
   const handleComposePress = () => {
     if (storages.user?.getBool('compose:create')) {
       return navigation.push('Compose');
     }
 
-    navigateToComposeCreate();
+    pushComposeCreate();
   };
 
   const handleComposeLongPress = () => {
     triggerHaptic();
-    navigateToComposeCreate();
+    pushComposeCreate();
   };
 
   return (

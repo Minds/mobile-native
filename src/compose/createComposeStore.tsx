@@ -26,6 +26,7 @@ import { confirmSupermindReply } from './SupermindConfirmation';
 import { hasVariation } from '../../ExperimentsProvider';
 import type GroupModel from '../groups/GroupModel';
 import type { SupportTiersType } from '../wire/WireTypes';
+import { pushAudienceSelector } from './ComposeAudienceSelector';
 
 /**
  * Display an error message to the user.
@@ -46,6 +47,12 @@ export type ComposeAudience = {
   tier?: SupportTiersType;
   group?: GroupModel;
 };
+
+export type ComposeCreateMode =
+  | 'post'
+  | 'monetizedPost'
+  | 'boost'
+  | 'supermind';
 
 /**
  * Composer store
@@ -82,10 +89,10 @@ export default function (props) {
     extra: null,
     posting: false,
     group: null,
-    boost: null,
     postToPermaweb: false,
     initialized: false,
     audience: { type: 'public' } as ComposeAudience,
+    createMode: 'post' as ComposeCreateMode,
     /**
      * the supermind request that is built from the SupermindComposeScreen
      */
@@ -115,6 +122,10 @@ export default function (props) {
       this.entity = params.entity || null;
       this.supermindObject = params.supermindObject;
       this.onSaveCallback = params.onSave;
+
+      if (params.createMode) {
+        this.setCreateMode(params.createMode, true);
+      }
 
       this.mode = params.mode
         ? params.mode
@@ -152,8 +163,6 @@ export default function (props) {
         this.openSupermindModal(channel ? { channel } : undefined, true);
       }
 
-      this.boost = params.boost;
-
       // clear params to avoid repetition
       props.navigation.setParams({
         group: undefined,
@@ -172,6 +181,32 @@ export default function (props) {
     },
     setAudience(audience: ComposeAudience) {
       this.audience = audience;
+    },
+    async setCreateMode(
+      mode: ComposeCreateMode,
+      clearComposeOnClose?: boolean,
+    ) {
+      if (mode === 'supermind') {
+        if (!(await this.openSupermindModal(undefined, clearComposeOnClose))) {
+          return false;
+        }
+      }
+
+      if (mode === 'monetizedPost') {
+        await pushAudienceSelector({
+          store: this,
+          monetizedOnly: true,
+        });
+        if (
+          this.audience.type !== 'membership' &&
+          this.audience.type !== 'plus'
+        ) {
+          return false;
+        }
+      }
+
+      this.createMode = mode;
+      return true;
     },
     setGroup(group: GroupModel) {
       this.group = group;
@@ -196,18 +231,17 @@ export default function (props) {
       const { popToTop } = props.navigation;
 
       this.onSaveCallback?.(entity);
-      popToTop();
 
-      if (this.boost) {
-        InteractionManager.runAfterInteractions(() => {
-          NavigationService.navigate(
-            hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
-            {
-              entity: entity,
-              boostType: 'post',
-            },
-          );
-        });
+      if (this.createMode === 'boost') {
+        NavigationService.push(
+          hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
+          {
+            entity: entity,
+            boostType: 'post',
+          },
+        );
+      } else {
+        popToTop();
       }
 
       this.clear(false);
@@ -438,7 +472,7 @@ export default function (props) {
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
       this.group = null;
-      this.boost = null;
+      this.createMode = 'post';
       this.postToPermaweb = false;
     },
     /**
@@ -755,15 +789,20 @@ export default function (props) {
       supermindRequest?: Partial<SupermindRequestParam>,
       closeComposerOnClear?: boolean,
     ) {
-      NavigationService.navigate('SupermindCompose', {
-        data: supermindRequest || this.supermindRequest,
-        closeComposerOnClear,
-        onSave: (payload: SupermindRequestParam) => {
-          this.supermindRequest = payload;
-        },
-        onClear: () => {
-          this.supermindRequest = undefined;
-        },
+      return new Promise(resolve => {
+        NavigationService.navigate('SupermindCompose', {
+          data: supermindRequest || this.supermindRequest,
+          closeComposerOnClear,
+          onSave: (payload: SupermindRequestParam) => {
+            this.supermindRequest = payload;
+            this.createMode = 'supermind';
+            resolve(payload);
+          },
+          onClear: () => {
+            this.supermindRequest = undefined;
+            resolve();
+          },
+        });
       });
     },
     get isSupermindReply() {

@@ -140,6 +140,9 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  TierManagementScreen: {};
+  TierScreen: {};
+  GroupsList: {};
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {

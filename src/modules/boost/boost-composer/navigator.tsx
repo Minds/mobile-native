@@ -10,7 +10,9 @@ import { useStores } from '~/common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
 
 export type BoostStackParamList = {
-  BoostAudienceSelector: undefined;
+  BoostAudienceSelector: {
+    popOnBack?: boolean;
+  };
   BoostComposer: undefined;
   BoostReview: undefined;
 };
@@ -44,6 +46,7 @@ export default function BoostComposerStack({
         <Screen
           name="BoostAudienceSelector"
           getComponent={() => require('./screens/AudienceSelector').default}
+          initialParams={route.params}
         />
         <Screen
           name="BoostComposer"

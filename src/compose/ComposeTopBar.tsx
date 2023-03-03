@@ -1,16 +1,18 @@
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { View } from 'react-native';
-import { Flow } from 'react-native-animated-spinkit';
-import { IconButton, IconButtonNext } from '~ui/icons';
+import { Circle } from 'react-native-animated-spinkit';
+import { Icon, IconButton, IconButtonNext } from '~ui/icons';
 import { confirm } from '../common/components/Confirm';
 import MText from '../common/components/MText';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import i18n from '../common/services/i18n.service';
-import { Row } from '../common/ui';
+import { Button, H3, Row } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
-import type { ComposeStoreType } from './useComposeStore';
 import AudienceSelector from './ComposeAudienceSelector';
+import { pushComposeCreateScreen } from './ComposeCreateScreen';
+import { ComposeCreateMode } from './createComposeStore';
+import type { ComposeStoreType } from './useComposeStore';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -52,7 +54,7 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
 
   const rightButton = props.store.posting ? (
     <View style={styles.dotIndicatorContainerStyle}>
-      <Flow color={ThemedStyles.getColor('SecondaryText')} />
+      <Circle size={28} color={ThemedStyles.getColor('Link')} />
     </View>
   ) : store.isEdit ? (
     <MText style={styles.postButton} onPress={onPressPost} testID="topBarDone">
@@ -70,8 +72,14 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
     />
   );
 
+  const handleModePress = () =>
+    pushComposeCreateScreen({
+      selected: store.createMode,
+      onItemPress: async mode => store.setCreateMode(mode),
+    });
+
   return (
-    <Row vertical="S" left="XS" right="L">
+    <Row vertical="S" left="XS" right="L" align="centerBoth">
       <IconButton
         size={30}
         name="close"
@@ -79,7 +87,17 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
         onPress={props.onPressBack}
         testID="topbarBack"
       />
-      {(store.supermindRequest || store.isSupermindReply) && <SupermindLabel />}
+      <Button
+        mode="flat"
+        size="tiny"
+        onPress={handleModePress}
+        top="XS"
+        shouldAnimateChanges={false}>
+        <Row align="centerBoth">
+          <H3 font="regular">{createModeMapping[store.createMode]}</H3>
+          <Icon name="chevron-down" color="PrimaryText" />
+        </Row>
+      </Button>
       <View style={theme.flexContainer} />
       <AudienceSelector store={store} />
       {rightButton}
@@ -87,8 +105,22 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
   );
 });
 
+const createModeMapping: Record<ComposeCreateMode, string | ReactNode> = {
+  // TODO: i18n
+  boost: 'Boosted Post',
+  monetizedPost: 'Create Post',
+  post: 'Create Post',
+  supermind: <SupermindLabel font="H3" height={25} />,
+};
+
 const styles = ThemedStyles.create({
-  dotIndicatorContainerStyle: ['rowJustifyEnd'],
+  dotIndicatorContainerStyle: [
+    'rowJustifyEnd',
+    {
+      width: 24,
+      height: 24,
+    },
+  ],
   topBar: {
     width: '100%',
     flexDirection: 'row',
@@ -107,7 +139,8 @@ const styles = ThemedStyles.create({
   ],
   postButton: {
     textAlign: 'right',
-    fontSize: 18,
+    fontSize: 16,
+    top: 5,
   },
   back: ['colorIcon', 'paddingLeft2x', 'paddingRight2x'],
 });

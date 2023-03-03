@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { showNotification } from '../../../../../AppMessages';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
@@ -16,12 +16,34 @@ import {
 import { useBoostStore } from '../boost.store';
 import { useTranslation } from '../../locales';
 import { BoostStackScreenProps } from '../navigator';
+import NavigationService from '../../../../navigation/NavigationService';
+import { useBackHandler } from '@react-native-community/hooks';
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
-function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
+function AudienceSelectorScreen({
+  navigation,
+  route,
+}: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
+  const { popOnBack } = route.params ?? ({} as Record<string, string>);
   const boostStore = useBoostStore();
+
+  const popTwice = () => {
+    NavigationService.goBack();
+    NavigationService.goBack();
+  };
+
+  useBackHandler(
+    useCallback(() => {
+      if (popOnBack) {
+        popTwice();
+        return true;
+      }
+
+      return false;
+    }, [popOnBack]),
+  );
 
   if (!boostStore.config) {
     showNotification('Boost config not found', 'danger');
@@ -32,9 +54,8 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   const onNext = () => {
     navigation.push('BoostComposer');
   };
-
   return (
-    <Screen safe onlyTopEdge>
+    <Screen safe onlyTopEdge={!popOnBack}>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -42,6 +63,8 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
             : t('Boost Post')
         }
         back
+        backIcon={popOnBack ? 'close' : undefined}
+        onBack={popOnBack ? popTwice : undefined}
         shadow
       />
       <FitScrollView>

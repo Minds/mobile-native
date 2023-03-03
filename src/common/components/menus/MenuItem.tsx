@@ -93,7 +93,7 @@ export default function ({
 
   const rightIcon = useMemo(() => {
     if (!icon && onPress) {
-      return <Icon name={'chevron-right'} size={iconSize} color={iconColor} />;
+      return <Icon name={'chevron-right'} size={iconSize} />;
     }
 
     if (typeof icon === 'string') {
