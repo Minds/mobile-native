@@ -1,7 +1,7 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Dimensions, ScrollView, View } from 'react-native';
 import { confirm } from '../common/components/Confirm';
 import Link from '../common/components/Link';
@@ -51,6 +51,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
     refresh,
   } = useSupportTiers();
   const { user } = useLegacyStores();
+  const [groupsVisible, setGroupsVisible] = useState(!monetizedOnly);
   const selected = store.audience;
 
   // TODO: i18n
@@ -234,7 +235,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         </>
       )}
 
-      {!monetizedOnly && (
+      {!monetizedOnly && groupsVisible && (
         <Row align="centerBetween">
           <B1 left="XL" top="L" font="bold">
             {texts.groups}
@@ -278,11 +279,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           style={styles.list}
           contentContainerStyle={styles.listPadding}
           header={content}
-          ListEmptyComponent={() => (
-            <B2 horizontal="XL" top="S" color="secondary">
-              {texts.noGroups}
-            </B2>
-          )}
+          onListUpdate={groups => setGroupsVisible(!!groups.length)}
           renderItem={renderGroup}
           fetchEndpoint={'api/v1/groups/member'}
           endpointData={'groups'}

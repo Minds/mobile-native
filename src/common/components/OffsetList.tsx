@@ -41,6 +41,7 @@ type PropsType = {
   renderPlaceholder?: () => JSX.Element;
   offsetPagination?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onListUpdate?: (data?: any) => void;
 };
 
 type FetchResponseType =
@@ -119,6 +120,12 @@ export default observer(
       scrollToTop: () =>
         listRef.current?.scrollToOffset({ offset: 0, animated: true }),
     }));
+
+    // =====================| EFFECTS |=====================>
+    useEffect(() => {
+      props.onListUpdate?.(data);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
     // =====================| METHODS |=====================>
 

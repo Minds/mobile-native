@@ -16,7 +16,6 @@ const Stack = createStackNavigator<ComposerStackParamList>();
 export default function ComposerStack({ route }: { route: RouteProp<any> }) {
   return (
     <Stack.Navigator
-      detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
