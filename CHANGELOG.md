@@ -2,9 +2,56 @@
 
 Minds Mobile
 
-## 4.32.2 (2023-02-17)
+## 4.32.3 (2023-03-06)
 
-No changes.
+### Fixed 🐛 (1 change)
+
+- [Fix malformed boosts injected in the feed](minds/mobile-native!2160)
+
+### Other (1 change)
+
+- [Design system v2 colors and button fixes](minds/mobile-native!2157)
+
+## 4.32.2 (2023-03-06)
+
+### Features ✨ (5 changes)
+
+- [Added CPM to boosts in boosts console](minds/mobile-native!2146)
+- [Add a single boost view to boost console & deeplinks](minds/mobile-native!2144)
+- [Added share action to comment](minds/mobile-native!2142)
+- [Added an update prompt when the app version is behind the latest version](minds/mobile-native!2123)
+- [Added Supermind receiver label to Supermind console](minds/mobile-native!2121)
+
+### Fixed 🐛 (5 changes)
+
+- [Fix boosts console v3 pagination](minds/mobile-native!2154)
+- [Fix estimated view in boot review screen](minds/mobile-native!2148)
+- [Fixed an issue crashing the registration screen on some devices](minds/mobile-native!2126)
+- [Fixed an issue where creating a cash account didn't navigate correctly](minds/mobile-native!2124)
+- [Fixed an issue where the tokens amount was being incorrectly rounder](minds/mobile-native!2120)
+
+### Changed 🔧 (9 changes)
+
+- [Changed date format in boost console](minds/mobile-native!2140)
+- [Fix boost pament method enum](minds/mobile-native!2137)
+- [Fix lastActive date in devices](minds/mobile-native!2135)
+- [Update boosts texts](minds/mobile-native!2134)
+- [Added footer for token rewards](minds/mobile-native!2133)
+- [Changed CodePush install mode and added an update screen](minds/mobile-native!2132)
+- [add icons to storybook](minds/mobile-native!2131)
+- [Version bump](minds/mobile-native!2127)
+- [hide in-app verification in drawer, small bugs](minds/mobile-native!2125)
+
+### Removed 🗑️ (4 changes)
+
+- [Removed NSFW from Post Options for iOS](minds/mobile-native!2151)
+- [Removed transak feature](minds/mobile-native!2145)
+- [Removed BuyToken feature](minds/mobile-native!2145)
+- [Removed BuyToken feature](minds/mobile-native!2145)
+
+### replaced (1 change)
+
+- [Replaced 0 tokens with empty string](minds/mobile-native!2149)
 
 ## 4.32.1 (2023-02-17)
 
@@ -27,7 +74,6 @@ No changes.
 - [Added violated premium content & security report reasons](minds/mobile-native!2116)
 - [Link to boost content policy with rejection message](minds/mobile-native!2111)
 - [Use in-app verification for wallet join rewards](minds/mobile-native!2112)
-
 
 ### Fixed 🐛 (5 changes)
 
