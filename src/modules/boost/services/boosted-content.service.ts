@@ -49,15 +49,15 @@ class BoostedContentService {
    * @param {Array<ActivityModel>} boosts
    */
   cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((e: ActivityModel) => {
-      e.boosted = true;
+    return boosts.filter((entity: ActivityModel) => {
+      entity.boosted = true;
       // remove NSFW on iOS
-      if (Platform.OS === 'ios' && e.nsfw && e.nsfw.length) {
+      if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
         return false;
       }
-      return e.type === 'user'
+      return entity.type === 'user'
         ? false
-        : !blockListService.has(e.ownerObj?.guid);
+        : !blockListService.has(entity.ownerObj?.guid);
     });
   }
 
