@@ -2,10 +2,6 @@
 
 Minds Mobile
 
-## 4.32.2 (2023-02-17)
-
-No changes.
-
 ## 4.32.1 (2023-02-17)
 
 ### Fixed 🐛 (3 changes)
@@ -27,7 +23,6 @@ No changes.
 - [Added violated premium content & security report reasons](minds/mobile-native!2116)
 - [Link to boost content policy with rejection message](minds/mobile-native!2111)
 - [Use in-app verification for wallet join rewards](minds/mobile-native!2112)
-
 
 ### Fixed 🐛 (5 changes)
 
