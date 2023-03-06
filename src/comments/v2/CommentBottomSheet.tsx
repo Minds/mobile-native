@@ -93,7 +93,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   const sheetRef = React.useRef<any>(null);
-  const route = useRoute<any>();
 
   React.useImperativeHandle(ref, () => ({
     expand: () => {
