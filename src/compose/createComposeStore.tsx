@@ -175,10 +175,6 @@ export default function (props) {
         noText: undefined,
       });
     },
-    // sets audience to a default value based on entity
-    initAudience() {
-      // TODO:
-    },
     setAudience(audience: ComposeAudience) {
       this.audience = audience;
     },
