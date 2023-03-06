@@ -4,7 +4,6 @@ import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
-import { codePush } from '../../modules/codepush';
 import codePushStore from '../../modules/codepush/codepush.store';
 
 /**

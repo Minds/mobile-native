@@ -8,7 +8,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { codePush, logMessage } from '../';
 import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
 import { View } from 'react-native';
-import InfoPopup from '../../../common/components/InfoPopup';
 import { Tooltip } from 'react-native-elements';
 import codePushStore from '../codepush.store';
 
