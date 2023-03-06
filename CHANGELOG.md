@@ -2,6 +2,16 @@
 
 Minds Mobile
 
+## 4.32.3 (2023-03-06)
+
+### Fixed 🐛 (1 change)
+
+- [Fix malformed boosts injected in the feed](minds/mobile-native!2160)
+
+### Other (1 change)
+
+- [Design system v2 colors and button fixes](minds/mobile-native!2157)
+
 ## 4.32.2 (2023-03-06)
 
 ### Features ✨ (5 changes)
