@@ -61,10 +61,11 @@ stages:
         - master
 
 # Run only on master
-.only_master:
+.only_master_rc:
   only:
     refs:
       - master
+      - /^rc-*/
 
 # Run only on tags
 .only_tags:
