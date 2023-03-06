@@ -8,6 +8,52 @@
     - npm install -g appcenter-cli
     - yarn install
 
+.pushrelease_prepare_base:
+  extends: .codepush_base
+  artifacts:
+    reports:
+      dotenv: deploy.env
+  rules:
+    # only for js branches
+    - if: $CI_COMMIT_BRANCH =~ /^js\/.*/
+      when: on_success
+
+pushrelease_review:ios:
+  extends: .pushrelease_prepare_base
+  environment:
+    name: codepush_review_ios/$CI_COMMIT_REF_SLUG
+    url: mindsapp://codepush/$CODEPUSH_DEPLOYMENT_KEY
+    on_stop: pushrelease_review:stop_ios
+  script:
+    - appcenter codepush deployment add $CI_COMMIT_REF_SLUG -a Minds/Minds-iOS
+    - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds-iOS --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - echo "CODEPUSH_DEPLOYMENT_KEY=$CODEPUSH_DEPLOYMENT_KEY" >> deploy.env
+    - appcenter codepush release-react -a Minds/Minds-iOS -d $CI_COMMIT_REF_SLUG
+
+pushrelease_review:stop_ios:
+  extends: .pushrelease_prepare_base
+  script:
+    - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds-iOS --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - appcenter codepush deployment remove $CI_COMMIT_REF_SLUG -a Minds/Minds-iOS
+
+pushrelease_review:android:
+  extends: .pushrelease_prepare_base
+  environment:
+    name: codepush_review_android/$CI_COMMIT_REF_SLUG
+    url: mindsapp://codepush/$CODEPUSH_DEPLOYMENT_KEY
+    on_stop: pushrelease_review:stop_android
+  script:
+    - appcenter codepush deployment add $CI_COMMIT_REF_SLUG -a Minds/Minds
+    - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - echo "CODEPUSH_DEPLOYMENT_KEY=$CODEPUSH_DEPLOYMENT_KEY" >> deploy.env
+    - appcenter codepush release-react -a Minds/Minds -d $CI_COMMIT_REF_SLUG
+
+pushrelease_review:stop_android:
+  extends: .pushrelease_prepare_base
+  script:
+    - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - appcenter codepush deployment remove $CI_COMMIT_REF_SLUG -a Minds/Minds
+
 pushrelease_staging:ios:
   extends:
     - .codepush_base
