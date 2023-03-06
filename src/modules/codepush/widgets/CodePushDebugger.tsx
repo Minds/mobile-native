@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
 import { B2, Button, Column, H3, Icon } from '~/common/ui';
@@ -197,6 +197,7 @@ const useCodePush = () => {
 
 export const CodePushCustomIcon = () => {
   const [metadata, setMetadata] = useState<LocalPackage | undefined | null>();
+  const tooltipRef = useRef<Tooltip>(null);
 
   useEffect(() => {
     codePush.getUpdateMetadata().then(data => {
@@ -208,15 +209,16 @@ export const CodePushCustomIcon = () => {
     return null;
   }
 
-  if (
-    [CODE_PUSH_STAGING_KEY, CODE_PUSH_PROD_KEY].includes(metadata.deploymentKey)
-  ) {
+  if (CODE_PUSH_PROD_KEY === metadata.deploymentKey) {
     return null;
   }
+
+  const isStaging = metadata.deploymentKey === CODE_PUSH_STAGING_KEY;
 
   return (
     <View style={ThemedStyles.style.positionAbsoluteTopLeft}>
       <Tooltip
+        ref={tooltipRef}
         skipAndroidStatusBar={true}
         overlayColor="rgba(0, 0, 0, 0.7)"
         containerStyle={ThemedStyles.style.borderRadius}
@@ -225,25 +227,30 @@ export const CodePushCustomIcon = () => {
         backgroundColor={ThemedStyles.getColor('Link')}
         popover={
           <>
-            <B2 color="white">You're using a custom app version</B2>
+            <B2 color="white">
+              {isStaging
+                ? "You're on staging"
+                : "You're using a custom app version"}
+            </B2>
             {!!metadata.description && (
               <B2 color="white">Update description: {metadata.description}</B2>
             )}
 
             <Button
               top="S"
-              onPress={() =>
+              onPress={() => {
+                tooltipRef.current?.toggleTooltip();
                 codePushStore.syncCodepush({
                   clearUpdates: true,
                   force: true,
                   deploymentKey: CODE_PUSH_PROD_KEY,
-                })
-              }>
+                });
+              }}>
               Revert to Production
             </Button>
           </>
         }>
-        <Icon name="warning" />
+        <Icon name={isStaging ? 'alpha-s-circle' : 'warning'} />
       </Tooltip>
     </View>
   );
