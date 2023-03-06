@@ -32,9 +32,13 @@ pushrelease_review:ios:
 
 pushrelease_review:stop_ios:
   extends: .pushrelease_prepare_base
-  environment: codepush_review_ios/$CI_COMMIT_REF_SLUG
+  environment:
+    name: codepush_review_ios/$CI_COMMIT_REF_SLUG
+    url: mindsapp://codepush/$CODEPUSH_DEPLOYMENT_KEY
+    action: stop
   script:
     - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds-iOS --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - echo "CODEPUSH_DEPLOYMENT_KEY=$CODEPUSH_DEPLOYMENT_KEY" >> deploy.env
     - appcenter codepush deployment remove $CI_COMMIT_REF_SLUG -a Minds/Minds-iOS
 
 pushrelease_review:android:
@@ -51,9 +55,13 @@ pushrelease_review:android:
 
 pushrelease_review:stop_android:
   extends: .pushrelease_prepare_base
-  environment: codepush_review_android/$CI_COMMIT_REF_SLUG
+  environment:
+    name: codepush_review_android/$CI_COMMIT_REF_SLUG
+    url: mindsapp://codepush/$CODEPUSH_DEPLOYMENT_KEY
+    action: stop
   script:
     - CODEPUSH_DEPLOYMENT_KEY=$(appcenter codepush deployment list -a Minds/Minds --output json | jq '.[] | select(.name=="$CI_COMMIT_REF_SLUG") | .key')
+    - echo "CODEPUSH_DEPLOYMENT_KEY=$CODEPUSH_DEPLOYMENT_KEY" >> deploy.env
     - appcenter codepush deployment remove $CI_COMMIT_REF_SLUG -a Minds/Minds
 
 pushrelease_staging:ios:
