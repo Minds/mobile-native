@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, IconButton, H2, Avatar, Icon } from '~ui';
+import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
