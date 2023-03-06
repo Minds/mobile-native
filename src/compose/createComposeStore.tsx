@@ -186,6 +186,8 @@ export default function (props) {
         if (!(await this.openSupermindModal(undefined, clearComposeOnClose))) {
           return false;
         }
+      } else {
+        this.supermindRequest = undefined;
       }
 
       if (mode === 'monetizedPost') {
