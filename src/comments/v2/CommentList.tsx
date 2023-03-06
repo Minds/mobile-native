@@ -82,8 +82,13 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     const focusedCommentUrn = props.store?.focusedCommentUrn;
 
     props.store.loadComments(true).then(() => {
+      // show comment input (open keyboard) if there were no comments
+      if (!props.store.comments.length) {
+        props.store.setShowInput(true);
+      }
+
+      // open focused if necessary
       if (focusedCommentUrn) {
-        // open focused if necessary
         const focused = props.store.comments.find(c => c.expanded);
         if (focused) {
           navigation.push('ReplyComment', {
