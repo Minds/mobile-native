@@ -47,7 +47,7 @@ const light = createTheme<BaseTheme>({
 
   warning: color['red-700'],
 
-  action: color['yellow-500-alt'],
+  action: color['yellow-300-alt'],
   link: color['yellow-500-alt'],
 });
 

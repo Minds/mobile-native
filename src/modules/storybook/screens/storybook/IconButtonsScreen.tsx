@@ -7,7 +7,7 @@ import { Stack } from '@tamagui/core';
 import { IconNames, icons } from '@minds/ui/icons';
 
 export function IconButtonsScreen(): JSX.Element {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
@@ -20,7 +20,7 @@ export function IconButtonsScreen(): JSX.Element {
       </ScrollView>
       <View fd={'row'} mt="$1" space>
         <Button circular icon={Icons.Chevron} onPress={goBack} />
-        <Button iconAfter={Icons.Send} f={1}>
+        <Button onPress={() => navigate('Tab')} iconAfter={Icons.Send} f={1}>
           Next
         </Button>
       </View>
