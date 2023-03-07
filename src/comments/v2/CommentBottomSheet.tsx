@@ -93,7 +93,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   const sheetRef = React.useRef<any>(null);
-  const route = useRoute<any>();
 
   React.useImperativeHandle(ref, () => ({
     expand: () => {
@@ -142,17 +141,13 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   React.useEffect(() => {
     if (
-      (props.commentsStore.parent &&
-        props.commentsStore.parent['comments:count'] === 0) ||
-      (route.params?.open && props.commentsStore.entity['comments:count'] === 0)
+      localStore.isVisible &&
+      (props.commentsStore?.parent?.['comments:count'] === 0 ||
+        props.commentsStore?.entity?.['comments:count'] === 0)
     ) {
-      setTimeout(() => {
-        if (props?.commentsStore) {
-          props.commentsStore.setShowInput(true);
-        }
-      }, 500);
+      props.commentsStore?.setShowInput(true);
     }
-  }, [props.commentsStore, route.params]);
+  }, [props.commentsStore, localStore.isVisible]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
