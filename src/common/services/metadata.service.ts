@@ -3,34 +3,76 @@ import sessionService from './session.service';
 import hashCode from '../helpers/hash-code';
 import NavigationService from '../../navigation/NavigationService';
 
+export type MetadataSource =
+  | 'feed/subscribed'
+  | 'feed/channel'
+  | 'feed/highlights'
+  | 'feed/groups'
+  | 'feed/discovery'
+  | 'feed/boosts'
+  | 'search/latest'
+  | 'search/top'
+  | 'search/channels'
+  | 'search/groups'
+  | 'single'
+  | 'portrait'
+  | 'top-feed';
+
+export type MetadataMedium =
+  | 'feed'
+  | 'portrait'
+  | 'featured-content'
+  | 'single';
+
+export type MetadataCampaign = string;
+
+export interface Metadata {
+  /**
+   * The platform that the action occured on
+   */
+  platform?: 'mobile';
+  /**
+   * A short token that represents the page group the action was performed from
+   */
+  source: MetadataSource;
+  /**
+   * In seconds, the timestamp representing the date the action took place
+   */
+  timestamp?: number;
+  salt?: string;
+  /**
+   * The type of page the action was recorded on
+   */
+  medium: MetadataMedium;
+  /**
+   * The campaign, if any, that the entity was attached to
+   */
+  campaign?: MetadataCampaign;
+  page_token?: string;
+  /**
+   * In seconds, how long the page has been active since this action was recorded
+   */
+  delta?: number;
+  /**
+   * The position in the feed that this view was recorded
+   */
+  position: number;
+  served_by_guid?: string;
+}
+
 /**
  * Metadata service for analytics
  */
 class MetadataService {
-  /**
-   * @var source
-   */
-  source = 'feed/subscribed';
-
-  /**
-   * @var medium
-   */
-  medium = 'feed';
-
-  /**
-   * @var campaign
-   */
-  campaign = '';
+  private source: MetadataSource = 'feed/subscribed';
+  private medium: MetadataMedium = 'feed';
+  private campaign?: MetadataCampaign;
+  private salt;
 
   /**
    * @var {moment} deltaBegin
    */
-  deltaBegin = moment();
-
-  /**
-   * @var salt
-   */
-  salt = '';
+  private deltaBegin = moment();
 
   /**
    * Constructor
@@ -42,45 +84,10 @@ class MetadataService {
   }
 
   /**
-   * @var {function} entityMapper maps entities properties to metadata
-   */
-  entityMapper = (entity, medium, position) => ({
-    position: position
-      ? position
-      : entity.position !== undefined
-      ? entity.position
-      : entity._list
-      ? entity._list.getIndex(entity) + 1
-      : 0,
-    medium: medium ? medium : entity.boosted ? 'featured-content' : 'feed',
-    campaign: entity.boosted_guid ? entity.urn : '',
-  });
-
-  /**
-   * Init delta timer
-   */
-  initDelta() {
-    this.deltaBegin = moment();
-  }
-
-  /**
-   * Get delta in seconds
-   * @returns {integer} seconds
-   */
-  getDelta(medium) {
-    if (this.medium || medium === 'single') {
-      return 0;
-    }
-    const deltaEnd = moment();
-    const delta = moment.duration(deltaEnd.diff(this.deltaBegin));
-    return delta.seconds();
-  }
-
-  /**
    * Set source
    * @param {String} source
    */
-  setSource(source) {
+  setSource(source: MetadataSource) {
     this.source = source;
     this.salt = Math.random()
       .toString(36)
@@ -92,7 +99,7 @@ class MetadataService {
    * Set medium
    * @param {String} medium
    */
-  setMedium(medium) {
+  setMedium(medium: MetadataMedium) {
     this.medium = medium;
     return this;
   }
@@ -101,15 +108,35 @@ class MetadataService {
    * Set campaign
    * @param {String} campaign
    */
-  setCampaign(campaign) {
+  setCampaign(campaign: MetadataCampaign) {
     this.campaign = campaign;
     return this;
   }
 
   /**
+   * Init delta timer
+   */
+  private initDelta() {
+    this.deltaBegin = moment();
+  }
+
+  /**
+   * Get delta in seconds
+   * @returns {integer} seconds
+   */
+  private getDelta(medium) {
+    if (this.medium || medium === 'single') {
+      return 0;
+    }
+    const deltaEnd = moment();
+    const delta = moment.duration(deltaEnd.diff(this.deltaBegin));
+    return delta.seconds();
+  }
+
+  /**
    * Build the page token
    */
-  buildPageToken() {
+  private buildPageToken() {
     const user = sessionService.getUser();
 
     const tokenParts = [
@@ -125,7 +152,7 @@ class MetadataService {
   /**
    * Get current visible route
    */
-  getCurrentRoute() {
+  private getCurrentRoute() {
     const state = NavigationService.getCurrentState();
     if (state.routeName === 'Tabs') {
       return state.routes[state.index].routeName;
@@ -135,37 +162,26 @@ class MetadataService {
   }
 
   /**
-   * returns the client metadata
-   * @param {Object|undefined} overrides
-   */
-  dto(overrides, medium?: string) {
-    return {
-      client_meta: this.build(overrides, medium),
-    };
-  }
-
-  /**
    * Get the metadata for the entity
    * @param {BaseModel} entity
    */
-  getEntityMeta(entity, medium?: string, position?: number) {
-    const overrides = this.entityMapper(entity, medium, position);
-    return this.dto(overrides, medium);
-  }
+  getClientMetadata(
+    entity,
+    medium?: MetadataMedium,
+    position?: number,
+  ): Metadata {
+    const listPosition = entity._list
+      ? entity._list.getIndex(entity) + 1
+      : undefined;
 
-  /**
-   * Build metadata
-   * @param {Object} overrides
-   */
-  private build(overrides = {}, medium?: string) {
     return {
       platform: 'mobile',
       page_token: this.buildPageToken(),
       delta: this.getDelta(medium),
       source: this.source,
-      medium: this.medium,
-      campaign: this.campaign,
-      ...overrides,
+      position: position ?? entity.position ?? listPosition ?? 0,
+      medium: medium || (entity.boosted ? 'featured-content' : this.medium),
+      campaign: entity.boosted_guid ? entity.urn : this.campaign,
     };
   }
 }

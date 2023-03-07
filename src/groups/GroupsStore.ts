@@ -1,11 +1,10 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 
 import groupsService from './GroupsService';
-import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
 import logService from '../common/services/log.service';
-import { isNetworkError } from '../common/services/api.service';
+import { isAbort, isNetworkError } from '../common/services/api.service';
+import OffsetListStore from '../common/stores/OffsetListStore';
 
 /**
  * Groups store
@@ -14,10 +13,11 @@ class GroupsStore {
   /**
    * List store
    */
-  @observable list = new OffsetFeedListStore('shallow');
+  @observable list = new OffsetListStore('shallow');
 
   @observable filter = 'member';
   @observable loading = false;
+  @observable loaded = false;
 
   @action
   setLoading(value) {
@@ -73,7 +73,7 @@ class GroupsStore {
 
   @action
   reset() {
-    this.list = new OffsetFeedListStore('shallow');
+    this.list = new OffsetListStore('shallow');
     this.loading = false;
     this.filter = 'member';
   }

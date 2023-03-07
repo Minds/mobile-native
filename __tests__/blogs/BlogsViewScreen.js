@@ -24,12 +24,8 @@ jest.mock(
   () => 'RemindAction',
 );
 jest.mock(
-  '../../src/newsfeed/activity/actions/ThumbUpAction',
-  () => 'ThumbUpAction',
-);
-jest.mock(
-  '../../src/newsfeed/activity/actions/ThumbDownAction',
-  () => 'ThumbDownAction',
+  '../../src/newsfeed/activity/actions/ThumbAction',
+  () => 'ThumbAction',
 );
 jest.mock(
   '../../src/newsfeed/activity/actions/CommentsAction',

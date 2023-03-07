@@ -37,6 +37,11 @@ import InteractionsBar from '../../../common/components/interactions/Interaction
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
+import {
+  useAnalytics,
+  withAnalyticsContext,
+} from '~/common/contexts/analytics.context';
+import analyticsService from '~/common/services/analytics.service';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -97,9 +102,10 @@ const ActivityOwner = ({
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
+  const analytics = useAnalytics();
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(props.entity),
+    comments: new CommentsStore(props.entity, analytics.contexts),
     scrollViewHeight: 0,
     contentHeight: 0,
     onContentSizeChange(width, height) {
@@ -373,7 +379,15 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 });
 
-export default ActivityFullScreen;
+export default withAnalyticsContext<PropsType>(props => [
+  analyticsService.buildEntityContext(props.entity),
+  analyticsService.buildClientMetaContext({
+    medium: 'single',
+    source: 'single',
+    position: 1,
+    campaign: props.entity?.boosted_guid ? props.entity.urn : undefined,
+  }),
+])(ActivityFullScreen);
 
 /**
  * Styles

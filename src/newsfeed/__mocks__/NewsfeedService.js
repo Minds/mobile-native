@@ -10,7 +10,7 @@ export default class NewsfeedService {
 
 export const update = jest.fn();
 export const toggleComments = jest.fn();
-export const setViewed = jest.fn();
+export const recordView = jest.fn();
 export const toggleMuteNotifications = jest.fn();
 export const follow = jest.fn();
 export const unfollow = jest.fn();

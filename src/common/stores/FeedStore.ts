@@ -1,8 +1,8 @@
 import { observable, action, runInAction } from 'mobx';
 
 import logService from '../services/log.service';
-import Viewed from './Viewed';
-import MetadataService from '../services/metadata.service';
+import ViewStore from './ViewStore';
+import MetadataService, { MetadataMedium } from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
 import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
@@ -65,7 +65,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Viewed store
    */
-  viewed = new Viewed();
+  viewStore = new ViewStore();
 
   /**
    * Metadata service
@@ -121,9 +121,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {BaseModel} entity
    * @param {string} medium
    */
-  addViewed(entity, medium?: string, position?: number) {
+  trackView(entity, medium?: MetadataMedium, position?: number) {
     return this.metadataService
-      ? this.viewed.addViewed(
+      ? this.viewStore.view(
           entity,
           this.metadataService as MetadataService,
           medium,
@@ -679,7 +679,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.loading = false;
     this.entities = [];
     this.feedsService.setOffset(0);
-    this.viewed.clearViewed();
+    this.viewStore.clearViewed();
     return this;
   }
 

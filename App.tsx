@@ -13,10 +13,11 @@ import {
   View,
   Linking,
   UIManager,
-  RefreshControl,
   AppState,
   AppStateStatus,
   Dimensions,
+  NativeEventSubscription,
+  EmitterSubscription,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
@@ -76,17 +77,16 @@ export let APP_CONST = {
  */
 @observer
 class App extends Component<Props> {
-  ShareReceiveListener;
+  shareReceiveSubscription;
 
-  constructor(props) {
+  constructor(
+    props,
+    private disposeLinkSubscription?: EmitterSubscription,
+    private stateSubscription?: NativeEventSubscription,
+    private backHandlerSubscription?: NativeEventSubscription,
+  ) {
     super(props);
     Orientation.lockPortrait();
-
-    if (!RefreshControl.defaultProps) {
-      RefreshControl.defaultProps = {};
-    }
-    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
-    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
   }
 
   /**
@@ -94,9 +94,15 @@ class App extends Component<Props> {
    */
   componentDidMount() {
     // Register event listeners
-    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-    Linking.addEventListener('url', this.handleOpenURL);
-    this.ShareReceiveListener = ShareMenu.addNewShareListener(
+    this.backHandlerSubscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.onBackPress,
+    );
+    this.disposeLinkSubscription = Linking.addEventListener(
+      'url',
+      this.handleOpenURL,
+    );
+    this.shareReceiveSubscription = ShareMenu.addNewShareListener(
       receiveShareService.handle,
     );
 
@@ -123,11 +129,9 @@ class App extends Component<Props> {
    */
   componentWillUnmount() {
     this.stateSubscription?.remove();
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-    Linking.removeEventListener('url', this.handleOpenURL);
-    if (this.ShareReceiveListener) {
-      this.ShareReceiveListener.remove();
-    }
+    this.disposeLinkSubscription?.remove();
+    this.backHandlerSubscription?.remove();
+    this.shareReceiveSubscription?.remove();
   }
 
   /**

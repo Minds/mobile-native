@@ -4,13 +4,13 @@ import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { setViewed, toggleExplicit } from '../newsfeed/NewsfeedService';
+import { recordView, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
-import MetadataService from './services/metadata.service';
+import MetadataService, { MetadataMedium } from './services/metadata.service';
 import { storeRatingService } from 'modules/store-rating';
 
 /**
@@ -228,9 +228,7 @@ export default class BaseModel extends AbstractModel {
   }
 
   getClientMetadata() {
-    return this._list && this._list.metadataService
-      ? this._list.metadataService!.getEntityMeta(this)
-      : {};
+    return this._list?.metadataService?.getClientMetadata(this);
   }
 
   /**
@@ -279,7 +277,7 @@ export default class BaseModel extends AbstractModel {
    * @param {boolean} showAlert Show an alert message if the action is not allowed
    * @returns {boolean}
    */
-  can(actionName: string, showAlert = false) {
+  can(actionName: string, _showAlert = false) {
     // TODO: implement permission check for each action
     // show a toaster notification if showAlert is true
 
@@ -303,16 +301,13 @@ export default class BaseModel extends AbstractModel {
   /**
    * Report viewed content
    */
-  sendViewed(medium?: string, position?: number) {
+  sendViewed(medium?: MetadataMedium, position?: number) {
     if (this._list) {
-      this._list.addViewed(this, medium, position);
+      this._list.trackView(this, medium, position);
     } else {
       const metadata = new MetadataService();
       metadata.setMedium('single').setSource('single');
-      //@ts-ignore
-      setViewed(this, {
-        client_meta: metadata.getEntityMeta(this, medium, position),
-      });
+      recordView(this, metadata.getClientMetadata(this, medium, position));
     }
   }
 
