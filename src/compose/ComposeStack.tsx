@@ -31,9 +31,10 @@ export default function ComposerStack({ route }: { route: RouteProp<any> }) {
         options={{
           headerShown: false,
           presentation: 'card',
+          animationTypeForReplace: 'push',
           ...TransitionPresets.SlideFromRightIOS,
         }}
-        initialParams={{ popOnBack: true }}
+        initialParams={{ safe: true, backIcon: 'close' }}
       />
     </Stack.Navigator>
   );

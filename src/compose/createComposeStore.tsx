@@ -231,13 +231,10 @@ export default function (props) {
       this.onSaveCallback?.(entity);
 
       if (this.createMode === 'boost') {
-        NavigationService.push(
-          hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
-          {
-            entity: entity,
-            boostType: 'post',
-          },
-        );
+        props.navigation.replace('BoostScreenV2', {
+          entity: entity,
+          boostType: 'post',
+        });
       } else {
         popToTop();
       }

@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
-import { showNotification } from '../../../../../AppMessages';
+import React from 'react';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import {
@@ -13,11 +12,10 @@ import {
   Screen,
   ScreenHeader,
 } from '~/common/ui';
-import { useBoostStore } from '../boost.store';
+import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
+import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
-import NavigationService from '../../../../navigation/NavigationService';
-import { useBackHandler } from '@react-native-community/hooks';
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
@@ -26,24 +24,8 @@ function AudienceSelectorScreen({
   route,
 }: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
-  const { popOnBack } = route.params ?? ({} as Record<string, string>);
+  const { safe, backIcon } = route.params ?? ({} as Record<string, string>);
   const boostStore = useBoostStore();
-
-  const popTwice = () => {
-    NavigationService.goBack();
-    NavigationService.goBack();
-  };
-
-  useBackHandler(
-    useCallback(() => {
-      if (popOnBack) {
-        popTwice();
-        return true;
-      }
-
-      return false;
-    }, [popOnBack]),
-  );
 
   if (!boostStore.config) {
     showNotification('Boost config not found', 'danger');
@@ -54,8 +36,9 @@ function AudienceSelectorScreen({
   const onNext = () => {
     navigation.push('BoostComposer');
   };
+
   return (
-    <Screen safe onlyTopEdge={!popOnBack}>
+    <Screen safe onlyTopEdge={!safe}>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -63,8 +46,7 @@ function AudienceSelectorScreen({
             : t('Boost Post')
         }
         back
-        backIcon={popOnBack ? 'close' : undefined}
-        onBack={popOnBack ? popTwice : undefined}
+        backIcon={backIcon}
         shadow
       />
       <FitScrollView>

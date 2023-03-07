@@ -8,10 +8,12 @@ import {
 import React from 'react';
 import { useStores } from '~/common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
+import type { IconMapNameType } from '../../../common/ui/icons/map';
 
 export type BoostStackParamList = {
   BoostAudienceSelector: {
-    popOnBack?: boolean;
+    safe?: boolean;
+    backIcon?: IconMapNameType;
   };
   BoostComposer: undefined;
   BoostReview: undefined;

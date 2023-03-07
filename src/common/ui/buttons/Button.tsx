@@ -256,7 +256,7 @@ export const ButtonComponent = ({
       content = icon;
     } else if (icon) {
       content = (
-        <Row>
+        <Row align="centerStart">
           {!reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
           {title}
           {reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
