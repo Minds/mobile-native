@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import React from 'react';
 import { IconProps } from './IconProps';
 import { Adjust } from './icons/Adjust';
 import { Boost } from './icons/Boost';
@@ -119,4 +119,4 @@ export const Icon = ({
   ...props
 }: IconProps & {
   name: IconNames;
-}) => createElement(icons[name], { ...props });
+}) => React.createElement(icons[name], { ...props });

@@ -9,8 +9,8 @@ import {
   StorybookScreen,
   ButtonsScreen,
   IconsScreen,
-  TabScreen,
   IconButtonsScreen,
+  TabScreen,
   AvatarsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
