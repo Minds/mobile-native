@@ -16,10 +16,10 @@ import { Stack } from '@tamagui/core';
 export function AvatarsScreen(): JSX.Element {
   const { goBack, navigate } = useNavigation();
   return (
-    <Layout f={1} p={'$4'}>
+    <Layout f={1} p="$4">
       <ScrollView>
-        <Text size={'$h3'}>Avatars</Text>
-        <Stack f={1} fw={'wrap'} br={'$4'} mt="$2" fd="row" jc={'space-evenly'}>
+        <Text size="$h3">Avatars</Text>
+        <Stack f={1} fw="wrap" br="$4" mt="$2" fd="row" jc="space-evenly">
           {urls.map((props, index) => (
             <Avatar
               key={`${index}`}
@@ -29,10 +29,10 @@ export function AvatarsScreen(): JSX.Element {
           ))}
         </Stack>
       </ScrollView>
-      <View fd={'row'} mt="$1" space>
+      <View fd="row" mt="$1" space>
         <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button
-          onPress={() => navigate('IconButtons')}
+          onPress={() => navigate('TextInputs')}
           iconAfter={Icons.Send}
           f={1}>
           Next
