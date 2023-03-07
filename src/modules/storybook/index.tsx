@@ -9,6 +9,7 @@ import {
   StorybookScreen,
   ButtonsScreen,
   IconsScreen,
+  TabScreen,
   IconButtonsScreen,
   AvatarsScreen,
 } from './screens'; // end-of-screen-list HYGEN
@@ -25,6 +26,7 @@ export function StorybookNavigator(): JSX.Element {
           <Screen name="Buttons" component={ButtonsScreen} />
           <Screen name="Icons" component={IconsScreen} />
           <Screen name="IconButtons" component={IconButtonsScreen} />
+          <Screen name="Tab" component={TabScreen} />
           <Screen name="Avatars" component={AvatarsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>

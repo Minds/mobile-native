@@ -20,10 +20,7 @@ export function IconButtonsScreen(): JSX.Element {
       </ScrollView>
       <View fd={'row'} mt="$1" space>
         <Button circular icon={Icons.Chevron} onPress={goBack} />
-        <Button
-          onPress={() => navigate('Avatars')}
-          iconAfter={Icons.Send}
-          f={1}>
+        <Button onPress={() => navigate('Tab')} iconAfter={Icons.Send} f={1}>
           Next
         </Button>
       </View>
