@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Stack } from '@tamagui/core';
 
 export function IconsScreen(): JSX.Element {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
@@ -25,7 +25,7 @@ export function IconsScreen(): JSX.Element {
       </ScrollView>
       <View fd={'row'} mt="$1" space>
         <Button icon={Icons.Chevron} circular onPress={goBack} />
-        <Button iconAfter={Icons.Send} f={1}>
+        <Button iconAfter={Icons.Send} f={1} onPress={() => navigate('Tab')}>
           Next
         </Button>
       </View>
