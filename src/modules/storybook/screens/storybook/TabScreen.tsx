@@ -11,7 +11,7 @@ const tabs = [
 ];
 
 export function TabScreen(): JSX.Element {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   return (
     <Layout f={1} p={'$4'}>
       <ScrollView>
@@ -32,7 +32,10 @@ export function TabScreen(): JSX.Element {
       </ScrollView>
       <View fd={'row'} mt="$1" space>
         <Button icon={Icons.Chevron} circular onPress={goBack} />
-        <Button iconAfter={Icons.Send} f={1}>
+        <Button
+          onPress={() => navigate('Avatars')}
+          iconAfter={Icons.Send}
+          f={1}>
           Next
         </Button>
       </View>

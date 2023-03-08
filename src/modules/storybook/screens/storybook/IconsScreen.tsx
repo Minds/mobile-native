@@ -26,11 +26,11 @@ export function IconsScreen(): JSX.Element {
         </Stack>
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button icon={Icons.Chevron} circular onPress={goBack} />
+        <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button
+          onPress={() => navigate('IconButtons')}
           iconAfter={Icons.Send}
-          f={1}
-          onPress={() => navigate('IconButtons')}>
+          f={1}>
           Next
         </Button>
       </View>

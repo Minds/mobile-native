@@ -11,6 +11,7 @@ import {
   IconsScreen,
   IconButtonsScreen,
   TabScreen,
+  AvatarsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,6 +27,7 @@ export function StorybookNavigator(): JSX.Element {
           <Screen name="Icons" component={IconsScreen} />
           <Screen name="IconButtons" component={IconButtonsScreen} />
           <Screen name="Tab" component={TabScreen} />
+          <Screen name="Avatars" component={AvatarsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>
       </ThemeWrapper>

@@ -15,16 +15,17 @@
     "*.css"
   ],
   "dependencies": {
-    "@tamagui/animations-reanimated": "1.5.9",
-    "@tamagui/button": "1.5.9",
-    "@tamagui/core": "1.5.9",
-    "@tamagui/font-size": "1.5.9",
-    "@tamagui/get-button-sized": "1.5.9",
-    "@tamagui/helpers-tamagui": "1.5.9",
-    "@tamagui/react-native-media-driver": "1.5.9",
-    "@tamagui/shorthands": "1.5.9",
-    "@tamagui/stacks": "1.5.9",
-    "@tamagui/text": "1.5.9"
+    "@tamagui/animations-react-native": "1.6.2",
+    "@tamagui/animations-reanimated": "1.6.2",
+    "@tamagui/button": "1.6.2",
+    "@tamagui/core": "1.6.2",
+    "@tamagui/font-size": "1.6.2",
+    "@tamagui/get-button-sized": "1.6.2",
+    "@tamagui/helpers-tamagui": "1.6.2",
+    "@tamagui/react-native-media-driver": "1.6.2",
+    "@tamagui/shorthands": "1.6.2",
+    "@tamagui/stacks": "1.6.2",
+    "@tamagui/text": "1.6.2"
   },
   "scripts": {
     "build": "tamagui-build",
@@ -37,7 +38,7 @@
     "react-native-svg": ">=12"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.5.9",
+    "@tamagui/build": "1.6.2",
     "camelcase": "^6.0.0",
     "cheerio": "^1.0.0-rc.5",
     "glob": "^7.1.6",
