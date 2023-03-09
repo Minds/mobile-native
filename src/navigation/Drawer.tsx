@@ -85,6 +85,13 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.push('Channel', { entity: channel });
       },
     },
+    {
+      name: i18n.t('settings.boostConsole'),
+      icon: 'trending-up',
+      onPress: () => {
+        navigation.push('BoostConsole');
+      },
+    },
     !isIosMindsHidden
       ? {
           name: i18n.t('wire.lock.plus'),
