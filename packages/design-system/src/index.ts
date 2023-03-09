@@ -13,3 +13,4 @@ export * from './Button';
 export * from './TabBar';
 export * from './IconButton';
 export * from './Avatar';
+export * from './controls';

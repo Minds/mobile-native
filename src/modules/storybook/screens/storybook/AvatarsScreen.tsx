@@ -32,7 +32,7 @@ export function AvatarsScreen(): JSX.Element {
       <View fd="row" mt="$1" space>
         <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button
-          onPress={() => navigate('IconButtons')}
+          onPress={() => navigate('Controls')}
           iconAfter={Icons.Send}
           f={1}>
           Next
