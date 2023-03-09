@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { PathConfig } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import {
   IconButtonsScreen,
   TabScreen,
   AvatarsScreen,
+  ListItemsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,6 +29,7 @@ export function StorybookNavigator(): JSX.Element {
           <Screen name="IconButtons" component={IconButtonsScreen} />
           <Screen name="Tab" component={TabScreen} />
           <Screen name="Avatars" component={AvatarsScreen} />
+          <Screen name="ListItems" component={ListItemsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>
       </ThemeWrapper>
