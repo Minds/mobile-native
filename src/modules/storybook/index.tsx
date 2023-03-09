@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { PathConfig } from '@react-navigation/native';
