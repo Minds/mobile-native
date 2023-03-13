@@ -2,12 +2,12 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
+import { Image } from 'expo-image';
 
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
-import FastImage from 'react-native-fast-image';
 import { useDimensions } from '@react-native-community/hooks';
 
 type PropsType = {
@@ -194,11 +194,7 @@ const MediaPresentation = observer(
             <Icon name="close-outline" size={26} style={styles.icon} />
           </TouchableOpacity>
         )}
-        <FastImage
-          source={mediaSource}
-          style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        <Image source={mediaSource} style={styles.image} contentFit="cover" />
         {attachment.uploading && (
           <Progress.Bar
             indeterminate={true}

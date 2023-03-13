@@ -1,4 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
+import { Image } from 'expo-image';
 import {
   StyleProp,
   TextStyle,
@@ -6,7 +7,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { AvatarSource } from '../../../channel/UserModel';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import { B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
@@ -108,7 +108,7 @@ export default function ({
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
-      {avatar && <FastImage source={avatar} style={styles.avatar} />}
+      {avatar && <Image source={avatar} style={styles.avatar} />}
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>
       )}

@@ -8,8 +8,9 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import { Image } from 'expo-image';
+
 import { observer } from 'mobx-react';
-import FastImage from 'react-native-fast-image';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -202,7 +203,7 @@ export default observer(function ComposeScreen(props: ScreenProps) {
           onScroll={onScrollHandler}>
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
-              <FastImage source={avatar} style={styles.wrappedAvatar} />
+              <Image source={avatar} style={styles.wrappedAvatar} />
             </View>
             <View style={useStyle('flexContainer', 'marginRight2x')}>
               {!store.noText && (

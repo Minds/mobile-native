@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Pressable, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
+
 import number from '../../common/helpers/number';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import ThemedStyles from '~styles/ThemedStyles';
@@ -21,7 +22,7 @@ export default observer(function TokenPrice() {
   return (
     <Pressable style={styles.pressableContainer}>
       <View style={styles.avatarContainer}>
-        <FastImage
+        <Image
           style={styles.avatar}
           resizeMode="contain"
           source={{

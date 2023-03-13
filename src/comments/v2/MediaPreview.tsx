@@ -2,7 +2,7 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
@@ -42,7 +42,7 @@ export default observer(function MediaPreview({
     case 'image':
     default:
       body = (
-        <FastImage
+        <Image
           resizeMode="cover"
           source={src}
           style={[styles.preview, aspect]}

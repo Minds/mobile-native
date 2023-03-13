@@ -1,5 +1,4 @@
 import { runInAction, action, observable, decorate } from 'mobx';
-import FastImage, { Source } from 'react-native-fast-image';
 import { FlatList, Alert, Platform } from 'react-native';
 import _ from 'lodash';
 import BaseModel from '../common/BaseModel';
@@ -29,6 +28,7 @@ import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import socketService from '~/common/services/socket.service';
 import { hasVariation } from '../../ExperimentsProvider';
+import { Image, ImageSource } from 'expo-image';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -214,7 +214,7 @@ export default class ActivityModel extends BaseModel {
    * {uri: 'http...'}
    * @param {string} size
    */
-  getThumbSource(size: ThumbSize = 'medium'): Source {
+  getThumbSource(size: ThumbSize = 'medium'): ImageSource {
     // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
       size = 'xlarge';
@@ -275,7 +275,8 @@ export default class ActivityModel extends BaseModel {
    * Preload thumb on image cache
    */
   preloadThumb(size: ThumbSize = 'medium') {
-    FastImage.preload([this.getThumbSource(size)]);
+    const uri = this.getThumbSource(size)?.uri;
+    uri && Image.prefetch(uri);
   }
 
   shouldBeBlured(): boolean {
