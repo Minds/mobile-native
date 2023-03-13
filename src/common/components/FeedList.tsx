@@ -115,8 +115,8 @@ export type FeedListPropsType<T extends BaseModel> = {
 /**
  * News feed list component
  */
-@observer
 @withFeedStoreProvider
+@observer
 export class FeedList<T extends BaseModel> extends Component<
   FeedListPropsType<T>
 > {

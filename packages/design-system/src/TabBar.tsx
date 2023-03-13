@@ -35,6 +35,7 @@ const TabBarItems = React.memo<TabBarItemsProps>(
     <>
       {tabs.map((tab, i) => (
         <Item
+          key={`${i}`}
           active={index === i}
           onLayout={event => {
             positions[i] = event.nativeEvent.layout;
