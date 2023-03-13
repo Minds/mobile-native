@@ -12,7 +12,7 @@ export const Row = styled(Stack, {
 });
 
 export const Column = styled(Stack, {
-  tag: 'Row',
+  tag: 'Column',
   fd: 'column',
 });
 
