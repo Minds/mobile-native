@@ -13,6 +13,7 @@ import {
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
+import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
 import ComposeIcon from '../compose/ComposeIcon';
 import { InternalStack } from '../navigation/NavigationStack';
@@ -30,6 +31,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
+import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -61,6 +63,9 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
+  // to enable testing of the badge from devoptions
+  useIsFeatureOn('mob-4812-discovery-badge');
+
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -258,6 +263,12 @@ const iconFromRoute: Record<string, IconMapNameType> = {
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
+    if (
+      route.name === 'Discovery' &&
+      hasVariation('mob-4812-discovery-badge')
+    ) {
+      return <DiscoveryIcon active={focused} />;
+    }
     if (route.name === 'Notifications') {
       return <NotificationIcon active={focused} />;
     }
