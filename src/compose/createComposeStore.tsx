@@ -513,7 +513,7 @@ export default function (props) {
      * Submit post
      */
     async submit() {
-      if (!this.entity) {
+      if (!this.entity && this.isEdit) {
         console.error("Entity isn't available");
         return;
       }
@@ -603,7 +603,7 @@ export default function (props) {
 
         // add remind
         if (this.isRemind) {
-          newPost.remind_guid = this.entity.guid;
+          newPost.remind_guid = this.entity?.guid;
         }
 
         if (
@@ -640,7 +640,7 @@ export default function (props) {
         }
 
         // keep the container if it is an edited activity
-        if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
+        if (this.isEdit && typeof this.entity?.container_guid !== 'undefined') {
           newPost.container_guid = this.entity.container_guid;
         }
 
@@ -651,7 +651,7 @@ export default function (props) {
         this.setPosting(true);
 
         const reqPromise = this.isEdit
-          ? api.post(`api/v3/newsfeed/activity/${this.entity.guid}`, newPost)
+          ? api.post(`api/v3/newsfeed/activity/${this.entity!.guid}`, newPost)
           : api.put('api/v3/newsfeed/activity', newPost);
 
         const response = await reqPromise;
@@ -661,8 +661,8 @@ export default function (props) {
         }
 
         if (this.isEdit) {
-          this.entity.update(response);
-          this.entity.setEdited('1');
+          this.entity!.update(response);
+          this.entity!.setEdited('1');
           return this.entity;
         }
 
