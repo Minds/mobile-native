@@ -128,10 +128,6 @@ const SettingsScreen = observer(({ navigation }) => {
 
   const secondSection: Array<Item> = [
     {
-      title: i18n.t('settings.boostConsole'),
-      screen: 'BoostConsole',
-    },
-    {
       title: i18n.t(
         ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
       ),
@@ -182,11 +178,11 @@ const SettingsScreen = observer(({ navigation }) => {
           <ScreenHeader title={i18n.t('moreScreen.settings')} />
         </HiddenTap>
         {firstSectionItems.map((item, index) => (
-          <MenuItem noBorderTop={index > 0} {...item} />
+          <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
         ))}
         <View style={theme.marginTop7x}>
           {secondSectionItems.map((item, index) => (
-            <MenuItem noBorderTop={index > 0} {...item} />
+            <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
           ))}
         </View>
       </ScrollView>
