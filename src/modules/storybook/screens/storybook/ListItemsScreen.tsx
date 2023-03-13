@@ -5,7 +5,6 @@ import React, { useReducer } from 'react';
 import { ScrollView } from 'react-native';
 import ErrorBoundary from '~/common/components/ErrorBoundary';
 import SettingInput from '~/common/components/SettingInput';
-import MenuItemOption from '~/common/components/menus/MenuItemOption';
 
 export function ListItemsScreen(): JSX.Element {
   const { goBack, navigate } = useNavigation();
@@ -55,30 +54,6 @@ function ListItems(): JSX.Element {
             placeholder={'Subtitle'}
             onChangeText={t => setState({ subtitle: t })}
             value={subtitle}
-          />
-          <MenuItemOption
-            title="Avatar"
-            onPress={() => setState({ avatar: !avatar })}
-            mode="checkbox"
-            selected={avatar}
-          />
-          <MenuItemOption
-            title="Left Icon"
-            onPress={() => setState({ leftIcon: !leftIcon })}
-            mode="checkbox"
-            selected={leftIcon}
-          />
-          <MenuItemOption
-            title="Right Icon"
-            onPress={() => setState({ rightIcon: !rightIcon })}
-            mode="checkbox"
-            selected={rightIcon}
-          />
-          <MenuItemOption
-            title="Pressable"
-            onPress={() => setState({ pressable: !pressable })}
-            mode="checkbox"
-            selected={pressable}
           />
         </View>
 
