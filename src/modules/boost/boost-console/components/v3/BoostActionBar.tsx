@@ -27,7 +27,8 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
   } = boost ?? {};
   const date = moment(created_timestamp * 1000).format('M/D/YY h:mma');
 
-  const cpm = (payment_amount * (summary?.views_delivered ?? 0)) / 1000;
+  const impressions = summary?.views_delivered ?? 0;
+  const cpm = impressions > 0 ? (1000 * payment_amount) / impressions : 0;
   const cpmLabel = t(
     payment_method === BoostPaymentMethod.cash ? '${{cpm}}' : '{{cpm}} tokens',
     { cpm },
