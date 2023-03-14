@@ -36,7 +36,7 @@ export default observer(function MediaPreview({ store }: PropsType) {
        */
       const minAspectRatio = width / height;
 
-      if (aspectRatio < minAspectRatio) {
+      if (!aspectRatio || aspectRatio < minAspectRatio) {
         aspectRatio = minAspectRatio;
       }
 
