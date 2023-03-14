@@ -545,7 +545,6 @@ export default function (props) {
         let newPost = {
           message: this.text,
           access_id: this.accessId,
-          time_created: Math.floor(this.time_created / 1000) || null,
         };
 
         if (this.supermindRequest) {
