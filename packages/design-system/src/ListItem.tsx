@@ -54,7 +54,7 @@ export const ListItem = BaseListItemFrame.extractable(
         {(avatarUrl || leftIcon) && (
           <View mr="$3" mt="$1" als="flex-start">
             {avatarUrl ? (
-              <Avatar sSize="l" bordered url={avatarUrl} />
+              <Avatar sSize="m" bordered url={avatarUrl} />
             ) : (
               leftIcon && <Icon name={leftIcon} size="$3" />
             )}
