@@ -2,6 +2,29 @@
 
 Minds Mobile
 
+## 4.32.4 (2023-03-09)
+
+### Features ✨ (1 change)
+
+- [Added IconButtons](minds/mobile-native!2155)
+
+### Fixed 🐛 (4 changes)
+
+- [Fix channel not showing feed](minds/mobile-native!2168)
+- [Fixed the media attachment for quoted posts and superminds](minds/mobile-native!2167)
+- [Disable autocomplete for comments in Android devices, to prevent a crash](minds/mobile-native!2166)
+- [Fix malformed boosts injected in the feed](minds/mobile-native!2160)
+
+### Changed 🔧 (1 change)
+
+- [Keyboard now opens automatically when opening comments on a post with no comments](minds/mobile-native!2163)
+
+### Other (3 changes)
+
+- [Fix error when unmounting the app component](minds/mobile-native!2162)
+- [Design v2 top tab bar with animations](minds/mobile-native!2159)
+- [Design system v2 colors and button fixes](minds/mobile-native!2157)
+
 ## 4.32.3 (2023-03-06)
 
 ### Fixed 🐛 (1 change)
