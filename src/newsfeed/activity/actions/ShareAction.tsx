@@ -17,6 +17,7 @@ import {
   BottomSheetModal,
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
+import { useAnalytics } from '~/common/contexts/analytics.context';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,11 +26,21 @@ type PropsType = {
 export default observer(function ShareAction({ entity }: PropsType) {
   // Do not render BottomSheet unless it is necessary
   const ref = React.useRef<any>(null);
-  // store
+  const analytics = useAnalytics();
+  const { guid, entity_guid, type, text, urn } = entity ?? {};
+
+  const title = type === 'comment' ? '' : text;
+
+  const requestParams =
+    type === 'comment' ? `${entity_guid}?focusedCommentUrn=${urn}` : guid;
+
+  const sharedLink = `${MINDS_URI}newsfeed/${requestParams}`;
+
   const localStore = useLocalStore(() => ({
     menuShown: false,
     onPress() {
       if (Platform.OS === 'ios') {
+        analytics.trackClick('share');
         localStore.share();
       } else {
         if (!localStore.menuShown) {
@@ -45,9 +56,11 @@ export default observer(function ShareAction({ entity }: PropsType) {
       ref.current?.dismiss();
     },
     share() {
-      ShareService.share(entity.text, MINDS_URI + 'newsfeed/' + entity.guid);
+      analytics.trackClick('share');
+      ShareService.share(title, sharedLink);
     },
     async sendTo() {
+      analytics.trackClick('sendTo');
       ref.current?.dismiss();
       try {
         const installed = await SendIntentAndroid.isAppInstalled(
@@ -56,7 +69,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
         if (installed) {
           SendIntentAndroid.sendText({
             title: '',
-            text: MINDS_URI + 'newsfeed/' + entity.guid,
+            text: sharedLink,
             type: SendIntentAndroid.TEXT_PLAIN,
             package: ANDROID_CHAT_APP,
           });

@@ -24,6 +24,8 @@ import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import { isNetworkError } from '../../common/services/api.service';
 import { storeRatingService } from 'modules/store-rating';
+import { EventContext } from '@snowplow/react-native-tracker';
+import analyticsService from '../../common/services/analytics.service';
 
 const COMMENTS_PAGE_SIZE = 12;
 
@@ -63,9 +65,13 @@ export default class CommentsStore {
   // parent for reply
   parent: CommentModel | null = null;
 
-  constructor(entity) {
+  constructor(entity, private analyticContexts: EventContext[] = []) {
     this.focusedCommentUrn = this.getFocusedCommentUrn();
     this.entity = entity;
+  }
+
+  getAnalyticContexts() {
+    return this.analyticContexts;
   }
 
   getParentPath() {
@@ -425,6 +431,7 @@ export default class CommentsStore {
       this.embed.clearRichEmbedAction();
       this.attachment.clear();
       storeRatingService.track('comment', true);
+      analyticsService.trackClick('comment', this.analyticContexts);
 
       if (this.entity.incrementCommentsCounter) {
         this.entity.incrementCommentsCounter();

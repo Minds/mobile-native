@@ -57,14 +57,17 @@ const Stack = createStackNavigator();
 
 const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
-  const { comment, entity, open } = route.params ?? {};
+  const { comment, entity, open, parentCommentsStore } = route.params ?? {};
 
   useBackHandler(() => {
     navigation.goBack();
     return true;
   });
   const store = React.useMemo(() => {
-    const commentStore = new CommentsStore(entity);
+    const commentStore = new CommentsStore(
+      entity,
+      parentCommentsStore?.getAnalyticContexts(),
+    );
     commentStore.setParent(comment);
     return commentStore;
   }, [comment, entity]);
@@ -90,7 +93,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   const sheetRef = React.useRef<any>(null);
-  const route = useRoute<any>();
 
   React.useImperativeHandle(ref, () => ({
     expand: () => {
@@ -139,17 +141,13 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   React.useEffect(() => {
     if (
-      (props.commentsStore.parent &&
-        props.commentsStore.parent['comments:count'] === 0) ||
-      (route.params?.open && props.commentsStore.entity['comments:count'] === 0)
+      localStore.isVisible &&
+      (props.commentsStore?.parent?.['comments:count'] === 0 ||
+        props.commentsStore?.entity?.['comments:count'] === 0)
     ) {
-      setTimeout(() => {
-        if (props?.commentsStore) {
-          props.commentsStore.setShowInput(true);
-        }
-      }, 500);
+      props.commentsStore?.setShowInput(true);
     }
-  }, [props.commentsStore, route.params]);
+  }, [props.commentsStore, localStore.isVisible]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
@@ -215,7 +213,10 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
           <Stack.Screen
             name="ReplyComment"
             component={ScreenReplyComment}
-            initialParams={{ focusedCommentUrn }}
+            initialParams={{
+              focusedCommentUrn,
+              parentCommentsStore: props.commentsStore,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

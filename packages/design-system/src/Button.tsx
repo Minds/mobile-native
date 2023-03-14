@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { TamaguiElement, styled, themeable } from '@tamagui/core';
 import { YStack } from '@tamagui/stacks';
 import { SizableText } from '@tamagui/text';
@@ -25,6 +25,14 @@ export const ButtonFrame = styled(YStack, {
       l: (_, extra) => getButtonStyle('$4', extra),
       m: (_, extra) => getButtonStyle('$3.5', extra),
       s: (_, extra) => getButtonStyle('$3', extra),
+      xs: (_, extra) => getButtonStyle('$2.5', extra),
+    },
+    circular: {
+      true: {
+        size: '$2.5',
+        width: '$2.5',
+        paddingHorizontal: '$0',
+      },
     },
     disabled: {
       true: {
@@ -32,17 +40,20 @@ export const ButtonFrame = styled(YStack, {
         opacity: 0.5,
       },
     },
-    outline: {
-      true: {
+    mode: {
+      solid: {},
+      outline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
       },
-    },
-    base: {
-      true: {
+      base: {
         backgroundColor: 'transparent',
         borderWidth: 1,
         borderColor: 'transparent',
+      },
+      simple: {
+        backgroundColor: 'transparent',
+        borderWidth: 0,
       },
     },
     type: {
@@ -97,11 +108,23 @@ export const ButtonFrame = styled(YStack, {
           borderColor: '$borderColorHoverWarning',
         },
       },
+      basic: {
+        focusStyle: {
+          backgroundColor: '$backgroundFocusBasic',
+        },
+        pressStyle: {
+          backgroundColor: '$backgroundPressBasic',
+        },
+        hoverStyle: {
+          backgroundColor: '$backgroundHoverBasic',
+        },
+      },
     },
   } as const,
 
   defaultVariants: {
     type: 'primary',
+    mode: 'solid',
     sSize: 'm',
   },
 });
@@ -130,21 +153,31 @@ export const ButtonText = styled(SizableText, {
         size: '$3',
       },
     },
-    type: {
-      primary: {
-        color: '$colorPrimary',
-      },
-      secondary: {
-        color: '$colorSecondary',
-      },
-      warning: {
-        color: '$colorWarning',
-      },
+    mode: {
+      solid: {},
+      outline: {},
+      base: {},
     },
+    type: (type, { props }) =>
+      ({
+        primary: {
+          color:
+            props['mode'] === 'solid'
+              ? '$colorPrimaryInverted'
+              : '$colorPrimary',
+        },
+        secondary: {
+          color: '$colorSecondary',
+        },
+        warning: {
+          color: '$colorWarning',
+        },
+      }[type]),
   } as const,
   defaultVariants: {
     sSize: 'm',
     type: 'primary',
+    mode: 'solid',
   },
 });
 

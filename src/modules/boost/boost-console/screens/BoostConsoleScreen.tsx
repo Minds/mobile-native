@@ -26,7 +26,7 @@ function BoostConsoleScreen({
   navigation,
 }: BoostConsoleScreenProps) {
   const { t } = useTranslation();
-  const { location: boostLocation, filter } = route?.params || {};
+  const { location: boostLocation, filter, boostGuid } = route?.params ?? {};
   const boostConsoleStore = useRef(new BoostConsoleStore()).current;
   let empty;
 
@@ -55,6 +55,13 @@ function BoostConsoleScreen({
 
     boostConsoleStore.loadList(!!guid);
   }, [boostConsoleStore, boostLocation, guid, filter]);
+
+  // open the single boost screen if the params exists
+  useEffect(() => {
+    if (boostGuid) {
+      navigation.navigate('SingleBoostConsole', { guid: boostGuid });
+    }
+  }, [boostGuid, navigation]);
 
   /**
    * Render row

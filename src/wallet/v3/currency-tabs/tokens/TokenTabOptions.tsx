@@ -12,7 +12,7 @@ import {
   BottomSheetButton,
   BottomSheetMenuItem,
 } from '../../../../common/components/bottom-sheet';
-import { IS_IOS, ONCHAIN_ENABLED } from '../../../../config/Config';
+import { ONCHAIN_ENABLED } from '../../../../config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -51,16 +51,6 @@ const TokenTabOptions = observer((props: PropsType) => {
         },
         iconName: 'arrow-right',
         iconType: 'material-community',
-      });
-    !IS_IOS &&
-      actions.push({
-        title: i18n.t('buyTokensScreen.title'),
-        onPress: () => {
-          close();
-          navigation.navigate('BuyTokens');
-        },
-        iconName: 'coins',
-        iconType: 'font-awesome-5',
       });
     if (isConnected) {
       actions.push({

@@ -5,11 +5,17 @@ import api, {
 import i18n from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
 import { hasVariation } from '../../../../ExperimentsProvider';
+import BoostModelV3 from '../models/BoostModelV3';
 import { BoostConsoleBoost, BoostStatus } from './types/BoostConsoleBoost';
 
 type BoostsResponse = {
   boosts: BoostConsoleBoost[];
+  offset?: string;
   has_more: boolean;
+} & ApiResponse;
+
+type SingleBoostsResponse = {
+  boost: BoostConsoleBoost;
 } & ApiResponse;
 
 export async function getBoosts(offset, filter, peer_filter) {
@@ -50,7 +56,7 @@ export async function getBoostsV3(
 
     return {
       entities: data.boosts || [],
-      offset: data['load-next'],
+      offset: data.has_more ? (offset ?? 0) + 15 : 0, // v3 doesn't use offset strings
     };
   } catch (err) {
     if (!isNetworkError(err)) {
@@ -82,4 +88,14 @@ export function acceptBoost(guid) {
   }
 
   return api.put(`api/v2/boost/peer/${guid}`);
+}
+
+export async function getSingleBoost(
+  guid: string,
+): Promise<BoostModelV3 | null> {
+  const { boost } = await api.get<SingleBoostsResponse>(
+    `api/v3/boosts/${guid}`,
+  );
+
+  return boost ? BoostModelV3.create(boost) : null;
 }

@@ -84,10 +84,10 @@ const Description = ({ users, total, limit, onPress }) => {
         }
 
         return (
-          <>
+          <React.Fragment key={index}>
             {prefix}
             <ChannelUsername user={user} />
-          </>
+          </React.Fragment>
         );
       })}{' '}
       <B2 color="secondary">{text}</B2>

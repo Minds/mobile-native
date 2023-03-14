@@ -40,11 +40,18 @@ const useNotificationRouter = (
           router.navigateToObject();
           break;
         case NotificationType.boost_accepted:
+        case NotificationType.boost_rejected:
         case NotificationType.boost_completed:
-          navigation.navigate('BoostConsole', {
-            location:
-              notification.data?.boost_location === 2 ? 'sidebar' : undefined,
-          });
+          if (notification.entity?.guid) {
+            navigation.navigate('SingleBoostConsole', {
+              guid: notification.entity?.guid,
+            });
+          } else {
+            navigation.navigate('BoostConsole', {
+              location:
+                notification.data?.boost_location === 2 ? 'sidebar' : undefined,
+            });
+          }
           break;
         case NotificationType.supermind_accepted:
           navigator.navTo('Activity');

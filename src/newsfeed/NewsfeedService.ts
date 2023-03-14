@@ -6,10 +6,9 @@ import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
 import analyticsService from '../common/services/analytics.service';
 import type ActivityModel from './ActivityModel';
-import type BlogModel from '../blogs/BlogModel';
-import UserModel from '../channel/UserModel';
-import GroupModel from '../groups/GroupModel';
 import { storeRatingService } from 'modules/store-rating';
+import { Metadata } from '../common/services/metadata.service';
+import BaseModel from '../common/BaseModel';
 
 export default class NewsfeedService {
   async _getFeed(endpoint, offset, limit) {
@@ -98,43 +97,34 @@ export function toggleComments(guid, value) {
 }
 
 /**
- * Mark as viewed
+ * records view of an in-feed entity
  * @param {Object} entity
  * @param {Object} data
  */
-export async function setViewed(
-  entity: ActivityModel | BlogModel | GroupModel | UserModel,
-  extra: any = {},
+export async function recordView(
+  entity: BaseModel | ActivityModel,
+  extra: Metadata,
 ) {
-  let data;
-
   // ignore if there is no internet
   if (!connectivityService.isConnected) {
     return;
   }
 
-  if (extra.client_meta) {
-    analyticsService.trackViewedContent(entity, extra.client_meta);
-  }
+  analyticsService.trackEntityView(entity, extra);
 
-  if (
-    !(entity instanceof GroupModel || entity instanceof UserModel) &&
-    entity.boosted_guid
-  ) {
-    data = await api.post(
-      'api/v2/analytics/views/boost/' + entity.boosted_guid,
-      extra,
-    );
+  if ('boosted_guid' in entity && entity.boosted_guid) {
+    let url = `api/v2/analytics/views/boost/${entity.boosted_guid}`;
+    // TODO: record channel with the url according to web
+    // https://gitlab.com/minds/front/-/blob/e256a141bed6303ec3c24f8999560e4633614867/src/app/modules/newsfeed/services/newsfeed.service.ts#L48
+
+    await api.post(url, extra);
   } else {
-    data = await api.post(
-      'api/v2/analytics/views/entity/' + entity.guid,
-      extra,
-    );
+    await api.post('api/v2/analytics/views/entity/' + entity.guid, extra);
   }
 
   storeRatingService.track('viewPost');
 
-  return data;
+  return;
 }
 
 /**

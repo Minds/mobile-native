@@ -63,11 +63,6 @@ export default observer(function VerifyUniquenessScreen() {
       screen: 'UpgradeScreen',
       params: { onComplete: () => inFeedNoticesService.load(), pro: true },
     },
-    /*{
-      title: i18n.t('onboarding.buyTokens'),
-      screen: '',
-      params: {},
-    },*/
   ];
 
   const steps = stepsMapping.map(mappingCallback);

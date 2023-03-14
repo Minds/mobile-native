@@ -19,7 +19,7 @@ export function ButtonsScreen(): JSX.Element {
         <ButtonsSizes />
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button icon={Icons.Chevron} circular onPress={goBack} />
+        <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button iconAfter={Icons.Send} f={1} onPress={() => navigate('Icons')}>
           Next
         </Button>
@@ -55,26 +55,29 @@ function Buttons({ disabled = false }: { disabled?: boolean }): JSX.Element {
       <Button disabled={disabled} sSize="xl" type="primary">
         {t('Primary')}
       </Button>
-      <Button disabled={disabled} type="primary" outline sSize="m">
+      <Button disabled={disabled} type="primary" mode="outline" sSize="m">
         {t('Outline')}
       </Button>
-      <Button disabled={disabled} type="primary" base sSize="m">
+      <Button disabled={disabled} type="primary" mode="base" sSize="m">
         {t('Base')}
       </Button>
       <Button disabled={disabled} type="secondary" sSize="m">
         {t('Secondary')}
       </Button>
-      <Button disabled={disabled} type="secondary" outline sSize="m">
+      <Button disabled={disabled} type="secondary" mode="outline" sSize="m">
         {t('Outline')}
       </Button>
-      <Button disabled={disabled} type="secondary" base sSize="m">
+      <Button disabled={disabled} type="secondary" mode="base" sSize="m">
         {t('Base')}
       </Button>
       <Button disabled={disabled} type="warning" sSize="m">
         {t('Warning')}
       </Button>
-      <Button disabled={disabled} type="warning" outline sSize="m">
+      <Button disabled={disabled} type="warning" mode="outline" sSize="m">
         {t('Outline')}
+      </Button>
+      <Button disabled={disabled} type="warning" mode="base" sSize="m">
+        {t('Base')}
       </Button>
     </View>
   );

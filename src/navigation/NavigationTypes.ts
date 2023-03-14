@@ -78,7 +78,6 @@ export type MoreStackParamList = {
   Settings: {};
   Analytics: {};
   InitialOnboarding: {};
-  BuyTokens: {};
   Account: {};
   Network: {};
   Security: {};
@@ -239,6 +238,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  SingleBoostConsole: {
+    guid: string;
+  };
   BoostConsole: {
     location?: string;
   };

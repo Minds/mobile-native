@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FunctionComponent, useContext } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import { getButtonSized } from '@tamagui/get-button-sized';
 import {
   ButtonNestingContext,
@@ -22,6 +22,7 @@ type ButtonIconProps = { color?: string; size?: number };
 type IconProp = JSX.Element | FunctionComponent<ButtonIconProps> | null;
 
 export type ButtonType = 'primary' | 'secondary' | 'warning';
+export type ModeType = 'solid' | 'outline' | 'base';
 
 export type ButtonProps = Omit<TextParentStyles, 'TextComponent'> &
   // GetProps<typeof ButtonFrame> &
@@ -61,14 +62,8 @@ export type ButtonProps = Omit<TextParentStyles, 'TextComponent'> &
      * Semantic type
      */
     type?: ButtonType;
-    /**
-     * Base mode
-     */
-    base?: boolean;
-    /**
-     * outline mode
-     */
-    outline?: boolean;
+
+    mode?: ModeType;
   };
 
 export function getButtonStyle(
@@ -76,7 +71,6 @@ export function getButtonStyle(
   variants: VariantSpreadExtras<any>,
 ): ReturnType<typeof getButtonSized> {
   const style = getButtonSized(val, variants);
-  style.borderRadius = 10000; //round buttons
   return style;
 }
 
@@ -112,14 +106,26 @@ export function useButton(propsIn: ButtonProps, Text: any) {
     ...propsActive.textProps,
     ...(propsIn.sSize && { sSize: propsIn.sSize }),
     ...(propsIn.type && { type: propsIn.type }),
+    ...(propsIn.mode && { mode: propsIn.mode }),
   };
+
+  const type = propsIn.type || 'primary';
+  const mode = propsIn.mode || 'solid';
+  const typeColor =
+    type === 'primary'
+      ? mode === 'solid'
+        ? '$colorPrimaryInverted'
+        : '$colorPrimary'
+      : '$colorPrimary';
+
+  const iconColor = color || typeColor;
 
   const size = propsActive.size ?? '$3.5';
   const iconSize =
     (typeof size === 'number'
       ? size * 0.5
       : getFontSize(size as FontSizeTokens)) * scaleIcon;
-  const getThemedIcon = useGetThemedIcon({ size: iconSize, color });
+  const getThemedIcon = useGetThemedIcon({ size: iconSize, color: iconColor });
   const [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon);
   const spaceSize = getVariableValue(iconSize) * scaleSpace;
   const contents = wrapChildrenInText(Text, propsActive);
