@@ -36,6 +36,12 @@ type ItemType = {
   [propName: string]: any;
 };
 
+export enum BoostPartnerSuitability {
+  DISABLED = 1,
+  SAFE = 2,
+  CONTROVERSIAL = 3,
+}
+
 const BoostSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
   const user = sessionService.getUser();
@@ -43,7 +49,7 @@ const BoostSettingsScreen = observer(() => {
   const localStore = useLocalStore(() => ({
     loading: true,
     viewBoostedContent: false,
-    showBoostChannel: 'controversial' as BoostChannelType,
+    showBoostChannel: 3 as BoostPartnerSuitability,
     boostAutoRotation: false,
     openContent: false,
     liquiditySpot: false,
@@ -56,7 +62,7 @@ const BoostSettingsScreen = observer(() => {
       this.boostAutoRotation = Boolean(settings.channel.boost_autorotate);
       this.openContent = settings.channel.boost_rating === 2;
       this.liquiditySpot = !settings.channel.liquidity_spot_opt_out;
-
+      this.showBoostChannel = settings.channel.boost_partner_suitability || 3;
       this.loading = false;
     },
     setViewBoostedContent(val: boolean) {
@@ -77,10 +83,10 @@ const BoostSettingsScreen = observer(() => {
 
       user.setLiquiditySpotOptOut(val ? false : true);
     },
-    setShowBoostChannel(value: BoostChannelType) {
+    setShowBoostChannel(value: BoostPartnerSuitability) {
       this.showBoostChannel = value;
       //TODO: IMPLEMENT WHEN THE BACKEND IS IN PLACE
-      //this.save({ DEFINE_VAR_NAME: val ? 0 : 1 });
+      this.save({ boost_partner_suitability: value });
     },
     async showBoost(): Promise<void> {
       try {
@@ -136,7 +142,8 @@ const BoostSettingsScreen = observer(() => {
     {
       id: 'showBoostChannel',
       isSelected: value => localStore.showBoostChannel === value,
-      onPress: (val: BoostChannelType) => localStore.setShowBoostChannel(val),
+      onPress: (val: BoostPartnerSuitability) =>
+        localStore.setShowBoostChannel(val),
       browserOnly: false,
       mindsPlus: false,
       tooltip: {
@@ -144,9 +151,9 @@ const BoostSettingsScreen = observer(() => {
         width: 220,
       },
       options: [
-        ['controversial', 'controversial'],
-        ['safe', 'safe'],
-        ['disable', 'disable'],
+        ['controversial', BoostPartnerSuitability.CONTROVERSIAL],
+        ['safe', BoostPartnerSuitability.SAFE],
+        ['disable', BoostPartnerSuitability.DISABLED],
       ],
     },
     {
