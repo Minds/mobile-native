@@ -758,7 +758,7 @@ export default function (props) {
 type PostPayload = {
   message?: string;
   access_id?: string | number;
-  time_created: number | null;
+  time_created?: number | null;
   supermind_request?: SupermindRequestParam & {
     receiver_username: string;
     receiver_guid: string;
