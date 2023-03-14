@@ -562,6 +562,8 @@ PODS:
     - React
   - RNGestureHandler (2.8.0):
     - React-Core
+  - RNIap (12.8.3):
+    - React-Core
   - RNImageColors (1.3.1):
     - React-Core
   - RNInAppBrowser (3.6.3):
@@ -750,6 +752,7 @@ DEPENDENCIES:
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNImageColors (from `../node_modules/react-native-image-colors`)
   - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNLocalize (from `../node_modules/react-native-localize`)
@@ -980,6 +983,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNImageColors:
     :path: "../node_modules/react-native-image-colors"
   RNInAppBrowser:
@@ -1136,6 +1141,7 @@ SPEC CHECKSUMS:
   RNFlashList: 5318fc0772902ffa55170b35caa95ad5a69da3ef
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
+  RNIap: ac2bf44a2a39094703f574c93c55949fc80d6fae
   RNImageColors: 5bb550d397934b18a55b8beec2af683bb9432898
   RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
