@@ -165,6 +165,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
           {supportTiers.map(tier => (
             <MenuItemOption
+              key={tier.guid}
               title={tier.name}
               subtitle={`${tier.description}${
                 tier.description ? '\n' : ''
