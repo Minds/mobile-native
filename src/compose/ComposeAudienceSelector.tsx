@@ -30,6 +30,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { upgradeToPlus } from '../upgrade/UpgradeScreen';
 import { ComposeAudience } from './createComposeStore';
 import { ComposeStoreType } from './useComposeStore';
+import { Trans } from 'react-i18next';
 
 const BOTTOM_SHEET_HEIGHT = Math.floor(Dimensions.get('window').height * 0.8);
 
@@ -53,31 +54,6 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const { user } = useLegacyStores();
   const [groupsVisible, setGroupsVisible] = useState(!monetizedOnly);
   const selected = store.audience;
-
-  // TODO: i18n
-  const texts = {
-    title: 'Select Audience',
-    done: i18n.t('done'),
-    audience: {
-      public: {
-        title: 'Public',
-      },
-      plus: {
-        title: 'Minds+',
-        subtitle:
-          'Submit this post to Minds+ Premium Content and earn a share of our revenue based on how it performs.',
-      },
-    },
-    memberships: 'Memberships',
-    groups: 'Groups',
-    noGroups: "You aren't a member of any groups",
-    plus: {
-      title: 'Plus monetization',
-      action: 'I agree to the terms',
-    },
-    manage: 'Manage',
-    getStarted: 'Get started',
-  };
 
   const select = useCallback(
     async audience => {
@@ -118,7 +94,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
       store.setAudience(audience);
     },
-    [navigation, store, texts.plus.action, texts.plus.title, user.me.plus],
+    [navigation, store, user.me.plus],
   );
 
   useFocusEffect(
@@ -190,9 +166,9 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           {supportTiers.map(tier => (
             <MenuItemOption
               title={tier.name}
-              subtitle={`${tier.description}${tier.description ? '\n' : ''}$${
-                tier.usd
-              }+ / month`} // TODO: i18n
+              subtitle={`${tier.description}${
+                tier.description ? '\n' : ''
+              }${i18n.t('membership.monthly', { usd: tier.usd })}`}
               reversedIcon
               borderless
               selected={
@@ -318,23 +294,27 @@ const Check = () => (
 
 const CheckBlank = () => <View style={styles.checkBlank} />;
 
-// TODO: i18n
 const PlusTerms = () => (
   <>
     <B2 bottom="L">
-      I agree to the{' '}
-      <Link url="https://www.minds.com/p/monetization-terms">
-        Minds monetization terms{' '}
-      </Link>
-      and have the rights to monetize this content.
+      <Trans
+        i18nKey="monetize"
+        defaults={i18n.t('monetize.terms.title')}
+        components={{
+          'terms-link': <TermsLink />,
+        }}
+      />
     </B2>
-    <B2>• This content is my original content</B2>
-    <B2 bottom="L">• This content is exclusive to Minds+</B2>
-    <B2>
-      I understand that violation of these requirements may result in losing the
-      ability to publish Premium Content for Minds+ members.
-    </B2>
+    <B2>• {i18n.t('monetize.terms.originalContent')}</B2>
+    <B2 bottom="L">• {i18n.t('monetize.terms.exclusive')}</B2>
+    <B2>{i18n.t('monetize.terms.violations')}</B2>
   </>
+);
+
+const TermsLink = () => (
+  <Link url="https://www.minds.com/p/monetization-terms">
+    {i18n.t('monetize.terms.linkTitle')}
+  </Link>
 );
 
 export const pushAudienceSelector = (
@@ -358,20 +338,20 @@ export const pushAudienceSelector = (
     }),
   );
 
-const ComposeAudienceSelector = ({ store }: { store: ComposeStoreType }) => {
-  // TODO: i18n
-  const audienceMapping: Record<ComposeAudience['type'], string> = {
-    public: 'Public',
-    plus: 'Minds+',
-    group: 'Group',
-    membership: 'Membership',
-  };
+const audienceMapping: Record<ComposeAudience['type'], string> = {
+  public: i18n.t('composer.audienceSelector.titles.public'),
+  plus: i18n.t('composer.audienceSelector.titles.plus'),
+  group: i18n.t('composer.audienceSelector.titles.group'),
+  membership: i18n.t('composer.audienceSelector.titles.membership'),
+};
 
+const ComposeAudienceSelector = ({ store }: { store: ComposeStoreType }) => {
   return (
     <Button
       fit
       font="regular"
       size="pill"
+      darkContent
       right="XL"
       onPress={() => pushAudienceSelector({ store })}>
       {audienceMapping[store.audience.type]}
@@ -396,3 +376,26 @@ const styles = ThemedStyles.create({
   },
   listPadding: { paddingBottom: 200 },
 });
+
+const texts = {
+  title: i18n.t('composer.audienceSelector.title'),
+  done: i18n.t('composer.audienceSelector.done'),
+  audience: {
+    public: {
+      title: i18n.t('composer.audienceSelector.audience.public.title'),
+    },
+    plus: {
+      title: i18n.t('composer.audienceSelector.audience.plus.title'),
+      subtitle: i18n.t('composer.audienceSelector.audience.plus.subtitle'),
+    },
+  },
+  memberships: i18n.t('composer.audienceSelector.memberships'),
+  groups: i18n.t('composer.audienceSelector.groups'),
+  noGroups: i18n.t('composer.audienceSelector.noGroups'),
+  plus: {
+    title: i18n.t('composer.audienceSelector.plus.title'),
+    action: i18n.t('composer.audienceSelector.plus.action'),
+  },
+  manage: i18n.t('composer.audienceSelector.manage'),
+  getStarted: i18n.t('composer.audienceSelector.getStarted'),
+};

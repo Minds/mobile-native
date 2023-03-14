@@ -109,10 +109,9 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
 });
 
 const createModeMapping: Record<ComposeCreateMode, string | ReactNode> = {
-  // TODO: i18n
-  boost: 'Boosted Post',
-  monetizedPost: 'New Post',
-  post: 'New Post',
+  boost: i18n.t('composer.create.boost'),
+  monetizedPost: i18n.t('composer.create.newPost'),
+  post: i18n.t('composer.create.newPost'),
   supermind: <SupermindLabel font="H3" height={27} />,
 };
 

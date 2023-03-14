@@ -16,12 +16,14 @@ const Header = ({ pro }: PropsType) => {
       style={styles.banner}
       source={require('../assets/plus-image.png')}
       resizeMode="cover">
-      <FadeView
-        style={ThemedStyles.style.positionAbsoluteBottom}
-        fades={['bottom']}
-        fadeLength={200}
-        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-      />
+      {ThemedStyles.theme === 1 && (
+        <FadeView
+          style={ThemedStyles.style.positionAbsoluteBottom}
+          fades={['bottom']}
+          fadeLength={200}
+          backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        />
+      )}
       <View style={styles.textContainer}>
         <MText style={styles.minds}>
           {i18n.t(`monetize.${texts}`).toUpperCase()}

@@ -518,7 +518,7 @@ const RootStack = observer(function () {
               }
               options={{
                 title: i18nService.t('settings.otherOptions.b1'),
-                headerBackTitle: 'Back', // TODO: i18n
+                headerBackTitle: i18nService.t('back'),
                 ...rootStackCardScreenOptions,
               }}
             />

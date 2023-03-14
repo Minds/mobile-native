@@ -9,6 +9,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import ComposeIcon from './ComposeIcon';
 import type { ComposeCreateMode } from './createComposeStore';
 import { IS_IOS } from '../config/Config';
+import i18nService from '../common/services/i18n.service';
 
 interface ComposeCreateScreenProps {
   selected?: ComposeCreateMode;
@@ -17,30 +18,6 @@ interface ComposeCreateScreenProps {
 
 export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
   const { selected, onItemPress } = props;
-
-  // TODO: i18n
-  const texts = {
-    post: {
-      title: 'Post',
-      subtitle: 'Create a post',
-    },
-    monetizedPost: {
-      title: 'Monetized Post',
-      subtitle:
-        'Create a monetized post and make it exclusive to a selected audience',
-    },
-    boost: {
-      title: 'Boosted Post',
-      subtitle:
-        'Boost your post to make your content reach more users. Your content will appear on newsfeeds across the site',
-    },
-    supermind: {
-      title: <SupermindLabel font="B1" />,
-      subtitle:
-        'Get replies from your favorite creators by sending them paid offers!',
-    },
-    description: 'Long press <compose /> to open this menu again',
-  };
 
   const navigateToCompose = (key: ComposeCreateMode) => {
     return onItemPress(key);
@@ -87,7 +64,7 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
       {!selected && (
         <B2 color="secondary" align="center" top="L">
           <Trans
-            i18nKey="myKey" // TODO: i18n
+            i18nKey="compose"
             defaults={texts.description}
             components={{
               compose: <Compose />,
@@ -133,4 +110,24 @@ const styles = {
     height: 20,
     top: 4,
   },
+};
+
+const texts = {
+  post: {
+    title: i18nService.t('composer.create.screen.post.title'),
+    subtitle: i18nService.t('composer.create.screen.post.subtitle'),
+  },
+  monetizedPost: {
+    title: i18nService.t('composer.create.screen.monetizedPost.title'),
+    subtitle: i18nService.t('composer.create.screen.monetizedPost.subtitle'),
+  },
+  boost: {
+    title: i18nService.t('composer.create.screen.boost.title'),
+    subtitle: i18nService.t('composer.create.screen.boost.subtitle'),
+  },
+  supermind: {
+    title: <SupermindLabel font="B1" />,
+    subtitle: i18nService.t('composer.create.screen.supermind.subtitle'),
+  },
+  description: i18nService.t('composer.create.screen.description'),
 };
