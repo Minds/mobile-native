@@ -6,14 +6,4 @@ export const Layout = styled(Stack, {
   flex: 1,
 });
 
-export const Row = styled(Stack, {
-  tag: 'Row',
-  fd: 'row',
-});
-
-export const Column = styled(Stack, {
-  tag: 'Column',
-  fd: 'column',
-});
-
 export { Stack as View };

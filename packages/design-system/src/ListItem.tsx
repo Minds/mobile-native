@@ -1,9 +1,10 @@
 import { StackProps, styled } from '@tamagui/core';
 import { Text } from './Text';
-import { Column, Row, View } from './View';
+import { View } from './View';
 import { Icon, IconNames } from './icons';
 import { StyleSheet } from 'react-native';
 import { Avatar } from './Avatar';
+import { XStack, YStack } from '@tamagui/stacks';
 
 type ListItemProps = {
   /**
@@ -30,7 +31,7 @@ type ListItemProps = {
   avatarUrl?: string;
 } & StackProps;
 
-const BaseListItemFrame = styled(Row, {
+const BaseListItemFrame = styled(XStack, {
   padding: '$3',
   paddingLeft: '$4',
   pressStyle: {
@@ -62,14 +63,14 @@ export const ListItem = BaseListItemFrame.extractable(
         )}
 
         {/* Content section */}
-        <Column f={1} jc="center">
+        <YStack f={1} jc="center">
           <Text fow={'500'}>{props.title}</Text>
           {!!props.subtitle && (
             <Text color="$colorTextSecondary" size="$b2" fow={'400'}>
               {props.subtitle}
             </Text>
           )}
-        </Column>
+        </YStack>
 
         {/* Right section */}
         {!!rightIcon && (
