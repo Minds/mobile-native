@@ -13,7 +13,7 @@ function ComposeBottomBar(props) {
     'mob-4637-ios-hide-minds-superminds',
   );
 
-  const allowMedia = !props.store.isEdit && !props.store.isRemind;
+  const allowMedia = !props.store.isEdit;
 
   const iconStyle = useMemo(
     () => [

@@ -70,7 +70,7 @@ export default observer(function CommentListHeader(props: {
             <MText style={[theme.fontXL, ...titleStyles]}>{title}</MText>
             <MText
               style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
-              {props.store.entity['comments:count']}
+              {props.store.entity['comments:count'] || ''}
             </MText>
           </View>
           {closeButton}

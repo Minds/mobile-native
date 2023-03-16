@@ -1,4 +1,3 @@
-// @ts-nocheck
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
@@ -20,10 +19,11 @@ import { SupermindRequestParam } from './SupermindComposeScreen';
 import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
-import { confirm } from '../common/components/Confirm';
 import { storeRatingService } from 'modules/store-rating';
 import { PickedMedia } from '~/common/services/image-picker.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
+import { Media } from '../common/stores/AttachmentStore';
+import GroupModel from '../groups/GroupModel';
 
 /**
  * Display an error message to the user.
@@ -60,34 +60,34 @@ export default function (props) {
      */
     allowedMode: null,
     videoPoster: null,
-    entity: null,
+    entity: null as ActivityModel | null,
     attachments: new MultiAttachmentStore(),
-    nsfw: [],
-    tags: [],
+    nsfw: [] as number[],
+    tags: [] as string[],
     wire_threshold: DEFAULT_MONETIZE as any,
     embed: new RichEmbedStore(),
     text: '',
     title: '',
-    time_created: null,
-    mediaToConfirm: null,
+    time_created: null as number | null,
+    mediaToConfirm: null as Media | null,
     extra: null,
     posting: false,
-    group: null,
+    group: null as GroupModel | null,
     postToPermaweb: false,
     initialized: false,
     /**
      * the supermind request that is built from the SupermindComposeScreen
      */
-    supermindRequest: undefined as SupermindRequestParam,
+    supermindRequest: undefined as SupermindRequestParam | undefined,
     /**
      * the supermind object which is passed from the SupermindConsole and used for supermind reply functionality.
      * The existence of this object means the composer is being used to reply to a supermind
      */
-    supermindObject: undefined as SupermindRequestModel,
+    supermindObject: undefined as SupermindRequestModel | undefined,
     /**
      * The onSave from route params, called after submitting
      */
-    onSaveCallback: undefined as (entity: ActivityModel) => void,
+    onSaveCallback: undefined as ((entity: ActivityModel) => void) | undefined,
     onScreenFocused() {
       const params = props.route.params;
       if (this.initialized || !params) {
@@ -183,31 +183,38 @@ export default function (props) {
       }
     },
     hydrateFromEntity() {
-      this.text = this.entity.message || '';
-      this.time_created = this.entity.time_created * 1000;
-      this.title = this.entity.title || '';
-      this.nsfw = this.entity.nsfw || [];
-      this.tags = this.entity.tags || [];
-      this.wire_threshold = this.entity.wire_threshold || DEFAULT_MONETIZE;
+      const entity = this.entity;
 
-      if (this.entity.custom_type === 'batch') {
-        this.entity.custom_data?.forEach(m => {
+      if (!entity) {
+        console.error("Entity doesn't exist");
+        return;
+      }
+
+      this.text = entity.message || '';
+      this.time_created = Number(entity.time_created) * 1000;
+      this.title = entity.title || '';
+      this.nsfw = entity.nsfw || [];
+      this.tags = entity.tags || [];
+      this.wire_threshold = entity.wire_threshold || DEFAULT_MONETIZE;
+
+      if (entity.custom_type === 'batch') {
+        entity.custom_data?.forEach(m => {
           this.attachments
-            .addAttachment()
+            .addAttachment(false)
             .setMedia('image', m.guid, m.src, m.width, m.height);
         });
-      } else if (this.entity.custom_type === 'video') {
+      } else if (entity.custom_type === 'video') {
         this.attachments
-          .addAttachment()
-          .setMedia('video', this.entity.custom_data?.guid);
-      } else if (this.entity.entity_guid || this.entity.perma_url) {
+          .addAttachment(false)
+          .setMedia('video', entity.custom_data?.guid);
+      } else if (entity.entity_guid || entity.perma_url) {
         // Rich embeds (blogs included)
         this.embed.setMeta({
-          entityGuid: this.entity.entity_guid || null,
-          url: this.entity.perma_url,
-          title: this.entity.title || '',
-          description: this.entity.blurb || '',
-          thumbnail: this.entity.thumbnail_src || '',
+          entityGuid: entity.entity_guid || null,
+          url: entity.perma_url,
+          title: entity.title || '',
+          description: entity.blurb || '',
+          thumbnail: entity.thumbnail_src || '',
         });
       }
     },
@@ -241,33 +248,37 @@ export default function (props) {
      * Edit the current post image
      */
     async editImage() {
-      if (
-        !this.mediaToConfirm ||
-        !this.mediaToConfirm.type.startsWith('image')
-      ) {
+      const mediaToConfirm = this.mediaToConfirm;
+      if (!mediaToConfirm || !mediaToConfirm.type.startsWith('image')) {
         return;
       }
 
       try {
         RNPhotoEditor.Edit({
-          path: this.mediaToConfirm.uri.replace('file://', ''),
+          path: mediaToConfirm.uri.replace('file://', ''),
           stickers: ['sticker6', 'sticker9'],
           hiddenControls: ['save', 'share'],
           onDone: _result => {
             Image.getSize(
-              this.mediaToConfirm.uri,
+              mediaToConfirm.uri,
               (w, h) => {
                 runInAction(() => {
-                  this.mediaToConfirm.key++;
+                  if (mediaToConfirm.key) {
+                    mediaToConfirm.key++;
+                  } else {
+                    mediaToConfirm.key = 0;
+                  }
+
                   if (
                     Platform.OS === 'android' &&
-                    this.mediaToConfirm.pictureOrientation <= 2
+                    typeof mediaToConfirm.pictureOrientation === 'number' &&
+                    mediaToConfirm.pictureOrientation <= 2
                   ) {
-                    this.mediaToConfirm.width = h;
-                    this.mediaToConfirm.height = w;
+                    mediaToConfirm.width = h;
+                    mediaToConfirm.height = w;
                   } else {
-                    this.mediaToConfirm.width = w;
-                    this.mediaToConfirm.height = h;
+                    mediaToConfirm.width = w;
+                    mediaToConfirm.height = h;
                   }
                 });
               },
@@ -283,7 +294,7 @@ export default function (props) {
      * Add tag
      * @param {string} tag
      */
-    addTag(tag) {
+    addTag(tag: string) {
       if (this.tags.length === hashtagService.maxHashtags) {
         this.maxHashtagsError();
         return false;
@@ -306,11 +317,11 @@ export default function (props) {
       }
     },
     parseTags() {
-      let result = this.text.match(hashRegex);
-      if (result) {
+      let matched = this.text.match(hashRegex);
+      if (matched) {
         // unique results
-        result = result.map(v => v.trim().slice(1));
-        const all = [...new Set(result.concat(this.tags))];
+        const results = matched.map(v => v.trim().slice(1));
+        const all = [...new Set(results.concat(this.tags))];
 
         if (all.length <= hashtagService.maxHashtags) {
           this.tags = all;
@@ -409,7 +420,7 @@ export default function (props) {
      * @param {object} media
      * @param {string} mode
      */
-    onMedia(media, mode = 'confirm') {
+    onMedia(media: Media, mode = 'confirm') {
       setTimeout(() => {
         this.mediaToConfirm = media;
         this.mediaToConfirm.key = 1;
@@ -478,6 +489,11 @@ export default function (props) {
      * Accept media
      */
     acceptMedia() {
+      if (!this.mediaToConfirm) {
+        console.error('No media attached');
+        return;
+      }
+
       this.attachments.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
@@ -497,6 +513,11 @@ export default function (props) {
      * Submit post
      */
     async submit() {
+      if (!this.entity && this.isEdit) {
+        console.error("Entity isn't available");
+        return;
+      }
+
       if (this.posting) {
         return;
       }
@@ -523,7 +544,7 @@ export default function (props) {
           // Mustn't have external links
           if (
             this.embed.hasRichEmbed &&
-            !this.embed.meta.url.toLowerCase().includes('minds.com')
+            !this.embed.meta?.url.toLowerCase().includes('minds.com')
           ) {
             showError(i18n.t('capture.noExternalLinks'));
             return false;
@@ -542,10 +563,9 @@ export default function (props) {
           return false;
         }
 
-        let newPost = {
+        let newPost: PostPayload = {
           message: this.text,
           access_id: this.accessId,
-          time_created: Math.floor(this.time_created / 1000) || null,
         };
 
         if (this.supermindRequest) {
@@ -580,7 +600,7 @@ export default function (props) {
 
         // add remind
         if (this.isRemind) {
-          newPost.remind_guid = this.entity.guid;
+          newPost.remind_guid = this.entity?.guid;
         }
 
         if (
@@ -613,11 +633,11 @@ export default function (props) {
 
         if (this.group) {
           newPost.container_guid = this.group.guid;
-          newPost.access_id = this.group.guid;
+          newPost.access_id = this.group.guid; // TODO: confirm this
         }
 
         // keep the container if it is an edited activity
-        if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
+        if (this.isEdit && typeof this.entity?.container_guid !== 'undefined') {
           newPost.container_guid = this.entity.container_guid;
         }
 
@@ -628,7 +648,7 @@ export default function (props) {
         this.setPosting(true);
 
         const reqPromise = this.isEdit
-          ? api.post(`api/v3/newsfeed/activity/${this.entity.guid}`, newPost)
+          ? api.post(`api/v3/newsfeed/activity/${this.entity!.guid}`, newPost)
           : api.put('api/v3/newsfeed/activity', newPost);
 
         const response = await reqPromise;
@@ -638,8 +658,8 @@ export default function (props) {
         }
 
         if (this.isEdit) {
-          this.entity.update(response);
-          this.entity.setEdited('1');
+          this.entity!.update(response);
+          this.entity!.setEdited('1');
           return this.entity;
         }
 
@@ -734,3 +754,25 @@ export default function (props) {
     },
   };
 }
+
+type PostPayload = {
+  message?: string;
+  access_id?: string | number;
+  time_created?: number | null;
+  supermind_request?: SupermindRequestParam & {
+    receiver_username: string;
+    receiver_guid: string;
+  };
+  supermind_reply_guid?: string;
+  paywall?: boolean;
+  wire_threshold?: typeof DEFAULT_MONETIZE;
+  remind_guid?: string;
+  post_to_permaweb?: boolean;
+  title?: string;
+  nsfw?: number[];
+  attachment_guids?: string[];
+  is_rich?: boolean;
+  license?: string;
+  container_guid?: string;
+  tags?: string[];
+};

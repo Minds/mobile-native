@@ -19,7 +19,7 @@ export function ButtonsScreen(): JSX.Element {
         <ButtonsSizes />
       </ScrollView>
       <View fd={'row'} mt="$1" space>
-        <Button icon={Icons.Chevron} circular onPress={goBack} />
+        <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button iconAfter={Icons.Send} f={1} onPress={() => navigate('Icons')}>
           Next
         </Button>
