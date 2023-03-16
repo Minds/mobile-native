@@ -4,7 +4,7 @@ import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
-import codePushStore from '../../modules/codepush/codepush.store';
+import { codePushStore } from 'modules/codepush';
 
 /**
  * Deeplinks router
