@@ -19,12 +19,14 @@ import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
-import { IS_IOS } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
+  const disableCash = useIsFeatureOn('mob-4836-iap-no-cash');
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
   const tabs = [
@@ -40,7 +42,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   ];
 
-  if (IS_IOS) {
+  if (IS_IOS || (GOOGLE_PLAY_STORE && disableCash)) {
     tabs.shift();
   }
 
