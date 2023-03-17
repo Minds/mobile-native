@@ -3,7 +3,7 @@ import apiService from '~/common/services/api.service';
 import blockListService from '~/common/services/block-list.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import ActivityModel from '~/newsfeed/ActivityModel';
+import BoostedContentModel from '~/newsfeed/BoostedContentModel';
 
 /**
  * Boosted content service
@@ -17,9 +17,9 @@ class BoostedContentService {
 
   /**
    * Boosts
-   * @var {Array<ActivityModel>} boosts
+   * @var {Array<BoostedContentModel>} boosts
    */
-  boosts: Array<ActivityModel> = [];
+  boosts: Array<BoostedContentModel> = [];
 
   /**
    * whether the feed is updating
@@ -46,10 +46,10 @@ class BoostedContentService {
 
   /**
    * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel>} boosts
+   * @param {Array<BoostedContentModel>} boosts
    */
-  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((entity: ActivityModel) => {
+  cleanBoosts(boosts: Array<BoostedContentModel>): Array<BoostedContentModel> {
+    return boosts.filter((entity: BoostedContentModel) => {
       entity.boosted = true;
       // remove NSFW on iOS
       if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
@@ -62,11 +62,11 @@ class BoostedContentService {
   }
 
   loadCached() {
-    const boosts = storages.session?.getArray<ActivityModel>(
+    const boosts = storages.session?.getArray<BoostedContentModel>(
       'BoostServiceCache',
     );
     if (boosts) {
-      this.boosts = ActivityModel.createMany(boosts);
+      this.boosts = BoostedContentModel.createMany(boosts);
     }
   }
 
@@ -84,7 +84,7 @@ class BoostedContentService {
           response.boosts.map(b => b.entity),
         );
 
-        this.boosts = ActivityModel.createMany(filteredBoosts);
+        this.boosts = BoostedContentModel.createMany(filteredBoosts);
 
         // cache boosts
         storages.session?.setArray('BoostServiceCache', filteredBoosts);
@@ -97,7 +97,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ActivityModel | null {
+  fetch(): BoostedContentModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {

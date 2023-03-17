@@ -12,6 +12,9 @@ import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
 import { showNotification } from 'AppMessages';
 
+export const shouldInjectBoostAtIndex = (i: number) =>
+  (i > 0 && i % 5 === 0) || i === 2;
+
 export type FeedRecordType = {
   owner_guid: string;
   timestamp: string;
@@ -130,7 +133,7 @@ export default class FeedsService {
     }
 
     for (let i = this.offset; i < this.offset + result.length; i++) {
-      if ((i > 0 && i % 5 === 0) || i === 2) {
+      if (shouldInjectBoostAtIndex(i)) {
         const boost = boostedContentService.fetch();
         if (boost) {
           result.splice(i, 0, boost);
