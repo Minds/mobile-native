@@ -115,7 +115,7 @@ class BoostedContentService {
   }
 
   /**
-   * gets boosts that contain media
+   * gets a boost that contains media
    */
   getMediaBoost(): BoostedActivityModel | null {
     const boost = this.fetch();
