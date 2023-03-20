@@ -111,6 +111,25 @@ class BoostedContentService {
 
     return this.boosts[this.offset];
   }
+
+  /**
+   * gets boosts that contain media
+   */
+  getMediaBoost(): BoostedContentModel | null {
+    const boost = this.fetch();
+
+    if (boost) {
+      // if the boost has media return it
+      if (boost.hasVideo() || boost.hasImage()) {
+        return boost;
+      }
+
+      // otherwise get another media boost
+      return this.getMediaBoost();
+    }
+
+    return null;
+  }
 }
 
 export default new BoostedContentService();
