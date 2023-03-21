@@ -1,5 +1,4 @@
 import api from './api.service';
-import featuresService from './features.service';
 import { storages } from './storage/storages.service';
 
 /**
@@ -18,11 +17,9 @@ class MindsConfigService {
    */
   async update() {
     const settings = await api.get<any>('api/v1/minds/config');
-    storages.app.setMap('mindsSettings', settings);
+    storages.user?.setMap('mindsSettings', settings);
 
     this.settings = settings;
-    // update the features based on the settings
-    featuresService.updateFeatures();
   }
 
   /**
@@ -31,13 +28,11 @@ class MindsConfigService {
   getSettings() {
     let settings;
     if (!this.settings) {
-      settings = storages.app.getMap('mindsSettings');
+      settings = storages.user?.getMap('mindsSettings');
       if (!settings) {
         settings = this.loadDefault();
       }
       this.settings = settings;
-      // update the features based on the settings
-      featuresService.updateFeatures();
     }
 
     return this.settings;
@@ -48,7 +43,7 @@ class MindsConfigService {
    */
   clear() {
     this.settings = undefined;
-    storages.app.removeItem('mindsSettings');
+    storages.user?.removeItem('mindsSettings');
   }
 }
 
