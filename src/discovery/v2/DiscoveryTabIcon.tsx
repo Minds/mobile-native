@@ -3,6 +3,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from '~ui/icons';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type PropsType = {
   size?: number;
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     width: 5,
     height: 5,
     borderRadius: 5,
-    backgroundColor: '#1B85D6',
+    backgroundColor: ThemedStyles.style.colorLink.color,
   },
 });
 

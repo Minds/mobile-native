@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
-import moment from 'moment';
+import { storages } from '~/common/services/storage/storages.service';
 
 export type TDiscoveryV2Tabs =
   | 'top'
@@ -25,6 +25,8 @@ export type TDiscoveryTrendsTrend = {};
 export type TDiscoveryTagsTag = {
   value: string;
 };
+
+const DISCOVERY_TS_KEY = 'discovery_ts';
 
 // TODO: workaround please remove
 const BOOST_V3 = true;
@@ -102,9 +104,10 @@ export default class DiscoveryV2Store {
       .setInjectBoost(false)
       .setLimit(15);
 
+    this.lastDiscoveryTimestamp = storages.app.getInt(DISCOVERY_TS_KEY) ?? 0;
+
     this.badgeVisible =
-      this.lastDiscoveryTimestamp <
-      moment(moment().format('YYYY-MM-DD')).unix(); // midnight
+      +new Date() - (this.lastDiscoveryTimestamp ?? 0) > 86400 * 1000; // 24 hours
   }
 
   @action
@@ -273,11 +276,13 @@ export default class DiscoveryV2Store {
 
   clearBadge() {
     this.badgeVisible = false;
-    this.lastDiscoveryTimestamp = moment().unix();
+    this.lastDiscoveryTimestamp = +new Date();
+    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 
   showBadge() {
     this.badgeVisible = true;
     this.lastDiscoveryTimestamp = 0;
+    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }

@@ -31,7 +31,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -63,8 +63,6 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-  // to enable testing of the badge from devoptions
-  useIsFeatureOn('mob-4812-discovery-badge');
 
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
