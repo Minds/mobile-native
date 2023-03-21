@@ -19,6 +19,7 @@ import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import PlanOptionsIAP from './PlanOptionsIAP';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
+import apiService from '~/common/services/api.service';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -79,12 +80,17 @@ const UpgradeInAppPurchasesTokens = ({
     const checkCurrentPurchase = async () => {
       try {
         if (currentPurchase?.productId) {
-          console.log('TRANSACTION', currentPurchase);
           await finishTransaction({
             purchase: currentPurchase,
             isConsumable: false,
           });
+
+          //TODO: Implement call to the backend
           console.log('TRANSACTION FINISHED', currentPurchase);
+          // apiService.post('dummySubEndpoint', {
+          //   productId: currentPurchase.productId,
+          //   token: currentPurchase.purchaseToken,
+          // });
 
           onComplete(currentPurchase);
           navigation.goBack();
