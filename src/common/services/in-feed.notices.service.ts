@@ -136,7 +136,8 @@ export class InFeedNoticesService {
         notice =>
           notice.location === 'inline' &&
           notice.should_show &&
-          !this.isDismissed(notice.key),
+          !this.isDismissed(notice.key) &&
+          noticeMapper[notice.key], // ignore not implemented ones
       );
       if (notices.length > position) {
         return notices[position - 1].key;
@@ -154,7 +155,8 @@ export class InFeedNoticesService {
         (notice: Notice) =>
           notice.should_show &&
           notice.location === 'top' &&
-          !this.isDismissed(notice.key),
+          !this.isDismissed(notice.key) &&
+          noticeMapper[notice.key], // ignore not implemented ones
       );
 
       return topNotice?.key;
