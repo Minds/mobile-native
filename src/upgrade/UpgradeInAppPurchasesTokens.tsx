@@ -19,7 +19,7 @@ import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import PlanOptionsIAP from './PlanOptionsIAP';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
-import apiService from '~/common/services/api.service';
+// import apiService from '~/common/services/api.service';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
