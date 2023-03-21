@@ -51,9 +51,7 @@ function createPortraitStore() {
         item => !(item instanceof PortraitBarBoostItem),
       );
       const sortedBarItems = _.sortBy(barItems, d => !d.unseen);
-      const items = injectBoosts(sortedBarItems);
-
-      this.items = items;
+      this.items = injectBoosts(sortedBarItems);
     },
     async load() {
       this.listenSubscriptions();

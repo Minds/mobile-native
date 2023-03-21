@@ -44,7 +44,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   const ref = React.useRef<ICarouselInstance>(null);
 
   let index = 0;
-  let { guid } = props.route.params ?? {};
+  const { guid } = props.route.params ?? {};
 
   // set default index based on guid
   if (guid) {
