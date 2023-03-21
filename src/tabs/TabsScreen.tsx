@@ -63,7 +63,6 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
