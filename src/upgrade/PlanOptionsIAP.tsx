@@ -8,7 +8,7 @@ import MText from '../common/components/MText';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
 import type { SubscriptionAndroid } from 'react-native-iap';
 import { PlanList } from './PlanOptions';
-import number from '~/common/helpers/number';
+import i18n from '~/common/services/i18n.service';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -64,13 +64,13 @@ export const PlanListIAP = observer(
             const isMonthly = pricingPhases.billingPeriod === 'P1M';
             const cost =
               parseInt(pricingPhases.priceAmountMicros, 10) / 1000000;
-            const detail = isMonthly
-              ? ' / month'
-              : ` / month (annually ${pricingPhases.formattedPrice})`;
-            const currencyCode = pricingPhases.formattedPrice.split(' ')[0];
+            const detail = ' / month';
             const price = isMonthly
               ? pricingPhases.formattedPrice
-              : `${currencyCode} ${number(cost / 12, 2)}`;
+              : (cost / 12).toLocaleString(i18n.getDeviceLocale(), {
+                  style: 'currency',
+                  currency: pricingPhases.priceCurrencyCode,
+                });
 
             return (
               <MenuItemOption
@@ -89,6 +89,11 @@ export const PlanListIAP = observer(
                     <MText style={theme.colorSecondaryText}>{detail}</MText>
                   </MText>
                 }
+                subtitle={
+                  isMonthly
+                    ? undefined
+                    : `Billed annually at ${pricingPhases.formattedPrice}`
+                }
                 selected={
                   subscription.productId === store.selectedOption.iapSku
                 }
@@ -103,7 +108,7 @@ export const PlanListIAP = observer(
 
 const lable = {
   P1M: 'Monthly',
-  P1Y: 'Yearly',
+  P1Y: 'Annualy',
 };
 
 export default PlanOptionsIAP;
