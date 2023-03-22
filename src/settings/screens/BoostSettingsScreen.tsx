@@ -190,7 +190,7 @@ const BoostSettingsScreen = observer(() => {
       </MText>
       {items.map(item => {
         return (
-          <View style={theme.marginBottom7x}>
+          <View key={item.id} style={theme.marginBottom7x}>
             <View
               style={[
                 theme.rowJustifyStart,

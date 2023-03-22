@@ -46,6 +46,7 @@ const PushNotificationsSettings = ({}: PropsType) => {
           }
           return (
             <MenuItemToggle
+              key={setting.notificationGroup}
               title={setting.notificationGroup}
               value={setting.enabled}
               onChange={setting.toggleEnabled}
