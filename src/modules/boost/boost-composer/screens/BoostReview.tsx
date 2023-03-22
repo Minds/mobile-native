@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { showNotification } from '~/../AppMessages';
 import FitScrollView from '~/common/components/FitScrollView';
 import Link from '~/common/components/Link';
@@ -16,49 +16,116 @@ import {
   Screen,
   ScreenHeader,
 } from '~/common/ui';
+import { IS_FROM_STORE } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import {
+  finishTransaction,
+  isIosStorekit2,
+  ProductPurchase,
+  requestPurchase,
+  useIAP,
+} from 'react-native-iap';
+
+const skus = ['boost.consumable.001'];
+initSkus();
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
-  const boostStore = useBoostStore();
+  const { products, getProducts } = useIAP();
+
+  const {
+    amount,
+    duration,
+    total,
+    wallet,
+    audience,
+    boostType,
+    paymentType: paymentTypeFromStore,
+    insights,
+    selectedCardId,
+    setSelectedCardId,
+    // createBoost,
+  } = useBoostStore();
+
+  const paymentType = paymentTypeFromStore === 'cash' ? 'cash' : 'tokens';
+  const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
+  const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
+  /**
+   * Get IAP products
+   */
+  useEffect(() => {
+    if (isCashFromStore) {
+      getProducts({ skus });
+    }
+  }, [getProducts, isCashFromStore]);
+
+  let selectedProduct: any;
+  if (products.length !== 0) {
+    selectedProduct = products.filter(
+      product => product.productId === getSkuFrom(amount, duration),
+    )?.[0];
+    console.log('selectedProduct', amount, duration, selectedProduct);
+  }
+
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
-    value: number(boostStore.wallet?.balance || 0, 0, 2),
+    value: number(wallet?.balance || 0, 0, 2),
   });
-  const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
     cash: {
       budgetDescription: t('${{amount}} per day for {{duration}} days', {
-        amount: boostStore.amount,
-        duration: boostStore.duration,
+        amount: amount,
+        duration: duration,
       }),
-      total: t('${{total}}.00', { total: boostStore.total }),
+      total: t('${{total}}.00', { total: total }),
     },
     tokens: {
       budgetDescription: t('{{amount}} tokens per day for {{duration}} days', {
-        amount: boostStore.amount,
-        duration: boostStore.duration,
+        amount: amount,
+        duration: duration,
       }),
-      total: t('{{total}} tokens', { total: boostStore.total }),
+      total: t('{{total}} tokens', { total: total }),
     },
   };
-  const title =
-    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
+  const title = boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
-  const handleCreate = () => {
-    return boostStore.createBoost()?.then(() => {
-      showNotification(t('Boost created successfully'));
-      navigation.popToTop();
-      navigation.goBack();
-    });
+  const handleCreate = async () => {
+    if (isCashFromStore) {
+      const purchases = await requestPurchase({
+        skus: [selectedProduct.productId],
+      }).catch(processError);
+      if (((purchases as unknown) as ProductPurchase[])?.length > 0) {
+        const purchase = purchases?.[0];
+        if (
+          (isIosStorekit2() && purchase?.transactionId) ||
+          purchase?.transactionReceipt
+        ) {
+          const result = await finishTransaction({
+            purchase,
+            isConsumable: true,
+          }).catch(processError);
+          if (
+            (typeof result !== 'boolean' && result?.code === 'OK') ||
+            result
+          ) {
+            // success
+            // return createBoost()?.then(() => {
+            showNotification(t('Boost created successfully'));
+            navigation.popToTop();
+            navigation.goBack();
+            // });
+          }
+        }
+      }
+    }
   };
 
-  const estimatedReach = boostStore.insights?.views?.low
-    ? `${boostStore.insights?.views?.low?.toLocaleString()} - ${boostStore.insights?.views?.high?.toLocaleString()}`
+  const estimatedReach = insights?.views?.low
+    ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
     : 'unknown';
 
   return (
@@ -77,9 +144,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         <Column vertical="M">
           <MenuItem
             title={t('Audience')}
-            subtitle={
-              boostStore.audience === 'safe' ? t('Safe') : t('Controversial')
-            }
+            subtitle={audience === 'safe' ? t('Safe') : t('Controversial')}
             borderless
           />
           <MenuItem
@@ -87,13 +152,21 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             subtitle={textMapping[paymentType].budgetDescription}
             borderless
           />
-          {boostStore.paymentType === 'cash' ? (
-            <StripeCardSelector
-              onCardSelected={card => boostStore.setSelectedCardId(card.id)}
-              selectedCardId={boostStore.selectedCardId}
-              containerStyle={ThemedStyles.style.bgPrimaryBackground}
-              borderless
-            />
+          {paymentType === 'cash' ? (
+            IS_FROM_STORE ? (
+              <MenuItem
+                title={t('IAP Payment method')}
+                subtitle={'iap'}
+                borderless
+              />
+            ) : (
+              <StripeCardSelector
+                onCardSelected={card => setSelectedCardId(card.id)}
+                selectedCardId={selectedCardId}
+                containerStyle={ThemedStyles.style.bgPrimaryBackground}
+                borderless
+              />
+            )
           ) : (
             <MenuItem
               title={t('Payment method')}
@@ -116,7 +189,8 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           spinner
           type="action"
           disabled={
-            boostStore.paymentType === 'cash' && !boostStore.selectedCardId
+            (isCashFromStore && !selectedProduct) ||
+            (isCashFromStripe && !selectedCardId)
           }
           top="XXXL2"
           horizontal="L">
@@ -142,6 +216,25 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       </FitScrollView>
     </Screen>
   );
+}
+
+function initSkus() {
+  for (let day of [1, 3, 10, 30]) {
+    for (let amount of [1, 5, 10]) {
+      skus.push(getSkuFrom(amount, day));
+    }
+  }
+}
+
+function getSkuFrom(amount: number, duration: number) {
+  // return `boost.a${amount}.d${duration}.001`;
+  `boost.a${amount}.d${duration}.001`;
+  return 'boost.consumable.001';
+}
+
+function processError(error: any) {
+  showNotification(error.message);
+  console.log('error', error);
 }
 
 export default observer(BoostReviewScreen);
