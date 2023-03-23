@@ -1,8 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 import { B2, Icon, IconButton, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export default function BoostRotatorHeader() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Row align="centerBoth">
@@ -10,7 +12,17 @@ export default function BoostRotatorHeader() {
         <B2 color="link">Boosted Post</B2>
       </Row>
 
-      <IconButton name="cog" color="PrimaryText" size={20} />
+      <IconButton
+        onPress={() =>
+          navigation.navigate('More', {
+            screen: 'BoostSettingsScreen',
+            initial: false,
+          })
+        }
+        name="cog"
+        color="PrimaryText"
+        size={20}
+      />
     </View>
   );
 }
