@@ -30,15 +30,10 @@ import {
   withIAPContext,
 } from 'react-native-iap';
 
-const skus = ['boost.consumable.001'];
-initSkus();
-
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
-  const { products, getProducts } = useIAP();
-
   const {
     amount,
     duration,
@@ -49,28 +44,30 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     paymentType: paymentTypeFromStore,
     insights,
     selectedCardId,
+    skus,
+    entity,
     setSelectedCardId,
-    // createBoost,
+    createBoost,
   } = useBoostStore();
+
+  const { products, getProducts } = useIAP();
 
   const paymentType = paymentTypeFromStore === 'cash' ? 'cash' : 'tokens';
   const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
   const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
-  /**
-   * Get IAP products
-   */
+
   useEffect(() => {
     if (isCashFromStore) {
       getProducts({ skus });
     }
-  }, [getProducts, isCashFromStore]);
+  }, [getProducts, isCashFromStore, skus]);
 
   let selectedProduct: any;
   if (products.length !== 0) {
     selectedProduct = products.filter(
-      product => product.productId === getSkuFrom(amount, duration),
+      product => product.productId === skus[0],
     )?.[0];
-    console.log('selectedProduct', amount, duration, selectedProduct);
+    // console.log('selectedProduct', amount, duration, selectedProduct);
   }
 
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
@@ -95,31 +92,35 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const title = boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
   const handleCreate = async () => {
-    if (isCashFromStore) {
-      const purchases = await requestPurchase({
-        skus: [selectedProduct.productId],
-      }).catch(processError);
-      if (((purchases as unknown) as ProductPurchase[])?.length > 0) {
-        const purchase = purchases?.[0];
-        if (
-          (isIosStorekit2() && purchase?.transactionId) ||
-          purchase?.transactionReceipt
-        ) {
-          const result = await finishTransaction({
-            purchase,
-            isConsumable: true,
-          }).catch(processError);
-          if (
-            (typeof result !== 'boolean' && result?.code === 'OK') ||
-            result
-          ) {
-            // success
-            // return createBoost()?.then(() => {
+    if (!isCashFromStore) {
+      return createBoost()?.then(() => {
+        showNotification(t('Boost created successfully'));
+        navigation.popToTop();
+        navigation.goBack();
+      });
+    }
+
+    const purchases = await requestPurchase({
+      skus: [selectedProduct.productId],
+      obfuscatedAccountIdAndroid: entity.ownerObj.guid,
+      obfuscatedProfileIdAndroid: entity.guid,
+      // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
+    }).catch(processError);
+    if (((purchases as unknown) as ProductPurchase[])?.length > 0) {
+      const purchase = purchases?.[0];
+      const { transactionId, transactionReceipt } = purchase ?? {};
+      if ((isIosStorekit2() && transactionId) || transactionReceipt) {
+        const result = await finishTransaction({
+          purchase: purchases?.[0],
+          isConsumable: true,
+        }).catch(processError);
+        if ((typeof result !== 'boolean' && result?.code === 'OK') || result) {
+          setSelectedCardId(transactionReceipt);
+          return createBoost()?.then(() => {
             showNotification(t('Boost created successfully'));
             navigation.popToTop();
             navigation.goBack();
-            // });
-          }
+          });
         }
       }
     }
@@ -217,20 +218,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       </FitScrollView>
     </Screen>
   );
-}
-
-function initSkus() {
-  for (let day of [1, 3, 10, 30]) {
-    for (let amount of [1, 5, 10]) {
-      skus.push(getSkuFrom(amount, day));
-    }
-  }
-}
-
-function getSkuFrom(amount: number, duration: number) {
-  // return `boost.a${amount}.d${duration}.001`;
-  `boost.a${amount}.d${duration}.001`;
-  return 'boost.consumable.001';
 }
 
 function processError(error: any) {

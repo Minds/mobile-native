@@ -19,16 +19,29 @@ import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
-import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { IS_IOS } from '~/config/Config';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
-  const disableCash = useIsFeatureOn('mob-4836-iap-no-cash');
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
+  const {
+    amount,
+    total,
+    duration,
+    config,
+    paymentType,
+    boostType,
+    amountRangeValues,
+    durationRangeValues,
+    setAmount,
+    setDuration,
+    setPaymentType,
+    isAmountValid,
+  } = boostStore;
+
   const tabs = [
     {
       id: 'cash',
@@ -42,47 +55,63 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   ];
 
-  if (IS_IOS || (GOOGLE_PLAY_STORE && disableCash)) {
+  if (IS_IOS) {
     tabs.shift();
   }
 
   const textMapping = {
     cash: {
       totalSpend: t('${{amount}} over {{duration}} days', {
-        amount: boostStore.amount * boostStore.duration,
-        duration: boostStore.duration,
+        amount: total,
+        duration: duration,
       }),
-      minBudget: `$${boostStore.config.min.cash.toLocaleString()}`,
-      maxBudget: `$${boostStore.config.max.cash.toLocaleString()}`,
+      minBudget: `$${config.min.cash.toLocaleString()}`,
+      maxBudget: `$${config.max.cash.toLocaleString()}`,
     },
     offchain_tokens: {
       totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: boostStore.amount * boostStore.duration,
-        duration: boostStore.duration,
+        amount: total,
+        duration: duration,
       }),
       minBudget: t('tokenWithCount', {
-        count: boostStore.config.min.offchain_tokens,
+        count: config.min.offchain_tokens,
       }),
       maxBudget: t('tokenWithCount', {
-        count: boostStore.config.max.offchain_tokens,
+        count: config.max.offchain_tokens,
       }),
     },
     onchain_tokens: {
       totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: boostStore.amount * boostStore.duration,
-        duration: boostStore.duration,
+        amount: total,
+        duration: duration,
       }),
       minBudget: t('tokenWithCount', {
-        count: boostStore.config.min.onchain_tokens,
+        count: config.min.onchain_tokens,
       }),
       maxBudget: t('tokenWithCount', {
-        count: boostStore.config.max.onchain_tokens,
+        count: config.max.onchain_tokens,
       }),
     },
   };
 
+  const amountSliderProps = {
+    ...amountRangeValues,
+    minimumStepLabel: `$${amountRangeValues.minimumRangeValue}`,
+    maximumStepLabel: `$${amountRangeValues.maximumRangeValue}`,
+  };
+
+  const durationSliderProps = {
+    ...durationRangeValues,
+    minimumStepLabel: t('dayWithCount', {
+      count: durationRangeValues.minimumRangeValue,
+    }),
+    maximumStepLabel: t('dayWithCount', {
+      count: durationRangeValues.maximumRangeValue,
+    }),
+  };
+
   const handlePaymentTypeChange = async id => {
-    boostStore.setPaymentType(id as IPaymentType);
+    setPaymentType(id as IPaymentType);
   };
 
   const onNext = () => {
@@ -92,11 +121,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   return (
     <Screen safe onlyTopEdge>
       <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
+        title={boostType === 'channel' ? t('Boost Channel') : t('Boost Post')}
         back
         shadow
       />
@@ -105,15 +130,25 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           containerStyle={ThemedStyles.style.marginTop}
           tabs={tabs}
           onChange={handlePaymentTypeChange}
-          current={boostStore.paymentType}
+          current={paymentType}
         />
-        <Column align="centerBoth" vertical="L">
+        <Column align="centerBoth" top="M">
           <H2 bottom="S" top="M">
-            {textMapping[boostStore.paymentType].totalSpend}
+            {textMapping[paymentType].totalSpend}
           </H2>
-          <B1 bottom="L2" color="secondary">
-            {t('Total Spend')}
-          </B1>
+          {isAmountValid() ? (
+            <B1 bottom="M" color="secondary">
+              {t('Total Spend')}
+            </B1>
+          ) : (
+            <B1 bottom="M" color="danger" align="center">
+              {t('The maximum spend should be less than ${{amount}}.', {
+                amount: total,
+              })}
+              {'\n'}
+              {t('Try reducing the duration or the daily budget')}
+            </B1>
+          )}
 
           <H2 bottom="S">
             {insights
@@ -123,44 +158,29 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           <B1 color="secondary">{t('Estimated reach')}</B1>
         </Column>
 
-        <Column top="L" horizontal="L2">
+        <Column top="M" horizontal="L2">
           <H3>{t('Daily budget')}</H3>
           <Slider
-            stepSize={1}
-            defaultValue={1}
-            currentValue={boostStore.amount}
-            maximumRangeValue={boostStore.config.max[boostStore.paymentType]}
-            minimumRangeValue={boostStore.config.min[boostStore.paymentType]}
-            minimumStepLabel={textMapping[boostStore.paymentType].minBudget}
-            maximumStepLabel={textMapping[boostStore.paymentType].maxBudget}
-            onAnswer={boostStore.setAmount}
+            {...amountSliderProps}
+            currentValue={amount}
+            onAnswer={setAmount}
             formatValue={value =>
-              boostStore.paymentType === 'cash'
+              paymentType === 'cash'
                 ? `$${value.toLocaleString()}`
                 : value.toLocaleString()
             }
-            steps={boostStore.config.bid_increments[boostStore.paymentType]}
             floatingLabel
           />
         </Column>
 
         <HairlineRow />
 
-        <Column top="L" horizontal="L2">
+        <Column top="M" horizontal="L2">
           <H3>{t('Duration')}</H3>
           <Slider
-            stepSize={1}
-            defaultValue={1}
-            currentValue={boostStore.duration}
-            maximumRangeValue={boostStore.config.duration.max}
-            minimumRangeValue={boostStore.config.duration.min}
-            maximumStepLabel={t('dayWithCount', {
-              count: boostStore.config.duration.max,
-            })}
-            minimumStepLabel={t('dayWithCount', {
-              count: boostStore.config.duration.min,
-            })}
-            onAnswer={boostStore.setDuration}
+            {...durationSliderProps}
+            currentValue={duration}
+            onAnswer={setDuration}
             floatingLabel
           />
         </Column>
@@ -170,7 +190,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         <B2
           color="secondary"
           horizontal="L"
-          vertical="L"
+          vertical="S"
           bottom="XL"
           align="justify">
           {t(
@@ -183,7 +203,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           mode="solid"
           type="action"
           horizontal="L"
-          bottom="L2">
+          disabled={!isAmountValid()}
+          bottom="M">
           {t('Next')}
         </Button>
       </FitScrollView>

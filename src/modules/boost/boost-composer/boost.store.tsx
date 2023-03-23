@@ -7,7 +7,7 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { IS_IOS } from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import {
   DEFAULT_DAILY_CASH_BUDGET,
   DEFAULT_DAILY_TOKEN_BUDGET,
@@ -88,6 +88,50 @@ export const createBoostStore = ({
   },
   validate() {
     return true;
+  },
+  /**
+   * IAP
+   */
+  get skus() {
+    // return [`boost.a${this.amount}.d${this.duration}.001`];
+    return ['boost.consumable.001'];
+  },
+  isAmountValid() {
+    return IS_FROM_STORE ? this.total < 450 : true;
+  },
+  get amountRangeValues() {
+    if (IS_FROM_STORE && this.paymentType === 'cash') {
+      return {
+        stepSize: 5,
+        defaultValue: 10,
+        minimumRangeValue: 5,
+        maximumRangeValue: 15,
+      };
+    }
+    return {
+      stepSize: 1,
+      defaultValue: 1,
+      maximumRangeValue: this.config.max[this.paymentType],
+      minimumRangeValue: this.config.min[this.paymentType],
+      steps: this.config.bid_increments[this.paymentType],
+    };
+  },
+  get durationRangeValues() {
+    if (IS_FROM_STORE && this.paymentType === 'cash') {
+      return {
+        stepSize: 1,
+        defaultValue: 1,
+        minimumRangeValue: 1,
+        maximumRangeValue: 30,
+        steps: [1, 3, 10, 30],
+      };
+    }
+    return {
+      stepSize: 1,
+      defaultValue: 1,
+      maximumRangeValue: this.config.duration.max,
+      minimumRangeValue: this.config.duration.min,
+    };
   },
 });
 
