@@ -33,7 +33,7 @@ export default observer(function SuggestedChannelsScreen() {
     !suggestions.result?.length &&
     new Array(12)
       .fill(true)
-      .map(index => <ChannelListItemPlaceholder key={index} />);
+      .map((_, index) => <ChannelListItemPlaceholder key={index} />);
 
   return (
     <ModalContainer
