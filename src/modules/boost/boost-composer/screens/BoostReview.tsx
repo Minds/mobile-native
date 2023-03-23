@@ -102,8 +102,8 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
     const purchases = await requestPurchase({
       skus: [selectedProduct.productId],
-      obfuscatedAccountIdAndroid: entity.ownerObj.guid,
-      obfuscatedProfileIdAndroid: entity.guid,
+      obfuscatedAccountIdAndroid: entity.guid,
+      obfuscatedProfileIdAndroid: entity.ownerObj?.guid ?? 'no-owner',
       // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
     }).catch(processError);
     if (((purchases as unknown) as ProductPurchase[])?.length > 0) {
