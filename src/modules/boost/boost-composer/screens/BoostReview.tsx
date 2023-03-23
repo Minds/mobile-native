@@ -27,6 +27,7 @@ import {
   ProductPurchase,
   requestPurchase,
   useIAP,
+  withIAPContext,
 } from 'react-native-iap';
 
 const skus = ['boost.consumable.001'];
@@ -237,4 +238,4 @@ function processError(error: any) {
   console.log('error', error);
 }
 
-export default observer(BoostReviewScreen);
+export default withIAPContext(observer(BoostReviewScreen));

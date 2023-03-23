@@ -6,7 +6,6 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
-import { withIAPContext } from 'react-native-iap';
 import { useStores } from '~/common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
 
@@ -52,9 +51,7 @@ export default function BoostComposerStack({
         />
         <Screen
           name="BoostReview"
-          getComponent={() =>
-            withIAPContext(require('./screens/BoostReview').default)
-          }
+          getComponent={() => require('./screens/BoostReview').default}
         />
       </Navigator>
     </BoostStoreProvider>
