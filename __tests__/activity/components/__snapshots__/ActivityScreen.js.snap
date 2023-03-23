@@ -420,11 +420,7 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
+            style={null}
           >
             <Text
               selectable={true}

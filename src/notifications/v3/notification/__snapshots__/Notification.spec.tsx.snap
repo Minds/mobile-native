@@ -866,20 +866,37 @@ exports[`Notification Boost accepted 1`] = `
       >
         <View
           style={
-            Object {
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "height": undefined,
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+            ]
           }
         >
           <View
+            onLayout={[Function]}
             style={
-              Array [
-                Object {
-                  "padding": 1,
-                },
-              ]
+              Object {
+                "justifyContent": "center",
+              }
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "padding": 1,
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -1166,20 +1183,37 @@ exports[`Notification Boost complete 1`] = `
       >
         <View
           style={
-            Object {
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "height": undefined,
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+            ]
           }
         >
           <View
+            onLayout={[Function]}
             style={
-              Array [
-                Object {
-                  "padding": 1,
-                },
-              ]
+              Object {
+                "justifyContent": "center",
+              }
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "padding": 1,
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -1466,20 +1500,37 @@ exports[`Notification Boost rejected 1`] = `
       >
         <View
           style={
-            Object {
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "height": undefined,
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+            ]
           }
         >
           <View
+            onLayout={[Function]}
             style={
-              Array [
-                Object {
-                  "padding": 1,
-                },
-              ]
+              Object {
+                "justifyContent": "center",
+              }
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "padding": 1,
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -1823,20 +1874,37 @@ exports[`Notification Boost rejected legacy 1`] = `
       >
         <View
           style={
-            Object {
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "height": undefined,
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+            ]
           }
         >
           <View
+            onLayout={[Function]}
             style={
-              Array [
-                Object {
-                  "padding": 1,
-                },
-              ]
+              Object {
+                "justifyContent": "center",
+              }
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "padding": 1,
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>

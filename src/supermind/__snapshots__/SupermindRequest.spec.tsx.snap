@@ -312,106 +312,122 @@ exports[`SupermindRequest should render inbound 1`] = `
     >
       <View
         style={
-          Object {
-            "justifyContent": "center",
-            "minHeight": 150,
-          }
+          Array [
+            Object {
+              "height": undefined,
+              "justifyContent": "center",
+              "overflow": "hidden",
+            },
+          ]
         }
       >
         <View
+          onLayout={[Function]}
           style={
-            Array [
-              Object {
-                "paddingHorizontal": 16,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-            ]
+            Object {
+              "justifyContent": "center",
+            }
           }
         >
           <View
             style={
               Object {
-                "flex": 1,
+                "minHeight": 150,
               }
             }
           >
-            <Text
-              selectable={true}
+            <View
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "paddingHorizontal": 16,
                   },
                   Object {
-                    "fontFamily": "Roboto",
+                    "paddingVertical": 12,
                   },
-                  Array [
+                ]
+              }
+            >
+              <View
+                style={null}
+              >
+                <Text
+                  selectable={true}
+                  style={
                     Array [
-                      Object {
-                        "fontFamily": "Roboto",
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      Object {
-                        "fontSize": 18,
-                      },
                       Object {
                         "color": "#FFFFFF",
                       },
                       Object {
-                        "fontFamily": "Roboto-Medium",
-                        "fontWeight": "500",
+                        "fontFamily": "Roboto",
                       },
-                    ],
-                    Object {
-                      "marginBottom": 4,
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Black",
-                      "fontWeight": "700",
-                    },
-                  ],
-                ]
-              }
-            >
-              TITLE
-            </Text>
-            <Text
-              selectable={true}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                  },
-                  Object {
-                    "fontFamily": "Roboto",
-                  },
-                  Array [
-                    Object {
-                      "fontFamily": "Roboto",
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "fontSize": 18,
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Medium",
-                      "fontWeight": "500",
-                    },
-                  ],
-                ]
-              }
-            >
-              Message
-            </Text>
+                      Array [
+                        Array [
+                          Object {
+                            "fontFamily": "Roboto",
+                            "fontSize": 16,
+                            "lineHeight": 24,
+                          },
+                          Object {
+                            "fontSize": 18,
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                          },
+                          Object {
+                            "fontFamily": "Roboto-Medium",
+                            "fontWeight": "500",
+                          },
+                        ],
+                        Object {
+                          "marginBottom": 4,
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Black",
+                          "fontWeight": "700",
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  TITLE
+                </Text>
+                <Text
+                  selectable={true}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      Object {
+                        "fontFamily": "Roboto",
+                      },
+                      Array [
+                        Object {
+                          "fontFamily": "Roboto",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Message
+                </Text>
+              </View>
+              <View />
+            </View>
           </View>
-          <View />
         </View>
       </View>
     </View>
@@ -790,106 +806,122 @@ exports[`SupermindRequest should render outbound 1`] = `
     >
       <View
         style={
-          Object {
-            "justifyContent": "center",
-            "minHeight": 150,
-          }
+          Array [
+            Object {
+              "height": undefined,
+              "justifyContent": "center",
+              "overflow": "hidden",
+            },
+          ]
         }
       >
         <View
+          onLayout={[Function]}
           style={
-            Array [
-              Object {
-                "paddingHorizontal": 16,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-            ]
+            Object {
+              "justifyContent": "center",
+            }
           }
         >
           <View
             style={
               Object {
-                "flex": 1,
+                "minHeight": 150,
               }
             }
           >
-            <Text
-              selectable={true}
+            <View
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "paddingHorizontal": 16,
                   },
                   Object {
-                    "fontFamily": "Roboto",
+                    "paddingVertical": 12,
                   },
-                  Array [
+                ]
+              }
+            >
+              <View
+                style={null}
+              >
+                <Text
+                  selectable={true}
+                  style={
                     Array [
-                      Object {
-                        "fontFamily": "Roboto",
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      Object {
-                        "fontSize": 18,
-                      },
                       Object {
                         "color": "#FFFFFF",
                       },
                       Object {
-                        "fontFamily": "Roboto-Medium",
-                        "fontWeight": "500",
+                        "fontFamily": "Roboto",
                       },
-                    ],
-                    Object {
-                      "marginBottom": 4,
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Black",
-                      "fontWeight": "700",
-                    },
-                  ],
-                ]
-              }
-            >
-              TITLE
-            </Text>
-            <Text
-              selectable={true}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                  },
-                  Object {
-                    "fontFamily": "Roboto",
-                  },
-                  Array [
-                    Object {
-                      "fontFamily": "Roboto",
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "fontSize": 18,
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Medium",
-                      "fontWeight": "500",
-                    },
-                  ],
-                ]
-              }
-            >
-              Message
-            </Text>
+                      Array [
+                        Array [
+                          Object {
+                            "fontFamily": "Roboto",
+                            "fontSize": 16,
+                            "lineHeight": 24,
+                          },
+                          Object {
+                            "fontSize": 18,
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                          },
+                          Object {
+                            "fontFamily": "Roboto-Medium",
+                            "fontWeight": "500",
+                          },
+                        ],
+                        Object {
+                          "marginBottom": 4,
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Black",
+                          "fontWeight": "700",
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  TITLE
+                </Text>
+                <Text
+                  selectable={true}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      Object {
+                        "fontFamily": "Roboto",
+                      },
+                      Array [
+                        Object {
+                          "fontFamily": "Roboto",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Message
+                </Text>
+              </View>
+              <View />
+            </View>
           </View>
-          <View />
         </View>
       </View>
     </View>
