@@ -6,10 +6,6 @@ const styles = ThemedStyles.create({
   },
   bodyContainer: {
     minHeight: 150,
-    justifyContent: 'center',
-  },
-  onlyContentbodyContainer: {
-    justifyContent: 'center',
   },
   messageContainer: ['paddingHorizontal4x', 'paddingVertical3x'],
   message: {

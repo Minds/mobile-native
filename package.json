@@ -162,7 +162,7 @@
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
     "react-native-reanimated": "^2.14.4",
-    "react-native-reanimated-carousel": "^3.0.3",
+    "react-native-reanimated-carousel": "^3.3.0",
     "react-native-reanimated-hooks": "^2.0.0",
     "react-native-reanimated-indicators": "^2.0.0",
     "react-native-redash": "^14.2.3",

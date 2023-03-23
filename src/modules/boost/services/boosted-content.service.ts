@@ -44,23 +44,6 @@ class BoostedContentService {
     this.boosts = [];
   }
 
-  /**
-   * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel>} boosts
-   */
-  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((entity: ActivityModel) => {
-      entity.boosted = true;
-      // remove NSFW on iOS
-      if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
-        return false;
-      }
-      return entity.type === 'user'
-        ? false
-        : !blockListService.has(entity.ownerObj?.guid);
-    });
-  }
-
   loadCached() {
     const boosts = storages.session?.getArray<ActivityModel>(
       'BoostServiceCache',
@@ -80,9 +63,7 @@ class BoostedContentService {
         location: 1,
       });
       if (response?.boosts) {
-        const filteredBoosts = this.cleanBoosts(
-          response.boosts.map(b => b.entity),
-        );
+        const filteredBoosts = cleanBoosts(response.boosts.map(b => b.entity));
 
         this.boosts = ActivityModel.createMany(filteredBoosts);
 
@@ -111,6 +92,21 @@ class BoostedContentService {
 
     return this.boosts[this.offset];
   }
+}
+
+export function cleanBoosts(
+  boosts: Array<ActivityModel>,
+): Array<ActivityModel> {
+  return boosts.filter((entity: ActivityModel) => {
+    entity.boosted = true;
+    // remove NSFW on iOS
+    if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
+      return false;
+    }
+    return entity.type === 'user'
+      ? false
+      : !blockListService.has(entity.ownerObj?.guid);
+  });
 }
 
 export default new BoostedContentService();

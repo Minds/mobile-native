@@ -121,9 +121,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     }
 
     return (
-      <DebouncedTouchableOpacity
-        onPress={this._navToGroup}
-        style={styles.groupContainer}>
+      <DebouncedTouchableOpacity onPress={this._navToGroup}>
         <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
         </MText>
@@ -277,9 +275,6 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     flexDirection: 'column',
-  },
-  groupContainer: {
-    paddingTop: 3,
   },
 });
 

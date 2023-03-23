@@ -36,6 +36,7 @@ import { CodePushUpdatePrompt } from 'modules/codepush';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
+import BoostRotator from './boost-rotator/BoostRotator';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -135,6 +136,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
             feedType={newsfeed.feedType}
             onFeedTypeChange={newsfeed.changeFeedTypeChange}
           />
+          <BoostRotator />
         </View>
       ),
       () => InFeedNoticesService.trackViewTop(),
