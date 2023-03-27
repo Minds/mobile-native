@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { showNotification } from '~/../AppMessages';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
@@ -144,4 +145,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   );
 }
 
-export default observer(BoostReviewScreen);
+export default observer(
+  withErrorBoundaryScreen(BoostReviewScreen, 'BoostReviewScreen'),
+);

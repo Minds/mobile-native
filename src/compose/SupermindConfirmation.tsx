@@ -9,6 +9,7 @@ import i18n from '~/common/services/i18n.service';
 import { B1, B2, Button, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { UNIT } from '~/styles/Tokens';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export interface SupermindConfirmationRouteParams {
   requiresTwitter?: boolean;
@@ -16,7 +17,7 @@ export interface SupermindConfirmationRouteParams {
   onDismiss: () => void;
 }
 
-export default function SupermindConfirmation() {
+function SupermindConfirmation() {
   const route = useRoute();
   const params = route.params as SupermindConfirmationRouteParams;
   const texts = {
@@ -121,3 +122,8 @@ export function confirmSupermindReply(
     });
   });
 }
+
+export default withErrorBoundaryScreen(
+  SupermindConfirmation,
+  'SupermindConfirmation',
+);

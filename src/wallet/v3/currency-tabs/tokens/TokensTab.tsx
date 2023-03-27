@@ -26,6 +26,7 @@ import { ONCHAIN_ENABLED } from '~/config/Config';
 import UserModel from '~/channel/UserModel';
 import useModelEvent from '~/common/hooks/useModelEvent';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -208,4 +209,4 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
   );
 });
 
-export default TokensTab;
+export default withErrorBoundaryScreen(TokensTab, 'TokensTab');

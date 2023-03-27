@@ -12,13 +12,11 @@ import usePushNotificationListener from '~/common/hooks/usePushNotificationListe
 import logService from '~/common/services/log.service';
 import { api } from '../api';
 import { useTranslation } from '../locales';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
-export default observer(function InAppVerificationCodeRequestScreen({
-  navigation,
-  route,
-}: PropsType) {
+function InAppVerificationCodeRequestScreen({ navigation, route }: PropsType) {
   const store = useCodeRequestStore(navigation, route);
   const { t } = useTranslation();
 
@@ -74,8 +72,14 @@ export default observer(function InAppVerificationCodeRequestScreen({
       </FitScrollView>
     </Screen>
   );
-});
+}
 
+export default observer(
+  withErrorBoundaryScreen(
+    InAppVerificationCodeRequestScreen,
+    'InAppVerificationCodeRequestScreen',
+  ),
+);
 function useCodeRequestStore(
   navigation: PropsType['navigation'],
   route: PropsType['route'],
@@ -122,7 +126,7 @@ function useCodeRequestStore(
       navigation.setParams({ requestAgain: undefined });
       store.requestCode();
     }
-  }, [route.params?.requestAgain, store]);
+  }, [navigation, route.params, store]);
 
   const pushListener = useCallback(
     push => {

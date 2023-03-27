@@ -21,6 +21,7 @@ import Earnings from '../Earnings';
 import { TokensTabStore } from '../tokens/createTokensTabStore';
 import { UsdTabStore } from './createUsdTabStore';
 import { Screen, Column, Row } from '~ui';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -123,4 +124,4 @@ const UsdTab = observer(
   },
 );
 
-export default UsdTab;
+export default withErrorBoundaryScreen(UsdTab, 'UsdTab');

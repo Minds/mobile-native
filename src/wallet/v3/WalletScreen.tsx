@@ -26,6 +26,7 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -135,4 +136,4 @@ const WalletScreen = observer((props: PropsType) => {
   );
 });
 
-export default WalletScreen;
+export default withErrorBoundaryScreen(WalletScreen, 'WalletScreen');

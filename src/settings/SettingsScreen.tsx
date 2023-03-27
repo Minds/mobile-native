@@ -19,6 +19,7 @@ import {
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -58,7 +59,7 @@ const setDarkMode = () => {
 
 type Item = MenuItemProps & { screen?: string; params?: any };
 
-const SettingsScreen = observer(({ navigation }) => {
+const SettingsScreen = ({ navigation }) => {
   const theme = ThemedStyles.style;
 
   const UPGRADE_DISABLED =
@@ -194,6 +195,8 @@ const SettingsScreen = observer(({ navigation }) => {
       </ScrollView>
     </Screen>
   );
-});
+};
 
-export default SettingsScreen;
+export default observer(
+  withErrorBoundaryScreen(SettingsScreen, 'SettingsScreen'),
+);

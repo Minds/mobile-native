@@ -32,6 +32,7 @@ import {
   ScrollContext,
   ScrollDirection,
 } from '~/common/contexts/scroll.context';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -204,7 +205,9 @@ function SupermindConsoleScreen({
   );
 }
 
-export default observer(SupermindConsoleScreen);
+export default observer(
+  withErrorBoundaryScreen(SupermindConsoleScreen, 'SupermindConsoleScreen'),
+);
 
 const renderSupermindInbound = row => <SupermindRequest request={row.item} />;
 const renderSupermindOutbound = row => (

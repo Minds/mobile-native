@@ -16,6 +16,7 @@ import {
 import { useBoostStore } from '../boost.store';
 import { useTranslation } from '../../locales';
 import { BoostStackScreenProps } from '../navigator';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
@@ -92,4 +93,6 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   );
 }
 
-export default observer(AudienceSelectorScreen);
+export default observer(
+  withErrorBoundaryScreen(AudienceSelectorScreen, 'AudienceSelectorScreen'),
+);

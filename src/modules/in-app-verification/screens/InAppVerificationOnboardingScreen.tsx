@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import MText from '~/common/components/MText';
@@ -12,7 +13,7 @@ import { useTranslation } from '../locales';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationOnboarding'>;
 
-export default function InAppVerificationOnboardingScreen() {
+function InAppVerificationOnboardingScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [termsAgreed, setTermsAgreed] = useState(false);
   const { t } = useTranslation();
@@ -81,3 +82,8 @@ export default function InAppVerificationOnboardingScreen() {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(
+  InAppVerificationOnboardingScreen,
+  'InAppVerificationOnboardingScreen',
+);
