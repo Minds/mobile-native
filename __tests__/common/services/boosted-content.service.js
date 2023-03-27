@@ -38,7 +38,7 @@ describe('Boosted content service', () => {
 
     // should fetch the feed
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
-      'api/v2/boost/feed',
+      'api/v3/boosts/feed',
     );
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
@@ -83,7 +83,7 @@ describe('Boosted content service', () => {
 
     // should fetch the feed
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
-      'api/v2/boost/feed',
+      'api/v3/boosts/feed',
     );
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
