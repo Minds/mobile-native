@@ -49,7 +49,7 @@ const BoostSettingsScreen = observer(() => {
   const localStore = useLocalStore(() => ({
     loading: true,
     viewBoostedContent: false,
-    showBoostChannel: 3 as BoostPartnerSuitability,
+    showBoostChannel: BoostPartnerSuitability.CONTROVERSIAL,
     boostAutoRotation: false,
     openContent: false,
     liquiditySpot: false,
@@ -225,7 +225,7 @@ const BoostSettingsScreen = observer(() => {
         </MText>
       </MText>
       {items.map(item => (
-        <Item item={item} />
+        <Item item={item} key={item.id} />
       ))}
     </ScrollView>
   );
@@ -275,6 +275,7 @@ const Item = observer(({ item }: { item: ItemType }) => {
       </View>
       {item.options.map(([name, value]) => (
         <MenuItemOption
+          key={name}
           title={i18n.t(`settings.boost.${name}`)}
           onPress={item.disabled ? undefined : () => item.onPress(value)}
           selected={item.isSelected(value)}
