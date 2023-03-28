@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
-import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { DiscoveryV2SearchStoreContext } from './DiscoveryV2SearchContext';
@@ -12,6 +11,7 @@ import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 import DiscoveryV2SearchStore, {
   DiscoveryV2SearchStoreAlgorithm,
 } from './DiscoveryV2SearchStore';
+import { DiscoveryStackParamList } from '~/navigation/DiscoveryStack';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;

@@ -43,20 +43,6 @@ type WebViewParams = {
   onRedirect?: (event: WebViewNavigation) => void;
 };
 
-export type DiscoveryStackParamList = {
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
-  Discovery: {};
-  Activity: {
-    entity?: ActivityModel;
-    group?: GroupModel;
-    guid?: string;
-    scrollToBottom?: boolean;
-    focusedCommentUrn?: string;
-    noBottomInset?: boolean;
-  };
-  Channel: {};
-};
-
 export type MoreStackParamList = {
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -65,7 +51,7 @@ export type MoreStackParamList = {
   };
   Drawer: {};
   SupermindSettingsScreen: {};
-  Channel: {};
+  Channel: AppStackParamList['Channel'];
   Wallet: {
     currency?: string;
     section?: string;
@@ -289,7 +275,10 @@ export type AppStackParamList = {
   Analytics: {};
   Notifications: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
-  Channel: {};
+  Channel: {
+    guid?: string;
+    entity?: UserModel;
+  };
   ChannelEdit: {};
   Bio: {
     store: ChannelStoreType;
