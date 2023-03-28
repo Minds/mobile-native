@@ -225,6 +225,9 @@
     "sessionExpired": "Logged out"
   },
   "inFeedNotices": {
+    "boostPartnerTitle": "Welcome to the Boost Partners Program",
+    "boostPartnerDescription": "You are now eligible to earn a 50/50 revenue-share for serving Boosts on your channel and content pages. You may disable or change your settings any time.",
+    "boostPartnerButton": "Read more",
     "pendingSupermind": "You have Supermind offers",
     "pendingSupermindDescription": "Reply to your fans to claim cash or tokens before your pending offers expire.",
     "pendingSupermindButton": "Let's go ",
@@ -840,7 +843,7 @@
   },
   "settings": {
     "submit": "Submit",
-    "boostConsole": "Boost Console",
+    "boostConsole": "Boost",
     "chooseBrowser": "Choose Browser",
     "chooseBrowserDescription": "Please choose where you want to open the external links.",
     "chooseBrowserHint": "This option can be changed from the settings",

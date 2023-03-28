@@ -1,5 +1,4 @@
 import api from './api.service';
-import featuresService from './features.service';
 import { storages } from './storage/storages.service';
 
 /**
@@ -21,8 +20,6 @@ class MindsConfigService {
     storages.app.setMap('mindsSettings', settings);
 
     this.settings = settings;
-    // update the features based on the settings
-    featuresService.updateFeatures();
   }
 
   /**
@@ -36,8 +33,6 @@ class MindsConfigService {
         settings = this.loadDefault();
       }
       this.settings = settings;
-      // update the features based on the settings
-      featuresService.updateFeatures();
     }
 
     return this.settings;

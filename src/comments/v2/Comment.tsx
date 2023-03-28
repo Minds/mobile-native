@@ -33,16 +33,41 @@ type PropsType = {
 /**
  * Comment Component
  */
-export default observer(function Comment(props: PropsType) {
+export default observer(function Comment({
+  comment,
+  store,
+  hideReply,
+  isHeader,
+}: PropsType) {
   const navigation = useNavigation<any>();
   const translateRef = React.useRef<any>();
   const theme = ThemedStyles.style;
 
-  const mature = props.comment.mature && !props.comment.mature_visibility;
+  const {
+    mature_visibility,
+    ownerObj,
+    parent_guid_l2,
+    can_reply,
+    focused,
+    description,
+    attachment_guid,
+    votedUp,
+    votedDown,
+    replies_count,
+    hasMedia,
+    isOwner,
+    toggleMatureVisibility,
+  } = comment ?? {};
 
-  const canReply = props.comment.parent_guid_l2 && !props.hideReply;
+  const { username, plus: isPlusUser } = ownerObj ?? {};
+
+  const { entity, setShowInput } = store ?? {};
+
+  const mature = comment?.mature && !mature_visibility;
+
+  const canReply = parent_guid_l2 && !hideReply;
   const backgroundColor = ThemedStyles.getColor(
-    props.isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
+    isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
@@ -106,59 +131,57 @@ export default observer(function Comment(props: PropsType) {
 
   const reply = React.useCallback(() => {
     // if we can't reply, open input and fill in owner username
-    if (!props.comment.can_reply) {
-      return props.store.setShowInput(
-        true,
-        undefined,
-        `@${props.comment.ownerObj.username} `,
-      );
+    if (!can_reply) {
+      return setShowInput(true, undefined, `@${username} `);
     }
 
     navigation.push('ReplyComment', {
-      comment: props.comment,
-      entity: props.store.entity,
+      comment,
+      entity,
       open: true,
     });
-  }, [navigation, props.comment, props.store]);
+  }, [can_reply, comment, entity, navigation, setShowInput, username]);
 
   const viewReply = React.useCallback(() => {
     navigation.push('ReplyComment', {
-      comment: props.comment,
-      entity: props.store.entity,
+      comment,
+      entity,
     });
-  }, [navigation, props.comment, props.store.entity]);
+  }, [navigation, comment, entity]);
 
   return (
     <View
       style={[
         styles.container,
-        props.comment.focused ? styles.focused : theme.bcolorPrimaryBorder,
+        isPlusUser
+          ? theme.bgPlusBackground
+          : focused
+          ? styles.focused
+          : theme.bcolorPrimaryBorder,
       ]}>
-      <CommentHeader entity={props.comment} navigation={navigation} />
+      <CommentHeader entity={comment} navigation={navigation} />
 
-      {!mature || props.comment.isOwner() ? (
+      {!mature || isOwner() ? (
         <>
           <View style={[styles.body, theme.flexContainer]}>
-            {!!props.comment.description && (
+            {!!description && (
               <>
                 <ReadMore
                   numberOfLines={6}
                   navigation={NavigationService}
-                  text={entities.decodeHTML(props.comment.description)}
+                  text={entities.decodeHTML(description)}
                   renderTruncatedFooter={renderTruncatedFooter}
                   renderRevealedFooter={renderRevealedFooter}
                 />
-                <Translate ref={translateRef} entity={props.comment} />
+                <Translate ref={translateRef} entity={comment} />
               </>
             )}
-            {(props.comment.hasMedia() ||
-              Boolean(props.comment.attachment_guid)) && (
+            {(hasMedia() || Boolean(attachment_guid)) && (
               <View style={theme.paddingTop3x}>
                 <MediaView
-                  entity={props.comment}
+                  entity={comment}
                   imageStyle={theme.borderRadius}
                   smallEmbed
-                  // onPress={this.navToImage}
                 />
               </View>
             )}
@@ -172,40 +195,37 @@ export default observer(function Comment(props: PropsType) {
           </View>
           <View style={styles.actionsContainer}>
             <ThumbAction
-              entity={props.comment}
+              entity={comment}
               direction="up"
-              voted={props.comment.votedUp}
+              voted={votedUp}
               size="tiny"
               touchableComponent={TouchableOpacity}
             />
             <ThumbAction
-              entity={props.comment}
+              entity={comment}
               direction="down"
-              voted={props.comment.votedDown}
+              voted={votedDown}
               size="tiny"
               touchableComponent={TouchableOpacity}
             />
-            <ShareAction entity={props.comment} />
+            <ShareAction entity={comment} />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
-            {!props.isHeader && (
+            {!isHeader && (
               <CommentBottomMenu
-                store={props.store}
-                entity={props.store.entity}
-                comment={props.comment}
+                store={store}
+                entity={store.entity}
+                comment={comment}
                 onTranslate={translate}
               />
             )}
           </View>
-          {!!props.comment.replies_count && !props.hideReply && (
+          {!!replies_count && !hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
               <MText style={[styles.viewReply, theme.colorLink]}>
-                {
-                  //@ts-ignore
-                  i18n.t('viewRepliesComments', {
-                    count: props.comment.replies_count,
-                  })
-                }
+                {i18n.t('viewRepliesComments.other', {
+                  count: replies_count,
+                })}
               </MText>
             </TouchableOpacity>
           )}
@@ -214,7 +234,7 @@ export default observer(function Comment(props: PropsType) {
         // mature
         <View>
           <TouchableOpacity
-            onPress={props.comment.toggleMatureVisibility}
+            onPress={toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
             <MText style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
@@ -229,12 +249,12 @@ export default observer(function Comment(props: PropsType) {
               {i18n.t('confirm18')}
             </MText>
           </TouchableOpacity>
-          {!props.isHeader && (
+          {!isHeader && (
             <View style={[theme.rowJustifyEnd, theme.padding3x]}>
               <CommentBottomMenu
-                store={props.store}
-                entity={props.store.entity}
-                comment={props.comment}
+                store={store}
+                entity={store.entity}
+                comment={comment}
                 onTranslate={translate}
               />
             </View>

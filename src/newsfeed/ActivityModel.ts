@@ -100,6 +100,9 @@ export default class ActivityModel extends BaseModel {
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
   blurhash?: string;
+  blurb?: string;
+  container_guid?: string;
+  tags?: string[];
 
   /**
    * Mature visibility flag
