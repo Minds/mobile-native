@@ -13,7 +13,7 @@ const size = getVariableValue(getTokens().size['$1']);
 
 const SwitchFrame = styled(XStack, {
   name: 'Switch',
-  tag: 'button',
+  tag: 'switch',
   borderRadius: 1000,
 
   width: '$4.5',

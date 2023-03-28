@@ -21,7 +21,7 @@ const enterStyle = {
 
 const StyledBullet = styled(Stack, {
   name: 'Radio',
-  tag: 'button',
+  tag: 'radio',
   width: '$1.5',
   height: '$1.5',
   borderRadius: 1000,
@@ -67,7 +67,7 @@ const Item = ({ value, label = '' }: RadioProps) => {
   const enabled = value === context?.value;
   return (
     <XStack onPress={() => context?.setValue(value)}>
-      <StyledBullet disabled={false}>
+      <StyledBullet>
         <AnimatePresence>
           {enabled && (
             <Stack
@@ -94,10 +94,10 @@ const Item = ({ value, label = '' }: RadioProps) => {
 
 export const RadioGroup = withStaticProperties(
   ({ onValueChange, initialValue, children }: RadioGroupProps) => {
-    const [value, set] = React.useState(initialValue ?? '');
+    const [value, setValueState] = React.useState(initialValue ?? '');
     const setValue = (newValue: string) => {
       if (value !== newValue) {
-        set(newValue);
+        setValueState(newValue);
         onValueChange(newValue);
       }
     };
