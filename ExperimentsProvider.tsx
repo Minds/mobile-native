@@ -112,5 +112,6 @@ export type FeatureID =
   | 'mob-twitter-oauth-4715'
   | 'engine-2503-twitter-feats'
   | 'minds-3639-plus-notice'
-  | 'epic-303-boost-partners'
-  | 'mob-4812-discovery-badge';
+  | 'mob-4812-discovery-badge'
+  | 'mob-4836-iap-no-cash'
+  | 'epic-303-boost-partners';

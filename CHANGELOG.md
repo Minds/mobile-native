@@ -2,6 +2,40 @@
 
 Minds Mobile
 
+## 4.33.0 (2023-03-23)
+
+### Features ✨ (2 changes)
+
+- [Boost partner in-feed notice added](minds/mobile-native!2182)
+- [Added background color to Mind+ comments](minds/mobile-native!2170)
+
+### Changed 🔧 (1 change)
+
+- [Disable cash boosts and upgrade screen for play store](minds/mobile-native!2190)
+
+## 4.32.5 (2023-03-20)
+
+### Fixed 🐛 (2 changes)
+
+- [Fixed an issue where editing a video and then pressing discard would delete the video source](minds/mobile-native!2174)
+- [Fixed an issue with editing a video which is being transcribed](minds/mobile-native!2174)
+
+### Changed 🔧 (1 change)
+
+- [fix cmp calculation](minds/mobile-native!2173)
+
+### Deprecated ⚠️ (1 change)
+
+- [Deprecated legacy connect bank account button on Wallet screen](minds/mobile-native!2183)
+
+### fix (1 change)
+
+- [fix creating time update when editing post](minds/mobile-native!2177)
+
+### changed boost console location (1 change)
+
+- [Moved Boost console to top drawer](minds/mobile-native!2169)
+
 ## 4.32.4 (2023-03-09)
 
 ### Features ✨ (1 change)
