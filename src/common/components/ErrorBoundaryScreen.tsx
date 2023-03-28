@@ -20,7 +20,10 @@ type StateType = {
   hasError: boolean;
 };
 
-class ErrorBoundaryScreen extends Component<PropsType, StateType> {
+export default class ErrorBoundaryScreen extends Component<
+  PropsType,
+  StateType
+> {
   error?: Error;
   info: any;
   state = {

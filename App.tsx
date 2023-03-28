@@ -41,7 +41,7 @@ import './src/common/services/socket.service';
 
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
-import ErrorBoundary from './src/common/components/ErrorBoundary';
+import ErrorBoundaryScreen from './src/common/components/ErrorBoundaryScreen';
 import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import i18n from './src/common/services/i18n.service';
@@ -192,15 +192,13 @@ class App extends Component<Props> {
                                 ThemedStyles.theme === 0 ? 'dark' : 'light'
                               }>
                               <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
+                                <ErrorBoundaryScreen screenName="App">
                                   <WCContextProvider>
                                     <NavigationStack
                                       key={ThemedStyles.theme + i18n.locale}
                                     />
                                   </WCContextProvider>
-                                </ErrorBoundary>
+                                </ErrorBoundaryScreen>
                               </BottomSheetModalProvider>
                             </UIProvider>
                           </PortalProvider>
