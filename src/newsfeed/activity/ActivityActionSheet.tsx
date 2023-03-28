@@ -15,8 +15,8 @@ import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import {
   BottomSheetButton,
-  BottomSheetModal,
   BottomSheetMenuItem,
+  pushBottomSheet,
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
@@ -36,13 +36,12 @@ type PropsType = {
   };
   channel?: UserModel;
   isChatHidden?: boolean;
+  onVisibilityChange?: (visible: boolean) => void;
 };
 
 type StateType = {
   options: Array<any>;
   userBlocked: boolean;
-  shown: boolean;
-  shareMenuShown: boolean;
 };
 
 /**
@@ -56,8 +55,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   state: StateType = {
     options: [],
     userBlocked: false,
-    shown: false,
-    shareMenuShown: false,
   };
 
   /**
@@ -79,11 +76,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
 
     this.setState({ options: this.getOptions() }, () => {
-      if (!this.state.shown) {
-        this.setState({ shown: true });
-      } else {
-        this.ref.current?.present();
-      }
+      pushActionSheet({ options: this.state.options });
     });
   };
 
@@ -305,13 +298,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         if (IS_IOS) {
           this.share();
         } else {
-          if (!this.state.shareMenuShown) {
-            this.setState({ shareMenuShown: true });
-            return;
-          }
-          if (this.shareMenuRef.current) {
-            this.shareMenuRef.current?.present();
-          }
+          pushShareSheet({
+            onSendTo: this.sendTo,
+            onShare: this.share,
+          });
         }
       },
     });
@@ -402,17 +392,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   }
 
   /**
-   * Hide the share menu
-   */
-  hideShareMenu = () => {
-    this.shareMenuRef.current?.dismiss();
-  };
-
-  /**
    * Send link to a user in chat
    */
   sendTo = async () => {
-    this.hideShareMenu();
     try {
       const installed = await SendIntentAndroid.isAppInstalled(
         ANDROID_CHAT_APP,
@@ -448,7 +430,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    * Share the link to the post
    */
   share = () => {
-    this.hideShareMenu();
     shareService.share(
       this.props.entity.text,
       MINDS_URI + 'newsfeed/' + this.props.entity.guid,
@@ -460,50 +441,60 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   render() {
     return (
-      <>
-        <IconButtonNext
-          scale
-          name="more"
-          size="large"
-          onPress={this.showActionSheet}
-          testID={this.props.testID}
-          // left="XS"
-        />
-        {this.state.shown && (
-          <BottomSheetModal ref={this.ref} autoShow>
-            {this.state.options.map((a, i) => (
-              <BottomSheetMenuItem {...a} key={i} />
-            ))}
-            <BottomSheetButton
-              text={i18n.t('cancel')}
-              onPress={this.hideActionSheet}
-            />
-          </BottomSheetModal>
-        )}
-        {this.state.shareMenuShown && (
-          <BottomSheetModal ref={this.shareMenuRef} autoShow>
-            <BottomSheetMenuItem
-              onPress={this.sendTo}
-              title={i18n.t('sendTo')}
-              iconName="repeat"
-              iconType="material"
-            />
-            <BottomSheetMenuItem
-              title={i18n.t('share')}
-              onPress={this.share}
-              iconName="edit"
-              iconType="material"
-            />
-
-            <BottomSheetButton
-              text={i18n.t('cancel')}
-              onPress={this.hideShareMenu}
-            />
-          </BottomSheetModal>
-        )}
-      </>
+      <IconButtonNext
+        scale
+        name="more"
+        size="large"
+        onPress={this.showActionSheet}
+        testID={this.props.testID}
+      />
     );
   }
 }
+
+const pushActionSheet = ({ options }: { options: any[] }) =>
+  pushBottomSheet({
+    safe: true,
+    component: ref => (
+      <>
+        {options.map((a, i) => (
+          <BottomSheetMenuItem {...a} key={i} />
+        ))}
+        <BottomSheetButton
+          text={i18n.t('cancel')}
+          onPress={() => ref.close()}
+        />
+      </>
+    ),
+  });
+
+export const pushShareSheet = ({ onSendTo, onShare }) =>
+  pushBottomSheet({
+    safe: true,
+    component: ref => (
+      <>
+        <BottomSheetMenuItem
+          onPress={() => {
+            ref.close();
+            onSendTo();
+          }}
+          title={i18n.t('sendTo')}
+          iconName="repeat"
+          iconType="material"
+        />
+        <BottomSheetMenuItem
+          title={i18n.t('share')}
+          onPress={() => {
+            ref.close();
+            onShare();
+          }}
+          iconName="edit"
+          iconType="material"
+        />
+
+        <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
+      </>
+    ),
+  });
 
 export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));

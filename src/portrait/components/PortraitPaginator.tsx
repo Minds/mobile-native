@@ -1,13 +1,17 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useElapsedTime } from 'use-elapsed-time';
 import type ActivityModel from '~/newsfeed/ActivityModel';
+import { useCarouselFocus } from '../PortraitViewerScreen';
 
 type PropsType = {
   store: {
     setIndex: (number) => void;
     index: number;
+    next: () => void;
   };
   activities: Array<ActivityModel>;
 };
@@ -17,35 +21,59 @@ type PropsType = {
  */
 export default function PortraitPaginator({ store, activities }: PropsType) {
   const insets = useSafeAreaInsets();
-
-  if (activities.length === 1) {
-    return null;
-  }
+  const focused = useCarouselFocus();
 
   const style = StyleSheet.flatten([
     styles.circlesContainer,
     { marginTop: insets.top ? insets.top : 0 },
   ]);
+
   return (
     <View style={style}>
-      {activities.map((_, i) => (
-        <Marker key={i} i={i} onPress={store.setIndex} store={store} />
-      ))}
+      {activities.map((_, i) =>
+        store.index === i && focused ? (
+          <ProgressBar
+            key={i}
+            store={store}
+            onComplete={() => {
+              store.next();
+            }}
+          />
+        ) : (
+          <View
+            style={[
+              styles.marker,
+              i > store.index ? styles.dark : styles.light,
+              store.index === i ? styles.dark : null,
+            ]}
+          />
+        ),
+      )}
     </View>
   );
 }
 
-const Marker = observer(({ i, onPress, store }) => {
+const ProgressBar = observer(({ onComplete, store }) => {
+  const duration = 5;
+  const { elapsedTime: progress } = useElapsedTime({
+    isPlaying: store.playing,
+    duration,
+    onComplete,
+  });
+
   return (
-    <TouchableOpacity onPress={() => onPress(i)} style={styles.markerContainer}>
-      <View
+    <View style={styles.progressBarContainer}>
+      <Animated.View
         style={[
           styles.marker,
-          i > store.index ? styles.dark : styles.light,
-          store.index === i ? styles.current : null,
+          styles.light,
+          styles.current,
+          {
+            width: `${Math.ceil((progress / duration) * 100)}%`,
+          },
         ]}
       />
-    </TouchableOpacity>
+    </View>
   );
 });
 
@@ -64,8 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   marker: {
+    flex: 1,
+    marginHorizontal: 2,
     opacity: 0.4,
-    width: '100%',
     height: 5,
     borderRadius: 5,
     elevation: 1,
@@ -87,5 +116,11 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     zIndex: 9999,
+  },
+  progressBarContainer: {
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    flex: 1,
+    height: 5,
+    width: '100%',
   },
 });

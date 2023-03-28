@@ -33,6 +33,8 @@ const UserContentSwiper = observer((props: PropsType) => {
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
     viewStore: new ViewStore(),
+    playing: true,
+    autoResumeOnFocus: true,
     setIndex(v) {
       if (v < 0 || v >= activities.length) {
         return;
@@ -48,6 +50,45 @@ const UserContentSwiper = observer((props: PropsType) => {
           deltaPosition.current - (activities[store.index].position || 0),
         ) + 1,
       );
+    },
+    next: () => {
+      if (store.index < activities.length - 1) {
+        if (
+          props.unseenMode &&
+          !activities.slice(store.index).some(p => p.seen) // there no seen posts ahead
+        ) {
+          if (activities[store.index + 1].seen) {
+            props.nextUser();
+            return;
+          }
+        }
+        store.setIndex(store.index + 1);
+      } else {
+        props.nextUser();
+      }
+    },
+    prev: () => {
+      if (store.index > 0) {
+        store.setIndex(store.index - 1);
+      } else {
+        props.prevUser();
+      }
+    },
+    pause: (autoResumeOnFocus = false) => {
+      if (!store.playing) {
+        return;
+      }
+
+      store.playing = false;
+      store.autoResumeOnFocus = autoResumeOnFocus;
+    },
+    resume: (autoResume = false) => {
+      if (!store.autoResumeOnFocus && autoResume) {
+        return;
+      }
+
+      store.playing = true;
+      store.autoResumeOnFocus = true;
     },
   }));
 
@@ -70,40 +111,27 @@ const UserContentSwiper = observer((props: PropsType) => {
     activities[store.index].seen = true;
   });
 
-  const onTapStateChangeRight = useCallback(() => {
-    if (store.index < activities.length - 1) {
-      if (
-        props.unseenMode &&
-        !activities.slice(store.index).some(p => p.seen) // there no seen posts ahead
-      ) {
-        if (activities[store.index + 1].seen) {
-          props.nextUser();
-          return;
-        }
-      }
-      store.setIndex(store.index + 1);
-    } else {
-      props.nextUser();
-    }
-  }, [activities, store, props]);
+  useFocusEffect(
+    useCallback(() => {
+      store.resume(true);
 
-  const onTapStateChangeLeft = useCallback(() => {
-    if (store.index > 0) {
-      store.setIndex(store.index - 1);
-    } else {
-      props.prevUser();
-    }
-  }, [store, props]);
+      return () => {
+        store.pause(true);
+      };
+    }, [store]),
+  );
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <PortraitActivity
-        hasPaginator={activities.length > 1}
+        hasPaginator
         key={`activity${store.index}`}
         entity={activities[store.index]}
         forceAutoplay
-        onPressNext={onTapStateChangeRight}
-        onPressPrev={onTapStateChangeLeft}
+        onPressNext={store.next}
+        onPressPrev={store.prev}
+        onLongPress={store.pause}
+        onPressOut={store.resume}
       />
       <PortraitPaginator store={store} activities={activities} />
     </View>
