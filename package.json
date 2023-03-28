@@ -68,6 +68,7 @@
     "@tamagui/animate-presence": "1.6.2",
     "@tamagui/core": "1.6.2",
     "@tamagui/font-size": "1.6.2",
+    "@tamagui/focusable": "1.6.2",
     "@tamagui/get-button-sized": "1.6.2",
     "@tamagui/helpers-tamagui": "1.6.2",
     "@tamagui/react-native-media-driver": "1.6.2",

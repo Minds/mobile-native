@@ -2,6 +2,63 @@
 
 Minds Mobile
 
+## 4.33.0 (2023-03-23)
+
+### Features ✨ (2 changes)
+
+- [Boost partner in-feed notice added](minds/mobile-native!2182)
+- [Added background color to Mind+ comments](minds/mobile-native!2170)
+
+### Changed 🔧 (1 change)
+
+- [Disable cash boosts and upgrade screen for play store](minds/mobile-native!2190)
+
+## 4.32.5 (2023-03-20)
+
+### Fixed 🐛 (2 changes)
+
+- [Fixed an issue where editing a video and then pressing discard would delete the video source](minds/mobile-native!2174)
+- [Fixed an issue with editing a video which is being transcribed](minds/mobile-native!2174)
+
+### Changed 🔧 (1 change)
+
+- [fix cmp calculation](minds/mobile-native!2173)
+
+### Deprecated ⚠️ (1 change)
+
+- [Deprecated legacy connect bank account button on Wallet screen](minds/mobile-native!2183)
+
+### fix (1 change)
+
+- [fix creating time update when editing post](minds/mobile-native!2177)
+
+### changed boost console location (1 change)
+
+- [Moved Boost console to top drawer](minds/mobile-native!2169)
+
+## 4.32.4 (2023-03-09)
+
+### Features ✨ (1 change)
+
+- [Added IconButtons](minds/mobile-native!2155)
+
+### Fixed 🐛 (4 changes)
+
+- [Fix channel not showing feed](minds/mobile-native!2168)
+- [Fixed the media attachment for quoted posts and superminds](minds/mobile-native!2167)
+- [Disable autocomplete for comments in Android devices, to prevent a crash](minds/mobile-native!2166)
+- [Fix malformed boosts injected in the feed](minds/mobile-native!2160)
+
+### Changed 🔧 (1 change)
+
+- [Keyboard now opens automatically when opening comments on a post with no comments](minds/mobile-native!2163)
+
+### Other (3 changes)
+
+- [Fix error when unmounting the app component](minds/mobile-native!2162)
+- [Design v2 top tab bar with animations](minds/mobile-native!2159)
+- [Design system v2 colors and button fixes](minds/mobile-native!2157)
+
 ## 4.32.3 (2023-03-06)
 
 ### Fixed 🐛 (1 change)

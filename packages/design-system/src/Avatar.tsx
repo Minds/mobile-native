@@ -10,7 +10,7 @@ const AvatarFrame = styled(TAvatar, {
   variants: {
     sSize: {
       m: { size: 32 },
-      l: { size: 40 },
+      l: { size: 64 },
       xl: { size: 96 },
     },
     bordered: {
