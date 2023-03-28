@@ -67,7 +67,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
           {localStore.duration > 0 && localStore.showFullControls && (
             <View style={styles.controlBarContainer}>
               <Icon
-                onPress={localStore.toggleFullScreen}
+                onPress={() => localStore.toggleFullScreen()}
                 name="ios-expand"
                 size={iconSize}
                 color={controlColor}
@@ -77,7 +77,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
                 <DebouncedTouchableWithoutFeedback
                   hitSlop={hitSlop}
-                  onPress={localStore.toggleVolume}>
+                  onPress={() => localStore.toggleVolume()}>
                   <Icon
                     name={
                       localStore.volume === 0
