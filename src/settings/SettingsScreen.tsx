@@ -14,9 +14,11 @@ import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
   DEV_MODE,
+  GOOGLE_PLAY_STORE,
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -59,6 +61,10 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
+  const UPGRADE_DISABLED =
+    (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
+    !PRO_PLUS_SUBSCRIPTION_ENABLED;
+
   const user = sessionService.getUser();
 
   const onComplete = useCallback(
@@ -93,7 +99,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.plus && !UPGRADE_DISABLED) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -101,7 +107,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.pro && !UPGRADE_DISABLED) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',

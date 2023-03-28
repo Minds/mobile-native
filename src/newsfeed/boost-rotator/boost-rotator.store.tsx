@@ -1,12 +1,10 @@
 import { useLocalStore } from 'mobx-react';
+import { boostedContentService, cleanBoosts } from 'modules/boost';
 import React, { useContext, useEffect } from 'react';
+import apiService from '~/common/services/api.service';
+import MetadataService from '~/common/services/metadata.service';
+import { storages } from '~/common/services/storage/storages.service';
 import ActivityModel from '../ActivityModel';
-import apiService from '../../common/services/api.service';
-import boostedContentService, {
-  cleanBoosts,
-} from '../../modules/boost/services/boosted-content.service';
-import { storages } from '../../common/services/storage/storages.service';
-import MetadataService from '../../common/services/metadata.service';
 import { recordView } from '../NewsfeedService';
 
 const CACHE_KEY = 'BoostRotatorCache';

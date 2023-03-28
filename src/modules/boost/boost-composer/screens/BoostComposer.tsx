@@ -19,7 +19,8 @@ import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
-import { IS_IOS } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -40,8 +41,10 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   ];
 
-  if (IS_IOS) {
+  if ((useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) || IS_IOS) {
     tabs.shift();
+    // if we disable cash, offchain_tokens should be the default
+    boostStore.paymentType = 'offchain_tokens';
   }
 
   const textMapping = {
