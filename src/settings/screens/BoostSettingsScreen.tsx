@@ -85,7 +85,6 @@ const BoostSettingsScreen = observer(() => {
     },
     setShowBoostChannel(value: BoostPartnerSuitability) {
       this.showBoostChannel = value;
-      //TODO: IMPLEMENT WHEN THE BACKEND IS IN PLACE
       this.save({ boost_partner_suitability: value });
     },
     async showBoost(): Promise<void> {
@@ -93,6 +92,7 @@ const BoostSettingsScreen = observer(() => {
         await settingsService.showBoosts();
         showNotification(i18n.t('settings.saved'), 'info');
       } catch (e) {
+        showNotification(i18n.t('errorMessage'));
         console.error(e);
       }
     },
@@ -101,6 +101,7 @@ const BoostSettingsScreen = observer(() => {
         await settingsService.hideBoosts();
         showNotification(i18n.t('settings.saved'), 'info');
       } catch (e) {
+        showNotification(i18n.t('errorMessage'));
         console.error(e);
       }
     },
