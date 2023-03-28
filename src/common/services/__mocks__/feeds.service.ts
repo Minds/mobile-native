@@ -13,6 +13,7 @@ const feedService = function () {
   this.fetchLocal = jest.fn();
   this.fetchRemoteOrLocal = jest.fn();
   this.fetchLocalOrRemote = jest.fn();
+  this.setDataProperty = jest.fn().mockImplementation(() => this);
 };
 
 export default feedService;

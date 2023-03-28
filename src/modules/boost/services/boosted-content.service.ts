@@ -1,8 +1,8 @@
 import { Platform } from 'react-native';
-import apiService from '~/common/services/api.service';
 import blockListService from '~/common/services/block-list.service';
+import FeedsService from '~/common/services/feeds.service';
+import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
-import { storages } from '~/common/services/storage/storages.service';
 import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 
 /**
@@ -16,6 +16,12 @@ class BoostedContentService {
   offset: number = -1;
 
   /**
+   * Feed service
+   * @var {FeedsService}
+   */
+  feedsService?: FeedsService;
+
+  /**
    * Boosts
    * @var {Array<BoostedActivityModel>} boosts
    */
@@ -27,21 +33,49 @@ class BoostedContentService {
   updating = false;
 
   /**
-   * Initialize if necessary
+   * Reload boosts list
    */
-  init() {
+  load = async (): Promise<any> => {
+    this.init();
     if (!sessionService.userLoggedIn || sessionService.switchingAccount) {
       return;
     }
-    this.loadCached();
-    return this.update();
+    try {
+      const done = await this.feedsService!.setOffset(0).fetchLocal();
+
+      if (!done) {
+        await this.update();
+      } else {
+        this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
+        this.update();
+      }
+    } catch (err) {
+      logService.exception('[BoostedContentService]', err);
+    }
+  };
+
+  /**
+   * Initialize if necessary
+   */
+  init() {
+    if (!this.feedsService) {
+      this.feedsService = new FeedsService();
+      this.feedsService
+        .setLimit(24)
+        .setOffset(0)
+        .setPaginated(false)
+        .setEndpoint('api/v3/boosts/feed')
+        .setDataProperty('boosts')
+        .setParams({ location: 1 });
+    }
   }
 
   /**
    * Clear the service
    */
   clear() {
-    this.boosts = [];
+    this.feedsService?.clear();
+    delete this.feedsService;
   }
 
   /**
@@ -63,34 +97,14 @@ class BoostedContentService {
     });
   }
 
-  loadCached() {
-    const boosts = storages.session?.getArray<BoostedActivityModel>(
-      'BoostServiceCache',
-    );
-    if (boosts) {
-      this.boosts = BoostedActivityModel.createMany(boosts);
-    }
-  }
-
   /**
    * Update boosted content from server
    */
   async update() {
     try {
       this.updating = true;
-      const response = await apiService.get<any>('api/v3/boosts/feed', {
-        location: 1,
-      });
-      if (response?.boosts) {
-        const filteredBoosts = this.cleanBoosts(
-          response.boosts.map(b => b.entity),
-        );
-
-        this.boosts = BoostedActivityModel.createMany(filteredBoosts);
-
-        // cache boosts
-        storages.session?.setArray('BoostServiceCache', filteredBoosts);
-      }
+      await this.feedsService!.fetch();
+      this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
     } finally {
       this.updating = false;
     }
