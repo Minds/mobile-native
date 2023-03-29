@@ -312,6 +312,8 @@ const createMindsVideoStore = ({
         isLooping: Boolean(repeat),
       });
 
+      this.player?.setProgressUpdateIntervalAsync(100);
+
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
       }

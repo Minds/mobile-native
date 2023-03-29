@@ -1,23 +1,18 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useElapsedTime } from 'use-elapsed-time';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 import { useCarouselFocus } from '../PortraitViewerScreen';
-import { useLayout } from '@react-native-community/hooks';
 
-type PropsType = {
+type PortraitPaginatorProps = {
   store: {
     setIndex: (number) => void;
     index: number;
     next: () => void;
     videoProgress?: number;
+    playing: boolean;
   };
   activities: Array<ActivityModel>;
 };
@@ -25,7 +20,7 @@ type PropsType = {
 /**
  * Portrait paginator
  */
-function PortraitPaginator({ store, activities }: PropsType) {
+function PortraitPaginator({ store, activities }: PortraitPaginatorProps) {
   const insets = useSafeAreaInsets();
   const focused = useCarouselFocus();
 
@@ -61,23 +56,34 @@ function PortraitPaginator({ store, activities }: PropsType) {
   );
 }
 
-const ProgressBar = observer(({ onComplete, store }) => {
+export default observer(PortraitPaginator);
+
+interface ProgressBarProps {
+  onComplete: () => void;
+  videoProgress?: number;
+  isVideo?: boolean;
+  store: PortraitPaginatorProps['store'];
+}
+
+const ProgressBar = observer((props: ProgressBarProps) => {
+  const { onComplete, videoProgress, isVideo, store } = props;
   const duration = 5;
   const { elapsedTime: progress } = useElapsedTime({
-    isPlaying: store.playing,
+    isPlaying: isVideo ? false : store.playing,
     duration,
     onComplete,
   });
+  const percentage = (isVideo ? videoProgress || 0 : progress / duration) * 100;
 
   return (
     <View style={styles.progressBarContainer}>
-      <Animated.View
+      <View
         style={[
           styles.marker,
           styles.light,
           styles.current,
           {
-            width: `${Math.ceil((progress / duration) * 100)}%`,
+            width: `${percentage}%`,
           },
         ]}
       />
