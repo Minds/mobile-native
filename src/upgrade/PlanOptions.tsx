@@ -11,7 +11,7 @@ type PropsType = {
   store: UpgradeStoreType;
 };
 
-export const labelMap: Record<SubscriptionType, (numner, string) => string> = {
+export const labelMap: Record<SubscriptionType, (number, string) => string> = {
   lifetime: (cost, symbol) => `Lifetime membership · ${symbol}${cost}`,
   monthly: (cost, symbol) => `Monthly · ${symbol}${cost}`,
   yearly: (cost, symbol) => `Annually · ${symbol}${cost / 12}`,
