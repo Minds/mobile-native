@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import MText from '../../common/components/MText';
 import i18nService from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -28,4 +29,4 @@ const UserNotFound = props => {
   );
 };
 
-export default UserNotFound;
+export default withErrorBoundary(UserNotFound);
