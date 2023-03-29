@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import UserModel from '~/channel/UserModel';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import SaveButton from '~/common/components/SaveButton';
 import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
@@ -10,7 +9,7 @@ import { useTranslation } from '../locales';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationConfirmation'>;
 
-function InAppVerificationConfirmationScreen() {
+export default function InAppVerificationConfirmationScreen() {
   const navigation = useNavigation<NavigationProp>();
   const onContinue = () => {
     navigation.popToTop();
@@ -40,8 +39,3 @@ function InAppVerificationConfirmationScreen() {
     </Screen>
   );
 }
-
-export default withErrorBoundaryScreen(
-  InAppVerificationConfirmationScreen,
-  'InAppVerificationConfirmationScreen',
-);

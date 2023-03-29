@@ -19,7 +19,6 @@ import {
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -197,6 +196,4 @@ const SettingsScreen = ({ navigation }) => {
   );
 };
 
-export default observer(
-  withErrorBoundaryScreen(SettingsScreen, 'SettingsScreen'),
-);
+export default observer(SettingsScreen);

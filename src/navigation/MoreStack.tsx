@@ -9,9 +9,33 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { RouteProp } from '@react-navigation/native';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
+
+export default function () {
+  return (
+    <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+      <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
+      {moreStacks.map(({ hideIf, ...screen }) => {
+        return hideIf ? undefined : (
+          <MoreStack.Screen key={screen.name} {...screenProps(screen)} />
+        );
+      })}
+    </MoreStack.Navigator>
+  );
+}
+
+const screenProps = props => {
+  const { comp, ...rest } = props;
+  return {
+    ...props,
+    getComponent: () => withErrorBoundaryScreen(comp, rest.name),
+  };
+};
+
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 const WalletOptions = () => ({
@@ -19,374 +43,319 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
-export default function () {
-  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
+const AccountScreenOptions = navigation => [
+  {
+    title: i18n.t('settings.accountOptions.1'),
+    onPress: () => navigation.push('SettingsEmail'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.2'),
+    onPress: () => navigation.push('LanguageScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.3'),
+    onPress: () => navigation.push('SettingsPassword'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.4'),
+    onPress: () => navigation.push('SettingsNotifications'),
+  },
+  !IS_IOS
+    ? {
+        title: i18n.t('settings.accountOptions.5'),
+        onPress: () => navigation.push('NSFWScreen'),
+      }
+    : null,
+  {
+    title: i18n.t('settings.accountOptions.7'),
+    onPress: () => navigation.push('AutoplaySettingsScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.8'),
+    onPress: () => navigation.push('BoostSettingsScreen'),
+  },
+];
 
-  const AccountScreenOptions = navigation => [
-    {
-      title: i18n.t('settings.accountOptions.1'),
-      onPress: () => navigation.push('SettingsEmail'),
-    },
-    {
-      title: i18n.t('settings.accountOptions.2'),
-      onPress: () => navigation.push('LanguageScreen'),
-    },
-    {
-      title: i18n.t('settings.accountOptions.3'),
-      onPress: () => navigation.push('SettingsPassword'),
-    },
-    {
-      title: i18n.t('settings.accountOptions.4'),
-      onPress: () => navigation.push('SettingsNotifications'),
-    },
-    !IS_IOS
-      ? {
-          title: i18n.t('settings.accountOptions.5'),
-          onPress: () => navigation.push('NSFWScreen'),
-        }
-      : null,
-    {
-      title: i18n.t('settings.accountOptions.7'),
-      onPress: () => navigation.push('AutoplaySettingsScreen'),
-    },
-    {
-      title: i18n.t('settings.accountOptions.8'),
-      onPress: () => navigation.push('BoostSettingsScreen'),
-    },
-  ];
+const NotificationsScreenOptions = navigation => [
+  {
+    title: i18n.t('settings.notificationsOptions.email'),
+    onPress: () => navigation.push('EmailNotificationsSettings'),
+  },
+  {
+    title: i18n.t('settings.notificationsOptions.push'),
+    onPress: () => navigation.push('PushNotificationsSettings'),
+  },
+];
 
-  const NotificationsScreenOptions = navigation => [
-    {
-      title: i18n.t('settings.notificationsOptions.email'),
-      onPress: () => navigation.push('EmailNotificationsSettings'),
-    },
-    {
-      title: i18n.t('settings.notificationsOptions.push'),
-      onPress: () => navigation.push('PushNotificationsSettings'),
-    },
-  ];
+const SecurityScreenOptions = navigation => [
+  {
+    title: i18n.t('settings.securityOptions.1'),
+    onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
+  },
+  {
+    title: i18n.t('settings.securityOptions.2'),
+    onPress: () => navigation.push('DevicesScreen'),
+  },
+];
 
-  const SecurityScreenOptions = navigation => [
-    {
-      title: i18n.t('settings.securityOptions.1'),
-      onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
-    },
-    {
-      title: i18n.t('settings.securityOptions.2'),
-      onPress: () => navigation.push('DevicesScreen'),
-    },
-  ];
+const BillingScreenOptions = !IS_IOS
+  ? navigation => [
+      {
+        title: i18n.t('settings.billingOptions.1'),
+        onPress: () => navigation.push('PaymentMethods'),
+      },
+      {
+        title: i18n.t('settings.billingOptions.2'),
+        onPress: () => navigation.push('RecurringPayments'),
+      },
+      {
+        title: 'Supermind',
+        onPress: () => navigation.push('SupermindSettingsScreen'),
+      },
+    ]
+  : navigation => [
+      {
+        title: 'Supermind',
+        onPress: () => navigation.push('SupermindSettingsScreen'),
+      },
+    ];
 
-  const BillingScreenOptions = !IS_IOS
-    ? navigation => [
-        {
-          title: i18n.t('settings.billingOptions.1'),
-          onPress: () => navigation.push('PaymentMethods'),
-        },
-        {
-          title: i18n.t('settings.billingOptions.2'),
-          onPress: () => navigation.push('RecurringPayments'),
-        },
-        {
-          title: 'Supermind',
-          onPress: () => navigation.push('SupermindSettingsScreen'),
-        },
-      ]
-    : navigation => [
-        {
-          title: 'Supermind',
-          onPress: () => navigation.push('SupermindSettingsScreen'),
-        },
-      ];
+type MoreStack = {
+  name: string;
+  comp: React.ComponentType<any>;
+  options?:
+    | NativeStackNavigationOptions
+    | ((props: {
+        route: RouteProp<MoreStackParamList, any>;
+        navigation: any;
+      }) => NativeStackNavigationOptions);
+  initialParams?: Partial<{}>;
+  hideIf?: boolean;
+};
 
-  return (
-    <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
-      <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
-      <MoreStack.Screen
-        name="Wallet"
-        getComponent={() => require('~/wallet/v3/WalletScreen').default}
-        options={WalletOptions}
-      />
-      <MoreStack.Screen
-        name="GroupsList"
-        getComponent={() => require('~/groups/GroupsListScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Analytics"
-        getComponent={() => require('~/analytics/AnalyticsScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Channel"
-        getComponent={() => require('~/channel/v2/ChannelScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="PlusDiscoveryScreen"
-        getComponent={() =>
-          require('~/discovery/v2/PlusDiscoveryScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Settings"
-        getComponent={() => require('~/settings/SettingsScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="SupermindConsole"
-        getComponent={() =>
-          require('~/supermind/SupermindConsoleScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Account"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{
-          title: i18n.t('settings.account'),
-        }}
-        initialParams={{ options: AccountScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Security"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{ title: i18n.t('settings.security') }}
-        initialParams={{ options: SecurityScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Billing"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{ title: i18n.t('settings.billing') }}
-        initialParams={{ options: BillingScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Referrals"
-        getComponent={() => require('~/referral/ReferralsScreen').default}
-        options={{ title: i18n.t('settings.referrals') }}
-      />
-      <MoreStack.Screen
-        name="BoostConsole"
-        getComponent={() => require('modules/boost').BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Other"
-        getComponent={() => require('~/settings/screens/OtherScreen').default}
-        options={{ title: i18n.t('settings.other') }}
-      />
-      <MoreStack.Screen
-        name="ChooseBrowser"
-        getComponent={() =>
-          require('~/settings/screens/ChooseBrowserScreen').default
-        }
-        options={{ title: i18n.t('settings.chooseBrowser') }}
-      />
-      <MoreStack.Screen
-        name="Resources"
-        getComponent={() =>
-          require('~/settings/screens/ResourcesScreen').default
-        }
-        options={{ title: i18n.t('settings.resources') }}
-      />
-      <MoreStack.Screen
-        name="SettingsNotifications"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{
-          title: i18n.t('settings.accountOptions.4'),
-        }}
-        initialParams={{ options: NotificationsScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="SettingsEmail"
-        getComponent={() => require('~/settings/screens/EmailScreen').default}
-        options={{ title: i18n.t('settings.accountOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="SettingsPassword"
-        getComponent={() =>
-          require('~/settings/screens/PasswordScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.3') }}
-      />
-      <MoreStack.Screen
-        name="PushNotificationsSettings"
-        getComponent={() =>
-          require('~/notifications/v3/settings/push/PushNotificationsSettings')
-            .default
-        }
-        options={{ title: i18n.t('settings.pushNotification') }}
-      />
-      <MoreStack.Screen
-        name="EmailNotificationsSettings"
-        getComponent={() =>
-          require('~/notifications/v3/settings/email/EmailNotificationsSettings')
-            .default
-        }
-        options={{ title: i18n.t('settings.emailNotifications') }}
-      />
-      <MoreStack.Screen
-        name="DataSaverScreen"
-        getComponent={() =>
-          require('~/settings/screens/DataSaverScreen').default
-        }
-        options={{ title: i18n.t('settings.networkOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="BlockedChannels"
-        getComponent={() =>
-          require('~/settings/screens/blocked/BlockedChannelsScreen').default
-        }
-        options={{ title: i18n.t('settings.blockedChannels') }}
-      />
-      <MoreStack.Screen
-        name="TierManagementScreen"
-        getComponent={() =>
-          require('~/common/components/tier-management/TierManagementScreen')
-            .default
-        }
-        options={{ title: i18n.t('settings.otherOptions.b1') }}
-        initialParams={{ useForSelection: false }}
-      />
-      {isTwitterEnabled && (
-        <MoreStack.Screen
-          name="TwitterSync"
-          getComponent={() =>
-            require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
-          }
-          options={{ title: i18n.t('settings.twitterSync.titleLong') }}
-        />
-      )}
-      <MoreStack.Screen
-        name="DeleteChannel"
-        getComponent={() =>
-          require('~/settings/screens/DeleteChannelScreen').default
-        }
-        options={{ title: i18n.t('settings.deleteChannel') }}
-      />
-      <MoreStack.Screen
-        name="DeactivateChannel"
-        getComponent={() =>
-          require('~/settings/screens/DeactivateChannelScreen').default
-        }
-        options={{ title: i18n.t('settings.disableChannel') }}
-      />
-      <MoreStack.Screen
-        name="LanguageScreen"
-        getComponent={() =>
-          require('~/settings/screens/LanguageScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.2') }}
-      />
-      <MoreStack.Screen
-        name="NSFWScreen"
-        getComponent={() => require('~/settings/screens/NSFWScreen').default}
-        options={{ title: i18n.t('settings.accountOptions.5') }}
-      />
-      <MoreStack.Screen
-        name="AutoplaySettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/AutoplaySettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.7') }}
-      />
-      <MoreStack.Screen
-        name="SupermindSettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/SupermindSettingsScreen').default
-        }
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="BoostSettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/BoostSettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.8') }}
-      />
-      <MoreStack.Screen
-        name="TwoFactorAuthSettingsScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/TwoFactorAuthSettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.securityOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="RecoveryCodesScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/RecoveryCodesScreen').default
-        }
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="VerifyAuthAppScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/VerifyAuthAppScreen').default
-        }
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="DisableTFA"
-        getComponent={() => require('~/auth/twoFactorAuth/DisableTFA').default}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="DevicesScreen"
-        getComponent={() => require('~/settings/screens/DevicesScreen').default}
-        options={{ title: i18n.t('settings.securityOptions.2') }}
-      />
-      {!IS_IOS && (
-        <MoreStack.Screen
-          name="PaymentMethods"
-          getComponent={() =>
-            require('~/settings/screens/BillingScreen').default
-          }
-          options={{ title: i18n.t('settings.billingOptions.1') }}
-        />
-      )}
-      {!IS_IOS && (
-        <MoreStack.Screen
-          name="RecurringPayments"
-          getComponent={() =>
-            require('~/settings/screens/RecurringPayments').default
-          }
-          options={{ title: i18n.t('settings.billingOptions.2') }}
-        />
-      )}
-      <MoreStack.Screen
-        name="ReportedContent"
-        getComponent={() => require('~/report/ReportedContentScreen').default}
-        options={{ title: i18n.t('settings.otherOptions.a1') }}
-      />
-      <MoreStack.Screen
-        name="AppInfo"
-        getComponent={() => require('~/settings/screens/AppInfoScreen').default}
-      />
-      <MoreStack.Screen
-        name="WebView"
-        getComponent={() => require('~/common/screens/WebViewScreen').default}
-      />
-      <MoreStack.Screen
-        name="BoostScreenV2"
-        getComponent={() => require('modules/boost').BoostComposerStack}
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="SupermindTwitterConnect"
-        getComponent={() =>
-          require('~/supermind/SupermindTwitterConnectScreen').default
-        }
-        options={{ headerShown: false }}
-      />
-    </MoreStack.Navigator>
-  );
-}
+export const moreStacks: MoreStack[] = [
+  {
+    name: 'Wallet',
+    comp: require('~/wallet/v3/WalletScreen').default,
+    options: WalletOptions,
+  },
+  {
+    name: 'GroupsList',
+    comp: require('~/groups/GroupsListScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'Analytics',
+    comp: require('~/analytics/AnalyticsScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'Channel',
+    comp: require('~/channel/v2/ChannelScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'PlusDiscoveryScreen',
+    comp: require('~/discovery/v2/PlusDiscoveryScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'Settings',
+    comp: require('~/settings/SettingsScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'SupermindConsole',
+    comp: require('~/supermind/SupermindConsoleScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'Account',
+    comp: require('~/common/components/OptionsDrawer').default,
+    options: { title: i18n.t('settings.account') },
+    initialParams: { options: AccountScreenOptions },
+  },
+  {
+    name: 'Security',
+    comp: require('~/common/components/OptionsDrawer').default,
+    options: { title: i18n.t('settings.security') },
+    initialParams: { options: SecurityScreenOptions },
+  },
+  {
+    name: 'Billing',
+    comp: require('~/common/components/OptionsDrawer').default,
+    options: { title: i18n.t('settings.billing') },
+    initialParams: { options: BillingScreenOptions },
+  },
+  {
+    name: 'Referrals',
+    comp: require('~/referral/ReferralsScreen').default,
+    options: { title: i18n.t('settings.referrals') },
+  },
+  {
+    name: 'BoostConsole',
+    comp: require('modules/boost').BoostConsoleScreen,
+    options: hideHeader,
+  },
+  {
+    name: 'Other',
+    comp: require('~/settings/screens/OtherScreen').default,
+    options: { title: i18n.t('settings.other') },
+  },
+  {
+    name: 'ChooseBrowser',
+    comp: require('~/settings/screens/ChooseBrowserScreen').default,
+    options: { title: i18n.t('settings.chooseBrowser') },
+  },
+  {
+    name: 'Resources',
+    comp: require('~/settings/screens/ResourcesScreen').default,
+    options: { title: i18n.t('settings.resources') },
+  },
+  {
+    name: 'SettingsNotifications',
+    comp: require('~/common/components/OptionsDrawer').default,
+    options: { title: i18n.t('settings.accountOptions.4') },
+    initialParams: { options: NotificationsScreenOptions },
+  },
+  {
+    name: 'SettingsEmail',
+    comp: require('~/settings/screens/EmailScreen').default,
+    options: { title: i18n.t('settings.accountOptions.1') },
+  },
+  {
+    name: 'SettingsPassword',
+    comp: require('~/settings/screens/PasswordScreen').default,
+    options: { title: i18n.t('settings.accountOptions.3') },
+  },
+  {
+    name: 'PushNotificationsSettings',
+    comp: require('~/notifications/v3/settings/push/PushNotificationsSettings')
+      .default,
+    options: { title: i18n.t('settings.pushNotification') },
+  },
+  {
+    name: 'EmailNotificationsSettings',
+    comp: require('~/notifications/v3/settings/email/EmailNotificationsSettings')
+      .default,
+    options: { title: i18n.t('settings.emailNotifications') },
+  },
+  {
+    name: 'DataSaverScreen',
+    comp: require('~/settings/screens/DataSaverScreen').default,
+    options: { title: i18n.t('settings.networkOptions.1') },
+  },
+  {
+    name: 'BlockedChannels',
+    comp: require('~/settings/screens/blocked/BlockedChannelsScreen').default,
+    options: { title: i18n.t('settings.blockedChannels') },
+  },
+  {
+    name: 'TierManagementScreen',
+    comp: require('~/common/components/tier-management/TierManagementScreen')
+      .default,
+    options: { title: i18n.t('settings.otherOptions.b1') },
+    initialParams: { useForSelection: false },
+  },
+  {
+    name: 'TwitterSync',
+    comp: require('~/settings/screens/twitter-sync/TwitterSyncScreen').default,
+    options: { title: i18n.t('settings.twitterSync.titleLong') },
+    hideIf: hasVariation('engine-2503-twitter-feats'),
+  },
+  {
+    name: 'DeleteChannel',
+    comp: require('~/settings/screens/DeleteChannelScreen').default,
+    options: { title: i18n.t('settings.deleteChannel') },
+  },
+  {
+    name: 'DeactivateChannel',
+    comp: require('~/settings/screens/DeactivateChannelScreen').default,
+    options: { title: i18n.t('settings.disableChannel') },
+  },
+  {
+    name: 'LanguageScreen',
+    comp: require('~/settings/screens/LanguageScreen').default,
+    options: { title: i18n.t('settings.accountOptions.2') },
+  },
+  {
+    name: 'NSFWScreen',
+    comp: require('~/settings/screens/NSFWScreen').default,
+    options: { title: i18n.t('settings.accountOptions.5') },
+  },
+  {
+    name: 'AutoplaySettingsScreen',
+    comp: require('~/settings/screens/AutoplaySettingsScreen').default,
+    options: { title: i18n.t('settings.accountOptions.7') },
+  },
+  {
+    name: 'SupermindSettingsScreen',
+    comp: require('~/settings/screens/SupermindSettingsScreen').default,
+    options: { headerShown: false },
+  },
+  {
+    name: 'BoostSettingsScreen',
+    comp: require('~/settings/screens/BoostSettingsScreen').default,
+    options: { title: i18n.t('settings.accountOptions.8') },
+  },
+  {
+    name: 'TwoFactorAuthSettingsScreen',
+    comp: require('~/auth/twoFactorAuth/TwoFactorAuthSettingsScreen').default,
+    options: { title: i18n.t('settings.securityOptions.1') },
+  },
+  {
+    name: 'RecoveryCodesScreen',
+    comp: require('~/auth/twoFactorAuth/RecoveryCodesScreen').default,
+    options: { title: i18n.t('settings.TFA') },
+  },
+  {
+    name: 'VerifyAuthAppScreen',
+    comp: require('~/auth/twoFactorAuth/VerifyAuthAppScreen').default,
+    options: { title: i18n.t('settings.TFA') },
+  },
+  {
+    name: 'DisableTFA',
+    comp: require('~/auth/twoFactorAuth/DisableTFA').default,
+    options: { title: i18n.t('settings.TFA') },
+  },
+  {
+    name: 'DevicesScreen',
+    comp: require('~/settings/screens/DevicesScreen').default,
+    options: { title: i18n.t('settings.securityOptions.2') },
+  },
+  {
+    name: 'PaymentMethods',
+    comp: require('~/settings/screens/BillingScreen').default,
+    options: { title: i18n.t('settings.billingOptions.1') },
+    hideIf: IS_IOS,
+  },
+  {
+    name: 'RecurringPayments',
+    comp: require('~/settings/screens/RecurringPayments').default,
+    options: { title: i18n.t('settings.billingOptions.2') },
+    hideIf: IS_IOS,
+  },
+  {
+    name: 'ReportedContent',
+    comp: require('~/report/ReportedContentScreen').default,
+    options: { title: i18n.t('settings.otherOptions.a1') },
+  },
+  {
+    name: 'AppInfo',
+    comp: require('~/settings/screens/AppInfoScreen').default,
+  },
+  {
+    name: 'WebView',
+    comp: require('~/common/screens/WebViewScreen').default,
+  },
+  {
+    name: 'BoostScreenV2',
+    comp: require('modules/boost').BoostComposerStack,
+    options: { headerShown: false },
+  },
+  {
+    name: 'SupermindTwitterConnect',
+    comp: require('~/supermind/SupermindTwitterConnectScreen').default,
+    options: { headerShown: false },
+  },
+];

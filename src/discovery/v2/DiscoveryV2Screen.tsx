@@ -16,7 +16,6 @@ import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { InjectItem } from '../../common/components/FeedList';
 import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
@@ -33,198 +32,189 @@ interface Props {
 /**
  * Discovery Feed Screen
  */
-export const DiscoveryV2Screen = observer(
-  withErrorBoundaryScreen((props: Props) => {
-    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
-      false,
-    );
-    const store = useDiscoveryV2Store();
-    const listRef = React.useRef<FeedList<any>>(null);
+export const DiscoveryV2Screen = observer((props: Props) => {
+  const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(false);
+  const store = useDiscoveryV2Store();
+  const listRef = React.useRef<FeedList<any>>(null);
 
-    // inject items in the store the first time
-    if (!store.trendingFeed.injectItems) {
-      store.trendingFeed.setInjectedItems([
-        new InjectItem(0, 'tags', () => (
-          <DiscoveryTagsList
-            type="trending"
-            store={store}
-            style={styles.bottomBorder}
-            showManageTags={false}
-          />
-        )),
-      ]);
-
-      store.topFeed.setInjectedItems([
-        new InjectItem(2, 'reco', () => (
-          <ChannelRecommendation location="discovery-feed" />
-        )),
-      ]);
-    }
-
-    const navigation = props.navigation;
-
-    const tabs = React.useMemo(
-      () =>
-        [
-          { id: 'top', title: i18n.t('discovery.top') },
-          { id: 'foryou', title: i18n.t('discovery.justForYou') },
-          { id: 'your-tags', title: i18n.t('discovery.yourTags') },
-          { id: 'trending-tags', title: i18n.t('discovery.trending') },
-          { id: 'boosts', title: i18n.t('boosted') },
-          { id: 'superminds', title: i18n.t('supermind.supermind') },
-        ].filter(Boolean) as { id: string; title: string }[],
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      [i18n.locale],
-    );
-
-    const emptyBoosts = React.useMemo(
-      () => (
-        <Empty
-          title={i18n.t('boosts.emptyList')}
-          subtitle={i18n.t('boosts.emptyListSubtitle')}>
-          <Button
-            onPress={() =>
-              navigation.navigate('More', {
-                screen: 'BoostSettingsScreen',
-                initial: false,
-              })
-            }
-            text={i18n.t('moreScreen.settings')}
-            large
-            action
-          />
-        </Empty>
-      ),
-      [navigation],
-    );
-
-    const header = (
-      <View style={styles.header}>
-        <InitialOnboardingButton />
-        <TopbarTabbar
-          current={store.activeTabId}
-          onChange={tabId => {
-            store.setTabId(tabId as TDiscoveryV2Tabs);
-          }}
-          tabs={tabs}
+  // inject items in the store the first time
+  if (!store.trendingFeed.injectItems) {
+    store.trendingFeed.setInjectedItems([
+      new InjectItem(0, 'tags', () => (
+        <DiscoveryTagsList
+          type="trending"
+          store={store}
+          style={styles.bottomBorder}
+          showManageTags={false}
         />
-      </View>
-    );
+      )),
+    ]);
 
-    useEffect(() => {
-      const unsubscribe = navigation.getParent().addListener('tabPress', () => {
-        if (shouldRefreshOnTabPress) {
-          listRef.current?.scrollToTop();
-          store.refreshActiveTab();
-        }
-      });
-      return unsubscribe;
-    }, [store, navigation, shouldRefreshOnTabPress]);
+    store.topFeed.setInjectedItems([
+      new InjectItem(2, 'reco', () => (
+        <ChannelRecommendation location="discovery-feed" />
+      )),
+    ]);
+  }
 
-    useEffect(() => {
-      const unsubscribe = navigation.addListener('focus', () => {
-        setShouldRefreshOnTabPress(true);
-      });
-      return unsubscribe;
-    }, [store, navigation]);
+  const navigation = props.navigation;
 
-    useEffect(() => {
-      const unsubscribe = navigation.addListener('blur', () => {
-        setShouldRefreshOnTabPress(false);
-      });
-      return unsubscribe;
-    }, [store, navigation]);
+  const tabs = React.useMemo(
+    () =>
+      [
+        { id: 'top', title: i18n.t('discovery.top') },
+        { id: 'foryou', title: i18n.t('discovery.justForYou') },
+        { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+        { id: 'trending-tags', title: i18n.t('discovery.trending') },
+        { id: 'boosts', title: i18n.t('boosted') },
+        { id: 'superminds', title: i18n.t('supermind.supermind') },
+      ].filter(Boolean) as { id: string; title: string }[],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [i18n.locale],
+  );
 
-    useEffect(() => {
-      store.topFeed.fetchLocalOrRemote();
-    }, [store]);
+  const emptyBoosts = React.useMemo(
+    () => (
+      <Empty
+        title={i18n.t('boosts.emptyList')}
+        subtitle={i18n.t('boosts.emptyListSubtitle')}>
+        <Button
+          onPress={() =>
+            navigation.navigate('More', {
+              screen: 'BoostSettingsScreen',
+              initial: false,
+            })
+          }
+          text={i18n.t('moreScreen.settings')}
+          large
+          action
+        />
+      </Empty>
+    ),
+    [navigation],
+  );
 
-    useFocusEffect(
-      useCallback(() => {
-        store.clearBadge();
-      }, [store]),
-    );
+  const header = (
+    <View style={styles.header}>
+      <InitialOnboardingButton />
+      <TopbarTabbar
+        current={store.activeTabId}
+        onChange={tabId => {
+          store.setTabId(tabId as TDiscoveryV2Tabs);
+        }}
+        tabs={tabs}
+      />
+    </View>
+  );
 
-    const screen = () => {
-      switch (store.activeTabId) {
-        case 'top':
-          return (
-            <DiscoveryTabContent key="top">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.topFeed}
-                navigation={navigation}
-              />
-            </DiscoveryTabContent>
-          );
-        case 'foryou':
-          return (
-            <DiscoveryTabContent key="foryou">
-              <DiscoveryTrendsList store={store} header={header} />
-            </DiscoveryTabContent>
-          );
-        case 'your-tags':
-          return (
-            <DiscoveryTabContent key="your-tags">
-              <DiscoveryTagsList type="your" store={store} header={header} />
-            </DiscoveryTabContent>
-          );
-        case 'trending-tags':
-          return (
-            <DiscoveryTabContent key="trending-tags">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.trendingFeed}
-                navigation={navigation}
-              />
-            </DiscoveryTabContent>
-          );
-        case 'boosts':
-          return (
-            <DiscoveryTabContent key="boosts">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.boostFeed}
-                navigation={navigation}
-                emptyMessage={emptyBoosts}
-              />
-            </DiscoveryTabContent>
-          );
-        case 'superminds':
-          return (
-            <DiscoveryTabContent key="superminds">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.supermindsFeed}
-                navigation={navigation}
-                emptyMessage={emptyBoosts}
-              />
-            </DiscoveryTabContent>
-          );
-        default:
-          return <View key="none" />;
+  useEffect(() => {
+    const unsubscribe = navigation.getParent().addListener('tabPress', () => {
+      if (shouldRefreshOnTabPress) {
+        listRef.current?.scrollToTop();
+        store.refreshActiveTab();
       }
-    };
+    });
+    return unsubscribe;
+  }, [store, navigation, shouldRefreshOnTabPress]);
 
-    return (
-      <Screen safe onlyTopEdge={IS_IOS}>
-        <View style={ThemedStyles.style.flexContainer}>
-          <Topbar
-            title="Discovery"
-            navigation={navigation}
-            noInsets
-            shadowLess
-          />
-          <AnimatePresence>{screen()}</AnimatePresence>
-        </View>
-      </Screen>
-    );
-  }, 'DiscoveryV2Screen'),
-);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setShouldRefreshOnTabPress(true);
+    });
+    return unsubscribe;
+  }, [store, navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      setShouldRefreshOnTabPress(false);
+    });
+    return unsubscribe;
+  }, [store, navigation]);
+
+  useEffect(() => {
+    store.topFeed.fetchLocalOrRemote();
+  }, [store]);
+
+  useFocusEffect(
+    useCallback(() => {
+      store.clearBadge();
+    }, [store]),
+  );
+
+  const screen = () => {
+    switch (store.activeTabId) {
+      case 'top':
+        return (
+          <DiscoveryTabContent key="top">
+            <FeedListSticky
+              ref={listRef}
+              header={header}
+              feedStore={store.topFeed}
+              navigation={navigation}
+            />
+          </DiscoveryTabContent>
+        );
+      case 'foryou':
+        return (
+          <DiscoveryTabContent key="foryou">
+            <DiscoveryTrendsList store={store} header={header} />
+          </DiscoveryTabContent>
+        );
+      case 'your-tags':
+        return (
+          <DiscoveryTabContent key="your-tags">
+            <DiscoveryTagsList type="your" store={store} header={header} />
+          </DiscoveryTabContent>
+        );
+      case 'trending-tags':
+        return (
+          <DiscoveryTabContent key="trending-tags">
+            <FeedListSticky
+              ref={listRef}
+              header={header}
+              feedStore={store.trendingFeed}
+              navigation={navigation}
+            />
+          </DiscoveryTabContent>
+        );
+      case 'boosts':
+        return (
+          <DiscoveryTabContent key="boosts">
+            <FeedListSticky
+              ref={listRef}
+              header={header}
+              feedStore={store.boostFeed}
+              navigation={navigation}
+              emptyMessage={emptyBoosts}
+            />
+          </DiscoveryTabContent>
+        );
+      case 'superminds':
+        return (
+          <DiscoveryTabContent key="superminds">
+            <FeedListSticky
+              ref={listRef}
+              header={header}
+              feedStore={store.supermindsFeed}
+              navigation={navigation}
+              emptyMessage={emptyBoosts}
+            />
+          </DiscoveryTabContent>
+        );
+      default:
+        return <View key="none" />;
+    }
+  };
+
+  return (
+    <Screen safe onlyTopEdge={IS_IOS}>
+      <View style={ThemedStyles.style.flexContainer}>
+        <Topbar title="Discovery" navigation={navigation} noInsets shadowLess />
+        <AnimatePresence>{screen()}</AnimatePresence>
+      </View>
+    </Screen>
+  );
+});
 
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],

@@ -1,6 +1,5 @@
 import { showNotification } from 'AppMessages';
 import React from 'react';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 import { Screen } from '~/common/ui';
 import VerificationCamera from '../components/VerificationCamera';
@@ -8,7 +7,10 @@ import { InAppVerificationStackScreenProps } from '../InAppVerificationStack';
 
 type Props = InAppVerificationStackScreenProps<'InAppVerificationCamera'>;
 
-function InAppVerificationCameraScreen({ route, navigation }: Props) {
+export default function InAppVerificationCameraScreen({
+  route,
+  navigation,
+}: Props) {
   if (!route.params?.code || !route.params?.deviceId) {
     showNotification('Missing params');
     navigation.goBack();
@@ -23,8 +25,3 @@ function InAppVerificationCameraScreen({ route, navigation }: Props) {
     </Screen>
   );
 }
-
-export default withErrorBoundaryScreen(
-  InAppVerificationCameraScreen,
-  'InAppVerificationCameraScreen',
-);

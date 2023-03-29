@@ -8,7 +8,6 @@ import DashboardTab from './tabs/dashboard/DashboardTab';
 import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type TAnalyticsTabs =
   | 'earnings'
@@ -111,6 +110,4 @@ const AnalyticsScreen = ({ navigation, route }: AnalyticsScreenProps) => {
   );
 };
 
-export default observer(
-  withErrorBoundaryScreen(AnalyticsScreen, 'AnalyticsScreen'),
-);
+export default observer(AnalyticsScreen);

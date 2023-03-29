@@ -1,9 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalyticsScreen component should render correctly 1`] = `
-<ErrorBoundaryScreen
-  screenName="AnalyticsScreen"
+<Screen
+  safe={true}
 >
-  <AnalyticsScreen />
-</ErrorBoundaryScreen>
+  <ScreenHeader
+    title="Analytics"
+  />
+  <TopbarTabbar
+    current="token"
+    onChange={[Function]}
+    tabs={
+      Array [
+        Object {
+          "id": "traffic",
+          "title": "Traffic",
+        },
+        Object {
+          "id": "token",
+          "title": "Tokens",
+        },
+        Object {
+          "id": "engagement",
+          "title": "Engagement",
+        },
+        Object {
+          "id": "earnings",
+          "title": "Earnings",
+        },
+        Object {
+          "id": "trending",
+          "title": "Trending",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Memo(wrappedComponent) />
+  </View>
+</Screen>
 `;

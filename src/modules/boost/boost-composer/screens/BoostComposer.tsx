@@ -21,7 +21,6 @@ import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
 import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -193,6 +192,4 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   );
 }
 
-export default observer(
-  withErrorBoundaryScreen(BoostComposerScreen, 'BoostComposerScreen'),
-);
+export default observer(BoostComposerScreen);

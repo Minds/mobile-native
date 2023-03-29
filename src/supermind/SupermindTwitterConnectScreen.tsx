@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { InteractionManager } from 'react-native';
 import { WebViewNavigation } from 'react-native-webview';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { showNotification } from '../../AppMessages';
 import useApiFetch from '../common/hooks/useApiFetch';
 import apiService from '../common/services/api.service';
@@ -15,7 +14,7 @@ export interface SupermindTwitterConnectRouteParams {
   onConnect: (success: boolean) => void;
 }
 
-function SupermindTwitterConnectScreen() {
+export default function SupermindTwitterConnectScreen() {
   const navigation = useNavigation();
   const { params } = useRoute();
   const { onConnect } = (params || {
@@ -74,11 +73,6 @@ function SupermindTwitterConnectScreen() {
     </Screen>
   );
 }
-
-export default withErrorBoundaryScreen(
-  SupermindTwitterConnectScreen,
-  'SupermindTwitterConnectScreen',
-);
 
 interface TwitterConfigResponse {
   discoverable: boolean;

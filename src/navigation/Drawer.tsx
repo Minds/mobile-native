@@ -18,12 +18,10 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
-// import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -160,7 +158,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
  * Drawer menu
  * @param props
  */
-function Drawer(props) {
+export default function Drawer(props) {
   const channel = sessionService.getUser();
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
@@ -263,5 +261,3 @@ const DrawerNavItem = ({
     </PressableLine>
   );
 };
-
-export default withErrorBoundaryScreen(Drawer, 'Drawer');

@@ -5,7 +5,6 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import { Screen } from '../../common/ui';
 import FitScrollView from '../../common/components/FitScrollView';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {};
 
@@ -191,4 +190,4 @@ const ResourcesScreen = ({}: PropsType) => {
   );
 };
 
-export default withErrorBoundaryScreen(ResourcesScreen, 'ResourcesScreen');
+export default ResourcesScreen;

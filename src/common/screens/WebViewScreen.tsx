@@ -7,7 +7,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
 import { B1, Screen } from '../ui';
 import CenteredLoading from '../components/CenteredLoading';
-import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
 
 type WebViewScreenRouteProp = RouteProp<MoreStackParamList, 'WebView'>;
 type WebViewScreenNavigationProp = StackNavigationProp<
@@ -64,4 +63,4 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
   );
 }
 
-export default withErrorBoundaryScreen(WebViewScreen, 'WebViewScreen');
+export default WebViewScreen;

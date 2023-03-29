@@ -12,7 +12,6 @@ import usePushNotificationListener from '~/common/hooks/usePushNotificationListe
 import logService from '~/common/services/log.service';
 import { api } from '../api';
 import { useTranslation } from '../locales';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
@@ -74,12 +73,8 @@ function InAppVerificationCodeRequestScreen({ navigation, route }: PropsType) {
   );
 }
 
-export default observer(
-  withErrorBoundaryScreen(
-    InAppVerificationCodeRequestScreen,
-    'InAppVerificationCodeRequestScreen',
-  ),
-);
+export default observer(InAppVerificationCodeRequestScreen);
+
 function useCodeRequestStore(
   navigation: PropsType['navigation'],
   route: PropsType['route'],
