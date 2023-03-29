@@ -19,6 +19,7 @@ import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import PlanOptionsIAP from './PlanOptionsIAP';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
+import sessionService from '~/common/services/session.service';
 // import apiService from '~/common/services/api.service';
 
 type UpgradeInPurchasesProps = {
@@ -145,6 +146,7 @@ const UpgradeInAppPurchasesTokens = ({
         offerToken &&
         requestSubscription({
           sku: sku,
+          obfuscatedAccountIdAndroid: sessionService.getUser().guid,
           ...(offerToken && {
             subscriptionOffers: [{ sku, offerToken }],
           }),
