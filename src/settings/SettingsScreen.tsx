@@ -58,7 +58,7 @@ const setDarkMode = () => {
 
 type Item = MenuItemProps & { screen?: string; params?: any };
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
   const UPGRADE_DISABLED =
@@ -194,6 +194,6 @@ const SettingsScreen = ({ navigation }) => {
       </ScrollView>
     </Screen>
   );
-};
+});
 
-export default observer(SettingsScreen);
+export default SettingsScreen;

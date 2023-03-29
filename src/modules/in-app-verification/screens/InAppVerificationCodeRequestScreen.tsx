@@ -15,7 +15,10 @@ import { useTranslation } from '../locales';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
-function InAppVerificationCodeRequestScreen({ navigation, route }: PropsType) {
+export default observer(function InAppVerificationCodeRequestScreen({
+  navigation,
+  route,
+}: PropsType) {
   const store = useCodeRequestStore(navigation, route);
   const { t } = useTranslation();
 
@@ -71,9 +74,7 @@ function InAppVerificationCodeRequestScreen({ navigation, route }: PropsType) {
       </FitScrollView>
     </Screen>
   );
-}
-
-export default observer(InAppVerificationCodeRequestScreen);
+});
 
 function useCodeRequestStore(
   navigation: PropsType['navigation'],

@@ -19,7 +19,10 @@ type WebViewScreenProps = {
   navigation: WebViewScreenNavigationProp;
 };
 
-function WebViewScreen({ route, navigation }: WebViewScreenProps) {
+export default function WebViewScreen({
+  route,
+  navigation,
+}: WebViewScreenProps) {
   if (!route.params) {
     return;
   }
@@ -62,5 +65,3 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
     </Screen>
   );
 }
-
-export default WebViewScreen;

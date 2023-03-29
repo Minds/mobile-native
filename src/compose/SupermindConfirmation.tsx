@@ -16,7 +16,7 @@ export interface SupermindConfirmationRouteParams {
   onDismiss: () => void;
 }
 
-function SupermindConfirmation() {
+export default function SupermindConfirmation() {
   const route = useRoute();
   const params = route.params as SupermindConfirmationRouteParams;
   const texts = {
@@ -121,5 +121,3 @@ export function confirmSupermindReply(
     });
   });
 }
-
-export default SupermindConfirmation;
