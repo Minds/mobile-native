@@ -14,6 +14,9 @@ import {
   DEFAULT_DURATION,
 } from './boost.constants';
 import { InsightEstimateResponse } from '../hooks/useBoostInsights';
+import { hasVariation } from 'ExperimentsProvider';
+
+export const IS_IAP_ON = IS_FROM_STORE && hasVariation('mob-4851-iap-boosts');
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -97,10 +100,10 @@ export const createBoostStore = ({
     return ['boost.consumable.001'];
   },
   isAmountValid() {
-    return IS_FROM_STORE ? this.total < 450 : true;
+    return IS_IAP_ON ? this.total < 450 : true;
   },
   get amountRangeValues() {
-    if (IS_FROM_STORE && this.paymentType === 'cash') {
+    if (IS_IAP_ON && this.paymentType === 'cash') {
       return {
         stepSize: 5,
         defaultValue: 10,
@@ -117,7 +120,7 @@ export const createBoostStore = ({
     };
   },
   get durationRangeValues() {
-    if (IS_FROM_STORE && this.paymentType === 'cash') {
+    if (IS_IAP_ON && this.paymentType === 'cash') {
       return {
         stepSize: 1,
         defaultValue: 1,

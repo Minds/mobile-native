@@ -16,10 +16,9 @@ import {
   Screen,
   ScreenHeader,
 } from '~/common/ui';
-import { IS_FROM_STORE } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { useBoostStore } from '../boost.store';
+import { IS_IAP_ON, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   finishTransaction,
@@ -53,8 +52,8 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { products, getProducts } = useIAP();
 
   const paymentType = paymentTypeFromStore === 'cash' ? 'cash' : 'tokens';
-  const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
-  const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
+  const isCashFromStore = paymentType === 'cash' && IS_IAP_ON;
+  const isCashFromStripe = paymentType === 'cash' && !IS_IAP_ON;
 
   useEffect(() => {
     if (isCashFromStore) {
@@ -155,7 +154,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             borderless
           />
           {paymentType === 'cash' ? (
-            IS_FROM_STORE ? (
+            IS_IAP_ON ? (
               <MenuItem
                 title={t('IAP Payment method')}
                 subtitle={'iap'}
