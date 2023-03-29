@@ -11,8 +11,18 @@ import {
   useBoostRotatorStore,
 } from '../boost-rotator.store';
 
+/**
+ * The height of the boost rotator
+ */
 const HEIGHT = 500;
+/**
+ * the max height of the activity
+ */
 const ACTIVITY_HEIGHT = HEIGHT - 175;
+/**
+ * the number of activities to render at any time
+ */
+const WINDOW_SIZE = 3;
 
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
@@ -42,7 +52,7 @@ function BoostRotatorCarousel() {
         loop
         ref={ref}
         vertical={false}
-        windowSize={3}
+        windowSize={WINDOW_SIZE}
         defaultIndex={0}
         pagingEnabled
         onSnapToItem={boostRotatorStore.setActiveIndex}
