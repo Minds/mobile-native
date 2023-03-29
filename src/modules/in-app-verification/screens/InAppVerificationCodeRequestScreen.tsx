@@ -122,7 +122,7 @@ function useCodeRequestStore(
       navigation.setParams({ requestAgain: undefined });
       store.requestCode();
     }
-  }, [navigation, route.params, store]);
+  }, [route.params?.requestAgain, store]);
 
   const pushListener = useCallback(
     push => {

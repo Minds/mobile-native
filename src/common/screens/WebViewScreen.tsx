@@ -23,9 +23,7 @@ export default function WebViewScreen({
   route,
   navigation,
 }: WebViewScreenProps) {
-  if (!route.params) {
-    return;
-  }
+  if (!route.params) return;
 
   /**
    * Looks for a path matching redirectUrl, calls onRedirect, and navigates back
