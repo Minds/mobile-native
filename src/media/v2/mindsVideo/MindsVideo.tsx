@@ -35,6 +35,7 @@ type PropsType = {
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
   hideOverlay?: boolean;
   ignoreDataSaver?: boolean;
+  onProgress?: (progress: number) => void;
 };
 
 const MindsVideo = observer((props: PropsType) => {
@@ -45,6 +46,7 @@ const MindsVideo = observer((props: PropsType) => {
     autoplay: props.autoplay,
     repeat: props.repeat,
     dataSaverEnabled,
+    onProgress: props.onProgress,
   });
 
   const onStoreCreated = props.onStoreCreated;

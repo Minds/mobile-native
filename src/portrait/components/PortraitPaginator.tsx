@@ -1,17 +1,23 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useElapsedTime } from 'use-elapsed-time';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 import { useCarouselFocus } from '../PortraitViewerScreen';
+import { useLayout } from '@react-native-community/hooks';
 
 type PropsType = {
   store: {
     setIndex: (number) => void;
     index: number;
     next: () => void;
+    videoProgress?: number;
   };
   activities: Array<ActivityModel>;
 };
@@ -19,7 +25,7 @@ type PropsType = {
 /**
  * Portrait paginator
  */
-export default function PortraitPaginator({ store, activities }: PropsType) {
+function PortraitPaginator({ store, activities }: PropsType) {
   const insets = useSafeAreaInsets();
   const focused = useCarouselFocus();
 
@@ -30,10 +36,12 @@ export default function PortraitPaginator({ store, activities }: PropsType) {
 
   return (
     <View style={style}>
-      {activities.map((_, i) =>
+      {activities.map((entity, i) =>
         store.index === i && focused ? (
           <ProgressBar
             key={i}
+            isVideo={entity.hasVideo()}
+            videoProgress={store.videoProgress}
             store={store}
             onComplete={() => {
               store.next();

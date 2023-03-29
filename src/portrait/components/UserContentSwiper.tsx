@@ -52,6 +52,8 @@ const UserContentSwiper = observer((props: PropsType) => {
       );
     },
     next: () => {
+      store.videoProgress = undefined;
+
       if (store.index < activities.length - 1) {
         if (
           props.unseenMode &&
@@ -68,6 +70,8 @@ const UserContentSwiper = observer((props: PropsType) => {
       }
     },
     prev: () => {
+      store.videoProgress = undefined;
+
       if (store.index > 0) {
         store.setIndex(store.index - 1);
       } else {
@@ -89,6 +93,10 @@ const UserContentSwiper = observer((props: PropsType) => {
 
       store.playing = true;
       store.autoResumeOnFocus = true;
+    },
+    videoProgress: undefined as number | undefined,
+    setVideoProgress(progress: number) {
+      this.videoProgress = progress;
     },
   }));
 
@@ -132,6 +140,7 @@ const UserContentSwiper = observer((props: PropsType) => {
         onPressPrev={store.prev}
         onLongPress={store.pause}
         onPressOut={store.resume}
+        onVideoProgress={store.setVideoProgress}
       />
       <PortraitPaginator store={store} activities={activities} />
     </View>

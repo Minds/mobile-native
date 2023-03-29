@@ -34,6 +34,7 @@ type PropsType = {
   onPressPrev: () => void;
   onLongPress?: () => void;
   onPressOut?: () => void;
+  onVideoProgress?: (progress: number) => void;
 };
 
 const window = Dimensions.get('window');
@@ -51,7 +52,6 @@ const PortraitActivity = observer((props: PropsType) => {
   }));
 
   const focused = useCarouselFocus();
-
   const insets = useSafeAreaInsets();
 
   const theme = ThemedStyles.style;
@@ -194,6 +194,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     navigation={navigation}
                     autoHeight={true}
                     ignoreDataSaver={true}
+                    onVideoProgress={props.onVideoProgress}
                   />
                 </View>
               ) : (
