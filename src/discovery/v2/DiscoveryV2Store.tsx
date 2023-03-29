@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
-import apiService from '../../common/services/api.service';
-import FeedStore from '../../common/stores/FeedStore';
+import apiService from '~/common/services/api.service';
+import FeedStore from '~/common/stores/FeedStore';
+import { storages } from '~/common/services/storage/storages.service';
 
 export type TDiscoveryV2Tabs =
   | 'top'
@@ -25,6 +26,8 @@ export type TDiscoveryTagsTag = {
   value: string;
 };
 
+const DISCOVERY_TS_KEY = 'discovery_ts';
+
 // TODO: workaround please remove
 const BOOST_V3 = true;
 
@@ -43,11 +46,13 @@ export default class DiscoveryV2Store {
   @observable direction = -1;
   @observable loadingTags = false;
   @observable refreshing = false;
+  @observable badgeVisible = true;
   boostFeed: FeedStore;
   trendingFeed: FeedStore;
   allFeed: FeedStore;
   topFeed: FeedStore;
   supermindsFeed: FeedStore;
+  lastDiscoveryTimestamp = 0;
 
   constructor(plus: boolean = false) {
     this.boostFeed = new FeedStore(true);
@@ -98,6 +103,11 @@ export default class DiscoveryV2Store {
       .setEndpoint('api/v3/newsfeed/superminds')
       .setInjectBoost(false)
       .setLimit(15);
+
+    this.lastDiscoveryTimestamp = storages.app.getInt(DISCOVERY_TS_KEY) ?? 0;
+
+    this.badgeVisible =
+      +new Date() - (this.lastDiscoveryTimestamp ?? 0) > 86400 * 1000; // 24 hours
   }
 
   @action
@@ -202,7 +212,9 @@ export default class DiscoveryV2Store {
     clean = true,
   ): Promise<void> {
     this.refreshing = true;
-    if (clean) this.setTrends([]);
+    if (clean) {
+      this.setTrends([]);
+    }
     await this.loadTrends(plus);
     this.refreshing = false;
   }
@@ -259,5 +271,18 @@ export default class DiscoveryV2Store {
     this.activeTabId = 'foryou';
     this.refreshing = false;
     this.loading = false;
+    this.showBadge();
+  }
+
+  clearBadge() {
+    this.badgeVisible = false;
+    this.lastDiscoveryTimestamp = +new Date();
+    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
+  }
+
+  showBadge() {
+    this.badgeVisible = true;
+    this.lastDiscoveryTimestamp = 0;
+    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }
