@@ -12,6 +12,7 @@ import {
 } from '../boost-rotator.store';
 
 const HEIGHT = 500;
+const ACTIVITY_HEIGHT = HEIGHT - 175;
 
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ function BoostRotatorCarousel() {
     itemProps => (
       <Activity
         entity={itemProps.item}
-        maxContentHeight={HEIGHT - 175}
+        maxContentHeight={ACTIVITY_HEIGHT}
         autoHeight
         navigation={navigation}
         borderless
