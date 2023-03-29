@@ -27,22 +27,15 @@ type PropsType = {
   currencyType: EarningsCurrencyType;
 };
 
-export const getFriendlyLabel = (id: string): string => {
-  switch (id) {
-    case 'wire':
-      return i18n.t('wallet.wire');
-    case 'wire-all':
-      return i18n.t('wallet.wireAll');
-    case 'partner':
-      return i18n.t('wallet.partner');
-    case 'plus':
-      return i18n.t('wallet.plus');
-    case 'wire_referral':
-      return i18n.t('wallet.wireReferral');
-  }
-
-  return capitalize(id);
+const friendlyLabel = {
+  wire: i18n.t('wallet.wire'),
+  'wire-all': i18n.t('wallet.wireAll'),
+  partner: i18n.t('wallet.partner'),
+  plus: i18n.t('wallet.plus'),
+  wire_referral: i18n.t('wallet.wireReferral'),
 };
+export const getFriendlyLabel = (id: string): string =>
+  friendlyLabel[id] ?? capitalize(id);
 
 const getProcessedData = (
   earning: Earnings,

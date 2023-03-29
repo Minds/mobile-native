@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
@@ -9,12 +10,9 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { Dashboard, Entity } from '../../AnalyticsTypes';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 
-interface TrendingTabProps {
-  navigation: any;
-}
-
-const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
+const TrendingTab = observer(() => {
   const theme = ThemedStyles.style;
+  const navigation = useNavigation<any>();
 
   const getEntityRoute = useCallback(
     (type, entity) => {

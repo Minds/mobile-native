@@ -60,13 +60,13 @@ const MindsTokens = ({
 
   if (!isTokens) {
     text.push(
-      <B2 font="medium" flat>
+      <B2 key={mindsFNumber} font="medium" flat>
         ${mindsFNumber}
       </B2>,
     );
   } else {
     text.push(
-      <B2 font="medium" flat>
+      <B2 key={mindsFNumber} font="medium" flat>
         {mindsFNumber}
       </B2>,
     );
@@ -74,22 +74,26 @@ const MindsTokens = ({
 
   if (isTokens) {
     text.push(
-      <B2 flat font="medium">
+      <B2 key={'1'} flat font="medium">
         {' '}
       </B2>,
     );
     text.push(
-      <B2 flat color="secondary" font="medium">
+      <B2 key={'2'} flat color="secondary" font="medium">
         tokens
       </B2>,
     );
     text.push(
-      <B2 flat color="secondary" font="bold">
+      <B2 key={'3'} flat color="secondary" font="bold">
         {' · '}
       </B2>,
     );
     text.push(
-      <B2 flat color={cashAsPrimary ? 'primary' : 'secondary'} font="medium">
+      <B2
+        key={'4'}
+        flat
+        color={cashAsPrimary ? 'primary' : 'secondary'}
+        font="medium">
         ${number(cash, 0, 2)}
       </B2>,
     );
