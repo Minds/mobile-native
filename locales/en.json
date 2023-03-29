@@ -1010,16 +1010,20 @@
       "learn": "Learn more about",
       "viewBoostedContent": "View Boosted Content",
       "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
+      "showBoostChannel": "Show boosts on my channel",
+      "showBoostChannelTooltip": "You can adjust the type of boosts served on your channel or disable them entirely",
       "boostAutoRotation": "Boost Auto-rotation",
       "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
-      "openContent": "Open Content",
+      "openContent": "Controversial Content",
       "openContentTooltip": "Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.",
       "liquiditySpot": "Liquidity Spot",
       "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
       "optIn": "Opt-in",
       "optOut": "Opt-out",
       "enable": "Enable",
-      "disable": "Disable"
+      "disable": "Disable",
+      "controversial": "Controversial",
+      "safe": "Safe"
     },
     "about": {
       "title": "about",

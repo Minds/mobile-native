@@ -112,7 +112,7 @@ const createMindsVideoStore = ({
       }
     },
     toggleFullScreen() {
-      videoPlayerService.setCurrent(this.player);
+      videoPlayerService.setCurrent(this);
       this.player?.presentFullscreenPlayer();
       if (!IS_IOS) {
         Orientation.unlock();
