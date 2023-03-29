@@ -6,6 +6,13 @@ import ThemedStyles from '~/styles/ThemedStyles';
 
 export default function BoostRotatorHeader() {
   const navigation = useNavigation();
+
+  const navToBoostSettings = () =>
+    navigation.navigate('More', {
+      screen: 'BoostSettingsScreen',
+      initial: false,
+    });
+
   return (
     <View style={styles.container}>
       <Row align="centerBoth">
@@ -14,12 +21,7 @@ export default function BoostRotatorHeader() {
       </Row>
 
       <IconButton
-        onPress={() =>
-          navigation.navigate('More', {
-            screen: 'BoostSettingsScreen',
-            initial: false,
-          })
-        }
+        onPress={navToBoostSettings}
         name="cog"
         color="PrimaryText"
         size={20}
