@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 
@@ -137,6 +138,12 @@ export const DiscoveryV2Screen = observer(
     useEffect(() => {
       store.topFeed.fetchLocalOrRemote();
     }, [store]);
+
+    useFocusEffect(
+      useCallback(() => {
+        store.clearBadge();
+      }, [store]),
+    );
 
     const screen = () => {
       switch (store.activeTabId) {
