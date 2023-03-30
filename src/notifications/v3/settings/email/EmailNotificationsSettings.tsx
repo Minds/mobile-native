@@ -51,7 +51,7 @@ const EmailNotificationsSettings = ({}: PropsType) => {
       <>
         {campaingTypes.map(campaignType => {
           return (
-            <>
+            <React.Fragment key={campaignType.tag}>
               <MText style={titleStyle}>
                 {i18n.t(`notificationSettings.${campaignType.tag}`)}
               </MText>
@@ -64,7 +64,7 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                     setting._topic,
                   );
                   return (
-                    <>
+                    <React.Fragment key={setting.guid}>
                       {!isSelector && (
                         <MenuItemToggle
                           title={setting.topic}
@@ -82,11 +82,11 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                           frecuencyOptions={frecuencyOptions}
                         />
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 },
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </>
