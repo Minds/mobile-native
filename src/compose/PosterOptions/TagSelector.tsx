@@ -117,8 +117,9 @@ export default observer(function ({}: TagSelectorProps) {
           contentContainerStyle={styles.suggestedScroll}
           horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
-          {localStore.suggested.map((t: any) => (
+          {localStore.suggested.map((t: any, index) => (
             <MText
+              key={index}
               style={[styles.tag, theme.colorIconActive]}
               onPress={() => store.addTag(t.value)}>
               #{t.value}
@@ -171,6 +172,7 @@ export default observer(function ({}: TagSelectorProps) {
           <BottomSheetScrollView keyboardShouldPersistTaps={'handled'}>
             {localStore.history.history.map(t => (
               <MText
+                key={t}
                 style={styles.historyTag}
                 onPress={() => localStore.addString(t)}>
                 #{t}
@@ -181,7 +183,7 @@ export default observer(function ({}: TagSelectorProps) {
       )}
       <View style={styles.tagsContainer}>
         {store.tags.map(t => (
-          <TagRow tag={t} store={store} />
+          <TagRow key={t} tag={t} store={store} />
         ))}
       </View>
     </View>
