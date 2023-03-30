@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import { FeedStoreContext } from '~/common/contexts/feed-store.context';
 import FeedStore from '~/common/stores/FeedStore';
 import Activity from '~/newsfeed/activity/Activity';
@@ -10,6 +9,7 @@ import {
   boostRotatorMetadata,
   useBoostRotatorStore,
 } from '../boost-rotator.store';
+import { useWindowDimensions } from 'react-native';
 
 /**
  * The height of the boost rotator
@@ -31,7 +31,7 @@ function BoostRotatorCarousel() {
   // this is only used to provide the metadata to the activity analytics context
   const feedStore = useRef(new FeedStore().setMetadata(boostRotatorMetadata))
     .current;
-  const { width } = useSafeAreaFrame();
+  const { width } = useWindowDimensions();
 
   const renderItem = useCallback(
     itemProps => (
