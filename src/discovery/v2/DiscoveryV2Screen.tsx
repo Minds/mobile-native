@@ -16,7 +16,7 @@ import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { InjectItem } from '../../common/components/FeedList';
 import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
@@ -33,7 +33,7 @@ interface Props {
 /**
  * Discovery Feed Screen
  */
-export const DiscoveryV2Screen = withErrorBoundaryScreen(
+export const DiscoveryV2Screen = withErrorBoundary(
   observer((props: Props) => {
     const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
       false,
@@ -224,7 +224,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       </Screen>
     );
   }),
-  'DiscoveryV2Screen',
 );
 
 const styles = ThemedStyles.create({
