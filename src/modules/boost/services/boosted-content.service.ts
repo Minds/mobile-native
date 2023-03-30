@@ -3,7 +3,7 @@ import blockListService from '~/common/services/block-list.service';
 import FeedsService from '~/common/services/feeds.service';
 import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
-import type ActivityModel from '~/newsfeed/ActivityModel';
+import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 
 /**
  * Boosted content service
@@ -23,9 +23,9 @@ class BoostedContentService {
 
   /**
    * Boosts
-   * @var {Array<ActivityModel>} boosts
+   * @var {Array<BoostedActivityModel>} boosts
    */
-  boosts: Array<ActivityModel> = [];
+  boosts: Array<BoostedActivityModel> = [];
 
   /**
    * whether the feed is updating
@@ -80,10 +80,12 @@ class BoostedContentService {
 
   /**
    * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel>} boosts
+   * @param {Array<BoostedActivityModel>} boosts
    */
-  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((entity: ActivityModel) => {
+  cleanBoosts(
+    boosts: Array<BoostedActivityModel>,
+  ): Array<BoostedActivityModel> {
+    return boosts.filter((entity: BoostedActivityModel) => {
       entity.boosted = true;
       // remove NSFW on iOS
       if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
@@ -111,7 +113,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ActivityModel | null {
+  fetch(): BoostedActivityModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {
@@ -124,6 +126,25 @@ class BoostedContentService {
     }
 
     return this.boosts[this.offset];
+  }
+
+  /**
+   * gets a boost that contains media
+   */
+  getMediaBoost(): BoostedActivityModel | null {
+    const boost = this.fetch();
+
+    if (boost) {
+      // if the boost has media return it
+      if (boost.hasVideo() || boost.hasImage()) {
+        return boost;
+      }
+
+      // otherwise get another media boost
+      return this.getMediaBoost();
+    }
+
+    return null;
   }
 }
 
