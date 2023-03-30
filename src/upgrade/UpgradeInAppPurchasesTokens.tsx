@@ -150,6 +150,8 @@ const UpgradeInAppPurchasesTokens = ({
           ...(offerToken && {
             subscriptionOffers: [{ sku, offerToken }],
           }),
+        }).catch(error => {
+          showNotification(error.message, 'warning');
         });
     }
   }, [store, wireStore, onComplete, navigation]);
