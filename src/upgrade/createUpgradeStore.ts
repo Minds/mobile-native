@@ -1,79 +1,62 @@
+import { IS_FROM_STORE } from '~/config/Config';
 import type UserModel from '../channel/UserModel';
 import entitiesService from '../common/services/entities.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import WireStore from '../wire/WireStore';
-import { PaymentPlan, payMethod, UpgradePlans } from './types';
+import {
+  SubscriptionType,
+  PayMethodType,
+  PaymentPlanType,
+  SettingsSubscriptionsType,
+} from './types';
+
+// TODO: move to the backend
+const IAP_SKUS_PLUS = {
+  monthly: 'plus.monthly.001',
+  yearly: 'plus.yearly.001',
+};
+const IAP_SKUS_PRO = {
+  monthly: 'pro.monthly.001',
+};
 
 const createUpgradeStore = () => {
-  const store = {
-    wire: new WireStore(),
+  return {
     loaded: false,
-    loading: false,
-    method: 'tokens' as payMethod,
-    card: '' as any,
-    settings: false as boolean | any,
+    method: 'tokens' as PayMethodType,
+    settings: null as null | SettingsSubscriptionsType,
+    plansTokens: [] as Array<PaymentPlanType>,
+    plansUSD: [] as Array<PaymentPlanType>,
     monthly: false,
     owner: {} as UserModel,
-    usdAmount: 0,
-    tokensAmount: 0,
-    selectedOption: {} as PaymentPlan,
+    selectedOption: {} as PaymentPlanType,
     isPro: false,
-    paymentPlans: {
-      pro: {
-        tokens: [
-          {
-            id: 'lifetime',
-            payment: 'Lifetime membership',
-            cost: 20000,
-            primarylabel: (monthly, total) => `Lifetime membership · ${total}`,
-            secondarylabel: (monthly, total) => `MINDS`,
-          },
-        ],
-        usd: [
-          {
-            id: 'monthly',
-            cost: 50,
-            primarylabel: (monthly, total) => `Monthly · $${total}`,
-            secondarylabel: (monthly, total) => `/ month`,
-          },
-          {
-            id: 'annual',
-            cost: 480,
-            primarylabel: (monthly, total) => `Annually · $${monthly}`,
-            secondarylabel: (monthly, total) =>
-              `/ month (billed annually $${total})`,
-          },
-        ],
-      },
-      plus: {
-        tokens: [
-          {
-            id: 'lifetime',
-            payment: 'Lifetime membership',
-            cost: 2500,
-            primarylabel: (monthly, total) => `Lifetime membership · ${total}`,
-            secondarylabel: (monthly, total) => `MINDS`,
-          },
-        ],
-        usd: [
-          {
-            id: 'monthly',
-            cost: 7,
-            primarylabel: (monthly, total) => `Monthly · $${total}`,
-            secondarylabel: (monthly, total) => `/ month`,
-          },
-          {
-            id: 'annual',
-            cost: 60,
-            primarylabel: (monthly, total) => `Annually · $${monthly}`,
-            secondarylabel: (monthly, total) =>
-              `/ month (billed annually $${total})`,
-          },
-        ],
-      },
-    } as UpgradePlans,
+    generatePaymentPlans() {
+      for (const key in this.settings) {
+        const current = this.settings[key];
+        // yearly and monthly are disabled for tokens
+        if (current.tokens && !['yearly', 'monthly'].includes(key)) {
+          this.plansTokens.push({
+            id: key as SubscriptionType,
+            cost: current.tokens,
+            can_have_trial: Boolean(current.can_have_trial),
+          });
+        }
+        if (current.usd) {
+          const skus = this.isPro ? IAP_SKUS_PRO : IAP_SKUS_PLUS;
+
+          // for store apps only show options with SKUs (in-app purchase)
+          if (!IS_FROM_STORE || skus[key]) {
+            this.plansUSD.push({
+              id: key as SubscriptionType,
+              cost: current.usd,
+              iapSku: skus[key] || '',
+              can_have_trial: Boolean(current.can_have_trial),
+            });
+          }
+        }
+      }
+    },
     get canHaveTrial(): boolean {
-      return this.method === 'usd' && this.settings.yearly.can_have_trial;
+      return this.method === 'usd' && this.selectedOption.can_have_trial;
     },
     init(pro: boolean = false) {
       this.getSettings(pro);
@@ -81,15 +64,18 @@ const createUpgradeStore = () => {
     setMonthly(monthly: boolean) {
       this.monthly = monthly;
     },
-    setLoading(loading) {
-      this.loading = loading;
-    },
+
     async getSettings(pro: boolean) {
+      if (this.loaded) return;
+
       // update the settings
       await mindsConfigService.update();
+
       const settings = mindsConfigService.getSettings();
-      // used to get costs for plus
-      this.settings = pro ? settings.upgrades.pro : settings.upgrades.plus;
+
+      this.settings = (pro
+        ? settings.upgrades.pro
+        : settings.upgrades.plus) as SettingsSubscriptionsType;
 
       // used to pay plus by wire
       const handler = pro ? settings.handlers.pro : settings.handlers.plus;
@@ -98,35 +84,25 @@ const createUpgradeStore = () => {
         `urn:user:${handler}`,
       )) as UserModel;
 
-      this.method = 'tokens';
-
       this.isPro = pro;
 
-      const plans = this.isPro ? this.paymentPlans.pro : this.paymentPlans.plus;
-      this.selectedOption = plans.tokens[0];
+      this.generatePaymentPlans();
+      this.selectedOption = this.plansTokens[0];
 
       this.loaded = true;
     },
-    setMethod() {
+    toogleMethod() {
       this.method = this.method === 'usd' ? 'tokens' : 'usd';
-      const plans = this.isPro ? this.paymentPlans.pro : this.paymentPlans.plus;
       this.selectedOption =
-        this.method === 'usd' ? plans.usd[0] : plans.tokens[0];
-    },
-    setCard(card: any) {
-      this.card = card;
+        this.method !== 'usd' ? this.plansTokens[0] : this.plansUSD[0];
     },
     setSettings(settings) {
       this.settings = settings;
     },
-    get amount() {
-      return this.method === 'usd' ? this.usdAmount : this.tokensAmount;
-    },
-    setSelectedOption(option: PaymentPlan) {
+    setSelectedOption(option: PaymentPlanType) {
       this.selectedOption = option;
     },
   };
-  return store;
 };
 
 export default createUpgradeStore;
