@@ -7,6 +7,8 @@ import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
+import { screenProps, ScreenProps } from './stack.utils';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
@@ -21,37 +23,41 @@ export default function () {
     <NewsfeedStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <NewsfeedStack.Screen
         name="MainFeed"
-        component={NewsfeedScreen}
+        component={withErrorBoundaryScreen(NewsfeedScreen)}
         options={hideHeader}
       />
       <NewsfeedStack.Screen
         name="TopNewsfeed"
-        component={TopNewsfeedScreen}
+        component={withErrorBoundaryScreen(TopNewsfeedScreen)}
         options={hideHeader}
       />
-      <NewsfeedStack.Screen
-        name="Channel"
-        getComponent={() => require('~/channel/v2/ChannelScreen').default}
-        options={hideHeader}
-      />
-      <NewsfeedStack.Screen
-        name="Activity"
-        getComponent={() => require('~/newsfeed/ActivityScreen').default}
-        options={hideHeader}
-        initialParams={{ noBottomInset: true }}
-      />
-      <NewsfeedStack.Screen
-        name="InAppVerification"
-        getComponent={() =>
-          require('modules/in-app-verification').InAppVerificationStack
-        }
-        options={hideHeader}
-      />
-      <NewsfeedStack.Screen
-        name="BoostScreenV2"
-        getComponent={() => require('modules/boost').BoostComposerStack}
-        options={hideHeader}
-      />
+      {newsfeedScreens.map(screen => (
+        <NewsfeedStack.Screen key={screen.name} {...screenProps(screen)} />
+      ))}
     </NewsfeedStack.Navigator>
   );
 }
+
+const newsfeedScreens: ScreenProps<string>[] = [
+  {
+    name: 'Channel',
+    comp: () => require('~/channel/v2/ChannelScreen').default,
+    options: hideHeader,
+  },
+  {
+    name: 'Activity',
+    comp: () => require('~/newsfeed/ActivityScreen').default,
+    options: hideHeader,
+    initialParams: { noBottomInset: true },
+  },
+  {
+    name: 'InAppVerification',
+    comp: () => require('modules/in-app-verification').InAppVerificationStack,
+    options: hideHeader,
+  },
+  {
+    name: 'BoostScreenV2',
+    comp: () => require('modules/boost').BoostComposerStack,
+    options: hideHeader,
+  },
+];

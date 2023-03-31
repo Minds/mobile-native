@@ -24,10 +24,9 @@ import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
-import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
-  Easing,
+  EasingNode,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -69,7 +68,7 @@ const getColorFromURI = async uri => {
   return color;
 };
 
-const EASING = Easing.bezier(0.16, 0.4, 0.3, 1) as any; //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
+const EASING = EasingNode.bezier(0.16, 0.4, 0.3, 1) as any; //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
 const RECOMMENDATION_POSITION = 4;
 
 type PropsType = {
@@ -527,8 +526,6 @@ const styles = ThemedStyles.create({
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
-const withError = withErrorBoundary(ChannelScreen);
+export default ChannelScreen;
 
-export default withError;
-
-export const withModal = withModalProvider(withError);
+export const withModal = withModalProvider(ChannelScreen);

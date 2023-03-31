@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 
@@ -15,7 +16,7 @@ import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { InjectItem } from '../../common/components/FeedList';
 import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
-import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
@@ -32,7 +33,7 @@ interface Props {
 /**
  * Discovery Feed Screen
  */
-export const DiscoveryV2Screen = withErrorBoundary(
+export const DiscoveryV2Screen = withErrorBoundaryScreen(
   observer((props: Props) => {
     const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
       false,
@@ -138,6 +139,12 @@ export const DiscoveryV2Screen = withErrorBoundary(
       store.topFeed.fetchLocalOrRemote();
     }, [store]);
 
+    useFocusEffect(
+      useCallback(() => {
+        store.clearBadge();
+      }, [store]),
+    );
+
     const screen = () => {
       switch (store.activeTabId) {
         case 'top':
@@ -217,6 +224,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
       </Screen>
     );
   }),
+  'DiscoveryV2Screen',
 );
 
 const styles = ThemedStyles.create({

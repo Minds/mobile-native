@@ -7,7 +7,6 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 
 import UserStore from '../../../src/auth/UserStore';
 
-import featuresService from '../../../src/common/services/features.service';
 import { Provider } from 'mobx-react';
 
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
@@ -24,7 +23,6 @@ jest.mock(
   () => 'CommentsAction',
 );
 jest.mock('../../../src/auth/UserStore');
-jest.mock('../../../src/common/services/features.service');
 jest.mock(
   '../../../src/newsfeed/activity/actions/RemindAction',
   () => 'RemindAction',
