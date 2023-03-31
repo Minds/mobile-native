@@ -24,6 +24,7 @@ import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
   EasingNode,
@@ -526,6 +527,8 @@ const styles = ThemedStyles.create({
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
-export default ChannelScreen;
+const withError = withErrorBoundary(ChannelScreen);
 
-export const withModal = withModalProvider(ChannelScreen);
+export default withError;
+
+export const withModal = withModalProvider(withError);

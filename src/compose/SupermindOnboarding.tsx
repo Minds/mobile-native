@@ -84,8 +84,8 @@ export default function SupermindOnboarding({
       <H4 bottom="XL2" left="S">
         {onboardingTypes[type].title}
       </H4>
-      {onboardingTypes[type].steps.map((step, index) => (
-        <Row key={index} right="XL2" bottom="L2">
+      {onboardingTypes[type].steps.map(step => (
+        <Row right="XL2" bottom="L2">
           <Column right="L">
             <Icon top="XS" name={step.icon as IconMapNameType} size={30} />
           </Column>

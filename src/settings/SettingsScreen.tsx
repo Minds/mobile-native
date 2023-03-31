@@ -184,11 +184,11 @@ const SettingsScreen = observer(({ navigation }) => {
           <ScreenHeader title={i18n.t('moreScreen.settings')} />
         </HiddenTap>
         {firstSectionItems.map((item, index) => (
-          <MenuItem key={index} noBorderTop={index > 0} {...item} />
+          <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
         ))}
         <View style={theme.marginTop7x}>
           {secondSectionItems.map((item, index) => (
-            <MenuItem key={index} noBorderTop={index > 0} {...item} />
+            <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
           ))}
         </View>
       </ScrollView>

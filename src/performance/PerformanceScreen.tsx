@@ -177,7 +177,7 @@ const Experiment = ({ name, results, onRun }) => {
               return (
                 <View style={styles.experimentRow}>
                   {result.map(text => (
-                    <View key={text}>
+                    <View>
                       <Text>{text}</Text>
                     </View>
                   ))}

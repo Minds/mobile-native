@@ -265,7 +265,6 @@ export default observer(function OnboardingScreen() {
         {steps.map((item, i) =>
           item ? (
             <MenuItem
-              key={i}
               {...item}
               titleStyle={
                 [

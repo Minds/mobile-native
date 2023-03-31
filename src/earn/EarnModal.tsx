@@ -185,13 +185,13 @@ export default observer(function ({ navigation }) {
         title={i18n.t('earnScreen.title')}>
         <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
         {earnItems.map(item => (
-          <EarnItem key={item.name} content={item} />
+          <EarnItem content={item} />
         ))}
         <MText style={[titleStyle, theme.paddingTop2x]}>
           {i18n.t('earnScreen.resources.title')}
         </MText>
         {resourcesItems.map(item => (
-          <ResourceItem key={item.name} content={item} />
+          <ResourceItem content={item} />
         ))}
         {PRO_PLUS_SUBSCRIPTION_ENABLED && (
           <>
@@ -199,7 +199,7 @@ export default observer(function ({ navigation }) {
               {i18n.t('earnScreen.unlock.title')}
             </MText>
             {unlockItems.map(item => (
-              <ResourceItem key={item.name} content={item} />
+              <ResourceItem content={item} />
             ))}
           </>
         )}

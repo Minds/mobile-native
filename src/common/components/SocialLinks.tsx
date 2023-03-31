@@ -74,7 +74,6 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
         const meta = getSocialProfileMeta(socialLink.key);
         return (
           <FaIcon
-            key={socialLink.key}
             name={meta.icon}
             size={16}
             onPress={() => Linking.openURL(socialLink.value)}

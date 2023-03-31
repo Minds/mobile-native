@@ -40,7 +40,6 @@ const HeaderTabsComponent = observer(({ store, tabList }: PropsType) => {
       {tabList.map(({ name, label }: tabType) => {
         return (
           <TouchableOpacity
-            key={name}
             onPress={() => store.setTab(name)}
             style={[
               tabStyle,

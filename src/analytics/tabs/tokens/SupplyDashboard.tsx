@@ -7,7 +7,7 @@ const SupplyDashboard = ({ metrics }: DashBoardPropsType) => {
   return (
     <View>
       {(Object.keys(metrics) as Array<keyof typeof metrics>).map(key => {
-        return <Card key={key} metrics={metrics[key]} type={key} />;
+        return <Card metrics={metrics[key]} type={key} />;
       })}
     </View>
   );

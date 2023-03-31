@@ -1,19 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import Placeholder from '~/common/components/Placeholder';
-import PressableScale from '~/common/components/PressableScale';
-import { useStores } from '~/common/hooks/use-stores';
-import i18nService from '~/common/services/i18n.service';
-import { B3, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import { observer } from 'mobx-react';
+import { View } from 'react-native';
+import ThemedStyles from '../styles/ThemedStyles';
 import { AVATAR_SIZE } from '~/styles/Tokens';
-
-import { PortraitBarBoostItem } from '../models/PortraitBarBoostItem';
-import PortraitBarItem from '../models/PortraitBarItem';
 import PortraitContentBarItem from './PortraitContentBarItem';
+import { PortraitBarItem } from './createPortraitStore';
+import { useNavigation } from '@react-navigation/native';
+import { useStores } from '../common/hooks/use-stores';
+import PressableScale from '~/common/components/PressableScale';
+import { B3, Icon, Row } from '~/common/ui';
+import i18nService from '~/common/services/i18n.service';
+import Placeholder from '~/common/components/Placeholder';
 
 /**
  * Header component
@@ -63,13 +61,19 @@ const BarPlaceholder = () => {
   );
 };
 
-const renderItem = ({ item }: { item: PortraitBarItem }) => {
+const renderItem = ({
+  item,
+  index,
+}: {
+  item: PortraitBarItem;
+  index: number;
+}) => {
   return (
     <PortraitContentBarItem
       avatarUrl={item.user.getAvatarSource()}
       title={item.user.username}
       unseen={item.unseen}
-      guid={item.user.guid}
+      index={index}
     />
   );
 };
@@ -90,6 +94,7 @@ const PortraitContentBar = observer(() => {
   return (
     <View style={styles.containerStyle}>
       <FlatList
+        // @ts-ignore
         ref={portraitBarRef}
         contentContainerStyle={styles.listContainerStyle}
         style={styles.bar}
@@ -97,10 +102,7 @@ const PortraitContentBar = observer(() => {
         ListHeaderComponent={Header}
         ListEmptyComponent={Empty}
         renderItem={renderItem}
-        data={store.items
-          // do not show boosts in the portrait bar
-          .filter(item => !(item instanceof PortraitBarBoostItem))
-          .slice()}
+        data={store.items.slice()}
         keyExtractor={keyExtractor}
       />
     </View>

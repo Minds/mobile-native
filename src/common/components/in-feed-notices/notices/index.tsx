@@ -8,7 +8,6 @@ import TagsNotice from './TagsNotice';
 import VerifyUniquenessNotice from './VerifyUniquenessNotice';
 import PlusUpgradeNotice from './PlusUpgradeNotice';
 import BoostPartnerNotice from './BoostPartnerNotice';
-import BoostChannelNotice from './BoostChannelNotice';
 
 export const noticeMapper = {
   'supermind-pending': <PendingSupermindNotice />,
@@ -20,7 +19,6 @@ export const noticeMapper = {
   'invite-friends': <InviteFriendsNotice />,
   'plus-upgrade': <PlusUpgradeNotice />,
   'boost-partners': <BoostPartnerNotice />,
-  'boost-channel': <BoostChannelNotice />,
 };
 
 export type NoticeName = keyof typeof noticeMapper;

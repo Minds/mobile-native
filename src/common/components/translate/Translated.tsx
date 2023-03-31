@@ -18,12 +18,7 @@ const Translated = observer(({ translateStore, style }: PropsType) => {
     navigation,
   };
   const mappingCallback = useCallback(
-    (v: string) =>
-      !!v && (
-        <Tags key={v} {...tagProps}>
-          {v}
-        </Tags>
-      ),
+    (v: string) => !!v && <Tags {...tagProps}>{v}</Tags>,
     [tagProps],
   );
 

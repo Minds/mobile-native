@@ -9,8 +9,9 @@ import { InjectItem } from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
-import PortraitContentBar from '../portrait/components/PortraitContentBar';
+import PortraitContentBar from '../portrait/PortraitContentBar';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
@@ -219,4 +220,4 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
 
 const prefetch: NotificationsTabOptions[] = ['all'];
 
-export default NewsfeedScreen;
+export default withErrorBoundary(NewsfeedScreen);

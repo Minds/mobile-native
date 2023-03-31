@@ -7,7 +7,7 @@ const TransactionsDashboard = ({ metrics }: DashBoardPropsType) => {
   return (
     <View>
       {Object.keys(metrics).map((key: any) => {
-        return <Card key={key} metrics={metrics[key]} type={key} />;
+        return <Card metrics={metrics[key]} type={key} />;
       })}
     </View>
   );

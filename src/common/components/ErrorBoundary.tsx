@@ -72,12 +72,12 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
     }
 
     return (
-      <View style={[theme.flexColumnCentered, containerStyle]}>
+      <View style={[theme.columnAlignCenter, containerStyle]}>
         <MText
           style={[
             textSmall ? theme.fontM : theme.fontM,
             theme.textCenter,
-            theme.marginTop5x,
+            theme.marginTop2x,
             theme.colorSecondaryText,
           ]}
           onPress={this.copy}>
@@ -88,7 +88,7 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
             textSmall ? theme.fontXS : theme.fontS,
             theme.textCenter,
             theme.marginTop2x,
-            theme.marginBottom5x,
+            theme.marginBottom2x,
             theme.fontHairline,
           ]}
           onPress={this.copy}>
@@ -122,9 +122,7 @@ export const withErrorBoundary = (
   message = '',
   small = false,
 ) => props => {
-  if (!message) {
-    message = i18n.t('errorDisplaying');
-  }
+  if (!message) message = i18n.t('errorDisplaying');
   return (
     <ErrorBoundary message={message} textSmall={small}>
       <WrappedComponent {...props} />

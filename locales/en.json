@@ -225,10 +225,6 @@
     "sessionExpired": "Logged out"
   },
   "inFeedNotices": {
-    "boostChannelTitle": "Expand Your Reach",
-    "boostChannelButton": "Boost Now",
-    "boostChannelLearMoreButton": "Learn More",
-    "boostChannelDescription": "Use Boost to reach new audiences on Minds. Boosted channels get more engagement and subscribers.",
     "boostPartnerTitle": "Welcome to the Boost Partners Program",
     "boostPartnerDescription": "You are now eligible to earn a 50/50 revenue-share for serving Boosts on your channel and content pages. You may disable or change your settings any time.",
     "boostPartnerButton": "Read more",
@@ -1014,20 +1010,16 @@
       "learn": "Learn more about",
       "viewBoostedContent": "View Boosted Content",
       "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
-      "showBoostChannel": "Show boosts on my channel",
-      "showBoostChannelTooltip": "You can adjust the type of boosts served on your channel or disable them entirely",
       "boostAutoRotation": "Boost Auto-rotation",
       "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
-      "openContent": "Controversial Content",
+      "openContent": "Open Content",
       "openContentTooltip": "Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.",
       "liquiditySpot": "Liquidity Spot",
       "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
       "optIn": "Opt-in",
       "optOut": "Opt-out",
       "enable": "Enable",
-      "disable": "Disable",
-      "controversial": "Controversial",
-      "safe": "Safe"
+      "disable": "Disable"
     },
     "about": {
       "title": "about",

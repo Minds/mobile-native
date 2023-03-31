@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
 import settingsService from '../SettingsService';
+import apiService from '../../common/services/api.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
@@ -21,27 +22,6 @@ import MenuItemOption from '../../common/components/menus/MenuItemOption';
  *  liquidity_spot_opt_out === 0 => liquiditySpot = true
  */
 
-type BoostChannelType = 'controversial' | 'safe' | 'disable';
-type ItemType = {
-  id:
-    | 'viewBoostedContent'
-    | 'showBoostChannel'
-    | 'boostAutoRotation'
-    | 'openContent'
-    | 'liquiditySpot';
-  tooltip: { width: number; height: number };
-  options: Array<
-    [BoostChannelType | 'enable' | 'disable' | 'optIn' | 'optOut', any]
-  >;
-  [propName: string]: any;
-};
-
-export enum BoostPartnerSuitability {
-  DISABLED = 1,
-  SAFE = 2,
-  CONTROVERSIAL = 3,
-}
-
 const BoostSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
   const user = sessionService.getUser();
@@ -49,7 +29,6 @@ const BoostSettingsScreen = observer(() => {
   const localStore = useLocalStore(() => ({
     loading: true,
     viewBoostedContent: false,
-    showBoostChannel: BoostPartnerSuitability.CONTROVERSIAL,
     boostAutoRotation: false,
     openContent: false,
     liquiditySpot: false,
@@ -62,7 +41,7 @@ const BoostSettingsScreen = observer(() => {
       this.boostAutoRotation = Boolean(settings.channel.boost_autorotate);
       this.openContent = settings.channel.boost_rating === 2;
       this.liquiditySpot = !settings.channel.liquidity_spot_opt_out;
-      this.showBoostChannel = settings.channel.boost_partner_suitability || 3;
+
       this.loading = false;
     },
     setViewBoostedContent(val: boolean) {
@@ -83,26 +62,24 @@ const BoostSettingsScreen = observer(() => {
 
       user.setLiquiditySpotOptOut(val ? false : true);
     },
-    setShowBoostChannel(value: BoostPartnerSuitability) {
-      this.showBoostChannel = value;
-      this.save({ boost_partner_suitability: value });
-    },
     async showBoost(): Promise<void> {
-      try {
-        await settingsService.showBoosts();
-        showNotification(i18n.t('settings.saved'), 'info');
-      } catch (e) {
-        showNotification(i18n.t('errorMessage'));
-        console.error(e);
+      if (user.plus) {
+        try {
+          await apiService.delete('api/v1/plus/boost');
+          showNotification(i18n.t('settings.saved'), 'info');
+        } catch (e) {
+          console.error(e);
+        }
       }
     },
     async hideBoost(): Promise<void> {
-      try {
-        await settingsService.hideBoosts();
-        showNotification(i18n.t('settings.saved'), 'info');
-      } catch (e) {
-        showNotification(i18n.t('errorMessage'));
-        console.error(e);
+      if (user.plus) {
+        try {
+          await apiService.put('api/v1/plus/boost');
+          showNotification(i18n.t('settings.saved'), 'info');
+        } catch (e) {
+          console.error(e);
+        }
       }
     },
     async save(params) {
@@ -123,10 +100,10 @@ const BoostSettingsScreen = observer(() => {
     return <CenteredLoading />;
   }
 
-  const items: Array<ItemType> = [
+  const items = [
     {
       id: 'viewBoostedContent',
-      isSelected: value => localStore.viewBoostedContent === value,
+      isSelected: () => localStore.viewBoostedContent,
       onPress: (val: boolean) => localStore.setViewBoostedContent(val),
       browserOnly: false,
       mindsPlus: true,
@@ -134,32 +111,13 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
-      options: [
-        ['enable', true],
-        ['disable', false],
-      ],
+      enable: undefined,
+      disable: undefined,
       disabled: !user.plus,
     },
     {
-      id: 'showBoostChannel',
-      isSelected: value => localStore.showBoostChannel === value,
-      onPress: (val: BoostPartnerSuitability) =>
-        localStore.setShowBoostChannel(val),
-      browserOnly: false,
-      mindsPlus: false,
-      tooltip: {
-        height: 75,
-        width: 220,
-      },
-      options: [
-        ['controversial', BoostPartnerSuitability.CONTROVERSIAL],
-        ['safe', BoostPartnerSuitability.SAFE],
-        ['disable', BoostPartnerSuitability.DISABLED],
-      ],
-    },
-    {
       id: 'boostAutoRotation',
-      isSelected: value => localStore.boostAutoRotation === value,
+      isSelected: () => localStore.boostAutoRotation,
       onPress: (val: boolean) => localStore.setBoostAutoRotation(val),
       browserOnly: true,
       mindsPlus: false,
@@ -167,15 +125,13 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
-      options: [
-        ['enable', true],
-        ['disable', false],
-      ],
+      enable: undefined,
+      disable: undefined,
       disabled: false,
     },
     {
       id: 'openContent',
-      isSelected: value => localStore.openContent === value,
+      isSelected: () => localStore.openContent,
       onPress: (val: boolean) => localStore.setOpenContent(val),
       browserOnly: false,
       mindsPlus: false,
@@ -183,15 +139,13 @@ const BoostSettingsScreen = observer(() => {
         height: 100,
         width: 230,
       },
-      options: [
-        ['enable', true],
-        ['disable', false],
-      ],
+      enable: undefined,
+      disable: undefined,
       disabled: false,
     },
     {
       id: 'liquiditySpot',
-      isSelected: value => localStore.liquiditySpot === value,
+      isSelected: () => localStore.liquiditySpot,
       onPress: (val: boolean) => localStore.setLiquiditySpot(val),
       browserOnly: true,
       mindsPlus: false,
@@ -199,13 +153,22 @@ const BoostSettingsScreen = observer(() => {
         height: 100,
         width: 230,
       },
-      options: [
-        ['optIn', true],
-        ['optOut', false],
-      ],
+      enable: 'optIn',
+      disable: 'optOut',
       disabled: false,
     },
-  ];
+  ] as const;
+
+  const browserOnly = (
+    <MText style={[theme.colorSecondaryText, styles.smallText]}>
+      ({i18n.t('browserOnly')})
+    </MText>
+  );
+  const mindsPlusOnly = (
+    <MText style={[theme.colorSecondaryText, styles.smallText]}>
+      ({i18n.t('mindsPlusFeature')})
+    </MText>
+  );
 
   return (
     <ScrollView style={[theme.fullHeight, theme.paddingTop4x]}>
@@ -225,64 +188,53 @@ const BoostSettingsScreen = observer(() => {
           Boost
         </MText>
       </MText>
-      {items.map(item => (
-        <Item item={item} key={item.id} />
-      ))}
+      {items.map(item => {
+        return (
+          <View style={theme.marginBottom7x}>
+            <View
+              style={[
+                theme.rowJustifyStart,
+                theme.marginBottom2x,
+                theme.paddingLeft4x,
+              ]}>
+              <MText style={[styles.text, theme.colorTertiaryText]}>
+                {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
+              </MText>
+              <Tooltip
+                skipAndroidStatusBar={true}
+                withOverlay={false}
+                containerStyle={theme.borderRadius}
+                width={item.tooltip.width}
+                height={item.tooltip.height}
+                backgroundColor={ThemedStyles.getColor('Link')}
+                popover={
+                  <MText style={theme.colorWhite}>
+                    {i18n.t(`settings.boost.${item.id}Tooltip`)}
+                  </MText>
+                }>
+                <Icon
+                  name="information-variant"
+                  size={15}
+                  color={ThemedStyles.getColor('TertiaryText')}
+                />
+              </Tooltip>
+              {item.browserOnly && browserOnly}
+              {item.mindsPlus && mindsPlusOnly}
+            </View>
+            <MenuItemOption
+              title={i18n.t(`settings.boost.${item.enable || 'enable'}`)}
+              onPress={item.disabled ? undefined : () => item.onPress(true)}
+              selected={item.isSelected()}
+            />
+            <MenuItemOption
+              title={i18n.t(`settings.boost.${item.disable || 'disable'}`)}
+              onPress={item.disabled ? undefined : () => item.onPress(false)}
+              selected={!item.isSelected()}
+            />
+          </View>
+        );
+      })}
     </ScrollView>
-  );
-});
-
-const Item = observer(({ item }: { item: ItemType }) => {
-  const theme = ThemedStyles.style;
-  return (
-    <View style={theme.marginBottom7x}>
-      <View
-        style={[
-          theme.rowJustifyStart,
-          theme.marginBottom2x,
-          theme.paddingLeft4x,
-        ]}>
-        <MText style={[styles.text, theme.colorTertiaryText]}>
-          {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
-        </MText>
-        <Tooltip
-          skipAndroidStatusBar={true}
-          withOverlay={false}
-          containerStyle={theme.borderRadius}
-          width={item.tooltip.width}
-          height={item.tooltip.height}
-          backgroundColor={ThemedStyles.getColor('Link')}
-          popover={
-            <MText style={theme.colorWhite}>
-              {i18n.t(`settings.boost.${item.id}Tooltip`)}
-            </MText>
-          }>
-          <Icon
-            name="information-variant"
-            size={15}
-            color={ThemedStyles.getColor('TertiaryText')}
-          />
-        </Tooltip>
-        {item.browserOnly && (
-          <MText style={[theme.colorSecondaryText, styles.smallText]}>
-            ({i18n.t('browserOnly')})
-          </MText>
-        )}
-        {item.mindsPlus && (
-          <MText style={[theme.colorSecondaryText, styles.smallText]}>
-            ({i18n.t('mindsPlusFeature')})
-          </MText>
-        )}
-      </View>
-      {item.options.map(([name, value]) => (
-        <MenuItemOption
-          key={name}
-          title={i18n.t(`settings.boost.${name}`)}
-          onPress={item.disabled ? undefined : () => item.onPress(value)}
-          selected={item.isSelected(value)}
-        />
-      ))}
-    </View>
   );
 });
 
