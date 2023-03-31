@@ -365,6 +365,22 @@ export default class Activity extends Component<PropsType> {
       !(entity.shouldBeBlured() && this.props.parentMature) &&
       !entity.mature_visibility;
 
+    const content = (
+      <View style={this.props.showOnlyContent ? null : styles.bodyContainer}>
+        {lock}
+        {shouldShowMessageOnTop ? message : undefined}
+        <MediaView
+          ref={this.setMediaViewRef}
+          entity={entity}
+          onPress={this.navToActivity}
+          autoHeight={this.props.autoHeight}
+        />
+        {this.showRemind()}
+        {this.props.entity.remind_deleted && <DeletedRemind />}
+        {shouldShowMessageOnBottom ? message : undefined}
+      </View>
+    );
+
     return (
       <View
         style={
@@ -388,24 +404,13 @@ export default class Activity extends Component<PropsType> {
               onLongPress={this.copyText}
               onLayout={this.onLayout}
               testID="ActivityView">
-              <MaxHeightFadeView maxHeight={this.props.maxContentHeight}>
-                <View
-                  style={
-                    this.props.showOnlyContent ? null : styles.bodyContainer
-                  }>
-                  {lock}
-                  {shouldShowMessageOnTop ? message : undefined}
-                  <MediaView
-                    ref={this.setMediaViewRef}
-                    entity={entity}
-                    onPress={this.navToActivity}
-                    autoHeight={this.props.autoHeight}
-                  />
-                  {this.showRemind()}
-                  {this.props.entity.remind_deleted && <DeletedRemind />}
-                  {shouldShowMessageOnBottom ? message : undefined}
-                </View>
-              </MaxHeightFadeView>
+              {this.props.maxContentHeight ? (
+                <MaxHeightFadeView maxHeight={this.props.maxContentHeight}>
+                  {content}
+                </MaxHeightFadeView>
+              ) : (
+                content
+              )}
             </Pressable>
             <BottomContent
               entity={entity}
