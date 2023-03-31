@@ -510,36 +510,6 @@ const RootStack = observer(function () {
               getComponent={() => require('modules/boost').BoostComposerStack}
               options={modalOptions}
             />
-            <RootStackNav.Screen
-              name="TierManagementScreen"
-              getComponent={() =>
-                require('~/common/components/tier-management/TierManagementScreen')
-                  .default
-              }
-              options={{
-                title: i18nService.t('settings.otherOptions.b1'),
-                headerBackTitle: i18nService.t('back'),
-                ...rootStackCardScreenOptions,
-              }}
-            />
-            <RootStackNav.Screen
-              name="TierScreen"
-              getComponent={() =>
-                require('~/settings/screens/TierScreen').default
-              }
-              options={{
-                title: 'Tier Management',
-                ...rootStackCardScreenOptions,
-              }}
-            />
-            <RootStackNav.Screen
-              name="GroupsList"
-              getComponent={() => require('~/groups/GroupsListScreen').default}
-              options={{
-                ...rootStackCardScreenOptions,
-                headerShown: false,
-              }}
-            />
           </>
         )
       ) : (
@@ -594,6 +564,34 @@ const RootStack = observer(function () {
         options={{
           ...TransitionPresets.ModalFadeTransition,
           gestureEnabled: false,
+        }}
+      />
+      <RootStackNav.Screen
+        name="TierManagementScreen"
+        getComponent={() =>
+          require('~/common/components/tier-management/TierManagementScreen')
+            .default
+        }
+        options={{
+          title: i18nService.t('settings.otherOptions.b1'),
+          headerBackTitle: i18nService.t('back'),
+          ...rootStackCardScreenOptions,
+        }}
+      />
+      <RootStackNav.Screen
+        name="TierScreen"
+        getComponent={() => require('~/settings/screens/TierScreen').default}
+        options={{
+          title: 'Tier Management',
+          ...rootStackCardScreenOptions,
+        }}
+      />
+      <RootStackNav.Screen
+        name="GroupsList"
+        getComponent={() => require('~/groups/GroupsListScreen').default}
+        options={{
+          ...rootStackCardScreenOptions,
+          headerShown: false,
         }}
       />
     </RootStackNav.Navigator>
