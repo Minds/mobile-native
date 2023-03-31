@@ -3,19 +3,19 @@ import { TLegacyStores } from '../contexts';
 import { useLocalStore, MobXProviderContext } from 'mobx-react';
 import createWalletStore, {
   WalletStoreType,
-} from '~/wallet/v2/createWalletStore';
+} from '../../wallet/v2/createWalletStore';
 import createSearchResultStore, {
   SearchResultStoreType,
-} from '~/topbar/searchbar/createSearchResultStore';
+} from '../../topbar/searchbar/createSearchResultStore';
 import createPortraitStore, {
   PortraitStoreType,
-} from '~/portrait/portrait.store';
+} from '../../portrait/createPortraitStore';
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
-import createChatStore, { ChatStoreType } from '~/chat/createChatStore';
+import createChatStore, { ChatStoreType } from '../../chat/createChatStore';
 import createNotificationsStore, {
   NotificationsStore,
-} from '~/notifications/v3/createNotificationsStore';
+} from '../../notifications/v3/createNotificationsStore';
 
 export const storesContext = React.createContext<StoresType | null>(null);
 

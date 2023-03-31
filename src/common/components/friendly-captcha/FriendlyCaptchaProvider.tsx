@@ -69,7 +69,6 @@ const FriendlyCaptchaProvider: ForwardRefRenderFunction<
         {captchas.map(captcha => (
           // TODO: handle multiple captchas and captcha origin
           <FriendlyCaptcha
-            key={captcha.id}
             origin={captcha.origin}
             onSolved={captcha.onSolved}
           />

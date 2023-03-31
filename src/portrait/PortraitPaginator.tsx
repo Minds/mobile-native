@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react';
 import React from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type ActivityModel from '~/newsfeed/ActivityModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import { observer } from 'mobx-react';
 
 type PropsType = {
   store: {

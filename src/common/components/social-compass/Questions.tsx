@@ -79,7 +79,6 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
             </MText>
             {questions.map(question => (
               <QuestionSlider
-                key={question.questionId}
                 question={question}
                 onAnswer={onAnswer(question.questionId)}
               />

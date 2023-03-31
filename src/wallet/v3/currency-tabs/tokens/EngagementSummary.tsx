@@ -32,7 +32,7 @@ const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
 const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
   const theme = ThemedStyles.style;
   const metrics = contributionScores.map(metric => (
-    <ContributionScores key={metric.id} metric={metric} />
+    <ContributionScores metric={metric} />
   ));
 
   return (

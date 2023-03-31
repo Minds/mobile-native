@@ -3,14 +3,14 @@ import { createAnimations } from '@tamagui/animations-reanimated';
 export const animations = createAnimations({
   bouncy: {
     type: 'spring',
-    damping: 9,
+    damping: 10,
     mass: 0.9,
-    stiffness: 150,
+    stiffness: 100,
   },
   lazy: {
     type: 'spring',
-    damping: 18,
-    stiffness: 50,
+    damping: 20,
+    stiffness: 60,
   },
   slow: {
     type: 'spring',

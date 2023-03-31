@@ -68,9 +68,9 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         theme.paddingBottom5x,
         theme.bcolorPrimaryBorder,
       ]}>
-      {data.map((row, index) => {
+      {data.map(row => {
         return (
-          <Container key={index}>
+          <Container>
             <Row>
               <Title>{row.title}</Title>
               {row.tooltip && (

@@ -6,7 +6,7 @@ import type { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
-import type PortraitBarItem from '../portrait/models/PortraitBarItem';
+import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
@@ -18,7 +18,8 @@ import type { BoostType } from '../boost/legacy/createBoostStore';
 import type { WebViewNavigation } from 'react-native-webview';
 import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { ComposeScreenParams } from '../compose/ComposeScreen';
 
 type AnyType = any;
 
@@ -139,13 +140,10 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {
-    openSupermindModal?: boolean;
-    isRemind?: boolean;
-    entity?: ActivityModel;
-    group?: GroupModel;
-    parentKey?: string;
-  };
+  TierManagementScreen: {};
+  TierScreen: {};
+  GroupsList: {};
+  Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
     data: SupermindRequestParam;
@@ -252,10 +250,7 @@ export type AppStackParamList = {
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
-    /**
-     * the guid of the selected activity to be focused
-     */
-    guid?: string;
+    index: number;
   };
   Fab: {
     disableThresholdCheck?: boolean;

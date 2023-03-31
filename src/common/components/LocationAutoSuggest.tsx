@@ -155,13 +155,12 @@ const LocationAutoSuggest = observer((props: PropsType) => {
           {store.loading ? (
             <CenteredLoading />
           ) : (
-            store.locations.map((value: locationType, index: number) => {
+            store.locations.map((value: locationType) => {
               if (!(value.address.town || value.address.city)) {
                 return null;
               }
               return (
                 <MText
-                  key={index}
                   onPress={() =>
                     setLocation(value.address.city ?? value.address.state)
                   }

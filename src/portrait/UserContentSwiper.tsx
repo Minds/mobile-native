@@ -1,16 +1,15 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import MetadataService from '~/common/services/metadata.service';
-import ViewStore from '~/common/stores/ViewStore';
-import ThemedStyles from '~/styles/ThemedStyles';
-
-import { useCarouselFocusEffect } from '../PortraitViewerScreen';
-import PortraitBarItem from '../models/PortraitBarItem';
-import portraitContentService from '../portrait-content.service';
-import PortraitActivity from './PortraitActivity';
+import { useFocusEffect } from '@react-navigation/native';
+import { useLocalStore, observer } from 'mobx-react';
+import ThemedStyles from '../styles/ThemedStyles';
+import portraitContentService from './PortraitContentService';
+import ViewStore from '../common/stores/ViewStore';
+import MetadataService from '../common/services/metadata.service';
 import PortraitPaginator from './PortraitPaginator';
+import { PortraitBarItem } from './createPortraitStore';
+import PortraitActivity from './PortraitActivity';
+import { useCarouselFocusEffect } from './PortraitViewerScreen';
 
 type PropsType = {
   item: PortraitBarItem;

@@ -48,7 +48,6 @@ const TiersList = observer(
       <>
         {tiers.map(tier => (
           <MenuItem
-            key={tier.guid}
             title={tier.name}
             label={`$${tier.usd}+ / mth`}
             onPress={
