@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 import { storages } from '../services/storage/storages.service';
+import analyticsService from '../services/analytics.service';
 
 const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -9,6 +10,7 @@ export type DismissIdentifier =
   | 'supermind:onboarding:consumer'
   | 'supermind:onboarding:producer'
   | 'update-prompt'
+  | 'banner:refer'
   | 'channel-recommendation:channel';
 
 type DismissItem = {
@@ -46,6 +48,7 @@ export class DismissalStore {
   dismiss(id: DismissIdentifier, duration: number = DEFAULT_DURATION) {
     this.dismisses = [...this.dismisses, { id, expiry: Date.now() + duration }];
     this._persist(this.dismisses);
+    analyticsService.trackClick(`${id}:dismiss`);
   }
 
   /**
