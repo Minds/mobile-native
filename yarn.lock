@@ -5702,6 +5702,14 @@
   resolved "https://registry.yarnpkg.com/@tamagui/fake-react-native/-/fake-react-native-1.6.2.tgz#5b573b6f0320d205477867b53c2bb6522a0f1a31"
   integrity sha512-vvXhm/eXAhOSJcpzmI2l8cV8r5FKZia05AC2d8hbi/OpzOsBeLoWl1/aHi1EFQ67OzSP1aaZ6pyZbWdvCfVRKg==
 
+"@tamagui/focusable@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@tamagui/focusable/-/focusable-1.6.2.tgz#b2e54fc5debdf91f41e9c29c046ab1d4162bb93a"
+  integrity sha512-GnKlCMrfyoDqpMCjZ2ffkJZnJ9ftbvT+pc4k3ku6oiW3r0m1A0B04QgoxiXlEDYkkvQbaN4hIHGbkdKsI9MclA==
+  dependencies:
+    "@tamagui/compose-refs" "1.6.2"
+    "@tamagui/web" "1.6.2"
+
 "@tamagui/font-size@1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@tamagui/font-size/-/font-size-1.6.2.tgz#36cd3a351fc50f8268729c8b992773430296aa6c"

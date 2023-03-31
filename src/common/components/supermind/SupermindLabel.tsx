@@ -1,26 +1,36 @@
 import { View } from 'react-native';
 import React from 'react';
-import ThemedStyles from '~/styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { LinearGradient } from 'expo-linear-gradient';
-import { B2 } from '~/common/ui';
 import { SupermindGradient } from '~/styles/Colors';
+import { Typography, TypographyType } from '../../ui/typography/Typography';
 
 type Props = {
   text?: string;
+  font?: TypographyType;
+  height?: number;
 };
 
-export default function SupermindLabel({ text }: Props) {
+export default function SupermindLabel({
+  text,
+  font = 'B2',
+  height = 24,
+}: Props) {
+  const outerStyle = useMemoStyle(
+    () => [styles.outerStyle, { height: height }],
+    [height],
+  );
   return (
-    <View style={styles.outerStyle}>
+    <View style={outerStyle}>
       <LinearGradient
         style={ThemedStyles.style.flexContainerCenter}
         colors={SupermindGradient}
         start={start}
         end={end}
         locations={locations}>
-        <B2 color="white" font="medium" horizontal="XS">
+        <Typography type={font} color="white" font="medium" horizontal="XS">
           {text || 'Supermind'}
-        </B2>
+        </Typography>
       </LinearGradient>
     </View>
   );
@@ -31,7 +41,6 @@ const end = { x: 1, y: 0 };
 const locations = [0, 0.4, 1];
 const styles = ThemedStyles.create({
   outerStyle: {
-    height: 22,
     borderRadius: 3,
     overflow: 'hidden',
   },

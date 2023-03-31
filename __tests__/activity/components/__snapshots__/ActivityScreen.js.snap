@@ -1700,6 +1700,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "attachment": AttachmentStore {
           "assetId": "",
           "cancelOrDelete": [Function],
+          "ephemeral": true,
           "filename": "",
           "guid": "",
           "onClear": undefined,

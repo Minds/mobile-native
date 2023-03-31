@@ -10,6 +10,7 @@ import NavigationService from '../../../navigation/NavigationService';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { BottomSheet, BottomSheetProps } from './';
+import { useBackHandler } from '@react-native-community/hooks';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -76,6 +77,13 @@ const BottomSheetInnerContainer = ({
   handleContentLayout,
 }: Pick<BottomSheetScreenParams, 'component'> | any) => {
   const bottomSheet = useBottomSheet();
+
+  useBackHandler(
+    useCallback(() => {
+      bottomSheet.close();
+      return true;
+    }, [bottomSheet]),
+  );
 
   return (
     <View style={styles.container}>

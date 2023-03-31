@@ -81,7 +81,7 @@ export default observer(function ({}: ScheduleSelectorProps) {
       />
       <DateTimePicker
         ref={dateTimePickerRef}
-        date={store.time_created}
+        date={current.toDate()}
         minimumDate={new Date()}
         onDateSelected={localStore.onSelect}
       />

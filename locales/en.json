@@ -225,6 +225,9 @@
     "sessionExpired": "Logged out"
   },
   "inFeedNotices": {
+    "boostPartnerTitle": "Welcome to the Boost Partners Program",
+    "boostPartnerDescription": "You are now eligible to earn a 50/50 revenue-share for serving Boosts on your channel and content pages. You may disable or change your settings any time.",
+    "boostPartnerButton": "Read more",
     "pendingSupermind": "You have Supermind offers",
     "pendingSupermindDescription": "Reply to your fans to claim cash or tokens before your pending offers expire.",
     "pendingSupermindButton": "Let's go ",
@@ -840,7 +843,7 @@
   },
   "settings": {
     "submit": "Submit",
-    "boostConsole": "Boost Console",
+    "boostConsole": "Boost",
     "chooseBrowser": "Choose Browser",
     "chooseBrowserDescription": "Please choose where you want to open the external links.",
     "chooseBrowserHint": "This option can be changed from the settings",
@@ -1169,7 +1172,8 @@
     "noUSD": "It doesn't accept USD",
     "join": "Join Membership",
     "pay": "Pay Custom Tier",
-    "alreadyMember": "You are already a member"
+    "alreadyMember": "You are already a member",
+    "monthly": "${{usd}}+ / month"
   },
   "wallet": {
     "wallet": "Wallet",
@@ -1565,6 +1569,7 @@
       "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "You don’t have any Membership Tiers",
       "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
+      "descriptionLong": "Start earning extra revenue for your content today by making this post exclusive to one of your membership tiers.",
       "setup": "Setup membership tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "Manage"
@@ -1573,6 +1578,13 @@
       "usd": "Contribution in USD (will be converted to tokens if necessary)",
       "hasUsd": "Accept USD",
       "hasTokens": "Accept Tokens"
+    },
+    "terms": {
+      "title": "I agree to the <terms-link /> and have the rights to monetize this content.",
+      "linkTitle": "Minds monetization terms",
+      "originalContent": "This content is my original content",
+      "exclusive": "This content is exclusive to Minds+",
+      "violations": "I understand that violation of these requirements may result in losing the ability to publish Premium Content for Minds+ members."
     }
   },
   "referrals": {
@@ -1828,5 +1840,58 @@
       "action": "Download"
     },
     "syncing": "Syncing app bundle..."
-  }
+  },
+  "composer": {
+    "audienceSelector": {
+      "title": "Select Audience",
+      "done": "Done",
+      "audience": {
+        "public": {
+          "title": "Public"
+        },
+        "plus": {
+          "title": "Minds+",
+          "subtitle": "Submit this post to Minds+ Premium Content and earn a share of our revenue based on how it performs."
+        }
+      },
+      "memberships": "Memberships",
+      "groups": "Groups",
+      "noGroups": "You aren't a member of any groups",
+      "plus": {
+        "title": "Plus monetization",
+        "action": "I agree to the terms"
+      },
+      "manage": "Manage",
+      "getStarted": "Get started",
+      "titles": {
+        "public": "Public",
+        "plus": "Minds+",
+        "group": "Group",
+        "membership": "Membership"
+      }
+    },
+    "create": {
+      "boost": "Boosted Post",
+      "newPost": "New Post",
+      "screen": {
+        "post": {
+          "title": "Post",
+          "subtitle": "Create a post"
+        },
+        "monetizedPost": {
+          "title": "Monetized Post",
+          "subtitle": "Create a monetized post and make it exclusive to a selected audience"
+        },
+        "boost": {
+          "title": "Boosted Post",
+          "subtitle": "Boost your post to make your content reach more users. Your content will appear on newsfeeds across the site"
+        },
+        "supermind": {
+          "subtitle": "Get replies from your favorite creators by sending them paid offers!"
+        },
+        "description": "Long press <compose /> to open this menu again"
+      }
+    }
+  },
+  "back": "Back"
 }
