@@ -34,7 +34,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
   const { channel } = store;
 
   if (!channel) {
-    return <View></View>;
+    return <></>;
   }
 
   // re-render on focus (in case the user was edited)

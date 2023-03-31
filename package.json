@@ -64,6 +64,8 @@
     "@tamagui/create-context": "1.6.2",
     "@tamagui/avatar": "1.6.2",
     "@tamagui/button": "1.6.2",
+    "@tamagui/slider": "1.6.2",
+    "@tamagui/animate-presence": "1.6.2",
     "@tamagui/core": "1.6.2",
     "@tamagui/font-size": "1.6.2",
     "@tamagui/focusable": "1.6.2",
