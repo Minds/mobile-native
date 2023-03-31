@@ -2,7 +2,6 @@ import 'react-native';
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import NotificationsScreen from '../../src/notifications/v3/NotificationsScreen';
-import { StoresProvider } from '../../src/common/hooks/use-stores';
 import { getStores } from '../../AppStores';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
