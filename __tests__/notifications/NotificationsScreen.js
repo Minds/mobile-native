@@ -13,6 +13,23 @@ jest.mock(
   '../../src/common/components/interactions/InteractionsBottomSheet',
   () => 'InteractionsBottomSheet',
 );
+jest.mock('../../src/common/hooks/use-stores', () => ({
+  StoresProvider: ({ children }) => children,
+  useStores: () => ({
+    notifications: {},
+    chat: {},
+  }),
+  useLegacyStores: () => ({
+    dismissal: {
+      isDismissed() {
+        return false;
+      },
+      dismiss() {
+        return;
+      },
+    },
+  }),
+}));
 
 getStores.mockReturnValue({
   user: {
@@ -47,9 +64,7 @@ describe('Notifications Screen Component', () => {
   it('renders correctly', () => {
     const { toJSON } = render(
       <Wrapper>
-        <StoresProvider>
-          <NotificationsScreen navigation={navigation} />
-        </StoresProvider>
+        <NotificationsScreen navigation={navigation} />
       </Wrapper>,
     );
     expect(toJSON()).toMatchSnapshot();
