@@ -1,12 +1,10 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
-import { Image, View, StyleSheet, Alert } from 'react-native';
-
+import { View, StyleSheet, Alert } from 'react-native';
 import { observer } from 'mobx-react';
-
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
@@ -311,7 +309,7 @@ export default class GroupHeader extends Component<PropsTypes> {
             <SmartImage
               source={iurl}
               style={styles.banner}
-              resizeMode={FastImage.resizeMode.cover}
+              contentFit="cover"
             />
           )}
           <View style={styles.headertextcontainer}>

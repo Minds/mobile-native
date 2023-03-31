@@ -1,5 +1,5 @@
+import { Image, ImageProps } from 'expo-image';
 import * as React from 'react';
-import { Image, ImageProps } from 'react-native';
 
 function ComposeIcon(props: Partial<ImageProps>) {
   const { source, ...other } = props;

@@ -4,7 +4,8 @@ import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import createLoginStore from './createLoginStore';
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
+
 import UserModel from '../../channel/UserModel';
 import sessionService from '../../common/services/session.service';
 import InputContainer, {
@@ -49,10 +50,7 @@ export default observer(function LoginForm(props: PropsType) {
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
-      <FastImage
-        source={user.getAvatarSource('medium')}
-        style={styles.avatar}
-      />
+      <Image source={user.getAvatarSource('medium')} style={styles.avatar} />
       <View style={styles.nameContainer}>
         <MText style={styles.name}>{user.name}</MText>
         <MText style={styles.username} testID={`username${user.username}`}>
