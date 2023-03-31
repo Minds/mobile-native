@@ -28,7 +28,7 @@ export function TextInputsScreen(): JSX.Element {
       <View fd={'row'} mt="$1" space>
         <Button circular icon={Icons.Chevron} onPress={goBack} />
         <Button
-          onPress={() => navigate('Avatars')}
+          onPress={() => navigate('ListItems')}
           iconAfter={Icons.Send}
           f={1}>
           Next

@@ -12,6 +12,8 @@ export * from './View';
 export * from './Button';
 export * from './IconButton';
 export * from './TabBar';
+export * from './ListItem';
+export * from './IconButton';
 export * from './Avatar';
 export * from './controls';
 export * from './TextInput';
