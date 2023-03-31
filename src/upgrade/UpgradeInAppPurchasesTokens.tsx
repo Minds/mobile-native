@@ -88,6 +88,7 @@ const UpgradeInAppPurchasesTokens = ({
               service: 'google',
               subscriptionId: currentPurchase.productId,
               purchaseToken: currentPurchase.purchaseToken,
+              autoRenewingAndroid: currentPurchase.autoRenewingAndroid,
             },
           );
 
