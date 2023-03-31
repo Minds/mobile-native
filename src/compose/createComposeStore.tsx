@@ -814,7 +814,7 @@ export default function (props) {
           },
           onClear: () => {
             this.supermindRequest = undefined;
-            resolve();
+            resolve(undefined);
           },
         });
       });
