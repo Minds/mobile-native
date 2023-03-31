@@ -11,19 +11,6 @@ import {
 } from '../boost-rotator.store';
 import { useWindowDimensions } from 'react-native';
 
-/**
- * The height of the boost rotator
- */
-const HEIGHT = 500;
-/**
- * the max height of the activity
- */
-const ACTIVITY_HEIGHT = HEIGHT - 175;
-/**
- * the number of activities to render at any time
- */
-const WINDOW_SIZE = 3;
-
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
   const boostRotatorStore = useBoostRotatorStore();
@@ -56,10 +43,7 @@ function BoostRotatorCarousel() {
         defaultIndex={0}
         pagingEnabled
         onSnapToItem={boostRotatorStore.setActiveIndex}
-        panGestureHandlerProps={{
-          cancelsTouchesInView: true,
-          activeOffsetX: [-10, 10],
-        }}
+        panGestureHandlerProps={gestureHandlerProps}
         enabled={!!boostRotatorStore.activites.length}
         width={width}
         height={HEIGHT}
@@ -70,5 +54,22 @@ function BoostRotatorCarousel() {
     </FeedStoreContext.Provider>
   );
 }
+
+/**
+ * The height of the boost rotator
+ */
+const HEIGHT = 500;
+/**
+ * the max height of the activity
+ */
+const ACTIVITY_HEIGHT = HEIGHT - 175;
+/**
+ * the number of activities to render at any time
+ */
+const WINDOW_SIZE = 3;
+const gestureHandlerProps = {
+  cancelsTouchesInView: true,
+  activeOffsetX: [-10, 10],
+};
 
 export default observer(BoostRotatorCarousel);
