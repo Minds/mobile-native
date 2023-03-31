@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import { AppStackParamList } from './NavigationTypes';
+import { screenProps, ScreenProps } from './stack.utils';
 
 const NotificationsStack = createNativeStackNavigator<AppStackParamList>();
 
@@ -15,19 +17,23 @@ export default function () {
       }}>
       <NotificationsStack.Screen
         name="Notifications"
-        component={NotificationsScreen}
+        component={withErrorBoundaryScreen(NotificationsScreen)}
       />
-      <NotificationsStack.Screen
-        name="Supermind"
-        getComponent={() => require('~/supermind/SupermindScreen').default}
-      />
-      <NotificationsStack.Screen
-        name="SupermindTwitterConnect"
-        getComponent={() =>
-          require('~/supermind/SupermindTwitterConnectScreen').default
-        }
-        options={{ headerShown: false }}
-      />
+      {notificationScreens.map(screen => (
+        <NotificationsStack.Screen key={screen.name} {...screenProps(screen)} />
+      ))}
     </NotificationsStack.Navigator>
   );
 }
+
+const notificationScreens: ScreenProps<string>[] = [
+  {
+    name: 'Supermind',
+    comp: () => require('~/supermind/SupermindScreen').default,
+  },
+  {
+    name: 'SupermindTwitterConnect',
+    comp: () => require('~/supermind/SupermindTwitterConnectScreen').default,
+    options: { headerShown: false },
+  },
+];

@@ -2,7 +2,7 @@ import { useLocalStore } from 'mobx-react';
 import { getStores } from '../../../../AppStores';
 import createChatStore from '../../../chat/createChatStore';
 import createNotificationsStore from '../../../notifications/v3/createNotificationsStore';
-import createPortraitStore from '../../../portrait/createPortraitStore';
+import createPortraitStore from '../../../portrait/portrait.store';
 import createSearchResultStore from '../../../topbar/searchbar/createSearchResultStore';
 import createWalletStore from '../../../wallet/v2/createWalletStore';
 import { TLegacyStores } from '../../contexts';

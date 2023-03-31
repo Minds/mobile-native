@@ -5587,6 +5587,14 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
+"@tamagui/animate-presence@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@tamagui/animate-presence/-/animate-presence-1.6.2.tgz#d2f7fb486f0da2dff327ce353b40836f14212516"
+  integrity sha512-chzS0zrGLA9Xhjj1LVrcbr0rVrmyH3HbxYZr9VyiimvhDCwGoedV5YvCC9CkqOH5QtlHw3ZtRGEvzVI24wA7pw==
+  dependencies:
+    "@tamagui/use-presence" "1.6.2"
+    "@tamagui/web" "1.6.2"
+
 "@tamagui/animations-react-native@1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@tamagui/animations-react-native/-/animations-react-native-1.6.2.tgz#e400018f91655fb3e45eb75fc24918d5aecc7716"
@@ -5814,6 +5822,20 @@
   resolved "https://registry.yarnpkg.com/@tamagui/simple-hash/-/simple-hash-1.6.2.tgz#9ad27c6888006560330c286f963adf19c398a156"
   integrity sha512-KV8y8TIonpDj+l/h3C4WRLtVNDpAZV2Va67G1K0a2E6y2r4Fr+QQ8kVfo3gTdFICJ2fq9POPf4k0fSUHK+vEOg==
 
+"@tamagui/slider@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@tamagui/slider/-/slider-1.6.2.tgz#b2fae20c0df0fcc4e1ab6c6dc417daf4316b807f"
+  integrity sha512-Z2ajzZzJQI7DCpInPjHuUTXybHEWyS/HnQssOKSKEyaAOannudPAmXeOpRxqs3l2ris0WiPaVZZOxZX1VA9z2Q==
+  dependencies:
+    "@tamagui/compose-refs" "1.6.2"
+    "@tamagui/core" "1.6.2"
+    "@tamagui/create-context" "1.6.2"
+    "@tamagui/get-size" "1.6.2"
+    "@tamagui/helpers" "1.6.2"
+    "@tamagui/stacks" "1.6.2"
+    "@tamagui/use-controllable-state" "1.6.2"
+    "@tamagui/use-direction" "1.6.2"
+
 "@tamagui/stacks@1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@tamagui/stacks/-/stacks-1.6.2.tgz#f0c47c47c190885bf1aa84e54a099cebf2806647"
@@ -5869,12 +5891,24 @@
   resolved "https://registry.yarnpkg.com/@tamagui/types/-/types-1.6.2.tgz#ab88e3e8f3f9d8d8e137be8125bb9e659ee9f31a"
   integrity sha512-6Ya8Cx6R9Ba4VlOE2b0N0IrlGxCvx0nEfHJAlf632aEjz3OIJXhyRY5+FTVYeYX+9aLB/tUA+dncBHXQpnSGTg==
 
+"@tamagui/use-controllable-state@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@tamagui/use-controllable-state/-/use-controllable-state-1.6.2.tgz#c88ec23b9327c896b9bea7aa3ef6f6a05d483419"
+  integrity sha512-njlEmqwnF+h7rCpB6sn4nbFdntwVfuOMh+BIBFV5YSE8XAheD7FkXR1IZVtSPFAsbWuwH5vFFMRCO+IHIxW0Ng==
+  dependencies:
+    "@tamagui/use-event" "1.6.2"
+
 "@tamagui/use-did-finish-ssr@1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@tamagui/use-did-finish-ssr/-/use-did-finish-ssr-1.6.2.tgz#c509146371be166910d04be935128475da528173"
   integrity sha512-Png3jZ0seMr8Y8gyY07hl1tGn1LcjoI8THyIZQFOy5daA8kkvv8Pu84jc3u1Q1D0D+AZcItwoT9GBJvn6k4QZA==
   dependencies:
     "@tamagui/constants" "1.6.2"
+
+"@tamagui/use-direction@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@tamagui/use-direction/-/use-direction-1.6.2.tgz#bbd7fd1f7c9a19b69a0fc4a2da633c5f325ae518"
+  integrity sha512-jZYKy01O1gofeagypZ0Qbg+5o+XY+JZHy7wNd0cRbispdgqouu5IaokhMmwY4lfRoOo86r2ye8slxZAA/p9ZBQ==
 
 "@tamagui/use-event@1.6.2":
   version "1.6.2"

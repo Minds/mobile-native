@@ -1,18 +1,18 @@
-import React from 'react';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../styles/ThemedStyles';
+import React from 'react';
+import excerpt from '~/common/helpers/excerpt';
 import { Icon } from '~/common/ui/icons';
-import { Avatar, Column, B3 } from '~ui';
-import excerpt from '../common/helpers/excerpt';
-import navigationService from '../navigation/NavigationService';
+import navigationService from '~/navigation/NavigationService';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { Avatar, B3, Column } from '~ui';
 
 type PropsType = {
   avatarUrl?: any;
   unseen?: boolean;
   title: string;
-  index?: number;
   onPress?: any;
   withPlus?: boolean;
+  guid?: string;
 };
 
 /**
@@ -22,9 +22,9 @@ type PropsType = {
 export default observer(function PortraitContentBarItem(props: PropsType) {
   const onPress = React.useCallback(() => {
     navigationService.push('PortraitViewerScreen', {
-      index: props.index,
+      guid: props.guid,
     });
-  }, [props.index]);
+  }, [props.guid]);
 
   return (
     <Column align="centerBoth" horizontal="XS">

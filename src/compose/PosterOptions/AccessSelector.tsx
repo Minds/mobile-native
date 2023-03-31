@@ -54,6 +54,7 @@ export default observer(function ({}: AccessSelectorProps) {
       <ScrollView>
         {ACCESS.map(o => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.accessId === o.value}

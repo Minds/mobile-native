@@ -88,5 +88,5 @@ const styles = ThemedStyles.create({
 
 export default withErrorBoundary(
   SearchResultComponent,
-  'Error displaying results',
+  'Error displaying search results',
 );
