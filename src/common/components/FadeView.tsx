@@ -29,7 +29,7 @@ const FadeView: FC<FadeViewProps> = ({
     const array: JSX.Element[] = [];
 
     const createGradient = props => (
-      <LinearGradient key={props.key} pointerEvents="none" {...props} />
+      <LinearGradient pointerEvents="none" {...props} />
     );
 
     fades.map(fade => {
@@ -37,7 +37,6 @@ const FadeView: FC<FadeViewProps> = ({
         case 'left':
           array.push(
             createGradient({
-              key: fade,
               colors: [startColor, endColor],
               start: [0, 1],
               style: {
@@ -53,7 +52,6 @@ const FadeView: FC<FadeViewProps> = ({
         case 'right':
           array.push(
             createGradient({
-              key: fade,
               colors: [endColor, startColor],
               start: [0, 1],
               style: {
@@ -69,7 +67,6 @@ const FadeView: FC<FadeViewProps> = ({
         case 'top':
           array.push(
             createGradient({
-              key: fade,
               colors: [startColor, endColor],
               style: {
                 position: 'absolute',
@@ -84,7 +81,6 @@ const FadeView: FC<FadeViewProps> = ({
         case 'bottom':
           array.push(
             createGradient({
-              key: fade,
               colors: [startColor, endColor],
               style: {
                 position: 'absolute',

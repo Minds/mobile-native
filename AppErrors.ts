@@ -23,11 +23,7 @@ if (process.env.JEST_WORKER_ID === undefined) {
           return null;
         }
         if (__DEV__) {
-          console.log(
-            'Exception',
-            hint.originalException,
-            hint.originalException?.stack,
-          );
+          console.log('Exception', hint.originalException);
         }
       }
 

@@ -1,8 +1,9 @@
 import boostedContentService from '../../../src/modules/boost/services/boosted-content.service';
 import blockListService from '../../../src/common/services/block-list.service';
 import sessionService from '../../../src/common/services/session.service';
+import api from '../../../src/common/services/api.service';
 
-jest.mock('../../../src/common/services/feeds.service');
+jest.mock('../../../src/common/services/api.service');
 jest.mock('../../../src/common/services/session.service');
 jest.mock('../../../src/common/services/block-list.service');
 
@@ -13,42 +14,24 @@ describe('Boosted content service', () => {
   beforeEach(() => {
     blockListService.has.mockClear();
     sessionService.userLoggedIn = true;
+    api.get.mockClear();
     boostedContentService.init();
   });
 
   it('should fetch the boosts from the server', async () => {
     blockListService.has.mockReturnValue(false);
-    const fakeBoosts = [
-      { guid: 1, ownerObj: { guid: 1 } },
-      { guid: 2, ownerObj: { guid: 2 } },
-      { guid: 3, ownerObj: { guid: 3 } },
-    ];
-    const result = fakeBoosts.map(e => {
-      e.boosted = true;
-      return e;
-    });
+    const fakeResponse = {
+      boosts: [
+        { entity: { guid: 1, ownerObj: { guid: 1 } } },
+        { entity: { guid: 2, ownerObj: { guid: 2 } } },
+        { entity: { guid: 3, ownerObj: { guid: 3 } } },
+      ],
+    };
 
-    boostedContentService.feedsService.getEntities.mockResolvedValue(
-      fakeBoosts,
-    );
-    boostedContentService.feedsService.fetchLocal.mockResolvedValue(true);
-
-    // load the boosts
-    await boostedContentService.load();
+    api.get.mockResolvedValue(fakeResponse);
 
     // should fetch the feed
-    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
-      'api/v3/boosts/feed',
-    );
-    expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
-    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
-    expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
-
-    // should fetch the boosts entities
-    expect(boostedContentService.feedsService.getEntities).toBeCalled();
-
-    // the boosts should be stored in the boosts property
-    expect(boostedContentService.boosts).toStrictEqual(result);
+    expect(api.get).toBeCalledWith('api/v3/boosts/feed', { location: 1 });
   });
 
   it('should fetch the boosts and filter blocked', async () => {
@@ -60,43 +43,24 @@ describe('Boosted content service', () => {
       .mockReturnValueOnce(true)
       .mockReturnValueOnce(false);
 
-    const fakeBoosts = [
-      { guid: 1, ownerObj: { guid: 1 } },
-      { guid: 2, ownerObj: { guid: 2 } },
-      { guid: 3, ownerObj: { guid: 3 } },
-    ];
+    const fakeResponse = {
+      boosts: [
+        { entity: { guid: 1, ownerObj: { guid: 1 } } },
+        { entity: { guid: 2, ownerObj: { guid: 2 } } },
+        { entity: { guid: 3, ownerObj: { guid: 3 } } },
+      ],
+    };
 
-    const result = fakeBoosts
-      .map(e => {
-        e.boosted = true;
-        return e;
-      })
-      .filter(e => e.guid !== 2);
-
-    boostedContentService.feedsService.getEntities.mockResolvedValue(
-      fakeBoosts,
-    );
-    boostedContentService.feedsService.fetchLocal.mockResolvedValue(true);
+    api.get.mockResolvedValue(fakeResponse);
 
     // load the boosts
-    await boostedContentService.load();
-
-    // should fetch the feed
-    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
-      'api/v3/boosts/feed',
-    );
-    expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
-    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
-    expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
+    await boostedContentService.update();
 
     // blocked should be called
     expect(blockListService.has).toBeCalled();
 
-    // should fetch the boosts entities
-    expect(boostedContentService.feedsService.getEntities).toBeCalled();
-
     // the boosts should be stored in the boosts property
-    expect(boostedContentService.boosts).toStrictEqual(result);
+    expect(boostedContentService.boosts.length).toStrictEqual(2);
   });
 
   it('should return next boost and start again when the end is reached', () => {

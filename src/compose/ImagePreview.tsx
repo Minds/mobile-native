@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import FastImage from 'react-native-fast-image';
 import { Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { useDimensions } from '@react-native-community/hooks';
 
 import SmartImage from '../common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
+import { Image } from 'expo-image';
 
 /**
  * Image preview with max and min aspect ratio support
@@ -40,7 +40,7 @@ export default observer(function (props) {
 
   if (!props.zoom) {
     return (
-      <FastImage
+      <Image
         key={props.image.key || 'imagePreview'}
         source={{
           uri: uri + (props.image.key ? `?${props.image.key}` : ''),
@@ -52,11 +52,7 @@ export default observer(function (props) {
             ? ThemedStyles.style.bgBlack
             : ThemedStyles.style.bgTertiaryBackground,
         ]}
-        resizeMode={
-          props.fullscreen
-            ? FastImage.resizeMode.cover
-            : FastImage.resizeMode.contain
-        }
+        contentFit={props.fullscreen ? 'cover' : 'contain'}
       />
     );
   } else {
@@ -74,7 +70,7 @@ export default observer(function (props) {
             props.style,
             ThemedStyles.style.bgTertiaryBackground,
           ]}
-          resizeMode={FastImage.resizeMode.contain}
+          contentFit="contain"
         />
       </ImageZoom>
     );

@@ -87,7 +87,6 @@ const RecurringPayments = () => {
       {subscriptions.slice().map((subscription: SubscriptionType) => {
         return (
           <MenuItem
-            key={`${subscription.guid}`}
             title={getTitle(subscription)}
             icon={
               <Button

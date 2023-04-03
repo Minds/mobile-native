@@ -159,6 +159,17 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
 
 export default UpgradeScreen;
 
+export const upgradeToPlus = navigation => {
+  return new Promise(resolve =>
+    navigation.push('UpgradeScreen', {
+      onComplete: (success: boolean) => {
+        resolve(!!success);
+      },
+      pro: false,
+    }),
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -74,7 +74,7 @@ export default observer(function VerifyUniquenessScreen() {
       onPressBack={navigation.goBack}>
       <View style={theme.flexContainer}>
         {steps.map(item => (
-          <MenuItem key={item.title} {...item} />
+          <MenuItem {...item} />
         ))}
 
         {PRO_PLUS_SUBSCRIPTION_ENABLED && (
@@ -82,7 +82,7 @@ export default observer(function VerifyUniquenessScreen() {
             label={'OTHER'}
             labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
             {other.map(item => (
-              <MenuItem key={item.title} {...item} />
+              <MenuItem {...item} />
             ))}
           </LabeledComponent>
         )}

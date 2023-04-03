@@ -1,7 +1,7 @@
 import { styled, Stack } from '@tamagui/core';
 
 export const Layout = styled(Stack, {
-  tag: 'layout',
+  tag: 'Layout',
   backgroundColor: '$background',
   flex: 1,
 });

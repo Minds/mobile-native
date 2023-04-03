@@ -94,7 +94,6 @@ const generateSection = (title, items) => (
     <MenuSubtitle>{title}</MenuSubtitle>
     {items.map((item, i) => (
       <MenuItem
-        key={i}
         {...item}
         i={i}
         containerItemStyle={i > 0 ? menuItemStyle : firstMenuItemStyle}

@@ -21,6 +21,11 @@ export const COMMON_BUTTON_STYLES = {
     paddingHorizontal: UNIT.L,
     paddingVertical: UNIT.XXXS,
   },
+  PILL: {
+    minHeight: UNIT.XXXL + UNIT.XS,
+    paddingHorizontal: UNIT.L,
+    paddingVertical: UNIT.XXXS,
+  },
 };
 
 export const FLAT_BUTTON_STYLES = {

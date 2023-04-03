@@ -1,4 +1,3 @@
-import { Blurhash } from 'react-native-blurhash';
 import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
@@ -101,11 +100,6 @@ export class AppInitManager {
         );
       }
     }
-
-    // clear cosine cache of blurhash
-    if (Platform.OS === 'android') {
-      Blurhash.clearCosineCache();
-    }
   }
 
   updateMindsConfigAndInitGrowthbook() {
@@ -142,7 +136,7 @@ export class AppInitManager {
     this.updateMindsConfigAndInitGrowthbook();
 
     // load boosted content
-    boostedContentService.load();
+    boostedContentService.init();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });

@@ -37,7 +37,7 @@ function MutualSubscribers({
       <Spacer {...props} containerStyle={styles.container}>
         <View style={styles.avatarContainer}>
           {users.slice(0, limit).map(user => {
-            return <ChannelAvatar key={user.guid} user={user} />;
+            return <ChannelAvatar user={user} />;
           })}
         </View>
 

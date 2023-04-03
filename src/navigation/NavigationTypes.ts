@@ -18,7 +18,8 @@ import type { BoostType } from '../boost/legacy/createBoostStore';
 import type { WebViewNavigation } from 'react-native-webview';
 import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { ComposeScreenParams } from '../compose/ComposeScreen';
 
 type AnyType = any;
 
@@ -139,13 +140,10 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {
-    openSupermindModal?: boolean;
-    isRemind?: boolean;
-    entity?: ActivityModel;
-    group?: GroupModel;
-    parentKey?: string;
-  };
+  TierManagementScreen: {};
+  TierScreen: {};
+  GroupsList: {};
+  Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
     data: SupermindRequestParam;

@@ -23,9 +23,7 @@ type PropsType = {
 };
 
 const ItemPartial = (item, index) => {
-  return (
-    <DiscoveryTrendsListItem key={index} isHero={index === 0} data={item} />
-  );
+  return <DiscoveryTrendsListItem isHero={index === 0} data={item} />;
 };
 
 const Trend = observer(({ store }) => {
@@ -48,9 +46,7 @@ export const DiscoveryTrendsList = observer(
 
     useEffect(() => {
       // do not reload if there is data already
-      if (store.trends.length !== 0) {
-        return;
-      }
+      if (store.trends.length !== 0) return;
       store.loadTags(plus);
       store.loadTrends(plus);
       if (plus) {

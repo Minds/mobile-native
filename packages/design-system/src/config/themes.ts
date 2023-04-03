@@ -16,15 +16,15 @@ const dark = createTheme({
   borderColorSecondary: color['grey-600'],
   borderColorTertiary: color['grey-500'],
 
-  action: color['yellow-500'],
-  link: color['grey-800'],
-
   color: color['grey-50'], // default primary
   colorTextPrimary: color['grey-50'],
   colorTextSecondary: color['grey-300'],
   colorTextTertiary: color['grey-400'],
 
   warning: color['red-500'],
+
+  action: color['yellow-500'],
+  link: color['grey-800'],
 });
 
 type BaseTheme = typeof dark;
@@ -40,15 +40,15 @@ const light = createTheme<BaseTheme>({
   borderColorSecondary: color['grey-200'],
   borderColorTertiary: color['grey-100'],
 
-  action: color['yellow-300-alt'],
-  link: color['yellow-300-alt'],
-
   color: color['grey-900'], // default primary
   colorTextPrimary: color['grey-900'],
   colorTextSecondary: color['grey-700'],
   colorTextTertiary: color['grey-600'],
 
   warning: color['red-700'],
+
+  action: color['yellow-300-alt'],
+  link: color['yellow-500-alt'],
 });
 
 export const themes = {

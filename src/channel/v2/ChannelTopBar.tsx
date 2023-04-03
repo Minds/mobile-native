@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import {
-  Image,
   Platform,
   SafeAreaView,
   TextInput,
@@ -21,6 +20,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MText from '~/common/components/MText';
+import { Image } from 'expo-image';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -206,7 +206,7 @@ const ChannelTopBar = observer(
               blurRadius={90}
               style={theme.positionAbsolute}
               source={store?.channel?.getBannerSource()!}
-              resizeMode="cover"
+              contentFit="cover"
             />
           )}
           <SafeAreaView style={styles.nameWrapper}>
