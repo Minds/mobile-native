@@ -60,6 +60,7 @@ function ComposeBottomBar(props) {
         !props.store.isRemind &&
         !isCreateModalOn &&
         !props.store.supermindRequest &&
+        !props.store.isEdit &&
         !isIosMindsHidden && (
           <IconButton
             name="money"

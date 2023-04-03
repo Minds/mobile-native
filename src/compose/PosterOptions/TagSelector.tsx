@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -15,6 +15,7 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { PosterStackScreenProps } from './PosterStackNavigator';
+import { ScrollView } from 'react-native-gesture-handler';
 
 /**
  * Tag row
@@ -98,74 +99,75 @@ export default observer(function ({}: PropsType) {
         backIconSize="large"
         store={store}
       />
-      <MText
-        style={[
-          theme.paddingVertical2x,
-          theme.colorSecondaryText,
-          theme.fontL,
-          theme.paddingHorizontal3x,
-        ]}>
-        {i18n.t('capture.tagsDescription')}
-      </MText>
-      <View style={styles.suggestedContainer}>
-        <ScrollView
-          style={theme.flexContainer}
-          showsHorizontalScrollIndicator={true}
-          contentContainerStyle={styles.suggestedScroll}
-          horizontal={true}>
-          <MIcon name="fire" size={23} style={theme.colorAlert} />
-          {localStore.suggested.map((t: any) => (
-            <MText
-              style={[styles.tag, theme.colorIconActive]}
-              onPress={() => store.addTag(t.value)}>
-              #{t.value}
-            </MText>
-          ))}
-        </ScrollView>
-      </View>
-      <MText
-        style={[
-          theme.paddingVertical4x,
-          theme.colorSecondaryText,
-          theme.fontM,
-          theme.paddingHorizontal3x,
-        ]}>
-        Tag
-      </MText>
-      <TextInput
-        ref={inputRef}
-        style={[
-          theme.colorPrimaryText,
-          theme.bcolorPrimaryBorder,
-          styles.input,
-          localStore.focused ? theme.bgSecondaryBackground : null,
-        ]}
-        placeholder="Enter tag"
-        placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-        onSubmitEditing={localStore.add}
-        onChangeText={localStore.setText}
-        textAlignVertical="top"
-        value={localStore.text}
-        onFocus={localStore.setFocused}
-        autoCapitalize="none"
-        onBlur={localStore.setBlured}
-        multiline={false}
-        autoCorrect={false}
-        selectTextOnFocus={true}
-        underlineColorAndroid="transparent"
-        testID="PostInput"
-      />
-      {showHistory && (
-        <View style={[styles.tagHistory, theme.bgSecondaryBackground]}>
-          <View style={styles.tagHistoryOpt}>
-            <MText style={theme.colorSecondaryText}>Recent tags</MText>
-            <MText
-              style={theme.colorSecondaryText}
-              onPress={localStore.history.clear}>
-              Clear history
-            </MText>
-          </View>
-          <BottomSheetScrollView keyboardShouldPersistTaps={'handled'}>
+      <BottomSheetScrollView keyboardShouldPersistTaps={'handled'}>
+        <MText
+          style={[
+            theme.paddingVertical2x,
+            theme.colorSecondaryText,
+            theme.fontL,
+            theme.paddingHorizontal3x,
+          ]}>
+          {i18n.t('capture.tagsDescription')}
+        </MText>
+        <View style={styles.suggestedContainer}>
+          <ScrollView
+            style={theme.flexContainer}
+            showsHorizontalScrollIndicator={true}
+            contentContainerStyle={styles.suggestedScroll}
+            horizontal={true}>
+            <MIcon name="fire" size={23} style={theme.colorAlert} />
+            {localStore.suggested.map((t: any) => (
+              <MText
+                style={[styles.tag, theme.colorIconActive]}
+                onPress={() => store.addTag(t.value)}>
+                #{t.value}
+              </MText>
+            ))}
+          </ScrollView>
+        </View>
+        <MText
+          style={[
+            theme.paddingVertical4x,
+            theme.colorSecondaryText,
+            theme.fontM,
+            theme.paddingHorizontal3x,
+          ]}>
+          Tag
+        </MText>
+        <TextInput
+          ref={inputRef}
+          style={[
+            theme.colorPrimaryText,
+            theme.bcolorPrimaryBorder,
+            styles.input,
+            localStore.focused ? theme.bgSecondaryBackground : null,
+          ]}
+          placeholder="Enter tag"
+          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+          onSubmitEditing={localStore.add}
+          onChangeText={localStore.setText}
+          textAlignVertical="top"
+          value={localStore.text}
+          onFocus={localStore.setFocused}
+          autoCapitalize="none"
+          onBlur={localStore.setBlured}
+          multiline={false}
+          autoCorrect={false}
+          selectTextOnFocus={true}
+          underlineColorAndroid="transparent"
+          testID="PostInput"
+        />
+        {showHistory && (
+          <View style={[styles.tagHistory, theme.bgSecondaryBackground]}>
+            <View style={styles.tagHistoryOpt}>
+              <MText style={theme.colorSecondaryText}>Recent tags</MText>
+              <MText
+                style={theme.colorSecondaryText}
+                onPress={localStore.history.clear}>
+                Clear history
+              </MText>
+            </View>
+
             {localStore.history.history.map(t => (
               <MText
                 style={styles.historyTag}
@@ -173,14 +175,14 @@ export default observer(function ({}: PropsType) {
                 #{t}
               </MText>
             ))}
-          </BottomSheetScrollView>
+          </View>
+        )}
+        <View style={styles.tagsContainer}>
+          {store.tags.map(t => (
+            <TagRow tag={t} store={store} />
+          ))}
         </View>
-      )}
-      <View style={styles.tagsContainer}>
-        {store.tags.map(t => (
-          <TagRow tag={t} store={store} />
-        ))}
-      </View>
+      </BottomSheetScrollView>
     </View>
   );
 });
@@ -221,7 +223,6 @@ const styles = StyleSheet.create({
     height: 46,
   },
   suggestedScroll: {
-    height: 50,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',

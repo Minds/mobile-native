@@ -77,7 +77,10 @@ const PosterOptions: FC<PropsType> = props => {
     : '';
 
   const showMonetize =
-    !store.portraitMode && !store.isRemind && !store.supermindRequest;
+    !store.portraitMode &&
+    !store.isRemind &&
+    !store.supermindRequest &&
+    !store.isEdit;
 
   const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 
