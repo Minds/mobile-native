@@ -1,7 +1,6 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 project.ext {
-    excludeAppGlideModule = true
 }
 
 buildscript {
