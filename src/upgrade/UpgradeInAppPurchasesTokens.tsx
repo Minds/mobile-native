@@ -20,6 +20,7 @@ import PlanOptionsIAP from './PlanOptionsIAP';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
 import sessionService from '~/common/services/session.service';
+import apiService from '~/common/services/api.service';
 // import apiService from '~/common/services/api.service';
 
 type UpgradeInPurchasesProps = {
@@ -81,17 +82,20 @@ const UpgradeInAppPurchasesTokens = ({
     const checkCurrentPurchase = async () => {
       try {
         if (currentPurchase?.productId) {
+          await apiService.post(
+            '/api/v3/payments/iap/subscription/acknowledge',
+            {
+              service: 'google',
+              subscriptionId: currentPurchase.productId,
+              purchaseToken: currentPurchase.purchaseToken,
+              autoRenewingAndroid: currentPurchase.autoRenewingAndroid,
+            },
+          );
+
           await finishTransaction({
             purchase: currentPurchase,
             isConsumable: false,
           });
-
-          //TODO: Implement call to the backend
-          console.log('TRANSACTION FINISHED', currentPurchase);
-          // apiService.post('dummySubEndpoint', {
-          //   productId: currentPurchase.productId,
-          //   token: currentPurchase.purchaseToken,
-          // });
 
           onComplete(currentPurchase);
           navigation.goBack();
