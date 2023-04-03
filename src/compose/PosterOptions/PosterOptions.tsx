@@ -80,7 +80,10 @@ function PosterOptions(props: PosterOptionsType) {
     : '';
 
   const showMonetize =
-    !store.portraitMode && !store.isRemind && !store.supermindRequest;
+    !store.portraitMode &&
+    !store.isRemind &&
+    !store.supermindRequest &&
+    !store.isEdit;
 
   const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 
