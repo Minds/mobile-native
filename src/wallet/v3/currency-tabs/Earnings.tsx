@@ -17,27 +17,25 @@ type PropsType = {
   store: TokensTabStore;
 };
 
-const TokensEarnings = observer(
-  ({ walletStore, currencyType, store }: PropsType) => {
-    const theme = ThemedStyles.style;
+const Earnings = observer(({ walletStore, currencyType, store }: PropsType) => {
+  const theme = ThemedStyles.style;
 
-    return (
-      <>
-        <MonthPickerInput
-          minimumDate={new Date(moment().subtract(6, 'months').toDate())}
-          maximumDate={new Date()}
-          containerStyle={[styles.container, theme.bcolorPrimaryBorder]}
-          onConfirm={store.monthPickerOnConfirm}
-        />
-        <EarningsOverview
-          localStore={store}
-          walletStore={walletStore}
-          currencyType={currencyType}
-        />
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <MonthPickerInput
+        minimumDate={new Date(moment().subtract(6, 'months').toDate())}
+        maximumDate={new Date()}
+        containerStyle={[styles.container, theme.bcolorPrimaryBorder]}
+        onConfirm={store.monthPickerOnConfirm}
+      />
+      <EarningsOverview
+        localStore={store}
+        walletStore={walletStore}
+        currencyType={currencyType}
+      />
+    </>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -48,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TokensEarnings;
+export default Earnings;
