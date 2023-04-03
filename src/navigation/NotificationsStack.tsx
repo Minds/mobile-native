@@ -20,7 +20,7 @@ export default function () {
         component={withErrorBoundaryScreen(NotificationsScreen)}
       />
       {notificationScreens.map(screen => (
-        <NotificationsStack.Screen key={screen.name} {...screenProps(screen)} />
+        <NotificationsStack.Screen {...screenProps(screen)} />
       ))}
     </NotificationsStack.Navigator>
   );

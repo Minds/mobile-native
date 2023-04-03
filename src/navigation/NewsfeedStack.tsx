@@ -9,6 +9,8 @@ import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 import { screenProps, ScreenProps } from './stack.utils';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { BoostComposerStack } from '~/modules/boost';
+import ChannelScreen from '~/channel/v2/ChannelScreen';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
@@ -31,19 +33,30 @@ export default function () {
         component={withErrorBoundaryScreen(TopNewsfeedScreen)}
         options={hideHeader}
       />
+      <NewsfeedStack.Screen
+        name="BoostScreenV2"
+        component={withErrorBoundaryScreen(BoostComposerStack)}
+        options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="Channel"
+        // getComponent={() => require('~/channel/v2/ChannelScreen').default}
+        component={withErrorBoundaryScreen(ChannelScreen)}
+        // options={hideHeader}
+      />
       {newsfeedScreens.map(screen => (
-        <NewsfeedStack.Screen key={screen.name} {...screenProps(screen)} />
+        <NewsfeedStack.Screen {...screenProps(screen)} />
       ))}
     </NewsfeedStack.Navigator>
   );
 }
 
 const newsfeedScreens: ScreenProps<string>[] = [
-  {
-    name: 'Channel',
-    comp: () => require('~/channel/v2/ChannelScreen').default,
-    options: hideHeader,
-  },
+  // {
+  //   name: 'Channel',
+  //   comp: () => require('~/channel/v2/ChannelScreen').default,
+  //   options: hideHeader,
+  // },
   {
     name: 'Activity',
     comp: () => require('~/newsfeed/ActivityScreen').default,
@@ -53,11 +66,6 @@ const newsfeedScreens: ScreenProps<string>[] = [
   {
     name: 'InAppVerification',
     comp: () => require('modules/in-app-verification').InAppVerificationStack,
-    options: hideHeader,
-  },
-  {
-    name: 'BoostScreenV2',
-    comp: () => require('modules/boost').BoostComposerStack,
     options: hideHeader,
   },
 ];

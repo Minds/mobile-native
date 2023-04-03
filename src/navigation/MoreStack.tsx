@@ -18,11 +18,9 @@ export default function () {
   return (
     <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
-      {moreStacks.map(({ hideIf, ...screen }) => {
-        return hideIf ? undefined : (
-          <MoreStack.Screen key={screen.name} {...screenProps(screen)} />
-        );
-      })}
+      {moreScreens.map(({ hideIf, ...screen }) =>
+        hideIf ? undefined : <MoreStack.Screen {...screenProps(screen)} />,
+      )}
     </MoreStack.Navigator>
   );
 }
@@ -111,7 +109,7 @@ const BillingScreenOptions = !IS_IOS
       },
     ];
 
-export const moreStacks: ScreenProps<string>[] = [
+const moreScreens: ScreenProps<string>[] = [
   {
     name: 'Wallet',
     comp: () => require('~/wallet/v3/WalletScreen').default,
@@ -172,7 +170,8 @@ export const moreStacks: ScreenProps<string>[] = [
   },
   {
     name: 'BoostConsole',
-    comp: () => require('modules/boost').BoostConsoleScreen,
+    comp: () =>
+      require('modules/boost/boost-console/screens/BoostConsoleScreen').default,
     options: hideHeader,
   },
   {

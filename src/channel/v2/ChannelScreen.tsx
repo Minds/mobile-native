@@ -43,6 +43,7 @@ import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
+// import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const tinycolor = require('tinycolor2');
 
@@ -525,6 +526,8 @@ const styles = ThemedStyles.create({
   nsfwChannel: ['bgPrimaryBackground', 'flexContainer'],
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
+
+// const ChannelScreen = withErrorBoundaryScreen(ChannelScreenComponent);
 
 export default ChannelScreen;
 

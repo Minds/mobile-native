@@ -33,6 +33,8 @@ import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
 import { isStoryBookOn } from '~/config/Config';
 import { ScreenProps, screenProps } from './stack.utils';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { BoostComposerStack } from '~/modules/boost';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -81,7 +83,7 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         {appScreens.map(screen => (
-          <AppStackNav.Screen key={screen.name} {...screenProps(screen)} />
+          <AppStackNav.Screen {...screenProps(screen)} />
         ))}
       </AppStackNav.Navigator>
     </>
@@ -126,6 +128,13 @@ const RootStack = observer(function () {
     codeEmailFF.on &&
     AuthService.justRegistered;
 
+  rootScreens.find(
+    screen => screen.name === 'ChooseBrowserModal',
+  )!.navigationKey = sessionService.showAuthNav ? 'auth' : 'inApp';
+  for (const screen of nextRootScreens) {
+    screen.navigationKey = sessionService.showAuthNav ? 'auth' : 'inApp';
+  }
+
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
@@ -150,8 +159,13 @@ const RootStack = observer(function () {
                 ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
               })}
             />
+            <RootStackNav.Screen
+              name="BoostScreenV2"
+              component={withErrorBoundaryScreen(BoostComposerStack)}
+              options={modalOptions}
+            />
             {rootScreens.map(screen => (
-              <RootStackNav.Screen key={screen.name} {...screenProps(screen)} />
+              <RootStackNav.Screen {...screenProps(screen)} />
             ))}
           </>
         )
@@ -159,7 +173,7 @@ const RootStack = observer(function () {
         <RootStackNav.Screen name="Auth" component={AuthStack} />
       )}
       {nextRootScreens.map(screen => (
-        <RootStackNav.Screen key={screen.name} {...screenProps(screen)} />
+        <RootStackNav.Screen {...screenProps(screen)} />
       ))}
     </RootStackNav.Navigator>
   );
@@ -219,7 +233,6 @@ const rootScreens: ScreenProps<string>[] = [
     name: 'Compose',
     comp: () => require('~/compose/ComposeScreen').default,
     options: TransitionPresets.ModalPresentationIOS,
-    bypassErrorBoundary: true,
   },
   {
     name: 'SupermindConfirmation',
@@ -247,7 +260,7 @@ const rootScreens: ScreenProps<string>[] = [
     options: modalOptions,
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'ChooseBrowserModal',
     comp: () => require('~/settings/screens/ChooseBrowserModalScreen').default,
     options: modalOptions,
@@ -346,40 +359,35 @@ const rootScreens: ScreenProps<string>[] = [
     comp: () =>
       require('../common/components/AutoComplete/ChannelSelectScreen').default,
   },
-  {
-    name: 'BoostScreenV2',
-    comp: () => require('modules/boost').BoostComposerStack,
-    options: modalOptions,
-  },
 ];
 
 const nextRootScreens: ScreenProps<string>[] = [
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'MultiUserLogin',
     comp: () => require('~/auth/multi-user/LoginScreen').default,
     options: modalOptions,
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'MultiUserRegister',
     comp: () => require('~/auth/multi-user/RegisterScreen').default,
     options: modalOptions,
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'DevTools',
     comp: () => require('~/settings/screens/DevToolsScreen').default,
     options: modalOptions,
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'ResetPassword',
     comp: () => require('~/auth/reset-password/ResetPasswordScreen').default,
     options: modalOptions,
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'BottomSheet',
     comp: () =>
       require('../common/components/bottom-sheet/BottomSheetScreen').default,
@@ -390,7 +398,7 @@ const nextRootScreens: ScreenProps<string>[] = [
     },
   },
   {
-    navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
+    // navigationKey: sessionService.showAuthNav ? 'auth' : 'inApp',
     name: 'CodePushSync',
     comp: () => require('modules/codepush').CodePushSyncScreen,
     options: {
@@ -523,12 +531,15 @@ const appScreens: ScreenProps<string>[] = [
   },
   {
     name: 'BoostConsole',
-    comp: () => require('modules/boost').BoostConsoleScreen,
+    comp: () =>
+      require('modules/boost/boost-console/screens/BoostConsoleScreen').default,
     options: hideHeader,
   },
   {
     name: 'SingleBoostConsole',
-    comp: () => require('modules/boost').SingleBoostConsoleScreen,
+    comp: () =>
+      require('modules/boost/boost-console/screens/SingleBoostConsoleScreen')
+        .default,
     options: hideHeader,
   },
 ];

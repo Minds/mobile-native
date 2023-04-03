@@ -14,7 +14,7 @@ export default function () {
   return (
     <DiscoveryStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       {discoveryScreens.map(screen => (
-        <DiscoveryStack.Screen key={screen.name} {...screenProps(screen)} />
+        <DiscoveryStack.Screen {...screenProps(screen)} />
       ))}
     </DiscoveryStack.Navigator>
   );
@@ -23,14 +23,12 @@ export default function () {
 const discoveryScreens: ScreenProps<string>[] = [
   {
     name: 'Discovery',
-    comp: () => require('~/discovery/v2/DiscoveryV2Screen').DiscoveryV2Screen,
+    comp: () => require('~/discovery/v2/DiscoveryV2Screen').default,
     options: hideHeader,
   },
   {
     name: 'DiscoverySearch',
-    comp: () =>
-      require('~/discovery/v2/search/DiscoverySearchScreen')
-        .DiscoverySearchScreen,
+    comp: () => require('~/discovery/v2/search/DiscoverySearchScreen').default,
   },
   {
     name: 'Channel',

@@ -53,3 +53,5 @@ export const DiscoverySearchScreen = observer((props: Props) => {
     </DiscoveryV2SearchStoreContext.Provider>
   );
 });
+
+export default DiscoverySearchScreen;

@@ -12,11 +12,15 @@ export type ScreenProps<T> = {
 };
 
 export const screenProps = (props: ScreenProps<any>) => {
-  const { comp, bypassErrorBoundary, ...rest } = props;
+  const { comp, bypassErrorBoundary = true, ...rest } = props;
   return {
+    key: rest.name,
     ...rest,
     getComponent: bypassErrorBoundary
       ? comp
-      : () => withErrorBoundaryScreen(comp(), rest.name),
+      : () => {
+          const Component = comp();
+          return withErrorBoundaryScreen(Component, rest.name);
+        },
   };
 };
