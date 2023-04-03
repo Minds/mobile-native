@@ -1,22 +1,20 @@
 import React, { useCallback } from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
-import { Image } from 'expo-image';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-
-import ThemedStyles from '~/styles/ThemedStyles';
+import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
 import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CommentInput, { CommentInputContext } from './CommentInput';
-import sessionService from '~/common/services/session.service';
-import GroupModel from '~/groups/GroupModel';
-
-import i18n from '~/common/services/i18n.service';
-import MText from '~/common/components/MText';
+import sessionService from '../../common/services/session.service';
+import GroupModel from '../../groups/GroupModel';
+import FastImage from 'react-native-fast-image';
+import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 import CommentModel from './CommentModel';
 
 // types
@@ -130,7 +128,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         <TouchableOpacity
           onPress={() => props.store.setShowInput(true)}
           style={styles.touchableStyles}>
-          <Image source={user.getAvatarSource()} style={styles.avatar} />
+          <FastImage source={user.getAvatarSource()} style={styles.avatar} />
           <MText style={styles.reply}>
             {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
           </MText>

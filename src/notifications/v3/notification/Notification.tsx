@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { View, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import {
@@ -17,7 +18,6 @@ import Merged from './content/Merged';
 import type Notification from './NotificationModel';
 import i18n from '../../../common/services/i18n.service';
 import MText from '../../../common/components/MText';
-import { Image } from 'expo-image';
 
 type PropsType = {
   notification: Notification;
@@ -63,7 +63,7 @@ const NotificationItem = observer(
             {
               //@ts-ignore
               <DebouncedTouchableOpacity onPress={navToFromChannel}>
-                <Image source={avatarSrc} style={styles.avatar} />
+                <FastImage source={avatarSrc} style={styles.avatar} />
               </DebouncedTouchableOpacity>
             }
             {

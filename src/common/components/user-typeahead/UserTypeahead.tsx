@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Image } from 'react-native';
 
 import Modal from 'react-native-modal';
 
@@ -20,7 +20,6 @@ import i18nService from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import TextInput from '../TextInput';
 import MText from '../MText';
-import { Image } from 'expo-image';
 
 /**
  * @deprecated please use ChannelSelectScreen

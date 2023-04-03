@@ -1,12 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, StyleSheet } from 'react-native';
-import { Image } from 'expo-image';
+import { Image, View, StyleSheet } from 'react-native';
 
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../config/Config';
+import FastImage from 'react-native-fast-image';
 import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
 /**
@@ -36,7 +36,11 @@ export default class ImageCard extends Component {
 
     return (
       <View>
-        <SmartImage source={image} style={styles.banner} contentFit="cover" />
+        <SmartImage
+          source={image}
+          style={styles.banner}
+          resizeMode={FastImage.resizeMode.cover}
+        />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>

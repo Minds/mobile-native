@@ -1,8 +1,13 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
-import { Image } from 'expo-image';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -40,9 +45,9 @@ export default observer(function SetupChannelScreen() {
 
   const hasAvatar = user?.hasAvatar();
   const channelStore = useLocalStore(createChannelStore);
-  const avatar = channelStore.uploading
+  const avatar = (channelStore.uploading
     ? { uri: channelStore.avatarPath }
-    : user?.getAvatarSource();
+    : user?.getAvatarSource()) as ImageSourcePropType;
   const keyboard = useKeyboard();
 
   const store = useLocalStore(() => ({

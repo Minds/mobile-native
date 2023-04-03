@@ -1,4 +1,5 @@
 import React from 'react';
+import FastImage from 'react-native-fast-image';
 import SmartImage from '../../../../common/components/SmartImage';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import { styles } from '../DiscoveryTrendsListItem';
@@ -21,7 +22,7 @@ const RichPartialThumbnail = ({ entity, isHero }: PropsType) => {
     <SmartImage
       source={image}
       style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
-      contentFit="cover"
+      resizeMode={FastImage.resizeMode.cover}
     />
   );
 };

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 
@@ -52,8 +53,8 @@ export default observer(function (props) {
         <SmartImage
           style={[styles.thumbnail, theme.bgTertiaryBackground]}
           source={source}
-          placeholder={thumbnail}
-          contentFit="cover"
+          thumbnail={thumbnail}
+          resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>
           <MText numberOfLines={1} style={[theme.fontXL, theme.padding]}>

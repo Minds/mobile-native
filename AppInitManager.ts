@@ -1,3 +1,4 @@
+import { Blurhash } from 'react-native-blurhash';
 import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
@@ -99,6 +100,11 @@ export class AppInitManager {
           { cancelable: false },
         );
       }
+    }
+
+    // clear cosine cache of blurhash
+    if (Platform.OS === 'android') {
+      Blurhash.clearCosineCache();
     }
   }
 

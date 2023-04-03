@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { Image } from 'expo-image';
+import FastImage, { Source } from 'react-native-fast-image';
 
 import type ActivityModel from '../newsfeed/ActivityModel';
 import UserModel from '../channel/UserModel';
@@ -24,17 +24,17 @@ export class PortraitBarItem {
     this.activities = activities;
   }
   preloadImages() {
-    const images: string[] = this.activities
-      .filter(activity => activity.hasMedia())
+    const images = this.activities
       .map(e => {
-        const source = e.getThumbSource('xlarge');
-        return source.uri || '';
+        const source = e.hasMedia() ? e.getThumbSource('xlarge') : null;
+        if (source) {
+          source.priority = FastImage.priority.low;
+        }
+        return source;
       })
-      .filter(uri => uri);
+      .filter(s => s !== null && s.uri);
 
-    if (images) {
-      Image.prefetch(images);
-    }
+    FastImage.preload(images as Source[]);
     this.imagesPreloaded = true;
   }
 

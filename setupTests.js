@@ -36,7 +36,6 @@ jest.mock('./src/common/services/analytics.service');
 jest.mock('./src/newsfeed/NewsfeedService');
 
 jest.mock('react-native-localize');
-jest.mock('expo-image');
 // jest.mock('react-native-device-info', () =>
 //   require('./node_modules/react-native-device-info/jest/react-native-device-info-mock'),
 // );

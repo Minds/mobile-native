@@ -7,11 +7,11 @@ import FeedsService from '../services/feeds.service';
 import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
+import FastImage from 'react-native-fast-image';
 import settingsStore from '../../settings/SettingsStore';
 import { isAbort } from '../services/api.service';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
-import { Image } from 'expo-image';
 
 enum FeedAction {
   Add = 0,
@@ -194,12 +194,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
           .map(e => {
             const source =
               e.hasMedia && e.hasMedia() ? e.getThumbSource('xlarge') : null;
-            return source?.uri;
+            if (source) {
+              source.priority = FastImage.priority.low;
+            }
+            return source;
           })
-          .filter(s => s);
-        if (images.length) {
-          Image.prefetch(images);
-        }
+          .filter(s => s !== null && s.uri);
+
+        FastImage.preload(images);
       }
     }
 

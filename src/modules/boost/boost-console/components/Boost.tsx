@@ -78,8 +78,8 @@ export default class Boost extends Component<BoostProps> {
       case 'user':
         return (
           <ChannelCard
-            entity={UserModel.create(entity)}
             // @ts-ignore
+            entity={UserModel.create(entity)}
             navigation={this.props.navigation}
           />
         );

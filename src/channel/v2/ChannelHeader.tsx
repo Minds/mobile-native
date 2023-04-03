@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, ScrollView, View, Image } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
-import { Image } from 'expo-image';
-
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -20,6 +18,7 @@ import TierManagementScreen from '../../common/components/tier-management/TierMa
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
+import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
 import { B2, Column, H4, Row } from '~ui';
 import { IS_IOS } from '~/config/Config';
@@ -198,7 +197,7 @@ const ChannelHeader = withErrorBoundary(
            **/}
           {props.store && channel && !props.hideImages && (
             <View style={styles.avatarContainer}>
-              <Image
+              <FastImage
                 style={styles.avatar}
                 source={channel.getAvatarSource()}
                 resizeMode="cover"

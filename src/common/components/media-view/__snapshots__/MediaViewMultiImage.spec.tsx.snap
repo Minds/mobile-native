@@ -59,42 +59,59 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com0",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com0",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -145,42 +162,59 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com1",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com1",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -246,42 +280,59 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com0",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com0",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -332,42 +383,59 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com1",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com1",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
     <View
@@ -415,42 +483,59 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com2",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com2",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -516,42 +601,59 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com0",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com0",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
     <View
@@ -599,42 +701,59 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com2",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com2",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -685,42 +804,59 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com1",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com1",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
     <View
@@ -768,42 +904,59 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           }
         }
       >
-        <Image
-          blurred={false}
-          contentFit="cover"
-          locked={false}
-          onError={[Function]}
-          onLoadEnd={[Function]}
-          onProgress={[Function]}
-          retry={2}
-          source={
-            Object {
-              "headers": Object {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
-              "uri": "http://fake.com3",
-            }
-          }
+        <View
           style={
-            Object {
-              "borderRadius": 3,
-              "elevation": 2,
-              "flex": 1,
-              "height": "100%",
-              "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
+            Array [
+              Object {
+                "overflow": "hidden",
               },
-              "shadowOpacity": 0.4,
-              "shadowRadius": 0,
-            }
+              Object {
+                "borderRadius": 3,
+                "elevation": 2,
+                "flex": 1,
+                "height": "100%",
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.4,
+                "shadowRadius": 0,
+              },
+            ]
           }
-        />
+        >
+          <FastImageView
+            blurred={false}
+            locked={false}
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="cover"
+            retry={2}
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                  "no-cache": "1",
+                },
+                "uri": "http://fake.com3",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
       </View>
     </View>
   </View>

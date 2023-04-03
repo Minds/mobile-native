@@ -1,10 +1,11 @@
-import { ImageSource } from 'expo-image';
 import React, { useMemo } from 'react';
 import {
   ImageURISource,
+  StyleProp,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
+import { ImageStyle, ResizeMode } from 'react-native-fast-image';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import api from '../../services/api.service';
@@ -17,17 +18,15 @@ const BORDER_RADIUS = 3;
 type PropsType = {
   fullWidth?: boolean;
   entity: ActivityModel;
-  style?: ImageProps['style'];
+  style?: StyleProp<ImageStyle>;
   ignoreDataSaver?: boolean;
-  mode?: ImageProps['contentFit'];
+  mode?: ResizeMode;
   /**
    * @param {number} index - the index of the image
    */
   onImagePress: (index: number) => void;
   onImageLongPress: (imageSource: ImageURISource) => void;
 };
-
-type ImageProps = SmartImageProps & { source: ImageSource };
 
 /**
  * Used for displaying multi images
@@ -38,7 +37,7 @@ export default function MediaViewMultiImage({
   onImagePress,
   onImageLongPress,
 }: PropsType) {
-  let images: ImageProps[] = useMemo(
+  let images: SmartImageProps[] = useMemo(
     () =>
       entity.custom_data.map((image, index) => {
         const source = {
@@ -86,14 +85,18 @@ const ImageItem = ({
   onPress,
   onLongPress,
   ...smartImageProps
-}: TouchableOpacityProps & ImageProps) => (
+}: SmartImageProps & TouchableOpacityProps) => (
   <TouchableOpacity
     onPress={onPress}
     onLongPress={onLongPress}
     style={styles.image}
     activeOpacity={1}
-    testID={'image-' + smartImageProps.source?.uri}>
-    <SmartImage {...smartImageProps} contentFit="cover" style={styles.image} />
+    testID={'image-' + smartImageProps.source.uri}>
+    <SmartImage
+      {...smartImageProps}
+      resizeMode={'cover'}
+      style={styles.image}
+    />
   </TouchableOpacity>
 );
 

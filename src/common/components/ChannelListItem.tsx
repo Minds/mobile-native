@@ -1,10 +1,9 @@
 import React from 'react';
 import { Keyboard, TextStyle, View, ViewStyle } from 'react-native';
-import { Image } from 'expo-image';
-
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
+import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
@@ -94,7 +93,7 @@ const ChannelListItem = (props: ChannelListItemProps) => {
 
   return (
     <MPressable style={containerStyle} {...otherProps} onPress={_onPress}>
-      <Image
+      <FastImage
         source={props.channel.getAvatarSource('medium')}
         style={styles.avatar}
       />

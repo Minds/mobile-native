@@ -32,34 +32,51 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
       ]
     }
   >
-    <Image
-      contentFit="cover"
-      onError={[Function]}
-      onLoadEnd={[Function]}
-      onProgress={[Function]}
-      retry={2}
-      source={
-        Object {
-          "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
-        }
-      }
+    <View
       style={
         Array [
+          Object {
+            "overflow": "hidden",
+          },
           Array [
-            Object {
-              "height": 100,
-              "width": 100,
-            },
-          ],
-          Array [
-            Object {
-              "height": 444.6666666666667,
-              "width": "100%",
-            },
+            Array [
+              Object {
+                "height": 100,
+                "width": 100,
+              },
+            ],
+            Array [
+              Object {
+                "height": 444.6666666666667,
+                "width": "100%",
+              },
+            ],
           ],
         ]
       }
-    />
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        onFastImageLoadEnd={[Function]}
+        onFastImageProgress={[Function]}
+        resizeMode="cover"
+        retry={2}
+        source={
+          Object {
+            "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
   </View>
   <View
     style={
@@ -229,29 +246,46 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       ]
     }
   >
-    <Image
-      contentFit="cover"
-      onError={[Function]}
-      onLoadEnd={[Function]}
-      onProgress={[Function]}
-      retry={2}
-      source={
-        Object {
-          "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
-        }
-      }
+    <View
       style={
         Array [
+          Object {
+            "overflow": "hidden",
+          },
           Array [
-            Object {
-              "height": 100,
-              "width": 100,
-            },
+            Array [
+              Object {
+                "height": 100,
+                "width": 100,
+              },
+            ],
+            null,
           ],
-          null,
         ]
       }
-    />
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        onFastImageLoadEnd={[Function]}
+        onFastImageProgress={[Function]}
+        resizeMode="cover"
+        retry={2}
+        source={
+          Object {
+            "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
   </View>
 </View>
 `;

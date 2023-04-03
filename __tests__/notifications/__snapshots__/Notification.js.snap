@@ -39,7 +39,7 @@ exports[`Notifications component renders correctly 1`] = `
       <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
       >
-        <Image
+        <FastImage
           source={
             Object {
               "headers": Object {

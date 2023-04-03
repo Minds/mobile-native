@@ -1,9 +1,8 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import Modal from 'react-native-modal';
 import { toJS } from 'mobx';
-import { Image } from 'expo-image';
 
 import api from '../services/api.service';
 import type { ApiResponse } from '../services/api.service';

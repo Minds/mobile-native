@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Image } from 'expo-image';
+import FastImage from 'react-native-fast-image';
 import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
@@ -31,7 +31,7 @@ export const Avatar = withSpacer(
 
     const avatar = (
       <View testID={testID} style={border && styles[border]}>
-        <Image
+        <FastImage
           source={isObservable(source) ? toJS(source) : source}
           style={styles[size]}
         />

@@ -5,9 +5,10 @@ import {
   View,
   ViewStyle,
   Platform,
+  Image,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
-import { Image } from 'expo-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -219,7 +220,7 @@ class OwnerBlock extends PureComponent<PropsType> {
                 blurRadius={IS_IOS ? 12 : 7}
               />
             ) : (
-              <Image source={this.avatarSrc} style={styles.avatar} />
+              <FastImage source={this.avatarSrc} style={styles.avatar} />
             )}
           </DebouncedTouchableOpacity>
           <View style={styles.body}>

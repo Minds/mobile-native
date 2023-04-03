@@ -94,8 +94,8 @@ export default function SupermindConfirmation() {
                   uri:
                     'https://www.minds.com/static/en/assets/twitter-supermind-placeholder.png',
                 }}
-                placeholder="L+Mt8[Ng%LjFD+bIoyae_JsjRkf+"
-                contentFit="cover"
+                blurhash={'L+Mt8[Ng%LjFD+bIoyae_JsjRkf+'}
+                resizeMode="cover"
                 style={imageStyle}
               />
             </>

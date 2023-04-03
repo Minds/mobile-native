@@ -4,8 +4,8 @@ import React, { PureComponent } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
-import { Image } from 'expo-image';
 
+import FastImage from 'react-native-fast-image';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -53,7 +53,11 @@ export default class BlogCard extends PureComponent<PropsType> {
         <TouchableOpacity
           onPress={this.navToBlog}
           style={theme.bgSecondaryBackground}>
-          <Image source={image} style={styles.banner} contentFit="cover" />
+          <FastImage
+            source={image}
+            style={styles.banner}
+            resizeMode={FastImage.resizeMode.cover}
+          />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
               <MText
@@ -87,7 +91,11 @@ export default class BlogCard extends PureComponent<PropsType> {
     return (
       <View style={theme.bgSecondaryBackground}>
         <MPressable onPress={this.navToBlog}>
-          <Image source={image} style={styles.banner} contentFit="cover" />
+          <FastImage
+            source={image}
+            style={styles.banner}
+            resizeMode={FastImage.resizeMode.cover}
+          />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
               <MText

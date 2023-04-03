@@ -1,10 +1,10 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Image } from 'expo-image';
 import { MotiView } from 'moti';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Gallery, { RenderItemInfo } from 'react-native-awesome-gallery';
+import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import api from '../common/services/api.service';
 import { ModalFullScreen } from '../common/ui';
@@ -50,9 +50,9 @@ export default function ImageGalleryScreen({
         height: item.height,
       });
       return (
-        <Image
+        <FastImage
           style={StyleSheet.absoluteFillObject}
-          contentFit="contain"
+          resizeMode="contain"
           source={{
             uri: item.src,
             headers: api.buildHeaders(),

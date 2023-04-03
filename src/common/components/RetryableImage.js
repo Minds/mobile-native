@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Image, ImageProps } from 'expo-image';
+import { Platform } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 /**
  * A fast image wrapper that add retry functionality
  * @param {Object} props
  */
-export default function (props: ImageProps & { retry?: number }) {
+export default function (props) {
   const { onError, ...otherProps } = props;
   const [retries, setRetries] = useState(0);
 
@@ -21,5 +22,10 @@ export default function (props: ImageProps & { retry?: number }) {
     [props.retry, retries, onError],
   );
 
-  return <Image key={retries} onError={errorHandler} {...otherProps} />;
+  // solve crash on android due to an invalid url
+  if (Platform.OS === 'android' && props.source?.uri?.indexOf('//', 8) !== -1) {
+    return null;
+  }
+
+  return <FastImage key={retries} onError={errorHandler} {...otherProps} />;
 }

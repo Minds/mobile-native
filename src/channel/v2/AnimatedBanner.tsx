@@ -1,7 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import SmartImage, {
-  SmartImageProps,
-} from '../../common/components/SmartImage';
+import SmartImage, { Source } from '../../common/components/SmartImage';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -14,7 +12,7 @@ import SmallCircleButton from '../../common/components/SmallCircleButton';
 
 interface AnimatedBannerProps {
   parentScrollOffset: Animated.SharedValue<number>;
-  bannerSource: SmartImageProps['source'];
+  bannerSource: Source;
 }
 
 /**

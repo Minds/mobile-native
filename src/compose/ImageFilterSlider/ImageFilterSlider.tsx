@@ -1,8 +1,9 @@
 import { MotiView } from 'moti';
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import { debounce } from 'lodash';
 import { FlatList } from 'react-native-gesture-handler';
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -10,8 +11,6 @@ import Animated, {
   interpolate,
   Extrapolate,
 } from 'react-native-reanimated';
-import { Image } from 'expo-image';
-
 import MText from '~/common/components/MText';
 import PressableScale from '~/common/components/PressableScale';
 import { IS_IOS } from '~/config/Config';

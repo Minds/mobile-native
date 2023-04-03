@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Wallets } from './registry';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import useWalletConnect from '../useWalletConnect';
@@ -11,7 +11,6 @@ import {
 } from '@gorhom/bottom-sheet';
 import { BottomSheet } from '~/common/components/bottom-sheet';
 import { ONCHAIN_ENABLED } from '~/config/Config';
-import { Image } from 'expo-image';
 
 const styles = StyleSheet.create({
   modalBody: {

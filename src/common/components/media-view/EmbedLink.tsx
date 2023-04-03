@@ -1,6 +1,7 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -61,7 +62,11 @@ export default function EmbedLink({
         onLongPress={onImageLongPress}
         activeOpacity={1}
         testID="Posted Image">
-        <SmartImage style={imageStyle} source={source} contentFit="cover" />
+        <SmartImage
+          style={imageStyle}
+          source={source}
+          resizeMode={FastImage.resizeMode.cover}
+        />
       </TouchableOpacity>
       <TouchableOpacity style={titleContainerStyle} onPress={openLink}>
         <MText numberOfLines={2} style={titleStyle}>

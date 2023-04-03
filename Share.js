@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { ShareMenuReactView } from 'react-native-share-menu';
+import { DARK_THEME } from './src/styles/Colors';
 
 const Share = () => {
   const logo = require('./src/assets/logos/logo-white.png');
@@ -14,7 +14,7 @@ const Share = () => {
 
   return (
     <View style={styles.container}>
-      <Image contentFit="cover" style={styles.logo} source={logo} />
+      <Image resizeMode={'cover'} style={styles.logo} source={logo} />
     </View>
   );
 };

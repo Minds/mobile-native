@@ -1,27 +1,25 @@
 import { useDimensions } from '@react-native-community/hooks';
-import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-
+import { View, TouchableOpacity, StyleProp } from 'react-native';
+import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
 import DoubleTap from '../DoubleTap';
-
+import ExplicitImage from '../explicit/ExplicitImage';
 import MText from '../MText';
-import SmartImage from '../SmartImage';
 
 const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
-  style?: ImageProps['style'];
+  style?: StyleProp<ImageStyle>;
   autoHeight?: boolean;
   ignoreDataSaver?: boolean;
-  mode?: ImageProps['contentFit'];
+  mode?: ResizeMode;
   onImageDoublePress?: () => void;
   onImagePress?: () => void;
   onImageLongPress?: () => void;
@@ -50,13 +48,13 @@ export default function MediaViewImage({
     () =>
       entity.isGif()
         ? undefined
-        : {
+        : ({
             ...source,
             uri: mediaProxyUrl(
               entity.getThumbSource('medium').uri, // convert from medium size to save some backend resources
               DATA_SAVER_THUMB_RES,
             ),
-          },
+          } as Source),
     [entity, source],
   );
 
@@ -88,9 +86,9 @@ export default function MediaViewImage({
     }
   }
 
-  const imageStyle = useMemoStyle(
-    ['fullWidth', { aspectRatio }, style as ImageStyle],
-    [(aspectRatio, style)],
+  const imageStyle = React.useMemo(
+    () => [ThemedStyles.style.fullWidth, { aspectRatio }, style],
+    [aspectRatio, style],
   );
 
   const imageError = React.useCallback(() => {
@@ -104,8 +102,8 @@ export default function MediaViewImage({
     e => {
       if (autoHeight) {
         setSize({
-          height: e.height,
-          width: e.width,
+          height: e.nativeEvent.height,
+          width: e.nativeEvent.width,
         });
       }
     },
@@ -138,18 +136,15 @@ export default function MediaViewImage({
       style={imageStyle}
       activeOpacity={1}
       testID="Posted Image">
-      <SmartImage
-        contentFit={mode}
+      <ExplicitImage
+        resizeMode={mode}
         style={imageStyle}
         source={source}
+        thumbnail={thumbnail}
+        entity={entity}
         onLoad={onLoadImage}
         onError={imageError}
-        ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
-        placeholder={
-          entity?.custom_data?.[0]?.blurhash || entity?.blurhash || thumbnail
-        }
-        locked={entity?.isLocked()}
-        recyclingKey={entity.urn}
+        ignoreDataSaver={ignoreDataSaver}
       />
     </DoubleTapTouchable>
   );
