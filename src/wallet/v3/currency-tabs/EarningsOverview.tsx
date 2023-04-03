@@ -16,7 +16,6 @@ import CenteredLoading from '../../../common/components/CenteredLoading';
 import capitalize from '../../../common/helpers/capitalize';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import { TokensTabStore } from './tokens/createTokensTabStore';
-import sessionService from '../../../common/services/session.service';
 import AccordionHeaderTitle from './AccordionHeaderTitle';
 import i18n from '../../../common/services/i18n.service';
 import { Spacer } from '~ui';
@@ -33,6 +32,7 @@ const friendlyLabel = {
   partner: i18n.t('wallet.partner'),
   plus: i18n.t('wallet.plus'),
   wire_referral: i18n.t('wallet.wireReferral'),
+  boost_partner: i18n.t('wallet.boostPartner'),
 };
 export const getFriendlyLabel = (id: string): string =>
   friendlyLabel[id] ?? capitalize(id);
@@ -73,35 +73,7 @@ const EarningsOverview = observer(
       return <CenteredLoading />;
     }
     const accordionData: Array<AccordionDataType> = walletStore.usdEarnings
-      .filter(earning => {
-        if (earning.id === null) {
-          return false;
-        }
-
-        if (earning.id !== 'partner') {
-          return true;
-        }
-
-        const user = sessionService.getUser();
-
-        if (
-          currencyType === 'usd' &&
-          ((user.pro && user.pro_method === 'tokens') ||
-            (user.plus && user.plus_method === 'tokens'))
-        ) {
-          return false;
-        }
-
-        if (
-          currencyType === 'tokens' &&
-          ((user.pro && user.pro_method === 'usd') ||
-            (user.plus && user.plus_method === 'usd'))
-        ) {
-          return false;
-        }
-
-        return true;
-      })
+      .filter(earning => !!earning.id)
       .map(earning => {
         const value =
           currencyType === 'tokens'
