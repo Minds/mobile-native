@@ -4,8 +4,9 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { Alert, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import FastImage, { Source } from 'react-native-fast-image';
+import { Image } from 'expo-image';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import withModalProvider from '~/navigation/withModalProvide';
 import Actions from '~/newsfeed/activity/Actions';
@@ -152,11 +153,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
     return (
       <ScrollView stickyHeaderIndices={[1]}>
         <>
-          <SmartImage
-            source={image as Source}
-            resizeMode={FastImage.resizeMode.cover}
-            style={styles.image}
-          />
+          <SmartImage source={image} contentFit="cover" style={styles.image} />
           <MText style={styles.title}>{blog.title}</MText>
           <SafeAreaView style={styles.header}>
             <SmallCircleButton
@@ -277,8 +274,8 @@ export default class BlogsViewScreen extends Component<PropsType> {
           </>
         ) : (
           <View style={theme.flexColumnCentered}>
-            <FastImage
-              resizeMode={FastImage.resizeMode.contain}
+            <Image
+              contentFit="contain"
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />

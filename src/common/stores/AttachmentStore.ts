@@ -12,6 +12,7 @@ import { UserError } from '../UserError';
 import { ApiResponse } from '../services/api.service';
 
 export type Media = {
+  key?: number;
   uri: string;
   type: string;
   path?: string;
@@ -19,6 +20,7 @@ export type Media = {
   filename?: string;
   width: number;
   height: number;
+  pictureOrientation?: number;
 };
 
 /**
@@ -44,7 +46,13 @@ export default class AttachmentStore {
 
   uploadPromise?: Promise<ApiResponse> | Cancelable;
 
-  constructor(onClear?: (s: AttachmentStore) => void) {
+  constructor(
+    onClear?: (s: AttachmentStore) => void,
+    /**
+     * Whether this attachment is not yet posted
+     */
+    private ephemeral = true,
+  ) {
     this.onClear = onClear;
   }
 
@@ -175,7 +183,7 @@ export default class AttachmentStore {
   cancelOrDelete = (deleteRemote = true) => {
     if (this.uploading) {
       this.cancelCurrentUpload();
-    } else {
+    } else if (this.ephemeral) {
       this.delete(deleteRemote);
     }
   };

@@ -10,7 +10,7 @@ import FitScrollView from '../common/components/FitScrollView';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
 import { UpgradeScreenNavigationProp, UpgradeScreenRouteProp } from './types';
-import { Button, Column, H3 } from '~ui';
+import { Button, Column, H4 } from '~ui';
 import {
   IS_FROM_STORE,
   IS_IOS,
@@ -46,7 +46,9 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
       <Header pro={pro} />
       {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
         <Column top="XL" align="centerBoth" horizontal="L">
-          <H3>Sorry, this is not available on iOS</H3>
+          <H4 align="center">
+            Sorry, the update is not available on mobile at the moment.
+          </H4>
           <Button
             top="XL2"
             mode="outline"
@@ -79,6 +81,17 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
 });
 
 export default withIAPContext(UpgradeScreen);
+
+export const upgradeToPlus = navigation => {
+  return new Promise(resolve =>
+    navigation.push('UpgradeScreen', {
+      onComplete: (success: boolean) => {
+        resolve(!!success);
+      },
+      pro: false,
+    }),
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

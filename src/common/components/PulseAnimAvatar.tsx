@@ -1,9 +1,9 @@
 //@ts-nocheck
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import Pulse from './Pulse';
+import { Image } from 'expo-image';
 
-import FastImage from 'react-native-fast-image';
+import Pulse from './Pulse';
 
 /**
  * Pulse avatar
@@ -53,7 +53,7 @@ export default class PulseAnimAvatar extends React.Component {
           activeOpacity={0.5}
           onPress={onPress}
           style={this.state.sizeStyle}>
-          <FastImage
+          <Image
             source={this.state.avatarUri}
             style={[this.state.imageStyle, this.props.style]}
           />

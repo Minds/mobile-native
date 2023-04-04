@@ -1,4 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
+import { Image } from 'expo-image';
 import {
   StyleProp,
   TextStyle,
@@ -6,7 +7,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { AvatarSource } from '../../../channel/UserModel';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import { B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
@@ -21,6 +21,7 @@ export type MenuItemProps = {
   titleStyle?: StyleProp<TextStyle>;
   subtitle?: string;
   icon?: IconMapNameType | ReactNode;
+  leftIcon?: IconMapNameType | ReactNode;
   iconSize?: IIconSize;
   iconColor?: IIconColor;
   borderless?: boolean;
@@ -34,6 +35,7 @@ export type MenuItemProps = {
    */
   multiLine?: boolean;
   reversedIcon?: boolean;
+  avatarSize?: number;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -42,6 +44,7 @@ export default function ({
   subtitle,
   onPress,
   icon,
+  leftIcon,
   iconSize,
   iconColor,
   avatar,
@@ -52,6 +55,7 @@ export default function ({
   titleStyle,
   multiLine,
   reversedIcon,
+  avatarSize,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -89,7 +93,7 @@ export default function ({
 
   const rightIcon = useMemo(() => {
     if (!icon && onPress) {
-      return <Icon name={'chevron-right'} size={iconSize} color={iconColor} />;
+      return <Icon name={'chevron-right'} size={iconSize} />;
     }
 
     if (typeof icon === 'string') {
@@ -104,11 +108,33 @@ export default function ({
 
     return icon;
   }, [icon, iconColor, iconSize, onPress]);
-  const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
+
+  const avatarStyle = useMemoStyle(() => {
+    const avatarStyles = [styles.avatar];
+    if (avatarSize) {
+      avatarStyles.push({
+        width: avatarSize,
+        height: avatarSize,
+        borderRadius: avatarSize / 2,
+      });
+    }
+    return avatarStyles;
+  }, [avatarSize]);
+
+  const shouldRenderIcon = !noIcon;
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
-      {avatar && <FastImage source={avatar} style={styles.avatar} />}
+      {avatar && <Image source={avatar} style={avatarStyle} />}
+      {leftIcon && (
+        <View style={styles.leftIcon}>
+          <Icon
+            name={leftIcon as IconMapNameType}
+            size={iconSize}
+            color={iconColor}
+          />
+        </View>
+      )}
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>
       )}

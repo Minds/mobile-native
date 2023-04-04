@@ -1,16 +1,11 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import {
-  ImageBackground,
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-} from 'react-native';
+import { ImageBackground, View, StyleSheet, Dimensions } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer } from 'mobx-react';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
+import { Image } from 'expo-image';
 
 const bannerAspectRatio = 3.2;
 const { width } = Dimensions.get('window');
@@ -43,7 +38,7 @@ const HeaderComponent: FunctionComponent<propsType> = observer(
           <Image
             style={[styles.avatar, theme.bcolorPrimaryBorder]}
             source={channel.getAvatarSource()}
-            resizeMode="cover"
+            contentFit="cover"
           />
         </View>
         {children}

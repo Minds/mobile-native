@@ -124,6 +124,7 @@ const Lock = observer(({ entity }: PropsType) => {
   let aspectRatio =
     entity.custom_data &&
     entity.custom_data[0] &&
+    entity.custom_data.length === 1 &&
     entity.custom_data[0].width / entity.custom_data[0].height;
 
   return (
