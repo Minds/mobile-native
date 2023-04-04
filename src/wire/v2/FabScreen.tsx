@@ -20,6 +20,7 @@ import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import { confirm } from '~/common/components/Confirm';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -239,4 +240,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FabScreen;
+export default withErrorBoundaryScreen(FabScreen, 'FabScreen');

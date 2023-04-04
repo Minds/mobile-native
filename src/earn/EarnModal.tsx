@@ -14,6 +14,7 @@ import {
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '../config/Config';
 import MText from '../common/components/MText';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const linkTo = (dest: string) =>
   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -93,126 +94,129 @@ const ResourceItem = ({ content }: { content: ResourceType }) => {
   );
 };
 
-export default observer(function ({ navigation }) {
-  const theme = ThemedStyles.style;
-  const localStore = useLocalStore(createLocalStore);
+export default withErrorBoundaryScreen(
+  observer(function ({ navigation }) {
+    const theme = ThemedStyles.style;
+    const localStore = useLocalStore(createLocalStore);
 
-  useEffect(() => {
-    const settings = mindsConfigService.getSettings();
-    localStore.setTokenAddress(settings.blockchain.token.address);
-  }, [localStore]);
+    useEffect(() => {
+      const settings = mindsConfigService.getSettings();
+      localStore.setTokenAddress(settings.blockchain.token.address);
+    }, [localStore]);
 
-  const navTo = (screen: string, options = {}) =>
-    navigation.navigate(screen, options);
+    const navTo = (screen: string, options = {}) =>
+      navigation.navigate(screen, options);
 
-  const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
+    const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
-  const earnItems: ContentType[] = [
-    {
-      name: 'create',
-      icon: 'plus-box',
-      onPress: () => navTo('Compose', { mode: 'text', start: true }),
-    },
-    {
-      name: 'refer',
-      icon: 'account-multiple',
-      onPress: () => navTo('Referrals'),
-    },
-  ];
+    const earnItems: ContentType[] = [
+      {
+        name: 'create',
+        icon: 'plus-box',
+        onPress: () => navTo('Compose', { mode: 'text', start: true }),
+      },
+      {
+        name: 'refer',
+        icon: 'account-multiple',
+        onPress: () => navTo('Referrals'),
+      },
+    ];
 
-  if (LIQUIDITY_ENABLED) {
-    earnItems.unshift({
-      name: 'pool',
-      icon: 'plus-circle-outline',
-      onPress: localStore.toggleUniswapWidget,
-    });
-  }
+    if (LIQUIDITY_ENABLED) {
+      earnItems.unshift({
+        name: 'pool',
+        icon: 'plus-circle-outline',
+        onPress: localStore.toggleUniswapWidget,
+      });
+    }
 
-  if (ONCHAIN_ENABLED) {
-    earnItems.push({
-      name: 'transfer',
-      icon: 'swap-horizontal',
-      onPress: openWithdrawal,
-    });
-  }
+    if (ONCHAIN_ENABLED) {
+      earnItems.push({
+        name: 'transfer',
+        icon: 'swap-horizontal',
+        onPress: openWithdrawal,
+      });
+    }
 
-  const resourcesItems: ResourceType[] = [
-    {
-      name: 'resources.rewards',
-      onPress: () => linkTo('rewards'),
-    },
-    {
-      name: 'resources.tokens',
-      onPress: () => linkTo('token'),
-    },
-    {
-      name: 'resources.earnings',
-      onPress: () =>
-        navTo('Tabs', { screen: 'CaptureTab', params: { screen: 'Wallet' } }),
-    },
-    {
-      name: 'resources.analytics',
-      onPress: () =>
-        navTo('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'Analytics' },
-        }),
-    },
-  ];
+    const resourcesItems: ResourceType[] = [
+      {
+        name: 'resources.rewards',
+        onPress: () => linkTo('rewards'),
+      },
+      {
+        name: 'resources.tokens',
+        onPress: () => linkTo('token'),
+      },
+      {
+        name: 'resources.earnings',
+        onPress: () =>
+          navTo('Tabs', { screen: 'CaptureTab', params: { screen: 'Wallet' } }),
+      },
+      {
+        name: 'resources.analytics',
+        onPress: () =>
+          navTo('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'Analytics' },
+          }),
+      },
+    ];
 
-  const unlockItems: ResourceType[] = [
-    {
-      name: 'unlock.mindsPlus',
-      onPress: () => navTo('UpgradeScreen', { onComplete, pro: false }),
-    },
-    {
-      name: 'unlock.pro',
-      onPress: () => navTo('UpgradeScreen', { onComplete, pro: true }),
-    },
-  ];
+    const unlockItems: ResourceType[] = [
+      {
+        name: 'unlock.mindsPlus',
+        onPress: () => navTo('UpgradeScreen', { onComplete, pro: false }),
+      },
+      {
+        name: 'unlock.pro',
+        onPress: () => navTo('UpgradeScreen', { onComplete, pro: true }),
+      },
+    ];
 
-  const titleStyle = [
-    styles.title,
-    theme.colorPrimaryText,
-    theme.marginTop5x,
-    theme.paddingLeft5x,
-  ];
+    const titleStyle = [
+      styles.title,
+      theme.colorPrimaryText,
+      theme.marginTop5x,
+      theme.paddingLeft5x,
+    ];
 
-  return (
-    <>
-      <ModalScreen
-        source={require('../assets/withdrawalbg.jpg')}
-        title={i18n.t('earnScreen.title')}>
-        <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
-        {earnItems.map(item => (
-          <EarnItem content={item} />
-        ))}
-        <MText style={[titleStyle, theme.paddingTop2x]}>
-          {i18n.t('earnScreen.resources.title')}
-        </MText>
-        {resourcesItems.map(item => (
-          <ResourceItem content={item} />
-        ))}
-        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
-          <>
-            <MText style={[titleStyle, theme.paddingTop2x]}>
-              {i18n.t('earnScreen.unlock.title')}
-            </MText>
-            {unlockItems.map(item => (
-              <ResourceItem content={item} />
-            ))}
-          </>
-        )}
-      </ModalScreen>
-      <UniswapWidget
-        isVisible={localStore.showUniswapWidget}
-        action={'add'}
-        onCloseButtonPress={localStore.toggleUniswapWidget}
-        tokenAddress={localStore.tokenAddress}
-      />
-    </>
-  );
-});
+    return (
+      <>
+        <ModalScreen
+          source={require('../assets/withdrawalbg.jpg')}
+          title={i18n.t('earnScreen.title')}>
+          <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
+          {earnItems.map(item => (
+            <EarnItem content={item} />
+          ))}
+          <MText style={[titleStyle, theme.paddingTop2x]}>
+            {i18n.t('earnScreen.resources.title')}
+          </MText>
+          {resourcesItems.map(item => (
+            <ResourceItem content={item} />
+          ))}
+          {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+            <>
+              <MText style={[titleStyle, theme.paddingTop2x]}>
+                {i18n.t('earnScreen.unlock.title')}
+              </MText>
+              {unlockItems.map(item => (
+                <ResourceItem content={item} />
+              ))}
+            </>
+          )}
+        </ModalScreen>
+        <UniswapWidget
+          isVisible={localStore.showUniswapWidget}
+          action={'add'}
+          onCloseButtonPress={localStore.toggleUniswapWidget}
+          tokenAddress={localStore.tokenAddress}
+        />
+      </>
+    );
+  }),
+  'EarnModal',
+);
 
 const styles = StyleSheet.create({
   title: {

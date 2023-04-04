@@ -7,11 +7,12 @@ import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 /**
  * Email confirmation screen
  */
-export default class EmailConfirmationScreen extends Component<{
+class EmailConfirmationScreen extends Component<{
   navigation: any;
   route: any;
 }> {
@@ -97,3 +98,8 @@ export default class EmailConfirmationScreen extends Component<{
     );
   }
 }
+
+export default withErrorBoundaryScreen(
+  EmailConfirmationScreen,
+  'EmailConfirmationScreen',
+);

@@ -36,6 +36,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
       }
     >
       <ChannelAvatar
+        key="0"
         user={
           Object {
             "access_id": "2",
@@ -119,6 +120,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
         }
       />
       <ChannelAvatar
+        key="1"
         user={
           Object {
             "access_id": "2",
@@ -202,6 +204,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
         }
       />
       <ChannelAvatar
+        key="2"
         user={
           Object {
             "access_id": "2",

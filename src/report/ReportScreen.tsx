@@ -17,6 +17,7 @@ import i18n from '../common/services/i18n.service';
 import mindsService from '../common/services/minds-config.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import reportService from './ReportService';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   route: any;
@@ -39,7 +40,7 @@ type StateType = {
   requireNote: boolean;
 };
 
-export default class ReportScreen extends Component<PropsType, StateType> {
+class ReportScreen extends Component<PropsType, StateType> {
   state: StateType = {
     note: '',
     reason: null,
@@ -385,3 +386,5 @@ const styles = StyleSheet.create({
     color: '#ececec',
   },
 });
+
+export default withErrorBoundaryScreen(ReportScreen, 'ReportScreen');

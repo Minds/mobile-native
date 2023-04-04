@@ -10,6 +10,7 @@ import sessionService from '~/common/services/session.service';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import Setup from './Setup';
 import WithdrawalInput from './WithdrawalInput';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const Withdrawal = observer(() => {
   const walletStore: WalletStoreType = useStores().wallet;
@@ -35,4 +36,4 @@ const Withdrawal = observer(() => {
   );
 });
 
-export default Withdrawal;
+export default withErrorBoundaryScreen(Withdrawal, 'Withdrawal');

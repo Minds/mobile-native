@@ -9,12 +9,13 @@ import apiService from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
 import { B2, Button, Column, H3, Screen, ScreenHeader } from '../common/ui';
 import { MINDS_URI } from '../config/Config';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export interface SupermindTwitterConnectRouteParams {
   onConnect: (success: boolean) => void;
 }
 
-export default function SupermindTwitterConnectScreen() {
+function SupermindTwitterConnectScreen() {
   const navigation = useNavigation();
   const { params } = useRoute();
   const { onConnect } = (params || {
@@ -73,6 +74,11 @@ export default function SupermindTwitterConnectScreen() {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(
+  SupermindTwitterConnectScreen,
+  'SupermindTwitterConnectScreen',
+);
 
 interface TwitterConfigResponse {
   discoverable: boolean;

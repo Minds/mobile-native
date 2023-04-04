@@ -19,6 +19,7 @@ import {
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -58,142 +59,145 @@ const setDarkMode = () => {
 
 type Item = MenuItemProps & { screen?: string; params?: any };
 
-const SettingsScreen = observer(({ navigation }) => {
-  const theme = ThemedStyles.style;
+const SettingsScreen = withErrorBoundaryScreen(
+  observer(({ navigation }) => {
+    const theme = ThemedStyles.style;
 
-  const UPGRADE_DISABLED =
-    (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
-    !PRO_PLUS_SUBSCRIPTION_ENABLED;
+    const UPGRADE_DISABLED =
+      (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
+      !PRO_PLUS_SUBSCRIPTION_ENABLED;
 
-  const user = sessionService.getUser();
+    const user = sessionService.getUser();
 
-  const onComplete = useCallback(
-    (forPro: boolean) => {
-      return (success: any) => {
-        if (success) {
-          forPro ? user.togglePro() : user.togglePlus();
-        }
-      };
-    },
-    [user],
-  );
+    const onComplete = useCallback(
+      (forPro: boolean) => {
+        return (success: any) => {
+          if (success) {
+            forPro ? user.togglePro() : user.togglePlus();
+          }
+        };
+      },
+      [user],
+    );
 
-  const firstSection: Array<Item> = [
-    {
-      title: i18n.t('settings.account'),
-      screen: 'Account',
-      params: {},
-    },
-    {
-      title: i18n.t('settings.security'),
-      screen: 'Security',
-      params: {},
-    },
-  ];
+    const firstSection: Array<Item> = [
+      {
+        title: i18n.t('settings.account'),
+        screen: 'Account',
+        params: {},
+      },
+      {
+        title: i18n.t('settings.security'),
+        screen: 'Security',
+        params: {},
+      },
+    ];
 
-  if (!IS_IOS) {
+    if (!IS_IOS) {
+      firstSection.push({
+        title: i18n.t('settings.billing'),
+        screen: 'Billing',
+        params: {},
+      });
+    }
+
+    if (!user.plus && !UPGRADE_DISABLED) {
+      firstSection.push({
+        title: i18n.t('monetize.plus'),
+        screen: 'UpgradeScreen',
+        params: { onComplete: onComplete(false), pro: false },
+      });
+    }
+
+    if (!user.pro && !UPGRADE_DISABLED) {
+      firstSection.push({
+        title: i18n.t('monetize.pro'),
+        screen: 'UpgradeScreen',
+        params: { onComplete: onComplete(true), pro: true },
+      });
+    }
+
     firstSection.push({
-      title: i18n.t('settings.billing'),
-      screen: 'Billing',
+      title: i18n.t('settings.chooseBrowser'),
+      screen: 'ChooseBrowser',
+    });
+
+    firstSection.push({
+      title: i18n.t('settings.other'),
+      screen: 'Other',
       params: {},
     });
-  }
 
-  if (!user.plus && !UPGRADE_DISABLED) {
     firstSection.push({
-      title: i18n.t('monetize.plus'),
-      screen: 'UpgradeScreen',
-      params: { onComplete: onComplete(false), pro: false },
+      title: i18n.t('settings.resources'),
+      screen: 'Resources',
+      params: {},
     });
-  }
 
-  if (!user.pro && !UPGRADE_DISABLED) {
-    firstSection.push({
-      title: i18n.t('monetize.pro'),
-      screen: 'UpgradeScreen',
-      params: { onComplete: onComplete(true), pro: true },
-    });
-  }
+    const secondSection: Array<Item> = [
+      {
+        title: i18n.t(
+          ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+        ),
+        onPress: setDarkMode,
+      },
+      {
+        title: i18n.t('help'),
+        onPress: navigateToHelp,
+      },
+    ];
 
-  firstSection.push({
-    title: i18n.t('settings.chooseBrowser'),
-    screen: 'ChooseBrowser',
-  });
+    if (DEV_MODE.isActive || __DEV__) {
+      secondSection.push({
+        title: 'Developer Options',
+        screen: 'DevTools',
+        testID: 'SettingsScreen:DevTools',
+      });
+    }
 
-  firstSection.push({
-    title: i18n.t('settings.other'),
-    screen: 'Other',
-    params: {},
-  });
-
-  firstSection.push({
-    title: i18n.t('settings.resources'),
-    screen: 'Resources',
-    params: {},
-  });
-
-  const secondSection: Array<Item> = [
-    {
-      title: i18n.t(
-        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-      ),
-      onPress: setDarkMode,
-    },
-    {
-      title: i18n.t('help'),
-      onPress: navigateToHelp,
-    },
-  ];
-
-  if (DEV_MODE.isActive || __DEV__) {
     secondSection.push({
-      title: 'Developer Options',
-      screen: 'DevTools',
-      testID: 'SettingsScreen:DevTools',
+      title: i18n.t('settings.logout'),
+      onPress: () => AuthService.logout(),
+      icon: 'login-variant',
     });
-  }
 
-  secondSection.push({
-    title: i18n.t('settings.logout'),
-    onPress: () => AuthService.logout(),
-    icon: 'login-variant',
-  });
+    const firstSectionItems = firstSection.map(
+      ({ title, screen, params, ...rest }) => ({
+        title,
+        onPress: () => navigation.push(screen, params),
+        ...rest,
+      }),
+    );
+    const secondSectionItems = secondSection.map(
+      ({ title, screen, params, ...rest }) => ({
+        title,
+        onPress: () => navigation.push(screen, params),
+        ...rest,
+      }),
+    );
 
-  const firstSectionItems = firstSection.map(
-    ({ title, screen, params, ...rest }) => ({
-      title,
-      onPress: () => navigation.push(screen, params),
-      ...rest,
-    }),
-  );
-  const secondSectionItems = secondSection.map(
-    ({ title, screen, params, ...rest }) => ({
-      title,
-      onPress: () => navigation.push(screen, params),
-      ...rest,
-    }),
-  );
-
-  return (
-    <Screen safe>
-      <ScrollView
-        testID="SettingsScreen"
-        style={theme.flexContainer}
-        contentContainerStyle={theme.paddingBottom4x}>
-        <HiddenTap>
-          <ScreenHeader title={i18n.t('moreScreen.settings')} />
-        </HiddenTap>
-        {firstSectionItems.map((item, index) => (
-          <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
-        ))}
-        <View style={theme.marginTop7x}>
-          {secondSectionItems.map((item, index) => (
+    return (
+      <Screen safe>
+        <ScrollView
+          testID="SettingsScreen"
+          style={theme.flexContainer}
+          contentContainerStyle={theme.paddingBottom4x}>
+          <HiddenTap>
+            <ScreenHeader title={i18n.t('moreScreen.settings')} />
+          </HiddenTap>
+          {firstSectionItems.map((item, index) => (
             <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
           ))}
-        </View>
-      </ScrollView>
-    </Screen>
-  );
-});
+          <View style={theme.marginTop7x}>
+            {secondSectionItems.map((item, index) => (
+              <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
+            ))}
+          </View>
+        </ScrollView>
+      </Screen>
+    );
+  }),
+  'SettingsScreen',
+);
 
 export default SettingsScreen;

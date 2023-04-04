@@ -10,6 +10,7 @@ import supportTiersService from '../../common/services/support-tiers.service';
 import { UserError } from '../../common/UserError';
 import MText from '../../common/components/MText';
 import Switch from '~/common/components/controls/Switch';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   route: any;
@@ -150,4 +151,4 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default TierScreen;
+export default withErrorBoundaryScreen(TierScreen, 'TierScreen');

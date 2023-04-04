@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type MappingItems = {
   title: string;
@@ -19,28 +20,29 @@ type MappingItems = {
 /**
  * Verify Email Modal Screen
  */
-export default observer(function VerifyUniquenessScreen() {
-  const theme = ThemedStyles.style;
-  const navigation = useNavigation();
+export default withErrorBoundaryScreen(
+  observer(function VerifyUniquenessScreen() {
+    const theme = ThemedStyles.style;
+    const navigation = useNavigation();
 
-  const mappingCallback = ({ title, screen, params }: MappingItems) => ({
-    title,
-    onPress: () => navigation.navigate(screen as any, params),
-  });
+    const mappingCallback = ({ title, screen, params }: MappingItems) => ({
+      title,
+      onPress: () => navigation.navigate(screen as any, params),
+    });
 
-  const stepsMapping: Array<MappingItems> = [
-    {
-      title: i18n.t('onboarding.phoneNumber'),
-      screen: 'PhoneValidation',
-      params: {
-        onConfirm: () => {
-          inFeedNoticesService.load();
-          navigation.goBack();
+    const stepsMapping: Array<MappingItems> = [
+      {
+        title: i18n.t('onboarding.phoneNumber'),
+        screen: 'PhoneValidation',
+        params: {
+          onConfirm: () => {
+            inFeedNoticesService.load();
+            navigation.goBack();
+          },
+          onCancel: () => false,
         },
-        onCancel: () => false,
       },
-    },
-    /*{
+      /*{
       title: i18n.t('onboarding.connectWallet'),
       screen: 'PhoneValidation',
       params: {},
@@ -50,43 +52,45 @@ export default observer(function VerifyUniquenessScreen() {
       screen: 'PhoneValidation',
       params: {},
     },*/
-  ];
+    ];
 
-  const otherMapping: Array<MappingItems> = [
-    {
-      title: i18n.t('monetize.plusHeader'),
-      screen: 'UpgradeScreen',
-      params: { onComplete: () => inFeedNoticesService.load(), pro: false },
-    },
-    {
-      title: i18n.t('monetize.proHeader'),
-      screen: 'UpgradeScreen',
-      params: { onComplete: () => inFeedNoticesService.load(), pro: true },
-    },
-  ];
+    const otherMapping: Array<MappingItems> = [
+      {
+        title: i18n.t('monetize.plusHeader'),
+        screen: 'UpgradeScreen',
+        params: { onComplete: () => inFeedNoticesService.load(), pro: false },
+      },
+      {
+        title: i18n.t('monetize.proHeader'),
+        screen: 'UpgradeScreen',
+        params: { onComplete: () => inFeedNoticesService.load(), pro: true },
+      },
+    ];
 
-  const steps = stepsMapping.map(mappingCallback);
-  const other = otherMapping.map(mappingCallback);
+    const steps = stepsMapping.map(mappingCallback);
+    const other = otherMapping.map(mappingCallback);
 
-  return (
-    <ModalContainer
-      title={i18n.t('onboarding.verifyUniqueness')}
-      onPressBack={navigation.goBack}>
-      <View style={theme.flexContainer}>
-        {steps.map(item => (
-          <MenuItem {...item} />
-        ))}
+    return (
+      <ModalContainer
+        title={i18n.t('onboarding.verifyUniqueness')}
+        onPressBack={navigation.goBack}>
+        <View style={theme.flexContainer}>
+          {steps.map(item => (
+            <MenuItem {...item} />
+          ))}
 
-        {PRO_PLUS_SUBSCRIPTION_ENABLED && (
-          <LabeledComponent
-            label={'OTHER'}
-            labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
-            {other.map(item => (
-              <MenuItem {...item} />
-            ))}
-          </LabeledComponent>
-        )}
-      </View>
-    </ModalContainer>
-  );
-});
+          {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+            <LabeledComponent
+              label={'OTHER'}
+              labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
+              {other.map(item => (
+                <MenuItem {...item} />
+              ))}
+            </LabeledComponent>
+          )}
+        </View>
+      </ModalContainer>
+    );
+  }),
+  'VerifyUniquenessScreen',
+);
