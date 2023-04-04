@@ -109,5 +109,7 @@ jest.mock('@stripe/stripe-react-native', () =>
 
 jest.mock('expo-sensors', () => jest.fn());
 
+jest.mock('react-native-exception-handler');
+
 import ri18n from 'utils/locales';
 ri18n.init();

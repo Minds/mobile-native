@@ -65,12 +65,12 @@ build:ios_mr:
     - .build_base
     - .except_nightly
     - .only_native
-  artifacts:
-    expire_in: 1 day
-    when: on_failure
-    public: false
-    paths:
-      - ios/ios-job.log
+  # artifacts:
+  #   expire_in: 1 day
+  #   when: on_failure
+  #   public: false
+  #   paths:
+  #     - ios/ios-job.log
   script:
     - export ENVFILE=".env.review"
     - fastlane buildrelease | tee -a ios-job.log

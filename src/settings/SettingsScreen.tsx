@@ -14,11 +14,9 @@ import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
   DEV_MODE,
-  GOOGLE_PLAY_STORE,
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface HelpResponse extends ApiResponse {
@@ -63,9 +61,7 @@ const SettingsScreen = withErrorBoundaryScreen(
   observer(({ navigation }) => {
     const theme = ThemedStyles.style;
 
-    const UPGRADE_DISABLED =
-      (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
-      !PRO_PLUS_SUBSCRIPTION_ENABLED;
+    const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
 
     const user = sessionService.getUser();
 

@@ -180,7 +180,7 @@ export type RootStackParamList = {
   };
   BoostScreen: { entity: ActivityModel; boostType: BoostType };
   UpgradeScreen: {
-    onComplete: Function;
+    onComplete: (any) => void;
     pro?: boolean;
   };
   VerifyEmail: {};

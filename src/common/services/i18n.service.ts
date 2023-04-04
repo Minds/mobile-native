@@ -2,7 +2,7 @@ import React from 'react';
 import { get, memoize } from 'lodash';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
-import { I18nManager } from 'react-native';
+import { I18nManager, NativeModules, Platform } from 'react-native';
 import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
 import { storages } from './storage/storages.service';
@@ -381,6 +381,14 @@ class I18nService {
       { name: 'Chinese', value: 'zh' },
       { name: 'Slovak', value: 'sk' },
     ];
+  }
+
+  getDeviceLocale() {
+    return (Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale ||
+        NativeModules.SettingsManager.settings.AppleLanguages?.[0]
+      : NativeModules.I18nManager.localeIdentifier
+    ).replace(/_/g, '-');
   }
 }
 
