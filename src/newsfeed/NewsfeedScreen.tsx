@@ -32,10 +32,10 @@ import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeed
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
-import { CodePushUpdatePrompt } from 'modules/codepush';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
+import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<

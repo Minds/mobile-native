@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect, useReducer } from 'react';
 import { Linking } from 'react-native';
-import { RemotePackage } from 'react-native-code-push';
+import codePush, { RemotePackage } from 'react-native-code-push';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import { useThrottledCallback } from '~/common/hooks/useDebouncedCallback';
@@ -12,7 +12,6 @@ import updateService from '~/common/services/update.service';
 import { B2 } from '~/common/ui';
 import { IS_FROM_STORE, STORE_LINK } from '~/config/Config';
 import { Version } from '~/config/Version';
-import { codePush } from '../';
 import { CommonReducer } from '../../../types/Common';
 
 const DISMISS_DURATION = 1 * 24 * 60 * 60 * 1000; // one day
