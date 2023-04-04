@@ -19,9 +19,13 @@ import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
-import { Button, Column, H3 } from '~ui';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { Button, Column, H4 } from '~ui';
+import {
+  GOOGLE_PLAY_STORE,
+  PRO_PLUS_SUBSCRIPTION_ENABLED,
+} from '~/config/Config';
 import { confirm } from '~/common/components/Confirm';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const isIos = Platform.OS === 'ios';
 
@@ -100,6 +104,10 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
     init();
   }, [localStore, pro, wallet]);
 
+  const DISABLED =
+    (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
+    !PRO_PLUS_SUBSCRIPTION_ENABLED;
+
   const topMargin = height / 18;
   const cleanTop = {
     marginTop: insets.top + (isIos ? topMargin : topMargin + 10),
@@ -108,9 +116,11 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
+      {DISABLED ? (
         <Column top="XL" align="centerBoth" horizontal="L">
-          <H3>Sorry, this is not available on iOS</H3>
+          <H4 align="center">
+            Sorry, the update is not available on mobile at the moment.
+          </H4>
           <Button
             top="XL2"
             mode="outline"
@@ -148,6 +158,17 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
 });
 
 export default UpgradeScreen;
+
+export const upgradeToPlus = navigation => {
+  return new Promise(resolve =>
+    navigation.push('UpgradeScreen', {
+      onComplete: (success: boolean) => {
+        resolve(!!success);
+      },
+      pro: false,
+    }),
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

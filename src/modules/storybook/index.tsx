@@ -9,6 +9,11 @@ import {
   StorybookScreen,
   ButtonsScreen,
   IconsScreen,
+  IconButtonsScreen,
+  TabScreen,
+  AvatarsScreen,
+  TextInputsScreen,
+  ListItemsScreen,
 } from './screens'; // end-of-screen-list HYGEN
 import { storages } from '~/common/services/storage/storages.service';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,6 +27,11 @@ export function StorybookNavigator(): JSX.Element {
           <Screen name="Storybook" component={StorybookScreen} />
           <Screen name="Buttons" component={ButtonsScreen} />
           <Screen name="Icons" component={IconsScreen} />
+          <Screen name="IconButtons" component={IconButtonsScreen} />
+          <Screen name="Tab" component={TabScreen} />
+          <Screen name="Avatars" component={AvatarsScreen} />
+          <Screen name="TextInputs" component={TextInputsScreen} />
+          <Screen name="ListItems" component={ListItemsScreen} />
           {/* end-of-navigator HYGEN */}
         </Navigator>
       </ThemeWrapper>
@@ -47,12 +57,12 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
             <Button
               icon={Icons.Lightmode}
               circular
-              sSize="m"
               onPress={() =>
                 setTheme(oldTheme => (oldTheme === 'dark' ? 'light' : 'dark'))
               }
             />
             <Button
+              circular
               icon={Icons.Clear}
               onPress={() => storages.app.setBool('storybook', false)}
             />

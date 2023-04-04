@@ -1,9 +1,8 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
-import { Image, View, StyleSheet } from 'react-native';
-
+import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
+import { Image } from 'expo-image';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';

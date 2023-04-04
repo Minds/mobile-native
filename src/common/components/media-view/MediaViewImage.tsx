@@ -1,25 +1,27 @@
 import { useDimensions } from '@react-native-community/hooks';
+import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
-import { View, TouchableOpacity, StyleProp } from 'react-native';
-import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
+import { View, TouchableOpacity } from 'react-native';
+
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
 import DoubleTap from '../DoubleTap';
-import ExplicitImage from '../explicit/ExplicitImage';
+
 import MText from '../MText';
+import SmartImage from '../SmartImage';
 
 const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
-  style?: StyleProp<ImageStyle>;
+  style?: ImageProps['style'];
   autoHeight?: boolean;
   ignoreDataSaver?: boolean;
-  mode?: ResizeMode;
+  mode?: ImageProps['contentFit'];
   onImageDoublePress?: () => void;
   onImagePress?: () => void;
   onImageLongPress?: () => void;
@@ -48,13 +50,13 @@ export default function MediaViewImage({
     () =>
       entity.isGif()
         ? undefined
-        : ({
+        : {
             ...source,
             uri: mediaProxyUrl(
               entity.getThumbSource('medium').uri, // convert from medium size to save some backend resources
               DATA_SAVER_THUMB_RES,
             ),
-          } as Source),
+          },
     [entity, source],
   );
 
@@ -86,9 +88,9 @@ export default function MediaViewImage({
     }
   }
 
-  const imageStyle = React.useMemo(
-    () => [ThemedStyles.style.fullWidth, { aspectRatio }, style],
-    [aspectRatio, style],
+  const imageStyle = useMemoStyle(
+    ['fullWidth', { aspectRatio }, style as ImageStyle],
+    [(aspectRatio, style)],
   );
 
   const imageError = React.useCallback(() => {
@@ -102,8 +104,8 @@ export default function MediaViewImage({
     e => {
       if (autoHeight) {
         setSize({
-          height: e.nativeEvent.height,
-          width: e.nativeEvent.width,
+          height: e.height,
+          width: e.width,
         });
       }
     },
@@ -136,15 +138,18 @@ export default function MediaViewImage({
       style={imageStyle}
       activeOpacity={1}
       testID="Posted Image">
-      <ExplicitImage
-        resizeMode={mode}
+      <SmartImage
+        contentFit={mode}
         style={imageStyle}
         source={source}
-        thumbnail={thumbnail}
-        entity={entity}
         onLoad={onLoadImage}
         onError={imageError}
-        ignoreDataSaver={ignoreDataSaver}
+        ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
+        placeholder={
+          entity?.custom_data?.[0]?.blurhash || entity?.blurhash || thumbnail
+        }
+        locked={entity?.isLocked()}
+        recyclingKey={entity.urn}
       />
     </DoubleTapTouchable>
   );

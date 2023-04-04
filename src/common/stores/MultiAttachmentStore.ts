@@ -56,9 +56,11 @@ export default class MultiAttachmentStore {
 
   /**
    * Adds a new attachment store to the array
+   * @param ephemeral - whether this attachment is not yet posted
+   * @returns store
    */
-  addAttachment() {
-    const store = new AttachmentStore();
+  addAttachment(ephemeral?: boolean) {
+    const store = new AttachmentStore(undefined, ephemeral);
     this.attachments.push(store);
     return store;
   }
@@ -72,7 +74,7 @@ export default class MultiAttachmentStore {
   @action
   async attachMedia(
     media: Media,
-    extra: any,
+    extra?: any,
     ignoreRepeated: boolean = false,
   ): Promise<AttachmentStore | false> {
     if (this.attachments.length === this.max) {

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
@@ -9,11 +9,12 @@ import ThemedStyles from '../styles/ThemedStyles';
 function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
+  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
 
-  const allowMedia = !props.store.isEdit && !props.store.isRemind;
+  const allowMedia = !props.store.isEdit;
 
   const iconStyle = useMemo(
     () => [
@@ -57,7 +58,9 @@ function ComposeBottomBar(props) {
       )}
       {!props.store.isGroup() &&
         !props.store.isRemind &&
+        !isCreateModalOn &&
         !props.store.supermindRequest &&
+        !props.store.isEdit &&
         !isIosMindsHidden && (
           <IconButton
             name="money"
@@ -74,7 +77,7 @@ function ComposeBottomBar(props) {
       />
       {
         // don't allow superminding in the context of a supermind reply
-        !props.store.isSupermindReply && (
+        !props.store.isSupermindReply && !isCreateModalOn && (
           <IconButton
             name="supermind"
             style={iconStyle}

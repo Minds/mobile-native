@@ -1,16 +1,17 @@
 import React from 'react';
 import { View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import FastImage from 'react-native-fast-image';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { Version } from '../../config/Version';
-import MText from '../../common/components/MText';
+import { Image } from 'expo-image';
+
+import ThemedStyles from '~/styles/ThemedStyles';
+import { Version } from '~/config/Version';
+import MText from '~/common/components/MText';
 
 export default function AppInfoScreen() {
   const theme = ThemedStyles.style;
   const logo = ThemedStyles.theme
-    ? require('../../assets/logos/logo-white.png')
-    : require('../../assets/logos/logo.png');
+    ? require('~/assets/logos/logo-white.png')
+    : require('~/assets/logos/logo.png');
 
   const rowStyle = [
     theme.rowJustifySpaceBetween,
@@ -31,8 +32,8 @@ export default function AppInfoScreen() {
         theme.centered,
         theme.bgPrimaryBackground,
       ]}>
-      <FastImage
-        resizeMode={FastImage.resizeMode.cover}
+      <Image
+        contentFit="cover"
         style={[styles.logo, theme.marginTop2x]}
         source={logo}
       />
