@@ -33,7 +33,6 @@ import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '~/navigation/NavigationTypes';
 import ActivityModel from '../newsfeed/ActivityModel';
 import GroupModel from '../groups/GroupModel';
 import type { ComposeCreateMode } from './createComposeStore';
@@ -42,10 +41,12 @@ import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import { IconButtonNext } from '../common/ui';
 import { confirm } from '../common/components/Confirm';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
+import { ComposerStackParamList } from './ComposeStack';
 
 const { width } = Dimensions.get('window');
 
-type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
+type ScreenProps = StackScreenProps<ComposerStackParamList, 'Composer'>;
+
 export type ComposeScreenParams = {
   openSupermindModal?: boolean;
   createMode?: ComposeCreateMode;
@@ -60,7 +61,7 @@ export type ComposeScreenParams = {
  * Compose Screen
  * @param {Object} props
  */
-export default observer(function ComposeScreen(props: ScreenProps) {
+const ComposeScreen: React.FC<ScreenProps> = props => {
   // ### states & variables
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
@@ -298,7 +299,9 @@ export default observer(function ComposeScreen(props: ScreenProps) {
       </SafeAreaView>
     </ComposeContext.Provider>
   );
-});
+};
+
+export default observer(ComposeScreen);
 
 const scrollViewContentContainerStyle = { paddingBottom: 35 };
 

@@ -4,10 +4,10 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
-import ComposeScreen from './ComposeScreen';
+import ComposeScreen, { ComposeScreenParams } from './ComposeScreen';
 
 export type ComposerStackParamList = {
-  Composer: {};
+  Composer: ComposeScreenParams;
   BoostScreenV2: {};
 };
 
