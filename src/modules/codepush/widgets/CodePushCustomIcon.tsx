@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { LocalPackage } from 'react-native-code-push';
 import { Tooltip } from 'react-native-elements';
+import i18nService from '~/common/services/i18n.service';
 import { B2, Button, Icon } from '~/common/ui';
 import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { codePush, codePushStore } from '../';
-import i18nService from '../../../common/services/i18n.service';
 
 const CodePushCustomIcon = () => {
   const [metadata, setMetadata] = useState<LocalPackage | undefined | null>();
