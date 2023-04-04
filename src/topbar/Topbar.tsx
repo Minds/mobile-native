@@ -14,7 +14,7 @@ import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
-import { CodePushCustomIcon } from '../modules/codepush/widgets/CodePushDebugger';
+import { CodePushCustomIcon } from 'modules/codepush';
 
 type PropsType = {
   navigation: any;

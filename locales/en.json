@@ -1840,7 +1840,13 @@
       "available": "Available:",
       "action": "Download"
     },
-    "syncing": "Syncing app bundle..."
+    "syncing": "Syncing app bundle...",
+    "custom": {
+      "staging": "You're on staging",
+      "usingCustom": "You're using a custom app version",
+      "updateDescription": "Update description",
+      "revertToProd": "Revert to Production"
+    }
   },
   "composer": {
     "audienceSelector": {
