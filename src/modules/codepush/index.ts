@@ -1,11 +1,10 @@
 import * as Sentry from '@sentry/react-native';
 import { hasVariation } from 'ExperimentsProvider';
-import codePush from 'react-native-code-push';
-import CodePushDebugger from './widgets/CodePushDebugger';
-import CodePushUpdatePrompt from './widgets/CodePushUpdatePrompt';
-import CodePushSyncScreen from './CodePushSyncScreen';
-
-export { CodePushDebugger, CodePushUpdatePrompt, codePush, CodePushSyncScreen };
+export { default as codePush } from 'react-native-code-push';
+export { default as CodePushDebugger } from './widgets/CodePushDebugger';
+export { default as CodePushSyncScreen } from './CodePushSyncScreen';
+export { default as codePushStore } from './codepush.store';
+export { default as CodePushUpdatePrompt } from './widgets/CodePushUpdatePrompt';
 
 export const logMessage = (event: any, prefix = 'CodePush log:') => {
   hasVariation('mob-4722-track-code-push')
