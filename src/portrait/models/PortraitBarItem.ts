@@ -1,5 +1,5 @@
+import { Image } from 'expo-image';
 import { computed } from 'mobx';
-import FastImage, { Source } from 'react-native-fast-image';
 import UserModel from '~/channel/UserModel';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 
@@ -14,17 +14,17 @@ export default class PortraitBarItem {
   }
 
   preloadImages() {
-    const images = this.activities
+    const images: string[] = this.activities
+      .filter(activity => activity.hasMedia())
       .map(e => {
-        const source = e.hasMedia() ? e.getThumbSource('xlarge') : null;
-        if (source) {
-          source.priority = FastImage.priority.low;
-        }
-        return source;
+        const source = e.getThumbSource('xlarge');
+        return source.uri || '';
       })
-      .filter(s => s !== null && s.uri);
+      .filter(uri => uri);
 
-    FastImage.preload(images as Source[]);
+    if (images) {
+      Image.prefetch(images);
+    }
     this.imagesPreloaded = true;
   }
 
