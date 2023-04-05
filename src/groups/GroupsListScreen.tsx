@@ -22,7 +22,7 @@ const GroupsListScreen = observer(() => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('discovery.groups')} back />
+      <ScreenHeader title={i18n.t('discovery.groups')} />
       <OffsetList
         renderItem={renderGroup}
         fetchEndpoint={'api/v1/groups/member'}

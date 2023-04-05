@@ -116,8 +116,9 @@ export default observer(function ({}: PropsType) {
             contentContainerStyle={styles.suggestedScroll}
             horizontal={true}>
             <MIcon name="fire" size={23} style={theme.colorAlert} />
-            {localStore.suggested.map((t: any) => (
+            {localStore.suggested.map((t: any, index) => (
               <MText
+                key={index}
                 style={[styles.tag, theme.colorIconActive]}
                 onPress={() => store.addTag(t.value)}>
                 #{t.value}
@@ -170,6 +171,7 @@ export default observer(function ({}: PropsType) {
 
             {localStore.history.history.map(t => (
               <MText
+                key={t}
                 style={styles.historyTag}
                 onPress={() => localStore.addString(t)}>
                 #{t}
@@ -178,8 +180,8 @@ export default observer(function ({}: PropsType) {
           </View>
         )}
         <View style={styles.tagsContainer}>
-          {store.tags.map(t => (
-            <TagRow tag={t} store={store} />
+          {store.tags.map((t, index) => (
+            <TagRow key={index} tag={t} store={store} />
           ))}
         </View>
       </BottomSheetScrollView>
