@@ -32,15 +32,11 @@ exports[`SupermindRequest should render inbound 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
-              "borderRadius": 3,
-              "overflow": "hidden",
-            },
-            Object {
-              "height": 24,
-            },
-          ]
+          Object {
+            "borderRadius": 3,
+            "height": 22,
+            "overflow": "hidden",
+          }
         }
       >
         <ExpoLinearGradient
@@ -496,15 +492,11 @@ exports[`SupermindRequest should render outbound 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
-              "borderRadius": 3,
-              "overflow": "hidden",
-            },
-            Object {
-              "height": 24,
-            },
-          ]
+          Object {
+            "borderRadius": 3,
+            "height": 22,
+            "overflow": "hidden",
+          }
         }
       >
         <ExpoLinearGradient

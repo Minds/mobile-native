@@ -73,6 +73,7 @@ export default observer(function () {
 
         {licenses.slice(0, 2).map(o => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.attachments.license === o.value}
@@ -90,6 +91,7 @@ export default observer(function () {
         </MText>
         {licenses.slice(2).map((o, i) => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.attachments.license === o.value}

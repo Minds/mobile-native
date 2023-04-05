@@ -91,7 +91,6 @@ export const getColor = (theme, mode, darkContent, disabled, type) => {
 
 export function getFontRenderer(size) {
   switch (size) {
-    case 'pill':
     case 'tiny':
       return Btn3;
     case 'small':

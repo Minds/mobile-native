@@ -70,8 +70,8 @@ export default observer(function () {
           {i18n.t('nsfw.categories').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>
-          {options.slice(1).map(o => (
-            <NsfwOption option={o} store={store} />
+          {options.slice(1).map((o, index) => (
+            <NsfwOption key={index} option={o} store={store} />
           ))}
         </View>
       </ScrollView>
