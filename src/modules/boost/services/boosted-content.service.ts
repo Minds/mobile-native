@@ -3,7 +3,7 @@ import apiService from '~/common/services/api.service';
 import blockListService from '~/common/services/block-list.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import ActivityModel from '~/newsfeed/ActivityModel';
+import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 
 /**
  * Boosted content service
@@ -17,9 +17,9 @@ class BoostedContentService {
 
   /**
    * Boosts
-   * @var {Array<ActivityModel>} boosts
+   * @var {Array<BoostedActivityModel>} boosts
    */
-  boosts: Array<ActivityModel> = [];
+  boosts: Array<BoostedActivityModel> = [];
 
   /**
    * whether the feed is updating
@@ -46,10 +46,12 @@ class BoostedContentService {
 
   /**
    * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel>} boosts
+   * @param {Array<BoostedActivityModel>} boosts
    */
-  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((entity: ActivityModel) => {
+  cleanBoosts(
+    boosts: Array<BoostedActivityModel>,
+  ): Array<BoostedActivityModel> {
+    return boosts.filter((entity: BoostedActivityModel) => {
       entity.boosted = true;
       // remove NSFW on iOS
       if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
@@ -62,11 +64,11 @@ class BoostedContentService {
   }
 
   loadCached() {
-    const boosts = storages.session?.getArray<ActivityModel>(
+    const boosts = storages.session?.getArray<BoostedActivityModel>(
       'BoostServiceCache',
     );
     if (boosts) {
-      this.boosts = ActivityModel.createMany(boosts);
+      this.boosts = BoostedActivityModel.createMany(boosts);
     }
   }
 
@@ -84,7 +86,7 @@ class BoostedContentService {
           response.boosts.map(b => b.entity),
         );
 
-        this.boosts = ActivityModel.createMany(filteredBoosts);
+        this.boosts = BoostedActivityModel.createMany(filteredBoosts);
 
         // cache boosts
         storages.session?.setArray('BoostServiceCache', filteredBoosts);
@@ -97,7 +99,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ActivityModel | null {
+  fetch(): BoostedActivityModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {
@@ -110,6 +112,25 @@ class BoostedContentService {
     }
 
     return this.boosts[this.offset];
+  }
+
+  /**
+   * gets a boost that contains media
+   */
+  getMediaBoost(): BoostedActivityModel | null {
+    const boost = this.fetch();
+
+    if (boost) {
+      // if the boost has media return it
+      if (boost.hasVideo() || boost.hasImage()) {
+        return boost;
+      }
+
+      // otherwise get another media boost
+      return this.getMediaBoost();
+    }
+
+    return null;
   }
 }
 

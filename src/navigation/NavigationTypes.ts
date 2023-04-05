@@ -6,7 +6,7 @@ import type { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
-import type { PortraitBarItem } from '../portrait/createPortraitStore';
+import type PortraitBarItem from '../portrait/models/PortraitBarItem';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
@@ -250,7 +250,10 @@ export type AppStackParamList = {
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
-    index: number;
+    /**
+     * the guid of the selected activity to be focused
+     */
+    guid?: string;
   };
   Fab: {
     disableThresholdCheck?: boolean;

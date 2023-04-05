@@ -1,33 +1,30 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { View, Platform, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-import type ActivityModel from '../newsfeed/ActivityModel';
-import MediaView from '../common/components/MediaView';
-import OwnerBlock from '../newsfeed/activity/OwnerBlock';
-import ThemedStyles from '../styles/ThemedStyles';
-import ActivityActionSheet from '../newsfeed/activity/ActivityActionSheet';
-
-import FloatingBackButton from '../common/components/FloatingBackButton';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Actions from '../newsfeed/activity/Actions';
-import Activity from '../newsfeed/activity/Activity';
-
-import CommentsStore from '../comments/v2/CommentsStore';
-import sessionService from '../common/services/session.service';
-import videoPlayerService from '../common/services/video-player.service';
-import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-
-import LockV2 from '../wire/v2/lock/Lock';
-import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
-import BoxShadow from '../common/components/BoxShadow';
-import i18n from '../common/services/i18n.service';
-import { withErrorBoundary } from '../common/components/ErrorBoundary';
-import MText from '../common/components/MText';
-import { useCarouselFocus } from './PortraitViewerScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
+import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
+import CommentsStore from '~/comments/v2/CommentsStore';
+import BoxShadow from '~/common/components/BoxShadow';
+import { withErrorBoundary } from '~/common/components/ErrorBoundary';
+import FloatingBackButton from '~/common/components/FloatingBackButton';
+import MText from '~/common/components/MText';
+import MediaView from '~/common/components/MediaView';
+import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
+import i18n from '~/common/services/i18n.service';
+import sessionService from '~/common/services/session.service';
+import videoPlayerService from '~/common/services/video-player.service';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import Actions from '~/newsfeed/activity/Actions';
+import Activity from '~/newsfeed/activity/Activity';
+import ActivityActionSheet from '~/newsfeed/activity/ActivityActionSheet';
+import OwnerBlock from '~/newsfeed/activity/OwnerBlock';
+import ThemedStyles from '~/styles/ThemedStyles';
+import LockV2 from '~/wire/v2/lock/Lock';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
+
+import { useCarouselFocus } from '../PortraitViewerScreen';
 
 type PropsType = {
   entity: ActivityModel;
