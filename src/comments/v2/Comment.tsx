@@ -131,7 +131,7 @@ export default observer(function Comment({
 
   const reply = React.useCallback(() => {
     // if we can't reply, open input and fill in owner username
-    if (!can_reply) {
+    if (!canReply && !can_reply) {
       return setShowInput(true, undefined, `@${username} `);
     }
 
@@ -140,7 +140,15 @@ export default observer(function Comment({
       entity,
       open: true,
     });
-  }, [can_reply, comment, entity, navigation, setShowInput, username]);
+  }, [
+    canReply,
+    can_reply,
+    comment,
+    entity,
+    navigation,
+    setShowInput,
+    username,
+  ]);
 
   const viewReply = React.useCallback(() => {
     navigation.push('ReplyComment', {
