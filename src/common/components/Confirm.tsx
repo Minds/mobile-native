@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
@@ -7,8 +7,7 @@ import { BottomSheetButton, pushBottomSheet } from './bottom-sheet';
 
 interface ConfirmProps {
   title: string;
-  actionText?: string;
-  description?: string | ReactNode;
+  description?: string;
   onConfirm: () => void;
   onCancel: () => void;
   onLayout?: ({
@@ -20,7 +19,6 @@ interface ConfirmProps {
 
 export default function Confirm({
   title,
-  actionText,
   description,
   onConfirm,
   onCancel,
@@ -35,12 +33,12 @@ export default function Confirm({
         <H2 align="center" bottom="L">
           {title}
         </H2>
-        {typeof description === 'string' ? <B1>{description}</B1> : description}
+        {!!description && <B1>{description}</B1>}
       </Spacer>
       <BottomSheetButton
         action
         solid
-        text={actionText ?? i18nService.t('confirm')}
+        text={i18nService.t('confirm')}
         onPress={onConfirm}
       />
       <BottomSheetButton text={i18nService.t('cancel')} onPress={onCancel} />

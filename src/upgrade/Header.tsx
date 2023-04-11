@@ -1,9 +1,7 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View } from 'react-native';
-import FadeView from '../common/components/FadeView';
+import { ImageBackground, View, StyleSheet } from 'react-native';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
 
 type PropsType = {
   pro: boolean | undefined;
@@ -16,14 +14,6 @@ const Header = ({ pro }: PropsType) => {
       style={styles.banner}
       source={require('../assets/plus-image.png')}
       resizeMode="cover">
-      {ThemedStyles.theme === 1 && (
-        <FadeView
-          style={ThemedStyles.style.positionAbsoluteBottom}
-          fades={['bottom']}
-          fadeLength={200}
-          backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-        />
-      )}
       <View style={styles.textContainer}>
         <MText style={styles.minds}>
           {i18n.t(`monetize.${texts}`).toUpperCase()}
@@ -57,7 +47,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
   },
   text: {
-    color: '#FFFFFF',
+    color: '#AEB0B8',
     fontSize: 16,
     fontFamily: 'Roboto-Regular',
     marginVertical: 15,

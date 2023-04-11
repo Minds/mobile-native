@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -8,15 +8,10 @@ import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import { LICENSES } from '~/common/services/list-options.service';
 import MText from '../../common/components/MText';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
 const licenses = LICENSES.filter(l => l.selectable);
-interface LicenseSelectorProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'LicenseSelector'> {}
 
 /**
  * Option
@@ -40,7 +35,7 @@ const Option = props => {
 /**
  * License selector
  */
-export default observer(function ({}: LicenseSelectorProps) {
+export default observer(function () {
   const theme = ThemedStyles.style;
   const store = useComposeContext();
 
@@ -78,6 +73,7 @@ export default observer(function ({}: LicenseSelectorProps) {
 
         {licenses.slice(0, 2).map(o => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.attachments.license === o.value}
@@ -95,6 +91,7 @@ export default observer(function ({}: LicenseSelectorProps) {
         </MText>
         {licenses.slice(2).map((o, i) => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.attachments.license === o.value}

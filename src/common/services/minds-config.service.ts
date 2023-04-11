@@ -17,7 +17,7 @@ class MindsConfigService {
    */
   async update() {
     const settings = await api.get<any>('api/v1/minds/config');
-    storages.app.setMap('mindsSettings', settings);
+    storages.user?.setMap('mindsSettings', settings);
 
     this.settings = settings;
   }
@@ -28,7 +28,7 @@ class MindsConfigService {
   getSettings() {
     let settings;
     if (!this.settings) {
-      settings = storages.app.getMap('mindsSettings');
+      settings = storages.user?.getMap('mindsSettings');
       if (!settings) {
         settings = this.loadDefault();
       }
@@ -43,7 +43,7 @@ class MindsConfigService {
    */
   clear() {
     this.settings = undefined;
-    storages.app.removeItem('mindsSettings');
+    storages.user?.removeItem('mindsSettings');
   }
 }
 

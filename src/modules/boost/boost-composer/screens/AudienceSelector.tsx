@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import { showNotification } from '../../../../../AppMessages';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import {
@@ -12,19 +13,14 @@ import {
   Screen,
   ScreenHeader,
 } from '~/common/ui';
-import { showNotification } from '../../../../../AppMessages';
-import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
+import { useTranslation } from '../../locales';
 import { BoostStackScreenProps } from '../navigator';
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
-function AudienceSelectorScreen({
-  navigation,
-  route,
-}: AudienceSelectorScreenProps) {
+function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
-  const { safe, backIcon } = route.params ?? ({} as Record<string, string>);
   const boostStore = useBoostStore();
 
   if (!boostStore.config) {
@@ -38,7 +34,7 @@ function AudienceSelectorScreen({
   };
 
   return (
-    <Screen safe onlyTopEdge={!safe}>
+    <Screen safe onlyTopEdge>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -46,7 +42,6 @@ function AudienceSelectorScreen({
             : t('Boost Post')
         }
         back
-        backIcon={backIcon}
         shadow
       />
       <FitScrollView>

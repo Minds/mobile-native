@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,11 +11,10 @@ import hashtagService from '../../common/services/hashtag.service';
 import HistoryStore from '../../common/stores/HistoryStore';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MenuItem from '../../common/components/menus/MenuItem';
+import { PosterStackScreenProps } from './PosterStackNavigator';
 import { ScrollView } from 'react-native-gesture-handler';
 
 /**
@@ -30,14 +29,12 @@ const TagRow = props => {
   return <MenuItem title={`#${props.tag}`} onPress={onDelete} icon="close" />;
 };
 
-interface TagSelectorProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'TagSelector'> {}
+type PropsType = PosterStackScreenProps<'TagSelector'>;
 
 /**
  * Tag selector
  */
-export default observer(function ({}: TagSelectorProps) {
+export default observer(function ({}: PropsType) {
   const theme = ThemedStyles.style;
   const store = useComposeContext();
   const inputRef = useRef<any>(null);
@@ -119,8 +116,9 @@ export default observer(function ({}: TagSelectorProps) {
             contentContainerStyle={styles.suggestedScroll}
             horizontal={true}>
             <MIcon name="fire" size={23} style={theme.colorAlert} />
-            {localStore.suggested.map((t: any) => (
+            {localStore.suggested.map((t: any, index) => (
               <MText
+                key={index}
                 style={[styles.tag, theme.colorIconActive]}
                 onPress={() => store.addTag(t.value)}>
                 #{t.value}
@@ -173,6 +171,7 @@ export default observer(function ({}: TagSelectorProps) {
 
             {localStore.history.history.map(t => (
               <MText
+                key={t}
                 style={styles.historyTag}
                 onPress={() => localStore.addString(t)}>
                 #{t}
@@ -181,8 +180,8 @@ export default observer(function ({}: TagSelectorProps) {
           </View>
         )}
         <View style={styles.tagsContainer}>
-          {store.tags.map(t => (
-            <TagRow tag={t} store={store} />
+          {store.tags.map((t, index) => (
+            <TagRow key={index} tag={t} store={store} />
           ))}
         </View>
       </BottomSheetScrollView>

@@ -114,5 +114,4 @@ export type FeatureID =
   | 'minds-3639-plus-notice'
   | 'mob-4812-discovery-badge'
   | 'mob-4836-iap-no-cash'
-  | 'mob-4596-create-modal'
   | 'epic-303-boost-partners';
