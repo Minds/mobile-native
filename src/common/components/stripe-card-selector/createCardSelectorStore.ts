@@ -5,6 +5,7 @@ import api, { ApiResponse } from '../../services/api.service';
 import i18nService from '../../services/i18n.service';
 import logService from '../../services/log.service';
 import { initStripe } from '../../services/stripe.service';
+import { confirm } from '../Confirm';
 
 interface StripeResponse extends ApiResponse {
   paymentmethods: Array<StripeCard>;
@@ -136,6 +137,32 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
     } catch (err) {
       logService.exception('[Stripe saveCard]', err);
       this.setInProgress(false);
+    }
+  },
+  async removeCard(index: number) {
+    if (!this.cards[index]) {
+      return;
+    }
+
+    const confirmed = await confirm({
+      title: 'Do you want to remove this card?',
+      description: selectValueExtractor(this.cards[index]),
+    });
+    if (confirmed) {
+      try {
+        this.setInProgress(true);
+        await api.delete(
+          'api/v2/payments/stripe/paymentmethods/' + this.cards[index].id,
+        );
+        this.cards.splice(index, 1);
+        if (this.current > this.cards.length - 1) {
+          this.current = this.cards.length - 1;
+        }
+      } catch (error) {
+        logService.exception('[Stripe removeCard]', error);
+      } finally {
+        this.setInProgress(false);
+      }
     }
   },
   onCardChange(cardDetails: CardFieldInput.Details) {
