@@ -307,12 +307,11 @@ const createMindsVideoStore = ({
       });
 
       this.player?.setStatusAsync({
+        progressUpdateIntervalMillis: 100,
         shouldPlay: true,
         isMuted: !this.volume,
         isLooping: Boolean(repeat),
       });
-
-      this.player?.setProgressUpdateIntervalAsync(100);
 
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
