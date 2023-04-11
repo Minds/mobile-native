@@ -1,33 +1,24 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { StyleSheet, View, Platform } from 'react-native';
-import ThemedStyles from '../styles/ThemedStyles';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDimensions } from '@react-native-community/hooks';
+
+import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import { UserError } from '../common/UserError';
 import FitScrollView from '../common/components/FitScrollView';
-import { useStores } from '../common/hooks/use-stores';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
-import PaymentMethod from './PaymentMethod';
-import {
-  payMethod,
-  UpgradeScreenNavigationProp,
-  UpgradeScreenRouteProp,
-} from './types';
-import PlanOptions from './PlanOptions';
-import { useDimensions } from '@react-native-community/hooks';
-import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
-import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
+import { UpgradeScreenNavigationProp, UpgradeScreenRouteProp } from './types';
 import { Button, Column, H4 } from '~ui';
 import {
-  GOOGLE_PLAY_STORE,
+  IS_FROM_STORE,
+  IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
-import { confirm } from '~/common/components/Confirm';
-import { useIsFeatureOn } from 'ExperimentsProvider';
-
-const isIos = Platform.OS === 'ios';
+import UpgradeStripeTokens from './UpgradeStripeTokens';
+import UpgradeInAppPurchasesTokens from './UpgradeInAppPurchasesTokens';
+import { withIAPContext } from 'react-native-iap';
 
 type PropsType = {
   route: UpgradeScreenRouteProp;
@@ -36,87 +27,24 @@ type PropsType = {
 
 const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   const localStore = useLocalStore(createUpgradeStore);
-  const wallet = useStores().wallet;
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
   const { height } = useDimensions().window;
   const { onComplete, pro } = route.params;
 
-  const complete = useCallback(
-    (done: any) => {
-      localStore.setLoading(false);
-      onComplete(done);
-      navigation.goBack();
-    },
-    [navigation, onComplete, localStore],
-  );
-
-  const payWith = useCallback(
-    async (currency: payMethod) => {
-      try {
-        localStore.wire.setAmount(localStore.selectedOption.cost);
-        localStore.wire.setCurrency(currency);
-        localStore.wire.setOwner(localStore.owner);
-        localStore.wire.setRecurring(
-          localStore.selectedOption.id === 'monthly',
-        );
-        if (currency === 'usd') {
-          localStore.wire.setPaymentMethodId(localStore.card.id);
-        }
-        const done = await localStore.wire.send();
-        if (!done) {
-          throw new UserError(i18n.t('boosts.errorPayment'));
-        }
-
-        complete(done);
-      } catch (err) {
-        if (err instanceof Error) {
-          throw new UserError(err.message);
-        } else {
-          throw new UserError(i18n.t('boosts.errorPayment'));
-        }
-      } finally {
-        localStore.setLoading(false);
-      }
-    },
-    [complete, localStore],
-  );
-
-  const confirmSend = useCallback(async () => {
-    if (
-      !(await confirm({
-        title: i18n.t('supermind.confirmNoRefund.title'),
-        description: i18n.t('supermind.confirmNoRefund.description'),
-      }))
-    ) {
-      return;
-    }
-    localStore.setLoading(true);
-    payWith(localStore.method);
-  }, [localStore, payWith]);
-
   useEffect(() => {
-    const init = async () => {
-      if (!localStore.loaded) {
-        localStore.init(pro);
-      }
-    };
-    init();
-  }, [localStore, pro, wallet]);
-
-  const DISABLED =
-    (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
-    !PRO_PLUS_SUBSCRIPTION_ENABLED;
+    localStore.init(pro);
+  }, [localStore, pro]);
 
   const topMargin = height / 18;
   const cleanTop = {
-    marginTop: insets.top + (isIos ? topMargin : topMargin + 10),
+    marginTop: insets.top + (IS_IOS ? topMargin : topMargin + 10),
   };
 
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      {DISABLED ? (
+      {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
         <Column top="XL" align="centerBoth" horizontal="L">
           <H4 align="center">
             Sorry, the update is not available on mobile at the moment.
@@ -131,33 +59,28 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
         </Column>
       ) : (
         <>
-          {localStore.settings === false && <UpgradeScreenPlaceHolder />}
-          {localStore.settings !== false && (
-            <FitScrollView>
-              {!isIos && <PaymentMethod store={localStore} />}
-              <PlanOptions store={localStore} pro={pro} />
-              {localStore.method === 'usd' && (
-                <StripeCardSelector onCardSelected={localStore.setCard} />
-              )}
-              <Button
-                mode="outline"
-                type="action"
-                top="L2"
-                horizontal="L"
-                loading={localStore.loading}
-                onPress={confirmSend}
-                spinner>
-                {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
-              </Button>
-            </FitScrollView>
-          )}
+          <FitScrollView>
+            {!IS_FROM_STORE ? (
+              <UpgradeStripeTokens
+                store={localStore}
+                pro={!!pro}
+                onComplete={onComplete}
+              />
+            ) : (
+              <UpgradeInAppPurchasesTokens
+                store={localStore}
+                pro={!!pro}
+                onComplete={onComplete}
+              />
+            )}
+          </FitScrollView>
         </>
       )}
     </View>
   );
 });
 
-export default UpgradeScreen;
+export default withIAPContext(UpgradeScreen);
 
 const styles = StyleSheet.create({
   container: {

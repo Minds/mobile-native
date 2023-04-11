@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
-import {
-  Alert,
-  ImageURISource,
-  StyleProp,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Alert, ImageURISource, View, ViewStyle } from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
+import { ImageProps } from 'expo-image';
 
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
 import download from '../services/download.service';
@@ -19,7 +14,6 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import NavigationService from '../../navigation/NavigationService';
 import EmbedLink from './media-view/EmbedLink';
-import { ImageStyle } from 'react-native-fast-image';
 import MediaViewImage from './media-view/MediaViewImage';
 import openUrlService from '../services/open-url.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -30,7 +24,7 @@ import MediaViewMultiImage from './media-view/MediaViewMultiImage';
 type PropsType = {
   entity: ActivityModel | CommentModel;
   navigation?: any;
-  imageStyle?: StyleProp<ImageStyle>;
+  imageStyle?: ImageProps['style'];
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
   onPress?: () => void;
@@ -214,18 +208,6 @@ export default class MediaView extends Component<PropsType> {
   };
 
   /**
-   * On image load handler
-   */
-  onLoadImage = e => {
-    if (this.props.autoHeight) {
-      this.setState({
-        height: e.nativeEvent.height,
-        width: e.nativeEvent.width,
-      });
-    }
-  };
-
-  /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
    * @param {object} thumbnail
@@ -314,22 +296,3 @@ export default class MediaView extends Component<PropsType> {
     });
   };
 }
-
-// const styles = StyleSheet.create({
-//   licenseContainer: {
-//     marginTop: 8,
-//     display: 'flex',
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   licenseText: {
-//     color: '#888',
-//     fontWeight: 'bold',
-//     fontFamily: 'Roboto',
-//     fontSize: 10,
-//   },
-//   licenseIcon: {
-//     paddingRight: 2,
-//   },
-// });

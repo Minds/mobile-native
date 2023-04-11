@@ -129,7 +129,6 @@ const MindsVideo = observer((props: PropsType) => {
           <RetryableImage
             style={theme.positionAbsolute}
             source={posterSource!}
-            withoutDownloadButton
           />
         )}
         <ExpoVideo

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -61,7 +61,7 @@ class CommentHeader extends PureComponent<PropsType> {
         <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
-            <FastImage source={avatarSrc} style={styles.avatar} />
+            <Image source={avatarSrc} style={styles.avatar} />
           </DebouncedTouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>

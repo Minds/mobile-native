@@ -1,5 +1,6 @@
 import {
   createStackNavigator,
+  StackScreenProps,
   TransitionPresets,
 } from '@react-navigation/stack';
 import React from 'react';
@@ -13,7 +14,9 @@ import PosterOptions from './PosterOptions';
 import ScheduleSelector from './ScheduleSelector';
 import TagSelector from './TagSelector';
 import MembershipMonetizeScreen from './monetize/MembershipMonetizeScreen';
-import ComposeSupermindScreen from '../SupermindComposeScreen';
+import ComposeSupermindScreen, {
+  SupermindRequestParam,
+} from '../SupermindComposeScreen';
 // import CustomMonetizeScreen from '../compose/PosterOptions/monetize/CustomMonetizeScreen';
 
 export type PosterStackParamList = {
@@ -28,10 +31,20 @@ export type PosterStackParamList = {
   PlusMonetize: {};
   MembershipMonetize: {};
   CustomMonetize: {};
-  ComposeSupermind: {};
+  ComposeSupermind: {
+    data: SupermindRequestParam;
+    closeComposerOnClear?: boolean;
+    onSave: (payload: SupermindRequestParam) => void;
+    onClear: () => void;
+  };
 };
 
 const Stack = createStackNavigator<PosterStackParamList>();
+
+export type PosterStackScreenProps<
+  T extends keyof PosterStackParamList
+> = StackScreenProps<PosterStackParamList, T>;
+
 const screenOptions = {
   ...TransitionPresets.SlideFromRightIOS,
   headerShown: false,

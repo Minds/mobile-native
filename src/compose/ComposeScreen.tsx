@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Dimensions,
@@ -8,34 +9,34 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { observer } from 'mobx-react';
-import FastImage from 'react-native-fast-image';
+
 import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
+import { observer } from 'mobx-react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { IconButtonNext } from '~ui/icons';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
-import MetaPreview from './MetaPreview';
-import TitleInput from './TitleInput';
-import NavigationService from '../navigation/NavigationService';
-import RemindPreview from './RemindPreview';
-import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
-import TopBar from './TopBar';
-import BottomBar from './ComposeBottomBar';
-import MediaPreview from './MediaPreview';
-import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
-import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
-import sessionService from '~/common/services/session.service';
-import useComposeStore, { ComposeContext } from './useComposeStore';
-import SupermindLabel from '../common/components/supermind/SupermindLabel';
+import { StackScreenProps } from '@react-navigation/stack';
 import { confirm } from '~/common/components/Confirm';
+import sessionService from '~/common/services/session.service';
+import { IconButtonNext } from '~ui/icons';
+import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
+import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
+import SupermindLabel from '../common/components/supermind/SupermindLabel';
+import i18n from '../common/services/i18n.service';
+import NavigationService from '../navigation/NavigationService';
+import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import BottomBar from './ComposeBottomBar';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '~/navigation/NavigationTypes';
+import MediaPreview from './MediaPreview';
+import MetaPreview from './MetaPreview';
+import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
+import RemindPreview from './RemindPreview';
+import TitleInput from './TitleInput';
+import TopBar from './TopBar';
+import useComposeStore, { ComposeContext } from './useComposeStore';
+import { RootStackParamList } from '../navigation/NavigationTypes';
 
 const { width } = Dimensions.get('window');
 
@@ -45,7 +46,7 @@ type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
  * Compose Screen
  * @param {Object} props
  */
-export default observer(function ComposeScreen(props: ScreenProps) {
+const ComposeScreen: React.FC<ScreenProps> = props => {
   // ### states & variables
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
@@ -202,7 +203,7 @@ export default observer(function ComposeScreen(props: ScreenProps) {
           onScroll={onScrollHandler}>
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
-              <FastImage source={avatar} style={styles.wrappedAvatar} />
+              <Image source={avatar} style={styles.wrappedAvatar} />
             </View>
             <View style={useStyle('flexContainer', 'marginRight2x')}>
               {!store.noText && (
@@ -276,7 +277,9 @@ export default observer(function ComposeScreen(props: ScreenProps) {
       </SafeAreaView>
     </ComposeContext.Provider>
   );
-});
+};
+
+export default observer(ComposeScreen);
 
 const scrollViewContentContainerStyle = { paddingBottom: 35 };
 

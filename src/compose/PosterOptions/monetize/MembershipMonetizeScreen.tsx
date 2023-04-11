@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -6,16 +6,13 @@ import i18n from '../../../common/services/i18n.service';
 import Wrapper from './common/Wrapper';
 import type { SupportTiersType } from '~/wire/WireTypes';
 import TierManagementScreen from '../../../common/components/tier-management/TierManagementScreen';
-import { StackScreenProps } from '@react-navigation/stack';
 import supportTiersService from '../../../common/services/support-tiers.service';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import MText from '../../../common/components/MText';
 import { useComposeContext } from '~/compose/useComposeStore';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { PosterStackScreenProps } from '~/compose/PosterOptions/PosterStackNavigator';
 
-interface MembershipMonetizeScreenProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'MembershipMonetize'> {}
+type PropsType = PosterStackScreenProps<'MembershipMonetize'>;
 
 const createMembershipMonetizeStore = () => {
   const store = {
@@ -51,7 +48,7 @@ const createMembershipMonetizeStore = () => {
 export type TierStoreType = ReturnType<typeof createMembershipMonetizeStore>;
 
 const MembershipMonetizeScreen = observer(
-  ({ route, navigation }: MembershipMonetizeScreenProps) => {
+  ({ route, navigation }: PropsType) => {
     const store = useComposeContext();
     const theme = ThemedStyles.style;
 

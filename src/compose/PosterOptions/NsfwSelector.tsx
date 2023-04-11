@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import _ from 'lodash';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
@@ -7,8 +7,6 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
 
@@ -30,14 +28,10 @@ const NsfwOption = props => {
   );
 };
 
-interface NsfwProps
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'NsfwSelector'> {}
-
 /**
  * NSFW selector
  */
-export default observer(function ({}: NsfwProps) {
+export default observer(function () {
   const store = useComposeContext();
   const length = store.nsfw.length;
   const options = useMemo(
@@ -76,8 +70,8 @@ export default observer(function ({}: NsfwProps) {
           {i18n.t('nsfw.categories').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>
-          {options.slice(1).map(o => (
-            <NsfwOption option={o} store={store} />
+          {options.slice(1).map((o, index) => (
+            <NsfwOption key={index} option={o} store={store} />
           ))}
         </View>
       </ScrollView>

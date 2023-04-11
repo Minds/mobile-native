@@ -1,6 +1,4 @@
 /* eslint-disable no-shadow */
-import { RouteProp } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
@@ -21,19 +19,16 @@ import i18nService from '../common/services/i18n.service';
 import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
-import { RootStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
 import { hasVariation } from 'ExperimentsProvider';
+import { PosterStackScreenProps } from './PosterOptions/PosterStackNavigator';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
-
-type PasswordConfirmation = RouteProp<RootStackParamList, 'SupermindCompose'>;
-type Navigation = StackNavigationProp<RootStackParamList, 'SupermindCompose'>;
 
 export enum ReplyType {
   text = 0,
@@ -73,16 +68,13 @@ type SupermindStateFn = (
   next: SupermindState,
 ) => SupermindState;
 
-interface SupermindComposeScreen {
-  route?: PasswordConfirmation;
-  navigation: Navigation;
-}
+type PropsType = PosterStackScreenProps<'ComposeSupermind'>;
 
 /**
  * Compose Screen
  * @param {Object} props
  */
-function SupermindComposeScreen(props: SupermindComposeScreen) {
+const SupermindComposeScreen: React.FC<PropsType> = props => {
   const theme = ThemedStyles.style;
   const { params } = props.route ?? {};
   const { data, closeComposerOnClear, onClear } = params ?? {};
@@ -381,7 +373,7 @@ function SupermindComposeScreen(props: SupermindComposeScreen) {
       </AnimatePresence>
     </ModalFullScreen>
   );
-}
+};
 
 export default observer(SupermindComposeScreen);
 

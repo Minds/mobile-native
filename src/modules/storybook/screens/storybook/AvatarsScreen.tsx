@@ -22,7 +22,7 @@ export function AvatarsScreen(): JSX.Element {
         <Stack f={1} fw="wrap" br="$4" mt="$2" fd="row" jc="space-evenly">
           {urls.map((props, index) => (
             <Avatar
-              key={`${index}`}
+              key={index}
               {...props}
               onPress={() => navigate('IconButtons')}
             />

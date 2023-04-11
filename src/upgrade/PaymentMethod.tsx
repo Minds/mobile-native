@@ -5,12 +5,14 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { UpgradeStoreType } from './createUpgradeStore';
 import MText from '../common/components/MText';
 import Switch from '~/common/components/controls/Switch';
+import { observer } from 'mobx-react';
 
 type PropsType = {
   store: UpgradeStoreType;
+  cashName?: string;
 };
 
-const PaymentMethod = ({ store }: PropsType) => {
+const PaymentMethod = ({ store, cashName }: PropsType) => {
   const theme = ThemedStyles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
   return (
@@ -21,10 +23,10 @@ const PaymentMethod = ({ store }: PropsType) => {
         theme.bcolorPrimaryBorder,
         theme.borderTopHair,
       ]}>
-      <MText style={switchTextStyle}>{i18n.t('usd')}</MText>
+      <MText style={switchTextStyle}>{cashName || i18n.t('usd')}</MText>
       <Switch
         value={store.method === 'tokens'}
-        onChange={store.setMethod}
+        onChange={store.toogleMethod}
         style={theme.marginHorizontal2x}
       />
       <MText style={switchTextStyle}>Tokens</MText>
@@ -32,7 +34,7 @@ const PaymentMethod = ({ store }: PropsType) => {
   );
 };
 
-export default PaymentMethod;
+export default observer(PaymentMethod);
 
 const styles = StyleSheet.create({
   switchText: {

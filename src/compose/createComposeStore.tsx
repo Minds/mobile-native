@@ -68,7 +68,7 @@ export default function (props) {
     embed: new RichEmbedStore(),
     text: '',
     title: '',
-    time_created: null as number | null,
+    time_created: undefined as number | undefined,
     mediaToConfirm: null as Media | null,
     extra: null,
     posting: false,
@@ -409,7 +409,6 @@ export default function (props) {
       this.isRemind = false;
       this.isEdit = false;
       this.nsfw = [];
-      this.time_created = null;
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
       this.group = null;

@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import { extendObservable } from 'mobx';
-import UserModel from '~/channel/UserModel';
 import { InjectItem } from '~/common/components/FeedList';
-import type ActivityModel from '~/newsfeed/ActivityModel';
-
 import PortraitBarItem from '../models/PortraitBarItem';
 import injectBoosts from './inject-boosts';
+import ActivityModel from '../../newsfeed/ActivityModel';
+import UserModel from '../../channel/UserModel';
 
 /**
  * gets entities, user, and seenList and returns a
