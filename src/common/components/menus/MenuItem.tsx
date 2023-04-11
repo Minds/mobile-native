@@ -36,6 +36,7 @@ export type MenuItemProps = {
   multiLine?: boolean;
   reversedIcon?: boolean;
   avatarSize?: number;
+  children?: ReactNode;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -54,6 +55,7 @@ export default function ({
   noIcon,
   titleStyle,
   multiLine,
+  children,
   reversedIcon,
   avatarSize,
   ...props
@@ -159,6 +161,7 @@ export default function ({
             {subtitle}
           </B2>
         )}
+        {children}
       </Column>
       {!reversedIcon && shouldRenderIcon && (
         <View style={styles.rightIcon}>{rightIcon}</View>
