@@ -23,6 +23,7 @@ import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
 import codePushStore from './src/modules/codepush/codepush.store';
 import { InteractionManager } from 'react-native';
+import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
 
 /**
  * App initialization manager
@@ -124,6 +125,7 @@ export class AppInitManager {
     translationService.purgeLanguagesCache();
     updateGrowthBookAttributes();
     boostedContentService.clear();
+    portraitBoostedContentService.clear();
   };
 
   /**
@@ -137,6 +139,7 @@ export class AppInitManager {
 
     // load boosted content
     boostedContentService.load();
+    portraitBoostedContentService.load();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });

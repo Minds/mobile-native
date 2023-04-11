@@ -148,4 +148,6 @@ class BoostedContentService {
   }
 }
 
+export { BoostedContentService };
+
 export default new BoostedContentService();
