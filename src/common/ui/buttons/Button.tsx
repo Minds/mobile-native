@@ -25,7 +25,7 @@ import { Row, Spacer } from '../layout';
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
   type?: 'base' | 'action' | 'warning';
-  size?: 'large' | 'medium' | 'small' | 'tiny' | 'pill';
+  size?: 'large' | 'medium' | 'small' | 'tiny';
   font?: 'regular' | 'medium';
   align?: 'start' | 'end' | 'stretch' | 'center';
   spinner?: boolean;
@@ -40,7 +40,6 @@ export type ButtonPropsType = {
   testID?: string;
   accessibilityLabel?: string;
   icon?: React.ReactNode;
-  reversedIcon?: boolean;
   pressableProps?: PressableProps;
 };
 const shouldBreak = (num, disabled, state) => {
@@ -73,7 +72,6 @@ export const ButtonComponent = ({
   accessibilityLabel,
   icon,
   fit,
-  reversedIcon,
   pressableProps,
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
@@ -256,10 +254,9 @@ export const ButtonComponent = ({
       content = icon;
     } else if (icon) {
       content = (
-        <Row align="centerStart">
-          {!reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
+        <Row>
+          {icon ? <Spacer right="XS">{icon}</Spacer> : null}
           {title}
-          {reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
         </Row>
       );
     } else {
@@ -366,9 +363,6 @@ const styles = ThemedStyles.create({
   },
   tiny: {
     ...COMMON_BUTTON_STYLES.TINY,
-  },
-  pill: {
-    ...COMMON_BUTTON_STYLES.PILL,
   },
   flat: {
     borderColor: 'transparent',

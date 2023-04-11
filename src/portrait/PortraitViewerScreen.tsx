@@ -1,26 +1,26 @@
-import React, { useCallback } from 'react';
-import { View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
   useFocusEffect,
 } from '@react-navigation/native';
-import { useLocalStore, observer } from 'mobx-react';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { observer, useLocalStore } from 'mobx-react';
+import React, { useCallback } from 'react';
+import { View } from 'react-native';
 import Animated, {
-  interpolateColor,
   SharedValue,
+  interpolateColor,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-
-import { AppStackParamList } from '../navigation/NavigationTypes';
-import ThemedStyles from '../styles/ThemedStyles';
-import UserContentSwiper from './UserContentSwiper';
-import { useStores } from '../common/hooks/use-stores';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
-import usePortraitAnimation from './usePortraitAnimation';
+import { useStores } from '~/common/hooks/use-stores';
+import { AppStackParamList } from '~/navigation/NavigationTypes';
 import withModalProvider from '~/navigation/withModalProvide';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import ThemedStyles from '~/styles/ThemedStyles';
+
+import UserContentSwiper from './components/UserContentSwiper';
+import usePortraitAnimation from './hooks/usePortraitAnimation';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -45,7 +45,19 @@ const PortraitViewerScreen = withErrorBoundaryScreen(
     const portraitStore = useStores().portrait;
     const ref = React.useRef<ICarouselInstance>(null);
 
-    const { index = 0 } = props.route.params ?? {};
+    let index = 0;
+    const { guid } = props.route.params ?? {};
+
+    // set default index based on guid
+    if (guid) {
+      const foundItemIndex = portraitStore.items.findIndex(
+        p => p.user.guid === guid,
+      );
+
+      if (foundItemIndex >= 0) {
+        index = foundItemIndex;
+      }
+    }
 
     const store = useLocalStore(() => ({
       index,

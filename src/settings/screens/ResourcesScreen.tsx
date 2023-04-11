@@ -180,13 +180,14 @@ const ResourcesScreen = ({}: PropsType) => {
     <Screen>
       <FitScrollView>
         {items.map((item: Items, index) => (
-          <>
+          <React.Fragment key={item.id}>
             <MenuSubtitle>
               {i18n.t(`settings.${item.id}.title`).toUpperCase()}
             </MenuSubtitle>
             {item.options.map((option: Options<typeof index>, i) =>
               !shouldHideCash || option.show !== false ? (
                 <MenuItem
+                  key={`${item.id}.${option.id}`}
                   // @ts-ignore
                   title={i18n.t(`settings.${item.id}.${option.id}`)}
                   onPress={option.onPress}
@@ -194,7 +195,7 @@ const ResourcesScreen = ({}: PropsType) => {
                 />
               ) : null,
             )}
-          </>
+          </React.Fragment>
         ))}
       </FitScrollView>
     </Screen>

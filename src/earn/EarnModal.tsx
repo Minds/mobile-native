@@ -187,13 +187,13 @@ export default withErrorBoundaryScreen(
           title={i18n.t('earnScreen.title')}>
           <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
           {earnItems.map(item => (
-            <EarnItem content={item} />
+            <EarnItem key={item.name} content={item} />
           ))}
           <MText style={[titleStyle, theme.paddingTop2x]}>
             {i18n.t('earnScreen.resources.title')}
           </MText>
           {resourcesItems.map(item => (
-            <ResourceItem content={item} />
+            <ResourceItem key={item.name} content={item} />
           ))}
           {PRO_PLUS_SUBSCRIPTION_ENABLED && (
             <>
@@ -201,7 +201,7 @@ export default withErrorBoundaryScreen(
                 {i18n.t('earnScreen.unlock.title')}
               </MText>
               {unlockItems.map(item => (
-                <ResourceItem content={item} />
+                <ResourceItem key={item.name} content={item} />
               ))}
             </>
           )}

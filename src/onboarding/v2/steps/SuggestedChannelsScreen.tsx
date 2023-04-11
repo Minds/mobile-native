@@ -36,7 +36,9 @@ export default withErrorBoundaryScreen(
     const loadingPlaceholder =
       suggestions.loading &&
       !suggestions.result?.length &&
-      new Array(12).fill(true).map(() => <ChannelListItemPlaceholder />);
+      new Array(12)
+        .fill(true)
+        .map((_, index) => <ChannelListItemPlaceholder key={index} />);
 
     return (
       <ModalContainer

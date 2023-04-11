@@ -46,7 +46,7 @@ export default class Carousel extends Component {
 
     if (this.state.offset % width === 0) {
       bubbles.map(v => {
-        v.key == this.state.offset
+        v.key === this.state.offset
           ? (bubbles[v.key / width] = <View style={filledBubble} key={v.key} />)
           : null;
       });

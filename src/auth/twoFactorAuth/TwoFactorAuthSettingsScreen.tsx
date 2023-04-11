@@ -62,6 +62,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
         <>
           {items.map(item => (
             <MenuItem
+              key={item.id}
               onPress={
                 localStore.has2faEnabled || item.id === 'email'
                   ? undefined

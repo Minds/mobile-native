@@ -14,7 +14,7 @@ const hitSlop = {
 
 type FontFamily = keyof typeof FONT_FAMILY;
 
-export type TypographyType =
+type TypographyType =
   | 'H1'
   | 'H2'
   | 'H3'

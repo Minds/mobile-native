@@ -268,6 +268,7 @@ export default withErrorBoundaryScreen(
           {steps.map((item, i) =>
             item ? (
               <MenuItem
+                key={i}
                 {...item}
                 titleStyle={
                   [
