@@ -24,7 +24,6 @@ import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
-import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
   Easing,
@@ -44,6 +43,7 @@ import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const tinycolor = require('tinycolor2');
 
@@ -518,7 +518,7 @@ const styles = ThemedStyles.create({
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 
-const withError = withErrorBoundary(ChannelScreen);
+const withError = withErrorBoundaryScreen(ChannelScreen);
 
 export default withError;
 

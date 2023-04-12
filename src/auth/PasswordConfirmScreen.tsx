@@ -13,6 +13,7 @@ import authService from './AuthService';
 import NavigationService from '../navigation/NavigationService';
 import MText from '../common/components/MText';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PasswordConfirmation = RouteProp<
   RootStackParamList,
@@ -27,108 +28,111 @@ type PropsType = {
   onGoBackPress?: Function;
 };
 
-const PasswordConfirmScreen = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
-  const onConfirm = props.route?.params?.onConfirm || props.onConfirm;
-  const title = props.route?.params?.title || props.title;
-  const onGoBackPress = React.useCallback(() => {
-    if (props.route?.params?.onConfirm !== undefined) {
-      NavigationService.goBack();
-    } else {
-      props.onGoBackPress && props.onGoBackPress();
-    }
-  }, [props]);
-  const localStore = useLocalStore(() => ({
-    password: '',
-    error: false,
-    hidePassword: true,
-    setPassword(password: string) {
-      this.password = password;
-    },
-    setError(error: boolean) {
-      this.error = error;
-    },
-    toggleHidePassword() {
-      this.hidePassword = !this.hidePassword;
-    },
-    async submit() {
-      this.error = false;
-      try {
-        await authService.validatePassword(this.password);
-        onConfirm && onConfirm(this.password);
-        this.password = '';
-      } catch (err) {
-        this.error = true;
+const PasswordConfirmScreen = withErrorBoundaryScreen(
+  observer((props: PropsType) => {
+    const theme = ThemedStyles.style;
+    const onConfirm = props.route?.params?.onConfirm || props.onConfirm;
+    const title = props.route?.params?.title || props.title;
+    const onGoBackPress = React.useCallback(() => {
+      if (props.route?.params?.onConfirm !== undefined) {
+        NavigationService.goBack();
+      } else {
+        props.onGoBackPress && props.onGoBackPress();
       }
-    },
-  }));
-  const msg = localStore.error ? (
-    <MText style={styles.error}>{i18n.t('auth.invalidPassword')}</MText>
-  ) : null;
-  const iconStyle = { flex: 2 };
-  const touchStyle = { flex: 3, alignItems: 'flex-end' };
+    }, [props]);
+    const localStore = useLocalStore(() => ({
+      password: '',
+      error: false,
+      hidePassword: true,
+      setPassword(password: string) {
+        this.password = password;
+      },
+      setError(error: boolean) {
+        this.error = error;
+      },
+      toggleHidePassword() {
+        this.hidePassword = !this.hidePassword;
+      },
+      async submit() {
+        this.error = false;
+        try {
+          await authService.validatePassword(this.password);
+          onConfirm && onConfirm(this.password);
+          this.password = '';
+        } catch (err) {
+          this.error = true;
+        }
+      },
+    }));
+    const msg = localStore.error ? (
+      <MText style={styles.error}>{i18n.t('auth.invalidPassword')}</MText>
+    ) : null;
+    const iconStyle = { flex: 2 };
+    const touchStyle = { flex: 3, alignItems: 'flex-end' };
 
-  return (
-    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <KeyboardAwareScrollView style={theme.flexContainer}>
-        <View style={styles.container}>
-          <Icon
-            name="chevron-left"
-            size={32}
-            color={ThemedStyles.getColor('SecondaryText')}
-            style={iconStyle}
-            onPress={onGoBackPress}
-          />
-          <MText style={styles.titleText}>
-            {title || i18n.t('auth.confirmpassword')}
-          </MText>
-          <TouchableOpacity
-            onPress={localStore.submit}
-            //@ts-ignore
-            style={touchStyle}>
-            <MText
-              style={[
-                theme.fontL,
-                theme.fontMedium,
-                theme.colorLink,
-                theme.paddingTop,
-              ]}>
-              {i18n.t('continue')}
+    return (
+      <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+        <KeyboardAwareScrollView style={theme.flexContainer}>
+          <View style={styles.container}>
+            <Icon
+              name="chevron-left"
+              size={32}
+              color={ThemedStyles.getColor('SecondaryText')}
+              style={iconStyle}
+              onPress={onGoBackPress}
+            />
+            <MText style={styles.titleText}>
+              {title || i18n.t('auth.confirmpassword')}
             </MText>
-          </TouchableOpacity>
-        </View>
-        {msg}
-        <MText
-          style={[
-            theme.colorSecondaryText,
-            theme.marginBottom6x,
-            theme.paddingLeft4x,
-          ]}>
-          {i18n.t('auth.confirmPasswordModal')}
-        </MText>
-        <View style={theme.fullWidth}>
-          <InputContainer
-            labelStyle={theme.colorPrimaryText}
-            style={theme.colorPrimaryText}
-            placeholder={i18n.t('auth.password')}
-            secureTextEntry={localStore.hidePassword}
-            autoComplete="password"
-            textContentType="password"
-            onChangeText={localStore.setPassword}
-            value={localStore.password}
-            autoFocus
-          />
-          <IonIcon
-            name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
-            size={25}
-            onPress={localStore.toggleHidePassword}
-            style={[theme.inputIcon, icon, theme.paddingRight]}
-          />
-        </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
-  );
-});
+            <TouchableOpacity
+              onPress={localStore.submit}
+              //@ts-ignore
+              style={touchStyle}>
+              <MText
+                style={[
+                  theme.fontL,
+                  theme.fontMedium,
+                  theme.colorLink,
+                  theme.paddingTop,
+                ]}>
+                {i18n.t('continue')}
+              </MText>
+            </TouchableOpacity>
+          </View>
+          {msg}
+          <MText
+            style={[
+              theme.colorSecondaryText,
+              theme.marginBottom6x,
+              theme.paddingLeft4x,
+            ]}>
+            {i18n.t('auth.confirmPasswordModal')}
+          </MText>
+          <View style={theme.fullWidth}>
+            <InputContainer
+              labelStyle={theme.colorPrimaryText}
+              style={theme.colorPrimaryText}
+              placeholder={i18n.t('auth.password')}
+              secureTextEntry={localStore.hidePassword}
+              autoComplete="password"
+              textContentType="password"
+              onChangeText={localStore.setPassword}
+              value={localStore.password}
+              autoFocus
+            />
+            <IonIcon
+              name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
+              size={25}
+              onPress={localStore.toggleHidePassword}
+              style={[theme.inputIcon, icon, theme.paddingRight]}
+            />
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    );
+  }),
+  'PasswordConfirmScreen',
+);
 
 const styles = StyleSheet.create({
   container: {

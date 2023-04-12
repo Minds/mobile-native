@@ -8,6 +8,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import Input from './components/Input';
 import Networks from './components/Networks';
 import ReferralsList from './components/ReferralsList';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface ReferralsScreenProps {
   navigation: any;
@@ -56,7 +57,7 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
   );
 };
 
-export default ReferralsScreen;
+export default withErrorBoundaryScreen(ReferralsScreen, 'ReferralScreen');
 
 const styles = StyleSheet.create({
   title: { lineHeight: 25 },

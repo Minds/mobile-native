@@ -15,6 +15,7 @@ import { NavigationProp } from '@react-navigation/native';
 import InputContainer from '~/common/components/InputContainer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   route: any;
@@ -274,4 +275,4 @@ const styles = ThemedStyles.create({
   },
 });
 
-export default ChannelEditScreen;
+export default withErrorBoundaryScreen(ChannelEditScreen, 'ChannelEditScreen');

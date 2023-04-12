@@ -9,10 +9,11 @@ import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
 import { useTranslation } from '../locales';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationOnboarding'>;
 
-export default function InAppVerificationOnboardingScreen() {
+function InAppVerificationOnboardingScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [termsAgreed, setTermsAgreed] = useState(false);
   const { t } = useTranslation();
@@ -81,3 +82,8 @@ export default function InAppVerificationOnboardingScreen() {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(
+  InAppVerificationOnboardingScreen,
+  'InAppVerificationOnboardingScreen',
+);

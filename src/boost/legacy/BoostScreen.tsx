@@ -20,6 +20,7 @@ import Link from '~/common/components/Link';
 import { Typography } from '~/common/ui/typography/Typography';
 import openUrlService from '~/common/services/open-url.service';
 import { Icon, Row } from '~/common/ui';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BoostTabType = 'cash' | 'tokens';
 
@@ -29,55 +30,58 @@ type BoostScreenProps = {
   route: BoostScreenRouteProp;
 };
 
-const BoostScreen = observer(({ route }: BoostScreenProps) => {
-  const { entity, boostType } = route.params || {};
-  const theme = ThemedStyles.style;
-  const wallet = useStores().wallet;
-  const wc = useWalletConnect();
-  const localStore = useLocalStore(createBoostStore, {
-    wc,
-    wallet: wallet.wallet,
-    entity: entity,
-    boostType,
-  });
+const BoostScreen = withErrorBoundaryScreen(
+  observer(({ route }: BoostScreenProps) => {
+    const { entity, boostType } = route.params || {};
+    const theme = ThemedStyles.style;
+    const wallet = useStores().wallet;
+    const wc = useWalletConnect();
+    const localStore = useLocalStore(createBoostStore, {
+      wc,
+      wallet: wallet.wallet,
+      entity: entity,
+      boostType,
+    });
 
-  const tabs: Array<TabType<BoostTabType>> = [
-    { id: 'cash', title: i18n.t('wallet.cash') },
-    { id: 'tokens', title: i18n.t('tokens') },
-  ];
+    const tabs: Array<TabType<BoostTabType>> = [
+      { id: 'cash', title: i18n.t('wallet.cash') },
+      { id: 'tokens', title: i18n.t('tokens') },
+    ];
 
-  const titleMapping = {
-    channel: i18n.t('boosts.boostChannel'),
-    post: i18n.t('boosts.boostPost'),
-    offer: i18n.t('boosts.boostOffer'),
-  };
+    const titleMapping = {
+      channel: i18n.t('boosts.boostChannel'),
+      post: i18n.t('boosts.boostPost'),
+      offer: i18n.t('boosts.boostOffer'),
+    };
 
-  useEffect(() => {
-    wallet.loadOffchainAndReceiver();
-  }, [wallet]);
+    useEffect(() => {
+      wallet.loadOffchainAndReceiver();
+    }, [wallet]);
 
-  return (
-    <ModalScreen
-      title={titleMapping[boostType]}
-      source={require('../../assets/boostBG.png')}
-      testID="BoostScreen">
-      <BoostNote />
-      <DismissKeyboard>
-        {!IS_IOS && (
-          <View style={theme.marginTop2x}>
-            <TopbarTabbar
-              tabs={tabs}
-              onChange={localStore.setPayment}
-              current={localStore.payment}
-            />
-          </View>
-        )}
+    return (
+      <ModalScreen
+        title={titleMapping[boostType]}
+        source={require('../../assets/boostBG.png')}
+        testID="BoostScreen">
+        <BoostNote />
+        <DismissKeyboard>
+          {!IS_IOS && (
+            <View style={theme.marginTop2x}>
+              <TopbarTabbar
+                tabs={tabs}
+                onChange={localStore.setPayment}
+                current={localStore.payment}
+              />
+            </View>
+          )}
 
-        <BoostTab localStore={localStore} />
-      </DismissKeyboard>
-    </ModalScreen>
-  );
-});
+          <BoostTab localStore={localStore} />
+        </DismissKeyboard>
+      </ModalScreen>
+    );
+  }),
+  'BoostScreen',
+);
 
 export default BoostScreen;
 
