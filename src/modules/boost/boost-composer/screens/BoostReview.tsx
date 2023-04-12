@@ -66,7 +66,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     selectedProduct = products.filter(
       product => product.productId === skus[0],
     )?.[0];
-    // console.log('selectedProduct', amount, duration, selectedProduct);
   }
 
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
@@ -75,15 +74,15 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const textMapping = {
     cash: {
       budgetDescription: t('${{amount}} per day for {{duration}} days', {
-        amount: amount,
-        duration: duration,
+        amount,
+        duration,
       }),
       total: t('${{total}}.00', { total: total }),
     },
     tokens: {
       budgetDescription: t('{{amount}} tokens per day for {{duration}} days', {
-        amount: amount,
-        duration: duration,
+        amount,
+        duration,
       }),
       total: t('{{total}} tokens', { total: total }),
     },

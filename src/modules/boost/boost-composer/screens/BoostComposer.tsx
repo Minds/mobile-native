@@ -64,17 +64,17 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
   const textMapping = {
     cash: {
-      totalSpend: t('${{amount}} over {{duration}} days', {
-        amount: total,
-        duration: duration,
+      totalSpend: t('${{total}} over {{duration}} days', {
+        total,
+        duration,
       }),
       minBudget: `$${config.min.cash.toLocaleString()}`,
       maxBudget: `$${config.max.cash.toLocaleString()}`,
     },
     offchain_tokens: {
-      totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: total,
-        duration: duration,
+      totalSpend: t('{{total}} tokens over {{duration}} days', {
+        total,
+        duration,
       }),
       minBudget: t('tokenWithCount', {
         count: config.min.offchain_tokens,
@@ -84,9 +84,9 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       }),
     },
     onchain_tokens: {
-      totalSpend: t('{{amount}} tokens over {{duration}} days', {
-        amount: total,
-        duration: duration,
+      totalSpend: t('{{total}} tokens over {{duration}} days', {
+        total,
+        duration,
       }),
       minBudget: t('tokenWithCount', {
         count: config.min.onchain_tokens,
@@ -95,22 +95,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         count: config.max.onchain_tokens,
       }),
     },
-  };
-
-  const amountSliderProps = {
-    ...amountRangeValues,
-    minimumStepLabel: `$${amountRangeValues.minimumRangeValue}`,
-    maximumStepLabel: `$${amountRangeValues.maximumRangeValue}`,
-  };
-
-  const durationSliderProps = {
-    ...durationRangeValues,
-    minimumStepLabel: t('dayWithCount', {
-      count: durationRangeValues.minimumRangeValue,
-    }),
-    maximumStepLabel: t('dayWithCount', {
-      count: durationRangeValues.maximumRangeValue,
-    }),
   };
 
   const handlePaymentTypeChange = async id => {
@@ -145,8 +129,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             </B1>
           ) : (
             <B1 bottom="M" color="danger" align="center">
-              {t('The maximum spend should be less than ${{amount}}.', {
-                amount: total,
+              {t('The maximum spend should be less than ${{total}}.', {
+                total,
               })}
               {'\n'}
               {t('Try reducing the duration or the daily budget')}
@@ -164,7 +148,9 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         <Column top="M" horizontal="L2">
           <H3>{t('Daily budget')}</H3>
           <Slider
-            {...amountSliderProps}
+            {...amountRangeValues}
+            minimumStepLabel={`$${amountRangeValues.minimumRangeValue}`}
+            maximumStepLabel={`$${amountRangeValues.maximumRangeValue}`}
             currentValue={amount}
             onAnswer={setAmount}
             formatValue={value =>
@@ -181,7 +167,13 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         <Column top="M" horizontal="L2">
           <H3>{t('Duration')}</H3>
           <Slider
-            {...durationSliderProps}
+            {...durationRangeValues}
+            minimumStepLabel={t('dayWithCount', {
+              count: durationRangeValues.minimumRangeValue,
+            })}
+            maximumStepLabel={t('dayWithCount', {
+              count: durationRangeValues.maximumRangeValue,
+            })}
             currentValue={duration}
             onAnswer={setDuration}
             floatingLabel
