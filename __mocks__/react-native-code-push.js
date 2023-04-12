@@ -1,17 +1,22 @@
-const codePush = jest.fn();
+const cp = () => app => app;
 
-codePush.CheckFrequency = {
-  ON_APP_RESUME: 0,
-};
-codePush.InstallMode = {
-  ON_NEXT_SUSPEND: 0,
-};
+Object.assign(cp, {
+  InstallMode: {},
+  CheckFrequency: {},
+  SyncStatus: {},
+  UpdateState: {},
+  DeploymentStatus: {},
+  DEFAULT_UPDATE_DIALOG: {},
 
-codePush.SyncStatus = {
-  CHECKING_FOR_UPDATE: 0,
-  DOWNLOADING_PACKAGE: 1,
-  INSTALLING_UPDATE: 2,
-  SYNC_IN_PROGRESS: 3,
-};
+  allowRestart: jest.fn(),
+  checkForUpdate: jest.fn(() => Promise.resolve(null)),
+  disallowRestart: jest.fn(),
+  getCurrentPackage: jest.fn(() => Promise.resolve(null)),
+  getUpdateMetadata: jest.fn(() => Promise.resolve(null)),
+  notifyAppReady: jest.fn(() => Promise.resolve()),
+  restartApp: jest.fn(),
+  sync: jest.fn(() => Promise.resolve(1)),
+  clearUpdates: jest.fn(),
+});
 
-export default codePush;
+export default cp;

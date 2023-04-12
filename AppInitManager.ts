@@ -21,7 +21,7 @@ import openUrlService from '~/common/services/open-url.service';
 import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
-import codePushStore from './src/modules/codepush/codepush.store';
+import { codePushStore } from 'modules/codepush';
 import { InteractionManager } from 'react-native';
 
 /**
@@ -49,10 +49,12 @@ export class AppInitManager {
     storeRatingService.track('appSession');
 
     if (!__DEV__) {
-      codePushStore.syncCodepush(() => {
-        InteractionManager.runAfterInteractions(() => {
-          RNBootSplash.hide({ fade: true });
-        });
+      codePushStore.syncCodepush({
+        onDownload: () => {
+          InteractionManager.runAfterInteractions(() => {
+            RNBootSplash.hide({ fade: true });
+          });
+        },
       });
     }
 
