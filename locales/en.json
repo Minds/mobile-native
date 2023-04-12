@@ -1840,5 +1840,11 @@
       "action": "Download"
     },
     "syncing": "Syncing app bundle..."
+  },
+  "EmissionBreakDown": {
+    "Total": "Total",
+    "Engagement": "Engagement",
+    "Holding": "Holding",
+    "Liquidity": "Liquidity"
   }
 }
