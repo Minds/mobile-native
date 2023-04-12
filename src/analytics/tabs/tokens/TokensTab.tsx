@@ -25,18 +25,17 @@ export type MetricsSubType = {
   [K in CardType]: TokensMetrics;
 };
 
-type RowType = Record<string, MetricsSubType>;
+const tabs = ['Supply', 'Transactions', 'Liquidity', 'Rewards'] as const;
+type TokensOptions = typeof tabs[number];
 
-const rows = ({
+type RowType = Record<TokensOptions, MetricsSubType | {}>;
+
+const rows: RowType = {
   Supply: {},
   Transactions: {},
   Liquidity: {},
   Rewards: {},
-} as unknown) as RowType;
-
-const tabs = ['Supply', 'Transactions', 'Liquidity', 'Rewards'] as const;
-
-type TokensOptions = typeof tabs[number];
+};
 
 const tabLabels = tabs.map<ButtonTabType<TokensOptions>>(id => ({
   id,
