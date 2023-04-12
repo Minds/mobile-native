@@ -330,6 +330,7 @@ exports[`Activity component renders correctly 1`] = `
     <View
       style={
         Object {
+          "justifyContent": "center",
           "minHeight": 150,
         }
       }

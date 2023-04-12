@@ -295,6 +295,7 @@ exports[`SupermindRequest should render inbound 1`] = `
       <View
         style={
           Object {
+            "justifyContent": "center",
             "minHeight": 150,
           }
         }
@@ -750,6 +751,7 @@ exports[`SupermindRequest should render outbound 1`] = `
       <View
         style={
           Object {
+            "justifyContent": "center",
             "minHeight": 150,
           }
         }
