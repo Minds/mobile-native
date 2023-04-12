@@ -5,6 +5,8 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import { Screen } from '../../common/ui';
 import FitScrollView from '../../common/components/FitScrollView';
+import { GOOGLE_PLAY_STORE } from '~/config/Config';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {};
 
@@ -97,6 +99,7 @@ const items = [
       {
         id: 'upgrade',
         onPress: () => Linking.openURL('https://mobile.minds.com/upgrades'),
+        show: false,
       },
       {
         id: 'token',
@@ -105,10 +108,12 @@ const items = [
       {
         id: 'plus',
         onPress: () => Linking.openURL('https://mobile.minds.com/plus'),
+        show: false,
       },
       {
         id: 'pro',
         onPress: () => Linking.openURL('https://mobile.minds.com/pro'),
+        show: false,
       },
       {
         id: 'pay',
@@ -164,9 +169,13 @@ const items = [
 ] as const;
 
 type Items = typeof items[number];
-type Options<T extends number> = typeof items[T]['options'][number];
+type Options<T extends number> = typeof items[T]['options'][number] & {
+  show?: boolean;
+};
 
 const ResourcesScreen = ({}: PropsType) => {
+  const shouldHideCash =
+    useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE;
   return (
     <Screen>
       <FitScrollView>
@@ -175,15 +184,17 @@ const ResourcesScreen = ({}: PropsType) => {
             <MenuSubtitle>
               {i18n.t(`settings.${item.id}.title`).toUpperCase()}
             </MenuSubtitle>
-            {item.options.map((option: Options<typeof index>, i) => (
-              <MenuItem
-                key={`${item.id}.${option.id}`}
-                // @ts-ignore
-                title={i18n.t(`settings.${item.id}.${option.id}`)}
-                onPress={option.onPress}
-                noBorderTop={i > 0}
-              />
-            ))}
+            {item.options.map((option: Options<typeof index>, i) =>
+              !shouldHideCash || option.show !== false ? (
+                <MenuItem
+                  key={`${item.id}.${option.id}`}
+                  // @ts-ignore
+                  title={i18n.t(`settings.${item.id}.${option.id}`)}
+                  onPress={option.onPress}
+                  noBorderTop={i > 0}
+                />
+              ) : null,
+            )}
           </React.Fragment>
         ))}
       </FitScrollView>

@@ -1,11 +1,12 @@
 import moment from 'moment';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import UserModel from '../../channel/UserModel';
-import MText from '../../common/components/MText';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { Image } from 'expo-image';
+
+import UserModel from '~/channel/UserModel';
+import MText from '~/common/components/MText';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
 import { Prospect, ReferralsEntity } from '../ReferralTypes';
 import PingButton from './PingButton';
 
@@ -35,7 +36,7 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
         activeOpacity={0.7}
         onPress={_onPress}
         style={[styles.firstColumn, theme.rowJustifyStart, theme.alignCenter]}>
-        <FastImage
+        <Image
           source={_getAvatarSource(referral)}
           style={[styles.avatar, theme.marginRight2x]}
         />

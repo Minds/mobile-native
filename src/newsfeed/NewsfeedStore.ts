@@ -32,7 +32,7 @@ class NewsfeedStore<T extends BaseModel> {
    */
   topFeedStore = new FeedStore()
     .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-    .setInjectBoost(false)
+    .setInjectBoost(true)
     .setLimit(12)
     .setPaginated(false) // this endpoint doesn't support pagination!
     .setMetadata(new MetadataService().setSource('top-feed').setMedium('feed'));

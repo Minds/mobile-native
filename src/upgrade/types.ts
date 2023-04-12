@@ -2,8 +2,8 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 
-export type payMethod = 'tokens' | 'usd';
-export type Upgrades = 'pro' | 'plus';
+export type PayMethodType = 'tokens' | 'usd';
+export type UpgradesType = 'pro' | 'plus';
 
 export type UpgradeScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -14,18 +14,24 @@ export type UpgradeScreenNavigationProp = StackNavigationProp<
   'UpgradeScreen'
 >;
 
-export type PaymentsIds = 'lifetime' | 'monthly' | 'annual';
-
-export type PaymentPlan = {
-  id: PaymentsIds;
-  payment: string;
-  cost: number;
-  primarylabel: (monthly: number, total: number) => string;
-  secondarylabel: (monthly: number, total: number) => string;
+export type SettingsPlanType = {
+  tokens?: number;
+  usd?: number;
+  can_have_trial?: boolean;
 };
 
-export type Plans = { [pay in payMethod]: Array<PaymentPlan> };
+export type SettingsSubscriptionsType = {
+  monthly: SettingsPlanType;
+  yearly: SettingsPlanType;
+  lifetime: SettingsPlanType;
+};
 
-export type UpgradePlans = {
-  [upgrade in Upgrades]: Plans;
+export type SubscriptionType = keyof SettingsSubscriptionsType;
+
+export type PaymentPlanType = {
+  id: SubscriptionType;
+  cost: number;
+  iapSku?: string; // in-app purchases SKU
+  offerToken?: string; // Android Subscriptions needs a offerToken
+  can_have_trial: boolean;
 };

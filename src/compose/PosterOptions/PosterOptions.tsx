@@ -9,13 +9,12 @@ import {
 } from '~/common/services/list-options.service';
 import TopBar from '../TopBar';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
-import { PosterStackParamList } from './PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IS_IOS } from '~/config/Config';
+import { PosterStackScreenProps } from './PosterStackNavigator';
 
 const height = 83;
 
@@ -25,11 +24,9 @@ export function useNavCallback(screen, store, navigation) {
   }, [store, screen, navigation]);
 }
 
-interface PosterOptionsType
-  extends FC,
-    StackScreenProps<PosterStackParamList, 'PosterOptions'> {}
+type PropsType = PosterStackScreenProps<'PosterOptions'>;
 
-function PosterOptions(props: PosterOptionsType) {
+const PosterOptions: FC<PropsType> = props => {
   const store = useComposeContext();
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
@@ -79,7 +76,10 @@ function PosterOptions(props: PosterOptionsType) {
     : '';
 
   const showMonetize =
-    !store.portraitMode && !store.isRemind && !store.supermindRequest;
+    !store.portraitMode &&
+    !store.isRemind &&
+    !store.supermindRequest &&
+    !store.isEdit;
 
   const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 
@@ -156,7 +156,7 @@ function PosterOptions(props: PosterOptionsType) {
       )}
     </View>
   );
-}
+};
 
 export default observer(PosterOptions);
 

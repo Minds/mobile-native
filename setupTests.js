@@ -36,6 +36,7 @@ jest.mock('./src/common/services/analytics.service');
 jest.mock('./src/newsfeed/NewsfeedService');
 
 jest.mock('react-native-localize');
+jest.mock('expo-image');
 // jest.mock('react-native-device-info', () =>
 //   require('./node_modules/react-native-device-info/jest/react-native-device-info-mock'),
 // );
@@ -107,6 +108,8 @@ jest.mock('@stripe/stripe-react-native', () =>
 );
 
 jest.mock('expo-sensors', () => jest.fn());
+
+jest.mock('react-native-exception-handler');
 
 import ri18n from 'utils/locales';
 ri18n.init();

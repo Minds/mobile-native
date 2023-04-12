@@ -1,15 +1,15 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Image, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
-import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
+import { Image } from 'expo-image';
 
 /**
  * Group Card
@@ -49,11 +49,7 @@ export default class GroupCard extends Component {
 
     return (
       <View>
-        <SmartImage
-          source={iurl}
-          style={styles.banner}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        <SmartImage source={iurl} style={styles.banner} contentFit="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>

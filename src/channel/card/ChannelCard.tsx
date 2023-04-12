@@ -1,17 +1,21 @@
-//@ts-nocheck
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 
 import MText from '../../common/components/MText';
 import SmartImage from '../../common/components/SmartImage';
+import type UserModel from '../UserModel';
+
+type PropsType = {
+  entity: UserModel;
+};
 
 /**
  * Channel Card
  */
 @observer
-export default class ChannelCard extends Component {
+export default class ChannelCard extends Component<PropsType> {
   subscribe() {
     this.props.entity.toggleSubscription();
   }
@@ -26,11 +30,7 @@ export default class ChannelCard extends Component {
 
     return (
       <View>
-        <SmartImage
-          source={iurl}
-          style={styles.banner}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        <SmartImage source={iurl} style={styles.banner} resizeMode="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>

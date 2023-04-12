@@ -58,6 +58,7 @@ function ComposeBottomBar(props) {
       {!props.store.isGroup() &&
         !props.store.isRemind &&
         !props.store.supermindRequest &&
+        !props.store.isEdit &&
         !isIosMindsHidden && (
           <IconButton
             name="money"

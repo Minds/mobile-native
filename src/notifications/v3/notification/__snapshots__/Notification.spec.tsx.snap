@@ -39,45 +39,27 @@ exports[`Notification 24 hours before an offer expires 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -332,45 +314,27 @@ exports[`Notification An offer expires 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -626,45 +590,27 @@ exports[`Notification Boost accepted 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -922,45 +868,27 @@ exports[`Notification Boost complete 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -1218,45 +1146,27 @@ exports[`Notification Boost rejected 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -1514,45 +1424,27 @@ exports[`Notification Boost rejected legacy 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -1867,45 +1759,27 @@ exports[`Notification Receiver accepts an offer 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -2161,45 +2035,27 @@ exports[`Notification Receiver declines an offer 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View
@@ -2455,45 +2311,27 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
       <View
         onPress={[Function]}
       >
-        <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
+        <Image
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
               },
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              },
-            ]
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
           }
-        >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
-                },
-                "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
-              }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
             }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
+          }
+        />
       </View>
       <View>
         <View

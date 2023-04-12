@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import {
-  Image,
   Platform,
   SafeAreaView,
   TextInput,
@@ -15,12 +14,13 @@ import { observer } from 'mobx-react';
 import { styles as headerStyles } from '~/topbar/Topbar';
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import Animated, {
-  EasingNode,
+  Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import MText from '~/common/components/MText';
+import { Image } from 'expo-image';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -134,7 +134,7 @@ const ChannelTopBar = observer(
           : -200,
         {
           duration: 500,
-          easing: EasingNode.bezier(0.16, 0.4, 0.3, 1) as any, //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
+          easing: Easing.bezier(0.16, 0.4, 0.3, 1) as any, //TODO: fix type once https://github.com/software-mansion/react-native-reanimated/pull/3012 is released
         },
       );
       if (on) {
@@ -206,7 +206,7 @@ const ChannelTopBar = observer(
               blurRadius={90}
               style={theme.positionAbsolute}
               source={store?.channel?.getBannerSource()!}
-              resizeMode="cover"
+              contentFit="cover"
             />
           )}
           <SafeAreaView style={styles.nameWrapper}>
