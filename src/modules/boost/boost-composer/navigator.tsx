@@ -8,9 +8,13 @@ import {
 import React from 'react';
 import { useStores } from '~/common/hooks/use-stores';
 import { BoostStoreProvider } from './boost.store';
+import type { IconMapNameType } from '../../../common/ui/icons/map';
 
 export type BoostStackParamList = {
-  BoostAudienceSelector: undefined;
+  BoostAudienceSelector: {
+    safe?: boolean;
+    backIcon?: IconMapNameType;
+  };
   BoostComposer: undefined;
   BoostReview: undefined;
 };
@@ -44,6 +48,7 @@ export default function BoostComposerStack({
         <Screen
           name="BoostAudienceSelector"
           getComponent={() => require('./screens/AudienceSelector').default}
+          initialParams={route.params}
         />
         <Screen
           name="BoostComposer"
