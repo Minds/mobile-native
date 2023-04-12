@@ -22,7 +22,7 @@ const AnalyticsScreen = observer(({ route }: { route: any }) => {
       <TopbarTabbar
         current={activeTabId}
         onChange={setActiveTabId}
-        tabs={Object.entries(tabs).map(([id, { title }]) => ({
+        tabs={Object.entries(tabs).map<any>(([id, { title }]) => ({
           id,
           title,
           key: id,
@@ -33,7 +33,6 @@ const AnalyticsScreen = observer(({ route }: { route: any }) => {
   );
 });
 
-const defaultTab = 'token';
 const tabs = {
   traffic: {
     title: i18n.t('analytics.traffic'),
@@ -73,6 +72,9 @@ const tabs = {
     title: i18n.t('analytics.trending.title'),
     screen: <TrendingTab key={'trending'} />,
   },
-};
+} as const;
+
+type Tab = keyof typeof tabs;
+const defaultTab: Tab = 'token';
 
 export default AnalyticsScreen;
