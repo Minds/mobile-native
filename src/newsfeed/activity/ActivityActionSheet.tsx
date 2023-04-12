@@ -194,6 +194,22 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
     } else {
+      if (entity?.boosted) {
+        options.push({
+          title: 'Hide Post',
+          iconName: 'eye-off',
+          iconType: 'material-community',
+          onPress: async () => {
+            try {
+              this.hideActionSheet();
+              await this.props.entity.hideEntity();
+              showNotification(i18n.t('postHidden'), 'success');
+            } catch (error) {
+              showNotification(i18n.t('errorMessage'), 'warning');
+            }
+          },
+        });
+      }
       options.push({
         title: 'Boost',
         iconName: 'trending-up',

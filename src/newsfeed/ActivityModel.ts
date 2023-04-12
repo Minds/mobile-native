@@ -535,6 +535,18 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
+  async hideEntity() {
+    try {
+      await api.put(`api/v3/newsfeed/hide-entities/${this.guid}`);
+      this.removeFromList();
+      ActivityModel.events.emit('hideEntity', this);
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  @action
   async toggleFollow() {
     const method = this['is:following'] ? unfollow : follow;
     try {
