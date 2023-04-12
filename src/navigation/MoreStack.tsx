@@ -121,6 +121,9 @@ export default function () {
         name="Channel"
         getComponent={() => require('~/channel/v2/ChannelScreen').default}
         options={hideHeader}
+        getId={({ params }) =>
+          'Channel' + (params?.entity?.guid || params?.guid || '')
+        }
       />
       <MoreStack.Screen
         name="PlusDiscoveryScreen"

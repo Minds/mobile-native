@@ -117,6 +117,9 @@ const AppStack = observer(() => {
           name="Channel"
           getComponent={() => require('~/channel/v2/ChannelScreen').withModal}
           options={hideHeader}
+          getId={({ params }) =>
+            'Channel' + (params?.entity?.guid || params?.guid || '')
+          }
         />
         <AppStackNav.Screen
           name="DiscoverySearch"

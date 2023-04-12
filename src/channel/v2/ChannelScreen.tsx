@@ -104,17 +104,8 @@ const ChannelScreen = observer((props: PropsType) => {
   const channelContext = useMemo(
     () => ({
       channel: store.channel || undefined,
-      /**
-       * when the user tapped on channel when they were
-       * on that channel page, wiggle the feedList scroll
-       **/
-      onSelfNavigation: () => {
-        topBarAnimationEnabled.current = false;
-        feedRef.current?.wiggle();
-        setTimeout(() => (topBarAnimationEnabled.current = true), 500);
-      },
     }),
-    [feedRef, store.channel],
+    [store.channel],
   );
 
   const bannerUri = store.channel?.getBannerSource().uri;
