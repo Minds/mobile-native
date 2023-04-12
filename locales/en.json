@@ -492,6 +492,9 @@
         "one": "and {{count}} other are subscribed",
         "other": "and {{count}} others are subscribed"
       }
+    },
+    "boostComposer": {
+      "title": "Boosted Post"
     }
   },
   "discovery": {

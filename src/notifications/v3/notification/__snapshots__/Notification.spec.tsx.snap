@@ -811,11 +811,7 @@ exports[`Notification Boost accepted 1`] = `
         testID="ActivityView"
       >
         <View
-          style={
-            Object {
-              "justifyContent": "center",
-            }
-          }
+          style={null}
         >
           <View
             style={
@@ -1093,11 +1089,7 @@ exports[`Notification Boost complete 1`] = `
         testID="ActivityView"
       >
         <View
-          style={
-            Object {
-              "justifyContent": "center",
-            }
-          }
+          style={null}
         >
           <View
             style={
@@ -1375,11 +1367,7 @@ exports[`Notification Boost rejected 1`] = `
         testID="ActivityView"
       >
         <View
-          style={
-            Object {
-              "justifyContent": "center",
-            }
-          }
+          style={null}
         >
           <View
             style={
@@ -1714,11 +1702,7 @@ exports[`Notification Boost rejected legacy 1`] = `
         testID="ActivityView"
       >
         <View
-          style={
-            Object {
-              "justifyContent": "center",
-            }
-          }
+          style={null}
         >
           <View
             style={

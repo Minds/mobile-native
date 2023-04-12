@@ -162,7 +162,7 @@ export default observer(function Comment({
       style={[
         styles.container,
         isPlusUser
-          ? theme.bgPlusBackground
+          ? theme.bgMutedBackground
           : focused
           ? styles.focused
           : theme.bcolorPrimaryBorder,
