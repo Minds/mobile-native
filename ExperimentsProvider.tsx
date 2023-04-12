@@ -113,4 +113,7 @@ export type FeatureID =
   | 'engine-2503-twitter-feats'
   | 'minds-3639-plus-notice'
   | 'mob-4851-iap-boosts'
+  | 'mob-4812-discovery-badge'
+  | 'mob-4836-iap-no-cash'
+  | 'mob-4596-create-modal'
   | 'epic-303-boost-partners';

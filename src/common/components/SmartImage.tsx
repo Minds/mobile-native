@@ -1,50 +1,32 @@
-import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Image, Platform, TouchableOpacity, View } from 'react-native';
-import { Blurhash } from 'react-native-blurhash';
-import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
+import { TouchableOpacity, View } from 'react-native';
+import { ImageProps } from 'expo-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
-import connectivityService from '../services/connectivity.service';
-import Delayed from './Delayed';
 import RetryableImage from './RetryableImage';
+import { autorun } from 'mobx';
 
-export interface SmartImageProps {
-  thumbnail?: Source;
+export type SmartImageProps = {
   ignoreDataSaver?: boolean;
   onError?: (e: any) => void;
-  size?: number;
-  style?: any;
-  source: Source;
-  onLoadEnd?: Function;
-  resizeMode?: ResizeMode;
+  iconSize?: number;
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
   thumbBlurRadius?: number;
-  blurhash?: string;
-  blurred?: boolean;
   locked?: boolean;
-}
-
-const defaultBlur = Platform.select({ android: 1, ios: 4 });
+} & ImageProps;
 
 /**
- * Fast-image wrapper with retry and connectivity awareness
+ * Expo image wrapper with retry and connectivity awareness
  * @param {Object} props
  */
 const SmartImage = observer(function (props: SmartImageProps) {
   const { withoutDownloadButton, ...otherProps } = props;
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
   const store = useLocalStore(createSmartImageStore, props);
-
-  useEffect(() => {
-    if (props.imageVisible) {
-      store.showImage(props.imageVisible);
-    }
-  }, [props.imageVisible, store]);
 
   useEffect(() => {
     try {
@@ -57,10 +39,6 @@ const SmartImage = observer(function (props: SmartImageProps) {
   useEffect(
     () =>
       autorun(() => {
-        if (connectivityService.isConnected && store.error) {
-          store.retry();
-        }
-
         if (store.showOverlay && !settingsStore.dataSaverEnabled) {
           store.showImage();
         }
@@ -73,7 +51,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
       <View style={[props.style, ThemedStyles.style.centered]}>
         <Icon
           name="wifi-off"
-          size={props.size || 24}
+          size={props.iconSize || 24}
           style={ThemedStyles.style.colorTertiaryText}
         />
       </View>
@@ -82,29 +60,18 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   return (
     <View style={props.style}>
-      {store.imageVisible && (
-        <RetryableImage
-          {...otherProps}
-          retry={2}
-          key={store.retries}
-          onError={store.setError}
-          source={props.source}
-          onLoadEnd={store.onLoadEnd}
-          onProgress={store.onProgress}
-        />
-      )}
+      <RetryableImage
+        {...otherProps}
+        retry={2}
+        key={store.retries}
+        onError={store.setError}
+        source={store.imageVisible ? props.source : undefined}
+        onLoadEnd={store.onLoadEnd}
+        onProgress={store.onProgress}
+      />
 
       {store.showOverlay && (
         <View style={absoluteCenter}>
-          <Delayed delay={120}>
-            <BlurredThumbnail
-              key={`thumbnail:${store.retries}`}
-              thumbBlurRadius={props.thumbBlurRadius}
-              style={props.style}
-              thumbnailSource={props.thumbnail as any}
-              blurhash={props.blurhash}
-            />
-          </Delayed>
           {dataSaverEnabled && !withoutDownloadButton && (
             <DownloadButton store={store} />
           )}
@@ -113,37 +80,6 @@ const SmartImage = observer(function (props: SmartImageProps) {
     </View>
   );
 });
-
-const BlurredThumbnail = ({
-  thumbBlurRadius,
-  style,
-  thumbnailSource,
-  blurhash,
-}) => {
-  if (blurhash) {
-    return (
-      <Blurhash
-        decodeWidth={16}
-        decodeHeight={16}
-        decodeAsync
-        blurhash={blurhash}
-        style={style}
-      />
-    );
-  }
-
-  if (thumbnailSource) {
-    return (
-      <Image
-        blurRadius={thumbBlurRadius || defaultBlur}
-        style={style}
-        source={thumbnailSource}
-      />
-    );
-  }
-
-  return null;
-};
 
 const DownloadButton = ({ store }) => {
   const theme = ThemedStyles.style;
@@ -198,13 +134,12 @@ const createSmartImageStore = props => {
         this.showOverlay = false;
       }
       this.progress = undefined;
-      this.retries = 0;
       if (props.onLoadEnd) {
         props.onLoadEnd();
       }
     },
     onProgress(e) {
-      const p = e.nativeEvent.loaded / e.nativeEvent.total;
+      const p = e.loaded / e.total;
       if (p) {
         // @ts-ignore
         this.progress = p;
@@ -220,39 +155,12 @@ const createSmartImageStore = props => {
     clearError() {
       this.error = false;
     },
-    retry() {
-      this.error = false;
-      this.retries++;
-    },
-    async isCached() {
-      if (!props.source.uri) {
-        return false;
-      }
-
-      try {
-        //@ts-ignore
-        const cached = await FastImage.getCachePath({
-          uri: props.source.uri,
-        });
-
-        return cached;
-      } catch (e) {}
-
-      return false;
-    },
     // shows image if cache exists and shows overlay if it didn't
     async onInit() {
       // if entity was locked, show overlay and return
-      if (props.locked) {
+      if (props.locked || dataSaverEnabled) {
         this.showOverlay = true;
         return;
-      }
-
-      // if it was cached, show the image, otherwise show the overlay
-      if (await this.isCached()) {
-        this.showImage();
-      } else {
-        this.showOverlay = true;
       }
     },
   };
@@ -262,9 +170,6 @@ export type SmartImageStore = ReturnType<typeof createSmartImageStore>;
 
 export default SmartImage;
 
-export type { Source };
-
-const absoluteCenter = ThemedStyles.combine('positionAbsolute', 'centered');
 const styles = ThemedStyles.create({
   downloadButton: [
     'centered',
@@ -276,3 +181,4 @@ const styles = ThemedStyles.create({
     },
   ],
 });
+const absoluteCenter = ThemedStyles.combine('positionAbsolute', 'centered');

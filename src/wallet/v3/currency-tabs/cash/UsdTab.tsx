@@ -14,7 +14,6 @@ import UsdSettings from '../../../v2/address/UsdSettings';
 import i18n from '../../../../common/services/i18n.service';
 import TransactionsListCash from '../../../v2/TransactionList/TransactionsListCash';
 import PaidButton from './PaidButton';
-import ConnectBankButton from './ConnectBankButton';
 import { Tooltip } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
@@ -110,12 +109,6 @@ const UsdTab = observer(
                 walletStore={walletStore}
               />
             </Tooltip>
-            <Row left="M">
-              <ConnectBankButton
-                walletStore={walletStore}
-                navigation={navigation}
-              />
-            </Row>
           </Row>
 
           <TopBarButtonTabBar

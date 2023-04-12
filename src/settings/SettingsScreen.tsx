@@ -59,6 +59,8 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
+  const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
+
   const user = sessionService.getUser();
 
   const onComplete = useCallback(
@@ -93,7 +95,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.plus && !UPGRADE_DISABLED) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -101,7 +103,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.pro && !UPGRADE_DISABLED) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',
