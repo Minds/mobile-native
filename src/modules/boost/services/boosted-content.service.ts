@@ -1,9 +1,8 @@
-import { Platform } from 'react-native';
-import blockListService from '~/common/services/block-list.service';
 import FeedsService from '~/common/services/feeds.service';
 import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
 import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
+import { cleanBoosts } from '../utils/clean-boosts';
 
 /**
  * Boosted content service
@@ -46,7 +45,7 @@ class BoostedContentService {
       if (!done) {
         await this.update();
       } else {
-        this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
+        this.boosts = cleanBoosts(await this.feedsService!.getEntities());
         this.update();
       }
     } catch (err) {
@@ -79,32 +78,13 @@ class BoostedContentService {
   }
 
   /**
-   * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<BoostedActivityModel>} boosts
-   */
-  cleanBoosts(
-    boosts: Array<BoostedActivityModel>,
-  ): Array<BoostedActivityModel> {
-    return boosts.filter((entity: BoostedActivityModel) => {
-      entity.boosted = true;
-      // remove NSFW on iOS
-      if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
-        return false;
-      }
-      return entity.type === 'user'
-        ? false
-        : !blockListService.has(entity.ownerObj?.guid);
-    });
-  }
-
-  /**
    * Update boosted content from server
    */
   async update() {
     try {
       this.updating = true;
       await this.feedsService!.fetch();
-      this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
+      this.boosts = cleanBoosts(await this.feedsService!.getEntities());
     } finally {
       this.updating = false;
     }

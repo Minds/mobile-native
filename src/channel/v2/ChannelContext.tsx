@@ -3,7 +3,6 @@ import UserModel from '~/channel/UserModel';
 
 type ChannelContextType = {
   channel?: UserModel;
-  onSelfNavigation?: () => void;
 };
 /**
  * context of the channel page

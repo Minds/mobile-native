@@ -9,6 +9,7 @@ import createLocalStore from './createLocalStore';
 import EmailSended from './EmailSended';
 import InputPassword from './InputPassword';
 import InputUser from './InputUser';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type ResetPasswordScreenPropsType = {
   navigation: any;
@@ -67,4 +68,4 @@ const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
 );
 
-export default observer(ResetPasswordScreen);
+export default withErrorBoundaryScreen(observer(ResetPasswordScreen));

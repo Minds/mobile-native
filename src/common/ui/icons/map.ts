@@ -325,6 +325,10 @@ const ICON_MAP = {
     font: 'IonIcon',
     name: 'checkmark',
   },
+  'alpha-s-circle': {
+    font: 'MaterialCommunityIcons',
+    name: 'alpha-s-circle',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

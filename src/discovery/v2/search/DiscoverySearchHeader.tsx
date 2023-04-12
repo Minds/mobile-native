@@ -6,7 +6,6 @@ import SearchView from '../../../common/components/SearchView';
 import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { useNavigation } from '@react-navigation/native';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -14,6 +13,7 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import FeedFilter from '../../../common/components/FeedFilter';
 import { DiscoveryV2SearchStoreAlgorithm } from './DiscoveryV2SearchStore';
+import { DiscoveryStackParamList } from '~/navigation/DiscoveryStack';
 
 type NavigationType = StackNavigationProp<
   DiscoveryStackParamList,

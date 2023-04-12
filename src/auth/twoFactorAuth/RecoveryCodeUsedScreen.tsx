@@ -11,6 +11,7 @@ import Button from '../../common/components/Button';
 import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const wHeight = Dimensions.get('window').height;
 
@@ -84,4 +85,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecoveryCodeUsedScreen;
+export default withErrorBoundaryScreen(
+  RecoveryCodeUsedScreen,
+  'RecoveryCodeUsedScreen',
+);

@@ -10,6 +10,7 @@ import i18n from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
 import { B1 } from '~/common/ui';
 import AuthService from './AuthService';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 /**
  * Initial email verification screen
@@ -160,4 +161,7 @@ const InitialEmailVerificationScreen = () => {
   );
 };
 
-export default observer(InitialEmailVerificationScreen);
+export default withErrorBoundaryScreen(
+  observer(InitialEmailVerificationScreen),
+  'InitialEmailVerificationScreen',
+);

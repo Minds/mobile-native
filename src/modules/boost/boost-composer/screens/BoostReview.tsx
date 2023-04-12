@@ -28,6 +28,7 @@ import {
   useIAP,
   withIAPContext,
 } from 'react-native-iap';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -223,4 +224,7 @@ function processError(error: any) {
   console.log('error', error);
 }
 
-export default withIAPContext(observer(BoostReviewScreen));
+export default withErrorBoundaryScreen(
+  withIAPContext(observer(BoostReviewScreen)),
+  'BoostReview',
+);
