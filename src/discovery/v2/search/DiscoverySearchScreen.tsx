@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
-import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
+import { DiscoveryStackParamList } from '~/navigation/DiscoveryStack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { DiscoveryV2SearchStoreContext } from './DiscoveryV2SearchContext';

@@ -36,8 +36,8 @@ function MutualSubscribers({
     <AnimatedHeight>
       <Spacer {...props} containerStyle={styles.container}>
         <View style={styles.avatarContainer}>
-          {users.slice(0, limit).map((user, index) => {
-            return <ChannelAvatar key={index} user={user} />;
+          {users.slice(0, limit).map(user => {
+            return <ChannelAvatar key={user.guid} user={user} />;
           })}
         </View>
 
