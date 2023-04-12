@@ -366,7 +366,14 @@ export default class Activity extends Component<PropsType> {
       !entity.mature_visibility;
 
     const content = (
-      <View style={this.props.showOnlyContent ? null : styles.bodyContainer}>
+      <View
+        style={
+          this.props.showOnlyContent
+            ? null
+            : this.props.maxContentHeight
+            ? styles.bodyContainer
+            : styles.bodyContainerCentered
+        }>
         {lock}
         {shouldShowMessageOnTop ? message : undefined}
         <MediaView

@@ -1,11 +1,17 @@
 import ThemedStyles from '../../styles/ThemedStyles';
 
+const CONTAINER_MIN_HEIGHT = 150;
+
 const styles = ThemedStyles.create({
   container: {
     overflow: 'visible',
   },
   bodyContainer: {
-    minHeight: 150,
+    minHeight: CONTAINER_MIN_HEIGHT,
+  },
+  bodyContainerCentered: {
+    minHeight: CONTAINER_MIN_HEIGHT,
+    justifyContent: 'center',
   },
   messageContainer: ['paddingHorizontal4x', 'paddingVertical3x'],
   message: {
