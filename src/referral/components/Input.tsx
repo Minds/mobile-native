@@ -41,11 +41,13 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           collapsable
           autoCorrect={false}
           style={[
-            theme.input,
+            theme.borderRadius5x,
+            theme.border,
+            theme.bcolorPrimaryBorder,
             theme.bgSecondaryBackground,
             theme.padding2x,
             theme.fontM,
-            styles.input,
+            theme.colorPrimaryText,
           ]}
           value={textToCopy}
         />
@@ -71,10 +73,6 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
 export default Input;
 
 const styles = StyleSheet.create({
-  input: {
-    borderRadius: 3,
-    lineHeight: 17,
-  },
   inputContainer: {
     alignItems: 'stretch',
     justifyContent: 'center',

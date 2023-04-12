@@ -18,7 +18,8 @@ import type { BoostType } from '../boost/legacy/createBoostStore';
 import type { WebViewNavigation } from 'react-native-webview';
 import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { ComposeScreenParams } from '../compose/ComposeScreen';
 
 type AnyType = any;
 
@@ -43,20 +44,6 @@ type WebViewParams = {
   onRedirect?: (event: WebViewNavigation) => void;
 };
 
-export type DiscoveryStackParamList = {
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
-  Discovery: {};
-  Activity: {
-    entity?: ActivityModel;
-    group?: GroupModel;
-    guid?: string;
-    scrollToBottom?: boolean;
-    focusedCommentUrn?: string;
-    noBottomInset?: boolean;
-  };
-  Channel: {};
-};
-
 export type MoreStackParamList = {
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -65,7 +52,7 @@ export type MoreStackParamList = {
   };
   Drawer: {};
   SupermindSettingsScreen: {};
-  Channel: {};
+  Channel: AppStackParamList['Channel'];
   Wallet: {
     currency?: string;
     section?: string;
@@ -139,13 +126,10 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
-  Compose: {
-    openSupermindModal?: boolean;
-    isRemind?: boolean;
-    entity?: ActivityModel;
-    group?: GroupModel;
-    parentKey?: string;
-  };
+  TierManagementScreen: {};
+  TierScreen: {};
+  GroupsList: {};
+  Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
     data: SupermindRequestParam;
@@ -292,7 +276,10 @@ export type AppStackParamList = {
   Analytics: {};
   Notifications: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
-  Channel: {};
+  Channel: {
+    guid?: string;
+    entity?: UserModel;
+  };
   ChannelEdit: {};
   Bio: {
     store: ChannelStoreType;

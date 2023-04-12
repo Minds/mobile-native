@@ -9,6 +9,7 @@ import updateService from '../common/services/update.service';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const UpdatingScreen = observer(() => {
   return (
@@ -61,4 +62,4 @@ const styles = ThemedStyles.create({
   ],
 });
 
-export default UpdatingScreen;
+export default withErrorBoundaryScreen(UpdatingScreen, 'UpdatingScreen');

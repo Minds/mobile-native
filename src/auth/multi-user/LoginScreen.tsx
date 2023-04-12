@@ -3,6 +3,7 @@ import React from 'react';
 import { ModalFullScreen } from '~/common/ui';
 import i18n from '../../common/services/i18n.service';
 import LoginForm from '../login/LoginForm';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   navigation: NavigationProp<any>;
@@ -20,4 +21,4 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
   );
 };
 
-export default LoginScreen;
+export default withErrorBoundaryScreen(LoginScreen, 'LoginScreen');

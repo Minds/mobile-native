@@ -8,6 +8,7 @@ import { RootStackParamList } from '~/navigation/NavigationTypes';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ChooseBrowser from '../components/ChooseBrowser';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type ChooseBrowserModalScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -47,7 +48,10 @@ const ChooseBrowserModalScreen = ({ navigation, route }: PropsType) => {
   );
 };
 
-export default ChooseBrowserModalScreen;
+export default withErrorBoundaryScreen(
+  ChooseBrowserModalScreen,
+  'ChooseBrowserModal',
+);
 
 const containerStyle = ThemedStyles.combine('bgPrimaryBackgroundHighlight', {
   height: 400,

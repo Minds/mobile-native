@@ -8,6 +8,7 @@ import logService from '~/common/services/log.service';
 import { B1, Button, ModalFullScreen } from '~/common/ui';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const openTerms = () => {
   Linking.openURL('https://www.minds.com/p/terms');
@@ -17,7 +18,7 @@ const openContent = () => {
   Linking.openURL('https://www.minds.com/content-policy');
 };
 
-export default function TosScreen({ navigation }) {
+function TosScreen({ navigation }) {
   const [error, setError] = React.useState(false);
   const { user } = useLegacyStores();
 
@@ -76,3 +77,4 @@ export default function TosScreen({ navigation }) {
     </ModalFullScreen>
   );
 }
+export default withErrorBoundaryScreen(TosScreen, 'TosScreen');

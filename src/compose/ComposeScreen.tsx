@@ -19,14 +19,18 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { confirm } from '~/common/components/Confirm';
 import sessionService from '~/common/services/session.service';
 import { IconButtonNext } from '~ui/icons';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import i18n from '../common/services/i18n.service';
+import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
+import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import BottomBar from './ComposeBottomBar';
+import ComposeTopBar from './ComposeTopBar';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
 import MediaPreview from './MediaPreview';
@@ -35,12 +39,23 @@ import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
 import RemindPreview from './RemindPreview';
 import TitleInput from './TitleInput';
 import TopBar from './TopBar';
+import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
-import { RootStackParamList } from '../navigation/NavigationTypes';
+import { ComposerStackParamList } from './ComposeStack';
 
 const { width } = Dimensions.get('window');
 
-type ScreenProps = StackScreenProps<RootStackParamList, 'Compose'>;
+type ScreenProps = StackScreenProps<ComposerStackParamList, 'Composer'>;
+
+export type ComposeScreenParams = {
+  openSupermindModal?: boolean;
+  createMode?: ComposeCreateMode;
+  isRemind?: boolean;
+  entity?: ActivityModel;
+  group?: GroupModel;
+  parentKey?: string;
+  boost?: boolean;
+};
 
 /**
  * Compose Screen
@@ -50,7 +65,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // ### states & variables
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
-
+  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
   const theme = ThemedStyles.style;
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -143,7 +158,9 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // #region effects
   useFocusEffect(store.onScreenFocused);
 
-  const autofocus = !props.route?.params?.openSupermindModal;
+  const autofocus =
+    props.route?.params?.createMode === 'post' ||
+    props.route?.params?.createMode === 'boost';
 
   useEffect(() => {
     if (autofocus) {
@@ -181,18 +198,23 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   return (
     <ComposeContext.Provider value={store}>
       <SafeAreaView style={styles.container}>
-        <TopBar
-          containerStyle={theme.paddingLeft}
-          rightText={rightButton}
-          leftComponent={
-            (store.supermindRequest || store.isSupermindReply) && (
-              <SupermindLabel />
-            )
-          }
-          onPressRight={onPressPost}
-          onPressBack={onPressBack}
-          store={store}
-        />
+        {isCreateModalOn ? (
+          <ComposeTopBar store={store} onPressBack={onPressBack} />
+        ) : (
+          <TopBar
+            containerStyle={theme.paddingLeft}
+            rightText={rightButton}
+            leftComponent={
+              (store.supermindRequest || store.isSupermindReply) && (
+                <SupermindLabel />
+              )
+            }
+            onPressRight={onPressPost}
+            onPressBack={onPressBack}
+            store={store}
+          />
+        )}
+
         <ScrollView
           ref={scrollViewRef}
           keyboardShouldPersistTaps={'always'}

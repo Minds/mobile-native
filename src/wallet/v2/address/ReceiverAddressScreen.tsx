@@ -14,6 +14,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import QRCode from 'react-native-qrcode-svg';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import MText from '../../../common/components/MText';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export type ReceiverAddressScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -106,4 +107,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReceiverAddressScreen;
+export default withErrorBoundaryScreen(
+  ReceiverAddressScreen,
+  'ReceiverAddressScreen',
+);

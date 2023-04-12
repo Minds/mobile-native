@@ -9,6 +9,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import CenteredLoading from '../../../common/components/CenteredLoading';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export type BtcAddressScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -65,4 +66,4 @@ const BtcAddressScreen = observer(({ navigation, route }: PropsType) => {
   );
 });
 
-export default BtcAddressScreen;
+export default withErrorBoundaryScreen(BtcAddressScreen, 'BtcAddressScreen');
