@@ -14,11 +14,10 @@ import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
   DEV_MODE,
-  GOOGLE_PLAY_STORE,
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -61,9 +60,7 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
-  const UPGRADE_DISABLED =
-    (useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) ||
-    !PRO_PLUS_SUBSCRIPTION_ENABLED;
+  const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
 
   const user = sessionService.getUser();
 
@@ -184,11 +181,11 @@ const SettingsScreen = observer(({ navigation }) => {
           <ScreenHeader title={i18n.t('moreScreen.settings')} />
         </HiddenTap>
         {firstSectionItems.map((item, index) => (
-          <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
+          <MenuItem key={index} noBorderTop={index > 0} {...item} />
         ))}
         <View style={theme.marginTop7x}>
           {secondSectionItems.map((item, index) => (
-            <MenuItem key={`${index}`} noBorderTop={index > 0} {...item} />
+            <MenuItem key={index} noBorderTop={index > 0} {...item} />
           ))}
         </View>
       </ScrollView>
@@ -196,4 +193,4 @@ const SettingsScreen = observer(({ navigation }) => {
   );
 });
 
-export default SettingsScreen;
+export default withErrorBoundaryScreen(SettingsScreen, 'SettingsScreen');

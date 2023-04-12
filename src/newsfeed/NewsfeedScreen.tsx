@@ -11,7 +11,7 @@ import type UserStore from '../auth/UserStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
-import PortraitContentBar from '../portrait/PortraitContentBar';
+import PortraitContentBar from '../portrait/components/PortraitContentBar';
 import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
@@ -35,6 +35,7 @@ import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar'
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
+import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
@@ -135,6 +136,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
             feedType={newsfeed.feedType}
             onFeedTypeChange={newsfeed.changeFeedTypeChange}
           />
+          <BoostRotator />
         </View>
       ),
       () => InFeedNoticesService.trackViewTop(),

@@ -14,6 +14,7 @@ import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
+import ReferBanner from '../common/components/ReferBanner';
 import { CodePushCustomIcon } from 'modules/codepush';
 
 type PropsType = {
@@ -134,6 +135,8 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         </View>
       </View>
+
+      <ReferBanner />
     </Animated.View>
   );
 });

@@ -36,7 +36,7 @@ export const LIGHT_THEME = {
   Transparent: 'transparent',
   AvatarActive: '#ECDA51',
   AvatarCircled: '#7D7D82',
-  PlusBackground: 'rgba(210, 219, 227, 0.4)',
+  MutedBackground: 'rgba(210, 219, 227, 0.4)',
 };
 
 export const DARK_THEME: ColorsType = {
@@ -74,7 +74,7 @@ export const DARK_THEME: ColorsType = {
   Transparent: 'transparent',
   AvatarActive: '#ECDA51',
   AvatarCircled: '#AEB0B8',
-  PlusBackground: 'rgba(65, 76, 87, 0.25)',
+  MutedBackground: 'rgba(65, 76, 87, 0.25)',
 };
 
 export const SupermindGradient = ['#2B52E8', '#5238ED', '#9B0FA8'];

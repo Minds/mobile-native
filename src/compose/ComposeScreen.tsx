@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Dimensions,
@@ -8,39 +9,38 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { Image } from 'expo-image';
 
-import { observer } from 'mobx-react';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
+import { observer } from 'mobx-react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
-import MetaPreview from './MetaPreview';
-import TitleInput from './TitleInput';
-import NavigationService from '../navigation/NavigationService';
-import RemindPreview from './RemindPreview';
-import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
-import ComposeTopBar from './ComposeTopBar';
-import BottomBar from './ComposeBottomBar';
-import MediaPreview from './MediaPreview';
-import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
-import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
+import { StackScreenProps } from '@react-navigation/stack';
+import { confirm } from '~/common/components/Confirm';
 import sessionService from '~/common/services/session.service';
-import useComposeStore, { ComposeContext } from './useComposeStore';
+import { IconButtonNext } from '~ui/icons';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
+import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
+import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
+import SupermindLabel from '../common/components/supermind/SupermindLabel';
+import i18n from '../common/services/i18n.service';
+import GroupModel from '../groups/GroupModel';
+import NavigationService from '../navigation/NavigationService';
+import ActivityModel from '../newsfeed/ActivityModel';
+import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import BottomBar from './ComposeBottomBar';
+import ComposeTopBar from './ComposeTopBar';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
 import { ComposerTextInput } from './ComposerTextInput';
-import { StackScreenProps } from '@react-navigation/stack';
-import ActivityModel from '../newsfeed/ActivityModel';
-import GroupModel from '../groups/GroupModel';
-import type { ComposeCreateMode } from './createComposeStore';
+import MediaPreview from './MediaPreview';
+import MetaPreview from './MetaPreview';
+import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
+import RemindPreview from './RemindPreview';
+import TitleInput from './TitleInput';
 import TopBar from './TopBar';
-import SupermindLabel from '../common/components/supermind/SupermindLabel';
-import { IconButtonNext } from '../common/ui';
-import { confirm } from '../common/components/Confirm';
-import { useIsFeatureOn } from '../../ExperimentsProvider';
+import type { ComposeCreateMode } from './createComposeStore';
+import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 
 const { width } = Dimensions.get('window');

@@ -7,6 +7,7 @@ import i18nService from '../../services/i18n.service';
 import { ModalFullScreen } from '../../ui';
 import InputContainer from '../InputContainer';
 import AutoComplete from './AutoComplete';
+import { withErrorBoundaryScreen } from '../ErrorBoundaryScreen';
 
 type ChannelSelectScreenRoute = RouteProp<
   RootStackParamList,
@@ -17,9 +18,7 @@ interface ChannelSelectScreenProps {
   route?: ChannelSelectScreenRoute;
 }
 
-export default function ChannelSelectScreen({
-  route,
-}: ChannelSelectScreenProps) {
+function ChannelSelectScreen({ route }: ChannelSelectScreenProps) {
   const [username, setUsername] = useState(route?.params?.username || '');
 
   const onSelect = useCallback(
@@ -52,3 +51,8 @@ export default function ChannelSelectScreen({
     </ModalFullScreen>
   );
 }
+
+export default withErrorBoundaryScreen(
+  ChannelSelectScreen,
+  'ChannelSelectScreen',
+);

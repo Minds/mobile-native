@@ -1,9 +1,8 @@
-import { Platform } from 'react-native';
-import apiService from '~/common/services/api.service';
-import blockListService from '~/common/services/block-list.service';
+import FeedsService from '~/common/services/feeds.service';
+import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
-import { storages } from '~/common/services/storage/storages.service';
-import ActivityModel from '~/newsfeed/ActivityModel';
+import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
+import { cleanBoosts } from '../utils/clean-boosts';
 
 /**
  * Boosted content service
@@ -16,10 +15,16 @@ class BoostedContentService {
   offset: number = -1;
 
   /**
-   * Boosts
-   * @var {Array<ActivityModel>} boosts
+   * Feed service
+   * @var {FeedsService}
    */
-  boosts: Array<ActivityModel> = [];
+  feedsService?: FeedsService;
+
+  /**
+   * Boosts
+   * @var {Array<BoostedActivityModel>} boosts
+   */
+  boosts: Array<BoostedActivityModel> = [];
 
   /**
    * whether the feed is updating
@@ -27,47 +32,49 @@ class BoostedContentService {
   updating = false;
 
   /**
-   * Initialize if necessary
+   * Reload boosts list
    */
-  init() {
+  load = async (): Promise<any> => {
+    this.init();
     if (!sessionService.userLoggedIn || sessionService.switchingAccount) {
       return;
     }
-    this.loadCached();
-    return this.update();
+    try {
+      const done = await this.feedsService!.setOffset(0).fetchLocal();
+
+      if (!done) {
+        await this.update();
+      } else {
+        this.boosts = cleanBoosts(await this.feedsService!.getEntities());
+        this.update();
+      }
+    } catch (err) {
+      logService.exception('[BoostedContentService]', err);
+    }
+  };
+
+  /**
+   * Initialize if necessary
+   */
+  init() {
+    if (!this.feedsService) {
+      this.feedsService = new FeedsService();
+      this.feedsService
+        .setLimit(24)
+        .setOffset(0)
+        .setPaginated(false)
+        .setEndpoint('api/v3/boosts/feed')
+        .setDataProperty('boosts')
+        .setParams({ location: 1 });
+    }
   }
 
   /**
    * Clear the service
    */
   clear() {
-    this.boosts = [];
-  }
-
-  /**
-   * Remove blocked channel's boosts and sets boosted to true
-   * @param {Array<ActivityModel>} boosts
-   */
-  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((entity: ActivityModel) => {
-      entity.boosted = true;
-      // remove NSFW on iOS
-      if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
-        return false;
-      }
-      return entity.type === 'user'
-        ? false
-        : !blockListService.has(entity.ownerObj?.guid);
-    });
-  }
-
-  loadCached() {
-    const boosts = storages.session?.getArray<ActivityModel>(
-      'BoostServiceCache',
-    );
-    if (boosts) {
-      this.boosts = ActivityModel.createMany(boosts);
-    }
+    this.feedsService?.clear();
+    delete this.feedsService;
   }
 
   /**
@@ -76,19 +83,8 @@ class BoostedContentService {
   async update() {
     try {
       this.updating = true;
-      const response = await apiService.get<any>('api/v3/boosts/feed', {
-        location: 1,
-      });
-      if (response?.boosts) {
-        const filteredBoosts = this.cleanBoosts(
-          response.boosts.map(b => b.entity),
-        );
-
-        this.boosts = ActivityModel.createMany(filteredBoosts);
-
-        // cache boosts
-        storages.session?.setArray('BoostServiceCache', filteredBoosts);
-      }
+      await this.feedsService!.fetch();
+      this.boosts = cleanBoosts(await this.feedsService!.getEntities());
     } finally {
       this.updating = false;
     }
@@ -97,7 +93,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ActivityModel | null {
+  fetch(): BoostedActivityModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {
@@ -110,6 +106,25 @@ class BoostedContentService {
     }
 
     return this.boosts[this.offset];
+  }
+
+  /**
+   * gets a boost that contains media
+   */
+  getMediaBoost(): BoostedActivityModel | null {
+    const boost = this.fetch();
+
+    if (boost) {
+      // if the boost has media return it
+      if (boost.hasVideo() || boost.hasImage()) {
+        return boost;
+      }
+
+      // otherwise get another media boost
+      return this.getMediaBoost();
+    }
+
+    return null;
   }
 }
 

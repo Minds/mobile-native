@@ -25,6 +25,7 @@ import Lock from '../wire/v2/lock/Lock';
 import BlogActionSheet from './BlogActionSheet';
 import BlogsViewStore from './BlogsViewStore';
 import BlogViewHTML from './BlogViewHTML';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BlogScreenRouteProp = RouteProp<AppStackParamList, 'BlogView'>;
 type BlogScreenNavigationProp = StackNavigationProp<
@@ -43,7 +44,7 @@ type PropsType = {
  */
 @inject('user')
 @observer
-export default class BlogsViewScreen extends Component<PropsType> {
+class BlogsViewScreen extends Component<PropsType> {
   commentsRef: any;
   blogsView: BlogsViewStore;
 
@@ -290,7 +291,11 @@ export default class BlogsViewScreen extends Component<PropsType> {
   }
 }
 
-export const withModal = withModalProvider(BlogsViewScreen);
+export default withErrorBoundaryScreen(BlogsViewScreen, 'BlogsViewScreen');
+
+export const withModal = withModalProvider(
+  withErrorBoundaryScreen(BlogsViewScreen, 'BlogsViewScreen'),
+);
 
 /**
  * Styles

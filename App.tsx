@@ -20,6 +20,7 @@ import {
   EmitterSubscription,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
+import { setup } from 'react-native-iap';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -58,6 +59,9 @@ import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
 
 appInitManager.initializeServices();
+
+// Setup apple IAP to use storekit 2
+setup({ storekitMode: 'STOREKIT2_MODE' });
 
 if (
   Platform.OS === 'android' &&

@@ -31,10 +31,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
-import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
-import { storages } from '~/common/services/storage/storages.service';
-import { triggerHaptic } from '~/common/services/haptic.service';
+import { hasVariation } from 'ExperimentsProvider';
+import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
+import { storages } from '../common/services/storage/storages.service';
+import { triggerHaptic } from '../common/services/haptic.service';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';

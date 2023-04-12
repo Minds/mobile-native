@@ -2,7 +2,9 @@ import React, { createContext, useContext } from 'react';
 import FeedStore from '../stores/FeedStore';
 import BaseModel from '../BaseModel';
 
-const FeedStoreContext = createContext<FeedStore<BaseModel> | null>(null);
+export const FeedStoreContext = createContext<FeedStore<BaseModel> | null>(
+  null,
+);
 
 export function withFeedStoreProvider<
   T extends {

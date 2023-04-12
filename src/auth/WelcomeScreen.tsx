@@ -11,6 +11,7 @@ import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -87,7 +88,10 @@ const devToggleStyle = ThemedStyles.combine(
   'padding5x',
 );
 
-export default observer(WelcomeScreen);
+export default withErrorBoundaryScreen(
+  observer(WelcomeScreen),
+  'WelcomeScreen',
+);
 
 const styles = StyleSheet.create({
   bulb: {

@@ -6,6 +6,7 @@ import { RootStackParamList } from '../navigation/NavigationTypes';
 import ModalContainer from '../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../styles/ThemedStyles';
 import LoginForm from './login/LoginForm';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type RelogScreenRouteProp = RouteProp<RootStackParamList, 'RelogScreen'>;
 
@@ -48,4 +49,4 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
   );
 };
 
-export default RelogScreen;
+export default withErrorBoundaryScreen(RelogScreen, 'RelogScreen');

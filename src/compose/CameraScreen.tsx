@@ -29,6 +29,7 @@ import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
 import { useBackHandler } from '@react-native-community/hooks';
 import { Orientation } from '~/services';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -43,311 +44,317 @@ const showError = message => {
  * Camera Screen
  * @param {Object} props
  */
-export default observer(function (props) {
-  // #region states & variables
-  const { portrait: portraitMode, mode: allowedMode, onMediaConfirmed } =
-    props.route?.params ?? {};
-  const [mode, setMode] = useState<'photo' | 'video'>(
-    allowedMode === 'video' ? 'video' : 'photo',
-  );
-  const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
+export default withErrorBoundaryScreen(
+  observer(function (props) {
+    // #region states & variables
+    const { portrait: portraitMode, mode: allowedMode, onMediaConfirmed } =
+      props.route?.params ?? {};
+    const [mode, setMode] = useState<'photo' | 'video'>(
+      allowedMode === 'video' ? 'video' : 'photo',
+    );
+    const [mediaToConfirm, setMediaToConfirm] = useState<any>(null);
 
-  /**
-   * the current selected filter
-   */
-  const [filter, setFilter] = useState<any>(null);
-  const [extractEnabled, setExtractEnabled] = useState<boolean>(false);
-  /**
-   * whether the image is being downloaded to camera roll
-   */
-  const [downloading, setDownloading] = useState(false);
-  const portrait = useIsPortrait();
-  const theme = ThemedStyles.style;
-  // #endregion
+    /**
+     * the current selected filter
+     */
+    const [filter, setFilter] = useState<any>(null);
+    const [extractEnabled, setExtractEnabled] = useState<boolean>(false);
+    /**
+     * whether the image is being downloaded to camera roll
+     */
+    const [downloading, setDownloading] = useState(false);
+    const portrait = useIsPortrait();
+    const theme = ThemedStyles.style;
+    // #endregion
 
-  // #region methods
-  /**
-   * reset the state
-   */
-  const reset = useCallback(() => {
-    setFilter(null);
-    setDownloading(false);
-    setMediaToConfirm(null);
-    setExtractEnabled(false);
-  }, []);
-  /**
-   * sets mode to photo
-   */
-  const setModePhoto = useCallback(() => setMode('photo'), []);
+    // #region methods
+    /**
+     * reset the state
+     */
+    const reset = useCallback(() => {
+      setFilter(null);
+      setDownloading(false);
+      setMediaToConfirm(null);
+      setExtractEnabled(false);
+    }, []);
+    /**
+     * sets mode to photo
+     */
+    const setModePhoto = useCallback(() => setMode('photo'), []);
 
-  /**
-   * sets mode to video
-   */
-  const setModeVideo = useCallback(() => setMode('video'), []);
+    /**
+     * sets mode to video
+     */
+    const setModeVideo = useCallback(() => setMode('video'), []);
 
-  useEffect(() => {
-    Orientation.unlock();
-    return () => {
-      Orientation.lockPortrait();
-    };
-  }, []);
+    useEffect(() => {
+      Orientation.unlock();
+      return () => {
+        Orientation.lockPortrait();
+      };
+    }, []);
 
-  useEffect(() => {
-    if (mediaToConfirm) Orientation.lockPortrait();
-    else Orientation.unlock();
-  }, [mediaToConfirm]);
+    useEffect(() => {
+      if (mediaToConfirm) {
+        Orientation.lockPortrait();
+      } else {
+        Orientation.unlock();
+      }
+    }, [mediaToConfirm]);
 
-  /**
-   * handles the confirm action
-   */
-  const handleConfirm = useCallback(
-    (extractedImage?: any) => {
-      if (!mediaToConfirm) {
+    /**
+     * handles the confirm action
+     */
+    const handleConfirm = useCallback(
+      (extractedImage?: any) => {
+        if (!mediaToConfirm) {
+          return;
+        }
+
+        if (filter && !extractedImage) {
+          // TODO loading please (extracting) and explain
+          return setExtractEnabled(true);
+        }
+
+        if (mediaToConfirm.type && mediaToConfirm.type.startsWith('video')) {
+          CameraRoll.save(mediaToConfirm.uri, {
+            album: 'Minds',
+            type: 'video',
+          }).catch(error =>
+            console.log('[Composer] Error saving video to gallery', error),
+          );
+        }
+
+        if (onMediaConfirmed) {
+          // if the media confirmed was handled, use the handler)
+          onMediaConfirmed(extractedImage || mediaToConfirm);
+        }
+
+        NavigationService.navigate('Compose', {
+          media: extractedImage || mediaToConfirm,
+          portrait: portraitMode,
+        });
+
+        InteractionManager.runAfterInteractions(reset);
+      },
+      [filter, mediaToConfirm, onMediaConfirmed, reset, portraitMode],
+    );
+
+    /**
+     * called after gallery selection is completed. Handles gallery selection
+     */
+    const handleGallerySelection = useCallback(async () => {
+      const media = await attachmentService.gallery(
+        mode === 'photo' ? 'Images' : 'Videos',
+        false,
+      );
+
+      if (!media) {
         return;
       }
 
-      if (filter && !extractedImage) {
-        // TODO loading please (extracting) and explain
-        return setExtractEnabled(true);
+      // we don't support multiple media yet
+      if (Array.isArray(media)) {
+        return;
       }
 
-      if (mediaToConfirm.type && mediaToConfirm.type.startsWith('video')) {
-        CameraRoll.save(mediaToConfirm.uri, {
-          album: 'Minds',
-          type: 'video',
-        }).catch(error =>
-          console.log('[Composer] Error saving video to gallery', error),
+      if (portraitMode && media.height < media.width) {
+        showError(i18n.t('capture.mediaPortraitError'));
+        return;
+      }
+
+      setMediaToConfirm(media);
+    }, [mode, portraitMode]);
+
+    /**
+     * called when edit icon is pressed. opens the rnPhotoEditor and handles callback
+     */
+    const onEdit = useCallback(() => {
+      try {
+        setMediaToConfirm(null);
+        RNPhotoEditor.Edit({
+          path: mediaToConfirm.uri.replace('file://', ''),
+          stickers: ['sticker6', 'sticker9'],
+          hiddenControls: ['save', 'share'],
+          onDone: () => {
+            // reset the filter as a workaround because we will have to rerender the filter slider.
+            // but ideally we should keep the filter and scroll to that filter slide
+            setFilter(null);
+
+            Image.getSize(
+              mediaToConfirm.uri,
+              (w, h) => {
+                runInAction(() => {
+                  mediaToConfirm.key++;
+                  mediaToConfirm.width = w;
+                  mediaToConfirm.height = h;
+
+                  setMediaToConfirm(mediaToConfirm);
+                });
+              },
+              err => console.log(err),
+            );
+          },
+        });
+      } catch (err) {
+        logService.exception(err);
+      }
+    }, [mediaToConfirm]);
+
+    /**
+     * Download the media to the gallery
+     */
+    const runDownload = useCallback(async () => {
+      try {
+        setDownloading(true);
+        await downloadService.downloadToGallery(
+          mediaToConfirm.uri,
+          undefined,
+          `minds/${Date.now()}`, // is this good?
         );
+        showNotification(i18n.t('imageAdded'), 'info', 3000);
+      } catch (e: any) {
+        showNotification(i18n.t('errorDownloading'), 'danger', 3000);
+        logService.exception('[MediaView] runDownload', e);
       }
+      setDownloading(false);
+    }, [mediaToConfirm]);
 
-      if (onMediaConfirmed) {
-        // if the media confirmed was handled, use the handler)
-        onMediaConfirmed(extractedImage || mediaToConfirm);
-      }
-
-      NavigationService.navigate('Compose', {
-        media: extractedImage || mediaToConfirm,
-        portrait: portraitMode,
-      });
-
-      InteractionManager.runAfterInteractions(reset);
-    },
-    [filter, mediaToConfirm, onMediaConfirmed, reset, portraitMode],
-  );
-
-  /**
-   * called after gallery selection is completed. Handles gallery selection
-   */
-  const handleGallerySelection = useCallback(async () => {
-    const media = await attachmentService.gallery(
-      mode === 'photo' ? 'Images' : 'Videos',
-      false,
-    );
-
-    if (!media) {
-      return;
-    }
-
-    // we don't support multiple media yet
-    if (Array.isArray(media)) {
-      return;
-    }
-
-    if (portraitMode && media.height < media.width) {
-      showError(i18n.t('capture.mediaPortraitError'));
-      return;
-    }
-
-    setMediaToConfirm(media);
-  }, [mode, portraitMode]);
-
-  /**
-   * called when edit icon is pressed. opens the rnPhotoEditor and handles callback
-   */
-  const onEdit = useCallback(() => {
-    try {
+    /**
+     * called when retake button is pressed. Resets current image to null
+     */
+    const retake = useCallback(() => {
       setMediaToConfirm(null);
-      RNPhotoEditor.Edit({
-        path: mediaToConfirm.uri.replace('file://', ''),
-        stickers: ['sticker6', 'sticker9'],
-        hiddenControls: ['save', 'share'],
-        onDone: () => {
-          // reset the filter as a workaround because we will have to rerender the filter slider.
-          // but ideally we should keep the filter and scroll to that filter slide
-          setFilter(null);
+    }, []);
 
-          Image.getSize(
-            mediaToConfirm.uri,
-            (w, h) => {
-              runInAction(() => {
-                mediaToConfirm.key++;
-                mediaToConfirm.width = w;
-                mediaToConfirm.height = h;
+    /**
+     * Android back button handler
+     */
+    useBackHandler(() => {
+      mediaToConfirm ? retake() : props.navigation.goBack();
+      return true;
+    });
 
-                setMediaToConfirm(mediaToConfirm);
-              });
-            },
-            err => console.log(err),
-          );
-        },
-      });
-    } catch (err) {
-      logService.exception(err);
-    }
-  }, [mediaToConfirm]);
+    /**
+     * called when the camera captures something
+     */
+    const handleCameraCapture = useCallback(media => {
+      media.key = 1;
+      if (media.metadata && media.metadata.Orientation === 6) {
+        const h = media.height;
+        media.height = media.width;
+        media.width = h;
+      }
+      // we try to reduce the size of the image
+      attachmentService
+        .processMedia(media)
+        .then(processedMedia => {
+          setMediaToConfirm(processedMedia);
+        })
+        .catch(err => {
+          console.log(err);
+          setMediaToConfirm(media);
+        });
+    }, []);
+    // #endregion
 
-  /**
-   * Download the media to the gallery
-   */
-  const runDownload = useCallback(async () => {
-    try {
-      setDownloading(true);
-      await downloadService.downloadToGallery(
-        mediaToConfirm.uri,
-        undefined,
-        `minds/${Date.now()}`, // is this good?
+    // #region effects
+    /**
+     * handles changing the navbar color. sets it dark on mount and to default on unmount
+     */
+    useEffect(() => {
+      changeNavigationBarColor('#000000', false, false);
+
+      return () => {
+        return changeNavigationBarColor(
+          ThemedStyles.style.bgSecondaryBackground.backgroundColor,
+          !ThemedStyles.theme,
+          true,
+        );
+      };
+    }, []);
+    // #endregion
+
+    // #region renders
+    let bottomBar;
+
+    if (mediaToConfirm) {
+      bottomBar = (
+        <BottomBarMediaConfirm
+          mode={mode}
+          onRetake={retake}
+          onConfirm={() => handleConfirm()}
+          extracting={extractEnabled}
+        />
       );
-      showNotification(i18n.t('imageAdded'), 'info', 3000);
-    } catch (e: any) {
-      showNotification(i18n.t('errorDownloading'), 'danger', 3000);
-      logService.exception('[MediaView] runDownload', e);
-    }
-    setDownloading(false);
-  }, [mediaToConfirm]);
-
-  /**
-   * called when retake button is pressed. Resets current image to null
-   */
-  const retake = useCallback(() => {
-    setMediaToConfirm(null);
-  }, []);
-
-  /**
-   * Android back button handler
-   */
-  useBackHandler(() => {
-    mediaToConfirm ? retake() : props.navigation.goBack();
-    return true;
-  });
-
-  /**
-   * called when the camera captures something
-   */
-  const handleCameraCapture = useCallback(media => {
-    media.key = 1;
-    if (media.metadata && media.metadata.Orientation === 6) {
-      const h = media.height;
-      media.height = media.width;
-      media.width = h;
-    }
-    // we try to reduce the size of the image
-    attachmentService
-      .processMedia(media)
-      .then(processedMedia => {
-        setMediaToConfirm(processedMedia);
-      })
-      .catch(err => {
-        console.log(err);
-        setMediaToConfirm(media);
-      });
-  }, []);
-  // #endregion
-
-  // #region effects
-  /**
-   * handles changing the navbar color. sets it dark on mount and to default on unmount
-   */
-  useEffect(() => {
-    changeNavigationBarColor('#000000', false, false);
-
-    return () => {
-      return changeNavigationBarColor(
-        ThemedStyles.style.bgSecondaryBackground.backgroundColor,
-        !ThemedStyles.theme,
-        true,
+    } else if (portrait && !allowedMode) {
+      bottomBar = (
+        <CameraScreenBottomBar
+          onSetPhotoPress={setModePhoto}
+          onSetVideoPress={setModeVideo}
+          mode={mode}
+        />
       );
-    };
-  }, []);
-  // #endregion
+    }
+    // #endregion
 
-  // #region renders
-  let bottomBar;
+    return (
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#000" barStyle="light-content" />
 
-  if (mediaToConfirm) {
-    bottomBar = (
-      <BottomBarMediaConfirm
-        mode={mode}
-        onRetake={retake}
-        onConfirm={() => handleConfirm()}
-        extracting={extractEnabled}
-      />
-    );
-  } else if (portrait && !allowedMode) {
-    bottomBar = (
-      <CameraScreenBottomBar
-        onSetPhotoPress={setModePhoto}
-        onSetVideoPress={setModeVideo}
-        mode={mode}
-      />
-    );
-  }
-  // #endregion
+        <PermissionsCheck>
+          <View style={styles.cameraContainer}>
+            <Camera
+              onMedia={handleCameraCapture}
+              mode={mediaToConfirm ? 'photo' : mode}
+              onForceVideo={setModeVideo}
+              onPressGallery={handleGallerySelection}
+              portraitMode={portraitMode}
+              disabled={Boolean(mediaToConfirm)}
+            />
 
-  return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#000" barStyle="light-content" />
-
-      <PermissionsCheck>
-        <View style={styles.cameraContainer}>
-          <Camera
-            onMedia={handleCameraCapture}
-            mode={mediaToConfirm ? 'photo' : mode}
-            onForceVideo={setModeVideo}
-            onPressGallery={handleGallerySelection}
-            portraitMode={portraitMode}
-            disabled={Boolean(mediaToConfirm)}
-          />
-
-          {Boolean(mediaToConfirm) && (
-            <View style={styles.filterContainer}>
-              {mode === 'photo' ? (
-                <View style={theme.flexContainer}>
-                  <ImageFilterSlider
-                    image={mediaToConfirm}
-                    extractEnabled={extractEnabled}
-                    onExtractImage={handleConfirm}
-                    onFilterChange={setFilter}
-                  />
-
-                  <SafeAreaView style={styles.topToolbarContainer}>
-                    <DownloadIconButton
-                      downloading={downloading}
-                      onDownload={runDownload}
+            {Boolean(mediaToConfirm) && (
+              <View style={styles.filterContainer}>
+                {mode === 'photo' ? (
+                  <View style={theme.flexContainer}>
+                    <ImageFilterSlider
+                      image={mediaToConfirm}
+                      extractEnabled={extractEnabled}
+                      onExtractImage={handleConfirm}
+                      onFilterChange={setFilter}
                     />
-                    <EditIconButton onPress={onEdit} />
-                  </SafeAreaView>
-                </View>
-              ) : (
-                <MediaPreviewFullScreen mediaToConfirm={mediaToConfirm} />
-              )}
-            </View>
-          )}
-        </View>
 
-        {bottomBar}
-      </PermissionsCheck>
+                    <SafeAreaView style={styles.topToolbarContainer}>
+                      <DownloadIconButton
+                        downloading={downloading}
+                        onDownload={runDownload}
+                      />
+                      <EditIconButton onPress={onEdit} />
+                    </SafeAreaView>
+                  </View>
+                ) : (
+                  <MediaPreviewFullScreen mediaToConfirm={mediaToConfirm} />
+                )}
+              </View>
+            )}
+          </View>
 
-      <FloatingBackButton
-        size="huge"
-        icon="close"
-        onPress={mediaToConfirm ? retake : props.navigation.goBack}
-        light
-        shadow
-        style={theme.padding3x}
-      />
-    </View>
-  );
-});
+          {bottomBar}
+        </PermissionsCheck>
+
+        <FloatingBackButton
+          size="huge"
+          icon="close"
+          onPress={mediaToConfirm ? retake : props.navigation.goBack}
+          light
+          shadow
+          style={theme.padding3x}
+        />
+      </View>
+    );
+  }),
+  'CameraScreen',
+);
 
 const TabButton = ({ onPress, active, children }) => {
   const theme = ThemedStyles.style;

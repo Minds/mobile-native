@@ -3,8 +3,13 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { DiscoveryStackParamList } from './NavigationTypes';
+import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
+
+export type DiscoveryStackParamList = Pick<
+  AppStackParamList,
+  'Channel' | 'Activity' | 'DiscoverySearch' | 'BoostScreenV2'
+> & { Discovery: {} };
 
 const DiscoveryStack = createNativeStackNavigator<DiscoveryStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -30,6 +35,9 @@ export default function () {
         name="Channel"
         getComponent={() => require('~/channel/v2/ChannelScreen').default}
         options={hideHeader}
+        getId={({ params }) =>
+          'Channel' + (params?.entity?.guid || params?.guid || '')
+        }
       />
       <DiscoveryStack.Screen
         name="Activity"

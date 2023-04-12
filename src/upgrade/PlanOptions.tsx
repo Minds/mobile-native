@@ -5,15 +5,35 @@ import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import MText from '../common/components/MText';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
+import { PaymentPlanType, SubscriptionType } from './types';
 
 type PropsType = {
   store: UpgradeStoreType;
-  pro: boolean | undefined;
 };
 
-const PlanOptions = observer(({ store, pro }: PropsType) => {
+export const labelMap: Record<SubscriptionType, (number, string) => string> = {
+  lifetime: (cost, symbol) => `Lifetime membership · ${symbol}${cost}`,
+  monthly: (cost, symbol) => `Monthly · ${symbol}${cost}`,
+  yearly: (cost, symbol) => `Annually · ${symbol}${cost / 12}`,
+};
+
+export const labelSecondaryMap: Record<
+  SubscriptionType,
+  (number, string) => string
+> = {
+  lifetime: () => `MINDS`,
+  monthly: () => `/ month`,
+  yearly: (cost, symbol) => `/ month (billed annually ${symbol}${cost})`,
+};
+
+/**
+ * Plan options component
+ */
+const PlanOptions = observer(({ store }: PropsType) => {
   const theme = ThemedStyles.style;
-  const plans = pro ? store.paymentPlans.pro : store.paymentPlans.plus;
+  const plans = store.method === 'tokens' ? store.plansTokens : store.plansUSD;
+
+  if (!plans || plans.length === 0) return null;
   return (
     <View style={theme.marginTop3x}>
       <MText
@@ -25,22 +45,44 @@ const PlanOptions = observer(({ store, pro }: PropsType) => {
         ]}>
         SELECT PLAN
       </MText>
-      {(store.method === 'tokens' ? plans.tokens : plans.usd).map(plan => (
+      <PlanList plans={plans} store={store} />
+    </View>
+  );
+});
+
+export const PlanList = ({
+  plans,
+  store,
+}: {
+  plans: Array<PaymentPlanType>;
+  store: UpgradeStoreType;
+}) => {
+  const theme = ThemedStyles.style;
+  return (
+    <>
+      {plans.map(plan => (
         <MenuItemOption
+          key={plan.id}
           onPress={() => store.setSelectedOption(plan)}
           title={
-            <MText style={[theme.colorPrimaryText]}>
-              {plan.primarylabel(plan.cost / 12, plan.cost)}{' '}
-              <MText style={[theme.colorSecondaryText]}>
-                {plan.secondarylabel(plan.cost / 12, plan.cost)}
+            <MText style={theme.colorPrimaryText}>
+              {labelMap[plan.id](
+                plan.cost,
+                store.method === 'tokens' ? '' : '$',
+              )}{' '}
+              <MText style={theme.colorSecondaryText}>
+                {labelSecondaryMap[plan.id](
+                  plan.cost,
+                  store.method === 'tokens' ? '' : '$',
+                )}
               </MText>
             </MText>
           }
           selected={plan.id === store.selectedOption.id}
         />
       ))}
-    </View>
+    </>
   );
-});
+};
 
 export default PlanOptions;

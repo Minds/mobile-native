@@ -121,7 +121,7 @@ export default function ({
     return avatarStyles;
   }, [avatarSize]);
 
-  const shouldRenderIcon = !noIcon;
+  const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>

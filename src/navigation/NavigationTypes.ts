@@ -6,7 +6,7 @@ import type { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
-import type { PortraitBarItem } from '../portrait/createPortraitStore';
+import type PortraitBarItem from '../portrait/models/PortraitBarItem';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
@@ -44,20 +44,6 @@ type WebViewParams = {
   onRedirect?: (event: WebViewNavigation) => void;
 };
 
-export type DiscoveryStackParamList = {
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
-  Discovery: {};
-  Activity: {
-    entity?: ActivityModel;
-    group?: GroupModel;
-    guid?: string;
-    scrollToBottom?: boolean;
-    focusedCommentUrn?: string;
-    noBottomInset?: boolean;
-  };
-  Channel: {};
-};
-
 export type MoreStackParamList = {
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -66,7 +52,7 @@ export type MoreStackParamList = {
   };
   Drawer: {};
   SupermindSettingsScreen: {};
-  Channel: {};
+  Channel: AppStackParamList['Channel'];
   Wallet: {
     currency?: string;
     section?: string;
@@ -180,7 +166,7 @@ export type RootStackParamList = {
   };
   BoostScreen: { entity: ActivityModel; boostType: BoostType };
   UpgradeScreen: {
-    onComplete: Function;
+    onComplete: (any) => void;
     pro?: boolean;
   };
   VerifyEmail: {};
@@ -250,7 +236,10 @@ export type AppStackParamList = {
   DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
-    index: number;
+    /**
+     * the guid of the selected activity to be focused
+     */
+    guid?: string;
   };
   Fab: {
     disableThresholdCheck?: boolean;
@@ -287,7 +276,10 @@ export type AppStackParamList = {
   Analytics: {};
   Notifications: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
-  Channel: {};
+  Channel: {
+    guid?: string;
+    entity?: UserModel;
+  };
   ChannelEdit: {};
   Bio: {
     store: ChannelStoreType;

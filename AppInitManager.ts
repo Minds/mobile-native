@@ -138,7 +138,7 @@ export class AppInitManager {
     this.updateMindsConfigAndInitGrowthbook();
 
     // load boosted content
-    boostedContentService.init();
+    boostedContentService.load();
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
