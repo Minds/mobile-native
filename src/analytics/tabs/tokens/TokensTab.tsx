@@ -34,16 +34,18 @@ const rows = ({
   Rewards: {},
 } as unknown) as RowType;
 
-const tabs = ['Supply', 'Transactions', 'Liquidity', 'Rewards'];
+const tabs = ['Supply', 'Transactions', 'Liquidity', 'Rewards'] as const;
 
-const tabLabels = tabs.map<ButtonTabType<string>>(id => ({
+type TokensOptions = typeof tabs[number];
+
+const tabLabels = tabs.map<ButtonTabType<TokensOptions>>(id => ({
   id,
   title: id,
 }));
 
 const createStore = () => ({
-  option: tabs[0],
-  setOption(option: string) {
+  option: tabs[0] as TokensOptions,
+  setOption(option: TokensOptions) {
     this.option = option;
   },
 });
@@ -57,7 +59,7 @@ const TokensTab = observer(() => {
   useEffect(() => {
     wallet.loadPrices();
     if (tabs.map(lowerCase).includes(route.params?.subtype)) {
-      store.setOption(capitalize(route.params.subtype));
+      store.setOption(capitalize(route.params.subtype) as TokensOptions);
     }
   }, [route, store, wallet]);
 
@@ -123,19 +125,19 @@ const styles = ThemedStyles.create({
 const EmissionBreakDown = {
   content: [
     {
-      title: 'Total',
+      title: i18n.t('EmissionBreakDown.Total'),
       value: '10,000 tokens/day',
     },
     {
-      title: 'Engagement',
+      title: i18n.t('EmissionBreakDown.Engagement'),
       value: '4,000 tokens',
     },
     {
-      title: 'Holding',
+      title: i18n.t('EmissionBreakDown.Holding'),
       value: '1,000 tokens',
     },
     {
-      title: 'Liquidity',
+      title: i18n.t('EmissionBreakDown.Liquidity'),
       value: '5,000 tokens',
     },
   ],
