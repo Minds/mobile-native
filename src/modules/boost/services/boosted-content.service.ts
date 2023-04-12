@@ -67,7 +67,6 @@ class BoostedContentService {
         .setPaginated(false)
         .setEndpoint('api/v3/boosts/feed')
         .setDataProperty('boosts')
-        // TODO:
         .setParams({
           location: 1,
           served_by_guid: this.servedByGuid,
