@@ -31,10 +31,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation, useIsFeatureOn } from 'ExperimentsProvider';
-import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
-import { storages } from '~/common/services/storage/storages.service';
-import { triggerHaptic } from '~/common/services/haptic.service';
+import { hasVariation } from 'ExperimentsProvider';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -157,18 +154,8 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
-  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
 
-  const pushComposeCreate = () =>
-    pushComposeCreateScreen({
-      onItemPress: async key => {
-        navigation.goBack();
-        storages.user?.setBool('compose:create', true);
-        navigation.navigate('Compose', { createMode: key });
-      },
-    });
-
-  const navToComposer = useCallback(() => navigation.push('Compose'), [
+  const navToCapture = useCallback(() => navigation.push('Compose'), [
     navigation,
   ]);
 
@@ -176,19 +163,6 @@ const Tabs = observer(function ({ navigation }) {
     () => navigation.push('Capture', { mode: 'video', start: true }),
     [navigation],
   );
-
-  const handleComposePress = () => {
-    if (storages.user?.getBool('compose:create')) {
-      return navigation.push('Compose');
-    }
-
-    pushComposeCreate();
-  };
-
-  const handleComposeLongPress = () => {
-    triggerHaptic();
-    pushComposeCreate();
-  };
 
   return (
     <View style={theme.flexContainer}>
@@ -217,11 +191,8 @@ const Tabs = observer(function ({ navigation }) {
             tabBarButton: props => (
               <DoubleTapSafeTouchable
                 {...props}
-                onPress={isCreateModalOn ? handleComposePress : navToComposer}
-                onLongPress={
-                  isCreateModalOn ? handleComposeLongPress : navToVideoCapture
-                }
-                delayLongPress={200}
+                onPress={navToCapture}
+                onLongPress={navToVideoCapture}
                 testID="CaptureTouchableButton"
               />
             ),

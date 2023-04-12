@@ -12,7 +12,7 @@ import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
-import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IS_IOS } from '~/config/Config';
 import { PosterStackScreenProps } from './PosterStackNavigator';
 
@@ -35,7 +35,6 @@ const PosterOptions: FC<PropsType> = props => {
   const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
-  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
@@ -123,7 +122,7 @@ const PosterOptions: FC<PropsType> = props => {
           noBorderTop
         />
       )}
-      {showMonetize && !isIosMindsHidden && !isCreateModalOn && (
+      {showMonetize && !isIosMindsHidden && (
         <MenuItem
           title={i18n.t('monetize.title')}
           label={monetizeDesc}

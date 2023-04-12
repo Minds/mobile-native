@@ -48,6 +48,7 @@ export default observer(function () {
       <ScrollView>
         {ACCESS.map(o => (
           <Option
+            key={o.text}
             option={o}
             store={store}
             selected={store.accessId === o.value}

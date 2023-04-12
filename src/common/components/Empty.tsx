@@ -29,12 +29,7 @@ export default function Empty({
 }
 
 const styles = ThemedStyles.create({
-  emptyContainer: [
-    'centered',
-    'paddingTop7x',
-    'paddingBottom20x',
-    'paddingHorizontal',
-  ],
+  emptyContainer: ['centered', 'paddingTop7x', 'paddingBottom20x'],
   subtitle: [
     'colorSecondaryText',
     'fontL',

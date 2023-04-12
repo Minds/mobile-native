@@ -27,8 +27,8 @@ export default function MenuItemOption(props: MenuItemOptionProps) {
   return (
     <MenuItem
       {...props}
-      icon={props.icon ?? icon}
-      noIcon={!props.mode && !props.icon && !props.selected}
+      icon={icon}
+      noIcon={!props.mode && !props.selected}
       iconColor={
         props.disabled
           ? 'IconDisabled'

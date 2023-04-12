@@ -10,7 +10,7 @@ const LoggedUsers = observer(({}: PropsType) => {
   return (
     <View>
       {sessionService.getSessions().map((tokenData, index) => (
-        <LoggedUserItem tokenData={tokenData} index={index} />
+        <LoggedUserItem key={index} tokenData={tokenData} index={index} />
       ))}
     </View>
   );
