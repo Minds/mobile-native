@@ -11,6 +11,7 @@ import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
 import { showNotification } from 'AppMessages';
+import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 
 export const shouldInjectBoostAtIndex = (i: number) =>
   (i > 0 && i % 5 === 0) || i === 2;
@@ -96,6 +97,8 @@ export default class FeedsService {
    */
   feedLastFetchedAt?: number;
 
+  private boostedContent?: BoostedContentService;
+
   /**
    * @var {string}
    */
@@ -132,9 +135,18 @@ export default class FeedsService {
       return result;
     }
 
+    // wait for the boosts to load, otherwise, don't fail this request
+    if (this.boostedContent) {
+      try {
+        await this.boostedContent.load();
+      } catch (e) {
+        console.error('[FeedsService] failed to fetch boosts');
+      }
+    }
+
     for (let i = this.offset; i < this.offset + result.length; i++) {
       if (shouldInjectBoostAtIndex(i)) {
-        const boost = boostedContentService.fetch();
+        const boost = (this.boostedContent ?? boostedContentService).fetch();
         if (boost) {
           result.splice(i, 0, boost);
         }
@@ -197,6 +209,16 @@ export default class FeedsService {
    */
   setInjectBoost(injectBoost: boolean): FeedsService {
     this.injectBoost = injectBoost;
+    return this;
+  }
+
+  /**
+   * Set inject boost
+   * @param {boolean} injectBoost
+   * @returns {FeedsService}
+   */
+  setBoostedContent(boostedContent: BoostedContentService): FeedsService {
+    this.boostedContent = boostedContent;
     return this;
   }
 

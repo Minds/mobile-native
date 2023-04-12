@@ -9,6 +9,7 @@ import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
  * Boosted content service
  */
 class BoostedContentService {
+  constructor(private servedByGuid?: string, private source?: string) {}
   /**
    * Offset
    * @var {number}
@@ -47,7 +48,7 @@ class BoostedContentService {
         await this.update();
       } else {
         this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
-        this.update();
+        await this.update();
       }
     } catch (err) {
       logService.exception('[BoostedContentService]', err);
@@ -66,7 +67,12 @@ class BoostedContentService {
         .setPaginated(false)
         .setEndpoint('api/v3/boosts/feed')
         .setDataProperty('boosts')
-        .setParams({ location: 1 });
+        // TODO:
+        .setParams({
+          location: 1,
+          served_by_guid: this.servedByGuid,
+          source: this.source,
+        });
     }
   }
 
@@ -147,5 +153,7 @@ class BoostedContentService {
     return null;
   }
 }
+
+export { BoostedContentService };
 
 export default new BoostedContentService();
