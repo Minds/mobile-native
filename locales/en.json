@@ -1859,6 +1859,12 @@
     },
     "syncing": "Syncing app bundle..."
   },
+  "EmissionBreakDown": {
+    "Total": "Total",
+    "Engagement": "Engagement",
+    "Holding": "Holding",
+    "Liquidity": "Liquidity"
+  },
   "composer": {
     "audienceSelector": {
       "title": "Select Audience",
