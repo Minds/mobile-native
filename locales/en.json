@@ -224,6 +224,12 @@
     "create": "Create new channel",
     "sessionExpired": "Logged out"
   },
+  "banners": {
+    "refer": {
+      "title": "<refer /> sales, fans and creators for a share of earnings.",
+      "refer": "Refer"
+    }
+  },
   "inFeedNotices": {
     "boostChannelTitle": "Expand Your Reach",
     "boostChannelButton": "Boost Now",
