@@ -4,7 +4,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { ReactNode, useCallback, useMemo } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { Keyboard, View } from 'react-native';
 import NavigationService from '../../../navigation/NavigationService';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';

@@ -28,7 +28,7 @@ type InteractionsProps = {
   entity: BaseModel;
   withoutInsets?: boolean;
   interaction?: Interactions;
-  onCancel?: () => void;
+  onCancel: () => void;
 };
 /**
  * Interactions Action Sheet
@@ -38,6 +38,7 @@ type InteractionsProps = {
 const Interactions = (props: InteractionsProps) => {
   // =====================| STATES & VARIABLES |=====================>
   const insets = useSafeAreaInsets();
+  const interaction = props.interaction ?? 'upVotes';
   const bottomInsets = props.withoutInsets ? 0 : insets.bottom;
   // whether the bottomsheet contents should be kept. defaults to true
   const navigation = useNavigation();
@@ -56,10 +57,10 @@ const Interactions = (props: InteractionsProps) => {
   const offsetListRef = useRef<any>();
   const store = useLocalStore(() => ({
     feedStore: new FeedStore(),
-    interaction: props.interaction ?? ('upVotes' as Interactions),
+    interaction,
     offset: '' as any,
-    setInteraction(interaction: Interactions) {
-      store.interaction = interaction;
+    setInteraction(_interaction: Interactions) {
+      store.interaction = _interaction;
       this.feedStore
         .setEndpoint(`api/v3/subscriptions/graph/${entity.guid}/subscriptions`)
         .setLimit(12)
@@ -155,8 +156,8 @@ const Interactions = (props: InteractionsProps) => {
 
   // =====================| METHODS |=====================>
   useEffect(() => {
-    store.setInteraction(props.interaction);
-  }, [props.interaction]);
+    store.setInteraction(interaction);
+  }, [interaction]);
 
   // =====================| RENDERS |=====================>
   const footer = (

@@ -1,7 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { forwardRef, useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import { View } from 'react-native';
-import FeedStore from '~/common/stores/FeedStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import BaseModel from '../../BaseModel';
 import capitalize from '../../helpers/capitalize';
