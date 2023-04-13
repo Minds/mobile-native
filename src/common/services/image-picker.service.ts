@@ -102,8 +102,12 @@ class ImagePickerService {
       const fileType = filename?.split('.').pop() || 'jpg';
       const media: PickedMedia = { ...m, mime: `${m.type}/${fileType}` };
 
-      // workaround for android inverted resolution on rotated images (https://github.com/expo/expo/issues/22097)
-      if (!IS_IOS && (m.exif?.Orientation === 6 || m.exif?.Orientation === 8)) {
+      // workaround for android inverted resolution on rotated images/videos (https://github.com/expo/expo/issues/22097)
+      if (
+        (!IS_IOS && (m.exif?.Orientation === 6 || m.exif?.Orientation === 8)) ||
+        //@ts-ignore missing property in expo-image-picker types
+        [90, -90].includes(m.rotation)
+      ) {
         media.width = m.height;
         media.height = m.width;
       }
