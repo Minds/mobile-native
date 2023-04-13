@@ -89,22 +89,25 @@ const ActivityOwner = ({
 
   return (
     <View style={containerStyle}>
-      <MutualSubscribers
-        vertical="M"
-        spacingType="padding"
-        avatars={false}
-        navigation={navigation}
-        channel={entity.ownerObj}
-        limit={2}
-        language={'follow'}
-        font="B3"
-        onPress={() =>
-          pushInteractionsBottomSheet({
-            entity: entity.ownerObj,
-            interaction: 'subscribersYouKnow',
-          })
-        }
-      />
+      {entity.ownerObj.plus && !entity.ownerObj.subscribed && (
+        <MutualSubscribers
+          vertical="M"
+          spacingType="padding"
+          avatars={false}
+          navigation={navigation}
+          channel={entity.ownerObj}
+          limit={2}
+          language={'follow'}
+          font="B3"
+          onPress={() =>
+            pushInteractionsBottomSheet({
+              entity: entity.ownerObj,
+              interaction: 'subscribersYouKnow',
+            })
+          }
+        />
+      )}
+
       <OwnerBlock
         entity={entity}
         navigation={navigation}
