@@ -4,13 +4,15 @@ import {
 } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback, useMemo } from 'react';
 import { Keyboard, View } from 'react-native';
 import NavigationService from '../../../navigation/NavigationService';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { BottomSheet, BottomSheetProps } from './';
 import { useBackHandler } from '@react-native-community/hooks';
+import Handle from '../bottom-sheet/Handle';
+import MText from '../MText';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -18,6 +20,7 @@ type BottomSheetScreenNavigationProp = StackNavigationProp<
 >;
 
 export type BottomSheetScreenParams = {
+  title?: string;
   component: (
     ref: BottomSheetMethods,
     handleContentLayout: ({
@@ -39,7 +42,7 @@ export default function BottomSheetScreen({
   route,
   navigation,
 }: BottomSheetScreenProps) {
-  const { component, snapPoints, ...props } = route.params;
+  const { component, snapPoints, title, ...props } = route.params;
 
   const handleClose = useCallback(() => {
     props?.onClose?.();
@@ -55,6 +58,17 @@ export default function BottomSheetScreen({
     (snapPoints as (string | number)[]) ?? ['CONTENT_HEIGHT'],
   );
 
+  const HandleComponent = useCallback(
+    () => (
+      <Handle>
+        <View style={styles.navbarContainer}>
+          <MText style={styles.titleStyle}>{title}</MText>
+        </View>
+      </Handle>
+    ),
+    [title],
+  );
+
   return (
     <BottomSheet
       index={0}
@@ -62,6 +76,7 @@ export default function BottomSheetScreen({
       handleHeight={animatedHandleHeight}
       contentHeight={animatedContentHeight}
       snapPoints={animatedSnapPoints}
+      handleComponent={title ? HandleComponent : undefined}
       {...props}
       onClose={handleClose}>
       <BottomSheetInnerContainer
@@ -99,4 +114,6 @@ export const pushBottomSheet = (params: BottomSheetScreenParams) => {
 
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
+  navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackground'],
+  titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],
 });
