@@ -32,6 +32,8 @@ import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
+import { storages } from './storage/storages.service';
+import referrerService from './referrer.service';
 
 type FieldError = { field: string; message: string };
 
@@ -433,6 +435,11 @@ export class ApiService {
       'App-Version': Version.VERSION,
       ...customHeaders,
     };
+
+    const referrer = referrerService.get();
+    if (referrer) {
+      headers.referrer = referrer;
+    }
 
     if (this.accessToken) {
       headers = {
