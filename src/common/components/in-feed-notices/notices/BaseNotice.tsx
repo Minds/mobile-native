@@ -13,6 +13,7 @@ type PropsType = {
   onPress: () => void;
   btnSecondaryText?: string;
   onSecondaryPress?: () => void;
+  borderless?: boolean;
 };
 
 /**
@@ -27,9 +28,10 @@ export default function BaseNotice({
   btnSecondaryText,
   onSecondaryPress,
   onClose,
+  borderless,
 }: PropsType) {
   return (
-    <View style={styles.container}>
+    <View style={borderless ? styles.container : styles.containerBordered}>
       <View style={styles.left}>
         <IconNext name={iconName} size="medium" color="PrimaryText" />
       </View>
@@ -76,8 +78,10 @@ const styles = ThemedStyles.create({
     'paddingRightL',
     'rowJustifyStart',
     'bcolorBaseBackground',
-    'borderBottom1x',
   ],
+  get containerBordered() {
+    return [...this.container, 'borderBottom1x'];
+  },
   buttonContainer: [{ marginRight: 60 }],
   right: ['paddingTopXXS', 'alignEnd', 'flexContainer'],
   left: [{ width: 60 }, 'paddingTopXS', 'alignCenter'],
