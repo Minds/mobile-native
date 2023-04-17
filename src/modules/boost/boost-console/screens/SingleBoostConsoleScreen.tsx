@@ -12,26 +12,28 @@ import BoostModelV3 from '../../models/BoostModelV3';
 
 type PropsType = AppStackScreenProps<'SingleBoostConsole'>;
 
-const SingleBoostConsoleScreen = ({ navigation, route }: PropsType) => {
-  const { t } = useTranslation();
-  const store = useLocalStore(localStore);
+const SingleBoostConsoleScreen = observer(
+  ({ navigation, route }: PropsType) => {
+    const { t } = useTranslation();
+    const store = useLocalStore(localStore);
 
-  const guid = route.params?.guid;
+    const guid = route.params?.guid;
 
-  React.useEffect(() => {
-    guid ? store.load(guid) : navigation.goBack();
-  }, [guid, navigation, store]);
+    React.useEffect(() => {
+      guid ? store.load(guid) : navigation.goBack();
+    }, [guid, navigation, store]);
 
-  return (
-    <Screen safe onlyTopEdge scroll>
-      <ScreenHeader title={t('Boost')} back />
-      {store.loading && <CenteredLoading />}
-      {store.boost && <BoostV3 boost={store.boost} />}
-    </Screen>
-  );
-};
+    return (
+      <Screen safe onlyTopEdge scroll>
+        <ScreenHeader title={t('Boost')} back />
+        {store.loading && <CenteredLoading />}
+        {store.boost && <BoostV3 boost={store.boost} />}
+      </Screen>
+    );
+  },
+);
 
-export default observer(SingleBoostConsoleScreen);
+export default SingleBoostConsoleScreen;
 
 function localStore() {
   return {

@@ -7,6 +7,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
 import { B1, Screen } from '../ui';
 import CenteredLoading from '../components/CenteredLoading';
+import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
 
 type WebViewScreenRouteProp = RouteProp<MoreStackParamList, 'WebView'>;
 type WebViewScreenNavigationProp = StackNavigationProp<
@@ -19,11 +20,10 @@ type WebViewScreenProps = {
   navigation: WebViewScreenNavigationProp;
 };
 
-export default function WebViewScreen({
-  route,
-  navigation,
-}: WebViewScreenProps) {
-  if (!route.params) return;
+function WebViewScreen({ route, navigation }: WebViewScreenProps) {
+  if (!route.params) {
+    return;
+  }
 
   /**
    * Looks for a path matching redirectUrl, calls onRedirect, and navigates back
@@ -63,3 +63,5 @@ export default function WebViewScreen({
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(WebViewScreen, 'WebViewScreen');

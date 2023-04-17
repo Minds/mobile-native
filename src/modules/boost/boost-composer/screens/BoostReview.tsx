@@ -20,6 +20,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -144,4 +145,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   );
 }
 
-export default observer(BoostReviewScreen);
+export default withErrorBoundaryScreen(
+  observer(BoostReviewScreen),
+  'BoostReview',
+);

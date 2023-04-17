@@ -2,7 +2,6 @@ import 'react-native';
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import NotificationsScreen from '../../src/notifications/v3/NotificationsScreen';
-import { StoresProvider } from '../../src/common/hooks/use-stores';
 import { getStores } from '../../AppStores';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -13,6 +12,23 @@ jest.mock(
   '../../src/common/components/interactions/InteractionsBottomSheet',
   () => 'InteractionsBottomSheet',
 );
+jest.mock('../../src/common/hooks/use-stores', () => ({
+  StoresProvider: ({ children }) => children,
+  useStores: () => ({
+    notifications: {},
+    chat: {},
+  }),
+  useLegacyStores: () => ({
+    dismissal: {
+      isDismissed() {
+        return false;
+      },
+      dismiss() {
+        return;
+      },
+    },
+  }),
+}));
 
 getStores.mockReturnValue({
   user: {
@@ -47,9 +63,7 @@ describe('Notifications Screen Component', () => {
   it('renders correctly', () => {
     const { toJSON } = render(
       <Wrapper>
-        <StoresProvider>
-          <NotificationsScreen navigation={navigation} />
-        </StoresProvider>
+        <NotificationsScreen navigation={navigation} />
       </Wrapper>,
     );
     expect(toJSON()).toMatchSnapshot();

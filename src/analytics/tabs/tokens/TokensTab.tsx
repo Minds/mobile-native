@@ -10,54 +10,54 @@ import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { CardType, TokensMetrics } from '../../AnalyticsTypes';
-import LiquidityDashboard from './LiquidityDashboard';
-import RewardsDashboard from './RewardsDashboard';
-import SupplyDashboard from './SupplyDashboard';
-import TransactionsDashboard from './TransactionsDashboard';
 import capitalize from '../../../common/helpers/capitalize';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 import MText from '../../../common/components/MText';
+import { useRoute } from '@react-navigation/native';
+import { lowerCase } from 'lodash';
+import Card from './Card';
 
 export type DashBoardPropsType = {
   metrics: MetricsSubType;
 };
 
-type TokensOptions = 'Supply' | 'Transactions' | 'Liquidity' | 'Rewards';
-
 export type MetricsSubType = {
   [K in CardType]: TokensMetrics;
 };
 
-const options: Array<ButtonTabType<TokensOptions>> = [
-  { id: 'Supply', title: 'Supply' },
-  { id: 'Transactions', title: 'Transactions' },
-  { id: 'Liquidity', title: 'Liquidity' },
-  { id: 'Rewards', title: 'Rewards' },
-];
+const tabs = ['Supply', 'Transactions', 'Liquidity', 'Rewards'] as const;
+type TokensOptions = typeof tabs[number];
+
+type RowType = Record<TokensOptions, MetricsSubType | {}>;
+
+const rows: RowType = {
+  Supply: {},
+  Transactions: {},
+  Liquidity: {},
+  Rewards: {},
+};
+
+const tabLabels = tabs.map<ButtonTabType<TokensOptions>>(id => ({
+  id,
+  title: id,
+}));
 
 const createStore = () => ({
-  option: 'Supply' as TokensOptions,
+  option: tabs[0] as TokensOptions,
   setOption(option: TokensOptions) {
     this.option = option;
   },
 });
 
-type RowType = {
-  [K in TokensOptions]: MetricsSubType;
-};
-
-const TokensTab = observer(({ route }: { route: any }) => {
+const TokensTab = observer(() => {
+  const route = useRoute<any>();
   const theme = ThemedStyles.style;
   const store = useLocalStore(createStore);
   const { wallet } = useStores();
 
   useEffect(() => {
     wallet.loadPrices();
-    if (
-      ['supply', 'transactions', 'liquidity', 'rewards'].includes(
-        route.params?.subtype,
-      )
-    ) {
+    if (tabs.map(lowerCase).includes(route.params?.subtype)) {
       store.setOption(capitalize(route.params.subtype) as TokensOptions);
     }
   }, [route, store, wallet]);
@@ -75,12 +75,6 @@ const TokensTab = observer(({ route }: { route: any }) => {
     return null;
   }
 
-  const rows = {
-    Supply: {},
-    Transactions: {},
-    Liquidity: {},
-    Rewards: {},
-  } as RowType;
   let dataError;
 
   try {
@@ -88,6 +82,10 @@ const TokensTab = observer(({ route }: { route: any }) => {
       const [metricKey, metricType] = metric.id.split('\\');
       rows[metricKey][metricType] = metric;
     });
+    rows.Rewards = {
+      ...rows.Rewards,
+      EmissionBreakDown,
+    };
   } catch (e) {
     dataError = e;
   }
@@ -101,30 +99,18 @@ const TokensTab = observer(({ route }: { route: any }) => {
     );
   }
 
-  let body;
-  switch (store.option) {
-    case 'Supply':
-      body = <SupplyDashboard metrics={rows.Supply} />;
-      break;
-    case 'Transactions':
-      body = <TransactionsDashboard metrics={rows.Transactions} />;
-      break;
-    case 'Liquidity':
-      body = <LiquidityDashboard metrics={rows.Liquidity} />;
-      break;
-    case 'Rewards':
-      body = <RewardsDashboard metrics={rows.Rewards} />;
-      break;
-  }
-
   return (
     <View style={theme.paddingTop2x}>
       <TopBarButtonTabBar
-        tabs={options}
+        tabs={tabLabels}
         current={store.option}
         onChange={store.setOption}
       />
-      <ScrollView contentContainerStyle={styles.padding}>{body}</ScrollView>
+      <ScrollView contentContainerStyle={styles.padding}>
+        {Object.entries(rows[store.option]).map(([key, metrics]) => (
+          <Card key={key} metrics={metrics} type={key as CardType} />
+        ))}
+      </ScrollView>
     </View>
   );
 });
@@ -134,5 +120,26 @@ const styles = ThemedStyles.create({
     paddingBottom: 120,
   },
 });
+
+const EmissionBreakDown = {
+  content: [
+    {
+      title: i18n.t('EmissionBreakDown.Total'),
+      value: '10,000 tokens/day',
+    },
+    {
+      title: i18n.t('EmissionBreakDown.Engagement'),
+      value: '4,000 tokens',
+    },
+    {
+      title: i18n.t('EmissionBreakDown.Holding'),
+      value: '1,000 tokens',
+    },
+    {
+      title: i18n.t('EmissionBreakDown.Liquidity'),
+      value: '5,000 tokens',
+    },
+  ],
+} as TokensMetrics;
 
 export default TokensTab;

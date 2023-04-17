@@ -10,6 +10,7 @@ import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import LoggedUsersList from './logged-users/LoggedUsersList';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {};
 
@@ -59,4 +60,7 @@ const menuStyle = ThemedStyles.combine(
   'borderTop0x',
 );
 
-export default observer(MultiUserScreen);
+export default withErrorBoundaryScreen(
+  observer(MultiUserScreen),
+  'MultiUserScreen',
+);

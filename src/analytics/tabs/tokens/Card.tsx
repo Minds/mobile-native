@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MText from '../../../common/components/MText';
-import { useStores } from '../../../common/hooks/use-stores';
-import i18n from '../../../common/services/i18n.service';
+import { Row } from '~/common/ui';
+import MText from '~/common/components/MText';
+import { useStores } from '~/common/hooks/use-stores';
+import i18n from '~/common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MindsTokens, {
   format,
@@ -28,18 +29,24 @@ const Card = ({ metrics, type }: PropsType) => {
         <Title type={type} />
         <Comparative comparative={metrics.comparative} total={metrics.total} />
       </View>
-      <AmountInfo metrics={metrics} />
-      {metrics.format !== 'points' && metrics.format !== 'usd' && (
-        <MText style={theme.colorSecondaryText}>
-          On-chain{' '}
-          <MText style={theme.colorPrimaryText}>
-            {format(metrics.onchain)}
-          </MText>{' '}
-          · Off-chain{' '}
-          <MText style={theme.colorPrimaryText}>
-            {format(metrics.offchain)}
-          </MText>{' '}
-        </MText>
+      {type === 'EmissionBreakDown' ? (
+        <EmissionBreakDown content={metrics.content} />
+      ) : (
+        <>
+          <AmountInfo metrics={metrics} />
+          {metrics.format !== 'points' && metrics.format !== 'usd' ? (
+            <MText style={theme.colorSecondaryText}>
+              On-chain{' '}
+              <MText style={theme.colorPrimaryText}>
+                {format(metrics.onchain)}
+              </MText>{' '}
+              · Off-chain{' '}
+              <MText style={theme.colorPrimaryText}>
+                {format(metrics.offchain)}
+              </MText>{' '}
+            </MText>
+          ) : null}
+        </>
       )}
     </View>
   );
@@ -84,11 +91,12 @@ const Comparative = ({
 }) => {
   const theme = ThemedStyles.style;
 
-  if (parseFloat(comparative.total_diff) === 0) {
+  if (parseFloat(comparative?.total_diff ?? '0') === 0) {
     return null;
   }
 
-  const prcnt = (parseFloat(comparative.total_diff) / parseFloat(total)) * 100;
+  const prcnt =
+    (parseFloat(comparative?.total_diff ?? '0') / parseFloat(total)) * 100;
 
   return (
     <View style={theme.rowJustifyStart}>
@@ -98,7 +106,7 @@ const Comparative = ({
         color={comparative.increase ? '#59B814' : '#e03c20'}
       />
       <MText style={styles.comparativeText}>
-        {format(comparative.total_diff)}{' '}
+        {format(comparative?.total_diff ?? '0')}{' '}
         <MText style={styles.comparativeText}>
           ({Math.round((prcnt + Number.EPSILON) * 100) / 100}%)
         </MText>
@@ -142,6 +150,21 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
   return <View style={styles.bodyContainer}>{body}</View>;
 };
 
+const EmissionBreakDown = ({ content = [] }: any) => (
+  <>
+    {content.map((item, index) => (
+      <Row vertical="M" align="centerBetween" key={index}>
+        <MText style={index === 0 ? styles.activeTitle : styles.title}>
+          {item.title}
+        </MText>
+        <MText style={index === 0 ? styles.activeTitle : styles.title}>
+          {item.value}
+        </MText>
+      </Row>
+    ))}
+  </>
+);
+
 const styles = ThemedStyles.create({
   bodyContainer: ['rowJustifyStart', 'marginTop2x', 'marginBottom3x'],
   container: [
@@ -172,6 +195,7 @@ const styles = ThemedStyles.create({
       fontSize: 20,
     },
   ],
+  activeTitle: ['fontLM', 'bold', 'marginRight', 'marginTop3x'],
 });
 
 export default Card;

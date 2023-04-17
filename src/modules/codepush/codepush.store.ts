@@ -31,17 +31,36 @@ class CodePushStore {
     }
   }
 
-  async syncCodepush(onDownload: () => void) {
+  async syncCodepush({
+    deploymentKey,
+    onDownload,
+    force,
+    clearUpdates,
+  }: {
+    deploymentKey?: string;
+    onDownload?: () => void;
+    force?: boolean;
+    clearUpdates?: boolean;
+  }) {
     try {
+      if (clearUpdates) {
+        await codePush.clearUpdates();
+      }
+
       const runningMetadata = await codePush.getUpdateMetadata();
-      const runningDeploymentKey = runningMetadata?.deploymentKey;
+      const runningDeploymentKey =
+        deploymentKey || runningMetadata?.deploymentKey;
       const sessions = sessionService.getSessions();
       const loggedOut = !sessions.length;
+      const forcedUpdate = force || loggedOut;
 
       const syncStatusChangedCallback = status => {
-        if (loggedOut && status === codePush.SyncStatus.DOWNLOADING_PACKAGE) {
+        if (
+          forcedUpdate &&
+          status === codePush.SyncStatus.DOWNLOADING_PACKAGE
+        ) {
           NavigationService.navigate('CodePushSync', {});
-          onDownload();
+          onDownload?.();
         }
 
         if (status === codePush.SyncStatus.UNKNOWN_ERROR) {
@@ -50,13 +69,14 @@ class CodePushStore {
       };
 
       logMessage(runningMetadata, 'CodePush metadata:');
+
       await codePush.sync(
         {
           ...CODEPUSH_DEFAULT_CONFIG,
-          installMode: loggedOut
+          installMode: forcedUpdate
             ? codePush.InstallMode.IMMEDIATE
             : CODEPUSH_DEFAULT_CONFIG.installMode,
-          mandatoryInstallMode: loggedOut
+          mandatoryInstallMode: forcedUpdate
             ? codePush.InstallMode.IMMEDIATE
             : CODEPUSH_DEFAULT_CONFIG.mandatoryInstallMode,
           deploymentKey: runningDeploymentKey,
