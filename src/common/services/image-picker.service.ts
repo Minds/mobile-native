@@ -1,6 +1,7 @@
 import * as ImagePicker from 'expo-image-picker';
 import permissions from './permissions.service';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { IS_IOS } from '~/config/Config';
 
 export type MediaType = 'All' | 'Videos' | 'Images';
 export type PickedMedia = ImagePickerAsset & { mime: string };
@@ -84,7 +85,7 @@ class ImagePickerService {
       allowsMultipleSelection: maxFiles > 1,
       selectionLimit: maxFiles,
       aspect,
-      exif: false,
+      exif: true, // change to false once the android inverted width/height issue is resolved (https://github.com/expo/expo/issues/22097)
       quality: 1, // lower than 1 disables gif animation on android
     });
 
@@ -100,6 +101,16 @@ class ImagePickerService {
       const filename = m.fileName || m.uri.split('/').pop();
       const fileType = filename?.split('.').pop() || 'jpg';
       const media: PickedMedia = { ...m, mime: `${m.type}/${fileType}` };
+
+      // workaround for android inverted resolution on rotated images/videos (https://github.com/expo/expo/issues/22097)
+      if (
+        (!IS_IOS && (m.exif?.Orientation === 6 || m.exif?.Orientation === 8)) ||
+        //@ts-ignore missing property in expo-image-picker types
+        [90, -90].includes(m.rotation)
+      ) {
+        media.width = m.height;
+        media.height = m.width;
+      }
       return media;
     });
   }
