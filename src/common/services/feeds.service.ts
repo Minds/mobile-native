@@ -136,7 +136,7 @@ export default class FeedsService {
     }
 
     // wait for the boosts to load, otherwise, don't fail this request
-    if (this.boostedContent) {
+    if (this.boostedContent && !this.boostedContent.boosts.length) {
       try {
         await this.boostedContent.load();
       } catch (e) {
