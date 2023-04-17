@@ -12,6 +12,7 @@ import logService from '../../../common/services/log.service';
 import CashOnboarding from './bank-info/CashOnboarding';
 import CashForm from './bank-info/CashForm';
 import createBankInfoStore from './bank-info/createBankInfoStore';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export type BankInfoScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -181,4 +182,4 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
   );
 });
 
-export default BankInfoScreen;
+export default withErrorBoundaryScreen(BankInfoScreen, 'BankInfoScreen');

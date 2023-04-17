@@ -70,19 +70,6 @@ class OwnerBlock extends PureComponent<PropsType> {
       return null;
     }
 
-    const lastRoute = getLastRoute(this.props.navigation);
-    /**
-     * do not navigate to channel if we were already in its page
-     **/
-    if (lastRoute && lastRoute.name === 'Channel') {
-      const currentScreenChannelGuid =
-        lastRoute.params?.guid || lastRoute.params?.entity?.guid;
-      if (currentScreenChannelGuid === channel.guid) {
-        this.context?.onSelfNavigation?.();
-        return;
-      }
-    }
-
     this.props.navigation.push('Channel', {
       guid: channel.guid,
       entity: channel.ownerObj,
@@ -120,9 +107,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     }
 
     return (
-      <DebouncedTouchableOpacity
-        onPress={this._navToGroup}
-        style={styles.groupContainer}>
+      <DebouncedTouchableOpacity onPress={this._navToGroup}>
         <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
         </MText>
@@ -211,7 +196,7 @@ class OwnerBlock extends PureComponent<PropsType> {
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}
-          <DebouncedTouchableOpacity onPress={this._onNavToChannelPress}>
+          <TouchableOpacity onPress={this._onNavToChannelPress}>
             {blurAvatar ? (
               <Image
                 source={this.avatarSrc}
@@ -221,7 +206,7 @@ class OwnerBlock extends PureComponent<PropsType> {
             ) : (
               <Image source={this.avatarSrc} style={styles.avatar} />
             )}
-          </DebouncedTouchableOpacity>
+          </TouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>
               <View pointerEvents="box-none" style={nameTouchableStyle}>
@@ -276,9 +261,6 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     flexDirection: 'column',
-  },
-  groupContainer: {
-    paddingTop: 3,
   },
 });
 

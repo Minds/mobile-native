@@ -26,6 +26,7 @@ import {
 } from './SupermindOnboarding';
 import { hasVariation } from 'ExperimentsProvider';
 import { PosterStackScreenProps } from './PosterOptions/PosterStackNavigator';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -375,7 +376,10 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
   );
 };
 
-export default observer(SupermindComposeScreen);
+export default withErrorBoundaryScreen(
+  observer(SupermindComposeScreen),
+  'SupermindComposeScreen',
+);
 
 const styles = ThemedStyles.create({
   twitterMenuItem: ['bgPrimaryBackground', { borderBottomWidth: 0 }],

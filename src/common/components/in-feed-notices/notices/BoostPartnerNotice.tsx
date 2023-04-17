@@ -5,11 +5,12 @@ import React from 'react';
 import i18n from '~/common/services/i18n.service';
 import openUrlService from '~/common/services/open-url.service';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Boost partner notice
  */
-function BoostPartnerNotice() {
+function BoostPartnerNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
 
   // on button press
@@ -22,6 +23,7 @@ function BoostPartnerNotice() {
 
   return (
     <InFeedNotice
+      name={name}
       title={i18n.t('inFeedNotices.boostPartnerTitle')}
       description={i18n.t('inFeedNotices.boostPartnerDescription')}
       btnText={i18n.t('inFeedNotices.boostPartnerButton')}

@@ -32,6 +32,9 @@ export default function () {
       <NewsfeedStack.Screen
         name="Channel"
         getComponent={() => require('~/channel/v2/ChannelScreen').default}
+        getId={({ params }) =>
+          'Channel' + (params?.entity?.guid || params?.guid || '')
+        }
         options={hideHeader}
       />
       <NewsfeedStack.Screen

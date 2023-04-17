@@ -485,7 +485,7 @@ export interface MetricsComparative {
   offchain: string;
   onchain: string;
   total: string;
-  total_diff: string;
+  total_diff?: string;
 }
 
 export interface TokensMetrics {
@@ -495,6 +495,7 @@ export interface TokensMetrics {
   offchain: string;
   onchain: string;
   total: string;
+  content?: Array<{ title: string; value: string }>;
 }
 
 export type CardType =

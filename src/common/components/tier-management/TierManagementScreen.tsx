@@ -11,6 +11,7 @@ import createTierManagementStore from './createTierManagementStore';
 import TiersList from './TiersList';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import Header from './Header';
+import { withErrorBoundaryScreen } from '../ErrorBoundaryScreen';
 
 export type PaymentType = 'usd' | 'tokens';
 
@@ -30,8 +31,8 @@ export const navToTierScreen = (
   navigation.push('TierScreen', { tier, tierManagementStore: localStore });
 };
 
-const TierManagementScreen = observer(
-  ({ route, navigation, tierStore }: PropsType) => {
+const TierManagementScreen = withErrorBoundaryScreen(
+  observer(({ route, navigation, tierStore }: PropsType) => {
     const localStore = useLocalStore(createTierManagementStore);
 
     const useForSelection = !!route.params?.useForSelection;
@@ -77,7 +78,8 @@ const TierManagementScreen = observer(
         />
       </ScrollView>
     );
-  },
+  }),
+  'TierManagementScreen',
 );
 
 export default TierManagementScreen;

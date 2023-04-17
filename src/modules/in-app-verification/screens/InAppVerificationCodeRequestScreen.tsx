@@ -12,74 +12,80 @@ import usePushNotificationListener from '~/common/hooks/usePushNotificationListe
 import logService from '~/common/services/log.service';
 import { api } from '../api';
 import { useTranslation } from '../locales';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
-export default observer(function InAppVerificationCodeRequestScreen({
-  navigation,
-  route,
-}: PropsType) {
-  const store = useCodeRequestStore(navigation, route);
-  const { t } = useTranslation();
+export default withErrorBoundaryScreen(
+  observer(function InAppVerificationCodeRequestScreen({
+    navigation,
+    route,
+  }: PropsType) {
+    const store = useCodeRequestStore(navigation, route);
+    const { t } = useTranslation();
 
-  const texts = messages(t);
-  const status = store.error ? 'error' : 'initial';
+    const texts = messages(t);
+    const status = store.error ? 'error' : 'initial';
 
-  const detail2 = t('Yes, it really is that simple.');
+    const detail2 = t('Yes, it really is that simple.');
 
-  return (
-    <Screen safe>
-      <ScreenHeader
-        title="Verification Code"
-        centerTitle
-        border
-        back
-        extra={
-          <SaveButton
-            onPress={store.onContinue}
-            text={t('Continue')}
-            disabled={!store.code}
-          />
-        }
-      />
-      <FitScrollView>
-        <Column space="L" top="XXL">
-          <H3 bottom="M">{texts[status].title}</H3>
-          <B1 color={store.error ? 'primary' : 'secondary'} bottom="M">
-            {texts[status].detail}
-          </B1>
-          {!store.error ? (
-            <B1 color="secondary" bottom="XL2">
-              {detail2}
+    return (
+      <Screen safe>
+        <ScreenHeader
+          title="Verification Code"
+          centerTitle
+          border
+          back
+          extra={
+            <SaveButton
+              onPress={store.onContinue}
+              text={t('Continue')}
+              disabled={!store.code}
+            />
+          }
+        />
+        <FitScrollView>
+          <Column space="L" top="XXL">
+            <H3 bottom="M">{texts[status].title}</H3>
+            <B1 color={store.error ? 'primary' : 'secondary'} bottom="M">
+              {texts[status].detail}
             </B1>
-          ) : (
-            <Button
-              mode="flat"
-              type="action"
-              onPress={() => store.requestCode()}>
-              {texts[status].action}
-            </Button>
-          )}
-          {Boolean(store.code) && (
-            <>
-              <H3 bottom="M" align="center">
-                {t('Your verification code is')}
-              </H3>
-              <H1 bottom="M" align="center">
-                {store.code}
-              </H1>
-            </>
-          )}
-        </Column>
-      </FitScrollView>
-    </Screen>
-  );
-});
+            {!store.error ? (
+              <B1 color="secondary" bottom="XL2">
+                {detail2}
+              </B1>
+            ) : (
+              <Button
+                mode="flat"
+                type="action"
+                onPress={() => store.requestCode()}>
+                {texts[status].action}
+              </Button>
+            )}
+            {Boolean(store.code) && (
+              <>
+                <H3 bottom="M" align="center">
+                  {t('Your verification code is')}
+                </H3>
+                <H1 bottom="M" align="center">
+                  {store.code}
+                </H1>
+              </>
+            )}
+          </Column>
+        </FitScrollView>
+      </Screen>
+    );
+  }),
+  'InAppVerificationCodeRequest',
+);
 
 function useCodeRequestStore(
   navigation: PropsType['navigation'],
   route: PropsType['route'],
 ) {
+  const { requestAgain } = route.params ?? {};
+
   const store = useLocalStore(() => ({
     code: '',
     error: '' as 'codeReqError' | '',
@@ -117,12 +123,12 @@ function useCodeRequestStore(
 
   // Code resend
   useEffect(() => {
-    if (route.params?.requestAgain) {
+    if (requestAgain) {
       // clean the parameter in case it is requested more than once
       navigation.setParams({ requestAgain: undefined });
       store.requestCode();
     }
-  }, [route.params?.requestAgain, store]);
+  }, [navigation, requestAgain, store]);
 
   const pushListener = useCallback(
     push => {

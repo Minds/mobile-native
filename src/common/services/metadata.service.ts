@@ -16,6 +16,7 @@ export type MetadataSource =
   | 'search/groups'
   | 'single'
   | 'portrait'
+  | 'boost-rotator'
   | 'top-feed';
 
 export type MetadataMedium =
@@ -180,7 +181,7 @@ class MetadataService {
     return {
       platform: 'mobile',
       page_token: this.buildPageToken(),
-      delta: this.getDelta(medium),
+      delta: this.getDelta(medium || this.medium),
       source: this.source,
       position: position ?? entity.position ?? listPosition ?? 0,
       medium: medium || (entity.boosted ? 'featured-content' : this.medium),
