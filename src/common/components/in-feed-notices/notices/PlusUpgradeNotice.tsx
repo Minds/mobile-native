@@ -8,11 +8,12 @@ import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import openUrlService from '~/common/services/open-url.service';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Upgrade to Minds plus Notice
  */
-function PlusUpgradeNotice() {
+function PlusUpgradeNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser()!;
   const { value: activeExperiment } = useFeature('minds-3639-plus-notice');
@@ -38,7 +39,7 @@ function PlusUpgradeNotice() {
   }, [navigation, user]);
 
   if (
-    !inFeedNoticesService.visible('plus-upgrade') ||
+    !inFeedNoticesService.visible(name) ||
     user.plus ||
     !PRO_PLUS_SUBSCRIPTION_ENABLED
   ) {
@@ -47,6 +48,7 @@ function PlusUpgradeNotice() {
 
   return (
     <InFeedNotice
+      name={name}
       title={i18n.t('inFeedNotices.plusUpgrade.title')}
       description={description}
       btnText={i18n.t('inFeedNotices.plusUpgrade.action')}
@@ -56,7 +58,6 @@ function PlusUpgradeNotice() {
       onSecondaryPress={() =>
         openUrlService.openLinkInInAppBrowser('https://minds.com/plus')
       }
-      onClose={() => inFeedNoticesService.dismiss('plus-upgrade')}
     />
   );
 }

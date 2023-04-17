@@ -7,17 +7,19 @@ import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { hasVariation } from 'ExperimentsProvider';
 import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Email Verify Notice
  */
-function EmailVerifyNotice() {
+function EmailVerifyNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
-  if (!inFeedNoticesService.visible('verify-email')) {
+  if (!inFeedNoticesService.visible(name)) {
     return null;
   }
   return (
     <InFeedNotice
+      name={name}
       title={i18nService.t('onboarding.verifyEmailAddress')}
       description={i18nService.t('inFeedNotices.verifyEmailDescription')}
       btnText={i18nService.t('inFeedNotices.verifyEmail')}

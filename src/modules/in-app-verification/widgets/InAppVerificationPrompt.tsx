@@ -7,6 +7,7 @@ export default function InAppVerificationPrompt() {
   const { t } = useTranslation();
   return (
     <BaseNotice
+      name={'in-app-verification-prompt'}
       title={t('Verify Account')}
       description={t(
         'Please verify your channel with the privacy-preserving human detector in order to be eligible for rewards.',
