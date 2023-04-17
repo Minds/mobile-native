@@ -437,7 +437,7 @@ export class ApiService {
 
     const referrer = referrerService.get();
     if (referrer) {
-      headers.referrer = referrer;
+      headers.minds_referrer = referrer;
     }
 
     if (this.accessToken) {
