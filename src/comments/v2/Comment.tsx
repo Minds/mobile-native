@@ -129,9 +129,7 @@ export default observer(function Comment({
 
   const reply = React.useCallback(() => {
     // if we can't reply, open input and fill in owner username
-    console.log('===>', canReply, !can_reply);
     if (canReply && !can_reply) {
-      console.log('SHOWING');
       return store.setShowInput(true, undefined, `@${username} `);
     }
 
