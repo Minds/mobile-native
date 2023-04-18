@@ -65,6 +65,7 @@ export default class UserModel extends BaseModel {
   plus_method: 'usd' | 'tokens' = 'tokens';
 
   @observable disable_autoplay_videos?: boolean;
+  @observable disabled_boost?: boolean;
 
   social_profiles?: Array<SocialProfile>;
 
@@ -394,6 +395,14 @@ export default class UserModel extends BaseModel {
   toggleDisableAutoplayVideos() {
     this.disable_autoplay_videos = !this.disable_autoplay_videos;
     this.saveDisableAutoplayVideosSetting();
+  }
+
+  /**
+   * Toggle disabled_boost property
+   */
+  @action
+  toggleDisabledBoost(value: boolean) {
+    this.disabled_boost = value;
   }
 
   /**
