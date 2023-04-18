@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import Cancelable from 'promise-cancelable';
 import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
@@ -80,7 +80,7 @@ export default class AttachmentStore {
       }
     }
 
-    if (!(await this.validate(media))) {
+    if (!this.validate(media)) {
       return;
     }
 
@@ -107,13 +107,15 @@ export default class AttachmentStore {
       }
     }
 
-    this.uri = media.uri;
-    this.type = media.type;
-    this.filename = media.filename;
-    this.width = media.width;
-    this.height = media.height;
-    this.assetId = media.assetId;
-    this.path = media.path;
+    runInAction(() => {
+      this.uri = media.uri;
+      this.type = media.type;
+      this.filename = media.filename;
+      this.width = media.width;
+      this.height = media.height;
+      this.assetId = media.assetId;
+      this.path = media.path;
+    });
 
     try {
       const resizedMedia = await attachmentService.processMedia(media);
@@ -151,7 +153,7 @@ export default class AttachmentStore {
     return this.guid;
   }
 
-  async validate(media) {
+  validate(media) {
     const settings = mindsConfigService.getSettings();
     if (media.duration && media.duration > settings.max_video_length * 1000) {
       Alert.alert(
