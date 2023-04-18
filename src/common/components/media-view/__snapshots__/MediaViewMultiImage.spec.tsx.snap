@@ -4,7 +4,6 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,
@@ -191,7 +190,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,
@@ -461,7 +459,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,

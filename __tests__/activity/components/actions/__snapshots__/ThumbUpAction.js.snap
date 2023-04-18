@@ -89,6 +89,7 @@ exports[`Thumb action component renders correctly 1`] = `
             "canary": false,
             "confirmEmail": [Function],
             "disable_autoplay_videos": undefined,
+            "disabled_boost": undefined,
             "email_confirmed": false,
             "eth_wallet": "",
             "founder": false,
