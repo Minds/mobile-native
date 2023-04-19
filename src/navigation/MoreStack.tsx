@@ -176,6 +176,13 @@ export default function () {
         options={{ title: i18n.t('settings.referrals') }}
       />
       <MoreStack.Screen
+        name="AffiliateProgram"
+        getComponent={() =>
+          require('modules/affiliate/screens/AffiliateProgramScreen').default
+        }
+        options={hideHeader}
+      />
+      <MoreStack.Screen
         name="BoostConsole"
         getComponent={() => require('modules/boost').BoostConsoleScreen}
         options={hideHeader}
