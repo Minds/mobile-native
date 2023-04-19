@@ -15,6 +15,11 @@ Minds Mobile
 ### Fixed 🐛 (1 change)
 
 - [Fixed reply comments issue](minds/mobile-native!2220)
+- [Fixed the black video preview on the composer](minds/mobile-native!2235)
+- [Fixed squished uploaded images & wrong aspect ratio in preview](minds/mobile-native!2231)
+- [Fixed crash attaching an image to a comment](minds/mobile-native!2237)
+- [Fixed crash on android after capturing an image](minds/mobile-native!2229)
+- [Fixed missing texts for non english languages](minds/mobile-native!2232)
 
 ## 4.34.0 (2023-04-11)
 
