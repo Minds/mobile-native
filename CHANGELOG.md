@@ -2,6 +2,20 @@
 
 Minds Mobile
 
+## 4.34.1 (2023-04-19)
+
+### Features ✨ (5 changes)
+
+- [Added audience selector to composer ](minds/mobile-native!2221)
+- [Added Create modal that will open when Compose is pressed for the first time](minds/mobile-native!2221)
+- [Referral sticky banner](minds/mobile-native!2208)
+- [Added EmissionBreakDown to Tokens Analytics](minds/mobile-native!2201)
+- [Added Boost Rotator to the newsfeed](minds/mobile-native!2193)
+
+### Fixed 🐛 (1 change)
+
+- [Fixed reply comments issue](minds/mobile-native!2220)
+
 ## 4.34.0 (2023-04-11)
 
 ### Features ✨ (7 changes)
