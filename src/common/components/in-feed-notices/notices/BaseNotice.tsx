@@ -7,7 +7,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { NoticeName } from '.';
 
 type PropsType = {
-  name: NoticeName;
+  name?: NoticeName;
   title: string;
   description: string | ReactNode;
   iconName: IconNameType;
@@ -37,7 +37,9 @@ export default function BaseNotice({
   borderless,
 }: PropsType) {
   const onPressClose = () => {
-    inFeedNoticesService.dismiss(name);
+    if (name) {
+      inFeedNoticesService.dismiss(name);
+    }
     onClose?.();
   };
 
@@ -64,7 +66,7 @@ export default function BaseNotice({
           {description}
         </B2>
         <View style={styles.buttonContainer}>
-          <Button fit size="medium" type="action" onPress={onPress}>
+          <Button fit size="medium" type="action" spinner onPress={onPress}>
             {btnText}
           </Button>
           {Boolean(btnSecondaryText) && (
