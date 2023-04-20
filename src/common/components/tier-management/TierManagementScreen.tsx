@@ -31,8 +31,8 @@ export const navToTierScreen = (
   navigation.push('TierScreen', { tier, tierManagementStore: localStore });
 };
 
-const TierManagementScreen = withErrorBoundaryScreen(
-  observer(({ route, navigation, tierStore }: PropsType) => {
+const TierManagementScreen = observer(
+  ({ route, navigation, tierStore }: PropsType) => {
     const localStore = useLocalStore(createTierManagementStore);
 
     const useForSelection = !!route.params?.useForSelection;
@@ -73,13 +73,16 @@ const TierManagementScreen = withErrorBoundaryScreen(
           tiers={localStore.support_tiers}
           useForSelection={useForSelection}
           tierStore={tierStore}
+          tierManagementStore={localStore}
           navigation={navigation}
           onLinkPress={() => navToTierScreen(navigation, false, localStore)}
         />
       </ScrollView>
     );
-  }),
-  'TierManagementScreen',
+  },
 );
 
-export default TierManagementScreen;
+export default withErrorBoundaryScreen(
+  TierManagementScreen,
+  'TierManagementScreen',
+);
