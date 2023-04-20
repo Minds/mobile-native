@@ -102,7 +102,7 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
         )}
       </Button>
       <View style={theme.flexContainer} />
-      <AudienceSelector store={store} />
+      {!store.isEdit && <AudienceSelector store={store} />}
       {rightButton}
     </Row>
   );

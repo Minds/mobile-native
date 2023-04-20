@@ -205,7 +205,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
                 />
               ) : undefined
             }
-            header={<Topbar noInsets navigation={navigation} />}
+            header={<Topbar noInsets banners navigation={navigation} />}
             ref={newsfeed.setListRef}
             feedStore={
               isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore

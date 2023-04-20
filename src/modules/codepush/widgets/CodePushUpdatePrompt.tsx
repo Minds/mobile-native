@@ -21,6 +21,8 @@ type CodePushUpdatePromptState = {
   nativeUpdate?: RemotePackage;
 };
 
+const noticeName = 'code-push';
+
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
  * there was a Pending update
@@ -97,6 +99,7 @@ function CodePushUpdatePrompt() {
   if (updateAvailable) {
     return (
       <BaseNotice
+        name={noticeName}
         title={i18nService.t('codePush.prompt.title')}
         description={i18nService.t('codePush.prompt.description')}
         btnText={i18nService.t('codePush.prompt.action')}
@@ -110,6 +113,7 @@ function CodePushUpdatePrompt() {
   if (nativeUpdate) {
     return (
       <BaseNotice
+        name={noticeName}
         title={i18nService.t('codePush.prompt.title')}
         description={
           <B2 color="secondary">

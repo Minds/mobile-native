@@ -59,7 +59,7 @@ export default function MediaViewMultiImage({
   );
 
   return (
-    <Row flex top="M" horizontal="M" containerStyle={styles.container}>
+    <Row top="M" horizontal="M" containerStyle={styles.container}>
       <Column flex right="XS">
         <ImageItem {...images[0]} />
         {images.length === 4 && (

@@ -1,6 +1,6 @@
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { observer } from 'mobx-react';
-import { noticeMapper } from './notices';
+import { getNotice } from './notices';
 
 type PropsType = {
   position?: number;
@@ -12,7 +12,7 @@ type PropsType = {
 
 function InlineInFeedNotice({ position = 1 }: PropsType) {
   const notice = inFeedNoticesService.getInlineNotice(position);
-  return notice ? noticeMapper[notice] : null;
+  return notice ? getNotice(notice) : null;
 }
 
 export default observer(InlineInFeedNotice);

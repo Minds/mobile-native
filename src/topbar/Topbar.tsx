@@ -23,6 +23,10 @@ type PropsType = {
   noInsets?: boolean;
   shadowLess?: boolean;
   showBack?: boolean;
+  /**
+   * whether banners should be shown
+   */
+  banners?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -136,7 +140,7 @@ export const Topbar = observer((props: PropsType) => {
         </View>
       </View>
 
-      <ReferBanner />
+      {props.banners && <ReferBanner />}
     </Animated.View>
   );
 });

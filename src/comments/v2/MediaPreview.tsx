@@ -1,8 +1,13 @@
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Image } from 'expo-image';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
