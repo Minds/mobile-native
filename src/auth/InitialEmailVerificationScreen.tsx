@@ -1,5 +1,4 @@
 import { useBackHandler } from '@react-native-community/hooks';
-import appInitManager from 'AppInitManager';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
@@ -49,9 +48,6 @@ const InitialEmailVerificationScreen = () => {
           .rawPost('api/v3/email/confirm', {}, headers);
 
         sessionService.getUser().setEmailConfirmed(true);
-        setTimeout(() => {
-          appInitManager.navigateToInitialScreen();
-        }, 300);
       } catch (error) {
         if (error instanceof TwoFactorError) {
           localStore.emailKey = error.message;

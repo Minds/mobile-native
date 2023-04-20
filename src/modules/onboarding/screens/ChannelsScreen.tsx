@@ -1,10 +1,12 @@
 import React from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
+
 import { Button, Screen, ScreenSection } from '~/common/ui';
 import Header from '../components/Header';
 import { ChannelRecommendationItem } from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
-import sessionService from '~/common/services/session.service';
-import { ScrollView } from 'react-native-gesture-handler';
 import UserModel from '~/channel/UserModel';
+import useApiQuery from '~/services/hooks/useApiQuery';
+import CenteredLoading from '~/common/components/CenteredLoading';
 
 export default function ChannelsScreen({ navigation }) {
   return (
@@ -29,9 +31,10 @@ export default function ChannelsScreen({ navigation }) {
 }
 
 const Body = () => {
-  const channels = useSuggestedChannels();
+  const { channels, isLoading } = useSuggestedChannels();
   return (
     <ScrollView>
+      {isLoading && <CenteredLoading />}
       {channels &&
         channels.map(channel => (
           <ChannelRecommendationItem
@@ -44,12 +47,26 @@ const Body = () => {
   );
 };
 
-const useSuggestedChannels = (): null | UserModel[] => {
-  const [channels, setChannels] = React.useState(null);
-  React.useEffect(() => {
-    setTimeout(() => {
-      setChannels([sessionService.getUser()]);
-    }, 2000);
-  }, []);
-  return channels;
+type ApiResponse = {
+  entities: Array<{ entity: UserModel }>;
+};
+
+const useSuggestedChannels = () => {
+  const query = useApiQuery<ApiResponse>(
+    ['suggestedchannels'],
+    'api/v3/recommendations',
+    {
+      limit: 12,
+      location: 'newsfeed',
+    },
+  );
+  const channels = React.useMemo(
+    () =>
+      query.data?.entities
+        ? UserModel.createMany(query.data.entities.map(item => item.entity))
+        : null,
+    [query.data],
+  );
+
+  return { ...query, channels };
 };

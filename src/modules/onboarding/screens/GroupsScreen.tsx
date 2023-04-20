@@ -8,23 +8,23 @@ import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import GroupModel from '~/groups/GroupModel';
 import useApiQuery from '~/services/hooks/useApiQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import AuthService from '~/auth/AuthService';
 const Item = withErrorBoundary(GroupsListItem);
 
-export default function GroupsScreen({ navigation }) {
+const next = () => AuthService.setCompletedOnboard();
+
+export default function GroupsScreen() {
   return (
     <Screen safe>
       <Header
         title="Join a group"
         description="Find your community, speak your mind."
         skip
-        onSkip={() => navigation.navigate('App')}
+        onSkip={next}
       />
       <Body />
       <ScreenSection bottom="L">
-        <Button
-          type="action"
-          size="large"
-          onPress={() => navigation.navigate('App')}>
+        <Button type="action" size="large" onPress={next}>
           Continue
         </Button>
       </ScreenSection>
@@ -44,11 +44,19 @@ const Body = () => {
   );
 };
 
+type ApiResponse = {
+  suggestions: Array<{ entity: GroupModel }>;
+};
+
 const useSuggestedGroups = () => {
-  const query = useApiQuery(['suggestedgroups'], 'api/v2/suggestions/group', {
-    limit: 12,
-    offset: 0,
-  });
+  const query = useApiQuery<ApiResponse>(
+    ['suggestedgroups'],
+    'api/v2/suggestions/group',
+    {
+      limit: 12,
+      offset: 0,
+    },
+  );
   const groups = React.useMemo(
     () =>
       query.data?.suggestions

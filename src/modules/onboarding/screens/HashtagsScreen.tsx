@@ -6,10 +6,21 @@ import { useLegacyStores } from '~/common/hooks/use-stores';
 import { Button, Screen, ScreenSection } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Header from '../components/Header';
+import { useIsFeatureOn } from 'ExperimentsProvider';
+import AuthService from '~/auth/AuthService';
 
 function HashTagsScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const { hashtag } = useLegacyStores();
+
+  const mandatoryOnboarding = !useIsFeatureOn(
+    'minds-3921-mandatory-onboarding-tags',
+  );
+
+  const next = () =>
+    mandatoryOnboarding
+      ? navigation.navigate('OnboardingChannels')
+      : AuthService.setCompletedOnboard();
 
   React.useEffect(() => {
     hashtag.loadSuggested();
@@ -39,7 +50,7 @@ function HashTagsScreen({ navigation }) {
           type="action"
           size="large"
           disabled={hashtag.selectedCount < 3}
-          onPress={() => navigation.navigate('OnboardingChannels')}>
+          onPress={next}>
           Continue
         </Button>
       </ScreenSection>
