@@ -1107,7 +1107,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             ]
           }
           testID="StripeConnectButton"
-          text="Update your details"
+          text="Update Your Details"
         >
           <Text
             onLayout={[Function]}
@@ -1135,7 +1135,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             }
           >
              
-            Update your details
+            Update Your Details
              
           </Text>
         </View>
