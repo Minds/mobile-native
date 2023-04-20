@@ -2,6 +2,10 @@
 
 Minds Mobile
 
+## 4.34.2 (2023-04-20)
+
+No changes.
+
 ## 4.34.1 (2023-04-19)
 
 ### Features ✨ (5 changes)
