@@ -578,7 +578,9 @@
   "comments": {
     "successRemoving": "Comment removed",
     "comments": "Comments",
-    "errorRemoving": "Error removing comment"
+    "errorRemoving": "Error removing comment",
+    "spamPrompt": "Show additional replies, mostly spam comments and bots",
+    "spamPromptAction": "Show"
   },
   "notification": {
     "referralPing": "Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{user}& will earn tokens for your referral",
