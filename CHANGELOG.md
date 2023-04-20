@@ -2,6 +2,58 @@
 
 Minds Mobile
 
+## 4.34.1 (2023-04-19)
+
+### Features ✨ (5 changes)
+
+- [Added audience selector to composer ](minds/mobile-native!2221)
+- [Added Create modal that will open when Compose is pressed for the first time](minds/mobile-native!2221)
+- [Referral sticky banner](minds/mobile-native!2208)
+- [Added EmissionBreakDown to Tokens Analytics](minds/mobile-native!2201)
+- [Added Boost Rotator to the newsfeed](minds/mobile-native!2193)
+
+### Fixed 🐛 (1 change)
+
+- [Fixed reply comments issue](minds/mobile-native!2220)
+- [Fixed the black video preview on the composer](minds/mobile-native!2235)
+- [Fixed squished uploaded images & wrong aspect ratio in preview](minds/mobile-native!2231)
+- [Fixed crash attaching an image to a comment](minds/mobile-native!2237)
+- [Fixed crash on android after capturing an image](minds/mobile-native!2229)
+- [Fixed missing texts for non english languages](minds/mobile-native!2232)
+
+## 4.34.0 (2023-04-11)
+
+### Features ✨ (7 changes)
+
+- [Android IAP for plus & pro](minds/mobile-native!2187)
+- [Moments: Boosts now appear between the moments feed](minds/mobile-native!2186)
+- [Added dot experiment to Discovery](minds/mobile-native!2176)
+- [Added dot experiment to Discovery](minds/mobile-native!2176)
+- [Added audience selector to composer](minds/mobile-native!2161)
+- [Added Create modal that will open when Compose is pressed for the first time](minds/mobile-native!2161)
+- [Add setting to allow boost in your channel](minds/mobile-native!2147)
+
+### Fixed 🐛 (1 change)
+
+- [Fixed activity lock positioning on multi image posts](minds/mobile-native!2210)
+
+### Changed 🔧 (4 changes)
+
+- [Update react navigation](minds/mobile-native!2214)
+- [Removed limiting conditions](minds/mobile-native!2205)
+- [Newsfeed: enabled boosts for the top feed](minds/mobile-native!2204)
+- [Refactor in-app images with expo-image](minds/mobile-native!2178)
+
+### Other (3 changes)
+
+- [Add react-native-iap](minds/mobile-native!2179)
+- [Design system: ListItems](minds/mobile-native!2171)
+- [Implemented Progress, Switch, Radio and Slider on the new design system](minds/mobile-native!2172)
+
+### fxed (1 change)
+
+- [Fixed bug in scheduled post date](minds/mobile-native!2199)
+
 ## 4.33.0 (2023-03-23)
 
 ### Features ✨ (2 changes)

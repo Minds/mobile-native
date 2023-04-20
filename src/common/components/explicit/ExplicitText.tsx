@@ -123,7 +123,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const paywalled = !!entity.paywall && !entity.isOwner();
 
     return (
-      <View style={paywalled ? styles.paywalled : theme.flexContainer}>
+      <View style={paywalled ? styles.paywalled : null}>
         {titleCmp}
         {body}
         {moreLess}

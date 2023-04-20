@@ -6,10 +6,11 @@ import SaveButton from '~/common/components/SaveButton';
 import { B1, Column, H3, Screen, ScreenHeader } from '~/common/ui';
 import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack';
 import { useTranslation } from '../locales';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationConfirmation'>;
 
-export default function InAppVerificationConfirmationScreen() {
+function InAppVerificationConfirmationScreen() {
   const navigation = useNavigation<NavigationProp>();
   const onContinue = () => {
     navigation.popToTop();
@@ -39,3 +40,8 @@ export default function InAppVerificationConfirmationScreen() {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(
+  InAppVerificationConfirmationScreen,
+  'InAppVerificationConfirmationScreen',
+);

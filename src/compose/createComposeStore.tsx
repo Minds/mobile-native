@@ -23,7 +23,9 @@ import { storeRatingService } from 'modules/store-rating';
 import { PickedMedia } from '~/common/services/image-picker.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
 import { Media } from '../common/stores/AttachmentStore';
-import GroupModel from '../groups/GroupModel';
+import type GroupModel from '../groups/GroupModel';
+import type { SupportTiersType } from '../wire/WireTypes';
+import { pushAudienceSelector } from './ComposeAudienceSelector';
 
 /**
  * Display an error message to the user.
@@ -37,6 +39,19 @@ const DEFAULT_MONETIZE = {
   type: 'tokens',
   min: 0,
 };
+
+export type ComposeAudience = {
+  type: 'public' | 'plus' | 'membership' | 'group';
+  value?: string;
+  tier?: SupportTiersType;
+  group?: GroupModel;
+};
+
+export type ComposeCreateMode =
+  | 'post'
+  | 'monetizedPost'
+  | 'boost'
+  | 'supermind';
 
 /**
  * Composer store
@@ -75,6 +90,8 @@ export default function (props) {
     group: null as GroupModel | null,
     postToPermaweb: false,
     initialized: false,
+    audience: { type: 'public' } as ComposeAudience,
+    createMode: 'post' as ComposeCreateMode,
     /**
      * the supermind request that is built from the SupermindComposeScreen
      */
@@ -104,6 +121,10 @@ export default function (props) {
       this.entity = params.entity || null;
       this.supermindObject = params.supermindObject;
       this.onSaveCallback = params.onSave;
+
+      if (params.createMode) {
+        this.setCreateMode(params.createMode, true);
+      }
 
       this.mode = params.mode
         ? params.mode
@@ -153,6 +174,40 @@ export default function (props) {
         noText: undefined,
       });
     },
+    setAudience(audience: ComposeAudience) {
+      this.audience = audience;
+    },
+    async setCreateMode(
+      mode: ComposeCreateMode,
+      clearComposeOnClose?: boolean,
+    ) {
+      if (mode === 'supermind') {
+        if (!(await this.openSupermindModal(undefined, clearComposeOnClose))) {
+          return false;
+        }
+      } else {
+        this.supermindRequest = undefined;
+      }
+
+      if (mode === 'monetizedPost') {
+        await pushAudienceSelector({
+          store: this,
+          monetizedOnly: true,
+        });
+        if (
+          this.audience.type !== 'membership' &&
+          this.audience.type !== 'plus'
+        ) {
+          return false;
+        }
+      }
+
+      this.createMode = mode;
+      return true;
+    },
+    setGroup(group: GroupModel) {
+      this.group = group;
+    },
     setScrollOffset(value: number) {
       this.scrollOffset = value;
     },
@@ -173,7 +228,16 @@ export default function (props) {
       const { popToTop } = props.navigation;
 
       this.onSaveCallback?.(entity);
-      popToTop();
+
+      if (this.createMode === 'boost') {
+        props.navigation.replace('BoostScreenV2', {
+          entity: entity,
+          boostType: 'post',
+        });
+      } else {
+        popToTop();
+      }
+
       this.clear(false);
 
       if (!isEdit) {
@@ -412,6 +476,7 @@ export default function (props) {
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
       this.group = null;
+      this.createMode = 'post';
       this.postToPermaweb = false;
     },
     /**
@@ -737,15 +802,20 @@ export default function (props) {
       supermindRequest?: Partial<SupermindRequestParam>,
       closeComposerOnClear?: boolean,
     ) {
-      NavigationService.navigate('SupermindCompose', {
-        data: supermindRequest || this.supermindRequest,
-        closeComposerOnClear,
-        onSave: (payload: SupermindRequestParam) => {
-          this.supermindRequest = payload;
-        },
-        onClear: () => {
-          this.supermindRequest = undefined;
-        },
+      return new Promise(resolve => {
+        NavigationService.navigate('SupermindCompose', {
+          data: supermindRequest || this.supermindRequest,
+          closeComposerOnClear,
+          onSave: (payload: SupermindRequestParam) => {
+            this.supermindRequest = payload;
+            this.createMode = 'supermind';
+            resolve(payload);
+          },
+          onClear: () => {
+            this.supermindRequest = undefined;
+            resolve(undefined);
+          },
+        });
       });
     },
     get isSupermindReply() {

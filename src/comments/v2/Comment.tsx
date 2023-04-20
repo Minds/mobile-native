@@ -61,8 +61,6 @@ export default observer(function Comment({
 
   const { username, plus: isPlusUser } = ownerObj ?? {};
 
-  const { entity, setShowInput } = store ?? {};
-
   const mature = comment?.mature && !mature_visibility;
 
   const canReply = parent_guid_l2 && !hideReply;
@@ -131,30 +129,30 @@ export default observer(function Comment({
 
   const reply = React.useCallback(() => {
     // if we can't reply, open input and fill in owner username
-    if (!can_reply) {
-      return setShowInput(true, undefined, `@${username} `);
+    if (canReply && !can_reply) {
+      return store.setShowInput(true, undefined, `@${username} `);
     }
 
     navigation.push('ReplyComment', {
       comment,
-      entity,
+      entity: store.entity,
       open: true,
     });
-  }, [can_reply, comment, entity, navigation, setShowInput, username]);
+  }, [canReply, can_reply, comment, navigation, store, username]);
 
   const viewReply = React.useCallback(() => {
     navigation.push('ReplyComment', {
       comment,
-      entity,
+      entity: store.entity,
     });
-  }, [navigation, comment, entity]);
+  }, [navigation, comment, store.entity]);
 
   return (
     <View
       style={[
         styles.container,
         isPlusUser
-          ? theme.bgPlusBackground
+          ? theme.bgMutedBackground
           : focused
           ? styles.focused
           : theme.bcolorPrimaryBorder,

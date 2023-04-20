@@ -6,11 +6,12 @@ import i18n from '~/common/services/i18n.service';
 import openUrlService from '~/common/services/open-url.service';
 import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Boost channel notice
  */
-function BoostChannelNotice() {
+function BoostChannelNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
 
   // on button press
@@ -26,6 +27,7 @@ function BoostChannelNotice() {
 
   return (
     <InFeedNotice
+      name={name}
       title={i18n.t('inFeedNotices.boostChannelTitle')}
       description={i18n.t('inFeedNotices.boostChannelDescription')}
       btnText={i18n.t('inFeedNotices.boostChannelButton')}

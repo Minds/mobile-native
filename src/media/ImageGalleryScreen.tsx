@@ -11,6 +11,7 @@ import { ModalFullScreen } from '../common/ui';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import BottomContent from '../newsfeed/activity/BottomContent';
 import ThemedStyles from '../styles/ThemedStyles';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 interface ImageGalleryScreenProps {
   route: any;
@@ -19,7 +20,7 @@ interface ImageGalleryScreenProps {
 
 const TOP_HEADER_HEIGHT = 200;
 
-export default function ImageGalleryScreen({
+function ImageGalleryScreen({
   route: {
     params: { entity, initialIndex },
   },
@@ -91,3 +92,5 @@ export default function ImageGalleryScreen({
     </ModalFullScreen>
   );
 }
+
+export default withErrorBoundaryScreen(ImageGalleryScreen, 'ImageGallery');

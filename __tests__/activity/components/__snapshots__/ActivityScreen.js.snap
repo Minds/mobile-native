@@ -402,11 +402,7 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
+            style={null}
           >
             <Text
               selectable={true}
@@ -1236,6 +1232,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "canary": false,
           "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
+          "disabled_boost": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -1366,6 +1363,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "canary": false,
           "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
+          "disabled_boost": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -1496,6 +1494,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "canary": false,
           "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
+          "disabled_boost": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -1626,6 +1625,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "canary": false,
           "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
+          "disabled_boost": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -1779,6 +1779,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "canary": false,
             "confirmEmail": [Function],
             "disable_autoplay_videos": undefined,
+            "disabled_boost": undefined,
             "email_confirmed": false,
             "eth_wallet": "",
             "founder": false,

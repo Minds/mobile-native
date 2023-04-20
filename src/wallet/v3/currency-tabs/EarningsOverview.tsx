@@ -26,7 +26,7 @@ type PropsType = {
   currencyType: EarningsCurrencyType;
 };
 
-const labels = {
+const friendlyLabel = {
   wire: i18n.t('wallet.wire'),
   'wire-all': i18n.t('wallet.wireAll'),
   partner: i18n.t('wallet.partner'),
@@ -34,9 +34,8 @@ const labels = {
   wire_referral: i18n.t('wallet.wireReferral'),
   boost_partner: i18n.t('wallet.boostPartner'),
 };
-
 export const getFriendlyLabel = (id: string): string =>
-  labels[id] ?? capitalize(id);
+  friendlyLabel[id] ?? capitalize(id);
 
 const getProcessedData = (
   earning: Earnings,

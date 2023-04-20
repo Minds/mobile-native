@@ -10,6 +10,7 @@ import i18n from '../common/services/i18n.service';
 import { TwoFactorError } from '~/common/services/api.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -175,4 +176,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default TwoFactorConfirmScreen;
+export default withErrorBoundaryScreen(
+  TwoFactorConfirmScreen,
+  'TwoFactorConfirmationScreen',
+);

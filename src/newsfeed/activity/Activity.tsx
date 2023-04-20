@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropsWithChildren, useState } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -18,7 +18,7 @@ import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
@@ -39,6 +39,7 @@ import ActivityContainer from './ActivityContainer';
 import { withAnalyticsContext } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
 import { useFeedStore } from '~/common/contexts/feed-store.context';
+import FadeView from '../../common/components/FadeView';
 
 const FONT_THRESHOLD = 300;
 
@@ -57,6 +58,7 @@ type PropsType = {
   borderless?: boolean;
   hideMetrics?: boolean;
   distinctBoosts?: boolean;
+  maxContentHeight?: number;
 };
 
 /**
@@ -314,11 +316,20 @@ export default class Activity extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
     const hasText = !!entity.text || !!entity.title;
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
+
+    /* Shows ontop only for rich embed or reminds */
+    const shouldShowMessageOnTop = Boolean(
+      this.props.entity.perma_url || this.props.entity.remind_object,
+    );
+    const shouldShowMessageOnBottom = !(
+      this.props.entity.perma_url ||
+      this.props.entity.remind_object ||
+      this.props.entity.remind_deleted
+    );
 
     const isShortText =
       !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
@@ -354,6 +365,29 @@ export default class Activity extends Component<PropsType> {
       !(entity.shouldBeBlured() && this.props.parentMature) &&
       !entity.mature_visibility;
 
+    const content = (
+      <View
+        style={
+          this.props.showOnlyContent
+            ? null
+            : this.props.maxContentHeight
+            ? styles.bodyContainer
+            : styles.bodyContainerCentered
+        }>
+        {lock}
+        {shouldShowMessageOnTop ? message : undefined}
+        <MediaView
+          ref={this.setMediaViewRef}
+          entity={entity}
+          onPress={this.navToActivity}
+          autoHeight={this.props.autoHeight}
+        />
+        {this.showRemind()}
+        {this.props.entity.remind_deleted && <DeletedRemind />}
+        {shouldShowMessageOnBottom ? message : undefined}
+      </View>
+    );
+
     return (
       <View
         style={
@@ -371,48 +405,63 @@ export default class Activity extends Component<PropsType> {
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
-          <Pressable
-            onPress={this.navToActivity}
-            onLongPress={this.copyText}
-            onLayout={this.onLayout}
-            testID="ActivityView">
-            <View
-              style={
-                this.props.showOnlyContent
-                  ? styles.onlyContentbodyContainer
-                  : styles.bodyContainer
-              }>
-              {lock}
-              {/* Shows ontop only for rich embed or reminds */}
-              {this.props.entity.perma_url || this.props.entity.remind_object
-                ? message
-                : undefined}
-              <MediaView
-                ref={this.setMediaViewRef}
-                entity={entity}
-                onPress={this.navToActivity}
-                imageStyle={theme.flexContainer}
-                autoHeight={this.props.autoHeight}
-              />
-              {this.showRemind()}
-              {this.props.entity.remind_deleted && <DeletedRemind />}
-              {!(
-                this.props.entity.perma_url ||
-                this.props.entity.remind_object ||
-                this.props.entity.remind_deleted
-              )
-                ? message
-                : undefined}
-            </View>
+          <>
+            <Pressable
+              onPress={this.navToActivity}
+              onLongPress={this.copyText}
+              onLayout={this.onLayout}
+              testID="ActivityView">
+              {this.props.maxContentHeight ? (
+                <MaxHeightFadeView maxHeight={this.props.maxContentHeight}>
+                  {content}
+                </MaxHeightFadeView>
+              ) : (
+                content
+              )}
+            </Pressable>
             <BottomContent
               entity={entity}
               showOnlyContent={this.props.showOnlyContent}
               hideTabs={this.props.hideTabs}
               hideMetrics={this.props.hideMetrics}
             />
-          </Pressable>
+          </>
         )}
       </View>
     );
   }
 }
+
+const MaxHeightFadeView = ({
+  maxHeight,
+  children,
+}: PropsWithChildren<{ maxHeight?: number }>) => {
+  const [exceeds, setExceeds] = useState(!!maxHeight);
+
+  const fadeViewStyle = useMemoStyle(
+    () => [
+      {
+        height: maxHeight,
+        justifyContent: exceeds ? 'flex-start' : 'center',
+        overflow: 'hidden',
+      },
+    ],
+    [maxHeight, exceeds],
+  );
+
+  const handleChildrenLayout = (event: LayoutChangeEvent) => {
+    if (maxHeight) {
+      setExceeds(event.nativeEvent.layout.height > maxHeight);
+    }
+  };
+
+  return (
+    <FadeView fades={exceeds ? ['bottom'] : []} style={fadeViewStyle}>
+      <View
+        onLayout={handleChildrenLayout}
+        style={{ justifyContent: exceeds ? 'flex-start' : 'center' }}>
+        {children}
+      </View>
+    </FadeView>
+  );
+};

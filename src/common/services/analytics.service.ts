@@ -14,6 +14,7 @@ import { storages } from './storage/storages.service';
 import { IS_IOS } from '~/config/Config';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
+import { DismissIdentifier } from '../stores/DismissalStore';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -337,4 +338,6 @@ export type ClickRef =
   | 'vote:down'
   | 'push-notification'
   | 'video-player-unmuted'
-  | 'remind';
+  | 'remind'
+  | 'banner:refer:action'
+  | `${DismissIdentifier}:dismiss`;

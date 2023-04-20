@@ -101,6 +101,8 @@ const translationGetters = {
   },
 };
 
+export const SupportedLanguages = Object.keys(translationGetters);
+
 const translate = memoize(
   (key, config) => i18n.t(key, config),
   (key, config) => (config ? key + JSON.stringify(config) : key),
@@ -149,8 +151,7 @@ class I18nService {
     // fallback if no available language fits
     const fallback = { languageTag: 'en' };
     let { languageTag } =
-      RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
-      fallback;
+      RNLocalize.findBestAvailableLanguage(SupportedLanguages) || fallback;
     return languageTag;
   }
 

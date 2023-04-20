@@ -65,32 +65,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         />
         <Memo(wrappedComponent)
           refresh={[Function]}
-          store={
-            Object {
-              "filter": "",
-              "init": [Function],
-              "listen": [Function],
-              "loadMailNotificationsSettings": [Function],
-              "loadPushNotificationsSettings": [Function],
-              "loadUnreadCount": [Function],
-              "loaded": false,
-              "mailsNotificationsSettings": Array [],
-              "markAsRead": [Function],
-              "onSocket": [Function],
-              "pollInterval": null,
-              "pushNotificationsSettings": Array [],
-              "reset": [Function],
-              "setFilter": [Function],
-              "setLoaded": [Function],
-              "setSilentRefresh": [Function],
-              "setUnread": [Function],
-              "silentRefresh": false,
-              "startPollCount": [Function],
-              "stopPollCount": [Function],
-              "unlisten": [Function],
-              "unread": 0,
-            }
-          }
+          store={Object {}}
         />
       </React.Fragment>
     }

@@ -21,6 +21,7 @@ import ActivityIndicator from '~/common/components/ActivityIndicator';
 import { useInfiniteFeedQuery } from '~/services';
 import { fetchNotificationsPage } from './api';
 import PrefetchNotifications from './PrefetchNotifications';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type PropsType = {
   navigation?: any;
@@ -183,7 +184,10 @@ const sticky = [0];
 const keyExtractor = (item: NotificationModel, index) =>
   item ? `${item.urn}-${index}` : 'menu';
 
-export default NotificationsScreen;
+export default withErrorBoundaryScreen(
+  NotificationsScreen,
+  'NotificationsScreen',
+);
 
 const styles = ThemedStyles.create({
   containerStyle: { flexGrow: 1 },

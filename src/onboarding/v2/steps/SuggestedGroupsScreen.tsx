@@ -10,55 +10,59 @@ import GroupsListItem from '../../../groups/GroupsListItem';
 import NavigationService from '../../../navigation/NavigationService';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ModalContainer from './ModalContainer';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 /**
  * Subscribe groups Modal Screen
  */
-export default observer(function SuggestedGroupsScreen() {
-  const theme = ThemedStyles.style;
-  const { current: listStore } = useRef(new FeedStore<GroupModel>());
-  useEffect(() => {
-    listStore
-      .setEndpoint('api/v2/feeds/global/hot/groups')
-      .setLimit(12)
-      .setInjectBoost(false)
-      .setAsActivities(true)
-      .setParams({
-        period: '1y',
-        nsfw: [],
-      })
-      .fetchRemoteOrLocal();
-  }, [listStore]);
+export default withErrorBoundaryScreen(
+  observer(function SuggestedGroupsScreen() {
+    const theme = ThemedStyles.style;
+    const { current: listStore } = useRef(new FeedStore<GroupModel>());
+    useEffect(() => {
+      listStore
+        .setEndpoint('api/v2/feeds/global/hot/groups')
+        .setLimit(12)
+        .setInjectBoost(false)
+        .setAsActivities(true)
+        .setParams({
+          period: '1y',
+          nsfw: [],
+        })
+        .fetchRemoteOrLocal();
+    }, [listStore]);
 
-  return (
-    <ModalContainer
-      title={i18n.t('onboarding.joinGroup')}
-      onPressBack={NavigationService.goBack}>
-      <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
-        <MText
-          style={[
-            theme.subTitleText,
-            theme.colorPrimaryText,
-            theme.paddingHorizontal2x,
-          ]}>
-          {i18n.t('onboarding.suggestedGroupsDescription')}
-        </MText>
-        <ScrollView style={theme.flexContainer}>
-          {listStore.loading && <CenteredLoading />}
-          {listStore.entities
-            .slice()
-            .map((group, index) =>
-              group instanceof GroupModel ? (
-                <GroupsListItem
-                  index={index}
-                  group={group}
-                  key={group.guid}
-                  noNavigate
-                />
-              ) : null,
-            )}
-        </ScrollView>
-      </View>
-    </ModalContainer>
-  );
-});
+    return (
+      <ModalContainer
+        title={i18n.t('onboarding.joinGroup')}
+        onPressBack={NavigationService.goBack}>
+        <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
+          <MText
+            style={[
+              theme.subTitleText,
+              theme.colorPrimaryText,
+              theme.paddingHorizontal2x,
+            ]}>
+            {i18n.t('onboarding.suggestedGroupsDescription')}
+          </MText>
+          <ScrollView style={theme.flexContainer}>
+            {listStore.loading && <CenteredLoading />}
+            {listStore.entities
+              .slice()
+              .map((group, index) =>
+                group instanceof GroupModel ? (
+                  <GroupsListItem
+                    index={index}
+                    group={group}
+                    key={group.guid}
+                    noNavigate
+                  />
+                ) : null,
+              )}
+          </ScrollView>
+        </View>
+      </ModalContainer>
+    );
+  }),
+  'SuggestedGroupsScreen',
+);

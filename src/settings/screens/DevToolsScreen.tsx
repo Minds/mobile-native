@@ -17,6 +17,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { CodePushDebugger, codePush } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
 import Link from '../../common/components/Link';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 const DevToolsScreen = () => {
   const navigation = useNavigation();
@@ -143,4 +144,4 @@ export const HiddenTap = ({
   );
 };
 
-export default DevToolsScreen;
+export default withErrorBoundaryScreen(DevToolsScreen, 'DevToolsScreen');

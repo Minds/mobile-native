@@ -32,6 +32,7 @@ import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
 import { isStoryBookOn } from '~/config/Config';
+import i18nService from '../common/services/i18n.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -117,6 +118,9 @@ const AppStack = observer(() => {
           name="Channel"
           getComponent={() => require('~/channel/v2/ChannelScreen').withModal}
           options={hideHeader}
+          getId={({ params }) =>
+            'Channel' + (params?.entity?.guid || params?.guid || '')
+          }
         />
         <AppStackNav.Screen
           name="DiscoverySearch"
@@ -270,6 +274,17 @@ const defaultScreenOptions: StackNavigationOptions = {
   cardOverlayEnabled: true,
 };
 
+const rootStackCardScreenOptions = {
+  headerShown: true,
+  ...TransitionPresets.SlideFromRightIOS,
+  cardStyle: {
+    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+  },
+  headerStyle: {
+    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+  },
+};
+
 const RootStack = observer(function () {
   const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
@@ -340,7 +355,7 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="Compose"
-              getComponent={() => require('~/compose/ComposeScreen').default}
+              getComponent={() => require('~/compose/ComposeStack').default}
               options={TransitionPresets.ModalPresentationIOS}
             />
             <RootStackNav.Screen
@@ -506,6 +521,36 @@ const RootStack = observer(function () {
               name="BoostScreenV2"
               getComponent={() => require('modules/boost').BoostComposerStack}
               options={modalOptions}
+            />
+            <RootStackNav.Screen
+              name="TierManagementScreen"
+              getComponent={() =>
+                require('~/common/components/tier-management/TierManagementScreen')
+                  .default
+              }
+              options={{
+                title: i18nService.t('settings.otherOptions.b1'),
+                headerBackTitle: i18nService.t('back'),
+                ...rootStackCardScreenOptions,
+              }}
+            />
+            <RootStackNav.Screen
+              name="TierScreen"
+              getComponent={() =>
+                require('~/settings/screens/TierScreen').default
+              }
+              options={{
+                title: 'Tier Management',
+                ...rootStackCardScreenOptions,
+              }}
+            />
+            <RootStackNav.Screen
+              name="GroupsList"
+              getComponent={() => require('~/groups/GroupsListScreen').default}
+              options={{
+                ...rootStackCardScreenOptions,
+                headerShown: false,
+              }}
             />
           </>
         )

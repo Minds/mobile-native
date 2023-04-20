@@ -5,11 +5,12 @@ import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Setup Channel Notice
  */
-function SetupChannelNotice() {
+function SetupChannelNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser();
 
@@ -18,11 +19,12 @@ function SetupChannelNotice() {
     navigation.navigate('SetupChannel');
   }, [navigation]);
 
-  if (!inFeedNoticesService.visible('setup-channel')) {
+  if (!inFeedNoticesService.visible(name)) {
     return null;
   }
   return (
     <InFeedNotice
+      name={name}
       title={i18nService.t('inFeedNotices.whois', { name: user?.name })}
       description={i18nService.t('inFeedNotices.userDescription')}
       btnText={i18nService.t('inFeedNotices.userButton')}

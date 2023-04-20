@@ -2,11 +2,7 @@
 
 exports[`Explicit text component renders correctly 1`] = `
 <View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
+  style={null}
 >
   <Tags
     style={

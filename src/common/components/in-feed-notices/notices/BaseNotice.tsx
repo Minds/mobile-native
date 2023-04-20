@@ -1,14 +1,18 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { B2, Button, H3, IconButtonNext, IconNext } from '~/common/ui';
 import { IconNameType } from '~/common/ui/icons/map';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { NoticeName } from '.';
 
 type PropsType = {
+  name: NoticeName;
   title: string;
   description: string | ReactNode;
   iconName: IconNameType;
   btnText: string;
+  dismissable?: boolean;
   onClose?: () => void;
   onPress: () => void;
   btnSecondaryText?: string;
@@ -19,15 +23,22 @@ type PropsType = {
  * Base in-feed notice component
  */
 export default function BaseNotice({
+  name,
   title,
   description,
   iconName,
   btnText,
+  dismissable = true,
   onPress,
   btnSecondaryText,
   onSecondaryPress,
   onClose,
 }: PropsType) {
+  const onPressClose = () => {
+    inFeedNoticesService.dismiss(name);
+    onClose?.();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.left}>
@@ -36,13 +47,13 @@ export default function BaseNotice({
       <View style={ThemedStyles.style.flexContainer}>
         <View style={ThemedStyles.style.rowJustifySpaceBetween}>
           <H3 bottom="XS">{title}</H3>
-          {onClose !== undefined && (
+          {dismissable && (
             <View style={styles.right}>
               <IconButtonNext
                 name="close"
                 size="medium"
                 color="PrimaryText"
-                onPress={onClose}
+                onPress={onPressClose}
               />
             </View>
           )}
