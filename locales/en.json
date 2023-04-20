@@ -228,6 +228,10 @@
     "refer": {
       "title": "<refer /> sales, fans and creators for a share of earnings.",
       "refer": "Refer"
+    },
+    "wefounder": {
+      "title": "Become an owner of Minds by <link />",
+      "refer": " joining our Wefunder."
     }
   },
   "inFeedNotices": {
