@@ -1071,6 +1071,75 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           </View>
         </View>
       </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "column",
+            "paddingBottom": 16,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          }
+        }
+      >
+        <View
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "alignSelf": "center",
+                "justifyContent": "center",
+              },
+              Object {
+                "backgroundColor": "#1F252C",
+                "borderColor": "#1B85D6",
+                "borderRadius": 21,
+                "borderWidth": 1,
+                "paddingHorizontal": 21,
+                "paddingVertical": 10,
+              },
+              undefined,
+            ]
+          }
+          testID="StripeConnectButton"
+          text="Update your details"
+        >
+          <Text
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Array [
+                  Object {
+                    "fontSize": 17,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "500",
+                  },
+                ],
+              ]
+            }
+          >
+             
+            Update your details
+             
+          </Text>
+        </View>
+      </View>
     </View>
   </RCTScrollView>
 </View>
