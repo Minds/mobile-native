@@ -1863,7 +1863,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "start": 0,
         },
         "showInput": false,
+        "showSpamComments": [Function],
         "socketRoomName": "",
+        "spamComments": Array [],
+        "spamCommentsShown": false,
         "text": "",
       }
     }
