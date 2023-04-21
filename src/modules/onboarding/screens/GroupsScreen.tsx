@@ -8,12 +8,13 @@ import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import GroupModel from '~/groups/GroupModel';
 import useApiQuery from '~/services/hooks/useApiQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import AuthService from '~/auth/AuthService';
 const Item = withErrorBoundary(GroupsListItem);
 
 const next = () => AuthService.setCompletedOnboard();
 
-export default function GroupsScreen() {
+function GroupsScreen() {
   return (
     <Screen safe>
       <Header
@@ -31,6 +32,8 @@ export default function GroupsScreen() {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(GroupsScreen);
 
 const Body = () => {
   const { groups, isLoading } = useSuggestedGroups();

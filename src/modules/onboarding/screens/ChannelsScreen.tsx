@@ -7,8 +7,9 @@ import { ChannelRecommendationItem } from '~/common/components/ChannelRecommenda
 import UserModel from '~/channel/UserModel';
 import useApiQuery from '~/services/hooks/useApiQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
-export default function ChannelsScreen({ navigation }) {
+function ChannelsScreen({ navigation }) {
   return (
     <Screen safe>
       <Header
@@ -29,6 +30,8 @@ export default function ChannelsScreen({ navigation }) {
     </Screen>
   );
 }
+
+export default withErrorBoundaryScreen(ChannelsScreen);
 
 const Body = () => {
   const { channels, isLoading } = useSuggestedChannels();

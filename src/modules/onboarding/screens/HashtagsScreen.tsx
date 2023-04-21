@@ -8,6 +8,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Header from '../components/Header';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import AuthService from '~/auth/AuthService';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 function HashTagsScreen({ navigation }) {
   const theme = ThemedStyles.style;
@@ -58,7 +59,7 @@ function HashTagsScreen({ navigation }) {
   );
 }
 
-export default observer(HashTagsScreen);
+export default withErrorBoundaryScreen(observer(HashTagsScreen));
 
 const styles = ThemedStyles.create({
   text: ['colorSecondaryText', 'fontM', 'bold'],
