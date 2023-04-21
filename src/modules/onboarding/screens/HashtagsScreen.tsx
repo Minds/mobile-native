@@ -13,7 +13,7 @@ function HashTagsScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const { hashtag } = useLegacyStores();
 
-  const mandatoryOnboarding = !useIsFeatureOn(
+  const mandatoryOnboarding = useIsFeatureOn(
     'minds-3921-mandatory-onboarding-tags',
   );
 
