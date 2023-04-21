@@ -119,7 +119,7 @@ const navigator = {
       };
     } else if (this.notification.type === NotificationType.supermind_accepted) {
       activityParams = {
-        guid: this.notification.entity.reply_activity_guid,
+        guid: this.notification.entity.activity_guid,
         hydrate: false,
       };
     } else if (this.notification.type === NotificationType.boost_rejected) {
