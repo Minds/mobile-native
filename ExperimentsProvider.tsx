@@ -116,4 +116,6 @@ export type FeatureID =
   | 'mob-4836-iap-no-cash'
   | 'mob-4596-create-modal'
   | 'minds-3921-mandatory-onboarding-tags'
+  | 'mob-4903-referrer-banner'
+  | 'mob-4903-wefounder-banner'
   | 'epic-303-boost-partners';
