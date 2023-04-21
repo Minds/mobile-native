@@ -329,6 +329,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'alpha-s-circle',
   },
+  gavel: {
+    font: 'MaterialIcons',
+    name: 'gavel',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

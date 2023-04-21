@@ -23,6 +23,8 @@ import {
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import NavigationService from '~/navigation/NavigationService';
+import { confirm } from '~/common/components/Confirm';
+import analyticsService from '~/common/services/analytics.service';
 
 type PropsType = {
   comment: CommentModel;
@@ -169,6 +171,7 @@ export default function CommentBottomMenu({
           close();
         },
       });
+
       actions.push({
         title: i18n.t('copy'),
         iconName: 'content-copy',
@@ -180,6 +183,38 @@ export default function CommentBottomMenu({
         },
       });
     }
+
+    if (comment.spam || true) {
+      actions.push({
+        title: i18n.t('comments.disputeSpam'),
+        iconName: 'gavel',
+        iconType: 'material',
+        onPress: async () => {
+          if (
+            !(await confirm({
+              title: 'Dispute spam report',
+              description:
+                'Our admin team can get it wrong from time to time. If you think this is not spam submit a report and we’ll be sure to review! ',
+              actionText: 'Submit',
+            }))
+          ) {
+            return;
+          }
+
+          analyticsService.trackClick('comment:dispute-spam', [
+            analyticsService.buildEntityContext(comment),
+          ]);
+
+          showNotification(
+            'Thanks! We’ve got your review for this comment! Our admin team will check it out and get back to you soon.',
+            'success',
+          );
+
+          close();
+        },
+      });
+    }
+
     return actions;
   }, [close, comment, entity, onTranslate, store, group]);
 
