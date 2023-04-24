@@ -14,6 +14,8 @@ function useNavCallback(screen) {
 }
 
 export default function () {
+  const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
+
   const contentAdmin = [
     /*{
       title: i18n.t('settings.otherOptions.a1'),
@@ -75,7 +77,8 @@ export default function () {
   return (
     <ScrollView style={containerStyle}>
       {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
-      {generateSection(i18n.t('settings.otherOptions.g'), referrals)}
+      {!affiliatesEnabled &&
+        generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {isTwitterEnabled &&
         generateSection(

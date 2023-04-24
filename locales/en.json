@@ -859,6 +859,7 @@
     "reportAs": "Do you want to report this post as:"
   },
   "settings": {
+    "affiliateProgram": "Affiliate Program",
     "submit": "Submit",
     "boostConsole": "Boost",
     "chooseBrowser": "Choose Browser",
