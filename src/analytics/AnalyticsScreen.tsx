@@ -18,7 +18,7 @@ const AnalyticsScreen = observer(({ route }: { route: any }) => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('analytics.title')} />
+      <ScreenHeader back title={i18n.t('analytics.title')} />
       <TopbarTabbar
         current={activeTabId}
         onChange={setActiveTabId}
