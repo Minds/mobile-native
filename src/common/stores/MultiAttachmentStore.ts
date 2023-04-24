@@ -1,6 +1,5 @@
 import { showNotification } from 'AppMessages';
 import { action, computed, observable } from 'mobx';
-import { IS_IOS } from '~/config/Config';
 import i18n from '../services/i18n.service';
 import AttachmentStore, { Media } from './AttachmentStore';
 
