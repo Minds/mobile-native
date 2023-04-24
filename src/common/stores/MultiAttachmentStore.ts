@@ -116,15 +116,13 @@ export default class MultiAttachmentStore {
    * @param media {Media}
    */
   mediaExists(media: Media): boolean {
-    if (IS_IOS) {
+    if (media.assetId) {
       return this.attachments.some(
         attachment => attachment.assetId === media.assetId,
       );
-    } else {
-      return this.attachments.some(
-        attachment => attachment.path === media.path,
-      );
     }
+
+    return this.attachments.some(attachment => attachment.path === media.path);
   }
 
   /**
