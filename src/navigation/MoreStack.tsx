@@ -173,7 +173,7 @@ export default function () {
       <MoreStack.Screen
         name="Referrals"
         getComponent={() => require('~/referral/ReferralsScreen').default}
-        options={{ title: i18n.t('settings.referrals') }}
+        options={hideHeader}
       />
       <MoreStack.Screen
         name="AffiliateProgram"
