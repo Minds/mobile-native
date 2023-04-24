@@ -15,7 +15,7 @@ exports[`Activity component renders correctly 1`] = `
         "borderColor": "#3f4b56",
       },
       Object {
-        "backgroundColor": "#1F252C",
+        "backgroundColor": "#1C1D1F",
       },
     ]
   }
@@ -559,7 +559,7 @@ exports[`Activity component renders correctly 1`] = `
                 "fontSize": 18,
               },
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Medium",

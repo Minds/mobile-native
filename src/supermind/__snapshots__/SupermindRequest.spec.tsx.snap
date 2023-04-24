@@ -12,7 +12,7 @@ exports[`SupermindRequest should render inbound 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#414C57",
+          "borderColor": "#53565A",
         },
         Object {
           "borderBottomWidth": 0.5,
@@ -119,7 +119,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -147,7 +147,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           "overflow": "visible",
         },
         Object {
-          "backgroundColor": "#1F252C",
+          "backgroundColor": "#1C1D1F",
         },
       ]
     }
@@ -159,7 +159,7 @@ exports[`SupermindRequest should render inbound 1`] = `
             "borderBottomWidth": 0.5,
           },
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
           undefined,
         ]
@@ -253,7 +253,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     Object {
                       "fontFamily": "Roboto-Bold",
@@ -324,7 +324,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -340,7 +340,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                         "fontSize": 18,
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto-Medium",
@@ -365,7 +365,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -380,7 +380,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "fontSize": 18,
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -409,7 +409,7 @@ exports[`SupermindRequest should render inbound 1`] = `
       style={
         Array [
           Object {
-            "color": "#B8C1CA",
+            "color": "#b9bbc0",
           },
           Object {
             "fontFamily": "Roboto",
@@ -429,7 +429,7 @@ exports[`SupermindRequest should render inbound 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -472,7 +472,7 @@ exports[`SupermindRequest should render outbound 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#414C57",
+          "borderColor": "#53565A",
         },
         Object {
           "borderBottomWidth": 0.5,
@@ -579,7 +579,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -607,7 +607,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           "overflow": "visible",
         },
         Object {
-          "backgroundColor": "#1F252C",
+          "backgroundColor": "#1C1D1F",
         },
       ]
     }
@@ -619,7 +619,7 @@ exports[`SupermindRequest should render outbound 1`] = `
             "borderBottomWidth": 0.5,
           },
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
           undefined,
         ]
@@ -713,7 +713,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     Object {
                       "fontFamily": "Roboto-Bold",
@@ -784,7 +784,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -800,7 +800,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                         "fontSize": 18,
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto-Medium",
@@ -825,7 +825,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -840,7 +840,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "fontSize": 18,
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -869,7 +869,7 @@ exports[`SupermindRequest should render outbound 1`] = `
       style={
         Array [
           Object {
-            "color": "#B8C1CA",
+            "color": "#b9bbc0",
           },
           Object {
             "fontFamily": "Roboto",
@@ -889,7 +889,7 @@ exports[`SupermindRequest should render outbound 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",

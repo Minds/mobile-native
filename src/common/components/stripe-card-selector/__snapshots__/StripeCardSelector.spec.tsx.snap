@@ -37,7 +37,7 @@ exports[`StripeCardSelector should render correctly 1`] = `
       Array [
         Array [
           Object {
-            "backgroundColor": "#1E242A",
+            "backgroundColor": "#1C1D1F",
           },
         ],
         Object {

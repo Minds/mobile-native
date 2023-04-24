@@ -74,7 +74,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
           "padding": 16,
         },
         Object {
-          "borderColor": "#414C57",
+          "borderColor": "#53565A",
         },
       ]
     }
@@ -93,7 +93,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -114,7 +114,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -124,7 +124,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
                 "paddingTop": 8,
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -154,7 +154,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
         "padding": 16,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -173,7 +173,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -194,7 +194,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -204,7 +204,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
               "paddingTop": 8,
             },
             Object {
-              "color": "#B8C1CA",
+              "color": "#b9bbc0",
             },
           ],
         ]
@@ -270,7 +270,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
         "padding": 16,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -289,7 +289,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -299,7 +299,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
               "paddingBottom": 8,
             },
             Object {
-              "color": "#B8C1CA",
+              "color": "#b9bbc0",
             },
           ],
         ]
@@ -315,7 +315,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -364,7 +364,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
           style={
             Array [
               Object {
-                "color": "#797B82",
+                "color": "#a1a5ab",
                 "fontSize": 32,
               },
               Object {
