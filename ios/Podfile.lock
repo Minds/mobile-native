@@ -157,7 +157,7 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.2)
-  - hermes-engine (0.70.7)
+  - hermes-engine (0.70.9)
   - iOSPhotoEditor (0.5)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
@@ -1084,7 +1084,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  hermes-engine: 566e656aa95456a3f3f739fd76ea9a9656f2633f
+  hermes-engine: 918ec5addfbc430c9f443376d739f088b6dc96c3
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libaom: 9bb51e0f8f9192245e3ca2a1c9e4375d9cbccc52
