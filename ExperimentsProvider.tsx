@@ -116,6 +116,8 @@ export const featureList = [
   'mob-4722-track-code-push',
   'mob-4812-discovery-badge',
   'mob-4836-iap-no-cash',
+  'mob-4903-referrer-banner',
+  'mob-4903-wefounder-banner',
 ] as const;
 
 export type FeatureID = typeof featureList[number];
