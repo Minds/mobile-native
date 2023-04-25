@@ -36,6 +36,7 @@ type PropsType = {
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
   distinctBoosts?: boolean;
+  hideBoostLabel?: boolean;
 };
 
 const getLastRoute = (navigation: NavigationProp<any>) => {
@@ -151,25 +152,26 @@ class OwnerBlock extends PureComponent<PropsType> {
       </HairlineRow>
     ) : null;
 
-    const boosted = this.props.entity.boosted ? (
-      <HairlineColumn>
-        {this.props.distinctBoosts && (
-          <NewsfeedHeader title="Boosted Content" borderless />
-        )}
-        <Row horizontal="XL" vertical="S">
-          <Icon
-            type="ionicon"
-            name="md-trending-up"
-            size={18}
-            style={ThemedStyles.style.marginRight}
-            color={ThemedStyles.getColor('Link')}
-          />
-          <B2 font="medium" color="link">
-            {i18nService.t('boosted')}
-          </B2>
-        </Row>
-      </HairlineColumn>
-    ) : undefined;
+    const boosted =
+      this.props.entity.boosted && !this.props.hideBoostLabel ? (
+        <HairlineColumn>
+          {this.props.distinctBoosts && (
+            <NewsfeedHeader title="Boosted Content" borderless />
+          )}
+          <Row horizontal="XL" vertical="S">
+            <Icon
+              type="ionicon"
+              name="md-trending-up"
+              size={18}
+              style={ThemedStyles.style.marginRight}
+              color={ThemedStyles.getColor('Link')}
+            />
+            <B2 font="medium" color="link">
+              {i18nService.t('boosted')}
+            </B2>
+          </Row>
+        </HairlineColumn>
+      ) : undefined;
 
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
