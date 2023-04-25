@@ -14,7 +14,14 @@ const BoostLatestPostPrompt = () => {
 
   const boostLatestPost = async () => {
     const response = await apiService.get<any>(
-      `api/v2/feeds/container/${user.guid}/activities?sync=1&limit=12&as_activities=1&export_user_counts=0&unseen=false`,
+      `api/v2/feeds/container/${user.guid}/activities`,
+      {
+        sync: 1,
+        limit: 12,
+        as_activities: 1,
+        export_user_counts: 0,
+        unseen: false,
+      },
     );
 
     if (!response?.entities.length) {
