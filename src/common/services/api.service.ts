@@ -692,8 +692,23 @@ export class ApiService {
           }
           resolve(response);
         } else {
-          console.log('Upload Error', xhr.status, xhr.responseText);
-          reject(new ApiError('Upload failed', xhr.status));
+          let response: ApiResponse;
+          try {
+            response = JSON.parse(xhr.responseText);
+          } catch (e) {
+            response = {
+              status: 'error',
+              message: 'Upload failed',
+            };
+          }
+          console.log('Upload Error', xhr.status, response);
+          reject(
+            new ApiError(
+              response.message || 'Upload failed',
+              xhr.status,
+              response.errors,
+            ),
+          );
         }
       };
       xhr.onerror = function () {
