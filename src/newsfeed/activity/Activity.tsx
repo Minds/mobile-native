@@ -57,9 +57,8 @@ type PropsType = {
   showOnlyContent?: boolean;
   borderless?: boolean;
   hideMetrics?: boolean;
-  distinctBoosts?: boolean;
+  displayBoosts?: 'none' | 'distinct';
   maxContentHeight?: number;
-  hideBoostLabel?: boolean;
 };
 
 /**
@@ -268,8 +267,7 @@ export default class Activity extends Component<PropsType> {
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}
-        distinctBoosts={this.props.distinctBoosts}
-        hideBoostLabel={this.props.hideBoostLabel}
+        displayBoosts={this.props.displayBoosts}
       />
     ) : null;
   }

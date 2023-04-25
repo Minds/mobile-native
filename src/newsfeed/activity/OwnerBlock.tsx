@@ -35,8 +35,7 @@ type PropsType = {
   children?: React.ReactNode;
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
-  distinctBoosts?: boolean;
-  hideBoostLabel?: boolean;
+  displayBoosts?: 'none' | 'distinct';
 };
 
 const getLastRoute = (navigation: NavigationProp<any>) => {
@@ -153,9 +152,10 @@ class OwnerBlock extends PureComponent<PropsType> {
     ) : null;
 
     const boosted =
-      this.props.entity.boosted && !this.props.hideBoostLabel ? (
+      !this.props.entity.boosted ||
+      this.props.displayBoosts === 'none' ? undefined : (
         <HairlineColumn>
-          {this.props.distinctBoosts && (
+          {this.props.displayBoosts === 'distinct' && (
             <NewsfeedHeader title="Boosted Content" borderless />
           )}
           <Row horizontal="XL" vertical="S">
@@ -171,7 +171,7 @@ class OwnerBlock extends PureComponent<PropsType> {
             </B2>
           </Row>
         </HairlineColumn>
-      ) : undefined;
+      );
 
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
