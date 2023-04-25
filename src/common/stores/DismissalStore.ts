@@ -11,6 +11,7 @@ export type DismissIdentifier =
   | 'supermind:onboarding:producer'
   | 'update-prompt'
   | 'banner:refer'
+  | 'banner:wefounder'
   | 'channel-recommendation:channel';
 
 type DismissItem = {

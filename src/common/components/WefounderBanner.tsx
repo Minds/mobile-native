@@ -1,4 +1,3 @@
-import NavigationService from '~/navigation/NavigationService';
 import Banner from './Banner';
 import Link from './Link';
 import analyticsService from '../services/analytics.service';
@@ -6,28 +5,29 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { Trans } from 'react-i18next';
 import i18n from '../services/i18n.service';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { Linking } from 'react-native';
 
-export default function ReferBanner() {
-  const featureOn = useIsFeatureOn('mob-4903-referrer-banner');
+export default function WefounderBanner() {
+  const featureOn = useIsFeatureOn('mob-4903-wefounder-banner');
 
   if (!featureOn) {
     return null;
   }
   const onPress = () => {
-    analyticsService.trackClick('banner:refer:action');
-    NavigationService.push('Referrals');
+    analyticsService.trackClick('banner:wefounder:action');
+    Linking.openURL('https://wefunder.com/minds/');
   };
 
   return (
     <Banner
-      name="banner:refer"
+      name="banner:wefounder"
       onPress={onPress}
       text={
         <Trans
-          i18nKey="refer"
-          defaults={i18n.t('banners.refer.title')}
+          i18nKey="link"
+          defaults={i18n.t('banners.wefounder.title')}
           components={{
-            refer: <ReferLink />,
+            link: <WefounderLink />,
           }}
         />
       }
@@ -35,8 +35,8 @@ export default function ReferBanner() {
   );
 }
 
-const ReferLink = () => (
+const WefounderLink = () => (
   <Link style={ThemedStyles.style.fontMedium}>
-    {i18n.t('banners.refer.refer')}
+    {i18n.t('banners.wefounder.refer')}
   </Link>
 );
