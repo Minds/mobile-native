@@ -32,11 +32,27 @@ export const createBoostStore = ({
   wallet,
   boostType,
   audience: 'safe' as IBoostAudience,
+  goal: 'reach' as IBoostGoal,
+  button: 'connect' as IBoostButton,
+  link: 'learnMore' as IBoostLink,
+  linkUrl: '',
   setInsights(insights) {
     this.insights = insights;
   },
   setAudience(audience: IBoostAudience) {
     this.audience = audience;
+  },
+  setGoal(goal: IBoostGoal) {
+    this.goal = goal;
+  },
+  setButton(button: IBoostButton) {
+    this.button = button;
+  },
+  setLink(link: IBoostLink) {
+    this.link = link;
+  },
+  setLinkUrl(url: string) {
+    this.linkUrl = url;
   },
   get amount() {
     return this.paymentType === 'cash' ? this.cashAmount : this.tokenAmount;
@@ -102,6 +118,9 @@ export interface CreateBoostParams {
 }
 
 export type IBoostAudience = 'safe' | 'mature';
+export type IBoostGoal = 'reach' | 'engagement' | 'following' | 'clicks';
+export type IBoostButton = 'subscribe' | 'connect' | 'stayInLoop';
+export type IBoostLink = 'learnMore' | 'getStarted' | 'signUp' | 'tryForFree';
 export type IPaymentType = 'cash' | 'offchain_tokens' | 'onchain_tokens';
 type IBoostConfig = {
   bid_increments: {

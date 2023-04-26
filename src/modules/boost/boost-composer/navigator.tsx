@@ -11,10 +11,13 @@ import { BoostStoreProvider } from './boost.store';
 import type { IconMapNameType } from '../../../common/ui/icons/map';
 
 export type BoostStackParamList = {
-  BoostAudienceSelector: {
+  BoostGoal: {
     safe?: boolean;
     backIcon?: IconMapNameType;
   };
+  BoostButton: undefined;
+  BoostLink: undefined;
+  BoostAudienceSelector: undefined;
   BoostComposer: undefined;
   BoostReview: undefined;
 };
@@ -46,9 +49,21 @@ export default function BoostComposerStack({
     <BoostStoreProvider boostType={boostType} entity={entity} wallet={wallet}>
       <Navigator screenOptions={defaultScreenOptions}>
         <Screen
+          name="BoostGoal"
+          getComponent={() => require('./screens/BoostGoal').default}
+          initialParams={route.params}
+        />
+        <Screen
+          name="BoostButton"
+          getComponent={() => require('./screens/BoostButton').default}
+        />
+        <Screen
+          name="BoostLink"
+          getComponent={() => require('./screens/BoostLink').default}
+        />
+        <Screen
           name="BoostAudienceSelector"
           getComponent={() => require('./screens/AudienceSelector').default}
-          initialParams={route.params}
         />
         <Screen
           name="BoostComposer"
