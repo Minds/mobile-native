@@ -8,7 +8,7 @@ import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
-import { IS_IOS } from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
@@ -77,7 +77,7 @@ export default function () {
     },
   ];
 
-  const BillingScreenOptions = !IS_IOS
+  const BillingScreenOptions = !IS_FROM_STORE
     ? navigation => [
         {
           title: i18n.t('settings.billingOptions.1'),
@@ -347,7 +347,7 @@ export default function () {
         getComponent={() => require('~/settings/screens/DevicesScreen').default}
         options={{ title: i18n.t('settings.securityOptions.2') }}
       />
-      {!IS_IOS && (
+      {!IS_FROM_STORE && (
         <MoreStack.Screen
           name="PaymentMethods"
           getComponent={() =>
