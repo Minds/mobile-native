@@ -79,6 +79,7 @@ function BoostGoalScreen({ navigation, route }: BoostGoalScreenProps) {
         <Column vertical="L" horizontal="M" top="L2">
           {items.map(item => (
             <MenuItemOption
+              key={item.id}
               title={item.title}
               subtitle={item.subtitle}
               borderless

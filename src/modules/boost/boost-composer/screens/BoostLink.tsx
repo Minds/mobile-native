@@ -74,6 +74,7 @@ function BoostLinkScreen({ navigation }: BoostLinkScreenProps) {
         <Column vertical="L" horizontal="M" top="L2">
           {items.map(item => (
             <MenuItemOption
+              key={item.id}
               title={item.title}
               borderless
               mode="radio"

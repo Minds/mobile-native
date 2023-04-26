@@ -53,6 +53,7 @@ function BoostButtonScreen({ navigation }: BoostButtonScreenProps) {
         <Column vertical="L" horizontal="M" top="L2">
           {items.map(item => (
             <MenuItemOption
+              key={item.id}
               title={item.title}
               borderless
               mode="radio"
