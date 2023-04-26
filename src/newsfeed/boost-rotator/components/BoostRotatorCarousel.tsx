@@ -28,6 +28,7 @@ function BoostRotatorCarousel() {
         autoHeight
         navigation={navigation}
         borderless
+        displayBoosts="none"
       />
     ),
     [navigation],
