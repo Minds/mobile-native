@@ -8,6 +8,7 @@ import { cleanBoosts } from '../utils/clean-boosts';
  * Boosted content service
  */
 class BoostedContentService {
+  constructor(private servedByGuid?: string, private source?: string) {}
   /**
    * Offset
    * @var {number}
@@ -46,7 +47,7 @@ class BoostedContentService {
         await this.update();
       } else {
         this.boosts = cleanBoosts(await this.feedsService!.getEntities());
-        this.update();
+        await this.update();
       }
     } catch (err) {
       logService.exception('[BoostedContentService]', err);
@@ -65,7 +66,11 @@ class BoostedContentService {
         .setPaginated(false)
         .setEndpoint('api/v3/boosts/feed')
         .setDataProperty('boosts')
-        .setParams({ location: 1 });
+        .setParams({
+          location: 1,
+          served_by_guid: this.servedByGuid,
+          source: this.source,
+        });
     }
   }
 
@@ -127,5 +132,7 @@ class BoostedContentService {
     return null;
   }
 }
+
+export { BoostedContentService };
 
 export default new BoostedContentService();

@@ -58,6 +58,9 @@ export interface Metadata {
    * The position in the feed that this view was recorded
    */
   position: number;
+  /**
+   * Used for boost partners: the guid of the channel that this boost was shown on, if any
+   */
   served_by_guid?: string;
 }
 
@@ -183,6 +186,7 @@ class MetadataService {
       position: position ?? entity.position ?? listPosition ?? 0,
       medium: medium || (entity.boosted ? 'featured-content' : this.medium),
       campaign: entity.boosted_guid ? entity.urn : this.campaign,
+      served_by_guid: entity?.ownerObj?.guid,
     };
   }
 }
