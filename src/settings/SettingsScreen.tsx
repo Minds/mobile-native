@@ -173,13 +173,13 @@ const SettingsScreen = observer(({ navigation }) => {
 
   return (
     <Screen safe>
+      <HiddenTap>
+        <ScreenHeader back title={i18n.t('moreScreen.settings')} />
+      </HiddenTap>
       <ScrollView
         testID="SettingsScreen"
         style={theme.flexContainer}
         contentContainerStyle={theme.paddingBottom4x}>
-        <HiddenTap>
-          <ScreenHeader title={i18n.t('moreScreen.settings')} />
-        </HiddenTap>
         {firstSectionItems.map((item, index) => (
           <MenuItem key={index} noBorderTop={index > 0} {...item} />
         ))}

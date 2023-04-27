@@ -1,6 +1,5 @@
 import { showNotification } from 'AppMessages';
 import { action, computed, observable } from 'mobx';
-import { IS_IOS } from '~/config/Config';
 import i18n from '../services/i18n.service';
 import AttachmentStore, { Media } from './AttachmentStore';
 
@@ -116,15 +115,13 @@ export default class MultiAttachmentStore {
    * @param media {Media}
    */
   mediaExists(media: Media): boolean {
-    if (IS_IOS) {
+    if (media.assetId) {
       return this.attachments.some(
         attachment => attachment.assetId === media.assetId,
       );
-    } else {
-      return this.attachments.some(
-        attachment => attachment.path === media.path,
-      );
     }
+
+    return this.attachments.some(attachment => attachment.path === media.path);
   }
 
   /**

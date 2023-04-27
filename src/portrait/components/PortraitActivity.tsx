@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import BoxShadow from '~/common/components/BoxShadow';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
@@ -32,6 +32,9 @@ type PropsType = {
   hasPaginator: boolean;
   onPressNext: () => void;
   onPressPrev: () => void;
+  onLongPress?: () => void;
+  onPressOut?: () => void;
+  onVideoProgress?: (progress: number) => void;
 };
 
 const window = Dimensions.get('window');
@@ -49,14 +52,12 @@ const PortraitActivity = observer((props: PropsType) => {
   }));
 
   const focused = useCarouselFocus();
-
   const insets = useSafeAreaInsets();
 
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
-  const commentsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -73,10 +74,10 @@ const PortraitActivity = observer((props: PropsType) => {
   });
 
   const onPressComment = useCallback(() => {
-    if (commentsRef.current?.expand) {
-      commentsRef.current.expand();
-    }
-  }, [commentsRef]);
+    pushCommentBottomSheet({
+      commentsStore: store.comments,
+    });
+  }, [store.comments]);
 
   useEffect(() => {
     if (focused) {
@@ -157,11 +158,17 @@ const PortraitActivity = observer((props: PropsType) => {
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.touchLeft, touchableStyle]}
+        onLongPress={props.onLongPress}
+        onPressOut={props.onPressOut}
+        delayLongPress={100}
         onPress={props.onPressPrev}
       />
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.touchRight, touchableStyle]}
+        onLongPress={props.onLongPress}
+        onPressOut={props.onPressOut}
+        delayLongPress={100}
         onPress={props.onPressNext}
       />
     </>
@@ -187,6 +194,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     navigation={navigation}
                     autoHeight={true}
                     ignoreDataSaver={true}
+                    onVideoProgress={props.onVideoProgress}
                   />
                 </View>
               ) : (
@@ -226,7 +234,6 @@ const PortraitActivity = observer((props: PropsType) => {
         <Actions entity={entity} onPressComment={onPressComment} />
       </View>
       {!showNSFW && tappingArea}
-      <CommentBottomSheet commentsStore={store.comments} ref={commentsRef} />
     </View>
   );
 });

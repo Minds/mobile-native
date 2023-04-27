@@ -14,6 +14,7 @@ import NavigationService from '~/navigation/NavigationService';
 import i18n from '~/common/services/i18n.service';
 import { showNotification } from '~/../AppMessages';
 import { IS_IOS } from '~/config/Config';
+import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 
 type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
@@ -203,6 +204,11 @@ const createChannelStore = () => {
           hasVariation('epic-303-boost-partners')
         ) {
           this.feedStore.setInjectBoost(true);
+          const channelBoostedContent = new BoostedContentService(
+            channel?.guid,
+            'feed/channel',
+          );
+          this.feedStore.feedsService.setBoostedContent(channelBoostedContent);
         }
       }
     },

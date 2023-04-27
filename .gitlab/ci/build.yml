@@ -185,10 +185,13 @@ build:androidproduction-playstore:
   <<: *prepare_build_android
   extends:
     - .build_base
-    - .rule_automatic_nonpatch_manual_patch
   script:
     - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
     - bundle exec fastlane assemble_build
     - *move_apk
+  rules:
+    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual

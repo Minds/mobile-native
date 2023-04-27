@@ -231,11 +231,12 @@ export const createVerificationStore = ({
               this.status = 'success';
             } catch (error) {
               logService.exception('VerificationCamera[upload]', error);
-              if (
-                error instanceof ApiError &&
-                error.errorId === VerificationRequestExpiredException
-              ) {
-                this.status = 'expired';
+              if (error instanceof ApiError) {
+                if (error.errorId === VerificationRequestExpiredException) {
+                  this.status = 'expired';
+                  return;
+                }
+                showNotification(error.message, 'warning', 0);
               }
 
               this.status = 'error';
