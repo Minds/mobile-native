@@ -4,11 +4,12 @@ import React, { useCallback } from 'react';
 import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
+import { NoticeProps } from '.';
 
 /**
  * Update Tags Notice
  */
-function TagsNotice() {
+function TagsNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
 
   // on button press
@@ -16,11 +17,12 @@ function TagsNotice() {
     navigation.navigate('SelectHashtags');
   }, [navigation]);
 
-  if (!inFeedNoticesService.visible('update-tags')) {
+  if (!inFeedNoticesService.visible(name)) {
     return null;
   }
   return (
     <InFeedNotice
+      name={name}
       title={i18nService.t('inFeedNotices.updatePreferences')}
       description={i18nService.t('inFeedNotices.tagsDescription')}
       btnText={i18nService.t('inFeedNotices.update')}

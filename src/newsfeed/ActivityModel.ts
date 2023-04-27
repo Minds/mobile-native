@@ -95,6 +95,7 @@ export default class ActivityModel extends BaseModel {
     custom_data: any;
     custom_type: string;
   };
+  spam?: boolean;
   type?: string;
   permaweb_id?: string;
   remind_deleted?: boolean;
@@ -528,6 +529,18 @@ export default class ActivityModel extends BaseModel {
       await api.delete(`api/v3/newsfeed/${this.urn}`);
       this.removeFromList();
       ActivityModel.events.emit('deleteEntity', this);
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  @action
+  async hideEntity() {
+    try {
+      await api.put(`api/v3/newsfeed/hide-entities/${this.guid}`);
+      this.removeFromList();
+      ActivityModel.events.emit('hideEntity', this);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

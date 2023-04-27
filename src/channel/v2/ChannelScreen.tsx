@@ -469,7 +469,7 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
-        distinctBoosts
+        displayBoosts="distinct"
         header={
           <ChannelHeader
             store={store}
