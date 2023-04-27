@@ -31,263 +31,76 @@ exports[`Activity screen component renders correctly  1`] = `
       style={
         Array [
           Object {
-            "borderBottomWidth": 0.5,
+            "backgroundColor": "#1C1D1F",
           },
           Object {
-            "borderColor": "#53565A",
+            "borderBottomWidth": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.22,
+            "shadowRadius": 2.22,
           },
-          Array [
-            Object {
-              "backgroundColor": "#1C1D1F",
-            },
-            Object {
-              "borderBottomWidth": 0,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-              "shadowRadius": 2.22,
-            },
-            Object {
-              "paddingTop": -10,
-            },
-          ],
+          Object {
+            "paddingTop": -10,
+          },
         ]
       }
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "flexDirection": "row",
-            "paddingHorizontal": 16,
-            "paddingVertical": 13,
-          }
+          Array [
+            Object {
+              "borderBottomWidth": 0.5,
+            },
+            Object {
+              "borderColor": "#53565A",
+            },
+            undefined,
+          ]
         }
       >
         <View
           style={
             Object {
               "alignItems": "center",
-              "color": "#F2F2F2",
-              "elevation": 4,
-              "justifyContent": "center",
-              "left": 0,
-              "marginLeft": -20,
-              "marginRight": -5,
-              "paddingTop": 0,
-              "position": undefined,
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 1,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 3,
-              "top": undefined,
-              "width": 50,
+              "display": "flex",
+              "flexDirection": "row",
+              "paddingHorizontal": 16,
+              "paddingVertical": 13,
             }
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={13.333333333333332}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "alignItems": "center",
+                "color": "#F2F2F2",
+                "elevation": 4,
                 "justifyContent": "center",
-              }
-            }
-            testID="floatingBackButton"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 40,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#AEB0B8",
-                        "fontSize": 40,
-                      },
-                      Object {},
-                      Object {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  󰅁
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          onPress={[Function]}
-        >
-          <Image
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
+                "left": 0,
+                "marginLeft": -20,
+                "marginRight": -5,
+                "paddingTop": 0,
+                "position": undefined,
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 1,
                 },
-                "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                "shadowOpacity": 0.2,
+                "shadowRadius": 3,
+                "top": undefined,
+                "width": 50,
               }
-            }
-            style={
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              }
-            }
-          />
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-              "marginLeft": 10,
-              "paddingRight": 5,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "flexDirection": "column",
-              }
-            }
-          >
-            <View
-              pointerEvents="box-none"
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "flex-start",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                ]
-              }
-            >
-              <Text
-                accessible={true}
-                focusable={true}
-                hitSlop={
-                  Object {
-                    "bottom": 4,
-                    "left": 4,
-                    "right": 4,
-                    "top": 4,
-                  }
-                }
-                numberOfLines={1}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "color": "#F2F2F2",
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Bold",
-                    },
-                    Object {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              />
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        />
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-              ]
             }
           >
             <View
               accessible={true}
               collapsable={false}
               focusable={true}
-              hitSlop={9.333333333333332}
+              hitSlop={13.333333333333332}
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
@@ -303,25 +116,208 @@ exports[`Activity screen component renders correctly  1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="floatingBackButton"
             >
               <View
-                collapsable={false}
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   }
                 }
               >
                 <View
                   style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 40,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#AEB0B8",
+                          "fontSize": 40,
+                        },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Design Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    󰅁
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            onPress={[Function]}
+          >
+            <Image
+              source={
+                Object {
+                  "headers": Object {
+                    "App-Version": "3.8.0",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Pragma": "no-cache",
+                    "no-cache": "1",
+                  },
+                  "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                }
+              }
+              style={
+                Object {
+                  "borderRadius": 18.5,
+                  "height": 37,
+                  "width": 37,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "marginLeft": 10,
+                "paddingRight": 5,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "column",
+                }
+              }
+            >
+              <View
+                pointerEvents="box-none"
+                style={
+                  Array [
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "flex-start",
+                    },
                     Object {
                       "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  accessible={true}
+                  focusable={true}
+                  hitSlop={
+                    Object {
+                      "bottom": 4,
+                      "left": 4,
+                      "right": 4,
+                      "top": 4,
+                    }
+                  }
+                  numberOfLines={1}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#F2F2F2",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Bold",
+                      },
+                      Object {
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      Object {
+                        "textAlign": "left",
+                      },
+                    ]
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "position": "relative",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                hitSlop={9.333333333333332}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "scale": 1,
+                        },
+                      ],
                     }
                   }
                 >
@@ -330,34 +326,44 @@ exports[`Activity screen component renders correctly  1`] = `
                       Object {
                         "alignItems": "center",
                         "flexDirection": "row",
-                        "height": 28,
                         "justifyContent": "center",
-                        "overflow": "hidden",
-                        "width": 28,
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <View
                       style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 25.76,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 28,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 28,
+                        }
                       }
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        selectable={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#AEB0B8",
+                              "fontSize": 25.76,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -1863,7 +1869,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "start": 0,
         },
         "showInput": false,
+        "showSpamComments": [Function],
         "socketRoomName": "",
+        "spamComments": Array [],
+        "spamCommentsShown": false,
         "text": "",
       }
     }

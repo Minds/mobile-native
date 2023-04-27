@@ -1,14 +1,11 @@
 import React from 'react';
-import { Platform, TextInput as TextInputType } from 'react-native';
+import { TextInput as TextInputType } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import Tags from '../common/components/Tags';
 import TextInput from '../common/components/TextInput';
 import { ComposeStoreType } from './useComposeStore';
 import onImageInput from '~/common/helpers/onImageInput';
-
-const isAndroid13 =
-  Platform.OS === 'android' && Platform?.constants?.Release === '13';
 
 export const ComposerTextInput = observer(
   React.forwardRef<
@@ -55,7 +52,7 @@ export const ComposerTextInput = observer(
         placeholder={placeholder}
         placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
         onChangeText={store.setText}
-        keyboardType={isAndroid13 ? 'visible-password' : 'default'}
+        keyboardType={'default'}
         textAlignVertical="top"
         multiline={true}
         selectTextOnFocus={false}

@@ -1,5 +1,6 @@
 //@ts-nocheck
 import Share from 'react-native-share';
+import { pushBottomSheet } from '../common/components/bottom-sheet';
 
 /**
  * Share service
@@ -27,14 +28,19 @@ class ShareService {
 
     // added a settimeout as a workaround for ios, without it the share dialog is not shown
     setTimeout(async () => {
-      try {
-        await Share.open({
-          title: title,
-          message: url,
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      // using a fake bottom sheet to have an easier way to track the visiblity of the share sheet
+      pushBottomSheet({
+        component: ref => {
+          Share.open({
+            title: title,
+            message: url,
+          })
+            .catch(err => console.error(err))
+            .finally(() => ref.close());
+
+          return null;
+        },
+      });
     }, 10);
   }
 }

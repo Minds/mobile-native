@@ -3,11 +3,13 @@ import React from 'react';
 import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
+import { HairlineRow, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { Row } from '~/common/ui';
 import { useTranslation } from '../../../locales';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 import FeedFilter from './FeedFilter';
+import BoostLatestPostPrompt from './BoostLatestPostPrompt';
+import BoostChannelPrompt from './BoostChannelPrompt';
 
 interface BoostTabBarProps {}
 
@@ -28,17 +30,27 @@ function BoostTabBar({}: BoostTabBarProps) {
   ];
 
   return (
-    <Row flex align="centerEnd">
-      <TopbarTabbar
-        titleStyle={theme.bold}
-        tabs={tabs}
-        onChange={boostConsoleStore.setFilter}
-        current={boostConsoleStore.filter}
-        containerStyle={styles.tabbar}
-      />
+    <>
+      <Row flex align="centerEnd">
+        <TopbarTabbar
+          titleStyle={theme.bold}
+          tabs={tabs}
+          onChange={boostConsoleStore.setFilter}
+          current={boostConsoleStore.filter}
+          containerStyle={styles.tabbar}
+        />
 
-      <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
-    </Row>
+        <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+      </Row>
+
+      <HairlineRow />
+
+      {boostConsoleStore.filter === 'feed' ? (
+        <BoostLatestPostPrompt />
+      ) : (
+        <BoostChannelPrompt />
+      )}
+    </>
   );
 }
 

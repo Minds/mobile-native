@@ -14,6 +14,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Selector from '~/common/components/SelectorV2';
 import PressableScale from '~/common/components/PressableScale';
 import Input from '~/common/components/Input';
+import { FeatureID, featureList } from 'ExperimentsProvider';
 
 /**
  * Growthbook DevTools
@@ -32,6 +33,12 @@ const GrowthbookDev = () => {
   }
   const experiments = {};
 
+  gb.getAllResults().forEach((v, k) => {
+    if (featureList.includes(k as FeatureID)) {
+      experiments[k] = v;
+    }
+  });
+
   const features = gb.getFeatures();
   const attr = gb.getAttributes();
 
@@ -39,15 +46,13 @@ const GrowthbookDev = () => {
     string,
     { result?: FeatureResult; feature: any }
   > = {};
-  Object.keys(features).forEach(name => {
-    allFeatures[name] = {
-      result: gb?.evalFeature(name),
-      feature: features[name],
-    };
-  });
-
-  gb.getAllResults().forEach((v, k) => {
-    experiments[k] = v;
+  Object.entries(features).forEach(([name, feature]) => {
+    if (!experiments[name] && featureList.includes(name as FeatureID)) {
+      allFeatures[name] = {
+        feature,
+        result: gb?.evalFeature(name),
+      };
+    }
   });
 
   const selectExperimentValue = (name, value) => {

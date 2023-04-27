@@ -501,6 +501,14 @@
       "descriptionMany": {
         "one": "and {{count}} other are subscribed",
         "other": "and {{count}} others are subscribed"
+      },
+      "follow": {
+        "one": "follows {{user}}",
+        "other": "follow {{user}}"
+      },
+      "followMany": {
+        "one": "and {{count}} other follow {{user}}",
+        "other": "and {{count}} others follow {{user}}"
       }
     },
     "boostComposer": {
@@ -582,7 +590,9 @@
   "comments": {
     "successRemoving": "Comment removed",
     "comments": "Comments",
-    "errorRemoving": "Error removing comment"
+    "errorRemoving": "Error removing comment",
+    "spamPrompt": "Show additional replies, mostly spam comments and bots",
+    "spamPromptAction": "Show"
   },
   "notification": {
     "referralPing": "Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{user}& will earn tokens for your referral",
@@ -1261,6 +1271,7 @@
       "add": "Add your bank details",
       "createAccount": "Create Cash Account",
       "complete": "Complete step",
+      "update": "Update Your Details",
       "leave": "Leave Monetization Program",
       "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
       "leaveButton": "Leave Monetization Program",
@@ -1771,11 +1782,12 @@
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
-  "imageViewer": "View image",
+  "imageViewer": "View Image",
   "remindedBy": "Reminded by",
   "pinnedPost": "Pinned post",
   "postReminded": "Post has been reminded",
   "remindRemoved": "Remind has been removed",
+  "postHidden": "Post has been hidden",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
   "yesterday": "Yesterday",
