@@ -20,11 +20,6 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
     createAccount,
   } = useStripeConnect();
 
-  // if user had an account and it wasn't restricted, we don't need to render anything
-  if (account && !restricted) {
-    return null;
-  }
-
   // don't show an empty state
   if (!account && loading) {
     return <ActivityIndicator />;
@@ -89,7 +84,9 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
         onPress={account ? openStripe : createAccount}
         text={
           account
-            ? i18n.t('wallet.usd.complete')
+            ? !restricted
+              ? i18n.t('wallet.usd.update')
+              : i18n.t('wallet.usd.complete')
             : i18n.t('wallet.usd.createAccount')
         }
       />

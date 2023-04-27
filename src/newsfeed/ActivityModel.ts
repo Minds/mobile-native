@@ -95,6 +95,7 @@ export default class ActivityModel extends BaseModel {
     custom_data: any;
     custom_type: string;
   };
+  spam?: boolean;
   type?: string;
   permaweb_id?: string;
   remind_deleted?: boolean;

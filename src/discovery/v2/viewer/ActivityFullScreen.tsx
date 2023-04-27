@@ -408,6 +408,7 @@ export default withAnalyticsContext<PropsType>(props => [
     source: 'single',
     position: 1,
     campaign: props.entity?.boosted_guid ? props.entity.urn : undefined,
+    served_by_guid: props.entity?.ownerObj?.guid,
   }),
 ])(ActivityFullScreen);
 

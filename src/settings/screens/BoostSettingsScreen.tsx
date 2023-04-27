@@ -67,6 +67,7 @@ const BoostSettingsScreen = observer(() => {
     },
     setViewBoostedContent(val: boolean) {
       this.viewBoostedContent = val;
+      user.toggleDisabledBoost(!val);
       val ? this.showBoost() : this.hideBoost();
     },
     setOpenContent(val: boolean) {

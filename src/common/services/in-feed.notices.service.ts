@@ -13,6 +13,7 @@ type Notice = {
   key: NoticeName;
   location: string;
   should_show: boolean;
+  dismissable?: boolean;
 };
 
 interface InFeedResponse extends ApiResponse {
@@ -75,7 +76,7 @@ export class InFeedNoticesService {
    * Remove an in-feed notice (until data is loaded again)
    * This method is used when the user remove a notice without having to wait for server response
    */
-  markAsCompleted(name: string) {
+  markAsCompleted(name: NoticeName) {
     if (this.data && this.data[name]) {
       const data = toJS(this.data);
       delete data[name];
@@ -190,7 +191,7 @@ export class InFeedNoticesService {
    * Dismiss a notice
    */
   @action
-  dismiss(noticeName: string) {
+  dismiss(noticeName: NoticeName) {
     this.dismissed[noticeName] = String(Date.now());
     storages.user?.setMap('IN_FEED_NOTICES_DISMISSED', this.dismissed);
   }
@@ -198,7 +199,7 @@ export class InFeedNoticesService {
   /**
    * Returns true if the notice has been dismissed
    */
-  isDismissed(noticeName: string): boolean {
+  isDismissed(noticeName: NoticeName): boolean {
     if (!this.dismissed[noticeName]) {
       return false;
     }
@@ -209,7 +210,7 @@ export class InFeedNoticesService {
    * returns true if the notice should be shown
    * @returns boolean
    */
-  visible(noticeName: keyof typeof noticeMapper) {
+  visible(noticeName: NoticeName) {
     return (
       this.data &&
       this.data.some(

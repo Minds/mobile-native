@@ -16,6 +16,7 @@ import { ANDROID_CHAT_APP } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
 import ReferBanner from '../common/components/ReferBanner';
 import { CodePushCustomIcon } from 'modules/codepush';
+import WefounderBanner from '~/common/components/WefounderBanner';
 
 type PropsType = {
   navigation: any;
@@ -23,6 +24,10 @@ type PropsType = {
   noInsets?: boolean;
   shadowLess?: boolean;
   showBack?: boolean;
+  /**
+   * whether banners should be shown
+   */
+  banners?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -136,7 +141,12 @@ export const Topbar = observer((props: PropsType) => {
         </View>
       </View>
 
-      <ReferBanner />
+      {props.banners && (
+        <>
+          <ReferBanner />
+          <WefounderBanner />
+        </>
+      )}
     </Animated.View>
   );
 });

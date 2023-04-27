@@ -228,6 +228,10 @@
     "refer": {
       "title": "<refer /> sales, fans and creators for a share of earnings.",
       "refer": "Refer"
+    },
+    "wefounder": {
+      "title": "Become an owner of Minds by <link />",
+      "refer": "joining our Wefunder."
     }
   },
   "inFeedNotices": {
@@ -586,7 +590,9 @@
   "comments": {
     "successRemoving": "Comment removed",
     "comments": "Comments",
-    "errorRemoving": "Error removing comment"
+    "errorRemoving": "Error removing comment",
+    "spamPrompt": "Show additional replies, mostly spam comments and bots",
+    "spamPromptAction": "Show"
   },
   "notification": {
     "referralPing": "Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{user}& will earn tokens for your referral",
@@ -1265,6 +1271,7 @@
       "add": "Add your bank details",
       "createAccount": "Create Cash Account",
       "complete": "Complete step",
+      "update": "Update Your Details",
       "leave": "Leave Monetization Program",
       "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
       "leaveButton": "Leave Monetization Program",
