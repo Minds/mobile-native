@@ -2,6 +2,33 @@
 
 Minds Mobile
 
+## 4.35.0 (2023-04-27)
+
+### Features ✨ (7 changes)
+
+- [Added back button to More screens](minds/mobile-native!2243)
+- [Added support for hiding spam comments by default](minds/mobile-native!2244)
+- [Retain referrer for 72h](minds/mobile-native!2234)
+- [Boost Console: added boost button for feed and sidebar](minds/mobile-native!2233)
+- [Add followers you know to activity screen](minds/mobile-native!2222)
+- [Added Hide option on boosted posts](minds/mobile-native!2228)
+- [Moments: Added timer](minds/mobile-native!2200)
+
+### Fixed 🐛 (4 changes)
+
+- [Fixed hide boost title in carousel](minds/mobile-native!2255)
+- [Fixed an issue where multiple images couldn't be attached composer on Android](minds/mobile-native!2253)
+- [Superminds: tapping the supermind reply notification will now open the reply instead of the request](minds/mobile-native!2251)
+- [Fixed an issue where channel boost settings wasn't being applied](minds/mobile-native!2226)
+
+### Removed 🗑️ (1 change)
+
+- [Removed payment methods for google version](minds/mobile-native!2257)
+
+### added Update Settings button for Stripe (1 change)
+
+- [Added Update Settings button](minds/mobile-native!2247)
+
 ## 4.34.2 (2023-04-20)
 
 No changes.
