@@ -119,17 +119,17 @@ class BoostedContentService {
   getMediaBoost(): BoostedActivityModel | null {
     const boost = this.fetch();
 
-    if (boost) {
-      // if the boost has media return it
-      if (boost.hasVideo() || boost.hasImage()) {
-        return boost;
-      }
-
-      // otherwise get another media boost
-      return this.getMediaBoost();
+    if (!boost) {
+      return null;
     }
 
-    return null;
+    // if the boost has media return it
+    if (boost.hasVideo() || boost.hasImage()) {
+      return boost;
+    }
+
+    // otherwise get another media boost
+    return this.getMediaBoost();
   }
 }
 
