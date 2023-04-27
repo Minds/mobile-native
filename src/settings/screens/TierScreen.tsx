@@ -2,15 +2,17 @@ import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SupportTiersType } from '../../wire/WireTypes';
 import { View } from 'react-native';
-import SettingInput from '../../common/components/SettingInput';
+import SettingInput from '~/common/components/SettingInput';
 import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import SaveButton from '../../common/components/SaveButton';
-import supportTiersService from '../../common/services/support-tiers.service';
-import { UserError } from '../../common/UserError';
-import MText from '../../common/components/MText';
+import i18n from '~/common/services/i18n.service';
+import SaveButton from '~/common/components/SaveButton';
+import supportTiersService from '~/common/services/support-tiers.service';
+import { UserError } from '~/common/UserError';
+import MText from '~/common/components/MText';
 import Switch from '~/common/components/controls/Switch';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { Button } from '~/common/ui/buttons';
+import { confirm } from '~/common/components/Confirm';
 
 type PropsType = {
   route: any;
@@ -70,23 +72,28 @@ const createTierStore = () => {
         return response;
       }
     },
+    async deleteTier() {
+      try {
+        await supportTiersService.delete(this.support_tier.urn);
+      } catch (err) {
+        throw new UserError(
+          err && err instanceof Error ? err.message : 'Unexpected error',
+        );
+      }
+    },
   };
   return store;
 };
 
 const TierScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const tier: SupportTiersType | boolean = route.params?.tier ?? false;
-  const tierManagementStore = route.params?.tierManagementStore;
-
+  const { tier, tierManagementStore } = route.params ?? {};
   let isNew = true;
 
   const labelStyle = [
-    theme.fontM,
+    theme.fontL,
     theme.colorSecondaryText,
-    theme.marginTop5x,
-    theme.paddingHorizontal3x,
-    theme.marginBottom2x,
+    theme.marginVertical5x,
   ];
 
   const localStore = useLocalStore(createTierStore);
@@ -106,6 +113,19 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
     }
     navigation.goBack();
   }, [localStore, navigation, tierManagementStore, isNew]);
+
+  const deleteTier = useCallback(async () => {
+    if (
+      await confirm({
+        title: i18n.t('confirm'),
+        description: i18n.t('confirmNoUndo'),
+      })
+    ) {
+      await localStore.deleteTier();
+      tierManagementStore?.removeTier(localStore.support_tier);
+      navigation.goBack();
+    }
+  }, [localStore, navigation, tierManagementStore]);
 
   navigation.setOptions({
     headerRight: () => <SaveButton onPress={save} />,
@@ -136,17 +156,29 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
         wrapperBorder={theme.borderTop}
         keyboardType="number-pad"
       />
-      <View style={theme.rowJustifySpaceBetween}>
-        <View style={theme.flexColumnCentered}>
-          <MText style={labelStyle}>
-            {i18n.t('monetize.customMonetize.hasTokens')}
-          </MText>
-          <Switch
-            value={localStore.support_tier.has_usd}
-            onChange={localStore.setHasUsd}
-          />
-        </View>
+      <View
+        style={[
+          theme.rowJustifySpaceBetween,
+          theme.alignCenter,
+          theme.paddingHorizontal3x,
+        ]}>
+        <MText style={labelStyle}>
+          {i18n.t('monetize.customMonetize.hasTokens')}
+        </MText>
+        <Switch
+          value={localStore.support_tier.has_usd}
+          onChange={localStore.setHasUsd}
+        />
       </View>
+      {!isNew && (
+        <Button
+          horizontal="XXXL2"
+          top="XXL"
+          type="warning"
+          onPress={deleteTier}>
+          {i18n.t('delete')}
+        </Button>
+      )}
     </View>
   );
 });
