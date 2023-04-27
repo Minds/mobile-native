@@ -501,6 +501,14 @@
       "descriptionMany": {
         "one": "and {{count}} other are subscribed",
         "other": "and {{count}} others are subscribed"
+      },
+      "follow": {
+        "one": "follows {{user}}",
+        "other": "follow {{user}}"
+      },
+      "followMany": {
+        "one": "and {{count}} other follow {{user}}",
+        "other": "and {{count}} others follow {{user}}"
       }
     },
     "boostComposer": {
