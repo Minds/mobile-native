@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SupportTiersType } from '../../wire/WireTypes';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import SettingInput from '~/common/components/SettingInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '~/common/services/i18n.service';
@@ -12,6 +12,7 @@ import MText from '~/common/components/MText';
 import Switch from '~/common/components/controls/Switch';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { Button } from '~/common/ui/buttons';
+import { confirm } from '~/common/components/Confirm';
 
 type PropsType = {
   route: any;
@@ -114,18 +115,16 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   }, [localStore, navigation, tierManagementStore, isNew]);
 
   const deleteTier = useCallback(async () => {
-    Alert.alert(i18n.t('confirm'), i18n.t('confirmNoUndo'), [
-      { text: i18n.t('no'), style: 'cancel' },
-      {
-        text: i18n.t('yes'),
-        style: 'destructive',
-        onPress: async () => {
-          await localStore.deleteTier();
-          tierManagementStore?.removeTier(localStore.support_tier);
-          navigation.goBack();
-        },
-      },
-    ]);
+    if (
+      await confirm({
+        title: i18n.t('confirm'),
+        description: i18n.t('confirmNoUndo'),
+      })
+    ) {
+      await localStore.deleteTier();
+      tierManagementStore?.removeTier(localStore.support_tier);
+      navigation.goBack();
+    }
   }, [localStore, navigation, tierManagementStore]);
 
   navigation.setOptions({
@@ -171,9 +170,15 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
           onChange={localStore.setHasUsd}
         />
       </View>
-      <Button horizontal="XXXL2" top="XXL" type="warning" onPress={deleteTier}>
-        {i18n.t('delete')}
-      </Button>
+      {!isNew && (
+        <Button
+          horizontal="XXXL2"
+          top="XXL"
+          type="warning"
+          onPress={deleteTier}>
+          {i18n.t('delete')}
+        </Button>
+      )}
     </View>
   );
 });
