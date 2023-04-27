@@ -21,11 +21,11 @@ filtered by the "T - Bug" label and verify the issue you're about to submit isn'
 
 (App version and build number)
 
-### What is the current *bug* behavior?
+### What is the current _bug_ behavior?
 
 (What actually happens)
 
-### What is the expected *correct* behavior?
+### What is the expected _correct_ behavior?
 
 (What you should see instead)
 
@@ -38,4 +38,4 @@ logs, and code as it's very hard to read otherwise.)
 
 (If you can, link to the line of code that might be responsible for the problem)
 
-/label ~"T \- Bug" ~"S \- Triage:new"
+/label ~"T \- Bug" ~"S \- Triage:new" ~ "Dev-team::Mobile"

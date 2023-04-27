@@ -19,22 +19,10 @@ Clearly outline the goal of the issue and why we are doing it
 Clearly detail what needs to be done to achieve the goal set out above
 --->
 
-## QA
-
-<!---
-Consideration is given to how the issue will be demoed and tested prior to being deployed
---->
-
 ## UX/Design
 
 <!---
 Sufficient wireframes have been presented and understood by the development team. Full mockups are not required and re-usable components are encouraged.
---->
-
-## Personas
-
-<!---
-Who does this user impact and why (optional)
 --->
 
 ## Experiments / Feature Flags
@@ -48,8 +36,7 @@ Experiments are not required, but it should be made clear if one is expected. If
 ## Acceptance Criteria
 
 <!--
-Everyone should be able to understand what is expected to be delivered
---->
+Everyone should be able to understand what is expected to be delivered. Please use the Gerkin format as below. This will also be used by QA for testing purposes.
 
 - Scenario: ...
   - Given ...
@@ -57,15 +44,15 @@ Everyone should be able to understand what is expected to be delivered
     - And ...
   - Then ...
     - And ...
+--->
 
 ## Definition of Ready Checklist
 
 - [ ] Definition Of Done (DoD)
-- [ ] Acceptance criteria
-- [ ] Weighted
-- [ ] QA
 - [ ] UX/Design
 - [ ] Backend available
 - [ ] Experiments / Feature Flags
+- [ ] Acceptance criteria
+- [ ] Weighted
 
-/label ~ "Type::Feature"
+/label ~ "Type::Feature" ~ "Dev-team::Mobile"
