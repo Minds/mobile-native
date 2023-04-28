@@ -32,6 +32,7 @@ import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
+import referrerService from './referrer.service';
 
 type FieldError = { field: string; message: string };
 
@@ -434,6 +435,11 @@ export class ApiService {
       ...customHeaders,
     };
 
+    const referrer = referrerService.get();
+    if (referrer) {
+      headers.minds_referrer = referrer;
+    }
+
     if (this.accessToken) {
       headers = {
         ...this.buildAuthorizationHeader(this.accessToken),
@@ -692,8 +698,23 @@ export class ApiService {
           }
           resolve(response);
         } else {
-          console.log('Upload Error', xhr.status, xhr.responseText);
-          reject(new ApiError('Upload failed', xhr.status));
+          let response: ApiResponse;
+          try {
+            response = JSON.parse(xhr.responseText);
+          } catch (e) {
+            response = {
+              status: 'error',
+              message: 'Upload failed',
+            };
+          }
+          console.log('Upload Error', xhr.status, response);
+          reject(
+            new ApiError(
+              response.message || 'Upload failed',
+              xhr.status,
+              response.errors,
+            ),
+          );
         }
       };
       xhr.onerror = function () {

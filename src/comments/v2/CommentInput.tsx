@@ -50,9 +50,6 @@ const Touchable = preventDoubleTap(TouchableOpacity);
 
 export const CommentInputContext = React.createContext(storeProvider);
 
-const isAndroid13 =
-  Platform.OS === 'android' && Platform?.constants?.Release === '13';
-
 /**
  * Floating Input component
  */
@@ -199,7 +196,7 @@ const CommentInput = observer((onShow, onDismiss) => {
             placeholder={placeHolder}
             underlineColorAndroid="transparent"
             onChangeText={provider.store?.setText}
-            keyboardType={isAndroid13 ? 'visible-password' : 'default'}
+            keyboardType={'default'}
             maxLength={CHAR_LIMIT}
             onImageChange={
               provider.store

@@ -5,6 +5,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
   safe={true}
 >
   <ScreenHeader
+    back={true}
     title="Analytics"
   />
   <TopbarTabbar

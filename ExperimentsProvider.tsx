@@ -101,21 +101,24 @@ export const useIsIOSFeatureOn = (feature: FeatureID) =>
 export const useIsAndroidFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && !IS_IOS;
 
-export type FeatureID =
-  | 'minds-3055-email-codes'
-  | 'mob-discovery-redirect'
-  | 'mob-4424-sockets'
-  | 'mob-4472-in-app-verification'
-  | 'mob-4637-ios-hide-minds-superminds'
-  | 'mob-4638-boost-v3'
-  | 'mob-4722-track-code-push'
-  | 'mob-twitter-oauth-4715'
-  | 'engine-2503-twitter-feats'
-  | 'minds-3639-plus-notice'
-  | 'mob-4812-discovery-badge'
-  | 'mob-4836-iap-no-cash'
-  | 'mob-4596-create-modal'
-  | 'minds-3921-mandatory-onboarding-tags'
-  | 'mob-4903-referrer-banner'
-  | 'mob-4903-wefounder-banner'
-  | 'epic-303-boost-partners';
+export const featureList = [
+  'engine-2503-twitter-feats',
+  'epic-303-boost-partners',
+  'minds-3055-email-codes',
+  'minds-3639-plus-notice',
+  'mob-discovery-redirect',
+  'mob-twitter-oauth-4715',
+  'mob-4424-sockets',
+  'mob-4472-in-app-verification',
+  'mob-4596-create-modal',
+  'mob-4637-ios-hide-minds-superminds',
+  'mob-4638-boost-v3',
+  'mob-4722-track-code-push',
+  'mob-4812-discovery-badge',
+  'minds-3921-mandatory-onboarding-tags',
+  'mob-4836-iap-no-cash',
+  'mob-4903-referrer-banner',
+  'mob-4903-wefounder-banner',
+] as const;
+
+export type FeatureID = typeof featureList[number];

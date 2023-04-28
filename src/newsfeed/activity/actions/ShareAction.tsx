@@ -1,31 +1,21 @@
-import React from 'react';
-
-import { Linking, Platform } from 'react-native';
-
-import { IconButtonNext } from '~ui/icons';
-
-import type ActivityModel from '../../ActivityModel';
 import { observer, useLocalStore } from 'mobx-react';
-import i18n from '../../../common/services/i18n.service';
+import React from 'react';
+import { Linking, Platform } from 'react-native';
 import SendIntentAndroid from 'react-native-send-intent';
-import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
-import logService from '../../../common/services/log.service';
-import ShareService from '../../../share/ShareService';
-import { actionsContainerStyle } from './styles';
-import {
-  BottomSheetButton,
-  BottomSheetModal,
-  BottomSheetMenuItem,
-} from '~/common/components/bottom-sheet';
 import { useAnalytics } from '~/common/contexts/analytics.context';
+import { IconButtonNext } from '~ui/icons';
+import logService from '../../../common/services/log.service';
+import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
+import ShareService from '../../../share/ShareService';
+import type ActivityModel from '../../ActivityModel';
+import { pushShareSheet } from '../ActivityActionSheet';
+import { actionsContainerStyle } from './styles';
 
 type PropsType = {
   entity: ActivityModel;
 };
 
 export default observer(function ShareAction({ entity }: PropsType) {
-  // Do not render BottomSheet unless it is necessary
-  const ref = React.useRef<any>(null);
   const analytics = useAnalytics();
   const { guid, entity_guid, type, text, urn } = entity ?? {};
 
@@ -37,23 +27,16 @@ export default observer(function ShareAction({ entity }: PropsType) {
   const sharedLink = `${MINDS_URI}newsfeed/${requestParams}`;
 
   const localStore = useLocalStore(() => ({
-    menuShown: false,
     onPress() {
       if (Platform.OS === 'ios') {
         analytics.trackClick('share');
         localStore.share();
       } else {
-        if (!localStore.menuShown) {
-          localStore.menuShown = true;
-          return;
-        }
-        if (ref.current) {
-          ref.current?.present();
-        }
+        pushShareSheet({
+          onSendTo: localStore.sendTo,
+          onShare: localStore.share,
+        });
       }
-    },
-    hide() {
-      ref.current?.dismiss();
     },
     share() {
       analytics.trackClick('share');
@@ -61,7 +44,6 @@ export default observer(function ShareAction({ entity }: PropsType) {
     },
     async sendTo() {
       analytics.trackClick('sendTo');
-      ref.current?.dismiss();
       try {
         const installed = await SendIntentAndroid.isAppInstalled(
           ANDROID_CHAT_APP,
@@ -84,36 +66,13 @@ export default observer(function ShareAction({ entity }: PropsType) {
   }));
 
   return (
-    <>
-      <IconButtonNext
-        scale
-        fill
-        style={actionsContainerStyle}
-        onPress={localStore.onPress}
-        name="share"
-        size="small"
-      />
-      {localStore.menuShown && (
-        <BottomSheetModal ref={ref} autoShow>
-          <BottomSheetMenuItem
-            onPress={localStore.sendTo}
-            title={i18n.t('sendTo')}
-            iconName="repeat"
-            iconType="material"
-          />
-          <BottomSheetMenuItem
-            title={i18n.t('share')}
-            onPress={localStore.share}
-            iconName="edit"
-            iconType="material"
-          />
-
-          <BottomSheetButton
-            text={i18n.t('cancel')}
-            onPress={localStore.hide}
-          />
-        </BottomSheetModal>
-      )}
-    </>
+    <IconButtonNext
+      scale
+      fill
+      style={actionsContainerStyle}
+      onPress={localStore.onPress}
+      name="share"
+      size="small"
+    />
   );
 });
