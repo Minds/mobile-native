@@ -34,7 +34,7 @@ export default withErrorBoundaryScreen(
       // prevent leaving the screen if it is the initial screen
       if (route.params?.initial) {
         unsubscribe = navigation.addListener('beforeRemove', e => {
-          if (hashtag.suggested.filter(s => s.selected).length >= 3) {
+          if (hashtag.selectedCount >= 3) {
             return;
           }
           showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');

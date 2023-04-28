@@ -127,6 +127,7 @@ type TwoFactorConfirmationParams = {
 
 export type RootStackParamList = {
   TierManagementScreen: {};
+  MandatoryOnboarding: {};
   TierScreen: {};
   GroupsList: {};
   Compose: ComposeScreenParams;

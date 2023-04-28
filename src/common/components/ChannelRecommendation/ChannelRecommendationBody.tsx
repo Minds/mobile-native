@@ -16,22 +16,25 @@ import { hasVariation } from '../../../../ExperimentsProvider';
 interface ChannelRecommendationItemProps {
   channel: UserModel;
   onSubscribed?: (user: UserModel) => void;
+  disableNavigation?: boolean;
 }
 
 export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
   channel,
   onSubscribed,
+  disableNavigation,
 }) => {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
   const navigation = useNavigation<any>();
   const onPress = useCallback(
     () =>
+      !disableNavigation &&
       navigation.push('Channel', {
         guid: channel.guid,
         entity: channel,
       }),
-    [navigation, channel],
+    [navigation, channel, disableNavigation],
   );
 
   const description =
