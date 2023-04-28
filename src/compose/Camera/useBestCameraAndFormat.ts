@@ -9,7 +9,6 @@ import {
 } from 'react-native-vision-camera';
 import { CameraStore } from './createCameraStore';
 import { useDimensions } from '@react-native-community/hooks';
-import { IS_IOS } from '../../config/Config';
 
 type CameraDevices = {
   [key in CameraPosition]: CameraDevice | undefined;
