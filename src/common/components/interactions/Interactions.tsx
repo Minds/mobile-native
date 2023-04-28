@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
@@ -256,4 +250,4 @@ const styles = ThemedStyles.create({
   cancelContainer: ['positionAbsoluteBottom', 'paddingHorizontal2x'],
   contentContainerStyle: { paddingBottom: 200 },
 });
-export default observer(forwardRef(Interactions));
+export default observer(Interactions);

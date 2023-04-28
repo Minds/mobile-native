@@ -11,6 +11,11 @@ const createTierManagementStore = () => {
     addTier(support_tier: SupportTiersType) {
       this.support_tiers.push(support_tier);
     },
+    removeTier(support_tier: SupportTiersType) {
+      this.support_tiers = this.support_tiers.filter(
+        tier => tier.urn !== support_tier.urn,
+      );
+    },
   };
   return store;
 };

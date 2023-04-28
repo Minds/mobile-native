@@ -1495,8 +1495,8 @@
   },
   "wire": {
     "customDonation": "Custom Donation",
-    "selectCredit": "Select a credit card.",
-    "addCard": "Add card.",
+    "selectCredit": "Select a credit card",
+    "addCard": "Add card",
     "amountMonth": "{{amount}} / month",
     "noAddress": "This channel has not configured their {{type}} address yet",
     "amountMonthDescription": "THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {{amount}}/MONTH TO @{{name}}",
