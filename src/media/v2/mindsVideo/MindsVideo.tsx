@@ -36,6 +36,10 @@ type PropsType = {
   hideOverlay?: boolean;
   ignoreDataSaver?: boolean;
   onProgress?: (progress: number) => void;
+  /**
+   * overrides the onPress of the video overlay
+   */
+  onOverlayPress?: () => void;
 };
 
 const MindsVideo = observer((props: PropsType) => {
@@ -47,6 +51,7 @@ const MindsVideo = observer((props: PropsType) => {
     repeat: props.repeat,
     dataSaverEnabled,
     onProgress: props.onProgress,
+    onOverlayPress: props.onOverlayPress,
   });
 
   const onStoreCreated = props.onStoreCreated;
