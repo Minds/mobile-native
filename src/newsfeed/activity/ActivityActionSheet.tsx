@@ -25,6 +25,7 @@ import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
 import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 type PropsType = {
   entity: ActivityModel;
@@ -81,13 +82,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   };
 
   /**
-   * Hide menu
-   */
-  hideActionSheet = () => {
-    this.ref.current?.dismiss();
-  };
-
-  /**
    * Get the options array based on the permissions
    */
   getOptions() {
@@ -96,7 +90,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconType: string;
       title: string;
       testID?: string;
-      onPress: () => void;
+      onPress: (ref?: BottomSheetMethods) => void;
     }> = [];
 
     const entity = this.props.entity;
@@ -113,14 +107,14 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('undoRemind'),
         iconName: 'undo',
         iconType: 'material',
-        onPress: async () => {
+        onPress: async ref => {
           try {
             await this.props.entity.deleteRemind();
             showNotification(i18n.t('remindRemoved'), 'success');
           } catch (error) {
             showNotification(i18n.t('errorMessage'), 'warning');
           }
-          this.hideActionSheet();
+          ref?.close();
         },
       });
     }
@@ -132,12 +126,12 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('edit'),
         iconName: 'edit',
         iconType: 'material',
-        onPress: async () => {
+        onPress: async ref => {
           this.props.navigation.navigate('Compose', {
             isEdit: true,
             entity: this.props.entity,
           });
-          this.hideActionSheet();
+          ref?.close();
         },
       });
 
@@ -148,8 +142,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           : i18n.t('removeExplicit'),
         iconName: 'explicit',
         iconType: 'material',
-        onPress: async () => {
-          this.hideActionSheet();
+        onPress: async ref => {
+          ref?.close();
           try {
             await this.props.entity.toggleExplicit();
           } catch (err) {
@@ -164,9 +158,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           title: !entity.pinned ? i18n.t('pin') : i18n.t('unpin'),
           iconName: 'pin-outline',
           iconType: 'material-community',
-          onPress: async () => {
+          onPress: async ref => {
             this.props.entity.togglePin();
-            this.hideActionSheet();
+            ref?.close();
           },
         });
       }
@@ -177,9 +171,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           : i18n.t('enableComments'),
         iconName: 'pin-outline',
         iconType: 'material-community',
-        onPress: async () => {
+        onPress: async ref => {
           try {
-            this.hideActionSheet();
+            ref?.close();
             await this.props.entity.toggleAllowComments();
           } catch (err) {
             this.showError();
@@ -189,16 +183,17 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     } else {
       if (entity?.boosted) {
         options.push({
-          title: 'Hide Post',
+          title: i18n.t('hidePost'),
           iconName: 'eye-off',
           iconType: 'material-community',
-          onPress: async () => {
+          onPress: async ref => {
             try {
-              this.hideActionSheet();
               await this.props.entity.hideEntity();
               showNotification(i18n.t('postHidden'), 'success');
             } catch (error) {
               showNotification(i18n.t('errorMessage'), 'warning');
+            } finally {
+              ref?.close();
             }
           },
         });
@@ -207,8 +202,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: 'Boost',
         iconName: 'trending-up',
         iconType: 'material-community',
-        onPress: async () => {
-          this.hideActionSheet();
+        onPress: async ref => {
+          ref?.close();
           if (hasVariation('mob-4638-boost-v3')) {
             this.props.navigation.push('BoostScreenV2', {
               entity: this.props.entity,
@@ -228,11 +223,11 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('translate.translate'),
         iconName: 'translate',
         iconType: 'material',
-        onPress: () => {
+        onPress: ref => {
           if (this.props.onTranslate) {
             this.props.onTranslate();
           }
-          this.hideActionSheet();
+          ref?.close();
         },
       });
     }
@@ -243,8 +238,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('permaweb.viewOnPermaweb'),
         iconName: 'format-paragraph',
         iconType: 'material-community',
-        onPress: () => {
-          this.hideActionSheet();
+        onPress: ref => {
+          ref?.close();
           Linking.openURL(
             'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
           );
@@ -258,8 +253,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('report'),
         iconName: 'ios-flag-outline',
         iconType: 'ionicon',
-        onPress: () => {
-          this.hideActionSheet();
+        onPress: ref => {
+          ref?.close();
           this.props.navigation.navigate('Report', {
             entity: this.props.entity,
           });
@@ -275,8 +270,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
         iconName: 'remove-circle-outline',
         iconType: 'ionicon',
-        onPress: async () => {
-          this.hideActionSheet();
+        onPress: async ref => {
+          ref?.close();
 
           if (this.props.channel) {
             return this.props.channel?.toggleBlock();
@@ -309,8 +304,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconName: 'share-social',
       iconType: 'ionicon',
       title: i18n.t('share'),
-      onPress: () => {
-        this.hideActionSheet();
+      onPress: ref => {
+        ref?.close();
         if (IS_IOS) {
           this.share();
         } else {
@@ -326,9 +321,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconName: entity['is:following'] ? 'bell-cancel' : 'bell',
       iconType: 'material-community',
       title: !entity['is:following'] ? i18n.t('follow') : i18n.t('unfollow'),
-      onPress: async () => {
-        this.hideActionSheet();
-
+      onPress: async ref => {
+        ref?.close();
         try {
           await this.props.entity.toggleFollow();
         } catch (err) {
@@ -352,8 +346,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconType: 'material-community',
         title: i18n.t('delete'),
         testID: 'deleteOption',
-        onPress: () => {
-          this.hideActionSheet();
+        onPress: ref => {
+          ref?.close();
           setTimeout(() => {
             Alert.alert(
               i18n.t('delete'),
@@ -375,8 +369,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'fullscreen',
         iconType: 'material-community',
         title: i18n.t('imageViewer'),
-        onPress: () => {
-          this.hideActionSheet();
+        onPress: ref => {
+          ref?.close();
           this.props.navigation.navigate('ImageGallery', {
             entity: this.props.entity,
           });
@@ -471,46 +465,50 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
 const pushActionSheet = ({ options }: { options: any[] }) =>
   pushBottomSheet({
     safe: true,
-    component: ref => (
-      <>
-        {options.map((a, i) => (
-          <BottomSheetMenuItem {...a} key={i} />
-        ))}
-        <BottomSheetButton
-          text={i18n.t('cancel')}
-          onPress={() => ref.close()}
-        />
-      </>
-    ),
+    component: ref => {
+      return (
+        <>
+          {options.map((a, i) => (
+            <BottomSheetMenuItem {...{ ...a, bottomSheetRef: ref }} key={i} />
+          ))}
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={() => ref.close()}
+          />
+        </>
+      );
+    },
   });
 
 export const pushShareSheet = ({ onSendTo, onShare }) =>
   pushBottomSheet({
     safe: true,
-    component: ref => (
-      <>
-        <BottomSheetMenuItem
-          onPress={() => {
-            ref.close();
-            onSendTo();
-          }}
-          title={i18n.t('sendTo')}
-          iconName="repeat"
-          iconType="material"
-        />
-        <BottomSheetMenuItem
-          title={i18n.t('share')}
-          onPress={() => {
-            ref.close();
-            onShare();
-          }}
-          iconName="edit"
-          iconType="material"
-        />
+    component: ref => {
+      return (
+        <>
+          <BottomSheetMenuItem
+            onPress={() => {
+              ref.close();
+              onSendTo();
+            }}
+            title={i18n.t('sendTo')}
+            iconName="repeat"
+            iconType="material"
+          />
+          <BottomSheetMenuItem
+            title={i18n.t('share')}
+            onPress={() => {
+              ref.close();
+              onShare();
+            }}
+            iconName="edit"
+            iconType="material"
+          />
 
-        <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
-      </>
-    ),
+          <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
+        </>
+      );
+    },
   });
 
 export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));

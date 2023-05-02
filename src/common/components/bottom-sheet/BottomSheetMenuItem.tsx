@@ -5,6 +5,7 @@ import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
 import MText from '../MText';
 import { B1 } from '~ui';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 export type BottomSheetMenuItemProps = {
   title: string | JSX.Element;
@@ -12,9 +13,10 @@ export type BottomSheetMenuItemProps = {
   iconType?: IconType;
   iconSize?: number;
   testID?: string;
-  onPress?: () => void;
+  onPress?: (ref?: BottomSheetMethods) => void;
   style?: any;
   textStyle?: any;
+  bottomSheetRef?: BottomSheetMethods;
 };
 
 const BottomSheetMenuItem = ({
@@ -26,6 +28,7 @@ const BottomSheetMenuItem = ({
   style,
   textStyle,
   testID = '',
+  bottomSheetRef,
 }: BottomSheetMenuItemProps) => {
   iconSize = iconSize || 24;
 
@@ -35,7 +38,7 @@ const BottomSheetMenuItem = ({
   return (
     <MPressable
       style={containerStyle}
-      onPress={onPress}
+      onPress={() => onPress?.(bottomSheetRef)}
       testID={testID}
       disabled={!onPress}>
       {Boolean(iconName) && (

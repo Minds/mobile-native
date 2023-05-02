@@ -1787,6 +1787,7 @@
   "pinnedPost": "Pinned post",
   "postReminded": "Post has been reminded",
   "remindRemoved": "Remind has been removed",
+  "hidePost": "Hide Post",
   "postHidden": "Post has been hidden",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
