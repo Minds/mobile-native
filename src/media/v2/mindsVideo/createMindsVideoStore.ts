@@ -18,7 +18,6 @@ import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { IS_IOS } from '~/config/Config';
 import { Orientation } from '~/services';
-import { Alert } from 'react-native';
 
 export type Source = {
   src: string;
