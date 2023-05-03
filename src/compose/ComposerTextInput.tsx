@@ -55,6 +55,7 @@ export const ComposerTextInput = observer(
         keyboardType={'default'}
         textAlignVertical="top"
         multiline={true}
+        autoFocus={true}
         selectTextOnFocus={false}
         underlineColorAndroid="transparent"
         onSelectionChange={store.selectionChanged}
