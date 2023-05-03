@@ -465,50 +465,46 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
 const pushActionSheet = ({ options }: { options: any[] }) =>
   pushBottomSheet({
     safe: true,
-    component: ref => {
-      return (
-        <>
-          {options.map((a, i) => (
-            <BottomSheetMenuItem {...{ ...a, bottomSheetRef: ref }} key={i} />
-          ))}
-          <BottomSheetButton
-            text={i18n.t('cancel')}
-            onPress={() => ref.close()}
-          />
-        </>
-      );
-    },
+    component: ref => (
+      <>
+        {options.map((a, i) => (
+          <BottomSheetMenuItem {...{ ...a, bottomSheetRef: ref }} key={i} />
+        ))}
+        <BottomSheetButton
+          text={i18n.t('cancel')}
+          onPress={() => ref.close()}
+        />
+      </>
+    ),
   });
 
 export const pushShareSheet = ({ onSendTo, onShare }) =>
   pushBottomSheet({
     safe: true,
-    component: ref => {
-      return (
-        <>
-          <BottomSheetMenuItem
-            onPress={() => {
-              ref.close();
-              onSendTo();
-            }}
-            title={i18n.t('sendTo')}
-            iconName="repeat"
-            iconType="material"
-          />
-          <BottomSheetMenuItem
-            title={i18n.t('share')}
-            onPress={() => {
-              ref.close();
-              onShare();
-            }}
-            iconName="edit"
-            iconType="material"
-          />
+    component: ref => (
+      <>
+        <BottomSheetMenuItem
+          onPress={() => {
+            ref.close();
+            onSendTo();
+          }}
+          title={i18n.t('sendTo')}
+          iconName="repeat"
+          iconType="material"
+        />
+        <BottomSheetMenuItem
+          title={i18n.t('share')}
+          onPress={() => {
+            ref.close();
+            onShare();
+          }}
+          iconName="edit"
+          iconType="material"
+        />
 
-          <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
-        </>
-      );
-    },
+        <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
+      </>
+    ),
   });
 
 export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
