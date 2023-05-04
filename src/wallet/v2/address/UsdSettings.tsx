@@ -53,7 +53,7 @@ const UsdSettings = ({ walletStore }: PropsType) => {
         )}
       </Spacer>
       {hasBankInfo && (
-        <Spacer bottom="XL2">
+        <Spacer top="XL" bottom="XL2">
           <StripeConnectButton />
         </Spacer>
       )}

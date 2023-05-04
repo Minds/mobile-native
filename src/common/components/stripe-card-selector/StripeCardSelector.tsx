@@ -2,25 +2,28 @@ import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { CardField, useStripe } from '@stripe/stripe-react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useRef } from 'react';
-import { InteractionManager } from 'react-native';
 import { showNotification } from '../../../../AppMessages';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { StripeCard } from '../../../wire/WireTypes';
 import i18n from '../../services/i18n.service';
-import { Row } from '../../ui';
+import { Row, Icon, IconButton } from '../../ui';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
-import InputSelector, { InputSelectorProps } from '../InputSelectorV2';
+
 import createCardSelectorStore, {
-  selectIdExtractor,
   selectValueExtractor,
 } from './createCardSelectorStore';
+import InputBase from '../InputBase';
+import { StyleProp, ViewStyle } from 'react-native';
+import MenuItem from '../menus/MenuItem';
 
 type StripeCardSelectorProps = {
   selectedCardId?: string;
   onCardSelected: (card: StripeCard) => void;
   info?: string;
   error?: string;
-} & Pick<InputSelectorProps, 'containerStyle' | 'borderless'>;
+  containerStyle?: StyleProp<ViewStyle>;
+  borderless?: boolean;
+};
 
 const StripeCardSelector = observer(
   ({
@@ -32,6 +35,7 @@ const StripeCardSelector = observer(
       onCardSelected,
       selectedCardId,
     });
+    const addCardBottomSheetRef = useRef<any>(null);
     const bottomSheetRef = useRef<any>(null);
     const { confirmSetupIntent } = useStripe();
 
@@ -40,10 +44,10 @@ const StripeCardSelector = observer(
     }, [store]);
 
     const close = React.useCallback(() => {
-      bottomSheetRef.current?.dismiss();
+      addCardBottomSheetRef.current?.dismiss();
     }, []);
     const show = React.useCallback(() => {
-      bottomSheetRef.current?.present();
+      addCardBottomSheetRef.current?.present();
     }, []);
 
     const onComplete = async () => {
@@ -69,28 +73,48 @@ const StripeCardSelector = observer(
 
     return (
       <>
-        <InputSelector
+        <InputBase
+          onPress={() => bottomSheetRef.current?.present()}
           {...inputSelectorProps}
-          onSelected={store.selectCard}
-          selected={store.currentCardId}
           label={i18n.t('orderReport.paymentMethod')}
-          data={[
-            ...store.cards,
-            {
-              name: i18n.t('wire.addCard'),
-              id: 'newCard',
-              iconName: 'add',
-              onPress: () =>
-                InteractionManager.runAfterInteractions(() => show()),
-            },
-          ]}
-          valueExtractor={selectValueExtractor}
-          keyExtractor={selectIdExtractor}
-          textStyle={ThemedStyles.style.fontXL}
-          backdropOpacity={0.9}
+          value={selectValueExtractor(store.cards[store.current])}
+          icon={<Icon name="chevron-down" />}
         />
+        <BottomSheetModal ref={bottomSheetRef}>
+          {store.cards.map((card, index) => (
+            <MenuItem
+              title={selectValueExtractor(card)}
+              titleStyle={
+                index === store.current
+                  ? ThemedStyles.style.colorLink
+                  : undefined
+              }
+              onPress={() => {
+                store.selectCard(card.id);
+                bottomSheetRef.current?.dismiss();
+              }}
+              icon={
+                <IconButton
+                  name="close"
+                  style={ThemedStyles.style.colorPrimaryText}
+                  onPress={() => store.removeCard(index)}
+                />
+              }
+            />
+          ))}
+
+          <BottomSheetButton
+            text={i18n.t('wire.addCard')}
+            onPress={show}
+            action
+          />
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={() => bottomSheetRef.current?.dismiss()}
+          />
+        </BottomSheetModal>
         <NewCardBottomSheet
-          ref={bottomSheetRef}
+          ref={addCardBottomSheetRef}
           store={store}
           onComplete={onComplete}
         />

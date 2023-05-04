@@ -42,6 +42,8 @@ import {
   withAnalyticsContext,
 } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
+import MutualSubscribers from '../../../channel/components/MutualSubscribers';
+import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -86,18 +88,38 @@ const ActivityOwner = ({
   );
 
   return (
-    <OwnerBlock
-      entity={entity}
-      navigation={navigation}
-      containerStyle={containerStyle}
-      leftToolbar={
-        <FloatingBackButton
-          onPress={navigation.goBack}
-          style={backButtonStyle}
+    <View style={containerStyle}>
+      {entity.ownerObj.plus && !entity.ownerObj.subscribed && (
+        <MutualSubscribers
+          vertical="M"
+          spacingType="padding"
+          avatars={false}
+          navigation={navigation}
+          channel={entity.ownerObj}
+          limit={2}
+          language={'follow'}
+          font="B3"
+          onPress={() =>
+            pushInteractionsBottomSheet({
+              entity: entity.ownerObj,
+              interaction: 'subscribersYouKnow',
+            })
+          }
         />
-      }
-      rightToolbar={right}
-    />
+      )}
+
+      <OwnerBlock
+        entity={entity}
+        navigation={navigation}
+        leftToolbar={
+          <FloatingBackButton
+            onPress={navigation.goBack}
+            style={backButtonStyle}
+          />
+        }
+        rightToolbar={right}
+      />
+    </View>
   );
 };
 
@@ -386,6 +408,7 @@ export default withAnalyticsContext<PropsType>(props => [
     source: 'single',
     position: 1,
     campaign: props.entity?.boosted_guid ? props.entity.urn : undefined,
+    served_by_guid: props.entity?.ownerObj?.guid,
   }),
 ])(ActivityFullScreen);
 

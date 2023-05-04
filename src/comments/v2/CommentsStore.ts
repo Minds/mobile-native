@@ -34,6 +34,7 @@ const COMMENTS_PAGE_SIZE = 12;
  */
 export default class CommentsStore {
   @observable.shallow comments: Array<CommentModel> = [];
+  @observable.shallow spamComments: Array<CommentModel> = [];
   @observable refreshing = false;
   @observable loaded = false;
   @observable saving = false;
@@ -43,6 +44,7 @@ export default class CommentsStore {
   @observable loadingPrevious = false;
   @observable loadingNext = false;
   @observable showInput = false;
+  @observable spamCommentsShown = false;
 
   @observable errorLoadingPrevious = false;
   @observable errorLoadingNext = false;
@@ -366,13 +368,22 @@ export default class CommentsStore {
       const comments = CommentModel.createMany(response.comments);
 
       if (descending) {
-        comments.reverse().forEach(c => this.comments.push(c));
+        comments
+          .reverse()
+          .forEach(c => (c.spam ? this.spamComments : this.comments).push(c));
       } else {
-        comments.forEach(c => this.comments.unshift(c));
+        comments.forEach(c =>
+          (c.spam ? this.spamComments : this.comments).unshift(c),
+        );
       }
     }
     this.reversed = response.reversed;
   }
+
+  showSpamComments = () => {
+    this.spamCommentsShown = true;
+    this.comments.push(...this.spamComments);
+  };
 
   /**
    * Add a comment
@@ -453,6 +464,8 @@ export default class CommentsStore {
   @action
   clearComments() {
     this.comments = [];
+    this.spamComments = [];
+    this.spamCommentsShown = false;
     this.reversed = true;
     this.loadNext = '';
     this.loadPrevious = '';

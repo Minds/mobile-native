@@ -109,7 +109,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   onEndReached?: () => void;
   testID?: string;
   estimatedItemSize?: number;
-  distinctBoosts?: boolean;
+  displayBoosts?: 'none' | 'distinct';
 };
 
 /**
@@ -334,7 +334,7 @@ export class FeedList<T extends BaseModel> extends Component<
           <Activity
             entity={entity}
             navigation={this.props.navigation}
-            distinctBoosts={this.props.distinctBoosts}
+            displayBoosts={this.props.displayBoosts}
             autoHeight={false}
           />
         )}

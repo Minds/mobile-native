@@ -7,7 +7,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { NoticeName } from '.';
 
 type PropsType = {
-  name: NoticeName;
+  name?: NoticeName;
   title: string;
   description: string | ReactNode;
   iconName: IconNameType;
@@ -17,6 +17,7 @@ type PropsType = {
   onPress: () => void;
   btnSecondaryText?: string;
   onSecondaryPress?: () => void;
+  borderless?: boolean;
 };
 
 /**
@@ -33,14 +34,17 @@ export default function BaseNotice({
   btnSecondaryText,
   onSecondaryPress,
   onClose,
+  borderless,
 }: PropsType) {
   const onPressClose = () => {
-    inFeedNoticesService.dismiss(name);
+    if (name) {
+      inFeedNoticesService.dismiss(name);
+    }
     onClose?.();
   };
 
   return (
-    <View style={styles.container}>
+    <View style={borderless ? styles.container : styles.containerBordered}>
       <View style={styles.left}>
         <IconNext name={iconName} size="medium" color="PrimaryText" />
       </View>
@@ -62,7 +66,7 @@ export default function BaseNotice({
           {description}
         </B2>
         <View style={styles.buttonContainer}>
-          <Button fit size="medium" type="action" onPress={onPress}>
+          <Button fit size="medium" type="action" spinner onPress={onPress}>
             {btnText}
           </Button>
           {Boolean(btnSecondaryText) && (
@@ -87,8 +91,10 @@ const styles = ThemedStyles.create({
     'paddingRightL',
     'rowJustifyStart',
     'bcolorBaseBackground',
-    'borderBottom1x',
   ],
+  get containerBordered() {
+    return [...this.container, 'borderBottom1x'];
+  },
   buttonContainer: [{ marginRight: 60 }],
   right: ['paddingTopXXS', 'alignEnd', 'flexContainer'],
   left: [{ width: 60 }, 'paddingTopXS', 'alignCenter'],

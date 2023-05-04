@@ -284,7 +284,7 @@ const ChannelHeader = withErrorBoundary(
               {!ownChannel && (
                 <MutualSubscribers
                   navigation={props.navigation}
-                  userGuid={channel.guid}
+                  channel={channel}
                   top="M"
                   onPress={props.onOpenSubscribersYouKnow}
                 />
