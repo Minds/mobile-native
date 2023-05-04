@@ -11,6 +11,14 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'dev-to',
   },
+  creator: {
+    font: 'IonIcon',
+    name: 'color-palette',
+  },
+  pro: {
+    font: 'MaterialCommunityIcons',
+    name: 'professional-hexagon',
+  },
   info: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
@@ -324,6 +332,19 @@ const ICON_MAP = {
   checkmark: {
     font: 'IonIcon',
     name: 'checkmark',
+  },
+  facebook: {
+    font: 'Fontisto',
+    name: 'facebook',
+  },
+  twitter: {
+    font: 'Fontisto',
+    name: 'twitter',
+    ratio: 0.8,
+  },
+  email: {
+    font: 'MaterialIcons',
+    name: 'email',
   },
   'alpha-s-circle': {
     font: 'MaterialCommunityIcons',

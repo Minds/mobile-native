@@ -18,6 +18,7 @@ import {
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -61,6 +62,8 @@ const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
   const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
+
+  const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
 
   const user = sessionService.getUser();
 
@@ -116,6 +119,14 @@ const SettingsScreen = observer(({ navigation }) => {
     title: i18n.t('settings.chooseBrowser'),
     screen: 'ChooseBrowser',
   });
+
+  if (affiliatesEnabled) {
+    firstSection.push({
+      title: i18n.t('settings.affiliateProgram'),
+      screen: 'AffiliateProgram',
+      params: {},
+    });
+  }
 
   firstSection.push({
     title: i18n.t('settings.other'),

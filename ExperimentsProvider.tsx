@@ -119,6 +119,7 @@ export const featureList = [
   'mob-4836-iap-no-cash',
   'mob-4903-referrer-banner',
   'mob-4903-wefounder-banner',
+  'epic-304-affiliates',
 ] as const;
 
 export type FeatureID = typeof featureList[number];
