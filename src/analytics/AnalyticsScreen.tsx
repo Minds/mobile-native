@@ -5,7 +5,6 @@ import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
-import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
 
@@ -44,10 +43,10 @@ const tabs = {
       />
     ),
   },
-  token: {
-    title: i18n.t('analytics.tokens.title'),
-    screen: <TokensTab key={'token'} />,
-  },
+  // token: {
+  //   title: i18n.t('analytics.tokens.title'),
+  //   screen: <TokensTab key={'token'} />,
+  // },
   engagement: {
     title: i18n.t('analytics.engagement'),
     screen: (
@@ -75,6 +74,6 @@ const tabs = {
 } as const;
 
 type Tab = keyof typeof tabs;
-const defaultTab: Tab = 'token';
+const defaultTab: Tab = 'traffic';
 
 export default AnalyticsScreen;
