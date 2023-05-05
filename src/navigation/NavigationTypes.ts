@@ -47,6 +47,7 @@ type WebViewParams = {
 export type MoreStackParamList = {
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
+  AffiliateProgram: undefined;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };
