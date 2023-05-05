@@ -22,7 +22,7 @@ module.exports = {
     [
       'transform-inline-environment-variables',
       {
-        include: 'TAMAGUI_TARGET',
+        include: ['APP_VERSION', 'TAMAGUI_TARGET'],
       },
     ],
     [
