@@ -175,8 +175,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: entity.allow_comments
           ? i18n.t('disableComments')
           : i18n.t('enableComments'),
-        iconName: 'pin-outline',
-        iconType: 'material-community',
+        iconName: entity.allow_comments ? 'speaker-notes-off' : 'speaker-notes',
+        iconType: 'material',
         onPress: async () => {
           try {
             this.hideActionSheet();

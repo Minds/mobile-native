@@ -63,7 +63,7 @@ export default observer(function Comment({
 
   const mature = comment?.mature && !mature_visibility;
 
-  const canReply = parent_guid_l2 && !hideReply;
+  const canReply = parent_guid_l2 && !hideReply && store.entity.allow_comments;
   const backgroundColor = ThemedStyles.getColor(
     isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );

@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS } from 'mobx';
+import { observable, action, computed, toJS, runInAction } from 'mobx';
 import _ from 'lodash';
 import EventEmitter from 'eventemitter3';
 
@@ -252,9 +252,13 @@ export default class BaseModel extends AbstractModel {
     let value = !this.mature;
     try {
       await toggleExplicit(this.guid, value);
-      this.mature = value;
+      runInAction(() => {
+        this.mature = value;
+      });
     } catch (err) {
-      this.mature = !value;
+      runInAction(() => {
+        this.mature = !value;
+      });
       logService.exception('[BaseModel]', err);
       throw err;
     }
@@ -263,7 +267,9 @@ export default class BaseModel extends AbstractModel {
   @action
   async toggleAllowComments() {
     await toggleAllow(this.guid, !this.allow_comments);
-    this.allow_comments = !this.allow_comments;
+    runInAction(() => {
+      this.allow_comments = !this.allow_comments;
+    });
   }
 
   @action
