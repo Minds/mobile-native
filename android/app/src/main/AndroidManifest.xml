@@ -67,7 +67,7 @@
             tools:node="merge"/>
         <!-- Temporal fix android 12 issues temporal -->
         
-        <activity android:exported="false" android:name=".CustomErrorScreen"></activity>
+        <activity android:exported="false" android:name=".CustomErrorScreen" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode|screenLayout|smallestScreenSize"
