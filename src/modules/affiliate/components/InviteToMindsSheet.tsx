@@ -25,30 +25,34 @@ const InviteToMindsSheet = React.forwardRef<BottomSheetModalType>(
           <IconButtonCircle
             name="twitter"
             title="Twitter"
+            color="White"
             backgroundColor="#1DA1F1"
             onPress={inviteTweeter}
           />
           <IconButtonCircle
             name="facebook"
             title="Facebook"
+            color="White"
             backgroundColor="#1977F2"
             onPress={inviteFacebook}
           />
           <IconButtonCircle
             name="email"
             title="Email"
+            color="White"
             backgroundColor="#334155"
             onPress={inviteEmail}
           />
           <IconButtonCircle
             name="chat-solid"
+            color="White"
             title="Messages"
             backgroundColor="#19C734"
             onPress={openShare}
           />
         </Row>
         <B2 align="center" color="secondary">
-          Your sign up invite has an expiration of 1 year.
+          Earn for up to 1 year from when someone uses your link.
         </B2>
         <BottomSheetButton text="Copy link" onPress={copyReferrer} />
       </BottomSheetModal>
