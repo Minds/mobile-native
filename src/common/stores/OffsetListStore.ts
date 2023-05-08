@@ -2,14 +2,10 @@ import { observable, action, extendObservable } from 'mobx';
 import MetadataService from '../services/metadata.service';
 import ViewStore from './ViewStore';
 
-type EntityType = {
-  _list: OffsetListStore;
-} & Record<string, any>;
-
 /**
  * Common infinite scroll list
  */
-export default class OffsetListStore {
+export default class OffsetListStore<T> {
   /**
    * list is refreshing
    */
@@ -44,7 +40,7 @@ export default class OffsetListStore {
   /**
    * Response entities
    */
-  entities: Array<EntityType> = [];
+  entities: Array<T> = [];
 
   /**
    * Constructor
@@ -96,13 +92,13 @@ export default class OffsetListStore {
   setList(list, replace = false, callback?: () => void) {
     if (list.entities) {
       if (replace) {
-        list.entities.forEach((entity: EntityType, index: number) => {
+        list.entities.forEach((entity: any, index: number) => {
           entity._list = this;
           entity.position = index + 1;
         });
         this.entities = list.entities;
       } else {
-        list.entities.forEach((entity: EntityType) => {
+        list.entities.forEach((entity: any) => {
           entity._list = this;
           entity.position = this.entities.length + 2;
           this.entities.push(entity);

@@ -18,13 +18,13 @@ import {
   BottomSheetMenuItem,
   pushBottomSheet,
 } from '../../common/components/bottom-sheet';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
 import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
+import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 
 type PropsType = {
   entity: ActivityModel;
@@ -338,7 +338,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     });
 
     // we use the group from the context, as the entity.containerObj is not updated
-    const group = this.context;
+    const group = this.context.group;
 
     // if can delete
     if (

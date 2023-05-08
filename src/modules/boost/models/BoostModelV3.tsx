@@ -23,6 +23,7 @@ export default class BoostModel extends BaseModel {
   created_timestamp!: number;
   daily_bid!: number;
   duration_days!: number;
+  rowKey!: string;
   entity?: ActivityModel;
   entity_guid!: string;
   payment_amount!: number;

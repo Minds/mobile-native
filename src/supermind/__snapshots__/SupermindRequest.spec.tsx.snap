@@ -143,9 +143,7 @@ exports[`SupermindRequest should render inbound 1`] = `
     onLayout={[Function]}
     style={
       Array [
-        Object {
-          "overflow": "visible",
-        },
+        Object {},
         Object {
           "backgroundColor": "#1F252C",
         },
@@ -180,6 +178,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           onPress={[Function]}
         >
           <Image
+            recyclingKey="824853017709780997"
             source={
               Object {
                 "headers": Object {
@@ -361,7 +360,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               TITLE
             </Text>
             <Text
-              selectable={true}
+              selectable={false}
               style={
                 Array [
                   Object {
@@ -603,9 +602,7 @@ exports[`SupermindRequest should render outbound 1`] = `
     onLayout={[Function]}
     style={
       Array [
-        Object {
-          "overflow": "visible",
-        },
+        Object {},
         Object {
           "backgroundColor": "#1F252C",
         },
@@ -640,6 +637,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           onPress={[Function]}
         >
           <Image
+            recyclingKey="824853017709780997"
             source={
               Object {
                 "headers": Object {
@@ -821,7 +819,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               TITLE
             </Text>
             <Text
-              selectable={true}
+              selectable={false}
               style={
                 Array [
                   Object {
