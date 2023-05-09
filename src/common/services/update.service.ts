@@ -2,7 +2,6 @@
 import { Alert } from 'react-native';
 
 import moment from 'moment-timezone';
-import { Version } from '../../config/Version';
 import { action, observable } from 'mobx';
 import navigationService from '../../navigation/NavigationService';
 import logService from './log.service';
@@ -10,6 +9,7 @@ import i18n from './i18n.service';
 import * as UpdateAPK from 'rn-update-apk';
 import { showNotification } from '../../../AppMessages';
 import { storages } from './storage/storages.service';
+import DeviceInfo from 'react-native-device-info';
 
 /**
  * Update service
@@ -47,7 +47,7 @@ class UpdateService {
 
     if (last) {
       try {
-        if (this.needUpdate(Version.VERSION, last.version)) {
+        if (this.needUpdate(DeviceInfo.getVersion(), last.version)) {
           if (await this.rememberTomorrow()) return;
 
           const doUpdate = () => {
