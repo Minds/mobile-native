@@ -1,15 +1,13 @@
-//@ts-nocheck
-import { Alert } from 'react-native';
-
-import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
-import navigationService from '../../navigation/NavigationService';
-import logService from './log.service';
-import i18n from './i18n.service';
+import moment from 'moment-timezone';
+import { Alert } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import * as UpdateAPK from 'rn-update-apk';
 import { showNotification } from '../../../AppMessages';
+import navigationService from '../../navigation/NavigationService';
+import i18n from './i18n.service';
+import logService from './log.service';
 import { storages } from './storage/storages.service';
-import DeviceInfo from 'react-native-device-info';
 
 /**
  * Update service
@@ -212,6 +210,7 @@ class UpdateService {
       if (part1 < part2) cmp = 1;
       if (part1 > part2) cmp = -1;
     }
+    // eslint-disable-next-line no-eval
     return eval('0' + comparator + cmp);
   }
 }
