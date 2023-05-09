@@ -7,6 +7,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { Icon } from '~/common/ui';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import PressableScale from '~/common/components/PressableScale';
+import { ColorsNameType } from '~/styles/Colors';
 
 /**
  * Circle icon button
@@ -14,10 +15,12 @@ import PressableScale from '~/common/components/PressableScale';
 export const IconButtonCircle = ({
   name,
   title,
+  color,
   onPress,
   backgroundColor,
 }: {
   name: IconMapNameType;
+  color?: ColorsNameType;
   title: string;
   onPress: () => void;
   backgroundColor?: ViewStyle['backgroundColor'];
@@ -28,7 +31,7 @@ export const IconButtonCircle = ({
         style={
           backgroundColor ? [{ backgroundColor }, styles.circle] : styles.circle
         }>
-        <Icon size="medium" name={name} color="PrimaryText" />
+        <Icon size="medium" name={name} color={color || 'PrimaryText'} />
       </View>
       <B1>{title}</B1>
     </View>

@@ -22,14 +22,9 @@ const LinksMindsSheet = React.forwardRef<BottomSheetModalType>((props, ref) => {
         <IconButtonCircle name="plus" title="Minds+" onPress={copyPlus} />
         <IconButtonCircle name="boost" title="Boost" onPress={copyBoost} />
         <IconButtonCircle name="pro" title="Minds Pro" onPress={copyPro} />
-        <IconButtonCircle
-          name="creator"
-          title="Creator"
-          onPress={copyReferrer}
-        />
       </Row>
       <B2 align="center" color="secondary">
-        Earn for up to 72 hours from your link.
+        Earn for up to 72 hours from when someone uses your link.
       </B2>
       <BottomSheetButton text="Copy link" onPress={copyReferrer} />
     </BottomSheetModal>
