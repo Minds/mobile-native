@@ -8,7 +8,7 @@ import { IS_IOS } from '~/config/Config';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { hasVariation, useIsFeatureOn } from '../../../../ExperimentsProvider';
+import { hasVariation } from '../../../../ExperimentsProvider';
 import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 import {
   DEFAULT_DAILY_CASH_BUDGET,
