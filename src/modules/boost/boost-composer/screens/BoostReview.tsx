@@ -76,11 +76,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
         <HairlineRow />
         <Column vertical="M">
-          <MenuItem
-            title={t('Goal')}
-            subtitle={t(`goal.${boostStore.goal}`)}
-            borderless
-          />
+          {boostStore.goalsEnabled && (
+            <MenuItem
+              title={t('Goal')}
+              subtitle={t(`goal.${boostStore.goal}`)}
+              borderless
+            />
+          )}
           <MenuItem
             title={t('Audience')}
             subtitle={

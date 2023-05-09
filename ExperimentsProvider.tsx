@@ -117,4 +117,5 @@ export type FeatureID =
   | 'mob-4596-create-modal'
   | 'mob-4903-referrer-banner'
   | 'mob-4903-wefounder-banner'
+  | 'minds-3952-boost-goals'
   | 'epic-303-boost-partners';

@@ -20,8 +20,12 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
-function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
+function AudienceSelectorScreen({
+  navigation,
+  route,
+}: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
+  const { safe, backIcon } = route.params ?? ({} as Record<string, any>);
   const boostStore = useBoostStore();
 
   if (!boostStore.config) {
@@ -35,7 +39,7 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
   };
 
   return (
-    <Screen safe onlyTopEdge>
+    <Screen safe onlyTopEdge={!safe}>
       <ScreenHeader
         title={
           boostStore.boostType === 'channel'
@@ -43,6 +47,7 @@ function AudienceSelectorScreen({ navigation }: AudienceSelectorScreenProps) {
             : t('Boost Post')
         }
         back
+        backIcon={backIcon}
         shadow
       />
       <FitScrollView>

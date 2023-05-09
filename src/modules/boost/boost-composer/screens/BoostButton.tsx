@@ -5,7 +5,7 @@ import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
 import { useTranslation } from '../../locales';
-import { IBoostButton, useBoostStore } from '../boost.store';
+import { BoostButtonText, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 
 type BoostButtonScreenProps = BoostStackScreenProps<'BoostButton'>;
@@ -18,17 +18,17 @@ function BoostButtonScreen({ navigation }: BoostButtonScreenProps) {
     navigation.push('BoostAudienceSelector');
   };
 
-  const items: { id: IBoostButton; title: string }[] = [
+  const items: { id: BoostButtonText; title: string }[] = [
     {
-      id: 'subscribe',
+      id: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL,
       title: t('Subscribe to my channel'),
     },
     {
-      id: 'connect',
+      id: BoostButtonText.GET_CONNECTED,
       title: t('Get connected'),
     },
     {
-      id: 'stayInLoop',
+      id: BoostButtonText.STAY_IN_THE_LOOP,
       title: t('Stay in the loop'),
     },
   ];

@@ -1,3 +1,5 @@
+import { BoostGoal } from '../boost-composer/boost.store';
+
 export type TranslationType = typeof en;
 
 const en = {
@@ -7,10 +9,10 @@ const en = {
   tokenWithCount_plural: '{{count}} tokens',
 
   goal: {
-    reach: 'Expand reach',
-    engagement: 'Increase engagement',
-    following: 'Grow your following',
-    clicks: 'Get more clicks',
+    [BoostGoal.VIEWS]: 'Expand reach',
+    [BoostGoal.ENGAGEMENT]: 'Increase engagement',
+    [BoostGoal.SUBSCRIBERS]: 'Grow your following',
+    [BoostGoal.CLICKS]: 'Get more clicks',
   },
 };
 

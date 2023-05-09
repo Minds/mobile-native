@@ -6,7 +6,7 @@ import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
 import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
-import { IBoostGoal, useBoostStore } from '../boost.store';
+import { BoostGoal, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 
 type BoostGoalScreenProps = BoostStackScreenProps<'BoostGoal'>;
@@ -23,35 +23,35 @@ function BoostGoalScreen({ navigation, route }: BoostGoalScreenProps) {
   }
 
   const onNext = () => {
-    if (boostStore.goal === 'following') {
+    if (boostStore.goal === BoostGoal.SUBSCRIBERS) {
       return navigation.push('BoostButton');
     }
-    if (boostStore.goal === 'clicks') {
+    if (boostStore.goal === BoostGoal.CLICKS) {
       return navigation.push('BoostLink');
     }
 
     navigation.push('BoostAudienceSelector');
   };
 
-  const items: { id: IBoostGoal; title: string; subtitle: string }[] = [
+  const items: { id: BoostGoal; title: string; subtitle: string }[] = [
     {
-      id: 'reach',
-      title: t('goal.reach'),
+      id: BoostGoal.VIEWS,
+      title: t(`goal.${BoostGoal.VIEWS}`),
       subtitle: t('Get more people to see your post.'),
     },
     {
-      id: 'engagement',
-      title: t('goal.engagement'),
+      id: BoostGoal.ENGAGEMENT,
+      title: t(`goal.${BoostGoal.ENGAGEMENT}`),
       subtitle: t('Get more Votes, Reminds, Comments, etc.'),
     },
     {
-      id: 'following',
-      title: t('goal.following'),
+      id: BoostGoal.SUBSCRIBERS,
+      title: t(`goal.${BoostGoal.SUBSCRIBERS}`),
       subtitle: t('Gain more subscribers and grow your channel.'),
     },
     {
-      id: 'clicks',
-      title: t('goal.clicks'),
+      id: BoostGoal.CLICKS,
+      title: t(`goal.${BoostGoal.CLICKS}`),
       subtitle: t(
         'Increase website traffic, app installs, or clicks on Minds.',
       ),

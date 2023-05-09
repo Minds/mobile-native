@@ -6,7 +6,7 @@ import InputContainer from '~/common/components/InputContainer';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
 import { useTranslation } from '../../locales';
-import { IBoostLink, useBoostStore } from '../boost.store';
+import { BoostButtonText, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 
 type BoostLinkScreenProps = BoostStackScreenProps<'BoostLink'>;
@@ -23,21 +23,21 @@ function BoostLinkScreen({ navigation }: BoostLinkScreenProps) {
     navigation.push('BoostAudienceSelector');
   };
 
-  const items: { id: IBoostLink; title: string }[] = [
+  const items: { id: BoostButtonText; title: string }[] = [
     {
-      id: 'learnMore',
+      id: BoostButtonText.LEARN_MORE,
       title: t('Learn More'),
     },
     {
-      id: 'getStarted',
+      id: BoostButtonText.GET_STARTED,
       title: t('Get Started'),
     },
     {
-      id: 'signUp',
+      id: BoostButtonText.SIGN_UP,
       title: t('Sign Up'),
     },
     {
-      id: 'tryForFree',
+      id: BoostButtonText.TRY_FOR_FREE,
       title: t('Try For Free'),
     },
   ];
@@ -103,8 +103,7 @@ export default withErrorBoundaryScreen(
 );
 
 function isURL(str: string) {
-  var urlRegex =
-    '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
+  var urlRegex = '^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$';
   var url = new RegExp(urlRegex, 'i');
   return str.length < 2083 && url.test(str);
 }

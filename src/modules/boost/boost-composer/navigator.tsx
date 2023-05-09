@@ -7,8 +7,9 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import { useStores } from '~/common/hooks/use-stores';
-import { BoostStoreProvider } from './boost.store';
+import { BoostStoreContext, createBoostStore } from './boost.store';
 import type { IconMapNameType } from '../../../common/ui/icons/map';
+import { useLocalStore } from 'mobx-react';
 
 export type BoostStackParamList = {
   BoostGoal: {
@@ -17,7 +18,10 @@ export type BoostStackParamList = {
   };
   BoostButton: undefined;
   BoostLink: undefined;
-  BoostAudienceSelector: undefined;
+  BoostAudienceSelector?: {
+    safe?: boolean;
+    backIcon?: IconMapNameType;
+  };
   BoostComposer: undefined;
   BoostReview: undefined;
 };
@@ -44,14 +48,23 @@ export default function BoostComposerStack({
 }) {
   const wallet = useStores().wallet;
   const { entity, boostType = 'post' } = route.params || {};
+  const boostStore = useLocalStore(createBoostStore, {
+    boostType,
+    entity,
+    wallet,
+  });
 
   return (
-    <BoostStoreProvider boostType={boostType} entity={entity} wallet={wallet}>
-      <Navigator screenOptions={defaultScreenOptions}>
+    <BoostStoreContext.Provider value={boostStore}>
+      <Navigator
+        initialRouteName={
+          boostStore.goalsEnabled ? 'BoostGoal' : 'BoostAudienceSelector'
+        }
+        screenOptions={defaultScreenOptions}>
         <Screen
           name="BoostGoal"
           getComponent={() => require('./screens/BoostGoal').default}
-          initialParams={route.params}
+          initialParams={boostStore.goalsEnabled ? route.params : undefined}
         />
         <Screen
           name="BoostButton"
@@ -64,6 +77,7 @@ export default function BoostComposerStack({
         <Screen
           name="BoostAudienceSelector"
           getComponent={() => require('./screens/AudienceSelector').default}
+          initialParams={boostStore.goalsEnabled ? undefined : route.params}
         />
         <Screen
           name="BoostComposer"
@@ -74,7 +88,7 @@ export default function BoostComposerStack({
           getComponent={() => require('./screens/BoostReview').default}
         />
       </Navigator>
-    </BoostStoreProvider>
+    </BoostStoreContext.Provider>
   );
 }
 
