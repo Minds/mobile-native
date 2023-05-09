@@ -7,6 +7,7 @@ const { color } = tokens;
 
 const dark = createTheme({
   background: color['grey-900'],
+  backgroundPress: color['gray-900'],
   backgroundPrimary: color['grey-900'],
   backgroundSecondary: color['grey-800'],
   backgroundTertiary: color['grey-700'],
@@ -24,6 +25,7 @@ const dark = createTheme({
   colorTextSecondary: color['grey-300'],
   colorTextTertiary: color['grey-400'],
 
+  colorPrimaryInverted: color['grey-900'],
   warning: color['red-500'],
 });
 
@@ -31,6 +33,7 @@ type BaseTheme = typeof dark;
 
 const light = createTheme<BaseTheme>({
   background: color['white'],
+  backgroundPress: color['white'],
   backgroundPrimary: color['white'],
   backgroundSecondary: color['grey-50'],
   backgroundTertiary: color['grey-100'],
@@ -40,14 +43,15 @@ const light = createTheme<BaseTheme>({
   borderColorSecondary: color['grey-200'],
   borderColorTertiary: color['grey-100'],
 
-  action: color['yellow-300-alt'],
-  link: color['yellow-300-alt'],
+  action: color['blue'],
+  link: color['blue'],
 
   color: color['grey-900'], // default primary
   colorTextPrimary: color['grey-900'],
   colorTextSecondary: color['grey-700'],
   colorTextTertiary: color['grey-600'],
 
+  colorPrimaryInverted: color['grey-50'],
   warning: color['red-700'],
 });
 
