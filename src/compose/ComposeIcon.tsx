@@ -1,11 +1,8 @@
-import { Image, ImageProps } from 'expo-image';
+import { Image, ImageProps } from 'react-native';
 import * as React from 'react';
 
 function ComposeIcon(props: Partial<ImageProps>) {
-  const { source, ...other } = props;
-  return (
-    <Image source={source || require('../assets/compose.png')} {...other} />
-  );
+  return <Image source={require('../assets/compose.png')} {...props} />;
 }
 
 export default ComposeIcon;
