@@ -6,8 +6,6 @@ import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 import CodePush, { CodePushOptions } from 'react-native-code-push';
 
-export const CODEPUSH_VERSION = '';
-
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
