@@ -5,6 +5,7 @@ import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import { codePushStore } from 'modules/codepush';
+import referrerService from './referrer.service';
 
 /**
  * Deeplinks router
@@ -104,6 +105,10 @@ class DeeplinksRouter {
     const route = this.getUrlRoute(url, cleanURL);
 
     const params = this.parseQueryParams(cleanURL);
+
+    if (params?.referrer) {
+      referrerService.set(params.referrer);
+    }
 
     // open deeplinks in a webview
     if (

@@ -14,6 +14,7 @@ export default class GroupModel extends BaseModel {
   nsfw: Array<number> = [];
   icontime: any;
   entity_guid?: string;
+  brief_description = '';
 
   @action
   toggleMatureVisibility() {

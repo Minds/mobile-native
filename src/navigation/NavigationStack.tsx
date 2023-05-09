@@ -328,16 +328,28 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            <RootStackNav.Screen
-              name="App"
-              component={AppStack}
-              options={({ route }) => ({
-                // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
-                animationEnabled: Boolean(route.params),
-                cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-                ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
-              })}
-            />
+            {AuthService.justRegistered && !AuthService.onboardCompleted ? (
+              <RootStackNav.Screen
+                name="App"
+                getComponent={() =>
+                  require('modules/onboarding').MandatoryOnboardingStack
+                }
+                options={modalOptions}
+              />
+            ) : (
+              <RootStackNav.Screen
+                name="App"
+                component={AppStack}
+                options={({ route }) => ({
+                  // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+                  animationEnabled: Boolean(route.params),
+                  cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+                  ...(route.params
+                    ? TransitionPresets.SlideFromRightIOS
+                    : null),
+                })}
+              />
+            )}
             <RootStackNav.Screen
               name="Capture"
               getComponent={() => require('~/compose/CameraScreen').default}

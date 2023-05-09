@@ -17,7 +17,6 @@ import authService, { registerParams } from '../AuthService';
 import apiService from '../../common/services/api.service';
 import delay from '../../common/helpers/delay';
 import logService from '../../common/services/log.service';
-import sessionService from '../../common/services/session.service';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
@@ -94,7 +93,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
-        sessionService.setInitialScreen('SelectHashtags', { isNewUser: true });
 
         try {
           await authService.login(store.username, store.password, true);

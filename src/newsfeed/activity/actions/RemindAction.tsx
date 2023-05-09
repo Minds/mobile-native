@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { IconButtonNext } from '~ui/icons';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -11,13 +11,14 @@ import sessionService from '../../../common/services/session.service';
 import { actionsContainerStyle } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
-  BottomSheetModal,
   BottomSheetButton,
   BottomSheetMenuItem,
+  pushBottomSheet,
 } from '../../../common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
 import { storeRatingService } from 'modules/store-rating';
 import { useAnalytics } from '~/common/contexts/analytics.context';
+import NavigationService from '../../../navigation/NavigationService';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -30,9 +31,6 @@ type PropsTypes = {
  * Remind Action Component
  */
 export default function ({ entity, hideCount }: PropsTypes) {
-  // Do not render BottomSheet unless it is necessary
-  const [shown, setShown] = React.useState(false);
-
   const reminded =
     entity.remind_users &&
     entity.remind_users.some(
@@ -46,23 +44,6 @@ export default function ({ entity, hideCount }: PropsTypes) {
 
   const route = useRoute();
   const navigation = useNavigation<any>();
-  const ref = useRef<any>(null);
-
-  const showDropdown = useCallback(() => {
-    if (!shown) {
-      setShown(true);
-      return;
-    }
-    if (ref.current) {
-      ref.current.present();
-    }
-  }, [shown]);
-
-  const close = useCallback(() => {
-    if (ref.current) {
-      ref.current.dismiss();
-    }
-  }, []);
 
   /**
    * Open quote in composer
@@ -73,8 +54,6 @@ export default function ({ entity, hideCount }: PropsTypes) {
       return;
     }
     const { key } = route;
-    // We remove it instead of hiding it because it causes some issues in some versions of Android (issue 3543)
-    setShown(false);
     navigation.navigate('Compose', {
       isRemind: true,
       entity,
@@ -100,9 +79,6 @@ export default function ({ entity, hideCount }: PropsTypes) {
   const remind = useCallback(() => {
     const compose = createComposeStore({ props: {}, newsfeed: null });
     compose.setRemindEntity(entity);
-    if (ref.current) {
-      ref.current.dismiss();
-    }
     compose
       .submit()
       .then(activity => {
@@ -117,7 +93,16 @@ export default function ({ entity, hideCount }: PropsTypes) {
         console.log(e);
         showNotification(i18n.t('errorMessage'), 'warning');
       });
-  }, [entity, newsfeed.feedStore]);
+  }, [analytics, entity, newsfeed.feedStore]);
+
+  const showDropdown = useCallback(() => {
+    pushRemindActionSheet({
+      reminded,
+      onUndo: undo,
+      onRemind: remind,
+      onQuote: quote,
+    });
+  }, [quote, remind, reminded, undo]);
 
   return (
     <>
@@ -137,34 +122,55 @@ export default function ({ entity, hideCount }: PropsTypes) {
           ) : null
         }
       />
-      {shown && (
-        <BottomSheetModal ref={ref} autoShow>
-          {reminded ? (
-            <BottomSheetMenuItem
-              onPress={undo}
-              title={i18n.t('undoRemind')}
-              iconName="undo"
-              iconType="material"
-            />
-          ) : (
-            <>
-              <BottomSheetMenuItem
-                onPress={remind}
-                title={i18n.t('capture.remind')}
-                iconName="repeat"
-                iconType="material"
-              />
-              <BottomSheetMenuItem
-                onPress={quote}
-                title={i18n.t('quote')}
-                iconName="edit"
-                iconType="material"
-              />
-            </>
-          )}
-          <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-        </BottomSheetModal>
-      )}
     </>
   );
 }
+
+const pushRemindActionSheet = ({
+  reminded,
+  onUndo,
+  onRemind,
+  onQuote,
+}: {
+  reminded?: boolean;
+  onUndo: () => void;
+  onRemind: () => void;
+  onQuote: () => void;
+}) =>
+  pushBottomSheet({
+    safe: true,
+    component: ref => (
+      <>
+        {reminded ? (
+          <BottomSheetMenuItem
+            onPress={onUndo}
+            title={i18n.t('undoRemind')}
+            iconName="undo"
+            iconType="material"
+          />
+        ) : (
+          <>
+            <BottomSheetMenuItem
+              onPress={() => {
+                onRemind();
+                ref.close();
+              }}
+              title={i18n.t('capture.remind')}
+              iconName="repeat"
+              iconType="material"
+            />
+            <BottomSheetMenuItem
+              onPress={() => {
+                NavigationService.goBack();
+                onQuote();
+              }}
+              title={i18n.t('quote')}
+              iconName="edit"
+              iconType="material"
+            />
+          </>
+        )}
+        <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
+      </>
+    ),
+  });

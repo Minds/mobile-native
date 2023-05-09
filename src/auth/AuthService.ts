@@ -8,6 +8,7 @@ import NavigationService from '../navigation/NavigationService';
 import sessionService from './../common/services/session.service';
 import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
+import { action, observable } from 'mobx';
 
 export type TFA = 'sms' | 'totp';
 
@@ -63,8 +64,14 @@ type validateParams = {
  * Auth Services
  */
 class AuthService {
-  justRegistered = false;
+  @observable justRegistered = false;
+  @observable onboardCompleted = false;
   showLoginPasswordModal: null | Function = null;
+
+  @action
+  setCompletedOnboard() {
+    this.onboardCompleted = true;
+  }
 
   /**
    * Login user
@@ -206,6 +213,7 @@ class AuthService {
    */
   async logout(preLogoutCallBack?: () => void): Promise<boolean> {
     this.justRegistered = false;
+    this.onboardCompleted = false;
     try {
       if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
@@ -252,6 +260,8 @@ class AuthService {
    */
   async revokeTokens(): Promise<boolean> {
     this.justRegistered = false;
+    this.onboardCompleted = false;
+
     try {
       if (session.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
@@ -319,6 +329,7 @@ class AuthService {
    */
   async logoutFrom(index: number): Promise<boolean> {
     this.justRegistered = false;
+    this.onboardCompleted = false;
     try {
       await this.unregisterTokenFrom(index);
 
@@ -348,6 +359,7 @@ class AuthService {
   async sessionLogout(newUser: boolean = false) {
     try {
       this.justRegistered = newUser;
+      this.onboardCompleted = false;
       session.logout(false);
       // Fixes auto-subscribe issue on register
       await api.clearCookies();

@@ -27,9 +27,11 @@ export type Source = {
 const createMindsVideoStore = ({
   autoplay,
   repeat,
+  onProgress,
 }: {
   autoplay?: boolean;
   repeat?: boolean;
+  onProgress?: (progress: number) => void;
 }) => {
   const store = {
     entity: <ActivityModel | null>null,
@@ -167,6 +169,7 @@ const createMindsVideoStore = ({
      */
     onProgress(currentTime: number) {
       this.currentTime = currentTime;
+      onProgress?.(this.currentTime / this.duration);
     },
     /**
      * Set the total duration of video
@@ -304,6 +307,7 @@ const createMindsVideoStore = ({
       });
 
       this.player?.setStatusAsync({
+        progressUpdateIntervalMillis: 100,
         shouldPlay: true,
         isMuted: !this.volume,
         isLooping: Boolean(repeat),

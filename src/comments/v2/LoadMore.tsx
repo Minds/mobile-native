@@ -8,6 +8,7 @@ import ActivityIndicator from '../../common/components/ActivityIndicator';
 import i18n from '../../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import MText from '../../common/components/MText';
+import SpamPrompt from './SpamPrompt';
 
 /**
  * Load next/early comments
@@ -26,9 +27,16 @@ export default observer(function LoadMore({
     : store.loadPrevious && !store.loadingPrevious;
 
   const showIndicator = next ? store.loadingNext : store.loadingPrevious;
+  const showSpamPrompt =
+    !next &&
+    !!store.spamComments.length &&
+    !store.spamCommentsShown &&
+    !show &&
+    !showIndicator;
 
   return (
     <View>
+      {showSpamPrompt && <SpamPrompt onPress={store.showSpamComments} />}
       {show ? (
         <TouchableOpacity
           onPress={() => {
