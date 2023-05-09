@@ -5,7 +5,6 @@ import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
 import MText from '../MText';
 import { B1 } from '~ui';
-import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 export type BottomSheetMenuItemProps = {
   title: string | JSX.Element;
@@ -13,7 +12,7 @@ export type BottomSheetMenuItemProps = {
   iconType?: IconType;
   iconSize?: number;
   testID?: string;
-  onPress?: (ref?: BottomSheetMethods) => void;
+  onPress?: () => void;
   style?: any;
   textStyle?: any;
 };
