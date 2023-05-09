@@ -16,7 +16,6 @@ export type BottomSheetMenuItemProps = {
   onPress?: (ref?: BottomSheetMethods) => void;
   style?: any;
   textStyle?: any;
-  bottomSheetRef?: BottomSheetMethods;
 };
 
 const BottomSheetMenuItem = ({
@@ -28,7 +27,6 @@ const BottomSheetMenuItem = ({
   style,
   textStyle,
   testID = '',
-  bottomSheetRef,
 }: BottomSheetMenuItemProps) => {
   iconSize = iconSize || 24;
 
@@ -38,7 +36,7 @@ const BottomSheetMenuItem = ({
   return (
     <MPressable
       style={containerStyle}
-      onPress={() => onPress?.(bottomSheetRef)}
+      onPress={onPress}
       testID={testID}
       disabled={!onPress}>
       {Boolean(iconName) && (
