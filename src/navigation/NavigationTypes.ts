@@ -47,6 +47,7 @@ type WebViewParams = {
 export type MoreStackParamList = {
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
+  AffiliateProgram: undefined;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };
@@ -127,7 +128,6 @@ type TwoFactorConfirmationParams = {
 
 export type RootStackParamList = {
   TierManagementScreen: {};
-  MandatoryOnboarding: {};
   TierScreen: {};
   GroupsList: {};
   Compose: ComposeScreenParams;

@@ -330,7 +330,7 @@ const RootStack = observer(function () {
           <>
             {AuthService.justRegistered && !AuthService.onboardCompleted ? (
               <RootStackNav.Screen
-                name="MandatoryOnboarding"
+                name="App"
                 getComponent={() =>
                   require('modules/onboarding').MandatoryOnboardingStack
                 }
