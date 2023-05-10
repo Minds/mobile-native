@@ -12,7 +12,7 @@ exports[`renders correctly 1`] = `
         "borderBottomWidth": 1,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
       undefined,
     ]
@@ -59,7 +59,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto-Medium",
@@ -87,7 +87,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -132,7 +132,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto-Medium",
@@ -160,7 +160,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -205,7 +205,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto-Medium",
@@ -233,7 +233,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -278,7 +278,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto-Medium",
@@ -306,7 +306,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",

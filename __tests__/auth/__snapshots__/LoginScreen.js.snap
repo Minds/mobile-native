@@ -17,7 +17,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
           Object {
             "borderBottomWidth": 1,
@@ -55,7 +55,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -218,14 +218,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "paddingTop": 8,
               },
               Object {
-                "backgroundColor": "#1A2025",
+                "backgroundColor": "#38393D",
               },
               Object {
                 "borderTopWidth": 1,
               },
               null,
               Object {
-                "borderColor": "#414C57",
+                "borderColor": "#53565A",
               },
               undefined,
             ]
@@ -266,7 +266,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#F2F2F2",
                         },
                         Object {
                           "fontFamily": "Roboto",
@@ -279,11 +279,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                             "marginBottom": 0,
                           },
                           Object {
-                            "color": "#B8C1CA",
+                            "color": "#b9bbc0",
                           },
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontSize": 16,
@@ -311,7 +311,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 labelStyle={
                   Array [
                     Object {
-                      "color": "#B8C1CA",
+                      "color": "#b9bbc0",
                     },
                     Object {
                       "fontSize": 16,
@@ -324,17 +324,17 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 }
                 maxLength={50}
                 onChangeText={[Function]}
-                placeholderTextColor="#797B82"
+                placeholderTextColor="#a1a5ab"
                 returnKeyLabel="Next"
                 returnKeyType="next"
                 style={
                   Array [
                     Object {
                       "backgroundColor": "transparent",
-                      "borderColor": "#414C57",
+                      "borderColor": "#53565A",
                       "borderRadius": 2,
                       "borderWidth": 1,
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                       "fontFamily": "Roboto",
                       "fontSize": 16,
                       "lineHeight": 21,
@@ -353,7 +353,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "fontSize": 18,
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       undefined,
                     ],
@@ -385,7 +385,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "paddingTop": 8,
                   },
                   Object {
-                    "backgroundColor": "#1A2025",
+                    "backgroundColor": "#38393D",
                   },
                   Object {
                     "borderTopWidth": 1,
@@ -394,7 +394,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "borderBottomWidth": 1,
                   },
                   Object {
-                    "borderColor": "#414C57",
+                    "borderColor": "#53565A",
                   },
                   undefined,
                 ]
@@ -435,7 +435,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#FFFFFF",
+                              "color": "#F2F2F2",
                             },
                             Object {
                               "fontFamily": "Roboto",
@@ -448,11 +448,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                                 "marginBottom": 0,
                               },
                               Object {
-                                "color": "#B8C1CA",
+                                "color": "#b9bbc0",
                               },
                               Array [
                                 Object {
-                                  "color": "#B8C1CA",
+                                  "color": "#b9bbc0",
                                 },
                                 Object {
                                   "fontSize": 16,
@@ -477,7 +477,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     labelStyle={
                       Array [
                         Object {
-                          "color": "#B8C1CA",
+                          "color": "#b9bbc0",
                         },
                         Object {
                           "fontSize": 16,
@@ -491,7 +491,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     multiline={false}
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
-                    placeholderTextColor="#797B82"
+                    placeholderTextColor="#a1a5ab"
                     returnKeyLabel="Submit"
                     returnKeyType="send"
                     secureTextEntry={true}
@@ -499,10 +499,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       Array [
                         Object {
                           "backgroundColor": "transparent",
-                          "borderColor": "#414C57",
+                          "borderColor": "#53565A",
                           "borderRadius": 2,
                           "borderWidth": 1,
-                          "color": "#FFFFFF",
+                          "color": "#F2F2F2",
                           "fontFamily": "Roboto",
                           "fontSize": 16,
                           "lineHeight": 21,
@@ -521,7 +521,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                             "fontSize": 18,
                           },
                           Object {
-                            "color": "#FFFFFF",
+                            "color": "#F2F2F2",
                           },
                           undefined,
                         ],
@@ -552,7 +552,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "top": 30,
                     },
                     Object {
-                      "color": "#B8C1CA",
+                      "color": "#b9bbc0",
                     },
                   ],
                   Object {
@@ -626,7 +626,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Object {
                     "alignItems": "center",
-                    "borderColor": "#1B85D6",
+                    "borderColor": "#FFD048",
                     "borderRadius": 100,
                     "borderWidth": 1,
                     "bottom": 0,
@@ -651,7 +651,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   }
                 >
                   <ActivityIndicator
-                    color="#FFFFFF"
+                    color="#F2F2F2"
                     size="small"
                   />
                 </View>
@@ -687,7 +687,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto-Medium",
@@ -739,7 +739,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",

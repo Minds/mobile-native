@@ -10,13 +10,13 @@ exports[`Owner component renders correctly 1`] = `
         "width": 30,
       },
       Object {
-        "backgroundColor": "#1A2025",
+        "backgroundColor": "#38393D",
       },
       Object {
         "borderWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }

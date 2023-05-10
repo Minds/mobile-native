@@ -32,7 +32,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto-Bold",
@@ -119,7 +119,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -140,7 +140,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -229,7 +229,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -250,7 +250,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -339,7 +339,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -360,7 +360,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -510,7 +510,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto-Bold",
@@ -597,7 +597,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -618,7 +618,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -640,14 +640,14 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
                 },
                 Array [
                   Object {
-                    "color": "#B8C1CA",
+                    "color": "#b9bbc0",
                   },
                   Object {
                     "textDecorationLine": "underline",
@@ -730,7 +730,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -751,7 +751,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -840,7 +840,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -861,7 +861,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
               Object {
                 "fontFamily": "Roboto",

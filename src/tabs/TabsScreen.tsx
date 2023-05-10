@@ -249,13 +249,15 @@ const styles = ThemedStyles.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  bar: {
-    position: 'absolute',
-    top: 0,
-    left: 20,
-    height: 4,
-    backgroundColor: '#1B85D6',
-  },
+  bar: [
+    {
+      position: 'absolute',
+      top: 0,
+      left: 20,
+      height: 4,
+    },
+    'bgLink',
+  ],
   tabBar: [
     {
       borderTopWidth: 1,

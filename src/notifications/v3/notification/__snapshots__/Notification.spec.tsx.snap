@@ -15,7 +15,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -88,7 +88,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -137,7 +137,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -151,7 +151,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -163,7 +163,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -178,7 +178,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -192,7 +192,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -207,7 +207,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -231,7 +231,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -245,7 +245,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -258,14 +258,13 @@ exports[`Notification 24 hours before an offer expires 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -290,7 +289,7 @@ exports[`Notification An offer expires 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -363,7 +362,7 @@ exports[`Notification An offer expires 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -412,7 +411,7 @@ exports[`Notification An offer expires 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -426,7 +425,7 @@ exports[`Notification An offer expires 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -437,7 +436,7 @@ exports[`Notification An offer expires 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -452,7 +451,7 @@ exports[`Notification An offer expires 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -468,7 +467,7 @@ exports[`Notification An offer expires 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -483,7 +482,7 @@ exports[`Notification An offer expires 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -507,7 +506,7 @@ exports[`Notification An offer expires 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -521,7 +520,7 @@ exports[`Notification An offer expires 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -534,14 +533,13 @@ exports[`Notification An offer expires 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -566,7 +564,7 @@ exports[`Notification Boost accepted 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -639,7 +637,7 @@ exports[`Notification Boost accepted 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -688,7 +686,7 @@ exports[`Notification Boost accepted 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -702,7 +700,7 @@ exports[`Notification Boost accepted 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -726,7 +724,7 @@ exports[`Notification Boost accepted 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -740,7 +738,7 @@ exports[`Notification Boost accepted 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -753,14 +751,13 @@ exports[`Notification Boost accepted 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -789,7 +786,7 @@ exports[`Notification Boost accepted 1`] = `
             "borderColor": "#3f4b56",
           },
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
         ]
       }
@@ -844,7 +841,7 @@ exports[`Notification Boost complete 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -917,7 +914,7 @@ exports[`Notification Boost complete 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -966,7 +963,7 @@ exports[`Notification Boost complete 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -980,7 +977,7 @@ exports[`Notification Boost complete 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1004,7 +1001,7 @@ exports[`Notification Boost complete 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1018,7 +1015,7 @@ exports[`Notification Boost complete 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1031,14 +1028,13 @@ exports[`Notification Boost complete 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1067,7 +1063,7 @@ exports[`Notification Boost complete 1`] = `
             "borderColor": "#3f4b56",
           },
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
         ]
       }
@@ -1122,7 +1118,7 @@ exports[`Notification Boost rejected 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -1195,7 +1191,7 @@ exports[`Notification Boost rejected 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1244,7 +1240,7 @@ exports[`Notification Boost rejected 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1258,7 +1254,7 @@ exports[`Notification Boost rejected 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1282,7 +1278,7 @@ exports[`Notification Boost rejected 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1296,7 +1292,7 @@ exports[`Notification Boost rejected 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1309,14 +1305,13 @@ exports[`Notification Boost rejected 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1345,7 +1340,7 @@ exports[`Notification Boost rejected 1`] = `
             "borderColor": "#3f4b56",
           },
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
         ]
       }
@@ -1400,7 +1395,7 @@ exports[`Notification Boost rejected legacy 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -1473,7 +1468,7 @@ exports[`Notification Boost rejected legacy 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1522,7 +1517,7 @@ exports[`Notification Boost rejected legacy 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1536,7 +1531,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1547,7 +1542,7 @@ exports[`Notification Boost rejected legacy 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -1562,7 +1557,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -1578,7 +1573,7 @@ exports[`Notification Boost rejected legacy 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -1593,7 +1588,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -1617,7 +1612,7 @@ exports[`Notification Boost rejected legacy 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1631,7 +1626,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1644,14 +1639,13 @@ exports[`Notification Boost rejected legacy 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1680,7 +1674,7 @@ exports[`Notification Boost rejected legacy 1`] = `
             "borderColor": "#3f4b56",
           },
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
         ]
       }
@@ -1735,7 +1729,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -1808,7 +1802,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1857,7 +1851,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1871,7 +1865,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1882,7 +1876,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -1897,7 +1891,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -1913,7 +1907,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -1928,7 +1922,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -1952,7 +1946,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -1966,7 +1960,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -1979,14 +1973,13 @@ exports[`Notification Receiver accepts an offer 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -2011,7 +2004,7 @@ exports[`Notification Receiver declines an offer 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -2084,7 +2077,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2133,7 +2126,7 @@ exports[`Notification Receiver declines an offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -2147,7 +2140,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -2158,7 +2151,7 @@ exports[`Notification Receiver declines an offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -2173,7 +2166,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -2189,7 +2182,7 @@ exports[`Notification Receiver declines an offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -2204,7 +2197,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -2228,7 +2221,7 @@ exports[`Notification Receiver declines an offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -2242,7 +2235,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -2255,14 +2248,13 @@ exports[`Notification Receiver declines an offer 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -2287,7 +2279,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#414C57",
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -2360,7 +2352,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#1B85D6",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2409,7 +2401,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -2423,7 +2415,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -2434,7 +2426,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -2449,7 +2441,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -2465,7 +2457,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -2480,7 +2472,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "fontWeight": "500",
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
               ],
             ]
@@ -2504,7 +2496,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -2518,7 +2510,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "fontWeight": "400",
               },
               Object {
-                "color": "#B8C1CA",
+                "color": "#b9bbc0",
               },
             ],
           ]
@@ -2531,14 +2523,13 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
           Array [
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#1B85D6",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
             },
           ]
         }

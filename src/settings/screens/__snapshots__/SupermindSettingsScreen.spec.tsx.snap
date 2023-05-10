@@ -112,7 +112,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -212,7 +212,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#FFFFFF"
+                  color="#F2F2F2"
                   size="small"
                 />
               </View>
@@ -248,7 +248,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#1B85D6",
+                      "color": "#FFD048",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -291,7 +291,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#797B82",
+                  "color": "#a1a5ab",
                 },
                 Object {
                   "fontFamily": "Roboto-Medium",
@@ -320,7 +320,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -349,7 +349,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#B8C1CA",
+                  "color": "#b9bbc0",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -380,12 +380,12 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         }
       >
         <ActivityIndicator
-          color="#1B85D6"
+          color="#FFD048"
           size="large"
         />
       </View>
       <ActivityIndicator
-        color="#B8C1CA"
+        color="#b9bbc0"
       />
     </View>
   </RCTScrollView>
@@ -504,7 +504,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -604,7 +604,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#FFFFFF"
+                  color="#F2F2F2"
                   size="small"
                 />
               </View>
@@ -640,7 +640,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#1B85D6",
+                      "color": "#FFD048",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -683,7 +683,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             style={
               Array [
                 Object {
-                  "color": "#797B82",
+                  "color": "#a1a5ab",
                 },
                 Object {
                   "fontFamily": "Roboto-Medium",
@@ -712,7 +712,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -741,7 +741,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             style={
               Array [
                 Object {
-                  "color": "#B8C1CA",
+                  "color": "#b9bbc0",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -770,14 +770,14 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             Object {
-              "backgroundColor": "#1A2025",
+              "backgroundColor": "#38393D",
             },
             Object {
               "borderTopWidth": 1,
             },
             null,
             Object {
-              "borderColor": "#414C57",
+              "borderColor": "#53565A",
             },
             undefined,
           ]
@@ -818,7 +818,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto",
@@ -831,11 +831,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                           "marginBottom": 0,
                         },
                         Object {
-                          "color": "#B8C1CA",
+                          "color": "#b9bbc0",
                         },
                         Array [
                           Object {
-                            "color": "#B8C1CA",
+                            "color": "#b9bbc0",
                           },
                           Object {
                             "fontSize": 16,
@@ -862,7 +862,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               labelStyle={
                 Array [
                   Object {
-                    "color": "#B8C1CA",
+                    "color": "#b9bbc0",
                   },
                   Object {
                     "fontSize": 16,
@@ -874,16 +874,16 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 ]
               }
               onChangeText={[Function]}
-              placeholderTextColor="#797B82"
+              placeholderTextColor="#a1a5ab"
               returnKeyType="done"
               style={
                 Array [
                   Object {
                     "backgroundColor": "transparent",
-                    "borderColor": "#414C57",
+                    "borderColor": "#53565A",
                     "borderRadius": 2,
                     "borderWidth": 1,
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                     "fontFamily": "Roboto",
                     "fontSize": 16,
                     "lineHeight": 21,
@@ -902,7 +902,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                       "fontSize": 18,
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     undefined,
                   ],
@@ -925,7 +925,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             Object {
-              "backgroundColor": "#1A2025",
+              "backgroundColor": "#38393D",
             },
             Object {
               "borderTopWidth": 1,
@@ -934,7 +934,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "borderBottomWidth": 1,
             },
             Object {
-              "borderColor": "#414C57",
+              "borderColor": "#53565A",
             },
             undefined,
           ]
@@ -975,7 +975,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto",
@@ -988,11 +988,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                           "marginBottom": 0,
                         },
                         Object {
-                          "color": "#B8C1CA",
+                          "color": "#b9bbc0",
                         },
                         Array [
                           Object {
-                            "color": "#B8C1CA",
+                            "color": "#b9bbc0",
                           },
                           Object {
                             "fontSize": 16,
@@ -1018,7 +1018,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               labelStyle={
                 Array [
                   Object {
-                    "color": "#B8C1CA",
+                    "color": "#b9bbc0",
                   },
                   Object {
                     "fontSize": 16,
@@ -1030,16 +1030,16 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 ]
               }
               onChangeText={[Function]}
-              placeholderTextColor="#797B82"
+              placeholderTextColor="#a1a5ab"
               returnKeyType="done"
               style={
                 Array [
                   Object {
                     "backgroundColor": "transparent",
-                    "borderColor": "#414C57",
+                    "borderColor": "#53565A",
                     "borderRadius": 2,
                     "borderWidth": 1,
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                     "fontFamily": "Roboto",
                     "fontSize": 16,
                     "lineHeight": 21,
@@ -1058,7 +1058,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                       "fontSize": 18,
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     undefined,
                   ],
@@ -1096,8 +1096,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 "justifyContent": "center",
               },
               Object {
-                "backgroundColor": "#1F252C",
-                "borderColor": "#1B85D6",
+                "backgroundColor": "#1C1D1F",
+                "borderColor": "#FFD048",
                 "borderRadius": 21,
                 "borderWidth": 1,
                 "paddingHorizontal": 21,
@@ -1114,7 +1114,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -1124,7 +1124,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                     "fontSize": 17,
                   },
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   undefined,
                   Object {
@@ -1257,7 +1257,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -1357,7 +1357,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#FFFFFF"
+                  color="#F2F2F2"
                   size="small"
                 />
               </View>
@@ -1393,7 +1393,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#1B85D6",
+                      "color": "#FFD048",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -1436,7 +1436,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#797B82",
+                  "color": "#a1a5ab",
                 },
                 Object {
                   "fontFamily": "Roboto-Medium",
@@ -1465,7 +1465,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -1494,7 +1494,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#B8C1CA",
+                  "color": "#b9bbc0",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -1525,12 +1525,12 @@ exports[`Supermind settings should update the store and submit 1`] = `
         }
       >
         <ActivityIndicator
-          color="#1B85D6"
+          color="#FFD048"
           size="large"
         />
       </View>
       <ActivityIndicator
-        color="#B8C1CA"
+        color="#b9bbc0"
       />
     </View>
   </RCTScrollView>

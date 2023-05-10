@@ -14,7 +14,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#1F252C",
+        "backgroundColor": "#1C1D1F",
       },
     ]
   }
@@ -31,7 +31,7 @@ exports[`Activity screen component renders correctly  1`] = `
       style={
         Array [
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
           Object {
             "borderBottomWidth": 0,
@@ -56,7 +56,7 @@ exports[`Activity screen component renders correctly  1`] = `
               "borderBottomWidth": 0.5,
             },
             Object {
-              "borderColor": "#414C57",
+              "borderColor": "#53565A",
             },
             undefined,
           ]
@@ -77,7 +77,7 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
                 "elevation": 4,
                 "justifyContent": "center",
                 "left": 0,
@@ -243,7 +243,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto-Bold",
@@ -415,7 +415,7 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -448,7 +448,7 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -490,14 +490,14 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
                 },
                 Array [
                   Object {
-                    "color": "#B8C1CA",
+                    "color": "#b9bbc0",
                   },
                   Object {
                     "fontSize": 14,
@@ -517,8 +517,8 @@ exports[`Activity screen component renders correctly  1`] = `
     <ExpoLinearGradient
       colors={
         Array [
-          "#1A202500",
-          "#1A2025FF",
+          "#38393D00",
+          "#38393DFF",
         ]
       }
       style={
@@ -534,7 +534,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#1F252C",
+        "backgroundColor": "#1C1D1F",
         "paddingBottom": -10,
       }
     }
@@ -547,7 +547,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "justifyContent": "flex-start",
           },
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
           Object {
             "paddingLeft": 8,
@@ -556,7 +556,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "borderTopWidth": 0.5,
           },
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
         ]
       }
@@ -573,7 +573,7 @@ exports[`Activity screen component renders correctly  1`] = `
               "paddingHorizontal": 16,
             },
             Object {
-              "borderColor": "#414C57",
+              "borderColor": "#53565A",
             },
           ]
         }
@@ -894,7 +894,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#F2F2F2",
                         },
                         Object {
                           "fontFamily": "Roboto",

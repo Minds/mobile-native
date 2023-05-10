@@ -5,7 +5,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": "#1F252C",
+        "backgroundColor": "#1C1D1F",
       },
       Object {
         "flex": 1,
@@ -146,7 +146,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "zIndex": 999,
               },
               Object {
-                "backgroundColor": "#1F252C",
+                "backgroundColor": "#1C1D1F",
                 "shadowColor": "transparent",
                 "zIndex": 999,
               },
@@ -186,7 +186,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#F2F2F2",
                       },
                       Object {
                         "fontFamily": "Roboto-Bold",
@@ -290,7 +290,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               style={
                                 Array [
                                   Object {
-                                    "color": "#FFFFFF",
+                                    "color": "#F2F2F2",
                                     "fontSize": 18.400000000000002,
                                   },
                                   Object {},
@@ -371,7 +371,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           style={
                             Array [
                               Object {
-                                "color": "#FFFFFF",
+                                "color": "#F2F2F2",
                                 "fontSize": 19.2,
                               },
                               Object {},
@@ -402,7 +402,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "justifyContent": "flex-start",
               },
               Object {
-                "backgroundColor": "#1F252C",
+                "backgroundColor": "#1C1D1F",
               },
             ]
           }
@@ -509,7 +509,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           style={
                             Array [
                               Object {
-                                "color": "#0085DD",
+                                "color": "#FFD048",
                                 "fontSize": 24,
                               },
                               Object {},
@@ -538,7 +538,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#1B85D6",
+                              "color": "#FFD048",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -563,7 +563,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#0085DD",
+                          "backgroundColor": "#FFD048",
                         },
                         Object {
                           "bottom": -2.5,
@@ -696,7 +696,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -721,7 +721,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#414C57",
+                          "backgroundColor": "#53565A",
                         },
                         Object {
                           "bottom": -2.5,
@@ -854,7 +854,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -879,7 +879,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#414C57",
+                          "backgroundColor": "#53565A",
                         },
                         Object {
                           "bottom": -2.5,
@@ -1012,7 +1012,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -1037,7 +1037,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#414C57",
+                          "backgroundColor": "#53565A",
                         },
                         Object {
                           "bottom": -2.5,
@@ -1170,7 +1170,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -1195,7 +1195,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#414C57",
+                          "backgroundColor": "#53565A",
                         },
                         Object {
                           "bottom": -2.5,
@@ -1328,7 +1328,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#B8C1CA",
+                              "color": "#b9bbc0",
                             },
                             Object {
                               "fontFamily": "Roboto-Medium",
@@ -1353,7 +1353,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     Array [
                       Array [
                         Object {
-                          "backgroundColor": "#414C57",
+                          "backgroundColor": "#53565A",
                         },
                         Object {
                           "bottom": -2.5,
@@ -1380,7 +1380,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         </View>
       </View>
       <ActivityIndicator
-        color="#B8C1CA"
+        color="#b9bbc0"
         onLayout={[Function]}
         style={
           Array [

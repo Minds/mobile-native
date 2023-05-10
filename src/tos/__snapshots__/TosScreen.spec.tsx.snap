@@ -17,7 +17,7 @@ exports[`Tos screen render and accept 1`] = `
       style={
         Array [
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
           Object {
             "borderBottomWidth": 1,
@@ -55,7 +55,7 @@ exports[`Tos screen render and accept 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto-Bold",
@@ -124,7 +124,7 @@ exports[`Tos screen render and accept 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -162,7 +162,7 @@ exports[`Tos screen render and accept 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#1B85D6",
+                  "color": "#FFD048",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -201,7 +201,7 @@ exports[`Tos screen render and accept 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#1B85D6",
+                  "color": "#FFD048",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -232,7 +232,7 @@ exports[`Tos screen render and accept 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -305,7 +305,7 @@ exports[`Tos screen render and accept 1`] = `
                 style={
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#1B85D6",
+                    "backgroundColor": "#FFD048",
                     "borderColor": "transparent",
                     "borderRadius": 100,
                     "borderWidth": 1,
