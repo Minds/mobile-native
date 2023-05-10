@@ -38,7 +38,7 @@ const CodePushCustomIcon = () => {
   const isStaging = metadata.deploymentKey === CODE_PUSH_STAGING_KEY;
 
   return (
-    <View style={ThemedStyles.style.positionAbsoluteTopLeft}>
+    <View style={styles.container}>
       <Tooltip
         ref={tooltipRef}
         skipAndroidStatusBar
@@ -73,3 +73,7 @@ const CodePushCustomIcon = () => {
 };
 
 export default CodePushCustomIcon;
+
+const styles = ThemedStyles.create({
+  container: ['positionAbsoluteTopLeft', { left: 15 }],
+});
