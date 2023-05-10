@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
+import { Image } from 'expo-image';
 import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
