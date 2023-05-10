@@ -31,7 +31,7 @@ Array [
             "alignItems": "center",
           },
           Object {
-            "backgroundColor": "#1A2025",
+            "backgroundColor": "#38393D",
           },
           Object {
             "paddingVertical": 16,
@@ -40,7 +40,7 @@ Array [
             "paddingHorizontal": 16,
           },
           Object {
-            "borderColor": "#414C57",
+            "borderColor": "#53565A",
           },
           Object {
             "borderLeftWidth": 0,
@@ -54,7 +54,7 @@ Array [
           undefined,
         ],
         Object {
-          "backgroundColor": "#1A2025",
+          "backgroundColor": "#38393D",
         },
       ]
     }
@@ -81,14 +81,14 @@ Array [
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
               },
               Array [
                 Object {
-                  "color": "#B8C1CA",
+                  "color": "#b9bbc0",
                 },
                 Object {
                   "fontSize": 16,
@@ -186,7 +186,7 @@ Array [
         Array [
           Array [
             Object {
-              "backgroundColor": "#1E242A",
+              "backgroundColor": "#1C1D1F",
             },
           ],
           Object {
@@ -252,7 +252,7 @@ Array [
               style={
                 Object {
                   "alignItems": "center",
-                  "borderColor": "#1B85D6",
+                  "borderColor": "#FFD048",
                   "borderRadius": 100,
                   "borderWidth": 1,
                   "bottom": 0,
@@ -295,7 +295,7 @@ Array [
                 style={
                   Array [
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#F2F2F2",
                     },
                     Object {
                       "fontFamily": "Roboto-Medium",
@@ -474,7 +474,7 @@ Array [
         Array [
           Array [
             Object {
-              "backgroundColor": "#1E242A",
+              "backgroundColor": "#1C1D1F",
             },
           ],
           Object {

@@ -8,7 +8,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#1A2025",
+        "backgroundColor": "#38393D",
       },
       Object {
         "alignItems": "center",
@@ -35,7 +35,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           "borderRadius": 14,
         },
         Object {
-          "backgroundColor": "#1F252C",
+          "backgroundColor": "#1C1D1F",
         },
       ]
     }
@@ -59,7 +59,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -96,7 +96,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           Array [
             Object {
               "backgroundColor": undefined,
-              "borderColor": "#1B85D6",
+              "borderColor": "#FFD048",
               "borderRadius": 4,
               "borderWidth": 1,
               "overflow": "hidden",
@@ -111,7 +111,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           collapsable={false}
           style={
             Object {
-              "backgroundColor": "#1B85D6",
+              "backgroundColor": "#FFD048",
               "height": 6,
               "transform": Array [
                 Object {
@@ -132,7 +132,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#FFFFFF",
+              "color": "#F2F2F2",
             },
             Object {
               "fontFamily": "Roboto",
@@ -149,7 +149,7 @@ exports[`Update Screen Component renders correctly 1`] = `
                 "textAlign": "center",
               },
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "marginTop": 8,

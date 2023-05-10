@@ -14,7 +14,7 @@ exports[`Slider component should render correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#FFFFFF",
+          "color": "#F2F2F2",
         },
         Object {
           "fontFamily": "Roboto",
@@ -37,9 +37,9 @@ exports[`Slider component should render correctly 1`] = `
     disabled={false}
     enabled={true}
     inverted={false}
-    maximumTrackTintColor="#414C57"
+    maximumTrackTintColor="#53565A"
     maximumValue={100}
-    minimumTrackTintColor="#414C57"
+    minimumTrackTintColor="#53565A"
     minimumValue={100}
     onChange={null}
     onRNCSliderSlidingComplete={null}
@@ -54,7 +54,7 @@ exports[`Slider component should render correctly 1`] = `
       }
     }
     thumbImage={null}
-    thumbTintColor="#1B85D6"
+    thumbTintColor="#FFD048"
     value={25}
   />
   <View
@@ -72,7 +72,7 @@ exports[`Slider component should render correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -86,7 +86,7 @@ exports[`Slider component should render correctly 1`] = `
               "fontWeight": "500",
             },
             Object {
-              "color": "#B8C1CA",
+              "color": "#b9bbc0",
             },
           ],
         ]
@@ -98,7 +98,7 @@ exports[`Slider component should render correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
+            "color": "#F2F2F2",
           },
           Object {
             "fontFamily": "Roboto",
@@ -112,7 +112,7 @@ exports[`Slider component should render correctly 1`] = `
               "fontWeight": "500",
             },
             Object {
-              "color": "#B8C1CA",
+              "color": "#b9bbc0",
             },
           ],
         ]

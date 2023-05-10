@@ -153,7 +153,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       renderItem={[Function]}
       style={
         Object {
-          "backgroundColor": "#1F252C",
+          "backgroundColor": "#1C1D1F",
         }
       }
     />
@@ -161,7 +161,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       style={
         Array [
           Object {
-            "backgroundColor": "#1F252C",
+            "backgroundColor": "#1C1D1F",
           },
           Object {
             "transform": Array [

@@ -39,7 +39,7 @@ exports[`Boost action bar component renders correctly 1`] = `
             "marginBottom": 4,
           },
           Object {
-            "color": "#B8C1CA",
+            "color": "#b9bbc0",
           },
         ]
       }
@@ -77,7 +77,7 @@ exports[`Boost action bar component renders correctly 1`] = `
             "marginBottom": 4,
           },
           Object {
-            "color": "#B8C1CA",
+            "color": "#b9bbc0",
           },
         ]
       }

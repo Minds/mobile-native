@@ -4,7 +4,7 @@ exports[`blog card component should renders correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#1A2025",
+      "backgroundColor": "#38393D",
     }
   }
 >
@@ -78,7 +78,7 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#F2F2F2",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -291,7 +291,7 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -316,7 +316,7 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#F2F2F2",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -353,7 +353,7 @@ exports[`blog card component should renders correctly 1`] = `
                       "fontSize": 28,
                     },
                     Object {
-                      "color": "#797B82",
+                      "color": "#a1a5ab",
                     },
                     Object {
                       "fontFamily": "Material Icons",
