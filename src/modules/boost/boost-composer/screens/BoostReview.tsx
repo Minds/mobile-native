@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { showNotification } from '~/../AppMessages';
+import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
@@ -20,7 +21,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
-import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -76,6 +76,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
         <HairlineRow />
         <Column vertical="M">
+          {boostStore.goalsEnabled && (
+            <MenuItem
+              title={t('Goal')}
+              subtitle={t(`goal.${boostStore.goal}`)}
+              borderless
+            />
+          )}
           <MenuItem
             title={t('Audience')}
             subtitle={
