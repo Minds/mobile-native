@@ -9,7 +9,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     title="Analytics"
   />
   <TopbarTabbar
-    current="token"
+    current="traffic"
     onChange={[Function]}
     tabs={
       Array [
@@ -17,11 +17,6 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
           "id": "traffic",
           "key": "traffic",
           "title": "Traffic",
-        },
-        Object {
-          "id": "token",
-          "key": "token",
-          "title": "Tokens",
         },
         Object {
           "id": "engagement",
@@ -52,7 +47,9 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   >
     <Memo(wrappedComponent)
-      key="token"
+      defaultMetric="page_views"
+      key="traffic"
+      url="api/v2/analytics/dashboards/traffic"
     />
   </View>
 </Screen>
