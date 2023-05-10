@@ -306,7 +306,7 @@ export default withErrorBoundaryScreen(
           <View style={styles.cameraContainer}>
             <Camera
               onMedia={handleCameraCapture}
-              mode={mediaToConfirm ? 'photo' : mode}
+              mode={mode}
               onForceVideo={setModeVideo}
               onPressGallery={handleGallerySelection}
               portraitMode={portraitMode}
