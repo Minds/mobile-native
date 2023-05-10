@@ -42,6 +42,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
       }
     >
       <ChannelAvatar
+        key="123"
         user={
           Object {
             "access_id": "2",
@@ -75,7 +76,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
@@ -125,6 +126,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
         }
       />
       <ChannelAvatar
+        key="123"
         user={
           Object {
             "access_id": "2",
@@ -158,7 +160,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
@@ -208,6 +210,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
         }
       />
       <ChannelAvatar
+        key="123"
         user={
           Object {
             "access_id": "2",
@@ -241,7 +244,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
@@ -345,7 +348,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
@@ -424,7 +427,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
@@ -503,7 +506,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
