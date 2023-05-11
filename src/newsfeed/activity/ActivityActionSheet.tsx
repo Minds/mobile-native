@@ -181,8 +181,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           try {
             this.hideActionSheet();
             await this.props.entity.toggleAllowComments();
-          } catch (err) {
-            this.showError();
+          } catch (err: any) {
+            this.showError(err?.message);
           }
         },
       });
