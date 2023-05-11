@@ -1,4 +1,4 @@
-import CameraRoll from '@react-native-community/cameraroll';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -47,8 +47,11 @@ const showError = message => {
 export default withErrorBoundaryScreen(
   observer(function (props) {
     // #region states & variables
-    const { portrait: portraitMode, mode: allowedMode, onMediaConfirmed } =
-      props.route?.params ?? {};
+    const {
+      portrait: portraitMode,
+      mode: allowedMode,
+      onMediaConfirmed,
+    } = props.route?.params ?? {};
     const [mode, setMode] = useState<'photo' | 'video'>(
       allowedMode === 'video' ? 'video' : 'photo',
     );
