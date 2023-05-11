@@ -3,3 +3,4 @@ export { default as BoostConsoleScreen } from './boost-console/screens/BoostCons
 export { default as SingleBoostConsoleScreen } from './boost-console/screens/SingleBoostConsoleScreen';
 export { default as boostedContentService } from './services/boosted-content.service';
 export { cleanBoosts } from './utils/clean-boosts';
+export { default as BoostCTA } from './widgets/BoostCTA';

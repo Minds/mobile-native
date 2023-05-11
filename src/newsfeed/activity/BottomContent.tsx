@@ -10,6 +10,7 @@ import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import useForceRender from '~/common/hooks/useForceRender';
 import { useAnalytics } from '~/common/contexts/analytics.context';
+import { BoostCTA } from 'modules/boost';
 
 type PropsType = {
   showOnlyContent?: boolean;
@@ -56,6 +57,7 @@ const BottomContent = (props: PropsType) => {
 
   return (
     <>
+      <BoostCTA entity={props.entity} />
       {!props.hideMetrics && (
         <ActivityMetrics
           entity={props.entity}

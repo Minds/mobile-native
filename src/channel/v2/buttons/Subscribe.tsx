@@ -11,6 +11,7 @@ const HITSLOP = {
 
 const Subscribe = (props: {
   channel: UserModel;
+  text?: string;
   testID?: string;
   /**
    * whether the subscribe button should only show a plus/check icon
@@ -24,12 +25,15 @@ const Subscribe = (props: {
    * subscribe button was pressed
    */
   onSubscribed?: (user: UserModel) => void;
+  disabled?: boolean;
 }) => {
   const { channel, mini, shouldUpdateFeed = true, onSubscribed } = props;
 
-  const subscriptionText = channel.subscribed
-    ? i18n.t('channel.subscribed')
-    : i18n.t('channel.subscribe');
+  const subscriptionText =
+    props.text ??
+    (channel.subscribed
+      ? i18n.t('channel.subscribed')
+      : i18n.t('channel.subscribe'));
 
   const onSubscriptionPress = useCallback(() => {
     if (channel.subscribed) {
@@ -52,6 +56,7 @@ const Subscribe = (props: {
       mode="outline"
       type={channel.subscribed ? 'base' : 'action'}
       size="tiny"
+      disabled={props.disabled}
       onPress={onSubscriptionPress}
       pressableProps={HITSLOP}
       icon={
