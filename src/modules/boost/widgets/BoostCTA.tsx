@@ -52,7 +52,6 @@ const BoostCTA = ({ entity }: BoostCTAProps) => {
           type="action"
           stretch
           size="tiny"
-          disabled={clicked}
           onPress={navigateToUrl}>
           {t(`goalText.${text}`)}
         </Button>

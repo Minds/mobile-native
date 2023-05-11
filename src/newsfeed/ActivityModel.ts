@@ -29,10 +29,7 @@ import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import socketService from '~/common/services/socket.service';
 import { hasVariation } from '../../ExperimentsProvider';
 import { Image, ImageSource } from 'expo-image';
-import {
-  BoostButtonText,
-  BoostGoal,
-} from '../modules/boost/boost-composer/boost.store';
+import { BoostButtonText } from '../modules/boost/boost-composer/boost.store';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
