@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, Image as RNImage, ScrollView, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import { Image } from 'expo-image';
@@ -211,7 +211,7 @@ const ChannelHeader = withErrorBoundary(
            **/}
           {!channel && (
             <View style={styles.avatarContainer}>
-              <Image
+              <RNImage
                 style={styles.avatar}
                 source={require('./../../assets/logos/bulb.png')}
                 resizeMode="cover"

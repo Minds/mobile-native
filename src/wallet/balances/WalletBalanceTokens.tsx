@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Image } from 'expo-image';
-import { View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import token from '../../common/helpers/token';
@@ -85,7 +84,7 @@ export default class WalletBalanceTokens extends Component {
       <View style={styles.container}>
         <View style={styles.view}>
           <Image
-            contentFit="contain"
+            resizeMode="contain"
             style={styles.logo}
             source={require('../../assets/logos/bulb.png')}
           />

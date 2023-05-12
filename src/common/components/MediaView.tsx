@@ -32,6 +32,10 @@ type PropsType = {
   ignoreDataSaver?: boolean;
   smallEmbed?: boolean;
   onVideoProgress?: (progress: number) => void;
+  /**
+   * overrides the onPress of the video overlay
+   */
+  onVideoOverlayPress?: () => void;
 };
 
 /**
@@ -96,6 +100,7 @@ export default class MediaView extends Component<PropsType> {
               onStoreCreated={this.onStoreCreated}
               hideOverlay={this.props.hideOverlay}
               onProgress={this.props.onVideoProgress}
+              onOverlayPress={this.props.onVideoOverlayPress}
               repeat={true}
             />
           </View>

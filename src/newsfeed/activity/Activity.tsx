@@ -382,6 +382,9 @@ export default class Activity extends Component<PropsType> {
           entity={entity}
           onPress={this.navToActivity}
           autoHeight={this.props.autoHeight}
+          onVideoOverlayPress={
+            this.props.maxContentHeight ? this.navToActivity : undefined
+          }
         />
         {this.showRemind()}
         {this.props.entity.remind_deleted && <DeletedRemind />}

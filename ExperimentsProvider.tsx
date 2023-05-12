@@ -119,6 +119,7 @@ export const featureList = [
   'mob-4836-iap-no-cash',
   'mob-4903-referrer-banner',
   'mob-4903-wefounder-banner',
+  'minds-3952-boost-goals',
   'epic-304-affiliates',
 ] as const;
 

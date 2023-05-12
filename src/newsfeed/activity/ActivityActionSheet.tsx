@@ -81,13 +81,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   };
 
   /**
-   * Hide menu
-   */
-  hideActionSheet = () => {
-    this.ref.current?.dismiss();
-  };
-
-  /**
    * Get the options array based on the permissions
    */
   getOptions() {
@@ -96,7 +89,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconType: string;
       title: string;
       testID?: string;
-      onPress: () => void;
+      onPress: () => Promise<void> | void;
     }> = [];
 
     const entity = this.props.entity;
@@ -120,7 +113,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           } catch (error) {
             showNotification(i18n.t('errorMessage'), 'warning');
           }
-          this.hideActionSheet();
         },
       });
     }
@@ -132,12 +124,11 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('edit'),
         iconName: 'edit',
         iconType: 'material',
-        onPress: async () => {
+        onPress: () => {
           this.props.navigation.navigate('Compose', {
             isEdit: true,
             entity: this.props.entity,
           });
-          this.hideActionSheet();
         },
       });
 
@@ -149,7 +140,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'explicit',
         iconType: 'material',
         onPress: async () => {
-          this.hideActionSheet();
           try {
             await this.props.entity.toggleExplicit();
           } catch (err) {
@@ -164,9 +154,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           title: !entity.pinned ? i18n.t('pin') : i18n.t('unpin'),
           iconName: 'pin-outline',
           iconType: 'material-community',
-          onPress: async () => {
+          onPress: () => {
             this.props.entity.togglePin();
-            this.hideActionSheet();
           },
         });
       }
@@ -175,11 +164,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: entity.allow_comments
           ? i18n.t('disableComments')
           : i18n.t('enableComments'),
-        iconName: 'pin-outline',
-        iconType: 'material-community',
+        iconName: entity.allow_comments ? 'speaker-notes-off' : 'speaker-notes',
+        iconType: 'material',
         onPress: async () => {
           try {
-            this.hideActionSheet();
             await this.props.entity.toggleAllowComments();
           } catch (err) {
             this.showError();
@@ -189,12 +177,11 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     } else {
       if (entity?.boosted) {
         options.push({
-          title: 'Hide Post',
+          title: i18n.t('hidePost'),
           iconName: 'eye-off',
           iconType: 'material-community',
           onPress: async () => {
             try {
-              this.hideActionSheet();
               await this.props.entity.hideEntity();
               showNotification(i18n.t('postHidden'), 'success');
             } catch (error) {
@@ -207,17 +194,13 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: 'Boost',
         iconName: 'trending-up',
         iconType: 'material-community',
-        onPress: async () => {
-          this.hideActionSheet();
-          if (hasVariation('mob-4638-boost-v3')) {
-            this.props.navigation.push('BoostScreenV2', {
+        onPress: () => {
+          this.props.navigation.push(
+            hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
+            {
               entity: this.props.entity,
-            });
-          } else {
-            this.props.navigation.push('BoostScreen', {
-              entity: this.props.entity,
-            });
-          }
+            },
+          );
         },
       });
     }
@@ -232,7 +215,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           if (this.props.onTranslate) {
             this.props.onTranslate();
           }
-          this.hideActionSheet();
         },
       });
     }
@@ -244,7 +226,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'format-paragraph',
         iconType: 'material-community',
         onPress: () => {
-          this.hideActionSheet();
           Linking.openURL(
             'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
           );
@@ -259,7 +240,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'ios-flag-outline',
         iconType: 'ionicon',
         onPress: () => {
-          this.hideActionSheet();
           this.props.navigation.navigate('Report', {
             entity: this.props.entity,
           });
@@ -276,8 +256,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'remove-circle-outline',
         iconType: 'ionicon',
         onPress: async () => {
-          this.hideActionSheet();
-
           if (this.props.channel) {
             return this.props.channel?.toggleBlock();
           }
@@ -310,7 +288,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconType: 'ionicon',
       title: i18n.t('share'),
       onPress: () => {
-        this.hideActionSheet();
         if (IS_IOS) {
           this.share();
         } else {
@@ -327,8 +304,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       iconType: 'material-community',
       title: !entity['is:following'] ? i18n.t('follow') : i18n.t('unfollow'),
       onPress: async () => {
-        this.hideActionSheet();
-
         try {
           await this.props.entity.toggleFollow();
         } catch (err) {
@@ -353,7 +328,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('delete'),
         testID: 'deleteOption',
         onPress: () => {
-          this.hideActionSheet();
           setTimeout(() => {
             Alert.alert(
               i18n.t('delete'),
@@ -376,7 +350,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconType: 'material-community',
         title: i18n.t('imageViewer'),
         onPress: () => {
-          this.hideActionSheet();
           this.props.navigation.navigate('ImageGallery', {
             entity: this.props.entity,
           });
@@ -471,17 +444,27 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
 const pushActionSheet = ({ options }: { options: any[] }) =>
   pushBottomSheet({
     safe: true,
-    component: ref => (
-      <>
-        {options.map((a, i) => (
-          <BottomSheetMenuItem {...a} key={i} />
-        ))}
-        <BottomSheetButton
-          text={i18n.t('cancel')}
-          onPress={() => ref.close()}
-        />
-      </>
-    ),
+    component: ref => {
+      const onClosePress = async (onPress?: () => Promise<void>) => {
+        await ref.close();
+        await onPress?.();
+      };
+
+      return (
+        <>
+          {options.map(({ onPress, ...a }, i) => (
+            <BottomSheetMenuItem
+              {...{ ...a, onPress: () => onClosePress(onPress) }}
+              key={i}
+            />
+          ))}
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={() => ref.close()}
+          />
+        </>
+      );
+    },
   });
 
 export const pushShareSheet = ({ onSendTo, onShare }) =>
@@ -490,8 +473,8 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
     component: ref => (
       <>
         <BottomSheetMenuItem
-          onPress={() => {
-            ref.close();
+          onPress={async () => {
+            await ref.close();
             onSendTo();
           }}
           title={i18n.t('sendTo')}
@@ -500,8 +483,8 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
         />
         <BottomSheetMenuItem
           title={i18n.t('share')}
-          onPress={() => {
-            ref.close();
+          onPress={async () => {
+            await ref.close();
             onShare();
           }}
           iconName="edit"

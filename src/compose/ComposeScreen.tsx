@@ -159,7 +159,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   useFocusEffect(store.onScreenFocused);
 
   const autofocus =
-    props.route?.params?.createMode === 'post' ||
+    (props.route?.params?.createMode ?? 'post') === 'post' ||
     props.route?.params?.createMode === 'boost';
 
   useEffect(() => {

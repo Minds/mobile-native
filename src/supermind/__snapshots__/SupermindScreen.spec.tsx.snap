@@ -114,7 +114,7 @@ exports[`SupermindScreen should render correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#F2F2F2",
                   },
                   Object {
                     "fontFamily": "Roboto-Bold",
@@ -147,7 +147,7 @@ exports[`SupermindScreen should render correctly 1`] = `
         }
       >
         <ActivityIndicator
-          color="#1B85D6"
+          color="#FFD048"
           size="large"
         />
       </View>

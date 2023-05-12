@@ -25,7 +25,7 @@ function AudienceSelectorScreen({
   route,
 }: AudienceSelectorScreenProps) {
   const { t } = useTranslation();
-  const { safe, backIcon } = route.params ?? ({} as Record<string, string>);
+  const { safe, backIcon } = route.params ?? ({} as Record<string, any>);
   const boostStore = useBoostStore();
 
   if (!boostStore.config) {

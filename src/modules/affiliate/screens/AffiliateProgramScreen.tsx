@@ -18,6 +18,7 @@ import { useTranslation } from '../locales';
 import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
+import TotalEarnings from '../components/TotalEarnings';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
@@ -35,6 +36,20 @@ export default function AffiliateProgramScreen({ navigation }) {
         <B2 color="secondary">
           Earn 45% of all sales you refer for Boost, Minds+/Pro.
         </B2>
+        <Button
+          vertical="XXXL"
+          type="action"
+          align="start"
+          onPress={() => {
+            linkBottomSheetRef.current?.present();
+          }}>
+          Refer and earn
+        </Button>
+        <H2>Invite your friend to Minds</H2>
+        <B2 color="secondary" vertical="L">
+          Track rewards for friends that use your invite code to sign up on
+          Minds. Earn for up to 1 year.
+        </B2>
         <Section title="Affiliate Referral" color="#3B82F6" />
         <B2 color="secondary">
           Earn 5% of all sales your affiliates refer to others.
@@ -45,25 +60,16 @@ export default function AffiliateProgramScreen({ navigation }) {
           Supermind, Memberships, and Tips.
         </B2>
 
-        <H2 top="XXL2">Invite your friend to Minds</H2>
-        <B2 color="secondary" vertical="L">
-          Track rewards for friends that use your invite code to sign up on
-          Minds. Earn for up to 1 year.
-        </B2>
         <Button
+          top="XXXL"
+          mode="outline"
           type="action"
           onPress={() => {
             inviteBottomSheetRef.current?.present();
           }}>
           Invite and earn
         </Button>
-
-        <H2 top="XXL">Total Earnings</H2>
-        <B2 color="secondary" vertical="L">
-          Track your total earnings through your unique affiliate link, for both
-          existing and new members on Minds
-        </B2>
-        <H2>$120.00</H2>
+        <TotalEarnings />
         <Row align="centerBetween" top="XL">
           <Button
             mode="outline"
@@ -74,14 +80,6 @@ export default function AffiliateProgramScreen({ navigation }) {
               });
             }}>
             View earnings
-          </Button>
-          <Button
-            mode="outline"
-            type="action"
-            onPress={() => {
-              linkBottomSheetRef.current?.present();
-            }}>
-            Earn with link
           </Button>
         </Row>
         <B3 vertical="XL">

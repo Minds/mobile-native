@@ -7,6 +7,7 @@ import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
 import EntityCounter from './EntityCounter';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
+import { observer } from 'mobx-react';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -69,4 +70,4 @@ const CommentsAction = (props: PropsType) => {
   );
 };
 
-export default CommentsAction;
+export default observer(CommentsAction);

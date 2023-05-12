@@ -29,6 +29,7 @@ import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import socketService from '~/common/services/socket.service';
 import { hasVariation } from '../../ExperimentsProvider';
 import { Image, ImageSource } from 'expo-image';
+import { BoostButtonText } from '../modules/boost/boost-composer/boost.store';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -104,6 +105,12 @@ export default class ActivityModel extends BaseModel {
   blurb?: string;
   container_guid?: string;
   tags?: string[];
+
+  /**
+   * Goals
+   */
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
 
   /**
    * Mature visibility flag

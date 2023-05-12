@@ -101,7 +101,10 @@ const PosterOptions: FC<PropsType> = props => {
       />
       <MenuItem
         title="Tag"
-        label={String(tags.slice(0, 4).map(t => `#${t} `))}
+        label={tags
+          .slice(0, 4)
+          .map(t => `#${t}`)
+          .join(', ')}
         onPress={onTagPress}
       />
       {IS_IOS ? null : (

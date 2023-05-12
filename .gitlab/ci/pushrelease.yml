@@ -7,6 +7,7 @@
     - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
+    - export RELEASE_VERSION=${CI_COMMIT_TAG:1}
 
 pushrelease_staging:ios:
   extends:
@@ -30,7 +31,7 @@ pushrelease_prod:ios:
     - .rule_patch_release
   environment: codepush_production_ios
   script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds-iOS -d Production
 
 pushrelease_prod:android:
   extends:
@@ -38,4 +39,4 @@ pushrelease_prod:android:
     - .rule_patch_release
   environment: codepush_production_android
   script:
-    - appcenter codepush release-react -a Minds/Minds -d Production
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds -d Production
