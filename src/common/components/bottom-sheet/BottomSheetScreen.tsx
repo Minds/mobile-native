@@ -107,10 +107,13 @@ const BottomSheetInnerContainer = ({
   );
 
   const close = () => {
-    bottomSheet.close();
-    setTimeout(() => {
-      NavigationService.goBack();
-    }, 200);
+    return new Promise(resolve => {
+      bottomSheet.close();
+      setTimeout(() => {
+        NavigationService.goBack();
+        resolve(true);
+      }, 200);
+    });
   };
 
   return (
@@ -127,10 +130,13 @@ const BottomSheetInnerContainerSafe = ({
   const bottomSheet = useBottomSheet();
 
   const close = () => {
-    bottomSheet.close();
-    setTimeout(() => {
-      NavigationService.goBack();
-    }, 200);
+    return new Promise(resolve => {
+      bottomSheet.close();
+      setTimeout(() => {
+        NavigationService.goBack();
+        resolve(true);
+      }, 200);
+    });
   };
 
   return (
