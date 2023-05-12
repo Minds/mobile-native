@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedback,
