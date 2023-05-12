@@ -2,9 +2,8 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Alert, SafeAreaView, ScrollView, View } from 'react-native';
+import { Alert, Image, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Image } from 'expo-image';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
 import SmallCircleButton from '~/common/components/SmallCircleButton';
@@ -276,7 +275,7 @@ class BlogsViewScreen extends Component<PropsType> {
         ) : (
           <View style={theme.flexColumnCentered}>
             <Image
-              contentFit="contain"
+              resizeMode="contain"
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
