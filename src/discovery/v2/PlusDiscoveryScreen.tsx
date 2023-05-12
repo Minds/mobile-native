@@ -21,7 +21,7 @@ const PlusDiscoveryScreen = observer(() => {
 
   const header = (
     <View style={theme.bgPrimaryBackground}>
-      <ScreenHeader title={i18n.t('plusTabTitleDiscovery')} />
+      <ScreenHeader back title={i18n.t('plusTabTitleDiscovery')} />
       <TopbarTabbar
         current={store.activeTabId}
         onChange={tabId => {
