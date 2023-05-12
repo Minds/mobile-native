@@ -32,9 +32,7 @@ export const createLightButtonTheme = (
   colorName: string,
 ) => ({
   [`background${variantName}`]:
-    variantName === 'Primary'
-      ? color['yellow-300-alt']
-      : color[`${colorName}-300`],
+    variantName === 'Primary' ? color['blue-500'] : color[`${colorName}-300`],
   [`backgroundFocus${variantName}`]: color[`${colorName}-400`],
   [`backgroundPress${variantName}`]: color[`${colorName}-500`],
   [`backgroundHover${variantName}`]: color[`${colorName}-500`],

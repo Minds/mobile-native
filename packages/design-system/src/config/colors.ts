@@ -30,7 +30,7 @@ export const color = {
   'blue-200': '#b7c7ff',
   'blue-300': '#92aaff',
   'blue-400': '#6e8eff',
-  'blue-500': '#4a72ff',
+  'blue-500': '#1b85d6',
   'blue-600': '#3b5dd5',
   'blue-700': '#2c48aa',
   'blue-800': '#1e3480',
@@ -77,5 +77,5 @@ export const color = {
   black: '#000000',
   white: '#FFFFFF',
 
-  blue: ' #4a72ff',
+  blue: '#1b85d6',
 };
