@@ -11,10 +11,7 @@ import { IS_IOS } from '~/config/Config';
 import PressableScale from '~/common/components/PressableScale';
 import { AnimatePresence, MotiView } from 'moti';
 import { Icon } from '~/common/ui';
-import {
-  useSafeAreaFrame,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type SearchTopBarProps = Pick<TextInputProps, 'onSubmitEditing'> & {
   visible?: boolean;
