@@ -21,15 +21,15 @@ function BoostButtonScreen({ navigation }: BoostButtonScreenProps) {
   const items: { id: BoostButtonText; title: string }[] = [
     {
       id: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL,
-      title: t('Subscribe to my channel'),
+      title: t(`goalText.${BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL}`),
     },
     {
       id: BoostButtonText.GET_CONNECTED,
-      title: t('Get connected'),
+      title: t(`goalText.${BoostButtonText.GET_CONNECTED}`),
     },
     {
       id: BoostButtonText.STAY_IN_THE_LOOP,
-      title: t('Stay in the loop'),
+      title: t(`goalText.${BoostButtonText.STAY_IN_THE_LOOP}`),
     },
   ];
 

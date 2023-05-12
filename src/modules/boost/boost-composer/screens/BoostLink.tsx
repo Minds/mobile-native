@@ -26,19 +26,19 @@ function BoostLinkScreen({ navigation }: BoostLinkScreenProps) {
   const items: { id: BoostButtonText; title: string }[] = [
     {
       id: BoostButtonText.LEARN_MORE,
-      title: t('Learn More'),
+      title: t(`goalText.${BoostButtonText.LEARN_MORE}`),
     },
     {
       id: BoostButtonText.GET_STARTED,
-      title: t('Get Started'),
+      title: t(`goalText.${BoostButtonText.GET_STARTED}`),
     },
     {
       id: BoostButtonText.SIGN_UP,
-      title: t('Sign Up'),
+      title: t(`goalText.${BoostButtonText.SIGN_UP}`),
     },
     {
       id: BoostButtonText.TRY_FOR_FREE,
-      title: t('Try For Free'),
+      title: t(`goalText.${BoostButtonText.TRY_FOR_FREE}`),
     },
   ];
 

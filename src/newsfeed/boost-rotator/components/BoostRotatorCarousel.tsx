@@ -24,7 +24,11 @@ function BoostRotatorCarousel() {
     itemProps => (
       <Activity
         entity={itemProps.item}
-        maxContentHeight={ACTIVITY_HEIGHT}
+        maxContentHeight={
+          itemProps.item?.goal_button_text
+            ? ACTIVITY_HEIGHT - BOOST_CTA_HEIGHT
+            : ACTIVITY_HEIGHT
+        }
         autoHeight
         navigation={navigation}
         borderless
@@ -64,6 +68,7 @@ const HEIGHT = 500;
  * the max height of the activity
  */
 const ACTIVITY_HEIGHT = HEIGHT - 175;
+const BOOST_CTA_HEIGHT = 45;
 /**
  * the number of activities to render at any time
  */
