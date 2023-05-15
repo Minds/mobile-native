@@ -4809,7 +4809,7 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-vector-icons@^6.4.5":
+"@types/react-native-vector-icons@^6.4.13", "@types/react-native-vector-icons@^6.4.5":
   version "6.4.13"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.13.tgz#28b34d15094e040718beefb67cb3eff0c4994cb6"
   integrity sha512-1PqFoKuXTSzMHwGMAr+REdYJBQAbe9xrww3ecZR0FsHcD1K+vGS/rxuAriL4rsI6+p69sZQjDzpEVAbDQcjSwA==
@@ -5013,7 +5013,7 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@^5.25.0", "@typescript-eslint/eslint-plugin@^5.30.5":
+"@typescript-eslint/eslint-plugin@^5.30.5", "@typescript-eslint/eslint-plugin@^5.59.5":
   version "5.59.5"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.59.5.tgz#f156827610a3f8cefc56baeaa93cd4a5f32966b4"
   integrity sha512-feA9xbVRWJZor+AnLNAr7A8JRWeZqHUf4T9tlP+TN04b05pFVhO5eN7/O93Y/1OUlLMHKbnJisgDURs/qvtqdg==
@@ -5029,7 +5029,7 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/parser@^5.25.0", "@typescript-eslint/parser@^5.30.5":
+"@typescript-eslint/parser@^5.30.5", "@typescript-eslint/parser@^5.59.5":
   version "5.59.5"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.59.5.tgz#63064f5eafbdbfb5f9dfbf5c4503cdf949852981"
   integrity sha512-NJXQC4MRnF9N9yWqQE2/KLRSOLvrrlZb48NGVfBa+RuPMN6B7ZcK5jZOvhuygv4D64fRKnZI4L4p8+M+rfeQuw==
@@ -12158,7 +12158,7 @@ i18n-js@^3.8.0:
   resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.9.2.tgz#4a015dcfabd4c9fc73115fc2d02d2627e4c15ca5"
   integrity sha512-+Gm8h5HL0emzKhRx2avMKX+nKiVPXeaOZm7Euf2/pbbFcLQoJ3zZYiUykAzoRasijCoWos2Kl1tslmScTgAQKw==
 
-i18next@^22.0.2:
+i18next@^22.4.15:
   version "22.4.15"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.4.15.tgz#951882b751872994f8502b5a6ef6f796e6a7d7f8"
   integrity sha512-yYudtbFrrmWKLEhl6jvKUYyYunj4bTBCe2qIUYAxbXoPusY7YmdwPvOE6fx6UIfWvmlbCWDItr7wIs8KEBZ5Zg==
@@ -17419,7 +17419,7 @@ react-hooks-testing-library@^0.6.0:
   dependencies:
     "@testing-library/react-hooks" "~1.0.2"
 
-react-i18next@^12.0.0:
+react-i18next@^12.2.2:
   version "12.2.2"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-12.2.2.tgz#38a6fad11acf4f2abfc5611bdb6b1918d0f47578"
   integrity sha512-KBB6buBmVKXUWNxXHdnthp+38gPyBT46hJCAIQ8rX19NFL/m2ahte2KARfIDf2tMnSAL7wwck6eDOd/9zn6aFg==
@@ -17478,10 +17478,10 @@ react-native-bootsplash@^4.7.1:
     picocolors "^1.0.0"
     sharp "^0.32.1"
 
-react-native-calendars@^1.1268.0:
-  version "1.1295.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1295.0.tgz#bbd0d99593fbef42ca7cbb9159f6061c852c8a1d"
-  integrity sha512-0Hvf7g6JA5HMHBr7svqhAPu7WQSwm31NllrIs6jWT+aUfd06Tfjo3MVYWBq8rHFNH9BCUvJVP2HwoRkQiF0Rug==
+react-native-calendars@^1.1297.0:
+  version "1.1297.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1297.0.tgz#a9c241b0f3ab149a6b64e5ce253cace71a72299b"
+  integrity sha512-up74+QFVT9p+WSQxV5IgjlU6u5LbZ5w+t1G2sqdzMFmAxaC4dFLBcUI558u6LHfQEPDrTBC5X70qLnROVxRX/g==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     lodash "^4.17.15"
@@ -20431,10 +20431,10 @@ typedarray-to-buffer@3.1.5, typedarray-to-buffer@^3.1.2, typedarray-to-buffer@^3
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.8.4:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
-  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+typescript@4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 typescript@^5.0.4:
   version "5.0.4"

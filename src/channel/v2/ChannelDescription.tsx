@@ -27,7 +27,7 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = useCallback(
-    handlePress => {
+    (handlePress): React.ReactNode => {
       return (
         <MText
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
@@ -40,7 +40,7 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
   );
 
   const renderTruncatedFooter = useCallback(
-    handlePress => {
+    (handlePress): React.ReactNode => {
       return (
         <TouchableOpacity onPress={handlePress} style={styles.touchable}>
           <LinearGradient

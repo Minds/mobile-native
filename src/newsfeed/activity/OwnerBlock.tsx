@@ -56,6 +56,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   containerStyle: any;
 
   static contextType = ChannelContext;
+  declare context: React.ContextType<typeof ChannelContext>;
 
   /**
    * Navigate To channel

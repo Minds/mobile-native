@@ -52,7 +52,8 @@
       "utils": ["src/utils"],
       "utils/*": ["src/utils/*"],
       "@minds/ui": ["packages/design-system/src"],
-      "@minds/ui/*": ["packages/design-system/src/*"]
+      "@minds/ui/*": ["packages/design-system/src/*"],
+      "react": ["./node_modules/@types/react"]
     },
     "types": ["jest"]
   },

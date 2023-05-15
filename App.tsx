@@ -27,7 +27,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
-import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import deviceInfo from 'react-native-device-info';

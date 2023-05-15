@@ -1,12 +1,11 @@
-import React, { Suspense } from 'react';
+import React, { PropsWithChildren, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, View } from 'react-native';
 import ErrorBoundary from '~/common/components/ErrorBoundary';
 
-export type ErrorSuspenseProps = {
+export type ErrorSuspenseProps = PropsWithChildren<{
   // ErrorFallback?: React.ComponentType<FallbackProps>;
-  SuspenseFallback?: NonNullable<React.ReactNode> | null;
-  children: React.ReactChildren | React.ReactNode | React.ReactNode[];
+  SuspenseFallback: React.ReactNode;
   onReset?: () => void;
   onError?: (
     error: Error,
@@ -14,11 +13,12 @@ export type ErrorSuspenseProps = {
       componentStack: string;
     },
   ) => void;
-};
+}>;
+
 export function ErrorSuspense(props: ErrorSuspenseProps): JSX.Element {
   const {
     // ErrorFallback = DefaultErrorFallback,
-    SuspenseFallback = DefaultSuspenseFallback,
+    SuspenseFallback = DefaultSuspenseFallback(),
     children,
   } = props;
   // const [reset, setReset] = useState(false);
@@ -51,7 +51,7 @@ export function ErrorSuspense(props: ErrorSuspenseProps): JSX.Element {
 //   );
 // }
 
-export function DefaultSuspenseFallback(): JSX.Element {
+export function DefaultSuspenseFallback(): React.ReactNode {
   const { t } = useTranslation('mainModule');
   return (
     <View>
