@@ -2,7 +2,6 @@
   stage: upload
   tags: [minds-ci]
   interruptible: true
-  except: !reference [.except_nightly, except]
 
 # Gets the version of the iOS app parsing the project files
 .getiosversion: &getiosversion
@@ -35,6 +34,7 @@
 upload:android:s3:oss: # Upload to S3
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .upload_s3
     - .only_tags
   before_script:
@@ -49,6 +49,7 @@ upload:android:browserstack:oss:
   <<: *upload_browserstack
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .only_tags
   before_script:
     - !reference [.getversion, script]
@@ -63,6 +64,7 @@ upload:android:browserstack:oss:
 upload:android:s3:playstore: # Upload to S3
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .upload_s3
     - .only_tags
   before_script:
@@ -77,6 +79,7 @@ upload:android:browserstack:playstore:
   <<: *upload_browserstack
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .only_tags
   before_script:
     - !reference [.getversion, script]
@@ -92,6 +95,7 @@ upload:android:s3:oss:rc: # Upload to S3
   <<: *upload_s3
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .only_release_branch
   before_script:
     - !reference [.getversion, script]
@@ -105,6 +109,7 @@ upload:android:browserstack:oss:rc:
   <<: *upload_browserstack
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .only_release_branch
   before_script:
     - !reference [.getversion, script]
@@ -120,6 +125,7 @@ upload:android:browserstack:mr:
   <<: *upload_browserstack
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .except_nightly
     - .only_native
   before_script:
@@ -138,6 +144,7 @@ upload:android:browserstack:mr:
 upload:ios:browserstack:mr:
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .upload_browserstack
     - .only_native
   before_script:
@@ -154,6 +161,7 @@ upload:ios:browserstack:mr:
 upload:ios:browserstack:rc:
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .upload_browserstack
     - .only_release_branch
   before_script:
@@ -170,6 +178,7 @@ upload:ios:browserstack:rc:
 upload:ios:browserstack:production:
   extends:
     - .upload_base
+    - .rule_never_nightly
     - .upload_browserstack
     - .rule_automatic_nonpatch_manual_patch
   before_script:

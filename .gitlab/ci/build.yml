@@ -66,8 +66,7 @@ build:android:
     - *move_apk
   rules:
     - !reference [.rule_automatic_nonpatch_manual_others, rules]
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
-      when: never
+    - !reference [.rule_never_nightly, rules]
 
 # Production build for QA of MR
 # Runs only on native branches

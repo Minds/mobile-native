@@ -71,6 +71,12 @@ stages:
       - $CI_RC_NIGHTLY_TESTS == "true"
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
+# Run only on nightly jobs
+.rule_never_nightly:
+  rules:
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
+      when: never
+
 # Run only on native branches
 .only_native:
   only:
