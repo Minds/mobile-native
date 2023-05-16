@@ -53,7 +53,6 @@ build:ios:
     - pod install
   extends:
     - .build_base
-    - .only_native
     - .rule_automatic_nonpatch_manual_others
   script:
     - fastlane buildrelease # | tee -a ios-job.log
