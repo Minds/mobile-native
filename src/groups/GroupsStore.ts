@@ -15,7 +15,7 @@ class GroupsStore {
    */
   @observable list = new OffsetListStore('shallow');
 
-  @observable filter = 'member';
+  @observable filter?: 'member' | 'suggested' = 'member';
   @observable loading = false;
   @observable loaded = false;
 

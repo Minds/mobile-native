@@ -142,6 +142,23 @@ class ChannelsService {
       return 0;
     }
   }
+
+  async getGroupList(channel: UserModel): Promise<any[]> {
+    try {
+      const result: any = await apiService.get(
+        `api/v3/channel/${channel.guid}/groups`,
+      );
+
+      const response: any = await apiService.get('api/v2/entities/', {
+        urns: result.entities.map(entity => entity.urn),
+        as_activities: 0,
+      });
+
+      return response.entities;
+    } catch (err) {
+      return [];
+    }
+  }
 }
 
 export default new ChannelsService();

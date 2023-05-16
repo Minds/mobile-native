@@ -23,7 +23,12 @@ type InitialLoadParams = {
   username?: string;
 };
 
-export type ChannelTabType = 'feed' | 'shop' | 'about' | 'memberships';
+export type ChannelTabType =
+  | 'feed'
+  | 'shop'
+  | 'about'
+  | 'groups'
+  | 'memberships';
 
 type FilterType = 'all' | 'images' | 'videos' | 'blogs';
 
@@ -383,9 +388,14 @@ const createChannelStore = () => {
     async getGroupCount() {
       if (this.channel) {
         return await channelsService.getGroupCount(this.channel);
-      } else {
-        return 0;
       }
+      return 0;
+    },
+    async getGroupList() {
+      if (this.channel) {
+        return await channelsService.getGroupList(this.channel);
+      }
+      return [];
     },
     isNsfw(channel: Entity) {
       return (
