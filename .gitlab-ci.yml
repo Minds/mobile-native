@@ -34,37 +34,29 @@ stages:
 .rule_nonpatch_release_manual:
   rules:
     - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
       when: manual
 
 # Run only for tags that ends on .0 (major, minor releases)
 .rule_nonpatch_release:
   rules:
     - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
 
 # Run for tags that ends on .0 (major, minor releases)
 .rule_nonpatch_release_success:
   rules:
     - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
       when: on_success
 
 # Run only for tags that don't end on .0 (patch releases)
 .rule_patch_release:
   rules:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
-      changes:
-        - master
 
-# Run only on master
-.only_master:
+# Run only on develop
+.only_develop:
   only:
     refs:
-      - master
+      - develop
 
 # Run only on tags
 .only_tags:
@@ -85,12 +77,20 @@ stages:
     refs:
       - /^native-*/
 
-# Run automatic on develop branch and manually on master
-.rule_automatic_develop_manual_master:
+# Run automatic on develop branch and manually other
+.rule_automatic_master_manual_others:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
     - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH != "master"
+      when: manual
+
+# Run automatic on develop branch and manually on master
+.rule_automatic_master_manual_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: manual
 
 # Run automatic on nonpatch versions and manually on patch versions
@@ -101,8 +101,22 @@ stages:
     - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
       when: manual
 
-# Run automatic on develop only
-.rule_automatic_develop:
+# Run automatic on nonpatch versions and manually on patch versions
+.rule_automatic_nonpatch_manual_others:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_TAG =~ /.*\.0$/
       when: on_success
+    - if: $CI_COMMIT_TAG != null
+      when: manual
+
+# Run automatic on master only
+.rule_automatic_master:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+
+# Run automatic on master only
+.only_release_branch:
+  only:
+    refs:
+      - /^release\/-*/

@@ -12,7 +12,7 @@
 pushrelease_staging:ios:
   extends:
     - .codepush_base
-    - .only_master
+    - .only_develop
   environment: codepush_staging_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
@@ -20,7 +20,7 @@ pushrelease_staging:ios:
 pushrelease_staging:android:
   extends:
     - .codepush_base
-    - .only_master
+    - .only_develop
   environment: codepush_staging_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Staging
