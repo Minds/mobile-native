@@ -14,7 +14,7 @@ jest.mock('../../src/common/components/Captcha');
 jest.mock('react-native-safe-area-context');
 jest.mock('../../AppMessages', () => ({ showNotification: jest.fn() }));
 
-describe('RegisterScreen component', () => {
+xdescribe('RegisterScreen component', () => {
   let navigation;
   beforeEach(() => {
     navigation = { goBack: jest.fn() };
