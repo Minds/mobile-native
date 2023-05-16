@@ -64,6 +64,12 @@ stages:
     refs:
       - tags
 
+# Run only on tags
+.rule_tags:
+  rules:
+    - if: $CI_COMMIT_TAG != null
+      when: on_success
+
 # Run only on nightly jobs
 .except_nightly:
   except:
@@ -123,8 +129,12 @@ stages:
     - if: $CI_COMMIT_BRANCH == "master"
       when: on_success
 
-# Run automatic on master only
-.only_release_branch:
-  only:
-    refs:
-      - /^release\/-*/
+.rule_release_branch:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release\/.*/
+      when: on_success
+
+.rule_native_branch:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^native\/.*/
+      when: on_success
