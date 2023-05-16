@@ -37,9 +37,6 @@ release:android:google_play:
 
 # iOS Release candidate to TestFlight
 release:ios:testflight:rc:
-  extends:
-    - .except_nightly
-    - .only_release_branch
   image: macos-12-xcode-14
   stage: release
   tags: [shared-macos-amd64]
@@ -52,6 +49,9 @@ release:ios:testflight:rc:
   script:
     - cd ios
     - fastlane upload_testflight
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
 
 # iOS production to TestFlight
 release:ios:testflight:

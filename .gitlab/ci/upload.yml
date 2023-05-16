@@ -34,23 +34,22 @@
 upload:android:s3:oss: # Upload to S3
   extends:
     - .upload_base
-    - .rule_never_nightly
     - .upload_s3
-    - .rule_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
   dependencies:
     - build:android
   needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_tags, rules]
 
 # Upload full APK to Browserstack
 upload:android:browserstack:oss:
   <<: *upload_browserstack
   extends:
     - .upload_base
-    - .rule_never_nightly
-    - .rule_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
@@ -59,28 +58,30 @@ upload:android:browserstack:oss:
   dependencies:
     - build:android
   needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_tags, rules]
 
 # Upload production builds (play-store version)
 upload:android:s3:playstore: # Upload to S3
   extends:
     - .upload_base
-    - .rule_never_nightly
     - .upload_s3
-    - .rule_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
   dependencies:
     - build:android:store
   needs: [build:android:store]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_tags, rules]
 
 # Upload to Browserstack
 upload:android:browserstack:playstore:
   <<: *upload_browserstack
   extends:
     - .upload_base
-    - .rule_never_nightly
-    - .rule_tags
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
@@ -89,28 +90,30 @@ upload:android:browserstack:playstore:
   dependencies:
     - build:android:store
   needs: [build:android:store]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_tags, rules]
 
 # Upload production RC
 upload:android:s3:oss:rc: # Upload to S3
   <<: *upload_s3
   extends:
     - .upload_base
-    - .rule_never_nightly
-    - .rule_release_branch
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
   dependencies:
     - build:android
   needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
 
 # Upload to Browserstack
 upload:android:browserstack:oss:rc:
   <<: *upload_browserstack
   extends:
     - .upload_base
-    - .rule_never_nightly
-    - .rule_release_branch
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
@@ -119,15 +122,15 @@ upload:android:browserstack:oss:rc:
   dependencies:
     - build:android
   needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
 
 # Upload MR builds to browserstack
 upload:android:browserstack:mr:
   <<: *upload_browserstack
   extends:
     - .upload_base
-    - .rule_never_nightly
-    - .except_nightly
-    - .rule_native_branch
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
@@ -136,6 +139,9 @@ upload:android:browserstack:mr:
   dependencies:
     - build:android:mr
   needs: [build:android:mr]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_native_branch, rules]
 
 #===============| IOS |===============>
 
@@ -144,9 +150,7 @@ upload:android:browserstack:mr:
 upload:ios:browserstack:mr:
   extends:
     - .upload_base
-    - .rule_never_nightly
     - .upload_browserstack
-    - .rule_native_branch
   before_script:
     - export ENVFILE=".env.review"
     - export INPUT_FILE=@ios/Minds.ipa
@@ -155,15 +159,16 @@ upload:ios:browserstack:mr:
   dependencies:
     - build:ios
   needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_native_branch, rules]
 
 # Uploads ipa to browserstack with appname Minds-$APPVERSION-RC.ipa
 # only runs on release branches
 upload:ios:browserstack:rc:
   extends:
     - .upload_base
-    - .rule_never_nightly
     - .upload_browserstack
-    - .rule_release_branch
   before_script:
     - *getiosversion
     - export INPUT_FILE=@ios/Minds.ipa
@@ -172,15 +177,16 @@ upload:ios:browserstack:rc:
   dependencies:
     - build:ios
   needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
 
 # Uploads ipa to browserstack with appname Minds-$APPVERSION.ipa
 # runs automatically on major and minor tags. And manually on patch tags.
 upload:ios:browserstack:production:
   extends:
     - .upload_base
-    - .rule_never_nightly
     - .upload_browserstack
-    - .rule_automatic_nonpatch_manual_patch
   before_script:
     - *getiosversion
     - export INPUT_FILE=@ios/Minds.ipa
@@ -189,3 +195,6 @@ upload:ios:browserstack:production:
   dependencies:
     - build:ios
   needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
