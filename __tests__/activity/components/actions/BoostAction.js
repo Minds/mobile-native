@@ -21,8 +21,6 @@ describe('Boost action component', () => {
         navigation={navigation}
       />,
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {
@@ -45,7 +43,6 @@ describe('Boost action component', () => {
     screen.update();
     let touchables = screen.find('withSpacer(IconButtonNextComponent)');
     touchables.at(0).props().onPress();
-    jest.runAllTimers();
 
     expect(navigation.push).toHaveBeenCalled();
 

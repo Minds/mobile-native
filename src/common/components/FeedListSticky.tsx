@@ -107,9 +107,10 @@ function FeedListSticky<T extends BaseModel>(
     },
   });
 
-  const contentStyle = React.useMemo(() => ({ paddingTop: headerHeight }), [
-    headerHeight,
-  ]);
+  const contentStyle = React.useMemo(
+    () => ({ paddingTop: headerHeight }),
+    [headerHeight],
+  );
 
   return (
     <ScrollContext.Provider

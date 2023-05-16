@@ -4,17 +4,17 @@ exports[`Activity component renders correctly 1`] = `
 <View
   onLayout={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "overflow": "visible",
       },
-      Object {
+      {
         "borderBottomWidth": 6,
       },
-      Object {
+      {
         "borderColor": "#3f4b56",
       },
-      Object {
+      {
         "backgroundColor": "#1C1D1F",
       },
     ]
@@ -22,7 +22,7 @@ exports[`Activity component renders correctly 1`] = `
 >
   <Pinned
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -44,7 +44,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -65,10 +65,10 @@ exports[`Activity component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -79,7 +79,7 @@ exports[`Activity component renders correctly 1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -93,7 +93,7 @@ exports[`Activity component renders correctly 1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -110,7 +110,7 @@ exports[`Activity component renders correctly 1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -118,7 +118,7 @@ exports[`Activity component renders correctly 1`] = `
   />
   <OwnerBlock
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -140,7 +140,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -161,10 +161,10 @@ exports[`Activity component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -175,7 +175,7 @@ exports[`Activity component renders correctly 1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -189,7 +189,7 @@ exports[`Activity component renders correctly 1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -206,13 +206,13 @@ exports[`Activity component renders correctly 1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
     }
     navigation={
-      Object {
+      {
         "navigate": [MockFunction],
         "push": [MockFunction],
       }
@@ -220,7 +220,7 @@ exports[`Activity component renders correctly 1`] = `
     rightToolbar={
       <ActivityActionSheet
         entity={
-          Object {
+          {
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -242,7 +242,7 @@ exports[`Activity component renders correctly 1`] = `
             "mature": false,
             "mature_visibility": false,
             "message": "Message",
-            "ownerObj": Object {
+            "ownerObj": {
               "__list": null,
               "access_id": "",
               "allow_comments": true,
@@ -263,10 +263,10 @@ exports[`Activity component renders correctly 1`] = `
               "mature": false,
               "mature_visibility": false,
               "mode": 0,
-              "nsfw": Array [],
+              "nsfw": [],
               "onchain_booster": 0,
               "pending_subscribe": false,
-              "permissions": Object {},
+              "permissions": {},
               "plus": false,
               "plus_method": "tokens",
               "pro": false,
@@ -277,7 +277,7 @@ exports[`Activity component renders correctly 1`] = `
               "subscribers_count": undefined,
               "subscriptions_count": 0,
               "subtype": false,
-              "tags": Array [],
+              "tags": [],
               "time_created": "1522036284",
               "time_updated": "",
               "type": "user",
@@ -291,7 +291,7 @@ exports[`Activity component renders correctly 1`] = `
             "paywall": "",
             "paywall_unlocked": false,
             "perma_url": false,
-            "permissions": Object {},
+            "permissions": {},
             "pinned": false,
             "quotes": 0,
             "reminds": 0,
@@ -308,13 +308,13 @@ exports[`Activity component renders correctly 1`] = `
             "type": "activity",
             "urn": "",
             "username": "",
-            "wire_totals": Object {
+            "wire_totals": {
               "tokens": 1000000000000000000,
             },
           }
         }
         navigation={
-          Object {
+          {
             "navigate": [MockFunction],
             "push": [MockFunction],
           }
@@ -332,7 +332,7 @@ exports[`Activity component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "justifyContent": "center",
           "minHeight": 150,
         }
@@ -340,7 +340,7 @@ exports[`Activity component renders correctly 1`] = `
     >
       <MediaView
         entity={
-          Object {
+          {
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -362,7 +362,7 @@ exports[`Activity component renders correctly 1`] = `
             "mature": false,
             "mature_visibility": false,
             "message": "Message",
-            "ownerObj": Object {
+            "ownerObj": {
               "__list": null,
               "access_id": "",
               "allow_comments": true,
@@ -383,10 +383,10 @@ exports[`Activity component renders correctly 1`] = `
               "mature": false,
               "mature_visibility": false,
               "mode": 0,
-              "nsfw": Array [],
+              "nsfw": [],
               "onchain_booster": 0,
               "pending_subscribe": false,
-              "permissions": Object {},
+              "permissions": {},
               "plus": false,
               "plus_method": "tokens",
               "pro": false,
@@ -397,7 +397,7 @@ exports[`Activity component renders correctly 1`] = `
               "subscribers_count": undefined,
               "subscriptions_count": 0,
               "subtype": false,
-              "tags": Array [],
+              "tags": [],
               "time_created": "1522036284",
               "time_updated": "",
               "type": "user",
@@ -411,7 +411,7 @@ exports[`Activity component renders correctly 1`] = `
             "paywall": "",
             "paywall_unlocked": false,
             "perma_url": false,
-            "permissions": Object {},
+            "permissions": {},
             "pinned": false,
             "quotes": 0,
             "reminds": 0,
@@ -428,7 +428,7 @@ exports[`Activity component renders correctly 1`] = `
             "type": "activity",
             "urn": "",
             "username": "",
-            "wire_totals": Object {
+            "wire_totals": {
               "tokens": 1000000000000000000,
             },
           }
@@ -437,11 +437,11 @@ exports[`Activity component renders correctly 1`] = `
       />
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "paddingHorizontal": 16,
             },
-            Object {
+            {
               "paddingVertical": 12,
             },
           ]
@@ -449,7 +449,7 @@ exports[`Activity component renders correctly 1`] = `
       >
         <ExplicitText
           entity={
-            Object {
+            {
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -471,7 +471,7 @@ exports[`Activity component renders correctly 1`] = `
               "mature": false,
               "mature_visibility": false,
               "message": "Message",
-              "ownerObj": Object {
+              "ownerObj": {
                 "__list": null,
                 "access_id": "",
                 "allow_comments": true,
@@ -492,10 +492,10 @@ exports[`Activity component renders correctly 1`] = `
                 "mature": false,
                 "mature_visibility": false,
                 "mode": 0,
-                "nsfw": Array [],
+                "nsfw": [],
                 "onchain_booster": 0,
                 "pending_subscribe": false,
-                "permissions": Object {},
+                "permissions": {},
                 "plus": false,
                 "plus_method": "tokens",
                 "pro": false,
@@ -506,7 +506,7 @@ exports[`Activity component renders correctly 1`] = `
                 "subscribers_count": undefined,
                 "subscriptions_count": 0,
                 "subtype": false,
-                "tags": Array [],
+                "tags": [],
                 "time_created": "1522036284",
                 "time_updated": "",
                 "type": "user",
@@ -520,7 +520,7 @@ exports[`Activity component renders correctly 1`] = `
               "paywall": "",
               "paywall_unlocked": false,
               "perma_url": false,
-              "permissions": Object {},
+              "permissions": {},
               "pinned": false,
               "quotes": 0,
               "reminds": 0,
@@ -537,31 +537,31 @@ exports[`Activity component renders correctly 1`] = `
               "type": "activity",
               "urn": "",
               "username": "",
-              "wire_totals": Object {
+              "wire_totals": {
                 "tokens": 1000000000000000000,
               },
             }
           }
           navigation={
-            Object {
+            {
               "navigate": [MockFunction],
               "push": [MockFunction],
             }
           }
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontFamily": "Roboto",
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "fontSize": 18,
               },
-              Object {
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
                 "fontWeight": "500",
               },
@@ -570,7 +570,7 @@ exports[`Activity component renders correctly 1`] = `
         />
         <ForwardRef(ObserverForwardRef)
           entity={
-            Object {
+            {
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -592,7 +592,7 @@ exports[`Activity component renders correctly 1`] = `
               "mature": false,
               "mature_visibility": false,
               "message": "Message",
-              "ownerObj": Object {
+              "ownerObj": {
                 "__list": null,
                 "access_id": "",
                 "allow_comments": true,
@@ -613,10 +613,10 @@ exports[`Activity component renders correctly 1`] = `
                 "mature": false,
                 "mature_visibility": false,
                 "mode": 0,
-                "nsfw": Array [],
+                "nsfw": [],
                 "onchain_booster": 0,
                 "pending_subscribe": false,
-                "permissions": Object {},
+                "permissions": {},
                 "plus": false,
                 "plus_method": "tokens",
                 "pro": false,
@@ -627,7 +627,7 @@ exports[`Activity component renders correctly 1`] = `
                 "subscribers_count": undefined,
                 "subscriptions_count": 0,
                 "subtype": false,
-                "tags": Array [],
+                "tags": [],
                 "time_created": "1522036284",
                 "time_updated": "",
                 "type": "user",
@@ -641,7 +641,7 @@ exports[`Activity component renders correctly 1`] = `
               "paywall": "",
               "paywall_unlocked": false,
               "perma_url": false,
-              "permissions": Object {},
+              "permissions": {},
               "pinned": false,
               "quotes": 0,
               "reminds": 0,
@@ -658,13 +658,13 @@ exports[`Activity component renders correctly 1`] = `
               "type": "activity",
               "urn": "",
               "username": "",
-              "wire_totals": Object {
+              "wire_totals": {
                 "tokens": 1000000000000000000,
               },
             }
           }
           style={
-            Object {
+            {
               "fontFamily": "Roboto",
               "fontSize": 16,
               "lineHeight": 24,
@@ -676,7 +676,7 @@ exports[`Activity component renders correctly 1`] = `
   </Pressable>
   <BottomContent
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -698,7 +698,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -719,10 +719,10 @@ exports[`Activity component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -733,7 +733,7 @@ exports[`Activity component renders correctly 1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -747,7 +747,7 @@ exports[`Activity component renders correctly 1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -764,7 +764,7 @@ exports[`Activity component renders correctly 1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }

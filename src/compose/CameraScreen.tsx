@@ -1,8 +1,8 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import React, { useCallback, useEffect, useState } from 'react';
 import { Image, InteractionManager, StatusBar, View } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';

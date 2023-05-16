@@ -4,9 +4,9 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
 <View>
   <View
     style={
-      Object {
-        "transform": Array [
-          Object {
+      {
+        "transform": [
+          {
             "translateY": -100,
           },
         ],
@@ -15,14 +15,14 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "zIndex": 1,
         }
       }
     >
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -32,8 +32,8 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
               },
@@ -42,7 +42,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
                 "marginRight": 8,
@@ -51,6 +51,23 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
             }
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -65,7 +82,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 }
@@ -73,7 +90,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -82,8 +99,8 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "row",
                         "height": 28,
@@ -98,18 +115,18 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 25.76,
                         },
-                        Object {},
-                        Object {
+                        {},
+                        {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -126,24 +143,24 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   >
     <View
       containerDimensions={
-        Object {
+        {
           "height": 1134,
           "width": 750,
         }
       }
       data={
-        Array [
-          Object {
+        [
+          {
             "src": "http://fake.com0",
           },
-          Object {
+          {
             "src": "http://fake.com1",
           },
         ]
@@ -152,20 +169,20 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       onSwipeToClose={[Function]}
       renderItem={[Function]}
       style={
-        Object {
+        {
           "backgroundColor": "#1C1D1F",
         }
       }
     />
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#1C1D1F",
           },
-          Object {
-            "transform": Array [
-              Object {
+          {
+            "transform": [
+              {
                 "translateY": 100,
               },
             ],

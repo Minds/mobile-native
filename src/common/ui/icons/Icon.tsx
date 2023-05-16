@@ -76,8 +76,11 @@ export function Icon({
   testID,
   ...common
 }: IIcon & UISpacingPropType) {
-  const { font: iconFont, name: iconName, ratio = 1 } =
-    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+  const {
+    font: iconFont,
+    name: iconName,
+    ratio = 1,
+  } = ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
   const iconStyles: TextStyle[] = [];
 
   if (shadow) {
@@ -163,8 +166,12 @@ function IconNextComponent({
   shadow = false,
   testID,
 }: IIconNext) {
-  const { font: iconFont, name: iconName, ratio = 1, top } =
-    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+  const {
+    font: iconFont,
+    name: iconName,
+    ratio = 1,
+    top,
+  } = ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   const iconStyles: TextStyle[] = [];
 

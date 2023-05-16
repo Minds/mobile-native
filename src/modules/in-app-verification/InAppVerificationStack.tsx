@@ -25,21 +25,19 @@ export type InAppVerificationStackParamList = {
 };
 
 export type InAppVerificationStackScreenProps<
-  S extends keyof InAppVerificationStackParamList
+  S extends keyof InAppVerificationStackParamList,
 > = StackScreenProps<InAppVerificationStackParamList, S>;
 
 export type InAppVerificationStackRouteProp<
-  S extends keyof InAppVerificationStackParamList
+  S extends keyof InAppVerificationStackParamList,
 > = RouteProp<InAppVerificationStackParamList, S>;
 
 export type InAppVerificationStackNavigationProp<
-  S extends keyof InAppVerificationStackParamList
+  S extends keyof InAppVerificationStackParamList,
 > = StackNavigationProp<InAppVerificationStackParamList, S>;
 
-const {
-  Navigator,
-  Screen,
-} = createStackNavigator<InAppVerificationStackParamList>();
+const { Navigator, Screen } =
+  createStackNavigator<InAppVerificationStackParamList>();
 
 type PropsType = AppStackScreenProps<'InAppVerification'>;
 

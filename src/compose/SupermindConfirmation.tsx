@@ -91,8 +91,7 @@ export default function SupermindConfirmation() {
               </B1>
               <SmartImage
                 source={{
-                  uri:
-                    'https://www.minds.com/static/en/assets/twitter-supermind-placeholder.png',
+                  uri: 'https://www.minds.com/static/en/assets/twitter-supermind-placeholder.png',
                 }}
                 placeholder="L+Mt8[Ng%LjFD+bIoyae_JsjRkf+"
                 contentFit="cover"

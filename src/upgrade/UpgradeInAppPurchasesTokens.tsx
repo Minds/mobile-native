@@ -70,7 +70,9 @@ const UpgradeInAppPurchasesTokens = ({
         subscription => subscription.productId === plan.iapSku,
       );
       if ((sub as SubscriptionAndroid)?.subscriptionOfferDetails) {
-        plan.offerToken = (sub as SubscriptionAndroid)?.subscriptionOfferDetails?.[0].offerToken;
+        plan.offerToken = (
+          sub as SubscriptionAndroid
+        )?.subscriptionOfferDetails?.[0].offerToken;
       }
     });
   }, [store.plansUSD, subscriptions]);

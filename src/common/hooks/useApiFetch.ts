@@ -228,7 +228,7 @@ const createStore = (storeOptions: {
       );
 
       // hack to remove the offset if the result was empty
-      if (dataField && result[dataField]?.length === 0) {
+      if (result && dataField && result[dataField]?.length === 0) {
         delete result[offsetField];
       }
 
