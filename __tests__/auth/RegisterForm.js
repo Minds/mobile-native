@@ -48,7 +48,7 @@ describe('RegisterScreen component', () => {
     const user = screen.getByTestId('usernameRegisterInput');
     const email = screen.getByTestId('emailInput');
     const password = screen.getByTestId('passwordInput');
-    const checkboxes = screen.getAllByRole('checkbox');
+    const checkboxes = screen.getAllByTestId('checkbox');
     const button = screen.getByTestId('registerButton');
 
     await fireEvent.changeText(user, 'myuser');
@@ -71,7 +71,7 @@ describe('RegisterScreen component', () => {
     const user = screen.getByTestId('usernameRegisterInput');
     const email = screen.getByTestId('emailInput');
     const password = screen.getByTestId('passwordInput');
-    const checkboxes = screen.getAllByRole('checkbox');
+    const checkboxes = screen.getAllByTestId('checkbox');
     const button = screen.getByTestId('registerButton');
 
     // const spy = jest.spyOn(captcha.parent, 'show');
