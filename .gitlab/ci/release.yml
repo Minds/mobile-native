@@ -39,7 +39,7 @@ release:ios_rc_testflight:
   extends: .except_nightly
   image: macos-12-xcode-14
   stage: release
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   environment: testflight
   dependencies:
     - build:ios_release_candidate
@@ -58,7 +58,7 @@ release:ios_prod_testflight:
   extends: .only_tags
   image: macos-12-xcode-14
   stage: release
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   environment: app_store
   dependencies:
     - build:ios_production
