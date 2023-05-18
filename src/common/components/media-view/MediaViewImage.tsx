@@ -40,12 +40,15 @@ export default function MediaViewImage({
   const [imageLoadFailed, setImageLoadFailed] = React.useState(false);
   const { width, height } = useDimensions().window;
   const [size, setSize] = React.useState({ height: 0, width: 0 });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const source = React.useMemo(() => entity.getThumbSource('xlarge'), [
-    entity,
-    //@ts-ignore
-    entity.attachment_guid,
-  ]);
+  const source = React.useMemo(
+    () => entity.getThumbSource('xlarge'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      entity,
+      //@ts-ignore
+      entity.attachment_guid,
+    ],
+  );
   const thumbnail = React.useMemo(
     () =>
       entity.isGif()
@@ -90,7 +93,7 @@ export default function MediaViewImage({
 
   const imageStyle = useMemoStyle(
     ['fullWidth', { aspectRatio }, style as ImageStyle],
-    [(aspectRatio, style)],
+    [aspectRatio, style],
   );
 
   const imageError = React.useCallback(() => {
