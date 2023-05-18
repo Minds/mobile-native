@@ -3,9 +3,9 @@
   needs: ['test:quality']
   interruptible: true
 
-.prepare_build_ios: &prepare_build_ios # tags: [shared-macos-amd64]
+.prepare_build_ios: &prepare_build_ios # tags: [saas-macos-medium-m1]
   image: macos-12-xcode-14
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   artifacts:
     name: 'Minds IPA'
     paths:
