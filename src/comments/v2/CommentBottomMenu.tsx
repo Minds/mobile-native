@@ -21,8 +21,8 @@ import {
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import NavigationService from '~/navigation/NavigationService';
+import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
 
 type PropsType = {
   comment: CommentModel;
@@ -43,7 +43,7 @@ export default function CommentBottomMenu({
   onTranslate,
 }: PropsType) {
   const theme = ThemedStyles.style;
-  const group = React.useContext(GroupContext);
+  const group = useGroupContext()?.group;
 
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);

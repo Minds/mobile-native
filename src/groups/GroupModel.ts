@@ -9,6 +9,7 @@ import groupsService from './GroupsService';
 export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
   @observable mature_visibility = false;
+  @observable briefdescription = '';
   name!: string;
   type!: string;
   nsfw: Array<number> = [];
@@ -83,9 +84,8 @@ export default class GroupModel extends BaseModel {
 /**
  * Define model observables
  */
+//@ts-ignore
 decorate(GroupModel, {
-  //@ts-ignore
-  briefdescription: observable,
   name: observable,
   'is:member': observable,
   'members:count': observable,

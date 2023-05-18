@@ -35,7 +35,6 @@ import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics'
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 import {
   useAnalytics,
@@ -44,6 +43,7 @@ import {
 import analyticsService from '~/common/services/analytics.service';
 import MutualSubscribers from '../../../channel/components/MutualSubscribers';
 import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
+import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -307,7 +307,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   return (
-    <GroupContext.Provider value={route.params?.group || null}>
+    <GroupContextProvider group={route.params?.group || null}>
       <View testID="ActivityScreen" style={containerStyle}>
         <View style={theme.flexContainer}>
           {ownerBlockShadow}
@@ -346,7 +346,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                         entity={entity}
                         navigation={navigation}
                         style={fontStyle}
-                        selectable={false}
+                        selectable={true}
                         noTruncate={true}
                       />
                       <Translate
@@ -397,7 +397,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           commentsStore={store.comments}
         />
       </View>
-    </GroupContext.Provider>
+    </GroupContextProvider>
   );
 });
 

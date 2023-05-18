@@ -147,7 +147,9 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() => require('~/groups/GroupViewScreen').withModal}
+          getComponent={() =>
+            require('~/modules/groups/screens/GroupScreen').GroupScreen
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen

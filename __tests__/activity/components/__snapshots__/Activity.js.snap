@@ -5,9 +5,7 @@ exports[`Activity component renders correctly 1`] = `
   onLayout={[Function]}
   style={
     Array [
-      Object {
-        "overflow": "visible",
-      },
+      Object {},
       Object {
         "borderBottomWidth": 6,
       },
@@ -548,6 +546,7 @@ exports[`Activity component renders correctly 1`] = `
               "push": [MockFunction],
             }
           }
+          selectable={false}
           style={
             Array [
               Object {

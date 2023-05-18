@@ -170,6 +170,7 @@ exports[`Activity screen component renders correctly  1`] = `
             onPress={[Function]}
           >
             <Image
+              recyclingKey="824853017709780997"
               source={
                 Object {
                   "headers": Object {
@@ -444,7 +445,7 @@ exports[`Activity screen component renders correctly  1`] = `
               TITLE
             </Text>
             <Text
-              selectable={false}
+              selectable={true}
               style={
                 Array [
                   Object {

@@ -1,6 +1,6 @@
 test:quality:
   extends: .except_nightly
-  image: node:14.19.2
+  image: node:18.13.0
   stage: test
   interruptible: true
   tags: [minds-ci]
