@@ -37,6 +37,8 @@ import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
+import ReferBanner from '~/common/components/ReferBanner';
+import WefounderBanner from '~/common/components/WefounderBanner';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -127,6 +129,8 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       () => (
         <View>
           <CheckLanguage />
+          <ReferBanner />
+          <WefounderBanner />
           <InitialOnboardingButton />
           <PortraitContentBar />
           <CodePushUpdatePrompt />
@@ -205,7 +209,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
                 />
               ) : undefined
             }
-            header={<Topbar noInsets banners navigation={navigation} />}
+            header={<Topbar noInsets navigation={navigation} />}
             ref={newsfeed.setListRef}
             feedStore={
               isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore

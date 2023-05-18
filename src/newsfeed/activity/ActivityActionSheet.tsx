@@ -169,8 +169,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         onPress: async () => {
           try {
             await this.props.entity.toggleAllowComments();
-          } catch (err) {
-            this.showError();
+          } catch (err: any) {
+            this.showError(err?.message);
           }
         },
       });
