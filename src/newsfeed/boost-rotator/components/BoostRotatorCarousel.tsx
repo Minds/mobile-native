@@ -43,7 +43,7 @@ function BoostRotatorCarousel() {
     <FeedStoreContext.Provider value={feedStore}>
       {boostRotatorStore.activites.length === 0 ? (
         <View style={placeholderContainer}>
-          <ActivityPlaceHolder />
+          <ActivityPlaceHolder showText />
         </View>
       ) : (
         <Carousel
