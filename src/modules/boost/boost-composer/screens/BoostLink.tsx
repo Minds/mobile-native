@@ -102,8 +102,7 @@ export default withErrorBoundaryScreen(
   'BoostLinkScreen',
 );
 
-function isURL(str?: string) {
-  if (!str) return false;
+function isURL(str: string) {
   var urlRegex = '^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$';
   var url = new RegExp(urlRegex, 'i');
   return str.length < 2083 && url.test(str);

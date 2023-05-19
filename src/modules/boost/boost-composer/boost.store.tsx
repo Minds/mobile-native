@@ -40,7 +40,7 @@ export const createBoostStore = ({
   goal: BoostGoal.VIEWS as BoostGoal,
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
-  linkUrl: undefined as string | undefined,
+  linkUrl: '',
   setInsights(insights) {
     this.insights = insights;
   },
@@ -104,14 +104,16 @@ export const createBoostStore = ({
 
     if (this.goalsEnabled) {
       payload.goal = this.goal;
-      if (![BoostGoal.CLICKS, BoostGoal.ENGAGEMENT].includes(this.goal)) {
-        payload.goal_button_text = this.button;
-        payload.goal_button_url = this.linkUrl;
+      payload.goal_button_text = this.button;
+      payload.goal_button_url = this.linkUrl;
+      if ([BoostGoal.VIEWS, BoostGoal.ENGAGEMENT].includes(this.goal)) {
+        payload.goal_button_text = undefined;
+        payload.goal_button_url = undefined;
       }
     }
 
     return apiService.post('api/v3/boosts', payload).catch(e => {
-      console.error('boost error', JSON.stringify(e));
+      console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
       showNotification(e.message || 'Something went wrong', 'danger');
       throw e;
     });

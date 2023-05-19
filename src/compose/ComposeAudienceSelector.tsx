@@ -86,7 +86,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           }
           break;
         case 'group':
-          if (audience?.group) {
+          if (audience.group) {
             store.setGroup(audience.group);
           }
           break;

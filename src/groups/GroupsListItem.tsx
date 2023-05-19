@@ -58,7 +58,7 @@ const JoinButton = observer(({ group, index }: ButtonPropsType) => {
 
 const GroupsListItem = observer((props: PropsType) => {
   const navigation = useNavigation();
-  const group = GroupModel.checkOrCreate(props?.group);
+  const group = GroupModel.checkOrCreate(props.group);
   const avatarSource = group.getAvatar();
 
   const _onPress = useCallback(() => {
