@@ -9,7 +9,7 @@ import MText from '../../common/components/MText';
 
 type PropsType = {
   localStore: SearchResultStoreType;
-  renderItem: (item, index) => Element | null;
+  renderItem: (item, index) => JSX.Element | null;
 };
 
 const SearchHistory = ({ localStore, renderItem }: PropsType) => {
