@@ -202,6 +202,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
 
   const theme = ThemedStyles.style;
 
+  const passValidation = validatePassword(store.password);
+
   const inputs = (
     <View>
       <InputContainer
@@ -250,7 +252,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <PasswordInput
         ref={passwordRef}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
-        showValidator={Boolean(store.password) && store.focused}
+        showValidator={
+          Boolean(store.password) && store.focused && !passValidation.all
+        }
         onChangeText={store.setPassword}
         value={store.password}
         testID="passwordInput"
@@ -261,7 +265,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         textContentType="newPassword"
         onSubmitEditing={store.onRegisterPress}
         error={
-          store.showErrors && !validatePassword(store.password).all
+          store.showErrors && !passValidation.all
             ? i18n.t('settings.invalidPassword')
             : undefined
         }
