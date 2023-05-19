@@ -238,3 +238,14 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
   },
   updateDialog: false,
 };
+
+type GraphQLConfig = Record<
+  'minds' | 'strapi',
+  { uri: string; accessToken?: string }
+>;
+
+export const GRAPHQL_CONFIG: GraphQLConfig = {
+  strapi: {
+    uri: 'https://cms.oke.minds.io/graphql',
+  },
+};
