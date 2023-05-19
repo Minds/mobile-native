@@ -152,7 +152,7 @@ export default function (props) {
         this.hydrateFromEntity();
       }
 
-      if (params.group) {
+      if (params?.group) {
         this.group = props.route.params?.group;
       }
 
