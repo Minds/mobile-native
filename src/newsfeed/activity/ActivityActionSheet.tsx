@@ -313,7 +313,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     });
 
     // we use the group from the context, as the entity.containerObj is not updated
-    const group = this.context.group;
+    const group = this.context?.group;
 
     // if can delete
     if (

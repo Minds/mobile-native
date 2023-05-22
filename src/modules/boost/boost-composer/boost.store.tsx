@@ -104,12 +104,16 @@ export const createBoostStore = ({
 
     if (this.goalsEnabled) {
       payload.goal = this.goal;
-      payload.goal_button_text =
-        this.goal === BoostGoal.CLICKS ? this.link : this.button;
+      payload.goal_button_text = this.button;
       payload.goal_button_url = this.linkUrl;
+      if ([BoostGoal.VIEWS, BoostGoal.ENGAGEMENT].includes(this.goal)) {
+        payload.goal_button_text = undefined;
+        payload.goal_button_url = undefined;
+      }
     }
 
     return apiService.post('api/v3/boosts', payload).catch(e => {
+      console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
       showNotification(e.message || 'Something went wrong', 'danger');
       throw e;
     });
