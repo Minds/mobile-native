@@ -2,7 +2,7 @@ import React from 'react';
 import useForceRender from './useForceRender';
 
 /**
- * A component recycler friendly state hook
+ * A recycler friendly state hook
  * use the identity to define if the initial state should be used
  */
 export default function useRecycledState<T = any>(
