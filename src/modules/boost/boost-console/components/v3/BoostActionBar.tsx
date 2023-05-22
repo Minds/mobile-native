@@ -86,6 +86,22 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
               <B1 color="secondary">{date}</B1>
             </Column>
           </Row>
+          <Row flex>
+            <Column flex>
+              {Boolean(boost.summary?.total_clicks) && (
+                <B1 font="bold">{t('Link clicks')}</B1>
+              )}
+            </Column>
+            <Column flex />
+            <Column flex />
+          </Row>
+          <Row flex bottom="L">
+            <Column flex>
+              <B1 color="secondary">{boost.summary?.total_clicks}</B1>
+            </Column>
+            <Column flex />
+            <Column flex />
+          </Row>
         </>
       )}
       {!!revokable && (
