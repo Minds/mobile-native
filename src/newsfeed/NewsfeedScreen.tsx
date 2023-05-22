@@ -37,8 +37,6 @@ import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
-// import ReferBanner from '~/common/components/ReferBanner';
-// import WefounderBanner from '~/common/components/WefounderBanner';
 import RemoteBanner from '~/common/components/RemoteBanner';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
@@ -130,8 +128,6 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       () => (
         <View>
           <CheckLanguage />
-          {/* <ReferBanner /> */}
-          {/* <WefounderBanner /> */}
           <RemoteBanner />
           <InitialOnboardingButton />
           <PortraitContentBar />

@@ -9,7 +9,7 @@ import MPressable from './MPressable';
 export interface BannerProps {
   name: DismissIdentifier;
   text: string | ReactNode;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 function Banner({ name, text, onPress }: BannerProps) {
@@ -42,7 +42,7 @@ const styles = ThemedStyles.create({
     'borderBottomHair',
     'borderTopHair',
     'bcolorAction',
-    'paddingLeft5x',
+    'paddingLeft3x',
     'paddingRight4x',
     'paddingVertical3x',
     'rowJustifySpaceBetween',

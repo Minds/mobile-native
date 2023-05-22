@@ -1,13 +1,15 @@
-import Banner from './Banner';
-import Link from './Link';
-import analyticsService from '../services/analytics.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { Trans } from 'react-i18next';
-import i18n from '../services/i18n.service';
+import { useCallback } from 'react';
 import { Linking } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { gql } from 'graphql-request';
+import Markdown from 'react-native-markdown-display';
+
 import { gqlClient } from '~/services';
+import Banner from './Banner';
+import analyticsService, { ClickRef } from '../services/analytics.service';
+import moment from 'moment';
+import { DismissIdentifier } from '../stores/DismissalStore';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const GET_TOPBAR_QUERY = gql`
   {
@@ -26,59 +28,51 @@ const GET_TOPBAR_QUERY = gql`
   }
 `;
 
+type AlertProps = {
+  message: string;
+  enabled: boolean;
+  url: string;
+  identifier: string;
+  onlyDisplayAfter: string;
+};
+
 export default function RemoteBanner() {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery<AlertProps>({
     queryKey: ['topbarAlert'],
-    queryFn: async () => {
-      return gqlClient().request(GET_TOPBAR_QUERY);
-    },
+    queryFn: () => gqlClient().request(GET_TOPBAR_QUERY),
+    select: useCallback(result => result.topbarAlert?.data?.attributes, []),
   });
 
-  console.log('DATA', JSON.stringify(data), isLoading, isError);
-
-  if (!data || isLoading || isError) {
+  if (isLoading || isError || !data?.enabled) {
     return null;
   }
 
-  const onPress = () => {
-    analyticsService.trackClick('banner:wefounder:action');
-    Linking.openURL('https://wefunder.com/minds/');
-  };
+  const { message, identifier, url, onlyDisplayAfter } = data || {};
+
+  if (moment(onlyDisplayAfter).isAfter(moment())) {
+    return null;
+  }
+
+  const onPress = url
+    ? () => {
+        analyticsService.trackClick(`banner:${identifier}:action` as ClickRef);
+        Linking.openURL(url);
+      }
+    : undefined;
 
   return (
     <Banner
-      name="banner:wefounder"
+      name={`banner:${identifier}` as DismissIdentifier}
       onPress={onPress}
-      text={
-        <Trans
-          i18nKey="link"
-          defaults={i18n.t('banners.wefounder.title')}
-          components={{
-            link: <RemoteLink />,
-          }}
-        />
-      }
+      text={<Markdown style={styles}>{fixDeepLinks(message)}</Markdown>}
     />
   );
 }
 
-const RemoteLink = () => (
-  <Link style={ThemedStyles.style.fontMedium}>
-    {i18n.t('banners.wefounder.refer')}
-  </Link>
-);
+// replace relative links with absolute app links `mindsapp://`
+const fixDeepLinks = (url: string) => url.replace(/\]\(\//g, '](mindsapp://');
 
-// {
-//   "topbarAlert": {
-//     "data": {
-//       "id": "1",
-//       "attributes": {
-//         "message": "[Refer](/settings/other/referrals) sales, fans and creators for a share of earnings.",
-//         "enabled": true,
-//         "url": null,
-//         "identifier": "affiliates",
-//         "onlyDisplayAfter": "2023-04-30T23:00:00.000Z"
-//       }
-//     }
-//   }
-// }
+const styles = ThemedStyles.create({
+  body: ['colorPrimaryText', 'fontLM'],
+  link: ['link', 'bold'],
+});
