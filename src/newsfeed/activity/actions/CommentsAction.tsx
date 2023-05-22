@@ -59,6 +59,7 @@ const CommentsAction = (props: PropsType) => {
       name={icon}
       size="small"
       fill
+      disabled={!props.entity.allow_comments}
       onPress={openComments}
       testID={props.testID}
       extra={
