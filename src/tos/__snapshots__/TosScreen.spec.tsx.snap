@@ -224,6 +224,7 @@ exports[`Tos screen render and accept 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginTop": 16,
             }
           }
@@ -253,6 +254,7 @@ exports[`Tos screen render and accept 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginTop": 56,
             }
           }
@@ -349,7 +351,7 @@ exports[`Tos screen render and accept 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#000000",
                       },
                       Object {
                         "fontFamily": "Roboto-Medium",

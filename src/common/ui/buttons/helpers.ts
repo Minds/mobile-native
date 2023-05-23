@@ -53,17 +53,17 @@ export const getColor = (theme, mode, darkContent, disabled, type) => {
     | 'link'
     | 'tertiary'
     | 'white'
+    | 'black'
     | 'danger'
     | undefined = 'primary';
   let spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
 
   if ((mode === 'solid' || darkContent) && !disabled) {
-    textColor = 'white';
-    spinnerColor = 'white';
+    textColor = theme === 1 && type === 'action' ? 'black' : 'white';
 
     return {
       textColor,
-      spinnerColor,
+      spinnerColor: textColor,
     };
   }
 

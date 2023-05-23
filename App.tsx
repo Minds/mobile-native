@@ -15,7 +15,6 @@ import {
   UIManager,
   AppState,
   AppStateStatus,
-  Dimensions,
   NativeEventSubscription,
   EmitterSubscription,
 } from 'react-native';
@@ -30,7 +29,7 @@ import { PortalProvider } from '@gorhom/portal';
 import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import deviceInfo from 'react-native-device-info';
+import { IS_IPAD } from '~/config/Config';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -90,7 +89,11 @@ class App extends Component<Props> {
     private backHandlerSubscription?: NativeEventSubscription,
   ) {
     super(props);
-    Orientation.lockPortrait();
+    if (IS_IPAD) {
+      Orientation.unlock();
+    } else {
+      Orientation.lockPortrait();
+    }
   }
 
   /**
@@ -227,11 +230,6 @@ export default App;
 const appContainerStyle = ThemedStyles.combine(
   'flexContainer',
   'bgPrimaryBackground',
-  {
-    paddingHorizontal: deviceInfo.isTablet()
-      ? (Dimensions.get('window').width - 530) / 2
-      : 0,
-  },
 );
 
 if (__DEV__) {

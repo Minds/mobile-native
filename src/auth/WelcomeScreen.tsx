@@ -1,17 +1,19 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '~/common/components/MText';
-import { DEV_MODE } from '~/config/Config';
+import { DEV_MODE, IS_IPAD } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button } from '~ui';
+import { Button, ButtonPropsType } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { UISpacingPropType } from '~/styles/Tokens';
+import { SpacingType } from '~/common/ui/helpers';
 
 const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -40,24 +42,25 @@ function WelcomeScreen(props: PropsType) {
 
   return (
     <SafeAreaView style={theme.flexContainer}>
-      <View style={theme.flexColumnStretch}>
+      <View style={[theme.flexColumnStretch]}>
         <Animated.Image
           resizeMode="contain"
           source={require('./../assets/logos/logo-white.png')}
           style={styles.image}
         />
-        <View style={styles.buttonContainer}>
+        <View
+          style={[
+            styles.buttonContainer,
+            IS_IPAD && theme.rowJustifySpaceBetween,
+          ]}>
           <Button
-            mode="outline"
             type="action"
-            font="medium"
-            bottom="XL"
+            {...buttonProps}
             testID="joinNowButton"
-            onPress={onRegisterPress}
-            darkContent>
+            onPress={onRegisterPress}>
             {i18n.t('auth.createChannel')}
           </Button>
-          <Button darkContent font="medium" onPress={onLoginPress}>
+          <Button darkContent {...buttonProps} onPress={onLoginPress}>
             {i18n.t('auth.login')}
           </Button>
         </View>
@@ -109,13 +112,25 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: '3%',
+    bottom: 0,
     left: 0,
     right: 0,
     padding: 32,
   },
-  buttonContainerStyle: {
-    alignSelf: 'stretch',
-    marginBottom: 20,
+  containerStyle: {
+    width: IS_IPAD ? '45%' : undefined,
   },
 });
+
+type ButtonType = Partial<
+  ButtonPropsType & {
+    containerStyle?: ViewStyle | undefined;
+    spacingType?: SpacingType | undefined;
+    children?: React.ReactNode;
+  } & UISpacingPropType
+>;
+const buttonProps: ButtonType = {
+  font: 'medium',
+  bottom: 'XL',
+  containerStyle: styles.containerStyle,
+};

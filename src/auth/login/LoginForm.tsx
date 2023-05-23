@@ -13,7 +13,7 @@ import InputContainer, {
 } from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
-import { IS_IOS } from '../../config/Config';
+import { IS_IOS, IS_IPAD } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
@@ -62,6 +62,7 @@ export default observer(function LoginForm(props: PropsType) {
     <InputContainer
       placeholder={i18n.t('auth.username')}
       onChangeText={localStore.setUsername}
+      selectionColor={ThemedStyles.getColor('Link')}
       autoComplete="username"
       textContentType="username"
       value={localStore.username}
@@ -90,6 +91,7 @@ export default observer(function LoginForm(props: PropsType) {
           <PasswordInput
             ref={passwordRef}
             placeholder={i18n.t('auth.password')}
+            selectionColor={ThemedStyles.getColor('Link')}
             autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
@@ -107,12 +109,12 @@ export default observer(function LoginForm(props: PropsType) {
           />
         </View>
         <Button
-          mode="outline"
           type="action"
           testID="loginButton"
           spinner
           horizontal="XL"
           top="XXL"
+          containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
           onPress={localStore.onLoginPress}>
           {i18n.t('auth.login')}
         </Button>
@@ -152,4 +154,11 @@ const styles = ThemedStyles.create({
     },
     'colorSecondaryText',
   ],
+  buttonIpad: {
+    width: '45%',
+    alignSelf: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

@@ -112,6 +112,7 @@ Array [
           <View
             style={
               Object {
+                "alignSelf": "stretch",
                 "marginBottom": 16,
                 "marginLeft": 20,
                 "marginTop": 16,
@@ -1174,6 +1175,7 @@ Array [
           <View
             style={
               Object {
+                "alignSelf": "stretch",
                 "marginHorizontal": 16,
                 "marginTop": 16,
               }

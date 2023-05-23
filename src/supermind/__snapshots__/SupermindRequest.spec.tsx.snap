@@ -80,6 +80,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           <View
             style={
               Object {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -111,6 +112,7 @@ exports[`SupermindRequest should render inbound 1`] = `
       <View
         style={
           Object {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -400,6 +402,7 @@ exports[`SupermindRequest should render inbound 1`] = `
   <View
     style={
       Object {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }
@@ -539,6 +542,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           <View
             style={
               Object {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -570,6 +574,7 @@ exports[`SupermindRequest should render outbound 1`] = `
       <View
         style={
           Object {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -859,6 +864,7 @@ exports[`SupermindRequest should render outbound 1`] = `
   <View
     style={
       Object {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }

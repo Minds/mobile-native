@@ -47,7 +47,7 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
         type="action"
         mode="solid"
         size="small"
-        icon={<Icon name="arrow-up" color="White" size="small" />}
+        icon={color => <Icon name="arrow-up" color={color} size="small" />}
         onPress={handleOnPress}
         shouldAnimateChanges={false}>
         {i18nService.t('newsfeed.seeLatestTitle', {

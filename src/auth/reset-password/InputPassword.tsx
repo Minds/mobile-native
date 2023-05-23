@@ -1,15 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
-import i18n from '../../common/services/i18n.service';
+import i18n from '~/common/services/i18n.service';
 import { ResetPasswordStore } from './createLocalStore';
 import { containerStyle, textStyle } from './EmailSended';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { styles } from './InputUser';
-import Button from '../../common/components/Button';
-import PasswordInput from '../../common/components/password-input/PasswordInput';
+import { Button } from '~/common/ui';
+import PasswordInput from '~/common/components/password-input/PasswordInput';
 import { DARK_THEME } from '../../styles/Colors';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
+import { IS_IPAD } from '~/config/Config';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -40,13 +41,15 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         />
       </View>
       <Button
-        text={i18n.t('continue')}
+        horizontal="L2"
+        type="action"
         onPress={resetPassword}
-        centered={false}
-        containerStyle={styles.button}
+        containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
         loading={store.sending}
-        action
-      />
+        spinner
+        disabled={!store.password}>
+        {i18n.t('continue')}
+      </Button>
     </View>
   );
 });

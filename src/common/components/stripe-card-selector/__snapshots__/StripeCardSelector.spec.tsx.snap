@@ -198,6 +198,7 @@ Array [
       <View
         style={
           Object {
+            "alignSelf": "stretch",
             "marginHorizontal": 16,
             "marginTop": 16,
           }
@@ -319,6 +320,7 @@ Array [
       <View
         style={
           Object {
+            "alignSelf": "stretch",
             "marginHorizontal": 16,
             "marginTop": 16,
           }
@@ -498,6 +500,7 @@ Array [
       <View
         style={
           Object {
+            "alignSelf": "stretch",
             "marginHorizontal": 16,
             "marginTop": 16,
           }

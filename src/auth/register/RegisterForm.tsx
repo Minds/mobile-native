@@ -25,6 +25,7 @@ import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingVie
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
+import { IS_IPAD } from '~/config/Config';
 
 type PropsType = {
   // called after registration is finished
@@ -208,6 +209,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     <View>
       <InputContainer
         placeholder={i18n.t('auth.username')}
+        selectionColor={ThemedStyles.getColor('Link', 1)}
         onChangeText={store.setUsername}
         onSubmitEditing={emailRef.current?.focus}
         value={store.username}
@@ -226,6 +228,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <InputContainer
         ref={emailRef}
         placeholder={i18n.t('auth.email')}
+        selectionColor={ThemedStyles.getColor('Link')}
         onChangeText={store.setEmail}
         onSubmitEditing={passwordRef.current?.focus}
         value={store.email}
@@ -251,6 +254,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       />
       <PasswordInput
         ref={passwordRef}
+        selectionColor={ThemedStyles.getColor('Link')}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         showValidator={
           Boolean(store.password) && store.focused && !passValidation.all
@@ -288,6 +292,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             {inputs}
             <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
               <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
                 containerStyle={styles.checkboxTerm}
                 title={
                   <MText style={styles.checkboxText}>
@@ -305,6 +310,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                 onPress={store.toggleTerms}
               />
               <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
                 containerStyle={styles.checkboxPromotions}
                 title={
                   <MText style={styles.checkboxText}>
@@ -316,12 +322,14 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               />
             </View>
             <BottomSheetButton
+              solid
               onPress={store.onRegisterPress}
               text={i18n.t('auth.createChannel')}
               disabled={true || store.inProgress}
               loading={store.inProgress}
               testID="registerButton"
               action
+              containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
             />
             <Captcha
               ref={captchaRef}
@@ -341,4 +349,11 @@ const styles = ThemedStyles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
+  buttonIpad: {
+    width: '45%',
+    alignSelf: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

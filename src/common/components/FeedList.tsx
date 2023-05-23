@@ -331,12 +331,14 @@ export class FeedList<T extends BaseModel> extends Component<
         {entity instanceof InjectItem && InjectedComponent ? (
           <InjectedComponent {...row} />
         ) : (
-          <Activity
-            entity={entity}
-            navigation={this.props.navigation}
-            displayBoosts={this.props.displayBoosts}
-            autoHeight={false}
-          />
+          <View style={{ maxWidth: 770, alignSelf: 'center' }}>
+            <Activity
+              entity={entity}
+              navigation={this.props.navigation}
+              displayBoosts={this.props.displayBoosts}
+              autoHeight={false}
+            />
+          </View>
         )}
       </ErrorBoundary>
     );

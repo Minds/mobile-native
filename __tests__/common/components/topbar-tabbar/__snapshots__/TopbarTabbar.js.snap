@@ -79,6 +79,7 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginVertical": 1,
             }
           }
@@ -152,6 +153,7 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginVertical": 1,
             }
           }
@@ -225,6 +227,7 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginVertical": 1,
             }
           }
@@ -298,6 +301,7 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "stretch",
               "marginVertical": 1,
             }
           }
