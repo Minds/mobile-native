@@ -13,7 +13,10 @@ import { AnimatePresence, MotiView } from 'moti';
 import { Icon } from '~/common/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-type SearchTopBarProps = Pick<TextInputProps, 'onSubmitEditing'> & {
+type SearchTopBarProps = Pick<
+  TextInputProps,
+  'onSubmitEditing' | 'placeholder'
+> & {
   visible?: boolean;
   onClosePress: () => void;
 };
@@ -46,7 +49,6 @@ export default function SearchTopBar({
         {visible && (
           <MotiView {...animation}>
             <TextInput
-              placeholder="Search Channel"
               ref={ref}
               style={styles.searchInput}
               placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
