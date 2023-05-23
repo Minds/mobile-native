@@ -95,6 +95,10 @@ export default class CommentsStore {
    **/
   @action
   setShowInput(value: boolean, edit?: CommentModel, text?: string) {
+    if (!this.entity.allow_comments) {
+      return;
+    }
+
     this.showInput = value;
     // if the text was an unfinished reply like "@someone ", remove it
     if (this.text && /^@.+ /.test(this.text)) {

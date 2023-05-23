@@ -2,7 +2,6 @@
 
 exports[`Comment action component renders correctly 1`] = `
 <withSpacer(IconButtonNextComponent)
-  disabled={true}
   extra={
     <Memo(EntityCounter)
       countProperty="comments:count"
