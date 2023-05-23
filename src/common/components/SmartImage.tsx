@@ -1,12 +1,11 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { ImageProps } from 'expo-image';
+import { Image, ImageProps } from 'expo-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
-import RetryableImage from './RetryableImage';
 import { autorun } from 'mobx';
 
 export type SmartImageProps = {
@@ -50,7 +49,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
     return (
       <View style={[props.style, ThemedStyles.style.centered]}>
         <Icon
-          name="wifi-off"
+          name="cloud-offline-outline"
           size={props.iconSize || 24}
           style={ThemedStyles.style.colorTertiaryText}
         />
@@ -60,10 +59,8 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   return (
     <View style={props.style}>
-      <RetryableImage
+      <Image
         {...otherProps}
-        retry={2}
-        key={store.retries}
         onError={store.setError}
         source={store.imageVisible ? props.source : undefined}
         onLoadEnd={store.onLoadEnd}
@@ -120,7 +117,11 @@ const createSmartImageStore = props => {
     showImage(show: boolean = true) {
       this.imageVisible = show;
     },
-    setError(error) {
+    setError({ error }) {
+      // workaround for the SDWebImage error with caching (the image is loaded correctly so we ignore)
+      if (error === 'Operation cancelled by user during querying the cache') {
+        return;
+      }
       this.error = true;
       this.progress = undefined;
 

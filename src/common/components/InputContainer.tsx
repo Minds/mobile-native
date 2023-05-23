@@ -33,7 +33,7 @@ const InputContainer = (
       style={[
         theme.paddingHorizontal4x,
         theme.paddingTop2x,
-        theme.bgSecondaryBackground,
+        theme.bgPrimaryBackgroundHighlight,
         theme.borderTop,
         noBottomBorder ? null : theme.borderBottom,
         theme.bcolorPrimaryBorder,

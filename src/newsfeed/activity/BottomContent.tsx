@@ -1,14 +1,12 @@
 import React from 'react';
-import type BottomSheet from '@gorhom/bottom-sheet';
 
 import ActivityMetrics from './metrics/ActivityMetrics';
 import Actions from './Actions';
 import Scheduled from './banners/Scheduled';
 import Pending from './banners/Pending';
 import type ActivityModel from '../ActivityModel';
-import CommentBottomSheet from '~/comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
-import useForceRender from '~/common/hooks/useForceRender';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { BoostCTA } from 'modules/boost';
 
@@ -21,10 +19,7 @@ type PropsType = {
 
 const BottomContent = (props: PropsType) => {
   const shouldRender = !props.showOnlyContent;
-  const commentsRef = React.useRef<BottomSheet>(null);
   const analytics = useAnalytics();
-
-  const forceRender = useForceRender();
 
   // we use a reference instead of the state to avoid re-rendering the component
   const commentsStore = React.useRef<null | CommentsStore>(null);
@@ -43,13 +38,12 @@ const BottomContent = (props: PropsType) => {
         props.entity,
         analytics.contexts,
       );
-      // we force the render to shown the bottom sheet
-      forceRender();
     }
-    if (commentsRef.current?.expand) {
-      commentsRef.current.expand();
-    }
-  }, [props.entity, forceRender, analytics]);
+
+    pushCommentBottomSheet({
+      commentsStore: commentsStore.current,
+    });
+  }, [props.entity, analytics]);
 
   if (!shouldRender) {
     return null;
@@ -73,13 +67,6 @@ const BottomContent = (props: PropsType) => {
         <Scheduled
           isScheduled={props.entity.isScheduled()}
           time_created={props.entity.time_created}
-        />
-      )}
-      {commentsStore.current && (
-        <CommentBottomSheet
-          ref={commentsRef}
-          autoOpen={true}
-          commentsStore={commentsStore.current}
         />
       )}
       <Pending isPending={props.entity.isPending()} />

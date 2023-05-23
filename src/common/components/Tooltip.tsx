@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { PropsWithChildren } from 'react';
+import { View, StyleSheet, ViewProps } from 'react-native';
 import { useLayout } from '@react-native-community/hooks';
+import { MotiAnimationProp, MotiView } from 'moti';
 
 const Triangle = ({ style, isDown }) => (
   <View
@@ -12,12 +13,21 @@ const Triangle = ({ style, isDown }) => (
   />
 );
 
+type TooltipProps = PropsWithChildren<
+  {
+    backgroundColor?: any;
+    containerStyle?: ViewProps['style'];
+    bottom?: number;
+  } & MotiAnimationProp<any>
+>;
+
 export default function Tooltip({
   backgroundColor,
   children,
   containerStyle,
   bottom = 0,
-}) {
+  ...other
+}: TooltipProps) {
   const bgStyle = { backgroundColor };
   const { onLayout, ...layout } = useLayout();
 
@@ -27,10 +37,13 @@ export default function Tooltip({
   };
 
   return (
-    <View style={[styles.container, containerPosition]} onLayout={onLayout}>
+    <MotiView
+      style={[styles.container, containerPosition]}
+      onLayout={onLayout}
+      {...other}>
       <View style={[styles.bubble, containerStyle, bgStyle]}>{children}</View>
       <Triangle style={{ borderBottomColor: backgroundColor }} isDown={true} />
-    </View>
+    </MotiView>
   );
 }
 

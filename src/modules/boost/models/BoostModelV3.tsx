@@ -34,6 +34,7 @@ export default class BoostModel extends BaseModel {
   rejection_reason?: BoostRejectionReason;
   summary?: {
     views_delivered: number;
+    total_clicks?: number;
   };
 
   constructor() {
