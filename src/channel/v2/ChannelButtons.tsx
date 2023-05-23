@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { Platform, View, ViewProps, ViewStyle } from 'react-native';
+import { Platform, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -21,7 +21,7 @@ import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { AnimatePresence, MotiProps, MotiTransitionProp, MotiView } from 'moti';
+import { AnimatePresence, MotiProps, MotiView } from 'moti';
 
 export type ButtonsType =
   | 'edit'
