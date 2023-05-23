@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Animated,
   PressableProps,
+  StyleProp,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -33,6 +34,7 @@ export type ButtonPropsType = {
   disabled?: boolean;
   fit?: boolean;
   darkContent?: boolean;
+  lightContent?: boolean;
   shouldAnimateChanges?: boolean;
   loading?: boolean;
   children?: React.ReactNode;
@@ -42,6 +44,7 @@ export type ButtonPropsType = {
   icon?: React.ReactNode;
   reversedIcon?: boolean;
   pressableProps?: PressableProps;
+  overlayStyle?: StyleProp<ViewStyle>;
 };
 const shouldBreak = (num, disabled, state) => {
   return (
@@ -63,6 +66,7 @@ export const ButtonComponent = ({
   stretch = false,
   disabled = false,
   darkContent = false,
+  lightContent = false,
   spinner = false,
   align = 'stretch',
   loading = false,
@@ -75,6 +79,7 @@ export const ButtonComponent = ({
   fit,
   reversedIcon,
   pressableProps,
+  ...props
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
 
@@ -86,12 +91,14 @@ export const ButtonComponent = ({
     styles[`${mode}_${size}`],
     iconOnly && styles.paddingLess,
     disabled && styles[`${mode}_disabled`],
+    // props.containerStyle,
   ];
 
   const overlayStyle: ViewStyle = StyleSheet.flatten([
     styles.overlay,
     styles[`${mode}_${type}__overlay`],
     disabled && styles[`${mode}_disabled__overlay`],
+    props.overlayStyle,
   ]);
 
   const scaleAnimation = useRef(new Animated.Value(0)).current;
@@ -104,6 +111,7 @@ export const ButtonComponent = ({
     ThemedStyles.theme,
     mode,
     darkContent,
+    lightContent,
     disabled,
     type,
   );
@@ -298,6 +306,7 @@ export const ButtonComponent = ({
           style={[{ opacity: activeAnimation }, styles[`active_${mode}`]]}
         />
         {darkContent && <View style={styles.darken} />}
+        {lightContent && <View style={styles.lighten} />}
         {/** Button Text */}
         <Animated.View
           style={{
@@ -354,6 +363,10 @@ const styles = ThemedStyles.create({
   darken: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: TRANSPARENCY.DARKEN20,
+  },
+  lighten: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: TRANSPARENCY.LIGHTEN50,
   },
   large: {
     ...COMMON_BUTTON_STYLES.LARGE,

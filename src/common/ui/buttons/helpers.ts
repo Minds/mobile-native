@@ -47,12 +47,20 @@ export const timingAnimation = (
   }).start(callback);
 };
 
-export const getColor = (theme, mode, darkContent, disabled, type) => {
+export const getColor = (
+  theme,
+  mode,
+  darkContent,
+  lightContent,
+  disabled,
+  type,
+) => {
   let textColor:
     | 'primary'
     | 'link'
     | 'tertiary'
     | 'white'
+    | 'black'
     | 'danger'
     | undefined = 'primary';
   let spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
@@ -60,6 +68,16 @@ export const getColor = (theme, mode, darkContent, disabled, type) => {
   if ((mode === 'solid' || darkContent) && !disabled) {
     textColor = 'white';
     spinnerColor = 'white';
+
+    return {
+      textColor,
+      spinnerColor,
+    };
+  }
+
+  if (lightContent) {
+    textColor = 'black';
+    spinnerColor = 'black';
 
     return {
       textColor,

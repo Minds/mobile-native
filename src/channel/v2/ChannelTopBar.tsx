@@ -8,7 +8,7 @@ import {
 import ThemedStyles, { useMemoStyle, useStyle } from '~/styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
 import type { ChannelStoreType } from './createChannelStore';
-import ChannelButtons from './ChannelButtons';
+import ChannelButtons, { ButtonsType } from './ChannelButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { observer } from 'mobx-react';
 import { styles as headerStyles } from '~/topbar/Topbar';
@@ -21,6 +21,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import MText from '~/common/components/MText';
 import { Image } from 'expo-image';
+import { isLight } from './ChannelScreen';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -49,6 +50,22 @@ type PropsType = {
   onPress?: () => void;
 };
 
+const hiddenChannelButtonsWithoutSubscribe: ButtonsType[] = [
+  'edit',
+  'join',
+  'subscribe',
+  'wire',
+  'boost',
+  'supermind',
+];
+const hiddenChannelButtonsWithSubscribe: ButtonsType[] = [
+  'edit',
+  'join',
+  'wire',
+  'boost',
+  'supermind',
+];
+
 /**
  * Channel Top Bar
  **/
@@ -66,14 +83,8 @@ const ChannelTopBar = observer(
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const insets = useSafeAreaInsets();
+    const isBgLight = !!backgroundColor && isLight(backgroundColor);
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
-    const hiddenChannelButtons = useRef([
-      'edit',
-      'join',
-      'subscribe',
-      'boost',
-      'supermind',
-    ]).current;
     /**
      * shows and hides the background with animation based
      * on the {withBg} prop
@@ -101,7 +112,6 @@ const ChannelTopBar = observer(
       'rowJustifySpaceBetween',
       'alignCenter',
       'paddingLeft2x',
-      'paddingBottom',
       cleanTop!,
     );
     const topBarInnerWrapperStyle = useMemoStyle(
@@ -232,11 +242,21 @@ const ChannelTopBar = observer(
         />
         {store && !hideButtons && (
           <ChannelButtons
-            iconSize={25}
             store={store}
             onEditPress={() => navigation.push('ChannelEdit', { store: store })}
             onSearchChannelPressed={onSearchChannelPressed}
-            notShow={hiddenChannelButtons}
+            notShow={
+              withBg && !store.channel?.subscribed
+                ? hiddenChannelButtonsWithSubscribe
+                : hiddenChannelButtonsWithoutSubscribe
+            }
+            subscribeProps={{
+              shouldUpdateFeed: false,
+              buttonProps: {
+                lightContent: isBgLight,
+                darkContent: !isBgLight,
+              },
+            }}
             containerStyle={theme.centered}
             iconsStyle={styles.channelButtonsIconsStyle}
             raisedIcons={!withBg}
