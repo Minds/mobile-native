@@ -59,7 +59,9 @@ const CommentsAction = (props: PropsType) => {
       name={icon}
       size="small"
       fill
-      disabled={!props.entity.allow_comments}
+      disabled={
+        !props.entity.allow_comments && props.entity['comments:count'] === 0
+      }
       onPress={openComments}
       testID={props.testID}
       extra={

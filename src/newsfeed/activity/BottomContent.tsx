@@ -33,10 +33,6 @@ const BottomContent = (props: PropsType) => {
   }
 
   const onPressComment = React.useCallback(() => {
-    if (!props.entity.allow_comments) {
-      return;
-    }
-
     if (!commentsStore.current) {
       commentsStore.current = new CommentsStore(
         props.entity,
