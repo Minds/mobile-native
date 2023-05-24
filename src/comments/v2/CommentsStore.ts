@@ -95,7 +95,7 @@ export default class CommentsStore {
    **/
   @action
   setShowInput(value: boolean, edit?: CommentModel, text?: string) {
-    if (!this.entity.allow_comments) {
+    if (value && !this.entity.allow_comments) {
       return;
     }
 

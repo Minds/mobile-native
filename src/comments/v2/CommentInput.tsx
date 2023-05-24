@@ -22,7 +22,7 @@ import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { CHAR_LIMIT, IS_IOS } from '../../config/Config';
+import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
 import Animated, {
@@ -111,7 +111,7 @@ const CommentInput = observer((onShow, onDismiss) => {
   return (
     <KeyboardSpacingView
       style={StyleSheet.absoluteFill}
-      enabled={IS_IOS}
+      enabled
       noInset
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
