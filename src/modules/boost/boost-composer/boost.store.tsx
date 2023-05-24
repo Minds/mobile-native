@@ -104,11 +104,11 @@ export const createBoostStore = ({
 
     if (this.goalsEnabled) {
       payload.goal = this.goal;
-      payload.goal_button_text = this.button;
-      payload.goal_button_url = this.linkUrl;
-      if ([BoostGoal.VIEWS, BoostGoal.ENGAGEMENT].includes(this.goal)) {
-        payload.goal_button_text = undefined;
-        payload.goal_button_url = undefined;
+      if (this.goal === BoostGoal.SUBSCRIBERS) {
+        payload.goal_button_text = this.button;
+      } else if (this.goal === BoostGoal.CLICKS) {
+        payload.goal_button_url = this.linkUrl;
+        payload.goal_button_text = this.button;
       }
     }
 
@@ -139,10 +139,10 @@ export interface CreateBoostParams {
 
 export type IBoostAudience = 'safe' | 'mature';
 export enum BoostGoal {
-  VIEWS = 1, // "expand reach"
-  ENGAGEMENT = 2, // "increase engagement"
-  SUBSCRIBERS = 3, // "grow your following"
-  CLICKS = 4, // "get more clicks"
+  VIEWS = 1, // "expand reach" - require nothing
+  ENGAGEMENT = 2, // "increase engagement" - require nothing
+  SUBSCRIBERS = 3, // "grow your following" - require button
+  CLICKS = 4, // "get more clicks" - require button and url
 }
 export enum BoostButtonText {
   SUBSCRIBE_TO_MY_CHANNEL = 1,
