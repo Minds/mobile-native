@@ -112,7 +112,7 @@ const BottomSheetInnerContainer = ({
       setTimeout(() => {
         NavigationService.goBack();
         resolve(true);
-      }, 200);
+      }, 100);
     });
   };
 
@@ -135,7 +135,7 @@ const BottomSheetInnerContainerSafe = ({
       setTimeout(() => {
         NavigationService.goBack();
         resolve(true);
-      }, 200);
+      }, 100);
     });
   };
 
