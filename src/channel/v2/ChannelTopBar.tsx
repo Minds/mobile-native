@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import ThemedStyles, { useMemoStyle, useStyle } from '~/styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
@@ -22,6 +23,8 @@ import Animated, {
 import MText from '~/common/components/MText';
 import { Image } from 'expo-image';
 import { isLight } from './ChannelScreen';
+import Subscribe from './buttons/Subscribe';
+import { Spacer } from '~/common/ui';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -50,7 +53,7 @@ type PropsType = {
   onPress?: () => void;
 };
 
-const hiddenChannelButtonsWithoutSubscribe: ButtonsType[] = [
+const hiddenChannelButtons: ButtonsType[] = [
   'edit',
   'join',
   'subscribe',
@@ -58,13 +61,9 @@ const hiddenChannelButtonsWithoutSubscribe: ButtonsType[] = [
   'boost',
   'supermind',
 ];
-const hiddenChannelButtonsWithSubscribe: ButtonsType[] = [
-  'edit',
-  'join',
-  'wire',
-  'boost',
-  'supermind',
-];
+const hiddenChannelButtonsWithWire = hiddenChannelButtons.filter(
+  p => p !== 'wire',
+);
 
 /**
  * Channel Top Bar
@@ -123,8 +122,8 @@ const ChannelTopBar = observer(
             backgroundColor || theme.bgPrimaryBackground.backgroundColor,
           paddingLeft: 70,
           paddingRight: Platform.select({
-            ios: 50,
-            android: 100,
+            ios: 10,
+            android: 60,
           }),
         },
         backgroundOpacityAnimatedStyle,
@@ -223,6 +222,18 @@ const ChannelTopBar = observer(
             <MText style={nameStyles} numberOfLines={1}>
               {store?.channel?.name}
             </MText>
+            {!!store?.channel && !store.channel?.subscribed && (
+              <Spacer left="S">
+                <Subscribe
+                  channel={store?.channel}
+                  shouldUpdateFeed={false}
+                  buttonProps={{
+                    lightContent: isBgLight,
+                    darkContent: !isBgLight,
+                  }}
+                />
+              </Spacer>
+            )}
           </SafeAreaView>
         </Animated.View>
         <SmallCircleButton
@@ -246,17 +257,10 @@ const ChannelTopBar = observer(
             onEditPress={() => navigation.push('ChannelEdit', { store: store })}
             onSearchChannelPressed={onSearchChannelPressed}
             notShow={
-              withBg && !store.channel?.subscribed
-                ? hiddenChannelButtonsWithSubscribe
-                : hiddenChannelButtonsWithoutSubscribe
+              store.channel?.subscribed
+                ? hiddenChannelButtonsWithWire
+                : hiddenChannelButtons
             }
-            subscribeProps={{
-              shouldUpdateFeed: false,
-              buttonProps: {
-                lightContent: isBgLight,
-                darkContent: !isBgLight,
-              },
-            }}
             containerStyle={theme.centered}
             iconsStyle={styles.channelButtonsIconsStyle}
             raisedIcons={!withBg}
@@ -290,11 +294,11 @@ const styles = ThemedStyles.create({
   name: {
     fontSize: 18,
     fontWeight: '600',
-    textAlign: 'center',
-    marginRight: 5,
+    textAlign: 'left',
     bottom: 2, // minor alignment of text
+    flex: 1,
   },
-  nameWrapper: ['rowJustifyStart', 'flexContainer', 'alignCenter'],
+  nameWrapper: ['rowJustifySpaceBetween', 'flexContainer', 'alignCenter'],
   searchInput: [
     'fontL',
     'colorSecondaryText',
