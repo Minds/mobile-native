@@ -40,7 +40,10 @@ const DiscoveryTabContent = observer(
         animate={animate}
         exit={exit}
         transition={transition}
-        style={ThemedStyles.style.positionAbsolute}>
+        style={[
+          ThemedStyles.style.positionAbsoluteCenter,
+          ThemedStyles.style.alignSelfCenterMaxWidth,
+        ]}>
         {children}
       </MotiView>
     );

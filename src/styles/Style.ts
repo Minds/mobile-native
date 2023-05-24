@@ -130,6 +130,11 @@ const _buildStyle = (theme: ColorsType) =>
     alignSelfCenter: {
       alignSelf: 'center',
     },
+    alignSelfCenterMaxWidth: {
+      alignSelf: 'center',
+      maxWidth: 770,
+      width: '100%',
+    },
     alignSelfStretch: {
       alignSelf: 'stretch',
     },
@@ -177,6 +182,10 @@ const _buildStyle = (theme: ColorsType) =>
       position: 'absolute',
       bottom: 0,
       right: 0,
+    },
+    positionAbsoluteCenter: {
+      position: 'absolute',
+      top: 0,
     },
     // fonts
     fontXS: {

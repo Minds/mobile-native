@@ -11,6 +11,7 @@ import {
 } from '../boost-rotator.store';
 import { View, useWindowDimensions } from 'react-native';
 import ActivityPlaceHolder from '~/newsfeed/ActivityPlaceHolder';
+import { IS_IPAD } from '~/config/Config';
 
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ function BoostRotatorCarousel() {
           onSnapToItem={boostRotatorStore.setActiveIndex}
           panGestureHandlerProps={gestureHandlerProps}
           enabled={!!boostRotatorStore.activites.length}
-          width={width}
+          width={width > WIDTH ? WIDTH : width}
           height={HEIGHT}
           data={boostRotatorStore.activites}
           renderItem={renderItem}
@@ -70,10 +71,12 @@ function BoostRotatorCarousel() {
 /**
  * The height of the boost rotator
  */
-const HEIGHT = 500;
+const WIDTH = 770;
+const HEIGHT = IS_IPAD ? WIDTH : 500;
 
 const placeholderContainer = {
   height: HEIGHT,
+  maxWidth: WIDTH,
 };
 
 /**

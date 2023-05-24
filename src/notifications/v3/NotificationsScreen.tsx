@@ -191,7 +191,11 @@ export default withErrorBoundaryScreen(
 
 const styles = ThemedStyles.create({
   containerStyle: { flexGrow: 1 },
-  container: ['bgPrimaryBackground', 'flexContainer'],
+  container: [
+    'bgPrimaryBackground',
+    'flexContainer',
+    'alignSelfCenterMaxWidth',
+  ],
   errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],
   errorText: ['colorLink', 'marginTop2x'],

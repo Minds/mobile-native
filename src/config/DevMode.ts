@@ -12,7 +12,7 @@ export class DevMode {
    * @param force force to be active
    */
   constructor(force?: boolean) {
-    const active = storages.app.getBool('developer_mode');
+    const active = storages.app.getBool('developer_mode') || __DEV__;
     this.isActive =
       active !== null && active !== undefined ? active : force || false;
   }

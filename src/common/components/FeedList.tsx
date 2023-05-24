@@ -331,7 +331,7 @@ export class FeedList<T extends BaseModel> extends Component<
         {entity instanceof InjectItem && InjectedComponent ? (
           <InjectedComponent {...row} />
         ) : (
-          <View style={{ maxWidth: 770, alignSelf: 'center' }}>
+          <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
             <Activity
               entity={entity}
               navigation={this.props.navigation}

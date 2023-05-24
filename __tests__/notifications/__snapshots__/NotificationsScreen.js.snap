@@ -10,6 +10,11 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       Object {
         "flex": 1,
       },
+      Object {
+        "alignSelf": "center",
+        "maxWidth": 770,
+        "width": "100%",
+      },
     ]
   }
 >
@@ -156,9 +161,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           <View
             style={
               Object {
-                "display": "flex",
-                "flexDirection": "row",
                 "height": 60,
+                "justifyContent": "center",
                 "paddingTop": 0,
               }
             }
@@ -166,8 +170,11 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             <View
               style={
                 Object {
+                  "alignSelf": "center",
                   "flex": 1,
                   "flexDirection": "row",
+                  "maxWidth": 770,
+                  "width": "100%",
                 }
               }
             >

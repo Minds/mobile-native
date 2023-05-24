@@ -127,7 +127,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       0,
       'prepend',
       () => (
-        <View>
+        <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
           <CheckLanguage />
           <ReferBanner />
           <WefounderBanner />

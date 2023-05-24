@@ -47,7 +47,13 @@ export const timingAnimation = (
   }).start(callback);
 };
 
-export const getColor = (theme, mode, darkContent, disabled, type) => {
+export const getColor = (
+  theme,
+  mode = 'solid',
+  darkContent = false,
+  disabled = false,
+  type = 'action',
+) => {
   let textColor:
     | 'primary'
     | 'link'
@@ -89,7 +95,7 @@ export const getColor = (theme, mode, darkContent, disabled, type) => {
   };
 };
 
-export function getFontRenderer(size) {
+export function getFontRenderer(size): (props: any) => JSX.Element {
   switch (size) {
     case 'pill':
     case 'tiny':

@@ -109,15 +109,12 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           onChange={handlePaymentTypeChange}
           current={boostStore.paymentType}
         />
-        <Column align="centerBoth" vertical="L">
-          <H2 bottom="S" top="M">
+        <Column align="centerBoth">
+          <H2 align="center" vertical="S">
             {textMapping[boostStore.paymentType].totalSpend}
           </H2>
-          <B1 bottom="L2" color="secondary">
-            {t('Total Spend')}
-          </B1>
-
-          <H2 bottom="S">
+          <B1 color="secondary">{t('Total Spend')}</B1>
+          <H2 align="center" bottom="S" top="L">
             {insights
               ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
               : t('Unknown')}
@@ -125,7 +122,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           <B1 color="secondary">{t('Estimated reach')}</B1>
         </Column>
 
-        <Column top="L" horizontal="L2">
+        <Column top="M" horizontal="L2">
           <H3>{t('Daily budget')}</H3>
           <Slider
             stepSize={1}
@@ -148,7 +145,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
         <HairlineRow />
 
-        <Column top="L" horizontal="L2">
+        <Column top="M" horizontal="L2">
           <H3>{t('Duration')}</H3>
           <Slider
             stepSize={1}
@@ -172,8 +169,8 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         <B2
           color="secondary"
           horizontal="L"
-          vertical="L"
-          bottom="XL"
+          vertical="M"
+          bottom="L"
           align="justify">
           {t(
             'Estimated reach is approximate and can fluctuate based on network demand.',
@@ -185,7 +182,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
           mode="solid"
           type="action"
           horizontal="L"
-          bottom="L2">
+          bottom="L">
           {t('Next')}
         </Button>
       </FitScrollView>
