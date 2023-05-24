@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import ThemedStyles, { useMemoStyle, useStyle } from '~/styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
