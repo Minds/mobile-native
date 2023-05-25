@@ -156,7 +156,7 @@ const CommentInput = observer((onShow, onDismiss) => {
           {
             paddingBottom: Platform.select({
               android: bottomInset + 9,
-              ios: bottomInset + 12,
+              ios: bottomInset - 16,
             }),
           },
         ]}>

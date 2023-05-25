@@ -111,7 +111,7 @@ export function pushCommentBottomSheet(props: PropsType) {
   const { height } = Dimensions.get('window');
 
   return pushBottomSheet({
-    safe: true,
+    safe: false,
     onClose: () => {
       props.commentsStore?.setShowInput(false);
     },
