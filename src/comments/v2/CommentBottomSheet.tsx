@@ -1,52 +1,17 @@
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import {
-  useBackHandler,
-  useDimensions,
-  useKeyboard,
-} from '@react-native-community/hooks';
-import {
-  NavigationContainer,
-  useFocusEffect,
-  useRoute,
-} from '@react-navigation/native';
+import { useBackHandler } from '@react-native-community/hooks';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 import {
   StackNavigationOptions,
   TransitionPresets,
   createStackNavigator,
 } from '@react-navigation/stack';
-import { observer, useLocalStore } from 'mobx-react';
-import React, { forwardRef, useCallback } from 'react';
-import { BackHandler, Dimensions } from 'react-native';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import Handle from '~/common/components/bottom-sheet/Handle';
+import React from 'react';
+import { Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { pushBottomSheet } from '../../common/components/bottom-sheet';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
-
-const bottomSheetLocalStore = ({ autoOpen }) => ({
-  isRendered: Boolean(autoOpen),
-  isVisible: false,
-  setIsRendered(isRendered: boolean) {
-    this.isRendered = isRendered;
-  },
-  setIsVisible(index: number) {
-    this.isVisible = index === 0;
-  },
-});
-
-const renderBackdrop = backdropProps => (
-  <BottomSheetBackdrop
-    {...backdropProps}
-    pressBehavior="close"
-    opacity={0.5}
-    appearsOnIndex={0}
-    disappearsOnIndex={-1}
-  />
-);
 
 type PropsType = {
   commentsStore: CommentsStore;
@@ -142,95 +107,6 @@ const CommentBottomSheetBase = (props: PropsType) => {
   );
 };
 
-const CommentBottomSheet = (props: PropsType, ref: any) => {
-  const height = useDimensions().window.height;
-  const topInsets = useSafeAreaInsets().top;
-
-  const localStore = useLocalStore(bottomSheetLocalStore, {
-    autoOpen: props.autoOpen,
-  });
-
-  const sheetRef = React.useRef<any>(null);
-
-  React.useImperativeHandle(ref, () => ({
-    expand: () => {
-      if (localStore.isRendered) {
-        sheetRef.current?.present();
-      } else {
-        localStore.setIsRendered(true);
-      }
-    },
-    close: () => {
-      sheetRef.current?.dismiss();
-    },
-  }));
-
-  // back button handler
-  const backHandler = useCallback(() => {
-    if (localStore.isVisible) {
-      sheetRef.current?.dismiss();
-      return true;
-    }
-
-    return false;
-  }, [sheetRef, localStore.isVisible]);
-
-  // hardware back button handling when screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      BackHandler.addEventListener('hardwareBackPress', backHandler);
-
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', backHandler);
-    }, [backHandler]),
-  );
-
-  React.useEffect(() => {
-    if (!localStore.isRendered && props.autoOpen) {
-      localStore.setIsRendered(true);
-    }
-  }, [props.autoOpen, localStore]);
-
-  React.useEffect(() => {
-    if (localStore.isRendered) {
-      sheetRef.current?.present();
-    }
-  }, [localStore.isRendered]);
-
-  // renders
-
-  const renderHandle = useCallback(
-    () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
-    [],
-  );
-  const onDismiss = useCallback(() => {
-    props.commentsStore.setShowInput(false);
-  }, [props.commentsStore]);
-
-  const { keyboardShown } = useKeyboard();
-
-  if (!localStore.isRendered) {
-    return null;
-  }
-
-  return (
-    <BottomSheetModal
-      key="commentSheet"
-      backdropComponent={renderBackdrop}
-      onDismiss={onDismiss}
-      onChange={localStore.setIsVisible}
-      handleHeight={20}
-      backgroundComponent={null}
-      ref={sheetRef}
-      snapPoints={[keyboardShown ? height - topInsets : '85%']}
-      index={0}
-      enableContentPanningGesture={true}
-      handleComponent={renderHandle}>
-      <CommentBottomSheetBase {...props} />
-    </BottomSheetModal>
-  );
-};
-
 export function pushCommentBottomSheet(props: PropsType) {
   const { height } = Dimensions.get('window');
 
@@ -250,6 +126,3 @@ export function pushCommentBottomSheet(props: PropsType) {
     ),
   });
 }
-
-// @ts-ignore
-export default observer(forwardRef(CommentBottomSheet));
