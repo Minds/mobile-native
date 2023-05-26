@@ -12,10 +12,12 @@ import React from 'react';
 //     trackAllPureComponents: true,
 //   });
 // }
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, LogBox, Platform } from 'react-native';
 import reanimated from 'react-native-reanimated';
 import App from './App';
 import { enableFreeze } from 'react-native-screens';
+
+LogBox.ignoreAllLogs();
 
 process.env.DEBUG === 'tamagui';
 process.env.TAMAGUI_TARGET = 'native';

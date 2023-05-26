@@ -9,7 +9,8 @@ import {
   boostRotatorMetadata,
   useBoostRotatorStore,
 } from '../boost-rotator.store';
-import { useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
+import ActivityPlaceHolder from '~/newsfeed/ActivityPlaceHolder';
 
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
@@ -41,22 +42,28 @@ function BoostRotatorCarousel() {
 
   return (
     <FeedStoreContext.Provider value={feedStore}>
-      <Carousel
-        loop
-        ref={ref}
-        vertical={false}
-        windowSize={WINDOW_SIZE}
-        defaultIndex={0}
-        pagingEnabled
-        onSnapToItem={boostRotatorStore.setActiveIndex}
-        panGestureHandlerProps={gestureHandlerProps}
-        enabled={!!boostRotatorStore.activites.length}
-        width={width}
-        height={HEIGHT}
-        data={boostRotatorStore.activites}
-        renderItem={renderItem}
-        scrollAnimationDuration={350}
-      />
+      {boostRotatorStore.activites.length === 0 ? (
+        <View style={placeholderContainer}>
+          <ActivityPlaceHolder showText />
+        </View>
+      ) : (
+        <Carousel
+          loop
+          ref={ref}
+          vertical={false}
+          windowSize={WINDOW_SIZE}
+          defaultIndex={0}
+          pagingEnabled
+          onSnapToItem={boostRotatorStore.setActiveIndex}
+          panGestureHandlerProps={gestureHandlerProps}
+          enabled={!!boostRotatorStore.activites.length}
+          width={width}
+          height={HEIGHT}
+          data={boostRotatorStore.activites}
+          renderItem={renderItem}
+          scrollAnimationDuration={350}
+        />
+      )}
     </FeedStoreContext.Provider>
   );
 }
@@ -65,6 +72,11 @@ function BoostRotatorCarousel() {
  * The height of the boost rotator
  */
 const HEIGHT = 500;
+
+const placeholderContainer = {
+  height: HEIGHT,
+};
+
 /**
  * the max height of the activity
  */

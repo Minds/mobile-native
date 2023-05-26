@@ -838,7 +838,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             {
-              "backgroundColor": "#38393D",
+              "backgroundColor": "#1C1D1F",
             },
             {
               "borderTopWidth": 1,
@@ -1010,7 +1010,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             {
-              "backgroundColor": "#38393D",
+              "backgroundColor": "#1C1D1F",
             },
             {
               "borderTopWidth": 1,

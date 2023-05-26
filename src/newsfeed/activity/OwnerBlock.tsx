@@ -204,10 +204,15 @@ class OwnerBlock extends PureComponent<PropsType> {
               <Image
                 source={this.avatarSrc}
                 style={styles.avatar}
+                recyclingKey={channel.guid}
                 blurRadius={IS_IOS ? 12 : 7}
               />
             ) : (
-              <Image source={this.avatarSrc} style={styles.avatar} />
+              <Image
+                source={this.avatarSrc}
+                style={styles.avatar}
+                recyclingKey={channel.guid}
+              />
             )}
           </TouchableOpacity>
           <View style={styles.body}>

@@ -45,7 +45,7 @@ export default function AffiliateProgramScreen({ navigation }) {
           }}>
           Refer and earn
         </Button>
-        <H2>Invite your friend to Minds</H2>
+        <H2>Invite your friends to Minds</H2>
         <B2 color="secondary" vertical="L">
           Track rewards for friends that use your invite code to sign up on
           Minds. Earn for up to 1 year.

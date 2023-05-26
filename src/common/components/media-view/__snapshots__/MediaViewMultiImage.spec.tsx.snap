@@ -65,7 +65,6 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -151,7 +150,6 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -251,7 +249,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -337,7 +334,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -420,7 +416,6 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -520,7 +515,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -603,7 +597,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -689,7 +682,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {
@@ -772,7 +764,6 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onError={[Function]}
           onLoadEnd={[Function]}
           onProgress={[Function]}
-          retry={2}
           source={
             {
               "headers": {

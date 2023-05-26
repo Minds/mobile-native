@@ -252,7 +252,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "paddingTop": 8,
               },
               {
-                "backgroundColor": "#38393D",
+                "backgroundColor": "#1C1D1F",
               },
               {
                 "borderTopWidth": 1,
@@ -436,7 +436,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "paddingTop": 8,
                   },
                   {
-                    "backgroundColor": "#38393D",
+                    "backgroundColor": "#1C1D1F",
                   },
                   {
                     "borderTopWidth": 1,

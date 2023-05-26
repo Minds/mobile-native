@@ -15,7 +15,7 @@ class BoostConsoleStore {
   /**
    * Boost list store
    */
-  list = new OffsetListStore();
+  list = new OffsetListStore<BoostModelV3>();
 
   /**
    * Boosts list filter

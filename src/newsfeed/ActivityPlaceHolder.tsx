@@ -2,7 +2,11 @@ import React from 'react';
 import { Column, Row, Spacer } from '~/common/ui';
 import Placeholder from '~/common/components/Placeholder';
 
-export default function ActivityPlaceHolder() {
+export default function ActivityPlaceHolder({
+  showText = false,
+}: {
+  showText?: boolean;
+}) {
   return (
     <Spacer vertical="S">
       <Row horizontal="M" align="centerStart" bottom="M">
@@ -15,6 +19,14 @@ export default function ActivityPlaceHolder() {
         </Column>
       </Row>
       <Placeholder radius="square" height={290} width="100%" />
+      {showText && (
+        <Column left="M" top="XL">
+          <Spacer bottom="S">
+            <Placeholder width={280} height={17} />
+          </Spacer>
+          <Placeholder width={240} height={15} />
+        </Column>
+      )}
     </Spacer>
   );
 }

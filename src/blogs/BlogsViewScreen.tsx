@@ -9,7 +9,7 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import withModalProvider from '~/navigation/withModalProvide';
 import Actions from '~/newsfeed/activity/Actions';
-import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
 import SmartImage from '../common/components/SmartImage';
@@ -65,7 +65,6 @@ class BlogsViewScreen extends Component<PropsType> {
   constructor(props) {
     super(props);
 
-    this.commentsRef = React.createRef();
     this.blogsView = props.blogsView ?? new BlogsViewStore();
   }
 
@@ -131,7 +130,11 @@ class BlogsViewScreen extends Component<PropsType> {
       <SafeAreaView style={theme.bgPrimaryBackground}>
         <Actions
           onPressComment={() => {
-            this.commentsRef.current.expand();
+            if (this.blogsView?.comments) {
+              pushCommentBottomSheet({
+                commentsStore: this.blogsView.comments,
+              });
+            }
           }}
           entity={blog}
         />
@@ -265,12 +268,6 @@ class BlogsViewScreen extends Component<PropsType> {
           <>
             {this.getBody()}
             {this.getToolbar()}
-            {this.blogsView.comments && (
-              <CommentBottomSheet
-                ref={this.commentsRef}
-                commentsStore={this.blogsView.comments}
-              />
-            )}
           </>
         ) : (
           <View style={theme.flexColumnCentered}>

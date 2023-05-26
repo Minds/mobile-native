@@ -154,6 +154,7 @@
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-navigation-bar-color": "^2.0.1",
     "react-native-notifications": "Minds/react-native-notifications",
+    "react-native-pager-view": "6.0.1",
     "react-native-performance": "^2.0.0",
     "react-native-permissions": "^3.6.1",
     "react-native-phone-number-input": "^2.1.0",
@@ -162,7 +163,7 @@
     "react-native-progress": "^5.0.0",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
-    "react-native-reanimated": "^2.14.4",
+    "react-native-reanimated": "2.17.0",
     "react-native-reanimated-carousel": "^3.3.0",
     "react-native-reanimated-hooks": "^2.0.0",
     "react-native-reanimated-indicators": "^2.0.0",
@@ -176,13 +177,14 @@
     "react-native-snap-carousel": "^3.8.2",
     "react-native-svg": "13.4.0",
     "react-native-system-setting": "^1.7.6",
-    "react-native-tab-view": "^3.1.1",
+    "react-native-tab-view": "^3.5.1",
     "react-native-vector-icons": "msantang78/react-native-vector-icons",
     "react-native-vision-camera": "^2.15.4",
     "react-native-web": "0.18.10",
     "react-native-webview": "11.26.0",
     "rn-update-apk": "^4.5.0",
     "rxjs": "^6.5.5",
+    "showtime-tab-view": "^0.1.2",
     "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
@@ -254,7 +256,7 @@
   "resolutions": {
     "react-devtools-core": "4.13.0",
     "react-native-gesture-handler": "2.9.0",
-    "react-native-reanimated": "^2.14.4"
+    "react-native-reanimated": "^2.17.0"
   },
   "husky": {
     "hooks": {

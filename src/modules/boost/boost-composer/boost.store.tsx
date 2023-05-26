@@ -91,25 +91,32 @@ export const createBoostStore = ({
       return null;
     }
 
-    return apiService
-      .post('api/v3/boosts', {
-        entity_guid: this.entity.guid,
-        target_suitability: this.audience === 'safe' ? 1 : 2,
-        target_location: boostType === 'post' ? 1 : 2,
-        payment_method: this.paymentType === 'cash' ? 1 : 2,
-        payment_method_id:
-          this.paymentType === 'cash' ? this.selectedCardId : undefined,
-        daily_bid: this.amount,
-        duration_days: this.duration,
-        goal: this.goal,
-        goal_button_text:
-          this.goal === BoostGoal.CLICKS ? this.link : this.button,
-        goal_button_url: this.linkUrl,
-      } as CreateBoostParams)
-      .catch(e => {
-        showNotification(e.message || 'Something went wrong', 'danger');
-        throw e;
-      });
+    const payload: CreateBoostParams = {
+      entity_guid: this.entity.guid,
+      target_suitability: this.audience === 'safe' ? 1 : 2,
+      target_location: boostType === 'post' ? 1 : 2,
+      payment_method: this.paymentType === 'cash' ? 1 : 2,
+      payment_method_id:
+        this.paymentType === 'cash' ? this.selectedCardId : undefined,
+      daily_bid: this.amount,
+      duration_days: this.duration,
+    };
+
+    if (this.goalsEnabled) {
+      payload.goal = this.goal;
+      if (this.goal === BoostGoal.SUBSCRIBERS) {
+        payload.goal_button_text = this.button;
+      } else if (this.goal === BoostGoal.CLICKS) {
+        payload.goal_button_url = this.linkUrl;
+        payload.goal_button_text = this.button;
+      }
+    }
+
+    return apiService.post('api/v3/boosts', payload).catch(e => {
+      console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
+      showNotification(e.message || 'Something went wrong', 'danger');
+      throw e;
+    });
   },
   validate() {
     return true;
@@ -121,17 +128,21 @@ export interface CreateBoostParams {
   target_suitability: number;
   target_location: number;
   payment_method: number;
-  payment_method_id: string;
+  payment_method_id?: string;
   daily_bid: number;
   duration_days: number;
+
+  goal?: BoostGoal;
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
 }
 
 export type IBoostAudience = 'safe' | 'mature';
 export enum BoostGoal {
-  VIEWS = 1, // "expand reach"
-  ENGAGEMENT = 2, // "increase engagement"
-  SUBSCRIBERS = 3, // "grow your following"
-  CLICKS = 4, // "get more clicks"
+  VIEWS = 1, // "expand reach" - require nothing
+  ENGAGEMENT = 2, // "increase engagement" - require nothing
+  SUBSCRIBERS = 3, // "grow your following" - require button
+  CLICKS = 4, // "get more clicks" - require button and url
 }
 export enum BoostButtonText {
   SUBSCRIBE_TO_MY_CHANNEL = 1,

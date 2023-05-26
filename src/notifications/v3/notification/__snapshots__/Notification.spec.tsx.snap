@@ -776,9 +776,7 @@ exports[`Notification Boost accepted 1`] = `
       onLayout={[Function]}
       style={
         [
-          {
-            "overflow": "visible",
-          },
+          {},
           {
             "borderWidth": 0.5,
           },
@@ -1070,9 +1068,7 @@ exports[`Notification Boost complete 1`] = `
       onLayout={[Function]}
       style={
         [
-          {
-            "overflow": "visible",
-          },
+          {},
           {
             "borderWidth": 0.5,
           },
@@ -1364,9 +1360,7 @@ exports[`Notification Boost rejected 1`] = `
       onLayout={[Function]}
       style={
         [
-          {
-            "overflow": "visible",
-          },
+          {},
           {
             "borderWidth": 0.5,
           },
@@ -1715,9 +1709,7 @@ exports[`Notification Boost rejected legacy 1`] = `
       onLayout={[Function]}
       style={
         [
-          {
-            "overflow": "visible",
-          },
+          {},
           {
             "borderWidth": 0.5,
           },
