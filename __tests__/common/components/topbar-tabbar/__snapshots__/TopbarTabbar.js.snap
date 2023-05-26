@@ -9,7 +9,7 @@ exports[`renders correctly 1`] = `
         "justifyContent": "flex-start",
       },
       Object {
-        "borderBottomWidth": 1,
+        "borderBottomWidth": 0.5,
       },
       Object {
         "borderColor": "#53565A",
@@ -42,16 +42,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
+                "marginTop": 4,
+              },
+              Object {
                 "marginHorizontal": 12,
               },
               Object {
                 "borderBottomWidth": 5,
               },
+              Object {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -115,16 +118,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
+                "marginTop": 4,
+              },
+              Object {
                 "marginHorizontal": 12,
               },
               Object {
                 "borderBottomWidth": 5,
               },
+              Object {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -188,16 +194,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
+                "marginTop": 4,
+              },
+              Object {
                 "marginHorizontal": 12,
               },
               Object {
                 "borderBottomWidth": 5,
               },
+              Object {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -261,16 +270,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
+                "marginTop": 4,
+              },
+              Object {
                 "marginHorizontal": 12,
               },
               Object {
                 "borderBottomWidth": 5,
               },
+              Object {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
