@@ -64,9 +64,10 @@ const CommentInput = observer((onShow, onDismiss) => {
   /**
    * hides the comment input
    */
-  const hideInput = useCallback(() => provider.store?.setShowInput(false), [
-    provider.store,
-  ]);
+  const hideInput = useCallback(
+    () => provider.store?.setShowInput(false),
+    [provider.store],
+  );
 
   /**
    * hide the input when back is pressed if it was visible

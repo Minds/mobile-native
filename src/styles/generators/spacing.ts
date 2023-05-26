@@ -23,7 +23,8 @@ function getFixedSpacing(name: UIUnitType) {
 }
 
 export default function spacing(name: string) {
-  const regex = /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
+  const regex =
+    /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
   const result = regex.exec(name);
 
   if (result) {

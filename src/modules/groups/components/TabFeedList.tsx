@@ -33,7 +33,7 @@ function TabFeedListComponent<T extends BaseModel>(
 }
 
 export const TabFeedList = React.forwardRef(TabFeedListComponent) as <
-  T extends BaseModel
+  T extends BaseModel,
 >(
   props: TabFeedListProps<T> & {
     ref?: React.Ref<FlashList<T>>;

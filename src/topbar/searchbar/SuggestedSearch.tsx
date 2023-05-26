@@ -8,7 +8,7 @@ import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
   localStore: SearchResultStoreType;
-  renderUser: (item, index) => JSX.Element;
+  renderUser: (item, index) => React.ReactNode;
 };
 
 const SuggestedSearch = observer(({ localStore, renderUser }: PropsType) => {

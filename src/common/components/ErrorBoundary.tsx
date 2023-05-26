@@ -117,15 +117,13 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
  * @param {string} message
  * @param {boolean} small
  */
-export const withErrorBoundary = (
-  WrappedComponent,
-  message = '',
-  small = false,
-) => props => {
-  if (!message) message = i18n.t('errorDisplaying');
-  return (
-    <ErrorBoundary message={message} textSmall={small}>
-      <WrappedComponent {...props} />
-    </ErrorBoundary>
-  );
-};
+export const withErrorBoundary =
+  (WrappedComponent, message = '', small = false) =>
+  props => {
+    if (!message) message = i18n.t('errorDisplaying');
+    return (
+      <ErrorBoundary message={message} textSmall={small}>
+        <WrappedComponent {...props} />
+      </ErrorBoundary>
+    );
+  };

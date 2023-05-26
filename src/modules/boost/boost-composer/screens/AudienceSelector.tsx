@@ -18,7 +18,8 @@ import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
-type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
+type AudienceSelectorScreenProps =
+  BoostStackScreenProps<'BoostAudienceSelector'>;
 
 function AudienceSelectorScreen({
   navigation,

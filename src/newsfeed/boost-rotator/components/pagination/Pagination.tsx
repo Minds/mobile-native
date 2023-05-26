@@ -31,7 +31,7 @@ interface PaginationProps {
     activeDotIndex: number,
     dotsLength: number,
     paginationRef: Pagination,
-  ) => React.Component;
+  ) => React.ReactNode;
   tappableDots?: boolean;
   vertical?: boolean;
   accessibilityLabel?: string;
@@ -156,12 +156,8 @@ export default class Pagination extends PureComponent<PaginationProps> {
   }
 
   render() {
-    const {
-      dotsLength,
-      containerStyle,
-      vertical,
-      accessibilityLabel,
-    } = this.props;
+    const { dotsLength, containerStyle, vertical, accessibilityLabel } =
+      this.props;
 
     if (!dotsLength || dotsLength < 2) {
       return false;

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { DefaultSuspenseFallback, ErrorSuspense } from './ErrorSuspense';
 
-type WidgetProps = {
+type WidgetProps = PropsWithChildren<{
   title?: string;
   onViewAll?: () => void;
-  children: React.ReactChildren | React.ReactNode | React.ReactNode[];
-};
+}>;
 
-export function Widget(props: WidgetProps): JSX.Element {
+export function Widget(props: WidgetProps): React.ReactNode {
   const { children, ...rest } = props;
   const errorSuspenseProps = {
-    SuspenseFallback: DefaultSuspenseFallback,
+    SuspenseFallback: DefaultSuspenseFallback(),
     // ErrorFallback: DefaultErrorFallback,
     children,
     ...rest,

@@ -21,7 +21,7 @@
     - chmod 700 ~/.ssh
     - chmod 644 ~/.ssh/known_hosts
     - ssh-add ~/.ssh/id_rsa
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --ignore-engines
     - cd ios
     - pod install
 
