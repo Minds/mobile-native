@@ -339,21 +339,24 @@ export const pushAudienceSelector = (
     }),
   );
 
-const audienceMapping: Record<ComposeAudience['type'], string> = {
-  public: i18n.t('composer.audienceSelector.titles.public'),
-  plus: i18n.t('composer.audienceSelector.titles.plus'),
-  group: i18n.t('composer.audienceSelector.titles.group'),
-  membership: i18n.t('composer.audienceSelector.titles.membership'),
-};
-
 const ComposeAudienceSelector = ({ store }: { store: ComposeStoreType }) => {
+  const audienceMapping: Record<ComposeAudience['type'], string> = {
+    public: i18n.t('composer.audienceSelector.titles.public'),
+    plus: i18n.t('composer.audienceSelector.titles.plus'),
+    group: store.audience.group?.name ?? '',
+    membership: store.audience.tier?.name ?? '',
+  };
+
   return (
     <Button
-      fit
+      right="XXXL2"
       font="regular"
       size="pill"
-      darkContent
-      right="XL"
+      type="action"
+      mode="outline"
+      color="link"
+      reversedIcon
+      icon={<Icon name="chevron-down" color="Link" size="small" />}
       onPress={() => pushAudienceSelector({ store })}>
       {audienceMapping[store.audience.type]}
     </Button>
@@ -370,10 +373,10 @@ const styles = ThemedStyles.create({
     borderRadius: 30,
   },
   get check() {
-    return [this.rounded, 'bgLink', 'centered'];
+    return [this.rounded, 'bgLink', 'centered', 'marginTop2x'];
   },
   get checkBlank() {
-    return [this.rounded, 'border2x', 'bcolorActive'];
+    return [this.rounded, 'border2x', 'bcolorActive', 'marginTop2x'];
   },
   listPadding: { paddingBottom: 200 },
 });
