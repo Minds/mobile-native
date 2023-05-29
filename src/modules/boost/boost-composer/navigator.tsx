@@ -26,17 +26,14 @@ export type BoostStackParamList = {
   BoostReview: undefined;
 };
 
-export type BoostStackScreenProps<
-  S extends keyof BoostStackParamList
-> = StackScreenProps<BoostStackParamList, S>;
+export type BoostStackScreenProps<S extends keyof BoostStackParamList> =
+  StackScreenProps<BoostStackParamList, S>;
 
-export type BoostStackRouteProp<
-  S extends keyof BoostStackParamList
-> = RouteProp<BoostStackParamList, S>;
+export type BoostStackRouteProp<S extends keyof BoostStackParamList> =
+  RouteProp<BoostStackParamList, S>;
 
-export type BoostStackNavigationProp<
-  S extends keyof BoostStackParamList
-> = StackNavigationProp<BoostStackParamList, S>;
+export type BoostStackNavigationProp<S extends keyof BoostStackParamList> =
+  StackNavigationProp<BoostStackParamList, S>;
 
 const { Navigator, Screen } = createStackNavigator<BoostStackParamList>();
 

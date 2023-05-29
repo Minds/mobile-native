@@ -26,9 +26,10 @@ export const DiscoverySearchScreen = withErrorBoundaryScreen(
     const theme = ThemedStyles.style;
     const store = useMemo(() => new DiscoveryV2SearchStore(), []);
 
-    const navigation = useNavigation<
-      StackNavigationProp<DiscoveryStackParamList, 'DiscoverySearch'>
-    >();
+    const navigation =
+      useNavigation<
+        StackNavigationProp<DiscoveryStackParamList, 'DiscoverySearch'>
+      >();
     navigation.setOptions({
       headerShown: false,
     });

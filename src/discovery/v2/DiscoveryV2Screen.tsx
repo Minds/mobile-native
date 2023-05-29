@@ -35,9 +35,8 @@ interface Props {
  */
 export const DiscoveryV2Screen = withErrorBoundaryScreen(
   observer((props: Props) => {
-    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
-      false,
-    );
+    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] =
+      useState(false);
     const store = useDiscoveryV2Store();
     const listRef = React.useRef<FeedList<any>>(null);
 

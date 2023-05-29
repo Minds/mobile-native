@@ -9,7 +9,6 @@ import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import i18n from '../common/services/i18n.service';
 import { Button, H3, Row } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
-import AudienceSelector from './ComposeAudienceSelector';
 import { pushComposeCreateScreen } from './ComposeCreateScreen';
 import { ComposeCreateMode } from './createComposeStore';
 import type { ComposeStoreType } from './useComposeStore';
@@ -102,7 +101,6 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
         )}
       </Button>
       <View style={theme.flexContainer} />
-      {!store.isEdit && <AudienceSelector store={store} />}
       {rightButton}
     </Row>
   );

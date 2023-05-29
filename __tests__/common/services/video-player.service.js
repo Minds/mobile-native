@@ -2,6 +2,7 @@ import videoPlayerService from '../../../src/common/services/video-player.servic
 import SystemSetting from 'react-native-system-setting';
 
 jest.mock('react-native-system-setting');
+jest.mock('expo-keep-awake');
 
 const mockPlayerRef1 = {
   pause: jest.fn(),

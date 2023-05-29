@@ -62,7 +62,7 @@ jest.mock(
 jest.useRealTimers();
 
 describe('Activity screen component', () => {
-  it('renders correctly ', async done => {
+  it('renders correctly ', async () => {
     try {
       const navigation = {
         push: jest.fn(),
@@ -93,10 +93,9 @@ describe('Activity screen component', () => {
 
       // should show the activity
       await expect(screen.toJSON()).toMatchSnapshot();
-
-      done();
     } catch (e) {
-      done.fail(e);
+      console.log(e);
+      throw e;
     }
   });
 });
