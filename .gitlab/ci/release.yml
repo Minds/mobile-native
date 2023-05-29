@@ -39,7 +39,7 @@ release:android:google_play:
 release:ios:testflight:rc:
   image: macos-12-xcode-14
   stage: release
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   environment: testflight
   dependencies:
     - build:ios
@@ -58,7 +58,7 @@ release:ios:testflight:
   extends: .rule_tags
   image: macos-12-xcode-14
   stage: release
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   environment: app_store
   dependencies:
     - build:ios

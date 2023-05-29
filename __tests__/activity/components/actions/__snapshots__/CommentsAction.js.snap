@@ -2,11 +2,12 @@
 
 exports[`Comment action component renders correctly 1`] = `
 <withSpacer(IconButtonNextComponent)
+  disabled={false}
   extra={
     <Memo(EntityCounter)
       countProperty="comments:count"
       entity={
-        Object {
+        {
           "attachment_guid": false,
           "blurb": false,
           "containerObj": undefined,
@@ -18,7 +19,7 @@ exports[`Comment action component renders correctly 1`] = `
           "guid": "activityguid0",
           "mature": false,
           "message": "Message",
-          "ownerObj": Object {
+          "ownerObj": {
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -32,7 +33,7 @@ exports[`Comment action component renders correctly 1`] = `
           "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
-          "wire_totals": Object {
+          "wire_totals": {
             "tokens": 1000000000000000000,
           },
         }
@@ -45,18 +46,18 @@ exports[`Comment action component renders correctly 1`] = `
   scale={true}
   size="small"
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
       },
-      Object {
+      {
         "margin": 4,
       },
-      Object {
+      {
         "paddingVertical": 12,
       },
-      Object {
+      {
         "alignItems": "center",
       },
     ]

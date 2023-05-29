@@ -3,9 +3,8 @@ import React from 'react';
 import createPhoneValidationStore, {
   PhoneValidationStore,
 } from './createPhoneValidationStore';
-export const PhoneValidationContext = React.createContext<PhoneValidationStore | null>(
-  null,
-);
+export const PhoneValidationContext =
+  React.createContext<PhoneValidationStore | null>(null);
 
 type PropsType = {
   onConfirm: Function;

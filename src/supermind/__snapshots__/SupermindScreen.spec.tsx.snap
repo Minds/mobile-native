@@ -6,14 +6,14 @@ exports[`SupermindScreen should render correctly 1`] = `
     <View>
       <View
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
@@ -23,8 +23,8 @@ exports[`SupermindScreen should render correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                   "justifyContent": "flex-start",
                 },
@@ -33,7 +33,7 @@ exports[`SupermindScreen should render correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                   "marginRight": 8,
@@ -42,6 +42,23 @@ exports[`SupermindScreen should render correctly 1`] = `
               }
             >
               <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -56,7 +73,7 @@ exports[`SupermindScreen should render correctly 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "justifyContent": "center",
                   }
@@ -64,7 +81,7 @@ exports[`SupermindScreen should render correctly 1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
@@ -73,8 +90,8 @@ exports[`SupermindScreen should render correctly 1`] = `
                 >
                   <View
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "alignItems": "center",
                           "flexDirection": "row",
                           "height": 28,
@@ -89,18 +106,18 @@ exports[`SupermindScreen should render correctly 1`] = `
                       allowFontScaling={false}
                       selectable={false}
                       style={
-                        Array [
-                          Object {
+                        [
+                          {
                             "color": "#AEB0B8",
                             "fontSize": 28,
                           },
-                          Object {},
-                          Object {
+                          {},
+                          {
                             "fontFamily": "Material Design Icons",
                             "fontStyle": "normal",
                             "fontWeight": "normal",
                           },
-                          Object {},
+                          {},
                         ]
                       }
                     >
@@ -112,18 +129,18 @@ exports[`SupermindScreen should render correctly 1`] = `
             </View>
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#F2F2F2",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto-Bold",
                   },
-                  Object {
+                  {
                     "fontSize": 24,
                     "lineHeight": 32,
                   },
-                  Object {
+                  {
                     "textAlign": "left",
                   },
                 ]
@@ -137,7 +154,7 @@ exports[`SupermindScreen should render correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "backgroundColor": "transparent",
             "flex": 1,

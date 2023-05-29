@@ -36,15 +36,13 @@ export default function useStripeConnect() {
     loading: accountLoading,
     refresh: refreshAccount,
   } = useApiFetch<StripeAccount>('api/v3/payments/stripe/connect/account');
-  const {
-    fetch: getRedirectUrl,
-    loading: onboardingLoading,
-  } = useApiFetch<StripeConnectOnboardingResponse>(
-    'api/v3/payments/stripe/connect/onboarding',
-    {
-      skip: true,
-    },
-  );
+  const { fetch: getRedirectUrl, loading: onboardingLoading } =
+    useApiFetch<StripeConnectOnboardingResponse>(
+      'api/v3/payments/stripe/connect/onboarding',
+      {
+        skip: true,
+      },
+    );
   const { post: createAccount, loading: createAccountLoading } = useApiCall(
     'api/v3/payments/stripe/connect/account',
   );

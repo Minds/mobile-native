@@ -3,18 +3,18 @@
 exports[`renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "flexDirection": "row",
         "justifyContent": "center",
       },
-      Object {
+      {
         "alignContent": "center",
         "alignItems": "center",
         "alignSelf": "center",
         "justifyContent": "center",
       },
-      Object {
+      {
         "backgroundColor": "#1C1D1F",
         "borderColor": "#53565A",
         "borderRadius": 21,
@@ -30,22 +30,22 @@ exports[`renders correctly 1`] = `
   <Text
     onLayout={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#F2F2F2",
         },
-        Object {
+        {
           "fontFamily": "Roboto",
         },
-        Array [
-          Object {
+        [
+          {
             "fontSize": 17,
           },
-          Object {
+          {
             "color": "#F2F2F2",
           },
           undefined,
-          Object {
+          {
             "fontWeight": "500",
           },
         ],

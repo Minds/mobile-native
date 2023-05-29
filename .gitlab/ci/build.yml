@@ -32,7 +32,7 @@
 # Builds iOS production ipa
 build:ios:
   image: macos-12-xcode-14
-  tags: [shared-macos-amd64]
+  tags: [saas-macos-medium-m1]
   artifacts:
     name: 'Minds IPA'
     paths:
@@ -48,7 +48,7 @@ build:ios:
     - chmod 700 ~/.ssh
     - chmod 644 ~/.ssh/known_hosts
     - ssh-add ~/.ssh/id_rsa
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --ignore-engines
     - cd ios
     - pod install
   extends: .build_base

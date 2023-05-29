@@ -26,14 +26,8 @@ type PropsType = {
  * Two factor confirmation modal screen
  */
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
-  const {
-    onConfirm,
-    title,
-    onCancel,
-    mfaType,
-    oldCode,
-    showRecovery,
-  } = route.params;
+  const { onConfirm, title, onCancel, mfaType, oldCode, showRecovery } =
+    route.params;
 
   // Disable back button on Android
   useBackHandler(

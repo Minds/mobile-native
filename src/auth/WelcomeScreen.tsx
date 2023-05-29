@@ -57,7 +57,7 @@ function WelcomeScreen(props: PropsType) {
             darkContent>
             {i18n.t('auth.createChannel')}
           </Button>
-          <Button font="medium" onPress={onLoginPress}>
+          <Button darkContent font="medium" onPress={onLoginPress}>
             {i18n.t('auth.login')}
           </Button>
         </View>

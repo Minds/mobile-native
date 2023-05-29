@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
 import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  WithSafeAreaInsetsProps,
+  withSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import { IconButtonNext } from '~ui/icons';
 import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
@@ -18,26 +21,23 @@ import {
   BottomSheetMenuItem,
   pushBottomSheet,
 } from '../../common/components/bottom-sheet';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
 import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
+import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 
 type PropsType = {
   entity: ActivityModel;
   onTranslate?: Function;
   testID?: string;
   navigation: any;
-  insets?: {
-    bottom: number;
-  };
   channel?: UserModel;
   isChatHidden?: boolean;
   onVisibilityChange?: (visible: boolean) => void;
-};
+} & WithSafeAreaInsetsProps;
 
 type StateType = {
   options: Array<any>;
@@ -49,6 +49,7 @@ type StateType = {
  */
 class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   static contextType = GroupContext;
+  declare context: React.ContextType<typeof GroupContext>;
   ref = React.createRef<BottomSheetModalType>();
   shareMenuRef = React.createRef<BottomSheetModalType>();
   deleteOption: React.ReactNode;
@@ -169,8 +170,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         onPress: async () => {
           try {
             await this.props.entity.toggleAllowComments();
-          } catch (err) {
-            this.showError();
+          } catch (err: any) {
+            this.showError(err?.message);
           }
         },
       });
@@ -313,7 +314,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     });
 
     // we use the group from the context, as the entity.containerObj is not updated
-    const group = this.context;
+    const group = this.context?.group;
 
     // if can delete
     if (
@@ -496,4 +497,4 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
     ),
   });
 
-export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
+export default withChannelContext(withSafeAreaInsets(ActivityActionSheet));

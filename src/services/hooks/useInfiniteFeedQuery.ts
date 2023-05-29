@@ -16,7 +16,7 @@ export type PageResponse<T> = {
 export function useInfiniteFeedQuery<
   T = unknown,
   TError = unknown,
-  TQueryKey extends QueryKey = QueryKey
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   queryFn: QueryFunction<PageResponse<T>, TQueryKey>,

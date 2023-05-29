@@ -6,12 +6,12 @@ exports[`Explicit text component renders correctly 1`] = `
 >
   <Tags
     style={
-      Array [
+      [
         undefined,
-        Object {
+        {
           "marginBottom": 4,
         },
-        Object {
+        {
           "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },

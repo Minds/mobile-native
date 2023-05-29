@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedback,
@@ -56,13 +56,13 @@ const MindsVideo = observer((props: PropsType) => {
 
   const onStoreCreated = props.onStoreCreated;
 
-  const posterSource = useRef(
+  const [posterSource, setPosterSource] = useState(
     props.entity
       ? dataSaverEnabled
         ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
         : getVideoThumb(props.entity)
       : null,
-  ).current;
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -92,6 +92,11 @@ const MindsVideo = observer((props: PropsType) => {
       localStore.clear();
       localStore.setEntity(props.entity);
       localStore.preload();
+      setPosterSource(
+        dataSaverEnabled
+          ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
+          : getVideoThumb(props.entity),
+      );
     }
   }, [localStore, props.entity]);
 
@@ -133,7 +138,7 @@ const MindsVideo = observer((props: PropsType) => {
         {localStore.showThumbnail && (
           <RetryableImage
             style={theme.positionAbsolute}
-            source={posterSource!}
+            source={posterSource}
           />
         )}
         <ExpoVideo

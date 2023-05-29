@@ -10,6 +10,7 @@ import InputContainer, {
 import i18n from '../../services/i18n.service';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { IS_IOS } from '../../../config/Config';
+import { AnimatePresence } from 'moti';
 
 type PropsType = {
   tooltipBackground?: ColorValue;
@@ -36,14 +37,28 @@ const PasswordInput = (
 
   return (
     <View>
-      {showValidator && (
-        <Tooltip
-          bottom={12}
-          backgroundColor={tooltipBackground}
-          containerStyle={theme.paddingLeft2x}>
-          <PasswordValidator password={props.value} textStyle={validatorText} />
-        </Tooltip>
-      )}
+      <AnimatePresence>
+        {showValidator && (
+          <Tooltip
+            from={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            exitTransition={{
+              type: 'timing',
+              delay: 700,
+              duration: 200,
+            }}
+            transition={{ type: 'timing', duration: 150 }}
+            bottom={12}
+            backgroundColor={tooltipBackground}
+            containerStyle={theme.paddingLeft2x}>
+            <PasswordValidator
+              password={props.value}
+              textStyle={validatorText}
+            />
+          </Tooltip>
+        )}
+      </AnimatePresence>
       <InputContainer
         ref={inputRef}
         placeholder={i18n.t('auth.password')}

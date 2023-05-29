@@ -11,18 +11,18 @@ exports[`Thumb action component renders correctly 1`] = `
     scale={true}
     size="small"
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "flexDirection": "column",
         },
-        Object {
+        {
           "margin": 4,
         },
-        Object {
+        {
           "paddingVertical": 12,
         },
-        Object {
+        {
           "alignItems": "center",
         },
       ]

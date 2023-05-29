@@ -347,6 +347,7 @@ export default class Activity extends Component<PropsType> {
             <ExplicitText
               entity={entity}
               navigation={this.props.navigation}
+              selectable={false}
               style={fontStyle}
             />
             <Translate

@@ -494,6 +494,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
+   * Load more if there is no previous error
+   */
+  ifNoErrorLoadMore = () => {
+    if (this.errorLoading) {
+      return;
+    }
+    this.loadMore();
+  };
+
+  /**
    * Hydrate current page
    */
   async hydratePage() {
