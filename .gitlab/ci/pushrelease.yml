@@ -7,7 +7,8 @@
     - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
-    - export RELEASE_VERSION=${${CI_COMMIT_TAG:1}:-${CI_COMMIT_BRANCH:9}}
+    - TAG_VERSION=${CI_COMMIT_TAG:1}
+    - export RELEASE_VERSION=${TAG_VERSION:-$CI_COMMIT_BRANCH}
 
 #===============| STAGING |===============>
 
