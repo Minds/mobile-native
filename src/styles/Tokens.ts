@@ -104,4 +104,5 @@ export const TRANSPARENCY = {
   LIGHTEN10: 'rgba(255, 255, 255, 0.1)',
   LIGHTEN20: 'rgba(255, 255, 255, 0.2)',
   LIGHTEN30: 'rgba(255, 255, 255, 0.3)',
+  LIGHTEN50: 'rgba(255, 255, 255, 0.5)',
 };
