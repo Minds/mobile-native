@@ -1877,7 +1877,8 @@
     },
     "syncing": "Syncing app bundle...",
     "custom": {
-      "staging": "You're on staging",
+      "staging": "You're on Staging",
+      "rc": "You're on Release candidate",
       "usingCustom": "You're using a custom app version",
       "updateDescription": "Update description",
       "revertToProd": "Revert to Production"

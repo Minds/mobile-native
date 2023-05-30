@@ -4,17 +4,17 @@ exports[`Notification 24 hours before an offer expires 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -22,7 +22,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -30,7 +30,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -41,8 +41,8 @@ exports[`Notification 24 hours before an offer expires 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -53,7 +53,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -64,7 +64,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -73,7 +73,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -86,7 +86,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -100,20 +100,20 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -127,7 +127,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -135,22 +135,22 @@ exports[`Notification 24 hours before an offer expires 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -161,23 +161,23 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -190,23 +190,23 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -219,7 +219,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -229,22 +229,22 @@ exports[`Notification 24 hours before an offer expires 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -255,15 +255,15 @@ exports[`Notification 24 hours before an offer expires 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -278,17 +278,17 @@ exports[`Notification An offer expires 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -296,7 +296,7 @@ exports[`Notification An offer expires 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -304,7 +304,7 @@ exports[`Notification An offer expires 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -315,8 +315,8 @@ exports[`Notification An offer expires 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -327,7 +327,7 @@ exports[`Notification An offer expires 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -338,7 +338,7 @@ exports[`Notification An offer expires 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -347,7 +347,7 @@ exports[`Notification An offer expires 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -360,7 +360,7 @@ exports[`Notification An offer expires 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -374,20 +374,20 @@ exports[`Notification An offer expires 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -401,7 +401,7 @@ exports[`Notification An offer expires 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -409,22 +409,22 @@ exports[`Notification An offer expires 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -434,23 +434,23 @@ exports[`Notification An offer expires 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -465,23 +465,23 @@ exports[`Notification An offer expires 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -494,7 +494,7 @@ exports[`Notification An offer expires 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -504,22 +504,22 @@ exports[`Notification An offer expires 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -530,15 +530,15 @@ exports[`Notification An offer expires 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -553,17 +553,17 @@ exports[`Notification Boost accepted 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -571,7 +571,7 @@ exports[`Notification Boost accepted 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -579,7 +579,7 @@ exports[`Notification Boost accepted 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -590,8 +590,8 @@ exports[`Notification Boost accepted 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -602,7 +602,7 @@ exports[`Notification Boost accepted 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -613,7 +613,7 @@ exports[`Notification Boost accepted 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -622,7 +622,7 @@ exports[`Notification Boost accepted 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -635,7 +635,7 @@ exports[`Notification Boost accepted 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -649,20 +649,20 @@ exports[`Notification Boost accepted 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -676,7 +676,7 @@ exports[`Notification Boost accepted 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -684,22 +684,22 @@ exports[`Notification Boost accepted 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -712,7 +712,7 @@ exports[`Notification Boost accepted 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -722,22 +722,22 @@ exports[`Notification Boost accepted 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -748,15 +748,15 @@ exports[`Notification Boost accepted 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -766,7 +766,7 @@ exports[`Notification Boost accepted 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "marginTop": 24,
         "paddingLeft": 0,
       }
@@ -775,21 +775,38 @@ exports[`Notification Boost accepted 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Array [
-          Object {},
-          Object {
+        [
+          {},
+          {
             "borderWidth": 0.5,
           },
-          Object {
+          {
             "borderColor": "#3f4b56",
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
         ]
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -810,8 +827,8 @@ exports[`Notification Boost accepted 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "padding": 1,
                 },
               ]
@@ -828,17 +845,17 @@ exports[`Notification Boost complete 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -846,7 +863,7 @@ exports[`Notification Boost complete 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -854,7 +871,7 @@ exports[`Notification Boost complete 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -865,8 +882,8 @@ exports[`Notification Boost complete 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -877,7 +894,7 @@ exports[`Notification Boost complete 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -888,7 +905,7 @@ exports[`Notification Boost complete 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -897,7 +914,7 @@ exports[`Notification Boost complete 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -910,7 +927,7 @@ exports[`Notification Boost complete 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -924,20 +941,20 @@ exports[`Notification Boost complete 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -951,7 +968,7 @@ exports[`Notification Boost complete 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -959,22 +976,22 @@ exports[`Notification Boost complete 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -987,7 +1004,7 @@ exports[`Notification Boost complete 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -997,22 +1014,22 @@ exports[`Notification Boost complete 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1023,15 +1040,15 @@ exports[`Notification Boost complete 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -1041,7 +1058,7 @@ exports[`Notification Boost complete 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "marginTop": 24,
         "paddingLeft": 0,
       }
@@ -1050,21 +1067,38 @@ exports[`Notification Boost complete 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Array [
-          Object {},
-          Object {
+        [
+          {},
+          {
             "borderWidth": 0.5,
           },
-          Object {
+          {
             "borderColor": "#3f4b56",
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
         ]
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1085,8 +1119,8 @@ exports[`Notification Boost complete 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "padding": 1,
                 },
               ]
@@ -1103,17 +1137,17 @@ exports[`Notification Boost rejected 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -1121,7 +1155,7 @@ exports[`Notification Boost rejected 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -1129,7 +1163,7 @@ exports[`Notification Boost rejected 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -1140,8 +1174,8 @@ exports[`Notification Boost rejected 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -1152,7 +1186,7 @@ exports[`Notification Boost rejected 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -1163,7 +1197,7 @@ exports[`Notification Boost rejected 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -1172,7 +1206,7 @@ exports[`Notification Boost rejected 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -1185,7 +1219,7 @@ exports[`Notification Boost rejected 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -1199,20 +1233,20 @@ exports[`Notification Boost rejected 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -1226,7 +1260,7 @@ exports[`Notification Boost rejected 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -1234,22 +1268,22 @@ exports[`Notification Boost rejected 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1262,7 +1296,7 @@ exports[`Notification Boost rejected 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -1272,22 +1306,22 @@ exports[`Notification Boost rejected 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1298,15 +1332,15 @@ exports[`Notification Boost rejected 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -1316,7 +1350,7 @@ exports[`Notification Boost rejected 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "marginTop": 24,
         "paddingLeft": 0,
       }
@@ -1325,21 +1359,38 @@ exports[`Notification Boost rejected 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Array [
-          Object {},
-          Object {
+        [
+          {},
+          {
             "borderWidth": 0.5,
           },
-          Object {
+          {
             "borderColor": "#3f4b56",
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
         ]
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1360,8 +1411,8 @@ exports[`Notification Boost rejected 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "padding": 1,
                 },
               ]
@@ -1378,17 +1429,17 @@ exports[`Notification Boost rejected legacy 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -1396,7 +1447,7 @@ exports[`Notification Boost rejected legacy 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -1404,7 +1455,7 @@ exports[`Notification Boost rejected legacy 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -1415,8 +1466,8 @@ exports[`Notification Boost rejected legacy 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -1427,7 +1478,7 @@ exports[`Notification Boost rejected legacy 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -1438,7 +1489,7 @@ exports[`Notification Boost rejected legacy 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -1447,7 +1498,7 @@ exports[`Notification Boost rejected legacy 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -1460,7 +1511,7 @@ exports[`Notification Boost rejected legacy 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -1474,20 +1525,20 @@ exports[`Notification Boost rejected legacy 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -1501,7 +1552,7 @@ exports[`Notification Boost rejected legacy 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -1509,22 +1560,22 @@ exports[`Notification Boost rejected legacy 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1534,23 +1585,23 @@ exports[`Notification Boost rejected legacy 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -1565,23 +1616,23 @@ exports[`Notification Boost rejected legacy 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -1594,7 +1645,7 @@ exports[`Notification Boost rejected legacy 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -1604,22 +1655,22 @@ exports[`Notification Boost rejected legacy 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1630,15 +1681,15 @@ exports[`Notification Boost rejected legacy 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -1648,7 +1699,7 @@ exports[`Notification Boost rejected legacy 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "marginTop": 24,
         "paddingLeft": 0,
       }
@@ -1657,21 +1708,38 @@ exports[`Notification Boost rejected legacy 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Array [
-          Object {},
-          Object {
+        [
+          {},
+          {
             "borderWidth": 0.5,
           },
-          Object {
+          {
             "borderColor": "#3f4b56",
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
         ]
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1692,8 +1760,8 @@ exports[`Notification Boost rejected legacy 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "padding": 1,
                 },
               ]
@@ -1710,17 +1778,17 @@ exports[`Notification Receiver accepts an offer 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -1728,7 +1796,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -1736,7 +1804,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -1747,8 +1815,8 @@ exports[`Notification Receiver accepts an offer 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -1759,7 +1827,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -1770,7 +1838,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -1779,7 +1847,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -1792,7 +1860,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -1806,20 +1874,20 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -1833,7 +1901,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -1841,22 +1909,22 @@ exports[`Notification Receiver accepts an offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1866,23 +1934,23 @@ exports[`Notification Receiver accepts an offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -1897,23 +1965,23 @@ exports[`Notification Receiver accepts an offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -1926,7 +1994,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -1936,22 +2004,22 @@ exports[`Notification Receiver accepts an offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -1962,15 +2030,15 @@ exports[`Notification Receiver accepts an offer 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -1985,17 +2053,17 @@ exports[`Notification Receiver declines an offer 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -2003,7 +2071,7 @@ exports[`Notification Receiver declines an offer 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -2011,7 +2079,7 @@ exports[`Notification Receiver declines an offer 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -2022,8 +2090,8 @@ exports[`Notification Receiver declines an offer 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -2034,7 +2102,7 @@ exports[`Notification Receiver declines an offer 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -2045,7 +2113,7 @@ exports[`Notification Receiver declines an offer 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -2054,7 +2122,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -2067,7 +2135,7 @@ exports[`Notification Receiver declines an offer 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -2081,20 +2149,20 @@ exports[`Notification Receiver declines an offer 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -2108,7 +2176,7 @@ exports[`Notification Receiver declines an offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -2116,22 +2184,22 @@ exports[`Notification Receiver declines an offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -2141,23 +2209,23 @@ exports[`Notification Receiver declines an offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -2172,23 +2240,23 @@ exports[`Notification Receiver declines an offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -2201,7 +2269,7 @@ exports[`Notification Receiver declines an offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -2211,22 +2279,22 @@ exports[`Notification Receiver declines an offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -2237,15 +2305,15 @@ exports[`Notification Receiver declines an offer 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]
@@ -2260,17 +2328,17 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
 <View
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
         "paddingHorizontal": 20,
         "paddingVertical": 16,
       },
-      Object {
+      {
         "borderBottomWidth": 0.5,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -2278,7 +2346,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "row",
       }
@@ -2286,7 +2354,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flexDirection": "column",
           "marginRight": 28,
         }
@@ -2297,8 +2365,8 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
       >
         <Image
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -2309,7 +2377,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 18.5,
               "height": 37,
               "width": 37,
@@ -2320,7 +2388,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "borderRadius": 14,
               "bottom": -15,
               "height": 24,
@@ -2329,7 +2397,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "overflow": "hidden",
               "position": "absolute",
               "shadowColor": "rgba(0,0,0, .4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 1,
               },
@@ -2342,7 +2410,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "backgroundColor": "#FFD048",
                   "borderRadius": 14,
@@ -2356,20 +2424,20 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFF",
                       "fontSize": 10,
                     },
-                    Object {
+                    {
                       "backgroundColor": "transparent",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
                 testID="iconIcon"
@@ -2383,7 +2451,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 9,
         }
@@ -2391,22 +2459,22 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -2416,23 +2484,23 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -2447,23 +2515,23 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         <Text
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 15,
                   "lineHeight": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "color": "#F2F2F2",
                 },
               ],
@@ -2476,7 +2544,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "center",
           "flex": 2,
           "flexDirection": "row",
@@ -2486,22 +2554,22 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 15,
                 "lineHeight": 18,
               },
-              Object {
+              {
                 "fontWeight": "400",
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -2512,15 +2580,15 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "borderRadius": 20,
               "height": 10,
               "marginLeft": 8,
               "width": 10,
             },
-            Object {
+            {
               "backgroundColor": "#FFD048",
             },
           ]

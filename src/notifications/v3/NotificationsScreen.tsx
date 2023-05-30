@@ -89,7 +89,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (query.error && !query.isLoading && !query.isRefetching) {
       return (
         <View style={styles.errorContainerStyle}>
-          <MText style={styles.errorStyle} onPress={refresh}>
+          <MText style={styles.errorStyle} onPress={() => refresh()}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
           </MText>

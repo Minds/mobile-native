@@ -2,14 +2,8 @@ import React, { useCallback, useRef } from 'react';
 import { Pressable, Animated } from 'react-native';
 
 export default function PressableScale(props) {
-  const {
-    children,
-    onPressIn,
-    onPressOut,
-    style,
-    innerStyle,
-    ...otherProps
-  } = props;
+  const { children, onPressIn, onPressOut, style, innerStyle, ...otherProps } =
+    props;
 
   const scaleAnimation = useRef(new Animated.Value(1)).current;
 

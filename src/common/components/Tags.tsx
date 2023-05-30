@@ -1,7 +1,7 @@
 //@ts-ignore
 import _ from 'lodash';
 
-import React, { PureComponent } from 'react';
+import React, { PropsWithChildren, PureComponent } from 'react';
 
 import { TextStyle } from 'react-native';
 import NavigationService from '~/navigation/NavigationService';
@@ -46,7 +46,7 @@ type PropsType = {
  *
  * Generate text with links
  */
-export default class Tags extends PureComponent<PropsType> {
+export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
   index: number = 0;
 
   /**
@@ -101,7 +101,8 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = str => {
-    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
+    const url =
+      /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -121,7 +122,8 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = str => {
-    const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url =
+      /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -141,7 +143,8 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = str => {
-    const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url =
+      /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (

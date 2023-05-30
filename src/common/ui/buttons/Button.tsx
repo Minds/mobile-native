@@ -44,6 +44,7 @@ export type ButtonPropsType = {
   icon?: React.ReactNode;
   reversedIcon?: boolean;
   pressableProps?: PressableProps;
+  color?: 'link' | 'primary' | 'tertiary' | 'danger';
   overlayStyle?: StyleProp<ViewStyle>;
 };
 const shouldBreak = (num, disabled, state) => {
@@ -79,6 +80,7 @@ export const ButtonComponent = ({
   fit,
   reversedIcon,
   pressableProps,
+  color,
   ...props
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
@@ -107,14 +109,19 @@ export const ButtonComponent = ({
   const stateRef = useRef({ state: 0, loading: false, pressing: false });
   const [text, setText]: any = useState(children);
   const Font = getFontRenderer(size);
-  const { textColor, spinnerColor } = getColor(
-    ThemedStyles.theme,
-    mode,
-    darkContent,
-    lightContent,
-    disabled,
-    type,
-  );
+  const { textColor, spinnerColor } = color
+    ? {
+        textColor: color,
+        spinnerColor: color,
+      }
+    : getColor(
+        ThemedStyles.theme,
+        mode,
+        darkContent,
+        lightContent,
+        disabled,
+        type,
+      );
   const bounceType = spinner ? 'long' : 'short';
 
   // Added for the LEGACY loading prop;

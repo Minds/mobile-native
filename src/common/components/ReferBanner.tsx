@@ -20,7 +20,7 @@ export default function ReferBanner() {
 
   return (
     <Banner
-      name="banner:refer"
+      dismissIdentifier="banner:refer"
       onPress={onPress}
       text={
         <Trans

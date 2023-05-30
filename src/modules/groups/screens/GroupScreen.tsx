@@ -135,6 +135,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
       />
       <SearchTopBar
         visible={currentStore?.showSearch}
+        placeholder="Search Group"
         onClosePress={() => currentStore?.toggleSearch()}
         onSubmitEditing={e => currentStore?.setSearch(e.nativeEvent.text)}
       />

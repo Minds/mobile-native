@@ -173,12 +173,14 @@ const Interactions = (props: InteractionsProps) => {
     return <ActivityPlaceHolder />;
   }, [isVote, isChannels]);
 
-  const renderItemUser = useMemo(() => _renderItemUser(navigation), [
-    navigation,
-  ]);
-  const renderItemActivity = useMemo(() => _renderItemActivity(navigation), [
-    navigation,
-  ]);
+  const renderItemUser = useMemo(
+    () => _renderItemUser(navigation),
+    [navigation],
+  );
+  const renderItemActivity = useMemo(
+    () => _renderItemActivity(navigation),
+    [navigation],
+  );
 
   return (
     <>
@@ -221,20 +223,17 @@ type Interactions =
   | 'subscribers'
   | 'subscribersYouKnow';
 
-const _renderItemUser = navigation => (row: { item: any; index: number }) => (
-  <ChannelListItem channel={row.item} navigation={navigation} />
-);
-const _renderItemActivity = navigation => (row: {
-  item: any;
-  index: number;
-}) => (
-  <Activity
-    entity={row.item}
-    hideTabs={true}
-    hideRemind={true}
-    navigation={navigation}
-  />
-);
+const _renderItemUser = navigation => (row: { item: any; index: number }) =>
+  <ChannelListItem channel={row.item} navigation={navigation} />;
+const _renderItemActivity = navigation => (row: { item: any; index: number }) =>
+  (
+    <Activity
+      entity={row.item}
+      hideTabs={true}
+      hideRemind={true}
+      navigation={navigation}
+    />
+  );
 
 const mapUser = data => data.map(d => UserModel.create(d.actor));
 const mapSubscriber = data => data.map(d => UserModel.create(d));

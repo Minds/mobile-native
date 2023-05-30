@@ -81,9 +81,8 @@ const check = {
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
-    const navigation = useNavigation<
-      NativeStackNavigationProp<AppStackParamList>
-    >();
+    const navigation =
+      useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
     const openWire = useCallback(() => {
       navigation.push('WireFab', {

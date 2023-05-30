@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
 
 jest.mock('../src/blockchain/v2/walletconnect/modal/registry');
+jest.mock('../AppInitManager');
 
 jest.mock('react-native-exception-handler');
 

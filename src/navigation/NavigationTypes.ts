@@ -357,10 +357,8 @@ export type AboutScreenNavigationProp = StackNavigationProp<
   'About'
 >;
 
-export type AppStackScreenProps<
-  T extends keyof AppStackParamList
-> = NativeStackScreenProps<AppStackParamList, T>;
+export type AppStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
 
-export type RootStackScreenProps<
-  T extends keyof RootStackParamList
-> = NativeStackScreenProps<RootStackParamList, T>;
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;

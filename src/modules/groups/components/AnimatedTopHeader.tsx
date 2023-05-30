@@ -30,7 +30,6 @@ export default function AnimatedTopHeader({
   currentStore,
   top,
 }: Props) {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const bgColor = ThemedStyles.getColor('PrimaryBackground');
 
@@ -76,11 +75,10 @@ export default function AnimatedTopHeader({
         <SmallCircleButton
           name="chevron-left"
           raised={true}
-          style={theme.colorIcon}
           onPress={navigation.goBack}
           color={ThemedStyles.getColor('PrimaryBackground')}
           iconStyle={styles.iconStyle}
-          reverseColor={'white'}
+          reverseColor={ThemedStyles.getColor('PrimaryText')}
         />
         <Animated.View style={titleStyle}>
           <H4>{group.name}</H4>
@@ -89,11 +87,10 @@ export default function AnimatedTopHeader({
           name="search"
           type="material"
           raised={true}
-          style={theme.colorIcon}
           onPress={() => currentStore?.toggleSearch()}
           color={ThemedStyles.getColor('PrimaryBackground')}
           iconStyle={styles.iconStyle}
-          reverseColor={'white'}
+          reverseColor={ThemedStyles.getColor('PrimaryText')}
         />
       </View>
     </Animated.View>
