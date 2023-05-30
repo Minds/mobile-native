@@ -8,6 +8,10 @@ export function useGroupFeedStore(group: GroupModel) {
     feed: new FeedStore(true),
     search: '',
     showSearch: false,
+    showPostButton: true,
+    setShowPostButton(value: boolean) {
+      this.showPostButton = value;
+    },
     toggleSearch() {
       this.showSearch = !this.showSearch;
       if (!this.showSearch) {
