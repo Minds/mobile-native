@@ -38,6 +38,7 @@ type PropsType = {
   map?: (data: any) => any;
   params?: Object;
   placeholderCount?: number;
+  defaultOffset?: number | string;
   renderPlaceholder?: () => JSX.Element;
   offsetPagination?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -56,7 +57,9 @@ export default observer(
   forwardRef(function OffsetList(props: PropsType, ref: any) {
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
-    const [offset, setOffset] = useState<string | number>('');
+    const [offset, setOffset] = useState<string | number>(
+      props.defaultOffset ?? '',
+    );
     const [page, setPage] = useState<number>(1);
     const listRef = React.useRef<FlatList>(null);
     const offsetField = props.offsetField || 'offset';

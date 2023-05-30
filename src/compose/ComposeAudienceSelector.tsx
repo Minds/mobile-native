@@ -146,7 +146,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!!PRO_PLUS_SUBSCRIPTION_ENABLED && (
+      {!mode && !!PRO_PLUS_SUBSCRIPTION_ENABLED && (
         <MenuItemOption
           title={texts.audience.plus.title}
           subtitle={texts.audience.plus.subtitle}
@@ -158,7 +158,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!IS_IOS && (
+      {!IS_IOS && mode !== 'groups' && (
         <>
           <Row align="centerBetween">
             <B1 left="XL" top="M" font="bold">
