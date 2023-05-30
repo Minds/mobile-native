@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-vision-camera/android/build.gradle b/node_modules/react-native-vision-camera/android/build.gradle
-index 91e64d9..415fd8a 100644
+index 91e64d9..f398505 100644
 --- a/node_modules/react-native-vision-camera/android/build.gradle
 +++ b/node_modules/react-native-vision-camera/android/build.gradle
 @@ -83,14 +83,12 @@ buildscript {
@@ -26,6 +26,58 @@ index 91e64d9..415fd8a 100644
 +  buildFeatures { 
 +    viewBinding = true 
 +    if (REACT_NATIVE_VERSION >= 71) { 
-       prefab true 
-     } 
+       prefab true
+     }
    }
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewManager.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewManager.kt
+index 35e01e4..482d373 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewManager.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewManager.kt
+@@ -12,6 +12,7 @@ class CameraViewManager(reactContext: ReactApplicationContext) : ViewGroupManage
+ 
+   public override fun createViewInstance(context: ThemedReactContext): CameraView {
+     val cameraViewModule = context.getNativeModule(CameraViewModule::class.java)!!
++    cameraViewModule.installFrameProcessorBindings()
+     return CameraView(context, cameraViewModule.frameProcessorThread)
+   }
+ 
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewModule.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewModule.kt
+index 7672b15..ee94cbe 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewModule.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraViewModule.kt
+@@ -58,21 +58,25 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
+     frameProcessorManager = null
+   }
+ 
+-  override fun initialize() {
+-    super.initialize()
+-
+-    if (frameProcessorManager == null) {
+-      frameProcessorThread.execute {
+-        frameProcessorManager = FrameProcessorRuntimeManager(reactApplicationContext, frameProcessorThread)
+-      }
+-    }
+-  }
+-
+   override fun onCatalystInstanceDestroy() {
+     super.onCatalystInstanceDestroy()
+     cleanup()
+   }
+ 
++  fun installFrameProcessorBindings(): Boolean {
++    return try {
++      if (frameProcessorManager == null) {
++        frameProcessorThread.execute {
++          frameProcessorManager = FrameProcessorRuntimeManager(reactApplicationContext, frameProcessorThread)
++        }
++      }
++      true;
++    } catch (e: Error) {
++      Log.e(TAG, "Failed to install Frame Processor JSI Bindings!", e)
++      false;
++    }
++  }
++
+   override fun invalidate() {
+     super.invalidate()
+     cleanup()
