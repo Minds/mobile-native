@@ -130,6 +130,8 @@ export type RootStackParamList = {
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
+  GroupsDiscovery: {};
+  GroupView: {};
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {

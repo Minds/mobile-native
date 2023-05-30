@@ -219,7 +219,7 @@ export default observer(
         data={data}
         renderItem={renderItem}
         ListFooterComponent={loadingFooter}
-        ListEmptyComponent={props.ListEmptyComponent}
+        ListEmptyComponent={!fetchStore.loading && props.ListEmptyComponent}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={_refresh}
