@@ -10,6 +10,7 @@ import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import i18n from '../../common/services/i18n.service';
 import { ScreenHeader } from '~ui/screen';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
+import { IS_IPAD } from '~/config/Config';
 
 const SAFE_AREA_EDGES: Edge[] = ['top'];
 /**
@@ -21,7 +22,7 @@ const PlusDiscoveryScreen = observer(() => {
 
   const header = (
     <View style={theme.bgPrimaryBackground}>
-      <ScreenHeader back title={i18n.t('plusTabTitleDiscovery')} />
+      <ScreenHeader back={!IS_IPAD} title={i18n.t('plusTabTitleDiscovery')} />
       <TopbarTabbar
         current={store.activeTabId}
         onChange={tabId => {
@@ -37,7 +38,9 @@ const PlusDiscoveryScreen = observer(() => {
   );
 
   return (
-    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.flexContainer}>
+    <SafeAreaView
+      edges={SAFE_AREA_EDGES}
+      style={[theme.flexContainer, theme.alignSelfCenterMaxWidth]}>
       <View style={theme.flexContainer}>
         {store.activeTabId === 'foryou' ? (
           <DiscoveryTrendsList plus={true} store={store} header={header} />

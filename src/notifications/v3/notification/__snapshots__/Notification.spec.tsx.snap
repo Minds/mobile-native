@@ -5,17 +5,24 @@ exports[`Notification 24 hours before an offer expires 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -279,17 +286,24 @@ exports[`Notification An offer expires 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -554,17 +568,24 @@ exports[`Notification Boost accepted 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -829,17 +850,24 @@ exports[`Notification Boost complete 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1104,17 +1132,24 @@ exports[`Notification Boost rejected 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1379,17 +1414,24 @@ exports[`Notification Boost rejected legacy 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1711,17 +1753,24 @@ exports[`Notification Receiver accepts an offer 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1986,17 +2035,24 @@ exports[`Notification Receiver declines an offer 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2261,17 +2317,24 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
   onPress={[Function]}
   style={
     Array [
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#53565A",
+        },
+      ],
       Object {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      Object {
-        "borderBottomWidth": 0.5,
-      },
-      Object {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }

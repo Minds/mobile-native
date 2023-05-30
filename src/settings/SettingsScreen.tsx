@@ -15,6 +15,7 @@ import { HiddenTap } from './screens/DevToolsScreen';
 import {
   DEV_MODE,
   IS_IOS,
+  IS_IPAD,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -185,7 +186,7 @@ const SettingsScreen = observer(({ navigation }) => {
   return (
     <Screen safe>
       <HiddenTap>
-        <ScreenHeader back title={i18n.t('moreScreen.settings')} />
+        <ScreenHeader back={!IS_IPAD} title={i18n.t('moreScreen.settings')} />
       </HiddenTap>
       <ScrollView
         testID="SettingsScreen"

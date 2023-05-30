@@ -17,6 +17,7 @@ import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { IS_IPAD } from '~/config/Config';
 
 type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
 
@@ -27,6 +28,10 @@ function AudienceSelectorScreen({
   const { t } = useTranslation();
   const { safe, backIcon } = route.params ?? ({} as Record<string, any>);
   const boostStore = useBoostStore();
+
+  const routes = navigation.getState()?.routes;
+  const showBackButton =
+    !IS_IPAD || routes[routes.length - 2]?.name === 'BoostGoal';
 
   if (!boostStore.config) {
     showNotification('Boost config not found', 'danger');
@@ -46,7 +51,7 @@ function AudienceSelectorScreen({
             ? t('Boost Channel')
             : t('Boost Post')
         }
-        back
+        back={showBackButton}
         backIcon={backIcon}
         shadow
       />

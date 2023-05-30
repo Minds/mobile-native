@@ -44,6 +44,7 @@ import analyticsService from '~/common/services/analytics.service';
 import MutualSubscribers from '../../../channel/components/MutualSubscribers';
 import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
 import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -69,11 +70,7 @@ const ActivityOwner = ({
   const { current: cleanTop } = useRef({
     paddingTop: insets.top - 10 || 2,
   });
-  const containerStyle = useStyle(
-    'bgPrimaryBackground',
-    styles.header,
-    cleanTop,
-  );
+  const containerStyle = useStyle('bgPrimaryBackground', cleanTop);
   const right = React.useMemo(
     () => (
       <View style={ThemedStyles.style.rowJustifyCenter}>
@@ -145,7 +142,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }));
   const route = useRoute<ActivityRoute>();
   const insets = useSafeAreaInsets();
-  const window = useDimensions().window;
+  const { width, height } = useDimensions().window;
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
@@ -251,7 +248,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   ) : null;
 
   const shadowOpt = {
-    width: window.width,
+    width,
     height: 60 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
@@ -301,9 +298,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   const containerStyle = useStyle(
-    window,
+    { height },
     'flexContainer',
     'bgPrimaryBackground',
+    'alignSelfCenterMaxWidth',
   );
 
   return (
@@ -312,7 +310,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <View style={theme.flexContainer}>
           {ownerBlockShadow}
           <ScrollView
-            style={theme.flexContainer}
+            style={[theme.flexContainer, { width: getMaxFeedWidth() }]}
             onLayout={store.onScrollViewSizeChange}
             onContentSizeChange={store.onContentSizeChange}
             contentContainerStyle={

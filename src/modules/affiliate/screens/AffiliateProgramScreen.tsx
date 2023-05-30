@@ -19,6 +19,7 @@ import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
+import { IS_IPAD } from '~/config/Config';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ export default function AffiliateProgramScreen({ navigation }) {
     <Screen safe onlyTopEdge scroll>
       <LinksMindsSheet ref={linkBottomSheetRef} />
       <InviteToMindsSheet ref={inviteBottomSheetRef} />
-      <ScreenHeader title={t('screenTitle')} back />
+      <ScreenHeader title={t('screenTitle')} back={!IS_IPAD} />
       <ScreenSection top="XL">
         <B1>{t('screenDescription')}</B1>
         <Section title="Affiliate" color="#6D28D9" />

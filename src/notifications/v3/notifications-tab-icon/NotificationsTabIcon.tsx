@@ -1,17 +1,17 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon } from '~ui/icons';
+import { IIconSize, Icon } from '~ui/icons';
 import { useStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
-  size?: number;
+  size?: IIconSize;
   active: boolean;
 };
 
 const NotificationsTabIcon = observer((props: PropsType) => {
-  const active = props.active;
+  const { active, size = 'large' } = props;
   const { notifications } = useStores();
 
   React.useEffect(() => {
@@ -23,8 +23,8 @@ const NotificationsTabIcon = observer((props: PropsType) => {
   return (
     <>
       <Icon
-        size="large"
         name="notification"
+        size={size}
         active={active}
         activeColor="PrimaryText"
       />

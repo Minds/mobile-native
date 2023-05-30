@@ -5,16 +5,18 @@ exports[`Activity screen component renders correctly  1`] = `
   style={
     Array [
       Object {
-        "fontScale": 2,
         "height": 1334,
-        "scale": 2,
-        "width": 750,
       },
       Object {
         "flex": 1,
       },
       Object {
         "backgroundColor": "#1C1D1F",
+      },
+      Object {
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -32,16 +34,6 @@ exports[`Activity screen component renders correctly  1`] = `
         Array [
           Object {
             "backgroundColor": "#1C1D1F",
-          },
-          Object {
-            "borderBottomWidth": 0,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 1,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-            "shadowRadius": 2.22,
           },
           Object {
             "paddingTop": -10,
@@ -388,9 +380,14 @@ exports[`Activity screen component renders correctly  1`] = `
       onContentSizeChange={[Function]}
       onLayout={[Function]}
       style={
-        Object {
-          "flex": 1,
-        }
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "width": 750,
+          },
+        ]
       }
     >
       <View>

@@ -194,7 +194,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const isLatest = newsfeed.feedType === 'latest';
 
   return (
-    <Screen safe onlyTopEdge={IS_IOS}>
+    <Screen safe onlyTopEdge={IS_IOS} hasMaxWidth={false}>
       <PrefetchNotifications tabs={prefetch} />
       <ChannelRecommendationProvider location="newsfeed">
         <View style={ThemedStyles.style.flexContainer}>

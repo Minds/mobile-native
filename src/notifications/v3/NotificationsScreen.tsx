@@ -142,11 +142,12 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         stickyHeaderIndices={sticky}
         stickyHeaderHiddenOnScroll={true}
         style={cleanTop}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <>
+          <View style={styles.centerMaxWidth}>
             <Topbar title="Notifications" navigation={navigation} noInsets />
             <NotificationsTopBar store={notifications} refresh={refresh} />
-          </>
+          </View>
         }
         scrollEnabled={!query.isRefetching}
         data={notificationsList}
@@ -156,7 +157,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={refresh}
         refreshing={query.isRefetching && query.isFetchedAfterMount}
         onViewableItemsChanged={onViewableItemsChanged}
-        // contentContainerStyle={}
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
@@ -191,11 +191,8 @@ export default withErrorBoundaryScreen(
 
 const styles = ThemedStyles.create({
   containerStyle: { flexGrow: 1 },
-  container: [
-    'bgPrimaryBackground',
-    'flexContainer',
-    'alignSelfCenterMaxWidth',
-  ],
+  container: ['bgPrimaryBackground', 'flexContainer'],
+  centerMaxWidth: ['alignSelfCenterMaxWidth'],
   errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],
   errorText: ['colorLink', 'marginTop2x'],

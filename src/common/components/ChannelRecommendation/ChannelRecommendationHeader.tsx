@@ -48,13 +48,15 @@ function ChannelRecommendationHeader({
     [dismissal],
   );
 
+  const { alignSelfCenterMaxWidth, bgPrimaryBackground } = ThemedStyles.style;
+
   return shouldRender ? (
     <View
-      style={
-        shadow
-          ? [ThemedStyles.style.bgPrimaryBackground, headerStyles.shadow]
-          : ThemedStyles.style.bgPrimaryBackground
-      }>
+      style={[
+        alignSelfCenterMaxWidth,
+        bgPrimaryBackground,
+        shadow ? headerStyles.shadow : undefined,
+      ]}>
       <Row align="centerBetween" vertical="L" horizontal="L">
         <H4>{i18nService.t('recommendedChannels')}</H4>
         <Row align="centerBoth">

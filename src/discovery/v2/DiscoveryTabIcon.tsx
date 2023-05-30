@@ -1,24 +1,24 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon } from '~ui/icons';
+import { IIconSize, Icon } from '~ui/icons';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 type PropsType = {
-  size?: number;
+  size?: IIconSize;
   active: boolean;
 };
 
 const DiscoveryTabIcon = observer((props: PropsType) => {
-  const active = props.active;
+  const { active, size = 'large' } = props;
   const { badgeVisible } = useDiscoveryV2Store();
 
   return (
     <>
       <Icon
-        size="large"
         name="search"
+        size={size}
         active={active}
         activeColor="PrimaryText"
       />

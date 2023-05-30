@@ -13,6 +13,7 @@ export type ScreenPropType = {
   children?: ReactNode;
   onlyTopEdge?: boolean;
   edges?: Edge[];
+  hasMaxWidth?: boolean;
 };
 
 export const Screen = ({
@@ -23,12 +24,13 @@ export const Screen = ({
   background = 'primary',
   onlyTopEdge,
   edges,
+  hasMaxWidth = true,
 }: ScreenPropType) => {
   const Renderer = safe ? SafeAreaView : View;
 
   if (scroll) {
     return (
-      <Renderer style={styles[background]}>
+      <Renderer style={[styles[background], hasMaxWidth && styles.maxWidth]}>
         <FitScrollView style={ThemedStyles.style.flexContainer}>
           {children}
         </FitScrollView>
@@ -38,7 +40,9 @@ export const Screen = ({
   }
 
   return (
-    <Renderer edges={onlyTopEdge ? ['top'] : edges} style={styles[background]}>
+    <Renderer
+      edges={onlyTopEdge ? ['top'] : edges}
+      style={[styles[background], hasMaxWidth && styles.maxWidth]}>
       {children}
     </Renderer>
   );
@@ -48,4 +52,5 @@ const styles = ThemedStyles.create({
   primary: ['flexContainer', 'bgPrimaryBackground'],
   secondary: ['flexContainer', 'bgSecondaryBackground'],
   tertiary: ['flexContainer', 'bgTertiaryBackground'],
+  maxWidth: ['alignSelfCenterMaxWidth'],
 });

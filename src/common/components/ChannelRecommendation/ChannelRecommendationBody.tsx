@@ -130,6 +130,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
         setListSize(RECOMMANDATIONS_SIZE + 2);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [recommendation, listSize],
   );
 
@@ -138,7 +139,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   }
 
   return (
-    <>
+    <View style={styles.centerMaxWidth}>
       <Spacer bottom="XL">
         {recommendation?.result?.entities.slice(0, listSize).map(suggestion => (
           <ChannelRecommendationItem
@@ -149,12 +150,13 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
         ))}
       </Spacer>
       <View style={styles.borderBottom} />
-    </>
+    </View>
   );
 };
 
 const styles = ThemedStyles.create({
   borderBottom: ['borderBottom6x', 'bcolorBaseBackground'],
+  centerMaxWidth: ['alignSelfCenterMaxWidth'],
 });
 
 export default observer(ChannelRecommendationBody);

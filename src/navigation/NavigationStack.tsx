@@ -11,6 +11,7 @@ import {
 } from '@react-navigation/stack';
 
 import TabsScreen from '../tabs/TabsScreen';
+import TabsScreenVertical from '../tabs/TabsScreenVertical';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 
@@ -31,7 +32,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
-import { isStoryBookOn } from '~/config/Config';
+import { IS_IPAD, isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -62,7 +63,9 @@ export const InternalStack = () => {
   );
 };
 
-const TabScreenWithModal = withModalProvider(TabsScreen);
+const TabScreenWithModal = withModalProvider(
+  IS_IPAD ? TabsScreenVertical : TabsScreen,
+);
 
 const AppStack = observer(() => {
   if (sessionService.switchingAccount) {

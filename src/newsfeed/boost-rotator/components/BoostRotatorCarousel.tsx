@@ -9,9 +9,9 @@ import {
   boostRotatorMetadata,
   useBoostRotatorStore,
 } from '../boost-rotator.store';
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import ActivityPlaceHolder from '~/newsfeed/ActivityPlaceHolder';
-import { IS_IPAD } from '~/config/Config';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 function BoostRotatorCarousel() {
   const navigation = useNavigation();
@@ -20,16 +20,19 @@ function BoostRotatorCarousel() {
   // this is only used to provide the metadata to the activity analytics context
   const feedStore = useRef(new FeedStore().setMetadata(boostRotatorMetadata))
     .current;
-  const { width } = useWindowDimensions();
 
+  const width = getMaxFeedWidth();
+  const height = Math.max(width, 500);
+
+  const activityHeight = height - 175;
   const renderItem = useCallback(
     itemProps => (
       <Activity
         entity={itemProps.item}
         maxContentHeight={
           itemProps.item?.goal_button_text
-            ? ACTIVITY_HEIGHT - BOOST_CTA_HEIGHT
-            : ACTIVITY_HEIGHT
+            ? activityHeight - BOOST_CTA_HEIGHT
+            : activityHeight
         }
         autoHeight
         navigation={navigation}
@@ -37,8 +40,13 @@ function BoostRotatorCarousel() {
         displayBoosts="none"
       />
     ),
-    [navigation],
+    [navigation, activityHeight],
   );
+
+  const placeholderContainer = {
+    height,
+    maxWidth: width,
+  };
 
   return (
     <FeedStoreContext.Provider value={feedStore}>
@@ -57,8 +65,8 @@ function BoostRotatorCarousel() {
           onSnapToItem={boostRotatorStore.setActiveIndex}
           panGestureHandlerProps={gestureHandlerProps}
           enabled={!!boostRotatorStore.activites.length}
-          width={width > WIDTH ? WIDTH : width}
-          height={HEIGHT}
+          width={width}
+          height={height}
           data={boostRotatorStore.activites}
           renderItem={renderItem}
           scrollAnimationDuration={350}
@@ -69,20 +77,8 @@ function BoostRotatorCarousel() {
 }
 
 /**
- * The height of the boost rotator
+ * the max height of the CTA
  */
-const WIDTH = 770;
-const HEIGHT = IS_IPAD ? WIDTH : 500;
-
-const placeholderContainer = {
-  height: HEIGHT,
-  maxWidth: WIDTH,
-};
-
-/**
- * the max height of the activity
- */
-const ACTIVITY_HEIGHT = HEIGHT - 175;
 const BOOST_CTA_HEIGHT = 45;
 /**
  * the number of activities to render at any time

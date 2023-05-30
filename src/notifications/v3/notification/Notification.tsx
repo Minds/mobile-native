@@ -18,6 +18,7 @@ import type Notification from './NotificationModel';
 import i18n from '../../../common/services/i18n.service';
 import MText from '../../../common/components/MText';
 import { Image } from 'expo-image';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type PropsType = {
   notification: Notification;
@@ -57,7 +58,9 @@ const NotificationItem = observer(
     ) : null;
 
     return (
-      <TouchableOpacity style={containerStyle} onPress={router.navToEntity}>
+      <TouchableOpacity
+        style={[containerStyle, ThemedStyles.style.alignSelfCenterMaxWidth]}
+        onPress={router.navToEntity}>
         <View style={styles.innerContainer}>
           <View style={styles.avatarContainer}>
             {

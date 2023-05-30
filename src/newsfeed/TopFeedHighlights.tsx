@@ -24,7 +24,7 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   }
 
   return (
-    <>
+    <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
       {newsfeed.highlightsStore.entities.map(entity =>
         entity instanceof ActivityModel ? (
           <Activity
@@ -44,7 +44,7 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
           {i18nService.t('newsfeed.seeMoreTopPosts')}
         </Button>
       </View>
-    </>
+    </View>
   );
 });
 

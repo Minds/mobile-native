@@ -26,6 +26,7 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { IS_IPAD } from '~/config/Config';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -123,7 +124,7 @@ const WalletScreen = observer((props: PropsType) => {
   return (
     <Screen safe>
       <ScreenHeader
-        back
+        back={!IS_IPAD}
         title={i18n.t('wallet.wallet')}
         extra={<TokenPrice />}
       />

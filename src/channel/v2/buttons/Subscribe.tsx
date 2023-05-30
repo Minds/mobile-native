@@ -53,7 +53,7 @@ const Subscribe = (props: {
 
   return (
     <Button
-      mode="outline"
+      mode="solid"
       type={channel.subscribed ? 'base' : 'action'}
       size="tiny"
       disabled={props.disabled}

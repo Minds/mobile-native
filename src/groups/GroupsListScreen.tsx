@@ -8,6 +8,7 @@ import GroupModel from './GroupModel';
 import { ScreenHeader, Screen } from '~/common/ui';
 import i18n from '~/common/services/i18n.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { IS_IPAD } from '~/config/Config';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -23,7 +24,7 @@ const GroupsListScreen = observer(() => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('discovery.groups')} back />
+      <ScreenHeader title={i18n.t('discovery.groups')} back={!IS_IPAD} />
       <OffsetList
         renderItem={renderGroup}
         fetchEndpoint={'api/v1/groups/member'}
