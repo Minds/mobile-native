@@ -157,9 +157,10 @@ const Tabs = observer(function ({ navigation }) {
       },
     });
 
-  const navToComposer = useCallback(() => navigation.push('Compose'), [
-    navigation,
-  ]);
+  const navToComposer = useCallback(
+    () => navigation.push('Compose'),
+    [navigation],
+  );
 
   const navToVideoCapture = useCallback(
     () => navigation.push('Capture', { mode: 'video', start: true }),

@@ -18,8 +18,9 @@ function BoostRotatorCarousel() {
   const boostRotatorStore = useBoostRotatorStore();
   const ref = React.useRef<ICarouselInstance>(null);
   // this is only used to provide the metadata to the activity analytics context
-  const feedStore = useRef(new FeedStore().setMetadata(boostRotatorMetadata))
-    .current;
+  const feedStore = useRef(
+    new FeedStore().setMetadata(boostRotatorMetadata),
+  ).current;
 
   const width = getMaxFeedWidth();
   const height = Math.max(width, 500);

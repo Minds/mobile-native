@@ -4,14 +4,14 @@ exports[`Supermind settings should load data and render correctly 1`] = `
 <View>
   <View
     style={
-      Object {
+      {
         "zIndex": 1,
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -21,8 +21,8 @@ exports[`Supermind settings should load data and render correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
               "justifyContent": "flex-start",
             },
@@ -31,7 +31,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "justifyContent": "center",
               "marginRight": 8,
@@ -40,6 +40,23 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -54,7 +71,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
               }
@@ -62,7 +79,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
@@ -71,8 +88,8 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             >
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 28,
@@ -87,18 +104,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#AEB0B8",
                         "fontSize": 28,
                       },
-                      Object {},
-                      Object {
+                      {},
+                      {
                         "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
@@ -110,18 +127,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         </View>
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 24,
                 "lineHeight": 32,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -132,6 +149,23 @@ exports[`Supermind settings should load data and render correctly 1`] = `
       </View>
       <View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -145,7 +179,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
+            {
               "alignSelf": "stretch",
             }
           }
@@ -153,8 +187,8 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "backgroundColor": "transparent",
                   "borderRadius": 100,
@@ -162,17 +196,17 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "justifyContent": "center",
                   "overflow": "hidden",
                 },
-                Object {
+                {
                   "borderColor": "transparent",
                   "borderRadius": 4,
                 },
-                Object {
+                {
                   "minHeight": 42,
                   "paddingHorizontal": 24,
                   "paddingVertical": 2,
                 },
                 undefined,
-                Object {
+                {
                   "borderRadius": 0,
                   "minHeight": 32,
                   "paddingHorizontal": 8,
@@ -185,7 +219,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 100,
@@ -202,9 +236,9 @@ exports[`Supermind settings should load data and render correctly 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
+                  {
+                    "transform": [
+                      {
                         "scale": 0,
                       },
                     ],
@@ -220,7 +254,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "rgba(0, 0, 0, 0.05)",
                   "bottom": 0,
                   "left": 0,
@@ -234,9 +268,9 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -246,18 +280,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
               <Text
                 numberOfLines={1}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFD048",
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Medium",
                     },
-                    Object {
+                    {
                       "fontSize": 18,
                       "lineHeight": 24,
                     },
-                    Object {
+                    {
                       "textAlign": "left",
                     },
                   ]
@@ -275,14 +309,14 @@ exports[`Supermind settings should load data and render correctly 1`] = `
     <View>
       <View
         style={
-          Object {
+          {
             "marginHorizontal": 16,
           }
         }
       >
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 16,
             }
@@ -290,18 +324,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#a1a5ab",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -312,7 +346,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 12,
             }
@@ -320,18 +354,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -342,7 +376,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginBottom": 12,
             }
@@ -350,18 +384,18 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#b9bbc0",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -373,7 +407,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "backgroundColor": "transparent",
             "flex": 1,
@@ -399,14 +433,14 @@ exports[`Supermind settings should load data and render correctly 2`] = `
 <View>
   <View
     style={
-      Object {
+      {
         "zIndex": 1,
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -416,8 +450,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
               "justifyContent": "flex-start",
             },
@@ -426,7 +460,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "justifyContent": "center",
               "marginRight": 8,
@@ -435,6 +469,23 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -449,7 +500,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
               }
@@ -457,7 +508,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
@@ -466,8 +517,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             >
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 28,
@@ -482,18 +533,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#AEB0B8",
                         "fontSize": 28,
                       },
-                      Object {},
-                      Object {
+                      {},
+                      {
                         "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
@@ -505,18 +556,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         </View>
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 24,
                 "lineHeight": 32,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -527,6 +578,23 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       </View>
       <View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -540,7 +608,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
+            {
               "alignSelf": "stretch",
             }
           }
@@ -548,8 +616,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "backgroundColor": "transparent",
                   "borderRadius": 100,
@@ -557,17 +625,17 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "justifyContent": "center",
                   "overflow": "hidden",
                 },
-                Object {
+                {
                   "borderColor": "transparent",
                   "borderRadius": 4,
                 },
-                Object {
+                {
                   "minHeight": 42,
                   "paddingHorizontal": 24,
                   "paddingVertical": 2,
                 },
                 undefined,
-                Object {
+                {
                   "borderRadius": 0,
                   "minHeight": 32,
                   "paddingHorizontal": 8,
@@ -580,7 +648,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 100,
@@ -597,9 +665,9 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
+                  {
+                    "transform": [
+                      {
                         "scale": 0,
                       },
                     ],
@@ -615,7 +683,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "rgba(0, 0, 0, 0.05)",
                   "bottom": 0,
                   "left": 0,
@@ -629,9 +697,9 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -641,18 +709,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               <Text
                 numberOfLines={1}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFD048",
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Medium",
                     },
-                    Object {
+                    {
                       "fontSize": 18,
                       "lineHeight": 24,
                     },
-                    Object {
+                    {
                       "textAlign": "left",
                     },
                   ]
@@ -670,14 +738,14 @@ exports[`Supermind settings should load data and render correctly 2`] = `
     <View>
       <View
         style={
-          Object {
+          {
             "marginHorizontal": 16,
           }
         }
       >
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 16,
             }
@@ -685,18 +753,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#a1a5ab",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -707,7 +775,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 12,
             }
@@ -715,18 +783,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -737,7 +805,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginBottom": 12,
             }
@@ -745,18 +813,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#b9bbc0",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -768,21 +836,21 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "paddingHorizontal": 16,
             },
-            Object {
+            {
               "paddingTop": 8,
             },
-            Object {
+            {
               "backgroundColor": "#1C1D1F",
             },
-            Object {
+            {
               "borderTopWidth": 1,
             },
             null,
-            Object {
+            {
               "borderColor": "#53565A",
             },
             undefined,
@@ -790,6 +858,23 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -805,7 +890,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <View
             style={
-              Object {
+              {
                 "paddingBottom": 10,
                 "paddingTop": 5,
               }
@@ -814,7 +899,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             <View>
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "stretch",
                     "flexDirection": "row",
                   }
@@ -822,31 +907,31 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               >
                 <Text
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#F2F2F2",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "fontFamily": "Roboto",
                           "fontSize": 16,
                           "fontWeight": "400",
                           "marginBottom": 0,
                         },
-                        Object {
+                        {
                           "color": "#b9bbc0",
                         },
-                        Array [
-                          Object {
+                        [
+                          {
                             "color": "#b9bbc0",
                           },
-                          Object {
+                          {
                             "fontSize": 16,
                           },
-                          Object {
+                          {
                             "paddingLeft": 1,
                           },
                           undefined,
@@ -866,14 +951,14 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               keyboardAppearance="dark"
               keyboardType="numeric"
               labelStyle={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#b9bbc0",
                   },
-                  Object {
+                  {
                     "fontSize": 16,
                   },
-                  Object {
+                  {
                     "paddingLeft": 1,
                   },
                   undefined,
@@ -883,8 +968,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               placeholderTextColor="#a1a5ab"
               returnKeyType="done"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "backgroundColor": "transparent",
                     "borderColor": "#53565A",
                     "borderRadius": 2,
@@ -894,20 +979,20 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                     "fontSize": 16,
                     "lineHeight": 21,
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "borderWidth": 0,
                       "marginBottom": 7,
                       "paddingHorizontal": 0,
                       "paddingVertical": 6,
                     },
-                    Object {
+                    {
                       "paddingLeft": 1,
                     },
-                    Object {
+                    {
                       "fontSize": 18,
                     },
-                    Object {
+                    {
                       "color": "#F2F2F2",
                     },
                     undefined,
@@ -923,23 +1008,23 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "paddingHorizontal": 16,
             },
-            Object {
+            {
               "paddingTop": 8,
             },
-            Object {
+            {
               "backgroundColor": "#1C1D1F",
             },
-            Object {
+            {
               "borderTopWidth": 1,
             },
-            Object {
+            {
               "borderBottomWidth": 1,
             },
-            Object {
+            {
               "borderColor": "#53565A",
             },
             undefined,
@@ -947,6 +1032,23 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -962,7 +1064,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         >
           <View
             style={
-              Object {
+              {
                 "paddingBottom": 10,
                 "paddingTop": 5,
               }
@@ -971,7 +1073,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             <View>
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "stretch",
                     "flexDirection": "row",
                   }
@@ -979,31 +1081,31 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               >
                 <Text
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#F2F2F2",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "fontFamily": "Roboto",
                           "fontSize": 16,
                           "fontWeight": "400",
                           "marginBottom": 0,
                         },
-                        Object {
+                        {
                           "color": "#b9bbc0",
                         },
-                        Array [
-                          Object {
+                        [
+                          {
                             "color": "#b9bbc0",
                           },
-                          Object {
+                          {
                             "fontSize": 16,
                           },
-                          Object {
+                          {
                             "paddingLeft": 1,
                           },
                           undefined,
@@ -1022,14 +1124,14 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               keyboardAppearance="dark"
               keyboardType="numeric"
               labelStyle={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#b9bbc0",
                   },
-                  Object {
+                  {
                     "fontSize": 16,
                   },
-                  Object {
+                  {
                     "paddingLeft": 1,
                   },
                   undefined,
@@ -1039,8 +1141,8 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               placeholderTextColor="#a1a5ab"
               returnKeyType="done"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "backgroundColor": "transparent",
                     "borderColor": "#53565A",
                     "borderRadius": 2,
@@ -1050,20 +1152,20 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                     "fontSize": 16,
                     "lineHeight": 21,
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "borderWidth": 0,
                       "marginBottom": 7,
                       "paddingHorizontal": 0,
                       "paddingVertical": 6,
                     },
-                    Object {
+                    {
                       "paddingLeft": 1,
                     },
-                    Object {
+                    {
                       "fontSize": 18,
                     },
-                    Object {
+                    {
                       "color": "#F2F2F2",
                     },
                     undefined,
@@ -1079,7 +1181,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "paddingBottom": 16,
             "paddingHorizontal": 16,
@@ -1090,18 +1192,18 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         <View
           onPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "alignContent": "center",
                 "alignItems": "center",
                 "alignSelf": "center",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "backgroundColor": "#1C1D1F",
                 "borderColor": "#FFD048",
                 "borderRadius": 21,
@@ -1118,22 +1220,22 @@ exports[`Supermind settings should load data and render correctly 2`] = `
           <Text
             onLayout={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "fontSize": 17,
                   },
-                  Object {
+                  {
                     "color": "#F2F2F2",
                   },
                   undefined,
-                  Object {
+                  {
                     "fontWeight": "500",
                   },
                 ],
@@ -1155,14 +1257,14 @@ exports[`Supermind settings should update the store and submit 1`] = `
 <View>
   <View
     style={
-      Object {
+      {
         "zIndex": 1,
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -1172,8 +1274,8 @@ exports[`Supermind settings should update the store and submit 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
               "justifyContent": "flex-start",
             },
@@ -1182,7 +1284,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "justifyContent": "center",
               "marginRight": 8,
@@ -1191,6 +1293,23 @@ exports[`Supermind settings should update the store and submit 1`] = `
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -1205,7 +1324,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
               }
@@ -1213,7 +1332,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
@@ -1222,8 +1341,8 @@ exports[`Supermind settings should update the store and submit 1`] = `
             >
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 28,
@@ -1238,18 +1357,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#AEB0B8",
                         "fontSize": 28,
                       },
-                      Object {},
-                      Object {
+                      {},
+                      {
                         "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
@@ -1261,18 +1380,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
         </View>
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 24,
                 "lineHeight": 32,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -1283,6 +1402,23 @@ exports[`Supermind settings should update the store and submit 1`] = `
       </View>
       <View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1296,7 +1432,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
+            {
               "alignSelf": "stretch",
             }
           }
@@ -1304,8 +1440,8 @@ exports[`Supermind settings should update the store and submit 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "backgroundColor": "transparent",
                   "borderRadius": 100,
@@ -1313,17 +1449,17 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "justifyContent": "center",
                   "overflow": "hidden",
                 },
-                Object {
+                {
                   "borderColor": "transparent",
                   "borderRadius": 4,
                 },
-                Object {
+                {
                   "minHeight": 42,
                   "paddingHorizontal": 24,
                   "paddingVertical": 2,
                 },
                 undefined,
-                Object {
+                {
                   "borderRadius": 0,
                   "minHeight": 32,
                   "paddingHorizontal": 8,
@@ -1336,7 +1472,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 100,
@@ -1353,9 +1489,9 @@ exports[`Supermind settings should update the store and submit 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
+                  {
+                    "transform": [
+                      {
                         "scale": 0,
                       },
                     ],
@@ -1371,7 +1507,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "rgba(0, 0, 0, 0.05)",
                   "bottom": 0,
                   "left": 0,
@@ -1385,9 +1521,9 @@ exports[`Supermind settings should update the store and submit 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -1397,18 +1533,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
               <Text
                 numberOfLines={1}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFD048",
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Medium",
                     },
-                    Object {
+                    {
                       "fontSize": 18,
                       "lineHeight": 24,
                     },
-                    Object {
+                    {
                       "textAlign": "left",
                     },
                   ]
@@ -1426,14 +1562,14 @@ exports[`Supermind settings should update the store and submit 1`] = `
     <View>
       <View
         style={
-          Object {
+          {
             "marginHorizontal": 16,
           }
         }
       >
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 16,
             }
@@ -1441,18 +1577,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#a1a5ab",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -1463,7 +1599,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginVertical": 12,
             }
@@ -1471,18 +1607,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -1493,7 +1629,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginBottom": 12,
             }
@@ -1501,18 +1637,18 @@ exports[`Supermind settings should update the store and submit 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#b9bbc0",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -1524,7 +1660,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "backgroundColor": "transparent",
             "flex": 1,

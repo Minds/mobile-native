@@ -4,18 +4,18 @@ exports[`Thumb action component renders correctly 1`] = `
 <preventDoubleTap(PressableScale)
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
         "flexDirection": "column",
       },
-      Object {
+      {
         "margin": 4,
       },
-      Object {
+      {
         "paddingVertical": 12,
       },
-      Object {
+      {
         "alignItems": "center",
       },
     ]
@@ -24,13 +24,13 @@ exports[`Thumb action component renders correctly 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "nowrap",
         },
-        Object {
+        {
           "margin": 4,
         },
       ]
@@ -46,19 +46,19 @@ exports[`Thumb action component renders correctly 1`] = `
     <EntityCounter
       countProperty="thumbs:up:count"
       entity={
-        Object {
+        {
           "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "can": [MockFunction] {
-            "calls": Array [
-              Array [
+            "calls": [
+              [
                 "vote",
               ],
             ],
-            "results": Array [
-              Object {
+            "results": [
+              {
                 "type": "return",
                 "value": true,
               },
@@ -81,7 +81,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "message": "Message",
-          "ownerObj": Object {
+          "ownerObj": {
             "__list": null,
             "access_id": "",
             "allow_comments": true,
@@ -102,10 +102,10 @@ exports[`Thumb action component renders correctly 1`] = `
             "mature": false,
             "mature_visibility": false,
             "mode": 0,
-            "nsfw": Array [],
+            "nsfw": [],
             "onchain_booster": 0,
             "pending_subscribe": false,
-            "permissions": Object {},
+            "permissions": {},
             "plus": false,
             "plus_method": "tokens",
             "pro": false,
@@ -116,7 +116,7 @@ exports[`Thumb action component renders correctly 1`] = `
             "subscribers_count": undefined,
             "subscriptions_count": 0,
             "subtype": false,
-            "tags": Array [],
+            "tags": [],
             "time_created": "1522036284",
             "time_updated": "",
             "type": "user",
@@ -130,7 +130,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "paywall": "",
           "paywall_unlocked": false,
           "perma_url": false,
-          "permissions": Object {},
+          "permissions": {},
           "pinned": false,
           "quotes": 0,
           "reminds": 0,
@@ -147,7 +147,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "type": "activity",
           "urn": "",
           "username": "",
-          "wire_totals": Object {
+          "wire_totals": {
             "tokens": 1000000000000000000,
           },
         }

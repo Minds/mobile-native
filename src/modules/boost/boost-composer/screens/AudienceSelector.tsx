@@ -19,7 +19,8 @@ import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_IPAD } from '~/config/Config';
 
-type AudienceSelectorScreenProps = BoostStackScreenProps<'BoostAudienceSelector'>;
+type AudienceSelectorScreenProps =
+  BoostStackScreenProps<'BoostAudienceSelector'>;
 
 function AudienceSelectorScreen({
   navigation,

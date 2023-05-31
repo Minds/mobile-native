@@ -1,13 +1,17 @@
 import { View } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
 interface HandleProps {
   showHandleBar?: boolean;
   style?: any;
 }
 
-const Handle: FC<HandleProps> = ({ children, showHandleBar = true, style }) => (
+const Handle: FC<PropsWithChildren<HandleProps>> = ({
+  children,
+  showHandleBar = true,
+  style,
+}) => (
   <View
     renderToHardwareTextureAndroid={true}
     style={useMemoStyle(

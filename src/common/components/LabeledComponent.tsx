@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { View, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from './MText';
@@ -10,7 +10,7 @@ type propsType = {
   valueStyle?: any;
 };
 
-const LabeledComponent: FunctionComponent<propsType> = ({
+const LabeledComponent: FC<PropsWithChildren<propsType>> = ({
   children,
   label,
   wrapperStyle,

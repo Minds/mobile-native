@@ -3,13 +3,9 @@ import i18n from '../../../common/services/i18n.service';
 import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
-import { Button, Icon } from '~ui';
+import { Button, ButtonPropsType, Icon } from '~ui';
 
-const HITSLOP = {
-  hitSlop: 10,
-};
-
-const Subscribe = (props: {
+export interface SubscribeProps {
   channel: UserModel;
   text?: string;
   testID?: string;
@@ -26,7 +22,14 @@ const Subscribe = (props: {
    */
   onSubscribed?: (user: UserModel) => void;
   disabled?: boolean;
-}) => {
+  buttonProps?: Partial<ButtonPropsType>;
+}
+
+const HITSLOP = {
+  hitSlop: 10,
+};
+
+const Subscribe = (props: SubscribeProps) => {
   const { channel, mini, shouldUpdateFeed = true, onSubscribed } = props;
 
   const subscriptionText =
@@ -69,7 +72,8 @@ const Subscribe = (props: {
           />
         )
       }
-      testID={props.testID}>
+      testID={props.testID}
+      {...props.buttonProps}>
       {mini ? undefined : subscriptionText}
     </Button>
   );

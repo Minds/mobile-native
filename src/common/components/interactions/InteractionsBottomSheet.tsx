@@ -100,9 +100,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
-    bottomSheetRef,
-  ]);
+  const close = React.useCallback(
+    () => bottomSheetRef.current?.close(),
+    [bottomSheetRef],
+  );
 
   const onBottomSheetVisibilityChange = useCallback(
     (visible: number) => {

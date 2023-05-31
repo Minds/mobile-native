@@ -7,10 +7,11 @@ import { FeedList } from '../common/components/FeedList';
 import FeedStore from '../common/stores/FeedStore';
 import ActivityModel from './ActivityModel';
 import NewsfeedService from './NewsfeedService';
+import { hasVariation } from 'ExperimentsProvider';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
-export type NewsfeedType = 'top' | 'latest';
+export type NewsfeedType = 'top' | 'latest' | 'foryou';
 
 /**
  * News feed store
@@ -50,6 +51,15 @@ class NewsfeedStore<T extends BaseModel> {
     );
 
   /**
+   * For you store
+   */
+  forYouStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
+    .setParams({ unseen: true })
+    .setInjectBoost(false)
+    .setLimit(15);
+
+  /**
    * List reference
    */
   listRef?: FeedList<T>;
@@ -70,6 +80,8 @@ class NewsfeedStore<T extends BaseModel> {
 
   get feedStore() {
     switch (this.feedType) {
+      case 'foryou':
+        return this.forYouStore;
       case 'top':
         return this.topFeedStore;
       case 'latest':
@@ -82,7 +94,7 @@ class NewsfeedStore<T extends BaseModel> {
    * Change FeedType and refresh the feed
    */
   @action
-  changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
+  changeFeedType = (feedType: NewsfeedType, refresh = false) => {
     this.feedType = feedType;
     try {
       storages.user?.setString(FEED_TYPE_KEY, feedType);
@@ -124,9 +136,18 @@ class NewsfeedStore<T extends BaseModel> {
   public loadFeed = async (refresh?: boolean) => {
     if (!this.feedType) {
       try {
-        const storedFeedType = storages.user?.getString(
+        let storedFeedType = storages.user?.getString(
           FEED_TYPE_KEY,
         ) as NewsfeedType;
+
+        // in case we have stored the foryou tab and it's not in the experiment, we default to latest
+        if (
+          !hasVariation('mob-4938-newsfeed-for-you') &&
+          storedFeedType === 'foryou'
+        ) {
+          storages.user?.setString(FEED_TYPE_KEY, 'latest');
+          storedFeedType = 'latest';
+        }
 
         this.feedType = storedFeedType || 'latest';
       } catch (e) {
@@ -141,7 +162,7 @@ class NewsfeedStore<T extends BaseModel> {
       this.highlightsStore.fetch();
     }
 
-    this.feedStore.fetchLocalThenRemote(refresh);
+    this.feedStore.fetchRemoteOrLocal(refresh);
   };
 
   /**
@@ -172,6 +193,7 @@ class NewsfeedStore<T extends BaseModel> {
     this.highlightsStore.reset();
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
+    this.forYouStore.reset();
     this.feedType = undefined;
   }
 }

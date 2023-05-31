@@ -30,9 +30,10 @@ const InputNumber = observer(({}: PropsType) => {
     [],
   );
 
-  const onContainerPress = useCallback(() => textInputRef.current?.focus(), [
-    textInputRef,
-  ]);
+  const onContainerPress = useCallback(
+    () => textInputRef.current?.focus(),
+    [textInputRef],
+  );
 
   React.useEffect(() => {
     store?.setPhoneInputRef(phoneInput);

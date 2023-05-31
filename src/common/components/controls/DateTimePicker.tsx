@@ -121,14 +121,21 @@ const DateTimePicker = observer(
       width,
     });
 
+    const maxDate = props.maximumDate
+      ? moment(props.maximumDate).format('YYYY-MM-DD')
+      : undefined;
+    const minDate = props.minimumDate
+      ? moment(props.minimumDate).format('YYYY-MM-DD')
+      : undefined;
+
     return (
       <BottomSheetModal ref={bottomSheetRef} enableDismissOnClose>
         <View style={styles.container}>
           <Animated.View style={[calendarAnimatedStyle, viewStyle]}>
             <Calendar
               current={localStore.textDate}
-              maxDate={props.maximumDate}
-              minDate={props.minimumDate}
+              maxDate={maxDate}
+              minDate={minDate}
               markedDates={{
                 [localStore.textDate]: {
                   selected: true,

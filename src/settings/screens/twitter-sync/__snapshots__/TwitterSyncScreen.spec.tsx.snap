@@ -10,7 +10,7 @@ exports[`TwitterSyncScreen renders correctly 1`] = `
   keyboardDismissMode="on-drag"
   keyboardOpeningTime={250}
   style={
-    Object {
+    {
       "flex": 1,
     }
   }

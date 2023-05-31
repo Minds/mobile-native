@@ -4,9 +4,9 @@ exports[`Tos screen render and accept 1`] = `
 <View>
   <View
     style={
-      Object {
-        "transform": Array [
-          Object {
+      {
+        "transform": [
+          {
             "translateY": 0,
           },
         ],
@@ -15,14 +15,14 @@ exports[`Tos screen render and accept 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "borderColor": "#53565A",
           },
-          Object {
+          {
             "borderBottomWidth": 1,
           },
-          Object {
+          {
             "minHeight": 55,
             "zIndex": 1,
           },
@@ -31,21 +31,21 @@ exports[`Tos screen render and accept 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
               "right": 0,
               "top": 0,
             },
-            Object {
+            {
               "alignContent": "center",
               "alignItems": "center",
               "alignSelf": "center",
               "justifyContent": "center",
             },
-            Object {
+            {
               "minHeight": 55,
             },
           ]
@@ -53,21 +53,21 @@ exports[`Tos screen render and accept 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 24,
                 "lineHeight": 32,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
-              Object {
+              {
                 "lineHeight": 26,
               },
             ]
@@ -78,7 +78,7 @@ exports[`Tos screen render and accept 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -88,8 +88,8 @@ exports[`Tos screen render and accept 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
               },
@@ -102,18 +102,18 @@ exports[`Tos screen render and accept 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   >
     <RCTScrollView
       contentContainerStyle={
-        Array [
-          Object {
+        [
+          {
             "padding": 12,
           },
-          Object {
+          {
             "paddingTop": 24,
           },
         ]
@@ -122,18 +122,18 @@ exports[`Tos screen render and accept 1`] = `
       <View>
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "textAlign": "justify",
               },
             ]
@@ -142,10 +142,19 @@ exports[`Tos screen render and accept 1`] = `
           We've recently updated our
            
           <Text
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
             accessible={true}
             focusable={true}
             hitSlop={
-              Object {
+              {
                 "bottom": 4,
                 "left": 4,
                 "right": 4,
@@ -160,18 +169,18 @@ exports[`Tos screen render and accept 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFD048",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -181,10 +190,19 @@ exports[`Tos screen render and accept 1`] = `
           </Text>
            and 
           <Text
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
             accessible={true}
             focusable={true}
             hitSlop={
-              Object {
+              {
                 "bottom": 4,
                 "left": 4,
                 "right": 4,
@@ -199,18 +217,18 @@ exports[`Tos screen render and accept 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFD048",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -223,7 +241,7 @@ exports[`Tos screen render and accept 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginTop": 16,
             }
@@ -231,18 +249,18 @@ exports[`Tos screen render and accept 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "justify",
                 },
               ]
@@ -253,13 +271,30 @@ exports[`Tos screen render and accept 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignSelf": "stretch",
               "marginTop": 56,
             }
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -273,7 +308,7 @@ exports[`Tos screen render and accept 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignSelf": "stretch",
               }
             }
@@ -281,8 +316,8 @@ exports[`Tos screen render and accept 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "backgroundColor": "transparent",
                     "borderRadius": 100,
@@ -291,7 +326,7 @@ exports[`Tos screen render and accept 1`] = `
                     "overflow": "hidden",
                   },
                   undefined,
-                  Object {
+                  {
                     "minHeight": 42,
                     "paddingHorizontal": 24,
                     "paddingVertical": 2,
@@ -305,7 +340,7 @@ exports[`Tos screen render and accept 1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "backgroundColor": "#FFD048",
                     "borderColor": "transparent",
@@ -323,7 +358,7 @@ exports[`Tos screen render and accept 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
+                  {
                     "backgroundColor": "rgba(0, 0, 0, 0.1)",
                     "bottom": 0,
                     "left": 0,
@@ -337,9 +372,9 @@ exports[`Tos screen render and accept 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
+                  {
+                    "transform": [
+                      {
                         "scale": 1,
                       },
                     ],
@@ -349,18 +384,18 @@ exports[`Tos screen render and accept 1`] = `
                 <Text
                   numberOfLines={1}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#000000",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Medium",
                       },
-                      Object {
+                      {
                         "fontSize": 18,
                         "lineHeight": 24,
                       },
-                      Object {
+                      {
                         "textAlign": "left",
                       },
                     ]
