@@ -12,8 +12,8 @@ export interface BannerProps {
   dismissIdentifier?: DismissIdentifier;
   actionIdentifier?: ClickRef;
   text: string | ReactNode;
-  onPress?: () => void;
   actionText?: string;
+  onPress?: () => void;
   onAction?: () => void;
   typography?: TypographyType;
 }
