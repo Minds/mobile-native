@@ -27,16 +27,7 @@ const HEADER_HEIGHT = 54;
 const FeedScene = ({ route }: any) => {
   const groupContext = useGroupContext();
   return groupContext && groupContext.feedStore ? (
-    <TabFeedList
-      index={route.index}
-      feedStore={groupContext.feedStore.feed}
-      onMomentumScrollBegin={() =>
-        groupContext?.feedStore?.setShowPostButton(false)
-      }
-      onMomentumScrollEnd={() =>
-        groupContext?.feedStore?.setShowPostButton(true)
-      }
-    />
+    <TabFeedList index={route.index} feedStore={groupContext.feedStore.feed} />
   ) : null;
 };
 
@@ -53,7 +44,7 @@ const PostToGroupButton = observer(({ navigation, routeKey }) => {
   const groupContext = useGroupContext();
   return (
     <CaptureFab
-      visible={groupContext?.feedStore?.showPostButton}
+      visible={true}
       navigation={navigation}
       group={groupContext?.group}
       routeKey={routeKey}
