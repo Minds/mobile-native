@@ -188,10 +188,6 @@ const _buildStyle = (theme: ColorsType) =>
       bottom: 0,
       right: 0,
     },
-    positionAbsoluteCenter: {
-      position: 'absolute',
-      top: 0,
-    },
     // fonts
     fontXS: {
       fontSize: 10,
