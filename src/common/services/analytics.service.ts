@@ -341,4 +341,5 @@ export type ClickRef =
   | 'remind'
   | 'banner:refer:action'
   | 'banner:wefounder:action'
+  | 'discovery:plus:upgrade'
   | `${DismissIdentifier}:dismiss`;

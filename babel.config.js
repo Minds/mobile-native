@@ -14,6 +14,12 @@ module.exports = {
       },
     ],
     [
+      '@babel/plugin-transform-flow-strip-types',
+      {
+        allowDeclareFields: true,
+      },
+    ],
+    [
       'react-native-reanimated/plugin',
       {
         globals: ['__scanOCR'],

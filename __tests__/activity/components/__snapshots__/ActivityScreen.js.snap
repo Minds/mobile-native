@@ -3,17 +3,17 @@
 exports[`Activity screen component renders correctly  1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "fontScale": 2,
         "height": 1334,
         "scale": 2,
         "width": 750,
       },
-      Object {
+      {
         "flex": 1,
       },
-      Object {
+      {
         "backgroundColor": "#1C1D1F",
       },
     ]
@@ -22,28 +22,28 @@ exports[`Activity screen component renders correctly  1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#1C1D1F",
           },
-          Object {
+          {
             "borderBottomWidth": 0,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
             "shadowOpacity": 0.22,
             "shadowRadius": 2.22,
           },
-          Object {
+          {
             "paddingTop": -10,
           },
         ]
@@ -51,11 +51,11 @@ exports[`Activity screen component renders correctly  1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderBottomWidth": 0.5,
             },
-            Object {
+            {
               "borderColor": "#53565A",
             },
             undefined,
@@ -64,7 +64,7 @@ exports[`Activity screen component renders correctly  1`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "display": "flex",
               "flexDirection": "row",
@@ -75,7 +75,7 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "color": "#F2F2F2",
                 "elevation": 4,
@@ -85,7 +85,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 "marginRight": -5,
                 "paddingTop": 0,
                 "position": undefined,
-                "shadowOffset": Object {
+                "shadowOffset": {
                   "height": 1,
                   "width": 1,
                 },
@@ -97,6 +97,23 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -111,7 +128,7 @@ exports[`Activity screen component renders correctly  1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 }
@@ -120,7 +137,7 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -129,8 +146,8 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "row",
                         "height": 40,
@@ -145,18 +162,18 @@ exports[`Activity screen component renders correctly  1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 40,
                         },
-                        Object {},
-                        Object {
+                        {},
+                        {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -172,8 +189,8 @@ exports[`Activity screen component renders correctly  1`] = `
             <Image
               recyclingKey="824853017709780997"
               source={
-                Object {
-                  "headers": Object {
+                {
+                  "headers": {
                     "App-Version": "3.8.0",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
                     "Content-Type": "application/json",
@@ -184,7 +201,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               }
               style={
-                Object {
+                {
                   "borderRadius": 18.5,
                   "height": 37,
                   "width": 37,
@@ -194,7 +211,7 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "flex": 1,
                 "marginLeft": 10,
                 "paddingRight": 5,
@@ -203,7 +220,7 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "flexDirection": "column",
                 }
               }
@@ -211,22 +228,31 @@ exports[`Activity screen component renders correctly  1`] = `
               <View
                 pointerEvents="box-none"
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "flexDirection": "row",
                       "justifyContent": "flex-start",
                     },
-                    Object {
+                    {
                       "alignItems": "center",
                     },
                   ]
                 }
               >
                 <Text
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
                   accessible={true}
                   focusable={true}
                   hitSlop={
-                    Object {
+                    {
                       "bottom": 4,
                       "left": 4,
                       "right": 4,
@@ -242,18 +268,18 @@ exports[`Activity screen component renders correctly  1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#F2F2F2",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Bold",
                       },
-                      Object {
+                      {
                         "fontSize": 16,
                         "lineHeight": 24,
                       },
-                      Object {
+                      {
                         "textAlign": "left",
                       },
                     ]
@@ -264,14 +290,14 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "flexDirection": "row",
               }
             }
           />
           <View
             style={
-              Object {
+              {
                 "flexDirection": "row",
                 "justifyContent": "center",
               }
@@ -279,8 +305,8 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "justifyContent": "center",
                     "position": "relative",
@@ -290,6 +316,23 @@ exports[`Activity screen component renders correctly  1`] = `
               }
             >
               <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -304,7 +347,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "justifyContent": "center",
                   }
@@ -313,9 +356,9 @@ exports[`Activity screen component renders correctly  1`] = `
                 <View
                   collapsable={false}
                   style={
-                    Object {
-                      "transform": Array [
-                        Object {
+                    {
+                      "transform": [
+                        {
                           "scale": 1,
                         },
                       ],
@@ -324,7 +367,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "alignItems": "center",
                         "flexDirection": "row",
                         "justifyContent": "center",
@@ -333,7 +376,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                           "flexDirection": "row",
                           "height": 28,
@@ -347,18 +390,18 @@ exports[`Activity screen component renders correctly  1`] = `
                         allowFontScaling={false}
                         selectable={false}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#AEB0B8",
                               "fontSize": 25.76,
                             },
                             undefined,
-                            Object {
+                            {
                               "fontFamily": "Material Icons",
                               "fontStyle": "normal",
                               "fontWeight": "normal",
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -375,11 +418,11 @@ exports[`Activity screen component renders correctly  1`] = `
     </View>
     <RCTScrollView
       contentContainerStyle={
-        Array [
-          Object {
+        [
+          {
             "width": "100%",
           },
-          Object {
+          {
             "flexGrow": 1,
             "justifyContent": "center",
           },
@@ -388,7 +431,7 @@ exports[`Activity screen component renders correctly  1`] = `
       onContentSizeChange={[Function]}
       onLayout={[Function]}
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -398,11 +441,11 @@ exports[`Activity screen component renders correctly  1`] = `
           accessibilityLabel="touchableTextCopy"
           onLongPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "paddingHorizontal": 16,
               },
-              Object {
+              {
                 "paddingVertical": 16,
               },
             ]
@@ -414,27 +457,27 @@ exports[`Activity screen component renders correctly  1`] = `
             <Text
               selectable={true}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#F2F2F2",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto",
                   },
-                  Array [
-                    Array [
-                      Object {
+                  [
+                    [
+                      {
                         "fontSize": 28,
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Medium",
                         "fontWeight": "500",
                       },
                     ],
-                    Object {
+                    {
                       "marginBottom": 4,
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Black",
                       "fontWeight": "700",
                     },
@@ -447,18 +490,18 @@ exports[`Activity screen component renders correctly  1`] = `
             <Text
               selectable={true}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#F2F2F2",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto",
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "fontSize": 28,
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Medium",
                       "fontWeight": "500",
                     },
@@ -473,15 +516,15 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "space-between",
               },
-              Object {
+              {
                 "padding": 8,
               },
-              Object {
+              {
                 "paddingHorizontal": 16,
               },
             ]
@@ -489,21 +532,21 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#b9bbc0",
                   },
-                  Object {
+                  {
                     "fontSize": 14,
                   },
-                  Object {
+                  {
                     "paddingVertical": 4,
                   },
                 ],
@@ -517,13 +560,13 @@ exports[`Activity screen component renders correctly  1`] = `
     </RCTScrollView>
     <ExpoLinearGradient
       colors={
-        Array [
+        [
           "#38393D00",
           "#38393DFF",
         ]
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "height": 40,
           "position": "absolute",
@@ -534,7 +577,7 @@ exports[`Activity screen component renders correctly  1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "backgroundColor": "#1C1D1F",
         "paddingBottom": -10,
       }
@@ -542,21 +585,21 @@ exports[`Activity screen component renders correctly  1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
-          Object {
+          {
             "paddingLeft": 8,
           },
-          Object {
+          {
             "borderTopWidth": 0.5,
           },
-          Object {
+          {
             "borderColor": "#53565A",
           },
         ]
@@ -565,21 +608,38 @@ exports[`Activity screen component renders correctly  1`] = `
     <View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderTopWidth": 0.5,
               "display": "flex",
               "flexDirection": "row",
               "justifyContent": "space-around",
               "paddingHorizontal": 16,
             },
-            Object {
+            {
               "borderColor": "#53565A",
             },
           ]
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -593,18 +653,18 @@ exports[`Activity screen component renders correctly  1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "flex": 1,
                 "flexDirection": "column",
               },
-              Object {
+              {
                 "margin": 4,
               },
-              Object {
+              {
                 "paddingVertical": 12,
               },
-              Object {
+              {
                 "alignItems": "center",
               },
             ]
@@ -614,9 +674,9 @@ exports[`Activity screen component renders correctly  1`] = `
           <View
             collapsable={false}
             style={
-              Object {
-                "transform": Array [
-                  Object {
+              {
+                "transform": [
+                  {
                     "scale": 1,
                   },
                 ],
@@ -625,13 +685,13 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "flexWrap": "nowrap",
                   },
-                  Object {
+                  {
                     "margin": 4,
                   },
                 ]
@@ -639,9 +699,9 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Array [
+                  [
                     undefined,
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -649,18 +709,18 @@ exports[`Activity screen component renders correctly  1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#AEB0B8",
                         "fontSize": 23.04,
                       },
-                      Object {},
-                      Object {
+                      {},
+                      {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
@@ -671,6 +731,23 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
         </View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -684,18 +761,18 @@ exports[`Activity screen component renders correctly  1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "flex": 1,
                 "flexDirection": "column",
               },
-              Object {
+              {
                 "margin": 4,
               },
-              Object {
+              {
                 "paddingVertical": 12,
               },
-              Object {
+              {
                 "alignItems": "center",
               },
             ]
@@ -705,9 +782,9 @@ exports[`Activity screen component renders correctly  1`] = `
           <View
             collapsable={false}
             style={
-              Object {
-                "transform": Array [
-                  Object {
+              {
+                "transform": [
+                  {
                     "scale": 1,
                   },
                 ],
@@ -716,13 +793,13 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "flexWrap": "nowrap",
                   },
-                  Object {
+                  {
                     "margin": 4,
                   },
                 ]
@@ -730,9 +807,9 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Array [
+                  [
                     undefined,
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -740,18 +817,18 @@ exports[`Activity screen component renders correctly  1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#AEB0B8",
                         "fontSize": 23.04,
                       },
-                      Object {},
-                      Object {
+                      {},
+                      {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
@@ -763,25 +840,25 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
                 "position": "relative",
               },
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "flex": 1,
                   "flexDirection": "column",
                 },
-                Object {
+                {
                   "margin": 4,
                 },
-                Object {
+                {
                   "paddingVertical": 12,
                 },
-                Object {
+                {
                   "alignItems": "center",
                 },
               ],
@@ -790,8 +867,20 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -808,12 +897,12 @@ exports[`Activity screen component renders correctly  1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 },
-                Object {
+                {
                   "alignItems": "center",
                   "bottom": 0,
                   "justifyContent": "center",
@@ -829,9 +918,9 @@ exports[`Activity screen component renders correctly  1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -840,7 +929,7 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -849,7 +938,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 20,
@@ -863,20 +952,20 @@ exports[`Activity screen component renders correctly  1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 18.400000000000002,
                         },
-                        Object {
+                        {
                           "marginTop": 2,
                         },
-                        Object {
+                        {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -885,12 +974,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flexDirection": "row",
                         "justifyContent": "center",
                       },
-                      Object {
+                      {
                         "marginLeft": 4,
                       },
                     ]
@@ -898,22 +987,22 @@ exports[`Activity screen component renders correctly  1`] = `
                 >
                   <Text
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#F2F2F2",
                         },
-                        Object {
+                        {
                           "fontFamily": "Roboto",
                         },
-                        Array [
-                          Array [
-                            Object {
+                        [
+                          [
+                            {
                               "color": "#AEB0B8",
                             },
-                            Object {
+                            {
                               "fontSize": 14,
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                               "fontWeight": "500",
                             },
@@ -930,25 +1019,25 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
                 "position": "relative",
               },
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "flex": 1,
                   "flexDirection": "column",
                 },
-                Object {
+                {
                   "margin": 4,
                 },
-                Object {
+                {
                   "paddingVertical": 12,
                 },
-                Object {
+                {
                   "alignItems": "center",
                 },
               ],
@@ -957,8 +1046,20 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -975,12 +1076,12 @@ exports[`Activity screen component renders correctly  1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 },
-                Object {
+                {
                   "alignItems": "center",
                   "bottom": 0,
                   "justifyContent": "center",
@@ -996,9 +1097,9 @@ exports[`Activity screen component renders correctly  1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -1007,7 +1108,7 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -1016,7 +1117,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 20,
@@ -1030,20 +1131,20 @@ exports[`Activity screen component renders correctly  1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 20.8,
                         },
-                        Object {
+                        {
                           "marginTop": -1,
                         },
-                        Object {
+                        {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -1056,25 +1157,25 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
                 "position": "relative",
               },
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "flex": 1,
                   "flexDirection": "column",
                 },
-                Object {
+                {
                   "margin": 4,
                 },
-                Object {
+                {
                   "paddingVertical": 12,
                 },
-                Object {
+                {
                   "alignItems": "center",
                 },
               ],
@@ -1082,6 +1183,23 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -1096,12 +1214,12 @@ exports[`Activity screen component renders correctly  1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 },
-                Object {
+                {
                   "alignItems": "center",
                   "bottom": 0,
                   "justifyContent": "center",
@@ -1116,9 +1234,9 @@ exports[`Activity screen component renders correctly  1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 1,
                     },
                   ],
@@ -1127,7 +1245,7 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -1136,7 +1254,7 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "height": 20,
@@ -1150,20 +1268,20 @@ exports[`Activity screen component renders correctly  1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 20,
                         },
-                        Object {
+                        {
                           "marginTop": -2,
                         },
-                        Object {
+                        {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -1179,41 +1297,41 @@ exports[`Activity screen component renders correctly  1`] = `
   </View>
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1236,7 +1354,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -1257,10 +1375,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1271,7 +1389,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1285,7 +1403,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1302,7 +1420,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1310,41 +1428,41 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1367,7 +1485,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -1388,10 +1506,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1402,7 +1520,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1416,7 +1534,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1433,7 +1551,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1441,41 +1559,41 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1498,7 +1616,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -1519,10 +1637,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1533,7 +1651,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1547,7 +1665,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1564,7 +1682,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1572,41 +1690,41 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1629,7 +1747,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
           "access_id": "",
           "allow_comments": true,
@@ -1650,10 +1768,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1664,7 +1782,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1678,7 +1796,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1695,191 +1813,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
-      }
-    }
-  />
-  <CommentBottomSheet
-    autoOpen={false}
-    commentsStore={
-      CommentsStore {
-        "analyticContexts": Array [
-          undefined,
-          undefined,
-        ],
-        "attachment": AttachmentStore {
-          "assetId": "",
-          "cancelOrDelete": [Function],
-          "ephemeral": true,
-          "filename": "",
-          "guid": "",
-          "onClear": undefined,
-          "path": "",
-          "transcoding": false,
-        },
-        "comments": Array [],
-        "embed": RichEmbedStore {
-          "_richEmbedFetchTimer": null,
-          "clearRichEmbedAction": [Function],
-          "richEmbedUrl": "",
-          "setRichEmbedPromise": null,
-        },
-        "entity": Object {
-          "access_id": "",
-          "allow_comments": true,
-          "attachment_guid": false,
-          "blurb": false,
-          "can": [MockFunction] {
-            "calls": Array [
-              Array [
-                "view",
-                true,
-              ],
-              Array [
-                "vote",
-              ],
-              Array [
-                "vote",
-              ],
-              Array [
-                "remind",
-              ],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-            ],
-          },
-          "comments:count": undefined,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "entity_guid": "",
-          "getLockType": [Function],
-          "guid": "activityguid0",
-          "impressions": 0,
-          "isOwner": [Function],
-          "is_visible": false,
-          "listenForMetricsDebounced": [Function],
-          "mature": false,
-          "mature_visibility": false,
-          "message": "Message",
-          "ownerObj": Object {
-            "__list": null,
-            "access_id": "",
-            "allow_comments": true,
-            "blocked": undefined,
-            "canary": false,
-            "confirmEmail": [Function],
-            "disable_autoplay_videos": undefined,
-            "disabled_boost": undefined,
-            "email_confirmed": false,
-            "eth_wallet": "",
-            "founder": false,
-            "groupsCount": 0,
-            "guid": "824853017709780997",
-            "impressions": undefined,
-            "isOwner": [Function],
-            "is_admin": false,
-            "last_accepted_tos": 0,
-            "mature": false,
-            "mature_visibility": false,
-            "mode": 0,
-            "nsfw": Array [],
-            "onchain_booster": 0,
-            "pending_subscribe": false,
-            "permissions": Object {},
-            "plus": false,
-            "plus_method": "tokens",
-            "pro": false,
-            "pro_method": "tokens",
-            "rewards": false,
-            "subscribed": undefined,
-            "subscriber": false,
-            "subscribers_count": undefined,
-            "subscriptions_count": 0,
-            "subtype": false,
-            "tags": Array [],
-            "time_created": "1522036284",
-            "time_updated": "",
-            "type": "user",
-            "urn": "",
-            "username": "",
-            "verified": false,
-            "wire_rewards": undefined,
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "paywall": "",
-          "paywall_unlocked": false,
-          "perma_url": false,
-          "permissions": Object {},
-          "pinned": false,
-          "quotes": 0,
-          "reminds": 0,
-          "rowKey": "something0",
-          "subtype": "",
-          "thumbnail_src": false,
-          "thumbs:down:count": undefined,
-          "thumbs:down:user_guids": undefined,
-          "thumbs:up:count": undefined,
-          "thumbs:up:user_guids": undefined,
-          "time_created": "1522036284",
-          "time_updated": "",
-          "title": "TITLE",
-          "type": "activity",
-          "urn": "",
-          "username": "",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
-        },
-        "errorLoadingNext": false,
-        "errorLoadingPrevious": false,
-        "focusedCommentUrn": null,
-        "level": 0,
-        "loadNext": "",
-        "loadPrevious": "",
-        "loaded": false,
-        "loadingNext": false,
-        "loadingPrevious": false,
-        "mature": 0,
-        "onAttachedMedia": [Function],
-        "parent": null,
-        "post": [Function],
-        "refreshing": false,
-        "reversed": true,
-        "saving": false,
-        "selectMediaType": [Function],
-        "selection": Object {
-          "end": 0,
-          "start": 0,
-        },
-        "showInput": false,
-        "showSpamComments": [Function],
-        "socketRoomName": "",
-        "spamComments": Array [],
-        "spamCommentsShown": false,
-        "text": "",
       }
     }
   />

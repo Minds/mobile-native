@@ -20,7 +20,7 @@ export default function WefounderBanner() {
 
   return (
     <Banner
-      name="banner:wefounder"
+      dismissIdentifier="banner:wefounder"
       onPress={onPress}
       text={
         <Trans

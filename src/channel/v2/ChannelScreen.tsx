@@ -50,7 +50,8 @@ const tinycolor = require('tinycolor2');
 /**
  * determines whether a color is light
  **/
-const isLight = (color: string) => tinycolor(color).getBrightness() > 170;
+export const isLight = (color: string) =>
+  tinycolor(color).getBrightness() > 170;
 
 /**
  * given an image uri, returns the average/dominant color
@@ -240,13 +241,6 @@ const ChannelScreen = observer((props: PropsType) => {
         if (lastDirection.current !== Direction.Down) {
           lastDirection.current = Direction.Down;
           /**
-           * hide topbar
-           **/
-          contentOffset.value = withTiming(-150, {
-            duration: 500,
-            easing: EASING,
-          });
-          /**
            * and set the text style according to app theme on iOS because
            * the statusbar is transparent there
            **/
@@ -314,9 +308,10 @@ const ChannelScreen = observer((props: PropsType) => {
   /**
    * Scroll to top when topbar is pressed
    **/
-  const onTopBarPress = useCallback(() => feedRef.current?.scrollToTop(), [
-    feedRef,
-  ]);
+  const onTopBarPress = useCallback(
+    () => feedRef.current?.scrollToTop(),
+    [feedRef],
+  );
 
   const openSubscribers = useCallback(
     () => subscribersActionSheetRef.current?.show('channelSubscribers'),

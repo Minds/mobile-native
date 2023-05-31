@@ -19,12 +19,14 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 0 }), [
-    insets.top,
-  ]);
-  const cleanBottom = useMemo(() => ({ height: insets.bottom + 50 }), [
-    insets.bottom,
-  ]);
+  const cleanTop = useMemo(
+    () => ({ paddingTop: insets.top || 0 }),
+    [insets.top],
+  );
+  const cleanBottom = useMemo(
+    () => ({ height: insets.bottom + 50 }),
+    [insets.bottom],
+  );
   const [videoPortrait, setVideoPortrait] = React.useState(true);
   const onVideoLoaded = React.useCallback(e => {
     setVideoPortrait(e.naturalSize.height > e.naturalSize.width);
