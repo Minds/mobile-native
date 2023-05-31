@@ -3,8 +3,8 @@
 exports[`Counter component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "flexDirection": "row",
         "justifyContent": "center",
       },
@@ -15,23 +15,23 @@ exports[`Counter component renders correctly 1`] = `
   <Text
     onLayout={[Function]}
     style={
-      Array [
-        Array [
-          Array [
-            Object {
+      [
+        [
+          [
+            {
               "color": "#AEB0B8",
             },
-            Object {
+            {
               "fontSize": 14,
             },
-            Object {
+            {
               "fontFamily": "Roboto-Medium",
               "fontWeight": "500",
             },
           ],
           undefined,
         ],
-        Object {
+        {
           "position": "absolute",
           "top": -999999,
         },

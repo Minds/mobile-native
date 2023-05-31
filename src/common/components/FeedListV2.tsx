@@ -14,6 +14,7 @@ import ErrorLoading from '~/common/components/ErrorLoading';
 import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import ErrorBoundary from './ErrorBoundary';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -21,7 +22,7 @@ type PlaceholderType =
   | null
   | undefined;
 
-export type FeedListPropsType<T extends BaseModel> = {
+export type FeedListProps<T extends BaseModel> = {
   feedStore: FeedStore<T>;
   hideContent?: boolean;
   emptyMessage?: React.ReactElement;
@@ -35,7 +36,7 @@ export type FeedListPropsType<T extends BaseModel> = {
 >;
 
 function FeedList<T extends BaseModel>(
-  props: FeedListPropsType<T>,
+  props: FeedListProps<T>,
   ref: React.Ref<FlashList<T>>,
 ) {
   const {
@@ -55,13 +56,21 @@ function FeedList<T extends BaseModel>(
   const renderActivity = useCallback(
     (row: { index: number; item: any; target: string }) => {
       const entity = row.item;
+      const InjectedComponent =
+        entity instanceof InjectItem ? entity.component : null;
       return (
-        <Activity
-          entity={entity}
-          displayBoosts={displayBoosts}
-          navigation={navigation}
-          autoHeight={false}
-        />
+        <ErrorBoundary>
+          {entity instanceof InjectItem && InjectedComponent ? (
+            <InjectedComponent {...row} />
+          ) : (
+            <Activity
+              entity={entity}
+              navigation={navigation}
+              displayBoosts={displayBoosts}
+              autoHeight={false}
+            />
+          )}
+        </ErrorBoundary>
       );
     },
     [navigation, displayBoosts],
@@ -176,7 +185,7 @@ const viewabilityConfig = {
 
 export const FeedListV2 = observer(
   React.forwardRef(FeedList) as <T extends BaseModel>(
-    props: FeedListPropsType<T> & {
+    props: FeedListProps<T> & {
       ref?: React.Ref<FlashList<T>>;
     },
   ) => React.ReactElement,

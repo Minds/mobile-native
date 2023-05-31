@@ -11,10 +11,8 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
-
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -34,17 +32,26 @@ import com.minds.mobile.CustomMMKVJSIModulePackage;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.microsoft.codepush.react.CodePush;
 
-import com.minds.mobile.newarchitecture.MainApplicationReactNativeHost;
-import com.facebook.react.config.ReactFeatureFlags;
+import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
+import com.facebook.react.defaults.DefaultReactNativeHost;
 
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
   
  private final ReactNativeHost mReactNativeHost =
-    new ReactNativeHostWrapper(this, new ReactNativeHost(this) {
+    new ReactNativeHostWrapper(this, new DefaultReactNativeHost(this) {
       @Override
       public boolean getUseDeveloperSupport() {
         return BuildConfig.DEBUG;
+      }
+
+      @Override
+      protected boolean isNewArchEnabled() {
+        return BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
+      }
+      @Override
+      protected Boolean isHermesEnabled() {
+        return BuildConfig.IS_HERMES_ENABLED;
       }
 
       @Override
@@ -72,27 +79,22 @@ public class MainApplication extends Application implements ShareApplication, Re
       }
   });
 
-  private final ReactNativeHost mNewArchitectureNativeHost =
-      new ReactNativeHostWrapper(this, new MainApplicationReactNativeHost(this));
-
   @Override
   public ReactNativeHost getReactNativeHost() {
-    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-      return mNewArchitectureNativeHost;
-    } else {
-      return mReactNativeHost;
-    }
+    return mReactNativeHost;
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
-        // If you opted-in for the New Architecture, we enable the TurboModule system
-    ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
-    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ReactNativeExceptionHandlerModule.replaceErrorScreenActivityClass(CustomErrorScreen.class);
-     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+      // If you opted-in for the New Architecture, we load the native entry point for this app.
+      DefaultNewArchitectureEntryPoint.load();
+    }
+    ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
 
   @Override

@@ -22,7 +22,7 @@ import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { CHAR_LIMIT, IS_IOS } from '../../config/Config';
+import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
 import Animated, {
@@ -64,9 +64,10 @@ const CommentInput = observer((onShow, onDismiss) => {
   /**
    * hides the comment input
    */
-  const hideInput = useCallback(() => provider.store?.setShowInput(false), [
-    provider.store,
-  ]);
+  const hideInput = useCallback(
+    () => provider.store?.setShowInput(false),
+    [provider.store],
+  );
 
   /**
    * hide the input when back is pressed if it was visible
@@ -111,7 +112,7 @@ const CommentInput = observer((onShow, onDismiss) => {
   return (
     <KeyboardSpacingView
       style={StyleSheet.absoluteFill}
-      enabled={IS_IOS}
+      enabled
       noInset
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
@@ -156,7 +157,7 @@ const CommentInput = observer((onShow, onDismiss) => {
           {
             paddingBottom: Platform.select({
               android: bottomInset + 9,
-              ios: bottomInset + 12,
+              ios: bottomInset - 16,
             }),
           },
         ]}>

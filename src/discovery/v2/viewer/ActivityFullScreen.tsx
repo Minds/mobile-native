@@ -6,7 +6,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
-import type BottomSheet from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -32,7 +31,7 @@ import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
-import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
@@ -151,7 +150,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
-  const commentsRef = useRef<BottomSheet>(null);
   const upVotesInteractionsRef = useRef<any>(null);
   const downVotesInteractionsRef = useRef<any>(null);
   const remindsInteractionsRef = useRef<any>(null);
@@ -165,11 +163,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ...ThemedStyles.style.bgPrimaryBackground,
   });
 
-  const onPressComment = useCallback(() => {
-    if (commentsRef.current?.expand) {
-      commentsRef.current.expand();
+  const openComments = useCallback(() => {
+    pushCommentBottomSheet({
+      commentsStore: store.comments,
+    });
+  }, [store]);
+
+  useEffect(() => {
+    if (route.params?.focusedCommentUrn || route.params?.scrollToBottom) {
+      openComments();
     }
-  }, [commentsRef]);
+  }, [route.params]);
 
   useEffect(() => {
     const user = sessionService.getUser();
@@ -379,7 +383,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onShowQuotesPress={showQuotes}
             entity={entity}
           />
-          <Actions entity={entity} hideCount onPressComment={onPressComment} />
+          <Actions entity={entity} hideCount onPressComment={openComments} />
         </View>
         <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
         <InteractionsBottomSheet
@@ -388,14 +392,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
         />
         <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
         <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
-        <CommentBottomSheet
-          ref={commentsRef}
-          autoOpen={
-            Boolean(route.params?.focusedCommentUrn) ||
-            Boolean(route.params?.scrollToBottom)
-          }
-          commentsStore={store.comments}
-        />
       </View>
     </GroupContextProvider>
   );

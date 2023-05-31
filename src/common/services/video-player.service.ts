@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import SystemSetting from 'react-native-system-setting';
-import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 //@ts-ignore
 import SilentSwitch from 'react-native-silent-switch';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
@@ -74,7 +74,7 @@ class VideoPlayerService {
       this.current.pause(false);
     }
     if (!this.current && videoPlayerRef) {
-      activateKeepAwake();
+      activateKeepAwakeAsync();
     }
     this.current = videoPlayerRef;
   }

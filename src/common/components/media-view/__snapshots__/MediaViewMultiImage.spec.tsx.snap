@@ -3,7 +3,7 @@
 exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,
@@ -13,7 +13,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginRight": 4,
@@ -25,13 +25,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -43,13 +43,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -66,8 +66,8 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -78,13 +78,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -98,7 +98,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginLeft": 4,
@@ -110,13 +110,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -128,13 +128,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -151,8 +151,8 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -163,13 +163,13 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -187,7 +187,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
 exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,
@@ -197,7 +197,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginRight": 4,
@@ -209,13 +209,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -227,13 +227,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -250,8 +250,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -262,13 +262,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -282,7 +282,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginLeft": 4,
@@ -294,13 +294,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -312,13 +312,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -335,8 +335,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -347,13 +347,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -366,7 +366,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "marginTop": 8,
         }
       }
@@ -376,13 +376,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -394,13 +394,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -417,8 +417,8 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -429,13 +429,13 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -453,7 +453,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
 exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "flexDirection": "row",
       "height": 220,
       "marginHorizontal": 12,
@@ -463,7 +463,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginRight": 4,
@@ -475,13 +475,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -493,13 +493,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -516,8 +516,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -528,13 +528,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -547,7 +547,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "marginTop": 8,
         }
       }
@@ -557,13 +557,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -575,13 +575,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -598,8 +598,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -610,13 +610,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -630,7 +630,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
         "flexDirection": "column",
         "marginLeft": 4,
@@ -642,13 +642,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -660,13 +660,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -683,8 +683,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -695,13 +695,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },
@@ -714,7 +714,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "marginTop": 8,
         }
       }
@@ -724,13 +724,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
       onLongPress={[Function]}
       onPress={[Function]}
       style={
-        Object {
+        {
           "borderRadius": 3,
           "elevation": 2,
           "flex": 1,
           "height": "100%",
           "shadowColor": "rgba(0, 0, 0, 0.4)",
-          "shadowOffset": Object {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
@@ -742,13 +742,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderRadius": 3,
             "elevation": 2,
             "flex": 1,
             "height": "100%",
             "shadowColor": "rgba(0, 0, 0, 0.4)",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
@@ -765,8 +765,8 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onLoadEnd={[Function]}
           onProgress={[Function]}
           source={
-            Object {
-              "headers": Object {
+            {
+              "headers": {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
@@ -777,13 +777,13 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
             }
           }
           style={
-            Object {
+            {
               "borderRadius": 3,
               "elevation": 2,
               "flex": 1,
               "height": "100%",
               "shadowColor": "rgba(0, 0, 0, 0.4)",
-              "shadowOffset": Object {
+              "shadowOffset": {
                 "height": 1,
                 "width": 0,
               },

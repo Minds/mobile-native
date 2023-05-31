@@ -4,7 +4,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import { MotiView } from 'moti';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import Reanimated, {
   useAnimatedProps,
   useSharedValue,
@@ -147,7 +147,7 @@ export default observer(function (props: PropsType) {
 
   // Keep device awake while camera is mounted
   useEffect(() => {
-    activateKeepAwake();
+    activateKeepAwakeAsync();
     return () => {
       deactivateKeepAwake();
     };
