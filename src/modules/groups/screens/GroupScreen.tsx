@@ -20,6 +20,7 @@ import {
 } from '../contexts/GroupContext';
 import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
+import CaptureFab from '~/capture/CaptureFab';
 
 const HEADER_HEIGHT = 54;
 
@@ -39,13 +40,26 @@ const routes = [
   { key: 'members', title: 'Members', index: 1 },
 ];
 
-export function GroupScreen({ route }) {
+const PostToGroupButton = observer(({ navigation, routeKey }) => {
+  const groupContext = useGroupContext();
+  return (
+    <CaptureFab
+      visible={true}
+      navigation={navigation}
+      group={groupContext?.group}
+      routeKey={routeKey}
+    />
+  );
+});
+
+export function GroupScreen({ route, navigation }) {
   const groupGuid = route.params.guid || route.params?.group?.guid;
   const group = useGroup({ guid: groupGuid, group: route.params?.group });
 
   return group ? (
     <GroupScreenContextProvider group={group}>
       <GroupScreenView group={group} />
+      <PostToGroupButton routeKey={route.key} navigation={navigation} />
     </GroupScreenContextProvider>
   ) : (
     <CenteredLoading />
