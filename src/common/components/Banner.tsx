@@ -75,8 +75,10 @@ function Banner({
 
 const styles = ThemedStyles.create({
   container: [
-    'bgSecondaryBackground',
-    'paddingLeft5x',
+    'borderBottomHair',
+    'borderTopHair',
+    'bcolorAction',
+    'paddingLeft3x',
     'paddingRight4x',
     'paddingVertical3x',
     'rowJustifySpaceBetween',
