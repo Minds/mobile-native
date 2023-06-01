@@ -58,6 +58,7 @@ build:ios:
     - !reference [.rule_automatic_nonpatch_manual_others, rules]
     - !reference [.rule_release_branch, rules]
     - !reference [.rule_native_branch, rules]
+    - when: manual
 
 # Build Android production Full Version (Higher version code)
 build:android:
@@ -70,6 +71,7 @@ build:android:
     - !reference [.rule_version_tag, rules]
     - !reference [.rule_release_branch, rules]
     - !reference [.rule_never_nightly, rules]
+    - when: manual
 
 # Production build for QA of MR
 # Runs only on native branches
@@ -112,6 +114,11 @@ build:android:store:
     - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
     - bundle exec fastlane assemble_build
     - *move_apk
+  rules:
+    - !reference [.rule_version_tag, rules]
+    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_never_nightly, rules]
+    - when: manual
 
 # Cleanup APK from merged MRs
 build:cleanup:
