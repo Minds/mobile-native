@@ -340,4 +340,5 @@ export type ClickRef =
   | 'video-player-unmuted'
   | 'remind'
   | 'banner:afiliate:action'
+  | 'discovery:plus:upgrade'
   | `${DismissIdentifier}:dismiss`;

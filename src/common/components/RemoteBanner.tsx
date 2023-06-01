@@ -32,7 +32,7 @@ export default function RemoteBanner() {
 
   return (
     <Banner
-      name={`banner:${identifier}` as DismissIdentifier}
+      dismissIdentifier={`banner:${identifier}` as DismissIdentifier}
       onPress={onPress}
       text={<Markdown style={styles}>{fixDeepLinks(message)}</Markdown>}
     />
