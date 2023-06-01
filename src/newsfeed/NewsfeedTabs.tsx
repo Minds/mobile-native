@@ -7,14 +7,11 @@ import { useIsFeatureOn } from 'ExperimentsProvider';
 import type BaseModel from '~/common/BaseModel';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import { NewsfeedType } from './NewsfeedStore';
-import { storages } from '../common/services/storage/storages.service';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
   const { groups } = useLegacyStores();
-  const hasGroups = groups.loaded
-    ? !!groups.list.entities.length
-    : storages.user?.getBool('groups:has_groups');
+  const hasGroups = groups.hasGroups;
 
   const tabs = React.useMemo(
     () => {
@@ -41,7 +38,9 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
   );
 
   useEffect(() => {
-    groups.loadList();
+    if (!groups.loaded) {
+      groups.loadList();
+    }
   }, [groups]);
 
   /**

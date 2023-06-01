@@ -7,6 +7,8 @@ import { isAbort, isNetworkError } from '../common/services/api.service';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import { storages } from '../common/services/storage/storages.service';
 
+const HAS_GROUPS_KEY = 'groups:has_groups';
+
 /**
  * Groups store
  */
@@ -19,6 +21,7 @@ class GroupsStore {
   @observable filter = 'member';
   @observable loading = false;
   @observable loaded = false;
+  @observable hasGroups = storages.user?.getBool(HAS_GROUPS_KEY) ?? false;
 
   constructor() {
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
@@ -48,7 +51,7 @@ class GroupsStore {
       this.list.setList(data);
       this.assignRowKeys(data);
       this.loaded = true;
-      storages.user?.setBool('groups:has_groups', !!this.list.entities.length);
+      this.setHasGroups(!!this.list.entities.length);
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -89,13 +92,20 @@ class GroupsStore {
   @action
   private onJoinGroup = (group: GroupModel) => {
     this.list.prepend(group);
+    this.setHasGroups(!!this.list.entities.length);
   };
 
   @action
   private onLeaveGroup = (group: GroupModel) => {
     const index = this.list.entities.findIndex(gr => gr.guid === group.guid);
     this.list.removeIndex(index);
+    this.setHasGroups(!!this.list.entities.length);
   };
+
+  private setHasGroups(value: boolean) {
+    this.hasGroups = value;
+    storages.user?.setBool(HAS_GROUPS_KEY, value);
+  }
 }
 
 export default GroupsStore;
