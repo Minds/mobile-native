@@ -85,25 +85,26 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.forYouStore.refresh();
   }, [newsfeed]);
 
-  const onTabPress = useCallback(
-    e => {
+  useEffect(() => {
+    const onPress = e => {
       if (navigation.isFocused()) {
         refreshNewsfeed();
-        e && e.preventDefault();
+        e?.preventDefault();
       }
-    },
-    [navigation, refreshNewsfeed],
-  );
+    };
 
-  useEffect(() => {
     newsfeed.loadFeed();
-
-    return navigation.getParent()?.addListener(
-      //@ts-ignore
-      'tabPress',
-      onTabPress,
+    const parent = navigation.getParent();
+    const unsubscribeTab = parent?.addListener<any>('tabPress', onPress);
+    const unsubscribeDrawer = parent?.addListener<any>(
+      'drawerItemPress',
+      onPress,
     );
-  }, [navigation, newsfeed, onTabPress]);
+    return () => {
+      unsubscribeTab?.();
+      unsubscribeDrawer?.();
+    };
+  }, [navigation, newsfeed, refreshNewsfeed]);
 
   // delay the load of the portrait feed data
   // we load the data here given that the flashlist is rendering it twice at the first render

@@ -111,13 +111,19 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     );
 
     useEffect(() => {
-      const unsubscribe = navigation.getParent().addListener('tabPress', () => {
+      const onPress = () => {
         if (shouldRefreshOnTabPress) {
           listRef.current?.scrollToTop();
           store.refreshActiveTab();
         }
-      });
-      return unsubscribe;
+      };
+      const parent = navigation.getParent();
+      const unsubscribeTab = parent.addListener('tabPress', onPress);
+      const unsubscribeDrawer = parent.addListener('drawerItemPress', onPress);
+      return () => {
+        unsubscribeTab();
+        unsubscribeDrawer();
+      };
     }, [store, navigation, shouldRefreshOnTabPress]);
 
     useEffect(() => {

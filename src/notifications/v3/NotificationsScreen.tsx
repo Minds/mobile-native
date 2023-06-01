@@ -66,10 +66,14 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 
   React.useEffect(() => {
-    const unsubscribe = navigation
-      .getParent()
-      .addListener('tabPress', () => navigation.isFocused() && refresh());
-    return unsubscribe;
+    const onPress = () => navigation.isFocused() && refresh();
+    const parent = navigation.getParent();
+    const unsubscribeTab = parent.addListener('tabPress', onPress);
+    const unsubscribeDrawer = parent.addListener('drawerItemPress', onPress);
+    return () => {
+      unsubscribeTab();
+      unsubscribeDrawer();
+    };
   }, [navigation, query, refresh]);
 
   const onViewableItemsChanged = React.useCallback(

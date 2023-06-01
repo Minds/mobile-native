@@ -11,6 +11,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../../settings/SettingsStore';
 import { View } from 'react-native';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
+import { IS_IPAD } from '~/config/Config';
 
 interface AnimatedBannerProps {
   parentScrollOffset: Animated.SharedValue<number>;
@@ -44,6 +45,15 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
         ),
       },
     ],
+    // fade background image for iPad
+    opacity: IS_IPAD
+      ? interpolate(
+          parentScrollOffset.value,
+          [0, 90, 100],
+          [1, 1, 0],
+          Extrapolate.CLAMP,
+        )
+      : 1,
   }));
 
   return (
@@ -78,6 +88,8 @@ const styles = ThemedStyles.create({
       top: 0,
       left: 0,
       right: 0,
+      overflow: 'hidden',
+      maxHeight: 280,
     },
   ],
   image: ['positionAbsolute'],
