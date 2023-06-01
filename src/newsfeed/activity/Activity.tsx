@@ -58,6 +58,7 @@ type PropsType = {
   borderless?: boolean;
   hideMetrics?: boolean;
   displayBoosts?: 'none' | 'distinct';
+  emphasizeGroup?: boolean;
   maxContentHeight?: number;
 };
 
@@ -268,6 +269,7 @@ export default class Activity extends Component<PropsType> {
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}
         displayBoosts={this.props.displayBoosts}
+        emphasizeGroup={this.props.emphasizeGroup}
       />
     ) : null;
   }

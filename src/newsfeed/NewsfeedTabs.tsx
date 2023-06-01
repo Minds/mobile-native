@@ -16,10 +16,12 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
             { id: 'foryou', title: i18n.t('newsfeed.foryouPosts') },
             { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
             { id: 'top', title: i18n.t('newsfeed.topPosts') },
+            { id: 'groups', title: i18n.t('newsfeed.topPosts') },
           ]
         : [
             { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
             { id: 'top', title: i18n.t('newsfeed.topPosts') },
+            { id: 'groups', title: i18n.t('newsfeed.topPosts') },
           ]) as { id: NewsfeedType; title: string }[],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [i18n.locale],
