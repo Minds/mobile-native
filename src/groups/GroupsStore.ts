@@ -13,11 +13,17 @@ class GroupsStore {
   /**
    * List store
    */
-  @observable list = new OffsetListStore('shallow');
+  @observable list = new OffsetListStore<GroupModel>('shallow');
 
   @observable filter = 'member';
   @observable loading = false;
   @observable loaded = false;
+
+  constructor() {
+    // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
+    GroupModel.events.on('joinedGroup', this.onJoinGroup);
+    GroupModel.events.on('leavedGroup', this.onLeaveGroup);
+  }
 
   @action
   setLoading(value) {
@@ -77,6 +83,17 @@ class GroupsStore {
     this.loading = false;
     this.filter = 'member';
   }
+
+  @action
+  private onJoinGroup = (group: GroupModel) => {
+    this.list.prepend(group);
+  };
+
+  @action
+  private onLeaveGroup = (group: GroupModel) => {
+    const index = this.list.entities.findIndex(gr => gr.guid === group.guid);
+    this.list.removeIndex(index);
+  };
 }
 
 export default GroupsStore;
