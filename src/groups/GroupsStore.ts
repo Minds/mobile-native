@@ -5,6 +5,7 @@ import GroupModel from './GroupModel';
 import logService from '../common/services/log.service';
 import { isAbort, isNetworkError } from '../common/services/api.service';
 import OffsetListStore from '../common/stores/OffsetListStore';
+import { storages } from '../common/services/storage/storages.service';
 
 /**
  * Groups store
@@ -47,6 +48,7 @@ class GroupsStore {
       this.list.setList(data);
       this.assignRowKeys(data);
       this.loaded = true;
+      storages.user?.setBool('groups:has_groups', !!this.list.entities.length);
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
