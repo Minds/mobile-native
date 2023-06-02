@@ -27,7 +27,11 @@ const HEADER_HEIGHT = 54;
 const FeedScene = ({ route }: any) => {
   const groupContext = useGroupContext();
   return groupContext && groupContext.feedStore ? (
-    <TabFeedList index={route.index} feedStore={groupContext.feedStore.feed} />
+    <TabFeedList
+      index={route.index}
+      feedStore={groupContext.feedStore.feed}
+      refreshControl={undefined}
+    />
   ) : null;
 };
 
