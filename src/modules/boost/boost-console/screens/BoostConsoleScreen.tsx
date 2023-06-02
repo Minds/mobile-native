@@ -13,6 +13,7 @@ import BoostTabBar from '../components/BoostTabBar';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
+import { IS_IPAD } from '~/config/Config';
 
 interface BoostConsoleScreenProps {
   route: RouteProp<any>;
@@ -102,7 +103,7 @@ function BoostConsoleScreen({
       <Screen safe onlyTopEdge>
         <ScreenHeader
           title={t('Boost Console')}
-          back
+          back={!IS_IPAD}
           extra={
             <IconButton
               name="cog"

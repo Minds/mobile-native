@@ -73,6 +73,7 @@ export default withErrorBoundaryScreen(
     return (
       <ModalContainer
         title={i18n.t('onboarding.verifyUniqueness')}
+        contentContainer={theme.alignSelfCenterMaxWidth}
         onPressBack={navigation.goBack}>
         <View style={theme.flexContainer}>
           {steps.map(item => (

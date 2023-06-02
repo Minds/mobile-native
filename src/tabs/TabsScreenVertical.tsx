@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   DrawerContentScrollView,
@@ -23,6 +22,7 @@ import { triggerHaptic } from '../common/services/haptic.service';
 import ComposeIcon from '~/compose/ComposeIcon';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
+import MoreStack from '~/navigation/MoreStack';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
@@ -86,7 +86,7 @@ const Tabs = observer(function () {
         />
         <Drawer.Screen
           name="Boosts"
-          getComponent={() => require('modules/boost').BoostComposerStack}
+          getComponent={() => require('modules/boost').BoostConsoleScreen}
         />
         <Drawer.Screen
           name="Supermind"
@@ -115,10 +115,7 @@ const Tabs = observer(function () {
           name="Analytics"
           getComponent={() => require('~/analytics/AnalyticsScreen').default}
         />
-        <Drawer.Screen
-          name="Settings"
-          getComponent={() => require('~/settings/SettingsScreen').default}
-        />
+        <Drawer.Screen name="Settings" component={MoreStack} />
       </Drawer.Navigator>
     </View>
   );

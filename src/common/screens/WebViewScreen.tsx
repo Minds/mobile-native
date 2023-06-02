@@ -46,7 +46,7 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
   }
 
   return (
-    <Screen>
+    <Screen hasMaxWidth={false}>
       <WebView
         source={source}
         scrollEnabled={true}

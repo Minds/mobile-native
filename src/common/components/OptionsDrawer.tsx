@@ -26,7 +26,11 @@ export default function ({ navigation, route }) {
 }
 
 const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgPrimaryBackground'],
+  container: [
+    'flexContainer',
+    'bgPrimaryBackground',
+    'alignSelfCenterMaxWidth',
+  ],
   innerWrapper: ['borderBottomHair', 'bcolorPrimaryBorder'],
   list: ['bgPrimaryBackground', 'paddingTop4x'],
 });

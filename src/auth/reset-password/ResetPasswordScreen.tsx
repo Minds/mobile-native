@@ -55,11 +55,15 @@ const ResetPasswordScreen: FC<ResetPasswordScreenPropsType> = ({
       title={store.title}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={ThemedStyles.style.bgPrimaryBackgroundHighlight}>
+      contentContainer={modalContainerStyle}>
       <View style={containerStyle}>{step}</View>
     </ModalContainer>
   );
 };
+const modalContainerStyle = ThemedStyles.combine(
+  'bgPrimaryBackgroundHighlight',
+  'alignSelfCenterMaxWidth',
+);
 
 const containerStyle = ThemedStyles.combine(
   'paddingTop2x',

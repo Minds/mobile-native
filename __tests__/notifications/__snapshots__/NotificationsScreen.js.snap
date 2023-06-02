@@ -31,7 +31,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 750,
+              "maxWidth": 2048,
               "width": "100%",
             },
           ]
@@ -54,8 +54,16 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "tabPress",
                             [Function],
                           ],
+                          [
+                            "drawerItemPress",
+                            [Function],
+                          ],
                         ],
                         "results": [
+                          {
+                            "type": "return",
+                            "value": undefined,
+                          },
                           {
                             "type": "return",
                             "value": undefined,
@@ -149,7 +157,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             [
               {
                 "alignSelf": "center",
-                "maxWidth": 750,
+                "maxWidth": 2048,
                 "width": "100%",
               },
             ]
@@ -191,7 +199,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "alignSelf": "center",
                     "flex": 1,
                     "flexDirection": "row",
-                    "maxWidth": 750,
+                    "maxWidth": 2048,
                     "width": "100%",
                   }
                 }

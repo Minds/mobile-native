@@ -21,7 +21,7 @@ exports[`Notifications component renders correctly 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 750,
+        "maxWidth": 2048,
         "width": "100%",
       },
     ]

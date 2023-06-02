@@ -53,6 +53,10 @@ export default withErrorBoundaryScreen(
   'ChooseBrowserModal',
 );
 
-const containerStyle = ThemedStyles.combine('bgPrimaryBackgroundHighlight', {
-  height: 400,
-});
+const containerStyle = ThemedStyles.combine(
+  'bgPrimaryBackgroundHighlight',
+  'alignSelfCenterMaxWidth',
+  {
+    height: 400,
+  },
+);

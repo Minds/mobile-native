@@ -8,7 +8,7 @@ import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
-import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS, IS_IPAD } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
@@ -100,7 +100,9 @@ export default function () {
       ];
 
   return (
-    <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <MoreStack.Navigator
+      initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
+      screenOptions={ThemedStyles.defaultScreenOptions}>
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
       <MoreStack.Screen
         name="Wallet"

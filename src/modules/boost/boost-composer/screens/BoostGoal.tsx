@@ -8,7 +8,6 @@ import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
 import { BoostGoal, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
-import { IS_IPAD } from '~/config/Config';
 
 type BoostGoalScreenProps = BoostStackScreenProps<'BoostGoal'>;
 
@@ -67,7 +66,7 @@ function BoostGoalScreen({ navigation, route }: BoostGoalScreenProps) {
             ? t('Boost Channel')
             : t('Boost Post')
         }
-        back={!IS_IPAD}
+        back
         backIcon={backIcon}
         shadow
       />

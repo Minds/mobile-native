@@ -37,7 +37,7 @@ const dynamicStyleHandler = {
 
 const { width, height } = Dimensions.get('window');
 export const getMaxFeedWidth = () =>
-  Math.min(width, height) - (IS_IPAD ? 110 : 0);
+  IS_IPAD ? Math.min(width, height) - (IS_IPAD ? 110 : 0) : 2048;
 
 const _buildStyle = (theme: ColorsType) =>
   ({
