@@ -214,6 +214,7 @@ class NewsfeedStore<T extends BaseModel> {
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
     this.forYouStore.reset();
+    this.groupsFeedStore.reset();
     this.feedType = undefined;
   }
 }
