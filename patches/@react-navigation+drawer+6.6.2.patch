@@ -1,0 +1,24 @@
+diff --git a/node_modules/@react-navigation/drawer/src/views/DrawerItemList.tsx b/node_modules/@react-navigation/drawer/src/views/DrawerItemList.tsx
+index 76f0125..596ab47 100644
+--- a/node_modules/@react-navigation/drawer/src/views/DrawerItemList.tsx
++++ b/node_modules/@react-navigation/drawer/src/views/DrawerItemList.tsx
+@@ -35,6 +35,7 @@ export default function DrawerItemList({
+     drawerInactiveTintColor,
+     drawerActiveBackgroundColor,
+     drawerInactiveBackgroundColor,
++    drawerType,
+   } = focusedOptions;
+ 
+   return state.routes.map((route, i) => {
+@@ -50,7 +51,10 @@ export default function DrawerItemList({
+       if (!event.defaultPrevented) {
+         navigation.dispatch({
+           ...(focused
+-            ? DrawerActions.closeDrawer()
++            ? drawerType !== 'permanent' ? DrawerActions.closeDrawer() : CommonActions.reset({
++              index: 0,
++              routes: [{ name: route.name }],
++            })
+             : CommonActions.navigate({ name: route.name, merge: true })),
+           target: state.key,
+         });
