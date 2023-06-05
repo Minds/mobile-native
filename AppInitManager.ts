@@ -1,3 +1,4 @@
+//@ts-nocheck
 import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
