@@ -21,6 +21,7 @@ import {
 import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const HEADER_HEIGHT = 54;
 
@@ -36,7 +37,13 @@ const FeedScene = ({ route }: any) => {
 };
 
 const MembersScene = ({ route, group }: any) => {
-  return <TabMemberList index={route.index} group={group} />;
+  return (
+    <TabMemberList
+      style={ThemedStyles.style.flexContainer}
+      index={route.index}
+      group={group}
+    />
+  );
 };
 
 const routes = [
