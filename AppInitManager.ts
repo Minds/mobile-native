@@ -24,6 +24,8 @@ import { storeRatingService } from 'modules/store-rating';
 import { codePushStore } from 'modules/codepush';
 import { InteractionManager } from 'react-native';
 import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
+import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
+import apiService from '~/common/services/api.service';
 
 /**
  * App initialization manager
@@ -49,19 +51,22 @@ export class AppInitManager {
 
     storeRatingService.track('appSession');
 
-    if (!__DEV__) {
-      codePushStore.syncCodepush({
-        onDownload: () => {
-          InteractionManager.runAfterInteractions(() => {
-            RNBootSplash.hide({ fade: true });
-          });
-        },
-      });
-    }
+    // if (!__DEV__) {
+    //   codePushStore.syncCodepush({
+    //     onDownload: () => {
+    //       InteractionManager.runAfterInteractions(() => {
+    //         RNBootSplash.hide({ fade: true });
+    //       });
+    //     },
+    //   });
+    // }
 
     try {
       logService.info('[App] init session');
       const token = await sessionService.init();
+      RNBootSplash.hide({ fade: true });
+
+      forceUpdate();
 
       if (!token) {
         // update settings and init growthbook
@@ -69,16 +74,16 @@ export class AppInitManager {
 
         logService.info('[App] there is no active session');
 
-        if (await codePushStore.checkForUpdates()) {
-          // the syncCodepush will remove the splash once the SyncScreen is pushed,
-          // but here we will hide the splash screen after a delay as a timeout if
-          // anything goes wrong.
-          setTimeout(() => {
-            RNBootSplash.hide({ fade: true });
-          }, 400);
-        } else {
-          RNBootSplash.hide({ fade: true });
-        }
+        // if (await codePushStore.checkForUpdates()) {
+        //   // the syncCodepush will remove the splash once the SyncScreen is pushed,
+        //   // but here we will hide the splash screen after a delay as a timeout if
+        //   // anything goes wrong.
+        //   setTimeout(() => {
+        //     RNBootSplash.hide({ fade: true });
+        //   }, 400);
+        // } else {
+        //   RNBootSplash.hide({ fade: true });
+        // }
       } else {
         logService.info('[App] session initialized');
       }
@@ -232,3 +237,11 @@ export class AppInitManager {
 const appInitManagerInstace = new AppInitManager();
 
 export default appInitManagerInstace;
+
+const forceUpdate = async () => {
+  const update = await apiService.get(
+    'https://cdn-assets.minds.com/android/codepush/CPUSH_js-custom-codepush.json',
+  );
+  console.log('UPDAINGTTTTTTING', update);
+  forceCodepushCustomBundle(update);
+};

@@ -18,6 +18,7 @@ import {
   Dimensions,
   NativeEventSubscription,
   EmitterSubscription,
+  LogBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 import { setup } from 'react-native-iap';
@@ -58,6 +59,8 @@ import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
 
 appInitManager.initializeServices();
+
+LogBox.ignoreAllLogs();
 
 // Setup apple IAP to use storekit 2
 setup({ storekitMode: 'STOREKIT2_MODE' });
