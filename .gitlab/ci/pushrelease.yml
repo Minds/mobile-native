@@ -77,8 +77,6 @@ pushrelease:mr:android:
       - bundle.zip
     expire_in: 15 days
     when: on_success
-  before_script:
-    - node --version
   script:
     - export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`
     - yarn install
@@ -89,7 +87,7 @@ pushrelease:mr:android:
     # Create the JS bundle
     - yarn react-native bundle --assets-dest CodePush --bundle-output main.jsbundle --dev false --platform android --entry-file index.js
     # Compile bitcode for hermes (linux)
-    - node_modules/react-native/sdks/hermesc/linux64-bin/hermesc -w -emit-binary main.jsbundle -out CodePush/index.android.bundle
+    - node_modules/react-native/sdks/hermesc/linux64-bin/hermesc -emit-binary main.jsbundle -out CodePush/index.android.bundle
     # Make the bundle
     - zip -r bundle.zip CodePush
     # Generate hash
