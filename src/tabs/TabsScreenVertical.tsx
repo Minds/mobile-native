@@ -19,7 +19,7 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
-import ComposeIcon from '~/compose/ComposeIcon';
+import { Icon as NIcon } from 'react-native-elements';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
 import MoreStack from '~/navigation/MoreStack';
@@ -121,19 +121,17 @@ const Tabs = observer(function () {
   );
 });
 
-// const isLargeScreen = false;
-
 type DrawerContentProps = DrawerNavigationOptions & {
   isPortrait?: boolean;
 };
 const drawerOptions = ({ route, isPortrait }): DrawerContentProps => ({
   headerShown: false,
   drawerType: 'permanent',
-  drawerStyle: { width: isPortrait ? 78 : 310 },
+  drawerStyle: { width: isPortrait ? 78 : 270 },
   overlayColor: 'transparent',
   lazy: true,
   drawerLabelStyle: {
-    fontSize: 18,
+    fontSize: 16,
   },
   drawerIcon: ({ focused }) => {
     if (route.name === 'Discovery') {
@@ -183,7 +181,7 @@ function DrawerContent(props) {
         onLongPress={handleComposeLongPress}
         style={styles.composeButton}
         delayLongPress={200}>
-        <ComposeIcon style={styles.composeIcon} />
+        <ComposeButton />
         {isPortrait ? undefined : (
           <H4 horizontal="XXL" vertical="L">
             {'Compose'}
@@ -195,16 +193,30 @@ function DrawerContent(props) {
   );
 }
 
+const ComposeButton = () => (
+  <View style={styles.editIcon}>
+    <NIcon
+      name="edit"
+      type="material"
+      size={24}
+      color={ThemedStyles.getColor('PrimaryBackground')}
+    />
+  </View>
+);
+
 export const styles = ThemedStyles.create({
+  editIcon: [
+    'bgIconActive',
+    {
+      marginLeft: 12,
+      padding: 14,
+      borderRadius: 60,
+    },
+  ],
   composeButton: {
-    marginHorizontal: 20,
     marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  composeIcon: {
-    width: 46,
-    height: 44,
   },
 });
 
