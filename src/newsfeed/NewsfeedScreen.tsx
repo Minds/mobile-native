@@ -173,7 +173,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
         <TopFeedHighlights
           onSeeTopFeedPress={() => {
-            newsfeed.listRef?.scrollToTop(true);
+            newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
             setTimeout(() => {
               newsfeed.changeFeedType('top', true);
             }, 500);
