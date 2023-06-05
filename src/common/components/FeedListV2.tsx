@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, ViewToken } from 'react-native';
+import { RefreshControl, View, ViewToken } from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
@@ -15,6 +15,8 @@ import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
+import { IS_IOS } from '~/config/Config';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -45,6 +47,7 @@ function FeedList<T extends BaseModel>(
     placeholder,
     emptyMessage,
     refreshing,
+    afterRefresh,
     feedStore,
     ...other
   } = props;
@@ -52,6 +55,13 @@ function FeedList<T extends BaseModel>(
   const navigation = useNavigation();
 
   const items: Array<any> = !hideContent ? feedStore.entities.slice() : [];
+
+  const refresh = useCallback(async () => {
+    await feedStore.refresh();
+    if (afterRefresh) {
+      afterRefresh();
+    }
+  }, [afterRefresh, feedStore]);
 
   const renderActivity = useCallback(
     (row: { index: number; item: any; target: string }) => {
@@ -92,6 +102,17 @@ function FeedList<T extends BaseModel>(
       data={items}
       refreshing={
         typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
+      }
+      refreshControl={
+        <RefreshControl
+          refreshing={
+            typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
+          }
+          onRefresh={refresh}
+          progressViewOffset={IS_IOS ? 0 : 80}
+          tintColor={ThemedStyles.getColor('Link')}
+          colors={[ThemedStyles.getColor('Link')]}
+        />
       }
       onEndReachedThreshold={5}
       renderItem={renderActivity}

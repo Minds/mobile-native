@@ -170,7 +170,7 @@ class NewsfeedStore<T extends BaseModel> {
    */
   scrollToTop() {
     if (this.listRef) {
-      this.listRef.scrollToTop(false);
+      this.listRef.scrollToOffset({ offset: 0 });
     }
   }
 

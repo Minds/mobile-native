@@ -113,7 +113,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     useEffect(() => {
       const onPress = () => {
         if (shouldRefreshOnTabPress) {
-          listRef.current?.scrollToTop();
+          listRef.current?.scrollToOffset({ offset: 0 });
           store.refreshActiveTab();
         }
       };
