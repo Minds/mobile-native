@@ -21,7 +21,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -302,7 +302,7 @@ exports[`Notification An offer expires 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -584,7 +584,7 @@ exports[`Notification Boost accepted 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -800,7 +800,7 @@ exports[`Notification Boost accepted 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 2048,
+              "maxWidth": 500,
               "width": "100%",
             },
           ],
@@ -889,7 +889,7 @@ exports[`Notification Boost complete 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -1105,7 +1105,7 @@ exports[`Notification Boost complete 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 2048,
+              "maxWidth": 500,
               "width": "100%",
             },
           ],
@@ -1194,7 +1194,7 @@ exports[`Notification Boost rejected 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -1410,7 +1410,7 @@ exports[`Notification Boost rejected 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 2048,
+              "maxWidth": 500,
               "width": "100%",
             },
           ],
@@ -1499,7 +1499,7 @@ exports[`Notification Boost rejected legacy 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -1772,7 +1772,7 @@ exports[`Notification Boost rejected legacy 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 2048,
+              "maxWidth": 500,
               "width": "100%",
             },
           ],
@@ -1861,7 +1861,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -2143,7 +2143,7 @@ exports[`Notification Receiver declines an offer 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -2425,7 +2425,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
       ],
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]

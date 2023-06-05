@@ -15,7 +15,7 @@ exports[`Activity screen component renders correctly  1`] = `
       },
       {
         "alignSelf": "center",
-        "maxWidth": 2048,
+        "maxWidth": 500,
         "width": "100%",
       },
     ]
@@ -428,7 +428,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "flex": 1,
           },
           {
-            "width": 2048,
+            "width": 500,
           },
         ]
       }
