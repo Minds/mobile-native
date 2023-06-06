@@ -1,49 +1,34 @@
-import { useEffect } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { useEffect, useRef } from 'react';
+import { observer } from 'mobx-react';
 
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
-import { ChannelStoreType } from '../createChannelStore';
 import GroupModel from '~/groups/GroupModel';
-import groupsService from '~/groups/GroupsService';
+import FeedStore from '~/common/stores/FeedStore';
 import GroupsListItem from '~/groups/GroupsListItem';
 
-type PropsType = {
-  store: ChannelStoreType;
-};
-
-const Groups = observer(({ store }: PropsType) => {
-  const ownChannel = store?.channel?.isOwner();
-
-  const localStore = useLocalStore(() => ({
-    groups: [] as GroupModel[],
-    loading: true,
-    init(list: GroupModel[]) {
-      this.groups = list;
-      this.loading = false;
-    },
-  }));
-
+const Groups = observer(() => {
+  const { current: groupStore } = useRef(new FeedStore<GroupModel>());
   useEffect(() => {
-    if (localStore.loading) {
-      (async () => {
-        if (ownChannel) {
-          const { entities } = await groupsService.loadList('member', 0);
-          localStore.init(entities);
-        } else {
-          const list = await store.getGroupList();
-          localStore.init(list);
-        }
-      })();
-    }
-  }, [localStore, ownChannel, store]);
+    groupStore
+      .setEndpoint('api/v1/groups/member')
+      .setLimit(12)
+      .setInjectBoost(false)
+      .setAsActivities(true)
+      .setParams({ nsfw: [] })
+      .fetchRemoteOrLocal();
+  }, [groupStore]);
 
   return (
     <>
-      {localStore.loading && <CenteredLoading />}
-      {localStore.groups?.map(group => (
-        <GroupsListItem group={group} key={group.guid} noNavigate />
-      ))}
+      {groupStore.loading && <CenteredLoading />}
+      {groupStore.entities
+        .slice()
+        .map(group =>
+          group instanceof GroupModel ? (
+            <GroupsListItem group={group} key={group.guid} noNavigate />
+          ) : null,
+        )}
     </>
   );
 });

@@ -391,12 +391,6 @@ const createChannelStore = () => {
       }
       return 0;
     },
-    async getGroupList() {
-      if (this.channel) {
-        return await channelsService.getGroupList(this.channel);
-      }
-      return [];
-    },
     isNsfw(channel: Entity) {
       return (
         Platform.OS === 'ios' &&
