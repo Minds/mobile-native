@@ -9,7 +9,7 @@ exports[`renders correctly 1`] = `
         "justifyContent": "flex-start",
       },
       {
-        "borderBottomWidth": 1,
+        "borderBottomWidth": 0.5,
       },
       {
         "borderColor": "#53565A",
@@ -42,16 +42,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
               {
                 "borderBottomWidth": 5,
               },
+              {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -115,16 +118,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
               {
                 "borderBottomWidth": 5,
               },
+              {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -188,16 +194,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
               {
                 "borderBottomWidth": 5,
               },
+              {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
@@ -261,16 +270,19 @@ exports[`renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
               {
                 "borderBottomWidth": 5,
               },
+              {
+                "borderColor": "transparent",
+              },
             ],
             undefined,
-            {
-              "borderColor": "transparent",
-            },
           ]
         }
       >

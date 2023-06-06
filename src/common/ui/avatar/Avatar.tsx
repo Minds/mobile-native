@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Image } from 'expo-image';
 import PressableScale from '~/common/components/PressableScale';
-import ThemedStyles from '~/styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
 import { withSpacer } from '~ui/layout';
 import {
@@ -19,23 +19,57 @@ export const Avatar = withSpacer(
     size = AVATAR_SIZE_DEFAULT,
     border,
     icon,
+    subAvatarSource,
     onPress,
     children,
     testID,
+    recyclingKey,
   }: any) => {
     let iconView: any = null;
+    let subAvatar: any = null;
+
+    const subAvatarSize = styles[size].width / 1.8;
+    const subAvatarStyle = useMemoStyle(
+      [
+        {
+          position: 'absolute',
+          bottom: -subAvatarSize / 4,
+          right: -subAvatarSize / 4,
+          width: subAvatarSize,
+          height: subAvatarSize,
+          borderRadius: subAvatarSize / 2,
+        },
+      ],
+      [subAvatarSize],
+    );
 
     if (icon) {
       iconView = <IconCircled style={styles.icon} name="menu" size="micro" />;
+    }
+
+    if (subAvatarSource) {
+      subAvatar = (
+        <Image
+          source={
+            isObservable(subAvatarSource)
+              ? toJS(subAvatarSource)
+              : subAvatarSource
+          }
+          recyclingKey={recyclingKey}
+          style={subAvatarStyle}
+        />
+      );
     }
 
     const avatar = (
       <View testID={testID} style={border && styles[border]}>
         <Image
           source={isObservable(source) ? toJS(source) : source}
+          recyclingKey={recyclingKey}
           style={styles[size]}
         />
         {iconView}
+        {subAvatar}
         {children}
       </View>
     );

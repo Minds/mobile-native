@@ -556,6 +556,26 @@ const RootStack = observer(function () {
                 headerShown: false,
               }}
             />
+            <RootStackNav.Screen
+              name="GroupsDiscovery"
+              getComponent={() =>
+                require('~/groups/GroupsDiscoveryScreen').default
+              }
+              options={{
+                ...rootStackCardScreenOptions,
+                headerShown: false,
+              }}
+            />
+            <RootStackNav.Screen
+              name="GroupView"
+              getComponent={() =>
+                require('~/modules/groups/screens/GroupScreen').GroupScreen
+              }
+              options={{
+                ...rootStackCardScreenOptions,
+                headerShown: false,
+              }}
+            />
           </>
         )
       ) : (

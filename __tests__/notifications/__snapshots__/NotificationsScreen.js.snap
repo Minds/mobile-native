@@ -69,6 +69,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         />
       </React.Fragment>
     }
+    contentContainerStyle={false}
     data={[]}
     getItem={[Function]}
     getItemCount={[Function]}

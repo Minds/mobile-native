@@ -339,6 +339,6 @@ export type ClickRef =
   | 'push-notification'
   | 'video-player-unmuted'
   | 'remind'
-  | 'banner:refer:action'
-  | 'banner:wefounder:action'
+  | 'banner:afiliate:action'
+  | 'discovery:plus:upgrade'
   | `${DismissIdentifier}:dismiss`;
