@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'; // fix ongesture handler error
+import 'react-native-image-keyboard';
 // import 'node-libs-react-native/globals';
 import './global';
 import crypto from 'crypto'; // DO NOT REMOVE!
@@ -11,10 +12,12 @@ import React from 'react';
 //     trackAllPureComponents: true,
 //   });
 // }
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, LogBox, Platform } from 'react-native';
 import reanimated from 'react-native-reanimated';
 import App from './App';
 import { enableFreeze } from 'react-native-screens';
+
+LogBox.ignoreAllLogs();
 
 process.env.DEBUG === 'tamagui';
 process.env.TAMAGUI_TARGET = 'native';

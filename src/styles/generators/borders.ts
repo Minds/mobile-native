@@ -23,9 +23,8 @@ export default function borders(name: string) {
     const size = getBorder(result[2]);
     return size !== undefined && size >= 0
       ? {
-          [`border${result[1] || ''}${
-            result[1] !== 'Radius' ? 'Width' : ''
-          }`]: size,
+          [`border${result[1] || ''}${result[1] !== 'Radius' ? 'Width' : ''}`]:
+            size,
         }
       : null;
   }

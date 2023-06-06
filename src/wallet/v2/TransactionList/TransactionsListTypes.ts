@@ -9,7 +9,7 @@ export type FilterStore = {
 };
 
 export type Entity = {
-  _list: OffsetListStore;
+  _list: OffsetListStore<Entity>;
   amount: number;
   contract: string;
   failed: boolean;

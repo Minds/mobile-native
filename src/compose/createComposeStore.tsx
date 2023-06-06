@@ -153,7 +153,12 @@ export default function (props) {
       }
 
       if (params.group) {
-        this.group = props.route.params?.group;
+        this.audience = {
+          type: 'group',
+          value: params.group.guid,
+          group: params.group,
+        };
+        this.group = params?.group;
       }
 
       if (params.openSupermindModal) {

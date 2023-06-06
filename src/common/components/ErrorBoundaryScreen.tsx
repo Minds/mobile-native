@@ -84,13 +84,14 @@ export default class ErrorBoundaryScreen extends Component<
  * @param {Component} WrappedComponent
  * @param {string} screenName
  */
-export const withErrorBoundaryScreen = (
-  WrappedComponent,
-  screenName = 'unknown screen',
-) => props => {
-  return (
-    <ErrorBoundaryScreen screenName={screenName} navigation={props.navigation}>
-      <WrappedComponent {...props} />
-    </ErrorBoundaryScreen>
-  );
-};
+export const withErrorBoundaryScreen =
+  (WrappedComponent, screenName = 'unknown screen') =>
+  props => {
+    return (
+      <ErrorBoundaryScreen
+        screenName={screenName}
+        navigation={props.navigation}>
+        <WrappedComponent {...props} />
+      </ErrorBoundaryScreen>
+    );
+  };

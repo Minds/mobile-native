@@ -107,8 +107,8 @@ const ChannelHeader = withErrorBoundary(
     useModelEvent(
       UserModel,
       'toggleSubscription',
-      ({ user }) => {
-        if (user.guid === channelGuid) {
+      ({ user, shouldUpdateFeed }) => {
+        if (user.guid === channelGuid && shouldUpdateFeed) {
           setInteracted(user.subscribed);
         }
       },

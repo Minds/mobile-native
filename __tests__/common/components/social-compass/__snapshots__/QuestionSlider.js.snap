@@ -3,8 +3,8 @@
 exports[`Slider component should render correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "marginBottom": 28,
       },
     ]
@@ -12,18 +12,18 @@ exports[`Slider component should render correctly 1`] = `
 >
   <Text
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#F2F2F2",
         },
-        Object {
+        {
           "fontFamily": "Roboto",
         },
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
           },
-          Object {
+          {
             "fontFamily": "Roboto-Medium",
             "fontWeight": "500",
           },
@@ -35,13 +35,14 @@ exports[`Slider component should render correctly 1`] = `
   </Text>
   <RNCSlider
     disabled={false}
-    enabled={true}
     inverted={false}
+    lowerLimit={-9007199254740991}
     maximumTrackTintColor="#53565A"
     maximumValue={100}
     minimumTrackTintColor="#53565A"
     minimumValue={100}
     onChange={null}
+    onRNCSliderAccessibilityAction={null}
     onRNCSliderSlidingComplete={null}
     onRNCSliderSlidingStart={null}
     onRNCSliderValueChange={null}
@@ -49,19 +50,20 @@ exports[`Slider component should render correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     step={1}
     style={
-      Object {
+      {
         "height": 40,
       }
     }
-    thumbImage={null}
+    tapToSeek={false}
     thumbTintColor="#FFD048"
+    upperLimit={9007199254740991}
     value={25}
   />
   <View
     pointerEvents="none"
     style={
-      Array [
-        Object {
+      [
+        {
           "flexDirection": "row",
           "justifyContent": "space-between",
         },
@@ -70,22 +72,22 @@ exports[`Slider component should render correctly 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "fontSize": 13,
             },
-            Object {
+            {
               "fontFamily": "Roboto-Medium",
               "fontWeight": "500",
             },
-            Object {
+            {
               "color": "#b9bbc0",
             },
           ],
@@ -96,22 +98,22 @@ exports[`Slider component should render correctly 1`] = `
     </Text>
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "fontSize": 13,
             },
-            Object {
+            {
               "fontFamily": "Roboto-Medium",
               "fontWeight": "500",
             },
-            Object {
+            {
               "color": "#b9bbc0",
             },
           ],

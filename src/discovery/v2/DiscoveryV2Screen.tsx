@@ -35,9 +35,8 @@ interface Props {
  */
 export const DiscoveryV2Screen = withErrorBoundaryScreen(
   observer((props: Props) => {
-    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
-      false,
-    );
+    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] =
+      useState(false);
     const store = useDiscoveryV2Store();
     const listRef = React.useRef<FeedList<any>>(null);
 
@@ -114,7 +113,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     useEffect(() => {
       const unsubscribe = navigation.getParent().addListener('tabPress', () => {
         if (shouldRefreshOnTabPress) {
-          listRef.current?.scrollToTop();
+          listRef.current?.scrollToOffset({ offset: 0 });
           store.refreshActiveTab();
         }
       });
@@ -154,7 +153,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
-                navigation={navigation}
               />
             </DiscoveryTabContent>
           );
@@ -177,7 +175,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
-                navigation={navigation}
               />
             </DiscoveryTabContent>
           );
@@ -188,7 +185,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.boostFeed}
-                navigation={navigation}
                 emptyMessage={emptyBoosts}
               />
             </DiscoveryTabContent>
@@ -200,7 +196,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.supermindsFeed}
-                navigation={navigation}
                 emptyMessage={emptyBoosts}
               />
             </DiscoveryTabContent>

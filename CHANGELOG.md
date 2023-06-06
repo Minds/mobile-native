@@ -2,6 +2,45 @@
 
 Minds Mobile
 
+## 4.36.1 (2023-05-25)
+
+No changes.
+
+## 4.36.0 (2023-05-24)
+
+### Features ✨ (2 changes)
+
+- [Added support for displaying Boost CTAs on the feed](minds/mobile-native!2277)
+- [Boost Composer: Added support for adding a link or button to the boost](minds/mobile-native!2258)
+
+### Fixed 🐛 (8 changes)
+
+- [Fixed an issue with boosting non-owner activities](minds/mobile-native!2280)
+- [Fixed an issue where video thumbnail would be incorrect after posting](minds/mobile-native!2279)
+- [Fixed the loading indicator behind the banner](minds/mobile-native!2276)
+- [Fixed composer, avatar image](minds/mobile-native!2274)
+- [Fixed some issues with disabled comments functionality](minds/mobile-native!2271)
+- [Fixed keyboard popup in composer](minds/mobile-native!2265)
+- [Fixed an issue with videos in the boost rotator not navigating to the activity on click](minds/mobile-native!2264)
+- [Fixed video dimension issue on portrait mode](minds/mobile-native!2261)
+
+### Changed 🔧 (2 changes)
+
+- [Changed colors to match new new design system](minds/mobile-native!2249)
+- [Changed colors to match new design system](minds/mobile-native!2249)
+
+### Removed 🗑️ (1 change)
+
+- [Removed Tokens tab from analytics screen](minds/mobile-native!2268)
+
+### fix (1 change)
+
+- [Fixed broken logic in boosts goals](minds/mobile-native!2302)
+
+### updated (1 change)
+
+- [Updated the codepush section in Developer Options](minds/mobile-native!2275)
+
 ## 4.35.2 (2023-05-09)
 
 ### Features ✨ (7 changes)

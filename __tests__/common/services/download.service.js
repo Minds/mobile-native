@@ -1,13 +1,11 @@
 import { Platform } from 'react-native';
 import service from '../../../src/common/services/download.service';
-import CameraRoll from '@react-native-community/cameraroll';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import permissions from '../../../src/common/services/permissions.service';
-
-CameraRoll.save = jest.fn();
 
 jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/session.service');
-
+jest.mock('@react-native-camera-roll/camera-roll');
 const FAKE_URL = 'https://fake.com';
 /**
  * Tests

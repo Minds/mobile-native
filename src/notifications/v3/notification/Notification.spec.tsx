@@ -29,7 +29,7 @@ describe('Notification', () => {
       />,
     );
     expect(await screen.findByText(name)).toBeTruthy();
-    expect(await screen.findByText('sent you a')).toBeTruthy();
+    expect(await screen.findByText(/sent you a/)).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
@@ -44,7 +44,7 @@ describe('Notification', () => {
       />,
     );
     expect(await screen.findByText(name)).toBeTruthy();
-    expect(await screen.findByText('has declined your')).toBeTruthy();
+    expect(await screen.findByText(/has declined your/)).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
@@ -59,7 +59,7 @@ describe('Notification', () => {
       />,
     );
     expect(await screen.findByText(name)).toBeTruthy();
-    expect(await screen.findByText('replied to your')).toBeTruthy();
+    expect(await screen.findByText(/replied to your/)).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
@@ -73,7 +73,7 @@ describe('Notification', () => {
         onShowSubscribers={jest.fn()}
       />,
     );
-    expect(await screen.findByText("Don't forget to review")).toBeTruthy();
+    expect(await screen.findByText(/Don\'t forget to review/)).toBeTruthy();
     expect(await screen.findByText(` ${name}'s`, { exact: true })).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
@@ -89,7 +89,7 @@ describe('Notification', () => {
       />,
     );
     expect(await screen.findByText(name)).toBeTruthy();
-    expect(await screen.findByText('missed your')).toBeTruthy();
+    expect(await screen.findByText(/missed your/)).toBeTruthy();
     expect(await screen.findByText('Supermind offer')).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
@@ -135,7 +135,7 @@ describe('Notification', () => {
       />,
     );
     expect(
-      await screen.findByText('Your Boost was rejected', { exact: true }),
+      await screen.findByText(/Your Boost was rejected/, { exact: true }),
     ).toBeTruthy();
 
     expect(screen.toJSON()).toMatchSnapshot();
@@ -153,7 +153,7 @@ describe('Notification', () => {
     );
     expect(await screen.findByText(name)).toBeTruthy();
     expect(
-      await screen.findByText('is unable to approve your', { exact: true }),
+      await screen.findByText(/is unable to approve your/, { exact: true }),
     ).toBeTruthy();
     expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();

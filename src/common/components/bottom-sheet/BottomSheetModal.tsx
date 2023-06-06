@@ -137,7 +137,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
               {detail}
             </B1>
           )}
-          {children}
+          <>{children}</>
         </View>
       </BottomSheetModal>
     );

@@ -16,7 +16,7 @@ describe('rich embed store', () => {
     RichEmbedService.getMeta.mockClear();
   });
 
-  it('it should return metadata from links without protocol', async (done) => {
+  it('it should return metadata from links without protocol', async () => {
     const fakeMeta = {
       meta: {
         title: 'Minds',
@@ -27,24 +27,19 @@ describe('rich embed store', () => {
 
     RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
-    try {
-      const promise = store.richEmbedCheck('hello www.minds.com');
+    const promise = store.richEmbedCheck('hello www.minds.com');
 
-      await promise;
+    await promise;
 
-      jest.runTimersToTime(1000);
+    jest.advanceTimersByTime(1000);
 
-      await store.setRichEmbedPromise;
+    await store.setRichEmbedPromise;
 
-      expect(toJS(store.meta)).toEqual(fakeMeta);
-      expect(RichEmbedService.getMeta).toBeCalledWith('https://www.minds.com');
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    expect(toJS(store.meta)).toEqual(fakeMeta);
+    expect(RichEmbedService.getMeta).toBeCalledWith('https://www.minds.com');
   });
 
-  it('it should return metadata from links with protocol', async (done) => {
+  it('it should return metadata from links with protocol', async () => {
     const fakeMeta = {
       meta: {
         title: 'Minds with protocol',
@@ -55,28 +50,23 @@ describe('rich embed store', () => {
 
     RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
-    try {
-      const promise = store.richEmbedCheck(
-        'hello https://www.minds.com/somelong/url?withparams=true&or=false',
-      );
+    const promise = store.richEmbedCheck(
+      'hello https://www.minds.com/somelong/url?withparams=true&or=false',
+    );
 
-      await promise;
+    await promise;
 
-      jest.runTimersToTime(1000);
+    jest.advanceTimersByTime(1000);
 
-      await store.setRichEmbedPromise;
+    await store.setRichEmbedPromise;
 
-      expect(toJS(store.meta)).toEqual(fakeMeta);
-      expect(RichEmbedService.getMeta).toBeCalledWith(
-        'https://www.minds.com/somelong/url?withparams=true&or=false',
-      );
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    expect(toJS(store.meta)).toEqual(fakeMeta);
+    expect(RichEmbedService.getMeta).toBeCalledWith(
+      'https://www.minds.com/somelong/url?withparams=true&or=false',
+    );
   });
 
-  it('it should return metadata from links with protocol http', async (done) => {
+  it('it should return metadata from links with protocol http', async () => {
     const fakeMeta = {
       meta: {
         title: 'Minds with protocol',
@@ -87,39 +77,29 @@ describe('rich embed store', () => {
 
     RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
-    try {
-      const promise = store.richEmbedCheck(
-        'hello http://www.minds.com/somelong/url?withparams=true&or=false',
-      );
+    const promise = store.richEmbedCheck(
+      'hello http://www.minds.com/somelong/url?withparams=true&or=false',
+    );
 
-      await promise;
+    await promise;
 
-      jest.runTimersToTime(1000);
+    jest.advanceTimersByTime(1000);
 
-      await store.setRichEmbedPromise;
+    await store.setRichEmbedPromise;
 
-      expect(toJS(store.meta)).toEqual(fakeMeta);
-      expect(RichEmbedService.getMeta).toBeCalledWith(
-        'http://www.minds.com/somelong/url?withparams=true&or=false',
-      );
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    expect(toJS(store.meta)).toEqual(fakeMeta);
+    expect(RichEmbedService.getMeta).toBeCalledWith(
+      'http://www.minds.com/somelong/url?withparams=true&or=false',
+    );
   });
 
-  it('it should return null if there is no link', async (done) => {
+  it('it should return null if there is no link', async () => {
     const fakeMeta = null;
 
-    try {
-      const promise = store.richEmbedCheck('hello minds');
+    const promise = store.richEmbedCheck('hello minds');
 
-      await promise;
+    await promise;
 
-      expect(toJS(store.meta)).toEqual(fakeMeta);
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    expect(toJS(store.meta)).toEqual(fakeMeta);
   });
 });

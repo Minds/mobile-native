@@ -12,7 +12,6 @@ import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/components/PortraitContentBar';
-import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
 import ChannelRecommendationBody from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
@@ -37,6 +36,8 @@ import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
+import RemoteBanner from '~/common/components/RemoteBanner';
+import NewsfeedTabs from './NewsfeedTabs';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -81,6 +82,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.highlightsStore.refresh();
     newsfeed.latestFeedStore.refresh();
     newsfeed.topFeedStore.refresh();
+    newsfeed.forYouStore.refresh();
   }, [newsfeed]);
 
   const onTabPress = useCallback(
@@ -127,15 +129,13 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       () => (
         <View>
           <CheckLanguage />
+          <RemoteBanner />
           <InitialOnboardingButton />
           <PortraitContentBar />
           <CodePushUpdatePrompt />
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
-          <NewsfeedHeader
-            feedType={newsfeed.feedType}
-            onFeedTypeChange={newsfeed.changeFeedTypeChange}
-          />
+          <NewsfeedTabs newsfeed={newsfeed} />
           <BoostRotator />
         </View>
       ),
@@ -173,9 +173,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
         <TopFeedHighlights
           onSeeTopFeedPress={() => {
-            newsfeed.listRef?.scrollToTop(true);
+            newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
             setTimeout(() => {
-              newsfeed.changeFeedTypeChange('top', true);
+              newsfeed.changeFeedType('top', true);
             }, 500);
           }}
         />
@@ -185,6 +185,8 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
 
     // top feed injected components
     newsfeed.topFeedStore.setInjectedItems([prepend]);
+    // for you injected components
+    newsfeed.forYouStore.setInjectedItems([prepend]);
   }
 
   const isLatest = newsfeed.feedType === 'latest';
@@ -205,12 +207,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
                 />
               ) : undefined
             }
-            header={<Topbar noInsets banners navigation={navigation} />}
+            header={<Topbar noInsets navigation={navigation} />}
             ref={newsfeed.setListRef}
-            feedStore={
-              isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore
-            }
-            navigation={navigation}
+            feedStore={newsfeed.feedStore}
             afterRefresh={refreshPortrait}
             placeholder={NewsfeedPlaceholder}
           />

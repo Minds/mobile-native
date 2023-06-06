@@ -14,7 +14,8 @@ import { api } from '../api';
 import { useTranslation } from '../locales';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
-type PropsType = InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
+type PropsType =
+  InAppVerificationStackScreenProps<'InAppVerificationCodeRequest'>;
 
 export default withErrorBoundaryScreen(
   observer(function InAppVerificationCodeRequestScreen({

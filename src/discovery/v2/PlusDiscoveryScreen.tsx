@@ -1,15 +1,18 @@
-import React from 'react';
-import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { useMindsPlusV2Store } from './useDiscoveryV2Store';
-import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
-import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
-import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import i18n from '../../common/services/i18n.service';
-import { ScreenHeader } from '~ui/screen';
+import React, { useCallback } from 'react';
+import { View } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
+import Banner from '~/common/components/Banner';
+import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { ScreenHeader } from '~ui/screen';
+import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
+import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
+import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
+import { useMindsPlusV2Store } from './useDiscoveryV2Store';
 
 const SAFE_AREA_EDGES: Edge[] = ['top'];
 /**
@@ -17,11 +20,33 @@ const SAFE_AREA_EDGES: Edge[] = ['top'];
  */
 const PlusDiscoveryScreen = observer(() => {
   const theme = ThemedStyles.style;
+  const navigation = useNavigation();
   const store = useMindsPlusV2Store();
+  const user = useCurrentUser();
+
+  const onUpgrade = useCallback(() => {
+    navigation.navigate('UpgradeScreen', {
+      onComplete: (success: any) => {
+        if (success) {
+          user?.togglePlus();
+        }
+      },
+      pro: false,
+    });
+  }, [navigation, user]);
 
   const header = (
     <View style={theme.bgPrimaryBackground}>
       <ScreenHeader back title={i18n.t('plusTabTitleDiscovery')} />
+      {!user?.plus && (
+        <Banner
+          actionText="Upgrade"
+          actionIdentifier="discovery:plus:upgrade"
+          text="Access exclusive Minds+ content"
+          typography="B2"
+          onAction={onUpgrade}
+        />
+      )}
       <TopbarTabbar
         current={store.activeTabId}
         onChange={tabId => {

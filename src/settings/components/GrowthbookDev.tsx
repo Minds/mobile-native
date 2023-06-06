@@ -42,10 +42,8 @@ const GrowthbookDev = () => {
   const features = gb.getFeatures();
   const attr = gb.getAttributes();
 
-  const allFeatures: Record<
-    string,
-    { result?: FeatureResult; feature: any }
-  > = {};
+  const allFeatures: Record<string, { result?: FeatureResult; feature: any }> =
+    {};
   Object.entries(features).forEach(([name, feature]) => {
     if (!experiments[name] && featureList.includes(name as FeatureID)) {
       allFeatures[name] = {
