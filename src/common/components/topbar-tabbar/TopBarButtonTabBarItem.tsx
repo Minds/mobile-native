@@ -71,7 +71,11 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
             styles.buttonContainer,
             isCurrent ? theme.bgLink : theme.bgTransparent,
           ]}
-          textStyle={[styles.text, !isCurrent ? theme.colorSecondaryText : {}]}
+          textStyle={[
+            styles.text,
+            ThemedStyles.theme === 1 ? theme.colorBlack : theme.colorWhite,
+            !isCurrent ? theme.colorSecondaryText : {},
+          ]}
           testID={tab.testID}
         />
       );

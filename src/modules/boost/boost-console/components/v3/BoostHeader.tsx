@@ -8,6 +8,7 @@ import type UserModel from '../../../../../channel/UserModel';
 import { useTranslation } from '../../../locales';
 import BoostModel from '../../../models/BoostModelV3';
 import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';
+import { getColor } from '~/common/ui/buttons/helpers';
 
 interface BoostHeader {
   boost: BoostModel;
@@ -47,11 +48,13 @@ export default function BoostHeader({ boost }: BoostHeader) {
     ),
   };
 
+  const { textColor } = getColor({ theme: ThemedStyles.theme });
+
   return (
     <>
       <Row top="M" left="L">
         <View style={styles.rectangle}>
-          <B2 font="medium" color="white" horizontal="S">
+          <B2 font="medium" color={textColor} horizontal="S">
             {boost.payment_method === BoostPaymentMethod.cash
               ? cashLabel
               : tokenLabel}

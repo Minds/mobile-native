@@ -22,6 +22,7 @@ import { frameThrower } from '~ui/helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
 import { Row, Spacer } from '../layout';
+import { ColorsNameType } from '~/styles/Colors';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -41,7 +42,7 @@ export type ButtonPropsType = {
   onPress?: () => void;
   testID?: string;
   accessibilityLabel?: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | ((color: ColorsNameType) => React.ReactNode);
   reversedIcon?: boolean;
   pressableProps?: PressableProps;
   color?: 'link' | 'primary' | 'tertiary' | 'danger';
@@ -114,14 +115,14 @@ export const ButtonComponent = ({
         textColor: color,
         spinnerColor: color,
       }
-    : getColor(
-        ThemedStyles.theme,
+    : getColor({
+        theme: ThemedStyles.theme,
         mode,
         darkContent,
         lightContent,
         disabled,
         type,
-      );
+      });
   const bounceType = spinner ? 'long' : 'short';
 
   // Added for the LEGACY loading prop;
@@ -267,14 +268,23 @@ export const ButtonComponent = ({
       </Font>
     );
 
+    const iconComponent =
+      typeof icon === 'function'
+        ? icon(ThemedStyles.theme === 1 ? 'Black' : 'White')
+        : icon;
+
     if (iconOnly) {
-      content = icon;
+      content = iconComponent;
     } else if (icon) {
       content = (
         <Row align="centerStart">
-          {!reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
+          {!reversedIcon && icon ? (
+            <Spacer right="XS">{iconComponent}</Spacer>
+          ) : null}
           {title}
-          {reversedIcon && icon ? <Spacer right="XS">{icon}</Spacer> : null}
+          {reversedIcon && icon ? (
+            <Spacer right="XS">{iconComponent}</Spacer>
+          ) : null}
         </Row>
       );
     } else {
