@@ -41,6 +41,7 @@ upload:android:s3:oss: # Upload to S3
   dependencies:
     - build:android
   needs: [build:android]
+  when: manual
   rules:
     - !reference [.rule_never_nightly, rules]
     - !reference [.rule_version_tag, rules]
@@ -105,6 +106,7 @@ upload:android:s3:oss:rc: # Upload to S3
   dependencies:
     - build:android
   needs: [build:android]
+  when: manual
   rules:
     - !reference [.rule_never_nightly, rules]
     - !reference [.rule_release_branch, rules]
