@@ -186,7 +186,7 @@ export default class CommentsStore {
    */
   @action
   async loadComments(descending = true) {
-    if (this.cantLoadMore(descending)) {
+    if (!this.canFetch(descending)) {
       return;
     }
 
@@ -562,17 +562,21 @@ export default class CommentsStore {
     this.selection = selection;
   }
 
-  /**
-   * Can't load more
-   * @param {boolean} descending
-   */
-  cantLoadMore(descending) {
-    return (
-      this.loaded &&
-      (!(descending ? this.loadPrevious : this.loadNext) ||
-        this.refreshing ||
-        (descending ? this.loadingPrevious : this.loadingNext))
-    );
+  canFetch(descending?: boolean) {
+    const offsetToken = descending ? this.loadPrevious : this.loadNext;
+    const loading = descending ? this.loadingPrevious : this.loadingNext;
+
+    // can't fetch while already loading or refreshing
+    if (loading || this.refreshing) {
+      return false;
+    }
+
+    // can't fetch if backend says there are no more items
+    if (this.loaded && !offsetToken) {
+      return false;
+    }
+
+    return true;
   }
 
   /**
