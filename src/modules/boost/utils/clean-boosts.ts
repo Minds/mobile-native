@@ -10,11 +10,14 @@ export function cleanBoosts(
   boosts: Array<ActivityModel>,
 ): Array<ActivityModel> {
   return boosts.filter((entity: ActivityModel) => {
-    entity.boosted = true;
-    // remove NSFW on iOS
-    if (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length) {
+    // remove NSFW on iOS or empty entities
+    if (
+      !entity ||
+      (Platform.OS === 'ios' && entity.nsfw && entity.nsfw.length)
+    ) {
       return false;
     }
+    entity.boosted = true;
     return entity.type === 'user'
       ? false
       : !blockListService.has(entity.ownerObj?.guid);
