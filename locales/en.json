@@ -533,6 +533,7 @@
     "images": "Images",
     "blogs": "Blogs",
     "groups": "Groups",
+    "discoverGroups": "Discover Groups",
     "addTags": "Add tags to personalize your feed",
     "selectTags": "Select tags",
     "posts": "posts",
@@ -1656,6 +1657,8 @@
   "edit": "Edit",
   "goback": "Go back",
   "quote": "Quote",
+  "groupShare": "Group share",
+  "shareToGroup": "Share to a group",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -1900,8 +1903,9 @@
         }
       },
       "memberships": "Memberships",
-      "groups": "Groups",
+      "groups": "Your Groups",
       "noGroups": "You aren't a member of any groups",
+      "discoverGroups": "Discover groups",
       "plus": {
         "title": "Plus monetization",
         "action": "I agree to the terms"
