@@ -8,10 +8,11 @@ import FeedStore from '../common/stores/FeedStore';
 import ActivityModel from './ActivityModel';
 import NewsfeedService from './NewsfeedService';
 import { hasVariation } from 'ExperimentsProvider';
+import sessionService from '../common/services/session.service';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
-export type NewsfeedType = 'top' | 'latest' | 'foryou';
+export type NewsfeedType = 'top' | 'latest' | 'foryou' | 'groups';
 
 /**
  * News feed store
@@ -60,6 +61,18 @@ class NewsfeedStore<T extends BaseModel> {
     .setLimit(15);
 
   /**
+   * Feed store
+   */
+  groupsFeedStore = new FeedStore()
+    .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
+    .setInjectBoost(true)
+    .setLimit(12)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
+    );
+
+  /**
    * List reference
    */
   listRef?: FeedList<T>;
@@ -84,6 +97,8 @@ class NewsfeedStore<T extends BaseModel> {
         return this.forYouStore;
       case 'top':
         return this.topFeedStore;
+      case 'groups':
+        return this.groupsFeedStore;
       case 'latest':
       default:
         return this.latestFeedStore;
@@ -154,9 +169,14 @@ class NewsfeedStore<T extends BaseModel> {
         console.error(e);
       }
     }
+
     // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
     if (this.feedType === 'top') {
       this.feedStore.clear();
+    } else if (this.feedType === 'groups') {
+      this.groupsFeedStore.setParams({
+        group_posts_for_user_guid: sessionService.getUser()?.guid,
+      });
     } else {
       // fetch highlights for the latests feed
       this.highlightsStore.fetch();
@@ -194,6 +214,7 @@ class NewsfeedStore<T extends BaseModel> {
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
     this.forYouStore.reset();
+    this.groupsFeedStore.reset();
     this.feedType = undefined;
   }
 }
