@@ -17,6 +17,8 @@ import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { BoostStoreType } from '../boost.store';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type AudienceSelectorScreenProps =
   BoostStackScreenProps<'BoostAudienceSelector'>;
@@ -52,7 +54,7 @@ function AudienceSelectorScreen({
         shadow
       />
       <FitScrollView>
-        <Column align="centerBoth" vertical="XL2">
+        <Column align="centerBoth" bottom="XL2" top="XL">
           <H2>{t('Customize your audience')}</H2>
           <B1 color="secondary">
             {t('Choose the best audience for this boost.')}
@@ -86,6 +88,7 @@ function AudienceSelectorScreen({
             onPress={() => boostStore.setAudience('mature')}
           />
         </Column>
+        <PlacementSelector boostStore={boostStore} />
       </FitScrollView>
       <Button
         onPress={onNext}
@@ -98,6 +101,44 @@ function AudienceSelectorScreen({
     </Screen>
   );
 }
+
+type PlacementSelector = {
+  boostStore: BoostStoreType;
+};
+
+const PlacementSelector = observer(({ boostStore }: PlacementSelector) => {
+  const { t } = useTranslation();
+  const isExperimentON = useIsFeatureOn('mob-4952-boost-platform-targeting');
+
+  return isExperimentON ? (
+    <Column bottom="XXL" horizontal="M">
+      <H3 horizontal="L" bottom="S">
+        {t('Placement')}
+      </H3>
+      <MenuItemOption
+        title={t('Web')}
+        borderless
+        mode="checkbox"
+        selected={boostStore.target_platform_web}
+        onPress={() => boostStore.togglePlatformWeb()}
+      />
+      <MenuItemOption
+        title={t('Android')}
+        borderless
+        mode="checkbox"
+        selected={boostStore.target_platform_android}
+        onPress={() => boostStore.togglePlatformAndroid()}
+      />
+      <MenuItemOption
+        title={t('iOS')}
+        borderless
+        mode="checkbox"
+        selected={boostStore.target_platform_ios}
+        onPress={() => boostStore.togglePlatformIos()}
+      />
+    </Column>
+  ) : null;
+});
 
 export default withErrorBoundaryScreen(
   observer(AudienceSelectorScreen),
