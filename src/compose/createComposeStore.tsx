@@ -122,6 +122,13 @@ export default function (props) {
       this.supermindObject = params.supermindObject;
       this.onSaveCallback = params.onSave;
 
+      if (params.audience) {
+        this.audience = params.audience;
+        if (this.audience.group) {
+          this.setGroup(this.audience.group);
+        }
+      }
+
       if (params.createMode) {
         this.setCreateMode(params.createMode, true);
       }
@@ -197,7 +204,7 @@ export default function (props) {
       if (mode === 'monetizedPost') {
         await pushAudienceSelector({
           store: this,
-          monetizedOnly: true,
+          mode: 'monetized',
         });
         if (
           this.audience.type !== 'membership' &&

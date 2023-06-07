@@ -27,7 +27,7 @@ export default class ImageViewer extends Component {
               styles.image,
               { height: this.props.height, width: this.props.width },
             ]}
-            resizeMode="stretch"
+            contentFit="stretch"
             source={this.props.source}
           />
         </ImageZoom>

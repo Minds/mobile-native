@@ -2,9 +2,11 @@
 
 Minds Mobile
 
-## 4.36.1 (2023-05-25)
+## 4.36.2 (2023-06-05)
 
-No changes.
+### Features ✨ (1 changes)
+
+- [New post button added to the groups screen](minds/mobile-native!2313)
 
 ## 4.36.0 (2023-05-24)
 

@@ -83,6 +83,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.latestFeedStore.refresh();
     newsfeed.topFeedStore.refresh();
     newsfeed.forYouStore.refresh();
+    newsfeed.groupsFeedStore.refresh();
   }, [newsfeed]);
 
   const onTabPress = useCallback(
@@ -187,6 +188,8 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.topFeedStore.setInjectedItems([prepend]);
     // for you injected components
     newsfeed.forYouStore.setInjectedItems([prepend]);
+    // groups injected components
+    newsfeed.groupsFeedStore.setInjectedItems([prepend]);
   }
 
   const isLatest = newsfeed.feedType === 'latest';
@@ -199,6 +202,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <FeedListSticky
             stickyHeaderIndices={isLatest ? sticky : undefined}
             overrideItemLayout={overrideItemLayout}
+            emphasizeGroup
             bottomComponent={
               isLatest ? (
                 <SeeLatestPostsButton
