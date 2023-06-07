@@ -540,6 +540,7 @@
     "votes": "votes"
   },
   "groups": {
+    "title": "Groups",
     "ongoingGathering": "Ongoing gathering",
     "joinGathering": "Join Gathering",
     "gotoGroup": "Go to group",
