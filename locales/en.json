@@ -1864,15 +1864,8 @@
   },
   "codePush": {
     "prompt": {
-      "title": "New update available",
-      "description": "There is a newer version of the app available. Would you like to update now?",
-      "action": "Restart"
-    },
-    "nativePrompt": {
-      "description": "Please update your app in order to enjoy the latest features.",
-      "current": "Current:",
-      "available": "Available:",
-      "action": "Download"
+      "heading": "Stay up to date and ",
+      "getVersion": "get version "
     },
     "syncing": "Syncing app bundle...",
     "custom": {
@@ -1942,5 +1935,6 @@
       }
     }
   },
-  "back": "Back"
+  "back": "Back",
+  "restart": "Restart"
 }
