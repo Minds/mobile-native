@@ -42,7 +42,7 @@ function WelcomeScreen(props: PropsType) {
 
   return (
     <SafeAreaView style={theme.flexContainer}>
-      <View style={[theme.flexColumnStretch]}>
+      <View style={theme.flexColumnStretch}>
         <Animated.Image
           resizeMode="contain"
           source={require('./../assets/logos/logo-white.png')}
