@@ -22,7 +22,7 @@ const navigation = {
 };
 useNavigation.mockReturnValue(navigation);
 
-xdescribe('SupermindRequest', () => {
+describe('SupermindRequest', () => {
   it('should render inbound', async () => {
     const request = SupermindRequestModel.create(supermindRequestFaker());
 
