@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import UserModel from '~/channel/UserModel';
 import generateFakeUser from '../../../../__mocks__/fake/channel/UserFactory';
-import ChannelRecommendation from './ChannelRecommendation';
+import ChannelRecommendation from './Recommendation';
 import ChannelRecommendationItem from './components/ChannelRecommendationItem';
 
 const mockEntity = generateFakeUser();
@@ -37,7 +37,7 @@ jest.mock('~/common/hooks/use-stores', () => ({
   }),
 }));
 
-describe('ChannelRecommendation', () => {
+describe('Recommendation', () => {
   test('renders correctly', () => {
     const component = shallow(
       <ChannelRecommendation type="channel" location="feed" />,

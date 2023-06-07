@@ -5,7 +5,7 @@ import RecommendationBody, {
 import RecommendationHeader from './RecommendationHeader';
 import RecommendationProvider from './RecommendationProvider';
 
-const ChannelRecommendation: FC<RecommendationBodyProps> = ({
+const Recommendation: FC<RecommendationBodyProps> = ({
   location,
   visible = true,
   channel,
@@ -25,4 +25,4 @@ const ChannelRecommendation: FC<RecommendationBodyProps> = ({
   ) : null;
 };
 
-export default ChannelRecommendation;
+export default Recommendation;
