@@ -31,6 +31,7 @@ const FeedScene = ({ route }: any) => {
     <TabFeedList
       index={route.index}
       feedStore={groupContext.feedStore.feed}
+      displayBoosts="distinct"
       refreshControl={undefined}
     />
   ) : null;

@@ -1,29 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import type NewsfeedStore from './NewsfeedStore';
 import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import { NewsfeedType } from './NewsfeedStore';
 import type BaseModel from '~/common/BaseModel';
+import { useLegacyStores } from '../common/hooks/use-stores';
+import { NewsfeedType } from './NewsfeedStore';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
+  const { groups } = useLegacyStores();
+  const hasGroups = groups.hasGroups;
+
   const tabs = React.useMemo(
-    () =>
-      (experimentOn
-        ? [
-            { id: 'foryou', title: i18n.t('newsfeed.foryouPosts') },
-            { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
-            { id: 'top', title: i18n.t('newsfeed.topPosts') },
-          ]
-        : [
-            { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
-            { id: 'top', title: i18n.t('newsfeed.topPosts') },
-          ]) as { id: NewsfeedType; title: string }[],
+    () => {
+      const _tabs: { id: NewsfeedType; title: string }[] = [
+        { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
+        { id: 'top', title: i18n.t('newsfeed.topPosts') },
+      ];
+
+      if (experimentOn) {
+        _tabs.unshift({
+          id: 'foryou',
+          title: i18n.t('newsfeed.foryouPosts'),
+        });
+      }
+
+      if (hasGroups) {
+        _tabs.push({ id: 'groups', title: i18n.t('newsfeed.groups') });
+      }
+
+      return _tabs;
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [i18n.locale],
+    [i18n.locale, hasGroups, experimentOn],
   );
+
+  useEffect(() => {
+    if (!groups.loaded) {
+      groups.loadList();
+    }
+  }, [groups]);
+
+  /**
+   * Change the tab to the first tab if we were on the groups tab and user leaves all groups
+   */
+  useEffect(() => {
+    if (!hasGroups && newsfeed.feedType === 'groups') {
+      newsfeed.changeFeedType(tabs[0].id);
+    }
+  }, [hasGroups, newsfeed, tabs]);
+
   return newsfeed.feedType ? (
     <TopbarTabbar
       current={newsfeed.feedType}

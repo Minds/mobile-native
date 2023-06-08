@@ -1,7 +1,7 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Dimensions, ScrollView, View } from 'react-native';
 import { confirm } from '../common/components/Confirm';
 import Link from '../common/components/Link';
@@ -35,28 +35,42 @@ import { Trans } from 'react-i18next';
 const BOTTOM_SHEET_HEIGHT = Math.floor(Dimensions.get('window').height * 0.8);
 
 interface AudienceSelectorSheetProps {
-  store: ComposeStoreType;
-  /**
-   * whether only monetized options should be shown
-   */
-  monetizedOnly?: boolean;
+  title?: string;
+  mode?: 'groups' | 'monetized';
+  store?: ComposeStoreType;
   onClose: () => void;
+  // overrides the default onSelect functionality
+  onSelect?: (audience: ComposeAudience) => void;
 }
 
 const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const navigation = useNavigation();
-  const { store, onClose, monetizedOnly } = props;
+  const { store, onClose, title, mode } = props;
   const {
     supportTiers,
     loading: supportTiersLoading,
     refresh,
   } = useSupportTiers();
   const { user } = useLegacyStores();
-  const [groupsVisible, setGroupsVisible] = useState(!monetizedOnly);
-  const selected = store.audience;
+  const selected = store?.audience ?? { type: 'public' };
+  const groupsListRef = useRef<any>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      groupsListRef.current?.refreshList?.();
+    }, []),
+  );
 
   const select = useCallback(
     async audience => {
+      if (props.onSelect) {
+        return props.onSelect(audience);
+      }
+
+      if (!store) {
+        return;
+      }
+
       switch (audience.type) {
         case 'public':
           store.clearWireThreshold();
@@ -94,7 +108,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
       store.setAudience(audience);
     },
-    [navigation, store, user.me.plus],
+    [navigation, props, store, user.me.plus],
   );
 
   useFocusEffect(
@@ -120,7 +134,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
   const content = (
     <>
-      {!monetizedOnly && (
+      {!mode && (
         <MenuItemOption
           title={texts.audience.public.title}
           mode="radio"
@@ -132,7 +146,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!!PRO_PLUS_SUBSCRIPTION_ENABLED && (
+      {!mode && !!PRO_PLUS_SUBSCRIPTION_ENABLED && (
         <MenuItemOption
           title={texts.audience.plus.title}
           subtitle={texts.audience.plus.subtitle}
@@ -144,7 +158,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!IS_IOS && (
+      {!IS_IOS && mode !== 'groups' && (
         <>
           <Row align="centerBetween">
             <B1 left="XL" top="M" font="bold">
@@ -212,20 +226,11 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         </>
       )}
 
-      {!monetizedOnly && groupsVisible && (
+      {mode !== 'monetized' && (
         <Row align="centerBetween">
           <B1 left="XL" top="L" font="bold">
             {texts.groups}
           </B1>
-
-          <Button
-            size="tiny"
-            mode="flat"
-            type="action"
-            top="S"
-            onPress={() => NavigationService.navigate('GroupsList')}>
-            {texts.manage}
-          </Button>
         </Row>
       )}
     </>
@@ -234,7 +239,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   return (
     <Screen safe edges={['bottom']}>
       <ScreenHeader
-        title={texts.title}
+        title={title ?? texts.title}
         back
         onBack={onClose}
         titleType="H3"
@@ -246,18 +251,33 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           </Button>
         }
       />
-      {monetizedOnly ? (
+      {mode === 'monetized' ? (
         <ScrollView style={{ height: BOTTOM_SHEET_HEIGHT }}>
           {content}
         </ScrollView>
       ) : (
         <OffsetList
+          ref={groupsListRef}
           ListComponent={BottomSheetFlatList}
           style={styles.list}
           contentContainerStyle={styles.listPadding}
           header={content}
-          onListUpdate={groups => setGroupsVisible(!!groups.length)}
           renderItem={renderGroup}
+          ListEmptyComponent={
+            <>
+              <Column horizontal="XL" top="M" align="centerStart">
+                <B1 color="secondary">{texts.noGroups}</B1>
+                <Button
+                  mode="outline"
+                  top="L"
+                  onPress={() => {
+                    NavigationService.push('GroupsDiscovery');
+                  }}>
+                  {texts.discoverGroups}
+                </Button>
+              </Column>
+            </>
+          }
           fetchEndpoint={'api/v1/groups/member'}
           endpointData={'groups'}
         />
@@ -396,6 +416,7 @@ const texts = {
   memberships: i18n.t('composer.audienceSelector.memberships'),
   groups: i18n.t('composer.audienceSelector.groups'),
   noGroups: i18n.t('composer.audienceSelector.noGroups'),
+  discoverGroups: i18n.t('composer.audienceSelector.discoverGroups'),
   plus: {
     title: i18n.t('composer.audienceSelector.plus.title'),
     action: i18n.t('composer.audienceSelector.plus.action'),

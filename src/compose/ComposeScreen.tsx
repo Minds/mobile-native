@@ -226,7 +226,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           scrollEventThrottle={64}
           onScroll={onScrollHandler}>
           {isCreateModalOn && !store.isEdit && (
-            <Row horizontal="S" vertical="S">
+            <Row horizontal="S" vertical="S" right="XXXL2">
               <ComposeAudienceSelector store={store} />
             </Row>
           )}

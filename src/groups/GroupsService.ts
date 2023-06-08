@@ -9,11 +9,10 @@ class GroupsService {
   /**
    * Load groups
    */
-  async loadList(filter, offset) {
+  async loadList(filter?: 'member' | 'suggested' = 'member', offset) {
     let endpoint =
       filter === 'suggested'
-        ? 'api/v2/entities/suggested/groups' +
-          (getStores().hashtag.all ? '/all' : '')
+        ? 'api/v2/suggested/groups' + (getStores().hashtag.all ? '/all' : '')
         : 'api/v1/groups/' + filter;
 
     const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list');

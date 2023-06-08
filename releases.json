@@ -1,6 +1,43 @@
 {
   "versions": [
     {
+      "version": "4.36.0",
+      "href": "https://cdn-assets.minds.com/android/Minds-4.36.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.36.0",
+      "changelog": [
+        "Added support for displaying Boost CTAs on the feed",
+        "Boost Composer: Added support for adding a link or button to the boost",
+        "Fixed an issue with boosting non-owner activities",
+        "Fixed an issue where video thumbnail would be incorrect after posting",
+        "Fixed the loading indicator behind the banner",
+        "Fixed composer, avatar image",
+        "Fixed some issues with disabled comments functionality",
+        "Fixed keyboard popup in composer",
+        "Fixed an issue with videos in the boost rotator not navigating to the activity on click",
+        "Fixed video dimension issue on portrait mode",
+        "Changed colors to match new new design system",
+        "Changed colors to match new design system",
+        "Removed Tokens tab from analytics screen",
+        "Fixed broken logic in boosts goals",
+        "Updated the codepush section in Developer Options"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "78107202780da38ad6921004459e7193"
+        },
+        {
+          "type": "sha256",
+          "value": "cb756a5d3a3f0d53d7edae385cac4a527b137ceaec17916a91fb8c80f856b7db"
+        },
+        {
+          "type": "sha512",
+          "value": "1887a0e6bf3fe497556c78ebab0685467b3ffc92f80f0274df20a5d9147aa3c147cb31485d71c82514ac0302c5a042a9211d918f4cf58e6cb1078095a81ec74d"
+        }
+      ]
+    },
+    {
       "version": "4.35.0",
       "href": "https://cdn-assets.minds.com/android/Minds-4.35.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.35.0",

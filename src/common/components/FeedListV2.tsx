@@ -31,6 +31,7 @@ export type FeedListProps<T extends BaseModel> = {
   onRefresh?: () => Promise<any>;
   afterRefresh?: () => void;
   displayBoosts?: 'none' | 'distinct';
+  emphasizeGroup?: boolean;
   placeholder?: PlaceholderType;
 } & Omit<
   FlashListProps<T>,
@@ -49,6 +50,7 @@ function FeedList<T extends BaseModel>(
     refreshing,
     afterRefresh,
     feedStore,
+    emphasizeGroup,
     ...other
   } = props;
 
@@ -77,13 +79,14 @@ function FeedList<T extends BaseModel>(
               entity={entity}
               navigation={navigation}
               displayBoosts={displayBoosts}
+              emphasizeGroup={emphasizeGroup}
               autoHeight={false}
             />
           )}
         </ErrorBoundary>
       );
     },
-    [navigation, displayBoosts],
+    [navigation, displayBoosts, emphasizeGroup],
   );
 
   const footerRender = useCallback(
