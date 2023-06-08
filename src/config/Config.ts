@@ -8,6 +8,7 @@ import CodePush, { CodePushOptions } from 'react-native-code-push';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
+
 export const ONCHAIN_ENABLED = false;
 export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
 
