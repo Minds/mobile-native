@@ -50,7 +50,7 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
     <Animated.View style={[styles.animatedView, animatedStyles]}>
       <Background
         source={bannerSource}
-        resizeMode="cover"
+        contentFit="cover"
         style={styles.image}
       />
       {!showBanner && settingsStore.dataSaverEnabled && (
