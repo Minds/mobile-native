@@ -354,6 +354,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'rocket-launch',
   },
+  alarm: {
+    font: 'MaterialIcons',
+    name: 'alarm',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;
