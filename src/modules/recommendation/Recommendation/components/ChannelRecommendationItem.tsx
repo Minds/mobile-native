@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/core';
 import React, { FC, useCallback } from 'react';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
+import MPressable from '~/common/components/MPressable';
 import i18n from '~/common/services/i18n.service';
 import { Avatar, B1, B2, Column, Icon, Row } from '~/common/ui';
-import MPressable from '../../MPressable';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;

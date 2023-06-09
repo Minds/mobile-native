@@ -38,10 +38,12 @@ import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
 import RemoteBanner from '~/common/components/RemoteBanner';
 import NewsfeedTabs from './NewsfeedTabs';
-import RecommendationProvider from '../common/components/Recommendation/RecommendationProvider';
-import RecommendationHeader from '../common/components/Recommendation/RecommendationHeader';
-import RecommendationBody from '../common/components/Recommendation/RecommendationBody';
-import type { RecommendationType } from '../common/components/Recommendation/types';
+import {
+  RecommendationProvider,
+  RecommendationHeader,
+  RecommendationBody,
+  RecommendationType,
+} from 'modules/recommendation';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<

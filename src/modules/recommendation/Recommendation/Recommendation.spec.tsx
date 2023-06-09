@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import UserModel from '~/channel/UserModel';
 import generateFakeUser from '../../../../__mocks__/fake/channel/UserFactory';
-import ChannelRecommendation from './Recommendation';
+import Recommendation from './Recommendation';
 import ChannelRecommendationItem from './components/ChannelRecommendationItem';
 
 const mockEntity = generateFakeUser();
@@ -40,7 +40,7 @@ jest.mock('~/common/hooks/use-stores', () => ({
 describe('Recommendation', () => {
   test('renders correctly', () => {
     const component = shallow(
-      <ChannelRecommendation type="channel" location="feed" />,
+      <Recommendation type="channel" location="feed" />,
     );
     expect(component).toMatchSnapshot();
   });

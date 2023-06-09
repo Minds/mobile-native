@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
+import { ChannelRecommendationStore } from '~/common/components/ChannelRecommendation/hooks/useChannelRecommendation';
 import { GroupRecommendationStore } from './hooks/useGroupRecommendation';
-import { ChannelRecommendationStore } from '../ChannelRecommendation/hooks/useChannelRecommendation';
 
 export type RecommendationContextType =
   | {

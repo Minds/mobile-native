@@ -1,16 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { View } from 'react-native';
-import { styles as headerStyles } from '~/topbar/Topbar';
-import { observer } from 'mobx-react-lite';
-import { useNavigation } from '@react-navigation/native';
-
-import { B2, H4, Row, Icon } from '~/common/ui';
+import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
+import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
 import i18nService from '~/common/services/i18n.service';
-import MenuSheet from '../bottom-sheet/MenuSheet';
+import { B2, H4, Icon, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import FeedListInvisibleHeader from '../FeedListInvisibleHeader';
-import { RecommendationType } from './types';
+import { styles as headerStyles } from '~/topbar/Topbar';
 import useDismissibility from './hooks/useDismissibility';
+import { RecommendationType } from './types';
 
 type PropsType = {
   type: RecommendationType;

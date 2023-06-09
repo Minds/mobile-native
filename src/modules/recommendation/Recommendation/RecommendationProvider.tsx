@@ -1,7 +1,7 @@
 import React from 'react';
 import type UserModel from '~/channel/UserModel';
-import useChannelRecommendation from './hooks/useChannelRecommendation';
 import { RecommendationContext } from './Recommendation.context';
+import useChannelRecommendation from './hooks/useChannelRecommendation';
 import useGroupRecommendation from './hooks/useGroupRecommendation';
 
 type ProviderPropTypes = {
