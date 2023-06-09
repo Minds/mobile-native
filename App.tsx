@@ -56,6 +56,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
+import { GraphQLProvider } from './src/graphql/GraphQLProvider';
 
 appInitManager.initializeServices();
 
@@ -185,33 +186,38 @@ class App extends Component<Props> {
                 onStateChange={NavigationService.onStateChange}>
                 <StoresProvider>
                   <QueryProvider>
-                    <Provider key="app" {...stores}>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                        <FriendlyCaptchaProvider
-                          ref={setFriendlyCaptchaReference}>
-                          <PortalProvider>
-                            <UIProvider
-                              defaultTheme={
-                                ThemedStyles.theme === 0 ? 'dark' : 'light'
-                              }>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
-                                  {/* Wallet connect functionality is disabled for now
+                    <GraphQLProvider>
+                      <Provider key="app" {...stores}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
+                              <UIProvider
+                                defaultTheme={
+                                  ThemedStyles.theme === 0 ? 'dark' : 'light'
+                                }>
+                                <BottomSheetModalProvider>
+                                  <ErrorBoundary
+                                    message="An error occurred"
+                                    containerStyle={
+                                      ThemedStyles.style.centered
+                                    }>
+                                    {/* Wallet connect functionality is disabled for now
                                   <WCContextProvider>
                                   */}
-                                  <NavigationStack
-                                    key={ThemedStyles.theme + i18n.locale}
-                                  />
-                                  {/* </WCContextProvider> */}
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </UIProvider>
-                          </PortalProvider>
-                        </FriendlyCaptchaProvider>
-                      </AppMessageProvider>
-                    </Provider>
+                                    <NavigationStack
+                                      key={ThemedStyles.theme + i18n.locale}
+                                    />
+                                    {/* </WCContextProvider> */}
+                                  </ErrorBoundary>
+                                </BottomSheetModalProvider>
+                              </UIProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </Provider>
+                    </GraphQLProvider>
                   </QueryProvider>
                 </StoresProvider>
               </NavigationContainer>
@@ -236,5 +242,5 @@ const appContainerStyle = ThemedStyles.combine(
 );
 
 // if (__DEV__) {
-//   require('tron');
+//   require('./tron');
 // }
