@@ -2,8 +2,6 @@ import { Platform } from 'react-native';
 import web3Util from 'web3-utils';
 
 import { showNotification } from '../../../AppMessages';
-import BlockchainBoostService from '../../blockchain/v2/services/BlockchainBoostService';
-import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 import type UserModel from '../../channel/UserModel';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
@@ -16,12 +14,10 @@ export type BoostType = 'channel' | 'post' | 'offer';
 export type Payment = 'tokens' | 'onchain' | 'cash';
 
 const createBoostStore = ({
-  wc,
   wallet,
   entity,
   boostType,
 }: {
-  wc: WCStore;
   wallet: Wallet;
   entity: UserModel | ActivityModel;
   boostType?: BoostType;
@@ -125,7 +121,7 @@ const createBoostStore = ({
 
       return { guid, checksum };
     },
-    async buildPaymentMethod(guid, checksum) {
+    async buildPaymentMethod() {
       switch (this.payment) {
         case 'cash':
           return {
@@ -133,38 +129,14 @@ const createBoostStore = ({
             payment_method_id: this.selectedCardId,
           };
         case 'onchain':
-          try {
-            await wc.connect();
-          } catch (error) {
-            throw new Error('Connect your wallet first');
-          }
-          if (!wc.web3 || !wc.address) {
-            throw new Error('Connect your wallet first');
-          }
-
           if (!this.boostOfferTarget?.eth_wallet) {
             throw new Error('This user does not have an on-chain account');
           }
 
-          const boostService = new BlockchainBoostService(wc.web3, wc);
           return {
             method: 'onchain',
-            txHash:
-              this.boostType !== 'offer'
-                ? await boostService.create(
-                    guid,
-                    this.amountTokens,
-                    checksum,
-                    wc.address,
-                  )
-                : await boostService.createPeer(
-                    this.boostOfferTarget?.eth_wallet,
-                    guid,
-                    this.amountTokens,
-                    checksum,
-                    wc.address,
-                  ),
-            address: wc.address,
+            txHash: undefined,
+            address: undefined,
           };
         case 'tokens':
           return {
@@ -187,7 +159,7 @@ const createBoostStore = ({
           guid,
           bidType: this.payment === 'cash' ? 'cash' : 'tokens',
           impressions: this.amountViews,
-          paymentMethod: await this.buildPaymentMethod(guid, checksum),
+          paymentMethod: await this.buildPaymentMethod(),
           checksum,
         });
         this.loading = false;
@@ -205,7 +177,7 @@ const createBoostStore = ({
           {
             guid,
             currency: 'tokens',
-            paymentMethod: await this.buildPaymentMethod(guid, checksum),
+            paymentMethod: await this.buildPaymentMethod(),
             bid: amount,
             destination: this.boostOfferTarget?.guid,
             scheduleTs: this.scheduleTs,
