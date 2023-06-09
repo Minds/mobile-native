@@ -37,6 +37,7 @@ export type MenuItemProps = {
   reversedIcon?: boolean;
   avatarSize?: number;
   children?: ReactNode;
+  alignTop?: boolean;
 } & TouchableOpacityProps;
 
 export default function ({
@@ -58,6 +59,7 @@ export default function ({
   children,
   reversedIcon,
   avatarSize,
+  alignTop,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -120,8 +122,21 @@ export default function ({
         borderRadius: avatarSize / 2,
       });
     }
+    if (alignTop) {
+      avatarStyles.push({ alignSelf: 'flex-start' });
+    }
     return avatarStyles;
-  }, [avatarSize]);
+  }, [avatarSize, alignTop]);
+
+  const rightIconStyle = useMemoStyle(() => {
+    const _styles = [styles.rightIcon];
+    if (alignTop) {
+      _styles.push({
+        top: 16,
+      });
+    }
+    return _styles;
+  }, [alignTop]);
 
   const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
 
@@ -164,7 +179,7 @@ export default function ({
         {children}
       </Column>
       {!reversedIcon && shouldRenderIcon && (
-        <View style={styles.rightIcon}>{rightIcon}</View>
+        <View style={rightIconStyle}>{rightIcon}</View>
       )}
     </MPressable>
   );
