@@ -134,17 +134,18 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       0,
       'prepend',
       () => (
-        <View>
+        <>
           <CheckLanguage />
-          <RemoteBanner />
+          <CodePushUpdatePrompt>
+            <RemoteBanner />
+          </CodePushUpdatePrompt>
           <InitialOnboardingButton />
           <PortraitContentBar />
-          <CodePushUpdatePrompt />
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
           <NewsfeedTabs newsfeed={newsfeed} />
           <BoostRotator />
-        </View>
+        </>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
