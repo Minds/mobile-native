@@ -281,7 +281,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   );
 
   return (
-    <KeyboardSpacingView style={theme.flexContainer} noInset>
+    <KeyboardSpacingView style={theme.flexContainer}>
       <FitScrollView
         ref={scrollViewRef}
         keyboardShouldPersistTaps={'always'}
