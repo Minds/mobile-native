@@ -208,6 +208,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     <View>
       <InputContainer
         placeholder={i18n.t('auth.username')}
+        selectionColor={ThemedStyles.getColor('Link', 1)}
         onChangeText={store.setUsername}
         onSubmitEditing={emailRef.current?.focus}
         value={store.username}
@@ -226,6 +227,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <InputContainer
         ref={emailRef}
         placeholder={i18n.t('auth.email')}
+        selectionColor={ThemedStyles.getColor('Link')}
         onChangeText={store.setEmail}
         onSubmitEditing={passwordRef.current?.focus}
         value={store.email}
@@ -251,6 +253,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       />
       <PasswordInput
         ref={passwordRef}
+        selectionColor={ThemedStyles.getColor('Link')}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         showValidator={
           Boolean(store.password) && store.focused && !passValidation.all
@@ -288,6 +291,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             {inputs}
             <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
               <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
                 containerStyle={styles.checkboxTerm}
                 title={
                   <MText style={styles.checkboxText}>
@@ -305,6 +309,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                 onPress={store.toggleTerms}
               />
               <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
                 containerStyle={styles.checkboxPromotions}
                 title={
                   <MText style={styles.checkboxText}>
@@ -316,6 +321,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               />
             </View>
             <BottomSheetButton
+              solid
               onPress={store.onRegisterPress}
               text={i18n.t('auth.createChannel')}
               disabled={true || store.inProgress}

@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import { ResetPasswordStore } from './createLocalStore';
 import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import InputContainer from '../../common/components/InputContainer';
-import MText from '../../common/components/MText';
+import i18n from '~/common/services/i18n.service';
+import InputContainer from '~/common/components/InputContainer';
+import MText from '~/common/components/MText';
 import { Button } from '~/common/ui';
 
 type PropsType = {
@@ -26,9 +26,8 @@ const InputUser = observer(({ store }: PropsType) => {
         value={store.username}
       />
       <Button
-        mode="outline"
         horizontal="L2"
-        type={store.username ? 'action' : undefined}
+        type={'action'}
         onPress={store.sendEmail}
         containerStyle={styles.button}
         loading={store.sending}
