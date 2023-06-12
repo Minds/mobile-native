@@ -52,18 +52,24 @@ const BoostEntity = ({ boost }: BoostProps) => {
   }
 
   const renderEntityByType = {
-    activity: () => (
-      <Activity
-        entity={ActivityModel.create(entity)}
-        hideTabs={true}
-        navigation={navigation}
-        borderless
-        hideMetrics={
-          boost_status === BoostStatus.APPROVED ||
-          boost_status === BoostStatus.COMPLETED
-        }
-      />
-    ),
+    activity: () => {
+      const activity = ActivityModel.create(entity);
+      activity.goal_button_text = boost.goal_button_text;
+      activity.goal_button_url = boost.goal_button_url;
+
+      return (
+        <Activity
+          entity={activity}
+          hideTabs={true}
+          navigation={navigation}
+          borderless
+          hideMetrics={
+            boost_status === BoostStatus.APPROVED ||
+            boost_status === BoostStatus.COMPLETED
+          }
+        />
+      );
+    },
     user: () => {
       const user = UserModel.create(entity);
       return (

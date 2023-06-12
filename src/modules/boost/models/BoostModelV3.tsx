@@ -13,6 +13,7 @@ import {
   BoostTargetLocation,
   BoostTargetSuitability,
 } from '../boost-console/types/BoostConsoleBoost';
+import { BoostButtonText, BoostGoal } from '../boost-composer/boost.store';
 
 /**
  * User model
@@ -32,6 +33,9 @@ export default class BoostModel extends BaseModel {
   target_suitability!: BoostTargetSuitability;
   updated_timestamp?: number | null;
   rejection_reason?: BoostRejectionReason;
+  goal?: BoostGoal;
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
   summary?: {
     views_delivered: number;
     total_clicks?: number;

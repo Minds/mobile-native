@@ -44,7 +44,8 @@ const SeeLatestPostsButton = ({
         type="action"
         mode="solid"
         size="small"
-        icon={<Icon name="arrow-up" color="White" size="small" />}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        icon={color => <Icon name="arrow-up" color={color} size="small" />}
         onPress={onPress}
         shouldAnimateChanges={false}>
         {i18nService.t('newsfeed.seeLatestTitle', {

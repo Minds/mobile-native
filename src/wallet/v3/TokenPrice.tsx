@@ -24,7 +24,7 @@ export default observer(function TokenPrice() {
       <View style={styles.avatarContainer}>
         <Image
           style={styles.avatar}
-          resizeMode="contain"
+          contentFit="contain"
           source={{
             uri: 'https://cdn-assets.minds.com/front/dist/browser/en/assets/logos/bulb.jpg',
           }}
