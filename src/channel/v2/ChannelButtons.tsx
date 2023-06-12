@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { Platform, ViewStyle } from 'react-native';
+import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AnimatePresence, MotiProps, MotiView } from 'moti';
+import { AnimatePresence, MotiView } from 'moti';
 
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
