@@ -243,29 +243,4 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
   updateDialog: undefined,
 };
 
-type GraphQLConfig = Record<
-  'minds' | 'strapi',
-  {
-    uri: string;
-    headers?: Record<string, string>;
-    accessToken?: string;
-  }
->;
-
-export const GRAPHQL_CONFIG: GraphQLConfig = {
-  minds: {
-    uri: 'https://www.minds.com/api/graphql',
-    headers: {
-      'Content-Type': 'application/json',
-      Cookie: 'staging=1',
-    },
-  },
-  strapi: {
-    uri: 'https://cms.oke.minds.io/graphql',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  },
-};
-
 export const USE_APOLLO = true;

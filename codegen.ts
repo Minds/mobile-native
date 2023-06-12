@@ -1,48 +1,69 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
+const MINDS_API_URI = 'https://www.minds.com/api/graphql';
+const STRAPI_API_URI = 'https://cms.oke.minds.io/graphql'; // 'https://cms.minds.com/graphql';
+
+const defaultHeaders = {
+  'Content-Type': 'application/json',
+  'Cache-Control': 'no-cache, no-store, must-revalidate',
+  Pragma: 'no-cache',
+  'no-cache': '1',
+};
+
+const mindsSchema = {
+  schema: {
+    [MINDS_API_URI]: {
+      headers: {
+        ...defaultHeaders,
+        Cookie: 'staging=1',
+      },
+    },
+  },
+  documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
+};
+
+const queryPlugins = [
+  'typescript',
+  'typescript-operations',
+  'typescript-react-query',
+];
+
+const apolloPlugins = [
+  'typescript',
+  'typescript-operations',
+  'typescript-react-apollo',
+];
+
+const apolloConfig = {
+  withHooks: true,
+  withMutationFn: true,
+  withRefreshFn: true,
+};
+
 const config: CodegenConfig = {
   overwrite: true,
   ignoreNoDocuments: true,
   generates: {
     './src/graphql/strapi.ts': {
-      // PRODUCTION
-      // schema: 'https://cms.minds.com/graphql',
-      // STAGING
-      // schema: 'https://cms.oke.minds.io/graphql',
-      schema: 'http://127.0.0.1:1337/graphql',
+      schema: './graphqlql.strapi.schema.json', // STRAPI_API_URI
       documents: ['src/**/*.strapi.graphql'],
-      // preset: 'client',
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-query',
-      ],
+      plugins: queryPlugins,
       config: {
         namedClient: 'strapi',
         fetcher: {
-          // from environment
-          // endpoint: 'process.env.STRAPI_ENDPOINT',
-          endpoint: 'https://cms.oke.minds.io/graphql',
+          endpoint: STRAPI_API_URI, // or 'process.env.STRAPI_ENDPOINT'
           fetchParams: {
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: defaultHeaders,
           },
         },
       },
     },
     './src/graphql/apollo.strapi.ts': {
-      schema: 'http://127.0.0.1:1337/graphql',
+      schema: './graphqlql.strapi.schema.json', // STRAPI_API_URI
       documents: ['src/**/*.strapi.graphql'],
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-apollo',
-      ],
+      plugins: apolloPlugins,
       config: {
-        withHooks: true,
-        withMutationFn: true,
-        withRefreshFn: true,
+        ...apolloConfig,
         defaultBaseOptions: {
           context: {
             clientName: 'strapi',
@@ -50,67 +71,36 @@ const config: CodegenConfig = {
         },
       },
     },
-    './graphqlql.strapi.schema.json': {
-      schema: 'http://127.0.0.1:1337/graphql',
-      plugins: ['introspection'],
-    },
     './src/graphql/api.ts': {
-      schema: {
-        'https://www.minds.com/api/graphql': {
-          headers: {
-            Cookie: 'staging=1',
-          },
-        },
-      },
-      documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-query',
-      ],
+      ...mindsSchema,
+      plugins: queryPlugins,
       config: {
         namedClient: 'default',
         fetcher: {
-          endpoint: 'https://www.minds.com/api/graphql',
+          endpoint: MINDS_API_URI,
           fetchParams: {
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: defaultHeaders,
+            Cookie: 'staging=1',
           },
         },
         addInfiniteQuery: true,
       },
     },
     './src/graphql/apollo.api.ts': {
-      schema: {
-        'https://www.minds.com/api/graphql': {
-          headers: {
-            Cookie: 'staging=1',
-          },
-        },
-      },
-      documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-apollo',
-      ],
-      config: {
-        withHooks: true,
-        withMutationFn: true,
-        withRefreshFn: true,
-      },
+      ...mindsSchema,
+      plugins: apolloPlugins,
+      config: apolloConfig,
     },
+    // INTROSPECTION
     './graphqlql.api.schema.json': {
-      schema: {
-        'https://www.minds.com/api/graphql': {
-          headers: {
-            Cookie: 'staging=1',
-          },
-        },
-      },
+      ...mindsSchema,
       plugins: ['introspection'],
     },
+    // need to run the strapi locally until strapi introspection is fixed
+    // './graphqlql.strapi.schema.json': {
+    //   schema: 'http://127.0.0.1:1337/graphql',
+    //   plugins: ['introspection'],
+    // },
   },
 };
 

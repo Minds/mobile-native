@@ -24,7 +24,14 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch('https://cms.oke.minds.io/graphql', {
       method: 'POST',
-      ...{ headers: { 'Content-Type': 'application/json' } },
+      ...{
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache',
+          'no-cache': '1',
+        },
+      },
       body: JSON.stringify({ query, variables }),
     });
 

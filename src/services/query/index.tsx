@@ -18,5 +18,3 @@ export const QueryProvider = ({ ...props }) => (
 );
 
 export default queryClient;
-
-export { gqlClient } from './graphql-client';

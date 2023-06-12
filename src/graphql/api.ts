@@ -29,7 +29,15 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch('https://www.minds.com/api/graphql', {
       method: 'POST',
-      ...{ headers: { 'Content-Type': 'application/json' } },
+      ...{
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache',
+          'no-cache': '1',
+        },
+        Cookie: 'staging=1',
+      },
       body: JSON.stringify({ query, variables }),
     });
 
