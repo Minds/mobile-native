@@ -378,6 +378,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 placeholderTextColor="#a1a5ab"
                 returnKeyLabel="Next"
                 returnKeyType="next"
+                selectionColor="#FFD048"
                 style={
                   [
                     {
@@ -563,6 +564,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     returnKeyLabel="Submit"
                     returnKeyType="send"
                     secureTextEntry={true}
+                    selectionColor="#FFD048"
                     style={
                       [
                         {
@@ -692,9 +694,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  {
-                    "backgroundColor": "transparent",
-                  },
+                  undefined,
                   {
                     "minHeight": 42,
                     "paddingHorizontal": 24,
@@ -711,7 +711,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   {
                     "alignItems": "center",
-                    "borderColor": "#FFD048",
+                    "backgroundColor": "#FFD048",
+                    "borderColor": "transparent",
                     "borderRadius": 100,
                     "borderWidth": 1,
                     "bottom": 0,
@@ -736,7 +737,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   }
                 >
                   <ActivityIndicator
-                    color="#F2F2F2"
+                    color="black"
                     size="small"
                   />
                 </View>
@@ -745,7 +746,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 collapsable={false}
                 style={
                   {
-                    "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                    "backgroundColor": "rgba(0, 0, 0, 0.1)",
                     "bottom": 0,
                     "left": 0,
                     "opacity": 0,
@@ -772,7 +773,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   style={
                     [
                       {
-                        "color": "#F2F2F2",
+                        "color": "#000000",
                       },
                       {
                         "fontFamily": "Roboto-Medium",

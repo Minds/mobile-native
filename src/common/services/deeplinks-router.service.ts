@@ -6,6 +6,7 @@ import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import { codePushStore } from 'modules/codepush';
 import referrerService from './referrer.service';
+import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
 
 /**
  * Deeplinks router
@@ -95,6 +96,15 @@ class DeeplinksRouter {
       }
     }
 
+    if (cleanURL.startsWith('customcodepush/')) {
+      const file = cleanURL.split('customcodepush/')?.[1];
+      if (file) {
+        console.log('Codepush File', file);
+        forceUpdate(file);
+      }
+      return;
+    }
+
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
       return true;
@@ -102,13 +112,18 @@ class DeeplinksRouter {
     if (url.endsWith('/')) {
       url = url.substr(0, url.length - 1);
     }
-    const route = this.getUrlRoute(url, cleanURL);
-
     const params = this.parseQueryParams(cleanURL);
 
     if (params?.referrer) {
       referrerService.set(params.referrer);
     }
+
+    // if it only include parameters we ignore
+    if (cleanURL.startsWith('?')) {
+      return false;
+    }
+
+    const route = this.getUrlRoute(url, cleanURL);
 
     // open deeplinks in a webview
     if (
@@ -212,3 +227,19 @@ class DeeplinksRouter {
 type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
 
 export default new DeeplinksRouter();
+
+const forceUpdate = async (file: string) => {
+  try {
+    console.log('Custom CodePush ->', file);
+    const response = await fetch(
+      'https://minds-repo.s3.amazonaws.com/android/codepush/' + file,
+    );
+
+    const update = await response.json();
+
+    console.log('Custom CodePush JSON', update);
+    forceCodepushCustomBundle(update);
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,38 +1,34 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useEffect, useReducer } from 'react';
+import React, { PropsWithChildren, useEffect, useReducer } from 'react';
 import { Linking } from 'react-native';
 import codePush, { RemotePackage } from 'react-native-code-push';
-import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
-import { useLegacyStores } from '~/common/hooks/use-stores';
 import { useThrottledCallback } from '~/common/hooks/useDebouncedCallback';
 import i18nService from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
 import updateService from '~/common/services/update.service';
 import { B2 } from '~/common/ui';
 import { IS_FROM_STORE, STORE_LINK } from '~/config/Config';
-import { Version } from '~/config/Version';
 import { CommonReducer } from '../../../types/Common';
-
-const DISMISS_DURATION = 1 * 24 * 60 * 60 * 1000; // one day
+import Banner from '~/common/components/Banner';
 
 type CodePushUpdatePromptState = {
   updateAvailable?: boolean;
   nativeUpdate?: RemotePackage;
+  appVersion?: string;
 };
-
-const noticeName = 'code-push';
 
 /**
  * Will continuously sync codepush on screen focus and show a Restart prompt if
  * there was a Pending update
  */
-function CodePushUpdatePrompt() {
-  const { dismissal } = useLegacyStores();
-  const [{ updateAvailable, nativeUpdate }, setState] = useReducer<
+
+const CodePushUpdatePrompt = observer(({ children }: PropsWithChildren) => {
+  const [{ updateAvailable, nativeUpdate, appVersion }, setState] = useReducer<
     CommonReducer<CodePushUpdatePromptState>
   >((prev, next) => ({ ...prev, ...next }), {
     updateAvailable: false,
+    appVersion: undefined,
     nativeUpdate: undefined,
   });
 
@@ -41,8 +37,6 @@ function CodePushUpdatePrompt() {
       nativeUpdate: remotePackage,
     });
   };
-
-  const onDismiss = () => dismissal.dismiss('update-prompt', DISMISS_DURATION);
 
   const onDownload = () => {
     if (IS_FROM_STORE) {
@@ -60,7 +54,9 @@ function CodePushUpdatePrompt() {
     useThrottledCallback(
       () => {
         codePush.getUpdateMetadata().then(data => {
-          if (!data?.deploymentKey) return;
+          if (!data?.deploymentKey) {
+            return;
+          }
 
           codePush.sync(
             {
@@ -86,53 +82,40 @@ function CodePushUpdatePrompt() {
   useEffect(() => {
     codePush.getUpdateMetadata(codePush.UpdateState.PENDING).then(data => {
       if (data?.isPending) {
-        setState({ updateAvailable: true });
+        setState({ updateAvailable: true, appVersion: data.appVersion });
         return;
       }
     });
   }, []);
 
-  if (dismissal.isDismissed('update-prompt')) {
-    return null;
-  }
-
   if (updateAvailable) {
     return (
-      <BaseNotice
-        name={noticeName}
-        title={i18nService.t('codePush.prompt.title')}
-        description={i18nService.t('codePush.prompt.description')}
-        btnText={i18nService.t('codePush.prompt.action')}
-        iconName="warning"
-        onPress={() => codePush.restartApp()}
-        onClose={onDismiss}
+      <Banner
+        actionText="Update"
+        onAction={() => codePush.restartApp()}
+        text={renderText(appVersion)}
       />
     );
   }
 
   if (nativeUpdate) {
     return (
-      <BaseNotice
-        name={noticeName}
-        title={i18nService.t('codePush.prompt.title')}
-        description={
-          <B2 color="secondary">
-            {i18nService.t('codePush.nativePrompt.description')}{' '}
-            {i18nService.t('codePush.nativePrompt.current')}
-            <B2 color="primary"> {Version.VERSION} </B2>
-            {i18nService.t('codePush.nativePrompt.available')}
-            <B2 color="primary"> {nativeUpdate.appVersion}</B2>
-          </B2>
-        }
-        btnText={i18nService.t('codePush.nativePrompt.action')}
-        iconName="warning"
-        onPress={onDownload}
-        onClose={onDismiss}
+      <Banner
+        actionText="Download"
+        onAction={onDownload}
+        text={renderText(nativeUpdate?.appVersion)}
       />
     );
   }
+  return <>{children}</>;
+});
 
-  return null;
-}
+const renderText = (version?: string) => (
+  <B2>
+    {i18nService.t('codePush.prompt.heading')} {'\n'}
+    {i18nService.t('codePush.prompt.getVersion')}
+    <B2 font="black"> {version}</B2>
+  </B2>
+);
 
-export default observer(CodePushUpdatePrompt);
+export default CodePushUpdatePrompt;

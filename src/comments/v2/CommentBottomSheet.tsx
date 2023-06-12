@@ -6,8 +6,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, useWindowDimensions } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { pushBottomSheet } from '../../common/components/bottom-sheet';
 import CommentList from './CommentList';
@@ -17,6 +16,11 @@ type PropsType = {
   commentsStore: CommentsStore;
   autoOpen?: boolean; // auto opens the bottom sheet when the component mounts
   title?: string;
+  onLayout: ({
+    nativeEvent: {
+      layout: { height },
+    },
+  }: any) => void;
   onChange?: (isOpen: boolean) => void;
 };
 
@@ -52,6 +56,8 @@ const CommentBottomSheetBase = (props: PropsType) => {
     props.commentsStore.getFocusedCommentUrn(),
   );
 
+  const { height } = useWindowDimensions();
+
   React.useEffect(() => {
     if (
       props.commentsStore?.parent?.['comments:count'] === 0 ||
@@ -84,32 +90,32 @@ const CommentBottomSheetBase = (props: PropsType) => {
 
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator
-        screenOptions={screenOptions}
-        initialRouteName="Comments">
-        <Stack.Screen
-          name="Comments"
-          component={ScreenComment}
-          initialParams={{
-            title: props.title || '',
-          }}
-        />
-        <Stack.Screen
-          name="ReplyComment"
-          component={ScreenReplyComment}
-          initialParams={{
-            focusedCommentUrn,
-            parentCommentsStore: props.commentsStore,
-          }}
-        />
-      </Stack.Navigator>
+      <View style={{ height: height * 0.85 }} onLayout={props.onLayout}>
+        <Stack.Navigator
+          screenOptions={screenOptions}
+          initialRouteName="Comments">
+          <Stack.Screen
+            name="Comments"
+            component={ScreenComment}
+            initialParams={{
+              title: props.title || '',
+            }}
+          />
+          <Stack.Screen
+            name="ReplyComment"
+            component={ScreenReplyComment}
+            initialParams={{
+              focusedCommentUrn,
+              parentCommentsStore: props.commentsStore,
+            }}
+          />
+        </Stack.Navigator>
+      </View>
     </NavigationContainer>
   );
 };
 
-export function pushCommentBottomSheet(props: PropsType) {
-  const { height } = Dimensions.get('window');
-
+export function pushCommentBottomSheet(props: Omit<PropsType, 'onLayout'>) {
   return pushBottomSheet({
     safe: false,
     onClose: () => {
@@ -117,12 +123,7 @@ export function pushCommentBottomSheet(props: PropsType) {
     },
     enableContentPanningGesture: true,
     component: (ref, onLayout) => (
-      <SafeAreaView
-        edges={['bottom']}
-        onLayout={onLayout}
-        style={{ height: height * 0.85 }}>
-        <CommentBottomSheetBase {...props} />
-      </SafeAreaView>
+      <CommentBottomSheetBase {...props} onLayout={onLayout} />
     ),
   });
 }

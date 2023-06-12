@@ -1,7 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';
 import Button from '../../../../../common/components/Button';
 import InputContainer from '../../../../../common/components/InputContainer';
 import MText from '../../../../../common/components/MText';
@@ -13,7 +12,6 @@ import createWithdrawStore from './createWithdrawStore';
 type TypeProps = {
   walletStore: WalletStoreType;
   navigation: any;
-  wc: WCStore;
 };
 
 const WithdrawalInput = observer((props: TypeProps) => {

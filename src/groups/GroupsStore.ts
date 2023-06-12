@@ -18,7 +18,7 @@ class GroupsStore {
    */
   @observable list = new OffsetListStore<GroupModel>('shallow');
 
-  @observable filter = 'member';
+  @observable filter?: 'member' | 'suggested' = 'member';
   @observable loading = false;
   @observable loaded = false;
   @observable hasGroups = storages.user?.getBool(HAS_GROUPS_KEY) ?? false;

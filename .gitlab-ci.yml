@@ -85,6 +85,12 @@ stages:
     - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
       when: never
 
+# Never on merge request pipes
+.rule_never_mr_pipes:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+
 # Run only on native branches
 .only_native:
   only:

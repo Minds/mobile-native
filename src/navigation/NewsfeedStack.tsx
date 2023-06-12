@@ -10,7 +10,12 @@ import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
-  'TopNewsfeed' | 'Channel' | 'Activity' | 'InAppVerification' | 'BoostScreenV2'
+  | 'TopNewsfeed'
+  | 'Channel'
+  | 'Activity'
+  | 'InAppVerification'
+  | 'BoostScreenV2'
+  | 'GroupView'
 > & { MainFeed: AppStackParamList['Newsfeed'] };
 
 const NewsfeedStack = createNativeStackNavigator<NewsfeedStackParamList>();
@@ -53,6 +58,13 @@ export default function () {
       <NewsfeedStack.Screen
         name="BoostScreenV2"
         getComponent={() => require('modules/boost').BoostComposerStack}
+        options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="GroupView"
+        getComponent={() =>
+          require('~/modules/groups/screens/GroupScreen').GroupScreen
+        }
         options={hideHeader}
       />
     </NewsfeedStack.Navigator>
