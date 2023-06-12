@@ -3,6 +3,8 @@ import { Platform, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AnimatePresence, MotiProps, MotiView } from 'moti';
+
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
   FLAG_EDIT_CHANNEL,
@@ -21,7 +23,6 @@ import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { AnimatePresence, MotiProps, MotiView } from 'moti';
 
 export type ButtonsType =
   | 'edit'
@@ -156,7 +157,7 @@ const ChannelButtons = withErrorBoundary(
 
 const iconStyle = { fontSize: 25 };
 
-const motiViewProps: MotiProps<ViewStyle> = {
+const motiViewProps: any = {
   from: { opacity: 0, scale: 0.8 },
   animate: { opacity: 1, scale: 1 },
   exit: { opacity: 0, scale: 0.8 },
