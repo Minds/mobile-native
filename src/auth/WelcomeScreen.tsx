@@ -12,8 +12,8 @@ import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { UISpacingPropType } from '~/styles/Tokens';
 import { SpacingType } from '~/common/ui/helpers';
+import { UISpacingPropType } from '~/styles/Tokens';
 
 const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;

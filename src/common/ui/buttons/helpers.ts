@@ -60,9 +60,9 @@ export const getColor = ({
   theme,
   mode = 'solid',
   darkContent = false,
+  lightContent,
   disabled = false,
   type = 'action',
-  lightContent,
 }: PropsForColor) => {
   let textColor:
     | 'primary'
@@ -76,7 +76,6 @@ export const getColor = ({
 
   if ((mode === 'solid' || darkContent) && !disabled) {
     textColor = theme === 1 && type === 'action' ? 'black' : 'white';
-
     return {
       textColor,
       spinnerColor: textColor,

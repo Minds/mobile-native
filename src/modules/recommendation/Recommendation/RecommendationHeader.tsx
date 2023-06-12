@@ -4,64 +4,55 @@ import React from 'react';
 import { View } from 'react-native';
 import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
-import { useLegacyStores } from '~/common/hooks/use-stores';
 import i18nService from '~/common/services/i18n.service';
 import { B2, H4, Icon, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { styles as headerStyles } from '~/topbar/Topbar';
-import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
-import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
+import useDismissibility from './hooks/useDismissibility';
+import { RecommendationType } from './types';
 
 type PropsType = {
-  location: string;
+  type: RecommendationType;
+  location: 'feed' | 'channel';
   shadow?: boolean;
-  recommendationStore?: ChannelRecommendationStore;
 };
 
-function ChannelRecommendationHeader({
-  location,
-  shadow,
-  recommendationStore,
-}: PropsType) {
+function RecommendationHeader({ type, location, shadow }: PropsType) {
   const navigation = useNavigation();
-  const { dismissal } = useLegacyStores();
-  const dismissible = location !== 'channel';
-  const recommendation =
-    useChannelRecommendationContext() || recommendationStore;
-
-  const shouldRender =
-    Boolean(recommendation?.result?.entities.length) &&
-    (dismissible
-      ? !dismissal.isDismissed('channel-recommendation:feed')
-      : true);
+  const { dismiss, shouldRender, dismissible } = useDismissibility(
+    type,
+    location,
+  );
 
   const sheetOptions = React.useMemo(
     () => [
       {
         title: i18nService.t('removeFromFeed'),
-        onPress: () => dismissal.dismiss('channel-recommendation:feed'),
+        onPress: dismiss,
         iconName: 'close',
         iconType: 'material-community',
       },
     ],
-    [dismissal],
+    [dismiss],
   );
-
-  const { alignSelfCenterMaxWidth, bgPrimaryBackground } = ThemedStyles.style;
 
   return shouldRender ? (
     <View
-      style={[
-        alignSelfCenterMaxWidth,
-        bgPrimaryBackground,
-        shadow ? headerStyles.shadow : undefined,
-      ]}>
+      style={
+        shadow
+          ? [ThemedStyles.style.bgPrimaryBackground, headerStyles.shadow]
+          : ThemedStyles.style.bgPrimaryBackground
+      }>
       <Row align="centerBetween" vertical="L" horizontal="L">
-        <H4>{i18nService.t('recommendedChannels')}</H4>
+        <H4>
+          {type === 'channel'
+            ? i18nService.t('recommendedChannels')
+            : i18nService.t('recommendedGroups')}
+        </H4>
         <Row align="centerBoth">
           <B2
             color="link"
-            onPress={() => navigation.navigate('SuggestedChannel')}>
+            onPress={() => navigation.navigate('SuggestedGroups')}>
             {i18nService.t('seeMore')}
           </B2>
 
@@ -78,4 +69,4 @@ function ChannelRecommendationHeader({
   );
 }
 
-export default observer(ChannelRecommendationHeader);
+export default observer(RecommendationHeader);

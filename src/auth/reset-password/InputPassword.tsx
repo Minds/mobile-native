@@ -45,9 +45,9 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         type="action"
         onPress={resetPassword}
         containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
-        loading={store.sending}
         spinner
-        disabled={!store.password}>
+        disabled={!store.password}
+        loading={store.sending}>
         {i18n.t('continue')}
       </Button>
     </View>

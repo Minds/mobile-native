@@ -121,7 +121,6 @@ export const ButtonComponent = ({
         darkContent,
         disabled,
         type,
-        lightContent,
       });
   const bounceType = spinner ? 'long' : 'short';
 

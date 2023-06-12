@@ -275,17 +275,6 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           inputRef={inputRef}
           scrollViewRef={scrollViewRef}
         />
-        {showBottomBar && (
-          <KeyboardSpacingView noInset style={styles.bottomBarContainer}>
-            <BottomBar
-              store={store}
-              onHashtag={handleHashtagPress}
-              onMoney={handleMoneyPress}
-              onOptions={handleOptionsPress}
-              onSupermind={handleSupermindPress}
-            />
-          </KeyboardSpacingView>
-        )}
 
         <PosterBottomSheet ref={optionsRef} />
 
@@ -304,6 +293,17 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           />
         </BottomSheet>
       </SafeAreaView>
+      {showBottomBar && (
+        <KeyboardSpacingView style={styles.bottomBarContainer}>
+          <BottomBar
+            store={store}
+            onHashtag={handleHashtagPress}
+            onMoney={handleMoneyPress}
+            onOptions={handleOptionsPress}
+            onSupermind={handleSupermindPress}
+          />
+        </KeyboardSpacingView>
+      )}
     </ComposeContext.Provider>
   );
 };

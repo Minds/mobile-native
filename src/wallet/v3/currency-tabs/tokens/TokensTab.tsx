@@ -79,7 +79,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       body = (
         <ReceiverSettings
           navigation={navigation}
-          connectWallet={() => {}}
+          connectWallet={() => null}
           onchainStore={onchainStore}
           walletStore={walletStore}
         />
@@ -95,7 +95,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}
-          connectWallet={() => {}}
+          connectWallet={() => null}
           onchainStore={onchainStore}
         />
         <TopBarButtonTabBar

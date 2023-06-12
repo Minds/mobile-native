@@ -70,7 +70,7 @@ export default class ErrorBoundaryScreen extends Component<
           mode="solid"
           type="warning"
           onPress={this.props.navigation?.goBack ?? codePush.restartApp}>
-          {i18n.t(this.props.navigation ? 'goback' : 'codePush.prompt.action')}
+          {i18n.t(this.props.navigation ? 'goback' : 'restart')}
         </Button>
       </View>
     ) : (

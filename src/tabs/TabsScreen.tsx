@@ -77,7 +77,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const containerStyle = useMemoStyle(
     [
       'rowJustifySpaceEvenly',
-      'bgSecondaryBackground',
+      'bgPrimaryBackgroundHighlight',
       styles.tabBar,
       bottomInset,
     ],
