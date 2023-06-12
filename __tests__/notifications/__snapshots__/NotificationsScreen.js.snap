@@ -31,7 +31,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           [
             {
               "alignSelf": "center",
-              "maxWidth": 500,
+              "maxWidth": 750,
               "width": "100%",
             },
           ]
@@ -157,7 +157,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             [
               {
                 "alignSelf": "center",
-                "maxWidth": 500,
+                "maxWidth": 750,
                 "width": "100%",
               },
             ]
@@ -199,7 +199,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "alignSelf": "center",
                     "flex": 1,
                     "flexDirection": "row",
-                    "maxWidth": 500,
+                    "maxWidth": 750,
                     "width": "100%",
                   }
                 }

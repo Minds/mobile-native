@@ -8,7 +8,7 @@ exports[`Activity component renders correctly 1`] = `
       [
         {
           "alignSelf": "center",
-          "maxWidth": 500,
+          "maxWidth": 750,
           "width": "100%",
         },
       ],

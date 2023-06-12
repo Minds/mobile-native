@@ -251,6 +251,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <LockV2 entity={entity} navigation={navigation} />
   ) : null;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const shadowOpt = {
     width,
     height: 60 + (entity.remind_users ? 42 : 0),
