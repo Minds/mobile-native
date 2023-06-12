@@ -248,7 +248,7 @@ type GraphQLConfig = Record<
   {
     uri: string;
     headers?: Record<string, string>;
-    // accessToken?: string;
+    accessToken?: string;
   }
 >;
 

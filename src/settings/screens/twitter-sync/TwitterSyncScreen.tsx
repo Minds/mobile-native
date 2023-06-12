@@ -16,6 +16,7 @@ import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
+//  import { useTwitterSyncTweetMessage } from '~/graphql/apollo.strapi';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -37,6 +38,14 @@ function TwitterSyncScreen() {
   const [discoverable, setDiscoverable] = useState<boolean>(
     connectedAccount?.discoverable || true,
   );
+
+  // const {
+  //   data: { twitterSyncTweetText } = {},
+  //   loading: isLoading,
+  //   error: isError,
+  // } = useTwitterSyncTweetMessage();
+
+  // const tweetText = twitterSyncTweetText?.data?.attributes?.tweetText;
 
   /**
    * posts the verification text on twitter by open a url
