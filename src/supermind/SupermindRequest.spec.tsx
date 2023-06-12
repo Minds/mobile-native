@@ -18,6 +18,7 @@ jest.mock('~/common/services/session.service');
 jest.mock('~/common/hooks/use-stores');
 
 //TODO: remove after refactor button component
+//@ts-ignore
 Animated.timing = jest.fn().mockReturnValue({ start: jest.fn() });
 Animated.spring = jest.fn().mockReturnValue({ start: jest.fn() });
 LayoutAnimation.configureNext = jest.fn();
