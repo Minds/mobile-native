@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { Animated, NativeModules, LayoutAnimation } from 'react-native';
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import RegisterForm from '../../src/auth/register/RegisterForm';
@@ -14,7 +14,12 @@ jest.mock('../../src/common/components/Captcha');
 jest.mock('react-native-safe-area-context');
 jest.mock('../../AppMessages', () => ({ showNotification: jest.fn() }));
 
-xdescribe('RegisterScreen component', () => {
+//TODO: remove after refactor button component
+Animated.timing = jest.fn().mockReturnValue({ start: jest.fn() });
+Animated.spring = jest.fn().mockReturnValue({ start: jest.fn() });
+LayoutAnimation.configureNext = jest.fn();
+
+describe('RegisterScreen component', () => {
   let navigation;
   beforeEach(() => {
     navigation = { goBack: jest.fn() };
