@@ -31,7 +31,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation } from 'ExperimentsProvider';
+import { hasVariation, useIsAndroidFeatureOn } from 'ExperimentsProvider';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
@@ -77,7 +77,7 @@ const TabBar = ({
 }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-  const showFAB = useIsFeatureOn('mob-4989-compose-fab');
+  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -164,7 +164,7 @@ const TabBar = ({
           visible={true}
           navigation={navigation}
           routeKey={routeKey}
-          style={{ bottom: 24 + tabBarHeight }}
+          style={styles.composeFAB}
         />
       ) : undefined}
     </View>
@@ -178,7 +178,7 @@ const TabBar = ({
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
   const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
-  const showFAB = useIsFeatureOn('mob-4989-compose-fab');
+  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
 
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
@@ -302,6 +302,9 @@ const styles = ThemedStyles.create({
     },
     'bcolorPrimaryBorder',
   ],
+  composeFAB: {
+    bottom: 24 + tabBarHeight,
+  },
 });
 
 const notificationOptions = {
