@@ -1,8 +1,8 @@
 # Run QA WebdriverIO Browserstack Tests
 .wdio_tests: &wdio_tests
   - yarn install --frozen-lockfile
-  - yarn run test:real:ios
-  - yarn run test:real:android
+  - yarn run e2e:ios:browserstack
+  - yarn run e2e:android:browserstack
 
 .qa_base:
   stage: qa

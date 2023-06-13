@@ -146,8 +146,8 @@ yarn
 #### Run the command below to execute automation on BrowserStack iOS & Android real devices respectively:
 
 ```
-yarn run test:real:ios
-yarn run test:real:android
+yarn run e2e:ios:browserstack
+yarn run e2e:android:browserstack
 ```
 
 ##### _Copyright Minds 2022_
