@@ -22,11 +22,21 @@ const mindsSchema = {
   documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
 };
 
+const strapiSchema = {
+  // schema: { [STRAPI_API_URI]: { headers: defaultHeaders } },
+  schema: './graphqlql.strapi.schema.json',
+  documents: ['src/**/*.strapi.graphql', '!src/gql/twitterSync*'],
+};
+
 const queryPlugins = [
   'typescript',
   'typescript-operations',
   'typescript-react-query',
 ];
+
+/**
+ * Apollo Codegen configuration.
+ */
 
 const apolloPlugins = [
   'typescript',
@@ -40,13 +50,39 @@ const apolloConfig = {
   withRefreshFn: true,
 };
 
+const apolloStrapi = {
+  './src/graphql/apollo.strapi.ts': {
+    ...strapiSchema,
+    plugins: apolloPlugins,
+    config: {
+      ...apolloConfig,
+      defaultBaseOptions: {
+        context: {
+          clientName: 'strapi',
+        },
+      },
+    },
+  },
+};
+
+const apolloMinds = {
+  './src/graphql/apollo.api.ts': {
+    ...mindsSchema,
+    plugins: apolloPlugins,
+    config: apolloConfig,
+  },
+};
+
+/**
+ * GraphQL Codegen configuration.
+ */
+
 const config: CodegenConfig = {
   overwrite: true,
   ignoreNoDocuments: true,
   generates: {
     './src/graphql/strapi.ts': {
-      schema: './graphqlql.strapi.schema.json', // STRAPI_API_URI
-      documents: ['src/**/*.strapi.graphql'],
+      ...strapiSchema,
       plugins: queryPlugins,
       config: {
         namedClient: 'strapi',
@@ -54,19 +90,6 @@ const config: CodegenConfig = {
           endpoint: STRAPI_API_URI, // or 'process.env.STRAPI_ENDPOINT'
           fetchParams: {
             headers: defaultHeaders,
-          },
-        },
-      },
-    },
-    './src/graphql/apollo.strapi.ts': {
-      schema: './graphqlql.strapi.schema.json', // STRAPI_API_URI
-      documents: ['src/**/*.strapi.graphql'],
-      plugins: apolloPlugins,
-      config: {
-        ...apolloConfig,
-        defaultBaseOptions: {
-          context: {
-            clientName: 'strapi',
           },
         },
       },
@@ -86,11 +109,8 @@ const config: CodegenConfig = {
         addInfiniteQuery: true,
       },
     },
-    './src/graphql/apollo.api.ts': {
-      ...mindsSchema,
-      plugins: apolloPlugins,
-      config: apolloConfig,
-    },
+    ...apolloStrapi,
+    ...apolloMinds,
     // INTROSPECTION
     './graphqlql.api.schema.json': {
       ...mindsSchema,
