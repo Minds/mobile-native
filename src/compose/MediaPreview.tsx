@@ -222,6 +222,7 @@ const MediaPresentation = observer(
           video={mediaSource}
           resizeMode={ResizeMode.CONTAIN}
           autoplay
+          repeat
         />
         {attachment.uploading && (
           <Progress.Bar

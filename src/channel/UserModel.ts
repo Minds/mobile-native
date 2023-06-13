@@ -170,7 +170,7 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  toggleSubscription = async (shouldUpdateFeed = true) => {
+  toggleSubscription = async (shouldUpdateFeed = false) => {
     const value = !this.subscribed;
     this.subscribed = value;
 

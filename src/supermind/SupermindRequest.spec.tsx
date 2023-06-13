@@ -8,6 +8,7 @@ import SupermindRequestModel from './SupermindRequestModel';
 
 import supermindRequestFaker from '~/../__mocks__/fake/supermind/SupermindRequestFaker';
 import { SupermindRequestStatus } from './types';
+import { Animated, LayoutAnimation } from 'react-native';
 
 // mock dependencies
 jest.mock('@react-navigation/native');
@@ -15,6 +16,12 @@ jest.mock('@react-navigation/native');
 // mock local code
 jest.mock('~/common/services/session.service');
 jest.mock('~/common/hooks/use-stores');
+
+//TODO: remove after refactor button component
+//@ts-ignore
+Animated.timing = jest.fn().mockReturnValue({ start: jest.fn() });
+Animated.spring = jest.fn().mockReturnValue({ start: jest.fn() });
+LayoutAnimation.configureNext = jest.fn();
 
 // mock navigation
 const navigation = {

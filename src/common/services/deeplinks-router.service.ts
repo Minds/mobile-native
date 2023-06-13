@@ -112,13 +112,18 @@ class DeeplinksRouter {
     if (url.endsWith('/')) {
       url = url.substr(0, url.length - 1);
     }
-    const route = this.getUrlRoute(url, cleanURL);
-
     const params = this.parseQueryParams(cleanURL);
 
     if (params?.referrer) {
       referrerService.set(params.referrer);
     }
+
+    // if it only include parameters we ignore
+    if (cleanURL.startsWith('?')) {
+      return false;
+    }
+
+    const route = this.getUrlRoute(url, cleanURL);
 
     // open deeplinks in a webview
     if (
