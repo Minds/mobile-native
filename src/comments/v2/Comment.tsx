@@ -174,7 +174,9 @@ export default observer(function Comment({
                 <Translate ref={translateRef} entity={comment} />
               </>
             )}
-            {(hasMedia() || Boolean(attachment_guid)) && (
+            {(hasMedia() ||
+              Boolean(attachment_guid) ||
+              Boolean(comment.perma_url)) && (
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={comment}
