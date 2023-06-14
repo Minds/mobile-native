@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce';
 import type UserModel from '../../channel/UserModel';
 import type UserStore from '../../auth/UserStore';
 import { userItem } from './SearchBar.service';
@@ -11,6 +12,12 @@ const createSearchResultStore = () => {
     suggested: [] as UserModel[],
     history: [] as Array<userItem | string>,
     searchText: '',
+    debouncedSearch: debounce(
+      async (user: UserStore, search: string) =>
+        await user.getSuggestedSearch(search),
+      300,
+    ),
+
     setSearchText(searchText: string) {
       this.searchText = searchText;
     },
@@ -32,10 +39,12 @@ const createSearchResultStore = () => {
     },
     async input(search: string) {
       this.setSearchText(search);
-      this.search = search;
+      if (!search) {
+        return;
+      }
       if (this.shouldShowSuggested && this.user) {
         this.loading = true;
-        this.suggested = await this.user.getSuggestedSearch(search);
+        this.suggested = (await this.debouncedSearch(this.user, search)) ?? [];
         this.loading = false;
       }
     },

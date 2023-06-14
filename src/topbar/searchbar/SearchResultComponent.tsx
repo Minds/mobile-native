@@ -47,6 +47,7 @@ const SearchResultComponent = observer(
           if (typeof item === 'string') {
             return (
               <MenuItem
+                key={`_${index}`}
                 containerItemStyle={styles.historyItem}
                 onPress={() => localStore.setSearchesAndQueryDiscovery(item)}
                 title={item}
