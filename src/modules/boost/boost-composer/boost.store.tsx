@@ -37,10 +37,22 @@ export const createBoostStore = ({
   wallet,
   boostType,
   audience: 'safe' as IBoostAudience,
+  target_platform_web: true as boolean,
+  target_platform_ios: true as boolean,
+  target_platform_android: true as boolean,
   goal: BoostGoal.VIEWS as BoostGoal,
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
   linkUrl: '',
+  togglePlatformWeb() {
+    this.target_platform_web = !this.target_platform_web;
+  },
+  togglePlatformIos() {
+    this.target_platform_ios = !this.target_platform_ios;
+  },
+  togglePlatformAndroid() {
+    this.target_platform_android = !this.target_platform_android;
+  },
   setInsights(insights) {
     this.insights = insights;
   },
@@ -112,6 +124,12 @@ export const createBoostStore = ({
       }
     }
 
+    if (hasVariation('mob-4952-boost-platform-targeting')) {
+      payload.target_platform_web = this.target_platform_web;
+      payload.target_platform_android = this.target_platform_android;
+      payload.target_platform_ios = this.target_platform_ios;
+    }
+
     return apiService.post('api/v3/boosts', payload).catch(e => {
       console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
       showNotification(e.message || 'Something went wrong', 'danger');
@@ -135,6 +153,9 @@ export interface CreateBoostParams {
   goal?: BoostGoal;
   goal_button_text?: BoostButtonText;
   goal_button_url?: string;
+  target_platform_web?: boolean;
+  target_platform_android?: boolean;
+  target_platform_ios?: boolean;
 }
 
 export type IBoostAudience = 'safe' | 'mature';

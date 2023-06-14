@@ -28,9 +28,10 @@ jest.mock('@react-native-cookies/cookies', () => ({
   clearByName: jest.fn(),
 }));
 
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
+jest.mock('react-native-reanimated', () => ({
+  ...require('react-native-reanimated/mock'),
+  useAnimatedKeyboard: jest.fn().mockReturnValue({ height: 0 }),
+}));
 
 jest.mock('./src/common/services/analytics.service');
 jest.mock('./src/newsfeed/NewsfeedService');
