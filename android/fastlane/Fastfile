@@ -39,6 +39,7 @@ platform :android do
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../app/minds.keystore")
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../minds.keystore")
     sh("echo $SENTRY_ANDROID_PROPERTIES | base64 --decode > ../sentry.properties")
+    sh("echo $ANDROID_PLAYSTORE_JSON | base64 --decode > ../app/play-store.json")
     
     # Increment build number
     increment_build(play: options[:play])
