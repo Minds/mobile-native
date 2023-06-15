@@ -362,6 +362,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'alarm',
   },
+  affiliate: {
+    font: 'MaterialCommunityIcons',
+    name: 'hand-heart',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

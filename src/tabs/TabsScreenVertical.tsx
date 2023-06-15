@@ -28,7 +28,7 @@ const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
 export type DrawerParamList = {
   Newsfeed: {};
-  Discovery: {};
+  Explore: {};
   More: {};
   Notifications: {};
   Boosts: {};
@@ -73,21 +73,21 @@ const Tabs = observer(function () {
           options={{ lazy: false }}
         />
         <Drawer.Screen
-          name="Discovery"
+          name="Explore"
           component={DiscoveryStack}
           options={{ lazy: false }}
         />
         <Drawer.Screen name="Notifications" component={NotificationsStack} />
         <Drawer.Screen
+          name="Boosts"
+          getComponent={() => require('modules/boost').BoostConsoleScreen}
+        />
+        {/* <Drawer.Screen //*** disabled for iOS ***
           name="MindsPlus"
           getComponent={() =>
             require('~/discovery/v2/PlusDiscoveryScreen').default
           }
-        />
-        <Drawer.Screen
-          name="Boosts"
-          getComponent={() => require('modules/boost').BoostConsoleScreen}
-        />
+        /> */}
         <Drawer.Screen
           name="Supermind"
           getComponent={() =>
@@ -127,25 +127,34 @@ type DrawerContentProps = DrawerNavigationOptions & {
 const drawerOptions = ({ route, isPortrait }): DrawerContentProps => ({
   headerShown: false,
   drawerType: 'permanent',
-  drawerStyle: { width: isPortrait ? 78 : 270 },
+  drawerStyle: {
+    width: isPortrait ? 78 : 270,
+  },
+  drawerActiveTintColor: ThemedStyles.getColor('PrimaryText'),
   overlayColor: 'transparent',
   lazy: true,
   drawerLabelStyle: {
+    paddingLeft: 8,
     fontSize: 16,
   },
   drawerIcon: ({ focused }) => {
-    if (route.name === 'Discovery') {
-      return <DiscoveryIcon size="huge" active={focused} />;
+    if (route.name === 'Explore') {
+      return (
+        <DiscoveryIcon size="large" active={focused} style={styles.icon} />
+      );
     }
     if (route.name === 'Notifications') {
-      return <NotificationIcon size="huge" active={focused} />;
+      return (
+        <NotificationIcon size="large" active={focused} style={styles.icon} />
+      );
     }
     return (
       <Icon
-        size="huge"
+        size="large"
         active={focused}
         name={iconFromRoute[route.name]}
         activeColor="PrimaryText"
+        style={styles.icon}
       />
     );
   },
@@ -218,6 +227,9 @@ export const styles = ThemedStyles.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  icon: {
+    marginLeft: 4,
+  },
 });
 
 const iconFromRoute: Record<string, IconMapNameType> = {
@@ -229,8 +241,8 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   Supermind: 'supermind',
   Wallet: 'bank',
   Analytics: 'analytics',
-  AffiliateProgram: 'share-social',
-  MindsPlus: 'plus-circle-outline',
+  AffiliateProgram: 'affiliate',
+  MindsPlus: 'queue',
   Groups: 'group',
   Settings: 'cog',
 };
