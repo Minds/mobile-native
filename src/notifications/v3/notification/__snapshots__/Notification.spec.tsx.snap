@@ -102,7 +102,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -335,7 +335,69 @@ exports[`Notification Affiliate earnings deposited 1`] = `
           }
         />
       </View>
-      <View />
+      <View>
+        <View
+          style={
+            {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFD048",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontSize": 10,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                    },
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
     <View
       style={
@@ -532,7 +594,7 @@ exports[`Notification An offer expires 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -807,7 +869,7 @@ exports[`Notification Boost accepted 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1099,7 +1161,7 @@ exports[`Notification Boost complete 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1391,7 +1453,7 @@ exports[`Notification Boost rejected 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1683,7 +1745,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -2032,7 +2094,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -2307,7 +2369,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -2541,7 +2603,69 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
           }
         />
       </View>
-      <View />
+      <View>
+        <View
+          style={
+            {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFD048",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontSize": 10,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                    },
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
     <View
       style={
@@ -2738,7 +2862,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
