@@ -3,12 +3,29 @@
 exports[`LoginForm component should renders correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
 >
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -24,21 +41,21 @@ exports[`LoginForm component should renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "paddingHorizontal": 16,
           },
-          Object {
+          {
             "paddingTop": 8,
           },
-          Object {
+          {
             "backgroundColor": "#1C1D1F",
           },
-          Object {
+          {
             "borderTopWidth": 1,
           },
           null,
-          Object {
+          {
             "borderColor": "#53565A",
           },
           undefined,
@@ -46,6 +63,23 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -61,7 +95,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "paddingBottom": 10,
               "paddingTop": 5,
             }
@@ -70,7 +104,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           <View>
             <View
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flexDirection": "row",
                 }
@@ -78,31 +112,31 @@ exports[`LoginForm component should renders correctly 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#F2F2F2",
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto",
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "fontFamily": "Roboto",
                         "fontSize": 16,
                         "fontWeight": "400",
                         "marginBottom": 0,
                       },
-                      Object {
+                      {
                         "color": "#b9bbc0",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#b9bbc0",
                         },
-                        Object {
+                        {
                           "fontSize": 16,
                         },
-                        Object {
+                        {
                           "paddingLeft": 1,
                         },
                         undefined,
@@ -123,14 +157,14 @@ exports[`LoginForm component should renders correctly 1`] = `
             keyboardAppearance="dark"
             keyboardType="default"
             labelStyle={
-              Array [
-                Object {
+              [
+                {
                   "color": "#b9bbc0",
                 },
-                Object {
+                {
                   "fontSize": 16,
                 },
-                Object {
+                {
                   "paddingLeft": 1,
                 },
                 undefined,
@@ -143,8 +177,8 @@ exports[`LoginForm component should renders correctly 1`] = `
             returnKeyType="next"
             selectionColor="#FFD048"
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "borderColor": "#53565A",
                   "borderRadius": 2,
@@ -154,20 +188,20 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "fontSize": 16,
                   "lineHeight": 21,
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "borderWidth": 0,
                     "marginBottom": 7,
                     "paddingHorizontal": 0,
                     "paddingVertical": 6,
                   },
-                  Object {
+                  {
                     "paddingLeft": 1,
                   },
-                  Object {
+                  {
                     "fontSize": 18,
                   },
-                  Object {
+                  {
                     "color": "#F2F2F2",
                   },
                   undefined,
@@ -184,7 +218,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "marginBottom": 16,
         }
       }
@@ -192,23 +226,23 @@ exports[`LoginForm component should renders correctly 1`] = `
       <View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "paddingHorizontal": 16,
               },
-              Object {
+              {
                 "paddingTop": 8,
               },
-              Object {
+              {
                 "backgroundColor": "#1C1D1F",
               },
-              Object {
+              {
                 "borderTopWidth": 1,
               },
-              Object {
+              {
                 "borderBottomWidth": 1,
               },
-              Object {
+              {
                 "borderColor": "#53565A",
               },
               undefined,
@@ -216,6 +250,23 @@ exports[`LoginForm component should renders correctly 1`] = `
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -231,7 +282,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "paddingBottom": 10,
                   "paddingTop": 5,
                 }
@@ -240,7 +291,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               <View>
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "stretch",
                       "flexDirection": "row",
                     }
@@ -248,31 +299,31 @@ exports[`LoginForm component should renders correctly 1`] = `
                 >
                   <Text
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#F2F2F2",
                         },
-                        Object {
+                        {
                           "fontFamily": "Roboto",
                         },
-                        Array [
-                          Object {
+                        [
+                          {
                             "fontFamily": "Roboto",
                             "fontSize": 16,
                             "fontWeight": "400",
                             "marginBottom": 0,
                           },
-                          Object {
+                          {
                             "color": "#b9bbc0",
                           },
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontSize": 16,
                             },
-                            Object {
+                            {
                               "paddingLeft": 1,
                             },
                             undefined,
@@ -290,14 +341,14 @@ exports[`LoginForm component should renders correctly 1`] = `
                 autoComplete="password"
                 keyboardAppearance="dark"
                 labelStyle={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#b9bbc0",
                     },
-                    Object {
+                    {
                       "fontSize": 16,
                     },
-                    Object {
+                    {
                       "paddingLeft": 1,
                     },
                     undefined,
@@ -312,8 +363,8 @@ exports[`LoginForm component should renders correctly 1`] = `
                 secureTextEntry={true}
                 selectionColor="#FFD048"
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "backgroundColor": "transparent",
                       "borderColor": "#53565A",
                       "borderRadius": 2,
@@ -323,20 +374,20 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "fontSize": 16,
                       "lineHeight": 21,
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "borderWidth": 0,
                         "marginBottom": 7,
                         "paddingHorizontal": 0,
                         "paddingVertical": 6,
                       },
-                      Object {
+                      {
                         "paddingLeft": 1,
                       },
-                      Object {
+                      {
                         "fontSize": 18,
                       },
-                      Object {
+                      {
                         "color": "#F2F2F2",
                       },
                       undefined,
@@ -356,27 +407,27 @@ exports[`LoginForm component should renders correctly 1`] = `
           onPress={[Function]}
           selectable={false}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": undefined,
                 "fontSize": 25,
               },
-              Array [
-                Object {
+              [
+                {
                   "position": "absolute",
                   "right": 12,
                   "top": 30,
                 },
-                Object {
+                {
                   "color": "#b9bbc0",
                 },
               ],
-              Object {
+              {
                 "fontFamily": "Ionicons",
                 "fontStyle": "normal",
                 "fontWeight": "normal",
               },
-              Object {},
+              {},
             ]
           }
         >
@@ -386,7 +437,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignSelf": "stretch",
           "marginHorizontal": 20,
           "marginTop": 24,
@@ -394,6 +445,23 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -407,7 +475,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignSelf": "stretch",
           }
         }
@@ -415,8 +483,8 @@ exports[`LoginForm component should renders correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "backgroundColor": "transparent",
                 "borderRadius": 100,
@@ -425,7 +493,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "overflow": "hidden",
               },
               undefined,
-              Object {
+              {
                 "minHeight": 42,
                 "paddingHorizontal": 24,
                 "paddingVertical": 2,
@@ -439,7 +507,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "backgroundColor": "#FFD048",
                 "borderColor": "transparent",
@@ -457,9 +525,9 @@ exports[`LoginForm component should renders correctly 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
+                {
+                  "transform": [
+                    {
                       "scale": 0,
                     },
                   ],
@@ -475,7 +543,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "backgroundColor": "rgba(0, 0, 0, 0.1)",
                 "bottom": 0,
                 "left": 0,
@@ -489,9 +557,9 @@ exports[`LoginForm component should renders correctly 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
-                "transform": Array [
-                  Object {
+              {
+                "transform": [
+                  {
                     "scale": 1,
                   },
                 ],
@@ -501,18 +569,18 @@ exports[`LoginForm component should renders correctly 1`] = `
             <Text
               numberOfLines={1}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#000000",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto-Medium",
                   },
-                  Object {
+                  {
                     "fontSize": 18,
                     "lineHeight": 24,
                   },
-                  Object {
+                  {
                     "textAlign": "left",
                   },
                 ]
@@ -526,7 +594,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "center",
@@ -535,10 +603,19 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <Text
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
         accessible={true}
         focusable={true}
         hitSlop={
-          Object {
+          {
             "bottom": 4,
             "left": 4,
             "right": 4,
@@ -553,18 +630,18 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "textAlign": "left",
             },
           ]

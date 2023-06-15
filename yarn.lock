@@ -16396,10 +16396,10 @@ morgan@^1.9.0:
     on-finished "~2.3.0"
     on-headers "~1.0.2"
 
-moti@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/moti/-/moti-0.20.0.tgz#e35e48506855b858d719930f9f10484e81d08058"
-  integrity sha512-ZogZ+2a1Qx86akSu/0/rDPWf5IxF1PIW+O8GuxdAiy4TajxQRn/yLcTP7NfpHfWPSJtoaFm4AvdXwOBoykWkBw==
+moti@^0.25.3:
+  version "0.25.3"
+  resolved "https://registry.yarnpkg.com/moti/-/moti-0.25.3.tgz#022213cb1fc545d13245daeeaed31940050b80c0"
+  integrity sha512-n6YR56i+tQdIuiOfspeCCvNR8vAJtPdfclt4998rX6S6kQn+/5DmfBWkOneN63JFTWM/oYnZHwwpF4z4LUXohQ==
   dependencies:
     framer-motion "^6.5.1"
 
