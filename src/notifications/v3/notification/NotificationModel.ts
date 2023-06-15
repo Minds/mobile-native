@@ -64,6 +64,8 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.supermind_expired:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
         return '';
       case NotificationType.boost_rejected:
         if (hasVariation('mob-4638-boost-v3')) {
@@ -84,6 +86,8 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.token_rewards_summary:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
@@ -124,12 +128,14 @@ export default class NotificationModel extends AbstractModel {
       type = 'boost_rejected_v2';
     }
     return i18n.t(`notification.verbs.${type}`, {
-      amount: this.data?.tokens_formatted,
+      amount: this.data?.tokens_formatted ?? this.data?.amount_usd,
     });
   }
 
   get Subject() {
     switch (this.type) {
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
       case NotificationType.token_rewards_summary:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
@@ -181,4 +187,6 @@ export enum NotificationType {
   supermind_accepted = 'supermind_accepted',
   supermind_expired = 'supermind_expired',
   supermind_expire24h = 'supermind_expire24h',
+  affiliate_earnings_deposited = 'affiliate_earnings_deposited',
+  referrer_affiliate_earnings_deposited = 'referrer_affiliate_earnings_deposited',
 }
