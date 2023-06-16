@@ -45,7 +45,7 @@ const BoostCTA = ({ entity }: BoostCTAProps) => {
   }
 
   return (
-    <Spacer horizontal="L" vertical="M">
+    <Spacer horizontal="L" top="S" bottom="M">
       {url ? (
         <Button
           mode="outline"
