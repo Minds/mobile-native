@@ -7,7 +7,7 @@ import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
-import i18n from '~/utils/locales';
+import i18n from '~/common/services/i18n.service';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
