@@ -2,7 +2,7 @@ import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
 
-import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
+import { DATA_SAVER_THUMB_RES, IS_IPAD } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
@@ -13,6 +13,7 @@ import DoubleTap from '../DoubleTap';
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
@@ -27,7 +28,8 @@ type PropsType = {
   onImageLongPress?: () => void;
 };
 
-const { width, height } = Dimensions.get('window');
+const { width: winWidth, height } = Dimensions.get('window');
+const width = IS_IPAD ? Math.min(getMaxFeedWidth(), winWidth) : winWidth;
 
 export default function MediaViewImage({
   entity,
