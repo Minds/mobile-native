@@ -108,10 +108,12 @@ function BoostConsoleScreen({
             <IconButton
               name="cog"
               onPress={() =>
-                navigation.navigate('More', {
-                  screen: 'BoostSettingsScreen',
-                  initial: false,
-                })
+                IS_IPAD
+                  ? navigation.navigate('BoostSettingsScreen')
+                  : navigation.navigate('More', {
+                      screen: 'BoostSettingsScreen',
+                      initial: false,
+                    })
               }
             />
           }
