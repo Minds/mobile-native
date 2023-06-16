@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
@@ -9,6 +9,7 @@ import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { Dashboard, Entity } from '../../AnalyticsTypes';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 const TrendingTab = observer(() => {
   const theme = ThemedStyles.style;
@@ -193,9 +194,9 @@ const TrendingTab = observer(() => {
 
 export default TrendingTab;
 
-const { width } = Dimensions.get('window');
+const width = getMaxFeedWidth();
 const styles = ThemedStyles.create({
-  scrollView: ['flexContainer', { width }],
+  scrollView: ['flexContainer', { width }, 'marginBottom24x'],
   columnView: ['flexColumnCentered', 'paddingRight'],
   columnViewP: ['flexColumnCentered', 'padding'],
   text: ['bold', 'textCenter'],
