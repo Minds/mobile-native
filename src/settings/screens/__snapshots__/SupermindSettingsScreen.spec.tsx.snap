@@ -869,7 +869,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "text": undefined,
             }
           }
-          accessible={true}
+          accessible={false}
           collapsable={false}
           focusable={true}
           onBlur={[Function]}
@@ -1043,7 +1043,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "text": undefined,
             }
           }
-          accessible={true}
+          accessible={false}
           collapsable={false}
           focusable={true}
           onBlur={[Function]}

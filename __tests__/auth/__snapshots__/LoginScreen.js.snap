@@ -243,7 +243,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "text": undefined,
           }
         }
-        accessible={true}
+        accessible={false}
         collapsable={false}
         focusable={true}
         onBlur={[Function]}
@@ -297,7 +297,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "text": undefined,
               }
             }
-            accessible={true}
+            accessible={false}
             collapsable={false}
             focusable={true}
             onBlur={[Function]}
@@ -484,7 +484,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "text": undefined,
                   }
                 }
-                accessible={true}
+                accessible={false}
                 collapsable={false}
                 focusable={true}
                 onBlur={[Function]}
