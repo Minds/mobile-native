@@ -294,7 +294,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
         </BottomSheet>
       </SafeAreaView>
       {showBottomBar && (
-        <KeyboardSpacingView style={styles.bottomBarContainer}>
+        <KeyboardSpacingView enabled style={styles.bottomBarContainer}>
           <BottomBar
             store={store}
             onHashtag={handleHashtagPress}

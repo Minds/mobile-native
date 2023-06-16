@@ -58,6 +58,7 @@ const FloatingInput = React.forwardRef(
           //@ts-ignore missing style type
           style={StyleSheet.absoluteFill}>
           <KeyboardSpacingView
+            enabled
             style={StyleSheet.absoluteFill}
             pointerEvents="box-none">
             <View style={styles.mainContainer}>
