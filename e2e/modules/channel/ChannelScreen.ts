@@ -1,6 +1,5 @@
 import Gestures from '../../helpers/Gestures';
 import { selectElement } from '../../helpers/Utils';
-import ActivityScreen from '../activity/ActivityScreen';
 import AppScreen from '../common/AppScreen';
 
 class ChannelScreen extends AppScreen {
@@ -13,10 +12,12 @@ class ChannelScreen extends AppScreen {
   }
 
   async openFirstPost() {
-    const firstPost = await this.firstActivity;
-    await Gestures.checkIfDisplayedWithSwipeUp(firstPost, 20);
-    await firstPost.click();
-    await ActivityScreen.waitForIsShown();
+    const isDisplayed = await this.firstActivity.isDisplayed();
+    if (!isDisplayed) {
+      // @ts-ignore
+      await Gestures.checkIfDisplayedWithSwipeUp(this.firstActivity, 20);
+    }
+    await this.firstActivity.click();
   }
 }
 

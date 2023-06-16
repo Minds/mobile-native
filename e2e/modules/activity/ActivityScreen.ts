@@ -11,7 +11,9 @@ class ActivityScreen extends AppScreen {
   }
 
   async openBoost() {
-    await this.boostButton.waitForDisplayed();
+    if (!(await this.boostButton.isDisplayed())) {
+      await this.boostButton.waitForDisplayed();
+    }
     await this.boostButton.click();
   }
 }

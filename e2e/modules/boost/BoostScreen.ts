@@ -7,15 +7,15 @@ class BoostScreen extends AppScreen {
   }
 
   get expandReach() {
-    return selectElement('text', 'Expand reach');
+    return selectElement('text', 'Expand reach', true);
   }
 
   get nextBtn() {
     return selectElement('text', 'Next');
   }
 
-  get tokenTab() {
-    return selectElement('text', 'Token');
+  get customizeAudience() {
+    return selectElement('text', 'Customize your audience', true);
   }
 
   get cashTab() {
