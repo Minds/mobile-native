@@ -118,7 +118,7 @@ export default observer(
 
     // =====================| PROVIDED METHODS |=====================>
     useImperativeHandle(ref, () => ({
-      refreshList: () => fetchStore.refresh(),
+      refreshList: () => _refresh(),
       scrollToTop: () =>
         listRef.current?.scrollToOffset({ offset: 0, animated: true }),
     }));
@@ -132,6 +132,10 @@ export default observer(
     // =====================| METHODS |=====================>
 
     const _refresh = React.useCallback(() => {
+      if (fetchStore.loading) {
+        return;
+      }
+
       props.offsetPagination ? setPage(1) : setOffset('');
       fetchStore.refresh();
     }, [props.offsetPagination, fetchStore]);
