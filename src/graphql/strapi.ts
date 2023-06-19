@@ -22,7 +22,7 @@ export type Incremental<T> =
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch('https://cms.oke.minds.io/graphql', {
+    const res = await fetch('http://localhost:1337/graphql', {
       method: 'POST',
       ...{
         headers: {
@@ -48,7 +48,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string };
+  ID: { input: string; output: string };
   String: { input: string; output: string };
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
@@ -533,6 +533,7 @@ export type GenericMorph =
   | I18NLocale
   | ProductPage
   | TopbarAlert
+  | TwitterSyncTweetText
   | UploadFile
   | UploadFolder
   | UsersPermissionsPermission
@@ -711,6 +712,7 @@ export type Mutation = {
   deleteHomepage?: Maybe<HomepageEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -733,6 +735,7 @@ export type Mutation = {
   updateHomepage?: Maybe<HomepageEntityResponse>;
   updateProductPage?: Maybe<ProductPageEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -850,6 +853,10 @@ export type MutationUpdateProductPageArgs = {
 
 export type MutationUpdateTopbarAlertArgs = {
   data: TopbarAlertInput;
+};
+
+export type MutationUpdateTwitterSyncTweetTextArgs = {
+  data: TwitterSyncTweetTextInput;
 };
 
 export type MutationUpdateUploadFileArgs = {
@@ -973,6 +980,7 @@ export type Query = {
   productPage?: Maybe<ProductPageEntityResponse>;
   productPages?: Maybe<ProductPageEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -1020,6 +1028,10 @@ export type QueryProductPagesArgs = {
 };
 
 export type QueryTopbarAlertArgs = {
+  publicationState?: InputMaybe<PublicationState>;
+};
+
+export type QueryTwitterSyncTweetTextArgs = {
   publicationState?: InputMaybe<PublicationState>;
 };
 
@@ -1122,6 +1134,30 @@ export type TopbarAlertInput = {
   onlyDisplayAfter?: InputMaybe<Scalars['DateTime']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TwitterSyncTweetText = {
+  __typename?: 'TwitterSyncTweetText';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  tweetText: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TwitterSyncTweetTextEntity = {
+  __typename?: 'TwitterSyncTweetTextEntity';
+  attributes?: Maybe<TwitterSyncTweetText>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type TwitterSyncTweetTextEntityResponse = {
+  __typename?: 'TwitterSyncTweetTextEntityResponse';
+  data?: Maybe<TwitterSyncTweetTextEntity>;
+};
+
+export type TwitterSyncTweetTextInput = {
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  tweetText?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UploadFile = {
@@ -1514,6 +1550,24 @@ export type TopbarAlertQuery = {
   } | null;
 };
 
+export type TwitterSyncTweetMessageQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type TwitterSyncTweetMessageQuery = {
+  __typename?: 'Query';
+  twitterSyncTweetText?: {
+    __typename?: 'TwitterSyncTweetTextEntityResponse';
+    data?: {
+      __typename?: 'TwitterSyncTweetTextEntity';
+      attributes?: {
+        __typename?: 'TwitterSyncTweetText';
+        tweetText: string;
+      } | null;
+    } | null;
+  } | null;
+};
+
 export const TopbarAlertDocument = `
     query TopbarAlert {
   topbarAlert {
@@ -1540,5 +1594,33 @@ export const useTopbarAlertQuery = <TData = TopbarAlertQuery, TError = unknown>(
       TopbarAlertDocument,
       variables,
     ),
+    options,
+  );
+export const TwitterSyncTweetMessageDocument = `
+    query TwitterSyncTweetMessage {
+  twitterSyncTweetText {
+    data {
+      attributes {
+        tweetText
+      }
+    }
+  }
+}
+    `;
+export const useTwitterSyncTweetMessageQuery = <
+  TData = TwitterSyncTweetMessageQuery,
+  TError = unknown,
+>(
+  variables?: TwitterSyncTweetMessageQueryVariables,
+  options?: UseQueryOptions<TwitterSyncTweetMessageQuery, TError, TData>,
+) =>
+  useQuery<TwitterSyncTweetMessageQuery, TError, TData>(
+    variables === undefined
+      ? ['TwitterSyncTweetMessage']
+      : ['TwitterSyncTweetMessage', variables],
+    fetcher<
+      TwitterSyncTweetMessageQuery,
+      TwitterSyncTweetMessageQueryVariables
+    >(TwitterSyncTweetMessageDocument, variables),
     options,
   );

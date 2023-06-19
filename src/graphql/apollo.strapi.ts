@@ -23,7 +23,7 @@ export type Incremental<T> =
 const defaultOptions = { context: { clientName: 'strapi' } } as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string };
+  ID: { input: string; output: string };
   String: { input: string; output: string };
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
@@ -508,6 +508,7 @@ export type GenericMorph =
   | I18NLocale
   | ProductPage
   | TopbarAlert
+  | TwitterSyncTweetText
   | UploadFile
   | UploadFolder
   | UsersPermissionsPermission
@@ -686,6 +687,7 @@ export type Mutation = {
   deleteHomepage?: Maybe<HomepageEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -708,6 +710,7 @@ export type Mutation = {
   updateHomepage?: Maybe<HomepageEntityResponse>;
   updateProductPage?: Maybe<ProductPageEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -825,6 +828,10 @@ export type MutationUpdateProductPageArgs = {
 
 export type MutationUpdateTopbarAlertArgs = {
   data: TopbarAlertInput;
+};
+
+export type MutationUpdateTwitterSyncTweetTextArgs = {
+  data: TwitterSyncTweetTextInput;
 };
 
 export type MutationUpdateUploadFileArgs = {
@@ -948,6 +955,7 @@ export type Query = {
   productPage?: Maybe<ProductPageEntityResponse>;
   productPages?: Maybe<ProductPageEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
+  twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -995,6 +1003,10 @@ export type QueryProductPagesArgs = {
 };
 
 export type QueryTopbarAlertArgs = {
+  publicationState?: InputMaybe<PublicationState>;
+};
+
+export type QueryTwitterSyncTweetTextArgs = {
   publicationState?: InputMaybe<PublicationState>;
 };
 
@@ -1097,6 +1109,30 @@ export type TopbarAlertInput = {
   onlyDisplayAfter?: InputMaybe<Scalars['DateTime']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TwitterSyncTweetText = {
+  __typename?: 'TwitterSyncTweetText';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  tweetText: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TwitterSyncTweetTextEntity = {
+  __typename?: 'TwitterSyncTweetTextEntity';
+  attributes?: Maybe<TwitterSyncTweetText>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type TwitterSyncTweetTextEntityResponse = {
+  __typename?: 'TwitterSyncTweetTextEntityResponse';
+  data?: Maybe<TwitterSyncTweetTextEntity>;
+};
+
+export type TwitterSyncTweetTextInput = {
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  tweetText?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UploadFile = {
@@ -1489,6 +1525,24 @@ export type TopbarAlertQuery = {
   } | null;
 };
 
+export type TwitterSyncTweetMessageQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type TwitterSyncTweetMessageQuery = {
+  __typename?: 'Query';
+  twitterSyncTweetText?: {
+    __typename?: 'TwitterSyncTweetTextEntityResponse';
+    data?: {
+      __typename?: 'TwitterSyncTweetTextEntity';
+      attributes?: {
+        __typename?: 'TwitterSyncTweetText';
+        tweetText: string;
+      } | null;
+    } | null;
+  } | null;
+};
+
 export const TopbarAlertDocument = gql`
   query TopbarAlert {
     topbarAlert {
@@ -1552,4 +1606,65 @@ export type TopbarAlertLazyQueryHookResult = ReturnType<
 export type TopbarAlertQueryResult = Apollo.QueryResult<
   TopbarAlertQuery,
   TopbarAlertQueryVariables
+>;
+export const TwitterSyncTweetMessageDocument = gql`
+  query TwitterSyncTweetMessage {
+    twitterSyncTweetText {
+      data {
+        attributes {
+          tweetText
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useTwitterSyncTweetMessageQuery__
+ *
+ * To run a query within a React component, call `useTwitterSyncTweetMessageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTwitterSyncTweetMessageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTwitterSyncTweetMessageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTwitterSyncTweetMessageQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    TwitterSyncTweetMessageQuery,
+    TwitterSyncTweetMessageQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    TwitterSyncTweetMessageQuery,
+    TwitterSyncTweetMessageQueryVariables
+  >(TwitterSyncTweetMessageDocument, options);
+}
+export function useTwitterSyncTweetMessageLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TwitterSyncTweetMessageQuery,
+    TwitterSyncTweetMessageQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    TwitterSyncTweetMessageQuery,
+    TwitterSyncTweetMessageQueryVariables
+  >(TwitterSyncTweetMessageDocument, options);
+}
+export type TwitterSyncTweetMessageQueryHookResult = ReturnType<
+  typeof useTwitterSyncTweetMessageQuery
+>;
+export type TwitterSyncTweetMessageLazyQueryHookResult = ReturnType<
+  typeof useTwitterSyncTweetMessageLazyQuery
+>;
+export type TwitterSyncTweetMessageQueryResult = Apollo.QueryResult<
+  TwitterSyncTweetMessageQuery,
+  TwitterSyncTweetMessageQueryVariables
 >;

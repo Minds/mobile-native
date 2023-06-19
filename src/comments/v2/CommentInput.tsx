@@ -111,6 +111,7 @@ const CommentInput = observer((onShow, onDismiss) => {
 
   return (
     <KeyboardSpacingView
+      enabled
       style={StyleSheet.absoluteFill}
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>

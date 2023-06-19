@@ -10,7 +10,7 @@ const onPress = () => {
  */
 export default function DismissKeyboard({ children, ...otherProps }) {
   return (
-    <Pressable onPress={onPress} {...otherProps}>
+    <Pressable accessible={false} onPress={onPress} {...otherProps}>
       {children}
     </Pressable>
   );

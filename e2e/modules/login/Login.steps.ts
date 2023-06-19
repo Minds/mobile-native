@@ -2,6 +2,7 @@ import { Then, When } from '@cucumber/cucumber';
 import { assert } from 'chai';
 import { context } from '../../data/Context';
 import LoginScreen from './LoginScreen';
+import ActionHelper from '../../helpers/ActionHelper';
 
 When(
   /^I try to log in with credentials; username: '(.+)' and password: '(.+)'$/,
@@ -34,7 +35,8 @@ Then(/^I see an error that the inputs are required$/, async () => {
   await LoginScreen.emptyCredentialsError.waitForDisplayed({
     timeout: 2000,
   });
-  const emptyCredentialsErrorDisplayed = await LoginScreen.emptyCredentialsError.isDisplayed();
+  const emptyCredentialsErrorDisplayed =
+    await LoginScreen.emptyCredentialsError.isDisplayed();
   assert.isTrue(emptyCredentialsErrorDisplayed);
 });
 
@@ -42,6 +44,7 @@ Then(/^I see an error that the credentials are invalid$/, async () => {
   await LoginScreen.incorrectCredentialsError.waitForDisplayed({
     timeout: 2000,
   });
-  const incorrectCredentialsErrorDisplayed = await LoginScreen.incorrectCredentialsError.isDisplayed();
+  const incorrectCredentialsErrorDisplayed =
+    await LoginScreen.incorrectCredentialsError.isDisplayed();
   assert.isTrue(incorrectCredentialsErrorDisplayed);
 });
