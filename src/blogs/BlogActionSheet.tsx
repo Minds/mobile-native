@@ -15,6 +15,7 @@ import {
   BottomSheetButton,
   BottomSheetMenuItemProps,
 } from '../common/components/bottom-sheet';
+import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 
 type PropsType = {
   entity: BlogModel;
@@ -74,6 +75,10 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
         },
       });
     }
+    // Copy URL
+    options.push(
+      copyToClipboardOptions(MINDS_URI + 'newsfeed/' + this.props.entity.guid),
+    );
 
     options.push({
       title: i18n.t('share'),
