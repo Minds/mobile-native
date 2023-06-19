@@ -19,10 +19,13 @@ config.capabilities = [
     // For W3C the appium capabilities need to have an extension prefix
     // This is `appium:` for all Appium Capabilities which can be found here
     // http://appium.io/docs/en/writing-running-appium/caps/
-    'appium:deviceName': 'iPhone 14 Pro',
-    'appium:platformVersion': '16.0',
+    'appium:deviceName': process.env.IOS_DEVICE_NAME,
+    'appium:platformVersion': process.env.IOS_PLATFORM_VERSION,
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'XCUITest',
+    'appium:autoAcceptAlerts': true,
+    // @ts-ignore
+    'appium:settings[snapshotMaxDepth]': 60,
     // The path to the app
     'appium:app': join(process.cwd(), './apps/Minds.app'),
     'appium:newCommandTimeout': 240,
