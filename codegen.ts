@@ -55,10 +55,10 @@ const config: CodegenConfig = {
       plugins: ['introspection'],
     },
     // comment below if introspection is not yet working on strapi
-    './graphqlql.strapi.schema.json': {
-      ...strapiSchema,
-      plugins: ['introspection'],
-    },
+    // './graphqlql.strapi.schema.json': {
+    //   ...strapiSchema,
+    //   plugins: ['introspection'],
+    // },
   },
 };
 

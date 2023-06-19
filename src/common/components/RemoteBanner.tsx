@@ -6,14 +6,13 @@ import analyticsService, { ClickRef } from '../services/analytics.service';
 import moment from 'moment';
 import { DismissIdentifier } from '../stores/DismissalStore';
 import ThemedStyles from '~/styles/ThemedStyles';
-// import { useTopbarAlertQuery } from '~/graphql/strapi';
-import { useTopbarAlertQuery } from '~/graphql/apollo.strapi';
+import { useTopbarAlertQuery } from '~/graphql/strapi';
 
 export default function RemoteBanner() {
   const {
     data: { topbarAlert } = {},
-    loading: isLoading,
-    error: isError,
+    isLoading,
+    isError,
   } = useTopbarAlertQuery();
 
   const data = topbarAlert?.data?.attributes;
