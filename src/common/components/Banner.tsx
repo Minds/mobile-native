@@ -46,9 +46,13 @@ function Banner({
   return (
     <MPressable style={styles.container} onPress={onPress}>
       <Column flex align="centerStart">
-        <Typography type={typography} font="medium">
-          {text}
-        </Typography>
+        {typeof text === 'string' ? (
+          <Typography type={typography} font="medium">
+            {text}
+          </Typography>
+        ) : (
+          text
+        )}
       </Column>
       {actionText && (
         <Button
