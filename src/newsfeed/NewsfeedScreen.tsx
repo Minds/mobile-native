@@ -230,7 +230,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         new InjectItem(1, 'empty', () => (
           <>
             <GroupsEmpty />
-            <Recommendation size={5} location="feed" type="group" />
+            <AnimatedHeight>
+              <Recommendation size={5} location="feed" type="group" />
+            </AnimatedHeight>
           </>
         )),
       );
