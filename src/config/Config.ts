@@ -243,4 +243,4 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
   updateDialog: undefined,
 };
 
-export const USE_APOLLO = true;
+export const USE_APOLLO = false;

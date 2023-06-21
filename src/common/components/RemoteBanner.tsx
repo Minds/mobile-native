@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 
 import Banner from './Banner';
@@ -49,4 +49,4 @@ const fixDeepLinks = (url: string) => url.replace(/\]\(\//g, '](mindsapp://');
 const styles = ThemedStyles.create({
   body: ['colorPrimaryText', 'fontLM'],
   link: ['link', 'bold'],
-});
+}) as StyleSheet.NamedStyles<any>;

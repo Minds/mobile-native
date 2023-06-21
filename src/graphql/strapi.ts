@@ -22,7 +22,7 @@ export type Incremental<T> =
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch('https://cms.oke.minds.io/graphql', {
+    const res = await fetch('https://cms.minds.com/graphql', {
       method: 'POST',
       ...{
         headers: {
