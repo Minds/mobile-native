@@ -48,7 +48,6 @@ import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
-// import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
@@ -56,7 +55,6 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
-import { GraphQLProvider } from './src/graphql/GraphQLProvider';
 
 appInitManager.initializeServices();
 
@@ -186,38 +184,29 @@ class App extends Component<Props> {
                 onStateChange={NavigationService.onStateChange}>
                 <StoresProvider>
                   <QueryProvider>
-                    <GraphQLProvider>
-                      <Provider key="app" {...stores}>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
-                          <FriendlyCaptchaProvider
-                            ref={setFriendlyCaptchaReference}>
-                            <PortalProvider>
-                              <UIProvider
-                                defaultTheme={
-                                  ThemedStyles.theme === 0 ? 'dark' : 'light'
-                                }>
-                                <BottomSheetModalProvider>
-                                  <ErrorBoundary
-                                    message="An error occurred"
-                                    containerStyle={
-                                      ThemedStyles.style.centered
-                                    }>
-                                    {/* Wallet connect functionality is disabled for now
-                                  <WCContextProvider>
-                                  */}
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                    {/* </WCContextProvider> */}
-                                  </ErrorBoundary>
-                                </BottomSheetModalProvider>
-                              </UIProvider>
-                            </PortalProvider>
-                          </FriendlyCaptchaProvider>
-                        </AppMessageProvider>
-                      </Provider>
-                    </GraphQLProvider>
+                    <Provider key="app" {...stores}>
+                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
+                        <FriendlyCaptchaProvider
+                          ref={setFriendlyCaptchaReference}>
+                          <PortalProvider>
+                            <UIProvider
+                              defaultTheme={
+                                ThemedStyles.theme === 0 ? 'dark' : 'light'
+                              }>
+                              <BottomSheetModalProvider>
+                                <ErrorBoundary
+                                  message="An error occurred"
+                                  containerStyle={ThemedStyles.style.centered}>
+                                  <NavigationStack
+                                    key={ThemedStyles.theme + i18n.locale}
+                                  />
+                                </ErrorBoundary>
+                              </BottomSheetModalProvider>
+                            </UIProvider>
+                          </PortalProvider>
+                        </FriendlyCaptchaProvider>
+                      </AppMessageProvider>
+                    </Provider>
                   </QueryProvider>
                 </StoresProvider>
               </NavigationContainer>

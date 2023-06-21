@@ -44,6 +44,7 @@ import {
   RecommendationBody,
   RecommendationType,
 } from 'modules/recommendation';
+import { useInfiniteNewsfeedQuery } from '~/graphql/api';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -82,6 +83,14 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
+
+  const { data, isLoading, isError } = useInfiniteNewsfeedQuery('algorithm', {
+    algorithm: 'latest',
+    limit: 12,
+    cursor: null,
+  });
+
+  console.log('feed', isLoading, isError, JSON.stringify(data));
 
   const refreshNewsfeed = useCallback(() => {
     newsfeed.scrollToTop();

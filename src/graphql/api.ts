@@ -4,6 +4,7 @@ import {
   UseQueryOptions,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query';
+import { gqlFetcher } from '~/common/services/api.service';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -24,34 +25,6 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch('https://www.minds.com/api/graphql', {
-      method: 'POST',
-      ...{
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache',
-          'no-cache': '1',
-        },
-        Cookie: 'staging=1',
-      },
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -783,7 +756,10 @@ export const useNewsfeedQuery = <TData = NewsfeedQuery, TError = unknown>(
 ) =>
   useQuery<NewsfeedQuery, TError, TData>(
     ['Newsfeed', variables],
-    fetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, variables),
+    gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
+      NewsfeedDocument,
+      variables,
+    ),
     options,
   );
 export const useInfiniteNewsfeedQuery = <
@@ -793,13 +769,24 @@ export const useInfiniteNewsfeedQuery = <
   pageParamKey: keyof NewsfeedQueryVariables,
   variables: NewsfeedQueryVariables,
   options?: UseInfiniteQueryOptions<NewsfeedQuery, TError, TData>,
-) =>
-  useInfiniteQuery<NewsfeedQuery, TError, TData>(
+) => {
+  return useInfiniteQuery<NewsfeedQuery, TError, TData>(
     ['Newsfeed.infinite', variables],
     metaData =>
-      fetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, {
+      gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, {
         ...variables,
         ...(metaData.pageParam ?? {}),
       })(),
+    options,
+  );
+};
+
+useNewsfeedQuery.fetcher = (
+  variables: NewsfeedQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
+    NewsfeedDocument,
+    variables,
     options,
   );
