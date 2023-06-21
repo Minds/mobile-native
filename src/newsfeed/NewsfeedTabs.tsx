@@ -11,13 +11,13 @@ import { NewsfeedType } from './NewsfeedStore';
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
   const { groups } = useLegacyStores();
-  const hasGroups = groups.hasGroups;
 
   const tabs = React.useMemo(
     () => {
       const _tabs: { id: NewsfeedType; title: string }[] = [
         { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
         { id: 'top', title: i18n.t('newsfeed.topPosts') },
+        { id: 'groups', title: i18n.t('newsfeed.groups') },
       ];
 
       if (experimentOn) {
@@ -27,14 +27,10 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
         });
       }
 
-      if (hasGroups) {
-        _tabs.push({ id: 'groups', title: i18n.t('newsfeed.groups') });
-      }
-
       return _tabs;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [i18n.locale, hasGroups, experimentOn],
+    [i18n.locale, experimentOn],
   );
 
   useEffect(() => {
@@ -42,15 +38,6 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
       groups.loadList();
     }
   }, [groups]);
-
-  /**
-   * Change the tab to the first tab if we were on the groups tab and user leaves all groups
-   */
-  useEffect(() => {
-    if (!hasGroups && newsfeed.feedType === 'groups') {
-      newsfeed.changeFeedType(tabs[0].id);
-    }
-  }, [hasGroups, newsfeed, tabs]);
 
   return newsfeed.feedType ? (
     <TopbarTabbar
