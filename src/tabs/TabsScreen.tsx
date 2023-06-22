@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
+  BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import {
   View,
@@ -63,6 +64,11 @@ const shadowOpt = {
 const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
+  TabParamList,
+  S
+>;
 
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
