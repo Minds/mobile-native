@@ -26,7 +26,7 @@ const Groups = observer(() => {
         .slice()
         .map(group =>
           group instanceof GroupModel ? (
-            <GroupsListItem group={group} key={group.guid} noNavigate />
+            <GroupsListItem group={group} key={group.guid} />
           ) : null,
         )}
     </>
