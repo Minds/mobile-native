@@ -130,7 +130,7 @@ function SupermindConsoleScreen({
     () => [
       {
         id: 'feed',
-        title: i18n.t('feed'),
+        title: i18n.t('explore'),
       },
       {
         id: 'inbound',
