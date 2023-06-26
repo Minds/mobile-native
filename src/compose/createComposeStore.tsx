@@ -217,7 +217,7 @@ export default function (props) {
       this.createMode = mode;
       return true;
     },
-    setGroup(group: GroupModel) {
+    setGroup(group: GroupModel | null) {
       this.group = group;
     },
     setScrollOffset(value: number) {
