@@ -18,13 +18,22 @@ type PropsType = {
 const TokensRewards = observer(({ walletStore, store }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  if (!store.rewards || !store.rewards.total) {
-    return (
+  const body =
+    !store.rewards || !store.rewards.total ? (
       <MText style={[theme.fontXL, theme.centered, theme.padding5x]}>
         {i18n.t('discovery.nothingToShow')}
       </MText>
+    ) : (
+      <>
+        <Payout
+          minds={store.rewards.total.daily}
+          mindsPrice={walletStore.prices.minds}
+          isToday={store.isToday}
+          store={store}
+        />
+        <MindsScores store={store} prices={walletStore.prices} />
+      </>
     );
-  }
 
   return (
     <>
@@ -33,19 +42,7 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
         maximumDate={new Date()}
         date={store.rewardsSelectedDate}
       />
-      {store.loading ? (
-        <CenteredLoading />
-      ) : (
-        <>
-          <Payout
-            minds={store.rewards.total.daily}
-            mindsPrice={walletStore.prices.minds}
-            isToday={store.isToday}
-            store={store}
-          />
-          <MindsScores store={store} prices={walletStore.prices} />
-        </>
-      )}
+      {store.loading ? <CenteredLoading /> : body}
     </>
   );
 });
