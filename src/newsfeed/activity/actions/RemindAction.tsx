@@ -56,24 +56,22 @@ export default function ({ entity, hideCount }: PropsTypes) {
   }, [reminded, entity]);
 
   return (
-    <>
-      <IconButtonNext
-        testID="Remind activity button"
-        style={actionsContainerStyle}
-        scale
-        disabled={disabled}
-        name="remind"
-        size="small"
-        fill
-        active={reminded}
-        onPress={showDropdown}
-        extra={
-          !hideCount && entity.reminds ? (
-            <EntityCounter entity={entity} countProperty="reminds" />
-          ) : null
-        }
-      />
-    </>
+    <IconButtonNext
+      testID="Remind activity button"
+      style={actionsContainerStyle}
+      scale
+      disabled={disabled}
+      name="remind"
+      size="small"
+      fill
+      active={reminded}
+      onPress={showDropdown}
+      extra={
+        !hideCount && entity.reminds ? (
+          <EntityCounter entity={entity} countProperty="reminds" />
+        ) : null
+      }
+    />
   );
 }
 
