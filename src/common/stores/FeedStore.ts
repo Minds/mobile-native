@@ -112,8 +112,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Sets the injected items for the feed
    */
-  setInjectedItems(injectItems: InjectItem[]) {
-    this.injectItems = injectItems;
+  setInjectedItems(injectItems: (InjectItem | undefined)[]) {
+    this.injectItems = injectItems.filter(Boolean) as InjectItem[];
   }
 
   /**

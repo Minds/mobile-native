@@ -12,6 +12,7 @@ import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
+import { hasVariation } from '../../../ExperimentsProvider';
 
 export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 
@@ -144,7 +145,10 @@ export default class FeedsService {
     }
 
     for (let i = this.offset; i < this.offset + result.length; i++) {
-      if (shouldInjectBoostAtIndex(i)) {
+      if (
+        shouldInjectBoostAtIndex(i) ||
+        (!hasVariation('mob-5009-boost-rotator-in-feed') && i === 2)
+      ) {
         const boost = (this.boostedContent ?? boostedContentService).fetch();
         if (boost) {
           result.splice(i, 0, boost);

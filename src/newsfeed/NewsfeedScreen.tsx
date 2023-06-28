@@ -81,6 +81,7 @@ const overrideItemLayout = (layout, item, index) => {
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
+  const inFeedBoostRotator = useIsFeatureOn('mob-5009-boost-rotator-in-feed');
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
 
   const refreshNewsfeed = useCallback(() => {
@@ -144,14 +145,15 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
           <NewsfeedTabs newsfeed={newsfeed} />
+          {!inFeedBoostRotator && <BoostRotator />}
         </>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
 
-    const boostRotatorInjectItem = new InjectItem(3, 'rotator', () => (
-      <BoostRotator />
-    ));
+    const boostRotatorInjectItem = inFeedBoostRotator
+      ? new InjectItem(3, 'rotator', () => <BoostRotator />)
+      : undefined;
 
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
