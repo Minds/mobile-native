@@ -9,6 +9,7 @@ import ActivityModel from './ActivityModel';
 import NewsfeedService from './NewsfeedService';
 import { hasVariation } from 'ExperimentsProvider';
 import sessionService from '../common/services/session.service';
+import EventEmitter from 'eventemitter3';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
@@ -82,6 +83,8 @@ class NewsfeedStore<T extends BaseModel> {
   @observable
   feedType?: NewsfeedType;
 
+  static events = new EventEmitter();
+
   /**
    * Constructors
    */
@@ -117,6 +120,7 @@ class NewsfeedStore<T extends BaseModel> {
       console.error(e);
     }
     this.loadFeed(refresh);
+    NewsfeedStore.events.emit('feedChange', feedType);
   };
 
   /**

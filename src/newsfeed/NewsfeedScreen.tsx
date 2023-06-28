@@ -144,15 +144,19 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
           <NewsfeedTabs newsfeed={newsfeed} />
-          <BoostRotator />
         </>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
 
+    const boostRotatorInjectItem = new InjectItem(3, 'rotator', () => (
+      <BoostRotator />
+    ));
+
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
+      boostRotatorInjectItem,
 
       new InjectItem(RECOMMENDATION_POSITION, 'channel', ({ target }) => (
         <ChannelRecommendationHeader
@@ -192,9 +196,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     ]);
 
     // top feed injected components
-    newsfeed.topFeedStore.setInjectedItems([prepend]);
+    newsfeed.topFeedStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // for you injected components
-    newsfeed.forYouStore.setInjectedItems([prepend]);
+    newsfeed.forYouStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // groups injected components
     newsfeed.groupsFeedStore.setInjectedItems([
       prepend,

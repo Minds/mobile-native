@@ -13,8 +13,7 @@ import _ from 'lodash';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 
-export const shouldInjectBoostAtIndex = (i: number) =>
-  (i > 0 && i % 5 === 0) || i === 2;
+export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 
 export type FeedRecordType = {
   owner_guid: string;
