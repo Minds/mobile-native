@@ -12,6 +12,7 @@ import {
   ListRenderItem,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  RefreshControl,
   StyleProp,
   View,
   ViewStyle,
@@ -22,6 +23,7 @@ import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
+import { IS_IOS } from '../../config/Config';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -228,7 +230,15 @@ export default observer(
         ListEmptyComponent={!fetchStore.loading && props.ListEmptyComponent}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
-        onRefresh={_refresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={!!fetchStore.refreshing}
+            onRefresh={_refresh}
+            progressViewOffset={IS_IOS ? 0 : 80}
+            tintColor={ThemedStyles.getColor('Link')}
+            colors={[ThemedStyles.getColor('Link')]}
+          />
+        }
         onScroll={props.onScroll}
         refreshing={fetchStore.refreshing}
         contentContainerStyle={props.contentContainerStyle}
