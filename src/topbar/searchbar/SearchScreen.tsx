@@ -57,6 +57,7 @@ const SearchScreen = withErrorBoundaryScreen(
 
     return (
       <KeyboardSpacingView
+        enabled
         style={[
           StyleSheet.absoluteFill,
           theme.bgPrimaryBackground,

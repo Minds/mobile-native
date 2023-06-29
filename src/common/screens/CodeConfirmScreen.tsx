@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useBackHandler } from '@react-native-community/hooks';
 import { B1, Button } from '~ui';
-import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import { ModalFullScreen } from '~ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '../services/i18n.service';
@@ -57,27 +56,25 @@ const CodeConfirmScreen = ({
           {i18n.t('verify')}
         </Button>
       }>
-      <KeyboardSpacingView style={theme.flexContainer}>
-        <ScrollView>
-          <B1 color="secondary" vertical="XL" horizontal="L">
-            {description}
-          </B1>
-          <View style={theme.fullWidth}>
-            <InputContainer
-              maxLength={maxLength}
-              keyboardType={keyboardType}
-              labelStyle={theme.colorPrimaryText}
-              style={theme.colorPrimaryText}
-              autoFocus
-              placeholder={placeholder}
-              onChangeText={onChangeText}
-              error={error ? error : ''}
-              value={value}
-            />
-          </View>
-          {detail}
-        </ScrollView>
-      </KeyboardSpacingView>
+      <ScrollView>
+        <B1 color="secondary" vertical="XL" horizontal="L">
+          {description}
+        </B1>
+        <View style={theme.fullWidth}>
+          <InputContainer
+            maxLength={maxLength}
+            keyboardType={keyboardType}
+            labelStyle={theme.colorPrimaryText}
+            style={theme.colorPrimaryText}
+            autoFocus
+            placeholder={placeholder}
+            onChangeText={onChangeText}
+            error={error ? error : ''}
+            value={value}
+          />
+        </View>
+        {detail}
+      </ScrollView>
     </ModalFullScreen>
   );
 };

@@ -3,6 +3,7 @@ import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
 import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 import { cleanBoosts } from '../utils/clean-boosts';
+import { BOOSTS_DELAY } from '~/config/Config';
 
 /**
  * Boosted content service
@@ -70,6 +71,7 @@ class BoostedContentService {
           location: 1,
           served_by_guid: this.servedByGuid,
           source: this.source,
+          show_boosts_after_x: BOOSTS_DELAY,
         });
     }
   }

@@ -45,6 +45,7 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   AffiliateProgram: undefined;

@@ -52,7 +52,11 @@ function RecommendationHeader({ type, location, shadow }: PropsType) {
         <Row align="centerBoth">
           <B2
             color="link"
-            onPress={() => navigation.navigate('SuggestedGroups')}>
+            onPress={() => {
+              type === 'channel'
+                ? navigation.navigate('SuggestedChannel')
+                : navigation.navigate('GroupsDiscovery');
+            }}>
             {i18nService.t('seeMore')}
           </B2>
 

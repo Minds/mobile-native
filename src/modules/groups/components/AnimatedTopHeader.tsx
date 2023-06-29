@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { View } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -14,6 +14,7 @@ import type GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { GroupMembersStoreType } from '../hooks/useGroupMembersStore';
 import { GroupFeedStoreType } from '../hooks/useGroupFeedStore';
+import GroupMoreMenu from './GroupMoreMenu';
 
 type Props = {
   animationHeaderHeight: SharedValue<number>;
@@ -31,6 +32,7 @@ export default function AnimatedTopHeader({
   top,
 }: Props) {
   const navigation = useNavigation();
+  const menuRef = useRef<any>();
   const bgColor = ThemedStyles.getColor('PrimaryBackground');
 
   const topbarStyle = useAnimatedStyle(() => {
@@ -88,13 +90,18 @@ export default function AnimatedTopHeader({
           <H4 numberOfLines={1}>{group.name}</H4>
         </Animated.View>
         <SmallCircleButton
-          name="search"
+          name="more-horiz"
           type="material"
           raised={true}
-          onPress={() => currentStore?.toggleSearch()}
+          onPress={() => menuRef.current?.present()}
           color={ThemedStyles.getColor('PrimaryBackground')}
           iconStyle={styles.iconStyle}
           reverseColor={ThemedStyles.getColor('PrimaryText')}
+        />
+        <GroupMoreMenu
+          ref={menuRef}
+          group={group}
+          onSearchGroupPressed={() => currentStore?.toggleSearch()}
         />
       </View>
     </Animated.View>

@@ -1,33 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<Fragment>
-  <withSpacer(IconButtonNextComponent)
-    disabled={false}
-    extra={null}
-    fill={true}
-    name="remind"
-    onPress={[Function]}
-    scale={true}
-    size="small"
-    style={
-      [
-        {
-          "flex": 1,
-          "flexDirection": "column",
-        },
-        {
-          "margin": 4,
-        },
-        {
-          "paddingVertical": 12,
-        },
-        {
-          "alignItems": "center",
-        },
-      ]
-    }
-    testID="Remind activity button"
-  />
-</Fragment>
+<withSpacer(IconButtonNextComponent)
+  disabled={false}
+  extra={null}
+  fill={true}
+  name="remind"
+  onPress={[Function]}
+  scale={true}
+  size="small"
+  style={
+    [
+      {
+        "flex": 1,
+        "flexDirection": "column",
+      },
+      {
+        "margin": 4,
+      },
+      {
+        "paddingVertical": 12,
+      },
+      {
+        "alignItems": "center",
+      },
+    ]
+  }
+  testID="Remind activity button"
+/>
 `;

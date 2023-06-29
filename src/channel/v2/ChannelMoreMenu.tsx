@@ -3,7 +3,7 @@ import type { NativeStackNavigationProp } from 'react-native-screens/native-stac
 import { useNavigation } from '@react-navigation/native';
 
 import type UserModel from '../UserModel';
-import i18n from '../../common/services/i18n.service';
+import i18n from '~/common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
 import { MINDS_URI } from '../../config/Config';
@@ -12,10 +12,11 @@ import {
   BottomSheetModal,
   BottomSheetButton,
   BottomSheetMenuItem,
-} from '../../common/components/bottom-sheet';
+} from '~/common/components/bottom-sheet';
 import { Platform } from 'react-native';
-import { useStores } from '../../common/hooks/use-stores';
+import { useStores } from '~/common/hooks/use-stores';
 import { hasVariation } from 'ExperimentsProvider';
+import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -100,6 +101,8 @@ const getOptions = (
       ref.current.dismiss();
     },
   });
+
+  options.push(copyToClipboardOptions(MINDS_URI + channel.username));
 
   if (!channel.isOwner()) {
     if (channel.isSubscribed()) {

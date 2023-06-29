@@ -38,7 +38,6 @@ type PropsType = {
   map?: (data: any) => any;
   params?: Object;
   placeholderCount?: number;
-  defaultOffset?: number | string;
   renderPlaceholder?: () => JSX.Element;
   offsetPagination?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -58,7 +57,7 @@ export default observer(
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>(
-      props.defaultOffset ?? '',
+      props.offsetPagination ? 0 : '',
     );
     const [page, setPage] = useState<number>(1);
     const listRef = React.useRef<FlatList>(null);
@@ -119,7 +118,7 @@ export default observer(
 
     // =====================| PROVIDED METHODS |=====================>
     useImperativeHandle(ref, () => ({
-      refreshList: () => fetchStore.refresh(),
+      refreshList: () => _refresh(),
       scrollToTop: () =>
         listRef.current?.scrollToOffset({ offset: 0, animated: true }),
     }));
@@ -133,6 +132,10 @@ export default observer(
     // =====================| METHODS |=====================>
 
     const _refresh = React.useCallback(() => {
+      if (fetchStore.loading) {
+        return;
+      }
+
       props.offsetPagination ? setPage(1) : setOffset('');
       fetchStore.refresh();
     }, [props.offsetPagination, fetchStore]);

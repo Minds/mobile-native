@@ -25,11 +25,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation } from 'ExperimentsProvider';
+import { hasVariation, useIsAndroidFeatureOn } from 'ExperimentsProvider';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
+import CaptureFab from '~/capture/CaptureFab';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -41,6 +42,7 @@ export type TabParamList = {
   More: {};
   Notifications: {};
   CaptureTab: {};
+  MindsPlus: {};
 };
 
 const { width } = Dimensions.get('screen');
@@ -54,11 +56,20 @@ const shadowOpt = {
   y: 0,
 };
 
+const tabBarHeight = IS_IOS ? 80 : 60;
+
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
+const TabBar = ({
+  state,
+  descriptors,
+  navigation,
+  routeKey,
+  disableTabIndicator,
+}) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const { bottom } = useSafeAreaInsets();
+  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -136,6 +147,14 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
       {!disableTabIndicator && (
         <Animated.View style={[styles.bar, barAnimatedStyle]} />
       )}
+      {showFAB ? (
+        <CaptureFab
+          visible={true}
+          navigation={navigation}
+          routeKey={routeKey}
+          style={styles.composeFAB}
+        />
+      ) : undefined}
     </View>
   );
 };
@@ -147,6 +166,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
   const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
+  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
 
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
@@ -199,24 +219,35 @@ const Tabs = observer(function ({ navigation }) {
           component={DiscoveryStack}
           options={discoveryOptions}
         />
-        <Tab.Screen
-          name="CaptureTab"
-          component={InternalStack}
-          options={{
-            tabBarTestID: 'CaptureTabButton',
-            tabBarButton: props => (
-              <DoubleTapSafeTouchable
-                {...props}
-                onPress={isCreateModalOn ? handleComposePress : navToComposer}
-                onLongPress={
-                  isCreateModalOn ? handleComposeLongPress : navToVideoCapture
-                }
-                delayLongPress={200}
-                testID="CaptureTouchableButton"
-              />
-            ),
-          }}
-        />
+        {showFAB ? (
+          <Tab.Screen
+            name="MindsPlus"
+            getComponent={() =>
+              require('~/discovery/v2/PlusDiscoveryScreen').default
+            }
+            options={{ tabBarTestID: 'Tabs:MindsPlus' }}
+            initialParams={{ backEnable: false }}
+          />
+        ) : (
+          <Tab.Screen
+            name="CaptureTab"
+            component={InternalStack}
+            options={{
+              tabBarTestID: 'CaptureTabButton',
+              tabBarButton: props => (
+                <DoubleTapSafeTouchable
+                  {...props}
+                  onPress={isCreateModalOn ? handleComposePress : navToComposer}
+                  onLongPress={
+                    isCreateModalOn ? handleComposeLongPress : navToVideoCapture
+                  }
+                  delayLongPress={200}
+                  testID="CaptureTouchableButton"
+                />
+              ),
+            }}
+          />
+        )}
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
@@ -255,10 +286,13 @@ const styles = ThemedStyles.create({
       shadowOpacity: 0.2,
       shadowRadius: 4,
       paddingHorizontal: 20,
-      height: IS_IOS ? 80 : 60,
+      height: tabBarHeight,
     },
     'bcolorPrimaryBorder',
   ],
+  composeFAB: {
+    bottom: 24 + tabBarHeight,
+  },
 });
 
 const notificationOptions = {
@@ -276,6 +310,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   User: 'user',
   Discovery: 'search',
   Performance: 'dev',
+  MindsPlus: 'queue',
 };
 
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({

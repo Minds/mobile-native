@@ -12,9 +12,12 @@ class ChannelScreen extends AppScreen {
   }
 
   async openFirstPost() {
-    const firstPost = await this.firstActivity;
-    await Gestures.checkIfDisplayedWithSwipeUp(firstPost, 20);
-    await firstPost.click();
+    const isDisplayed = await this.firstActivity.isDisplayed();
+    if (!isDisplayed) {
+      // @ts-ignore
+      await Gestures.checkIfDisplayedWithSwipeUp(this.firstActivity, 20);
+    }
+    await this.firstActivity.click();
   }
 }
 

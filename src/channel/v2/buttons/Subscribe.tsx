@@ -30,7 +30,7 @@ const HITSLOP = {
 };
 
 const Subscribe = (props: SubscribeProps) => {
-  const { channel, mini, shouldUpdateFeed = true, onSubscribed } = props;
+  const { channel, mini, onSubscribed } = props;
 
   const subscriptionText =
     props.text ??
@@ -43,13 +43,13 @@ const Subscribe = (props: SubscribeProps) => {
       Alert.alert(i18n.t('attention'), i18n.t('channel.confirmUnsubscribe'), [
         {
           text: i18n.t('yesImSure'),
-          onPress: () => channel.toggleSubscription(shouldUpdateFeed),
+          onPress: () => channel.toggleSubscription(),
         },
         { text: i18n.t('no') },
       ]);
     } else {
       onSubscribed?.(channel);
-      return channel.toggleSubscription(shouldUpdateFeed);
+      return channel.toggleSubscription();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel.subscribed, channel.toggleSubscription, onSubscribed]);

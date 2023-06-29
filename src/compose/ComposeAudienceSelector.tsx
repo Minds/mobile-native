@@ -49,26 +49,20 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const {
     supportTiers,
     loading: supportTiersLoading,
-    refresh,
-  } = useSupportTiers();
+    refresh: refreshSupportTiers,
+  } = useSupportTiers(IS_IOS);
   const { user } = useLegacyStores();
   const selected = store?.audience ?? { type: 'public' };
   const groupsListRef = useRef<any>(null);
 
-  useFocusEffect(
-    useCallback(() => {
-      groupsListRef.current?.refreshList?.();
-    }, []),
-  );
-
-  const select = useCallback(
+  const handleSelect = useCallback(
     async audience => {
-      if (props.onSelect) {
-        return props.onSelect(audience);
-      }
-
       if (!store) {
         return;
+      }
+
+      if (audience.type !== 'group') {
+        store.setGroup(null);
       }
 
       switch (audience.type) {
@@ -108,12 +102,18 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
       store.setAudience(audience);
     },
-    [navigation, props, store, user.me.plus],
+    [navigation, store, user.me.plus],
   );
+
+  const select = props.onSelect ?? handleSelect;
 
   useFocusEffect(
     useCallback(() => {
-      refresh();
+      if (!IS_IOS) {
+        refreshSupportTiers();
+      }
+
+      groupsListRef.current?.refreshList?.();
     }, []),
   );
 

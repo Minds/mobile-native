@@ -1,5 +1,4 @@
 import { selectElement } from '../../helpers/Utils';
-import BoostScreen from '../boost/BoostScreen';
 import AppScreen from '../common/AppScreen';
 
 class ActivityScreen extends AppScreen {
@@ -12,9 +11,10 @@ class ActivityScreen extends AppScreen {
   }
 
   async openBoost() {
-    await this.boostButton.waitForDisplayed();
+    if (!(await this.boostButton.isDisplayed())) {
+      await this.boostButton.waitForDisplayed();
+    }
     await this.boostButton.click();
-    return BoostScreen.waitForIsShown();
   }
 }
 
