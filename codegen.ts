@@ -1,20 +1,73 @@
-import { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from '@graphql-codegen/cli';
+
+const MINDS_API_URI = 'https://www.minds.com/api/graphql';
+const STRAPI_API_URI = 'https://cms.minds.com/graphql';
+// const STRAPI_API_URI = 'https://cms.oke.minds.io/graphql';
+// const STRAPI_API_URI = 'http://localhost:1337/graphql';
+
+const defaultHeaders = {
+  'Content-Type': 'application/json',
+  'Cache-Control': 'no-cache, no-store, must-revalidate',
+  Pragma: 'no-cache',
+  'no-cache': '1',
+};
+
+const queryPlugins = [
+  'typescript',
+  'typescript-operations',
+  'typescript-react-query',
+];
+
+/**
+ * GraphQL Codegen configuration.
+ */
 
 const config: CodegenConfig = {
-  schema: [
-    {
-      'https://cms.oke.minds.io/graphql': {
-        headers: {},
-      },
-    },
-  ],
+  overwrite: true,
   ignoreNoDocuments: true,
   generates: {
-    './src/gql/': {
-      documents: ['src/**/*.tsx', '!src/gql/**/*'],
-      preset: 'client',
-      plugins: [],
+    './src/graphql/strapi.ts': {
+      schema: './graphqlql.strapi.schema.json',
+      documents: ['src/**/*.strapi.graphql'], //, '!src/gql/twitterSync*'],
+      plugins: queryPlugins,
+      config: {
+        namedClient: 'strapi',
+        fetcher: {
+          endpoint: STRAPI_API_URI,
+          fetchParams: {
+            headers: defaultHeaders,
+          },
+        },
+      },
     },
+    './src/graphql/api.ts': {
+      schema: './graphqlql.api.schema.json',
+      documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
+      plugins: queryPlugins,
+      config: {
+        namedClient: 'default',
+        fetcher: {
+          func: '~/common/services/api.service#gqlFetcher',
+          isReactHook: false,
+        },
+        addInfiniteQuery: true,
+        exposeFetcher: true,
+      },
+    },
+    // INTROSPECTION
+    './graphqlql.api.schema.json': {
+      schema: {
+        [MINDS_API_URI]: {
+          headers: { ...defaultHeaders, Cookie: 'staging=1' },
+        },
+      },
+      plugins: ['introspection'],
+    },
+    // uncomment below if you want to run introspection on strapi
+    // './graphqlql.strapi.schema.json': {
+    //   schema: { [STRAPI_API_URI]: { headers: defaultHeaders } },
+    //   plugins: ['introspection'],
+    // },
   },
 };
 

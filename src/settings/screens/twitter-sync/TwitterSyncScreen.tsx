@@ -16,6 +16,7 @@ import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
+import { useTwitterSyncTweetMessageQuery } from '~/graphql/strapi';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -38,21 +39,30 @@ function TwitterSyncScreen() {
     connectedAccount?.discoverable || true,
   );
 
+  const { data: { twitterSyncTweetText } = {} } =
+    useTwitterSyncTweetMessageQuery();
+
+  const tweetText =
+    twitterSyncTweetText?.data?.attributes?.tweetText ??
+    'Verifying my channel on @minds. {url}';
+
+  const tweetMessage = tweetText.replace(
+    /{url}/g,
+    mindsSettings.site_url + user?.username,
+  );
+
   /**
    * posts the verification text on twitter by open a url
    **/
   const onPostToTwitter = useCallback(() => {
-    if (!user) return;
-
-    const siteUrl = mindsSettings.site_url;
-    const tweetMessage = `${i18n.t('settings.twitterSync.verificationText')} ${
-      siteUrl + user?.username
-    }`;
+    if (!user) {
+      return;
+    }
 
     return Linking.openURL(
       `https://twitter.com/intent/tweet?text=${tweetMessage}`,
     );
-  }, [mindsSettings.site_url, user]);
+  }, [tweetMessage, user]);
 
   /**
    * validates the twitter handle
