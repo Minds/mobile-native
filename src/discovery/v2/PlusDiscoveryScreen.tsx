@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
@@ -21,8 +21,10 @@ const SAFE_AREA_EDGES: Edge[] = ['top'];
 const PlusDiscoveryScreen = observer(() => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
+  const route = useRoute<any>();
   const store = useMindsPlusV2Store();
   const user = useCurrentUser();
+  const { backEnable = true } = route.params ?? {};
 
   const onUpgrade = useCallback(() => {
     navigation.navigate('UpgradeScreen', {
@@ -37,7 +39,7 @@ const PlusDiscoveryScreen = observer(() => {
 
   const header = (
     <View style={theme.bgPrimaryBackground}>
-      <ScreenHeader back title={i18n.t('plusTabTitleDiscovery')} />
+      <ScreenHeader back={backEnable} title={i18n.t('plusTabTitleDiscovery')} />
       {!user?.plus && (
         <Banner
           actionText="Upgrade"
