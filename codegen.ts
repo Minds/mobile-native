@@ -27,8 +27,8 @@ const config: CodegenConfig = {
   ignoreNoDocuments: true,
   generates: {
     './src/graphql/strapi.ts': {
-      schema: './graphqlql.strapi.schema.json',
-      documents: ['src/**/*.strapi.graphql'], //, '!src/gql/twitterSync*'],
+      schema: './gql-schemas/strapi.schema.json',
+      documents: ['src/**/*.strapi.graphql'],
       plugins: queryPlugins,
       config: {
         namedClient: 'strapi',
@@ -41,7 +41,7 @@ const config: CodegenConfig = {
       },
     },
     './src/graphql/api.ts': {
-      schema: './graphqlql.api.schema.json',
+      schema: './gql-schemas/api.schema.json',
       documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
       plugins: queryPlugins,
       config: {
@@ -55,7 +55,7 @@ const config: CodegenConfig = {
       },
     },
     // INTROSPECTION
-    './graphqlql.api.schema.json': {
+    './gql-schemas/api.schema.json': {
       schema: {
         [MINDS_API_URI]: {
           headers: { ...defaultHeaders, Cookie: 'staging=1' },
@@ -64,7 +64,7 @@ const config: CodegenConfig = {
       plugins: ['introspection'],
     },
     // uncomment below if you want to run introspection on strapi
-    // './graphqlql.strapi.schema.json': {
+    // './gql-schemas/strapi.schema.json': {
     //   schema: { [STRAPI_API_URI]: { headers: defaultHeaders } },
     //   plugins: ['introspection'],
     // },
