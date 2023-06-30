@@ -57,7 +57,11 @@ const BoostCTA = ({ entity }: BoostCTAProps) => {
         </Button>
       ) : (
         <Subscribe
-          text={t(`goalText.${text}`)}
+          text={
+            !channel.isOwner() && channel.isSubscribed()
+              ? t('Subscribed')
+              : t(`goalText.${text}`)
+          }
           disabled={clicked || channel.isOwner()}
           channel={channel}
           shouldUpdateFeed={false}
