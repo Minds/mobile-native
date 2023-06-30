@@ -21,8 +21,8 @@ export const labelSecondaryMap: Record<
   SubscriptionType,
   (number, string) => string
 > = {
-  lifetime: () => `MINDS`,
-  monthly: () => `/ month`,
+  lifetime: () => 'MINDS',
+  monthly: () => '/ month',
   yearly: (cost, symbol) => `/ month (billed annually ${symbol}${cost})`,
 };
 
@@ -33,7 +33,9 @@ const PlanOptions = observer(({ store }: PropsType) => {
   const theme = ThemedStyles.style;
   const plans = store.method === 'tokens' ? store.plansTokens : store.plansUSD;
 
-  if (!plans || plans.length === 0) return null;
+  if (!plans || plans.length === 0) {
+    return null;
+  }
   return (
     <View style={theme.marginTop3x}>
       <MText
@@ -50,39 +52,41 @@ const PlanOptions = observer(({ store }: PropsType) => {
   );
 });
 
-export const PlanList = ({
-  plans,
-  store,
-}: {
-  plans: Array<PaymentPlanType>;
-  store: UpgradeStoreType;
-}) => {
-  const theme = ThemedStyles.style;
-  return (
-    <>
-      {plans.map(plan => (
-        <MenuItemOption
-          key={plan.id}
-          onPress={() => store.setSelectedOption(plan)}
-          title={
-            <MText style={theme.colorPrimaryText}>
-              {labelMap[plan.id](
-                plan.cost,
-                store.method === 'tokens' ? '' : '$',
-              )}{' '}
-              <MText style={theme.colorSecondaryText}>
-                {labelSecondaryMap[plan.id](
+export const PlanList = observer(
+  ({
+    plans,
+    store,
+  }: {
+    plans: Array<PaymentPlanType>;
+    store: UpgradeStoreType;
+  }) => {
+    const theme = ThemedStyles.style;
+    return (
+      <>
+        {plans.map(plan => (
+          <MenuItemOption
+            key={plan.id}
+            onPress={() => store.setSelectedOption(plan)}
+            title={
+              <MText style={theme.colorPrimaryText}>
+                {labelMap[plan.id](
                   plan.cost,
                   store.method === 'tokens' ? '' : '$',
-                )}
+                )}{' '}
+                <MText style={theme.colorSecondaryText}>
+                  {labelSecondaryMap[plan.id](
+                    plan.cost,
+                    store.method === 'tokens' ? '' : '$',
+                  )}
+                </MText>
               </MText>
-            </MText>
-          }
-          selected={plan.id === store.selectedOption.id}
-        />
-      ))}
-    </>
-  );
-};
+            }
+            selected={plan.id === store.selectedOption.id}
+          />
+        ))}
+      </>
+    );
+  },
+);
 
 export default PlanOptions;
