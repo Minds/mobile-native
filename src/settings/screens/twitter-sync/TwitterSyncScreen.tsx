@@ -16,7 +16,7 @@ import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
-import { useTwitterSyncTweetMessageQuery } from '~/graphql/strapi';
+import { useTweetMessageQuery } from '~/graphql/strapi';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -40,7 +40,7 @@ function TwitterSyncScreen() {
   );
 
   const { data: { twitterSyncTweetText } = {}, isLoading } =
-    useTwitterSyncTweetMessageQuery();
+    useTweetMessageQuery();
 
   const tweetText =
     twitterSyncTweetText?.data?.attributes?.tweetText ??

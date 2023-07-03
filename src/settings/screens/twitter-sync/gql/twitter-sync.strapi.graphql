@@ -1,4 +1,4 @@
-query TwitterSyncTweetMessage {
+query TweetMessage {
   twitterSyncTweetText {
     data {
       attributes {
