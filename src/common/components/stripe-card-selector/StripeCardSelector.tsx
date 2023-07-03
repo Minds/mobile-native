@@ -70,14 +70,15 @@ const StripeCardSelector = observer(
         );
       }
     };
-
+    const currentCard =
+      store.cards?.length > 0 ? store.cards[store.current] : undefined;
     return (
       <>
         <InputBase
           onPress={() => bottomSheetRef.current?.present()}
           {...inputSelectorProps}
           label={i18n.t('orderReport.paymentMethod')}
-          value={selectValueExtractor(store.cards[store.current])}
+          value={selectValueExtractor(currentCard)}
           icon={<Icon name="chevron-down" />}
         />
         <BottomSheetModal ref={bottomSheetRef}>
