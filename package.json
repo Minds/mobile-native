@@ -212,7 +212,6 @@
     "@graphql-codegen/typescript-operations": "^4.0.0",
     "@graphql-codegen/typescript-react-query": "^4.1.0",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/eslint-config": "^3.2.0",
     "@tamagui/babel-plugin": "1.26.1",
     "@testing-library/jest-native": "^5.4.2",
