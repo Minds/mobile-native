@@ -1713,7 +1713,7 @@
   "passwordConmfirmPlaceholder": "confirm password...",
   "boost": "Boost",
   "boosted": "Boosted",
-  "follow": "Follow",
+  "follow": "Follow post",
   "unfollow": "Unfollow",
   "tokens": "Tokens",
   "share": "Share",
@@ -1844,6 +1844,7 @@
   "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
+  "copyLink": "Copy Link",
   "emptyList": "Sorry the list is empty",
   "nothingToSee": "Nothing to see here",
   "and": "and",
@@ -1937,6 +1938,11 @@
       }
     }
   },
+  "group": {
+    "search": "Search Group",
+    "share": "Share Group"
+  },
   "back": "Back",
+  "explore": "Explore",
   "restart": "Restart"
 }

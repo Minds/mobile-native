@@ -12,6 +12,10 @@ export const useGroupMembersStore = group => {
     members: new OffsetListStore<UserModel>('shallow'),
     search: '',
     showSearch: false,
+
+    toggleMenu() {
+      this.showSearch = !this.showSearch;
+    },
     toggleSearch() {
       this.showSearch = !this.showSearch;
       if (!this.showSearch) {

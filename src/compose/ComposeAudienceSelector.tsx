@@ -55,14 +55,14 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const selected = store?.audience ?? { type: 'public' };
   const groupsListRef = useRef<any>(null);
 
-  const select = useCallback(
+  const handleSelect = useCallback(
     async audience => {
-      if (props.onSelect) {
-        return props.onSelect(audience);
-      }
-
       if (!store) {
         return;
+      }
+
+      if (audience.type !== 'group') {
+        store.setGroup(null);
       }
 
       switch (audience.type) {
@@ -102,8 +102,10 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
 
       store.setAudience(audience);
     },
-    [navigation, props, store, user.me.plus],
+    [navigation, store, user.me.plus],
   );
+
+  const select = props.onSelect ?? handleSelect;
 
   useFocusEffect(
     useCallback(() => {

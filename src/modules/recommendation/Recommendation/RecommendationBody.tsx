@@ -25,15 +25,17 @@ export interface RecommendationBodyProps {
   channel?: UserModel;
 
   recommendationStore?: ChannelRecommendationStore;
+
+  size?: number;
 }
 
 const RecommendationBody: FC<RecommendationBodyProps> = ({
   type,
   location,
   visible = true,
+  size = hasVariation('mob-4638-boost-v3') ? 4 : 3,
 }) => {
-  const RECOMMANDATIONS_SIZE = hasVariation('mob-4638-boost-v3') ? 4 : 3;
-  const [listSize, setListSize] = useState(RECOMMANDATIONS_SIZE);
+  const [listSize, setListSize] = useState(size);
   const recommendation = useRecommendationContext();
   const { shouldRender } = useDismissibility(type, location, visible);
 
@@ -43,8 +45,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
   const onSubscribed = useCallback(
     subscribedChannel => {
       if (
-        recommendation.channelRecommendation.result!.entities.length <=
-        RECOMMANDATIONS_SIZE
+        recommendation.channelRecommendation.result!.entities.length <= size
       ) {
         return null;
       }
@@ -55,11 +56,11 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
           suggestion => suggestion.entity_guid !== subscribedChannel.guid,
         ),
       });
-      if (listSize === RECOMMANDATIONS_SIZE) {
-        setListSize(RECOMMANDATIONS_SIZE + 2);
+      if (listSize === size) {
+        setListSize(size + 2);
       }
     },
-    [recommendation.channelRecommendation, RECOMMANDATIONS_SIZE, listSize],
+    [recommendation.channelRecommendation, size, listSize],
   );
 
   /**
@@ -68,8 +69,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
   const onJoined = useCallback(
     subscribedChannel => {
       if (
-        recommendation.groupRecommendation.result!.suggestions.length <=
-        RECOMMANDATIONS_SIZE
+        recommendation.groupRecommendation.result!.suggestions.length <= size
       ) {
         return null;
       }
@@ -81,11 +81,11 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
             suggestion => suggestion.entity.guid !== subscribedChannel.guid,
           ),
       });
-      if (listSize === RECOMMANDATIONS_SIZE) {
-        setListSize(RECOMMANDATIONS_SIZE + 2);
+      if (listSize === size) {
+        setListSize(size + 2);
       }
     },
-    [RECOMMANDATIONS_SIZE, listSize, recommendation.groupRecommendation],
+    [size, listSize, recommendation.groupRecommendation],
   );
 
   if (!shouldRender) {

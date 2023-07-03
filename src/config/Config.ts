@@ -253,3 +253,5 @@ export const GRAPHQL_CONFIG: GraphQLConfig = {
     uri: 'https://cms.oke.minds.io/graphql',
   },
 };
+
+export const BOOSTS_DELAY = 604800;

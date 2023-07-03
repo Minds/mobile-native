@@ -8,13 +8,16 @@ import { hasVariation } from 'ExperimentsProvider';
 import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
 
 /**
  * Email Verify Notice
  */
 function EmailVerifyNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
-  if (!inFeedNoticesService.visible(name)) {
+  const user = useCurrentUser();
+
+  if (!inFeedNoticesService.visible(name) || user?.email_confirmed) {
     return null;
   }
   return (
