@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
+  BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import {
   View,
@@ -67,6 +68,11 @@ const tabBarHeight = IS_IOS ? 80 : 60;
 const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
+  TabParamList,
+  S
+>;
 
 const TabBar = ({
   state,
