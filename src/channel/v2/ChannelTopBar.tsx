@@ -218,18 +218,20 @@ const ChannelTopBar = observer(
             <MText style={nameStyles} numberOfLines={1}>
               {store?.channel?.name}
             </MText>
-            {!!store?.channel && !store.channel?.subscribed && (
-              <Spacer left="S">
-                <Subscribe
-                  channel={store?.channel}
-                  shouldUpdateFeed={false}
-                  buttonProps={{
-                    lightContent: isBgLight,
-                    darkContent: !isBgLight,
-                  }}
-                />
-              </Spacer>
-            )}
+            {!!store?.channel &&
+              !store.channel?.subscribed &&
+              !store.channel.isOwner() && (
+                <Spacer left="S">
+                  <Subscribe
+                    channel={store?.channel}
+                    shouldUpdateFeed={false}
+                    buttonProps={{
+                      lightContent: isBgLight,
+                      darkContent: !isBgLight,
+                    }}
+                  />
+                </Spacer>
+              )}
           </SafeAreaView>
         </Animated.View>
         <SmallCircleButton
