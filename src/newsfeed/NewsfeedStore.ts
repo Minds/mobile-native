@@ -172,7 +172,7 @@ class NewsfeedStore<T extends BaseModel> {
 
     // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
     if (this.feedType === 'top') {
-      this.feedStore.clear();
+      refresh = true;
     } else if (this.feedType === 'groups') {
       this.groupsFeedStore.setParams({
         group_posts_for_user_guid: sessionService.getUser()?.guid,
