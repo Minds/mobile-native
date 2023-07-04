@@ -240,7 +240,6 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
     delayInHours: 4,
     maxRetryAttempts: 2,
   },
-  updateDialog: undefined,
 };
 
 export const BOOSTS_DELAY = 604800;
