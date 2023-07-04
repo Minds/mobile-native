@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'; // fix ongesture handler error
+import 'react-native-image-keyboard';
 // import 'node-libs-react-native/globals';
 import './global';
 import crypto from 'crypto'; // DO NOT REMOVE!

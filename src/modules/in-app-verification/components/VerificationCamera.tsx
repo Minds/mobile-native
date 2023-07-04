@@ -24,13 +24,8 @@ type PropsType = {
 const TARGET_WIDTH_RATIO = 0.65;
 
 function OcrCamera({ code, deviceId }: PropsType) {
-  const {
-    store,
-    camera,
-    device,
-    format,
-    frameProcessor,
-  } = useVerificationCamera(code, deviceId);
+  const { store, camera, device, format, frameProcessor } =
+    useVerificationCamera(code, deviceId);
 
   const { t } = useTranslation();
   const texts = messages(t);

@@ -443,7 +443,7 @@
     "text": "Text",
     "postOptions": "Post Options",
     "retake": "Retake",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
+    "allowMinds": "Enable access so you can take photos and record videos to share on Minds. Microphone access lets you record videos and use audio features.",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
@@ -533,12 +533,14 @@
     "images": "Images",
     "blogs": "Blogs",
     "groups": "Groups",
+    "discoverGroups": "Discover Groups",
     "addTags": "Add tags to personalize your feed",
     "selectTags": "Select tags",
     "posts": "posts",
     "votes": "votes"
   },
   "groups": {
+    "title": "Groups",
     "ongoingGathering": "Ongoing gathering",
     "joinGathering": "Join Gathering",
     "gotoGroup": "Go to group",
@@ -576,15 +578,11 @@
     "title": "Newsfeed",
     "designYourChannel": "Design your channel",
     "empty": "Your newsfeed is empty",
-    "topPosts": "Top Posts",
-    "latestPosts": "Latest Posts",
+    "topPosts": "Top",
+    "foryouPosts": "For you",
+    "latestPosts": "Latest",
+    "groups": "Groups",
     "seeMoreTopPosts": "See more top posts",
-    "latestTitle": "Latest posts enabled",
-    "latestDesc": "Show posts as they happen",
-    "latestAction": "Enable Latest Posts",
-    "topTitle": "Top posts enabled",
-    "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
-    "topAction": "Enable Top Posts",
     "seeLatestTitle": "See {{count}} latest posts"
   },
   "comments": {
@@ -1660,6 +1658,8 @@
   "edit": "Edit",
   "goback": "Go back",
   "quote": "Quote",
+  "groupShare": "Group share",
+  "shareToGroup": "Share to a group",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -1850,6 +1850,7 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "recommendedGroups": "Recommended Groups",
   "expires": "Expires",
   "requirements": "Requirements",
   "seeMore": "See more",
@@ -1865,19 +1866,13 @@
   },
   "codePush": {
     "prompt": {
-      "title": "New update available",
-      "description": "There is a newer version of the app available. Would you like to update now?",
-      "action": "Restart"
-    },
-    "nativePrompt": {
-      "description": "Please update your app in order to enjoy the latest features.",
-      "current": "Current:",
-      "available": "Available:",
-      "action": "Download"
+      "heading": "Stay up to date and ",
+      "getVersion": "get version "
     },
     "syncing": "Syncing app bundle...",
     "custom": {
-      "staging": "You're on staging",
+      "staging": "You're on Staging",
+      "rc": "You're on Release candidate",
       "usingCustom": "You're using a custom app version",
       "updateDescription": "Update description",
       "revertToProd": "Revert to Production"
@@ -1903,8 +1898,9 @@
         }
       },
       "memberships": "Memberships",
-      "groups": "Groups",
+      "groups": "Your Groups",
       "noGroups": "You aren't a member of any groups",
+      "discoverGroups": "Discover groups",
       "plus": {
         "title": "Plus monetization",
         "action": "I agree to the terms"
@@ -1941,5 +1937,6 @@
       }
     }
   },
-  "back": "Back"
+  "back": "Back",
+  "restart": "Restart"
 }

@@ -12,23 +12,23 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     current="traffic"
     onChange={[Function]}
     tabs={
-      Array [
-        Object {
+      [
+        {
           "id": "traffic",
           "key": "traffic",
           "title": "Traffic",
         },
-        Object {
+        {
           "id": "engagement",
           "key": "engagement",
           "title": "Engagement",
         },
-        Object {
+        {
           "id": "earnings",
           "key": "earnings",
           "title": "Earnings",
         },
-        Object {
+        {
           "id": "trending",
           "key": "trending",
           "title": "Trending",
@@ -38,7 +38,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "alignContent": "center",
         "alignItems": "center",
         "alignSelf": "center",

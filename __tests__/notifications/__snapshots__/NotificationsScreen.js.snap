@@ -3,11 +3,11 @@
 exports[`Notifications Screen Component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "backgroundColor": "#1C1D1F",
       },
-      Object {
+      {
         "flex": 1,
       },
     ]
@@ -17,8 +17,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     ListEmptyComponent={
       <ActivityIndicator
         style={
-          Array [
-            Object {
+          [
+            {
               "marginTop": 48,
             },
           ]
@@ -29,24 +29,24 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       <React.Fragment>
         <Memo(wrappedComponent)
           navigation={
-            Object {
+            {
               "getParent": [MockFunction] {
-                "calls": Array [
-                  Array [],
+                "calls": [
+                  [],
                 ],
-                "results": Array [
-                  Object {
+                "results": [
+                  {
                     "type": "return",
-                    "value": Object {
+                    "value": {
                       "addListener": [MockFunction] {
-                        "calls": Array [
-                          Array [
+                        "calls": [
+                          [
                             "tabPress",
                             [Function],
                           ],
                         ],
-                        "results": Array [
-                          Object {
+                        "results": [
+                          {
                             "type": "return",
                             "value": undefined,
                           },
@@ -65,11 +65,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         />
         <Memo(wrappedComponent)
           refresh={[Function]}
-          store={Object {}}
+          store={{}}
         />
       </React.Fragment>
     }
-    data={Array []}
+    contentContainerStyle={false}
+    data={[]}
     getItem={[Function]}
     getItemCount={[Function]}
     keyExtractor={[Function]}
@@ -96,29 +97,29 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     scrollEventThrottle={50}
     stickyHeaderHiddenOnScroll={true}
     stickyHeaderIndices={
-      Array [
+      [
         0,
       ]
     }
     style={
-      Object {
+      {
         "flex": 1,
         "flexGrow": 1,
         "marginTop": 0,
       }
     }
     viewabilityConfig={
-      Object {
+      {
         "itemVisiblePercentThreshold": 70,
         "minimumViewTime": 500,
         "waitForInteraction": false,
       }
     }
     viewabilityConfigCallbackPairs={
-      Array [
-        Object {
+      [
+        {
           "onViewableItemsChanged": [Function],
-          "viewabilityConfig": Object {
+          "viewabilityConfig": {
             "itemVisiblePercentThreshold": 70,
             "minimumViewTime": 500,
             "waitForInteraction": false,
@@ -134,10 +135,10 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "elevation": 3,
-                "shadowOffset": Object {
+                "shadowOffset": {
                   "height": 1.5,
                   "width": 0,
                 },
@@ -145,7 +146,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "shadowRadius": 1.41,
                 "zIndex": 999,
               },
-              Object {
+              {
                 "backgroundColor": "#1C1D1F",
                 "shadowColor": "transparent",
                 "zIndex": 999,
@@ -155,7 +156,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "display": "flex",
                 "flexDirection": "row",
                 "height": 60,
@@ -165,7 +166,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "flex": 1,
                   "flexDirection": "row",
                 }
@@ -173,7 +174,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flex": 1,
                     "flexDirection": "row",
@@ -184,18 +185,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               >
                 <Text
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#F2F2F2",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Bold",
                       },
-                      Object {
+                      {
                         "fontSize": 24,
                         "lineHeight": 32,
                       },
-                      Object {
+                      {
                         "textAlign": "left",
                       },
                     ]
@@ -206,7 +207,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "flex-end",
@@ -216,12 +217,29 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "marginRight": 16,
                     }
                   }
                 >
                   <View
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": undefined,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     collapsable={false}
                     focusable={true}
@@ -238,9 +256,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     <View
                       collapsable={false}
                       style={
-                        Object {
-                          "transform": Array [
-                            Object {
+                        {
+                          "transform": [
+                            {
                               "scale": 1,
                             },
                           ],
@@ -249,7 +267,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flexGrow": 1,
                             "justifyContent": "center",
@@ -258,13 +276,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "borderRadius": 200,
                                 "overflow": "hidden",
                                 "padding": 6.4,
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#404e53",
                               },
                             ]
@@ -272,8 +290,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "height": 20,
@@ -288,18 +306,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               allowFontScaling={false}
                               selectable={false}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "color": "#F2F2F2",
                                     "fontSize": 18.400000000000002,
                                   },
-                                  Object {},
-                                  Object {
+                                  {},
+                                  {
                                     "fontFamily": "Material Design Icons",
                                     "fontStyle": "normal",
                                     "fontWeight": "normal",
                                   },
-                                  Object {},
+                                  {},
                                 ]
                               }
                             >
@@ -312,6 +330,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </View>
                 </View>
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -328,9 +363,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -339,13 +374,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Array [
-                          Object {
+                        [
+                          {
                             "borderRadius": 200,
                             "overflow": "hidden",
                             "padding": 6.4,
                           },
-                          Object {
+                          {
                             "backgroundColor": "#404e53",
                           },
                         ]
@@ -353,8 +388,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 20,
@@ -369,18 +404,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#F2F2F2",
                                 "fontSize": 19.2,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Ionicons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -396,12 +431,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
               },
-              Object {
+              {
                 "backgroundColor": "#1C1D1F",
               },
             ]
@@ -409,14 +444,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <RCTScrollView
             contentContainerStyle={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 8,
                 },
-                Object {
+                {
                   "paddingLeft": 12,
                 },
-                Object {
+                {
                   "flex": 1,
                   "paddingBottom": 0,
                   "paddingLeft": 0,
@@ -429,8 +464,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             <View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -440,6 +475,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -453,14 +505,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -472,9 +524,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -483,15 +535,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -499,7 +551,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -507,18 +559,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#FFD048",
                                 "fontSize": 24,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Material Icons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -528,7 +580,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -536,18 +588,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#FFD048",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -560,12 +612,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#FFD048",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -574,9 +626,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -587,8 +639,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -598,6 +650,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -611,14 +680,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -630,9 +699,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -641,15 +710,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -657,7 +726,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -665,18 +734,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#AEB0B8",
                                 "fontSize": 22.080000000000002,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Material Icons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -686,7 +755,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -694,18 +763,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -718,12 +787,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#53565A",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -732,9 +801,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -745,8 +814,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -756,6 +825,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -769,14 +855,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -788,9 +874,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -799,15 +885,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -815,7 +901,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -823,18 +909,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#AEB0B8",
                                 "fontSize": 22.080000000000002,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Material Design Icons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -844,7 +930,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -852,18 +938,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -876,12 +962,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#53565A",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -890,9 +976,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -903,8 +989,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -914,6 +1000,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -927,14 +1030,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -946,9 +1049,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -957,15 +1060,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -973,7 +1076,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -981,18 +1084,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#AEB0B8",
                                 "fontSize": 19.200000000000003,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "FontAwesome",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -1002,7 +1105,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -1010,18 +1113,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -1034,12 +1137,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#53565A",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -1048,9 +1151,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -1061,8 +1164,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -1072,6 +1175,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -1085,14 +1205,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -1104,9 +1224,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -1115,15 +1235,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -1131,7 +1251,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -1139,18 +1259,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#AEB0B8",
                                 "fontSize": 23.04,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Material Icons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -1160,7 +1280,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -1168,18 +1288,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -1192,12 +1312,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#53565A",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -1206,9 +1326,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -1219,8 +1339,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "alignItems": "center",
                       "flex": 1,
                       "flexDirection": "row",
@@ -1230,6 +1350,23 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -1243,14 +1380,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "column",
                         "justifyContent": "center",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "flex": 1,
                           "height": 52,
                           "paddingBottom": 3,
@@ -1262,9 +1399,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     collapsable={false}
                     style={
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "scale": 1,
                           },
                         ],
@@ -1273,15 +1410,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                         }
                       }
                     >
                       <View
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 24,
@@ -1289,7 +1426,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "overflow": "hidden",
                               "width": 24,
                             },
-                            Object {},
+                            {},
                           ]
                         }
                       >
@@ -1297,18 +1434,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           allowFontScaling={false}
                           selectable={false}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "color": "#AEB0B8",
                                 "fontSize": 24.96,
                               },
-                              Object {},
-                              Object {
+                              {},
+                              {
                                 "fontFamily": "Material Design Icons",
                                 "fontStyle": "normal",
                                 "fontWeight": "normal",
                               },
-                              Object {},
+                              {},
                             ]
                           }
                         >
@@ -1318,7 +1455,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Object {
+                        {
                           "marginTop": 1,
                         }
                       }
@@ -1326,18 +1463,18 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       <Text
                         numberOfLines={1}
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto-Medium",
                             },
-                            Object {
+                            {
                               "fontSize": 10,
                               "lineHeight": 16,
                             },
-                            Object {
+                            {
                               "textAlign": "center",
                             },
                           ]
@@ -1350,12 +1487,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Array [
-                        Object {
+                    [
+                      [
+                        {
                           "backgroundColor": "#53565A",
                         },
-                        Object {
+                        {
                           "bottom": -2.5,
                           "height": 3,
                           "left": 0,
@@ -1364,9 +1501,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           "zIndex": 100,
                         },
                       ],
-                      Object {
-                        "transform": Array [
-                          Object {
+                      {
+                        "transform": [
+                          {
                             "translateY": 0,
                           },
                         ],
@@ -1383,8 +1520,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         color="#b9bbc0"
         onLayout={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "marginTop": 48,
             },
           ]
@@ -1393,10 +1530,10 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     </View>
   </RCTScrollView>
   <InteractionsBottomSheet
-    entity={Object {}}
+    entity={{}}
     keepOpen={false}
     snapPoints={
-      Array [
+      [
         "90%",
       ]
     }

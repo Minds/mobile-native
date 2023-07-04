@@ -27,6 +27,7 @@ export default function AppMessageProvider({ children }) {
   }, [ThemedStyles.theme]);
   return (
     <ThemeProvider theme={theme}>
+      {/* @ts-ignore TODO: Add children type to the fork*/}
       <ToastProvider position="TOP" offset={20} maxToasts={5}>
         <ToastContext.Consumer>
           {({ toast }) => {

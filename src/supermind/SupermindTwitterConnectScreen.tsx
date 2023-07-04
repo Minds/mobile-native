@@ -101,9 +101,8 @@ export const ensureTwitterConnected = async navigation => {
     /**
      * Get twitter config
      */
-    const {
-      twitter_oauth2_connected,
-    } = await apiService.get<TwitterConfigResponse>('api/v3/twitter/config');
+    const { twitter_oauth2_connected } =
+      await apiService.get<TwitterConfigResponse>('api/v3/twitter/config');
 
     /**
      * Open twitter connect screen if twitter wasn't connected

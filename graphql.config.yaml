@@ -1,0 +1,4 @@
+schema:
+  - https://cms.oke.minds.io/graphql:
+      headers:
+        admin-secret: 'no-secret'

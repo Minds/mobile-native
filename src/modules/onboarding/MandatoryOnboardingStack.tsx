@@ -13,13 +13,11 @@ export type OnboardingStackParamList = {
 };
 
 export type OnboardingStackScreenProps<
-  S extends keyof OnboardingStackParamList
+  S extends keyof OnboardingStackParamList,
 > = StackScreenProps<OnboardingStackParamList, S>;
 
-const {
-  Navigator,
-  Screen,
-} = createNativeStackNavigator<OnboardingStackParamList>();
+const { Navigator, Screen } =
+  createNativeStackNavigator<OnboardingStackParamList>();
 
 /**
  * Mandatory Onboarding Navigation Stack

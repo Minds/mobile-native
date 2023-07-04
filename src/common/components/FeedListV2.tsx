@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, ViewToken } from 'react-native';
+import { RefreshControl, View, ViewToken } from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
@@ -14,6 +14,9 @@ import ErrorLoading from '~/common/components/ErrorLoading';
 import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import ErrorBoundary from './ErrorBoundary';
+import { IS_IOS } from '~/config/Config';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -21,13 +24,14 @@ type PlaceholderType =
   | null
   | undefined;
 
-export type FeedListPropsType<T extends BaseModel> = {
+export type FeedListProps<T extends BaseModel> = {
   feedStore: FeedStore<T>;
   hideContent?: boolean;
   emptyMessage?: React.ReactElement;
   onRefresh?: () => Promise<any>;
   afterRefresh?: () => void;
   displayBoosts?: 'none' | 'distinct';
+  emphasizeGroup?: boolean;
   placeholder?: PlaceholderType;
 } & Omit<
   FlashListProps<T>,
@@ -35,7 +39,7 @@ export type FeedListPropsType<T extends BaseModel> = {
 >;
 
 function FeedList<T extends BaseModel>(
-  props: FeedListPropsType<T>,
+  props: FeedListProps<T>,
   ref: React.Ref<FlashList<T>>,
 ) {
   const {
@@ -44,7 +48,9 @@ function FeedList<T extends BaseModel>(
     placeholder,
     emptyMessage,
     refreshing,
+    afterRefresh,
     feedStore,
+    emphasizeGroup,
     ...other
   } = props;
 
@@ -52,19 +58,35 @@ function FeedList<T extends BaseModel>(
 
   const items: Array<any> = !hideContent ? feedStore.entities.slice() : [];
 
+  const refresh = useCallback(async () => {
+    await feedStore.refresh();
+    if (afterRefresh) {
+      afterRefresh();
+    }
+  }, [afterRefresh, feedStore]);
+
   const renderActivity = useCallback(
     (row: { index: number; item: any; target: string }) => {
       const entity = row.item;
+      const InjectedComponent =
+        entity instanceof InjectItem ? entity.component : null;
       return (
-        <Activity
-          entity={entity}
-          displayBoosts={displayBoosts}
-          navigation={navigation}
-          autoHeight={false}
-        />
+        <ErrorBoundary>
+          {entity instanceof InjectItem && InjectedComponent ? (
+            <InjectedComponent {...row} />
+          ) : (
+            <Activity
+              entity={entity}
+              navigation={navigation}
+              displayBoosts={displayBoosts}
+              emphasizeGroup={emphasizeGroup}
+              autoHeight={false}
+            />
+          )}
+        </ErrorBoundary>
       );
     },
-    [navigation, displayBoosts],
+    [navigation, displayBoosts, emphasizeGroup],
   );
 
   const footerRender = useCallback(
@@ -84,7 +106,19 @@ function FeedList<T extends BaseModel>(
       refreshing={
         typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
       }
+      refreshControl={
+        <RefreshControl
+          refreshing={
+            typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
+          }
+          onRefresh={refresh}
+          progressViewOffset={IS_IOS ? 0 : 80}
+          tintColor={ThemedStyles.getColor('Link')}
+          colors={[ThemedStyles.getColor('Link')]}
+        />
+      }
       onEndReachedThreshold={5}
+      drawDistance={700}
       renderItem={renderActivity}
       keyExtractor={keyExtractor}
       ListFooterComponent={footerRender}
@@ -176,7 +210,7 @@ const viewabilityConfig = {
 
 export const FeedListV2 = observer(
   React.forwardRef(FeedList) as <T extends BaseModel>(
-    props: FeedListPropsType<T> & {
+    props: FeedListProps<T> & {
       ref?: React.Ref<FlashList<T>>;
     },
   ) => React.ReactElement,

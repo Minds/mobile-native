@@ -45,6 +45,7 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   AffiliateProgram: undefined;
@@ -130,6 +131,8 @@ export type RootStackParamList = {
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
+  GroupsDiscovery: {};
+  GroupView: {};
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
@@ -357,10 +360,8 @@ export type AboutScreenNavigationProp = StackNavigationProp<
   'About'
 >;
 
-export type AppStackScreenProps<
-  T extends keyof AppStackParamList
-> = NativeStackScreenProps<AppStackParamList, T>;
+export type AppStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
 
-export type RootStackScreenProps<
-  T extends keyof RootStackParamList
-> = NativeStackScreenProps<RootStackParamList, T>;
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;

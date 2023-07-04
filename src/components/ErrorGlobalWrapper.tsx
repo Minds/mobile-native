@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, PropsWithChildren } from 'react';
 import ErrorBoundary from '~/common/components/ErrorBoundary';
 
 export type ErrorGlobalWrapperProps = {
@@ -11,10 +11,9 @@ export type ErrorGlobalWrapperProps = {
   ) => void;
 };
 
-export const ErrorGlobalWrapper: FunctionComponent<ErrorGlobalWrapperProps> = ({
-  children,
-  ...props
-}): JSX.Element => {
+export const ErrorGlobalWrapper: FunctionComponent<
+  PropsWithChildren<ErrorGlobalWrapperProps>
+> = ({ children, ...props }): JSX.Element => {
   // const [reset, setReset] = useState(false);
 
   // const onReset = () => {

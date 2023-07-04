@@ -141,6 +141,7 @@ export default function MediaViewImage({
       testID="Posted Image">
       <SmartImage
         contentFit={mode}
+        transition={100}
         style={imageStyle}
         source={source}
         onLoad={onLoadImage}

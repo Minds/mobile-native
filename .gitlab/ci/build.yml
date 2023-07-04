@@ -3,34 +3,11 @@
   needs: ['test:quality']
   interruptible: true
 
-.prepare_build_ios: &prepare_build_ios # tags: [saas-macos-medium-m1]
-  image: macos-12-xcode-14
-  tags: [saas-macos-medium-m1]
-  artifacts:
-    name: 'Minds IPA'
-    paths:
-      - 'ios/Minds.ipa'
-    expire_in: 45 days
-    when: on_success
-  before_script:
-    - 'mkdir -p ~/.ssh' # we github to the known_hosts file (fix hanging when cloning secrets repo)
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/load-secure-files/-/raw/main/installer" | bash
-    - mv .secure_files/id_rsa ~/.ssh/id_rsa
-    - echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=' >> ~/.ssh/known_hosts
-    - eval $(ssh-agent -s)
-    - chmod 700 ~/.ssh
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-add ~/.ssh/id_rsa
-    - yarn install --frozen-lockfile
-    - cd ios
-    - pod install
-
 # Android common build steps
 .prepare_build_android: &prepare_build_android
   image: msantang78/ci-mobile-android:latest
   tags: [minds-ci]
   before_script:
-    # PREPARE
     - !reference [.getversion, script]
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
@@ -52,86 +29,58 @@
 .move_apk: &move_apk
   - mv app/build/outputs/apk/release/app-release.apk ../$APK_NAME
 
-# Gets the version of the iOS app parsing the project files
-.getiosversion: &getiosversion
-  - export FASTLANE_DISABLE_COLORS=1
-  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
-  - echo "APPVERSION=$APPVERSION"
-
-# Build the QA iOS app for each MR and upload it to browserstack
-build:ios_mr:
-  <<: *prepare_build_ios
-  extends:
-    - .build_base
-    - .except_nightly
-    - .only_native
-  # artifacts:
-  #   expire_in: 1 day
-  #   when: on_failure
-  #   public: false
-  #   paths:
-  #     - ios/ios-job.log
+# Builds iOS production ipa
+build:ios:
+  image: macos-12-xcode-14
+  tags: [saas-macos-medium-m1]
+  artifacts:
+    name: 'Minds IPA'
+    paths:
+      - 'ios/Minds.ipa'
+    expire_in: 45 days
+    when: on_success
+  before_script:
+    - 'mkdir -p ~/.ssh' # we github to the known_hosts file (fix hanging when cloning secrets repo)
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/load-secure-files/-/raw/main/installer" | bash
+    - mv .secure_files/id_rsa ~/.ssh/id_rsa
+    - echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=' >> ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - chmod 700 ~/.ssh
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-add ~/.ssh/id_rsa
+    - yarn install --frozen-lockfile --ignore-engines
+    - cd ios
+    - pod install
+  extends: .build_base
   script:
-    - export ENVFILE=".env.review"
-    - fastlane buildrelease | tee -a ios-job.log
-    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME"
-
-# Build iOS RC for develop branch
-build:ios_release_candidate:
-  <<: *prepare_build_ios
-  extends:
-    - .build_base
-    - .rule_automatic_develop_manual_master
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_RC"}'
-
-# Build iOS for master branch
-build:ios_production:
-  <<: *prepare_build_ios
-  extends:
-    - .build_base
-    - .rule_automatic_nonpatch_manual_patch
-  script:
-    - *getiosversion
-    - fastlane buildrelease
-    - export TARGET_NAME=Minds-$APPVERSION.ipa
-    - cd ..
-    - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@ios/Minds.ipa;filename=$TARGET_NAME" -F 'data={"custom_id":"IOS_PRODUCTION"}'
+    - fastlane buildrelease # | tee -a ios-job.log
+  rules:
+    - !reference [.rule_automatic_nonpatch_manual_others, rules]
+    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_native_branch, rules]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    - when: manual
 
 # Build Android production Full Version (Higher version code)
-build:androidproduction:
+build:android:
   <<: *prepare_build_android
   extends: .build_base
   script:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
-    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
-      when: never
+    - !reference [.rule_version_tag, rules]
+    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_never_mr_pipes, rules]
+    - when: manual
 
 # Production build for QA of MR
-build:android_mr_production:
+# Runs only on native branches
+build:android:mr:
   <<: *prepare_build_android
-  extends:
-    - .build_base
-    - .except_nightly
-    - .only_native
+  extends: .build_base
   variables:
     APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   cache:
@@ -151,6 +100,29 @@ build:android_mr_production:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://minds-repo.s3.amazonaws.com/mobile/$APK_FILENAME
     on_stop: build:cleanup
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_native_branch, rules]
+    - !reference [.rule_custom_tag, rules]
+
+# Play store version (Lowest version code)
+build:android:store:
+  <<: *prepare_build_android
+  extends:
+    - .build_base
+    - .rule_version_tag
+  script:
+    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
+    - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
+    - bundle exec fastlane assemble_build
+    - *move_apk
+  rules:
+    - !reference [.rule_version_tag, rules]
+    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_never_mr_pipes, rules]
+    - when: manual
 
 # Cleanup APK from merged MRs
 build:cleanup:
@@ -179,19 +151,3 @@ build:cleanup:
     - !reference [.delete_browserstack, script]
     - export TARGET_NAME=$IPA_FILENAME
     - !reference [.delete_browserstack, script]
-
-# Play store version (Lowest version code)
-build:androidproduction-playstore:
-  <<: *prepare_build_android
-  extends:
-    - .build_base
-  script:
-    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
-    - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
-    - bundle exec fastlane assemble_build
-    - *move_apk
-  rules:
-    - !reference [.rule_automatic_nonpatch_manual_patch, rules]
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual

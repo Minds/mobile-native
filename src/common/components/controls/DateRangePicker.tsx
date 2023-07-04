@@ -9,6 +9,7 @@ import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sh
 import { Calendar } from 'react-native-calendars';
 import { UIUnitType } from '~/styles/Tokens';
 import useModernTheme from './useModernTheme';
+import moment from 'moment';
 
 export type DateRangePickerPropsType = {
   spacing?: UIUnitType;
@@ -161,15 +162,28 @@ const DateRangePicker = observer((props: DateRangePickerPropsType) => {
     }
   }, [localStore]);
 
+  const maxDate = props.maximumDate
+    ? moment(props.maximumDate).format('YYYY-MM-DD')
+    : undefined;
+  const minDate = props.minimumDate
+    ? moment(props.minimumDate).format('YYYY-MM-DD')
+    : undefined;
+
+  const currentDate = localStore.endDate || localStore.startDate;
+
+  const currentDateString = currentDate
+    ? moment(currentDate).format('YYYY-MM-DD')
+    : undefined;
+
   // Render -------------------------------------------------
   return (
     <PressableLine onPress={localStore.openPicker} style={props.containerStyle}>
       {<props.inputComponent text={localStore.confirmedText} />}
       <BottomSheetModal ref={ref} onDismiss={localStore.send}>
         <Calendar
-          current={localStore.endDate || localStore.startDate}
-          maxDate={props.maximumDate}
-          minDate={props.minimumDate}
+          current={currentDateString}
+          maxDate={maxDate}
+          minDate={minDate}
           markedDates={localStore.marks}
           markingType={'period'}
           onDayPress={localStore.setDate}

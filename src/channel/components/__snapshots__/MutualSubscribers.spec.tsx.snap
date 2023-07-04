@@ -4,38 +4,38 @@ exports[`MutualSubscribers renders correctly 1`] = `
 <AnimatedHeight>
   <Spacer
     containerStyle={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexDirection": "row",
           "justifyContent": "flex-start",
         },
-        Object {
+        {
           "alignItems": "center",
         },
-        Object {
+        {
           "width": "100%",
         },
-        Object {
+        {
           "borderBottomWidth": 0.5,
         },
-        Object {
+        {
           "borderColor": "#323C3F",
         },
       ]
     }
-    navigation={Object {}}
+    navigation={{}}
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
+          {
             "paddingRight": 20,
           },
         ]
@@ -44,7 +44,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
       <ChannelAvatar
         key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -52,7 +52,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -83,8 +83,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -94,16 +94,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -115,11 +115,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
@@ -128,7 +128,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
       <ChannelAvatar
         key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -136,7 +136,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -167,8 +167,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -178,16 +178,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -199,11 +199,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
@@ -212,7 +212,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
       <ChannelAvatar
         key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -220,7 +220,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -251,8 +251,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -262,16 +262,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -283,11 +283,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
@@ -296,15 +296,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
           },
-          Object {
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
+          {
             "flexWrap": "wrap",
           },
         ]
@@ -315,8 +315,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
         limit={3}
         total={10}
         users={
-          Array [
-            Object {
+          [
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -324,7 +324,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -355,8 +355,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -366,16 +366,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -387,15 +387,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },
-            Object {
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -403,7 +403,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -434,8 +434,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -445,16 +445,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -466,15 +466,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },
-            Object {
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -482,7 +482,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -513,8 +513,8 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -524,16 +524,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -545,11 +545,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },

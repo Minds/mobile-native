@@ -3,9 +3,9 @@
 exports[`Partials tests renders correctly HeroPartial 1`] = `
 <View
   style={
-    Array [
-      Array [
-        Object {
+    [
+      [
+        {
           "flexDirection": "column",
           "paddingHorizontal": 0,
           "paddingTop": 0,
@@ -16,15 +16,15 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
 >
   <View
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "height": 100,
             "width": 100,
           },
         ],
-        Array [
-          Object {
+        [
+          {
             "height": 444.6666666666667,
             "width": "100%",
           },
@@ -38,20 +38,20 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
       onLoadEnd={[Function]}
       onProgress={[Function]}
       source={
-        Object {
+        {
           "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
         }
       }
       style={
-        Array [
-          Array [
-            Object {
+        [
+          [
+            {
               "height": 100,
               "width": 100,
             },
           ],
-          Array [
-            Object {
+          [
+            {
               "height": 444.6666666666667,
               "width": "100%",
             },
@@ -62,17 +62,17 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "borderBottomWidth": 1,
           "display": "flex",
           "flexDirection": "row",
         },
-        Object {
+        {
           "padding": 16,
         },
-        Object {
+        {
           "borderColor": "#53565A",
         },
       ]
@@ -80,8 +80,8 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "paddingRight": 10,
           },
@@ -90,15 +90,15 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 16,
                 "fontWeight": "bold",
               },
@@ -111,18 +111,18 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "paddingTop": 8,
               },
-              Object {
+              {
                 "color": "#b9bbc0",
               },
             ],
@@ -142,17 +142,17 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
 exports[`Partials tests renders correctly RichPartial 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "borderBottomWidth": 1,
         "display": "flex",
         "flexDirection": "row",
       },
-      Object {
+      {
         "padding": 16,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -160,8 +160,8 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "paddingRight": 10,
         },
@@ -170,15 +170,15 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "fontWeight": "bold",
             },
@@ -191,18 +191,18 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
     </Text>
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "paddingTop": 8,
             },
-            Object {
+            {
               "color": "#b9bbc0",
             },
           ],
@@ -217,9 +217,9 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
   </View>
   <View
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "height": 100,
             "width": 100,
           },
@@ -234,14 +234,14 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
       onLoadEnd={[Function]}
       onProgress={[Function]}
       source={
-        Object {
+        {
           "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
         }
       }
       style={
-        Array [
-          Array [
-            Object {
+        [
+          [
+            {
               "height": 100,
               "width": 100,
             },
@@ -257,17 +257,17 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
 exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "borderBottomWidth": 1,
         "display": "flex",
         "flexDirection": "row",
       },
-      Object {
+      {
         "padding": 16,
       },
-      Object {
+      {
         "borderColor": "#53565A",
       },
     ]
@@ -275,8 +275,8 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "paddingRight": 10,
         },
@@ -285,18 +285,18 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "paddingBottom": 8,
             },
-            Object {
+            {
               "color": "#b9bbc0",
             },
           ],
@@ -311,15 +311,15 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
     </Text>
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#F2F2F2",
           },
-          Object {
+          {
             "fontFamily": "Roboto",
           },
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "fontWeight": "bold",
             },
@@ -333,15 +333,15 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "overflow": "hidden",
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignSelf": "center",
           },
         ]
@@ -349,7 +349,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "backgroundColor": "transparent",
             "justifyContent": "center",
@@ -360,20 +360,20 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
           allowFontScaling={false}
           selectable={false}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#a1a5ab",
                 "fontSize": 32,
               },
-              Object {
+              {
                 "backgroundColor": "transparent",
               },
-              Object {
+              {
                 "fontFamily": "Material Design Icons",
                 "fontStyle": "normal",
                 "fontWeight": "normal",
               },
-              Object {},
+              {},
             ]
           }
           testID="iconIcon"

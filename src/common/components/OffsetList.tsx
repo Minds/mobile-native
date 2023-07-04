@@ -12,6 +12,7 @@ import {
   ListRenderItem,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  RefreshControl,
   StyleProp,
   View,
   ViewStyle,
@@ -22,6 +23,7 @@ import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
+import { IS_IOS } from '../../config/Config';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -56,7 +58,9 @@ export default observer(
   forwardRef(function OffsetList(props: PropsType, ref: any) {
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
-    const [offset, setOffset] = useState<string | number>('');
+    const [offset, setOffset] = useState<string | number>(
+      props.offsetPagination ? 0 : '',
+    );
     const [page, setPage] = useState<number>(1);
     const listRef = React.useRef<FlatList>(null);
     const offsetField = props.offsetField || 'offset';
@@ -116,7 +120,7 @@ export default observer(
 
     // =====================| PROVIDED METHODS |=====================>
     useImperativeHandle(ref, () => ({
-      refreshList: () => fetchStore.refresh(),
+      refreshList: () => _refresh(),
       scrollToTop: () =>
         listRef.current?.scrollToOffset({ offset: 0, animated: true }),
     }));
@@ -130,6 +134,10 @@ export default observer(
     // =====================| METHODS |=====================>
 
     const _refresh = React.useCallback(() => {
+      if (fetchStore.loading) {
+        return;
+      }
+
       props.offsetPagination ? setPage(1) : setOffset('');
       fetchStore.refresh();
     }, [props.offsetPagination, fetchStore]);
@@ -219,10 +227,18 @@ export default observer(
         data={data}
         renderItem={renderItem}
         ListFooterComponent={loadingFooter}
-        ListEmptyComponent={props.ListEmptyComponent}
+        ListEmptyComponent={!fetchStore.loading && props.ListEmptyComponent}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
-        onRefresh={_refresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={!!fetchStore.refreshing}
+            onRefresh={_refresh}
+            progressViewOffset={IS_IOS ? 0 : 80}
+            tintColor={ThemedStyles.getColor('Link')}
+            colors={[ThemedStyles.getColor('Link')]}
+          />
+        }
         onScroll={props.onScroll}
         refreshing={fetchStore.refreshing}
         contentContainerStyle={props.contentContainerStyle}

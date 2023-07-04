@@ -16,7 +16,7 @@ const HITSLOP = {
 
 type PropsType = {
   group: GroupModel;
-  onPress?: Function;
+  onPress?: () => void;
   hideButton?: boolean;
   index?: number;
   noNavigate?: boolean;
@@ -25,16 +25,22 @@ type PropsType = {
 type ButtonPropsType = {
   group: GroupModel;
   index?: number;
+  onPress?: () => void;
 };
 
-const JoinButton = observer(({ group, index }: ButtonPropsType) => {
+const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
   const isMember = group['is:member'];
-  let onPress;
-  if (isMember) {
-    onPress = () => group.leave();
-  } else {
-    onPress = group.can(FLAG_JOIN, true) ? () => group.join() : () => {};
-  }
+
+  const onPress = useCallback(() => {
+    if (isMember) {
+      group.leave();
+    } else {
+      if (group.can(FLAG_JOIN, true)) {
+        group.join();
+        props.onPress?.();
+      }
+    }
+  }, [group, isMember, props]);
 
   return (
     <Button
@@ -76,11 +82,18 @@ const GroupsListItem = observer((props: PropsType) => {
 
   return (
     <MenuItem
+      alignTop
       avatar={avatarSource?.source}
       title={group.name}
       onPress={_onPress}
       icon={
-        !props.hideButton && <JoinButton index={props.index} group={group} />
+        !props.hideButton && (
+          <JoinButton
+            index={props.index}
+            group={group}
+            onPress={props.onPress}
+          />
+        )
       }
       borderless>
       <>

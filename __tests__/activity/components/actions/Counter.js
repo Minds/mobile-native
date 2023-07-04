@@ -7,8 +7,6 @@ describe('Counter component', () => {
   let screen;
   beforeEach(() => {
     screen = renderer.create(<Counter count={100} />);
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {

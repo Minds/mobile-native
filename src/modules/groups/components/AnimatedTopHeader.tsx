@@ -81,7 +81,7 @@ export default function AnimatedTopHeader({
           reverseColor={ThemedStyles.getColor('PrimaryText')}
         />
         <Animated.View style={titleStyle}>
-          <H4>{group.name}</H4>
+          <H4 numberOfLines={1}>{group.name}</H4>
         </Animated.View>
         <SmallCircleButton
           name="search"

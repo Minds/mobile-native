@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChannelRecommendationItem renders correctly 1`] = `
+<MPressable
+  onPress={[Function]}
+>
+  <Row
+    horizontal="L"
+    vertical="S"
+  >
+    <withSpacer()
+      right="M"
+      size="tiny"
+      source={{}}
+      top="XS"
+    />
+    <Column
+      align="centerStart"
+      flex={true}
+      right="L"
+    >
+      <B1
+        font="bold"
+      >
+        Some User
+      </B1>
+    </Column>
+    <Subscribe
+      channel={
+        {
+          "access_id": "2",
+          "allow_comments": true,
+          "banned": "no",
+          "blocked": false,
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": "2",
+          "briefdescription": "",
+          "canary": false,
+          "categories": [
+            "music",
+            "nature",
+            "news",
+            "politics",
+            "science",
+            "technology",
+            "education",
+            "art",
+            "health",
+          ],
+          "chat": true,
+          "city": "",
+          "confirmEmail": [Function],
+          "container_guid": "0",
+          "deleted": "0",
+          "disable_autoplay_videos": undefined,
+          "disabled_boost": false,
+          "dob": "",
+          "email_confirmed": false,
+          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": "725165605782560768",
+          "founder": false,
+          "gender": "private",
+          "getAvatarSource": [MockFunction] {
+            "calls": [
+              [
+                "medium",
+              ],
+            ],
+            "results": [
+              {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "groupsCount": 0,
+          "guid": "123",
+          "icontime": "1523515420",
+          "impressions": 100,
+          "isOwner": [Function],
+          "is_admin": false,
+          "language": "en",
+          "last_accepted_tos": 0,
+          "legacy_guid": false,
+          "mature": "1",
+          "mature_channel": "0",
+          "mature_visibility": false,
+          "merchant": {
+            "exclusive": {
+              "amount": "10",
+              "enabled": true,
+            },
+            "id": "acct_Dsdfjdlsaf34243",
+            "service": "stripe",
+          },
+          "mode": 0,
+          "monetized": "",
+          "name": "Some User",
+          "nsfw": [],
+          "onchain_booster": 0,
+          "owner_guid": "0",
+          "pending_subscribe": false,
+          "permissions": {},
+          "pinned_posts": [],
+          "plus": true,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "programs": [
+            "affiliate",
+          ],
+          "rating": "1",
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": [],
+          "spam": "0",
+          "subscribed": false,
+          "subscriber": true,
+          "subscribers_count": 50,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "tags": [],
+          "time_created": "1468113204",
+          "time_updated": false,
+          "type": "user",
+          "urn": "",
+          "username": "someusermane",
+          "verified": true,
+          "website": "",
+          "wire_rewards": {
+            "description": "",
+            "rewards": {
+              "money": [],
+              "points": [],
+            },
+          },
+        }
+      }
+      mini={true}
+      shouldUpdateFeed={false}
+    />
+  </Row>
+</MPressable>
+`;
+
+exports[`Recommendation renders correctly 1`] = `
+<RecommendationProvider
+  location="feed"
+  types={
+    [
+      "channel",
+    ]
+  }
+>
+  <RecommendationHeader
+    location="feed"
+    type="channel"
+  />
+  <RecommendationBody
+    location="feed"
+    type="channel"
+  />
+</RecommendationProvider>
+`;

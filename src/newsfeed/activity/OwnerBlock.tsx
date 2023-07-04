@@ -20,7 +20,16 @@ import { NavigationProp } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
-import { B1, B2, B3, Row, HairlineRow, IconNext, HairlineColumn } from '~ui';
+import {
+  B1,
+  B2,
+  B3,
+  Row,
+  HairlineRow,
+  IconNext,
+  HairlineColumn,
+  Avatar,
+} from '~ui';
 import { IS_IOS } from '~/config/Config';
 import NewsfeedHeader from '../NewsfeedHeader';
 
@@ -36,6 +45,7 @@ type PropsType = {
   storeUserTap?: boolean;
   searchResultStore: SearchResultStoreType;
   displayBoosts?: 'none' | 'distinct';
+  emphasizeGroup?: boolean;
 };
 
 const getLastRoute = (navigation: NavigationProp<any>) => {
@@ -56,6 +66,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   containerStyle: any;
 
   static contextType = ChannelContext;
+  declare context: React.ContextType<typeof ChannelContext>;
 
   /**
    * Navigate To channel
@@ -101,7 +112,28 @@ class OwnerBlock extends PureComponent<PropsType> {
     }
   };
 
-  get group() {
+  get avatar() {
+    const channel = this.props.entity.ownerObj;
+
+    const groupAvatarSource = this.props.emphasizeGroup
+      ? this.props.entity.containerObj?.getAvatar?.()?.source
+      : undefined;
+
+    return (
+      <Avatar
+        source={groupAvatarSource ?? this.avatarSrc}
+        size={'tiny'}
+        subAvatarSource={groupAvatarSource ? this.avatarSrc : undefined}
+        recyclingKey={
+          this.props.emphasizeGroup
+            ? this.props.entity.containerObj?.guid + channel.guid
+            : channel.guid
+        }
+      />
+    );
+  }
+
+  get groupLink() {
     if (!this.props.entity.containerObj || this.props.children) {
       return null;
     }
@@ -110,6 +142,20 @@ class OwnerBlock extends PureComponent<PropsType> {
       <DebouncedTouchableOpacity onPress={this._navToGroup}>
         <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
+        </MText>
+      </DebouncedTouchableOpacity>
+    );
+  }
+
+  get nameLink() {
+    const channel = this.props.entity.ownerObj;
+    const name =
+      channel.name && channel.name !== channel.username ? channel.name : '';
+
+    return (
+      <DebouncedTouchableOpacity onPress={this._onNavToChannelPress}>
+        <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
+          {name || channel.username}
         </MText>
       </DebouncedTouchableOpacity>
     );
@@ -132,6 +178,9 @@ class OwnerBlock extends PureComponent<PropsType> {
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
     this.avatarSrc = this.props.entity.ownerObj.getAvatarSource();
+
+    const groupEmphasized =
+      this.props.emphasizeGroup && this.props.entity.containerObj;
 
     // Remind header
     const remind = this.props.entity.remind_users ? (
@@ -198,7 +247,10 @@ class OwnerBlock extends PureComponent<PropsType> {
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}
-          <TouchableOpacity onPress={this._onNavToChannelPress}>
+          <TouchableOpacity
+            onPress={
+              groupEmphasized ? this._navToGroup : this._onNavToChannelPress
+            }>
             {blurAvatar ? (
               <Image
                 source={this.avatarSrc}
@@ -207,30 +259,34 @@ class OwnerBlock extends PureComponent<PropsType> {
                 blurRadius={IS_IOS ? 12 : 7}
               />
             ) : (
-              <Image
-                source={this.avatarSrc}
-                style={styles.avatar}
-                recyclingKey={channel.guid}
-              />
+              this.avatar
             )}
           </TouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>
               <View pointerEvents="box-none" style={nameTouchableStyle}>
-                <B1
-                  numberOfLines={1}
-                  font="bold"
-                  onPress={this._onNavToChannelPress}>
-                  {name || channel.username}
-                  {Boolean(name) && (
-                    <B2 font="bold" color="secondary" numberOfLines={1}>
-                      {' '}
-                      @{channel.username}
-                    </B2>
-                  )}
-                </B1>
+                {groupEmphasized ? (
+                  <B1 numberOfLines={1} font="bold" onPress={this._navToGroup}>
+                    {this.props.entity.containerObj!.name}
+                  </B1>
+                ) : (
+                  <B1
+                    numberOfLines={1}
+                    font="bold"
+                    onPress={this._onNavToChannelPress}>
+                    {name || channel.username}
+                    {Boolean(name) && (
+                      <B2 font="bold" color="secondary" numberOfLines={1}>
+                        {' '}
+                        @{channel.username}
+                      </B2>
+                    )}
+                  </B1>
+                )}
               </View>
-              {this.group}
+
+              {groupEmphasized ? this.nameLink : this.groupLink}
+
               {this.props.children}
             </View>
           </View>

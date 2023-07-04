@@ -1,17 +1,16 @@
+import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { View } from 'react-native';
-import { styles as headerStyles } from '~/topbar/Topbar';
-import { observer } from 'mobx-react-lite';
-import { useNavigation } from '@react-navigation/native';
-
-import { B2, H4, Row, Icon } from '~/common/ui';
-import i18nService from '~/common/services/i18n.service';
+import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
+import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-import MenuSheet from '../bottom-sheet/MenuSheet';
+import i18nService from '~/common/services/i18n.service';
+import { B2, H4, Icon, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
-import FeedListInvisibleHeader from '../FeedListInvisibleHeader';
+import { styles as headerStyles } from '~/topbar/Topbar';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
+import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
 
 type PropsType = {
   location: string;

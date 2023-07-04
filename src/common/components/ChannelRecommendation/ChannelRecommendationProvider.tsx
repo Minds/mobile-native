@@ -9,9 +9,8 @@ export type ChannelRecommendationContextType =
   | ChannelRecommendationStore
   | undefined;
 
-export const ChannelRecommendationContext = createContext<ChannelRecommendationContextType>(
-  undefined,
-);
+export const ChannelRecommendationContext =
+  createContext<ChannelRecommendationContextType>(undefined);
 
 type ProviderPropTypes = {
   children: React.ReactNode;

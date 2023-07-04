@@ -41,9 +41,8 @@ export type PosterStackParamList = {
 
 const Stack = createStackNavigator<PosterStackParamList>();
 
-export type PosterStackScreenProps<
-  T extends keyof PosterStackParamList
-> = StackScreenProps<PosterStackParamList, T>;
+export type PosterStackScreenProps<T extends keyof PosterStackParamList> =
+  StackScreenProps<PosterStackParamList, T>;
 
 const screenOptions = {
   ...TransitionPresets.SlideFromRightIOS,

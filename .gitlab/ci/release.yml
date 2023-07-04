@@ -1,11 +1,11 @@
-release:android_production:
-  extends: .only_tags
+release:android:apk:
+  extends: .rule_version_tag_manual
   image: cimg/aws:2022.06.1
   stage: release
   tags: [minds-ci]
   dependencies:
-    - build:androidproduction
-    - upload:s3:oss
+    - build:android
+  needs: [build:android]
   before_script:
     - node -v
     - yarn install
@@ -16,8 +16,8 @@ release:android_production:
     - yarn release-json Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
-release:android_google_play:
-  extends: .only_tags
+release:android:google_play:
+  extends: .rule_version_tag
   image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
@@ -32,36 +32,37 @@ release:android_google_play:
     - echo "Upload to the play store $APK_NAME"
     - bundle exec fastlane supply --apk ../$APK_NAME
   dependencies:
-    - build:androidproduction-playstore
+    - build:android:store
+  needs: [build:android:store]
 
 # iOS Release candidate to TestFlight
-release:ios_rc_testflight:
-  extends: .except_nightly
+release:ios:testflight:rc:
   image: macos-12-xcode-14
   stage: release
   tags: [saas-macos-medium-m1]
   environment: testflight
   dependencies:
-    - build:ios_release_candidate
+    - build:ios
+  needs: [build:ios]
   interruptible: true
   when: manual
   script:
     - cd ios
     - fastlane upload_testflight
-  only:
-    refs:
-      - develop
-      - master
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
 
 # iOS production to TestFlight
-release:ios_prod_testflight:
-  extends: .only_tags
+release:ios:testflight:
+  extends: .rule_tags
   image: macos-12-xcode-14
   stage: release
   tags: [saas-macos-medium-m1]
   environment: app_store
   dependencies:
-    - build:ios_production
+    - build:ios
+  needs: [build:ios]
   interruptible: true
   script:
     - cd ios

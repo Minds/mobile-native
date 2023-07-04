@@ -3,19 +3,16 @@ import { Contract } from 'web3-eth-contract';
 
 import logService from '../../../common/services/log.service';
 import mindsConfigService from '../../../common/services/minds-config.service';
-import type { WCStore } from '../walletconnect/WalletConnectContext';
 
 export type TransactionResponse = { transactionHash: string };
 export type ContractName = 'token' | 'wire' | 'boost' | 'withdraw';
 
 export default abstract class ContractServiceAbstract {
   web3: Web3;
-  wc: WCStore;
   contractInstances = new Map<string, Contract>();
 
-  constructor(web3: Web3, wc: WCStore) {
+  constructor(web3: Web3) {
     this.web3 = web3;
-    this.wc = wc;
   }
 
   /**
@@ -86,7 +83,6 @@ export default abstract class ContractServiceAbstract {
         .once('transactionHash', hash => resolve({ transactionHash: hash }))
         .once('error', e => reject(e));
       // use deep linking to bring focus to the wallet app
-      this.wc.openWalletApp();
     });
   }
 

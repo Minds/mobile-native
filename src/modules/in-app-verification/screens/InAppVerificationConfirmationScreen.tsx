@@ -8,7 +8,8 @@ import { InAppVerificationStackNavigationProp } from '../InAppVerificationStack'
 import { useTranslation } from '../locales';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
-type NavigationProp = InAppVerificationStackNavigationProp<'InAppVerificationConfirmation'>;
+type NavigationProp =
+  InAppVerificationStackNavigationProp<'InAppVerificationConfirmation'>;
 
 function InAppVerificationConfirmationScreen() {
   const navigation = useNavigation<NavigationProp>();

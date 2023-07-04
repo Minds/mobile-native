@@ -4,14 +4,14 @@ import React, { FC, useCallback, useState } from 'react';
 import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
+import MPressable from '~/common/components/MPressable';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import i18n from '~/common/services/i18n.service';
 import { Avatar, B1, B2, Column, Icon, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import MPressable from '../MPressable';
+import { hasVariation } from '../../../../ExperimentsProvider';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
-import { hasVariation } from '../../../../ExperimentsProvider';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;

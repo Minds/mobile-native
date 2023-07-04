@@ -211,12 +211,12 @@ export class InFeedNoticesService {
    * @returns boolean
    */
   visible(noticeName: NoticeName) {
-    return (
+    return Boolean(
       this.data &&
-      this.data.some(
-        notice => notice.should_show && notice.key === noticeName,
-      ) &&
-      !this.isDismissed(noticeName)
+        this.data.some(
+          notice => notice.should_show && notice.key === noticeName,
+        ) &&
+        !this.isDismissed(noticeName),
     );
   }
 }

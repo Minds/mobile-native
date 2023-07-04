@@ -62,6 +62,7 @@ export default observer(function LoginForm(props: PropsType) {
     <InputContainer
       placeholder={i18n.t('auth.username')}
       onChangeText={localStore.setUsername}
+      selectionColor={ThemedStyles.getColor('Link')}
       autoComplete="username"
       textContentType="username"
       value={localStore.username}
@@ -90,6 +91,7 @@ export default observer(function LoginForm(props: PropsType) {
           <PasswordInput
             ref={passwordRef}
             placeholder={i18n.t('auth.password')}
+            selectionColor={ThemedStyles.getColor('Link')}
             autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
@@ -107,7 +109,6 @@ export default observer(function LoginForm(props: PropsType) {
           />
         </View>
         <Button
-          mode="outline"
           type="action"
           testID="loginButton"
           spinner

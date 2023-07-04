@@ -26,38 +26,39 @@ const defaultMap = data => data;
 /**
  * a function that merges the new state with the old state
  */
-const mergeState = (dataField: string, map = defaultMap) => (
-  newData: ApiFetchType,
-  oldData: ApiFetchType,
-) =>
-  dataField
-    ? ({
-        ...newData,
-        [dataField]: [
-          ...(oldData ? oldData[dataField] : []),
-          ...map(newData && newData[dataField] ? newData[dataField] : []),
-        ],
-      } as ApiFetchType)
-    : [...(oldData ? (oldData as Array<any>) : []), ...map(newData || [])];
+const mergeState =
+  (dataField: string, map = defaultMap) =>
+  (newData: ApiFetchType, oldData: ApiFetchType) =>
+    dataField
+      ? ({
+          ...newData,
+          [dataField]: [
+            ...(oldData ? oldData[dataField] : []),
+            ...map(newData && newData[dataField] ? newData[dataField] : []),
+          ],
+        } as ApiFetchType)
+      : [...(oldData ? (oldData as Array<any>) : []), ...map(newData || [])];
 
 /**
  * a function that replaces the state with the new state
  */
-const replaceState = (dataField: string, map = defaultMap) => (newData: any) =>
-  dataField
-    ? {
-        ...newData,
-        [dataField]: [
-          ...map(newData && newData[dataField] ? newData[dataField] : []),
-        ],
-      }
-    : newData
-    ? map(newData)
-    : [];
+const replaceState =
+  (dataField: string, map = defaultMap) =>
+  (newData: any) =>
+    dataField
+      ? {
+          ...newData,
+          [dataField]: [
+            ...map(newData && newData[dataField] ? newData[dataField] : []),
+          ],
+        }
+      : newData
+      ? map(newData)
+      : [];
 
 type MethodType = 'get' | 'post' | 'put' | 'delete';
 
-export interface FetchOptions<P = unknown> {
+export interface FetchOptions<P = any> {
   updateState?: (newData: any, oldData: any) => any;
   params?: P;
   persist?: boolean;
@@ -189,22 +190,16 @@ const createStore = (storeOptions: {
     if (!data) {
       data = storeOptions.options?.params || {};
     }
-    let {
-      updateState,
-      offsetField,
-      dataField,
-      updateStrategy,
-      map,
-      persist,
-    } = Object.assign(
-      {
-        updateStrategy: 'replace',
-        offsetField: 'load-next',
-        dataField: 'entities',
-      },
-      storeOptions.options,
-      opts,
-    );
+    let { updateState, offsetField, dataField, updateStrategy, map, persist } =
+      Object.assign(
+        {
+          updateStrategy: 'replace',
+          offsetField: 'load-next',
+          dataField: 'entities',
+        },
+        storeOptions.options,
+        opts,
+      );
     this.clearRetryTimer(!retry);
 
     if (!updateState) {
@@ -233,7 +228,7 @@ const createStore = (storeOptions: {
       );
 
       // hack to remove the offset if the result was empty
-      if (dataField && result[dataField]?.length === 0) {
+      if (result && dataField && result[dataField]?.length === 0) {
         delete result[offsetField];
       }
 

@@ -8,7 +8,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import type BaseModel from '../BaseModel';
 import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
-import FeedList, { FeedListPropsType } from './FeedList';
+import { StyleSheet, View } from 'react-native';
+import { FeedListProps, FeedListV2 } from './FeedListV2';
 
 /**
  * Animated header
@@ -38,11 +39,20 @@ const Header = ({ children, translationY, onHeight }) => {
 
 const MIN_SCROLL_THRESHOLD = 5;
 
+const AnimatedFeedListV2 = Animated.createAnimatedComponent(
+  FeedListV2 as any,
+) as any;
+
+type FeedListStickyProps<T extends BaseModel> = FeedListProps<T> & {
+  header?: React.ReactElement;
+  bottomComponent?: React.ReactNode;
+};
+
 /**
  * Feed list with reanimated sticky header
  */
 function FeedListSticky<T extends BaseModel>(
-  props: FeedListPropsType<T>,
+  props: FeedListStickyProps<T>,
   ref: any,
 ) {
   const translationY = useSharedValue(0);
@@ -107,29 +117,35 @@ function FeedListSticky<T extends BaseModel>(
     },
   });
 
-  const contentStyle = React.useMemo(() => ({ paddingTop: headerHeight }), [
-    headerHeight,
-  ]);
+  const contentStyle = React.useMemo(
+    () => ({ paddingTop: headerHeight }),
+    [headerHeight],
+  );
 
   return (
     <ScrollContext.Provider
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
-      <FeedList
-        ref={ref}
-        {...otherProps}
-        onScroll={scrollHandler}
-        contentContainerStyle={contentStyle}
-        bottomComponent={
-          <>
-            <Header translationY={translationY} onHeight={setHeaderHeight}>
-              {header}
-            </Header>
-            {props.bottomComponent}
-          </>
-        }
-      />
+      <View style={styles.container}>
+        <AnimatedFeedListV2
+          ref={ref}
+          {...otherProps}
+          onScroll={scrollHandler}
+          contentContainerStyle={contentStyle}
+        />
+        <Header translationY={translationY} onHeight={setHeaderHeight}>
+          {header}
+        </Header>
+        {props.bottomComponent}
+      </View>
     </ScrollContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden',
+    flex: 1,
+  },
+});
 
 export default React.forwardRef(FeedListSticky);

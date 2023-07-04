@@ -94,9 +94,10 @@ const supportTiersService = new SupportTiersService();
 
 export default supportTiersService;
 
-export const useSupportTiers = () => {
+export const useSupportTiers = (skip?: boolean) => {
   const store = useApiFetch<SupportTiersResponse>('api/v3/wire/supporttiers', {
     persist: true,
+    skip,
   });
 
   return {

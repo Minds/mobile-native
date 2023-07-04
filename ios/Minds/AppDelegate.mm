@@ -10,92 +10,56 @@
 #import <React/RCTConvert.h>
 // end custom imports
 
-
-#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
 
-#import <React/RCTAppSetupUtils.h>
-
-#if RCT_NEW_ARCH_ENABLED
-#import <React/CoreModulesPlugins.h>
-#import <React/RCTCxxBridgeDelegate.h>
-#import <React/RCTFabricSurfaceHostingProxyRootView.h>
-#import <React/RCTSurfacePresenter.h>
-#import <React/RCTSurfacePresenterBridgeAdapter.h>
-#import <ReactCommon/RCTTurboModuleManager.h>
-
-#import <react/config/ReactNativeConfig.h>
-
-@interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
-  RCTTurboModuleManager *_turboModuleManager;
-  RCTSurfacePresenterBridgeAdapter *_bridgeAdapter;
-  std::shared_ptr<const facebook::react::ReactNativeConfig> _reactNativeConfig;
-  facebook::react::ContextContainer::Shared _contextContainer;
-}
-@end
-#endif
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  RCTAppSetupPrepareApp(application);
-
-  RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
-
-#if RCT_NEW_ARCH_ENABLED
-  _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
-  _reactNativeConfig = std::make_shared<facebook::react::EmptyReactNativeConfig const>();
-  _contextContainer->insert("ReactNativeConfig", _reactNativeConfig);
-  _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
-  bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
-#endif
-
-  UIView *rootView = [self.reactDelegate createRootViewWithBridge:bridge moduleName:@"Minds" initialProperties:nil];
-
-  if (@available(iOS 13.0, *)) {
-    rootView.backgroundColor = [UIColor systemBackgroundColor];
-  } else {
-    rootView.backgroundColor = [UIColor whiteColor];
-  }
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [self.reactDelegate createRootViewController];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-
-  // minds packages init
-  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+  self.moduleName = @"Minds";
+  // You can add your custom initial props in the dictionary below.
+  // They will be passed down to the ViewController used by React Native.
+  self.initialProps = @{};
 
   [RNNotifications startMonitorNotifications];
 
-  [ReactNativeExceptionHandler replaceNativeExceptionHandlerBlock:^(NSException *exception, NSString *readeableException){
+  // [ReactNativeExceptionHandler replaceNativeExceptionHandlerBlock:^(NSException *exception, NSString *readeableException){
 
-    //We create an alert box
-    UIAlertController* alert = [UIAlertController
-                                alertControllerWithTitle:@"An error occurred"
-                                message: @"Apologies..The app will close now \nPlease restart the app\n"
-                                preferredStyle:UIAlertControllerStyleAlert];
+  //   //We create an alert box
+  //   UIAlertController* alert = [UIAlertController
+  //                               alertControllerWithTitle:@"An error occurred"
+  //                               message: @"Apologies..The app will close now \nPlease restart the app\n"
+  //                               preferredStyle:UIAlertControllerStyleAlert];
 
-    // We show the alert box using the rootViewController
-    [rootViewController presentViewController:alert animated:YES completion:nil];
+  //   // We show the alert box using the rootViewController
+  //   [rootViewController presentViewController:alert animated:YES completion:nil];
 
-    // Hence we set a timer of 4 secs and then call the method releaseExceptionHold to quit the app after
-    // 4 secs of showing the popup
-    [NSTimer scheduledTimerWithTimeInterval:4.0
-                                     target:[ReactNativeExceptionHandler class]
-                                   selector:@selector(releaseExceptionHold)
-                                   userInfo:nil
-                                    repeats:NO];
+  //   // Hence we set a timer of 4 secs and then call the method releaseExceptionHold to quit the app after
+  //   // 4 secs of showing the popup
+  //   [NSTimer scheduledTimerWithTimeInterval:4.0
+  //                                    target:[ReactNativeExceptionHandler class]
+  //                                  selector:@selector(releaseExceptionHold)
+  //                                  userInfo:nil
+  //                                   repeats:NO];
 
-    // or  you can call
-    // [ReactNativeExceptionHandler releaseExceptionHold]; when you are done to release the UI lock.
-  }];
+  //   // or  you can call
+  //   // [ReactNativeExceptionHandler releaseExceptionHold]; when you are done to release the UI lock.
+  // }];
   // end minds packages init
-  [super application:application didFinishLaunchingWithOptions:launchOptions];
-  return YES;
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+- (UIView *)createRootViewWithBridge:(RCTBridge *)bridge
+                          moduleName:(NSString *)moduleName
+                           initProps:(NSDictionary *)initProps {
+  UIView *rootView = [super createRootViewWithBridge:bridge
+                                          moduleName:moduleName
+                                           initProps:initProps];
+
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+
+  return rootView;
 }
 
 // minds added methods
@@ -140,47 +104,19 @@
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [CodePush bundleURL];
+  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
 
-#if RCT_NEW_ARCH_ENABLED
-
-#pragma mark - RCTCxxBridgeDelegate
-
-- (std::unique_ptr<facebook::react::JSExecutorFactory>)jsExecutorFactoryForBridge:(RCTBridge *)bridge
+/// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
+///
+/// @see: https://reactjs.org/blog/2022/03/29/react-v18.html
+/// @note: This requires to be rendering on Fabric (i.e. on the New Architecture).
+/// @return: `true` if the `concurrentRoot` feature is enabled. Otherwise, it returns `false`.
+- (BOOL)concurrentRootEnabled
 {
-  _turboModuleManager = [[RCTTurboModuleManager alloc] initWithBridge:bridge
-                                                             delegate:self
-                                                            jsInvoker:bridge.jsCallInvoker];
-  return RCTAppSetupDefaultJsExecutorFactory(bridge, _turboModuleManager);
+  return true;
 }
 
-#pragma mark RCTTurboModuleManagerDelegate
-
-- (Class)getModuleClassFromName:(const char *)name
-{
-  return RCTCoreModulesClassProvider(name);
-}
-
-- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
-                                                      jsInvoker:(std::shared_ptr<facebook::react::CallInvoker>)jsInvoker
-{
-  return nullptr;
-}
-
-- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
-                                                     initParams:
-                                                         (const facebook::react::ObjCTurboModule::InitParams &)params
-{
-  return nullptr;
-}
-
-- (id<RCTTurboModule>)getModuleInstanceFromClass:(Class)moduleClass
-{
-  return RCTAppSetupDefaultModuleFromClass(moduleClass);
-}
-
-#endif
 
 @end

@@ -57,6 +57,7 @@ export default observer(function (props) {
     );
   } else {
     return (
+      //@ts-ignore missing children definition in old package
       <ImageZoom
         cropWidth={Dimensions.get('window').width}
         cropHeight={Dimensions.get('window').height}

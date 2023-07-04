@@ -22,19 +22,13 @@ function TwitterSyncScreen() {
   const minFollowers = mindsSettings.twitter?.min_followers_for_sync;
 
   const user = useCurrentUser();
-  const {
-    connectedAccount,
-    error: connectedAccountError,
-  } = useConnectedAccount();
-  const {
-    connectAccount,
-    loading: connectAccountLoading,
-  } = useConnectAccount();
+  const { connectedAccount, error: connectedAccountError } =
+    useConnectedAccount();
+  const { connectAccount, loading: connectAccountLoading } =
+    useConnectAccount();
   const { updateAccount } = useUpdateAccount();
-  const {
-    disconnectAccount,
-    loading: disconnectAccountLoading,
-  } = useDisconnectAccount();
+  const { disconnectAccount, loading: disconnectAccountLoading } =
+    useDisconnectAccount();
 
   const [twitterHandle, setTwitterHandle] = useState('');
   const [isValid, setIsValid] = useState(false);

@@ -27,7 +27,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
-import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import deviceInfo from 'react-native-device-info';
@@ -49,7 +48,7 @@ import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
-import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
+// import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
@@ -199,11 +198,13 @@ class App extends Component<Props> {
                                 <ErrorBoundary
                                   message="An error occurred"
                                   containerStyle={ThemedStyles.style.centered}>
+                                  {/* Wallet connect functionality is disabled for now
                                   <WCContextProvider>
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                  </WCContextProvider>
+                                  */}
+                                  <NavigationStack
+                                    key={ThemedStyles.theme + i18n.locale}
+                                  />
+                                  {/* </WCContextProvider> */}
                                 </ErrorBoundary>
                               </BottomSheetModalProvider>
                             </UIProvider>
@@ -234,6 +235,6 @@ const appContainerStyle = ThemedStyles.combine(
   },
 );
 
-if (__DEV__) {
-  require('tron');
-}
+// if (__DEV__) {
+//   require('tron');
+// }

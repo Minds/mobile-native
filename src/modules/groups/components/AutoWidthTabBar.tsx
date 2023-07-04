@@ -30,7 +30,7 @@ type TabsWidthType = { [index: number]: number };
  * Helper functions
  */
 const getActiveOpacityText = (
-  position: Animated.AnimatedInterpolation,
+  position: Animated.AnimatedInterpolation<number>,
   routes: Route[],
   tabIndex: number,
 ) => {
@@ -47,7 +47,7 @@ const getActiveOpacityText = (
 };
 
 const getTranslateX = (
-  position: Animated.AnimatedInterpolation,
+  position: Animated.AnimatedInterpolation<number>,
   routes: Route[],
   tabsWidth: TabsWidthType,
   contentWidth: number,
@@ -85,7 +85,7 @@ const getTranslateX = (
 };
 
 const getIndicatorScaleX = (
-  position: Animated.AnimatedInterpolation,
+  position: Animated.AnimatedInterpolation<number>,
   routes: Route[],
   tabsWidth: TabsWidthType,
   contentWidth: number,

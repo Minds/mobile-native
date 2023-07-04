@@ -1,4 +1,4 @@
-import React, { FC, RefObject } from 'react';
+import React, { FC, PropsWithChildren, RefObject } from 'react';
 import {
   HandlerStateChangeEvent,
   TapGestureHandler,
@@ -12,7 +12,12 @@ type PropsType = {
   device: CameraDevice;
 };
 
-const FocusGesture: FC<PropsType> = ({ store, children, device, camera }) => {
+const FocusGesture: FC<PropsWithChildren<PropsType>> = ({
+  store,
+  children,
+  device,
+  camera,
+}) => {
   const onFocus = React.useCallback(
     (tapEvent: HandlerStateChangeEvent) => {
       if (device?.supportsFocus) {

@@ -21,7 +21,6 @@ import PasswordInput from '../../common/components/password-input/PasswordInput'
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
-import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
@@ -208,6 +207,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     <View>
       <InputContainer
         placeholder={i18n.t('auth.username')}
+        selectionColor={ThemedStyles.getColor('Link', 1)}
         onChangeText={store.setUsername}
         onSubmitEditing={emailRef.current?.focus}
         value={store.username}
@@ -226,6 +226,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <InputContainer
         ref={emailRef}
         placeholder={i18n.t('auth.email')}
+        selectionColor={ThemedStyles.getColor('Link')}
         onChangeText={store.setEmail}
         onSubmitEditing={passwordRef.current?.focus}
         value={store.email}
@@ -251,6 +252,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       />
       <PasswordInput
         ref={passwordRef}
+        selectionColor={ThemedStyles.getColor('Link')}
         tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         showValidator={
           Boolean(store.password) && store.focused && !passValidation.all
@@ -278,60 +280,61 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   );
 
   return (
-    <KeyboardSpacingView style={theme.flexContainer} noInset>
-      <FitScrollView
-        ref={scrollViewRef}
-        keyboardShouldPersistTaps={'always'}
-        contentContainerStyle={theme.paddingBottom4x}>
-        <DismissKeyboard>
-          <>
-            {inputs}
-            <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-              <CheckBox
-                containerStyle={styles.checkboxTerm}
-                title={
-                  <MText style={styles.checkboxText}>
-                    {i18n.t('auth.accept')}{' '}
-                    <MText
-                      style={theme.link}
-                      onPress={() =>
-                        Linking.openURL('https://www.minds.com/p/terms')
-                      }>
-                      {i18n.t('auth.termsAndConditions')}
-                    </MText>
+    <FitScrollView
+      ref={scrollViewRef}
+      keyboardShouldPersistTaps={'always'}
+      contentContainerStyle={theme.paddingBottom4x}>
+      <DismissKeyboard>
+        <>
+          {inputs}
+          <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+            <CheckBox
+              checkedColor={ThemedStyles.getColor('Link')}
+              containerStyle={styles.checkboxTerm}
+              title={
+                <MText style={styles.checkboxText}>
+                  {i18n.t('auth.accept')}{' '}
+                  <MText
+                    style={theme.link}
+                    onPress={() =>
+                      Linking.openURL('https://www.minds.com/p/terms')
+                    }>
+                    {i18n.t('auth.termsAndConditions')}
                   </MText>
-                }
-                checked={store.termsAccepted}
-                onPress={store.toggleTerms}
-              />
-              <CheckBox
-                containerStyle={styles.checkboxPromotions}
-                title={
-                  <MText style={styles.checkboxText}>
-                    {i18n.t('auth.promotions')}
-                  </MText>
-                }
-                checked={store.exclusivePromotions}
-                onPress={store.togglePromotions}
-              />
-            </View>
-            <BottomSheetButton
-              onPress={store.onRegisterPress}
-              text={i18n.t('auth.createChannel')}
-              disabled={true || store.inProgress}
-              loading={store.inProgress}
-              testID="registerButton"
-              action
+                </MText>
+              }
+              checked={store.termsAccepted}
+              onPress={store.toggleTerms}
             />
-            <Captcha
-              ref={captchaRef}
-              onResult={store.onCaptchResult}
-              testID="captcha"
+            <CheckBox
+              checkedColor={ThemedStyles.getColor('Link')}
+              containerStyle={styles.checkboxPromotions}
+              title={
+                <MText style={styles.checkboxText}>
+                  {i18n.t('auth.promotions')}
+                </MText>
+              }
+              checked={store.exclusivePromotions}
+              onPress={store.togglePromotions}
             />
-          </>
-        </DismissKeyboard>
-      </FitScrollView>
-    </KeyboardSpacingView>
+          </View>
+          <BottomSheetButton
+            solid
+            onPress={store.onRegisterPress}
+            text={i18n.t('auth.createChannel')}
+            disabled={true || store.inProgress}
+            loading={store.inProgress}
+            testID="registerButton"
+            action
+          />
+          <Captcha
+            ref={captchaRef}
+            onResult={store.onCaptchResult}
+            testID="captcha"
+          />
+        </>
+      </DismissKeyboard>
+    </FitScrollView>
   );
 });
 

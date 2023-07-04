@@ -8,7 +8,8 @@ const config = {
   setupFiles: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!react-native|react-navigation|@unimodules/.*å)/',
+    'node_modules/(?!react-native|react-native-gesture-handler|react-navigation)/',
+    'jest-runner',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   snapshotSerializers: ['./node_modules/enzyme-to-json/serializer'],

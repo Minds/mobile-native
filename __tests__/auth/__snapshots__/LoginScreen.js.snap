@@ -3,26 +3,40 @@
 exports[`LoginScreen component should renders correctly 1`] = `
 <View>
   <View
-    style={
-      Object {
-        "transform": Array [
-          Object {
+    animate={
+      {
+        "transform": [
+          {
             "translateY": 0,
           },
         ],
       }
     }
+    style={
+      {
+        "transform": [
+          {
+            "translateY": 0,
+          },
+        ],
+      }
+    }
+    transition={
+      {
+        "mass": 0.3,
+      }
+    }
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "borderColor": "#53565A",
           },
-          Object {
+          {
             "borderBottomWidth": 1,
           },
-          Object {
+          {
             "minHeight": 55,
             "zIndex": 1,
           },
@@ -31,21 +45,21 @@ exports[`LoginScreen component should renders correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
               "right": 0,
               "top": 0,
             },
-            Object {
+            {
               "alignContent": "center",
               "alignItems": "center",
               "alignSelf": "center",
               "justifyContent": "center",
             },
-            Object {
+            {
               "minHeight": 55,
             },
           ]
@@ -53,21 +67,21 @@ exports[`LoginScreen component should renders correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 24,
                 "lineHeight": 32,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
-              Object {
+              {
                 "lineHeight": 26,
               },
             ]
@@ -78,7 +92,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -88,8 +102,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
               },
@@ -98,7 +112,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
                 "marginRight": 8,
@@ -107,6 +121,23 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -121,7 +152,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 }
@@ -129,7 +160,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
@@ -138,8 +169,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "flexDirection": "row",
                         "height": 28,
@@ -154,18 +185,18 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     allowFontScaling={false}
                     selectable={false}
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#AEB0B8",
                           "fontSize": 25.76,
                         },
-                        Object {},
-                        Object {
+                        {},
+                        {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Object {},
+                        {},
                       ]
                     }
                   >
@@ -182,20 +213,37 @@ exports[`LoginScreen component should renders correctly 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
     >
       <View
-        accessible={true}
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
         collapsable={false}
         focusable={true}
         onBlur={[Function]}
@@ -210,21 +258,21 @@ exports[`LoginScreen component should renders correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "paddingHorizontal": 16,
               },
-              Object {
+              {
                 "paddingTop": 8,
               },
-              Object {
+              {
                 "backgroundColor": "#1C1D1F",
               },
-              Object {
+              {
                 "borderTopWidth": 1,
               },
               null,
-              Object {
+              {
                 "borderColor": "#53565A",
               },
               undefined,
@@ -232,7 +280,24 @@ exports[`LoginScreen component should renders correctly 1`] = `
           }
         >
           <View
-            accessible={true}
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={false}
             collapsable={false}
             focusable={true}
             onBlur={[Function]}
@@ -247,7 +312,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "paddingBottom": 10,
                   "paddingTop": 5,
                 }
@@ -256,7 +321,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               <View>
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "stretch",
                       "flexDirection": "row",
                     }
@@ -264,31 +329,31 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 >
                   <Text
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#F2F2F2",
                         },
-                        Object {
+                        {
                           "fontFamily": "Roboto",
                         },
-                        Array [
-                          Object {
+                        [
+                          {
                             "fontFamily": "Roboto",
                             "fontSize": 16,
                             "fontWeight": "400",
                             "marginBottom": 0,
                           },
-                          Object {
+                          {
                             "color": "#b9bbc0",
                           },
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#b9bbc0",
                             },
-                            Object {
+                            {
                               "fontSize": 16,
                             },
-                            Object {
+                            {
                               "paddingLeft": 1,
                             },
                             undefined,
@@ -309,14 +374,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 keyboardAppearance="dark"
                 keyboardType="default"
                 labelStyle={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#b9bbc0",
                     },
-                    Object {
+                    {
                       "fontSize": 16,
                     },
-                    Object {
+                    {
                       "paddingLeft": 1,
                     },
                     undefined,
@@ -327,9 +392,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 placeholderTextColor="#a1a5ab"
                 returnKeyLabel="Next"
                 returnKeyType="next"
+                selectionColor="#FFD048"
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "backgroundColor": "transparent",
                       "borderColor": "#53565A",
                       "borderRadius": 2,
@@ -339,20 +405,20 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "fontSize": 16,
                       "lineHeight": 21,
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "borderWidth": 0,
                         "marginBottom": 7,
                         "paddingHorizontal": 0,
                         "paddingVertical": 6,
                       },
-                      Object {
+                      {
                         "paddingLeft": 1,
                       },
-                      Object {
+                      {
                         "fontSize": 18,
                       },
-                      Object {
+                      {
                         "color": "#F2F2F2",
                       },
                       undefined,
@@ -369,7 +435,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "marginBottom": 16,
             }
           }
@@ -377,23 +443,23 @@ exports[`LoginScreen component should renders correctly 1`] = `
           <View>
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "paddingHorizontal": 16,
                   },
-                  Object {
+                  {
                     "paddingTop": 8,
                   },
-                  Object {
+                  {
                     "backgroundColor": "#1C1D1F",
                   },
-                  Object {
+                  {
                     "borderTopWidth": 1,
                   },
-                  Object {
+                  {
                     "borderBottomWidth": 1,
                   },
-                  Object {
+                  {
                     "borderColor": "#53565A",
                   },
                   undefined,
@@ -401,7 +467,24 @@ exports[`LoginScreen component should renders correctly 1`] = `
               }
             >
               <View
-                accessible={true}
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={false}
                 collapsable={false}
                 focusable={true}
                 onBlur={[Function]}
@@ -416,7 +499,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "paddingBottom": 10,
                       "paddingTop": 5,
                     }
@@ -425,7 +508,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   <View>
                     <View
                       style={
-                        Object {
+                        {
                           "alignItems": "stretch",
                           "flexDirection": "row",
                         }
@@ -433,31 +516,31 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     >
                       <Text
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "color": "#F2F2F2",
                             },
-                            Object {
+                            {
                               "fontFamily": "Roboto",
                             },
-                            Array [
-                              Object {
+                            [
+                              {
                                 "fontFamily": "Roboto",
                                 "fontSize": 16,
                                 "fontWeight": "400",
                                 "marginBottom": 0,
                               },
-                              Object {
+                              {
                                 "color": "#b9bbc0",
                               },
-                              Array [
-                                Object {
+                              [
+                                {
                                   "color": "#b9bbc0",
                                 },
-                                Object {
+                                {
                                   "fontSize": 16,
                                 },
-                                Object {
+                                {
                                   "paddingLeft": 1,
                                 },
                                 undefined,
@@ -475,14 +558,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     autoComplete="password"
                     keyboardAppearance="dark"
                     labelStyle={
-                      Array [
-                        Object {
+                      [
+                        {
                           "color": "#b9bbc0",
                         },
-                        Object {
+                        {
                           "fontSize": 16,
                         },
-                        Object {
+                        {
                           "paddingLeft": 1,
                         },
                         undefined,
@@ -495,9 +578,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     returnKeyLabel="Submit"
                     returnKeyType="send"
                     secureTextEntry={true}
+                    selectionColor="#FFD048"
                     style={
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "transparent",
                           "borderColor": "#53565A",
                           "borderRadius": 2,
@@ -507,20 +591,20 @@ exports[`LoginScreen component should renders correctly 1`] = `
                           "fontSize": 16,
                           "lineHeight": 21,
                         },
-                        Array [
-                          Object {
+                        [
+                          {
                             "borderWidth": 0,
                             "marginBottom": 7,
                             "paddingHorizontal": 0,
                             "paddingVertical": 6,
                           },
-                          Object {
+                          {
                             "paddingLeft": 1,
                           },
-                          Object {
+                          {
                             "fontSize": 18,
                           },
-                          Object {
+                          {
                             "color": "#F2F2F2",
                           },
                           undefined,
@@ -540,27 +624,27 @@ exports[`LoginScreen component should renders correctly 1`] = `
               onPress={[Function]}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": undefined,
                     "fontSize": 25,
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "position": "absolute",
                       "right": 12,
                       "top": 30,
                     },
-                    Object {
+                    {
                       "color": "#b9bbc0",
                     },
                   ],
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
@@ -570,13 +654,30 @@ exports[`LoginScreen component should renders correctly 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "marginHorizontal": 20,
               "marginTop": 24,
             }
           }
         >
           <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -590,7 +691,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignSelf": "stretch",
               }
             }
@@ -598,8 +699,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "backgroundColor": "transparent",
                     "borderRadius": 100,
@@ -607,10 +708,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  Object {
+                  undefined,
+                  {
                     "minHeight": 42,
                     "paddingHorizontal": 24,
                     "paddingVertical": 2,
@@ -624,9 +723,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
-                    "borderColor": "#FFD048",
+                    "backgroundColor": "#FFD048",
+                    "borderColor": "transparent",
                     "borderRadius": 100,
                     "borderWidth": 1,
                     "bottom": 0,
@@ -641,9 +741,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 <View
                   collapsable={false}
                   style={
-                    Object {
-                      "transform": Array [
-                        Object {
+                    {
+                      "transform": [
+                        {
                           "scale": 0,
                         },
                       ],
@@ -651,7 +751,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   }
                 >
                   <ActivityIndicator
-                    color="#F2F2F2"
+                    color="black"
                     size="small"
                   />
                 </View>
@@ -659,8 +759,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                  {
+                    "backgroundColor": "rgba(0, 0, 0, 0.1)",
                     "bottom": 0,
                     "left": 0,
                     "opacity": 0,
@@ -673,9 +773,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
               <View
                 collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
+                  {
+                    "transform": [
+                      {
                         "scale": 1,
                       },
                     ],
@@ -685,18 +785,18 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 <Text
                   numberOfLines={1}
                   style={
-                    Array [
-                      Object {
-                        "color": "#F2F2F2",
+                    [
+                      {
+                        "color": "#000000",
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Medium",
                       },
-                      Object {
+                      {
                         "fontSize": 18,
                         "lineHeight": 24,
                       },
-                      Object {
+                      {
                         "textAlign": "left",
                       },
                     ]
@@ -710,7 +810,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "center",
@@ -719,10 +819,19 @@ exports[`LoginScreen component should renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
             accessible={true}
             focusable={true}
             hitSlop={
-              Object {
+              {
                 "bottom": 4,
                 "left": 4,
                 "right": 4,
@@ -737,18 +846,18 @@ exports[`LoginScreen component should renders correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 16,
                   "lineHeight": 24,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]

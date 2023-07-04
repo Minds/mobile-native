@@ -77,7 +77,7 @@ function SupermindConsoleScreen({
   const scrollY = useSharedValue(0);
 
   const scrollToTopAndRefresh = () => {
-    listRef.current?.scrollToTop();
+    listRef.current?.scrollToOffset({ offset: 0 });
     return listRef.current?.refreshList();
   };
 
@@ -126,7 +126,7 @@ function SupermindConsoleScreen({
     <Screen safe>
       <ScreenHeader
         title="Supermind"
-        onTitlePress={() => listRef.current?.scrollToTop()}
+        onTitlePress={() => listRef.current?.scrollToOffset({ offset: 0 })}
         extra={
           !onboarding && (
             <IconButton

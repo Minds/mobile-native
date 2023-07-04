@@ -169,6 +169,10 @@ const ICON_MAP = {
     name: 'user',
     ratio: 1.05,
   },
+  profile: {
+    font: 'MaterialIcons',
+    name: 'person',
+  },
   chat: {
     font: 'MaterialCommunityIcons',
     name: 'message-outline',
@@ -230,7 +234,7 @@ const ICON_MAP = {
   },
   analytics: {
     font: 'MaterialIcons',
-    name: 'analytics',
+    name: 'insights',
   },
   queue: {
     font: 'MaterialIcons',
@@ -349,6 +353,14 @@ const ICON_MAP = {
   'alpha-s-circle': {
     font: 'MaterialCommunityIcons',
     name: 'alpha-s-circle',
+  },
+  rocket: {
+    font: 'MaterialCommunityIcons',
+    name: 'rocket-launch',
+  },
+  alarm: {
+    font: 'MaterialIcons',
+    name: 'alarm',
   },
 } as const;
 

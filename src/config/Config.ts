@@ -28,6 +28,10 @@ export const CODE_PUSH_STAGING_KEY = IS_IOS
   ? RNConfig.CODEPUSH_STAGING_KEY_IOS
   : RNConfig.CODEPUSH_STAGING_KEY_ANDROID;
 
+export const CODE_PUSH_RC_KEY = IS_IOS
+  ? RNConfig.CODEPUSH_RC_KEY_IOS
+  : RNConfig.CODEPUSH_RC_KEY_ANDROID;
+
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
 
@@ -237,4 +241,15 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
     maxRetryAttempts: 2,
   },
   updateDialog: false,
+};
+
+type GraphQLConfig = Record<
+  'minds' | 'strapi',
+  { uri: string; accessToken?: string }
+>;
+
+export const GRAPHQL_CONFIG: GraphQLConfig = {
+  strapi: {
+    uri: 'https://cms.oke.minds.io/graphql',
+  },
 };

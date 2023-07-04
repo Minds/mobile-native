@@ -154,9 +154,10 @@ const DiscoveryTagsManager = (props: Props, ref) => {
     inputRef.current?.show();
   }, []);
 
-  const listHeight = React.useMemo(() => ({ height: (height - 60) * 0.6 }), [
-    height,
-  ]);
+  const listHeight = React.useMemo(
+    () => ({ height: (height - 60) * 0.6 }),
+    [height],
+  );
 
   const sections = [
     {

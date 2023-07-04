@@ -98,9 +98,8 @@ export const createVerificationStore = ({
   },
   async requestPermission() {
     const cameraStatus = await Camera.requestCameraPermission();
-    let {
-      status: geoStatus,
-    } = await Location.requestForegroundPermissionsAsync();
+    let { status: geoStatus } =
+      await Location.requestForegroundPermissionsAsync();
 
     this.hasPermission =
       cameraStatus === 'authorized' && geoStatus === 'granted';

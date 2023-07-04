@@ -122,6 +122,13 @@ export default function (props) {
       this.supermindObject = params.supermindObject;
       this.onSaveCallback = params.onSave;
 
+      if (params.audience) {
+        this.audience = params.audience;
+        if (this.audience.group) {
+          this.setGroup(this.audience.group);
+        }
+      }
+
       if (params.createMode) {
         this.setCreateMode(params.createMode, true);
       }
@@ -197,7 +204,7 @@ export default function (props) {
       if (mode === 'monetizedPost') {
         await pushAudienceSelector({
           store: this,
-          monetizedOnly: true,
+          mode: 'monetized',
         });
         if (
           this.audience.type !== 'membership' &&
@@ -210,7 +217,7 @@ export default function (props) {
       this.createMode = mode;
       return true;
     },
-    setGroup(group: GroupModel) {
+    setGroup(group: GroupModel | null) {
       this.group = group;
     },
     setScrollOffset(value: number) {
@@ -243,13 +250,13 @@ export default function (props) {
         popToTop();
       }
 
-      this.clear(false);
-
-      if (!isEdit) {
+      if (!isEdit && !this.time_created) {
         ActivityModel.events.emit('newPost', entity);
       } else {
         ActivityModel.events.emit('edited', entity);
       }
+
+      this.clear(false);
     },
     hydrateFromEntity() {
       const entity = this.entity;
@@ -298,8 +305,8 @@ export default function (props) {
         this.wire_threshold.min = value;
       }
     },
-    setTimeCreated(time) {
-      this.time_created = time;
+    setTimeCreated(time?: number | null) {
+      this.time_created = time ?? undefined;
     },
     toggleNsfw(opt) {
       if (opt === 0) {
@@ -714,6 +721,10 @@ export default function (props) {
           newPost.tags = this.tags;
         }
 
+        if (this.time_created) {
+          newPost.time_created = this.buildTimestamp(this.time_created);
+        }
+
         this.setPosting(true);
 
         const reqPromise = this.isEdit
@@ -825,6 +836,16 @@ export default function (props) {
     },
     get isSupermindReply() {
       return Boolean(this.supermindObject);
+    },
+    /**
+     * Builds a Unix timestamp based off current state (up to seconds)
+     */
+    buildTimestamp(timestamp: number): number | null {
+      const date = new Date(timestamp);
+
+      date.setSeconds(0);
+
+      return Math.floor(date.getTime() / 1000);
     },
   };
 }

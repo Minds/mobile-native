@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import CameraRoll from '@react-native-community/cameraroll';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 
 import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';

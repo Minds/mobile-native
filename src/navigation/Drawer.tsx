@@ -13,16 +13,17 @@ import {
   Column,
   HairlineSpacer,
   IconButton,
+  Icon,
   Avatar,
   Screen,
   PressableLine,
   Spacer,
 } from '~ui';
-// import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import { showNotification } from 'AppMessages';
 import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { MoreStackParamList } from './NavigationTypes';
+import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 
 type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
 
@@ -74,22 +75,21 @@ const getOptionsSmallList = navigation => {
 
 type Flags = Record<'isIosMindsHidden', boolean>;
 
+type MenuItem = {
+  name: string;
+  icon: IconNameType;
+  onPress: () => void;
+  testID?: string;
+} | null;
 const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
   const channel = sessionService.getUser();
-  let list = [
+  const list: MenuItem[] = [
     {
       name: i18n.t('settings.profile'),
-      icon: 'user',
+      icon: 'profile',
       testID: 'Drawer:channel',
       onPress: () => {
         navigation.push('Channel', { entity: channel });
-      },
-    },
-    {
-      name: i18n.t('settings.boostConsole'),
-      icon: 'trending-up',
-      onPress: () => {
-        navigation.push('BoostConsole');
       },
     },
     !isIosMindsHidden
@@ -102,7 +102,15 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         }
       : null,
     {
+      name: i18n.t('settings.boostConsole'),
+      icon: 'boost',
+      onPress: () => {
+        navigation.push('BoostConsole');
+      },
+    },
+    {
       name: 'Supermind',
+      icon: 'supermind',
       onPress: () => {
         navigation.navigate('SupermindConsole');
       },
@@ -115,9 +123,6 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('Wallet');
       },
     },
-  ];
-  list = [
-    ...list,
     {
       name: 'Analytics',
       icon: 'analytics',
@@ -241,23 +246,28 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   );
 };
 
+type DrawerNavItemProps = {
+  name: string;
+  icon?: IconMapNameType;
+  onPress: () => void;
+  small?: boolean;
+  testID?: string;
+};
 const DrawerNavItem = ({
+  icon,
   name,
   onPress,
   small,
   testID,
-}: {
-  icon;
-  name;
-  onPress;
-  small;
-  testID?;
-}) => {
+}: DrawerNavItemProps) => {
   const T = small ? B1 : H3;
   return (
     <PressableLine testID={testID} onPress={onPress}>
-      <Row align="centerStart" flex left="XL" vertical="M">
-        <T font={small ? 'regular' : 'bold'}>{name}</T>
+      <Row align="centerStart" flex left="XXL" vertical={small ? 'M' : 'L'}>
+        {icon ? <Icon name={icon} size={24} color="PrimaryText" /> : undefined}
+        <T left={icon ? 'L' : undefined} font={small ? 'regular' : 'bold'}>
+          {name}
+        </T>
       </Row>
     </PressableLine>
   );

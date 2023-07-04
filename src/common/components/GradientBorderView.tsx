@@ -18,10 +18,10 @@ export default function GradientBorderView({
   end,
   ...other
 }: PropsType) {
-  const containerStyle = React.useMemo(() => [style, { margin: borderWidth }], [
-    style,
-    borderWidth,
-  ]);
+  const containerStyle = React.useMemo(
+    () => [style, { margin: borderWidth }],
+    [style, borderWidth],
+  );
 
   return (
     <LinearGradient colors={colors} start={start} end={end}>

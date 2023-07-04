@@ -5,19 +5,19 @@ import { useHeaderTabContext } from 'showtime-tab-view';
 import { TabFlashListScrollView } from './TabFlashListScrollView';
 import type BaseModel from '~/common/BaseModel';
 import {
-  FeedListPropsType,
+  FeedListProps,
   FeedListV2,
 } from '../../../common/components/FeedListV2';
 
 export type TabFeedListProps<T extends BaseModel> = Omit<
-  FeedListPropsType<T>,
+  FeedListProps<T>,
   'renderScrollComponent'
 > & {
   index: number;
 };
 
 function TabFeedListComponent<T extends BaseModel>(
-  props: FeedListPropsType<T>,
+  props: FeedListProps<T>,
   ref: React.Ref<FlashList<T>>,
 ) {
   const { scrollViewPaddingTop } = useHeaderTabContext();
@@ -33,7 +33,7 @@ function TabFeedListComponent<T extends BaseModel>(
 }
 
 export const TabFeedList = React.forwardRef(TabFeedListComponent) as <
-  T extends BaseModel
+  T extends BaseModel,
 >(
   props: TabFeedListProps<T> & {
     ref?: React.Ref<FlashList<T>>;

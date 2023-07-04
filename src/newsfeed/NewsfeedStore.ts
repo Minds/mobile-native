@@ -7,10 +7,12 @@ import { FeedList } from '../common/components/FeedList';
 import FeedStore from '../common/stores/FeedStore';
 import ActivityModel from './ActivityModel';
 import NewsfeedService from './NewsfeedService';
+import { hasVariation } from 'ExperimentsProvider';
+import sessionService from '../common/services/session.service';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
-export type NewsfeedType = 'top' | 'latest';
+export type NewsfeedType = 'top' | 'latest' | 'foryou' | 'groups';
 
 /**
  * News feed store
@@ -50,6 +52,27 @@ class NewsfeedStore<T extends BaseModel> {
     );
 
   /**
+   * For you store
+   */
+  forYouStore = new FeedStore()
+    .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
+    .setParams({ unseen: true })
+    .setInjectBoost(false)
+    .setLimit(15);
+
+  /**
+   * Feed store
+   */
+  groupsFeedStore = new FeedStore()
+    .setEndpoint('api/v2/feeds/subscribed/activities')
+    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
+    .setInjectBoost(true)
+    .setLimit(12)
+    .setMetadata(
+      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
+    );
+
+  /**
    * List reference
    */
   listRef?: FeedList<T>;
@@ -70,8 +93,12 @@ class NewsfeedStore<T extends BaseModel> {
 
   get feedStore() {
     switch (this.feedType) {
+      case 'foryou':
+        return this.forYouStore;
       case 'top':
         return this.topFeedStore;
+      case 'groups':
+        return this.groupsFeedStore;
       case 'latest':
       default:
         return this.latestFeedStore;
@@ -82,7 +109,7 @@ class NewsfeedStore<T extends BaseModel> {
    * Change FeedType and refresh the feed
    */
   @action
-  changeFeedTypeChange = (feedType: NewsfeedType, refresh = false) => {
+  changeFeedType = (feedType: NewsfeedType, refresh = false) => {
     this.feedType = feedType;
     try {
       storages.user?.setString(FEED_TYPE_KEY, feedType);
@@ -124,24 +151,38 @@ class NewsfeedStore<T extends BaseModel> {
   public loadFeed = async (refresh?: boolean) => {
     if (!this.feedType) {
       try {
-        const storedFeedType = storages.user?.getString(
+        let storedFeedType = storages.user?.getString(
           FEED_TYPE_KEY,
         ) as NewsfeedType;
+
+        // in case we have stored the foryou tab and it's not in the experiment, we default to latest
+        if (
+          !hasVariation('mob-4938-newsfeed-for-you') &&
+          storedFeedType === 'foryou'
+        ) {
+          storages.user?.setString(FEED_TYPE_KEY, 'latest');
+          storedFeedType = 'latest';
+        }
 
         this.feedType = storedFeedType || 'latest';
       } catch (e) {
         console.error(e);
       }
     }
+
     // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
     if (this.feedType === 'top') {
       this.feedStore.clear();
+    } else if (this.feedType === 'groups') {
+      this.groupsFeedStore.setParams({
+        group_posts_for_user_guid: sessionService.getUser()?.guid,
+      });
     } else {
       // fetch highlights for the latests feed
       this.highlightsStore.fetch();
     }
 
-    this.feedStore.fetchLocalThenRemote(refresh);
+    this.feedStore.fetchRemoteOrLocal(refresh);
   };
 
   /**
@@ -149,7 +190,7 @@ class NewsfeedStore<T extends BaseModel> {
    */
   scrollToTop() {
     if (this.listRef) {
-      this.listRef.scrollToTop(false);
+      this.listRef.scrollToOffset({ offset: 0 });
     }
   }
 
@@ -172,6 +213,8 @@ class NewsfeedStore<T extends BaseModel> {
     this.highlightsStore.reset();
     this.latestFeedStore.reset();
     this.topFeedStore.reset();
+    this.forYouStore.reset();
+    this.groupsFeedStore.reset();
     this.feedType = undefined;
   }
 }

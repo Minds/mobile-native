@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   ForwardRefRenderFunction,
+  PropsWithChildren,
   useImperativeHandle,
   useState,
 } from 'react';
@@ -8,7 +9,8 @@ import { View } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FriendlyCaptcha from './FriendlyCaptcha';
 
-export let friendlyCaptchaReference: null | FriendlyCaptchaProviderHandle = null;
+export let friendlyCaptchaReference: null | FriendlyCaptchaProviderHandle =
+  null;
 
 export function setFriendlyCaptchaReference(ref) {
   friendlyCaptchaReference = ref;
@@ -32,7 +34,7 @@ interface FriendlyCaptchaProviderProps extends React.FunctionComponent {}
 
 const FriendlyCaptchaProvider: ForwardRefRenderFunction<
   FriendlyCaptchaProviderHandle,
-  FriendlyCaptchaProviderProps
+  PropsWithChildren<FriendlyCaptchaProviderProps>
 > = ({ children }, ref) => {
   const [captchas, setCaptchas] = useState<Captcha[]>([]);
 

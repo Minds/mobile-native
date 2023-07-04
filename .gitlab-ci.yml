@@ -1,5 +1,7 @@
 variables:
   APK_NAME: Minds.apk
+  NON_PATCH_REGEX: /^v[0-9]+\.[0-9]+\.0$/
+  VERSION_REGEX: /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
 include:
   - local: .gitlab/ci/test.yml
@@ -33,44 +35,42 @@ stages:
 # Run only for tags that ends on .0 (major, minor releases)
 .rule_nonpatch_release_manual:
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
+    - if: $CI_COMMIT_TAG =~ $NON_PATCH_REGEX
       when: manual
 
 # Run only for tags that ends on .0 (major, minor releases)
 .rule_nonpatch_release:
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
+    - if: $CI_COMMIT_TAG =~ $NON_PATCH_REGEX
 
 # Run for tags that ends on .0 (major, minor releases)
 .rule_nonpatch_release_success:
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
-      changes:
-        - master
+    - if: $CI_COMMIT_TAG =~ $NON_PATCH_REGEX
       when: on_success
 
 # Run only for tags that don't end on .0 (patch releases)
 .rule_patch_release:
   rules:
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
-      changes:
-        - master
+    - if: $CI_COMMIT_TAG =~ $VERSION_REGEX && $CI_COMMIT_TAG !~ $NON_PATCH_REGEX
 
-# Run only on master
-.only_master:
+# Run only on develop
+.only_develop:
   only:
     refs:
-      - master
+      - develop
 
 # Run only on tags
 .only_tags:
   only:
     refs:
       - tags
+
+# Run only on tags
+.rule_tags:
+  rules:
+    - if: $CI_COMMIT_TAG != null
+      when: on_success
 
 # Run only on nightly jobs
 .except_nightly:
@@ -79,30 +79,83 @@ stages:
       - $CI_RC_NIGHTLY_TESTS == "true"
       - $CI_PROD_NIGHTLY_TESTS == "true"
 
+# Run only on nightly jobs
+.rule_never_nightly:
+  rules:
+    - if: $CI_RC_NIGHTLY_TESTS == "true" && $CI_PROD_NIGHTLY_TESTS == "true"
+      when: never
+
+# Never on merge request pipes
+.rule_never_mr_pipes:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+
 # Run only on native branches
 .only_native:
   only:
     refs:
       - /^native-*/
 
-# Run automatic on develop branch and manually on master
-.rule_automatic_develop_manual_master:
+# Run automatic on develop branch and manually other
+.rule_automatic_master_manual_others:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
     - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH != "master"
+      when: manual
+
+# Run automatic on develop branch and manually on master
+.rule_automatic_master_manual_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: manual
 
 # Run automatic on nonpatch versions and manually on patch versions
 .rule_automatic_nonpatch_manual_patch:
   rules:
-    - if: $CI_COMMIT_TAG =~ /.*\.0$/
+    - if: $CI_COMMIT_TAG =~ $NON_PATCH_REGEX
       when: on_success
-    - if: $CI_COMMIT_TAG !~ /.*\.0$/ && $CI_COMMIT_TAG != null
+    - if: $CI_COMMIT_TAG =~ $VERSION_REGEX && $CI_COMMIT_TAG !~ $NON_PATCH_REGEX
       when: manual
 
-# Run automatic on develop only
-.rule_automatic_develop:
+# Run automatic on nonpatch versions and manually on patch versions
+.rule_automatic_nonpatch_manual_others:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_TAG =~ $NON_PATCH_REGEX
+      when: on_success
+    - if: $CI_COMMIT_TAG != null
+      when: manual
+
+# Run automatic on master only
+.rule_automatic_master:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+
+.rule_release_branch:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release\/v[0-9]+\.[0-9]+\.[0-9]+$/
+      when: on_success
+
+.rule_native_branch:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^native\/.*/
+      when: on_success
+
+.rule_version_tag:
+  rules:
+    - if: $CI_COMMIT_TAG =~ $VERSION_REGEX
+      when: on_success
+
+.rule_version_tag_manual:
+  rules:
+    - if: $CI_COMMIT_TAG =~ $VERSION_REGEX
+      when: manual
+
+.rule_custom_tag:
+  rules:
+    - if: $CI_COMMIT_TAG != null && $CI_COMMIT_TAG !~ $VERSION_REGEX
       when: on_success

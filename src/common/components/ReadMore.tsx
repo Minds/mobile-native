@@ -52,8 +52,8 @@ type PropsType = {
   text: string;
   style?: TextStyle | Array<TextStyle>;
   navigation: any;
-  renderTruncatedFooter?: React.ReactNode;
-  renderRevealedFooter?: React.ReactNode;
+  renderTruncatedFooter?: React.ReactNode | ((any) => React.ReactNode);
+  renderRevealedFooter?: React.ReactNode | ((any) => React.ReactNode);
 };
 
 export default function ReadMore({

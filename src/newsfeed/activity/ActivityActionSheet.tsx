@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
 import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  WithSafeAreaInsetsProps,
+  withSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import { IconButtonNext } from '~ui/icons';
 import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
@@ -31,13 +34,10 @@ type PropsType = {
   onTranslate?: Function;
   testID?: string;
   navigation: any;
-  insets?: {
-    bottom: number;
-  };
   channel?: UserModel;
   isChatHidden?: boolean;
   onVisibilityChange?: (visible: boolean) => void;
-};
+} & WithSafeAreaInsetsProps;
 
 type StateType = {
   options: Array<any>;
@@ -49,6 +49,7 @@ type StateType = {
  */
 class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   static contextType = GroupContext;
+  declare context: React.ContextType<typeof GroupContext>;
   ref = React.createRef<BottomSheetModalType>();
   shareMenuRef = React.createRef<BottomSheetModalType>();
   deleteOption: React.ReactNode;
@@ -496,4 +497,4 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
     ),
   });
 
-export default withSafeAreaInsets(withChannelContext(ActivityActionSheet));
+export default withChannelContext(withSafeAreaInsets(ActivityActionSheet));

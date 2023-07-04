@@ -3,17 +3,17 @@
 exports[`Update Screen Component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "flex": 1,
       },
-      Object {
+      {
         "backgroundColor": "#38393D",
       },
-      Object {
+      {
         "alignItems": "center",
       },
-      Object {
+      {
         "justifyContent": "center",
       },
     ]
@@ -21,20 +21,20 @@ exports[`Update Screen Component renders correctly 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignContent": "center",
           "alignItems": "center",
           "alignSelf": "center",
           "justifyContent": "center",
         },
-        Object {
+        {
           "padding": 20,
         },
-        Object {
+        {
           "borderRadius": 14,
         },
-        Object {
+        {
           "backgroundColor": "#1C1D1F",
         },
       ]
@@ -43,12 +43,12 @@ exports[`Update Screen Component renders correctly 1`] = `
     <Image
       resizeMode="contain"
       source={
-        Object {
+        {
           "testUri": "../../../src/assets/logos/bulb.png",
         }
       }
       style={
-        Object {
+        {
           "height": 90,
           "width": 80,
         }
@@ -57,21 +57,21 @@ exports[`Update Screen Component renders correctly 1`] = `
     <View>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 22,
               },
-              Object {
+              {
                 "textAlign": "center",
               },
-              Object {
+              {
                 "paddingVertical": 12,
               },
             ],
@@ -83,7 +83,7 @@ exports[`Update Screen Component renders correctly 1`] = `
       <View
         animated={true}
         animationConfig={
-          Object {
+          {
             "bounciness": 0,
           }
         }
@@ -93,8 +93,8 @@ exports[`Update Screen Component renders correctly 1`] = `
         onLayout={[Function]}
         progress={0}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": undefined,
               "borderColor": "#FFD048",
               "borderRadius": 4,
@@ -110,17 +110,17 @@ exports[`Update Screen Component renders correctly 1`] = `
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "backgroundColor": "#FFD048",
               "height": 6,
-              "transform": Array [
-                Object {
+              "transform": [
+                {
                   "translateX": 0,
                 },
-                Object {
+                {
                   "translateX": 1,
                 },
-                Object {
+                {
                   "scaleX": 0.0001,
                 },
               ],
@@ -130,28 +130,28 @@ exports[`Update Screen Component renders correctly 1`] = `
       </View>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 14,
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
                 "fontWeight": "500",
               },
-              Object {
+              {
                 "textAlign": "center",
               },
-              Object {
+              {
                 "color": "#F2F2F2",
               },
-              Object {
+              {
                 "marginTop": 8,
               },
             ],

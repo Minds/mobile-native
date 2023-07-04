@@ -3,36 +3,76 @@ import { ReactNode } from 'react';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useLegacyStores } from '../hooks/use-stores';
 import { DismissIdentifier } from '../stores/DismissalStore';
-import { B1, Column, IconButton } from '../ui';
+import { Button, Column, IconButton } from '../ui';
 import MPressable from './MPressable';
+import { Typography, TypographyType } from '../ui/typography/Typography';
+import analyticsService, { ClickRef } from '../services/analytics.service';
 
 export interface BannerProps {
-  name: DismissIdentifier;
+  dismissIdentifier?: DismissIdentifier;
+  actionIdentifier?: ClickRef;
   text: string | ReactNode;
-  onPress: () => void;
+  actionText?: string;
+  onPress?: () => void;
+  onAction?: () => void;
+  typography?: TypographyType;
 }
 
-function Banner({ name, text, onPress }: BannerProps) {
+function Banner({
+  dismissIdentifier,
+  actionIdentifier,
+  text,
+  onPress,
+  actionText,
+  typography = 'B1',
+  ...props
+}: BannerProps) {
   const { dismissal } = useLegacyStores();
 
-  const onDismiss = () => dismissal.dismiss(name);
+  const onDismiss = () =>
+    dismissIdentifier && dismissal.dismiss(dismissIdentifier);
 
-  if (dismissal.isDismissed(name)) {
+  const onAction = () => {
+    if (actionIdentifier) {
+      analyticsService.trackClick(actionIdentifier);
+    }
+    props.onAction?.();
+  };
+
+  if (dismissIdentifier && dismissal.isDismissed(dismissIdentifier)) {
     return null;
   }
 
   return (
-    <MPressable onPress={onPress} style={styles.container}>
-      <Column flex>
-        <B1 font="medium">{text}</B1>
+    <MPressable style={styles.container} onPress={onPress}>
+      <Column flex align="centerStart">
+        {typeof text === 'string' ? (
+          <Typography type={typography} font="medium">
+            {text}
+          </Typography>
+        ) : (
+          text
+        )}
       </Column>
-      <IconButton
-        scale
-        left="S"
-        name="close"
-        color="PrimaryText"
-        onPress={onDismiss}
-      />
+      {actionText && (
+        <Button
+          type="action"
+          mode="solid"
+          onPress={onAction}
+          left="S"
+          size="small">
+          {actionText}
+        </Button>
+      )}
+      {!!dismissIdentifier && (
+        <IconButton
+          scale
+          left="S"
+          name="close"
+          color="PrimaryText"
+          onPress={onDismiss}
+        />
+      )}
     </MPressable>
   );
 }
@@ -42,7 +82,7 @@ const styles = ThemedStyles.create({
     'borderBottomHair',
     'borderTopHair',
     'bcolorAction',
-    'paddingLeft5x',
+    'paddingLeft3x',
     'paddingRight4x',
     'paddingVertical3x',
     'rowJustifySpaceBetween',

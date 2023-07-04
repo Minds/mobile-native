@@ -2,14 +2,14 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-import type { StyleProp, GestureResponderEvent, ViewStyle } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 type PropsType = {
   name: string;
   type?: string;
   style?: StyleProp<ViewStyle>;
   size?: number;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress?: () => void;
   reverseColor?: string;
   color?: string;
   raised?: boolean;

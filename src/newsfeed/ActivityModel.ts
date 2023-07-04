@@ -20,7 +20,7 @@ import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
-import type GroupModel from '../groups/GroupModel';
+import GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
 import mindsService from '../common/services/minds-config.service';
 import NavigationService from '../navigation/NavigationService';
@@ -216,6 +216,7 @@ export default class ActivityModel extends BaseModel {
   childModels(): any {
     return {
       ownerObj: UserModel,
+      containerObj: GroupModel,
       remind_object: ActivityModel,
     };
   }

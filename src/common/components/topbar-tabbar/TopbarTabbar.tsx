@@ -19,7 +19,7 @@ export type TabType<T> = {
 
 type PropsType<T> = {
   tabs: Array<TabType<T>>;
-  current: T;
+  current?: T;
   onChange: (id: T) => void;
   titleStyle?: StyleProp<TextStyle>;
   subtitleStyle?: StyleProp<TextStyle>;
@@ -38,22 +38,17 @@ export const topbarTabbarRef = React.createRef<ScrollView>();
  */
 function TopbarTabbar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
-  const tabStyle = [
-    theme.paddingVertical2x,
-    theme.marginHorizontal3x,
-    theme.borderBottom5x,
-  ];
 
   return (
     <View
       style={[
         theme.rowJustifyStart,
-        theme.borderBottom,
+        theme.borderBottomHair,
         theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}>
       <ScrollView
-        contentContainerStyle={[theme.marginHorizontal2x, theme.paddingRight4x]}
+        contentContainerStyle={styles.scrollContainer}
         horizontal
         showsHorizontalScrollIndicator={false}
         ref={topbarTabbarRef}>
@@ -63,11 +58,10 @@ function TopbarTabbar<T>(props: PropsType<T>) {
             key={i}
             testID={tab.testID}
             style={[
-              tabStyle,
-              props.tabStyle,
               tab.id === props.current
-                ? theme.bcolorTabBorder
-                : theme.bcolorTransparent,
+                ? styles.tabStyleCurrent
+                : styles.tabStyle,
+              props.tabStyle,
             ]}>
             <B1
               font="medium"
@@ -84,3 +78,21 @@ function TopbarTabbar<T>(props: PropsType<T>) {
 }
 
 export default TopbarTabbar;
+
+const styles = ThemedStyles.create({
+  scrollContainer: ['marginHorizontal2x', 'paddingRight4x'],
+  tabStyleCurrent: [
+    'paddingVertical2x',
+    'marginTop',
+    'marginHorizontal3x',
+    'borderBottom5x',
+    'bcolorTabBorder',
+  ],
+  tabStyle: [
+    'paddingVertical2x',
+    'marginTop',
+    'marginHorizontal3x',
+    'borderBottom5x',
+    'bcolorTransparent',
+  ],
+});

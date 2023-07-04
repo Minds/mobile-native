@@ -1,7 +1,7 @@
 import React from 'react';
 import UserModel from '~/channel/UserModel';
 
-type ChannelContextType = {
+export type ChannelContextType = {
   channel?: UserModel;
 };
 /**
