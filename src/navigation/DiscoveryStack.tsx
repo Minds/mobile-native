@@ -5,11 +5,22 @@ import {
 } from '@react-navigation/native-stack';
 import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { TDiscoveryV2Tabs } from '~/discovery/v2/DiscoveryV2Store';
+import { StackScreenProps } from '@react-navigation/stack';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { TabParamList } from '~/tabs/TabsScreen';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type DiscoveryStackParamList = Pick<
   AppStackParamList,
   'Channel' | 'Activity' | 'DiscoverySearch' | 'BoostScreenV2'
-> & { Discovery: {} };
+> & { Discovery: { tab?: TDiscoveryV2Tabs } };
+
+export type DiscoveryStackScreenProps<S extends keyof DiscoveryStackParamList> =
+  CompositeScreenProps<
+    StackScreenProps<DiscoveryStackParamList, S>,
+    BottomTabScreenProps<TabParamList> // parent navigation types
+  >;
 
 const DiscoveryStack = createNativeStackNavigator<DiscoveryStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };

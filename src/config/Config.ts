@@ -155,7 +155,7 @@ export const MINDS_DEEPLINK = [
   ['analytics/dashboard/:type', 'More/Analytics', 'navigate'],
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
-  ['discovery/:tab', 'Discovery', 'navigate'],
+  ['discovery/:tab', 'Discovery/Discovery', 'navigate'],
   [
     'supermind/inbox',
     'More/SupermindConsole',
