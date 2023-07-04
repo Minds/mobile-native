@@ -1,7 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
-import { AnimatePresence } from 'moti';
 import React from 'react';
 import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
@@ -11,10 +10,7 @@ import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
-import {
-  SupermindOnboardingOverlay,
-  useSupermindOnboarding,
-} from '../compose/SupermindOnboarding';
+import { useSupermindOnboarding } from '../compose/SupermindOnboarding';
 import { MoreStackParamList } from '../navigation/NavigationTypes';
 import SeeLatestButton from '../newsfeed/SeeLatestButton';
 import StripeConnectButton from '../wallet/v2/stripe-connect/StripeConnectButton';
@@ -32,6 +28,7 @@ import {
   ScrollContext,
   ScrollDirection,
 } from '~/common/contexts/scroll.context';
+import { OnboardingOverlay } from '~/components/OnboardingOverlay';
 
 type TabModeType = 'inbound' | 'outbound';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -190,8 +187,13 @@ function SupermindConsoleScreen({
           onPress={scrollToTopAndRefresh}
         />
       </ScrollContext.Provider>
+      <OnboardingOverlay
+        type="producer"
+        onDismiss={dismissOnboarding}
+        // style={styles.onboardingOverlay}
+      />
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {onboarding && (
           <SupermindOnboardingOverlay
             type="producer"
@@ -199,7 +201,7 @@ function SupermindConsoleScreen({
             style={styles.onboardingOverlay}
           />
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </Screen>
   );
 }

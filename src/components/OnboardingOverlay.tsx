@@ -1,4 +1,4 @@
-import { MotiView } from 'moti';
+import { AnimatePresence, MotiView } from 'moti';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import FitScrollView from '~/common/components/FitScrollView';
@@ -66,19 +66,19 @@ const onboardingTypes = {
   },
 };
 
-type SupermindOnboardingType = 'consumer' | 'producer';
+type OnboardingType = 'consumer' | 'producer';
 
-interface SupermindOnboardingProps {
-  type: SupermindOnboardingType;
+interface OnboardingProps {
+  type: OnboardingType;
   style?: StyleProp<ViewStyle>;
   onDismiss: () => void;
 }
 
-export default function SupermindOnboarding({
+export default function Onboarding({
   type,
   style,
   onDismiss,
-}: SupermindOnboardingProps) {
+}: OnboardingProps) {
   return (
     <FitScrollView style={style} contentContainerStyle={styles.container}>
       <H4 bottom="XL2" left="S">
@@ -115,15 +115,21 @@ export default function SupermindOnboarding({
 /**
  * Must be used with AnimatePresence for the unmount animation to work
  */
-export function SupermindOnboardingOverlay(props: SupermindOnboardingProps) {
+export function OnboardingOverlay(props: OnboardingProps) {
   return (
-    <MotiView from={from} animate={animate} exit={exit} style={styles.overlay}>
-      <SupermindOnboarding {...props} />
-    </MotiView>
+    <AnimatePresence>
+      <MotiView
+        from={from}
+        animate={animate}
+        exit={exit}
+        style={styles.overlay}>
+        <Onboarding {...props} />
+      </MotiView>
+    </AnimatePresence>
   );
 }
 
-export const useSupermindOnboarding = (type: SupermindOnboardingType) => {
+export const useOnboarding = (type: OnboardingType) => {
   const id = `supermind:onboarding:${type}` as DismissIdentifier;
   const { dismissal } = useLegacyStores();
 
@@ -133,7 +139,7 @@ export const useSupermindOnboarding = (type: SupermindOnboardingType) => {
   ];
 };
 
-const from = { opacity: 0 };
+const from = { opacity: 1 };
 const animate = { opacity: 1 };
 const exit = {
   opacity: 0,
