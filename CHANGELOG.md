@@ -2,6 +2,39 @@
 
 Minds Mobile
 
+## v4.37.0 (2023-07-04)
+
+### Features ✨ (11 changes)
+
+- [Groups: empty state and group recommendation upgrade](minds/mobile-native!2353)
+- [Boost CTAs are now shown on the boost console](minds/mobile-native!2325)
+- [Added group recommendations in the groups feed](minds/mobile-native!2324)
+- [Added icons in drawer](minds/mobile-native!2319)
+- [Added Groups feed](minds/mobile-native!2314)
+- [Group Share: Posts can now be shared into groups directly from the feed](minds/mobile-native!2308)
+- [Channels: Introduced Subscribe button in the channel topbar](minds/mobile-native!2299)
+- [Composer: audience selector now shows which group or membership you have selected](minds/mobile-native!2294)
+- [Added strapi remote banner](minds/mobile-native!2284)
+- [Added support for upgrading to Minds+ from Minds+ discovery screen](minds/mobile-native!2291)
+- [Added groups tab to channels](minds/mobile-native!2282)
+
+### Fixed 🐛 (7 changes)
+
+- [Fixed an issue where a selected group wouldn't get unselected in composer](minds/mobile-native!2363)
+- [Fixed remote banner on android](minds/mobile-native!2352)
+- [Fixed an issue where the feed scroll would change after subscribing to a channel](minds/mobile-native!2331)
+- [Fixed video not repeating after upload in composer](minds/mobile-native!2329)
+- [Fixed an issue where scheduled posts weren't working as expected](minds/mobile-native!2328)
+- [Fixed bug in boost rotator](minds/mobile-native!2322)
+- [Fixed the errors in Wallet](minds/mobile-native!2321)
+
+### Changed 🔧 (2 changes)
+
+- [Changed remote banner in update prompt](minds/mobile-native!2320)
+- [Changed color to black on yellow buttons](minds/mobile-native!2318)
+- [Update react native to 0.71 and update many dependencies](minds/mobile-native!2278)
+
+
 ## 4.36.2 (2023-06-05)
 
 ### Features ✨ (1 changes)
