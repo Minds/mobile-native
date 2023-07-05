@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { default as codePush } from 'react-native-code-push'; // use external codepush to avoid cyclic error
 import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
 import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
@@ -10,7 +11,7 @@ import {
 } from '~/config/Config';
 import { Version } from '~/config/Version';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { codePush, logMessage } from '../';
+import { logMessage } from '../';
 
 const CodePushDebugger = () => {
   const {
