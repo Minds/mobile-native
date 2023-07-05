@@ -686,7 +686,9 @@
       "boost_rejected_v2": "Your Boost was rejected",
       "boost_completed": "Your Boost is complete",
       "boost_accepted": "Your Boost is now running",
-      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!",
+      "affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
+      "referrer_affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program"
     }
   },
   "interactions": {

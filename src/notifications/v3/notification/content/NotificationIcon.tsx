@@ -30,6 +30,11 @@ const notificationIconsTypes: {
   supermind_accepted: { name: 'tips-and-updates', type: 'material' },
   supermind_expired: { name: 'tips-and-updates', type: 'material' },
   supermind_expire24h: { name: 'tips-and-updates', type: 'material' },
+  affiliate_earnings_deposited: { name: 'attach-money', type: 'material' },
+  referrer_affiliate_earnings_deposited: {
+    name: 'attach-money',
+    type: 'material',
+  },
 };
 
 const NotificationIcon = ({ type }: { type: NotificationType }) => {
@@ -41,7 +46,7 @@ const NotificationIcon = ({ type }: { type: NotificationType }) => {
     <SmallCircleButton
       name={notificationIconsTypes[type].name}
       type={notificationIconsTypes[type].type}
-      reverseColor={'#FFFF'}
+      reverseColor={ThemedStyles.getColor('ButtonText')}
       color={ThemedStyles.getColor('Link')}
       size={10}
       style={styles.notificationIconStyle}
