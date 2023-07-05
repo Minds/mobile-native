@@ -7,7 +7,6 @@ import { AnimatePresence } from 'moti';
 
 import i18n from '../../common/services/i18n.service';
 
-import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
@@ -17,8 +16,6 @@ import { InjectItem } from '../../common/components/FeedList';
 import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
-import Empty from '~/common/components/Empty';
-import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import FeedListSticky from '~/common/components/FeedListSticky';
@@ -31,7 +28,6 @@ import ChannelListItem from '../../common/components/ChannelListItem';
 import UserModel from '../../channel/UserModel';
 import GroupsListItem from '../../groups/GroupsListItem';
 import GroupModel from '../../groups/GroupModel';
-import OffsetListSticky from '../../common/components/OffsetListSticky';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
