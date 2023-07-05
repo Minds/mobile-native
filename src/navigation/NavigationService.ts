@@ -3,13 +3,14 @@ import {
   CommonActions,
   StackActions,
   SwitchActions,
+  createNavigationContainerRef,
 } from '@react-navigation/native';
 import analyticsService from '~/common/services/analytics.service';
 
-let _navigator = null;
+export const navigationRef = createNavigationContainerRef();
 
 export function getTopLevelNavigator() {
-  return _navigator;
+  return navigationRef;
 }
 
 function getStateFrom(nav) {
@@ -19,51 +20,60 @@ function getStateFrom(nav) {
   return nav.routes[nav.index];
 }
 
-export function setTopLevelNavigator(navigatorRef) {
-  _navigator = navigatorRef;
-}
-
 function getCurrentState() {
-  const root = _navigator.getRootState();
+  const root = navigationRef.getRootState();
   return getStateFrom(root);
 }
 
 function navigate(...args) {
-  _navigator.navigate(...args);
+  if (navigationRef.isReady()) {
+    // Perform navigation if the react navigation is ready to handle actions
+    navigationRef.navigate(...args);
+  } else {
+    throw new Error('[NavigationService] Navigation is not ready');
+  }
 }
 
 function setParams(params) {
-  _navigator.dispatch(CommonActions.setParams(params));
+  navigationRef.dispatch(CommonActions.setParams(params));
 }
 
 function dispatch(...args) {
-  _navigator.dispatch(...args);
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(...args);
+  } else {
+    throw new Error('[NavigationService] Navigation is not ready');
+  }
 }
 
 function push(...args) {
-  _navigator.dispatch(StackActions.push(...args));
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.push(...args));
+  } else {
+    throw new Error('[NavigationService] Navigation is not ready');
+  }
 }
 
 function goBack() {
-  _navigator.dispatch(CommonActions.goBack());
+  navigationRef.dispatch(CommonActions.goBack());
 }
 
 function jumpTo(route) {
-  _navigator.dispatch(SwitchActions.jumpTo({ route }));
+  navigationRef.dispatch(SwitchActions.jumpTo({ route }));
 }
 
 function addListener(name, fn) {
-  return _navigator?.addListener(name, fn);
+  return navigationRef?.addListener(name, fn);
 }
 
 /**
  * Runs every time the navigation state changes
  */
 function onStateChange() {
-  if (!_navigator) {
+  if (!navigationRef) {
     return;
   }
-  const currentRouteName = _navigator.getCurrentRoute()?.name;
+  const currentRouteName = navigationRef.getCurrentRoute()?.name;
 
   // record analytics event for screen view
   analyticsService.onNavigatorStateChange(currentRouteName);
@@ -75,7 +85,6 @@ export default {
   jumpTo,
   getCurrentState,
   push,
-  setTopLevelNavigator,
   goBack,
   addListener,
   onStateChange,

@@ -29,3 +29,4 @@ export const useFocusEffect = jest.fn();
 
 export const DefaultTheme = { colors: {} };
 export const DarkTheme = { colors: {} };
+export const createNavigationContainerRef = jest.fn();

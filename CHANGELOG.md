@@ -34,7 +34,6 @@ Minds Mobile
 - [Changed color to black on yellow buttons](minds/mobile-native!2318)
 - [Update react native to 0.71 and update many dependencies](minds/mobile-native!2278)
 
-
 ## 4.36.2 (2023-06-05)
 
 ### Features ✨ (1 changes)
