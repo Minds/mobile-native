@@ -26,6 +26,12 @@ import { Screen } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
+import OffsetList from '../../common/components/OffsetList';
+import ChannelListItem from '../../common/components/ChannelListItem';
+import UserModel from '../../channel/UserModel';
+import GroupsListItem from '../../groups/GroupsListItem';
+import GroupModel from '../../groups/GroupModel';
+import OffsetListSticky from '../../common/components/OffsetListSticky';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -38,6 +44,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       useState(false);
     const store = useDiscoveryV2Store();
     const listRef = React.useRef<FeedList<any>>(null);
+    const channelsListRef = React.useRef<any>(null);
+    const groupsListRef = React.useRef<any>(null);
+    const tab = props.route.params?.tab;
 
     // inject items in the store the first time
     if (!store.trendingFeed.injectItems) {
@@ -65,35 +74,12 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       () =>
         [
           { id: 'top', title: i18n.t('discovery.top') },
-          { id: 'foryou', title: i18n.t('discovery.justForYou') },
-          { id: 'your-tags', title: i18n.t('discovery.yourTags') },
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
-          { id: 'boosts', title: i18n.t('boosted') },
-          { id: 'supermind', title: i18n.t('supermind.supermind') },
+          { id: 'channels', title: 'Channels' },
+          { id: 'groups', title: 'Groups' },
         ].filter(Boolean) as { id: string; title: string }[],
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [i18n.locale],
-    );
-
-    const emptyBoosts = React.useMemo(
-      () => (
-        <Empty
-          title={i18n.t('boosts.emptyList')}
-          subtitle={i18n.t('boosts.emptyListSubtitle')}>
-          <Button
-            onPress={() =>
-              navigation.navigate('More', {
-                screen: 'BoostSettingsScreen',
-                initial: false,
-              })
-            }
-            text={i18n.t('moreScreen.settings')}
-            large
-            action
-          />
-        </Empty>
-      ),
-      [navigation],
     );
 
     const header = (
@@ -116,11 +102,26 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
         ?.addListener('tabPress', () => {
           if (shouldRefreshOnTabPress) {
             listRef.current?.scrollToOffset({ offset: 0 });
+            switch (tab) {
+              case 'channels':
+                channelsListRef?.current?.refreshList();
+                break;
+              case 'groups':
+                groupsListRef?.current?.refreshList();
+                break;
+            }
             store.refreshActiveTab();
           }
         });
       return unsubscribe;
-    }, [store, navigation, shouldRefreshOnTabPress]);
+    }, [
+      store,
+      navigation,
+      shouldRefreshOnTabPress,
+      channelsListRef,
+      groupsListRef,
+      tab,
+    ]);
 
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -136,12 +137,18 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       return unsubscribe;
     }, [store, navigation]);
 
-    const tab = props.route.params?.tab;
-
     useEffect(() => {
       store.topFeed.fetchLocalOrRemote();
       if (tab) {
         store.setTabId(tab);
+        switch (tab) {
+          case 'channels':
+            channelsListRef?.current?.refreshList();
+            break;
+          case 'groups':
+            groupsListRef?.current?.refreshList();
+            break;
+        }
       }
     }, [store, tab]);
 
@@ -163,18 +170,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               />
             </DiscoveryTabContent>
           );
-        case 'foryou':
-          return (
-            <DiscoveryTabContent key="foryou">
-              <DiscoveryTrendsList store={store} header={header} />
-            </DiscoveryTabContent>
-          );
-        case 'your-tags':
-          return (
-            <DiscoveryTabContent key="your-tags">
-              <DiscoveryTagsList type="your" store={store} header={header} />
-            </DiscoveryTabContent>
-          );
         case 'trending-tags':
           return (
             <DiscoveryTabContent key="trending-tags">
@@ -185,25 +180,41 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               />
             </DiscoveryTabContent>
           );
-        case 'boosts':
+        case 'channels':
           return (
-            <DiscoveryTabContent key="boosts">
-              <FeedListSticky
-                ref={listRef}
+            <DiscoveryTabContent key="channels">
+              <OffsetList
+                ref={channelsListRef}
+                sticky
+                fetchEndpoint="api/v3/subscriptions/relational/subscriptions-of-subscriptions"
+                endpointData="users"
                 header={header}
-                feedStore={store.boostFeed}
-                emptyMessage={emptyBoosts}
+                offsetPagination
+                renderItem={({ item }) => (
+                  <ChannelListItem
+                    channel={UserModel.checkOrCreate(item)}
+                    borderless
+                    navigation={navigation}
+                  />
+                )}
               />
             </DiscoveryTabContent>
           );
-        case 'supermind':
+        case 'groups':
           return (
-            <DiscoveryTabContent key="supermind">
-              <FeedListSticky
-                ref={listRef}
+            <DiscoveryTabContent key="groups">
+              <OffsetList
+                ref={groupsListRef}
+                sticky
+                fetchEndpoint="api/v2/suggestions/group"
+                endpointData="suggestions"
                 header={header}
-                feedStore={store.supermindsFeed}
-                emptyMessage={emptyBoosts}
+                offsetPagination
+                renderItem={({ item }) => (
+                  <GroupsListItem
+                    group={GroupModel.checkOrCreate(item.entity)}
+                  />
+                )}
               />
             </DiscoveryTabContent>
           );

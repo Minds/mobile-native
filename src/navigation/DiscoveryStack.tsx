@@ -13,7 +13,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type DiscoveryStackParamList = Pick<
   AppStackParamList,
-  'Channel' | 'Activity' | 'DiscoverySearch' | 'BoostScreenV2'
+  'Channel' | 'Activity' | 'DiscoverySearch' | 'BoostScreenV2' | 'GroupView'
 > & { Discovery: { tab?: TDiscoveryV2Tabs } };
 
 export type DiscoveryStackScreenProps<S extends keyof DiscoveryStackParamList> =
@@ -55,6 +55,13 @@ export default function () {
         getComponent={() => require('~/newsfeed/ActivityScreen').default}
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
+      />
+      <DiscoveryStack.Screen
+        name="GroupView"
+        getComponent={() =>
+          require('~/modules/groups/screens/GroupScreen').GroupScreen
+        }
+        options={hideHeader}
       />
     </DiscoveryStack.Navigator>
   );

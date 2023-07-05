@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import {
   FlatList,
+  FlatListProps,
   ListRenderItem,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -24,16 +25,18 @@ import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import { IS_IOS } from '../../config/Config';
+import StickyList from './StickyList';
+import Animated from 'react-native-reanimated';
 
-type PropsType = {
-  header?: React.ComponentType<any> | React.ReactElement;
+export type OffsetListProps<T = any> = {
+  header?: React.ReactElement;
   emptyMessage?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   ListEmptyComponent?: React.ReactNode;
   ListComponent?: any;
   onRefresh?: () => void;
-  renderItem: ListRenderItem<any>;
+  renderItem: ListRenderItem<T>;
   fetchEndpoint: string;
   endpointData: string;
   offsetField?: string;
@@ -44,6 +47,7 @@ type PropsType = {
   offsetPagination?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   onListUpdate?: (data?: any) => void;
+  sticky?: boolean;
 };
 
 type FetchResponseType =
@@ -55,7 +59,7 @@ type FetchResponseType =
 
 export default observer(
   // TODO: add ref types
-  forwardRef(function OffsetList(props: PropsType, ref: any) {
+  forwardRef(function OffsetList(props: OffsetListProps, ref: any) {
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>(
@@ -218,33 +222,43 @@ export default observer(
       );
     }
 
-    const List = props.ListComponent || FlatList;
+    const List = props.sticky
+      ? Animated.FlatList
+      : props.ListComponent ?? FlatList;
 
-    return (
-      <List
-        ref={listRef}
-        ListHeaderComponent={props.header}
-        data={data}
-        renderItem={renderItem}
-        ListFooterComponent={loadingFooter}
-        ListEmptyComponent={!fetchStore.loading && props.ListEmptyComponent}
-        keyExtractor={keyExtractor}
-        onEndReached={onFetchMore}
-        refreshControl={
-          <RefreshControl
-            refreshing={!!fetchStore.refreshing}
-            onRefresh={_refresh}
-            progressViewOffset={IS_IOS ? 0 : 80}
-            tintColor={ThemedStyles.getColor('Link')}
-            colors={[ThemedStyles.getColor('Link')]}
-          />
-        }
-        onScroll={props.onScroll}
-        refreshing={fetchStore.refreshing}
-        contentContainerStyle={props.contentContainerStyle}
-        style={props.style || listStyle}
-      />
-    );
+    const listProps: FlatListProps<any> = {
+      ref: listRef,
+      data: data,
+      renderItem: renderItem,
+      ListFooterComponent: loadingFooter || undefined,
+      // @ts-ignore
+      ListEmptyComponent: !fetchStore.loading && props.ListEmptyComponent,
+      keyExtractor: keyExtractor,
+      onEndReached: onFetchMore,
+      refreshControl: (
+        <RefreshControl
+          refreshing={!!fetchStore.refreshing}
+          onRefresh={_refresh}
+          progressViewOffset={IS_IOS ? 0 : 80}
+          tintColor={ThemedStyles.getColor('Link')}
+          colors={[ThemedStyles.getColor('Link')]}
+        />
+      ),
+      onScroll: props.onScroll,
+      refreshing: fetchStore.refreshing,
+      contentContainerStyle: props.contentContainerStyle,
+      style: props.style || listStyle,
+    };
+
+    if (props.sticky) {
+      return (
+        <StickyList header={props.header}>
+          {stickyProps => <List {...listProps} {...stickyProps} />}
+        </StickyList>
+      );
+    }
+
+    return <List {...listProps} />;
   }),
 );
 
