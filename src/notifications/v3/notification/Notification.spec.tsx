@@ -158,9 +158,53 @@ describe('Notification', () => {
     expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
     expect(screen.toJSON()).toMatchSnapshot();
   });
+
+  test('Affiliate earnings deposited', async () => {
+    mockedHasVariation.mockReturnValue(false);
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.affiliate_earnings_deposited,
+          data: {
+            amount_usd: 10.99,
+          },
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(
+      await screen.findByText(
+        /You just earned \$10.99 from Minds Affiliate Program/,
+        { exact: true },
+      ),
+    ).toBeTruthy();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  test('Referrer affiliate earnings deposited', async () => {
+    mockedHasVariation.mockReturnValue(false);
+    render(
+      <NotificationItem
+        notification={createFakeNotification({
+          type: NotificationType.referrer_affiliate_earnings_deposited,
+          data: {
+            amount_usd: 12.99,
+          },
+        })}
+        onShowSubscribers={jest.fn()}
+      />,
+    );
+    expect(
+      await screen.findByText(
+        /You just earned \$12.99 from Minds Affiliate Program/,
+        { exact: true },
+      ),
+    ).toBeTruthy();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
 });
 
-const createFakeNotification = ({ type }: any) =>
+const createFakeNotification = ({ type, ...rest }: any) =>
   mapNotification({
     uuid: 'fakeUuid',
     to_guid: 'toGuid', // me
@@ -195,6 +239,7 @@ const createFakeNotification = ({ type }: any) =>
     merged_from_guids: [],
     merged_from: [],
     merged_count: 0,
+    ...rest,
   });
 
 const mapNotification = notification => {
