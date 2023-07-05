@@ -9,15 +9,18 @@ const Recommendation: FC<RecommendationBodyProps> = ({
   location,
   visible = true,
   channel,
+  type,
+  size,
 }) => {
   return visible ? (
     <RecommendationProvider
       location={location}
-      types={['channel']}
+      types={[type]}
       channel={channel}>
-      <RecommendationHeader type="channel" location={location} />
+      <RecommendationHeader type={type} location={location} />
       <RecommendationBody
-        type="channel"
+        size={size}
+        type={type}
         location={location}
         channel={channel}
       />

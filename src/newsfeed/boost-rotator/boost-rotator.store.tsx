@@ -6,6 +6,7 @@ import MetadataService from '~/common/services/metadata.service';
 import { storages } from '~/common/services/storage/storages.service';
 import ActivityModel from '../ActivityModel';
 import { recordView } from '../NewsfeedService';
+import { BOOSTS_DELAY } from '~/config/Config';
 
 const CACHE_KEY = 'BoostRotatorCache';
 
@@ -45,6 +46,7 @@ const createBoostRotatorStore = ({}: BoostRotatorStoreProps) => {
         this.fetching = true;
         const response = await apiService.get<any>('api/v3/boosts/feed', {
           location: 1,
+          show_boosts_after_x: BOOSTS_DELAY,
         });
         if (response?.boosts) {
           const filteredBoosts = cleanBoosts(
@@ -96,12 +98,14 @@ function BoostRotatorStoreProvider(
   );
 }
 
-export function useBoostRotatorStore() {
+export function useBoostRotatorStore(fetch?: boolean) {
   const store = useContext(BoostRotatorStoreContext)!;
 
   useEffect(() => {
-    store.fetch();
-  }, [store]);
+    if (fetch) {
+      store.fetch();
+    }
+  }, [store, fetch]);
 
   return store;
 }

@@ -82,9 +82,23 @@ export async function openDeepLinkUrl(url: string) {
   }
 }
 
-export function selectElement(type: 'id' | 'text', text: string) {
+export function selectElement(
+  type: 'id' | 'text',
+  text: string,
+  wild?: boolean,
+) {
   if (!browser.isAndroid) {
-    return $(`~${text}`);
+    switch (type) {
+      case 'id':
+        return $(`~${text}`);
+      case 'text':
+        if (wild) {
+          return $(
+            `-ios predicate string:type == 'XCUIElementTypeOther' && name CONTAINS '${text}'`,
+          );
+        }
+        return $(`~${text}`);
+    }
   }
 
   switch (type) {

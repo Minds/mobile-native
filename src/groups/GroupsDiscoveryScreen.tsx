@@ -28,7 +28,7 @@ const GroupsDiscoveryScreen = observer(() => {
         renderItem={renderGroup}
         fetchEndpoint={'api/v2/suggestions/group'}
         endpointData={'suggestions'}
-        defaultOffset={0}
+        offsetPagination
       />
     </Screen>
   );

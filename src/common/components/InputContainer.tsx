@@ -39,7 +39,7 @@ const InputContainer = (
         theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}>
-      <Pressable onPress={() => inputRef.current?.focus()}>
+      <Pressable accessible={false} onPress={() => inputRef.current?.focus()}>
         <Input
           ref={inputRef}
           style={[

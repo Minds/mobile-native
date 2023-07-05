@@ -4,9 +4,12 @@ import Animated, {
   useAnimatedKeyboard,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { IS_IOS } from '~/config/Config';
 
 interface PropsType extends ViewProps {
   children: React.ReactNode;
+  enabled?: boolean;
+  translate?: boolean;
 }
 
 export const screenRealHeightContext = React.createContext<number>(0);
@@ -20,13 +23,22 @@ export const screenRealHeightContext = React.createContext<number>(0);
 export default function KeyboardSpacingView({
   children,
   style,
+  translate,
+  enabled = !IS_IOS,
   ...otherProps
 }: PropsType) {
+  const isEnabled = enabled !== false;
   const keyboard = useAnimatedKeyboard();
   const translateStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: -keyboard.height.value }],
-    };
+    return !isEnabled
+      ? {}
+      : translate
+      ? {
+          transform: [{ translateY: -keyboard.height.value }],
+        }
+      : {
+          paddingBottom: keyboard.height.value,
+        };
   });
 
   return (

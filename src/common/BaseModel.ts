@@ -309,7 +309,7 @@ export default class BaseModel extends AbstractModel {
    */
   sendViewed(medium?: MetadataMedium, position?: number) {
     if (this._list) {
-      this._list.trackView(this, medium, position);
+      this._list.trackView?.(this, medium, position);
     } else {
       const metadata = new MetadataService();
       metadata.setMedium('single').setSource('single');

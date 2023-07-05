@@ -12,7 +12,7 @@ export default observer(function TokenPrice() {
   const { result } = useApiFetch<{ minds: number }>(
     'api/v3/blockchain/token-prices',
     {
-      retry: 0, // retry until it loads successfully or it is unmounted
+      retry: 3, // retry until it loads successfully or it is unmounted
     },
   );
 

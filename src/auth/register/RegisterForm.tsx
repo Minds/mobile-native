@@ -21,7 +21,6 @@ import PasswordInput from '../../common/components/password-input/PasswordInput'
 import MText from '../../common/components/MText';
 import { BottomSheetButton } from '../../common/components/bottom-sheet';
 import { useNavigation } from '@react-navigation/core';
-import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
@@ -281,63 +280,61 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   );
 
   return (
-    <KeyboardSpacingView style={theme.flexContainer}>
-      <FitScrollView
-        ref={scrollViewRef}
-        keyboardShouldPersistTaps={'always'}
-        contentContainerStyle={theme.paddingBottom4x}>
-        <DismissKeyboard>
-          <>
-            {inputs}
-            <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-              <CheckBox
-                checkedColor={ThemedStyles.getColor('Link')}
-                containerStyle={styles.checkboxTerm}
-                title={
-                  <MText style={styles.checkboxText}>
-                    {i18n.t('auth.accept')}{' '}
-                    <MText
-                      style={theme.link}
-                      onPress={() =>
-                        Linking.openURL('https://www.minds.com/p/terms')
-                      }>
-                      {i18n.t('auth.termsAndConditions')}
-                    </MText>
+    <FitScrollView
+      ref={scrollViewRef}
+      keyboardShouldPersistTaps={'always'}
+      contentContainerStyle={theme.paddingBottom4x}>
+      <DismissKeyboard>
+        <>
+          {inputs}
+          <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+            <CheckBox
+              checkedColor={ThemedStyles.getColor('Link')}
+              containerStyle={styles.checkboxTerm}
+              title={
+                <MText style={styles.checkboxText}>
+                  {i18n.t('auth.accept')}{' '}
+                  <MText
+                    style={theme.link}
+                    onPress={() =>
+                      Linking.openURL('https://www.minds.com/p/terms')
+                    }>
+                    {i18n.t('auth.termsAndConditions')}
                   </MText>
-                }
-                checked={store.termsAccepted}
-                onPress={store.toggleTerms}
-              />
-              <CheckBox
-                checkedColor={ThemedStyles.getColor('Link')}
-                containerStyle={styles.checkboxPromotions}
-                title={
-                  <MText style={styles.checkboxText}>
-                    {i18n.t('auth.promotions')}
-                  </MText>
-                }
-                checked={store.exclusivePromotions}
-                onPress={store.togglePromotions}
-              />
-            </View>
-            <BottomSheetButton
-              solid
-              onPress={store.onRegisterPress}
-              text={i18n.t('auth.createChannel')}
-              disabled={true || store.inProgress}
-              loading={store.inProgress}
-              testID="registerButton"
-              action
+                </MText>
+              }
+              checked={store.termsAccepted}
+              onPress={store.toggleTerms}
             />
-            <Captcha
-              ref={captchaRef}
-              onResult={store.onCaptchResult}
-              testID="captcha"
+            <CheckBox
+              checkedColor={ThemedStyles.getColor('Link')}
+              containerStyle={styles.checkboxPromotions}
+              title={
+                <MText style={styles.checkboxText}>
+                  {i18n.t('auth.promotions')}
+                </MText>
+              }
+              checked={store.exclusivePromotions}
+              onPress={store.togglePromotions}
             />
-          </>
-        </DismissKeyboard>
-      </FitScrollView>
-    </KeyboardSpacingView>
+          </View>
+          <BottomSheetButton
+            solid
+            onPress={store.onRegisterPress}
+            text={i18n.t('auth.createChannel')}
+            disabled={true || store.inProgress}
+            loading={store.inProgress}
+            testID="registerButton"
+            action
+          />
+          <Captcha
+            ref={captchaRef}
+            onResult={store.onCaptchResult}
+            testID="captcha"
+          />
+        </>
+      </DismissKeyboard>
+    </FitScrollView>
   );
 });
 

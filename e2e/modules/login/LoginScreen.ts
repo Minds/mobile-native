@@ -23,6 +23,7 @@ class LoginScreen extends AppScreen {
     return selectElement(
       'text',
       'Incorrect username/password. Please try again.',
+      true,
     );
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import settingsStore from '../settings/SettingsStore';
@@ -14,6 +14,7 @@ type CaptureFabProps = {
   routeKey: string;
   navigation: any;
   testID?: string;
+  style?: ViewStyle;
 };
 
 /**
@@ -33,6 +34,7 @@ const CaptureFab = ({
   group,
   testID,
   routeKey,
+  style,
 }: CaptureFabProps) => {
   const navToCapture = () => {
     navigation.push('Compose', {
@@ -45,7 +47,10 @@ const CaptureFab = ({
     <AnimatePresence>
       {visible && (
         <ShowHide
-          style={settingsStore.leftHanded ? styles.leftSide : styles.rightSide}>
+          style={[
+            settingsStore.leftHanded ? styles.leftSide : styles.rightSide,
+            style,
+          ]}>
           <View style={styles.container}>
             <Icon
               name="edit"
