@@ -32,7 +32,7 @@ import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import deviceInfo from 'react-native-device-info';
 
 import NavigationService, {
-  setTopLevelNavigator,
+  navigationRef,
 } from './src/navigation/NavigationService';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
@@ -177,23 +177,22 @@ class App extends Component<Props> {
       <View style={appContainerStyle}>
         <ExperimentsProvider>
           <SafeAreaProvider>
-            {sessionService.ready && (
-              <NavigationContainer
-                ref={setTopLevelNavigator}
-                theme={ThemedStyles.navTheme}
-                onReady={appInitManager.onNavigatorReady}
-                onStateChange={NavigationService.onStateChange}>
+            <UIProvider
+              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+              {sessionService.ready && (
                 <StoresProvider>
                   <QueryProvider>
                     <Provider key="app" {...stores}>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                        <FriendlyCaptchaProvider
-                          ref={setFriendlyCaptchaReference}>
-                          <PortalProvider>
-                            <UIProvider
-                              defaultTheme={
-                                ThemedStyles.theme === 0 ? 'dark' : 'light'
-                              }>
+                      <NavigationContainer
+                        ref={navigationRef}
+                        theme={ThemedStyles.navTheme}
+                        onReady={appInitManager.onNavigatorReady}
+                        onStateChange={NavigationService.onStateChange}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
                               <BottomSheetModalProvider>
                                 <ErrorBoundary
                                   message="An error occurred"
@@ -207,15 +206,15 @@ class App extends Component<Props> {
                                   {/* </WCContextProvider> */}
                                 </ErrorBoundary>
                               </BottomSheetModalProvider>
-                            </UIProvider>
-                          </PortalProvider>
-                        </FriendlyCaptchaProvider>
-                      </AppMessageProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </NavigationContainer>
                     </Provider>
                   </QueryProvider>
                 </StoresProvider>
-              </NavigationContainer>
-            )}
+              )}
+            </UIProvider>
           </SafeAreaProvider>
         </ExperimentsProvider>
       </View>

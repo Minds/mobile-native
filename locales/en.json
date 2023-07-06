@@ -443,7 +443,7 @@
     "text": "Text",
     "postOptions": "Post Options",
     "retake": "Retake",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
+    "allowMinds": "Enable access so you can take photos and record videos to share on Minds. Microphone access lets you record videos and use audio features.",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",

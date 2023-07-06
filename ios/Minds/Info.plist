@@ -74,7 +74,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This lets you record videos with sound</string>
+	<string>Microphone access lets you record videos with sound and use audio features.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This lets you save photos to your camera roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
