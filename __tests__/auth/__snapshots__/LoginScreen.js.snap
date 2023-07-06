@@ -751,7 +751,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   }
                 >
                   <ActivityIndicator
-                    color="black"
+                    color="white"
                     size="small"
                   />
                 </View>
@@ -787,7 +787,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   style={
                     [
                       {
-                        "color": "#000000",
+                        "color": "#FFFFFF",
                       },
                       {
                         "fontFamily": "Roboto-Medium",

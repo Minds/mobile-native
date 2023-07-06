@@ -199,11 +199,23 @@ export default class DiscoveryV2Store {
   }
 }
 
-export type TDiscoveryV2Tabs = 'top' | 'trending-tags' | 'channels' | 'groups';
+export type TDiscoveryV2Tabs =
+  | 'top'
+  | 'foryou'
+  | 'your-tags'
+  | 'trending-tags'
+  | 'boosts'
+  | 'supermind'
+  | 'channels'
+  | 'groups';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   top: 0,
+  foryou: 1,
+  'your-tags': 2,
   'trending-tags': 3,
+  boosts: 4,
+  supermind: 5,
   channels: 6,
   groups: 7,
 };
@@ -215,3 +227,6 @@ export type TDiscoveryTagsTag = {
 };
 
 const DISCOVERY_TS_KEY = 'discovery_ts';
+
+// TODO: workaround please remove
+const BOOST_V3 = true;
