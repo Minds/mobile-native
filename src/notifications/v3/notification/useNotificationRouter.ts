@@ -1,3 +1,4 @@
+import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
@@ -63,6 +64,12 @@ const useNotificationRouter = (
             params: { currency: 'usd', section: 'earnings' },
             initial: false,
           });
+          break;
+        case NotificationType.gift_card_recipient_notified:
+          const code = notification.data?.gift_card?.claimCode;
+          if (code) {
+            Linking.openURL(`minds://gift-cards/claim/${code}`);
+          }
           break;
         default:
           switch (notification.entity.type) {

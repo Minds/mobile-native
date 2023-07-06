@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, TextStyle } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, TextStyle, Linking } from 'react-native';
+import i18n from '~/common/services/i18n.service';
+import { Button } from '~/common/ui';
+import ReadMore from '~/common/components/ReadMore';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
-import ReadMore from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
@@ -21,6 +23,13 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   const isEntityComment = notification.entity?.type === 'comment';
   const isNoCommentEntity =
     notification.entity && notification.entity?.type !== 'comment';
+  const hasGiftCard =
+    notification.type === NotificationType.gift_card_recipient_notified;
+
+  const onClaimGiftCard = () => {
+    const code = notification.data?.gift_card?.claimCode;
+    code && Linking.openURL(`minds://gift-cards/claim/${code}`);
+  };
 
   switch (notification.type) {
     case NotificationType.supermind_created:
@@ -34,14 +43,21 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   }
 
   if (
-    entityIsUser ||
-    (!hasCommentExcerpt && !isEntityComment && !isNoCommentEntity)
+    (entityIsUser && !hasGiftCard) ||
+    (!hasGiftCard &&
+      !hasCommentExcerpt &&
+      !isEntityComment &&
+      !isNoCommentEntity)
   ) {
     return null;
   }
 
   return (
-    <View style={styles.contentPreviewContainer}>
+    <View
+      style={[
+        styles.contentPreviewContainer,
+        hasGiftCard && styles.buttonMargin,
+      ]}>
       {hasCommentExcerpt &&
         renderComment(
           notification.data.comment_excerpt,
@@ -55,6 +71,11 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
           navigation,
         )}
       {isNoCommentEntity && renderContent(notification, navigation)}
+      {hasGiftCard && (
+        <Button mode="outline" type="action" onPress={onClaimGiftCard}>
+          {i18n.t('notification.claimGiftButton')}
+        </Button>
+      )}
     </View>
   );
 });

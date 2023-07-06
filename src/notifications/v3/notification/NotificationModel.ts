@@ -66,6 +66,7 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.boost_completed:
       case NotificationType.affiliate_earnings_deposited:
       case NotificationType.referrer_affiliate_earnings_deposited:
+      case NotificationType.gift_card_recipient_notified:
         return '';
       case NotificationType.boost_rejected:
         if (hasVariation('mob-4638-boost-v3')) {
@@ -88,6 +89,7 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.boost_completed:
       case NotificationType.affiliate_earnings_deposited:
       case NotificationType.referrer_affiliate_earnings_deposited:
+      case NotificationType.gift_card_recipient_notified:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
@@ -189,4 +191,5 @@ export enum NotificationType {
   supermind_expire24h = 'supermind_expire24h',
   affiliate_earnings_deposited = 'affiliate_earnings_deposited',
   referrer_affiliate_earnings_deposited = 'referrer_affiliate_earnings_deposited',
+  gift_card_recipient_notified = 'gift_card_recipient_notified',
 }
