@@ -102,7 +102,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -274,6 +274,224 @@ exports[`Notification 24 hours before an offer expires 1`] = `
 </View>
 `;
 
+exports[`Notification Affiliate earnings deposited 1`] = `
+<View
+  onPress={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      {
+        "borderBottomWidth": 0.5,
+      },
+      {
+        "borderColor": "#53565A",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <View
+        onPress={[Function]}
+      >
+        <Image
+          source={
+            {
+              "headers": {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
+          }
+          style={
+            {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
+            }
+          }
+        />
+      </View>
+      <View>
+        <View
+          style={
+            {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFD048",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontSize": 10,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                    },
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              {
+                "fontWeight": "400",
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        You just earned $10.99 from Minds Affiliate Program
+         
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              {
+                "fontWeight": "400",
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        Sep 20, 2022
+      </Text>
+      <View
+        style={
+          [
+            {
+              "alignSelf": "center",
+              "borderRadius": 20,
+              "height": 10,
+              "marginLeft": 8,
+              "width": 10,
+            },
+            {
+              "backgroundColor": "#FFD048",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
 exports[`Notification An offer expires 1`] = `
 <View
   onPress={[Function]}
@@ -376,7 +594,7 @@ exports[`Notification An offer expires 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -651,7 +869,7 @@ exports[`Notification Boost accepted 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -943,7 +1161,7 @@ exports[`Notification Boost complete 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1235,7 +1453,7 @@ exports[`Notification Boost rejected 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1527,7 +1745,7 @@ exports[`Notification Boost rejected legacy 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -1876,7 +2094,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -2151,7 +2369,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {
@@ -2324,6 +2542,224 @@ exports[`Notification Receiver declines an offer 1`] = `
 </View>
 `;
 
+exports[`Notification Referrer affiliate earnings deposited 1`] = `
+<View
+  onPress={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      {
+        "borderBottomWidth": 0.5,
+      },
+      {
+        "borderColor": "#53565A",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <View
+        onPress={[Function]}
+      >
+        <Image
+          source={
+            {
+              "headers": {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "no-cache": "1",
+              },
+              "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
+            }
+          }
+          style={
+            {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
+            }
+          }
+        />
+      </View>
+      <View>
+        <View
+          style={
+            {
+              "borderRadius": 14,
+              "bottom": -15,
+              "height": 24,
+              "left": 15,
+              "margin": 7,
+              "overflow": "hidden",
+              "position": "absolute",
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+              "width": 24,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFD048",
+                  "borderRadius": 14,
+                  "height": 24,
+                  "justifyContent": "center",
+                  "width": 24,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontSize": 10,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                    },
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              {
+                "fontWeight": "400",
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        You just earned $12.99 from Minds Affiliate Program
+         
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "fontSize": 15,
+                "lineHeight": 18,
+              },
+              {
+                "fontWeight": "400",
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        Sep 20, 2022
+      </Text>
+      <View
+        style={
+          [
+            {
+              "alignSelf": "center",
+              "borderRadius": 20,
+              "height": 10,
+              "marginLeft": 8,
+              "width": 10,
+            },
+            {
+              "backgroundColor": "#FFD048",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
 exports[`Notification Sender sends a Supermind offer 1`] = `
 <View
   onPress={[Function]}
@@ -2426,7 +2862,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 style={
                   [
                     {
-                      "color": "#FFFF",
+                      "color": "#000000",
                       "fontSize": 10,
                     },
                     {

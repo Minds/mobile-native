@@ -1529,9 +1529,9 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type TopbarAlertQueryVariables = Exact<{ [key: string]: never }>;
+export type RemoteBannerQueryVariables = Exact<{ [key: string]: never }>;
 
-export type TopbarAlertQuery = {
+export type RemoteBannerQuery = {
   __typename?: 'Query';
   topbarAlert?: {
     __typename?: 'TopbarAlertEntityResponse';
@@ -1550,11 +1550,9 @@ export type TopbarAlertQuery = {
   } | null;
 };
 
-export type TwitterSyncTweetMessageQueryVariables = Exact<{
-  [key: string]: never;
-}>;
+export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
-export type TwitterSyncTweetMessageQuery = {
+export type TweetMessageQuery = {
   __typename?: 'Query';
   twitterSyncTweetText?: {
     __typename?: 'TwitterSyncTweetTextEntityResponse';
@@ -1568,8 +1566,8 @@ export type TwitterSyncTweetMessageQuery = {
   } | null;
 };
 
-export const TopbarAlertDocument = `
-    query TopbarAlert {
+export const RemoteBannerDocument = `
+    query RemoteBanner {
   topbarAlert {
     data {
       id
@@ -1584,20 +1582,23 @@ export const TopbarAlertDocument = `
   }
 }
     `;
-export const useTopbarAlertQuery = <TData = TopbarAlertQuery, TError = unknown>(
-  variables?: TopbarAlertQueryVariables,
-  options?: UseQueryOptions<TopbarAlertQuery, TError, TData>,
+export const useRemoteBannerQuery = <
+  TData = RemoteBannerQuery,
+  TError = unknown,
+>(
+  variables?: RemoteBannerQueryVariables,
+  options?: UseQueryOptions<RemoteBannerQuery, TError, TData>,
 ) =>
-  useQuery<TopbarAlertQuery, TError, TData>(
-    variables === undefined ? ['TopbarAlert'] : ['TopbarAlert', variables],
-    fetcher<TopbarAlertQuery, TopbarAlertQueryVariables>(
-      TopbarAlertDocument,
+  useQuery<RemoteBannerQuery, TError, TData>(
+    variables === undefined ? ['RemoteBanner'] : ['RemoteBanner', variables],
+    fetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
+      RemoteBannerDocument,
       variables,
     ),
     options,
   );
-export const TwitterSyncTweetMessageDocument = `
-    query TwitterSyncTweetMessage {
+export const TweetMessageDocument = `
+    query TweetMessage {
   twitterSyncTweetText {
     data {
       attributes {
@@ -1607,20 +1608,18 @@ export const TwitterSyncTweetMessageDocument = `
   }
 }
     `;
-export const useTwitterSyncTweetMessageQuery = <
-  TData = TwitterSyncTweetMessageQuery,
+export const useTweetMessageQuery = <
+  TData = TweetMessageQuery,
   TError = unknown,
 >(
-  variables?: TwitterSyncTweetMessageQueryVariables,
-  options?: UseQueryOptions<TwitterSyncTweetMessageQuery, TError, TData>,
+  variables?: TweetMessageQueryVariables,
+  options?: UseQueryOptions<TweetMessageQuery, TError, TData>,
 ) =>
-  useQuery<TwitterSyncTweetMessageQuery, TError, TData>(
-    variables === undefined
-      ? ['TwitterSyncTweetMessage']
-      : ['TwitterSyncTweetMessage', variables],
-    fetcher<
-      TwitterSyncTweetMessageQuery,
-      TwitterSyncTweetMessageQueryVariables
-    >(TwitterSyncTweetMessageDocument, variables),
+  useQuery<TweetMessageQuery, TError, TData>(
+    variables === undefined ? ['TweetMessage'] : ['TweetMessage', variables],
+    fetcher<TweetMessageQuery, TweetMessageQueryVariables>(
+      TweetMessageDocument,
+      variables,
+    ),
     options,
   );

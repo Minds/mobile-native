@@ -112,10 +112,8 @@ build:android:store:
     - .build_base
     - .rule_version_tag
   script:
-    - "sed -i 's/^versionCode=/# versionCode=/' ./gradle.properties"
-    - "sed -i 's/^## versionCode/versionCode/' ./gradle.properties"
     - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
-    - bundle exec fastlane assemble_build
+    - bundle exec fastlane assemble_build play:true
     - *move_apk
   rules:
     - !reference [.rule_version_tag, rules]

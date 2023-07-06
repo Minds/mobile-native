@@ -63,6 +63,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   injectItems?: InjectItem[];
 
   /**
+   * Custom injected components
+   */
+  emptyComponent?: InjectItem;
+
+  /**
    * Viewed store
    */
   viewStore = new ViewStore();
@@ -114,6 +119,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   setInjectedItems(injectItems: InjectItem[]) {
     this.injectItems = injectItems;
+    return this;
+  }
+
+  /**
+   * Sets the injected items for the feed
+   */
+  setEmptyComponent(emptyComponent: InjectItem) {
+    this.emptyComponent = emptyComponent;
   }
 
   /**
@@ -157,7 +170,17 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   @action
   addEntities(entities, replace = false) {
-    if (replace) {
+    if (!entities.length) {
+      const injected = this.injectItems?.find(i =>
+        typeof i.indexes === 'function' ? i.indexes(0) : i.indexes === 0,
+      );
+      if (injected) {
+        this.entities = [injected];
+      }
+      if (this.emptyComponent) {
+        this.entities.push(this.emptyComponent);
+      }
+    } else if (replace) {
       entities.forEach((entity, index) => {
         entity._list = this;
         entity.position = index + 1;

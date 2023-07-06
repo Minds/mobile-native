@@ -78,3 +78,7 @@ sentry.properties
 
 apps/
 *.log
+
+
+# Ignore GrpahQL Schema files
+gql-schemas/

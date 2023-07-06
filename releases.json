@@ -1,6 +1,49 @@
 {
   "versions": [
     {
+      "version": "4.37.0",
+      "href": "https://cdn-assets.minds.com/android/Minds-4.37.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.37.0",
+      "changelog": [
+        "Groups: empty state and group recommendation upgrade",
+        "Boost CTAs are now shown on the boost console",
+        "Added group recommendations in the groups feed",
+        "Added icons in drawer",
+        "Added Groups feed",
+        "Group Share: Posts can now be shared into groups directly from the feed",
+        "Channels: Introduced Subscribe button in the channel topbar",
+        "Composer: audience selector now shows which group or membership you have selected",
+        "Added strapi remote banner",
+        "Added support for upgrading to Minds+ from Minds+ discovery screen",
+        "Added groups tab to channels",
+        "Fixed an issue where a selected group wouldn't get unselected in composer",
+        "Fixed remote banner on android",
+        "Fixed an issue where the feed scroll would change after subscribing to a channel",
+        "Fixed video not repeating after upload in composer",
+        "Fixed an issue where scheduled posts weren't working as expected",
+        "Fixed bug in boost rotator",
+        "Fixed the errors in Wallet",
+        "Changed remote banner in update prompt",
+        "Changed color to black on yellow buttons",
+        "Update react native to 0.71 and update many dependencies"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "3fb7139d7efc8e608ea900340ddd54cd"
+        },
+        {
+          "type": "sha256",
+          "value": "362d22a0160dcaa1a2ece479e38addb50a5266f63584b0e6d70a11dc426bc4f1"
+        },
+        {
+          "type": "sha512",
+          "value": "ea3e16a1c7b512ecdab83edba94818fffe60572305bd81ede5ec81d58cb184b0fddc8721cd9360c73f001b9f7ad1d468ba180b340934064ea52d37078f227498"
+        }
+      ]
+    },
+    {
       "version": "4.36.0",
       "href": "https://cdn-assets.minds.com/android/Minds-4.36.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.36.0",

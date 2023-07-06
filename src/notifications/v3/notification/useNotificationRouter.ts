@@ -56,6 +56,14 @@ const useNotificationRouter = (
         case NotificationType.supermind_accepted:
           navigator.navTo('Activity');
           break;
+        case NotificationType.affiliate_earnings_deposited:
+        case NotificationType.referrer_affiliate_earnings_deposited:
+          navigation.navigate('More', {
+            screen: 'Wallet',
+            params: { currency: 'usd', section: 'earnings' },
+            initial: false,
+          });
+          break;
         default:
           switch (notification.entity.type) {
             case 'group':

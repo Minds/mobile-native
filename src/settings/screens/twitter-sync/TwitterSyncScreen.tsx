@@ -16,7 +16,7 @@ import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
-import { useTwitterSyncTweetMessageQuery } from '~/graphql/strapi';
+import { useTweetMessageQuery } from '~/graphql/strapi';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
@@ -39,12 +39,12 @@ function TwitterSyncScreen() {
     connectedAccount?.discoverable || true,
   );
 
-  const { data: { twitterSyncTweetText } = {} } =
-    useTwitterSyncTweetMessageQuery();
+  const { data: { twitterSyncTweetText } = {}, isLoading } =
+    useTweetMessageQuery();
 
   const tweetText =
     twitterSyncTweetText?.data?.attributes?.tweetText ??
-    'Verifying my channel on @minds. {url}';
+    i18n.t('settings.twitterSync.verificationText');
 
   const tweetMessage = tweetText.replace(
     /{url}/g,
@@ -198,7 +198,11 @@ function TwitterSyncScreen() {
           <B1 color="secondary" vertical="L">
             {i18n.t('settings.twitterSync.step1.desc')}
           </B1>
-          <Button onPress={onPostToTwitter} type={'action'} mode={'outline'}>
+          <Button
+            disabled={isLoading}
+            onPress={onPostToTwitter}
+            type={'action'}
+            mode={'outline'}>
             {i18n.t('settings.twitterSync.step1.action')}
           </Button>
         </ScreenSection>
