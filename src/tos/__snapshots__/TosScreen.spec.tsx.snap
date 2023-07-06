@@ -398,7 +398,7 @@ exports[`Tos screen render and accept 1`] = `
                   style={
                     [
                       {
-                        "color": "#FFFFFF",
+                        "color": "#000000",
                       },
                       {
                         "fontFamily": "Roboto-Medium",
