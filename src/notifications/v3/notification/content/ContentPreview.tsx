@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextStyle, Linking } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import i18n from '~/common/services/i18n.service';
 import { Button } from '~/common/ui';
 import ReadMore from '~/common/components/ReadMore';
@@ -10,6 +10,7 @@ import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
 import { NotificationType } from '../NotificationModel';
 import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
+import useNotificationRouter from '../useNotificationRouter';
 
 type PropsType = {
   notification: NotificationModel;
@@ -25,11 +26,7 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
     notification.entity && notification.entity?.type !== 'comment';
   const hasGiftCard =
     notification.type === NotificationType.gift_card_recipient_notified;
-
-  const onClaimGiftCard = () => {
-    const code = notification.data?.gift_card?.claimCode;
-    code && Linking.openURL(`minds://gift-cards/claim/${code}`);
-  };
+  const { navigateToObject } = useNotificationRouter(notification);
 
   switch (notification.type) {
     case NotificationType.supermind_created:
@@ -72,7 +69,7 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
         )}
       {isNoCommentEntity && renderContent(notification, navigation)}
       {hasGiftCard && (
-        <Button mode="outline" type="action" onPress={onClaimGiftCard}>
+        <Button mode="outline" type="action" onPress={navigateToObject}>
           {i18n.t('notification.claimGiftButton')}
         </Button>
       )}

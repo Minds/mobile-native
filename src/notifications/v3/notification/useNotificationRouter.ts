@@ -7,7 +7,7 @@ import { NotificationType } from './NotificationModel';
 
 const useNotificationRouter = (
   notification: NotificationModel,
-  showSubscribersModal: () => void,
+  showSubscribersModal?: () => void,
 ) => {
   const navigation = useNavigation();
   const router = {
@@ -31,13 +31,14 @@ const useNotificationRouter = (
           if (!notification.hasMerged) {
             router.navToChannel(notification.from);
           } else {
-            showSubscribersModal();
+            showSubscribersModal?.();
           }
           break;
         case NotificationType.supermind_created:
         case NotificationType.supermind_declined:
         case NotificationType.supermind_expire24h:
         case NotificationType.supermind_expired:
+        case NotificationType.gift_card_recipient_notified:
           router.navigateToObject();
           break;
         case NotificationType.boost_accepted:
@@ -64,12 +65,6 @@ const useNotificationRouter = (
             params: { currency: 'usd', section: 'earnings' },
             initial: false,
           });
-          break;
-        case NotificationType.gift_card_recipient_notified:
-          const code = notification.data?.gift_card?.claimCode;
-          if (code) {
-            Linking.openURL(`minds://gift-cards/claim/${code}`);
-          }
           break;
         default:
           switch (notification.entity.type) {
@@ -101,6 +96,12 @@ const useNotificationRouter = (
           break;
         case NotificationType.supermind_accepted:
           router.navToEntity();
+          break;
+        case NotificationType.gift_card_recipient_notified:
+          const code = notification.data?.gift_card?.claimCode;
+          if (code) {
+            Linking.openURL(`minds://gift-cards/claim/${code}`);
+          }
           break;
         default:
           // If the navigation was targeted to us navigate to own channel
