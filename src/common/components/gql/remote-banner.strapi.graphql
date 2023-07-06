@@ -1,0 +1,14 @@
+query RemoteBanner {
+  topbarAlert {
+    data {
+      id
+      attributes {
+        message
+        enabled
+        url
+        identifier
+        onlyDisplayAfter
+      }
+    }
+  }
+}

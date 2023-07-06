@@ -396,6 +396,10 @@ const _buildStyle = (theme: ColorsType) =>
     borderBottomHair: {
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
+    debug: {
+      borderWidth: 1,
+      borderColor: 'red',
+    },
   } as const);
 
 export type Styles = ReturnType<typeof _buildStyle> & DynamicStyles;
