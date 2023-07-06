@@ -19,14 +19,46 @@ export default class DiscoveryV2Store {
   @observable loadingTags = false;
   @observable refreshing = false;
   @observable badgeVisible = true;
+  boostFeed: FeedStore;
   trendingFeed: FeedStore;
+  allFeed: FeedStore;
   topFeed: FeedStore;
+  supermindsFeed: FeedStore;
   lastDiscoveryTimestamp = 0;
+  plus?: boolean;
 
   constructor(plus: boolean = false) {
+    this.plus = plus;
+    this.boostFeed = new FeedStore(true);
+    this.boostFeed
+      .getMetadataService()!
+      .setSource('feed/boosts')
+      .setMedium('featured-content');
+
+    this.boostFeed
+      .setEndpoint(BOOST_V3 ? 'api/v3/boosts/feed' : 'api/v2/boost/feed')
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    if (BOOST_V3) {
+      this.boostFeed.feedsService.setDataProperty('boosts');
+      this.boostFeed.setParams({ location: 1 });
+    }
+
     this.trendingFeed = new FeedStore(true)
       .setEndpoint('api/v2/feeds/global/top/all')
       .setParams({ period: '12h', plus })
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    this.allFeed = new FeedStore(true);
+    this.allFeed
+      .getMetadataService()!
+      .setSource('feed/discovery')
+      .setMedium('feed');
+
+    this.allFeed
+      .setEndpoint('api/v2/feeds/global/topV2/all')
       .setInjectBoost(false)
       .setLimit(15);
 
@@ -34,6 +66,15 @@ export default class DiscoveryV2Store {
     this.topFeed
       .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
       .setParams({ unseen: true })
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    if (plus) {
+      this.activeTabId = 'foryou';
+    }
+
+    this.supermindsFeed = new FeedStore()
+      .setEndpoint('api/v3/newsfeed/superminds')
       .setInjectBoost(false)
       .setLimit(15);
 
@@ -52,8 +93,20 @@ export default class DiscoveryV2Store {
         case 'top':
           this.topFeed.fetchRemoteOrLocal();
           break;
+        case 'boosts':
+          this.boostFeed.fetchRemoteOrLocal();
+          break;
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
+          break;
+        case 'supermind':
+          this.supermindsFeed.fetchRemoteOrLocal();
+          break;
+        case 'foryou':
+          if (id === this.activeTabId) {
+            // already on tab
+            this.refreshTrends();
+          }
           break;
       }
     }
@@ -167,20 +220,29 @@ export default class DiscoveryV2Store {
     switch (this.activeTabId) {
       case 'top':
         return this.topFeed.refresh();
+      case 'foryou':
+        this.refreshTrends();
+        return this.allFeed.refresh();
+      case 'your-tags':
+        return this.refreshTags();
       case 'trending-tags':
         this.refreshTags();
         return this.trendingFeed.clear().refresh();
+      case 'boosts':
+        return this.boostFeed.refresh();
     }
   }
 
   @action
   reset() {
+    this.allFeed.reset();
     this.topFeed.reset();
     this.trendingFeed.reset();
+    this.boostFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
-    this.activeTabId = 'top';
+    this.activeTabId = this.plus ? 'foryou' : 'top';
     this.refreshing = false;
     this.loading = false;
     this.showBadge();
@@ -205,9 +267,7 @@ export type TDiscoveryV2Tabs =
   | 'your-tags'
   | 'trending-tags'
   | 'boosts'
-  | 'supermind'
-  | 'channels'
-  | 'groups';
+  | 'supermind';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   top: 0,
@@ -216,8 +276,6 @@ const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   'trending-tags': 3,
   boosts: 4,
   supermind: 5,
-  channels: 6,
-  groups: 7,
 };
 
 export type TDiscoveryTrendsTrend = {};
