@@ -267,7 +267,9 @@ export type TDiscoveryV2Tabs =
   | 'your-tags'
   | 'trending-tags'
   | 'boosts'
-  | 'supermind';
+  | 'supermind'
+  | 'channels'
+  | 'groups';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   top: 0,
@@ -276,6 +278,8 @@ const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   'trending-tags': 3,
   boosts: 4,
   supermind: 5,
+  channels: 6,
+  groups: 7,
 };
 
 export type TDiscoveryTrendsTrend = {};
