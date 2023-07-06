@@ -1,6 +1,8 @@
 import {
+  useMutation,
   useQuery,
   useInfiniteQuery,
+  UseMutationOptions,
   UseQueryOptions,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query';
@@ -316,6 +318,8 @@ export type Query = {
   activity: ActivityNode;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
+  /** Returns an individual gift card by its claim code. */
+  giftCardByClaimCode: GiftCardNode;
   /** Returns a list of gift card transactions */
   giftCardTransactions: GiftCardTransactionsConnection;
   /** Returns a list of gift cards belonging to a user */
@@ -333,6 +337,10 @@ export type QueryActivityArgs = {
 
 export type QueryGiftCardArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardByClaimCodeArgs = {
+  claimCode: Scalars['String']['input'];
 };
 
 export type QueryGiftCardTransactionsArgs = {
@@ -404,6 +412,52 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type ClaimGiftCardMutationVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type ClaimGiftCardMutation = {
+  __typename?: 'Mutation';
+  claimGiftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    claimedByGuid?: string | null;
+  };
+};
+
+export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGiftCardBalancesQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+  }>;
+};
+
+export type GetGiftCardByCodeQueryVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type GetGiftCardByCodeQuery = {
+  __typename?: 'Query';
+  giftCardByClaimCode: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
 };
 
 export type NewsfeedQueryVariables = Exact<{
@@ -742,6 +796,160 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const ClaimGiftCardDocument = `
+    mutation ClaimGiftCard($claimCode: String!) {
+  claimGiftCard(claimCode: $claimCode) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+    claimedByGuid
+  }
+}
+    `;
+export const useClaimGiftCardMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ClaimGiftCardMutation,
+    TError,
+    ClaimGiftCardMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    ClaimGiftCardMutation,
+    TError,
+    ClaimGiftCardMutationVariables,
+    TContext
+  >(
+    ['ClaimGiftCard'],
+    (variables?: ClaimGiftCardMutationVariables) =>
+      gqlFetcher<ClaimGiftCardMutation, ClaimGiftCardMutationVariables>(
+        ClaimGiftCardDocument,
+        variables,
+      )(),
+    options,
+  );
+useClaimGiftCardMutation.fetcher = (
+  variables: ClaimGiftCardMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<ClaimGiftCardMutation, ClaimGiftCardMutationVariables>(
+    ClaimGiftCardDocument,
+    variables,
+    options,
+  );
+export const GetGiftCardBalancesDocument = `
+    query GetGiftCardBalances {
+  giftCardsBalances {
+    productId
+    balance
+  }
+}
+    `;
+export const useGetGiftCardBalancesQuery = <
+  TData = GetGiftCardBalancesQuery,
+  TError = unknown,
+>(
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: UseQueryOptions<GetGiftCardBalancesQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardBalancesQuery, TError, TData>(
+    variables === undefined
+      ? ['GetGiftCardBalances']
+      : ['GetGiftCardBalances', variables],
+    gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+      GetGiftCardBalancesDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetGiftCardBalancesQuery = <
+  TData = GetGiftCardBalancesQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardBalancesQueryVariables,
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: UseInfiniteQueryOptions<GetGiftCardBalancesQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetGiftCardBalancesQuery, TError, TData>(
+    variables === undefined
+      ? ['GetGiftCardBalances.infinite']
+      : ['GetGiftCardBalances.infinite', variables],
+    metaData =>
+      gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+        GetGiftCardBalancesDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetGiftCardBalancesQuery.fetcher = (
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+    GetGiftCardBalancesDocument,
+    variables,
+    options,
+  );
+export const GetGiftCardByCodeDocument = `
+    query GetGiftCardByCode($claimCode: String!) {
+  giftCardByClaimCode(claimCode: $claimCode) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+  }
+}
+    `;
+export const useGetGiftCardByCodeQuery = <
+  TData = GetGiftCardByCodeQuery,
+  TError = unknown,
+>(
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: UseQueryOptions<GetGiftCardByCodeQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardByCodeQuery, TError, TData>(
+    ['GetGiftCardByCode', variables],
+    gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+      GetGiftCardByCodeDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetGiftCardByCodeQuery = <
+  TData = GetGiftCardByCodeQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardByCodeQueryVariables,
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: UseInfiniteQueryOptions<GetGiftCardByCodeQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetGiftCardByCodeQuery, TError, TData>(
+    ['GetGiftCardByCode.infinite', variables],
+    metaData =>
+      gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+        GetGiftCardByCodeDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetGiftCardByCodeQuery.fetcher = (
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+    GetGiftCardByCodeDocument,
+    variables,
+    options,
+  );
 export const NewsfeedDocument = `
     query Newsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
   newsfeed(
