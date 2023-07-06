@@ -741,7 +741,7 @@ export const gqlFetcher = <TData, TVariables>(
   options?: RequestInit['headers'],
 ): (() => Promise<TData>) => {
   return async () => {
-    const response = await apiService.post<TData>(
+    const response = await apiService.post<{ data: TData }>(
       'api/graphql',
       JSON.stringify({
         query,
@@ -761,6 +761,6 @@ export const gqlFetcher = <TData, TVariables>(
       throw new Error(message || 'Error…');
     }
 
-    return response;
+    return response.data;
   };
 };
