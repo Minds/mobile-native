@@ -1101,7 +1101,7 @@
       "description": "Using our Twitter Sync tool, Twitter users with over {{limit}} followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.",
       "discoverable": "Allow other channels to discover me via Twitter",
       "disconnect": "Disconnect",
-      "verificationText": "Verifying my channel on @minds.",
+      "verificationText": "Verifying my channel on @minds. {url}",
       "step1": {
         "title": "Step 1",
         "desc": "We need you to create a Tweet so that we can pair your account. It's important that the pre-populated link is not changed.",

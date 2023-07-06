@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
@@ -180,7 +179,8 @@ export const MINDS_DEEPLINK = [
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
-  DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
+  parseInt(`${DeviceInfo.getBuildNumber()}`, 10) < 1050000000 &&
+  Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
 
@@ -239,18 +239,6 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
   rollbackRetryOptions: {
     delayInHours: 4,
     maxRetryAttempts: 2,
-  },
-  updateDialog: false,
-};
-
-type GraphQLConfig = Record<
-  'minds' | 'strapi',
-  { uri: string; accessToken?: string }
->;
-
-export const GRAPHQL_CONFIG: GraphQLConfig = {
-  strapi: {
-    uri: 'https://cms.oke.minds.io/graphql',
   },
 };
 
