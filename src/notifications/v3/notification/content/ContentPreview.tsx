@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, TextStyle, Linking } from 'react-native';
 import i18n from '~/common/services/i18n.service';
 import { Button } from '~/common/ui';
