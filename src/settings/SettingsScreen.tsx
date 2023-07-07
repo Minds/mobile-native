@@ -121,7 +121,7 @@ const SettingsScreen = observer(({ navigation }) => {
     screen: 'ChooseBrowser',
   });
 
-  if (affiliatesEnabled) {
+  if (affiliatesEnabled && !IS_IPAD) {
     firstSection.push({
       title: i18n.t('settings.affiliateProgram'),
       screen: 'AffiliateProgram',

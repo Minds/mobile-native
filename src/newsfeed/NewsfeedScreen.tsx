@@ -43,7 +43,10 @@ import {
   RecommendationHeader,
   RecommendationBody,
   RecommendationType,
+  Recommendation,
 } from 'modules/recommendation';
+import { GroupsEmpty } from '../modules/groups';
+import AnimatedHeight from '../common/components/animations/AnimatedHeight';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -162,7 +165,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         />
       )),
       new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
-        <ChannelRecommendationBody location="newsfeed" />
+        <AnimatedHeight>
+          <ChannelRecommendationBody location="newsfeed" />
+        </AnimatedHeight>
       )),
       new InjectItem(
         RECOMMENDATION_POSITION + 2,
@@ -197,25 +202,41 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     // for you injected components
     newsfeed.forYouStore.setInjectedItems([prepend]);
     // groups injected components
-    newsfeed.groupsFeedStore.setInjectedItems([
-      prepend,
-
-      new InjectItem(RECOMMENDATION_POSITION, 'grouprecs', ({ target }) => (
-        <RecommendationHeader
-          type="group"
-          location="feed"
-          shadow={target === 'StickyHeader'}
-        />
-      )),
-      new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs', () => (
-        <RecommendationBody type="group" location="feed" />
-      )),
-      new InjectItem(
-        RECOMMENDATION_POSITION + 2,
-        'end',
-        FeedListInvisibleHeader,
-      ),
-    ]);
+    newsfeed.groupsFeedStore
+      .setInjectedItems([
+        prepend,
+        new InjectItem(
+          RECOMMENDATION_POSITION,
+          'grouprecs-header',
+          ({ target }) => (
+            <RecommendationHeader
+              type="group"
+              location="feed"
+              shadow={target === 'StickyHeader'}
+            />
+          ),
+        ),
+        new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs-body', () => (
+          <AnimatedHeight>
+            <RecommendationBody size={1} type="group" location="feed" />
+          </AnimatedHeight>
+        )),
+        new InjectItem(
+          RECOMMENDATION_POSITION + 2,
+          'end',
+          FeedListInvisibleHeader,
+        ),
+      ])
+      .setEmptyComponent(
+        new InjectItem(1, 'empty', () => (
+          <>
+            <GroupsEmpty />
+            <AnimatedHeight>
+              <Recommendation size={5} location="feed" type="group" />
+            </AnimatedHeight>
+          </>
+        )),
+      );
   }
 
   const isLatest = newsfeed.feedType === 'latest';

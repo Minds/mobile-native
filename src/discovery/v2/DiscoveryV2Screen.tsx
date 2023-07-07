@@ -25,10 +25,9 @@ import FeedListSticky from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
 
-interface Props {
-  navigation: any;
-}
+type Props = DiscoveryStackScreenProps<'Discovery'>;
 
 /**
  * Discovery Feed Screen
@@ -70,7 +69,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           { id: 'your-tags', title: i18n.t('discovery.yourTags') },
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
           { id: 'boosts', title: i18n.t('boosted') },
-          { id: 'superminds', title: i18n.t('supermind.supermind') },
+          { id: 'supermind', title: i18n.t('supermind.supermind') },
         ].filter(Boolean) as { id: string; title: string }[],
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [i18n.locale],
@@ -118,11 +117,13 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
         }
       };
       const parent = navigation.getParent();
-      const unsubscribeTab = parent.addListener('tabPress', onPress);
-      const unsubscribeDrawer = parent.addListener('drawerItemPress', onPress);
+      //@ts-ignore
+      const unsubscribeTab = parent?.addListener('tabPress', onPress);
+      //@ts-ignore
+      const unsubscribeDrawer = parent?.addListener('drawerItemPress', onPress);
       return () => {
-        unsubscribeTab();
-        unsubscribeDrawer();
+        unsubscribeTab?.();
+        unsubscribeDrawer?.();
       };
     }, [store, navigation, shouldRefreshOnTabPress]);
 
@@ -140,9 +141,14 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       return unsubscribe;
     }, [store, navigation]);
 
+    const tab = props.route.params?.tab;
+
     useEffect(() => {
       store.topFeed.fetchLocalOrRemote();
-    }, [store]);
+      if (tab) {
+        store.setTabId(tab);
+      }
+    }, [store, tab]);
 
     useFocusEffect(
       useCallback(() => {
@@ -195,9 +201,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               />
             </DiscoveryTabContent>
           );
-        case 'superminds':
+        case 'supermind':
           return (
-            <DiscoveryTabContent key="superminds">
+            <DiscoveryTabContent key="supermind">
               <FeedListSticky
                 ref={listRef}
                 header={header}

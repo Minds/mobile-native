@@ -76,20 +76,16 @@ export const getColor = ({
 
   if ((mode === 'solid' || darkContent) && !disabled) {
     textColor = theme === 1 && type === 'action' ? 'black' : 'white';
+
     return {
       textColor,
       spinnerColor: textColor,
     };
   }
 
-  if (lightContent) {
-    textColor = 'black';
-    spinnerColor = 'black';
-
-    return {
-      textColor,
-      spinnerColor,
-    };
+  if (lightContent || darkContent) {
+    textColor = lightContent ? 'black' : 'white';
+    spinnerColor = lightContent ? 'black' : 'white';
   }
 
   if (mode === 'flat') {
@@ -98,9 +94,6 @@ export const getColor = ({
     }
     if (type === 'warning') {
       textColor = 'danger';
-    }
-    if (darkContent) {
-      spinnerColor = 'white';
     }
   }
 

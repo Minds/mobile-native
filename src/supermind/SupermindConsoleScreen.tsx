@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React from 'react';
+import React, { useEffect } from 'react';
 import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
   TabType,
@@ -32,8 +32,12 @@ import {
   ScrollContext,
   ScrollDirection,
 } from '~/common/contexts/scroll.context';
+import { FeedListV2 } from '~/common/components/FeedListV2';
+import useFeedStore from '~/common/hooks/useFeedStore';
+import PendingSupermindNotice from '~/common/components/in-feed-notices/notices/PendingSupermindNotice';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 
-type TabModeType = 'inbound' | 'outbound';
+type TabModeType = 'inbound' | 'outbound' | 'feed';
 type SupermindConsoleScreenRouteProp = RouteProp<
   MoreStackParamList,
   'SupermindConsole'
@@ -66,15 +70,29 @@ function SupermindConsoleScreen({
 }: SupermindConsoleScreenProps) {
   const theme = ThemedStyles.style;
   const [mode, setMode] = React.useState<TabModeType>(
-    route.params?.tab ?? 'inbound',
+    route.params?.tab ?? 'feed',
   );
   const [filter, setFilter] = React.useState<SupermindFilterType>(
     route.params?.tab === 'outbound' ? 'all' : 'pending',
   );
   const listRef = React.useRef<any>(null);
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
+  const feedStore = useFeedStore();
   const scrollDirection = useSharedValue(0);
   const scrollY = useSharedValue(0);
+
+  // configure feed store
+  feedStore
+    .setEndpoint('api/v3/newsfeed/superminds')
+    .setInjectBoost(false)
+    .setLimit(15);
+
+  // initial load of the feed & notices
+  useEffect(() => {
+    feedStore.fetchRemoteOrLocal();
+
+    inFeedNoticesService.load();
+  }, [feedStore]);
 
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToOffset({ offset: 0 });
@@ -111,6 +129,10 @@ function SupermindConsoleScreen({
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
       {
+        id: 'feed',
+        title: i18n.t('explore'),
+      },
+      {
         id: 'inbound',
         title: i18n.t('inbound'),
       },
@@ -139,42 +161,58 @@ function SupermindConsoleScreen({
         back={!IS_IPAD}
         shadow
       />
-      <OffsetList
-        ref={listRef}
-        ListComponent={Animated.FlatList}
-        header={
-          <>
-            <TopbarTabbar
-              titleStyle={theme.fontXL}
-              tabs={tabs}
-              onChange={handleModeChange}
-              current={mode}
-              tabStyle={theme.paddingVertical}
-              right={
-                <SupermindConsoleFeedFilter
-                  value={filter}
-                  onFilterChange={setFilter}
-                  containerStyles={styles.filterContainer}
-                />
-              }
+      <TopbarTabbar
+        titleStyle={theme.fontXL}
+        tabs={tabs}
+        onChange={handleModeChange}
+        current={mode}
+        tabStyle={theme.paddingVertical}
+        right={
+          mode !== 'feed' ? (
+            <SupermindConsoleFeedFilter
+              value={filter}
+              onFilterChange={setFilter}
+              containerStyles={styles.filterContainer}
             />
-            <StripeConnectButton background="secondary" top="M" bottom="L" />
-          </>
+          ) : null
         }
-        contentContainerStyle={ThemedStyles.style.paddingTop2x}
-        map={mapRequests}
-        fetchEndpoint={
-          mode === 'inbound'
-            ? `api/v3/supermind/inbox${filterParam}`
-            : `api/v3/supermind/outbox${filterParam}`
-        }
-        offsetPagination
-        renderItem={
-          mode === 'inbound' ? renderSupermindInbound : renderSupermindOutbound
-        }
-        endpointData=""
-        onScroll={scrollHandler}
       />
+      {mode === 'feed' ? (
+        <FeedListV2
+          feedStore={feedStore}
+          ListHeaderComponent={
+            inFeedNoticesService.getNotice('supermind-pending')?.should_show ? (
+              <PendingSupermindNotice
+                name="supermind-pending"
+                onPress={() => setMode('inbound')}
+              />
+            ) : null
+          }
+        />
+      ) : (
+        <OffsetList
+          ref={listRef}
+          ListComponent={Animated.FlatList}
+          header={
+            <StripeConnectButton background="secondary" top="M" bottom="L" />
+          }
+          contentContainerStyle={ThemedStyles.style.paddingTop2x}
+          map={mapRequests}
+          fetchEndpoint={
+            mode === 'inbound'
+              ? `api/v3/supermind/inbox${filterParam}`
+              : `api/v3/supermind/outbox${filterParam}`
+          }
+          offsetPagination
+          renderItem={
+            mode === 'inbound'
+              ? renderSupermindInbound
+              : renderSupermindOutbound
+          }
+          endpointData=""
+          onScroll={scrollHandler}
+        />
+      )}
 
       <ScrollContext.Provider
         value={{

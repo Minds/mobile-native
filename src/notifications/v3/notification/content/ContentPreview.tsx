@@ -28,6 +28,8 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
     case NotificationType.supermind_accepted:
     case NotificationType.supermind_expired:
     case NotificationType.supermind_expire24h:
+    case NotificationType.affiliate_earnings_deposited:
+    case NotificationType.referrer_affiliate_earnings_deposited:
       return null;
   }
 
