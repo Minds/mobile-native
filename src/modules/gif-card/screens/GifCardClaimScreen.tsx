@@ -24,7 +24,6 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { showNotification } from 'AppMessages';
 
-//https://feat-gift-card-claim-m4126.oke.minds.io/gift-cards/claim/a63dd2bf9b8e3b63ccd4d39ed2aec0dbb6ba02cb777e11de5dfa9e02094b93c0
 type Props = AppStackScreenProps<'GifCardClaim'>;
 
 export function GifCardClaimScreen({ navigation, route }: Props) {
@@ -48,8 +47,6 @@ export function GifCardClaimScreen({ navigation, route }: Props) {
     : () => claimMutation.mutate({ claimCode: code });
 
   const claimed = claimMutation.isSuccess;
-
-  console.log(data?.giftCardByClaimCode);
 
   const buttonText = error
     ? t('claim.errorButton')
