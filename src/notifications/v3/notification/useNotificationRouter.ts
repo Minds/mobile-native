@@ -1,4 +1,3 @@
-import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
@@ -100,7 +99,7 @@ const useNotificationRouter = (
         case NotificationType.gift_card_recipient_notified:
           const code = notification.data?.gift_card?.claimCode;
           if (code) {
-            Linking.openURL(`minds://gift-cards/claim/${code}`);
+            navigation.navigate('GifCardClaim', { code });
           }
           break;
         default:
