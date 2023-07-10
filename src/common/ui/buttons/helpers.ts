@@ -57,6 +57,7 @@ type PropsForColor = {
 };
 
 export const getColor = ({
+  theme,
   mode = 'solid',
   darkContent = false,
   lightContent,
@@ -74,33 +75,17 @@ export const getColor = ({
   let spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
 
   if ((mode === 'solid' || darkContent) && !disabled) {
-    textColor = 'white';
-    spinnerColor = 'white';
+    textColor = theme === 1 && type === 'action' ? 'black' : 'white';
 
     return {
       textColor,
-      spinnerColor,
+      spinnerColor: textColor,
     };
   }
 
-  if (lightContent) {
-    textColor = 'black';
-    spinnerColor = 'black';
-
-    return {
-      textColor,
-      spinnerColor,
-    };
-  }
-
-  if (darkContent) {
-    textColor = 'white';
-    spinnerColor = 'white';
-
-    return {
-      textColor,
-      spinnerColor,
-    };
+  if (lightContent || darkContent) {
+    textColor = lightContent ? 'black' : 'white';
+    spinnerColor = lightContent ? 'black' : 'white';
   }
 
   if (mode === 'flat') {
@@ -109,9 +94,6 @@ export const getColor = ({
     }
     if (type === 'warning') {
       textColor = 'danger';
-    }
-    if (darkContent) {
-      spinnerColor = 'white';
     }
   }
 
