@@ -180,6 +180,26 @@ export function useMemoStyle(
 }
 
 /**
+ * Checks if the current theme is dark.
+ * Since theme is an observable, this can be used inside an observable and it will fire renders on change
+ *
+ * @return {boolean} True if the theme is dark, false otherwise.
+ */
+export function useIsDarkTheme() {
+  return ThemedStyles.theme === 1;
+}
+
+/**
+ * Checks if the current theme is light.
+ * Since theme is an observable, this can be used inside an observable and it will fire renders on change
+ *
+ * @return {boolean} True if the theme is light, false otherwise.
+ */
+export function useIsLightTheme() {
+  return ThemedStyles.theme === 0;
+}
+
+/**
  * Map props to styles
  */
 export function useStyleFromProps(props: Object) {
