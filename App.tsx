@@ -32,7 +32,7 @@ import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import deviceInfo from 'react-native-device-info';
 
 import NavigationService, {
-  setTopLevelNavigator,
+  navigationRef,
 } from './src/navigation/NavigationService';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
@@ -48,7 +48,6 @@ import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
-// import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
@@ -177,45 +176,40 @@ class App extends Component<Props> {
       <View style={appContainerStyle}>
         <ExperimentsProvider>
           <SafeAreaProvider>
-            {sessionService.ready && (
-              <NavigationContainer
-                ref={setTopLevelNavigator}
-                theme={ThemedStyles.navTheme}
-                onReady={appInitManager.onNavigatorReady}
-                onStateChange={NavigationService.onStateChange}>
+            <UIProvider
+              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+              {sessionService.ready && (
                 <StoresProvider>
                   <QueryProvider>
                     <Provider key="app" {...stores}>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                        <FriendlyCaptchaProvider
-                          ref={setFriendlyCaptchaReference}>
-                          <PortalProvider>
-                            <UIProvider
-                              defaultTheme={
-                                ThemedStyles.theme === 0 ? 'dark' : 'light'
-                              }>
+                      <NavigationContainer
+                        ref={navigationRef}
+                        theme={ThemedStyles.navTheme}
+                        onReady={appInitManager.onNavigatorReady}
+                        onStateChange={NavigationService.onStateChange}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
                               <BottomSheetModalProvider>
                                 <ErrorBoundary
                                   message="An error occurred"
                                   containerStyle={ThemedStyles.style.centered}>
-                                  {/* Wallet connect functionality is disabled for now
-                                  <WCContextProvider>
-                                  */}
                                   <NavigationStack
                                     key={ThemedStyles.theme + i18n.locale}
                                   />
-                                  {/* </WCContextProvider> */}
                                 </ErrorBoundary>
                               </BottomSheetModalProvider>
-                            </UIProvider>
-                          </PortalProvider>
-                        </FriendlyCaptchaProvider>
-                      </AppMessageProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </NavigationContainer>
                     </Provider>
                   </QueryProvider>
                 </StoresProvider>
-              </NavigationContainer>
-            )}
+              )}
+            </UIProvider>
           </SafeAreaProvider>
         </ExperimentsProvider>
       </View>
@@ -236,5 +230,5 @@ const appContainerStyle = ThemedStyles.combine(
 );
 
 // if (__DEV__) {
-//   require('tron');
+//   require('./tron');
 // }

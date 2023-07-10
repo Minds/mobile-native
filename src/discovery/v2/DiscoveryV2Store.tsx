@@ -9,7 +9,7 @@ export type TDiscoveryV2Tabs =
   | 'your-tags'
   | 'trending-tags'
   | 'boosts'
-  | 'superminds';
+  | 'supermind';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   top: 0,
@@ -17,7 +17,7 @@ const tabIndex: Record<TDiscoveryV2Tabs, number> = {
   'your-tags': 2,
   'trending-tags': 3,
   boosts: 4,
-  superminds: 5,
+  supermind: 5,
 };
 
 export type TDiscoveryTrendsTrend = {};
@@ -125,7 +125,7 @@ export default class DiscoveryV2Store {
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
           break;
-        case 'superminds':
+        case 'supermind':
           this.supermindsFeed.fetchRemoteOrLocal();
           break;
         case 'foryou':

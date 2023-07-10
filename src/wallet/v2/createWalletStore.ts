@@ -388,6 +388,7 @@ const createWalletStore = () => ({
     }
   },
   async loadRewards(date: Date) {
+    this.loadPrices();
     try {
       const dateTs = getStartOfDayUnixTs(date);
       const formattedDate = moment(dateTs * 1000)
@@ -398,7 +399,6 @@ const createWalletStore = () => ({
       let rewards = <any>await api.get('api/v3/rewards/', {
         date: formattedDate,
       });
-      await this.loadPrices();
       const response = <any>await api.get('api/v2/blockchain/contributions', {
         from: dateTs,
         to: dateTs + 1,

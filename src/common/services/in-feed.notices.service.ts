@@ -147,6 +147,16 @@ export class InFeedNoticesService {
   }
 
   /**
+   * Returns the Notice object with the given noticeName if it exists in the data array.
+   *
+   * @param {NoticeName} noticeName - The name of the Notice object to retrieve.
+   * @return {Notice | undefined} The Notice object with the given noticeName if it exists, otherwise undefined.
+   */
+  getNotice(noticeName: NoticeName): Notice | undefined {
+    return this.data?.find(notice => notice.key === noticeName);
+  }
+
+  /**
    * Get the current top notice
    * (first visible top notice)
    */

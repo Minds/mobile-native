@@ -36,14 +36,9 @@ export default function BaseNotice({
   onClose,
   borderless,
 }: PropsType) {
-  const onPressClose = () => {
-    if (name) {
-      inFeedNoticesService.dismiss(name);
-    }
-    onClose?.();
-  };
+  const [dismissed, setDismissed] = React.useState(false);
 
-  return (
+  return dismissed ? null : (
     <View style={borderless ? styles.container : styles.containerBordered}>
       <View style={styles.left}>
         <IconNext name={iconName} size="medium" color="PrimaryText" />
@@ -57,7 +52,13 @@ export default function BaseNotice({
                 name="close"
                 size="medium"
                 color="PrimaryText"
-                onPress={onPressClose}
+                onPress={() => {
+                  if (name) {
+                    setDismissed(true);
+                    inFeedNoticesService.dismiss(name);
+                  }
+                  onClose?.();
+                }}
               />
             </View>
           )}

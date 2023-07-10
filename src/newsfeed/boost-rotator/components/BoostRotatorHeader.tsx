@@ -7,11 +7,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 export default function BoostRotatorHeader() {
   const navigation = useNavigation();
 
-  const navToBoostSettings = () =>
-    navigation.navigate('More', {
-      screen: 'BoostSettingsScreen',
-      initial: false,
-    });
+  const navToBoostSettings = () => navigation.navigate('BoostSettingsScreen');
 
   return (
     <View style={styles.container}>

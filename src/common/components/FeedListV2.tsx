@@ -118,6 +118,7 @@ function FeedList<T extends BaseModel>(
         />
       }
       onEndReachedThreshold={5}
+      drawDistance={700}
       renderItem={renderActivity}
       keyExtractor={keyExtractor}
       ListFooterComponent={footerRender}

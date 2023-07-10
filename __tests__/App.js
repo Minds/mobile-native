@@ -7,6 +7,9 @@ import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
 
 jest.mock('../AppInitManager');
+jest.mock('@minds/ui', () => ({
+  UIProvider: ({ children }) => children,
+}));
 
 jest.mock('react-native-exception-handler');
 

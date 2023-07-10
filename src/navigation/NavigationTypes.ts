@@ -45,6 +45,7 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   AffiliateProgram: undefined;
@@ -345,6 +346,7 @@ export type AppStackParamList = {
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   Referrals: {};
+  BoostSettingsScreen: {};
 };
 
 // types for channel edit screens

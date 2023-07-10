@@ -397,6 +397,13 @@ export default function () {
         }
         options={{ headerShown: false }}
       />
+      <MoreStack.Screen
+        name="GroupView"
+        getComponent={() =>
+          require('~/modules/groups/screens/GroupScreen').GroupScreen
+        }
+        options={{ headerShown: false }}
+      />
     </MoreStack.Navigator>
   );
 }

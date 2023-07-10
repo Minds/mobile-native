@@ -5,6 +5,7 @@ import {
   WithSafeAreaInsetsProps,
   withSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import { IconButtonNext } from '~ui/icons';
 import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
@@ -28,6 +29,7 @@ import logService from '~/common/services/log.service';
 import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
+import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 
 type PropsType = {
   entity: ActivityModel;
@@ -283,6 +285,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
     }
+    // Copy URL
+    options.push(
+      copyToClipboardOptions(MINDS_URI + 'newsfeed/' + this.props.entity.guid),
+    );
     // Share
     options.push({
       iconName: 'share-social',
@@ -424,6 +430,11 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       this.props.entity.text,
       MINDS_URI + 'newsfeed/' + this.props.entity.guid,
     );
+  };
+
+  copyToClipboard = () => {
+    Clipboard.setString(MINDS_URI + 'newsfeed/' + this.props.entity.guid);
+    showNotification(i18n.t('copied'));
   };
 
   /**
