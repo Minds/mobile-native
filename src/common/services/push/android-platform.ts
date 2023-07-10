@@ -88,7 +88,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Android don't need permissions from user
    */
   checkPermissions() {
-    return Promise.resolve(true);
+    return permissionsService.requestNotificationPermission();
   }
 
   requestPermission() {
