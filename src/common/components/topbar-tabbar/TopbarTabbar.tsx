@@ -19,7 +19,7 @@ export type TabType<T> = {
 
 type PropsType<T> = {
   tabs: Array<TabType<T>>;
-  current?: T;
+  current: T;
   onChange: (id: T) => void;
   titleStyle?: StyleProp<TextStyle>;
   subtitleStyle?: StyleProp<TextStyle>;
