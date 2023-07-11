@@ -25,7 +25,7 @@ import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import { IS_IOS } from '../../config/Config';
-import StickyList from './StickyList';
+import StickyListWrapper from './StickyListWrapper';
 import Animated from 'react-native-reanimated';
 
 export type OffsetListProps<T = any> = {
@@ -252,9 +252,10 @@ export default observer(
 
     if (props.sticky) {
       return (
-        <StickyList header={props.header}>
-          {stickyProps => <List {...listProps} {...stickyProps} />}
-        </StickyList>
+        <StickyListWrapper
+          header={props.header}
+          renderList={stickyProps => <List {...listProps} {...stickyProps} />}
+        />
       );
     }
 

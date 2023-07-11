@@ -12,13 +12,13 @@ import { StyleSheet, View } from 'react-native';
 type StickyListProps = {
   header?: React.ReactElement;
   bottomComponent?: React.ReactNode;
-  children: (props: any) => React.ReactNode;
+  renderList: (props: any) => React.ReactNode;
 };
 
 /**
  * A list with reanimated sticky header
  */
-function StickyList(props: StickyListProps, ref: any) {
+function StickyListWrapper(props: StickyListProps, ref: any) {
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
@@ -90,7 +90,7 @@ function StickyList(props: StickyListProps, ref: any) {
     <ScrollContext.Provider
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <View style={styles.container}>
-        {props.children({
+        {props.renderList({
           ref: ref,
           ...otherProps,
           ListComponent: Animated.FlatList,
@@ -141,4 +141,4 @@ const Header = ({ children, translationY, onHeight }) => {
 
 const MIN_SCROLL_THRESHOLD = 5;
 
-export default React.forwardRef(StickyList);
+export default React.forwardRef(StickyListWrapper);
