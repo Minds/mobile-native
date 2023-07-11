@@ -1,11 +1,13 @@
 import api from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
+import BlockchainWireService from '../blockchain/v2/services/BlockchainWireService';
 
 import type {
   WireRequest,
   PaymentMethod,
   TransactionPayload,
 } from './WireTypes';
+import { WCStore } from '../blockchain/v2/walletconnect/WalletConnectContext';
 
 /**
  * Wire Service
@@ -68,8 +70,8 @@ class WireService {
    * Send wire
    * @param {object} opts
    */
-  async send(opts: WireRequest): Promise<any> {
-    const payload = await this.getTransactionPayloads(opts);
+  async send(opts: WireRequest, wc?: WCStore): Promise<any> {
+    const payload = await this.getTransactionPayloads(opts, wc);
 
     if (!payload) {
       return;
@@ -93,7 +95,10 @@ class WireService {
    * Get transaction payloads
    * @param {object} opts
    */
-  async getTransactionPayloads(opts: WireRequest): Promise<TransactionPayload> {
+  async getTransactionPayloads(
+    opts: WireRequest,
+    wc?: WCStore,
+  ): Promise<TransactionPayload> {
     let type: PaymentMethod | null = null;
     switch (opts.currency) {
       case 'tokens':
@@ -115,22 +120,66 @@ class WireService {
         if (!opts.owner.eth_wallet) {
           throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
         }
+        if (!wc) {
+          throw new Error('A wallet connect store must be provided');
+        }
+
+        try {
+          await wc?.connect();
+        } catch (error) {
+          console.log(error);
+          // if the user cancel the connection or it fails we return null
+          return null;
+        }
+
+        if (!wc.web3 || !wc?.address) {
+          throw new Error('You must connect a wallet first');
+        }
+
+        const wireService = new BlockchainWireService(wc.web3, wc);
+
         return {
           method: type,
-          address: undefined,
+          address: wc.address,
           receiver: opts.owner.eth_wallet,
-          txHash: undefined,
+          txHash: await wireService.create(
+            opts.owner.eth_wallet,
+            opts.amount,
+            wc.address,
+          ),
         };
 
       case 'eth':
         if (!opts.owner.eth_wallet) {
           throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
         }
+        if (!wc) {
+          throw new Error('A wallet connect store must be provided');
+        }
+
+        try {
+          await wc?.connect();
+        } catch (error) {
+          console.log(error);
+          // if the user cancel the connection or it fails we return null
+          return null;
+        }
+
+        if (!wc.web3 || !wc?.address) {
+          throw new Error('You must connect a wallet first');
+        }
+
+        const blockchainWireService = new BlockchainWireService(wc.web3, wc);
+
         return {
           method: type,
-          address: undefined,
+          address: wc.address,
           receiver: opts.owner.eth_wallet,
-          txHash: undefined,
+          txHash: await blockchainWireService.createEth(
+            wc.address,
+            opts.owner.eth_wallet,
+            opts.amount,
+          ),
         };
 
       case 'usd':
