@@ -14,8 +14,6 @@ import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
-import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
@@ -28,9 +26,8 @@ type tabType = 'tokens' | 'usd' | 'eth';
 
 const lastAmountStorageKey = 'lastTipAmount';
 
-const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
+const createFabScreenStore = () => {
   const store = {
-    wc,
     loaded: false,
     wire: new WireStore(),
     tab: 'tokens' as tabType,
@@ -117,7 +114,7 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
     },
     async send() {
       try {
-        let done = await this.wire.send(this.wc);
+        let done = await this.wire.send();
 
         if (!done) {
           return;
@@ -161,8 +158,7 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
 export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 
 const FabScreen = observer(({ route, navigation }) => {
-  const wc = useWalletConnect();
-  const store = useLocalStore(createFabScreenStore, { wc });
+  const store = useLocalStore(createFabScreenStore);
 
   const tabList = [
     {

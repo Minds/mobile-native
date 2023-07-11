@@ -8,7 +8,6 @@ import MenuItem, {
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
-import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 import { useNavigation } from '@react-navigation/core';
 
 import { B1, B2, Row, Column } from '~ui';
@@ -20,8 +19,6 @@ type PropsType = {
 };
 
 const TokensOverview = observer(({ walletStore }: PropsType) => {
-  useWalletConnect();
-
   const navigation = useNavigation();
 
   const walletActions: MenuItemProps[] = [];
