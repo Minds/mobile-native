@@ -42,11 +42,11 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   ];
 
-  // if ((useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) || IS_IOS) {
-  //   tabs.shift();
-  //   // if we disable cash, offchain_tokens should be the default
-  //   boostStore.paymentType = 'offchain_tokens';
-  // }
+  if ((useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) || IS_IOS) {
+    tabs.shift();
+    // if we disable cash, offchain_tokens should be the default
+    boostStore.paymentType = 'offchain_tokens';
+  }
 
   const textMapping = {
     cash: {
