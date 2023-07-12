@@ -21,6 +21,10 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import {
+  GiftCardProductIdEnum,
+  useFetchPaymentMethodsQuery,
+} from '~/graphql/api';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -28,22 +32,24 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
 
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
+
   const {
-    id: payment_method_id,
-    name,
     balance,
-  } = {
-    id: '12345',
-    name: 'Boost Credits',
-    balance: 14.0,
-  };
+    id: creditPaymentMethod,
+    name,
+  } = data?.paymentMethods?.[0] ?? {};
+
   const hasCredits = Number(balance) >= Number(boostStore.total);
 
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
     value: number(boostStore.wallet?.balance || 0, 0, 2),
   });
 
-  const creditLabel = t('Boost Credits (${{value}} Credits)', {
+  const creditLabel = t('{{name}} (${{value}} Credits)', {
+    name,
     value: number(balance || 0, 2, 2),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
@@ -67,7 +73,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
   const handleCreate = () => {
-    return boostStore.createBoost(payment_method_id)?.then(() => {
+    return boostStore.createBoost(creditPaymentMethod)?.then(() => {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
@@ -146,7 +152,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           spinner
           type="action"
           disabled={
-            boostStore.paymentType === 'cash' && !boostStore.selectedCardId
+            boostStore.paymentType === 'cash' &&
+            !hasCredits &&
+            !boostStore.selectedCardId
           }
           top="XXXL2"
           horizontal="L">
