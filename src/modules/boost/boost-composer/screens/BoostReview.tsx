@@ -27,8 +27,24 @@ type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
+
+  const {
+    id: payment_method_id,
+    name,
+    balance,
+  } = {
+    id: '12345',
+    name: 'Boost Credits',
+    balance: 14.0,
+  };
+  const hasCredits = Number(balance) >= Number(boostStore.total);
+
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
     value: number(boostStore.wallet?.balance || 0, 0, 2),
+  });
+
+  const creditLabel = t('Boost Credits (${{value}} Credits)', {
+    value: number(balance || 0, 2, 2),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
@@ -51,7 +67,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
   const handleCreate = () => {
-    return boostStore.createBoost()?.then(() => {
+    return boostStore.createBoost(payment_method_id)?.then(() => {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
@@ -95,7 +111,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             subtitle={textMapping[paymentType].budgetDescription}
             borderless
           />
-          {boostStore.paymentType === 'cash' ? (
+          {hasCredits ? (
+            <MenuItem
+              title={t('Payment method')}
+              subtitle={creditLabel}
+              borderless
+            />
+          ) : boostStore.paymentType === 'cash' ? (
             <StripeCardSelector
               onCardSelected={card => boostStore.setSelectedCardId(card.id)}
               selectedCardId={boostStore.selectedCardId}

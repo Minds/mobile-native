@@ -98,7 +98,7 @@ export const createBoostStore = ({
     this.selectedCardId = cardId;
   },
   selectedCardId: '',
-  createBoost() {
+  createBoost(payment_method_id?: string) {
     if (!this.validate()) {
       return null;
     }
@@ -109,7 +109,9 @@ export const createBoostStore = ({
       target_location: boostType === 'post' ? 1 : 2,
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
-        this.paymentType === 'cash' ? this.selectedCardId : undefined,
+        this.paymentType === 'cash'
+          ? payment_method_id ?? this.selectedCardId
+          : undefined,
       daily_bid: this.amount,
       duration_days: this.duration,
     };
