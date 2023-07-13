@@ -67,7 +67,9 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
           bodyTextStyle,
           navigation,
         )}
-      {isNoCommentEntity && renderContent(notification, navigation)}
+      {!hasGiftCard &&
+        isNoCommentEntity &&
+        renderContent(notification, navigation)}
       {hasGiftCard && (
         <Button mode="outline" type="action" onPress={navigateToObject}>
           {i18n.t('notification.claimGiftButton')}
