@@ -12,6 +12,7 @@ import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
+import sessionService from './session.service';
 import { hasVariation } from '../../../ExperimentsProvider';
 
 export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
@@ -131,7 +132,7 @@ export default class FeedsService {
       ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
       : feedPage;
 
-    if (!this.injectBoost) {
+    if (!this.injectBoost || sessionService.getUser()?.disabled_boosts) {
       return result;
     }
 

@@ -15,7 +15,6 @@ import {
 } from '~/common/components/bottom-sheet';
 import { Platform } from 'react-native';
 import { useStores } from '~/common/hooks/use-stores';
-import { hasVariation } from 'ExperimentsProvider';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 
 function dismiss(ref) {
@@ -76,17 +75,11 @@ const getOptions = (
       iconType: 'material-community',
       title: i18n.t('boosts.boostChannel'),
       onPress: () => {
-        if (hasVariation('mob-4638-boost-v3')) {
-          navigation.navigate('BoostScreenV2', {
-            entity: channel,
-            boostType: 'channel',
-          });
-        } else {
-          navigation.navigate('BoostScreen', {
-            entity: channel,
-            boostType: 'channel',
-          });
-        }
+        navigation.navigate('BoostScreenV2', {
+          entity: channel,
+          boostType: 'channel',
+        });
+
         ref.current.dismiss();
       },
     });
