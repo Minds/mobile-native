@@ -84,6 +84,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     ? `${boostStore.insights?.views?.low?.toLocaleString()} - ${boostStore.insights?.views?.high?.toLocaleString()}`
     : 'unknown';
 
+  const audiencePlatforms =
+    !boostStore.target_platform_android ||
+    !boostStore.target_platform_ios ||
+    !boostStore.target_platform_web
+      ? `; ${boostStore.platformsText}`
+      : '';
+
   return (
     <Screen safe onlyTopEdge>
       <ScreenHeader title={title} back shadow />
@@ -107,9 +114,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           )}
           <MenuItem
             title={t('Audience')}
-            subtitle={
+            subtitle={`${
               boostStore.audience === 'safe' ? t('Safe') : t('Controversial')
-            }
+            }${audiencePlatforms}`}
             borderless
           />
           <MenuItem

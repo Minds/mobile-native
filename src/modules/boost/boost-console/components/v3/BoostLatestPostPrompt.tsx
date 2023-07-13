@@ -30,11 +30,11 @@ const BoostLatestPostPrompt = () => {
     }
 
     const sortedEntitesByTimeCreated = response?.entities.sort((a, b) => {
-      if (Number(a.entity.time_created) > Number(b.entity.time_created)) {
+      if (Number(a.entity?.time_created) > Number(b.entity?.time_created)) {
         return -1;
       }
 
-      if (Number(a.entity.time_created) < Number(b.entity.time_created)) {
+      if (Number(a.entity?.time_created) < Number(b.entity?.time_created)) {
         return 1;
       }
 

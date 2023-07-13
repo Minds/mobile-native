@@ -177,15 +177,18 @@ describe('wire store', () => {
     expect(store.sending).toEqual(false);
 
     // should call the service
-    expect(wireService.send).toBeCalledWith({
-      currency: 'tokens',
-      amount: store.amount,
-      guid: store.guid,
-      owner: store.owner,
-      offchain: true,
-      recurring: store.recurring,
-      paymentMethodId: '',
-    });
+    expect(wireService.send).toBeCalledWith(
+      {
+        currency: 'tokens',
+        amount: store.amount,
+        guid: store.guid,
+        owner: store.owner,
+        offchain: true,
+        recurring: store.recurring,
+        paymentMethodId: '',
+      },
+      undefined,
+    );
   });
 
   it('should throw on send a wire', async () => {
@@ -206,15 +209,18 @@ describe('wire store', () => {
       // should set sending in false on finish
       expect(store.sending).toEqual(false);
       // should call the service
-      expect(wireService.send).toBeCalledWith({
-        currency: 'tokens',
-        amount: store.amount,
-        guid: store.guid,
-        owner: store.owner,
-        offchain: true,
-        recurring: store.recurring,
-        paymentMethodId: '',
-      });
+      expect(wireService.send).toBeCalledWith(
+        {
+          currency: 'tokens',
+          amount: store.amount,
+          guid: store.guid,
+          owner: store.owner,
+          offchain: true,
+          recurring: store.recurring,
+          paymentMethodId: '',
+        },
+        undefined,
+      );
     }
   });
 });

@@ -18,6 +18,7 @@ import { TokensTabStore } from './createTokensTabStore';
 import i18n from '../../../../common/services/i18n.service';
 import { Screen, Column } from '~ui';
 import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
+import { showNotification } from 'AppMessages';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -79,7 +80,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       body = (
         <ReceiverSettings
           navigation={navigation}
-          connectWallet={() => null}
+          connectWallet={showMessage}
           onchainStore={onchainStore}
           walletStore={walletStore}
         />
@@ -95,7 +96,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}
-          connectWallet={() => null}
+          connectWallet={showMessage}
           onchainStore={onchainStore}
         />
         <TopBarButtonTabBar
@@ -109,5 +110,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
     </Screen>
   );
 });
+
+// This message should not be shown since the functionality is disabled, it is kept just in case
+const showMessage = () =>
+  showNotification('Please connect your wallet on the web');
 
 export default TokensTab;

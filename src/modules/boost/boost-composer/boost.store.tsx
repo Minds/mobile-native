@@ -44,6 +44,14 @@ export const createBoostStore = ({
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
   linkUrl: '',
+  get platformsText() {
+    const enabled: string[] = [];
+    this.target_platform_ios && enabled.push('iOS');
+    this.target_platform_android && enabled.push('Android');
+    this.target_platform_web && enabled.push('Web');
+
+    return enabled.join(', ');
+  },
   togglePlatformWeb() {
     this.target_platform_web = !this.target_platform_web;
   },
