@@ -465,11 +465,6 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              name="BoostScreen"
-              getComponent={() => require('~/boost/legacy/BoostScreen').default}
-              options={modalOptions}
-            />
-            <RootStackNav.Screen
               name="WalletWithdrawal"
               getComponent={() =>
                 require('~/wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal')

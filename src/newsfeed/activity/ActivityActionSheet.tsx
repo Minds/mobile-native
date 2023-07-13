@@ -26,7 +26,6 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { hasVariation } from 'ExperimentsProvider';
 import { isApiError } from '../../common/services/api.service';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
@@ -198,12 +197,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         iconName: 'trending-up',
         iconType: 'material-community',
         onPress: () => {
-          this.props.navigation.push(
-            hasVariation('mob-4638-boost-v3') ? 'BoostScreenV2' : 'BoostScreen',
-            {
-              entity: this.props.entity,
-            },
-          );
+          this.props.navigation.push('BoostScreenV2', {
+            entity: this.props.entity,
+          });
         },
       });
     }
