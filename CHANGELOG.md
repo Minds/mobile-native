@@ -2,7 +2,26 @@
 
 Minds Mobile
 
-## v4.37.0 (2023-07-04)
+## 4.37.1 (2023-07-13)
+
+### Features ✨ (3 changes)
+
+- [Added copy to clipboard option](minds/mobile-native!2344)
+- [Added support for affiliate notifications](minds/mobile-native!2343)
+- [Added composer FAB](minds/mobile-native!2334)
+
+### Fixed 🐛 (8 changes)
+
+- [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
+- [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
+- [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)
+- [Fixed an issue where a newly registered user would still see boosts ](minds/mobile-native!2361)
+- [Fixed minds+ anually](minds/mobile-native!2351)
+- [Fixed search too slow](minds/mobile-native!2339)
+- [Fixed label in post options](minds/mobile-native!2338)
+- [fixed back navigation from rotator settings](minds/mobile-native!2336)
+
+## 4.37.0 (2023-07-04)
 
 ### Features ✨ (11 changes)
 
@@ -33,25 +52,6 @@ Minds Mobile
 - [Changed remote banner in update prompt](minds/mobile-native!2320)
 - [Changed color to black on yellow buttons](minds/mobile-native!2318)
 - [Update react native to 0.71 and update many dependencies](minds/mobile-native!2278)
-
-## 4.37.1 (2023-07-13)
-
-### Features ✨ (3 changes)
-
-- [Added copy to clipboard option](minds/mobile-native!2344)
-- [Added support for affiliate notifications](minds/mobile-native!2343)
-- [Added composer FAB](minds/mobile-native!2334)
-
-### Fixed 🐛 (8 changes)
-
-- [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
-- [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
-- [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)
-- [Fixed an issue where a newly registered user would still see boosts ](minds/mobile-native!2361)
-- [Fixed minds+ anually](minds/mobile-native!2351)
-- [Fixed search too slow](minds/mobile-native!2339)
-- [Fixed label in post options](minds/mobile-native!2338)
-- [fixed back navigation from rotator settings](minds/mobile-native!2336)
 
 ## 4.36.2 (2023-06-05)
 
