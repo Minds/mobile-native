@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, StyleSheet, View } from 'react-native';
+import { Alert, Button, View } from 'react-native';
 import openUrlService from '~/common/services/open-url.service';
 import { Icon, IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
@@ -249,8 +249,6 @@ class ReportScreen extends Component<PropsType, StateType> {
    * Render reasons list
    */
   renderReasons() {
-    const theme = ThemedStyles.style;
-
     const reasons =
       this.state.reason && this.state.reason.hasMore
         ? this.state.reason.reasons
@@ -350,37 +348,5 @@ class ReportScreen extends Component<PropsType, StateType> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  reasonItem: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-    minHeight: 50,
-  },
-  reasonItemLabelContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  reasonItemLabel: {
-    flex: 1,
-    fontWeight: '600',
-    textAlign: 'left',
-  },
-  chevronContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 36,
-  },
-  chevron: {
-    color: '#ececec',
-  },
-});
 
 export default withErrorBoundaryScreen(ReportScreen, 'ReportScreen');
