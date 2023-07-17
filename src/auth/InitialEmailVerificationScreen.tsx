@@ -145,7 +145,11 @@ const InitialEmailVerificationScreen = () => {
       <B1
         horizontal="L"
         color="link"
-        onPress={() => NavigationService.push('ChangeEmail')}>
+        onPress={() =>
+          NavigationService.push('ChangeEmail', {
+            onSubmit: () => localStore.resend(),
+          })
+        }>
         Change email
       </B1>
     </>

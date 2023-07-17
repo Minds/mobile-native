@@ -20,6 +20,7 @@ import validator from '../common/services/validator.service';
  * to be able to transition to this component as the initial screen
  */
 const ChangeEmailScreen = () => {
+  const route = useRoute<any>();
   // Local store
   const localStore = useLocalStore(() => ({
     email: '',
@@ -38,7 +39,10 @@ const ChangeEmailScreen = () => {
 
       return settingsService
         .submitSettings({ email: this.email })
-        .then(() => NavigationService.goBack())
+        .then(() => {
+          NavigationService.goBack();
+          route.params.onSubmit?.();
+        })
         .catch(() =>
           showNotification(i18n.t('settings.errorSaving'), 'danger'),
         );
