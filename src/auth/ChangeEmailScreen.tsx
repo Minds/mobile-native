@@ -12,6 +12,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import settingsService from '../settings/SettingsService';
 import { showNotification } from '../../AppMessages';
 import validator from '../common/services/validator.service';
+import { IS_IOS } from '../config/Config';
 
 /**
  * Initial email verification screen
@@ -58,7 +59,7 @@ const ChangeEmailScreen = () => {
   }, [localStore]);
 
   const detail = (
-    <KeyboardSpacingView safe enabled>
+    <KeyboardSpacingView safe={IS_IOS} enabled>
       <SafeAreaView
         edges={['bottom']}
         style={ThemedStyles.style.bgPrimaryBackground}>
