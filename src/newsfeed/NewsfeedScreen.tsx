@@ -46,7 +46,6 @@ import {
   Recommendation,
 } from 'modules/recommendation';
 import { GroupsEmpty } from '../modules/groups';
-import AnimatedHeight from '../common/components/animations/AnimatedHeight';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -56,13 +55,6 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 
 const HIGHLIGHT_POSITION = 9;
 const RECOMMENDATION_POSITION = 4;
-
-const sticky = [
-  RECOMMENDATION_POSITION,
-  RECOMMENDATION_POSITION + 2,
-  HIGHLIGHT_POSITION,
-  HIGHLIGHT_POSITION + 2,
-];
 
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
@@ -164,9 +156,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         />
       )),
       new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
-        <AnimatedHeight>
-          <ChannelRecommendationBody location="newsfeed" />
-        </AnimatedHeight>
+        <ChannelRecommendationBody location="newsfeed" />
       )),
       new InjectItem(
         RECOMMENDATION_POSITION + 2,
@@ -216,9 +206,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           ),
         ),
         new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs-body', () => (
-          <AnimatedHeight>
-            <RecommendationBody size={1} type="group" location="feed" />
-          </AnimatedHeight>
+          <RecommendationBody size={1} type="group" location="feed" />
         )),
         new InjectItem(
           RECOMMENDATION_POSITION + 2,
@@ -230,9 +218,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
         new InjectItem(1, 'empty', () => (
           <>
             <GroupsEmpty />
-            <AnimatedHeight>
-              <Recommendation size={5} location="feed" type="group" />
-            </AnimatedHeight>
+            <Recommendation size={5} location="feed" type="group" />
           </>
         )),
       );
@@ -249,7 +235,6 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           types={RECOMMENDATION_TYPES}>
           <View style={ThemedStyles.style.flexContainer}>
             <FeedListSticky
-              stickyHeaderIndices={isLatest ? sticky : undefined}
               overrideItemLayout={overrideItemLayout}
               emphasizeGroup
               bottomComponent={
