@@ -250,6 +250,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
               feedStore={newsfeed.feedStore}
               afterRefresh={refreshPortrait}
               placeholder={NewsfeedPlaceholder}
+              extraData={newsfeed.feedType}
             />
           </View>
         </RecommendationProvider>
