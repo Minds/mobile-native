@@ -10,7 +10,7 @@ import i18n from '../common/services/i18n.service';
 export default observer(function TopFeedHighlightsHeader({
   target,
 }: {
-  target: string;
+  target?: string;
 }) {
   const { newsfeed, dismissal } = useLegacyStores();
   const shouldRender = !dismissal.isDismissed('top-highlights');

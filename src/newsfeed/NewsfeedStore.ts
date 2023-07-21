@@ -170,6 +170,8 @@ class NewsfeedStore<T extends BaseModel> {
       }
     }
 
+    let waitPromise: Promise<any> | undefined;
+
     // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
     if (this.feedType === 'top') {
       refresh = true;
@@ -179,10 +181,10 @@ class NewsfeedStore<T extends BaseModel> {
       });
     } else {
       // fetch highlights for the latests feed
-      this.highlightsStore.fetch();
+      waitPromise = this.highlightsStore.fetch();
     }
 
-    this.feedStore.fetchRemoteOrLocal(refresh);
+    this.feedStore.fetchRemoteOrLocal(refresh, waitPromise);
   };
 
   /**

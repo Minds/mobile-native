@@ -22,7 +22,6 @@ import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FeedListSticky from '~/common/components/FeedListSticky';
-import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import { ChannelRecommendationProvider } from '~/common/components/ChannelRecommendation/ChannelRecommendationProvider';
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
@@ -148,42 +147,31 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
-
-      new InjectItem(RECOMMENDATION_POSITION, 'channel', ({ target }) => (
-        <ChannelRecommendationHeader
-          location="newsfeed"
-          shadow={target === 'StickyHeader'}
-        />
+      new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
+        <>
+          <ChannelRecommendationHeader location="newsfeed" />
+          <ChannelRecommendationBody location="newsfeed" />
+        </>
       )),
-      new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
-        <ChannelRecommendationBody location="newsfeed" />
-      )),
-      new InjectItem(
-        RECOMMENDATION_POSITION + 2,
-        'end',
-        FeedListInvisibleHeader,
-      ),
       new InjectItem(
         7,
         'ilNotice',
         () => <InlineInFeedNotice position={1} />,
         () => InFeedNoticesService.trackViewInFeed(1),
       ),
-
-      new InjectItem(HIGHLIGHT_POSITION, 'highlightheader', ({ target }) => (
-        <TopFeedHighlightsHeader target={target} />
-      )),
       new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
-        <TopFeedHighlights
-          onSeeTopFeedPress={() => {
-            newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
-            setTimeout(() => {
-              newsfeed.changeFeedType('top', true);
-            }, 500);
-          }}
-        />
+        <>
+          <TopFeedHighlightsHeader />
+          <TopFeedHighlights
+            onSeeTopFeedPress={() => {
+              newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
+              setTimeout(() => {
+                newsfeed.changeFeedType('top', true);
+              }, 500);
+            }}
+          />
+        </>
       )),
-      new InjectItem(HIGHLIGHT_POSITION + 2, 'end', FeedListInvisibleHeader),
     ]);
 
     // top feed injected components
@@ -206,13 +194,11 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           ),
         ),
         new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs-body', () => (
-          <RecommendationBody size={1} type="group" location="feed" />
+          <>
+            <RecommendationHeader type="group" location="feed" />
+            <RecommendationBody size={1} type="group" location="feed" />
+          </>
         )),
-        new InjectItem(
-          RECOMMENDATION_POSITION + 2,
-          'end',
-          FeedListInvisibleHeader,
-        ),
       ])
       .setEmptyComponent(
         new InjectItem(1, 'empty', () => (
