@@ -100,6 +100,7 @@ export const DiscoveryTrendsList = observer(
             </View>
           )
         }
+        refreshing={store.refreshing}
         onRefresh={onRefresh}
       />
     );

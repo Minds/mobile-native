@@ -37,6 +37,7 @@ const BlockedChannelsScreen = observer(props => {
           </View>
         }
         style={[theme.bgPrimaryBackground, theme.flexContainer]}
+        refreshing={localStore.loading}
         onRefresh={onRefresh}
       />
     </View>
