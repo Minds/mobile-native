@@ -121,6 +121,12 @@ build:android:store:
     - !reference [.rule_never_nightly, rules]
     - !reference [.rule_never_mr_pipes, rules]
     - when: manual
+  artifacts:
+    name: 'Minds Store APK'
+    paths:
+      - $APK_NAME
+    expire_in: 45 days
+    when: on_success
 
 # Cleanup APK from merged MRs
 build:cleanup:
