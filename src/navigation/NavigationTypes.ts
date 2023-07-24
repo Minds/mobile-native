@@ -128,6 +128,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  Report: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
@@ -320,7 +321,6 @@ export type AppStackParamList = {
   Transactions: {};
   BlockchainWalletImport: {};
   BlockchainWalletDetails: {};
-  Report: {};
   More: {};
   Withdraw: {};
   WalletOnboarding: {};

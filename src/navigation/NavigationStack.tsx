@@ -171,11 +171,6 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
-          name="Report"
-          getComponent={() => require('~/report/ReportScreen').default}
-          options={{ title: i18n.t('report') }}
-        />
-        <AppStackNav.Screen
           name="TierScreen"
           getComponent={() => require('~/settings/screens/TierScreen').default}
           options={{ title: 'Tier Management' }}
@@ -369,6 +364,11 @@ const RootStack = observer(function () {
               name="Compose"
               getComponent={() => require('~/compose/ComposeStack').default}
               options={TransitionPresets.ModalPresentationIOS}
+            />
+            <RootStackNav.Screen
+              name="Report"
+              getComponent={() => require('~/report/ReportScreen').default}
+              options={{ title: i18n.t('report'), headerShown: true }}
             />
             <RootStackNav.Screen
               name="SupermindConfirmation"
