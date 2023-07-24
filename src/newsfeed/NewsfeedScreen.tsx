@@ -182,18 +182,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.groupsFeedStore
       .setInjectedItems([
         prepend,
-        new InjectItem(
-          RECOMMENDATION_POSITION,
-          'grouprecs-header',
-          ({ target }) => (
-            <RecommendationHeader
-              type="group"
-              location="feed"
-              shadow={target === 'StickyHeader'}
-            />
-          ),
-        ),
-        new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs-body', () => (
+        new InjectItem(RECOMMENDATION_POSITION, 'grouprecs-body', () => (
           <>
             <RecommendationHeader type="group" location="feed" />
             <RecommendationBody size={1} type="group" location="feed" />
