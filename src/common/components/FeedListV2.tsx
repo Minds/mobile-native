@@ -124,6 +124,7 @@ function FeedList<T extends BaseModel>(
     <FlashList
       estimatedItemSize={450}
       data={items}
+      refreshing={isRefreshing}
       refreshControl={refreshControl}
       onEndReachedThreshold={5}
       drawDistance={height}
