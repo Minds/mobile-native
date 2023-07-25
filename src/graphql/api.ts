@@ -544,6 +544,72 @@ export type GetGiftCardByCodeQuery = {
   };
 };
 
+export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
+  giftCardGuid: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetGiftCardTransactionsLedgerQuery = {
+  __typename?: 'Query';
+  giftCardTransactionLedger: {
+    __typename?: 'GiftCardTransactionsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardTransactionEdge';
+      node: {
+        __typename?: 'GiftCardTransaction';
+        paymentGuid?: string | null;
+        giftCardGuid?: string | null;
+        amount: number;
+        createdAt: number;
+        refundedAt?: number | null;
+        boostGuid?: string | null;
+        id: string;
+        giftCardIssuerGuid?: string | null;
+        giftCardIssuerName?: string | null;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
+};
+
+export type GetGiftCardsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  ordering?: InputMaybe<GiftCardOrderingEnum>;
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
+}>;
+
+export type GetGiftCardsQuery = {
+  __typename?: 'Query';
+  giftCards: {
+    __typename?: 'GiftCardsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardEdge';
+      node: {
+        __typename?: 'GiftCardNode';
+        guid?: string | null;
+        productId: GiftCardProductIdEnum;
+        balance: number;
+        amount: number;
+        claimedByGuid?: string | null;
+        expiresAt: number;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+    };
+  };
+};
+
 export type NewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
   limit: Scalars['Int']['input'];
@@ -872,72 +938,6 @@ export type PageInfoFragment = {
   endCursor?: string | null;
 };
 
-export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
-  giftCardGuid: Scalars['String']['input'];
-  first?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-export type GetGiftCardTransactionsLedgerQuery = {
-  __typename?: 'Query';
-  giftCardTransactionLedger: {
-    __typename?: 'GiftCardTransactionsConnection';
-    edges: Array<{
-      __typename?: 'GiftCardTransactionEdge';
-      node: {
-        __typename?: 'GiftCardTransaction';
-        paymentGuid?: string | null;
-        giftCardGuid?: string | null;
-        amount: number;
-        createdAt: number;
-        refundedAt?: number | null;
-        boostGuid?: string | null;
-        id: string;
-        giftCardIssuerGuid?: string | null;
-        giftCardIssuerName?: string | null;
-      };
-    }>;
-    pageInfo: {
-      __typename?: 'PageInfo';
-      hasNextPage: boolean;
-      endCursor?: string | null;
-      startCursor?: string | null;
-    };
-  };
-};
-
-export type GetGiftCardsQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  ordering?: InputMaybe<GiftCardOrderingEnum>;
-  productId?: InputMaybe<GiftCardProductIdEnum>;
-  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
-}>;
-
-export type GetGiftCardsQuery = {
-  __typename?: 'Query';
-  giftCards: {
-    __typename?: 'GiftCardsConnection';
-    edges: Array<{
-      __typename?: 'GiftCardEdge';
-      node: {
-        __typename?: 'GiftCardNode';
-        guid?: string | null;
-        productId: GiftCardProductIdEnum;
-        balance: number;
-        amount: number;
-        claimedByGuid?: string | null;
-        expiresAt: number;
-      };
-    }>;
-    pageInfo: {
-      __typename?: 'PageInfo';
-      hasNextPage: boolean;
-      endCursor?: string | null;
-    };
-  };
-};
-
 export const PageInfoFragmentDoc = `
     fragment PageInfo on PageInfo {
   hasPreviousPage
@@ -1105,105 +1105,6 @@ useGetGiftCardByCodeQuery.fetcher = (
     variables,
     options,
   );
-export const NewsfeedDocument = `
-    query Newsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
-  newsfeed(
-    algorithm: $algorithm
-    first: $limit
-    after: $cursor
-    inFeedNoticesDelivered: $inFeedNoticesDelivered
-  ) {
-    edges {
-      cursor
-      node {
-        id
-        ... on ActivityNode {
-          legacy
-        }
-        ... on BoostNode {
-          goalButtonUrl
-          goalButtonText
-          legacy
-        }
-        ... on FeedNoticeNode {
-          location
-          key
-        }
-        ... on FeedHighlightsConnection {
-          edges {
-            node {
-              id
-              legacy
-            }
-          }
-          pageInfo {
-            ...PageInfo
-          }
-        }
-        ... on PublisherRecsConnection {
-          edges {
-            publisherNode: node {
-              id
-              ... on UserNode {
-                legacy
-              }
-              ... on BoostNode {
-                legacy
-              }
-            }
-          }
-          pageInfo {
-            ...PageInfo
-          }
-        }
-      }
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
-}
-    ${PageInfoFragmentDoc}`;
-export const useNewsfeedQuery = <TData = NewsfeedQuery, TError = unknown>(
-  variables: NewsfeedQueryVariables,
-  options?: UseQueryOptions<NewsfeedQuery, TError, TData>,
-) =>
-  useQuery<NewsfeedQuery, TError, TData>(
-    ['Newsfeed', variables],
-    gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
-      NewsfeedDocument,
-      variables,
-    ),
-    options,
-  );
-export const useInfiniteNewsfeedQuery = <
-  TData = NewsfeedQuery,
-  TError = unknown,
->(
-  pageParamKey: keyof NewsfeedQueryVariables,
-  variables: NewsfeedQueryVariables,
-  options?: UseInfiniteQueryOptions<NewsfeedQuery, TError, TData>,
-) => {
-  return useInfiniteQuery<NewsfeedQuery, TError, TData>(
-    ['Newsfeed.infinite', variables],
-    metaData =>
-      gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options,
-  );
-};
-
-useNewsfeedQuery.fetcher = (
-  variables: NewsfeedQueryVariables,
-  options?: RequestInit['headers'],
-) =>
-  gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
-    NewsfeedDocument,
-    variables,
-    options,
-  );
 export const GetGiftCardTransactionsLedgerDocument = `
     query GetGiftCardTransactionsLedger($giftCardGuid: String!, $first: Int, $after: String) {
   giftCardTransactionLedger(
@@ -1349,6 +1250,105 @@ useGetGiftCardsQuery.fetcher = (
 ) =>
   gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
     GetGiftCardsDocument,
+    variables,
+    options,
+  );
+export const NewsfeedDocument = `
+    query Newsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
+  newsfeed(
+    algorithm: $algorithm
+    first: $limit
+    after: $cursor
+    inFeedNoticesDelivered: $inFeedNoticesDelivered
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        ... on ActivityNode {
+          legacy
+        }
+        ... on BoostNode {
+          goalButtonUrl
+          goalButtonText
+          legacy
+        }
+        ... on FeedNoticeNode {
+          location
+          key
+        }
+        ... on FeedHighlightsConnection {
+          edges {
+            node {
+              id
+              legacy
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+        ... on PublisherRecsConnection {
+          edges {
+            publisherNode: node {
+              id
+              ... on UserNode {
+                legacy
+              }
+              ... on BoostNode {
+                legacy
+              }
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+export const useNewsfeedQuery = <TData = NewsfeedQuery, TError = unknown>(
+  variables: NewsfeedQueryVariables,
+  options?: UseQueryOptions<NewsfeedQuery, TError, TData>,
+) =>
+  useQuery<NewsfeedQuery, TError, TData>(
+    ['Newsfeed', variables],
+    gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
+      NewsfeedDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteNewsfeedQuery = <
+  TData = NewsfeedQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof NewsfeedQueryVariables,
+  variables: NewsfeedQueryVariables,
+  options?: UseInfiniteQueryOptions<NewsfeedQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<NewsfeedQuery, TError, TData>(
+    ['Newsfeed.infinite', variables],
+    metaData =>
+      gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useNewsfeedQuery.fetcher = (
+  variables: NewsfeedQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
+    NewsfeedDocument,
     variables,
     options,
   );
