@@ -16,7 +16,7 @@ export default function () {
       <WalletStack.Screen
         name="CreditTransactions"
         getComponent={() =>
-          require('~/wallet/v3/CreditTransactionsScreen').default
+          require('~/modules/gif-card/screens/CreditTransactionsScreen').default
         }
         options={{ headerShown: false }}
       />

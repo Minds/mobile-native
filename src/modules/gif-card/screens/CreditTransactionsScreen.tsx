@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react';
 import { B1, B2, Column, Screen, ScreenHeader } from '~/common/ui';
-import { GiftTransationList } from './currency-tabs/credit-lists/components/GiftTransactionList';
-import { dateFormat } from './currency-tabs/credit-lists/components/date-utils';
-// import i18n from '~/common/services/i18n.service';
+import { GiftTransationList } from '../components/GiftTransactionList';
+import { dateFormat } from '../components/date-utils';
 
 /**
  * CreditTransactions screen
+ * calling from Wallet stack with params
  */
 const CreditTransactionsScreen = observer(({ route }) => {
-  const { guid, expiresAt } = route.params ?? {};
-
+  const { expiresAt, guid } = route.params ?? {};
   return (
     <Screen safe scroll>
       <ScreenHeader back title={'Boost Credits'} />

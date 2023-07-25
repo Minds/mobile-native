@@ -13,8 +13,6 @@ export const GiftTransationList = ({ guid }: { guid: string }) => {
   const { data, isLoading, refetch, loadMore, sortState, setSortState } =
     useGetTransactions(guid);
 
-  console.log('transactions', data);
-
   return (
     <FlashList
       ListHeaderComponent={
