@@ -386,6 +386,7 @@ exports[`blog card component should renders correctly 1`] = `
     <Actions
       entity={
         {
+          "_collapsed": false,
           "access_id": "2",
           "allow_comments": true,
           "boost_rejection_reason": -1,
@@ -422,6 +423,7 @@ exports[`blog card component should renders correctly 1`] = `
           "monetized": false,
           "ownerObj": {
             "__list": null,
+            "_collapsed": false,
             "access_id": "2",
             "allow_comments": true,
             "banned": "no",

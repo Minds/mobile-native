@@ -28,6 +28,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
     <Subscribe
       channel={
         {
+          "_collapsed": false,
           "access_id": "2",
           "allow_comments": true,
           "banned": "no",

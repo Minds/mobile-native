@@ -124,6 +124,8 @@ export const featureList = [
   'mob-4938-newsfeed-for-you',
   'mob-4989-compose-fab',
   'mob-4952-boost-platform-targeting',
+  'mob-5075-hide-post-on-downvote',
+  'mob-5075-explicit-vote-buttons',
 ] as const;
 
 export type FeatureID = typeof featureList[number];

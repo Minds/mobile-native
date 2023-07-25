@@ -17,6 +17,7 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { useIsFeatureOn } from '../../../ExperimentsProvider';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -55,6 +56,8 @@ function FeedList<T extends BaseModel>(
   } = props;
 
   const navigation = useNavigation();
+  const explicitVoteFeature = useIsFeatureOn('mob-5075-explicit-vote-buttons');
+  const hidePostFeature = useIsFeatureOn('mob-5075-hide-post-on-downvote');
 
   const items: Array<any> = !hideContent ? feedStore.entities.slice() : [];
 
@@ -81,12 +84,21 @@ function FeedList<T extends BaseModel>(
               displayBoosts={displayBoosts}
               emphasizeGroup={emphasizeGroup}
               autoHeight={false}
+              quietDownvote
+              explicitVoteButtons={explicitVoteFeature && row.index % 3 === 0}
+              hidePostOnDownvote={hidePostFeature}
             />
           )}
         </ErrorBoundary>
       );
     },
-    [navigation, displayBoosts, emphasizeGroup],
+    [
+      navigation,
+      displayBoosts,
+      emphasizeGroup,
+      explicitVoteFeature,
+      hidePostFeature,
+    ],
   );
 
   const footerRender = useCallback(

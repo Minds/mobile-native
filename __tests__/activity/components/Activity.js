@@ -33,11 +33,30 @@ jest.mock(
   '../../../src/newsfeed/activity/metrics/ActivityMetrics',
   () => 'ActivityMetrics',
 );
+
 jest.mock('../../../AppStores');
 
 jest.mock('../../../src/common/contexts/analytics.context', () => ({
-  withAnalyticsContext: mapper => ({ children }) => children,
+  withAnalyticsContext:
+    mapper =>
+    ({ children }) =>
+      children,
 }));
+
+jest.mock('../../../src/newsfeed/activity/contexts/Activity.context', () => ({
+  withActivityContext:
+    mapper =>
+    ({ children }) =>
+      children,
+}));
+
+jest.mock(
+  '../../../src/newsfeed/activity/hocs/undoable',
+  () =>
+    () =>
+    ({ children }) =>
+      children,
+);
 
 describe('Activity component', () => {
   let user, comments, entity, screen;

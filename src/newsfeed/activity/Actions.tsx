@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { StyleSheet, View, Platform } from 'react-native';
 
@@ -10,12 +10,15 @@ import CommentsAction from './actions/CommentsAction';
 import RemindAction from './actions/RemindAction';
 import BoostAction from './actions/BoostAction';
 import BaseModel from '../../common/BaseModel';
-import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import SupermindAction from './actions/SupermindAction';
 import ShareAction from './actions/ShareAction';
 import { IS_IOS } from '~/config/Config';
+import { useActivityContext } from './contexts/Activity.context';
+import { Button, HairlineRow, Icon, Row } from '../../common/ui';
+import { useAnalytics } from '../../common/contexts/analytics.context';
+import ActivityModel from '../ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,7 +28,20 @@ type PropsType = {
 };
 
 export const Actions = observer((props: PropsType) => {
+  const { explicitVoteButtons, onDownvote } = useActivityContext();
+  const analytics = useAnalytics();
   const navigation = useNavigation();
+  const containerStyle = useMemoStyle(
+    [
+      styles.container,
+      {
+        borderTopWidth: explicitVoteButtons
+          ? undefined
+          : StyleSheet.hairlineWidth,
+      },
+    ],
+    [explicitVoteButtons],
+  );
 
   if (props.hideTabs) {
     return null;
@@ -38,60 +54,99 @@ export const Actions = observer((props: PropsType) => {
     parseInt(entity.time_created, 10) * 1000,
   );
 
+  const voteUp = useCallback(() => {
+    entity.toggleVote('up').then(() => {
+      analytics.trackClick('vote:up');
+    });
+  }, [analytics, entity]);
+
+  const voteDown = useCallback(() => {
+    entity.toggleVote('down').then(() => {
+      analytics.trackClick('vote:down');
+    });
+
+    onDownvote?.();
+  }, [analytics, entity, onDownvote]);
+
+  if (!entity) {
+    return null;
+  }
+
   return (
-    <View>
-      {entity && (
-        <View style={containerStyle}>
-          <ThumbAction
-            direction="up"
-            entity={entity}
-            voted={entity.votedUp}
-            hideCount={props.hideCount}
-          />
-          <ThumbAction
-            direction="down"
-            entity={entity}
-            voted={entity.votedDown}
-            hideCount={props.hideCount}
-          />
-          <CommentsAction
-            // hideCount={props.hideCount}
-            entity={entity}
-            navigation={navigation}
-            onPressComment={props.onPressComment}
-            testID={
-              props.entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''
-            }
-          />
-          <RemindAction entity={entity} hideCount={props.hideCount} />
+    <>
+      <View style={containerStyle}>
+        {!explicitVoteButtons && (
+          <>
+            <ThumbAction
+              direction="up"
+              entity={entity}
+              voted={entity.votedUp}
+              hideCount={props.hideCount}
+            />
+            <ThumbAction
+              direction="down"
+              entity={entity}
+              voted={entity.votedDown}
+              hideCount={props.hideCount}
+            />
+          </>
+        )}
+        <CommentsAction
+          // hideCount={props.hideCount}
+          entity={entity}
+          navigation={navigation}
+          onPressComment={props.onPressComment}
+          testID={entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''}
+        />
+        <RemindAction entity={entity} hideCount={props.hideCount} />
 
-          {IS_IOS && <ShareAction entity={entity} />}
+        {IS_IOS && <ShareAction entity={entity} />}
 
-          {!isOwner && hasWire && (
-            <WireAction owner={entity.ownerObj} navigation={navigation} />
-          )}
+        {!isOwner && hasWire && (
+          <WireAction owner={entity.ownerObj} navigation={navigation} />
+        )}
 
-          {isOwner && !isScheduled && (
-            <BoostAction entity={entity} navigation={navigation} />
-          )}
+        {isOwner && !isScheduled && (
+          <BoostAction entity={entity} navigation={navigation} />
+        )}
 
-          {!isOwner && !IS_IOS && <SupermindAction entity={entity} />}
-        </View>
+        {!isOwner && !IS_IOS && <SupermindAction entity={entity} />}
+      </View>
+
+      {explicitVoteButtons && (
+        <>
+          <HairlineRow />
+          <Row align="centerBetween" horizontal="L" vertical="M">
+            <VoteButtonWithText
+              direction="up"
+              voted={entity.votedUp}
+              onVote={voteUp}
+            />
+            <VoteButtonWithText
+              direction="down"
+              voted={entity.votedDown}
+              onVote={voteDown}
+            />
+          </Row>
+        </>
       )}
-    </View>
+    </>
   );
 });
 
 export default Actions;
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: 16,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
+const styles = ThemedStyles.create({
+  container: [
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingHorizontal: 16,
+      minHeight: 64,
+    },
+    'bcolorPrimaryBorder',
+  ],
   avatar: {
     height: 46,
     width: 46,
@@ -101,7 +156,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const containerStyle = ThemedStyles.combine(
-  styles.container,
-  'bcolorPrimaryBorder',
+const VoteButtonWithText = ({
+  direction,
+  voted,
+  onVote,
+}: {
+  direction: 'up' | 'down';
+  voted: boolean;
+  onVote: () => void;
+}) => (
+  <Button
+    fit
+    size="small"
+    mode="outline"
+    color={voted ? 'link' : undefined}
+    icon={
+      <Icon
+        color={voted ? 'Link' : undefined}
+        name={`thumb-${direction}`}
+        right="XS"
+      />
+    }
+    onPress={onVote}>
+    See {direction === 'up' ? 'more' : 'less'} of this
+  </Button>
 );
