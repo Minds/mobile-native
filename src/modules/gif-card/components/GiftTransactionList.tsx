@@ -5,10 +5,11 @@ import {
   GiftCardTransactionEdge,
   useInfiniteGetGiftCardTransactionsLedgerQuery,
 } from '~/graphql/api';
-import { IconMapNameType } from '~/common/ui/icons/map';
 import { dateFormat, timeFormat } from './date-utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
+import { Image, View } from 'react-native';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 export const GiftTransationList = ({ guid }: { guid: string }) => {
   const { t } = useTranslation();
@@ -41,22 +42,26 @@ const renderItem =
       node: { amount, createdAt },
     } = item;
 
-    const [iconName, title, indicatorProps] =
+    const [icon, title, indicatorProps] =
       amount > 0
         ? [
-            'boost',
+            <MindsIcon />,
             t('Boost Credit from @minds\n(Expires {{date}})', {
               date: dateFormat(createdAt),
             }),
             arrow.up,
           ]
-        : ['boost', t('Credit towards Boosted Content'), arrow.down];
+        : [
+            <Icon name={'boost'} />,
+            t('Credit towards Boosted Content'),
+            arrow.down,
+          ];
     return (
       <Column horizontal="XL" vertical="L">
         <B1 color="secondary">{dateFormat(createdAt)} </B1>
         <Row flex top="L" align="centerBetween" background="secondary">
           <Row flex align="centerStart" background="tertiary">
-            <Icon name={iconName as IconMapNameType} />
+            {icon}
             <Column flex left="M">
               <B1>{title}</B1>
               <B3 color="secondary">{timeFormat(createdAt)}</B3>
@@ -72,6 +77,18 @@ const renderItem =
       </Column>
     );
   };
+
+const MindsIcon = () => {
+  return (
+    <View style={styles.logo}>
+      <Image
+        source={require('~/assets/logos/bulb.png')}
+        resizeMode="contain"
+        style={styles.bulb}
+      />
+    </View>
+  );
+};
 
 const useGetTransactions = (giftCardGuid: string) => {
   const pageParamKey = 'after';
@@ -125,3 +142,22 @@ const arrow: Record<string, IIcon> = {
     color: 'DangerBackground',
   },
 };
+
+const styles = ThemedStyles.create({
+  logo: [
+    'bgWhite',
+    'bcolorAvatarCircled',
+    {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      borderWidth: 1,
+    },
+  ],
+  bulb: {
+    width: 18,
+    height: 18,
+  },
+});
