@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import i18n from '~/common/services/i18n.service';
 import {
   BottomSheetModal,
   BottomSheetButton,
@@ -10,6 +9,7 @@ import {
 } from '~/common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
 import { GiftCardStatusFilterEnum } from '~/graphql/api';
+import { useTranslation } from '../locales';
 
 type CreditFilterType = keyof typeof GiftCardStatusFilterEnum;
 
@@ -19,6 +19,8 @@ type PropsType = {
 };
 
 const Filter = observer(({ filterState, setFilterState }: PropsType) => {
+  const { t } = useTranslation();
+
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
     ref.current?.dismiss();
@@ -40,23 +42,23 @@ const Filter = observer(({ filterState, setFilterState }: PropsType) => {
         <Row align="centerBoth">
           <Icon name="filter" size="small" />
           <B3 left="XXS" color="secondary">
-            {i18n.t('filter')}
+            {t('filter')}
           </B3>
         </Row>
       </TouchableOpacity>
       <BottomSheetModal ref={ref}>
-        <SectionTitle>Status</SectionTitle>
+        <SectionTitle>{t('Status')}</SectionTitle>
         <RadioButton
           selected={filterState === 'Active'}
-          title="Active"
+          title={t('Active')}
           onPress={onPress('Active')}
         />
         <RadioButton
           selected={filterState === 'Expired'}
-          title="Expired"
+          title={t('Expired')}
           onPress={onPress('Expired')}
         />
-        <BottomSheetButton text={i18n.t('close')} onPress={close} />
+        <BottomSheetButton text={t('Close')} onPress={close} />
       </BottomSheetModal>
     </>
   );

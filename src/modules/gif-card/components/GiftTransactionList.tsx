@@ -6,10 +6,12 @@ import {
   useInfiniteGetGiftCardTransactionsLedgerQuery,
 } from '~/graphql/api';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import capitalize from '~/common/helpers/capitalize';
 import { dateFormat, timeFormat } from './date-utils';
+import { useTranslation } from '../locales';
+import { TFunction } from 'i18next';
 
 export const GiftTransationList = ({ guid }: { guid: string }) => {
+  const { t } = useTranslation();
   const { data, isLoading, refetch, loadMore, sortState, setSortState } =
     useGetTransactions(guid);
 
@@ -17,14 +19,14 @@ export const GiftTransationList = ({ guid }: { guid: string }) => {
     <FlashList
       ListHeaderComponent={
         <Row horizontal="XL" bottom="S" align="centerBetween">
-          <B2 color="secondary">{capitalize(sortState)}</B2>
+          <B2 color="secondary">{t(sortState)}</B2>
           <Sort sortState={sortState} setSortState={setSortState} />
         </Row>
       }
       estimatedItemSize={200}
       keyExtractor={(item, index) => item?.node?.id ?? `${index}`}
       data={data}
-      renderItem={renderItem}
+      renderItem={renderItem(t)}
       refreshing={isLoading}
       onRefresh={refetch}
       onEndReached={loadMore}
@@ -32,36 +34,44 @@ export const GiftTransationList = ({ guid }: { guid: string }) => {
   );
 };
 
-const renderItem = ({ item }: ListRenderItemInfo<GiftCardTransactionEdge>) => {
-  const {
-    node: { amount, createdAt },
-  } = item;
+const renderItem =
+  (t: TFunction<'GiftCardModule', undefined, 'GiftCardModule'>) =>
+  ({ item }: ListRenderItemInfo<GiftCardTransactionEdge>) => {
+    const {
+      node: { amount, createdAt },
+    } = item;
 
-  const [iconName, title, indicatorProps] =
-    amount > 0
-      ? ['boost', 'Boost Credit from @minds\n(Expires Apr 18th)', arrow.up]
-      : ['boost', 'Credit towards Boosted Content', arrow.down];
-  return (
-    <Column horizontal="XL" vertical="L">
-      <B1 color="secondary">{dateFormat(createdAt)} </B1>
-      <Row flex top="L" align="centerBetween" background="secondary">
-        <Row flex align="centerStart" background="tertiary">
-          <Icon name={iconName as IconMapNameType} />
-          <Column flex left="M">
-            <B1>{title}</B1>
-            <B3 color="secondary">{timeFormat(createdAt)}</B3>
-          </Column>
+    const [iconName, title, indicatorProps] =
+      amount > 0
+        ? [
+            'boost',
+            t('Boost Credit from @minds\n(Expires {{date}})', {
+              date: dateFormat(createdAt),
+            }),
+            arrow.up,
+          ]
+        : ['boost', t('Credit towards Boosted Content'), arrow.down];
+    return (
+      <Column horizontal="XL" vertical="L">
+        <B1 color="secondary">{dateFormat(createdAt)} </B1>
+        <Row flex top="L" align="centerBetween" background="secondary">
+          <Row flex align="centerStart" background="tertiary">
+            <Icon name={iconName as IconMapNameType} />
+            <Column flex left="M">
+              <B1>{title}</B1>
+              <B3 color="secondary">{timeFormat(createdAt)}</B3>
+            </Column>
+          </Row>
+          <Row align="centerBoth">
+            <Icon {...indicatorProps} />
+            <B1 font="bold" color="primary">
+              {Math.abs(amount ?? 0)}
+            </B1>
+          </Row>
         </Row>
-        <Row align="centerBoth">
-          <Icon {...indicatorProps} />
-          <B1 font="bold" color="primary">
-            {Math.abs(amount ?? 0)}
-          </B1>
-        </Row>
-      </Row>
-    </Column>
-  );
-};
+      </Column>
+    );
+  };
 
 const useGetTransactions = (giftCardGuid: string) => {
   const pageParamKey = 'after';

@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import capitalize from '~/common/helpers/capitalize';
 import { B2, B3, Row } from '~/common/ui';
 import Link from '~/common/components/Link';
 import Filter, { useFilterState } from './Filter';
@@ -17,8 +16,11 @@ import {
 } from '~/graphql/api';
 import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
 import { dateFormat } from './date-utils';
+import { useTranslation } from '../locales';
+import { TFunction } from 'i18next';
 
 export const GiftCardList = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const {
     data,
@@ -33,7 +35,7 @@ export const GiftCardList = () => {
     <FlashList
       ListHeaderComponent={
         <Row horizontal="XL" bottom="S" align="centerBetween">
-          <B2 color="secondary">{capitalize(gitfCardState)}</B2>
+          <B2 color="secondary">{t(gitfCardState)}</B2>
           <Filter
             filterState={gitfCardState}
             setFilterState={setGiftCardState}
@@ -43,7 +45,7 @@ export const GiftCardList = () => {
       estimatedItemSize={CARD_HEIGHT}
       keyExtractor={(item, index) => item?.node?.id ?? `${index}`}
       data={data}
-      renderItem={renderCard(navigation)}
+      renderItem={renderCard(navigation, t)}
       refreshing={isLoading}
       onRefresh={refetch}
       onEndReached={loadMore}
@@ -52,7 +54,10 @@ export const GiftCardList = () => {
 };
 
 const renderCard =
-  (navigation: NavigationProp<ReactNavigation.RootParamList>) =>
+  (
+    navigation: NavigationProp<ReactNavigation.RootParamList>,
+    t: TFunction<'GiftCardModule', undefined, 'GiftCardModule'>,
+  ) =>
   ({ item }: ListRenderItemInfo<GiftCardEdge>) => {
     const {
       node: { guid, balance, amount, expiresAt, productId },
@@ -67,7 +72,9 @@ const renderCard =
         <MindsCard disabled={disabled} />
         <View style={[styles.textBox, last && styles.lastItem]}>
           <B2 font="bold">{productId}</B2>
-          <B2 bottom="XL">Expires {dateFormat(expiresAt)}</B2>
+          <B2 bottom="XL">
+            {t('Expires {{date}}', { date: dateFormat(expiresAt) })}
+          </B2>
           <Link
             onPress={() =>
               balance === amount
@@ -75,10 +82,10 @@ const renderCard =
                 : navigation.navigate('CreditTransactions', { guid, expiresAt })
             }
             decoration={false}>
-            {balance === amount ? 'No Transactions' : 'View Transactions'}
+            {balance === amount ? t('No Transactions') : t('View Transactions')}
           </Link>
           <Row top="S" bottom="L" align="centerBetween">
-            <B2 font="bold">Balance</B2>
+            <B2 font="bold">{t('Balance')}</B2>
             <B2 font="bold">${balance}</B2>
           </Row>
         </View>
@@ -104,6 +111,7 @@ const MindsCard = observer(({ disabled = false }) => {
 });
 
 export const CreditsToExpire = () => {
+  const { t } = useTranslation();
   const { data } = useGetGiftCards(true);
 
   const firstNode = data?.[0]?.node ?? {};
@@ -114,7 +122,10 @@ export const CreditsToExpire = () => {
   }
   return (
     <B3 top="S">
-      ${balance} in Boost Credits{'\n'}Expires {dateFormat(expiresAt)}
+      {t('${{balance}} in Boost Credits\nExpires {{date}}', {
+        balance,
+        date: dateFormat(expiresAt),
+      })}
     </B3>
   );
 };

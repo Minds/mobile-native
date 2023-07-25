@@ -11,12 +11,14 @@ import {
   useGetGiftCards,
 } from './GiftCardList';
 import { dateFormat } from './date-utils';
+import { useTranslation } from '../locales';
 
 type CreditOptions = 'balance';
 /**
  * Credits tab
  */
 const CreditsTab = observer(() => {
+  const { t } = useTranslation();
   const [option, setOption] = useState<CreditOptions>('balance');
 
   const balance = useGetGiftBalance();
@@ -26,7 +28,7 @@ const CreditsTab = observer(() => {
   const { balance: bal, expiresAt: exp } = firstNode;
 
   const options: Array<ButtonTabType<CreditOptions>> = [
-    { id: 'balance', title: 'Gift Balance' },
+    { id: 'balance', title: t('Gift Balance') },
   ];
   const tabs: Record<CreditOptions, React.ReactElement> = {
     balance: <GiftCardList />,
@@ -35,11 +37,14 @@ const CreditsTab = observer(() => {
   return (
     <Screen>
       <Column horizontal="XL" vertical="L">
-        <B1 color="secondary">{'Boost Credits'}</B1>
+        <B1 color="secondary">{t('Boost Credits')}</B1>
         <H4>${balance}</H4>
         {bal && exp ? (
           <B3 top="S">
-            ${bal} in Boost Credits{'\n'}Expires {dateFormat(exp)}
+            {t('${{bal}} in Boost Credits\nExpires {{date}}', {
+              bal,
+              date: dateFormat(exp),
+            })}
           </B3>
         ) : undefined}
       </Column>

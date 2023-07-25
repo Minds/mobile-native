@@ -9,6 +9,7 @@ import {
   SectionTitle,
 } from '~/common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
+import { useTranslation } from '../locales';
 
 type CreditSortType = 'Ascending' | 'Descending'; // keyof typeof GiftCardStatusFilterEnum;
 
@@ -18,6 +19,7 @@ type PropsType = {
 };
 
 const Sort = observer(({ sortState, setSortState }: PropsType) => {
+  const { t } = useTranslation();
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
     ref.current?.dismiss();
@@ -39,21 +41,20 @@ const Sort = observer(({ sortState, setSortState }: PropsType) => {
         <Row align="centerBoth">
           <Icon name="filter" size="small" />
           <B3 left="S" color="secondary">
-            {/* {i18n.t('sort')} */}
-            Sort
+            {t('Sort')}
           </B3>
         </Row>
       </TouchableOpacity>
       <BottomSheetModal ref={ref}>
-        <SectionTitle>Date</SectionTitle>
+        <SectionTitle>{t('Date')}</SectionTitle>
         <RadioButton
           selected={sortState === 'Ascending'}
-          title="Ascending"
+          title={t('Ascending')}
           onPress={onPress('Ascending')}
         />
         <RadioButton
           selected={sortState === 'Descending'}
-          title="Descending"
+          title={t('Descending')}
           onPress={onPress('Descending')}
         />
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
