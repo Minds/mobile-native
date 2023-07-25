@@ -3,13 +3,14 @@ query GetGiftCards(
   $after: String
   $ordering: GiftCardOrderingEnum
   $productId: GiftCardProductIdEnum
-  $statusFilter: String # $statusFilter: GiftCardStatusFilterEnum,
+  $statusFilter: GiftCardStatusFilterEnum
 ) {
   giftCards(
     first: $first
     after: $after
     ordering: $ordering
-    productId: $productId # statusFilter: $statusFilter
+    productId: $productId
+    statusFilter: $statusFilter
   ) {
     edges {
       node {

@@ -9,16 +9,15 @@ import {
   SectionTitle,
 } from '~/common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
-import { GiftCardStatusFilterEnum } from '~/graphql/api';
 
-type CreditFilterType = keyof typeof GiftCardStatusFilterEnum;
+type CreditSortType = 'Ascending' | 'Descending'; // keyof typeof GiftCardStatusFilterEnum;
 
 type PropsType = {
-  filterState: CreditFilterType;
-  setFilterState: (state: CreditFilterType) => void;
+  sortState: CreditSortType;
+  setSortState: (state: CreditSortType) => void;
 };
 
-const Filter = observer(({ filterState, setFilterState }: PropsType) => {
+const Sort = observer(({ sortState, setSortState }: PropsType) => {
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
     ref.current?.dismiss();
@@ -27,10 +26,10 @@ const Filter = observer(({ filterState, setFilterState }: PropsType) => {
     ref.current?.present();
   }, [ref]);
 
-  const onPress = (state: CreditFilterType) => () => {
+  const onPress = (state: CreditSortType) => () => {
     close();
     setTimeout(() => {
-      setFilterState?.(state);
+      setSortState?.(state);
     }, 200);
   };
 
@@ -39,22 +38,23 @@ const Filter = observer(({ filterState, setFilterState }: PropsType) => {
       <TouchableOpacity onPress={show} testID="FilterToggle">
         <Row align="centerBoth">
           <Icon name="filter" size="small" />
-          <B3 left="XXS" color="secondary">
-            {i18n.t('filter')}
+          <B3 left="S" color="secondary">
+            {/* {i18n.t('sort')} */}
+            Sort
           </B3>
         </Row>
       </TouchableOpacity>
       <BottomSheetModal ref={ref}>
-        <SectionTitle>Status</SectionTitle>
+        <SectionTitle>Date</SectionTitle>
         <RadioButton
-          selected={filterState === 'Active'}
-          title="Active"
-          onPress={onPress('Active')}
+          selected={sortState === 'Ascending'}
+          title="Ascending"
+          onPress={onPress('Ascending')}
         />
         <RadioButton
-          selected={filterState === 'Expired'}
-          title="Expired"
-          onPress={onPress('Expired')}
+          selected={sortState === 'Descending'}
+          title="Descending"
+          onPress={onPress('Descending')}
         />
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
       </BottomSheetModal>
@@ -62,17 +62,16 @@ const Filter = observer(({ filterState, setFilterState }: PropsType) => {
   );
 });
 
-export const useFilterState = (forceActive: boolean) => {
-  const [gitfCardState, setGiftCardState] =
-    React.useState<CreditFilterType>('Active');
+export const useSortState = (forceActive = false) => {
+  const [sortState, setSortState] = React.useState<CreditSortType>('Ascending');
 
-  const statusFilter = forceActive ? 'Active' : gitfCardState;
+  const statusSort = forceActive ? 'Ascending' : sortState;
 
   return {
-    gitfCardState,
-    setGiftCardState,
-    statusFilter,
+    sortState,
+    setSortState,
+    statusSort,
   };
 };
 
-export default Filter;
+export default Sort;

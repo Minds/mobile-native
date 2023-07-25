@@ -1,22 +1,22 @@
 import { Image, View } from 'react-native';
 import { observer } from 'mobx-react';
-import moment from 'moment';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import capitalize from '~/common/helpers/capitalize';
 import { B2, B3, Row } from '~/common/ui';
 import Link from '~/common/components/Link';
-import Filter, { CreditFilterType } from './Filter';
+import Filter, { useFilterState } from './Filter';
 import {
   GiftCardEdge,
   GiftCardOrderingEnum,
   GiftCardProductIdEnum,
+  GiftCardStatusFilterEnum,
   useGetGiftCardBalancesQuery,
   useInfiniteGetGiftCardsQuery,
 } from '~/graphql/api';
 import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
-import { useState } from 'react';
+import { dateFormat } from './date-utils';
 
 export const GiftCardList = () => {
   const navigation = useNavigation();
@@ -72,7 +72,7 @@ const renderCard =
             onPress={() =>
               balance === amount
                 ? undefined
-                : navigation.navigate('CreditTransactions', { guid })
+                : navigation.navigate('CreditTransactions', { guid, expiresAt })
             }
             decoration={false}>
             {balance === amount ? 'No Transactions' : 'View Transactions'}
@@ -123,14 +123,13 @@ export const useGetGiftCards = (forceActive = false) => {
   const pageParamKey = 'after';
   const productId = GiftCardProductIdEnum.Boost;
 
-  const [gitfCardState, setGiftCardState] =
-    useState<CreditFilterType>('active');
+  const { gitfCardState, setGiftCardState, statusFilter } =
+    useFilterState(forceActive);
 
   const {
     data: paginatedData,
     hasNextPage: morePages,
     isLoading,
-    isFetchingNextPage,
     fetchNextPage,
     refetch,
   } = useInfiniteGetGiftCardsQuery(
@@ -139,7 +138,7 @@ export const useGetGiftCards = (forceActive = false) => {
       first: 12,
       productId,
       ordering: GiftCardOrderingEnum.ExpiringAsc,
-      statusFilter: forceActive ? 'active' : gitfCardState,
+      statusFilter: GiftCardStatusFilterEnum[statusFilter],
     },
     {
       getNextPageParam: lastPage => {
@@ -157,7 +156,6 @@ export const useGetGiftCards = (forceActive = false) => {
   return {
     data,
     isLoading,
-    isFetchingNextPage,
     gitfCardState,
     setGiftCardState,
     fetchNextPage,
@@ -174,8 +172,6 @@ export const useGetGiftBalance = () => {
     {};
   return balance;
 };
-
-const dateFormat = (val: number) => moment(val * 1000).format('ddd MMM do');
 
 const CARD_HEIGHT = 86;
 const styles = ThemedStyles.create({

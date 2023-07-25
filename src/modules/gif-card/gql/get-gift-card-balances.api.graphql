@@ -2,10 +2,10 @@ query GetGiftCardBalances {
   giftCardsBalances {
     productId
     balance
-    # earliestExpiringGiftCard {
-    #   guid
-    #   balance
-    #   expiresAt
-    # }
+    earliestExpiringGiftCard {
+      guid
+      balance
+      expiresAt
+    }
   }
 }

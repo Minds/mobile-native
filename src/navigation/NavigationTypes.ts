@@ -372,5 +372,5 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 
 export type WalletStackParamList = {
   Wallet: {};
-  CreditTransactions: { guid: string };
+  CreditTransactions: { guid: string; expireAt?: number };
 };
