@@ -1440,6 +1440,9 @@
       "tokenAmount": "Amount",
       "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
       "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
+    },
+    "credits": {
+      "title": "Boost Credits"
     }
   },
   "analytics": {
@@ -1718,6 +1721,7 @@
   "follow": "Follow post",
   "unfollow": "Unfollow",
   "tokens": "Tokens",
+  "credits": "Credits",
   "share": "Share",
   "edited": "Edited",
   "success": "Success",

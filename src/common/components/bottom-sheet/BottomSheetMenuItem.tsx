@@ -44,7 +44,11 @@ const BottomSheetMenuItem = ({
             size={iconSize}
             name={iconName!}
             type={iconType}
-            iconStyle={ThemedStyles.style.colorSecondaryText}
+            iconStyle={
+              iconName === 'ios-radio-button-on'
+                ? ThemedStyles.style.colorIconActive
+                : ThemedStyles.style.colorSecondaryText
+            }
           />
         </View>
       )}
