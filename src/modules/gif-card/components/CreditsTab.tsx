@@ -25,7 +25,7 @@ const CreditsTab = observer(() => {
   const { data } = useGetGiftCards();
 
   const firstNode = data?.[0]?.node ?? {};
-  const { balance: bal, expiresAt: exp } = firstNode;
+  const { balance: firstBalance, expiresAt } = firstNode;
 
   const options: Array<ButtonTabType<CreditOptions>> = [
     { id: 'balance', title: t('Gift Balance') },
@@ -39,11 +39,11 @@ const CreditsTab = observer(() => {
       <Column horizontal="XL" vertical="L">
         <B1 color="secondary">{t('Boost Credits')}</B1>
         <H4>${balance}</H4>
-        {bal && exp ? (
+        {firstBalance && expiresAt ? (
           <B3 top="S">
-            {t('${{bal}} in Boost Credits\nExpires {{date}}', {
-              bal,
-              date: dateFormat(exp),
+            {t('${{firstBalance}} in Boost Credits\nExpires {{date}}', {
+              firstBalance,
+              date: dateFormat(expiresAt),
             })}
           </B3>
         ) : undefined}

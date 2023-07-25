@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import i18n from '~/common/services/i18n.service';
 import {
   BottomSheetModal,
   BottomSheetButton,
@@ -57,7 +56,7 @@ const Sort = observer(({ sortState, setSortState }: PropsType) => {
           title={t('Descending')}
           onPress={onPress('Descending')}
         />
-        <BottomSheetButton text={i18n.t('close')} onPress={close} />
+        <BottomSheetButton text={t('Close')} onPress={close} />
       </BottomSheetModal>
     </>
   );
