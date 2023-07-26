@@ -1,10 +1,10 @@
 import {
-  useMutation,
   useQuery,
   useInfiniteQuery,
-  UseMutationOptions,
+  useMutation,
   UseQueryOptions,
   UseInfiniteQueryOptions,
+  UseMutationOptions,
 } from '@tanstack/react-query';
 import { gqlFetcher } from '~/common/services/api.service';
 export type Maybe<T> = T | null;
@@ -44,34 +44,35 @@ export type ActivityEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type ActivityNode = NodeInterface & {
-  __typename?: 'ActivityNode';
-  /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
-  blurhash?: Maybe<Scalars['String']['output']>;
-  commentsCount: Scalars['Int']['output'];
-  guid: Scalars['String']['output'];
-  hasVotedDown: Scalars['Boolean']['output'];
-  hasVotedUp: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  impressionsCount: Scalars['Int']['output'];
-  /** The activity has comments enabled */
-  isCommentingEnabled: Scalars['Boolean']['output'];
-  legacy: Scalars['String']['output'];
-  message: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  owner: UserNode;
-  ownerGuid: Scalars['String']['output'];
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  /** Relevant for images/video posts */
-  title?: Maybe<Scalars['String']['output']>;
-  urn: Scalars['String']['output'];
-  votesDownCount: Scalars['Int']['output'];
-  votesUpCount: Scalars['Int']['output'];
-};
+export type ActivityNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'ActivityNode';
+    /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
+    blurhash?: Maybe<Scalars['String']['output']>;
+    commentsCount: Scalars['Int']['output'];
+    guid: Scalars['String']['output'];
+    hasVotedDown: Scalars['Boolean']['output'];
+    hasVotedUp: Scalars['Boolean']['output'];
+    id: Scalars['ID']['output'];
+    impressionsCount: Scalars['Int']['output'];
+    /** The activity has comments enabled */
+    isCommentingEnabled: Scalars['Boolean']['output'];
+    legacy: Scalars['String']['output'];
+    message: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    owner: UserNode;
+    ownerGuid: Scalars['String']['output'];
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    /** Relevant for images/video posts */
+    title?: Maybe<Scalars['String']['output']>;
+    urn: Scalars['String']['output'];
+    votesDownCount: Scalars['Int']['output'];
+    votesUpCount: Scalars['Int']['output'];
+  };
 
 export type BoostEdge = EdgeInterface & {
   __typename?: 'BoostEdge';
@@ -111,6 +112,34 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type EntityNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'EntityNode';
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    legacy: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+  };
+
+export type EntityNodeInterface = {
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
 };
 
 export type FeedHighlightsConnection = ConnectionInterface &
@@ -210,6 +239,7 @@ export type GiftCardTransaction = NodeInterface & {
   giftCardGuid?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   paymentGuid?: Maybe<Scalars['String']['output']>;
+  refundedAt?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GiftCardTransactionEdge = EdgeInterface & {
@@ -238,28 +268,44 @@ export type GroupEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type GroupNode = NodeInterface & {
-  __typename?: 'GroupNode';
-  guid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  legacy: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
+export type GroupNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'GroupNode';
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    legacy: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+  };
+
+export type KeyValuePairInput = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   claimGiftCard: GiftCardNode;
+  /** Mark an onboarding step for a user as completed. */
+  completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  /** Sets onboarding state for the currently logged in user. */
+  setOnboardingState: OnboardingState;
 };
 
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
+};
+
+export type MutationCompleteOnboardingStepArgs = {
+  additionalData?: InputMaybe<Array<KeyValuePairInput>>;
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
 };
 
 export type MutationCreateGiftCardArgs = {
@@ -268,6 +314,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationSetOnboardingStateArgs = {
+  completed: Scalars['Boolean']['input'];
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -285,12 +335,34 @@ export type NodeInterface = {
   id: Scalars['ID']['output'];
 };
 
+export type OnboardingState = {
+  __typename?: 'OnboardingState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  startedAt: Scalars['Int']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type OnboardingStepProgressState = {
+  __typename?: 'OnboardingStepProgressState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  stepKey: Scalars['String']['output'];
+  stepType: Scalars['String']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaymentMethod = {
+  __typename?: 'PaymentMethod';
+  balance?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type PublisherRecsConnection = ConnectionInterface &
@@ -329,6 +401,12 @@ export type Query = {
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
+  /** Gets onboarding state for the currently logged in user. */
+  onboardingState?: Maybe<OnboardingState>;
+  /** Get the currently logged in users onboarding step progress. */
+  onboardingStepProgress: Array<OnboardingStepProgressState>;
+  /** Get a list of payment methods for the logged in user */
+  paymentMethods: Array<PaymentMethod>;
 };
 
 export type QueryActivityArgs = {
@@ -369,6 +447,10 @@ export type QueryNewsfeedArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type QueryPaymentMethodsArgs = {
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
   cursor: Scalars['String']['output'];
@@ -377,41 +459,56 @@ export type UserEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type UserNode = NodeInterface & {
-  __typename?: 'UserNode';
-  briefDescription: Scalars['String']['output'];
-  /** The users public ETH address */
-  ethAddress?: Maybe<Scalars['String']['output']>;
-  guid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  /** The number of views the users has received. Includes views from their posts */
-  impressionsCount: Scalars['Int']['output'];
-  /** The user is a founder (contributed to crowdfunding) */
-  isFounder: Scalars['Boolean']['output'];
-  /** The user is a member of Minds+ */
-  isPlus: Scalars['Boolean']['output'];
-  /** The user is a member of Minds Pro */
-  isPro: Scalars['Boolean']['output'];
-  /** You are subscribed to this user */
-  isSubscribed: Scalars['Boolean']['output'];
-  /** The user is subscribed to you */
-  isSubscriber: Scalars['Boolean']['output'];
-  /** The user is a verified */
-  isVerified: Scalars['Boolean']['output'];
-  legacy: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** The number of subscribers the user has */
-  subscribersCount: Scalars['Int']['output'];
-  /** The number of channels the user is subscribed to */
-  subscriptionsCount: Scalars['Int']['output'];
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
-  username: Scalars['String']['output'];
+export type UserNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'UserNode';
+    briefDescription: Scalars['String']['output'];
+    /** The users public ETH address */
+    ethAddress?: Maybe<Scalars['String']['output']>;
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** The number of views the users has received. Includes views from their posts */
+    impressionsCount: Scalars['Int']['output'];
+    /** The user is a founder (contributed to crowdfunding) */
+    isFounder: Scalars['Boolean']['output'];
+    /** The user is a member of Minds+ */
+    isPlus: Scalars['Boolean']['output'];
+    /** The user is a member of Minds Pro */
+    isPro: Scalars['Boolean']['output'];
+    /** You are subscribed to this user */
+    isSubscribed: Scalars['Boolean']['output'];
+    /** The user is subscribed to you */
+    isSubscriber: Scalars['Boolean']['output'];
+    /** The user is a verified */
+    isVerified: Scalars['Boolean']['output'];
+    legacy: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** The number of subscribers the user has */
+    subscribersCount: Scalars['Int']['output'];
+    /** The number of channels the user is subscribed to */
+    subscriptionsCount: Scalars['Int']['output'];
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+    username: Scalars['String']['output'];
+  };
+
+export type FetchPaymentMethodsQueryVariables = Exact<{
+  giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
+}>;
+
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -502,6 +599,7 @@ export type NewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'EntityNode'; id: string }
             | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
@@ -559,6 +657,7 @@ export type NewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'EntityNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -703,6 +802,7 @@ export type NewsfeedQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'EntityNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -796,6 +896,62 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const FetchPaymentMethodsDocument = `
+    query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+  paymentMethods(productId: $giftCardProductId) {
+    id
+    name
+    balance
+  }
+}
+    `;
+export const useFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) =>
+  useQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods']
+      : ['FetchPaymentMethods', variables],
+    gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+      FetchPaymentMethodsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchPaymentMethodsQueryVariables,
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods.infinite']
+      : ['FetchPaymentMethods.infinite', variables],
+    metaData =>
+      gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+        FetchPaymentMethodsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useFetchPaymentMethodsQuery.fetcher = (
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+    FetchPaymentMethodsDocument,
+    variables,
+    options,
+  );
 export const ClaimGiftCardDocument = `
     mutation ClaimGiftCard($claimCode: String!) {
   claimGiftCard(claimCode: $claimCode) {
