@@ -28,6 +28,10 @@ import ChannelListItem from '../../common/components/ChannelListItem';
 import UserModel from '../../channel/UserModel';
 import GroupsListItem from '../../groups/GroupsListItem';
 import GroupModel from '../../groups/GroupModel';
+import { useIsFeatureOn } from '../../../ExperimentsProvider';
+import Empty from '~/common/components/Empty';
+import Button from '~/common/components/Button';
+import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -42,6 +46,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const listRef = React.useRef<FeedList<any>>(null);
     const channelsListRef = React.useRef<any>(null);
     const groupsListRef = React.useRef<any>(null);
+    const isDiscoveryConsolidationOn = useIsFeatureOn(
+      'mob-5038-discovery-consolidation',
+    );
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time
@@ -67,15 +74,48 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const navigation = props.navigation;
 
     const tabs = React.useMemo(
-      () =>
-        [
-          { id: 'top', title: i18n.t('discovery.top') },
-          { id: 'trending-tags', title: i18n.t('discovery.trending') },
-          { id: 'channels', title: 'Channels' },
-          { id: 'groups', title: 'Groups' },
-        ].filter(Boolean) as { id: string; title: string }[],
+      () => {
+        if (isDiscoveryConsolidationOn) {
+          return [
+            { id: 'top', title: i18n.t('discovery.topV2') },
+            { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
+            { id: 'channels', title: 'Channels' },
+            { id: 'groups', title: 'Groups' },
+          ].filter(Boolean) as { id: string; title: string }[];
+        } else {
+          return [
+            { id: 'top', title: i18n.t('discovery.top') },
+            { id: 'foryou', title: i18n.t('discovery.justForYou') },
+            { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+            { id: 'trending-tags', title: i18n.t('discovery.trending') },
+            { id: 'boosts', title: i18n.t('boosted') },
+            { id: 'supermind', title: i18n.t('supermind.supermind') },
+          ].filter(Boolean) as { id: string; title: string }[];
+        }
+      },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [i18n.locale],
+      [i18n.locale, isDiscoveryConsolidationOn],
+    );
+
+    const emptyBoosts = React.useMemo(
+      () => (
+        <Empty
+          title={i18n.t('boosts.emptyList')}
+          subtitle={i18n.t('boosts.emptyListSubtitle')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('More', {
+                screen: 'BoostSettingsScreen',
+                initial: false,
+              })
+            }
+            text={i18n.t('moreScreen.settings')}
+            large
+            action
+          />
+        </Empty>
+      ),
+      [navigation],
     );
 
     const header = (
@@ -166,6 +206,18 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               />
             </DiscoveryTabContent>
           );
+        case 'foryou':
+          return (
+            <DiscoveryTabContent key="foryou">
+              <DiscoveryTrendsList store={store} header={header} />
+            </DiscoveryTabContent>
+          );
+        case 'your-tags':
+          return (
+            <DiscoveryTabContent key="your-tags">
+              <DiscoveryTagsList type="your" store={store} header={header} />
+            </DiscoveryTabContent>
+          );
         case 'trending-tags':
           return (
             <DiscoveryTabContent key="trending-tags">
@@ -173,6 +225,28 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
+              />
+            </DiscoveryTabContent>
+          );
+        case 'boosts':
+          return (
+            <DiscoveryTabContent key="boosts">
+              <FeedListSticky
+                ref={listRef}
+                header={header}
+                feedStore={store.boostFeed}
+                emptyMessage={emptyBoosts}
+              />
+            </DiscoveryTabContent>
+          );
+        case 'supermind':
+          return (
+            <DiscoveryTabContent key="supermind">
+              <FeedListSticky
+                ref={listRef}
+                header={header}
+                feedStore={store.supermindsFeed}
+                emptyMessage={emptyBoosts}
               />
             </DiscoveryTabContent>
           );

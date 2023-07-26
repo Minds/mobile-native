@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { storages } from '~/common/services/storage/storages.service';
+import { hasVariation } from '../../../ExperimentsProvider';
 
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = 'top';
@@ -242,7 +243,11 @@ export default class DiscoveryV2Store {
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
-    this.activeTabId = this.plus ? 'foryou' : 'top';
+    this.activeTabId = hasVariation('mob-5038-discovery-consolidation')
+      ? this.plus
+        ? 'foryou'
+        : 'top'
+      : 'foryou';
     this.refreshing = false;
     this.loading = false;
     this.showBadge();
