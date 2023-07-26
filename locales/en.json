@@ -20,6 +20,7 @@
     "pendingModeration": "This post is awaiting moderation"
   },
   "permissions": {
+    "notification": "Stay connected with instant updates on Minds. Enable push notifications now!",
     "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
     "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
     "camera": "Minds needs access to your external camera so you can capture pictures.",
