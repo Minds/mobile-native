@@ -84,6 +84,14 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="GifCardClaim"
+          getComponent={() =>
+            require('~/modules/gif-card/screens/GifCardClaimScreen')
+              .GifCardClaimScreen
+          }
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
           name="WebView"
           getComponent={() => require('~/common/screens/WebViewScreen').default}
         />
@@ -459,11 +467,6 @@ const RootStack = observer(function () {
               getComponent={() =>
                 require('~/onboarding/v2/steps/PhoneValidationScreen').default
               }
-              options={modalOptions}
-            />
-            <RootStackNav.Screen
-              name="BoostScreen"
-              getComponent={() => require('~/boost/legacy/BoostScreen').default}
               options={modalOptions}
             />
             <RootStackNav.Screen

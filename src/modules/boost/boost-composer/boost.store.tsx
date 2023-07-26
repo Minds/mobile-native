@@ -44,6 +44,14 @@ export const createBoostStore = ({
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
   linkUrl: '',
+  get platformsText() {
+    const enabled: string[] = [];
+    this.target_platform_ios && enabled.push('iOS');
+    this.target_platform_android && enabled.push('Android');
+    this.target_platform_web && enabled.push('Web');
+
+    return enabled.join(', ');
+  },
   togglePlatformWeb() {
     this.target_platform_web = !this.target_platform_web;
   },
@@ -98,7 +106,7 @@ export const createBoostStore = ({
     this.selectedCardId = cardId;
   },
   selectedCardId: '',
-  createBoost() {
+  createBoost(creditPaymentMethod?: string) {
     if (!this.validate()) {
       return null;
     }
@@ -109,7 +117,9 @@ export const createBoostStore = ({
       target_location: boostType === 'post' ? 1 : 2,
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
-        this.paymentType === 'cash' ? this.selectedCardId : undefined,
+        this.paymentType === 'cash'
+          ? creditPaymentMethod ?? this.selectedCardId
+          : undefined,
       daily_bid: this.amount,
       duration_days: this.duration,
     };

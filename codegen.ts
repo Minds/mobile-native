@@ -59,7 +59,7 @@ const config: CodegenConfig = {
       // use this if introspection fails and comment ...api_schema
       // schema: './gql-schemas/api.schema.json',
       ...api_schema,
-      documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
+      documents: ['src/**/*.api.graphql'],
       plugins: queryPlugins,
       config: {
         namedClient: 'default',
