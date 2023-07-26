@@ -87,7 +87,7 @@ export type ActivityProps = {
 })
 @undoable()
 @withActivityContext(props => ({
-  quietDownvote: props.quietDownvote,
+  quietDownvote: true,
   explicitVoteButtons: props.explicitVoteButtons,
   hidePostOnDownvote: props.hidePostOnDownvote,
   onDownvote: props.onDownvote,

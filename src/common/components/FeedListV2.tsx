@@ -84,7 +84,6 @@ function FeedList<T extends BaseModel>(
               displayBoosts={displayBoosts}
               emphasizeGroup={emphasizeGroup}
               autoHeight={false}
-              quietDownvote
               explicitVoteButtons={explicitVoteFeature && row.index % 3 === 0}
               hidePostOnDownvote={hidePostFeature}
             />

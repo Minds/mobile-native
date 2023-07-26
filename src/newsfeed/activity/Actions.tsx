@@ -65,7 +65,9 @@ export const Actions = observer((props: PropsType) => {
       analytics.trackClick('vote:down');
     });
 
-    onDownvote?.();
+    if (entity.votedDown) {
+      onDownvote?.();
+    }
   }, [analytics, entity, onDownvote]);
 
   if (!entity) {
@@ -166,7 +168,6 @@ const VoteButtonWithText = ({
   onVote: () => void;
 }) => (
   <Button
-    fit
     size="small"
     mode="outline"
     color={voted ? 'link' : undefined}
@@ -178,6 +179,6 @@ const VoteButtonWithText = ({
       />
     }
     onPress={onVote}>
-    See {direction === 'up' ? 'more' : 'less'} of this
+    {direction === 'up' ? 'See more of this' : 'See less of this'}
   </Button>
 );

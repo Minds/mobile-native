@@ -41,11 +41,12 @@ const ThumbAction = ({
       return;
     }
 
+    if (direction === 'down' && !voted) {
+      onDownvote?.();
+    }
+
     remoteAction(() => {
       return entity.toggleVote(direction).then(() => {
-        if (direction === 'down') {
-          onDownvote?.();
-        }
         analytics.trackClick(`vote:${direction}`);
       });
     });

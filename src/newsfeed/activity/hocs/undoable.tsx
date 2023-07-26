@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { B2, Button, Column } from '../../../common/ui';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import Activity, { ActivityProps } from '../Activity';
+import { useAnalytics } from '../../../common/contexts/analytics.context';
 
 /**
  * provides undoable functionality to the activity and handles the size and ui.
@@ -15,6 +16,7 @@ export default function undoable() {
       React.forwardRef(
         (props: ActivityProps, ref: React.Ref<ActivityProps>) => {
           const collapsed = props.entity._collapsed;
+          const analytics = useAnalytics();
           const setCollapsed = useCallback(
             (on?: boolean) => {
               props.entity._collapsed = on ?? true;
@@ -41,8 +43,11 @@ export default function undoable() {
           }, [setCollapsed]);
 
           const handleUndo = useCallback(() => {
+            props.entity.toggleVote('down').then(() => {
+              analytics.trackClick('vote:down');
+            });
             setCollapsed(false);
-          }, [setCollapsed]);
+          }, [analytics, props.entity, setCollapsed]);
 
           if (!props.hidePostOnDownvote) {
             return (
