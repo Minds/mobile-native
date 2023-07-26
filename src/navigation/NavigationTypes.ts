@@ -226,6 +226,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  GifCardClaim: {
+    code: string;
+  };
   SingleBoostConsole: {
     guid: string;
   };

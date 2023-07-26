@@ -5,6 +5,7 @@ import i18n from '../common/services/i18n.service';
 import UserModel from '../channel/UserModel';
 
 import type { Currency } from './WireTypes';
+import type { WCStore } from '../blockchain/v2/walletconnect/WalletConnectContext';
 
 /**
  * Wire store
@@ -81,9 +82,7 @@ class WireStore {
   }
 
   async loadUserRewards(): Promise<UserModel | null> {
-    if (!this.owner || !this.owner.guid) {
-      return null;
-    }
+    if (!this.owner || !this.owner.guid) return null;
     const owner = await wireService.userRewards(this.owner.guid);
     const { merchant, eth_wallet, wire_rewards, sums } = owner;
 
@@ -165,7 +164,7 @@ class WireStore {
    * Confirm and Send wire
    */
   @action
-  async send(): Promise<any> {
+  async send(wc?: WCStore): Promise<any> {
     if (this.sending) {
       return;
     }
@@ -181,15 +180,18 @@ class WireStore {
       this.sending = true;
 
       if (this.guid && this.owner) {
-        done = await wireService.send({
-          amount: this.amount,
-          guid: this.guid,
-          owner: this.owner,
-          recurring: this.recurring,
-          currency: this.currency,
-          offchain: this.offchain,
-          paymentMethodId: this.paymentMethodId,
-        });
+        done = await wireService.send(
+          {
+            amount: this.amount,
+            guid: this.guid,
+            owner: this.owner,
+            recurring: this.recurring,
+            currency: this.currency,
+            offchain: this.offchain,
+            paymentMethodId: this.paymentMethodId,
+          },
+          wc,
+        );
       }
       this.stopSending();
     } catch (e) {

@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
+import { CheckBox } from 'react-native-elements';
 import MindsSwitch from '../../common/components/MindsSwitch';
 import i18nService from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
 import { ONCHAIN_ENABLED } from '../../config/Config';
 import MText from '../../common/components/MText';
 
-const TokensForm = observer(() => {
+type propsType = {
+  store: FabScreenStore;
+};
+
+const TokensForm = observer(({ store }: propsType) => {
   const theme = ThemedStyles.style;
+
+  useEffect(() => {
+    store.getLastAmount();
+  }, [store]);
+
+  useEffect(() => {
+    store.getWalletBalance();
+  }, [store]);
 
   return (
     <View>
@@ -19,8 +33,11 @@ const TokensForm = observer(() => {
         labelStyle={styles.label}
         style={styles.inputText}
         placeholder={'Tokens'}
+        onChangeText={store.setAmount}
+        value={store.amount.toString()}
         keyboardType="decimal-pad"
         testID="fabTokensInput"
+        error={store.errors.amount}
       />
       <View style={theme.paddingHorizontal4x}>
         <LabeledComponent
@@ -33,7 +50,7 @@ const TokensForm = observer(() => {
               initialValue={true}
               rightValue={false}
               leftValue={true}
-              onSelectedValueChange={() => null}
+              onSelectedValueChange={v => store.wire.setTokenType(v)}
             />
           ) : (
             <MText style={styles.type}>
@@ -47,9 +64,30 @@ const TokensForm = observer(() => {
           wrapperStyle={theme.marginBottom4x}>
           <MText
             style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
-            ''
+            {store.walletBalance}
           </MText>
         </LabeledComponent>
+
+        {store.wire.offchain && (
+          <LabeledComponent label="Repeat Payment Monthly">
+            <CheckBox
+              containerStyle={[theme.checkbox, styles.checkbox]}
+              title={
+                <MText
+                  style={[
+                    theme.colorPrimaryText,
+                    theme.fontMedium,
+                    theme.paddingLeft,
+                    theme.fontL,
+                  ]}>
+                  Repeat ?
+                </MText>
+              }
+              checked={store.wire.recurring}
+              onPress={store.setRepeat}
+            />
+          </LabeledComponent>
+        )}
       </View>
     </View>
   );

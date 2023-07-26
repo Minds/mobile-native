@@ -8,14 +8,12 @@ const createBlockedChannelsStore = () => {
       if (refresh) {
         this.feedStore.clear();
       }
-
       this.feedStore
         .setEndpoint('api/v1/block')
         .setAsActivities(false)
         .setLimit(12)
         .noSync()
         .fetchRemoteOrLocal(refresh);
-
       return;
     },
   };

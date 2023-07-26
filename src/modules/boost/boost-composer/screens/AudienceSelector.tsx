@@ -116,20 +116,15 @@ const PlacementSelector = observer(({ boostStore }: PlacementSelector) => {
   const [open, setOpen] = React.useState(true);
   const isExperimentON = useIsFeatureOn('mob-4952-boost-platform-targeting');
 
-  const enabled = [];
-  boostStore.target_platform_ios && enabled.push(t('iOS'));
-  boostStore.target_platform_android && enabled.push(t('Android'));
-  boostStore.target_platform_web && enabled.push(t('Web'));
-
-  const text = enabled.join(', ');
+  const enabled =
+    boostStore.target_platform_ios ||
+    boostStore.target_platform_android ||
+    boostStore.target_platform_web;
 
   return isExperimentON ? (
     <Column bottom="XXL" horizontal="M">
       <MPressable style={accordionStyle} onPress={() => setOpen(!open)}>
-        <H3
-          left="L"
-          vertical="S"
-          color={enabled.length === 0 ? 'danger' : 'primary'}>
+        <H3 left="L" vertical="S" color={enabled ? 'primary' : 'danger'}>
           {t('Placement')}
         </H3>
         <Icon
@@ -138,7 +133,7 @@ const PlacementSelector = observer(({ boostStore }: PlacementSelector) => {
           right="L"
         />
       </MPressable>
-      {enabled.length === 0 && (
+      {!enabled && (
         <B1 align="center" color="danger">
           {t('Please select at least one platform!')}
         </B1>
@@ -197,7 +192,7 @@ const PlacementSelector = observer(({ boostStore }: PlacementSelector) => {
             translateY: 50,
           }}>
           <B1 color="secondary" left="L">
-            {text}
+            {boostStore.platformsText}
           </B1>
         </MotiView>
       )}
