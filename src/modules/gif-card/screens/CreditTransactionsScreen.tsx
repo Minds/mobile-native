@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import { B1, B2, Column, Screen, ScreenHeader } from '~/common/ui';
 import { GiftTransationList } from '../components/GiftTransactionList';
-import { dateFormat } from '../components/date-utils';
+import { dateFormat } from '../components/utils';
 import { useTranslation } from '../locales';
 
 /**

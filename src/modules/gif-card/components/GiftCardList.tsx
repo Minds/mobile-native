@@ -15,7 +15,7 @@ import {
   useInfiniteGetGiftCardsQuery,
 } from '~/graphql/api';
 import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
-import { dateFormat } from './date-utils';
+import { dateFormat, useInfiniteQuery } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 
@@ -131,47 +131,24 @@ export const CreditsToExpire = () => {
 };
 
 export const useGetGiftCards = (forceActive = false) => {
-  const pageParamKey = 'after';
   const productId = GiftCardProductIdEnum.Boost;
-
   const { gitfCardState, setGiftCardState, statusFilter } =
     useFilterState(forceActive);
-
-  const {
-    data: paginatedData,
-    hasNextPage: morePages,
-    isLoading,
-    fetchNextPage,
-    refetch,
-  } = useInfiniteGetGiftCardsQuery(
-    pageParamKey,
+  const result = useInfiniteQuery<GiftCardEdge>(
+    useInfiniteGetGiftCardsQuery,
     {
       first: 12,
       productId,
       ordering: GiftCardOrderingEnum.ExpiringAsc,
       statusFilter: GiftCardStatusFilterEnum[statusFilter],
     },
-    {
-      getNextPageParam: lastPage => {
-        const { endCursor, hasNextPage } = lastPage.giftCards.pageInfo ?? {};
-        return hasNextPage ? { [pageParamKey]: endCursor } : undefined;
-      },
-    },
+    'giftCards',
   );
 
-  const data = (paginatedData?.pages?.flatMap(page => page.giftCards.edges) ||
-    []) as GiftCardEdge[];
-
-  const loadMore = () => (morePages ? fetchNextPage() : undefined);
-
   return {
-    data,
-    isLoading,
+    ...result,
     gitfCardState,
     setGiftCardState,
-    fetchNextPage,
-    refetch,
-    loadMore,
   };
 };
 

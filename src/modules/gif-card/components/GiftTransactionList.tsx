@@ -5,7 +5,7 @@ import {
   GiftCardTransactionEdge,
   useInfiniteGetGiftCardTransactionsLedgerQuery,
 } from '~/graphql/api';
-import { dateFormat, timeFormat } from './date-utils';
+import { dateFormat, timeFormat, useInfiniteQuery } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 import { Image, View } from 'react-native';
@@ -91,42 +91,19 @@ const MindsIcon = () => {
 };
 
 const useGetTransactions = (giftCardGuid: string) => {
-  const pageParamKey = 'after';
   const { sortState, setSortState } = useSortState();
 
-  const {
-    data: paginatedData,
-    hasNextPage: morePages,
-    isLoading,
-    fetchNextPage,
-    refetch,
-  } = useInfiniteGetGiftCardTransactionsLedgerQuery(
-    pageParamKey,
+  const result = useInfiniteQuery<GiftCardTransactionEdge>(
+    useInfiniteGetGiftCardTransactionsLedgerQuery,
     {
       first: 12,
       giftCardGuid,
     },
-    {
-      getNextPageParam: lastPage => {
-        const { endCursor, hasNextPage } =
-          lastPage.giftCardTransactionLedger.pageInfo ?? {};
-        return hasNextPage ? { [pageParamKey]: endCursor } : undefined;
-      },
-    },
+    'giftCardTransactionLedger',
   );
 
-  const data = (paginatedData?.pages?.flatMap(
-    page => page.giftCardTransactionLedger.edges,
-  ) || []) as GiftCardTransactionEdge[];
-
-  const loadMore = () => (morePages ? fetchNextPage() : undefined);
-
   return {
-    data,
-    isLoading,
-    fetchNextPage,
-    refetch,
-    loadMore,
+    ...result,
     sortState,
     setSortState,
   };

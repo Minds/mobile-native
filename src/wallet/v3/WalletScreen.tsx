@@ -59,7 +59,7 @@ const WalletScreen = observer((props: PropsType) => {
     },
   ];
 
-  if (isIosMindsHidden) {
+  if (!isIosMindsHidden) {
     tabs.push(
       {
         id: 'usd',

@@ -10,7 +10,7 @@ import {
   useGetGiftBalance,
   useGetGiftCards,
 } from './GiftCardList';
-import { dateFormat } from './date-utils';
+import { dateFormat } from './utils';
 import { useTranslation } from '../locales';
 
 type CreditOptions = 'balance';
