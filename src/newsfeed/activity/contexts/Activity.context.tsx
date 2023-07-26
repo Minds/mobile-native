@@ -15,7 +15,7 @@ const ActivityContext = React.createContext<ActivityContextType | undefined>(
 const useActivityContext = () => useContext(ActivityContext)!;
 
 function withActivityContext(
-  contextResolver?: (props: ActivityProps) => any | null | undefined,
+  contextResolver?: (props: ActivityProps) => ActivityContextType | undefined,
 ) {
   return (WrappedComponent: any) =>
     React.forwardRef((props: ActivityProps, ref: React.Ref<ActivityProps>) => {
