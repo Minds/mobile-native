@@ -35,6 +35,7 @@ const notificationIconsTypes: {
     name: 'attach-money',
     type: 'material',
   },
+  gift_card_recipient_notified: { name: 'redeem', type: 'material' },
 };
 
 const NotificationIcon = ({ type }: { type: NotificationType }) => {
