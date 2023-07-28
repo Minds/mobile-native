@@ -1,4 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { gqlFetcher } from '~/common/services/strapi.service';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -19,33 +20,6 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch('https://cms.oke.minds.io/graphql', {
-      method: 'POST',
-      ...{
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache',
-          'no-cache': '1',
-        },
-      },
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -2131,7 +2105,7 @@ export const useRemoteBannerQuery = <
 ) =>
   useQuery<RemoteBannerQuery, TError, TData>(
     variables === undefined ? ['RemoteBanner'] : ['RemoteBanner', variables],
-    fetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
+    gqlFetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
       RemoteBannerDocument,
       variables,
     ),
@@ -2171,7 +2145,7 @@ export const useGetExplainerScreensQuery = <
     variables === undefined
       ? ['GetExplainerScreens']
       : ['GetExplainerScreens', variables],
-    fetcher<GetExplainerScreensQuery, GetExplainerScreensQueryVariables>(
+    gqlFetcher<GetExplainerScreensQuery, GetExplainerScreensQueryVariables>(
       GetExplainerScreensDocument,
       variables,
     ),
@@ -2209,7 +2183,7 @@ export const useGetExplainerScreenQuery = <
 ) =>
   useQuery<GetExplainerScreenQuery, TError, TData>(
     ['GetExplainerScreen', variables],
-    fetcher<GetExplainerScreenQuery, GetExplainerScreenQueryVariables>(
+    gqlFetcher<GetExplainerScreenQuery, GetExplainerScreenQueryVariables>(
       GetExplainerScreenDocument,
       variables,
     ),
@@ -2235,7 +2209,7 @@ export const useTweetMessageQuery = <
 ) =>
   useQuery<TweetMessageQuery, TError, TData>(
     variables === undefined ? ['TweetMessage'] : ['TweetMessage', variables],
-    fetcher<TweetMessageQuery, TweetMessageQueryVariables>(
+    gqlFetcher<TweetMessageQuery, TweetMessageQueryVariables>(
       TweetMessageDocument,
       variables,
     ),
