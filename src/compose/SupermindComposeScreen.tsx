@@ -19,7 +19,8 @@ import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
-import SupermindOnboarding, {
+import {
+  SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
 import { hasVariation } from 'ExperimentsProvider';
@@ -362,14 +363,14 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
         </B2>
       </FitScrollView>
 
-      {onboarding && (
-        <AnimatePresence>
-          <SupermindOnboarding
+      <AnimatePresence>
+        {onboarding && (
+          <SupermindOnboardingOverlay
             type="consumer"
             onDismiss={handleOnboardingDismiss}
           />
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </ModalFullScreen>
   );
 };
