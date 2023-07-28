@@ -220,6 +220,7 @@ export type GiftCardTransaction = NodeInterface & {
   giftCardGuid?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   paymentGuid?: Maybe<Scalars['String']['output']>;
+  refundedAt?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GiftCardTransactionEdge = EdgeInterface & {
@@ -343,6 +344,13 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+export type PaymentMethod = {
+  __typename?: 'PaymentMethod';
+  balance?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -387,6 +395,8 @@ export type Query = {
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
   onboardingStepProgress: Array<OnboardingStepProgressState>;
+  /** Get a list of payment methods for the logged in user */
+  paymentMethods: Array<PaymentMethod>;
   search: SearchResultsConnection;
 };
 
@@ -430,6 +440,10 @@ export type QueryNewsfeedArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   inFeedNoticesDelivered?: InputMaybe<Array<Scalars['String']['input']>>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryPaymentMethodsArgs = {
+  productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
 export type QuerySearchArgs = {
@@ -562,6 +576,20 @@ export type DismissMutation = {
     key: string;
     dismissalTimestamp: number;
   };
+};
+
+export type FetchPaymentMethodsQueryVariables = Exact<{
+  giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
+}>;
+
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -1084,6 +1112,62 @@ useDismissMutation.fetcher = (
 ) =>
   gqlFetcher<DismissMutation, DismissMutationVariables>(
     DismissDocument,
+    variables,
+    options,
+  );
+export const FetchPaymentMethodsDocument = `
+    query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+  paymentMethods(productId: $giftCardProductId) {
+    id
+    name
+    balance
+  }
+}
+    `;
+export const useFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) =>
+  useQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods']
+      : ['FetchPaymentMethods', variables],
+    gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+      FetchPaymentMethodsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchPaymentMethodsQueryVariables,
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods.infinite']
+      : ['FetchPaymentMethods.infinite', variables],
+    metaData =>
+      gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+        FetchPaymentMethodsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useFetchPaymentMethodsQuery.fetcher = (
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+    FetchPaymentMethodsDocument,
     variables,
     options,
   );
