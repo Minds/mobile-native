@@ -127,13 +127,13 @@ export const useSupermindOnboarding = (type: SupermindOnboardingType) => {
   const id = `supermind:onboarding:${type}` as DismissIdentifier;
   const { dismissal } = useLegacyStores();
 
-  return [dismissal.isDismissed(id), () => dismissal.dismiss(id)] as [
+  return [!dismissal.isDismissed(id), () => dismissal.dismiss(id)] as [
     boolean,
     () => void,
   ];
 };
 
-const from = { opacity: 0 };
+const from = { opacity: 1 };
 const animate = { opacity: 1 };
 const exit = {
   opacity: 0,

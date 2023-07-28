@@ -26,6 +26,7 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -135,6 +136,7 @@ const WalletScreen = observer((props: PropsType) => {
         tabStyle={theme.paddingVertical}
       />
       {store.wallet.loaded ? body[store.currency] : body.loading}
+      <OnboardingOverlay type="wallet_cash_earnings" />
     </Screen>
   );
 });

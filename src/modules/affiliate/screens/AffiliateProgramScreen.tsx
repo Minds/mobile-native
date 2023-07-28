@@ -19,6 +19,8 @@ import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
+import FitScrollView from '~/common/components/FitScrollView';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
@@ -26,68 +28,71 @@ export default function AffiliateProgramScreen({ navigation }) {
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
 
   return (
-    <Screen safe onlyTopEdge scroll>
-      <LinksMindsSheet ref={linkBottomSheetRef} />
-      <InviteToMindsSheet ref={inviteBottomSheetRef} />
+    <Screen safe onlyTopEdge>
       <ScreenHeader title={t('screenTitle')} back />
-      <ScreenSection top="XL">
-        <B1>{t('screenDescription')}</B1>
-        <Section title="Affiliate" color="#6D28D9" />
-        <B2 color="secondary">
-          Earn 45% of all sales you refer for Boost, Minds+/Pro.
-        </B2>
-        <Button
-          vertical="XXXL"
-          type="action"
-          align="start"
-          onPress={() => {
-            linkBottomSheetRef.current?.present();
-          }}>
-          Refer and earn
-        </Button>
-        <H2>Invite your friends to Minds</H2>
-        <B2 color="secondary" vertical="L">
-          Track rewards for friends that use your invite code to sign up on
-          Minds. Earn for up to 1 year.
-        </B2>
-        <Section title="Affiliate Referral" color="#3B82F6" />
-        <B2 color="secondary">
-          Earn 5% of all sales your affiliates refer to others.
-        </B2>
-        <Section title="Creator Referral" color="#92C5FD" />
-        <B2 color="secondary">
-          Earn 5% of what any referred creator earns through features like
-          Supermind, Memberships, and Tips.
-        </B2>
-
-        <Button
-          top="XXXL"
-          mode="outline"
-          type="action"
-          onPress={() => {
-            inviteBottomSheetRef.current?.present();
-          }}>
-          Invite and earn
-        </Button>
-        <TotalEarnings />
-        <Row align="centerBetween" top="XL">
+      <FitScrollView>
+        <LinksMindsSheet ref={linkBottomSheetRef} />
+        <InviteToMindsSheet ref={inviteBottomSheetRef} />
+        <ScreenSection top="XL">
+          <B1>{t('screenDescription')}</B1>
+          <Section title="Affiliate" color="#6D28D9" />
+          <B2 color="secondary">
+            Earn 45% of all sales you refer for Boost, Minds+/Pro.
+          </B2>
           <Button
-            mode="outline"
+            vertical="XXXL"
+            type="action"
+            align="start"
             onPress={() => {
-              navigation.navigate('Wallet', {
-                currency: 'cash',
-                section: 'earnings',
-              });
+              linkBottomSheetRef.current?.present();
             }}>
-            View earnings
+            Refer and earn
           </Button>
-        </Row>
-        <B3 vertical="XL">
-          Note - You will be credited as the click referrer for any purchases of
-          Boosts and subscriptions (Minds+ and Pro) they make for the next 72
-          hours.
-        </B3>
-      </ScreenSection>
+          <H2>Invite your friends to Minds</H2>
+          <B2 color="secondary" vertical="L">
+            Track rewards for friends that use your invite code to sign up on
+            Minds. Earn for up to 1 year.
+          </B2>
+          <Section title="Affiliate Referral" color="#3B82F6" />
+          <B2 color="secondary">
+            Earn 5% of all sales your affiliates refer to others.
+          </B2>
+          <Section title="Creator Referral" color="#92C5FD" />
+          <B2 color="secondary">
+            Earn 5% of what any referred creator earns through features like
+            Supermind, Memberships, and Tips.
+          </B2>
+
+          <Button
+            top="XXXL"
+            mode="outline"
+            type="action"
+            onPress={() => {
+              inviteBottomSheetRef.current?.present();
+            }}>
+            Invite and earn
+          </Button>
+          <TotalEarnings />
+          <Row align="centerBetween" top="XL">
+            <Button
+              mode="outline"
+              onPress={() => {
+                navigation.navigate('Wallet', {
+                  currency: 'cash',
+                  section: 'earnings',
+                });
+              }}>
+              View earnings
+            </Button>
+          </Row>
+          <B3 vertical="XL">
+            Note - You will be credited as the click referrer for any purchases
+            of Boosts and subscriptions (Minds+ and Pro) they make for the next
+            72 hours.
+          </B3>
+        </ScreenSection>
+      </FitScrollView>
+      <OnboardingOverlay type="affiliates" />
     </Screen>
   );
 }

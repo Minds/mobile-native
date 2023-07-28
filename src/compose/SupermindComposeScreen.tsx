@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { observer } from 'mobx-react';
-// import { AnimatePresence } from 'moti';
+import { AnimatePresence } from 'moti';
 import React, { useCallback, useReducer, useRef } from 'react';
 import { showNotification } from '../../AppMessages';
 import UserModel from '../channel/UserModel';
@@ -19,11 +19,12 @@ import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
-import { useSupermindOnboarding } from './SupermindOnboarding';
+import SupermindOnboarding, {
+  useSupermindOnboarding,
+} from './SupermindOnboarding';
 import { hasVariation } from 'ExperimentsProvider';
 import { PosterStackScreenProps } from './PosterOptions/PosterStackNavigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { OnboardingOverlay } from '~/components/OnboardingOverlay';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -361,15 +362,14 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
         </B2>
       </FitScrollView>
 
-      <OnboardingOverlay type="consumer" onDismiss={handleOnboardingDismiss} />
-      {/* {onboarding && (
+      {onboarding && (
         <AnimatePresence>
           <SupermindOnboarding
             type="consumer"
             onDismiss={handleOnboardingDismiss}
           />
         </AnimatePresence>
-      )} */}
+      )}
     </ModalFullScreen>
   );
 };

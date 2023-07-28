@@ -1,121 +1,40 @@
-import { AnimatePresence, MotiView } from 'moti';
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
+import { AnimatePresence, MotiView } from 'moti';
+
 import FitScrollView from '~/common/components/FitScrollView';
-import { IS_IOS } from '~/config/Config';
-import GradientButton from '../common/components/GradientButton';
-import MText from '../common/components/MText';
-import { useLegacyStores } from '../common/hooks/use-stores';
-import i18n from '../common/services/i18n.service';
-import openUrlService from '../common/services/open-url.service';
-import { DismissIdentifier } from '../common/stores/DismissalStore';
-import { B2, Column, H4, Icon, Row } from '../common/ui';
-import { IconMapNameType } from '../common/ui/icons/map';
+import { B2, Button, Column, H4, Icon, Row } from '~/common/ui';
+import { IconMapNameType } from '~/common/ui/icons/map';
+import { useGetExplainerScreenQuery } from '~/graphql/strapi';
+import { useDismissMutation, useGetDismissalQuery } from '~/graphql/api';
 import ThemedStyles from '../styles/ThemedStyles';
+// import { Dimensions } from 'react-native';
 
-const onboardingTypes = {
-  producer: {
-    title: i18n.t('supermind.onboarding.producer.title'),
-    steps: [
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.1.title'),
-        description: IS_IOS
-          ? i18n.t('supermind.onboarding.producer.steps.1.subtitle-iOS')
-          : i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
-        icon: 'money',
-        link: {
-          title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
-          onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
-        },
-      },
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.2.title'),
-        description: i18n.t('supermind.onboarding.producer.steps.2.subtitle'),
-        icon: 'sms',
-      },
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.3.title'),
-        description: i18n.t('supermind.onboarding.producer.steps.3.subtitle'),
-        icon: 'delete',
-      },
-    ],
-  },
-  consumer: {
-    title: IS_IOS
-      ? i18n.t('supermind.onboarding.consumer.title-iOS')
-      : i18n.t('supermind.onboarding.consumer.title'),
-    steps: [
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
-        description: IS_IOS
-          ? i18n.t('supermind.onboarding.consumer.steps.1.subtitle-iOS')
-          : i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
-        icon: 'money',
-      },
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.2.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.2.subtitle'),
-        icon: 'sms',
-      },
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.3.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.3.subtitle'),
-        icon: 'date-range',
-      },
-    ],
-  },
-};
-
-type OnboardingType = 'consumer' | 'producer';
+type OnboardingType =
+  | 'affiliates'
+  | 'analytics'
+  | 'boost'
+  | 'groups_memberships'
+  | 'minds_plus'
+  | 'wallet_cash_earnings';
 
 interface OnboardingProps {
   type: OnboardingType;
-  style?: StyleProp<ViewStyle>;
-  onDismiss: () => void;
 }
 
-export default function Onboarding({
-  type,
-  style,
-  onDismiss,
-}: OnboardingProps) {
-  return (
-    <FitScrollView style={style} contentContainerStyle={styles.container}>
-      <H4 bottom="XL2" left="S">
-        {onboardingTypes[type].title}
-      </H4>
-      {onboardingTypes[type].steps.map((step, index) => (
-        <Row key={index} right="XL2" bottom="L2">
-          <Column right="L">
-            <Icon top="XS" name={step.icon as IconMapNameType} size={30} />
-          </Column>
-          <Column right="L">
-            <H4 font="bold">{step.title}</H4>
-            <B2 color="secondary">
-              {step.description}{' '}
-              {Boolean(step.link) && (
-                <MText style={styles.link} onPress={step.link.onPress}>
-                  {step.link.title}
-                </MText>
-              )}
-            </B2>
-          </Column>
-        </Row>
-      ))}
-      <View style={ThemedStyles.style.flexContainer} />
-      <GradientButton
-        testID="dismissButton"
-        title="Continue"
-        onPress={onDismiss}
-      />
-    </FitScrollView>
-  );
-}
+export default function OnboardingOverlay({ type: key }: OnboardingProps) {
+  const { explainer, dismissed, onDismiss } = useExplainer(key);
 
-/**
- * Must be used with AnimatePresence for the unmount animation to work
- */
-export function OnboardingOverlay(props: OnboardingProps) {
+  if (!explainer || dismissed) {
+    return null;
+  }
+
+  const {
+    subtitle = '',
+    section = [],
+    continueButton: { text: continueButtonText },
+  } = explainer;
+
   return (
     <AnimatePresence>
       <MotiView
@@ -123,20 +42,64 @@ export function OnboardingOverlay(props: OnboardingProps) {
         animate={animate}
         exit={exit}
         style={styles.overlay}>
-        <Onboarding {...props} />
+        <FitScrollView contentContainerStyle={styles.container}>
+          <Column flex>
+            <H4 bottom="XL2" left="S">
+              {subtitle}
+            </H4>
+            {section.map((step, index) => (
+              <Row key={index} right="XL2" bottom="L2">
+                <Column right="L">
+                  <Icon
+                    top="XS"
+                    name={step?.icon as IconMapNameType}
+                    size={20}
+                  />
+                </Column>
+                <Column right="L">
+                  <H4 font="bold">{step?.title}</H4>
+                  <B2 color="secondary">{step?.description?.trim()}</B2>
+                </Column>
+              </Row>
+            ))}
+          </Column>
+          <Button testID="dismissButton" type="action" onPress={onDismiss}>
+            {continueButtonText ?? 'Continue'}
+          </Button>
+        </FitScrollView>
       </MotiView>
     </AnimatePresence>
   );
 }
 
-export const useOnboarding = (type: OnboardingType) => {
-  const id = `supermind:onboarding:${type}` as DismissIdentifier;
-  const { dismissal } = useLegacyStores();
+export const useExplainer = (key: string) => {
+  const queryClient = useQueryClient();
+  const dismiss = useDismissMutation();
 
-  return [dismissal.isDismissed(id), () => dismissal.dismiss(id)] as [
-    boolean,
-    () => void,
-  ];
+  const { data: { dismissalByKey: dismissed } = {} } = useGetDismissalQuery({
+    key,
+  });
+  // const { data: allDismissals } = useGetDismissalsQuery();
+  const { data } = useGetExplainerScreenQuery({
+    key,
+  });
+
+  const onDismiss = () => {
+    dismiss.mutate(
+      { key },
+      {
+        onSuccess(result) {
+          queryClient.setQueryData(['GetDismissal', { key }], result);
+        },
+      },
+    );
+  };
+
+  return {
+    explainer: data?.explainerScreensWeb?.data?.[0]?.attributes,
+    dismissed,
+    onDismiss,
+  };
 };
 
 const from = { opacity: 1 };
@@ -144,14 +107,8 @@ const animate = { opacity: 1 };
 const exit = {
   opacity: 0,
 };
-
+// const height = Dimensions.get('window').height - 28 * 4;
 const styles = ThemedStyles.create({
-  container: ['paddingHorizontal4x', 'paddingTop6x', 'paddingBottom6x'],
+  container: ['flexContainer', 'marginTop28x', 'padding6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
-  link: [
-    'colorSecondaryText',
-    {
-      textDecorationLine: 'underline',
-    },
-  ],
 });
