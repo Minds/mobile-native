@@ -24,7 +24,7 @@ const style = () => `
       /*padding-right: 4px;*/
       font-size: 12px;
       letter-spacing: 0;
-      background-color: ${ThemedStyles.getColor('SecondaryBackground')};
+      background-color: ${ThemedStyles.getColor('PrimaryBackground')};
       color: ${ThemedStyles.getColor('PrimaryText')};
       line-height: 20px;
     }
@@ -262,7 +262,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
         scrollEnabled={false}
         source={this.state.html}
         mixedContentMode="compatibility"
-        style={[ThemedStyles.style.bgSecondaryBackground, this.state.style]}
+        style={[ThemedStyles.style.bgPrimaryBackground, this.state.style]}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
