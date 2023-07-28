@@ -491,10 +491,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
+      }
 
-      this.addEntities(entities, replace);
+      runInAction(() => {
+        this.addEntities(entities, replace);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -555,8 +559,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       )
         return;
 
-      if (refresh) this.clear();
-      this.addEntities(entities);
+      runInAction(() => {
+        if (refresh) this.clear();
+        this.addEntities(entities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -601,7 +608,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
           console.log('[FeedStore] error in the wait promise', error);
         }
       }
-      this.addEntities(entities);
+      runInAction(() => {
+        this.addEntities(entities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -644,10 +654,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
-      this.clear();
-      this.addEntities(remoteEntities);
+      }
+
+      runInAction(() => {
+        this.clear();
+        this.addEntities(remoteEntities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
