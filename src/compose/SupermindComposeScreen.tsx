@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
