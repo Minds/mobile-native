@@ -9,10 +9,10 @@ import { hasVariation } from '../../../../../ExperimentsProvider';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
 import Boost from '../components/Boost';
-import BoostTabBar from '../components/BoostTabBar';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
+import BoostFeed from '../components/v3/BoostFeed';
 
 interface BoostConsoleScreenProps {
   route: RouteProp<any>;
@@ -91,12 +91,6 @@ function BoostConsoleScreen({
     );
   }
 
-  const tabs = (
-    <View>
-      {hasVariation('mob-4638-boost-v3') ? <BoostTabBarV3 /> : <BoostTabBar />}
-    </View>
-  );
-
   return (
     <BoostConsoleStoreContext.Provider value={boostConsoleStore}>
       <Screen safe onlyTopEdge>
@@ -115,18 +109,22 @@ function BoostConsoleScreen({
             />
           }
         />
-        <FlatList
-          ListHeaderComponent={tabs}
-          ListEmptyComponent={empty}
-          data={boostConsoleStore.list.entities.slice()}
-          renderItem={renderBoost}
-          keyExtractor={item => item.rowKey}
-          onRefresh={refresh}
-          refreshing={boostConsoleStore.list.refreshing}
-          onEndReached={loadFeed}
-          onEndReachedThreshold={0}
-          style={styles.list}
-        />
+        {boostConsoleStore.filter !== 'explore' ? (
+          <FlatList
+            ListHeaderComponent={<BoostTabBarV3 />}
+            ListEmptyComponent={empty}
+            data={boostConsoleStore.list.entities.slice()}
+            renderItem={renderBoost}
+            keyExtractor={item => item.rowKey}
+            onRefresh={refresh}
+            refreshing={boostConsoleStore.list.refreshing}
+            onEndReached={loadFeed}
+            onEndReachedThreshold={0}
+            style={styles.list}
+          />
+        ) : (
+          <BoostFeed ListHeaderComponent={<BoostTabBarV3 />} />
+        )}
       </Screen>
     </BoostConsoleStoreContext.Provider>
   );
@@ -135,6 +133,6 @@ function BoostConsoleScreen({
 export default observer(BoostConsoleScreen);
 
 const styles = ThemedStyles.create({
-  list: ['bgPrimaryBackground', 'flexContainer', 'marginTop3x'],
+  list: ['bgPrimaryBackground', 'flexContainer'],
   emptyContent: ['alignCenter', 'marginTop12x'],
 });

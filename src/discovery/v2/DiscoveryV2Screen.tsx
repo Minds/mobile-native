@@ -88,7 +88,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
             { id: 'foryou', title: i18n.t('discovery.justForYou') },
             { id: 'your-tags', title: i18n.t('discovery.yourTags') },
             { id: 'trending-tags', title: i18n.t('discovery.trending') },
-            { id: 'boosts', title: i18n.t('boosted') },
             { id: 'supermind', title: i18n.t('supermind.supermind') },
           ].filter(Boolean) as { id: string; title: string }[];
         }
@@ -225,17 +224,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
-              />
-            </DiscoveryTabContent>
-          );
-        case 'boosts':
-          return (
-            <DiscoveryTabContent key="boosts">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.boostFeed}
-                emptyMessage={emptyBoosts}
               />
             </DiscoveryTabContent>
           );
