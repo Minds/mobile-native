@@ -130,7 +130,7 @@ export const createBoostStore = ({
         payload.goal_button_text = this.button;
       } else if (this.goal === BoostGoal.CLICKS) {
         payload.goal_button_url = this.linkUrl;
-        payload.goal_button_text = this.button;
+        payload.goal_button_text = this.link;
       }
     }
 
