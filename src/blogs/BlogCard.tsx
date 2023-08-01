@@ -9,7 +9,7 @@ import { Image } from 'expo-image';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
 import ThemedStyles from '../styles/ThemedStyles';
-import type BlogModel from './BlogModel';
+import BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
 import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
@@ -29,10 +29,11 @@ export default class BlogCard extends PureComponent<PropsType> {
    * Navigate to blog
    */
   navToBlog = () => {
-    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW, true)) {
+    const blog = BlogModel.checkOrCreate(this.props.entity);
+    if (!this.props.navigation || !blog.can(FLAG_VIEW, true)) {
       return;
     }
-    return this.props.navigation.push('BlogView', { blog: this.props.entity });
+    return this.props.navigation.push('BlogView', { blog });
   };
 
   /**
@@ -52,7 +53,7 @@ export default class BlogCard extends PureComponent<PropsType> {
       <View>
         <TouchableOpacity
           onPress={this.navToBlog}
-          style={theme.bgSecondaryBackground}>
+          style={theme.bgPrimaryBackground}>
           <Image source={image} style={styles.banner} contentFit="cover" />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
@@ -73,7 +74,7 @@ export default class BlogCard extends PureComponent<PropsType> {
    * Render Card
    */
   render() {
-    const blog = this.props.entity;
+    const blog = BlogModel.checkOrCreate(this.props.entity);
     const channel = this.props.entity.ownerObj;
     const image = blog.getBannerSource?.();
     const title = this.cleanTitle(blog.title);
@@ -85,7 +86,7 @@ export default class BlogCard extends PureComponent<PropsType> {
     }
 
     return (
-      <View style={theme.bgSecondaryBackground}>
+      <View style={theme.bgPrimaryBackground}>
         <MPressable onPress={this.navToBlog}>
           <Image source={image} style={styles.banner} contentFit="cover" />
           <View style={theme.padding2x}>
