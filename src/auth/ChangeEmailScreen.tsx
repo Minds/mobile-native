@@ -15,10 +15,7 @@ import validator from '../common/services/validator.service';
 import { IS_IOS } from '../config/Config';
 
 /**
- * Initial email verification screen
- *
- * It uses the 2FA endpoints but without the api.service interceptor modal
- * to be able to transition to this component as the initial screen
+ * This screen is used in onboarding to update the email
  */
 const ChangeEmailScreen = () => {
   const route = useRoute<any>();
