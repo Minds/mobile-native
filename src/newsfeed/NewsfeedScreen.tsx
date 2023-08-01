@@ -14,10 +14,8 @@ import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/components/PortraitContentBar';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
-import ChannelRecommendationBody from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
 import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
-import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
 import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -45,6 +43,7 @@ import {
   Recommendation,
 } from 'modules/recommendation';
 import { GroupsEmpty } from '../modules/groups';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -148,10 +147,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
-        <>
-          <ChannelRecommendationHeader location="newsfeed" />
-          <ChannelRecommendationBody location="newsfeed" />
-        </>
+        <ChannelRecommendation location="newsfeed" />
       )),
       new InjectItem(
         7,

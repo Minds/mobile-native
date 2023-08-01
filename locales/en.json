@@ -394,6 +394,7 @@
     "boostCashViews": "{{amount}} USD = {{views}} views",
     "boostTokenViews": "{{amount}} token = {{views}} views",
     "boostedChannel": "Boosted Channel",
+    "boostedGroup": "Boosted Group",
     "boostChangingTitle": "Boost is changing",
     "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
     "boostChangingLink": "Read more about the update."
@@ -1858,6 +1859,7 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "recommendedForYou": "Recommended for you",
   "recommendedGroups": "Recommended Groups",
   "expires": "Expires",
   "requirements": "Requirements",

@@ -194,30 +194,11 @@ exports[`ChannelRecommendation renders correctly 1`] = `
 `;
 
 exports[`ChannelRecommendationItem renders correctly 1`] = `
-<MPressable
-  onPress={[Function]}
->
-  <Row
-    horizontal="L"
-    vertical="S"
-  >
-    <withSpacer()
-      right="M"
-      size="tiny"
-      top="XS"
-    />
-    <Column
-      align="centerStart"
-      flex={true}
-      right="L"
-    >
-      <B1
-        font="bold"
-      >
-        Some User
-      </B1>
-    </Column>
-    <Subscribe
+<_default
+  alignTop={true}
+  borderless={true}
+  icon={
+    <Memo(Subscribe)
       channel={
         {
           "access_id": "2",
@@ -335,6 +316,15 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
       mini={true}
       shouldUpdateFeed={false}
     />
-  </Row>
-</MPressable>
+  }
+  onPress={[Function]}
+  title="Some User"
+>
+  <B2
+    color="secondary"
+    numberOfLines={2}
+    right="XL"
+    top="XS"
+  />
+</_default>
 `;
