@@ -92,7 +92,8 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         InteractionManager.runAfterInteractions(() => {
           setTimeout(() => {
             NavigationService.push('BoostUpgrade');
-          }, 400);
+            // the same time as the toast dismisses
+          }, 2800);
         });
       }
     });
