@@ -25,11 +25,16 @@ import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import NavigationService from '../../../../navigation/NavigationService';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '../../../../config/Config';
+import { InteractionManager } from 'react-native';
+import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const boostStore = useBoostStore();
 
   const { data } = useFetchPaymentMethodsQuery({
@@ -77,6 +82,19 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
+
+      // only show the boost upgrade modal for users that arent plus or pro
+      if (user?.pro || user?.plus) {
+        return;
+      }
+
+      if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
+        InteractionManager.runAfterInteractions(() => {
+          setTimeout(() => {
+            NavigationService.push('BoostUpgrade');
+          }, 400);
+        });
+      }
     });
   };
 

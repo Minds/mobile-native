@@ -20,7 +20,7 @@ exports[`Notifications component renders correctly 1`] = `
     ]
   }
 >
-  <View
+  <AnimatedView
     style={
       {
         "flex": 1,
@@ -28,7 +28,7 @@ exports[`Notifications component renders correctly 1`] = `
       }
     }
   >
-    <View
+    <AnimatedView
       style={
         {
           "flexDirection": "column",
@@ -61,13 +61,13 @@ exports[`Notifications component renders correctly 1`] = `
           }
         />
       </preventDoubleTap(TouchableOpacity)>
-      <View>
+      <AnimatedView>
         <NotificationIcon
           type="token_rewards_summary"
         />
-      </View>
-    </View>
-    <View
+      </AnimatedView>
+    </AnimatedView>
+    <AnimatedView
       style={
         {
           "alignSelf": "center",
@@ -326,8 +326,8 @@ exports[`Notifications component renders correctly 1`] = `
         />
          
       </MText>
-    </View>
-    <View
+    </AnimatedView>
+    <AnimatedView
       style={
         {
           "alignSelf": "center",
@@ -355,8 +355,8 @@ exports[`Notifications component renders correctly 1`] = `
       >
         1w
       </MText>
-    </View>
-  </View>
+    </AnimatedView>
+  </AnimatedView>
   <Memo()
     notification={
       NotificationModel {
