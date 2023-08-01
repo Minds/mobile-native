@@ -125,35 +125,27 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             </View>
           </View>
         </View>
-        <View
+        <Text
           style={
-            {
-              "marginRight": 12,
-            }
+            [
+              {
+                "color": "#F2F2F2",
+              },
+              {
+                "fontFamily": "Roboto-Bold",
+              },
+              {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              [
-                {
-                  "color": "#F2F2F2",
-                },
-                {
-                  "fontFamily": "Roboto-Bold",
-                },
-                {
-                  "fontSize": 24,
-                  "lineHeight": 32,
-                },
-                {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Supermind
-          </Text>
-        </View>
+          Supermind
+        </Text>
       </View>
       <View>
         <View
@@ -559,35 +551,27 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             </View>
           </View>
         </View>
-        <View
+        <Text
           style={
-            {
-              "marginRight": 12,
-            }
+            [
+              {
+                "color": "#F2F2F2",
+              },
+              {
+                "fontFamily": "Roboto-Bold",
+              },
+              {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              [
-                {
-                  "color": "#F2F2F2",
-                },
-                {
-                  "fontFamily": "Roboto-Bold",
-                },
-                {
-                  "fontSize": 24,
-                  "lineHeight": 32,
-                },
-                {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Supermind
-          </Text>
-        </View>
+          Supermind
+        </Text>
       </View>
       <View>
         <View
@@ -1388,35 +1372,27 @@ exports[`Supermind settings should update the store and submit 1`] = `
             </View>
           </View>
         </View>
-        <View
+        <Text
           style={
-            {
-              "marginRight": 12,
-            }
+            [
+              {
+                "color": "#F2F2F2",
+              },
+              {
+                "fontFamily": "Roboto-Bold",
+              },
+              {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              {
+                "textAlign": "left",
+              },
+            ]
           }
         >
-          <Text
-            style={
-              [
-                {
-                  "color": "#F2F2F2",
-                },
-                {
-                  "fontFamily": "Roboto-Bold",
-                },
-                {
-                  "fontSize": 24,
-                  "lineHeight": 32,
-                },
-                {
-                  "textAlign": "left",
-                },
-              ]
-            }
-          >
-            Supermind
-          </Text>
-        </View>
+          Supermind
+        </Text>
       </View>
       <View>
         <View
