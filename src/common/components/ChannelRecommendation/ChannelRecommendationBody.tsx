@@ -9,7 +9,6 @@ import { useLegacyStores } from '~/common/hooks/use-stores';
 import i18n from '~/common/services/i18n.service';
 import { Avatar, B1, B2, Column, Icon, Row, Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { hasVariation } from '../../../../ExperimentsProvider';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
 
@@ -92,7 +91,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   visible = true,
   recommendationStore,
 }) => {
-  const RECOMMANDATIONS_SIZE = hasVariation('mob-4638-boost-v3') ? 4 : 3;
+  const RECOMMANDATIONS_SIZE = 4;
   const [listSize, setListSize] = useState(RECOMMANDATIONS_SIZE);
   const recommendation =
     useChannelRecommendationContext() || recommendationStore;

@@ -5,11 +5,8 @@ import { FlatList, View } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { H4, IconButton, Screen, ScreenHeader } from '~ui';
-import { hasVariation } from '../../../../../ExperimentsProvider';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
-import Boost from '../components/Boost';
-import BoostTabBar from '../components/BoostTabBar';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
@@ -67,12 +64,7 @@ function BoostConsoleScreen({
    * Render row
    */
   const renderBoost = row => {
-    const boost = row.item;
-    if (hasVariation('mob-4638-boost-v3')) {
-      return <BoostV3 boost={boost} />;
-    }
-
-    return <Boost boost={boost} navigation={navigation} />;
+    return <BoostV3 boost={row.item} />;
   };
 
   if (boostConsoleStore.loading) {
@@ -90,12 +82,6 @@ function BoostConsoleScreen({
       </View>
     );
   }
-
-  const tabs = (
-    <View>
-      {hasVariation('mob-4638-boost-v3') ? <BoostTabBarV3 /> : <BoostTabBar />}
-    </View>
-  );
 
   return (
     <BoostConsoleStoreContext.Provider value={boostConsoleStore}>
@@ -116,7 +102,7 @@ function BoostConsoleScreen({
           }
         />
         <FlatList
-          ListHeaderComponent={tabs}
+          ListHeaderComponent={<BoostTabBarV3 />}
           ListEmptyComponent={empty}
           data={boostConsoleStore.list.entities.slice()}
           renderItem={renderBoost}
