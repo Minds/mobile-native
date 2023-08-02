@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { B2, Button, Column } from '../../../common/ui';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import Activity, { ActivityProps } from '../Activity';
 import { useAnalytics } from '../../../common/contexts/analytics.context';
 
@@ -28,16 +28,6 @@ export default function undoable() {
             [props.entity],
           );
 
-          const style = useMemoStyle(
-            [
-              {
-                overflow: 'hidden',
-                height: collapsed ? 120 : undefined,
-              },
-            ],
-            [collapsed],
-          );
-
           const handleDownvote = useCallback(() => {
             setCollapsed(true);
           }, [setCollapsed]);
@@ -49,7 +39,7 @@ export default function undoable() {
             setCollapsed(false);
           }, [analytics, props.entity, setCollapsed]);
 
-          if (!props.hidePostOnDownvote) {
+          if (!props.hidePostOnDownvote || !collapsed) {
             return (
               <ActivityComponent
                 {...props}
@@ -60,7 +50,8 @@ export default function undoable() {
           }
 
           return (
-            <View style={style}>
+            <View
+              style={collapsed ? styles.collapsedStyle : styles.regularStyle}>
               <ActivityComponent
                 onDownvote={handleDownvote}
                 {...props}
@@ -97,4 +88,11 @@ const styles = ThemedStyles.create({
     'borderBottom6x',
     'bcolorBaseBackground',
   ],
+  collapsedStyle: {
+    overflow: 'hidden',
+    height: 120,
+  },
+  regularStyle: {
+    overflow: 'hidden',
+  },
 });
