@@ -17,27 +17,17 @@ export default function undoable() {
         (props: ActivityProps, ref: React.Ref<ActivityProps>) => {
           const collapsed = props.entity._collapsed;
           const analytics = useAnalytics();
-          const setCollapsed = useCallback(
-            (on?: boolean) => {
-              props.entity._collapsed = on ?? true;
-              props.entity.__list?.updateEntity(
-                props.entity.guid,
-                props.entity,
-              );
-            },
-            [props.entity],
-          );
 
           const handleDownvote = useCallback(() => {
-            setCollapsed(true);
-          }, [setCollapsed]);
+            props.entity.setCollapsed?.(true);
+          }, [props.entity]);
 
           const handleUndo = useCallback(() => {
             props.entity.toggleVote('down').then(() => {
               analytics.trackClick('vote:down');
             });
-            setCollapsed(false);
-          }, [analytics, props.entity, setCollapsed]);
+            props.entity.setCollapsed?.(false);
+          }, [analytics, props.entity]);
 
           if (!props.hidePostOnDownvote || !collapsed) {
             return (

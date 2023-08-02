@@ -4,11 +4,11 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import Actions from './Actions';
 import Scheduled from './banners/Scheduled';
 import Pending from './banners/Pending';
+import type ActivityModel from '../ActivityModel';
 import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { BoostCTA } from 'modules/boost';
-import ActivityModel from '../ActivityModel';
 
 type PropsType = {
   showOnlyContent?: boolean;
