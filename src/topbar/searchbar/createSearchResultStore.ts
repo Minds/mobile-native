@@ -39,6 +39,7 @@ const createSearchResultStore = () => {
     },
     async input(search: string) {
       this.setSearchText(search);
+      this.search = search;
       if (!search) {
         return;
       }

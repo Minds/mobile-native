@@ -6,55 +6,19 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import type BaseModel from '../BaseModel';
 import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
 import { StyleSheet, View } from 'react-native';
-import { FeedListProps, FeedListV2 } from './FeedListV2';
 
-/**
- * Animated header
- */
-const Header = ({ children, translationY, onHeight }) => {
-  const styleAnim = useAnimatedStyle(() => {
-    return {
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-      transform: [{ translateY: -translationY.value }],
-      zIndex: 1,
-    };
-  });
-  const { onLayout, ...layout } = useLayout();
-
-  useEffect(() => {
-    onHeight(layout.height);
-  }, [layout.height, onHeight]);
-
-  return (
-    <Animated.View style={styleAnim} onLayout={onLayout}>
-      {children}
-    </Animated.View>
-  );
-};
-
-const MIN_SCROLL_THRESHOLD = 5;
-
-const AnimatedFeedListV2 = Animated.createAnimatedComponent(
-  FeedListV2 as any,
-) as any;
-
-type FeedListStickyProps<T extends BaseModel> = FeedListProps<T> & {
+type StickyListProps = {
   header?: React.ReactElement;
   bottomComponent?: React.ReactNode;
+  renderList: (props: any) => React.ReactNode;
 };
 
 /**
- * Feed list with reanimated sticky header
+ * A list with reanimated sticky header
  */
-function FeedListSticky<T extends BaseModel>(
-  props: FeedListStickyProps<T>,
-  ref: any,
-) {
+function StickyListWrapper(props: StickyListProps, ref: any) {
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
@@ -126,13 +90,13 @@ function FeedListSticky<T extends BaseModel>(
     <ScrollContext.Provider
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <View style={styles.container}>
-        <AnimatedFeedListV2
-          ref={ref}
-          {...otherProps}
-          scrollEventThrottle={16}
-          onScroll={scrollHandler}
-          contentContainerStyle={contentStyle}
-        />
+        {props.renderList({
+          ref: ref,
+          ...otherProps,
+          ListComponent: Animated.FlatList,
+          onScroll: scrollHandler,
+          contentContainerStyle: contentStyle,
+        })}
         <Header translationY={translationY} onHeight={setHeaderHeight}>
           {header}
         </Header>
@@ -149,4 +113,32 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.forwardRef(FeedListSticky);
+/**
+ * Animated header
+ */
+const Header = ({ children, translationY, onHeight }) => {
+  const styleAnim = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      transform: [{ translateY: -translationY.value }],
+      zIndex: 1,
+    };
+  });
+  const { onLayout, ...layout } = useLayout();
+
+  useEffect(() => {
+    onHeight(layout.height);
+  }, [layout.height, onHeight]);
+
+  return (
+    <Animated.View style={styleAnim} onLayout={onLayout}>
+      {children}
+    </Animated.View>
+  );
+};
+
+const MIN_SCROLL_THRESHOLD = 5;
+
+export default React.forwardRef(StickyListWrapper);

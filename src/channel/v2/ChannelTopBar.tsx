@@ -116,7 +116,7 @@ const ChannelTopBar = observer(
       [
         'positionAbsolute',
         {
-          opacity: 0.8,
+          opacity: 1,
           backgroundColor:
             backgroundColor || theme.bgPrimaryBackground.backgroundColor,
           paddingLeft: 70,
@@ -228,6 +228,7 @@ const ChannelTopBar = observer(
                     buttonProps={{
                       lightContent: isBgLight,
                       darkContent: !isBgLight,
+                      mode: 'solid',
                     }}
                   />
                 </Spacer>

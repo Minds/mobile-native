@@ -56,7 +56,7 @@ build:ios:
     - fastlane buildrelease # | tee -a ios-job.log
   rules:
     - !reference [.rule_automatic_nonpatch_manual_others, rules]
-    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_release_branch_manual, rules]
     - !reference [.rule_native_branch, rules]
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: never
@@ -70,8 +70,7 @@ build:android:
     - bundle exec fastlane assemble_build
     - *move_apk
   rules:
-    - !reference [.rule_version_tag, rules]
-    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_release_branch_manual, rules]
     - !reference [.rule_never_nightly, rules]
     - !reference [.rule_never_mr_pipes, rules]
     - when: manual
@@ -110,17 +109,21 @@ build:android:store:
   <<: *prepare_build_android
   extends:
     - .build_base
-    - .rule_version_tag
   script:
     - "sed -i 's/<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\" \\/>//g' ./app/src/main/AndroidManifest.xml"
     - bundle exec fastlane assemble_build play:true
     - *move_apk
   rules:
-    - !reference [.rule_version_tag, rules]
-    - !reference [.rule_release_branch, rules]
+    - !reference [.rule_release_branch_manual, rules]
     - !reference [.rule_never_nightly, rules]
     - !reference [.rule_never_mr_pipes, rules]
     - when: manual
+  artifacts:
+    name: 'Minds Store APK'
+    paths:
+      - $APK_NAME
+    expire_in: 45 days
+    when: on_success
 
 # Cleanup APK from merged MRs
 build:cleanup:

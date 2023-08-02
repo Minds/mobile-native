@@ -586,8 +586,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Fetch from remote endpoint or from the local storage if it fails
    * @param {boolean} refresh
+   * @param {Promise<any>} wait used to sync the load of any other remote data and render the content after both are ready
    */
-  async fetchRemoteOrLocal(refresh = false) {
+  async fetchRemoteOrLocal(refresh = false, wait?: Promise<any>) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
@@ -602,10 +603,20 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
+      }
 
-      if (refresh) this.clear();
+      if (refresh) {
+        this.clear();
+      }
+      if (wait) {
+        try {
+          await wait;
+        } catch (error) {
+          console.log('[FeedStore] error in the wait promise', error);
+        }
+      }
       this.addEntities(entities);
     } catch (err) {
       // ignore aborts

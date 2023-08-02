@@ -1,5 +1,5 @@
 release:android:apk:
-  extends: .rule_version_tag_manual
+  extends: .rule_release_branch_manual
   image: cimg/aws:2022.06.1
   stage: release
   tags: [minds-ci]
@@ -14,10 +14,11 @@ release:android:apk:
     - cp $APK_NAME Minds-$APPVERSION.apk
     - echo "Releasing Minds-$APPVERSION.apk"
     - yarn release-json Minds-$APPVERSION.apk
+    - aws s3 cp Minds-$APPVERSION.apk s3://minds-repo/mobile/Minds-$APPVERSION.apk
     - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
 
 release:android:google_play:
-  extends: .rule_version_tag
+  extends: .rule_release_branch_manual
   image: msantang78/ci-mobile-android:latest
   stage: release
   tags: [minds-ci]
@@ -50,19 +51,4 @@ release:ios:testflight:rc:
     - fastlane upload_testflight
   rules:
     - !reference [.rule_never_nightly, rules]
-    - !reference [.rule_release_branch, rules]
-
-# iOS production to TestFlight
-release:ios:testflight:
-  extends: .rule_tags
-  image: macos-12-xcode-14
-  stage: release
-  tags: [saas-macos-medium-m1]
-  environment: app_store
-  dependencies:
-    - build:ios
-  needs: [build:ios]
-  interruptible: true
-  script:
-    - cd ios
-    - fastlane upload_testflight
+    - !reference [.rule_release_branch_manual, rules]

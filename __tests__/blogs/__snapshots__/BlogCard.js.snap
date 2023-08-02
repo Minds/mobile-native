@@ -4,7 +4,7 @@ exports[`blog card component should renders correctly 1`] = `
 <View
   style={
     {
-      "backgroundColor": "#38393D",
+      "backgroundColor": "#1C1D1F",
     }
   }
 >
