@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
+import { MotiView } from 'moti';
 
 import FitScrollView from '~/common/components/FitScrollView';
 import { B2, Button, Column, H4, Icon, Row } from '~/common/ui';
@@ -35,7 +35,7 @@ export default function OnboardingOverlay({ type: key }: OnboardingProps) {
   } = explainer;
 
   return (
-    <View style={styles.overlay}>
+    <MotiView from={from} animate={animate} exit={exit} style={styles.overlay}>
       <FitScrollView contentContainerStyle={styles.container}>
         <Column flex>
           <H4 bottom="XL2" left="S">
@@ -57,7 +57,7 @@ export default function OnboardingOverlay({ type: key }: OnboardingProps) {
           {continueButtonText ?? 'Continue'}
         </Button>
       </FitScrollView>
-    </View>
+    </MotiView>
   );
 }
 
@@ -68,7 +68,6 @@ export const useExplainer = (key: string) => {
   const { data: { dismissalByKey: dismissed } = {} } = useGetDismissalQuery({
     key,
   });
-  // const { data: allDismissals } = useGetDismissalsQuery();
   const { data } = useGetExplainerScreenQuery({
     key,
   });
@@ -91,6 +90,9 @@ export const useExplainer = (key: string) => {
   };
 };
 
+const from = { opacity: 1 };
+const animate = { opacity: 1 };
+const exit = { opacity: 0 };
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'marginTop28x', 'padding6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
