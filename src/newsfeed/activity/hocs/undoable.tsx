@@ -32,6 +32,7 @@ export default function undoable() {
           if (!props.hidePostOnDownvote || !collapsed) {
             return (
               <ActivityComponent
+                onDownvote={handleDownvote}
                 {...props}
                 // @ts-ignore
                 ref={ref}
