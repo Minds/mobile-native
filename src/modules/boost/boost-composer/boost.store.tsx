@@ -114,7 +114,7 @@ export const createBoostStore = ({
     const payload: CreateBoostParams = {
       entity_guid: this.entity.guid,
       target_suitability: this.audience === 'safe' ? 1 : 2,
-      target_location: ['post', 'group'].includes(boostType) ? 1 : 2,
+      target_location: ['channel', 'group'].includes(boostType) ? 2 : 1,
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
         this.paymentType === 'cash'
