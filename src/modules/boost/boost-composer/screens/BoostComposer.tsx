@@ -12,7 +12,6 @@ import {
   H3,
   HairlineRow,
   Screen,
-  ScreenHeader,
 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';

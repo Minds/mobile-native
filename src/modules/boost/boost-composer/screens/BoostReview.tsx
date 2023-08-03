@@ -7,26 +7,16 @@ import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import {
-  B1,
-  B2,
-  Button,
-  Column,
-  H2,
-  HairlineRow,
-  Screen,
-  ScreenHeader,
-} from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { useBoostStore } from '../boost.store';
+import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
 import BoostComposerHeader from '../components/BoostComposerHeader';
-import { BoostType } from '../../../../boost/legacy/createBoostStore';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -76,8 +66,6 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     channel: t('Boost Channel'),
     post: t('Boost Post'),
     group: t('Boost Group'),
-    /** @deprecated */
-    offer: t('Boost Offer'),
   };
 
   const title = titleMap[boostStore.boostType];

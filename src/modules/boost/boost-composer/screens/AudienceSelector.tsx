@@ -13,7 +13,6 @@ import {
   HairlineRow,
   Icon,
   Screen,
-  ScreenHeader,
 } from '~/common/ui';
 import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';

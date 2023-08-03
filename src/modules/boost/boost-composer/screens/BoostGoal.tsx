@@ -3,7 +3,7 @@ import React from 'react';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
+import { B1, Button, Column, H2, Screen } from '~/common/ui';
 import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
 import { BoostGoal, useBoostStore } from '../boost.store';

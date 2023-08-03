@@ -1,6 +1,5 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
-import type { BoostType } from '~/boost/legacy/createBoostStore';
 import UserModel from '~/channel/UserModel';
 import apiService from '~/common/services/api.service';
 import mindsConfigService from '~/common/services/minds-config.service';
@@ -15,6 +14,8 @@ import {
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
+
+export type BoostType = 'post' | 'channel' | 'group';
 
 type BoostStoreParams = {
   boostType: BoostType;

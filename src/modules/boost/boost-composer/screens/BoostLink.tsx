@@ -4,7 +4,7 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import FitScrollView from '~/common/components/FitScrollView';
 import InputContainer from '~/common/components/InputContainer';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
+import { B1, Button, Column, H2, Screen } from '~/common/ui';
 import { useTranslation } from '../../locales';
 import { BoostButtonText, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
