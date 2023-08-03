@@ -44,6 +44,7 @@ import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
+import { IS_IOS } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
 
@@ -160,6 +161,8 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // #region effects
   useFocusEffect(store.onScreenFocused);
 
+  const edges = IS_IOS ? ['top'] : ['top', 'bottom'];
+
   const autofocus =
     (props.route?.params?.createMode ?? 'post') === 'post' ||
     props.route?.params?.createMode === 'boost';
@@ -199,7 +202,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
 
   return (
     <ComposeContext.Provider value={store}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={edges}>
         {isCreateModalOn ? (
           <ComposeTopBar store={store} onPressBack={onPressBack} />
         ) : (
@@ -292,18 +295,18 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
             onPress={closeConfirm}
           />
         </BottomSheet>
+        {showBottomBar && (
+          <KeyboardSpacingView enabled style={styles.bottomBarContainer}>
+            <BottomBar
+              store={store}
+              onHashtag={handleHashtagPress}
+              onMoney={handleMoneyPress}
+              onOptions={handleOptionsPress}
+              onSupermind={handleSupermindPress}
+            />
+          </KeyboardSpacingView>
+        )}
       </SafeAreaView>
-      {showBottomBar && (
-        <KeyboardSpacingView enabled style={styles.bottomBarContainer}>
-          <BottomBar
-            store={store}
-            onHashtag={handleHashtagPress}
-            onMoney={handleMoneyPress}
-            onOptions={handleOptionsPress}
-            onSupermind={handleSupermindPress}
-          />
-        </KeyboardSpacingView>
-      )}
     </ComposeContext.Provider>
   );
 };
