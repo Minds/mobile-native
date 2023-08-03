@@ -141,24 +141,6 @@ describe('Notification', () => {
     expect(screen.toJSON()).toMatchSnapshot();
   });
 
-  test('Boost rejected legacy', async () => {
-    mockedHasVariation.mockReturnValue(false);
-    render(
-      <NotificationItem
-        notification={createFakeNotification({
-          type: NotificationType.boost_rejected,
-        })}
-        onShowSubscribers={jest.fn()}
-      />,
-    );
-    expect(await screen.findByText(name)).toBeTruthy();
-    expect(
-      await screen.findByText(/is unable to approve your/, { exact: true }),
-    ).toBeTruthy();
-    expect(await screen.findByText('boost', { exact: true })).toBeTruthy();
-    expect(screen.toJSON()).toMatchSnapshot();
-  });
-
   test('Affiliate earnings deposited', async () => {
     mockedHasVariation.mockReturnValue(false);
     render(
