@@ -2,34 +2,7 @@ import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { storages } from '~/common/services/storage/storages.service';
-
-export type TDiscoveryV2Tabs =
-  | 'top'
-  | 'foryou'
-  | 'your-tags'
-  | 'trending-tags'
-  | 'boosts'
-  | 'supermind';
-
-const tabIndex: Record<TDiscoveryV2Tabs, number> = {
-  top: 0,
-  foryou: 1,
-  'your-tags': 2,
-  'trending-tags': 3,
-  boosts: 4,
-  supermind: 5,
-};
-
-export type TDiscoveryTrendsTrend = {};
-
-export type TDiscoveryTagsTag = {
-  value: string;
-};
-
-const DISCOVERY_TS_KEY = 'discovery_ts';
-
-// TODO: workaround please remove
-const BOOST_V3 = true;
+import { hasVariation } from '../../../ExperimentsProvider';
 
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = 'top';
@@ -53,8 +26,10 @@ export default class DiscoveryV2Store {
   topFeed: FeedStore;
   supermindsFeed: FeedStore;
   lastDiscoveryTimestamp = 0;
+  plus?: boolean;
 
   constructor(plus: boolean = false) {
+    this.plus = plus;
     this.boostFeed = new FeedStore(true);
     this.boostFeed
       .getMetadataService()!
@@ -268,7 +243,11 @@ export default class DiscoveryV2Store {
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
-    this.activeTabId = 'foryou';
+    this.activeTabId = hasVariation('mob-5038-discovery-consolidation')
+      ? this.plus
+        ? 'foryou'
+        : 'top'
+      : 'foryou';
     this.refreshing = false;
     this.loading = false;
     this.showBadge();
@@ -286,3 +265,35 @@ export default class DiscoveryV2Store {
     storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }
+
+export type TDiscoveryV2Tabs =
+  | 'top'
+  | 'foryou'
+  | 'your-tags'
+  | 'trending-tags'
+  | 'boosts'
+  | 'supermind'
+  | 'channels'
+  | 'groups';
+
+const tabIndex: Record<TDiscoveryV2Tabs, number> = {
+  top: 0,
+  foryou: 1,
+  'your-tags': 2,
+  'trending-tags': 3,
+  boosts: 4,
+  supermind: 5,
+  channels: 6,
+  groups: 7,
+};
+
+export type TDiscoveryTrendsTrend = {};
+
+export type TDiscoveryTagsTag = {
+  value: string;
+};
+
+const DISCOVERY_TS_KEY = 'discovery_ts';
+
+// TODO: workaround please remove
+const BOOST_V3 = true;

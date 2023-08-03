@@ -2,7 +2,7 @@
 
 Minds Mobile
 
-## 4.37.1 (2023-07-13)
+## 4.38.0 (2023-07-20)
 
 ### Features ✨ (3 changes)
 
@@ -12,6 +12,9 @@ Minds Mobile
 
 ### Fixed 🐛 (8 changes)
 
+- [Feed performance & package updates](minds/mobile-native!2391)
+- [Soft reset crash on Android](minds/mobile-native!2390)
+- [Android 13 missing push notification permissions](minds/mobile-native!2382)
 - [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
 - [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
 - [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)

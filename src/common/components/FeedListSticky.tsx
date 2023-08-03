@@ -129,6 +129,7 @@ function FeedListSticky<T extends BaseModel>(
         <AnimatedFeedListV2
           ref={ref}
           {...otherProps}
+          scrollEventThrottle={16}
           onScroll={scrollHandler}
           contentContainerStyle={contentStyle}
         />

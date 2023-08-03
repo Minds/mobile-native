@@ -51,6 +51,9 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     paddingLeft: 0,
   },
+  buttonMargin: {
+    marginTop: 16,
+  },
 });
 
 export const readIndicatorStyle = ThemedStyles.combine(

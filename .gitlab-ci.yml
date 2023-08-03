@@ -140,6 +140,11 @@ stages:
     - if: $CI_COMMIT_BRANCH =~ /^release\/v[0-9]+\.[0-9]+\.[0-9]+$/
       when: on_success
 
+.rule_release_branch_manual:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release\/v[0-9]+\.[0-9]+\.[0-9]+$/
+      when: manual
+
 .rule_native_branch:
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^native\/.*/

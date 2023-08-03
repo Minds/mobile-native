@@ -84,6 +84,14 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="GifCardClaim"
+          getComponent={() =>
+            require('~/modules/gif-card/screens/GifCardClaimScreen')
+              .GifCardClaimScreen
+          }
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
           name="WebView"
           getComponent={() => require('~/common/screens/WebViewScreen').default}
         />
@@ -161,11 +169,6 @@ const AppStack = observer(() => {
           name="WireFab"
           getComponent={() => require('~/wire/v2/FabScreen').default}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="Report"
-          getComponent={() => require('~/report/ReportScreen').default}
-          options={{ title: i18n.t('report') }}
         />
         <AppStackNav.Screen
           name="TierScreen"
@@ -570,6 +573,10 @@ const RootStack = observer(function () {
                 ...rootStackCardScreenOptions,
                 headerShown: false,
               }}
+            />
+            <RootStackNav.Screen
+              name="Report"
+              getComponent={() => require('~/report/ReportScreen').default}
             />
           </>
         )

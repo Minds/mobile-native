@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-  Button,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Alert, Button, View } from 'react-native';
 import openUrlService from '~/common/services/open-url.service';
-import { Icon, IconButton } from '~/common/ui';
+import { Icon, IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
@@ -18,6 +11,7 @@ import mindsService from '../common/services/minds-config.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import reportService from './ReportService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import MenuItem from '../common/components/menus/MenuItem';
 
 type PropsType = {
   route: any;
@@ -255,8 +249,6 @@ class ReportScreen extends Component<PropsType, StateType> {
    * Render reasons list
    */
   renderReasons() {
-    const theme = ThemedStyles.style;
-
     const reasons =
       this.state.reason && this.state.reason.hasMore
         ? this.state.reason.reasons
@@ -265,8 +257,7 @@ class ReportScreen extends Component<PropsType, StateType> {
     const reasonItems = reasons?.map((reason, i) => {
       const externalLink = this.getExternalLinkForReason(reason);
       return (
-        <TouchableOpacity
-          style={styles.reasonItem}
+        <MenuItem
           key={i}
           onPress={
             externalLink
@@ -275,22 +266,16 @@ class ReportScreen extends Component<PropsType, StateType> {
                   this.state.reason
                     ? this.selectSubreason(reason)
                     : this.selectReason(reason)
-          }>
-          <View style={styles.reasonItemLabelContainer}>
-            <View style={theme.rowStretch}>
-              <MText style={styles.reasonItemLabel}>{reason.label}</MText>
-            </View>
-          </View>
-          {reason.hasMore && (
-            <View style={styles.chevronContainer}>
-              <Icon
-                name={externalLink ? 'external-link' : 'chevron-right'}
-                size="large"
-                color="Link"
-              />
-            </View>
-          )}
-        </TouchableOpacity>
+          }
+          title={reason.label}
+          borderless
+          noIcon={!reason.hasMore}
+          icon={
+            externalLink && (
+              <Icon name={'external-link'} size="large" color="Link" />
+            )
+          }
+        />
       );
     });
 
@@ -313,16 +298,25 @@ class ReportScreen extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const showTitle = this.state.reason && this.state.reason.hasMore;
     return (
-      <ScrollView
-        style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
+      <Screen safe scroll>
+        <ScreenHeader
+          backIcon={this.state.reason?.hasMore ? undefined : 'close'}
+          back
+          onBack={
+            this.state.reason?.hasMore
+              ? () => this.setState({ reason: null })
+              : undefined
+          }
+          title={i18n.t('report')}
+        />
         {showTitle && (
           <MText
             style={[
-              theme.fontL,
-              theme.bgPrimaryBackground,
-              theme.colorWhite,
-              theme.paddingHorizontal2x,
-              theme.paddingVertical3x,
+              theme.fontXL,
+              theme.bold,
+              theme.colorPrimaryText,
+              theme.paddingHorizontal4x,
+              theme.paddingVertical4x,
             ]}>
             {this.state.reason?.label}
           </MText>
@@ -350,41 +344,9 @@ class ReportScreen extends Component<PropsType, StateType> {
             />
           )}
         </View>
-      </ScrollView>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  reasonItem: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-    minHeight: 50,
-  },
-  reasonItemLabelContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  reasonItemLabel: {
-    flex: 1,
-    fontWeight: '600',
-    textAlign: 'left',
-  },
-  chevronContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 36,
-  },
-  chevron: {
-    color: '#ececec',
-  },
-});
 
 export default withErrorBoundaryScreen(ReportScreen, 'ReportScreen');

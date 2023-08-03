@@ -20,6 +20,7 @@
     "pendingModeration": "This post is awaiting moderation"
   },
   "permissions": {
+    "notification": "Stay connected with instant updates on Minds. Enable push notifications now!",
     "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
     "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
     "camera": "Minds needs access to your external camera so you can capture pictures.",
@@ -520,10 +521,12 @@
     "manage": "Manage Tags",
     "justForYou": "Just for you",
     "top": "Top",
+    "topV2": "Trending",
     "yourTags": "Your tags",
     "otherTags": "Other tags",
     "trendingTags": "Trending tags",
     "trending": "Trending",
+    "trendingV2": "Trending tags",
     "search": "Search...",
     "nothingToShow": "Nothing to show",
     "nothingToSee": "Nothing to see here...",
@@ -645,6 +648,7 @@
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "claimGiftButton": "Claim Gift",
     "filters": {
       "all": "All",
       "tags": "Tags",
@@ -688,7 +692,8 @@
       "boost_accepted": "Your Boost is now running",
       "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!",
       "affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
-      "referrer_affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program"
+      "referrer_affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
+      "gift_card_recipient_notified": "sent you a gift for Boost"
     }
   },
   "interactions": {

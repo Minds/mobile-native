@@ -9,6 +9,22 @@ import { showNotification } from '../../../AppMessages';
  */
 class PermissionsService {
   /**
+   * Request push notification permission
+   */
+
+  async requestNotificationPermission() {
+    return (
+      RESULTS.GRANTED ===
+      (await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS, {
+        title: 'Minds',
+        message: i18n.t('permissions.notification'),
+        buttonPositive: i18n.t('permissions.grant'),
+        buttonNegative: i18n.t('no'),
+      }))
+    );
+  }
+
+  /**
    * Request external storage read permission
    */
   async readExternalStorage() {

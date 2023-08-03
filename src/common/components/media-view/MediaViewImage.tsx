@@ -130,6 +130,10 @@ export default function MediaViewImage({
 
     return <View style={errorContainerStyle}>{text}</View>;
   }
+  const blur = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
+  const placeholder = blur
+    ? { blurhash: blur, width: 9, height: 9 }
+    : thumbnail;
 
   return (
     <DoubleTapTouchable
@@ -141,15 +145,12 @@ export default function MediaViewImage({
       testID="Posted Image">
       <SmartImage
         contentFit={mode}
-        transition={100}
         style={imageStyle}
         source={source}
         onLoad={onLoadImage}
         onError={imageError}
         ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
-        placeholder={
-          entity?.custom_data?.[0]?.blurhash || entity?.blurhash || thumbnail
-        }
+        placeholder={placeholder}
         locked={entity?.isLocked()}
         recyclingKey={entity.urn}
       />

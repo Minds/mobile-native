@@ -213,6 +213,7 @@ export type RootStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   StoryBook: {};
   CodePushSync: {};
+  Report: {};
 };
 
 export type AuthStackParamList = {
@@ -226,6 +227,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  GifCardClaim: {
+    code: string;
+  };
   SingleBoostConsole: {
     guid: string;
   };
@@ -317,7 +321,6 @@ export type AppStackParamList = {
   Transactions: {};
   BlockchainWalletImport: {};
   BlockchainWalletDetails: {};
-  Report: {};
   More: {};
   Withdraw: {};
   WalletOnboarding: {};

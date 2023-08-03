@@ -31,7 +31,7 @@ platform :android do
       
     current_build_number = options[:play] ?  previous_build_number + 1 : 1050000000 + previous_build_number + 1
       
-    sh("sed -i 's/^versionCode=.*/versionCode="+(current_build_number.to_s)+"/' ./gradle.properties")
+    sh("sed -i 's/^versionCode=.*/versionCode="+(current_build_number.to_s)+"/' ../gradle.properties")
   end
 
   desc "Create a release build"

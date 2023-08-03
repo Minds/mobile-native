@@ -124,6 +124,7 @@ export const featureList = [
   'mob-4938-newsfeed-for-you',
   'mob-4989-compose-fab',
   'mob-4952-boost-platform-targeting',
+  'mob-5038-discovery-consolidation',
   'mob-5009-boost-rotator-in-feed',
 ] as const;
 
