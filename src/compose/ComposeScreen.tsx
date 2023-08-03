@@ -13,7 +13,10 @@ import {
 import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
 import { observer } from 'mobx-react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  NativeSafeAreaViewProps,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { confirm } from '~/common/components/Confirm';
@@ -161,7 +164,9 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // #region effects
   useFocusEffect(store.onScreenFocused);
 
-  const edges = IS_IOS ? ['top'] : ['top', 'bottom'];
+  const edges: NativeSafeAreaViewProps['edges'] = IS_IOS
+    ? ['top']
+    : ['top', 'bottom'];
 
   const autofocus =
     (props.route?.params?.createMode ?? 'post') === 'post' ||
