@@ -24,6 +24,7 @@ import { BoostStoreType } from '../boost.store';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import MPressable from '~/common/components/MPressable';
 import ThemedStyles from '~/styles/ThemedStyles';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type AudienceSelectorScreenProps =
   BoostStackScreenProps<'BoostAudienceSelector'>;
@@ -48,16 +49,7 @@ function AudienceSelectorScreen({
 
   return (
     <Screen safe onlyTopEdge={!safe}>
-      <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back
-        backIcon={backIcon}
-        shadow
-      />
+      <BoostComposerHeader backIcon={backIcon} />
       <FitScrollView>
         <Column align="centerBoth" bottom="XL2" top="XL">
           <H2>{t('Customize your audience')}</H2>

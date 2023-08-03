@@ -12,7 +12,7 @@ import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
 
-export type BoostType = 'channel' | 'post' | 'offer';
+export type BoostType = 'channel' | 'post' | 'offer' | 'group';
 export type Payment = 'tokens' | 'onchain' | 'cash';
 
 const createBoostStore = ({

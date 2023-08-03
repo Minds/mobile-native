@@ -25,6 +25,8 @@ import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import BoostComposerHeader from '../components/BoostComposerHeader';
+import { BoostType } from '../../../../boost/legacy/createBoostStore';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -69,8 +71,16 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       total: t('{{total}} tokens', { total: boostStore.total }),
     },
   };
-  const title =
-    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
+
+  const titleMap: Record<BoostType, string> = {
+    channel: t('Boost Channel'),
+    post: t('Boost Post'),
+    group: t('Boost Group'),
+    /** @deprecated */
+    offer: t('Boost Offer'),
+  };
+
+  const title = titleMap[boostStore.boostType];
 
   const handleCreate = () => {
     return boostStore.createBoost(creditPaymentMethod)?.then(() => {
@@ -93,7 +103,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={title} back shadow />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
