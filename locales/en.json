@@ -1947,7 +1947,8 @@
   },
   "group": {
     "search": "Search Group",
-    "share": "Share Group"
+    "share": "Share Group",
+    "boost": "Boost Group"
   },
   "back": "Back",
   "explore": "Explore",

@@ -7,24 +7,16 @@ import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import {
-  B1,
-  B2,
-  Button,
-  Column,
-  H2,
-  HairlineRow,
-  Screen,
-  ScreenHeader,
-} from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { useBoostStore } from '../boost.store';
+import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -69,8 +61,14 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       total: t('{{total}} tokens', { total: boostStore.total }),
     },
   };
-  const title =
-    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
+
+  const titleMap: Record<BoostType, string> = {
+    channel: t('Boost Channel'),
+    post: t('Boost Post'),
+    group: t('Boost Group'),
+  };
+
+  const title = titleMap[boostStore.boostType];
 
   const handleCreate = () => {
     return boostStore.createBoost(creditPaymentMethod)?.then(() => {
@@ -93,7 +91,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={title} back shadow />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
