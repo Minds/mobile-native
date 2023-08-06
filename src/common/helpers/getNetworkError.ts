@@ -8,7 +8,7 @@ import i18n from '../services/i18n.service';
  */
 export default (error: any) => {
   if (isApiError(error)) {
-    if (error.errors) {
+    if (error.errors?.length) {
       return error.errors.map(e => e.message).join('\n');
     }
     return error.message;
