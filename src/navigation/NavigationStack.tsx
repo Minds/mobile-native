@@ -366,6 +366,11 @@ const RootStack = observer(function () {
               options={TransitionPresets.ModalPresentationIOS}
             />
             <RootStackNav.Screen
+              name="Report"
+              getComponent={() => require('~/report/ReportScreen').default}
+              options={{ title: i18n.t('report'), headerShown: true }}
+            />
+            <RootStackNav.Screen
               name="SupermindConfirmation"
               getComponent={() =>
                 require('~/compose/SupermindConfirmation').default

@@ -128,6 +128,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  Report: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
