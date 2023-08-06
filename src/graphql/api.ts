@@ -39,40 +39,40 @@ export type Scalars = {
 export type ActivityEdge = EdgeInterface & {
   __typename?: 'ActivityEdge';
   cursor: Scalars['String']['output'];
+  explicitVotes: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: ActivityNode;
   type: Scalars['String']['output'];
 };
 
-export type ActivityNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'ActivityNode';
-    /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
-    blurhash?: Maybe<Scalars['String']['output']>;
-    commentsCount: Scalars['Int']['output'];
-    guid: Scalars['String']['output'];
-    hasVotedDown: Scalars['Boolean']['output'];
-    hasVotedUp: Scalars['Boolean']['output'];
-    id: Scalars['ID']['output'];
-    impressionsCount: Scalars['Int']['output'];
-    /** The activity has comments enabled */
-    isCommentingEnabled: Scalars['Boolean']['output'];
-    legacy: Scalars['String']['output'];
-    message: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    owner: UserNode;
-    ownerGuid: Scalars['String']['output'];
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    /** Relevant for images/video posts */
-    title?: Maybe<Scalars['String']['output']>;
-    urn: Scalars['String']['output'];
-    votesDownCount: Scalars['Int']['output'];
-    votesUpCount: Scalars['Int']['output'];
-  };
+export type ActivityNode = NodeInterface & {
+  __typename?: 'ActivityNode';
+  /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
+  blurhash?: Maybe<Scalars['String']['output']>;
+  commentsCount: Scalars['Int']['output'];
+  guid: Scalars['String']['output'];
+  hasVotedDown: Scalars['Boolean']['output'];
+  hasVotedUp: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  impressionsCount: Scalars['Int']['output'];
+  /** The activity has comments enabled */
+  isCommentingEnabled: Scalars['Boolean']['output'];
+  legacy: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  owner: UserNode;
+  ownerGuid: Scalars['String']['output'];
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** Relevant for images/video posts */
+  title?: Maybe<Scalars['String']['output']>;
+  urn: Scalars['String']['output'];
+  votesDownCount: Scalars['Int']['output'];
+  votesUpCount: Scalars['Int']['output'];
+};
 
 export type BoostEdge = EdgeInterface & {
   __typename?: 'BoostEdge';
@@ -103,6 +103,13 @@ export type ConnectionInterface = {
   pageInfo: PageInfo;
 };
 
+export type Dismissal = {
+  __typename?: 'Dismissal';
+  dismissalTimestamp: Scalars['Int']['output'];
+  key: Scalars['String']['output'];
+  userGuid: Scalars['String']['output'];
+};
+
 export type EdgeImpl = EdgeInterface & {
   __typename?: 'EdgeImpl';
   cursor: Scalars['String']['output'];
@@ -112,34 +119,6 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
-};
-
-export type EntityNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'EntityNode';
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    legacy: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-  };
-
-export type EntityNodeInterface = {
-  guid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  legacy: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
 };
 
 export type FeedHighlightsConnection = ConnectionInterface &
@@ -168,6 +147,8 @@ export type FeedNoticeEdge = EdgeInterface & {
 
 export type FeedNoticeNode = NodeInterface & {
   __typename?: 'FeedNoticeNode';
+  /** Whether the notice is dismissible */
+  dismissible: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   /** The key of the notice that the client should render */
   key: Scalars['String']['output'];
@@ -278,24 +259,18 @@ export type GroupEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type GroupNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'GroupNode';
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    legacy: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-  };
-
-export type KeyValuePairInput = {
-  key: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+export type GroupNode = NodeInterface & {
+  __typename?: 'GroupNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
 };
 
 export type KeyValuePairInput = {
@@ -309,6 +284,8 @@ export type Mutation = {
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  /** Dismiss a notice by its key. */
+  dismiss: Dismissal;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
 };
@@ -329,6 +306,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationDismissArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -403,6 +384,10 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Get dismissal by key. */
+  dismissalByKey?: Maybe<Dismissal>;
+  /** Get all of a users dismissals. */
+  dismissals: Array<Dismissal>;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
   /** Returns an individual gift card by its claim code. */
@@ -429,10 +414,15 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  search: SearchResultsConnection;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryDismissalByKeyArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type QueryGiftCardArgs = {
@@ -482,6 +472,53 @@ export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
+export type QuerySearchArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  filter: SearchFilterEnum;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  mediaType: SearchMediaTypeEnum;
+  nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
+  query: Scalars['String']['input'];
+};
+
+export enum SearchFilterEnum {
+  Group = 'GROUP',
+  Latest = 'LATEST',
+  Top = 'TOP',
+  User = 'USER',
+}
+
+export enum SearchMediaTypeEnum {
+  All = 'ALL',
+  Blog = 'BLOG',
+  Image = 'IMAGE',
+  Video = 'VIDEO',
+}
+
+export enum SearchNsfwEnum {
+  Nudity = 'NUDITY',
+  Other = 'OTHER',
+  Pornography = 'PORNOGRAPHY',
+  Profanity = 'PROFANITY',
+  RaceReligion = 'RACE_RELIGION',
+  Violence = 'VIOLENCE',
+}
+
+export type SearchResultsConnection = ConnectionInterface & {
+  __typename?: 'SearchResultsConnection';
+  /** The number of search records matching the query */
+  count: Scalars['Int']['output'];
+  edges: Array<EdgeInterface>;
+  pageInfo: PageInfo;
+};
+
+export type SearchResultsCount = {
+  __typename?: 'SearchResultsCount';
+  count: Scalars['Int']['output'];
+};
+
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
   cursor: Scalars['String']['output'];
@@ -490,43 +527,42 @@ export type UserEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type UserNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'UserNode';
-    briefDescription: Scalars['String']['output'];
-    /** The users public ETH address */
-    ethAddress?: Maybe<Scalars['String']['output']>;
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    /** The number of views the users has received. Includes views from their posts */
-    impressionsCount: Scalars['Int']['output'];
-    /** The user is a founder (contributed to crowdfunding) */
-    isFounder: Scalars['Boolean']['output'];
-    /** The user is a member of Minds+ */
-    isPlus: Scalars['Boolean']['output'];
-    /** The user is a member of Minds Pro */
-    isPro: Scalars['Boolean']['output'];
-    /** You are subscribed to this user */
-    isSubscribed: Scalars['Boolean']['output'];
-    /** The user is subscribed to you */
-    isSubscriber: Scalars['Boolean']['output'];
-    /** The user is a verified */
-    isVerified: Scalars['Boolean']['output'];
-    legacy: Scalars['String']['output'];
-    name: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** The number of subscribers the user has */
-    subscribersCount: Scalars['Int']['output'];
-    /** The number of channels the user is subscribed to */
-    subscriptionsCount: Scalars['Int']['output'];
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-    username: Scalars['String']['output'];
-  };
+export type UserNode = NodeInterface & {
+  __typename?: 'UserNode';
+  briefDescription: Scalars['String']['output'];
+  /** The users public ETH address */
+  ethAddress?: Maybe<Scalars['String']['output']>;
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The number of views the users has received. Includes views from their posts */
+  impressionsCount: Scalars['Int']['output'];
+  /** The user is a founder (contributed to crowdfunding) */
+  isFounder: Scalars['Boolean']['output'];
+  /** The user is a member of Minds+ */
+  isPlus: Scalars['Boolean']['output'];
+  /** The user is a member of Minds Pro */
+  isPro: Scalars['Boolean']['output'];
+  /** You are subscribed to this user */
+  isSubscribed: Scalars['Boolean']['output'];
+  /** The user is subscribed to you */
+  isSubscriber: Scalars['Boolean']['output'];
+  /** The user is a verified */
+  isVerified: Scalars['Boolean']['output'];
+  legacy: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** The number of subscribers the user has */
+  subscribersCount: Scalars['Int']['output'];
+  /** The number of channels the user is subscribed to */
+  subscriptionsCount: Scalars['Int']['output'];
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
 
 export type FetchPaymentMethodsQueryVariables = Exact<{
   giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
@@ -702,7 +738,6 @@ export type NewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
-            | { __typename?: 'EntityNode'; id: string }
             | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
@@ -760,7 +795,6 @@ export type NewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'EntityNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -905,7 +939,6 @@ export type NewsfeedQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'EntityNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
