@@ -12,6 +12,7 @@ import { useAnalytics } from '~/common/contexts/analytics.context';
 import type ActivityModel from '../../ActivityModel';
 import EntityCounter from './EntityCounter';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
+import { useActivityContext } from '../contexts/Activity.context';
 
 export interface ThumbProps {
   direction: 'up' | 'down';
@@ -27,15 +28,21 @@ const ThumbAction = ({
   size = '21',
   ...props
 }: ThumbProps) => {
+  const { quietDownvote, onDownvote } = useActivityContext();
   const entity = props.entity;
   const canVote = entity.can(FLAG_VOTE);
   const Touchable = props.touchableComponent || PressableScaleCustom;
   const voted = !!props.voted;
+  const hideCount = props.hideCount || (quietDownvote && direction === 'down');
   const analytics = useAnalytics();
 
   const toggleThumb = async () => {
     if (!entity.can(FLAG_VOTE, true)) {
       return;
+    }
+
+    if (direction === 'down' && !voted) {
+      onDownvote?.();
     }
 
     remoteAction(() => {
@@ -58,7 +65,7 @@ const ThumbAction = ({
           name={`thumb-${direction}`}
           down={direction !== 'up'}
         />
-        {!props.hideCount && (
+        {!hideCount && (
           <EntityCounter
             entity={entity}
             countProperty={`thumbs:${direction}:count`}

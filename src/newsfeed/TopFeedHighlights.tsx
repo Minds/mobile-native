@@ -10,10 +10,12 @@ import { Button } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Activity from './activity/Activity';
 import ActivityModel from './ActivityModel';
+import { useIsFeatureOn } from '../../ExperimentsProvider';
 
 const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
   const navigation = useNavigation();
   const { newsfeed, dismissal } = useLegacyStores();
+  const hidePostFeature = useIsFeatureOn('mob-5075-hide-post-on-downvote');
   const isDismissed = dismissal.isDismissed('top-highlights');
 
   const shouldRender =
@@ -25,12 +27,14 @@ const TopFeedHighlights = observer(({ onSeeTopFeedPress }) => {
 
   return (
     <>
-      {newsfeed.highlightsStore.entities.map(entity =>
+      {newsfeed.highlightsStore.entities.map((entity, i) =>
         entity instanceof ActivityModel ? (
           <Activity
             entity={entity}
             navigation={navigation}
             key={`hl${entity.urn}`}
+            explicitVoteButtons={i === 1}
+            hidePostOnDownvote={hidePostFeature}
           />
         ) : null,
       )}
