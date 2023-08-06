@@ -26,6 +26,7 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -59,11 +60,18 @@ const WalletScreen = observer((props: PropsType) => {
   ];
 
   if (!isIosMindsHidden) {
-    tabs.push({
-      id: 'usd',
-      title: i18n.t('wallet.cash'),
-      testID: 'WalletScreen:cash',
-    });
+    tabs.push(
+      {
+        id: 'usd',
+        title: i18n.t('wallet.cash'),
+        testID: 'WalletScreen:cash',
+      },
+      {
+        id: 'credits',
+        title: i18n.t('credits'),
+        testID: 'WalletScreen:credits',
+      },
+    );
   }
 
   useEffect(() => {
@@ -117,6 +125,7 @@ const WalletScreen = observer((props: PropsType) => {
         tokensTabStore={tokenTabStore}
       />
     ),
+    credits: <CreditsTab />,
     loading: <CenteredLoading />,
   };
 

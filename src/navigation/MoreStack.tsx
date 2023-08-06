@@ -10,14 +10,10 @@ import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import WalletStack from './WalletStack';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
-
-const WalletOptions = () => ({
-  title: i18n.t('wallet.wallet'),
-  headerShown: false,
-});
 
 export default function () {
   const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
@@ -104,8 +100,8 @@ export default function () {
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
       <MoreStack.Screen
         name="Wallet"
-        getComponent={() => require('~/wallet/v3/WalletScreen').default}
-        options={WalletOptions}
+        component={WalletStack}
+        options={hideHeader}
       />
       <MoreStack.Screen
         name="GroupsList"
