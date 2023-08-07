@@ -197,7 +197,7 @@
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
-    "authCode": "Authentication code",
+    "authCode": "Verification Code",
     "recoveryCode": "Recovery code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
     "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
@@ -217,7 +217,8 @@
     "rateLimit": "Too many attempts, please try again later",
     "newPassword": "Create a new password. You’ll use this to access your account.",
     "nextLabel": "Next",
-    "submitLabel": "Submit"
+    "submitLabel": "Submit",
+    "mistypedEmail": "Mistyped your email? Change your email address below."
   },
   "multiUser": {
     "switchChannel": "Switch Account",

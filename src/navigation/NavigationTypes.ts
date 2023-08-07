@@ -128,6 +128,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  ChangeEmail: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
