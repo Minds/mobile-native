@@ -354,6 +354,12 @@ export default class Activity extends Component<ActivityProps> {
       <Lock entity={entity} navigation={this.props.navigation} />
     ) : null;
 
+    if (!hasText) {
+      // We reset the translate reference if there is no text, this prevents to have an old reference when recycling
+      //@ts-ignore
+      this.translate.current = null;
+    }
+
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
         {hasText ? (
@@ -365,6 +371,7 @@ export default class Activity extends Component<ActivityProps> {
               style={fontStyle}
             />
             <Translate
+              key={`translate-${entity.guid}`} // force render if entity change (solve issues when recycling)
               ref={this.translate}
               entity={entity}
               style={styles.message}
