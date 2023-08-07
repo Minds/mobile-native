@@ -40,10 +40,11 @@ import { withAnalyticsContext } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
 import { useFeedStore } from '~/common/contexts/feed-store.context';
 import FadeView from '../../common/components/FadeView';
-
+import { withActivityContext } from './contexts/Activity.context';
+import undoable from './hocs/undoable';
 const FONT_THRESHOLD = 300;
 
-type PropsType = {
+export type ActivityProps = {
   entity: ActivityModel;
   navigation: any;
   hydrateOnNav?: boolean;
@@ -60,12 +61,16 @@ type PropsType = {
   displayBoosts?: 'none' | 'distinct';
   emphasizeGroup?: boolean;
   maxContentHeight?: number;
+  onDownvote?: () => void;
+  quietDownvote?: boolean;
+  explicitVoteButtons?: boolean;
+  hidePostOnDownvote?: boolean;
 };
 
 /**
  * Activity
  */
-@withAnalyticsContext<PropsType>(props => {
+@withAnalyticsContext<ActivityProps>(props => {
   const feedStore = useFeedStore();
   const clientMetaContext =
     feedStore?.metadataService &&
@@ -80,8 +85,15 @@ type PropsType = {
   }
   return contexts;
 })
+@undoable()
+@withActivityContext(props => ({
+  quietDownvote: true,
+  explicitVoteButtons: props.explicitVoteButtons,
+  hidePostOnDownvote: props.hidePostOnDownvote,
+  onDownvote: props.onDownvote,
+}))
 @observer
-export default class Activity extends Component<PropsType> {
+export default class Activity extends Component<ActivityProps> {
   /**
    * Disposer for autoplay reaction
    */

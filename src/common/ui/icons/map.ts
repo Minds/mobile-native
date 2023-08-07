@@ -4,6 +4,7 @@ type Icon = {
   name: string;
   ratio?: number;
   top?: number;
+  transform?: any;
 };
 
 const ICON_MAP = {
@@ -361,6 +362,16 @@ const ICON_MAP = {
   alarm: {
     font: 'MaterialIcons',
     name: 'alarm',
+  },
+  'triangle-down': {
+    font: 'MaterialIcons',
+    name: 'play-arrow',
+    transform: [{ rotate: '90deg' }],
+  },
+  'triangle-up': {
+    font: 'MaterialIcons',
+    name: 'play-arrow',
+    transform: [{ rotate: '270deg' }],
   },
 } as const;
 

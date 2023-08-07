@@ -229,6 +229,22 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.loaded = true;
   }
 
+  @action
+  updateEntity(guid: string, entity: T) {
+    this.entities = this.entities.map(ent => {
+      if (ent instanceof InjectItem) {
+        return ent;
+      }
+
+      if (ent.guid === guid) {
+        return entity;
+      }
+
+      return ent;
+    });
+    return this;
+  }
+
   /**
    * Set loading
    * @param {boolean} value
