@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  Image,
+  ViewStyle,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -105,15 +112,18 @@ export const Topbar = observer((props: PropsType) => {
                     styles.logoWrapper,
                     isChatIconHidden && styles.noMarginLeft,
                   ]}>
-                  <Image
-                    resizeMode="contain"
-                    source={
-                      ThemedStyles.theme
-                        ? require('../assets/logos/logo-white.png')
-                        : require('../assets/logos/logo.png')
-                    }
-                    style={styles.logo}
-                  />
+                  <TouchableWithoutFeedback
+                    onPress={scrollContext?.scrollToTop}>
+                    <Image
+                      resizeMode="contain"
+                      source={
+                        ThemedStyles.theme
+                          ? require('../assets/logos/logo-white.png')
+                          : require('../assets/logos/logo.png')
+                      }
+                      style={styles.logo}
+                    />
+                  </TouchableWithoutFeedback>
 
                   <CodePushCustomIcon />
                 </View>

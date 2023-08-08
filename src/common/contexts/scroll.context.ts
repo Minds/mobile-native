@@ -10,6 +10,7 @@ export const ScrollContext = React.createContext<
       scrollY: SharedValue<number>;
       scrollDirection: SharedValue<ScrollDirection>;
       headerHeight: number;
+      scrollToTop?: () => void;
     }
   | undefined
 >(undefined);

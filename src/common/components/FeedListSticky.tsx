@@ -1,5 +1,11 @@
 import { useLayout } from '@react-native-community/hooks';
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -8,7 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type BaseModel from '../BaseModel';
 import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { FeedListProps, FeedListV2 } from './FeedListV2';
 
 /**
@@ -58,10 +64,15 @@ function FeedListSticky<T extends BaseModel>(
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);
+  const listRef = useRef<FlatList>(ref);
   const scrollDirection = useSharedValue<ScrollDirection>(
     ScrollDirection.neutral,
   );
   const { header, ...otherProps } = props;
+
+  const scrollToTop = useCallback(() => {
+    listRef.current.scrollToOffset?.({ offset: 0, animated: true });
+  }, [listRef]);
 
   /**
    * headerHeight - set by the header layout
@@ -117,6 +128,8 @@ function FeedListSticky<T extends BaseModel>(
     },
   });
 
+  useImperativeHandle(ref, () => listRef.current, [listRef]);
+
   const contentStyle = React.useMemo(
     () => ({ paddingTop: headerHeight }),
     [headerHeight],
@@ -124,10 +137,16 @@ function FeedListSticky<T extends BaseModel>(
 
   return (
     <ScrollContext.Provider
-      value={{ translationY, scrollY, headerHeight, scrollDirection }}>
+      value={{
+        translationY,
+        scrollY,
+        headerHeight,
+        scrollDirection,
+        scrollToTop,
+      }}>
       <View style={styles.container}>
         <AnimatedFeedListV2
-          ref={ref}
+          ref={listRef}
           {...otherProps}
           scrollEventThrottle={16}
           onScroll={scrollHandler}
