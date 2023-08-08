@@ -29,7 +29,7 @@ const en = {
   Ascending: 'Newest to Oldest',
   Descending: 'Oldest to Newest',
   'No Credits':
-    'No boost credits found. Your gift cards will be displayed here.',
+    'You can view all your gifts, as well as their remaining balances, expiration, and transactions.',
 };
 
 export default en;
