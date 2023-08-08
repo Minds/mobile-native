@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { B2, B3, Row } from '~/common/ui';
+import { B2, B3, Column, H3, Row } from '~/common/ui';
 import Link from '~/common/components/Link';
 import Filter, { useFilterState } from './Filter';
 import {
@@ -41,6 +41,11 @@ export const GiftCardList = () => {
             setFilterState={setGiftCardState}
           />
         </Row>
+      }
+      ListEmptyComponent={
+        <Column horizontal="XL" vertical="XXL2">
+          <H3>{t('No Credits')}</H3>
+        </Column>
       }
       estimatedItemSize={CARD_HEIGHT}
       keyExtractor={(item, index) => item?.node?.id ?? `${index}`}

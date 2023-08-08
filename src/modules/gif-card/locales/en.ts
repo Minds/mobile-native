@@ -28,6 +28,8 @@ const en = {
   },
   Ascending: 'Newest to Oldest',
   Descending: 'Oldest to Newest',
+  'No Credits':
+    'No boost credits found. Your gift cards will be displayed here.',
 };
 
 export default en;
