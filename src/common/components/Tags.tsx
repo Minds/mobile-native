@@ -9,30 +9,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 
 import openUrlService from '../services/open-url.service';
 import MText from './MText';
-
-export const hashRegex = new RegExp(
-  [
-    '([^&]|\\B|^)', // Start of string, and word boundary. Not if preceded by & symbol
-    '#', //
-    '([',
-    '\\wÀ-ÿ', // All Latin words + accented characters
-    '\\u0E00-\\u0E7F', // Unicode range for Thai
-    '\\u2460-\\u9FBB', // Unicode range for Japanese but may be overly zealous
-    ']+)',
-  ].join(''),
-  'gim',
-);
-
-export const cashRegex = new RegExp(
-  [
-    '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
-    '\\$', //
-    '([',
-    'A-Za-z',
-    ']+)',
-  ].join(''),
-  'gim', // Global, Case insensitive, Multiline
-);
+import { regex } from '~/services';
 
 type PropsType = {
   color?: string;
@@ -101,10 +78,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * full url
    */
   parseUrl = str => {
-    const url =
-      /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
-
-    return this.replaceRegular(str, url, (i, content) => {
+    return this.replaceRegular(str, regex.url, (i, content) => {
       return (
         <MText
           key={i}
@@ -122,10 +96,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * url .com .org .net
    */
   parseShortUrl = str => {
-    const url =
-      /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
-
-    return this.replaceRegular(str, url, (i, content) => {
+    return this.replaceRegular(str, regex.shortUrl, (i, content) => {
       return (
         <MText
           key={i}
@@ -143,10 +114,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * url starting with www
    */
   parseWwwUrl = str => {
-    const url =
-      /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
-
-    return this.replaceRegular(str, url, (i, content) => {
+    return this.replaceRegular(str, regex.wwwUrl, (i, content) => {
       return (
         <MText
           key={i}
@@ -164,7 +132,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * #tags
    */
   parseHash = str => {
-    return this.replaceRegular(str, hashRegex, (i, content) => {
+    return this.replaceRegular(str, regex.hash, (i, content) => {
       return (
         <MText
           key={i}
@@ -179,7 +147,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
   };
 
   parseCash = str => {
-    return this.replaceRegular(str, cashRegex, (i, content) => {
+    return this.replaceRegular(str, regex.cash, (i, content) => {
       return (
         <MText
           key={i}
@@ -197,20 +165,23 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * @tags
    */
   parseUser = str => {
-    const hash = /(^|\s|\B)@(\w*[a-zA-Z_]+\w*)/gim;
-
-    return this.replaceRegular(str, hash, (i, content) => {
-      return (
-        <MText
-          key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
-          onPress={() => {
-            this.navToChannel(content);
-          }}>
-          @{content}
-        </MText>
-      );
-    });
+    return this.replaceRegular(
+      str,
+      regex.tag,
+      (i, content) => {
+        return (
+          <MText
+            key={i}
+            style={[this.props.style, ThemedStyles.style.colorLink]}
+            onPress={() => {
+              this.navToChannel(content);
+            }}>
+            @{content}
+          </MText>
+        );
+      },
+      4,
+    );
   };
 
   /**
@@ -275,11 +246,11 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * @param {regular} regular
    * @param {function} replace
    */
-  replaceRegular(str, regular, replace) {
+  replaceRegular(str, regular, replace, increment = 3) {
     const result = str.split(regular);
     if (result.length === 1) return str;
 
-    for (let i = 2; i < result.length; i = i + 3) {
+    for (let i = 2; i < result.length; i = i + increment) {
       const content = result[i];
       result[i] = replace(this.index++, content);
     }

@@ -12,7 +12,6 @@ import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
-import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
@@ -26,6 +25,7 @@ import { Media } from '../common/stores/AttachmentStore';
 import type GroupModel from '../groups/GroupModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import { pushAudienceSelector } from './ComposeAudienceSelector';
+import { regex } from '~/services';
 
 /**
  * Display an error message to the user.
@@ -393,7 +393,7 @@ export default function (props) {
       }
     },
     parseTags() {
-      let matched = this.text.match(hashRegex);
+      let matched = this.text.match(regex.hash);
       if (matched) {
         // unique results
         const results = matched.map(v => v.trim().slice(1));
