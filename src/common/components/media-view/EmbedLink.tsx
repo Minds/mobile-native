@@ -41,7 +41,7 @@ export default function EmbedLink({
       'https://minds-player.withlivepeer.com?v=',
       '',
     );
-    return <StreamPlayer id={videoId} />;
+    return <StreamPlayer id={videoId} key={`${entity.guid}_player`} />;
   }
 
   if (!small) {
