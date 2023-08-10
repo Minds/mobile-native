@@ -1,9 +1,8 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const MINDS_API_URI = 'https://www.minds.com/api/graphql';
-// use this for sandbox
-// const MINDS_API_URI = 'https://feat-explainer-screens-m4132.oke.minds.io/api/graphql';
-
+// const MINDS_API_URI =
+//   'https://feat-gift-card-txs-m4165.oke.minds.io/api/graphql';
 const STRAPI_API_URI = 'https://cms.minds.com/graphql';
 // use this for sandbox
 // const STRAPI_API_URI = 'https://cms.oke.minds.io/graphql';

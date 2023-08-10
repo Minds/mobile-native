@@ -648,6 +648,15 @@ export default class ActivityModel extends BaseModel {
       this.onMetricsUpdate(event),
     );
   }
+
+  /**
+   * Used to handle the state for the collapsed state
+   */
+  @action
+  setCollapsed(on = true) {
+    this._collapsed = on;
+    this.__list?.updateEntity(this.guid, this);
+  }
 }
 
 /**

@@ -4,6 +4,7 @@ type Icon = {
   name: string;
   ratio?: number;
   top?: number;
+  transform?: any;
 };
 
 const ICON_MAP = {
@@ -421,6 +422,16 @@ const ICON_MAP = {
   account_balance_wallet: {
     font: 'MaterialIcons',
     name: 'account-balance-wallet',
+  },
+  'triangle-down': {
+    font: 'MaterialIcons',
+    name: 'play-arrow',
+    transform: [{ rotate: '90deg' }],
+  },
+  'triangle-up': {
+    font: 'MaterialIcons',
+    name: 'play-arrow',
+    transform: [{ rotate: '270deg' }],
   },
 } as const;
 
