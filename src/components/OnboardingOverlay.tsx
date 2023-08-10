@@ -77,7 +77,9 @@ export const useExplainer = (key: string) => {
       { key },
       {
         onSuccess(result) {
-          queryClient.setQueryData(['GetDismissal', { key }], result);
+          queryClient.setQueryData(['GetDismissal', { key }], {
+            dismissalByKey: result.dismiss,
+          });
         },
       },
     );
