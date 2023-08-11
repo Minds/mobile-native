@@ -15,7 +15,7 @@ import {
   useInfiniteGetGiftCardsQuery,
 } from '~/graphql/api';
 import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
-import { dateFormat, useInfiniteQuery } from './utils';
+import { dateFormat, useInfiniteQuery, useRefetchOnFocus } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 
@@ -149,6 +149,7 @@ export const useGetGiftCards = (forceActive = false) => {
     },
     'giftCards',
   );
+  useRefetchOnFocus(result.refetch);
 
   return {
     ...result,
@@ -158,7 +159,8 @@ export const useGetGiftCards = (forceActive = false) => {
 };
 
 export const useGetGiftBalance = () => {
-  const { data: balances } = useGetGiftCardBalancesQuery();
+  const { data: balances, refetch } = useGetGiftCardBalancesQuery();
+  useRefetchOnFocus(refetch);
   const productId = GiftCardProductIdEnum.Boost;
   const { balance } =
     balances?.giftCardsBalances?.filter(b => b.productId === productId)?.[0] ??
