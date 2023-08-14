@@ -34,8 +34,7 @@ export const GiftCardList = () => {
   return (
     <FlashList
       ListHeaderComponent={
-        <Row horizontal="XL" bottom="S" align="centerBetween">
-          <B2 color="secondary">{t(gitfCardState)}</B2>
+        <Row horizontal="XL" bottom="S" align="centerEnd">
           <Filter
             filterState={gitfCardState}
             setFilterState={setGiftCardState}
@@ -76,7 +75,7 @@ const renderCard =
       <Row top="XL" horizontal="XL">
         <MindsCard disabled={disabled} />
         <View style={[styles.textBox, last && styles.lastItem]}>
-          <B2 font="bold">{productId}</B2>
+          <B2 font="bold">{t(`${productId}`)}</B2>
           <B2 bottom="XL">
             {t('Expires {{date}}', { date: dateFormat(expiresAt) })}
           </B2>
@@ -158,9 +157,9 @@ export const useGetGiftCards = (forceActive = false) => {
   };
 };
 
-export const useGetGiftBalance = () => {
+export const useGetGiftBalance = (refresh = true) => {
   const { data: balances, refetch } = useGetGiftCardBalancesQuery();
-  useRefetchOnFocus(refetch);
+  useRefetchOnFocus(refresh ? refetch : undefined);
   const productId = GiftCardProductIdEnum.Boost;
   const { balance } =
     balances?.giftCardsBalances?.filter(b => b.productId === productId)?.[0] ??
