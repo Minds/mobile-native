@@ -17,6 +17,7 @@ class MindsConfigService {
    */
   async update() {
     const settings = await api.get<any>('api/v1/minds/config');
+    console.log('settings', settings);
     storages.user?.setMap('mindsSettings', settings);
 
     this.settings = settings;

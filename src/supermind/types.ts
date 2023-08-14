@@ -13,6 +13,7 @@ export enum SupermindRequestReplyType {
   TEXT = 0,
   IMAGE = 1,
   VIDEO = 2,
+  LIVE = 3,
 }
 
 export enum SupermindRequestPaymentMethod {
