@@ -1,6 +1,7 @@
 import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
+import Pinchable from 'react-native-pinchable';
 
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -136,25 +137,28 @@ export default function MediaViewImage({
     : thumbnail;
 
   return (
-    <DoubleTapTouchable
-      onDoubleTap={onImageDoublePress}
-      onPress={onImagePress}
-      onLongPress={onImageLongPress}
-      style={imageStyle}
-      activeOpacity={1}
-      testID="Posted Image">
-      <SmartImage
-        contentFit={mode}
-        style={imageStyle}
-        source={source}
-        onLoad={onLoadImage}
-        onError={imageError}
-        ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
-        placeholder={placeholder}
-        locked={entity?.isLocked()}
-        recyclingKey={entity.urn}
-      />
-    </DoubleTapTouchable>
+    <View pointerEvents="box-none">
+      <Pinchable>
+        <DoubleTapTouchable
+          onPress={onImagePress}
+          onLongPress={onImageLongPress}
+          style={imageStyle}
+          activeOpacity={1}
+          testID="Posted Image">
+          <SmartImage
+            contentFit={mode}
+            style={imageStyle}
+            source={source}
+            onLoad={onLoadImage}
+            onError={imageError}
+            ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
+            placeholder={placeholder}
+            locked={entity?.isLocked()}
+            recyclingKey={entity.urn}
+          />
+        </DoubleTapTouchable>
+      </Pinchable>
+    </View>
   );
 }
 

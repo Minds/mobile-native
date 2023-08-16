@@ -162,6 +162,7 @@
     "react-native-permissions": "^3.6.1",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-photo-editor": "^1.0.13",
+    "react-native-pinchable": "^0.2.1",
     "react-native-popable": "^0.4.2",
     "react-native-progress": "^5.0.0",
     "react-native-qrcode-svg": "^5.2.0",
