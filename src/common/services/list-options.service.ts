@@ -56,7 +56,6 @@ export const LICENSES = [
 
 export const ACCESS = [
   { value: 0, text: 'Unlisted' },
-  { value: 0, text: 'Private' },
   { value: 1, text: 'Loggedin' },
   { value: 2, text: 'Public' },
 ];
