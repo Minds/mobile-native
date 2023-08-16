@@ -42,7 +42,7 @@ const Filter = observer(({ filterState, setFilterState }: PropsType) => {
         <Row align="centerBoth">
           <Icon name="filter" size="small" />
           <B3 left="XXS" color="secondary">
-            {t('filter')}
+            {t('Filter')}
           </B3>
         </Row>
       </TouchableOpacity>

@@ -1,0 +1,43 @@
+query GetExplainerScreens {
+  explainerScreensWeb {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}
+
+query GetExplainerScreen($key: String!) {
+  explainerScreensWeb(filters: { key: { eq: $key } }) {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}

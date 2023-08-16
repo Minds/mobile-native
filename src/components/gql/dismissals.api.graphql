@@ -1,0 +1,23 @@
+query GetDismissals {
+  dismissals {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+
+query GetDismissal($key: String!) {
+  dismissalByKey(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+
+mutation Dismiss($key: String!) {
+  dismiss(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
