@@ -28,6 +28,9 @@ const en = {
   },
   Ascending: 'Newest to Oldest',
   Descending: 'Oldest to Newest',
+  'No Credits':
+    'You can view all your gifts, as well as their remaining balances, expiration, and transactions.',
+  BOOST: 'Boost Credit',
 };
 
 export default en;
