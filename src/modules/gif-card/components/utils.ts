@@ -1,8 +1,10 @@
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { UseInfiniteQueryResult } from '@tanstack/react-query';
 import moment from 'moment';
 
 export const dateFormat = (val: number) =>
-  moment(val * 1000).format('ddd, MMM do');
+  moment(val * 1000).format('ddd, MMM do, YYYY');
 export const timeFormat = (val: number) => moment(val * 1000).format('HH:mm');
 
 type HookFunc = (
@@ -35,4 +37,11 @@ export const useInfiniteQuery = <TData>(
     fetchNextPage: infiniteResult.fetchNextPage,
     refetch: infiniteResult.refetch,
   };
+};
+export const useRefetchOnFocus = (refetch = () => {}) => {
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 };
