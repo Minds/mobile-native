@@ -1,4 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { gqlFetcher } from '~/common/services/strapi.service';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -19,33 +20,6 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch('https://cms.minds.com/graphql', {
-      method: 'POST',
-      ...{
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache',
-          'no-cache': '1',
-        },
-      },
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -2028,6 +2002,68 @@ export type RemoteBannerQuery = {
   } | null;
 };
 
+export type GetExplainerScreensQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetExplainerScreensQuery = {
+  __typename?: 'Query';
+  explainerScreensWeb?: {
+    __typename?: 'ExplainerScreenWebEntityResponseCollection';
+    data: Array<{
+      __typename?: 'ExplainerScreenWebEntity';
+      attributes?: {
+        __typename?: 'ExplainerScreenWeb';
+        key: string;
+        triggerRoute?: string | null;
+        title: string;
+        subtitle: string;
+        section: Array<{
+          __typename?: 'ComponentExplainerScreenSection';
+          icon: string;
+          title: string;
+          description: string;
+        } | null>;
+        continueButton: {
+          __typename?: 'ComponentExplainerScreenContinueButton';
+          text: string;
+          dataRef: string;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
+export type GetExplainerScreenQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetExplainerScreenQuery = {
+  __typename?: 'Query';
+  explainerScreensWeb?: {
+    __typename?: 'ExplainerScreenWebEntityResponseCollection';
+    data: Array<{
+      __typename?: 'ExplainerScreenWebEntity';
+      attributes?: {
+        __typename?: 'ExplainerScreenWeb';
+        key: string;
+        triggerRoute?: string | null;
+        title: string;
+        subtitle: string;
+        section: Array<{
+          __typename?: 'ComponentExplainerScreenSection';
+          icon: string;
+          title: string;
+          description: string;
+        } | null>;
+        continueButton: {
+          __typename?: 'ComponentExplainerScreenContinueButton';
+          text: string;
+          dataRef: string;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
 export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TweetMessageQuery = {
@@ -2069,8 +2105,86 @@ export const useRemoteBannerQuery = <
 ) =>
   useQuery<RemoteBannerQuery, TError, TData>(
     variables === undefined ? ['RemoteBanner'] : ['RemoteBanner', variables],
-    fetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
+    gqlFetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
       RemoteBannerDocument,
+      variables,
+    ),
+    options,
+  );
+export const GetExplainerScreensDocument = `
+    query GetExplainerScreens {
+  explainerScreensWeb {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetExplainerScreensQuery = <
+  TData = GetExplainerScreensQuery,
+  TError = unknown,
+>(
+  variables?: GetExplainerScreensQueryVariables,
+  options?: UseQueryOptions<GetExplainerScreensQuery, TError, TData>,
+) =>
+  useQuery<GetExplainerScreensQuery, TError, TData>(
+    variables === undefined
+      ? ['GetExplainerScreens']
+      : ['GetExplainerScreens', variables],
+    gqlFetcher<GetExplainerScreensQuery, GetExplainerScreensQueryVariables>(
+      GetExplainerScreensDocument,
+      variables,
+    ),
+    options,
+  );
+export const GetExplainerScreenDocument = `
+    query GetExplainerScreen($key: String!) {
+  explainerScreensWeb(filters: {key: {eq: $key}}) {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetExplainerScreenQuery = <
+  TData = GetExplainerScreenQuery,
+  TError = unknown,
+>(
+  variables: GetExplainerScreenQueryVariables,
+  options?: UseQueryOptions<GetExplainerScreenQuery, TError, TData>,
+) =>
+  useQuery<GetExplainerScreenQuery, TError, TData>(
+    ['GetExplainerScreen', variables],
+    gqlFetcher<GetExplainerScreenQuery, GetExplainerScreenQueryVariables>(
+      GetExplainerScreenDocument,
       variables,
     ),
     options,
@@ -2095,7 +2209,7 @@ export const useTweetMessageQuery = <
 ) =>
   useQuery<TweetMessageQuery, TError, TData>(
     variables === undefined ? ['TweetMessage'] : ['TweetMessage', variables],
-    fetcher<TweetMessageQuery, TweetMessageQueryVariables>(
+    gqlFetcher<TweetMessageQuery, TweetMessageQueryVariables>(
       TweetMessageDocument,
       variables,
     ),

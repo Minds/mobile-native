@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { B2, B3, Row } from '~/common/ui';
+import { B1, B2, B3, Row } from '~/common/ui';
 import Link from '~/common/components/Link';
 import Filter, { useFilterState } from './Filter';
 import {
@@ -15,7 +15,7 @@ import {
   useInfiniteGetGiftCardsQuery,
 } from '~/graphql/api';
 import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
-import { dateFormat, useInfiniteQuery } from './utils';
+import { dateFormat, useInfiniteQuery, useRefetchOnFocus } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 
@@ -34,13 +34,17 @@ export const GiftCardList = () => {
   return (
     <FlashList
       ListHeaderComponent={
-        <Row horizontal="XL" bottom="S" align="centerBetween">
-          <B2 color="secondary">{t(gitfCardState)}</B2>
+        <Row horizontal="XL" bottom="S" align="centerEnd">
           <Filter
             filterState={gitfCardState}
             setFilterState={setGiftCardState}
           />
         </Row>
+      }
+      ListEmptyComponent={
+        <B1 horizontal="XL" vertical="XL">
+          {t('No Credits')}
+        </B1>
       }
       estimatedItemSize={CARD_HEIGHT}
       keyExtractor={(item, index) => item?.node?.id ?? `${index}`}
@@ -71,7 +75,7 @@ const renderCard =
       <Row top="XL" horizontal="XL">
         <MindsCard disabled={disabled} />
         <View style={[styles.textBox, last && styles.lastItem]}>
-          <B2 font="bold">{productId}</B2>
+          <B2 font="bold">{t(`${productId}`)}</B2>
           <B2 bottom="XL">
             {t('Expires {{date}}', { date: dateFormat(expiresAt) })}
           </B2>
@@ -144,6 +148,7 @@ export const useGetGiftCards = (forceActive = false) => {
     },
     'giftCards',
   );
+  useRefetchOnFocus(result.refetch);
 
   return {
     ...result,
@@ -152,8 +157,9 @@ export const useGetGiftCards = (forceActive = false) => {
   };
 };
 
-export const useGetGiftBalance = () => {
-  const { data: balances } = useGetGiftCardBalancesQuery();
+export const useGetGiftBalance = (refresh = true) => {
+  const { data: balances, refetch } = useGetGiftCardBalancesQuery();
+  useRefetchOnFocus(refresh ? refetch : undefined);
   const productId = GiftCardProductIdEnum.Boost;
   const { balance } =
     balances?.giftCardsBalances?.filter(b => b.productId === productId)?.[0] ??
