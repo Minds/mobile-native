@@ -564,6 +564,46 @@ export type UserNode = NodeInterface & {
   username: Scalars['String']['output'];
 };
 
+export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDismissalsQuery = {
+  __typename?: 'Query';
+  dismissals: Array<{
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  }>;
+};
+
+export type GetDismissalQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetDismissalQuery = {
+  __typename?: 'Query';
+  dismissalByKey?: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  } | null;
+};
+
+export type DismissMutationVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type DismissMutation = {
+  __typename?: 'Mutation';
+  dismiss: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  };
+};
+
 export type PageInfoFragment = {
   __typename?: 'PageInfo';
   hasPreviousPage: boolean;
@@ -1355,6 +1395,147 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const GetDismissalsDocument = `
+    query GetDismissals {
+  dismissals {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useGetDismissalsQuery = <
+  TData = GetDismissalsQuery,
+  TError = unknown,
+>(
+  variables?: GetDismissalsQueryVariables,
+  options?: UseQueryOptions<GetDismissalsQuery, TError, TData>,
+) =>
+  useQuery<GetDismissalsQuery, TError, TData>(
+    variables === undefined ? ['GetDismissals'] : ['GetDismissals', variables],
+    gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+      GetDismissalsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetDismissalsQuery = <
+  TData = GetDismissalsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetDismissalsQueryVariables,
+  variables?: GetDismissalsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetDismissalsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetDismissalsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetDismissals.infinite']
+      : ['GetDismissals.infinite', variables],
+    metaData =>
+      gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+        GetDismissalsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetDismissalsQuery.fetcher = (
+  variables?: GetDismissalsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+    GetDismissalsDocument,
+    variables,
+    options,
+  );
+export const GetDismissalDocument = `
+    query GetDismissal($key: String!) {
+  dismissalByKey(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useGetDismissalQuery = <
+  TData = GetDismissalQuery,
+  TError = unknown,
+>(
+  variables: GetDismissalQueryVariables,
+  options?: UseQueryOptions<GetDismissalQuery, TError, TData>,
+) =>
+  useQuery<GetDismissalQuery, TError, TData>(
+    ['GetDismissal', variables],
+    gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+      GetDismissalDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetDismissalQuery = <
+  TData = GetDismissalQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetDismissalQueryVariables,
+  variables: GetDismissalQueryVariables,
+  options?: UseInfiniteQueryOptions<GetDismissalQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetDismissalQuery, TError, TData>(
+    ['GetDismissal.infinite', variables],
+    metaData =>
+      gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+        GetDismissalDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetDismissalQuery.fetcher = (
+  variables: GetDismissalQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+    GetDismissalDocument,
+    variables,
+    options,
+  );
+export const DismissDocument = `
+    mutation Dismiss($key: String!) {
+  dismiss(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useDismissMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DismissMutation,
+    TError,
+    DismissMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<DismissMutation, TError, DismissMutationVariables, TContext>(
+    ['Dismiss'],
+    (variables?: DismissMutationVariables) =>
+      gqlFetcher<DismissMutation, DismissMutationVariables>(
+        DismissDocument,
+        variables,
+      )(),
+    options,
+  );
+useDismissMutation.fetcher = (
+  variables: DismissMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<DismissMutation, DismissMutationVariables>(
+    DismissDocument,
+    variables,
+    options,
+  );
 export const FetchSearchDocument = `
     query FetchSearch($query: String!, $filter: SearchFilterEnum!, $mediaType: SearchMediaTypeEnum!, $nsfw: [SearchNsfwEnum!], $limit: Int!, $cursor: String) {
   search(
