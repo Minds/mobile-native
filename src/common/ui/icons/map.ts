@@ -237,6 +237,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'insights',
   },
+  affiliates: {
+    font: 'MaterialIcons',
+    name: 'volunteer-activism',
+  },
   queue: {
     font: 'MaterialIcons',
     name: 'add-to-queue',
