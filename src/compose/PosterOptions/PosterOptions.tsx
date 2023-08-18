@@ -47,11 +47,11 @@ const PosterOptions: FC<PropsType> = props => {
     store,
     props.navigation,
   );
-  const onPermawebPress = useNavCallback(
-    'PermawebSelector',
-    store,
-    props.navigation,
-  );
+  // const onPermawebPress = useNavCallback(
+  //   'PermawebSelector',
+  //   store,
+  //   props.navigation,
+  // );
   const onMonetizePress = useNavCallback(
     'MonetizeSelector',
     store,
@@ -82,11 +82,11 @@ const PosterOptions: FC<PropsType> = props => {
     !store.supermindRequest &&
     !store.isEdit;
 
-  const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
+  // const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
 
-  const permawebDesc = store.postToPermaweb
-    ? i18n.t('permaweb.description')
-    : null;
+  // const permawebDesc = store.postToPermaweb
+  //   ? i18n.t('permaweb.description')
+  //   : null;
 
   return (
     <View style={styles.container}>
@@ -135,7 +135,7 @@ const PosterOptions: FC<PropsType> = props => {
           noBorderTop
         />
       )}
-      {showPermaweb && (
+      {/* {showPermaweb && (
         <MenuItem
           title={i18n.t('permaweb.title')}
           label={permawebDesc || ''}
@@ -143,7 +143,7 @@ const PosterOptions: FC<PropsType> = props => {
           testID="permawebButton"
           noBorderTop
         />
-      )}
+      )} */}
       <MenuItem
         title="License"
         label={getLicenseText(license)}

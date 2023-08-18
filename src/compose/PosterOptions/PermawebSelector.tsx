@@ -7,7 +7,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import MText from '../../common/components/MText';
+// import MText from '../../common/components/MText';
 import { useComposeContext } from '~/compose/useComposeStore';
 
 /**
@@ -28,18 +28,18 @@ export default observer(function () {
         backIconSize="large"
         store={store}
       />
-      <MText style={[styles.permawebTerms]}>{i18n.t('permaweb.terms')}</MText>
-      <MText style={[styles.permawebProcessTime]}>
+      {/* <MText style={[styles.permawebTerms]}>{i18n.t('permaweb.terms')}</MText> */}
+      {/* <MText style={[styles.permawebProcessTime]}>
         {i18n.t('permaweb.processingTime')}
-      </MText>
+      </MText> */}
       <View style={[styles.checkboxContainer]}>
         <CheckBox
           title={`${i18n.t('auth.accept')} ${i18n.t(
             'auth.termsAndConditions',
           )}.`}
           containerStyle={[theme.checkbox]}
-          checked={store.postToPermaweb}
-          onPress={() => store.togglePostToPermaweb()}
+          // checked={store.postToPermaweb}
+          // onPress={() => store.togglePostToPermaweb()}
           textStyle={theme.colorPrimaryText}
           // @ts-ignore
           testID="checkbox"
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
-  permawebTerms: {
-    marginHorizontal: 50,
-    marginVertical: 20,
-  },
-  permawebProcessTime: {
-    marginHorizontal: 50,
-  },
+  // permawebTerms: {
+  //   marginHorizontal: 50,
+  //   marginVertical: 20,
+  // },
+  // permawebProcessTime: {
+  //   marginHorizontal: 50,
+  // },
   checkboxContainer: {
     marginHorizontal: 50,
     alignSelf: 'flex-end',

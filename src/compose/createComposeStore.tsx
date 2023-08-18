@@ -88,7 +88,7 @@ export default function (props) {
     extra: null,
     posting: false,
     group: null as GroupModel | null,
-    postToPermaweb: false,
+    // postToPermaweb: false,
     initialized: false,
     audience: { type: 'public' } as ComposeAudience,
     createMode: 'post' as ComposeCreateMode,
@@ -489,7 +489,7 @@ export default function (props) {
       this.tags = [];
       this.group = null;
       this.createMode = 'post';
-      this.postToPermaweb = false;
+      // this.postToPermaweb = false;
     },
     /**
      * On media
@@ -679,17 +679,17 @@ export default function (props) {
           newPost.remind_guid = this.entity?.guid;
         }
 
-        if (
-          this.postToPermaweb &&
-          !this.supermindRequest &&
-          !this.isSupermindReply
-        ) {
-          if (this.paywalled) {
-            showError(i18n.t('permaweb.cannotMonetize'));
-            return false;
-          }
-          newPost.post_to_permaweb = true;
-        }
+        // if (
+        //   this.postToPermaweb &&
+        //   !this.supermindRequest &&
+        //   !this.isSupermindReply
+        // ) {
+        //   if (this.paywalled) {
+        //     showError(i18n.t('permaweb.cannotMonetize'));
+        //     return false;
+        //   }
+        //   newPost.post_to_permaweb = true;
+        // }
 
         if (this.title) {
           newPost.title = this.title;
@@ -801,9 +801,9 @@ export default function (props) {
         (this.wire_threshold && this.wire_threshold.min > 0)
       );
     },
-    togglePostToPermaweb() {
-      this.postToPermaweb = !this.postToPermaweb;
-    },
+    // togglePostToPermaweb() {
+    //   this.postToPermaweb = !this.postToPermaweb;
+    // },
     isGroup() {
       return !!props.route?.params?.group;
     },
@@ -862,7 +862,7 @@ type PostPayload = {
   paywall?: boolean;
   wire_threshold?: typeof DEFAULT_MONETIZE;
   remind_guid?: string;
-  post_to_permaweb?: boolean;
+  // post_to_permaweb?: boolean;
   title?: string;
   nsfw?: number[];
   attachment_guids?: string[];
