@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import moment from 'moment';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -15,8 +15,6 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IS_IOS } from '~/config/Config';
 import { PosterStackScreenProps } from './PosterStackNavigator';
-
-const height = 83;
 
 export function useNavCallback(screen, store, navigation) {
   return useCallback(() => {
@@ -47,11 +45,6 @@ const PosterOptions: FC<PropsType> = props => {
     store,
     props.navigation,
   );
-  // const onPermawebPress = useNavCallback(
-  //   'PermawebSelector',
-  //   store,
-  //   props.navigation,
-  // );
   const onMonetizePress = useNavCallback(
     'MonetizeSelector',
     store,
@@ -81,12 +74,6 @@ const PosterOptions: FC<PropsType> = props => {
     !store.isRemind &&
     !store.supermindRequest &&
     !store.isEdit;
-
-  // const showPermaweb = !store.isEdit && !store.group && !store.isRemind;
-
-  // const permawebDesc = store.postToPermaweb
-  //   ? i18n.t('permaweb.description')
-  //   : null;
 
   return (
     <View style={styles.container}>
@@ -135,15 +122,6 @@ const PosterOptions: FC<PropsType> = props => {
           noBorderTop
         />
       )}
-      {/* {showPermaweb && (
-        <MenuItem
-          title={i18n.t('permaweb.title')}
-          label={permawebDesc || ''}
-          onPress={onPermawebPress}
-          testID="permawebButton"
-          noBorderTop
-        />
-      )} */}
       <MenuItem
         title="License"
         label={getLicenseText(license)}
@@ -165,50 +143,5 @@ const PosterOptions: FC<PropsType> = props => {
 export default observer(PosterOptions);
 
 const styles = ThemedStyles.create({
-  headerContainer: {
-    overflow: 'hidden',
-    paddingTop: 20,
-  },
-  header: {
-    height,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    shadowColor: '#121414',
-    shadowOffset: {
-      width: 0,
-      height: -5,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 5.0,
-    elevation: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  close: {
-    position: 'absolute',
-    right: 20,
-  },
-  optionTitle: [
-    'colorSecondaryText',
-    {
-      width: '40%',
-      fontSize: 16,
-    },
-  ],
-  optionDescription: {
-    flex: 1,
-    fontSize: 16,
-  },
-  row: [
-    'bcolorPrimaryBorder',
-    {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-      height: 55,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-  ],
   container: ['flexContainer', 'bgPrimaryBackground', 'fullHeight'],
 });

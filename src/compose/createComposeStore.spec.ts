@@ -166,17 +166,6 @@ describe('createComposeStore', () => {
     );
   });
 
-  // it('should not post to permaweb if a supermind is active', () => {
-  //   store.togglePostToPermaweb();
-  //   createASupermind();
-  //   expect(apiService.put).toHaveBeenCalledWith(
-  //     expect.any(String),
-  //     expect.not.objectContaining({
-  //       post_to_permaweb: true,
-  //     }),
-  //   );
-  // });
-
   it('should reply to a supermind correctly', async () => {
     const supermindGuid = 'supermindFakeGuid';
     mockedConfirm.mockReturnValue(true);
