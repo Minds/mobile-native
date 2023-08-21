@@ -257,6 +257,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         </ScrollView>
       ) : (
         <OffsetList
+          sticky
           ref={groupsListRef}
           ListComponent={BottomSheetFlatList}
           style={styles.list}
