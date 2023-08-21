@@ -251,38 +251,41 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
           </Button>
         }
       />
-      {mode === 'monetized' ? (
-        <ScrollView style={{ height: BOTTOM_SHEET_HEIGHT }}>
-          {content}
-        </ScrollView>
-      ) : (
-        <OffsetList
-          sticky
-          ref={groupsListRef}
-          ListComponent={BottomSheetFlatList}
-          style={styles.list}
-          contentContainerStyle={styles.listPadding}
-          header={content}
-          renderItem={renderGroup}
-          ListEmptyComponent={
-            <>
-              <Column horizontal="XL" top="M" align="centerStart">
-                <B1 color="secondary">{texts.noGroups}</B1>
-                <Button
-                  mode="outline"
-                  top="L"
-                  onPress={() => {
-                    NavigationService.push('GroupsDiscovery');
-                  }}>
-                  {texts.discoverGroups}
-                </Button>
-              </Column>
-            </>
-          }
-          fetchEndpoint={'api/v1/groups/member'}
-          endpointData={'groups'}
-        />
-      )}
+      <ScrollView
+        // eslint-disable-next-line react-native/no-inline-styles
+        contentContainerStyle={{ paddingBottom: 65 }}
+        style={{ height: BOTTOM_SHEET_HEIGHT }}>
+        {mode === 'monetized' ? (
+          content
+        ) : (
+          <OffsetList
+            sticky
+            ref={groupsListRef}
+            ListComponent={BottomSheetFlatList}
+            style={styles.list}
+            contentContainerStyle={styles.listPadding}
+            header={content}
+            renderItem={renderGroup}
+            ListEmptyComponent={
+              <>
+                <Column horizontal="XL" top="M" align="centerStart">
+                  <B1 color="secondary">{texts.noGroups}</B1>
+                  <Button
+                    mode="outline"
+                    top="L"
+                    onPress={() => {
+                      NavigationService.push('GroupsDiscovery');
+                    }}>
+                    {texts.discoverGroups}
+                  </Button>
+                </Column>
+              </>
+            }
+            fetchEndpoint={'api/v1/groups/member'}
+            endpointData={'groups'}
+          />
+        )}
+      </ScrollView>
     </Screen>
   );
 });
