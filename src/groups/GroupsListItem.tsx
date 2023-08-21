@@ -97,9 +97,12 @@ const GroupsListItem = observer((props: PropsType) => {
       }
       borderless>
       <>
-        <B2 numberOfLines={2} color="secondary" right="XL">
-          {entities.decodeHTML(group.brief_description)}
-        </B2>
+        {group.brief_description.length ? (
+          <B2 numberOfLines={2} color="secondary" right="XL">
+            {entities.decodeHTML(group.brief_description)}
+          </B2>
+        ) : undefined}
+
         <B2>
           {i18n.t('groups.listMembersCount', {
             count: abbrev(group['members:count']),

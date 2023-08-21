@@ -562,7 +562,8 @@
     "removeModerator": "Remove as Moderator",
     "listMembersCount": "{{count}} members",
     "disableConversations": "Disable conversations",
-    "enableConversations": "Enable conversations"
+    "enableConversations": "Enable conversations",
+    "manage": "Groups you manage"
   },
   "messenger": {
     "errorDirectMessage": "Error sending direct message",

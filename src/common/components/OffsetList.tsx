@@ -231,6 +231,7 @@ export default observer(
       data: data,
       renderItem: renderItem,
       ListFooterComponent: loadingFooter || undefined,
+      ListHeaderComponent: props.header,
       // @ts-ignore
       ListEmptyComponent: !fetchStore.loading && props.ListEmptyComponent,
       keyExtractor: keyExtractor,
