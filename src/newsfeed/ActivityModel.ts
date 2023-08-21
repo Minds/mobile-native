@@ -98,7 +98,6 @@ export default class ActivityModel extends BaseModel {
   };
   spam?: boolean;
   type?: string;
-  // permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
   blurhash?: string;
