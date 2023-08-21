@@ -87,6 +87,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   contentContainerStyle?: StyleProp<ViewStyle>;
   hideContent?: boolean;
   stickyHeaderHiddenOnScroll?: boolean;
+  onEndReachedThreshold?: number;
   stickyHeaderIndices?: number[];
   placeholder?:
     | React.ComponentType<any>

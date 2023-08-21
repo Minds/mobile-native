@@ -8,6 +8,7 @@ import DashboardTab from './tabs/dashboard/DashboardTab';
 import TrendingTab from './tabs/trending/TrendingTab';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { IS_IPAD } from '~/config/Config';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 const AnalyticsScreen = observer(({ route }: { route: any }) => {
   const theme = ThemedStyles.style;
@@ -29,6 +30,7 @@ const AnalyticsScreen = observer(({ route }: { route: any }) => {
         }))}
       />
       <View style={theme.centered}>{tabs[activeTabId]?.screen}</View>
+      <OnboardingOverlay type="analytics" />
     </Screen>
   );
 });

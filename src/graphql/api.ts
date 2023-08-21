@@ -1,8 +1,10 @@
 import {
   useQuery,
   useInfiniteQuery,
+  useMutation,
   UseQueryOptions,
   UseInfiniteQueryOptions,
+  UseMutationOptions,
 } from '@tanstack/react-query';
 import { gqlFetcher } from '~/common/services/api.service';
 export type Maybe<T> = T | null;
@@ -37,6 +39,7 @@ export type Scalars = {
 export type ActivityEdge = EdgeInterface & {
   __typename?: 'ActivityEdge';
   cursor: Scalars['String']['output'];
+  explicitVotes: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: ActivityNode;
   type: Scalars['String']['output'];
@@ -100,6 +103,13 @@ export type ConnectionInterface = {
   pageInfo: PageInfo;
 };
 
+export type Dismissal = {
+  __typename?: 'Dismissal';
+  dismissalTimestamp: Scalars['Int']['output'];
+  key: Scalars['String']['output'];
+  userGuid: Scalars['String']['output'];
+};
+
 export type EdgeImpl = EdgeInterface & {
   __typename?: 'EdgeImpl';
   cursor: Scalars['String']['output'];
@@ -137,6 +147,8 @@ export type FeedNoticeEdge = EdgeInterface & {
 
 export type FeedNoticeNode = NodeInterface & {
   __typename?: 'FeedNoticeNode';
+  /** Whether the notice is dismissible */
+  dismissible: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   /** The key of the notice that the client should render */
   key: Scalars['String']['output'];
@@ -147,6 +159,8 @@ export type FeedNoticeNode = NodeInterface & {
 export type GiftCardBalanceByProductId = {
   __typename?: 'GiftCardBalanceByProductId';
   balance: Scalars['Float']['output'];
+  /** Returns the earliest expiring gift that contributes to this balance. */
+  earliestExpiringGiftCard?: Maybe<GiftCardNode>;
   productId: GiftCardProductIdEnum;
 };
 
@@ -196,6 +210,11 @@ export enum GiftCardProductIdEnum {
   Supermind = 'SUPERMIND',
 }
 
+export enum GiftCardStatusFilterEnum {
+  Active = 'ACTIVE',
+  Expired = 'EXPIRED',
+}
+
 export type GiftCardTargetInput = {
   targetEmail?: InputMaybe<Scalars['String']['input']>;
   targetUserGuid?: InputMaybe<Scalars['String']['input']>;
@@ -204,10 +223,14 @@ export type GiftCardTargetInput = {
 export type GiftCardTransaction = NodeInterface & {
   __typename?: 'GiftCardTransaction';
   amount: Scalars['Float']['output'];
+  boostGuid?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Int']['output'];
   giftCardGuid?: Maybe<Scalars['String']['output']>;
+  giftCardIssuerGuid?: Maybe<Scalars['String']['output']>;
+  giftCardIssuerName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   paymentGuid?: Maybe<Scalars['String']['output']>;
+  refundedAt?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GiftCardTransactionEdge = EdgeInterface & {
@@ -250,14 +273,31 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export type KeyValuePairInput = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   claimGiftCard: GiftCardNode;
+  /** Mark an onboarding step for a user as completed. */
+  completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  /** Dismiss a notice by its key. */
+  dismiss: Dismissal;
+  /** Sets onboarding state for the currently logged in user. */
+  setOnboardingState: OnboardingState;
 };
 
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
+};
+
+export type MutationCompleteOnboardingStepArgs = {
+  additionalData?: InputMaybe<Array<KeyValuePairInput>>;
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
 };
 
 export type MutationCreateGiftCardArgs = {
@@ -266,6 +306,14 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationDismissArgs = {
+  key: Scalars['String']['input'];
+};
+
+export type MutationSetOnboardingStateArgs = {
+  completed: Scalars['Boolean']['input'];
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -283,12 +331,34 @@ export type NodeInterface = {
   id: Scalars['ID']['output'];
 };
 
+export type OnboardingState = {
+  __typename?: 'OnboardingState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  startedAt: Scalars['Int']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type OnboardingStepProgressState = {
+  __typename?: 'OnboardingStepProgressState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  stepKey: Scalars['String']['output'];
+  stepType: Scalars['String']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaymentMethod = {
+  __typename?: 'PaymentMethod';
+  balance?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type PublisherRecsConnection = ConnectionInterface &
@@ -314,8 +384,21 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Get dismissal by key. */
+  dismissalByKey?: Maybe<Dismissal>;
+  /** Get all of a users dismissals. */
+  dismissals: Array<Dismissal>;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
+  /** Returns an individual gift card by its claim code. */
+  giftCardByClaimCode: GiftCardNode;
+  /**
+   * Returns a list of gift card transactions for a ledger,
+   * containing more information than just getting transactions,
+   * including linked boost_guid's for Boost payments and injects
+   * a transaction for the initial deposit.
+   */
+  giftCardTransactionLedger: GiftCardTransactionsConnection;
   /** Returns a list of gift card transactions */
   giftCardTransactions: GiftCardTransactionsConnection;
   /** Returns a list of gift cards belonging to a user */
@@ -325,14 +408,37 @@ export type Query = {
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
+  /** Gets onboarding state for the currently logged in user. */
+  onboardingState?: Maybe<OnboardingState>;
+  /** Get the currently logged in users onboarding step progress. */
+  onboardingStepProgress: Array<OnboardingStepProgressState>;
+  /** Get a list of payment methods for the logged in user */
+  paymentMethods: Array<PaymentMethod>;
+  search: SearchResultsConnection;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
 };
 
+export type QueryDismissalByKeyArgs = {
+  key: Scalars['String']['input'];
+};
+
 export type QueryGiftCardArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardByClaimCodeArgs = {
+  claimCode: Scalars['String']['input'];
+};
+
+export type QueryGiftCardTransactionLedgerArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giftCardGuid: Scalars['String']['input'];
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryGiftCardTransactionsArgs = {
@@ -350,6 +456,7 @@ export type QueryGiftCardsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   ordering?: InputMaybe<GiftCardOrderingEnum>;
   productId?: InputMaybe<GiftCardProductIdEnum>;
+  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -359,6 +466,57 @@ export type QueryNewsfeedArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   inFeedNoticesDelivered?: InputMaybe<Array<Scalars['String']['input']>>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryPaymentMethodsArgs = {
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
+export type QuerySearchArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  filter: SearchFilterEnum;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  mediaType: SearchMediaTypeEnum;
+  nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
+  query: Scalars['String']['input'];
+};
+
+export enum SearchFilterEnum {
+  Group = 'GROUP',
+  Latest = 'LATEST',
+  Top = 'TOP',
+  User = 'USER',
+}
+
+export enum SearchMediaTypeEnum {
+  All = 'ALL',
+  Blog = 'BLOG',
+  Image = 'IMAGE',
+  Video = 'VIDEO',
+}
+
+export enum SearchNsfwEnum {
+  Nudity = 'NUDITY',
+  Other = 'OTHER',
+  Pornography = 'PORNOGRAPHY',
+  Profanity = 'PROFANITY',
+  RaceReligion = 'RACE_RELIGION',
+  Violence = 'VIOLENCE',
+}
+
+export type SearchResultsConnection = ConnectionInterface & {
+  __typename?: 'SearchResultsConnection';
+  /** The number of search records matching the query */
+  count: Scalars['Int']['output'];
+  edges: Array<EdgeInterface>;
+  pageInfo: PageInfo;
+};
+
+export type SearchResultsCount = {
+  __typename?: 'SearchResultsCount';
+  count: Scalars['Int']['output'];
 };
 
 export type UserEdge = EdgeInterface & {
@@ -404,6 +562,178 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDismissalsQuery = {
+  __typename?: 'Query';
+  dismissals: Array<{
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  }>;
+};
+
+export type GetDismissalQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetDismissalQuery = {
+  __typename?: 'Query';
+  dismissalByKey?: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  } | null;
+};
+
+export type DismissMutationVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type DismissMutation = {
+  __typename?: 'Mutation';
+  dismiss: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  };
+};
+
+export type FetchPaymentMethodsQueryVariables = Exact<{
+  giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
+}>;
+
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
+};
+
+export type ClaimGiftCardMutationVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type ClaimGiftCardMutation = {
+  __typename?: 'Mutation';
+  claimGiftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    claimedByGuid?: string | null;
+  };
+};
+
+export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGiftCardBalancesQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+    earliestExpiringGiftCard?: {
+      __typename?: 'GiftCardNode';
+      guid?: string | null;
+      balance: number;
+      expiresAt: number;
+    } | null;
+  }>;
+};
+
+export type GetGiftCardByCodeQueryVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type GetGiftCardByCodeQuery = {
+  __typename?: 'Query';
+  giftCardByClaimCode: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
+};
+
+export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
+  giftCardGuid: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetGiftCardTransactionsLedgerQuery = {
+  __typename?: 'Query';
+  giftCardTransactionLedger: {
+    __typename?: 'GiftCardTransactionsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardTransactionEdge';
+      node: {
+        __typename?: 'GiftCardTransaction';
+        paymentGuid?: string | null;
+        giftCardGuid?: string | null;
+        amount: number;
+        createdAt: number;
+        refundedAt?: number | null;
+        boostGuid?: string | null;
+        id: string;
+        giftCardIssuerGuid?: string | null;
+        giftCardIssuerName?: string | null;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
+};
+
+export type GetGiftCardsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  ordering?: InputMaybe<GiftCardOrderingEnum>;
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
+}>;
+
+export type GetGiftCardsQuery = {
+  __typename?: 'Query';
+  giftCards: {
+    __typename?: 'GiftCardsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardEdge';
+      node: {
+        __typename?: 'GiftCardNode';
+        guid?: string | null;
+        productId: GiftCardProductIdEnum;
+        balance: number;
+        amount: number;
+        claimedByGuid?: string | null;
+        expiresAt: number;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+    };
+  };
 };
 
 export type NewsfeedQueryVariables = Exact<{
@@ -742,6 +1072,510 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const GetDismissalsDocument = `
+    query GetDismissals {
+  dismissals {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useGetDismissalsQuery = <
+  TData = GetDismissalsQuery,
+  TError = unknown,
+>(
+  variables?: GetDismissalsQueryVariables,
+  options?: UseQueryOptions<GetDismissalsQuery, TError, TData>,
+) =>
+  useQuery<GetDismissalsQuery, TError, TData>(
+    variables === undefined ? ['GetDismissals'] : ['GetDismissals', variables],
+    gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+      GetDismissalsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetDismissalsQuery = <
+  TData = GetDismissalsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetDismissalsQueryVariables,
+  variables?: GetDismissalsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetDismissalsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetDismissalsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetDismissals.infinite']
+      : ['GetDismissals.infinite', variables],
+    metaData =>
+      gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+        GetDismissalsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetDismissalsQuery.fetcher = (
+  variables?: GetDismissalsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetDismissalsQuery, GetDismissalsQueryVariables>(
+    GetDismissalsDocument,
+    variables,
+    options,
+  );
+export const GetDismissalDocument = `
+    query GetDismissal($key: String!) {
+  dismissalByKey(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useGetDismissalQuery = <
+  TData = GetDismissalQuery,
+  TError = unknown,
+>(
+  variables: GetDismissalQueryVariables,
+  options?: UseQueryOptions<GetDismissalQuery, TError, TData>,
+) =>
+  useQuery<GetDismissalQuery, TError, TData>(
+    ['GetDismissal', variables],
+    gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+      GetDismissalDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetDismissalQuery = <
+  TData = GetDismissalQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetDismissalQueryVariables,
+  variables: GetDismissalQueryVariables,
+  options?: UseInfiniteQueryOptions<GetDismissalQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetDismissalQuery, TError, TData>(
+    ['GetDismissal.infinite', variables],
+    metaData =>
+      gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+        GetDismissalDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetDismissalQuery.fetcher = (
+  variables: GetDismissalQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetDismissalQuery, GetDismissalQueryVariables>(
+    GetDismissalDocument,
+    variables,
+    options,
+  );
+export const DismissDocument = `
+    mutation Dismiss($key: String!) {
+  dismiss(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
+    `;
+export const useDismissMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DismissMutation,
+    TError,
+    DismissMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<DismissMutation, TError, DismissMutationVariables, TContext>(
+    ['Dismiss'],
+    (variables?: DismissMutationVariables) =>
+      gqlFetcher<DismissMutation, DismissMutationVariables>(
+        DismissDocument,
+        variables,
+      )(),
+    options,
+  );
+useDismissMutation.fetcher = (
+  variables: DismissMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<DismissMutation, DismissMutationVariables>(
+    DismissDocument,
+    variables,
+    options,
+  );
+export const FetchPaymentMethodsDocument = `
+    query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+  paymentMethods(productId: $giftCardProductId) {
+    id
+    name
+    balance
+  }
+}
+    `;
+export const useFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) =>
+  useQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods']
+      : ['FetchPaymentMethods', variables],
+    gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+      FetchPaymentMethodsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteFetchPaymentMethodsQuery = <
+  TData = FetchPaymentMethodsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchPaymentMethodsQueryVariables,
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchPaymentMethodsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchPaymentMethodsQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchPaymentMethods.infinite']
+      : ['FetchPaymentMethods.infinite', variables],
+    metaData =>
+      gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+        FetchPaymentMethodsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useFetchPaymentMethodsQuery.fetcher = (
+  variables?: FetchPaymentMethodsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
+    FetchPaymentMethodsDocument,
+    variables,
+    options,
+  );
+export const ClaimGiftCardDocument = `
+    mutation ClaimGiftCard($claimCode: String!) {
+  claimGiftCard(claimCode: $claimCode) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+    claimedByGuid
+  }
+}
+    `;
+export const useClaimGiftCardMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ClaimGiftCardMutation,
+    TError,
+    ClaimGiftCardMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    ClaimGiftCardMutation,
+    TError,
+    ClaimGiftCardMutationVariables,
+    TContext
+  >(
+    ['ClaimGiftCard'],
+    (variables?: ClaimGiftCardMutationVariables) =>
+      gqlFetcher<ClaimGiftCardMutation, ClaimGiftCardMutationVariables>(
+        ClaimGiftCardDocument,
+        variables,
+      )(),
+    options,
+  );
+useClaimGiftCardMutation.fetcher = (
+  variables: ClaimGiftCardMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<ClaimGiftCardMutation, ClaimGiftCardMutationVariables>(
+    ClaimGiftCardDocument,
+    variables,
+    options,
+  );
+export const GetGiftCardBalancesDocument = `
+    query GetGiftCardBalances {
+  giftCardsBalances {
+    productId
+    balance
+    earliestExpiringGiftCard {
+      guid
+      balance
+      expiresAt
+    }
+  }
+}
+    `;
+export const useGetGiftCardBalancesQuery = <
+  TData = GetGiftCardBalancesQuery,
+  TError = unknown,
+>(
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: UseQueryOptions<GetGiftCardBalancesQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardBalancesQuery, TError, TData>(
+    variables === undefined
+      ? ['GetGiftCardBalances']
+      : ['GetGiftCardBalances', variables],
+    gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+      GetGiftCardBalancesDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetGiftCardBalancesQuery = <
+  TData = GetGiftCardBalancesQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardBalancesQueryVariables,
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: UseInfiniteQueryOptions<GetGiftCardBalancesQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetGiftCardBalancesQuery, TError, TData>(
+    variables === undefined
+      ? ['GetGiftCardBalances.infinite']
+      : ['GetGiftCardBalances.infinite', variables],
+    metaData =>
+      gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+        GetGiftCardBalancesDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetGiftCardBalancesQuery.fetcher = (
+  variables?: GetGiftCardBalancesQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables>(
+    GetGiftCardBalancesDocument,
+    variables,
+    options,
+  );
+export const GetGiftCardByCodeDocument = `
+    query GetGiftCardByCode($claimCode: String!) {
+  giftCardByClaimCode(claimCode: $claimCode) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+  }
+}
+    `;
+export const useGetGiftCardByCodeQuery = <
+  TData = GetGiftCardByCodeQuery,
+  TError = unknown,
+>(
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: UseQueryOptions<GetGiftCardByCodeQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardByCodeQuery, TError, TData>(
+    ['GetGiftCardByCode', variables],
+    gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+      GetGiftCardByCodeDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetGiftCardByCodeQuery = <
+  TData = GetGiftCardByCodeQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardByCodeQueryVariables,
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: UseInfiniteQueryOptions<GetGiftCardByCodeQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetGiftCardByCodeQuery, TError, TData>(
+    ['GetGiftCardByCode.infinite', variables],
+    metaData =>
+      gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+        GetGiftCardByCodeDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetGiftCardByCodeQuery.fetcher = (
+  variables: GetGiftCardByCodeQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables>(
+    GetGiftCardByCodeDocument,
+    variables,
+    options,
+  );
+export const GetGiftCardTransactionsLedgerDocument = `
+    query GetGiftCardTransactionsLedger($giftCardGuid: String!, $first: Int, $after: String) {
+  giftCardTransactionLedger(
+    giftCardGuid: $giftCardGuid
+    first: $first
+    after: $after
+  ) {
+    edges {
+      node {
+        paymentGuid
+        giftCardGuid
+        amount
+        createdAt
+        refundedAt
+        boostGuid
+        id
+        giftCardIssuerGuid
+        giftCardIssuerName
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}
+    `;
+export const useGetGiftCardTransactionsLedgerQuery = <
+  TData = GetGiftCardTransactionsLedgerQuery,
+  TError = unknown,
+>(
+  variables: GetGiftCardTransactionsLedgerQueryVariables,
+  options?: UseQueryOptions<GetGiftCardTransactionsLedgerQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardTransactionsLedgerQuery, TError, TData>(
+    ['GetGiftCardTransactionsLedger', variables],
+    gqlFetcher<
+      GetGiftCardTransactionsLedgerQuery,
+      GetGiftCardTransactionsLedgerQueryVariables
+    >(GetGiftCardTransactionsLedgerDocument, variables),
+    options,
+  );
+export const useInfiniteGetGiftCardTransactionsLedgerQuery = <
+  TData = GetGiftCardTransactionsLedgerQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardTransactionsLedgerQueryVariables,
+  variables: GetGiftCardTransactionsLedgerQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetGiftCardTransactionsLedgerQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetGiftCardTransactionsLedgerQuery, TError, TData>(
+    ['GetGiftCardTransactionsLedger.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetGiftCardTransactionsLedgerQuery,
+        GetGiftCardTransactionsLedgerQueryVariables
+      >(GetGiftCardTransactionsLedgerDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useGetGiftCardTransactionsLedgerQuery.fetcher = (
+  variables: GetGiftCardTransactionsLedgerQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetGiftCardTransactionsLedgerQuery,
+    GetGiftCardTransactionsLedgerQueryVariables
+  >(GetGiftCardTransactionsLedgerDocument, variables, options);
+export const GetGiftCardsDocument = `
+    query GetGiftCards($first: Int, $after: String, $ordering: GiftCardOrderingEnum, $productId: GiftCardProductIdEnum, $statusFilter: GiftCardStatusFilterEnum) {
+  giftCards(
+    first: $first
+    after: $after
+    ordering: $ordering
+    productId: $productId
+    statusFilter: $statusFilter
+  ) {
+    edges {
+      node {
+        guid
+        productId
+        balance
+        amount
+        claimedByGuid
+        expiresAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+export const useGetGiftCardsQuery = <
+  TData = GetGiftCardsQuery,
+  TError = unknown,
+>(
+  variables?: GetGiftCardsQueryVariables,
+  options?: UseQueryOptions<GetGiftCardsQuery, TError, TData>,
+) =>
+  useQuery<GetGiftCardsQuery, TError, TData>(
+    variables === undefined ? ['GetGiftCards'] : ['GetGiftCards', variables],
+    gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
+      GetGiftCardsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetGiftCardsQuery = <
+  TData = GetGiftCardsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetGiftCardsQueryVariables,
+  variables?: GetGiftCardsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetGiftCardsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetGiftCardsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetGiftCards.infinite']
+      : ['GetGiftCards.infinite', variables],
+    metaData =>
+      gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
+        GetGiftCardsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetGiftCardsQuery.fetcher = (
+  variables?: GetGiftCardsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
+    GetGiftCardsDocument,
+    variables,
+    options,
+  );
 export const NewsfeedDocument = `
     query Newsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
   newsfeed(

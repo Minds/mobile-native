@@ -128,6 +128,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  ChangeEmail: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
@@ -213,6 +214,7 @@ export type RootStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   StoryBook: {};
   CodePushSync: {};
+  Report: {};
 };
 
 export type AuthStackParamList = {
@@ -226,6 +228,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  GifCardClaim: {
+    code: string;
+  };
   SingleBoostConsole: {
     guid: string;
   };
@@ -317,7 +322,6 @@ export type AppStackParamList = {
   Transactions: {};
   BlockchainWalletImport: {};
   BlockchainWalletDetails: {};
-  Report: {};
   More: {};
   Withdraw: {};
   WalletOnboarding: {};
@@ -366,3 +370,8 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
+
+export type WalletStackParamList = {
+  Wallet: {};
+  CreditTransactions: { guid: string; expireAt?: number };
+};

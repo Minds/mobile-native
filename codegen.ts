@@ -1,11 +1,11 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const MINDS_API_URI = 'https://www.minds.com/api/graphql';
+// const MINDS_API_URI =
+//   'https://feat-gift-card-txs-m4165.oke.minds.io/api/graphql';
 const STRAPI_API_URI = 'https://cms.minds.com/graphql';
 // use this for sandbox
 // const STRAPI_API_URI = 'https://cms.oke.minds.io/graphql';
-// use this for local development
-// const STRAPI_API_URI = 'http://localhost:1337/graphql';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -48,10 +48,8 @@ const config: CodegenConfig = {
       config: {
         namedClient: 'strapi',
         fetcher: {
-          endpoint: STRAPI_API_URI,
-          fetchParams: {
-            headers: defaultHeaders,
-          },
+          func: '~/common/services/strapi.service#gqlFetcher',
+          isReactHook: false,
         },
       },
     },
@@ -59,7 +57,7 @@ const config: CodegenConfig = {
       // use this if introspection fails and comment ...api_schema
       // schema: './gql-schemas/api.schema.json',
       ...api_schema,
-      documents: ['src/**/*.api.graphql', '!src/gql/**/*'],
+      documents: ['src/**/*.api.graphql'],
       plugins: queryPlugins,
       config: {
         namedClient: 'default',

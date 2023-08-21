@@ -1,6 +1,42 @@
 {
   "versions": [
     {
+      "version": "4.38.0",
+      "href": "https://cdn-assets.minds.com/android/Minds-4.38.0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.38.0",
+      "changelog": [
+        "Added copy to clipboard option",
+        "Added support for affiliate notifications",
+        "Added composer FAB",
+        "Feed performance & package updates",
+        "Soft reset crash on Android",
+        "Android 13 missing push notification permissions",
+        "Fixed BoostCTA text when subscribed",
+        "Fixed an issue where subscribing to a group from search would throw an error",
+        "Fixed an issue with Subscribe button appearing on user's own channel",
+        "Fixed an issue where a newly registered user would still see boosts",
+        "Fixed minds+ anually",
+        "Fixed search too slow",
+        "Fixed label in post options",
+        "fixed back navigation from rotator settings"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "6bdafa1891daa2fb7f2caf3f73af6f32"
+        },
+        {
+          "type": "sha256",
+          "value": "0918e17556d0ff0c8b3dcc180a817e0ece3e089e76d961e52e30c541558ea2a3"
+        },
+        {
+          "type": "sha512",
+          "value": "ea742da67d8594fa1254977501dd29a254b0749993dc289b4922c73dc786a54f278716e9a7f1cd46ec014389a1285e8da4d4b164449b1508a57fee942ba306de"
+        }
+      ]
+    },
+    {
       "version": "4.37.0",
       "href": "https://cdn-assets.minds.com/android/Minds-4.37.0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.37.0",

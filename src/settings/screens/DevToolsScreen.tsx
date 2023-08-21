@@ -18,6 +18,9 @@ import { CodePushDebugger, codePush } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
 import Link from '../../common/components/Link';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import pushService from '~/common/services/push.service';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { showNotification } from 'AppMessages';
 
 const DevToolsScreen = () => {
   const navigation = useNavigation();
@@ -114,6 +117,18 @@ const DevToolsScreen = () => {
           <B2 align="center" color="tertiary">
             Requires <Link onPress={() => codePush.restartApp()}>restart</Link>
           </B2>
+          <Row align="centerBetween" vertical="L">
+            <B1>Push Notifications</B1>
+            <Button
+              size="small"
+              onPress={() => {
+                Clipboard.setString(pushService.getToken());
+                showNotification('Token copied to the clipboard');
+              }}
+              type="action">
+              Copy Token
+            </Button>
+          </Row>
         </ScreenSection>
         <CodePushDebugger />
         <GrowthbookDev />

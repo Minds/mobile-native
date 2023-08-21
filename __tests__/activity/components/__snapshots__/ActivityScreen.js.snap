@@ -604,20 +604,584 @@ exports[`Activity screen component renders correctly  1`] = `
         ]
       }
     />
-    <View>
-      <View
-        style={
+    <View
+      style={
+        [
           [
             {
-              "borderTopWidth": 0.5,
               "display": "flex",
               "flexDirection": "row",
               "justifyContent": "space-around",
+              "minHeight": 64,
               "paddingHorizontal": 16,
             },
             {
               "borderColor": "#53565A",
             },
+          ],
+          {
+            "borderTopWidth": 0.5,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
+            },
+          ]
+        }
+        testID="Thumb up activity button"
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "nowrap",
+                },
+                {
+                  "margin": 4,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  {},
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#AEB0B8",
+                      "fontSize": 23.04,
+                    },
+                    {},
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
+            },
+          ]
+        }
+        testID="Thumb down activity button"
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "nowrap",
+                },
+                {
+                  "margin": 4,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  {},
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#AEB0B8",
+                      "fontSize": 23.04,
+                    },
+                    {},
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={6.666666666666666}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+              },
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          testID=""
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 20,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "color": "#AEB0B8",
+                        "fontSize": 18.400000000000002,
+                      },
+                      {
+                        "marginTop": 2,
+                      },
+                      {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  󰍡
+                </Text>
+              </View>
+              <View
+                style={
+                  [
+                    {
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "marginLeft": 4,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto",
+                      },
+                      [
+                        [
+                          {
+                            "color": "#AEB0B8",
+                          },
+                          {
+                            "fontSize": 14,
+                          },
+                          {
+                            "fontFamily": "Roboto-Medium",
+                            "fontWeight": "500",
+                          },
+                        ],
+                        undefined,
+                      ],
+                    ]
+                  }
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={6.666666666666666}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+              },
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          testID="Remind activity button"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 20,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "color": "#AEB0B8",
+                        "fontSize": 20.8,
+                      },
+                      {
+                        "marginTop": -1,
+                      },
+                      {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  󰑖
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
           ]
         }
       >
@@ -642,6 +1206,7 @@ exports[`Activity screen component renders correctly  1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
+          hitSlop={6.666666666666666}
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -654,21 +1219,20 @@ exports[`Activity screen component renders correctly  1`] = `
           style={
             [
               {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              {
-                "margin": 4,
-              },
-              {
-                "paddingVertical": 12,
+                "alignItems": "center",
+                "justifyContent": "center",
               },
               {
                 "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
               },
             ]
           }
-          testID="Thumb up activity button"
         >
           <View
             collapsable={false}
@@ -684,24 +1248,23 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               style={
-                [
-                  {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "flexWrap": "nowrap",
-                  },
-                  {
-                    "margin": 4,
-                  },
-                ]
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
               }
             >
               <View
                 style={
-                  [
-                    undefined,
-                    {},
-                  ]
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 20,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
+                  }
                 }
               >
                 <Text
@@ -711,9 +1274,11 @@ exports[`Activity screen component renders correctly  1`] = `
                     [
                       {
                         "color": "#AEB0B8",
-                        "fontSize": 23.04,
+                        "fontSize": 20,
                       },
-                      {},
+                      {
+                        "marginTop": -2,
+                      },
                       {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -723,570 +1288,8 @@ exports[`Activity screen component renders correctly  1`] = `
                     ]
                   }
                 >
-                  
+                  
                 </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              {
-                "margin": 4,
-              },
-              {
-                "paddingVertical": 12,
-              },
-              {
-                "alignItems": "center",
-              },
-            ]
-          }
-          testID="Thumb down activity button"
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <View
-              style={
-                [
-                  {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "flexWrap": "nowrap",
-                  },
-                  {
-                    "margin": 4,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  [
-                    undefined,
-                    {},
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 23.04,
-                      },
-                      {},
-                      {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
-                  }
-                >
-                  
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "position": "relative",
-              },
-              undefined,
-              [
-                {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                {
-                  "margin": 4,
-                },
-                {
-                  "paddingVertical": 12,
-                },
-                {
-                  "alignItems": "center",
-                },
-              ],
-            ]
-          }
-        >
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
-            }
-            testID=""
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <View
-                style={
-                  {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <View
-                  style={
-                    {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
-                  }
-                >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 18.400000000000002,
-                        },
-                        {
-                          "marginTop": 2,
-                        },
-                        {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    󰍡
-                  </Text>
-                </View>
-                <View
-                  style={
-                    [
-                      {
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                      },
-                      {
-                        "marginLeft": 4,
-                      },
-                    ]
-                  }
-                >
-                  <Text
-                    style={
-                      [
-                        {
-                          "color": "#F2F2F2",
-                        },
-                        {
-                          "fontFamily": "Roboto",
-                        },
-                        [
-                          [
-                            {
-                              "color": "#AEB0B8",
-                            },
-                            {
-                              "fontSize": 14,
-                            },
-                            {
-                              "fontFamily": "Roboto-Medium",
-                              "fontWeight": "500",
-                            },
-                          ],
-                          undefined,
-                        ],
-                      ]
-                    }
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "position": "relative",
-              },
-              undefined,
-              [
-                {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                {
-                  "margin": 4,
-                },
-                {
-                  "paddingVertical": 12,
-                },
-                {
-                  "alignItems": "center",
-                },
-              ],
-            ]
-          }
-        >
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
-            }
-            testID="Remind activity button"
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <View
-                style={
-                  {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <View
-                  style={
-                    {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
-                  }
-                >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 20.8,
-                        },
-                        {
-                          "marginTop": -1,
-                        },
-                        {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    󰑖
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "position": "relative",
-              },
-              undefined,
-              [
-                {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                {
-                  "margin": 4,
-                },
-                {
-                  "paddingVertical": 12,
-                },
-                {
-                  "alignItems": "center",
-                },
-              ],
-            ]
-          }
-        >
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <View
-                style={
-                  {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <View
-                  style={
-                    {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
-                  }
-                >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 20,
-                        },
-                        {
-                          "marginTop": -2,
-                        },
-                        {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
               </View>
             </View>
           </View>
@@ -1297,6 +1300,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -1355,6 +1359,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1428,6 +1433,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -1486,6 +1492,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1559,6 +1566,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -1617,6 +1625,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1690,6 +1699,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <InteractionsBottomSheet
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -1748,6 +1758,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,

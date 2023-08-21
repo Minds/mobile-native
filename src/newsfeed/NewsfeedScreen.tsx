@@ -22,7 +22,6 @@ import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FeedListSticky from '~/common/components/FeedListSticky';
-import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import { ChannelRecommendationProvider } from '~/common/components/ChannelRecommendation/ChannelRecommendationProvider';
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
@@ -46,7 +45,6 @@ import {
   Recommendation,
 } from 'modules/recommendation';
 import { GroupsEmpty } from '../modules/groups';
-import AnimatedHeight from '../common/components/animations/AnimatedHeight';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -56,13 +54,6 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 
 const HIGHLIGHT_POSITION = 9;
 const RECOMMENDATION_POSITION = 4;
-
-const sticky = [
-  RECOMMENDATION_POSITION,
-  RECOMMENDATION_POSITION + 2,
-  HIGHLIGHT_POSITION,
-  HIGHLIGHT_POSITION + 2,
-];
 
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
@@ -84,6 +75,7 @@ const overrideItemLayout = (layout, item, index) => {
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
+  const inFeedBoostRotator = useIsFeatureOn('mob-5009-boost-rotator-in-feed');
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
 
   const refreshNewsfeed = useCallback(() => {
@@ -148,92 +140,67 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
           <NewsfeedTabs newsfeed={newsfeed} />
-          <BoostRotator />
+          {!inFeedBoostRotator && <BoostRotator />}
         </View>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
 
+    const boostRotatorInjectItem = inFeedBoostRotator
+      ? new InjectItem(3, 'rotator', () => <BoostRotator />)
+      : undefined;
+
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
-
-      new InjectItem(RECOMMENDATION_POSITION, 'channel', ({ target }) => (
-        <ChannelRecommendationHeader
-          location="newsfeed"
-          shadow={target === 'StickyHeader'}
-        />
-      )),
-      new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
-        <AnimatedHeight>
+      boostRotatorInjectItem,
+      new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
+        <>
+          <ChannelRecommendationHeader location="newsfeed" />
           <ChannelRecommendationBody location="newsfeed" />
-        </AnimatedHeight>
+        </>
       )),
-      new InjectItem(
-        RECOMMENDATION_POSITION + 2,
-        'end',
-        FeedListInvisibleHeader,
-      ),
       new InjectItem(
         7,
         'ilNotice',
         () => <InlineInFeedNotice position={1} />,
         () => InFeedNoticesService.trackViewInFeed(1),
       ),
-
-      new InjectItem(HIGHLIGHT_POSITION, 'highlightheader', ({ target }) => (
-        <TopFeedHighlightsHeader target={target} />
-      )),
       new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
-        <TopFeedHighlights
-          onSeeTopFeedPress={() => {
-            newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
-            setTimeout(() => {
-              newsfeed.changeFeedType('top', true);
-            }, 500);
-          }}
-        />
+        <>
+          <TopFeedHighlightsHeader />
+          <TopFeedHighlights
+            onSeeTopFeedPress={() => {
+              newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
+              setTimeout(() => {
+                newsfeed.changeFeedType('top', true);
+              }, 500);
+            }}
+          />
+        </>
       )),
-      new InjectItem(HIGHLIGHT_POSITION + 2, 'end', FeedListInvisibleHeader),
     ]);
 
     // top feed injected components
-    newsfeed.topFeedStore.setInjectedItems([prepend]);
+    newsfeed.topFeedStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // for you injected components
-    newsfeed.forYouStore.setInjectedItems([prepend]);
+    newsfeed.forYouStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // groups injected components
     newsfeed.groupsFeedStore
       .setInjectedItems([
         prepend,
-        new InjectItem(
-          RECOMMENDATION_POSITION,
-          'grouprecs-header',
-          ({ target }) => (
-            <RecommendationHeader
-              type="group"
-              location="feed"
-              shadow={target === 'StickyHeader'}
-            />
-          ),
-        ),
-        new InjectItem(RECOMMENDATION_POSITION + 1, 'grouprecs-body', () => (
-          <AnimatedHeight>
+        new InjectItem(RECOMMENDATION_POSITION, 'grouprecs-body', () => (
+          <>
+            <RecommendationHeader type="group" location="feed" />
             <RecommendationBody size={1} type="group" location="feed" />
-          </AnimatedHeight>
+          </>
         )),
-        new InjectItem(
-          RECOMMENDATION_POSITION + 2,
-          'end',
-          FeedListInvisibleHeader,
-        ),
       ])
       .setEmptyComponent(
         new InjectItem(1, 'empty', () => (
           <>
             <GroupsEmpty />
-            <AnimatedHeight>
-              <Recommendation size={5} location="feed" type="group" />
-            </AnimatedHeight>
+            <Recommendation size={5} location="feed" type="group" />
           </>
         )),
       );
@@ -250,7 +217,6 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           types={RECOMMENDATION_TYPES}>
           <View style={ThemedStyles.style.flexContainer}>
             <FeedListSticky
-              stickyHeaderIndices={isLatest ? sticky : undefined}
               overrideItemLayout={overrideItemLayout}
               emphasizeGroup
               bottomComponent={
@@ -266,6 +232,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
               feedStore={newsfeed.feedStore}
               afterRefresh={refreshPortrait}
               placeholder={NewsfeedPlaceholder}
+              extraData={newsfeed.feedType}
             />
           </View>
         </RecommendationProvider>

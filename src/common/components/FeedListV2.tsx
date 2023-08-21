@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { RefreshControl, View, ViewToken } from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,8 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { useDimensions } from '@react-native-community/hooks';
+import { useIsFeatureOn } from '../../../ExperimentsProvider';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -38,6 +40,8 @@ export type FeedListProps<T extends BaseModel> = {
   'data' | 'getItemType' | 'keyExtractor' | 'renderItem'
 >;
 
+const colors = [ThemedStyles.getColor('Link')];
+
 function FeedList<T extends BaseModel>(
   props: FeedListProps<T>,
   ref: React.Ref<FlashList<T>>,
@@ -54,7 +58,11 @@ function FeedList<T extends BaseModel>(
     ...other
   } = props;
 
+  const { height } = useDimensions().window;
+
   const navigation = useNavigation();
+  const explicitVoteFeature = useIsFeatureOn('mob-5075-explicit-vote-buttons');
+  const hidePostFeature = useIsFeatureOn('mob-5075-hide-post-on-downvote');
 
   const items: Array<any> = !hideContent ? feedStore.entities.slice() : [];
 
@@ -81,12 +89,20 @@ function FeedList<T extends BaseModel>(
               displayBoosts={displayBoosts}
               emphasizeGroup={emphasizeGroup}
               autoHeight={false}
+              explicitVoteButtons={explicitVoteFeature && row.index % 3 === 0}
+              hidePostOnDownvote={hidePostFeature}
             />
           )}
         </ErrorBoundary>
       );
     },
-    [navigation, displayBoosts, emphasizeGroup],
+    [
+      navigation,
+      displayBoosts,
+      emphasizeGroup,
+      explicitVoteFeature,
+      hidePostFeature,
+    ],
   );
 
   const footerRender = useCallback(
@@ -99,26 +115,30 @@ function FeedList<T extends BaseModel>(
     [feedStore, emptyMessage],
   );
 
+  const isRefreshing =
+    typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing;
+
+  const refreshControl = useMemo(
+    () => (
+      <RefreshControl
+        refreshing={isRefreshing}
+        onRefresh={refresh}
+        progressViewOffset={IS_IOS ? 0 : 80}
+        tintColor={ThemedStyles.getColor('Link')}
+        colors={colors}
+      />
+    ),
+    [isRefreshing, refresh],
+  );
+
   return (
     <FlashList
       estimatedItemSize={450}
       data={items}
-      refreshing={
-        typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
-      }
-      refreshControl={
-        <RefreshControl
-          refreshing={
-            typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing
-          }
-          onRefresh={refresh}
-          progressViewOffset={IS_IOS ? 0 : 80}
-          tintColor={ThemedStyles.getColor('Link')}
-          colors={[ThemedStyles.getColor('Link')]}
-        />
-      }
+      refreshing={isRefreshing}
+      refreshControl={refreshControl}
       onEndReachedThreshold={5}
-      drawDistance={700}
+      drawDistance={height}
       renderItem={renderActivity}
       keyExtractor={keyExtractor}
       ListFooterComponent={footerRender}

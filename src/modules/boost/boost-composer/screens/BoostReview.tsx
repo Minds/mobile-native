@@ -21,14 +21,29 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import {
+  GiftCardProductIdEnum,
+  useFetchPaymentMethodsQuery,
+} from '~/graphql/api';
+import { IS_IOS } from '~/config/Config';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
+
+  const { name, balance, creditPaymentMethod, hasCredits } = useCredits(
+    boostStore.total,
+  );
+
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
     value: number(boostStore.wallet?.balance || 0, 0, 2),
+  });
+
+  const creditLabel = t('{{name}} (${{value}} Credits)', {
+    name,
+    value: number(balance || 0, 2, 2),
   });
   const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
@@ -51,7 +66,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
 
   const handleCreate = () => {
-    return boostStore.createBoost()?.then(() => {
+    return boostStore.createBoost(creditPaymentMethod)?.then(() => {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
@@ -102,7 +117,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             subtitle={textMapping[paymentType].budgetDescription}
             borderless
           />
-          {boostStore.paymentType === 'cash' ? (
+          {hasCredits ? (
+            <MenuItem
+              title={t('Payment method')}
+              subtitle={creditLabel}
+              borderless
+            />
+          ) : boostStore.paymentType === 'cash' && !IS_IOS ? (
             <StripeCardSelector
               onCardSelected={card => boostStore.setSelectedCardId(card.id)}
               selectedCardId={boostStore.selectedCardId}
@@ -131,7 +152,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           spinner
           type="action"
           disabled={
-            boostStore.paymentType === 'cash' && !boostStore.selectedCardId
+            boostStore.paymentType === 'cash' &&
+            !hasCredits &&
+            !boostStore.selectedCardId
           }
           top="XXXL2"
           horizontal="L">
@@ -158,6 +181,23 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     </Screen>
   );
 }
+
+const useCredits = (total = 0) => {
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
+
+  const { balance, id, name } = data?.paymentMethods?.[0] ?? {};
+
+  const hasCredits = Number(balance) >= Number(total);
+
+  return {
+    balance,
+    creditPaymentMethod: id,
+    name,
+    hasCredits,
+  };
+};
 
 export default withErrorBoundaryScreen(
   observer(BoostReviewScreen),

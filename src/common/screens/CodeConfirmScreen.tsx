@@ -16,7 +16,7 @@ type PropsType = {
   keyboardType?: string;
   detail?: React.ReactNode;
   onBack?: () => void;
-  onVerify: () => void;
+  onVerify?: () => void;
   onChangeText: (t: string) => void;
   value: string;
 };
@@ -52,9 +52,11 @@ const CodeConfirmScreen = ({
       onBack={onBack}
       title={title}
       extra={
-        <Button mode="flat" size="small" type="action" onPress={onVerify}>
-          {i18n.t('verify')}
-        </Button>
+        onVerify ? (
+          <Button mode="flat" size="small" type="action" onPress={onVerify}>
+            {i18n.t('verify')}
+          </Button>
+        ) : undefined
       }>
       <ScrollView>
         <B1 color="secondary" vertical="XL" horizontal="L">

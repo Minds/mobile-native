@@ -7,7 +7,6 @@ import { AnimatePresence } from 'moti';
 
 import i18n from '../../common/services/i18n.service';
 
-import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
@@ -17,8 +16,6 @@ import { InjectItem } from '../../common/components/FeedList';
 import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
-import Empty from '~/common/components/Empty';
-import Button from '~/common/components/Button';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import FeedListSticky from '~/common/components/FeedListSticky';
@@ -26,6 +23,15 @@ import { Screen } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
+import OffsetList from '../../common/components/OffsetList';
+import ChannelListItem from '../../common/components/ChannelListItem';
+import UserModel from '../../channel/UserModel';
+import GroupsListItem from '../../groups/GroupsListItem';
+import GroupModel from '../../groups/GroupModel';
+import { useIsFeatureOn } from '../../../ExperimentsProvider';
+import Empty from '~/common/components/Empty';
+import Button from '~/common/components/Button';
+import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -38,6 +44,12 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       useState(false);
     const store = useDiscoveryV2Store();
     const listRef = React.useRef<FeedList<any>>(null);
+    const channelsListRef = React.useRef<any>(null);
+    const groupsListRef = React.useRef<any>(null);
+    const isDiscoveryConsolidationOn = useIsFeatureOn(
+      'mob-5038-discovery-consolidation',
+    );
+    const tab = props.route.params?.tab;
 
     // inject items in the store the first time
     if (!store.trendingFeed.injectItems) {
@@ -62,17 +74,27 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const navigation = props.navigation;
 
     const tabs = React.useMemo(
-      () =>
-        [
-          { id: 'top', title: i18n.t('discovery.top') },
-          { id: 'foryou', title: i18n.t('discovery.justForYou') },
-          { id: 'your-tags', title: i18n.t('discovery.yourTags') },
-          { id: 'trending-tags', title: i18n.t('discovery.trending') },
-          { id: 'boosts', title: i18n.t('boosted') },
-          { id: 'supermind', title: i18n.t('supermind.supermind') },
-        ].filter(Boolean) as { id: string; title: string }[],
+      () => {
+        if (isDiscoveryConsolidationOn) {
+          return [
+            { id: 'top', title: i18n.t('discovery.topV2') },
+            { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
+            { id: 'channels', title: 'Channels' },
+            { id: 'groups', title: 'Groups' },
+          ].filter(Boolean) as { id: string; title: string }[];
+        } else {
+          return [
+            { id: 'top', title: i18n.t('discovery.top') },
+            { id: 'foryou', title: i18n.t('discovery.justForYou') },
+            { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+            { id: 'trending-tags', title: i18n.t('discovery.trending') },
+            { id: 'boosts', title: i18n.t('boosted') },
+            { id: 'supermind', title: i18n.t('supermind.supermind') },
+          ].filter(Boolean) as { id: string; title: string }[];
+        }
+      },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [i18n.locale],
+      [i18n.locale, isDiscoveryConsolidationOn],
     );
 
     const emptyBoosts = React.useMemo(
@@ -110,22 +132,32 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     );
 
     useEffect(() => {
-      const onPress = () => {
-        if (shouldRefreshOnTabPress) {
-          listRef.current?.scrollToOffset({ offset: 0 });
-          store.refreshActiveTab();
-        }
-      };
-      const parent = navigation.getParent();
-      //@ts-ignore
-      const unsubscribeTab = parent?.addListener('tabPress', onPress);
-      //@ts-ignore
-      const unsubscribeDrawer = parent?.addListener('drawerItemPress', onPress);
-      return () => {
-        unsubscribeTab?.();
-        unsubscribeDrawer?.();
-      };
-    }, [store, navigation, shouldRefreshOnTabPress]);
+      const unsubscribe = navigation
+        .getParent()
+        //@ts-ignore
+        ?.addListener('tabPress', () => {
+          if (shouldRefreshOnTabPress) {
+            listRef.current?.scrollToOffset({ offset: 0 });
+            switch (tab) {
+              case 'channels':
+                channelsListRef?.current?.refreshList();
+                break;
+              case 'groups':
+                groupsListRef?.current?.refreshList();
+                break;
+            }
+            store.refreshActiveTab();
+          }
+        });
+      return unsubscribe;
+    }, [
+      store,
+      navigation,
+      shouldRefreshOnTabPress,
+      channelsListRef,
+      groupsListRef,
+      tab,
+    ]);
 
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -141,12 +173,18 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       return unsubscribe;
     }, [store, navigation]);
 
-    const tab = props.route.params?.tab;
-
     useEffect(() => {
       store.topFeed.fetchLocalOrRemote();
       if (tab) {
         store.setTabId(tab);
+        switch (tab) {
+          case 'channels':
+            channelsListRef?.current?.refreshList();
+            break;
+          case 'groups':
+            groupsListRef?.current?.refreshList();
+            break;
+        }
       }
     }, [store, tab]);
 
@@ -209,6 +247,44 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 header={header}
                 feedStore={store.supermindsFeed}
                 emptyMessage={emptyBoosts}
+              />
+            </DiscoveryTabContent>
+          );
+        case 'channels':
+          return (
+            <DiscoveryTabContent key="channels">
+              <OffsetList
+                ref={channelsListRef}
+                sticky
+                fetchEndpoint="api/v3/subscriptions/relational/subscriptions-of-subscriptions"
+                endpointData="users"
+                header={header}
+                offsetPagination
+                renderItem={({ item }) => (
+                  <ChannelListItem
+                    channel={UserModel.checkOrCreate(item)}
+                    borderless
+                    navigation={navigation}
+                  />
+                )}
+              />
+            </DiscoveryTabContent>
+          );
+        case 'groups':
+          return (
+            <DiscoveryTabContent key="groups">
+              <OffsetList
+                ref={groupsListRef}
+                sticky
+                fetchEndpoint="api/v2/suggestions/group"
+                endpointData="suggestions"
+                header={header}
+                offsetPagination
+                renderItem={({ item }) => (
+                  <GroupsListItem
+                    group={GroupModel.checkOrCreate(item.entity)}
+                  />
+                )}
               />
             </DiscoveryTabContent>
           );

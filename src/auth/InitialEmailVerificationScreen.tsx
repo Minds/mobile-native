@@ -10,6 +10,7 @@ import sessionService from '~/common/services/session.service';
 import { B1 } from '~/common/ui';
 import AuthService from './AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import NavigationService from '../navigation/NavigationService';
 
 /**
  * Initial email verification screen
@@ -130,15 +131,28 @@ const InitialEmailVerificationScreen = () => {
   }, [localStore]);
 
   const detail = (
-    <B1 color="secondary" vertical="XL" horizontal="L">
-      {i18n.t('onboarding.verifyEmailDescription2')}
-      <B1
-        color={localStore.resending ? 'tertiary' : 'link'}
-        onPress={localStore.resend}>
-        {' '}
-        {i18n.t('onboarding.resend')}
+    <>
+      <B1 color="secondary" vertical="XL" horizontal="L">
+        {i18n.t('onboarding.verifyEmailDescription2')}
+        <B1
+          color={localStore.resending ? 'tertiary' : 'link'}
+          onPress={localStore.resend}>
+          {' '}
+          {i18n.t('onboarding.resend')}
+        </B1>
       </B1>
-    </B1>
+
+      <B1
+        horizontal="L"
+        color="link"
+        onPress={() =>
+          NavigationService.push('ChangeEmail', {
+            onSubmit: () => localStore.resend(),
+          })
+        }>
+        Change email
+      </B1>
+    </>
   );
   return (
     <CodeConfirmScreen

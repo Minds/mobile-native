@@ -14,6 +14,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 const SAFE_AREA_EDGES: Edge[] = ['top'];
 /**
@@ -38,8 +39,8 @@ const PlusDiscoveryScreen = observer(() => {
     });
   }, [navigation, user]);
 
-  const header = (
-    <View style={theme.bgPrimaryBackground}>
+  return (
+    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.flexContainer}>
       <ScreenHeader back={backEnable} title={i18n.t('plusTabTitleDiscovery')} />
       {!user?.plus && (
         <Banner
@@ -61,34 +62,18 @@ const PlusDiscoveryScreen = observer(() => {
           { id: 'trending-tags', title: i18n.t('discovery.trending') },
         ]}
       />
-    </View>
-  );
-
-  return (
-    <SafeAreaView
-      edges={SAFE_AREA_EDGES}
-      style={[theme.flexContainer, theme.alignSelfCenterMaxWidth]}>
       <View style={theme.flexContainer}>
         {store.activeTabId === 'foryou' ? (
-          <DiscoveryTrendsList plus={true} store={store} header={header} />
+          <DiscoveryTrendsList plus={true} store={store} />
         ) : store.activeTabId === 'your-tags' ? (
-          <DiscoveryTagsList
-            type="your"
-            plus={true}
-            store={store}
-            header={header}
-          />
+          <DiscoveryTagsList type="your" plus={true} store={store} />
         ) : store.activeTabId === 'trending-tags' ? (
-          <DiscoveryTagsList
-            type="trending"
-            plus={true}
-            store={store}
-            header={header}
-          />
+          <DiscoveryTagsList type="trending" plus={true} store={store} />
         ) : (
           <View />
         )}
       </View>
+      <OnboardingOverlay type="minds_plus" />
     </SafeAreaView>
   );
 });
