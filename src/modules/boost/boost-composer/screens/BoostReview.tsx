@@ -25,6 +25,7 @@ import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import { IS_IOS } from '~/config/Config';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -122,7 +123,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               subtitle={creditLabel}
               borderless
             />
-          ) : boostStore.paymentType === 'cash' ? (
+          ) : boostStore.paymentType === 'cash' && !IS_IOS ? (
             <StripeCardSelector
               onCardSelected={card => boostStore.setSelectedCardId(card.id)}
               selectedCardId={boostStore.selectedCardId}
