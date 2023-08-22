@@ -45,20 +45,13 @@ const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
   return (
     <Button
       mode="outline"
-      type={isMember ? 'base' : 'action'}
+      type={'action'}
       size="tiny"
       onPress={onPress}
       pressableProps={HITSLOP}
-      testID={`suggestedGroup${index}`}
-      icon={
-        <Icon
-          name={isMember ? 'check' : 'plus'}
-          color="PrimaryText"
-          size="small"
-          horizontal="S"
-        />
-      }
-    />
+      testID={`suggestedGroup${index}`}>
+      {isMember ? 'Joined' : 'Join'}
+    </Button>
   );
 });
 

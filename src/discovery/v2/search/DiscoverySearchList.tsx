@@ -124,12 +124,10 @@ export const DiscoverySearchList = observer((props: Props) => {
       <FeedList
         header={
           isTop ? (
-            <>
-              <AnimatedHeight>
-                <Finder type="group" query={searchTerm} />
-                <Finder type="channel" query={searchTerm} />
-              </AnimatedHeight>
-            </>
+            <AnimatedHeight>
+              <Finder type="group" query={searchTerm} />
+              <Finder type="channel" query={searchTerm} />
+            </AnimatedHeight>
           ) : undefined
         }
         feedStore={store.listStore}
