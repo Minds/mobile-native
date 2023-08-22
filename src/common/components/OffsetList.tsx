@@ -48,7 +48,6 @@ export type OffsetListProps<T = any> = {
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   onListUpdate?: (data?: any) => void;
   sticky?: boolean;
-  keepHeader?: boolean;
 };
 
 type FetchResponseType =
@@ -260,12 +259,7 @@ export default observer(
       );
     }
 
-    return (
-      <List
-        {...listProps}
-        ListHeaderComponent={props.keepHeader ? props.header : undefined}
-      />
-    );
+    return <List {...listProps} ListHeaderComponent={props.header} />;
   }),
 );
 
