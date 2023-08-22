@@ -97,7 +97,7 @@ const GroupsListItem = observer((props: PropsType) => {
       }
       borderless>
       <>
-        {group.brief_description.length ? (
+        {group.brief_description?.length ? (
           <B2 numberOfLines={2} color="secondary" right="XL">
             {entities.decodeHTML(group.brief_description)}
           </B2>
