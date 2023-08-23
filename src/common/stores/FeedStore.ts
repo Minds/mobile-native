@@ -728,12 +728,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Refresh
    */
   @action
-  async refresh() {
+  async refresh(wait?: Promise<any>) {
     this.refreshing = true;
     this.newPostsCount = 0;
 
     try {
-      await this.fetchRemoteOrLocal(true);
+      await this.fetchRemoteOrLocal(true, wait);
     } catch (err) {
       logService.exception('[FeedStore]', err);
     } finally {
