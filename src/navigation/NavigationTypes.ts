@@ -128,6 +128,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  ChangeEmail: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
@@ -274,7 +275,6 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
-  PermawebSelector: {};
   AccessSelector: {
     store: ComposeStoreType;
   };
@@ -370,3 +370,8 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
+
+export type WalletStackParamList = {
+  Wallet: {};
+  CreditTransactions: { guid: string; expireAt?: number };
+};

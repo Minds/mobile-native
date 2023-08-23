@@ -21,6 +21,7 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -44,6 +45,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -117,6 +119,7 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -140,6 +143,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -219,6 +223,7 @@ exports[`Activity component renders correctly 1`] = `
       <ActivityActionSheet
         entity={
           {
+            "_collapsed": false,
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -242,6 +247,7 @@ exports[`Activity component renders correctly 1`] = `
             "message": "Message",
             "ownerObj": {
               "__list": null,
+              "_collapsed": false,
               "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
@@ -339,6 +345,7 @@ exports[`Activity component renders correctly 1`] = `
       <MediaView
         entity={
           {
+            "_collapsed": false,
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -362,6 +369,7 @@ exports[`Activity component renders correctly 1`] = `
             "message": "Message",
             "ownerObj": {
               "__list": null,
+              "_collapsed": false,
               "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
@@ -448,6 +456,7 @@ exports[`Activity component renders correctly 1`] = `
         <ExplicitText
           entity={
             {
+              "_collapsed": false,
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -471,6 +480,7 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": {
                 "__list": null,
+                "_collapsed": false,
                 "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
@@ -570,6 +580,7 @@ exports[`Activity component renders correctly 1`] = `
         <ForwardRef(ObserverForwardRef)
           entity={
             {
+              "_collapsed": false,
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -593,6 +604,7 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": {
                 "__list": null,
+                "_collapsed": false,
                 "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
@@ -662,6 +674,7 @@ exports[`Activity component renders correctly 1`] = `
               },
             }
           }
+          key="translate-activityguid0"
           style={
             {
               "fontFamily": "Roboto",
@@ -676,6 +689,7 @@ exports[`Activity component renders correctly 1`] = `
   <BottomContent
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -699,6 +713,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,

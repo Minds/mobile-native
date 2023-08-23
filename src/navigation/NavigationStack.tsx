@@ -642,6 +642,10 @@ const RootStack = observer(function () {
           gestureEnabled: false,
         }}
       />
+      <RootStackNav.Screen
+        name="ChangeEmail"
+        getComponent={() => require('~/auth/ChangeEmailScreen').default}
+      />
     </RootStackNav.Navigator>
   );
 });

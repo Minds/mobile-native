@@ -29,6 +29,7 @@ import NavigationService from '../../../../navigation/NavigationService';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '../../../../config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
+import { IS_IOS } from '~/config/Config';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -37,17 +38,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const user = useCurrentUser();
   const boostStore = useBoostStore();
 
-  const { data } = useFetchPaymentMethodsQuery({
-    giftCardProductId: GiftCardProductIdEnum.Boost,
-  });
-
-  const {
-    balance,
-    id: creditPaymentMethod,
-    name,
-  } = data?.paymentMethods?.[0] ?? {};
-
-  const hasCredits = Number(balance) >= Number(boostStore.total);
+  const { name, balance, creditPaymentMethod, hasCredits } = useCredits(
+    boostStore.total,
+  );
 
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
     value: number(boostStore.wallet?.balance || 0, 0, 2),
@@ -149,7 +142,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               subtitle={creditLabel}
               borderless
             />
-          ) : boostStore.paymentType === 'cash' ? (
+          ) : boostStore.paymentType === 'cash' && !IS_IOS ? (
             <StripeCardSelector
               onCardSelected={card => boostStore.setSelectedCardId(card.id)}
               selectedCardId={boostStore.selectedCardId}
@@ -207,6 +200,23 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     </Screen>
   );
 }
+
+const useCredits = (total = 0) => {
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
+
+  const { balance, id, name } = data?.paymentMethods?.[0] ?? {};
+
+  const hasCredits = Number(balance) >= Number(total);
+
+  return {
+    balance,
+    creditPaymentMethod: id,
+    name,
+    hasCredits,
+  };
+};
 
 export default withErrorBoundaryScreen(
   observer(BoostReviewScreen),

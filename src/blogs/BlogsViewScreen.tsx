@@ -315,7 +315,7 @@ const styles = ThemedStyles.create({
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
-  ownerBlockContainer: ['bgSecondaryBackground'],
+  ownerBlockContainer: ['bgPrimaryBackground'],
   description: {
     paddingLeft: 15,
     paddingRight: 15,
@@ -332,6 +332,6 @@ const styles = ThemedStyles.create({
     padding: 12,
     flexDirection: 'row',
   },
-  container: ['flexContainer', 'bgSecondaryBackground'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
   iconStyle: { fontSize: 28 },
 });

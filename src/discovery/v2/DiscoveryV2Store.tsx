@@ -20,7 +20,6 @@ export default class DiscoveryV2Store {
   @observable loadingTags = false;
   @observable refreshing = false;
   @observable badgeVisible = true;
-  boostFeed: FeedStore;
   trendingFeed: FeedStore;
   allFeed: FeedStore;
   topFeed: FeedStore;
@@ -30,22 +29,6 @@ export default class DiscoveryV2Store {
 
   constructor(plus: boolean = false) {
     this.plus = plus;
-    this.boostFeed = new FeedStore(true);
-    this.boostFeed
-      .getMetadataService()!
-      .setSource('feed/boosts')
-      .setMedium('featured-content');
-
-    this.boostFeed
-      .setEndpoint(BOOST_V3 ? 'api/v3/boosts/feed' : 'api/v2/boost/feed')
-      .setInjectBoost(false)
-      .setLimit(15);
-
-    if (BOOST_V3) {
-      this.boostFeed.feedsService.setDataProperty('boosts');
-      this.boostFeed.setParams({ location: 1 });
-    }
-
     this.trendingFeed = new FeedStore(true)
       .setEndpoint('api/v2/feeds/global/top/all')
       .setParams({ period: '12h', plus })
@@ -93,9 +76,6 @@ export default class DiscoveryV2Store {
       switch (id) {
         case 'top':
           this.topFeed.fetchRemoteOrLocal();
-          break;
-        case 'boosts':
-          this.boostFeed.fetchRemoteOrLocal();
           break;
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
@@ -229,8 +209,6 @@ export default class DiscoveryV2Store {
       case 'trending-tags':
         this.refreshTags();
         return this.trendingFeed.clear().refresh();
-      case 'boosts':
-        return this.boostFeed.refresh();
     }
   }
 
@@ -239,7 +217,6 @@ export default class DiscoveryV2Store {
     this.allFeed.reset();
     this.topFeed.reset();
     this.trendingFeed.reset();
-    this.boostFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
@@ -294,6 +271,3 @@ export type TDiscoveryTagsTag = {
 };
 
 const DISCOVERY_TS_KEY = 'discovery_ts';
-
-// TODO: workaround please remove
-const BOOST_V3 = true;

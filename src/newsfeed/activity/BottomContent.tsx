@@ -18,6 +18,7 @@ type PropsType = {
 };
 
 const BottomContent = (props: PropsType) => {
+  const entity = props.entity;
   const shouldRender = !props.showOnlyContent;
   const analytics = useAnalytics();
 
@@ -27,23 +28,20 @@ const BottomContent = (props: PropsType) => {
   // if there is a store of a different entity (after a recycle), we remove it
   if (
     commentsStore.current &&
-    commentsStore.current.entity.urn !== props.entity.urn
+    commentsStore.current.entity.urn !== entity.urn
   ) {
     commentsStore.current = null;
   }
 
   const onPressComment = React.useCallback(() => {
     if (!commentsStore.current) {
-      commentsStore.current = new CommentsStore(
-        props.entity,
-        analytics.contexts,
-      );
+      commentsStore.current = new CommentsStore(entity, analytics.contexts);
     }
 
     pushCommentBottomSheet({
       commentsStore: commentsStore.current,
     });
-  }, [props.entity, analytics]);
+  }, [entity, analytics]);
 
   if (!shouldRender) {
     return null;
@@ -63,13 +61,13 @@ const BottomContent = (props: PropsType) => {
         entity={props.entity}
         hideTabs={props.hideTabs}
       />
-      {props.entity.isOwner() && (
+      {entity.isOwner() && (
         <Scheduled
-          isScheduled={props.entity.isScheduled()}
-          time_created={props.entity.time_created}
+          isScheduled={entity.isScheduled()}
+          time_created={entity.time_created}
         />
       )}
-      <Pending isPending={props.entity.isPending()} />
+      <Pending isPending={entity.isPending()} />
     </>
   );
 };
