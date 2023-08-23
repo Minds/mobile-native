@@ -578,6 +578,14 @@ const RootStack = observer(function () {
               name="Report"
               getComponent={() => require('~/report/ReportScreen').default}
             />
+            <RootStackNav.Screen
+              name="BoostUpgrade"
+              getComponent={() => require('~/modules/boost').BoostUpgrade}
+              options={{
+                ...defaultScreenOptions,
+                headerShown: false,
+              }}
+            />
           </>
         )
       ) : (

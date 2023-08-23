@@ -215,6 +215,7 @@ export type RootStackParamList = {
   StoryBook: {};
   CodePushSync: {};
   Report: {};
+  BoostUpgrade: undefined;
 };
 
 export type AuthStackParamList = {
