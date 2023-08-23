@@ -8,6 +8,7 @@ import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import permissionsService from './permissions.service';
 
+const ANDROID_API_VERSION = parseInt(Platform.constants['Release'] ?? 0, 10);
 /**
  * Download Service
  */
@@ -22,7 +23,7 @@ class DownloadService {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
       if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
         return CameraRoll.save(url, { type: 'photo' });
-      } else {
+      } else if (ANDROID_API_VERSION < 11) {
         let allowed = await permissionsService.checkWriteExternalStorage(true);
 
         if (!allowed) {
@@ -32,25 +33,25 @@ class DownloadService {
         if (!allowed) {
           return;
         }
-
-        const type = entity && this.isGif(entity) ? 'gif' : 'jpg';
-        const filePath = `${RNFS.CachesDirectoryPath}/${
-          entity?.guid || name || 'untitled'
-        }.${type}`;
-        const download = RNFS.downloadFile({
-          fromUrl: url,
-          toFile: filePath,
-          progressDivider: 1,
-        });
-
-        return download.promise.then(result => {
-          if (result.statusCode === 200) {
-            return CameraRoll.save(filePath, { type: 'photo' });
-          } else {
-            showNotification(i18nService.t('errorDownloading'), 'danger');
-          }
-        });
       }
+
+      const type = entity && this.isGif(entity) ? 'gif' : 'jpg';
+      const filePath = `${RNFS.CachesDirectoryPath}/${
+        entity?.guid || name || 'untitled'
+      }.${type}`;
+      const download = RNFS.downloadFile({
+        fromUrl: url,
+        toFile: filePath,
+        progressDivider: 1,
+      });
+
+      return download.promise.then(result => {
+        if (result.statusCode === 200) {
+          return CameraRoll.save(filePath, { type: 'photo' });
+        } else {
+          showNotification(i18nService.t('errorDownloading'), 'danger');
+        }
+      });
     } catch (e) {
       showNotification(i18nService.t('errorDownloading'), 'danger');
     }
