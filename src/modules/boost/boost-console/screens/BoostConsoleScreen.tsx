@@ -13,6 +13,7 @@ import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 import BoostFeed from '../components/v3/BoostFeed';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 interface BoostConsoleScreenProps {
   route: RouteProp<any>;
@@ -125,6 +126,7 @@ function BoostConsoleScreen({
         ) : (
           <BoostFeed ListHeaderComponent={<BoostTabBarV3 />} />
         )}
+        <OnboardingOverlay type="boost" />
       </Screen>
     </BoostConsoleStoreContext.Provider>
   );

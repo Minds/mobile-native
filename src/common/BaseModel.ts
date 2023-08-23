@@ -56,6 +56,12 @@ export default class BaseModel extends AbstractModel {
   __list: FeedStore | null = null;
 
   /**
+   * Whether this model is collapsed in the feed
+   * @var {OffsetListStore}
+   */
+  @observable _collapsed: boolean = false;
+
+  /**
    *  List reference setter
    */
   set _list(value) {

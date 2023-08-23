@@ -9,7 +9,6 @@ import LicenseSelector from './LicenseSelector';
 import MonetizeScreen from './monetize/MonetizeScreen';
 import PlusMonetizeScreen from './monetize/PlusMonetizeScreen';
 import NsfwSelector from './NsfwSelector';
-import PermawebSelector from './PermawebSelector';
 import PosterOptions from './PosterOptions';
 import ScheduleSelector from './ScheduleSelector';
 import TagSelector from './TagSelector';
@@ -23,7 +22,6 @@ export type PosterStackParamList = {
   PosterOptions: {};
   TagSelector: {};
   NsfwSelector: {};
-  PermawebSelector: {};
   ScheduleSelector: {};
   MonetizeSelector: {};
   LicenseSelector: {};
@@ -56,7 +54,6 @@ export default function PosterStackNavigator() {
       <Stack.Screen name="PosterOptions" component={PosterOptions} />
       <Stack.Screen name="TagSelector" component={TagSelector} />
       <Stack.Screen name="NsfwSelector" component={NsfwSelector} />
-      <Stack.Screen name="PermawebSelector" component={PermawebSelector} />
       <Stack.Screen name="ScheduleSelector" component={ScheduleSelector} />
       <Stack.Screen name="MonetizeSelector" component={MonetizeScreen} />
       <Stack.Screen name="LicenseSelector" component={LicenseSelector} />

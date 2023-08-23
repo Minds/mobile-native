@@ -13,6 +13,7 @@ import { Recommendation } from '../modules/recommendation';
 import Divider from '../common/components/Divider';
 import AnimatedHeight from '../common/components/animations/AnimatedHeight';
 import { useNavigation } from '@react-navigation/native';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -71,6 +72,7 @@ const GroupsListScreen = observer(() => {
           </>
         }
       />
+      <OnboardingOverlay type="groups_memberships" />
     </Screen>
   );
 });
