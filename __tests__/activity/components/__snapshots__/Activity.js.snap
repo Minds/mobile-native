@@ -674,6 +674,7 @@ exports[`Activity component renders correctly 1`] = `
               },
             }
           }
+          key="translate-activityguid0"
           style={
             {
               "fontFamily": "Roboto",
