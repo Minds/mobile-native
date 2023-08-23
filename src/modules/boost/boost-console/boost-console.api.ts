@@ -43,7 +43,7 @@ export async function getBoosts(offset, filter, peer_filter) {
 
 export async function getBoostsV3(
   offset,
-  location: 'feed' | 'sidebar',
+  location: 'feed' | 'sidebar' | 'explore',
   status?: BoostStatus,
 ) {
   try {

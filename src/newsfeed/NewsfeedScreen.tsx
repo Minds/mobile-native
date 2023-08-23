@@ -57,7 +57,7 @@ const RECOMMENDATION_POSITION = 4;
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
-  newsfeed: NewsfeedStore<any>;
+  newsfeed: NewsfeedStore;
   route: NewsfeedScreenRouteProp;
 };
 
@@ -74,16 +74,42 @@ const overrideItemLayout = (layout, item, index) => {
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
+  const inFeedBoostRotator = useIsFeatureOn('mob-5009-boost-rotator-in-feed');
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
 
-  const refreshNewsfeed = useCallback(() => {
-    newsfeed.scrollToTop();
-    newsfeed.highlightsStore.refresh();
-    newsfeed.latestFeedStore.refresh();
-    newsfeed.topFeedStore.refresh();
-    newsfeed.forYouStore.refresh();
-    newsfeed.groupsFeedStore.refresh();
-  }, [newsfeed]);
+  const refreshNewsfeed = useCallback(
+    (scrollAndRefresh = false) => {
+      const position = newsfeed.listRef?.getScrollPosition();
+      if (position && position > 10 && !scrollAndRefresh) {
+        newsfeed.listRef?.scrollToOffset({ offset: 0, animated: true });
+      } else {
+        if (scrollAndRefresh) {
+          newsfeed.listRef?.scrollToOffset({ offset: 0, animated: true });
+        }
+        if (
+          newsfeed.latestFeedStore.newPostsCount ||
+          newsfeed.feedType !== 'latest'
+        ) {
+          switch (newsfeed.feedType) {
+            case 'foryou':
+              newsfeed.forYouStore.refresh();
+              break;
+            case 'latest':
+              newsfeed.latestFeedStore.refresh(
+                newsfeed.highlightsStore.refresh(), // sync highlights load but wait for it before updating the feed (Performance improvement)
+              );
+              break;
+            case 'top':
+              newsfeed.topFeedStore.refresh();
+              break;
+            case 'groups':
+              newsfeed.groupsFeedStore.refresh();
+          }
+        }
+      }
+    },
+    [newsfeed],
+  );
 
   const onTabPress = useCallback(
     e => {
@@ -137,15 +163,20 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
           <NewsfeedTabs newsfeed={newsfeed} />
-          <BoostRotator />
+          {!inFeedBoostRotator && <BoostRotator />}
         </>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
 
+    const boostRotatorInjectItem = inFeedBoostRotator
+      ? new InjectItem(3, 'rotator', () => <BoostRotator />)
+      : undefined;
+
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
+      boostRotatorInjectItem,
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
         <ChannelRecommendation location="newsfeed" />
       )),
@@ -171,9 +202,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     ]);
 
     // top feed injected components
-    newsfeed.topFeedStore.setInjectedItems([prepend]);
+    newsfeed.topFeedStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // for you injected components
-    newsfeed.forYouStore.setInjectedItems([prepend]);
+    newsfeed.forYouStore.setInjectedItems([prepend, boostRotatorInjectItem]);
     // groups injected components
     newsfeed.groupsFeedStore
       .setInjectedItems([
@@ -211,7 +242,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
               bottomComponent={
                 isLatest ? (
                   <SeeLatestPostsButton
-                    onPress={refreshNewsfeed}
+                    onPress={() => refreshNewsfeed(true)}
                     feedStore={newsfeed.latestFeedStore}
                   />
                 ) : undefined

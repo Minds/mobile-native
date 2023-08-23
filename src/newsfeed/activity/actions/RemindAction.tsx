@@ -22,7 +22,6 @@ import { storeRatingService } from 'modules/store-rating';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import NavigationService from '../../../navigation/NavigationService';
 import type NewsfeedStore from '../../NewsfeedStore';
-import type BaseModel from '../../../common/BaseModel';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -83,7 +82,7 @@ const pushRemindActionSheet = ({
 }: {
   reminded?: boolean;
   entity: ActivityModel;
-  newsfeed: NewsfeedStore<BaseModel>;
+  newsfeed: NewsfeedStore;
   analytics;
 }) => {
   /**

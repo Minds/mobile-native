@@ -197,7 +197,7 @@
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
-    "authCode": "Authentication code",
+    "authCode": "Verification Code",
     "recoveryCode": "Recovery code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
     "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
@@ -217,7 +217,8 @@
     "rateLimit": "Too many attempts, please try again later",
     "newPassword": "Create a new password. You’ll use this to access your account.",
     "nextLabel": "Next",
-    "submitLabel": "Submit"
+    "submitLabel": "Submit",
+    "mistypedEmail": "Mistyped your email? Change your email address below."
   },
   "multiUser": {
     "switchChannel": "Switch Account",
@@ -800,6 +801,9 @@
           },
           "6": {
             "label": "Trafficking"
+          },
+          "7": {
+            "label": "Animal abuse"
           }
         }
       },
@@ -1724,6 +1728,7 @@
   "follow": "Follow post",
   "unfollow": "Unfollow",
   "tokens": "Tokens",
+  "credits": "Credits",
   "share": "Share",
   "edited": "Edited",
   "success": "Success",
@@ -1801,14 +1806,6 @@
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
   "yesterday": "Yesterday",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Help",
   "unblock": "Unblock",
   "earnScreen": {

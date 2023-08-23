@@ -79,27 +79,29 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   return (
     <>
       <Spacer bottom="XL">
-        {recommendation?.result?.entities.slice(0, listSize).map(suggestion => {
-          switch (suggestion.entity_type) {
-            case 'user':
-              return (
-                <ChannelRecommendationItem
-                  key={suggestion.entity.guid}
-                  channel={suggestion.entity as UserModel}
-                  onSubscribed={onSubscribed}
-                />
-              );
-            case 'group':
-              return (
-                <GroupsListItem
-                  group={suggestion.entity as GroupModel}
-                  key={suggestion.entity.guid}
-                />
-              );
-          }
-          console.error('Unknown entity type', suggestion.entity_type);
-          return null;
-        })}
+        {recommendation?.result?.entities
+          .slice(0, listSize)
+          .map((suggestion, index) => {
+            switch (suggestion.entity_type) {
+              case 'user':
+                return (
+                  <ChannelRecommendationItem
+                    key={`${suggestion.entity.guid}_${index}`}
+                    channel={suggestion.entity as UserModel}
+                    onSubscribed={onSubscribed}
+                  />
+                );
+              case 'group':
+                return (
+                  <GroupsListItem
+                    group={suggestion.entity as GroupModel}
+                    key={suggestion.entity.guid}
+                  />
+                );
+            }
+            console.error('Unknown entity type', suggestion.entity_type);
+            return null;
+          })}
       </Spacer>
       <View style={styles.borderBottom} />
     </>
