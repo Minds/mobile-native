@@ -1,9 +1,8 @@
 import { action, observable } from 'mobx';
-import type BaseModel from '~/common/BaseModel';
 import MetadataService from '~/common/services/metadata.service';
 import { storages } from '~/common/services/storage/storages.service';
 import UserModel from '../channel/UserModel';
-import { FeedList } from '../common/components/FeedList';
+import type { FeedListStickyType } from '../common/components/FeedListSticky';
 import FeedStore from '../common/stores/FeedStore';
 import ActivityModel from './ActivityModel';
 import NewsfeedService from './NewsfeedService';
@@ -14,11 +13,10 @@ import EventEmitter from 'eventemitter3';
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
 export type NewsfeedType = 'top' | 'latest' | 'foryou' | 'groups';
-
 /**
  * News feed store
  */
-class NewsfeedStore<T extends BaseModel> {
+class NewsfeedStore {
   /**
    * Feed store
    */
@@ -76,7 +74,7 @@ class NewsfeedStore<T extends BaseModel> {
   /**
    * List reference
    */
-  listRef?: FeedList<T>;
+  listRef?: React.ElementRef<FeedListStickyType>;
 
   service = new NewsfeedService();
 
