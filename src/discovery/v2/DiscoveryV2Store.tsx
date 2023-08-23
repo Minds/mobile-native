@@ -209,8 +209,6 @@ export default class DiscoveryV2Store {
       case 'trending-tags':
         this.refreshTags();
         return this.trendingFeed.clear().refresh();
-      case 'boosts':
-        return this.boostFeed.refresh();
     }
   }
 
@@ -219,7 +217,6 @@ export default class DiscoveryV2Store {
     this.allFeed.reset();
     this.topFeed.reset();
     this.trendingFeed.reset();
-    this.boostFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
