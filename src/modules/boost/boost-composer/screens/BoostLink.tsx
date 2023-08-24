@@ -4,10 +4,11 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import FitScrollView from '~/common/components/FitScrollView';
 import InputContainer from '~/common/components/InputContainer';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
+import { B1, Button, Column, H2, Screen } from '~/common/ui';
 import { useTranslation } from '../../locales';
 import { BoostButtonText, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostLinkScreenProps = BoostStackScreenProps<'BoostLink'>;
 
@@ -44,15 +45,7 @@ function BoostLinkScreen({ navigation }: BoostLinkScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back
-        shadow
-      />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Add a link and button')}</H2>

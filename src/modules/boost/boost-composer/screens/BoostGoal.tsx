@@ -3,11 +3,12 @@ import React from 'react';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
+import { B1, Button, Column, H2, Screen } from '~/common/ui';
 import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
 import { BoostGoal, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostGoalScreenProps = BoostStackScreenProps<'BoostGoal'>;
 
@@ -60,16 +61,7 @@ function BoostGoalScreen({ navigation, route }: BoostGoalScreenProps) {
 
   return (
     <Screen safe onlyTopEdge={!safe}>
-      <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back
-        backIcon={backIcon}
-        shadow
-      />
+      <BoostComposerHeader backIcon={backIcon} />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Choose a goal')}</H2>

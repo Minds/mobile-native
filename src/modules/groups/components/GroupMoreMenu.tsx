@@ -11,6 +11,7 @@ import {
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import { MINDS_URI } from '~/config/Config';
 import GroupModel from '~/groups/GroupModel';
+import NavigationService from '../../../navigation/NavigationService';
 
 type PropsType = {
   group: GroupModel;
@@ -34,6 +35,20 @@ const getOptions = ({ group, onSearchGroupPressed, ref }: OptionsProps) => {
   }> = [];
 
   const link = `${MINDS_URI}group/${group.guid}/feed`;
+
+  options.push({
+    iconName: 'trending-up',
+    iconType: 'material',
+    title: i18n.t('group.boost'),
+    onPress: () => {
+      NavigationService.navigate('BoostScreenV2', {
+        entity: group,
+        boostType: 'group',
+      });
+
+      ref.current.dismiss();
+    },
+  });
 
   options.push({
     iconName: 'search',

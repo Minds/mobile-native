@@ -12,7 +12,6 @@ import {
   H3,
   HairlineRow,
   Screen,
-  ScreenHeader,
 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
@@ -23,6 +22,7 @@ import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -98,15 +98,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back
-        shadow
-      />
+      <BoostComposerHeader />
       <FitScrollView>
         <TopbarTabbar
           containerStyle={ThemedStyles.style.marginTop}

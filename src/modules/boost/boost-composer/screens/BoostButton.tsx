@@ -3,10 +3,11 @@ import React from 'react';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import { B1, Button, Column, H2, Screen, ScreenHeader } from '~/common/ui';
+import { B1, Button, Column, H2, Screen } from '~/common/ui';
 import { useTranslation } from '../../locales';
 import { BoostButtonText, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostButtonScreenProps = BoostStackScreenProps<'BoostButton'>;
 
@@ -35,15 +36,7 @@ function BoostButtonScreen({ navigation }: BoostButtonScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back
-        shadow
-      />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Add a button to your post')}</H2>
