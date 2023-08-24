@@ -101,7 +101,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
               .map(suggestion => (
                 <ChannelRecommendationItem
                   key={suggestion.entity.guid}
-                  channel={suggestion.entity}
+                  channel={suggestion.entity as UserModel}
                   onSubscribed={onSubscribed}
                 />
               ))

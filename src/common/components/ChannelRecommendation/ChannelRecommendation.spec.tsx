@@ -1,10 +1,10 @@
 import React from 'react';
 import ChannelRecommendation from './ChannelRecommendation';
 
-import { ChannelRecommendationItem } from './ChannelRecommendationBody';
 import { shallow } from 'enzyme';
 import UserModel from '~/channel/UserModel';
 import generateFakeUser from '../../../../__mocks__/fake/channel/UserFactory';
+import { ChannelRecommendationItem } from '~/modules/recommendation';
 
 const mockEntity = generateFakeUser();
 

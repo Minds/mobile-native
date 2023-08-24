@@ -16,6 +16,7 @@ export default class GroupModel extends BaseModel {
   icontime: any;
   entity_guid?: string;
   brief_description = '';
+  boosted?: boolean;
 
   @action
   toggleMatureVisibility() {

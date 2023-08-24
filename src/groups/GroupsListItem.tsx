@@ -7,8 +7,9 @@ import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { B2, Button, Icon } from '../common/ui';
+import { B2, Button, Icon, Row } from '../common/ui';
 import GroupModel from './GroupModel';
+import capitalize from '~/common/helpers/capitalize';
 
 const HITSLOP = {
   hitSlop: 10,
@@ -49,16 +50,9 @@ const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
       size="tiny"
       onPress={onPress}
       pressableProps={HITSLOP}
-      testID={`suggestedGroup${index}`}
-      icon={
-        <Icon
-          name={isMember ? 'check' : 'plus'}
-          color="PrimaryText"
-          size="small"
-          horizontal="S"
-        />
-      }
-    />
+      testID={`suggestedGroup${index}`}>
+      {isMember ? 'Joined' : 'Join'}
+    </Button>
   );
 });
 
@@ -97,17 +91,24 @@ const GroupsListItem = observer((props: PropsType) => {
       }
       borderless>
       <>
-        <B2 numberOfLines={2} color="secondary" right="XL">
-          {entities.decodeHTML(group.brief_description)}
+        <B2 top="XS">
+          {abbrev(group['members:count'])}{' '}
+          <B2 color="secondary">{i18n.t('members').toLocaleLowerCase()}</B2>
         </B2>
-        <B2>
-          {i18n.t('groups.listMembersCount', {
-            count: abbrev(group['members:count']),
-          })}
+        <B2 numberOfLines={2} color="secondary" right="XL" top="XS">
+          {entities.decodeHTML(capitalize(group.brief_description))}
         </B2>
+        {group.boosted && <BoostedGroupLabel />}
       </>
     </MenuItem>
   );
 });
+
+const BoostedGroupLabel = () => (
+  <Row top="XS" align="centerStart">
+    <Icon name="boost" size="tiny" right="XS" color="Link" />
+    <B2 color="link">{i18n.t('boosts.boostedGroup')}</B2>
+  </Row>
+);
 
 export default GroupsListItem;
