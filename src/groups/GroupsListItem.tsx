@@ -7,7 +7,7 @@ import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { B2, Button, Icon } from '../common/ui';
+import { B2, Button } from '../common/ui';
 import GroupModel from './GroupModel';
 
 const HITSLOP = {
@@ -79,6 +79,7 @@ const GroupsListItem = observer((props: PropsType) => {
       avatar={avatarSource?.source}
       title={group.name}
       onPress={_onPress}
+      isRightIconButton
       icon={
         !props.hideButton && (
           <JoinButton
@@ -91,7 +92,7 @@ const GroupsListItem = observer((props: PropsType) => {
       borderless>
       <>
         <B2 numberOfLines={2} color="secondary" right="XL">
-          {entities.decodeHTML(group.brief_description)}
+          {entities.decodeHTML(group.brief_description ?? '')}
         </B2>
         <B2>
           {i18n.t('groups.listMembersCount', {
