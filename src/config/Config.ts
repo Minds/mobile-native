@@ -44,10 +44,9 @@ export const CUSTOM_API_URL = DEV_MODE.getApiURL();
  * by setting them to true in a review app and after updating the app
  * with a production version having that option turned on
  */
-export const MINDS_STAGING =
-  true || DEV_MODE.isActive
-    ? storages.app.getBool(STAGING_KEY) || false
-    : false;
+export const MINDS_STAGING = DEV_MODE.isActive
+  ? storages.app.getBool(STAGING_KEY) || false
+  : false;
 export const MINDS_CANARY = DEV_MODE.isActive
   ? storages.app.getBool(CANARY_KEY) || false
   : false;
