@@ -93,13 +93,15 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
             <Column flex />
             <Column flex />
           </Row>
-          <Row flex bottom="L">
-            <Column flex>
-              <B1 color="secondary">{boost.summary?.total_clicks}</B1>
-            </Column>
-            <Column flex />
-            <Column flex />
-          </Row>
+          {Boolean(boost.summary?.total_clicks) && (
+            <Row flex bottom="L">
+              <Column flex>
+                <B1 color="secondary">{boost.summary?.total_clicks}</B1>
+              </Column>
+              <Column flex />
+              <Column flex />
+            </Row>
+          )}
         </>
       )}
       {!!revokable && (
