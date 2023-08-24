@@ -4,19 +4,24 @@ import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { Popable } from 'react-native-popable';
-import { Row, SpacerPropType } from '~ui';
+import { B3, Row, SpacerPropType } from '~ui';
 
 /**
  * Badge tooltip using Poppable because react-native-elements/Tooltip
  * doesn't have a way to show the Tooltip on top
  **/
 const BadgeTooltip: FC<any> = ({ label, color, children }) => {
+  const fontColor = ThemedStyles.theme === 1 ? 'black' : 'white';
   return (
     <Popable
       backgroundColor={color}
       position={'top'}
       animationType={'spring'}
-      content={label}>
+      content={
+        <B3 color={fontColor} align="center" vertical="XS">
+          {label}
+        </B3>
+      }>
       {children}
     </Popable>
   );
