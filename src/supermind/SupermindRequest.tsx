@@ -42,6 +42,10 @@ function SupermindRequest({ request, outbound }: Props) {
         })
       ) {
         apiService.post(`api/v3/supermind/${request.guid}/accept-live`);
+        request.setStatus(SupermindRequestStatus.ACCEPTED);
+
+        // refresh in-feed notices
+        inFeedNoticesService.load();
       }
     } else {
       navigation.navigate('Compose', {
