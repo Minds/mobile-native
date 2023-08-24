@@ -56,7 +56,6 @@ const GroupsListScreen = observer(() => {
             </>
           ) : undefined
         }
-        sticky
         fetchEndpoint={'api/v1/groups/member'}
         endpointData={'groups'}
         onListUpdate={data => {
