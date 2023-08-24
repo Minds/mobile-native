@@ -13,12 +13,13 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { InjectItem } from '../../common/components/FeedList';
-import type FeedList from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Topbar from '~/topbar/Topbar';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
-import FeedListSticky from '~/common/components/FeedListSticky';
+import FeedListSticky, {
+  FeedListStickyType,
+} from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -43,7 +44,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] =
       useState(false);
     const store = useDiscoveryV2Store();
-    const listRef = React.useRef<FeedList<any>>(null);
+    const listRef = React.useRef<React.ElementRef<FeedListStickyType>>(null);
     const channelsListRef = React.useRef<any>(null);
     const groupsListRef = React.useRef<any>(null);
     const isDiscoveryConsolidationOn = useIsFeatureOn(
@@ -88,7 +89,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
             { id: 'foryou', title: i18n.t('discovery.justForYou') },
             { id: 'your-tags', title: i18n.t('discovery.yourTags') },
             { id: 'trending-tags', title: i18n.t('discovery.trending') },
-            { id: 'boosts', title: i18n.t('boosted') },
             { id: 'supermind', title: i18n.t('supermind.supermind') },
           ].filter(Boolean) as { id: string; title: string }[];
         }
@@ -225,17 +225,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
-              />
-            </DiscoveryTabContent>
-          );
-        case 'boosts':
-          return (
-            <DiscoveryTabContent key="boosts">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.boostFeed}
-                emptyMessage={emptyBoosts}
               />
             </DiscoveryTabContent>
           );

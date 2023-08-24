@@ -17,7 +17,8 @@ class ConnectivityService {
    * Is connected
    */
   @computed get isConnected() {
-    return this.connectionInfo.type !== 'none' && this.isInternetReachable;
+    // TODO: add back  after fixed https://github.com/react-native-netinfo/react-native-netinfo/issues/669
+    return this.connectionInfo.type !== 'none'; // && this.isInternetReachable;
   }
 
   /**

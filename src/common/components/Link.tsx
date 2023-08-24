@@ -3,9 +3,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import openUrlService from '../services/open-url.service';
 import MText, { MTextProps } from './MText';
 
-type LinkProps = { url?: string } & MTextProps;
+type LinkProps = { url?: string; decoration?: boolean } & MTextProps;
 
-export default function Link(props: LinkProps) {
+export default function Link({ decoration = true, ...props }: LinkProps) {
   return (
     <MText
       {...props}
@@ -13,7 +13,7 @@ export default function Link(props: LinkProps) {
         props.url ? () => openUrlService.open(props.url!) : props.onPress
       }
       style={[
-        { textDecorationLine: 'underline' },
+        decoration && { textDecorationLine: 'underline' },
         ThemedStyles.style.colorLink,
         props.style,
       ]}

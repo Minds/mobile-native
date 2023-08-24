@@ -52,5 +52,8 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
       url="api/v2/analytics/dashboards/traffic"
     />
   </View>
+  <OnboardingOverlay
+    type="analytics"
+  />
 </Screen>
 `;

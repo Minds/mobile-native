@@ -259,7 +259,7 @@ export default observer(
       );
     }
 
-    return <List {...listProps} />;
+    return <List {...listProps} ListHeaderComponent={props.header} />;
   }),
 );
 
