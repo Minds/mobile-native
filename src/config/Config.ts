@@ -67,11 +67,19 @@ export const IMAGE_MAX_SIZE = 2048;
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
+
+const MINDS_PROD = true;
 export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
-    : 'https://www.minds.com/';
-// : 'https://feat-user-verification-2460.minds.io/';
+    : MINDS_PROD
+    ? 'https://www.minds.com/'
+    : 'https://feat-explainer-screens-m4132.oke.minds.io';
+
+const STRAPI_PROD = true;
+export const STRAPI_API_URI = STRAPI_PROD
+  ? 'https://cms.minds.com/graphql'
+  : 'https://cms.oke.minds.io/graphql';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;

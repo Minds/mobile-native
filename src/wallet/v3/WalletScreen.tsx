@@ -26,7 +26,9 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
+import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -48,9 +50,12 @@ const WalletScreen = observer((props: PropsType) => {
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
+  const balance = useGetGiftBalance(false);
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+
+  const showCreditTab = (balance ?? 0) > 0;
 
   const tabs: Array<TabType<CurrencyType>> = [
     {
@@ -60,18 +65,19 @@ const WalletScreen = observer((props: PropsType) => {
   ];
 
   if (!isIosMindsHidden) {
-    tabs.push(
-      {
-        id: 'usd',
-        title: i18n.t('wallet.cash'),
-        testID: 'WalletScreen:cash',
-      },
-      {
-        id: 'credits',
-        title: i18n.t('credits'),
-        testID: 'WalletScreen:credits',
-      },
-    );
+    tabs.push({
+      id: 'usd',
+      title: i18n.t('wallet.cash'),
+      testID: 'WalletScreen:cash',
+    });
+  }
+
+  if (showCreditTab) {
+    tabs.push({
+      id: 'credits',
+      title: i18n.t('credits'),
+      testID: 'WalletScreen:credits',
+    });
   }
 
   useEffect(() => {
@@ -144,6 +150,7 @@ const WalletScreen = observer((props: PropsType) => {
         tabStyle={theme.paddingVertical}
       />
       {store.wallet.loaded ? body[store.currency] : body.loading}
+      <OnboardingOverlay type="wallet_cash_earnings" />
     </Screen>
   );
 });

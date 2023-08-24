@@ -83,6 +83,7 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     // backgroundColor:'#4690DF',
     bottom: 48,
+    zIndex: 1000,
     // zIndex: 1,
     right: 24,
   },
