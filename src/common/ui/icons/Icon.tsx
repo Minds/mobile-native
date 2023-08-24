@@ -80,6 +80,7 @@ export function Icon({
     font: iconFont,
     name: iconName,
     ratio = 1,
+    transform,
   } = ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
   const iconStyles: TextStyle[] = [];
 
@@ -128,8 +129,12 @@ export function Icon({
       base.push(style);
     }
 
+    if (transform) {
+      base.push({ transform });
+    }
+
     return base;
-  }, [nested, common, sizeNamed, style]);
+  }, [nested, common, sizeNamed, style, transform]);
 
   const Component = Fonts[iconFont];
 

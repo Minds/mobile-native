@@ -11,7 +11,7 @@ const injectBoosts = (barItems: PortraitBarItem[]) => {
   const items = [...barItems];
 
   for (let i = 0; i < items.length; i++) {
-    if (shouldInjectBoostAtIndex(i)) {
+    if (shouldInjectBoostAtIndex(i) || i === 2) {
       const boost = portraitBoostedContentService.getMediaBoost();
       if (boost?.ownerObj) {
         boost.position = i;

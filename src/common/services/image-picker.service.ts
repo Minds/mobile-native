@@ -89,7 +89,7 @@ class ImagePickerService {
       quality: 1, // lower than 1 disables gif animation on android
     });
 
-    if (!result.assets) {
+    if (!result?.assets) {
       return false;
     }
 

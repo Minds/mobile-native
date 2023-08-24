@@ -14,7 +14,9 @@ const MPressable = ({ ...props }) => {
       Platform.select({
         android: {
           android_ripple: {
-            color: ThemedStyles.getColor('TertiaryBackground'),
+            color:
+              props.underlayColor ??
+              ThemedStyles.getColor('TertiaryBackground'),
           },
         },
         default: {
@@ -24,7 +26,8 @@ const MPressable = ({ ...props }) => {
             props.style,
             {
               backgroundColor: pressed
-                ? ThemedStyles.getColor('SecondaryBackground')
+                ? props.underlayColor ??
+                  ThemedStyles.getColor('SecondaryBackground')
                 : props.style
                 ? StyleSheet.flatten(props.style).backgroundColor
                 : undefined,
@@ -32,7 +35,7 @@ const MPressable = ({ ...props }) => {
           ],
         },
       }),
-    [pressed, props.style],
+    [pressed, props.style, props.underlayColor],
   );
 
   return (
