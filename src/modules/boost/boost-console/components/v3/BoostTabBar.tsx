@@ -27,6 +27,10 @@ function BoostTabBar({}: BoostTabBarProps) {
       id: 'sidebar',
       title: t('Channel + groups'),
     },
+    {
+      id: 'explore',
+      title: t('Explore'),
+    },
   ];
 
   return (
@@ -40,12 +44,14 @@ function BoostTabBar({}: BoostTabBarProps) {
           containerStyle={styles.tabbar}
         />
 
-        <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+        {boostConsoleStore.filter !== 'explore' && (
+          <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+        )}
       </Row>
 
       <HairlineRow />
 
-      {boostConsoleStore.filter === 'feed' ? (
+      {boostConsoleStore.filter !== 'sidebar' ? (
         <BoostLatestPostPrompt />
       ) : (
         <BoostChannelPrompt />

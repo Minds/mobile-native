@@ -53,21 +53,21 @@ const navigateToHelp = async (navigation: Navigation) => {
 const getOptionsSmallList = navigation => {
   return [
     {
-      name: i18n.t('help'),
-      onPress: () => {
-        navigateToHelp(navigation);
-      },
-    },
-    {
       name: i18n.t('earnScreen.title'),
       onPress: () => {
         navigation.navigate('EarnModal');
       },
     },
     {
-      name: i18n.t('referrals.menu'),
+      name: i18n.t('analytics.title'),
       onPress: () => {
-        navigation.navigate('Referrals');
+        navigation.navigate('Analytics');
+      },
+    },
+    {
+      name: i18n.t('help'),
+      onPress: () => {
+        navigateToHelp(navigation);
       },
     },
   ];
@@ -124,11 +124,11 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
       },
     },
     {
-      name: 'Analytics',
-      icon: 'analytics',
+      name: 'Affiliate',
+      icon: 'affiliates',
 
       onPress: () => {
-        navigation.navigate('Analytics');
+        navigation.navigate('AffiliateProgram');
       },
     },
     {

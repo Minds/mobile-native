@@ -55,11 +55,15 @@ const Interactions = (props: InteractionsProps) => {
     offset: '' as any,
     setInteraction(_interaction: Interactions) {
       store.interaction = _interaction;
-      this.feedStore
-        .setEndpoint(`api/v3/subscriptions/graph/${entity.guid}/subscriptions`)
-        .setLimit(12)
-        .clear()
-        .fetch();
+      if (_interaction === 'channelSubscriptions') {
+        this.feedStore
+          .setEndpoint(
+            `api/v3/subscriptions/graph/${entity.guid}/subscriptions`,
+          )
+          .setLimit(12)
+          .clear()
+          .fetch();
+      }
     },
     get endpoint() {
       return (
@@ -202,10 +206,12 @@ const Interactions = (props: InteractionsProps) => {
         />
       ) : (
         <FeedList
-          estimatedItemSize={50}
+          estimatedItemSize={60}
           feedStore={store.feedStore}
           navigation={navigation}
           renderActivity={renderItemUser}
+          onEndReachedThreshold={0.5}
+          contentContainerStyle={styles.contentContainerStyle}
         />
       )}
       {footer}

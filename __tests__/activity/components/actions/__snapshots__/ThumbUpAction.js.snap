@@ -47,6 +47,7 @@ exports[`Thumb action component renders correctly 1`] = `
       countProperty="thumbs:up:count"
       entity={
         {
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
@@ -83,6 +84,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": {
             "__list": null,
+            "_collapsed": false,
             "access_id": "",
             "allow_comments": true,
             "blocked": undefined,
