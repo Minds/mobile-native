@@ -713,8 +713,6 @@ export default function (props) {
 
         this.setPosting(true);
 
-        console.log('NEWPOST', JSON.stringify(newPost));
-
         const reqPromise = this.isEdit
           ? api.post(`api/v3/newsfeed/activity/${this.entity!.guid}`, newPost)
           : api.put('api/v3/newsfeed/activity', newPost);
