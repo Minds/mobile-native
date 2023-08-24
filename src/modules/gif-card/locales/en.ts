@@ -26,6 +26,11 @@ const en = {
       'When making eligible purchases, your credit balance will be automatically chosen as the default payment method. However, if you prefer not to use your credit balance for a specific purchase, you can unselect it as the payment method.',
     button: 'Create a Boost',
   },
+  Ascending: 'Newest to Oldest',
+  Descending: 'Oldest to Newest',
+  'No Credits':
+    'You can view all your gifts, as well as their remaining balances, expiration, and transactions.',
+  BOOST: 'Boost Credit',
 };
 
 export default en;

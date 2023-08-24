@@ -5,6 +5,7 @@ exports[`BottomContent component renders correctly 1`] = `
   <BoostCTA
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -28,6 +29,7 @@ exports[`BottomContent component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -101,6 +103,7 @@ exports[`BottomContent component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -124,6 +127,7 @@ exports[`BottomContent component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -197,6 +201,7 @@ exports[`BottomContent component renders correctly 1`] = `
   <Memo(wrappedComponent)
     entity={
       {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -220,6 +225,7 @@ exports[`BottomContent component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,

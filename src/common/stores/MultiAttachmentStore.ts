@@ -120,8 +120,13 @@ export default class MultiAttachmentStore {
         attachment => attachment.assetId === media.assetId,
       );
     }
+    if (media.path) {
+      return this.attachments.some(
+        attachment => attachment.path === media.path,
+      );
+    }
 
-    return this.attachments.some(attachment => attachment.path === media.path);
+    return this.attachments.some(attachment => attachment.uri === media.uri);
   }
 
   /**

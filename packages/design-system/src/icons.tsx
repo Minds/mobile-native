@@ -35,6 +35,7 @@ import { Tip } from './icons/Tip';
 import { Upvote } from './icons/Upvote';
 import { VerifiedBadge } from './icons/VerifiedBadge';
 import { Wallet } from './icons/Wallet';
+import { MindsPro } from './icons/MindsPro';
 
 export const icons = {
   adjust: Adjust,
@@ -72,6 +73,7 @@ export const icons = {
   upvote: Upvote,
   verifiedBadge: VerifiedBadge,
   wallet: Wallet,
+  mindsPro: MindsPro,
 };
 
 export {
@@ -110,6 +112,7 @@ export {
   Upvote,
   VerifiedBadge,
   Wallet,
+  MindsPro,
 };
 
 export type IconNames = keyof typeof icons;

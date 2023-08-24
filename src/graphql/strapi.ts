@@ -1,4 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { gqlFetcher } from '~/common/services/strapi.service';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -19,33 +20,6 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch('https://cms.minds.com/graphql', {
-      method: 'POST',
-      ...{
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache',
-          'no-cache': '1',
-        },
-      },
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -158,6 +132,59 @@ export type ComponentCommonActionButtonInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   navigationUrl?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentExplainerScreenContinueButton = {
+  __typename?: 'ComponentExplainerScreenContinueButton';
+  dataRef: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ComponentExplainerScreenContinueButtonFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>>
+  >;
+  dataRef?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>>
+  >;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentExplainerScreenContinueButtonInput = {
+  dataRef?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentExplainerScreenSection = {
+  __typename?: 'ComponentExplainerScreenSection';
+  description: Scalars['String']['output'];
+  icon: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentExplainerScreenSectionFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentExplainerScreenSectionFiltersInput>>
+  >;
+  description?: InputMaybe<StringFilterInput>;
+  icon?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentExplainerScreenSectionFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentExplainerScreenSectionFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentExplainerScreenSectionInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ComponentMarketingComponentsAsFeaturedIn = {
@@ -456,6 +483,12 @@ export type ComponentOnboardingV5UserSelectorStep = {
 
 export type ComponentOnboardingV5VerifyEmailStep = {
   __typename?: 'ComponentOnboardingV5VerifyEmailStep';
+  changeEmailActionButton: ComponentOnboardingV5ActionButton;
+  changeEmailActionText: Scalars['String']['output'];
+  changeEmailDescription: Scalars['String']['output'];
+  changeEmailInputLabel: Scalars['String']['output'];
+  changeEmailInputPlaceholder?: Maybe<Scalars['String']['output']>;
+  changeEmailTitle: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   inputLabel: Scalars['String']['output'];
   inputPlaceholder?: Maybe<Scalars['String']['output']>;
@@ -633,6 +666,127 @@ export type Error = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type ExplainerScreenMobile = {
+  __typename?: 'ExplainerScreenMobile';
+  continueButton: ComponentExplainerScreenContinueButton;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  key: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  section: Array<Maybe<ComponentExplainerScreenSection>>;
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ExplainerScreenMobileSectionArgs = {
+  filters?: InputMaybe<ComponentExplainerScreenSectionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ExplainerScreenMobileEntity = {
+  __typename?: 'ExplainerScreenMobileEntity';
+  attributes?: Maybe<ExplainerScreenMobile>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ExplainerScreenMobileEntityResponse = {
+  __typename?: 'ExplainerScreenMobileEntityResponse';
+  data?: Maybe<ExplainerScreenMobileEntity>;
+};
+
+export type ExplainerScreenMobileEntityResponseCollection = {
+  __typename?: 'ExplainerScreenMobileEntityResponseCollection';
+  data: Array<ExplainerScreenMobileEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ExplainerScreenMobileFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ExplainerScreenMobileFiltersInput>>>;
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  key?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ExplainerScreenMobileFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ExplainerScreenMobileFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  section?: InputMaybe<ComponentExplainerScreenSectionFiltersInput>;
+  subtitle?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ExplainerScreenMobileInput = {
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonInput>;
+  key?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  section?: InputMaybe<Array<InputMaybe<ComponentExplainerScreenSectionInput>>>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ExplainerScreenWeb = {
+  __typename?: 'ExplainerScreenWeb';
+  continueButton: ComponentExplainerScreenContinueButton;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  key: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  section: Array<Maybe<ComponentExplainerScreenSection>>;
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  triggerRoute?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ExplainerScreenWebSectionArgs = {
+  filters?: InputMaybe<ComponentExplainerScreenSectionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ExplainerScreenWebEntity = {
+  __typename?: 'ExplainerScreenWebEntity';
+  attributes?: Maybe<ExplainerScreenWeb>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ExplainerScreenWebEntityResponse = {
+  __typename?: 'ExplainerScreenWebEntityResponse';
+  data?: Maybe<ExplainerScreenWebEntity>;
+};
+
+export type ExplainerScreenWebEntityResponseCollection = {
+  __typename?: 'ExplainerScreenWebEntityResponseCollection';
+  data: Array<ExplainerScreenWebEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ExplainerScreenWebFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ExplainerScreenWebFiltersInput>>>;
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  key?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ExplainerScreenWebFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ExplainerScreenWebFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  section?: InputMaybe<ComponentExplainerScreenSectionFiltersInput>;
+  subtitle?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  triggerRoute?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ExplainerScreenWebInput = {
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonInput>;
+  key?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  section?: InputMaybe<Array<InputMaybe<ComponentExplainerScreenSectionInput>>>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  triggerRoute?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -666,6 +820,8 @@ export type FloatFilterInput = {
 export type GenericMorph =
   | AuxPage
   | ComponentCommonActionButton
+  | ComponentExplainerScreenContinueButton
+  | ComponentExplainerScreenSection
   | ComponentMarketingComponentsAsFeaturedIn
   | ComponentMarketingComponentsHero
   | ComponentMarketingComponentsMarketingPageSection
@@ -686,6 +842,8 @@ export type GenericMorph =
   | ComponentProductHero
   | ComponentProductOther
   | ComponentProductSection
+  | ExplainerScreenMobile
+  | ExplainerScreenWeb
   | Homepage
   | I18NLocale
   | OnboardingV5Version
@@ -859,6 +1017,8 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createAuxPage?: Maybe<AuxPageEntityResponse>;
+  createExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
+  createExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   createOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -868,6 +1028,8 @@ export type Mutation = {
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
+  deleteExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
+  deleteExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
   deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
@@ -891,6 +1053,8 @@ export type Mutation = {
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateAuxPage?: Maybe<AuxPageEntityResponse>;
+  updateExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
+  updateExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateHomepage?: Maybe<HomepageEntityResponse>;
   updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
@@ -914,6 +1078,14 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateAuxPageArgs = {
   data: AuxPageInput;
+};
+
+export type MutationCreateExplainerScreenMobileArgs = {
+  data: ExplainerScreenMobileInput;
+};
+
+export type MutationCreateExplainerScreenWebArgs = {
+  data: ExplainerScreenWebInput;
 };
 
 export type MutationCreateOnboardingV5VersionArgs = {
@@ -941,6 +1113,14 @@ export type MutationCreateUsersPermissionsUserArgs = {
 };
 
 export type MutationDeleteAuxPageArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteExplainerScreenMobileArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteExplainerScreenWebArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1003,6 +1183,16 @@ export type MutationResetPasswordArgs = {
 
 export type MutationUpdateAuxPageArgs = {
   data: AuxPageInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateExplainerScreenMobileArgs = {
+  data: ExplainerScreenMobileInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateExplainerScreenWebArgs = {
+  data: ExplainerScreenWebInput;
   id: Scalars['ID']['input'];
 };
 
@@ -1196,6 +1386,10 @@ export type Query = {
   __typename?: 'Query';
   auxPage?: Maybe<AuxPageEntityResponse>;
   auxPages?: Maybe<AuxPageEntityResponseCollection>;
+  explainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
+  explainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
+  explainerScreensMobile?: Maybe<ExplainerScreenMobileEntityResponseCollection>;
+  explainerScreensWeb?: Maybe<ExplainerScreenWebEntityResponseCollection>;
   homepage?: Maybe<HomepageEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
@@ -1222,6 +1416,28 @@ export type QueryAuxPageArgs = {
 
 export type QueryAuxPagesArgs = {
   filters?: InputMaybe<AuxPageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryExplainerScreenMobileArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryExplainerScreenWebArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryExplainerScreensMobileArgs = {
+  filters?: InputMaybe<ExplainerScreenMobileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryExplainerScreensWebArgs = {
+  filters?: InputMaybe<ExplainerScreenWebFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1786,6 +2002,68 @@ export type RemoteBannerQuery = {
   } | null;
 };
 
+export type GetExplainerScreensQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetExplainerScreensQuery = {
+  __typename?: 'Query';
+  explainerScreensWeb?: {
+    __typename?: 'ExplainerScreenWebEntityResponseCollection';
+    data: Array<{
+      __typename?: 'ExplainerScreenWebEntity';
+      attributes?: {
+        __typename?: 'ExplainerScreenWeb';
+        key: string;
+        triggerRoute?: string | null;
+        title: string;
+        subtitle: string;
+        section: Array<{
+          __typename?: 'ComponentExplainerScreenSection';
+          icon: string;
+          title: string;
+          description: string;
+        } | null>;
+        continueButton: {
+          __typename?: 'ComponentExplainerScreenContinueButton';
+          text: string;
+          dataRef: string;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
+export type GetExplainerScreenQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetExplainerScreenQuery = {
+  __typename?: 'Query';
+  explainerScreensWeb?: {
+    __typename?: 'ExplainerScreenWebEntityResponseCollection';
+    data: Array<{
+      __typename?: 'ExplainerScreenWebEntity';
+      attributes?: {
+        __typename?: 'ExplainerScreenWeb';
+        key: string;
+        triggerRoute?: string | null;
+        title: string;
+        subtitle: string;
+        section: Array<{
+          __typename?: 'ComponentExplainerScreenSection';
+          icon: string;
+          title: string;
+          description: string;
+        } | null>;
+        continueButton: {
+          __typename?: 'ComponentExplainerScreenContinueButton';
+          text: string;
+          dataRef: string;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
 export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TweetMessageQuery = {
@@ -1827,8 +2105,86 @@ export const useRemoteBannerQuery = <
 ) =>
   useQuery<RemoteBannerQuery, TError, TData>(
     variables === undefined ? ['RemoteBanner'] : ['RemoteBanner', variables],
-    fetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
+    gqlFetcher<RemoteBannerQuery, RemoteBannerQueryVariables>(
       RemoteBannerDocument,
+      variables,
+    ),
+    options,
+  );
+export const GetExplainerScreensDocument = `
+    query GetExplainerScreens {
+  explainerScreensWeb {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetExplainerScreensQuery = <
+  TData = GetExplainerScreensQuery,
+  TError = unknown,
+>(
+  variables?: GetExplainerScreensQueryVariables,
+  options?: UseQueryOptions<GetExplainerScreensQuery, TError, TData>,
+) =>
+  useQuery<GetExplainerScreensQuery, TError, TData>(
+    variables === undefined
+      ? ['GetExplainerScreens']
+      : ['GetExplainerScreens', variables],
+    gqlFetcher<GetExplainerScreensQuery, GetExplainerScreensQueryVariables>(
+      GetExplainerScreensDocument,
+      variables,
+    ),
+    options,
+  );
+export const GetExplainerScreenDocument = `
+    query GetExplainerScreen($key: String!) {
+  explainerScreensWeb(filters: {key: {eq: $key}}) {
+    data {
+      attributes {
+        key
+        triggerRoute
+        title
+        subtitle
+        section {
+          icon
+          title
+          description
+        }
+        continueButton {
+          text
+          dataRef
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetExplainerScreenQuery = <
+  TData = GetExplainerScreenQuery,
+  TError = unknown,
+>(
+  variables: GetExplainerScreenQueryVariables,
+  options?: UseQueryOptions<GetExplainerScreenQuery, TError, TData>,
+) =>
+  useQuery<GetExplainerScreenQuery, TError, TData>(
+    ['GetExplainerScreen', variables],
+    gqlFetcher<GetExplainerScreenQuery, GetExplainerScreenQueryVariables>(
+      GetExplainerScreenDocument,
       variables,
     ),
     options,
@@ -1853,7 +2209,7 @@ export const useTweetMessageQuery = <
 ) =>
   useQuery<TweetMessageQuery, TError, TData>(
     variables === undefined ? ['TweetMessage'] : ['TweetMessage', variables],
-    fetcher<TweetMessageQuery, TweetMessageQueryVariables>(
+    gqlFetcher<TweetMessageQuery, TweetMessageQueryVariables>(
       TweetMessageDocument,
       variables,
     ),

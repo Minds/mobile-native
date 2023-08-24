@@ -13,9 +13,9 @@ import _ from 'lodash';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 import sessionService from './session.service';
+import { hasVariation } from '../../../ExperimentsProvider';
 
-export const shouldInjectBoostAtIndex = (i: number) =>
-  (i > 0 && i % 5 === 0) || i === 2;
+export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -146,7 +146,10 @@ export default class FeedsService {
     }
 
     for (let i = this.offset; i < this.offset + result.length; i++) {
-      if (shouldInjectBoostAtIndex(i)) {
+      if (
+        shouldInjectBoostAtIndex(i) ||
+        (!hasVariation('mob-5009-boost-rotator-in-feed') && i === 2)
+      ) {
         const boost = (this.boostedContent ?? boostedContentService).fetch();
         if (boost) {
           result.splice(i, 0, boost);
@@ -457,6 +460,11 @@ export default class FeedsService {
       if (!(await this.fetchLocal())) {
         // if there is no local data rethrow the exception
         throw err;
+      }
+
+      // TODO: remove this after fixed https://github.com/react-native-netinfo/react-native-netinfo/issues/669
+      if (connectivityService.isConnected) {
+        return;
       }
 
       showNotification(

@@ -10,6 +10,8 @@ import BoostConsoleStore from '../boost-console.store';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
+import BoostFeed from '../components/v3/BoostFeed';
+import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 interface BoostConsoleScreenProps {
   route: RouteProp<any>;
@@ -101,18 +103,23 @@ function BoostConsoleScreen({
             />
           }
         />
-        <FlatList
-          ListHeaderComponent={<BoostTabBarV3 />}
-          ListEmptyComponent={empty}
-          data={boostConsoleStore.list.entities.slice()}
-          renderItem={renderBoost}
-          keyExtractor={item => item.rowKey}
-          onRefresh={refresh}
-          refreshing={boostConsoleStore.list.refreshing}
-          onEndReached={loadFeed}
-          onEndReachedThreshold={0}
-          style={styles.list}
-        />
+        {boostConsoleStore.filter !== 'explore' ? (
+          <FlatList
+            ListHeaderComponent={<BoostTabBarV3 />}
+            ListEmptyComponent={empty}
+            data={boostConsoleStore.list.entities.slice()}
+            renderItem={renderBoost}
+            keyExtractor={item => item.rowKey}
+            onRefresh={refresh}
+            refreshing={boostConsoleStore.list.refreshing}
+            onEndReached={loadFeed}
+            onEndReachedThreshold={0}
+            style={styles.list}
+          />
+        ) : (
+          <BoostFeed ListHeaderComponent={<BoostTabBarV3 />} />
+        )}
+        <OnboardingOverlay type="boost" />
       </Screen>
     </BoostConsoleStoreContext.Provider>
   );
@@ -121,6 +128,6 @@ function BoostConsoleScreen({
 export default observer(BoostConsoleScreen);
 
 const styles = ThemedStyles.create({
-  list: ['bgPrimaryBackground', 'flexContainer', 'marginTop3x'],
+  list: ['bgPrimaryBackground', 'flexContainer'],
   emptyContent: ['alignCenter', 'marginTop12x'],
 });

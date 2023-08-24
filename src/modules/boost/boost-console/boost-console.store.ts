@@ -18,7 +18,7 @@ class BoostConsoleStore {
   /**
    * Boosts list filter
    */
-  @observable filter: 'feed' | 'sidebar' = 'feed';
+  @observable filter: 'feed' | 'sidebar' | 'explore' = 'feed';
   @observable peer_filter = 'inbox';
   @observable feedFilter: 'all' | BoostStatus = 'all';
 

@@ -98,7 +98,6 @@ export default class ActivityModel extends BaseModel {
   };
   spam?: boolean;
   type?: string;
-  permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
   blurhash?: string;
@@ -647,6 +646,15 @@ export default class ActivityModel extends BaseModel {
     socketService.unsubscribe(this.metricsRoom, event =>
       this.onMetricsUpdate(event),
     );
+  }
+
+  /**
+   * Used to handle the state for the collapsed state
+   */
+  @action
+  setCollapsed(on = true) {
+    this._collapsed = on;
+    this.__list?.updateEntity(this.guid, this);
   }
 }
 

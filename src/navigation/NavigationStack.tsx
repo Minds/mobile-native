@@ -578,6 +578,14 @@ const RootStack = observer(function () {
               name="Report"
               getComponent={() => require('~/report/ReportScreen').default}
             />
+            <RootStackNav.Screen
+              name="BoostUpgrade"
+              getComponent={() => require('~/modules/boost').BoostUpgrade}
+              options={{
+                ...defaultScreenOptions,
+                headerShown: false,
+              }}
+            />
           </>
         )
       ) : (
@@ -633,6 +641,10 @@ const RootStack = observer(function () {
           ...TransitionPresets.ModalFadeTransition,
           gestureEnabled: false,
         }}
+      />
+      <RootStackNav.Screen
+        name="ChangeEmail"
+        getComponent={() => require('~/auth/ChangeEmailScreen').default}
       />
     </RootStackNav.Navigator>
   );
