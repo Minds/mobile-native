@@ -152,6 +152,7 @@ const pushNewCardBottomSheet = store => {
           )}
           {store.cardDetailsComplete && (
             <BottomSheetButton
+              action
               text={i18n.t('wire.addCard')}
               onPress={() => onComplete()}
               loading={store.inProgress}
