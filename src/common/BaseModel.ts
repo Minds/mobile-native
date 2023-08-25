@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS } from 'mobx';
+import { observable, action, computed, toJS, runInAction } from 'mobx';
 import _ from 'lodash';
 import EventEmitter from 'eventemitter3';
 
@@ -54,6 +54,12 @@ export default class BaseModel extends AbstractModel {
    * @var {OffsetListStore}
    */
   __list: FeedStore | null = null;
+
+  /**
+   * Whether this model is collapsed in the feed
+   * @var {OffsetListStore}
+   */
+  @observable _collapsed: boolean = false;
 
   /**
    *  List reference setter
@@ -252,9 +258,13 @@ export default class BaseModel extends AbstractModel {
     let value = !this.mature;
     try {
       await toggleExplicit(this.guid, value);
-      this.mature = value;
+      runInAction(() => {
+        this.mature = value;
+      });
     } catch (err) {
-      this.mature = !value;
+      runInAction(() => {
+        this.mature = !value;
+      });
       logService.exception('[BaseModel]', err);
       throw err;
     }
@@ -263,7 +273,9 @@ export default class BaseModel extends AbstractModel {
   @action
   async toggleAllowComments() {
     await toggleAllow(this.guid, !this.allow_comments);
-    this.allow_comments = !this.allow_comments;
+    runInAction(() => {
+      this.allow_comments = !this.allow_comments;
+    });
   }
 
   @action
@@ -303,7 +315,7 @@ export default class BaseModel extends AbstractModel {
    */
   sendViewed(medium?: MetadataMedium, position?: number) {
     if (this._list) {
-      this._list.trackView(this, medium, position);
+      this._list.trackView?.(this, medium, position);
     } else {
       const metadata = new MetadataService();
       metadata.setMedium('single').setSource('single');

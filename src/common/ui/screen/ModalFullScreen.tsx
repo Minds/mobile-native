@@ -35,9 +35,10 @@ export const ModalFullScreen = ({
 }: PropsType) => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
-  const goBackPress = React.useCallback(() => navigation.goBack(), [
-    navigation,
-  ]);
+  const goBackPress = React.useCallback(
+    () => navigation.goBack(),
+    [navigation],
+  );
 
   return (
     <Screen loading={loading} scroll={scroll} safe>

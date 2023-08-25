@@ -9,3 +9,5 @@ export default {
   onSession: jest.fn(),
   getUser: jest.fn(),
 };
+
+export const isTokenExpired = jest.fn();

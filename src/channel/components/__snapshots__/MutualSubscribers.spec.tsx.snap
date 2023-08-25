@@ -4,40 +4,47 @@ exports[`MutualSubscribers renders correctly 1`] = `
 <AnimatedHeight>
   <Spacer
     containerStyle={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexDirection": "row",
           "justifyContent": "flex-start",
         },
-        Object {
+        {
           "alignItems": "center",
         },
-        Object {
+        {
           "width": "100%",
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#323C3F",
         },
       ]
     }
-    navigation={Object {}}
+    navigation={{}}
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
+          {
             "paddingRight": 20,
           },
         ]
       }
     >
       <ChannelAvatar
+        key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -45,7 +52,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -69,15 +76,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -87,16 +94,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -108,19 +115,20 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
         }
       />
       <ChannelAvatar
+        key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -128,7 +136,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -152,15 +160,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -170,16 +178,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -191,19 +199,20 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
         }
       />
       <ChannelAvatar
+        key="123"
         user={
-          Object {
+          {
             "access_id": "2",
             "banned": "no",
             "blocked": false,
@@ -211,7 +220,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "boost_autorotate": true,
             "boost_rating": "2",
             "briefdescription": "",
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -235,15 +244,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction],
-            "guid": undefined,
+            "guid": "123",
             "icontime": "1523515420",
             "impressions": 100,
             "language": "en",
             "legacy_guid": false,
             "mature": "1",
             "mature_channel": "0",
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -253,16 +262,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "monetized": "",
             "name": "Some User",
             "owner_guid": "0",
-            "pinned_posts": Array [],
+            "pinned_posts": [],
             "plus": true,
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
@@ -274,11 +283,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           }
@@ -287,26 +296,27 @@ exports[`MutualSubscribers renders correctly 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
           },
-          Object {
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
+          {
             "flexWrap": "wrap",
           },
         ]
       }
     >
       <Description
+        fontType="B2"
         limit={3}
         total={10}
         users={
-          Array [
-            Object {
+          [
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -314,7 +324,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -338,15 +348,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -356,16 +366,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -377,15 +387,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },
-            Object {
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -393,7 +403,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -417,15 +427,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -435,16 +445,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -456,15 +466,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },
-            Object {
+            {
               "access_id": "2",
               "banned": "no",
               "blocked": false,
@@ -472,7 +482,7 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "boost_autorotate": true,
               "boost_rating": "2",
               "briefdescription": "",
-              "categories": Array [
+              "categories": [
                 "music",
                 "nature",
                 "news",
@@ -496,15 +506,15 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "founder": false,
               "gender": "private",
               "getAvatarSource": [MockFunction],
-              "guid": undefined,
+              "guid": "123",
               "icontime": "1523515420",
               "impressions": 100,
               "language": "en",
               "legacy_guid": false,
               "mature": "1",
               "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
+              "merchant": {
+                "exclusive": {
                   "amount": "10",
                   "enabled": true,
                 },
@@ -514,16 +524,16 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "monetized": "",
               "name": "Some User",
               "owner_guid": "0",
-              "pinned_posts": Array [],
+              "pinned_posts": [],
               "plus": true,
-              "programs": Array [
+              "programs": [
                 "affiliate",
               ],
               "rating": "1",
               "rewards": true,
               "signup_method": false,
               "site_guid": false,
-              "social_profiles": Array [],
+              "social_profiles": [],
               "spam": "0",
               "subscribed": false,
               "subscriber": true,
@@ -535,169 +545,11 @@ exports[`MutualSubscribers renders correctly 1`] = `
               "username": "someusermane",
               "verified": true,
               "website": "",
-              "wire_rewards": Object {
+              "wire_rewards": {
                 "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
-                },
-              },
-            },
-            Object {
-              "access_id": "2",
-              "banned": "no",
-              "blocked": false,
-              "boostProPlus": false,
-              "boost_autorotate": true,
-              "boost_rating": "2",
-              "briefdescription": "",
-              "categories": Array [
-                "music",
-                "nature",
-                "news",
-                "politics",
-                "science",
-                "technology",
-                "education",
-                "art",
-                "health",
-              ],
-              "chat": true,
-              "city": "",
-              "container_guid": "0",
-              "deleted": "0",
-              "disabled_boost": false,
-              "dob": "",
-              "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
-              "fb": false,
-              "feature_flags": false,
-              "featured_id": "725165605782560768",
-              "founder": false,
-              "gender": "private",
-              "getAvatarSource": [MockFunction],
-              "guid": undefined,
-              "icontime": "1523515420",
-              "impressions": 100,
-              "language": "en",
-              "legacy_guid": false,
-              "mature": "1",
-              "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
-                  "amount": "10",
-                  "enabled": true,
-                },
-                "id": "acct_Dsdfjdlsaf34243",
-                "service": "stripe",
-              },
-              "monetized": "",
-              "name": "Some User",
-              "owner_guid": "0",
-              "pinned_posts": Array [],
-              "plus": true,
-              "programs": Array [
-                "affiliate",
-              ],
-              "rating": "1",
-              "rewards": true,
-              "signup_method": false,
-              "site_guid": false,
-              "social_profiles": Array [],
-              "spam": "0",
-              "subscribed": false,
-              "subscriber": true,
-              "subscribers_count": 50,
-              "subtype": false,
-              "time_created": "1468113204",
-              "time_updated": false,
-              "type": "user",
-              "username": "someusermane",
-              "verified": true,
-              "website": "",
-              "wire_rewards": Object {
-                "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
-                },
-              },
-            },
-            Object {
-              "access_id": "2",
-              "banned": "no",
-              "blocked": false,
-              "boostProPlus": false,
-              "boost_autorotate": true,
-              "boost_rating": "2",
-              "briefdescription": "",
-              "categories": Array [
-                "music",
-                "nature",
-                "news",
-                "politics",
-                "science",
-                "technology",
-                "education",
-                "art",
-                "health",
-              ],
-              "chat": true,
-              "city": "",
-              "container_guid": "0",
-              "deleted": "0",
-              "disabled_boost": false,
-              "dob": "",
-              "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
-              "fb": false,
-              "feature_flags": false,
-              "featured_id": "725165605782560768",
-              "founder": false,
-              "gender": "private",
-              "getAvatarSource": [MockFunction],
-              "guid": undefined,
-              "icontime": "1523515420",
-              "impressions": 100,
-              "language": "en",
-              "legacy_guid": false,
-              "mature": "1",
-              "mature_channel": "0",
-              "merchant": Object {
-                "exclusive": Object {
-                  "amount": "10",
-                  "enabled": true,
-                },
-                "id": "acct_Dsdfjdlsaf34243",
-                "service": "stripe",
-              },
-              "monetized": "",
-              "name": "Some User",
-              "owner_guid": "0",
-              "pinned_posts": Array [],
-              "plus": true,
-              "programs": Array [
-                "affiliate",
-              ],
-              "rating": "1",
-              "rewards": true,
-              "signup_method": false,
-              "site_guid": false,
-              "social_profiles": Array [],
-              "spam": "0",
-              "subscribed": false,
-              "subscriber": true,
-              "subscribers_count": 50,
-              "subtype": false,
-              "time_created": "1468113204",
-              "time_updated": false,
-              "type": "user",
-              "username": "someusermane",
-              "verified": true,
-              "website": "",
-              "wire_rewards": Object {
-                "description": "",
-                "rewards": Object {
-                  "money": Array [],
-                  "points": Array [],
+                "rewards": {
+                  "money": [],
+                  "points": [],
                 },
               },
             },

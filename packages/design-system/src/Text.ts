@@ -5,8 +5,8 @@ export const Text = styled(Paragraph, {
   tag: 'span',
   name: 'Text',
   fontFamily: '$body',
+  fontWeight: '400',
   size: '$b',
-  // margin: 0,
   variants: {
     type: {
       primary: {
@@ -34,7 +34,4 @@ export const Text = styled(Paragraph, {
       },
     },
   } as const,
-  defaultVariants: {
-    fontWeight: '400',
-  },
 });

@@ -23,10 +23,10 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
     return user.getAvatarSource('small');
   }, []);
 
-  const _onPress = useCallback(() => onPress(referral.prospect), [
-    onPress,
-    referral,
-  ]);
+  const _onPress = useCallback(
+    () => onPress(referral.prospect),
+    [onPress, referral],
+  );
 
   return (
     <View

@@ -12,18 +12,14 @@ import CheckLanguage from '../common/components/CheckLanguage';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/components/PortraitContentBar';
-import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
-import ChannelRecommendationBody from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
 import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
-import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
 import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
 import FeedListSticky from '~/common/components/FeedListSticky';
-import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import { ChannelRecommendationProvider } from '~/common/components/ChannelRecommendation/ChannelRecommendationProvider';
 import TopFeedHighlightsHeader from './TopFeedHighlightsHeader';
 import TopInFeedNotice from '~/common/components/in-feed-notices/TopInFeedNotice';
@@ -37,6 +33,17 @@ import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
 import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
+import RemoteBanner from '~/common/components/RemoteBanner';
+import NewsfeedTabs from './NewsfeedTabs';
+import {
+  RecommendationProvider,
+  RecommendationHeader,
+  RecommendationBody,
+  RecommendationType,
+  Recommendation,
+} from 'modules/recommendation';
+import { GroupsEmpty } from '../modules/groups';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -47,17 +54,10 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 const HIGHLIGHT_POSITION = 9;
 const RECOMMENDATION_POSITION = 4;
 
-const sticky = [
-  RECOMMENDATION_POSITION,
-  RECOMMENDATION_POSITION + 2,
-  HIGHLIGHT_POSITION,
-  HIGHLIGHT_POSITION + 2,
-];
-
 type NewsfeedScreenProps = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
-  newsfeed: NewsfeedStore<any>;
+  newsfeed: NewsfeedStore;
   route: NewsfeedScreenRouteProp;
 };
 
@@ -74,14 +74,42 @@ const overrideItemLayout = (layout, item, index) => {
 const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const { newsfeed } = useLegacyStores();
   const portrait = useStores().portrait;
+  const inFeedBoostRotator = useIsFeatureOn('mob-5009-boost-rotator-in-feed');
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
 
-  const refreshNewsfeed = useCallback(() => {
-    newsfeed.scrollToTop();
-    newsfeed.highlightsStore.refresh();
-    newsfeed.latestFeedStore.refresh();
-    newsfeed.topFeedStore.refresh();
-  }, [newsfeed]);
+  const refreshNewsfeed = useCallback(
+    (scrollAndRefresh = false) => {
+      const position = newsfeed.listRef?.getScrollPosition();
+      if (position && position > 10 && !scrollAndRefresh) {
+        newsfeed.listRef?.scrollToOffset({ offset: 0, animated: true });
+      } else {
+        if (scrollAndRefresh) {
+          newsfeed.listRef?.scrollToOffset({ offset: 0, animated: true });
+        }
+        if (
+          newsfeed.latestFeedStore.newPostsCount ||
+          newsfeed.feedType !== 'latest'
+        ) {
+          switch (newsfeed.feedType) {
+            case 'foryou':
+              newsfeed.forYouStore.refresh();
+              break;
+            case 'latest':
+              newsfeed.latestFeedStore.refresh(
+                newsfeed.highlightsStore.refresh(), // sync highlights load but wait for it before updating the feed (Performance improvement)
+              );
+              break;
+            case 'top':
+              newsfeed.topFeedStore.refresh();
+              break;
+            case 'groups':
+              newsfeed.groupsFeedStore.refresh();
+          }
+        }
+      }
+    },
+    [newsfeed],
+  );
 
   const onTabPress = useCallback(
     e => {
@@ -125,66 +153,77 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       0,
       'prepend',
       () => (
-        <View>
+        <>
           <CheckLanguage />
+          <CodePushUpdatePrompt>
+            <RemoteBanner />
+          </CodePushUpdatePrompt>
           <InitialOnboardingButton />
           <PortraitContentBar />
-          <CodePushUpdatePrompt />
           <TopInFeedNotice />
           {inAppVerification ? <InAppVerificationPrompt /> : null}
-          <NewsfeedHeader
-            feedType={newsfeed.feedType}
-            onFeedTypeChange={newsfeed.changeFeedTypeChange}
-          />
-          <BoostRotator />
-        </View>
+          <NewsfeedTabs newsfeed={newsfeed} />
+          {!inFeedBoostRotator && <BoostRotator />}
+        </>
       ),
       () => InFeedNoticesService.trackViewTop(),
     );
 
+    const boostRotatorInjectItem = inFeedBoostRotator
+      ? new InjectItem(3, 'rotator', () => <BoostRotator />)
+      : undefined;
+
     // latest feed injected components
     newsfeed.latestFeedStore.setInjectedItems([
       prepend,
-
-      new InjectItem(RECOMMENDATION_POSITION, 'channel', ({ target }) => (
-        <ChannelRecommendationHeader
-          location="newsfeed"
-          shadow={target === 'StickyHeader'}
-        />
+      boostRotatorInjectItem,
+      new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
+        <ChannelRecommendation location="newsfeed" />
       )),
-      new InjectItem(RECOMMENDATION_POSITION + 1, 'channel', () => (
-        <ChannelRecommendationBody location="newsfeed" />
-      )),
-      new InjectItem(
-        RECOMMENDATION_POSITION + 2,
-        'end',
-        FeedListInvisibleHeader,
-      ),
       new InjectItem(
         7,
         'ilNotice',
         () => <InlineInFeedNotice position={1} />,
         () => InFeedNoticesService.trackViewInFeed(1),
       ),
-
-      new InjectItem(HIGHLIGHT_POSITION, 'highlightheader', ({ target }) => (
-        <TopFeedHighlightsHeader target={target} />
-      )),
       new InjectItem(HIGHLIGHT_POSITION + 1, 'highlight', () => (
-        <TopFeedHighlights
-          onSeeTopFeedPress={() => {
-            newsfeed.listRef?.scrollToTop(true);
-            setTimeout(() => {
-              newsfeed.changeFeedTypeChange('top', true);
-            }, 500);
-          }}
-        />
+        <>
+          <TopFeedHighlightsHeader />
+          <TopFeedHighlights
+            onSeeTopFeedPress={() => {
+              newsfeed.listRef?.scrollToOffset({ animated: true, offset: 0 });
+              setTimeout(() => {
+                newsfeed.changeFeedType('top', true);
+              }, 500);
+            }}
+          />
+        </>
       )),
-      new InjectItem(HIGHLIGHT_POSITION + 2, 'end', FeedListInvisibleHeader),
     ]);
 
     // top feed injected components
-    newsfeed.topFeedStore.setInjectedItems([prepend]);
+    newsfeed.topFeedStore.setInjectedItems([prepend, boostRotatorInjectItem]);
+    // for you injected components
+    newsfeed.forYouStore.setInjectedItems([prepend, boostRotatorInjectItem]);
+    // groups injected components
+    newsfeed.groupsFeedStore
+      .setInjectedItems([
+        prepend,
+        new InjectItem(RECOMMENDATION_POSITION, 'grouprecs-body', () => (
+          <>
+            <RecommendationHeader type="group" location="feed" />
+            <RecommendationBody size={1} type="group" location="feed" />
+          </>
+        )),
+      ])
+      .setEmptyComponent(
+        new InjectItem(1, 'empty', () => (
+          <>
+            <GroupsEmpty />
+            <Recommendation size={5} location="feed" type="group" />
+          </>
+        )),
+      );
   }
 
   const isLatest = newsfeed.feedType === 'latest';
@@ -193,33 +232,36 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
     <Screen safe onlyTopEdge={IS_IOS}>
       <PrefetchNotifications tabs={prefetch} />
       <ChannelRecommendationProvider location="newsfeed">
-        <View style={ThemedStyles.style.flexContainer}>
-          <FeedListSticky
-            stickyHeaderIndices={isLatest ? sticky : undefined}
-            overrideItemLayout={overrideItemLayout}
-            bottomComponent={
-              isLatest ? (
-                <SeeLatestPostsButton
-                  onPress={refreshNewsfeed}
-                  feedStore={newsfeed.latestFeedStore}
-                />
-              ) : undefined
-            }
-            header={<Topbar noInsets banners navigation={navigation} />}
-            ref={newsfeed.setListRef}
-            feedStore={
-              isLatest ? newsfeed.latestFeedStore : newsfeed.topFeedStore
-            }
-            navigation={navigation}
-            afterRefresh={refreshPortrait}
-            placeholder={NewsfeedPlaceholder}
-          />
-        </View>
+        <RecommendationProvider
+          location="newsfeed"
+          types={RECOMMENDATION_TYPES}>
+          <View style={ThemedStyles.style.flexContainer}>
+            <FeedListSticky
+              overrideItemLayout={overrideItemLayout}
+              emphasizeGroup
+              bottomComponent={
+                isLatest ? (
+                  <SeeLatestPostsButton
+                    onPress={() => refreshNewsfeed(true)}
+                    feedStore={newsfeed.latestFeedStore}
+                  />
+                ) : undefined
+              }
+              header={<Topbar noInsets navigation={navigation} />}
+              ref={newsfeed.setListRef}
+              feedStore={newsfeed.feedStore}
+              afterRefresh={refreshPortrait}
+              placeholder={NewsfeedPlaceholder}
+              extraData={newsfeed.feedType}
+            />
+          </View>
+        </RecommendationProvider>
       </ChannelRecommendationProvider>
     </Screen>
   );
 });
 
 const prefetch: NotificationsTabOptions[] = ['all'];
+const RECOMMENDATION_TYPES: RecommendationType[] = ['group'];
 
 export default withErrorBoundary(NewsfeedScreen);

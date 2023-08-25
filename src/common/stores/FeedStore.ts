@@ -63,6 +63,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   injectItems?: InjectItem[];
 
   /**
+   * Custom injected components
+   */
+  emptyComponent?: InjectItem;
+
+  /**
    * Viewed store
    */
   viewStore = new ViewStore();
@@ -112,8 +117,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Sets the injected items for the feed
    */
-  setInjectedItems(injectItems: InjectItem[]) {
-    this.injectItems = injectItems;
+  setInjectedItems(injectItems: (InjectItem | undefined)[]) {
+    this.injectItems = injectItems.filter(Boolean) as InjectItem[];
+    return this;
+  }
+
+  /**
+   * Sets the injected items for the feed
+   */
+  setEmptyComponent(emptyComponent: InjectItem) {
+    this.emptyComponent = emptyComponent;
   }
 
   /**
@@ -157,7 +170,17 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   @action
   addEntities(entities, replace = false) {
-    if (replace) {
+    if (!entities.length) {
+      const injected = this.injectItems?.find(i =>
+        typeof i.indexes === 'function' ? i.indexes(0) : i.indexes === 0,
+      );
+      if (injected) {
+        this.entities = [injected];
+      }
+      if (this.emptyComponent) {
+        this.entities.push(this.emptyComponent);
+      }
+    } else if (replace) {
       entities.forEach((entity, index) => {
         entity._list = this;
         entity.position = index + 1;
@@ -204,6 +227,22 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     }
 
     this.loaded = true;
+  }
+
+  @action
+  updateEntity(guid: string, entity: T) {
+    this.entities = this.entities.map(ent => {
+      if (ent instanceof InjectItem) {
+        return ent;
+      }
+
+      if (ent.guid === guid) {
+        return entity;
+      }
+
+      return ent;
+    });
+    return this;
   }
 
   /**
@@ -468,10 +507,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
+      }
 
-      this.addEntities(entities, replace);
+      runInAction(() => {
+        this.addEntities(entities, replace);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -492,6 +535,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       this.fetch();
     }
   }
+
+  /**
+   * Load more if there is no previous error
+   */
+  ifNoErrorLoadMore = () => {
+    if (this.errorLoading) {
+      return;
+    }
+    this.loadMore();
+  };
 
   /**
    * Hydrate current page
@@ -522,8 +575,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       )
         return;
 
-      if (refresh) this.clear();
-      this.addEntities(entities);
+      runInAction(() => {
+        if (refresh) this.clear();
+        this.addEntities(entities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -537,8 +593,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Fetch from remote endpoint or from the local storage if it fails
    * @param {boolean} refresh
+   * @param {Promise<any>} wait used to sync the load of any other remote data and render the content after both are ready
    */
-  async fetchRemoteOrLocal(refresh = false) {
+  async fetchRemoteOrLocal(refresh = false, wait?: Promise<any>) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
@@ -553,11 +610,24 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
+      }
 
-      if (refresh) this.clear();
-      this.addEntities(entities);
+      if (refresh) {
+        this.clear();
+      }
+      if (wait) {
+        try {
+          await wait;
+        } catch (error) {
+          console.log('[FeedStore] error in the wait promise', error);
+        }
+      }
+      runInAction(() => {
+        this.addEntities(entities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -600,10 +670,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (
         endpoint !== this.feedsService.endpoint ||
         params !== this.feedsService.params
-      )
+      ) {
         return;
-      this.clear();
-      this.addEntities(remoteEntities);
+      }
+
+      runInAction(() => {
+        this.clear();
+        this.addEntities(remoteEntities);
+        this.setLoading(false);
+      });
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
@@ -653,12 +728,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Refresh
    */
   @action
-  async refresh() {
+  async refresh(wait?: Promise<any>) {
     this.refreshing = true;
     this.newPostsCount = 0;
 
     try {
-      await this.fetchRemoteOrLocal(true);
+      await this.fetchRemoteOrLocal(true, wait);
     } catch (err) {
       logService.exception('[FeedStore]', err);
     } finally {

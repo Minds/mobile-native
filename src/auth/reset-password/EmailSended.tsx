@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ResetPasswordStore } from './createLocalStore';
+import { Button } from '~/common/ui';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -15,9 +16,9 @@ const EmailSended = ({ store }: PropsType) => {
     <View style={containerStyle}>
       <CText>{i18n.t('auth.emailSent')}</CText>
       <CText>{i18n.t('auth.followInstuctions')}</CText>
-      <TouchableOpacity style={touchableStyle} onPress={store.sendEmail}>
-        <CText>{i18n.t('auth.sendAgain')}</CText>
-      </TouchableOpacity>
+      <Button onPress={store.sendEmail} vertical="L2" type={'action'}>
+        {i18n.t('auth.sendAgain')}
+      </Button>
     </View>
   );
 };
@@ -33,7 +34,5 @@ export const textStyle = ThemedStyles.combine(
   'marginTop4x',
   'textCenter',
 );
-
-const touchableStyle = ThemedStyles.combine('marginTop16x', 'marginBottom20x');
 
 export default EmailSended;

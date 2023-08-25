@@ -4,7 +4,11 @@ import { LocalPackage } from 'react-native-code-push';
 import { Tooltip } from 'react-native-elements';
 import i18nService from '~/common/services/i18n.service';
 import { B2, Button, Icon } from '~/common/ui';
-import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
+import {
+  CODE_PUSH_PROD_KEY,
+  CODE_PUSH_RC_KEY,
+  CODE_PUSH_STAGING_KEY,
+} from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { codePush, codePushStore } from '../';
 
@@ -36,9 +40,10 @@ const CodePushCustomIcon = () => {
   }
 
   const isStaging = metadata.deploymentKey === CODE_PUSH_STAGING_KEY;
+  const isRc = metadata.deploymentKey === CODE_PUSH_RC_KEY;
 
   return (
-    <View style={ThemedStyles.style.positionAbsoluteTopLeft}>
+    <View style={styles.container}>
       <Tooltip
         ref={tooltipRef}
         skipAndroidStatusBar
@@ -52,6 +57,8 @@ const CodePushCustomIcon = () => {
             <B2 color="white">
               {isStaging
                 ? i18nService.t('codePush.custom.staging')
+                : isRc
+                ? i18nService.t('codePush.custom.rc')
                 : i18nService.t('codePush.custom.usingCustom')}
             </B2>
             {!!metadata.description && (
@@ -66,10 +73,16 @@ const CodePushCustomIcon = () => {
             </Button>
           </>
         }>
-        <Icon name={isStaging ? 'alpha-s-circle' : 'warning'} />
+        <Icon
+          name={isStaging ? 'alpha-s-circle' : isRc ? 'rocket' : 'warning'}
+        />
       </Tooltip>
     </View>
   );
 };
 
 export default CodePushCustomIcon;
+
+const styles = ThemedStyles.create({
+  container: ['positionAbsoluteTopLeft', { left: 15 }],
+});

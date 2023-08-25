@@ -3,16 +3,16 @@
 exports[`renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "flexDirection": "row",
         "justifyContent": "flex-start",
       },
-      Object {
-        "borderBottomWidth": 1,
+      {
+        "borderBottomWidth": 0.5,
       },
-      Object {
-        "borderColor": "#414C57",
+      {
+        "borderColor": "#53565A",
       },
       undefined,
     ]
@@ -20,11 +20,11 @@ exports[`renders correctly 1`] = `
 >
   <RCTScrollView
     contentContainerStyle={
-      Array [
-        Object {
+      [
+        {
           "marginHorizontal": 8,
         },
-        Object {
+        {
           "paddingRight": 16,
         },
       ]
@@ -36,39 +36,42 @@ exports[`renders correctly 1`] = `
       <View
         onPress={[Function]}
         style={
-          Array [
-            Array [
-              Object {
+          [
+            [
+              {
                 "paddingVertical": 8,
               },
-              Object {
+              {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
-              Object {
+              {
                 "borderBottomWidth": 5,
+              },
+              {
+                "borderColor": "transparent",
               },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -78,25 +81,25 @@ exports[`renders correctly 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "marginVertical": 1,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -109,39 +112,42 @@ exports[`renders correctly 1`] = `
       <View
         onPress={[Function]}
         style={
-          Array [
-            Array [
-              Object {
+          [
+            [
+              {
                 "paddingVertical": 8,
               },
-              Object {
+              {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
-              Object {
+              {
                 "borderBottomWidth": 5,
+              },
+              {
+                "borderColor": "transparent",
               },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -151,25 +157,25 @@ exports[`renders correctly 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "marginVertical": 1,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -182,39 +188,42 @@ exports[`renders correctly 1`] = `
       <View
         onPress={[Function]}
         style={
-          Array [
-            Array [
-              Object {
+          [
+            [
+              {
                 "paddingVertical": 8,
               },
-              Object {
+              {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
-              Object {
+              {
                 "borderBottomWidth": 5,
+              },
+              {
+                "borderColor": "transparent",
               },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -224,25 +233,25 @@ exports[`renders correctly 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "marginVertical": 1,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]
@@ -255,39 +264,42 @@ exports[`renders correctly 1`] = `
       <View
         onPress={[Function]}
         style={
-          Array [
-            Array [
-              Object {
+          [
+            [
+              {
                 "paddingVertical": 8,
               },
-              Object {
+              {
+                "marginTop": 4,
+              },
+              {
                 "marginHorizontal": 12,
               },
-              Object {
+              {
                 "borderBottomWidth": 5,
+              },
+              {
+                "borderColor": "transparent",
               },
             ],
             undefined,
-            Object {
-              "borderColor": "transparent",
-            },
           ]
         }
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Medium",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -297,25 +309,25 @@ exports[`renders correctly 1`] = `
         </Text>
         <View
           style={
-            Object {
+            {
               "marginVertical": 1,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "left",
                 },
               ]

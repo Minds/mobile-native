@@ -1,7 +1,6 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
 
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -12,6 +11,7 @@ import i18n from '../../services/i18n.service';
 import DoubleTap from '../DoubleTap';
 
 import MText from '../MText';
+import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
 
 const DoubleTapTouchable = DoubleTap(TouchableOpacity);
@@ -27,6 +27,8 @@ type PropsType = {
   onImageLongPress?: () => void;
 };
 
+const { width, height } = Dimensions.get('window');
+
 export default function MediaViewImage({
   entity,
   style,
@@ -37,15 +39,17 @@ export default function MediaViewImage({
   onImagePress,
   onImageLongPress,
 }: PropsType) {
-  const [imageLoadFailed, setImageLoadFailed] = React.useState(false);
-  const { width, height } = useDimensions().window;
-  const [size, setSize] = React.useState({ height: 0, width: 0 });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const source = React.useMemo(() => entity.getThumbSource('xlarge'), [
-    entity,
-    //@ts-ignore
-    entity.attachment_guid,
-  ]);
+  const [imageLoadFailed, setImageLoadFailed] = useRecycledState(false, entity);
+  const [size, setSize] = useRecycledState({ height: 0, width: 0 }, entity);
+  const source = React.useMemo(
+    () => entity.getThumbSource('xlarge'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      entity,
+      //@ts-ignore
+      entity.attachment_guid,
+    ],
+  );
   const thumbnail = React.useMemo(
     () =>
       entity.isGif()
@@ -90,27 +94,24 @@ export default function MediaViewImage({
 
   const imageStyle = useMemoStyle(
     ['fullWidth', { aspectRatio }, style as ImageStyle],
-    [(aspectRatio, style)],
+    [aspectRatio, style],
   );
 
-  const imageError = React.useCallback(() => {
+  const imageError = () => {
     setImageLoadFailed(true);
-  }, []);
+  };
 
   /**
    * On image load handler
    */
-  const onLoadImage = React.useCallback(
-    e => {
-      if (autoHeight) {
-        setSize({
-          height: e.height,
-          width: e.width,
-        });
-      }
-    },
-    [autoHeight],
-  );
+  const onLoadImage = e => {
+    if (autoHeight) {
+      setSize({
+        height: e.height,
+        width: e.width,
+      });
+    }
+  };
 
   if (imageLoadFailed) {
     let text = <MText style={errorTextStyle}>{i18n.t('errorMedia')}</MText>;
@@ -129,6 +130,10 @@ export default function MediaViewImage({
 
     return <View style={errorContainerStyle}>{text}</View>;
   }
+  const blur = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
+  const placeholder = blur
+    ? { blurhash: blur, width: 9, height: 9 }
+    : thumbnail;
 
   return (
     <DoubleTapTouchable
@@ -145,9 +150,7 @@ export default function MediaViewImage({
         onLoad={onLoadImage}
         onError={imageError}
         ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
-        placeholder={
-          entity?.custom_data?.[0]?.blurhash || entity?.blurhash || thumbnail
-        }
+        placeholder={placeholder}
         locked={entity?.isLocked()}
         recyclingKey={entity.urn}
       />

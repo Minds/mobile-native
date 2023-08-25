@@ -12,7 +12,6 @@ import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
-import { hashRegex } from '~/common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
@@ -26,6 +25,7 @@ import { Media } from '../common/stores/AttachmentStore';
 import type GroupModel from '../groups/GroupModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import { pushAudienceSelector } from './ComposeAudienceSelector';
+import { regex } from '~/services';
 
 /**
  * Display an error message to the user.
@@ -88,7 +88,6 @@ export default function (props) {
     extra: null,
     posting: false,
     group: null as GroupModel | null,
-    postToPermaweb: false,
     initialized: false,
     audience: { type: 'public' } as ComposeAudience,
     createMode: 'post' as ComposeCreateMode,
@@ -122,6 +121,13 @@ export default function (props) {
       this.supermindObject = params.supermindObject;
       this.onSaveCallback = params.onSave;
 
+      if (params.audience) {
+        this.audience = params.audience;
+        if (this.audience.group) {
+          this.setGroup(this.audience.group);
+        }
+      }
+
       if (params.createMode) {
         this.setCreateMode(params.createMode, true);
       }
@@ -153,7 +159,12 @@ export default function (props) {
       }
 
       if (params.group) {
-        this.group = props.route.params?.group;
+        this.audience = {
+          type: 'group',
+          value: params.group.guid,
+          group: params.group,
+        };
+        this.group = params?.group;
       }
 
       if (params.openSupermindModal) {
@@ -192,7 +203,7 @@ export default function (props) {
       if (mode === 'monetizedPost') {
         await pushAudienceSelector({
           store: this,
-          monetizedOnly: true,
+          mode: 'monetized',
         });
         if (
           this.audience.type !== 'membership' &&
@@ -205,7 +216,7 @@ export default function (props) {
       this.createMode = mode;
       return true;
     },
-    setGroup(group: GroupModel) {
+    setGroup(group: GroupModel | null) {
       this.group = group;
     },
     setScrollOffset(value: number) {
@@ -238,13 +249,13 @@ export default function (props) {
         popToTop();
       }
 
-      this.clear(false);
-
-      if (!isEdit) {
+      if (!isEdit && !this.time_created) {
         ActivityModel.events.emit('newPost', entity);
       } else {
         ActivityModel.events.emit('edited', entity);
       }
+
+      this.clear(false);
     },
     hydrateFromEntity() {
       const entity = this.entity;
@@ -293,8 +304,8 @@ export default function (props) {
         this.wire_threshold.min = value;
       }
     },
-    setTimeCreated(time) {
-      this.time_created = time;
+    setTimeCreated(time?: number | null) {
+      this.time_created = time ?? undefined;
     },
     toggleNsfw(opt) {
       if (opt === 0) {
@@ -381,7 +392,7 @@ export default function (props) {
       }
     },
     parseTags() {
-      let matched = this.text.match(hashRegex);
+      let matched = this.text.match(regex.hash);
       if (matched) {
         // unique results
         const results = matched.map(v => v.trim().slice(1));
@@ -477,7 +488,6 @@ export default function (props) {
       this.tags = [];
       this.group = null;
       this.createMode = 'post';
-      this.postToPermaweb = false;
     },
     /**
      * On media
@@ -667,18 +677,6 @@ export default function (props) {
           newPost.remind_guid = this.entity?.guid;
         }
 
-        if (
-          this.postToPermaweb &&
-          !this.supermindRequest &&
-          !this.isSupermindReply
-        ) {
-          if (this.paywalled) {
-            showError(i18n.t('permaweb.cannotMonetize'));
-            return false;
-          }
-          newPost.post_to_permaweb = true;
-        }
-
         if (this.title) {
           newPost.title = this.title;
         }
@@ -707,6 +705,10 @@ export default function (props) {
 
         if (this.tags.length) {
           newPost.tags = this.tags;
+        }
+
+        if (this.time_created) {
+          newPost.time_created = this.buildTimestamp(this.time_created);
         }
 
         this.setPosting(true);
@@ -785,9 +787,6 @@ export default function (props) {
         (this.wire_threshold && this.wire_threshold.min > 0)
       );
     },
-    togglePostToPermaweb() {
-      this.postToPermaweb = !this.postToPermaweb;
-    },
     isGroup() {
       return !!props.route?.params?.group;
     },
@@ -821,6 +820,16 @@ export default function (props) {
     get isSupermindReply() {
       return Boolean(this.supermindObject);
     },
+    /**
+     * Builds a Unix timestamp based off current state (up to seconds)
+     */
+    buildTimestamp(timestamp: number): number | null {
+      const date = new Date(timestamp);
+
+      date.setSeconds(0);
+
+      return Math.floor(date.getTime() / 1000);
+    },
   };
 }
 
@@ -836,7 +845,6 @@ type PostPayload = {
   paywall?: boolean;
   wire_threshold?: typeof DEFAULT_MONETIZE;
   remind_guid?: string;
-  post_to_permaweb?: boolean;
   title?: string;
   nsfw?: number[];
   attachment_guids?: string[];

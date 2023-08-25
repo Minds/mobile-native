@@ -6,7 +6,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
-import type BottomSheet from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -32,16 +31,18 @@ import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
-import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 import {
   useAnalytics,
   withAnalyticsContext,
 } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
+import MutualSubscribers from '../../../channel/components/MutualSubscribers';
+import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
+import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -86,18 +87,38 @@ const ActivityOwner = ({
   );
 
   return (
-    <OwnerBlock
-      entity={entity}
-      navigation={navigation}
-      containerStyle={containerStyle}
-      leftToolbar={
-        <FloatingBackButton
-          onPress={navigation.goBack}
-          style={backButtonStyle}
+    <View style={containerStyle}>
+      {entity.ownerObj.plus && !entity.ownerObj.subscribed && (
+        <MutualSubscribers
+          vertical="M"
+          spacingType="padding"
+          avatars={false}
+          navigation={navigation}
+          channel={entity.ownerObj}
+          limit={2}
+          language={'follow'}
+          font="B3"
+          onPress={() =>
+            pushInteractionsBottomSheet({
+              entity: entity.ownerObj,
+              interaction: 'subscribersYouKnow',
+            })
+          }
         />
-      }
-      rightToolbar={right}
-    />
+      )}
+
+      <OwnerBlock
+        entity={entity}
+        navigation={navigation}
+        leftToolbar={
+          <FloatingBackButton
+            onPress={navigation.goBack}
+            style={backButtonStyle}
+          />
+        }
+        rightToolbar={right}
+      />
+    </View>
   );
 };
 
@@ -129,7 +150,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
-  const commentsRef = useRef<BottomSheet>(null);
   const upVotesInteractionsRef = useRef<any>(null);
   const downVotesInteractionsRef = useRef<any>(null);
   const remindsInteractionsRef = useRef<any>(null);
@@ -143,11 +163,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ...ThemedStyles.style.bgPrimaryBackground,
   });
 
-  const onPressComment = useCallback(() => {
-    if (commentsRef.current?.expand) {
-      commentsRef.current.expand();
+  const openComments = useCallback(() => {
+    pushCommentBottomSheet({
+      commentsStore: store.comments,
+    });
+  }, [store]);
+
+  useEffect(() => {
+    if (route.params?.focusedCommentUrn || route.params?.scrollToBottom) {
+      openComments();
     }
-  }, [commentsRef]);
+  }, [route.params]);
 
   useEffect(() => {
     const user = sessionService.getUser();
@@ -285,7 +311,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   return (
-    <GroupContext.Provider value={route.params?.group || null}>
+    <GroupContextProvider group={route.params?.group || null}>
       <View testID="ActivityScreen" style={containerStyle}>
         <View style={theme.flexContainer}>
           {ownerBlockShadow}
@@ -324,7 +350,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                         entity={entity}
                         navigation={navigation}
                         style={fontStyle}
-                        selectable={false}
+                        selectable={true}
                         noTruncate={true}
                       />
                       <Translate
@@ -357,7 +383,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onShowQuotesPress={showQuotes}
             entity={entity}
           />
-          <Actions entity={entity} hideCount onPressComment={onPressComment} />
+          <Actions entity={entity} hideCount onPressComment={openComments} />
         </View>
         <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
         <InteractionsBottomSheet
@@ -366,16 +392,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
         />
         <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
         <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
-        <CommentBottomSheet
-          ref={commentsRef}
-          autoOpen={
-            Boolean(route.params?.focusedCommentUrn) ||
-            Boolean(route.params?.scrollToBottom)
-          }
-          commentsStore={store.comments}
-        />
       </View>
-    </GroupContext.Provider>
+    </GroupContextProvider>
   );
 });
 

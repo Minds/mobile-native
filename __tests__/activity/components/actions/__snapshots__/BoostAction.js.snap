@@ -3,25 +3,25 @@
 exports[`Boost action component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "justifyContent": "center",
         "position": "relative",
       },
       undefined,
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "flexDirection": "column",
         },
-        Object {
+        {
           "margin": 4,
         },
-        Object {
+        {
           "paddingVertical": 12,
         },
-        Object {
+        {
           "alignItems": "center",
         },
       ],
@@ -29,6 +29,23 @@ exports[`Boost action component renders correctly 1`] = `
   }
 >
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -43,12 +60,12 @@ exports[`Boost action component renders correctly 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
-        Object {
+        {
           "alignItems": "center",
           "bottom": 0,
           "justifyContent": "center",
@@ -64,9 +81,9 @@ exports[`Boost action component renders correctly 1`] = `
     <View
       collapsable={false}
       style={
-        Object {
-          "transform": Array [
-            Object {
+        {
+          "transform": [
+            {
               "scale": 1,
             },
           ],
@@ -75,7 +92,7 @@ exports[`Boost action component renders correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "center",
@@ -84,7 +101,7 @@ exports[`Boost action component renders correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "height": 20,
@@ -98,18 +115,18 @@ exports[`Boost action component renders correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 20.8,
                 },
                 undefined,
-                Object {
+                {
                   "fontFamily": "Material Design Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >

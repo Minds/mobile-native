@@ -1,30 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TwitterSyncScreen renders correctly 1`] = `
-<KeyboardAwareScrollView
-  enableAutomaticScroll={true}
-  enableOnAndroid={false}
-  enableResetScrollToCoords={true}
-  extraHeight={75}
-  extraScrollHeight={0}
-  keyboardDismissMode="on-drag"
-  keyboardOpeningTime={250}
-  style={
-    Object {
-      "flex": 1,
+<QueryClientProvider
+  client={
+    QueryClient {
+      "defaultOptions": {
+        "queries": {
+          "refetchOnMount": false,
+          "refetchOnReconnect": false,
+          "refetchOnWindowFocus": false,
+          "retry": false,
+          "staleTime": 300000,
+        },
+      },
+      "logger": {
+        "error": [Function],
+        "log": [Function],
+        "warn": [Function],
+      },
+      "mountCount": 0,
+      "mutationCache": MutationCache {
+        "config": {},
+        "listeners": [],
+        "mutationId": 0,
+        "mutations": [],
+        "subscribe": [Function],
+      },
+      "mutationDefaults": [],
+      "queryCache": QueryCache {
+        "config": {},
+        "listeners": [],
+        "queries": [],
+        "queriesMap": {},
+        "subscribe": [Function],
+      },
+      "queryDefaults": [],
     }
   }
-  viewIsInsideTabBar={false}
 >
-  <ScreenSection
-    top="L"
-  >
-    <B1
-      color="secondary"
-    >
-      Using our Twitter Sync tool, Twitter users with over NaN followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.
-    </B1>
-  </ScreenSection>
-  <CenteredLoading />
-</KeyboardAwareScrollView>
+  <TwitterSyncScreen />
+</QueryClientProvider>
 `;

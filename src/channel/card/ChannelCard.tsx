@@ -30,7 +30,7 @@ export default class ChannelCard extends Component<PropsType> {
 
     return (
       <View>
-        <SmartImage source={iurl} style={styles.banner} resizeMode="cover" />
+        <SmartImage source={iurl} style={styles.banner} contentFit="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>

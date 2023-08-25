@@ -1,17 +1,19 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '~/common/components/MText';
 import { DEV_MODE } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button } from '~ui';
+import { Button, ButtonPropsType } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { SpacingType } from '~/common/ui/helpers';
+import { UISpacingPropType } from '~/styles/Tokens';
 
 const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -48,16 +50,13 @@ function WelcomeScreen(props: PropsType) {
         />
         <View style={styles.buttonContainer}>
           <Button
-            mode="outline"
             type="action"
-            font="medium"
-            bottom="XL"
+            {...buttonProps}
             testID="joinNowButton"
-            onPress={onRegisterPress}
-            darkContent>
+            onPress={onRegisterPress}>
             {i18n.t('auth.createChannel')}
           </Button>
-          <Button font="medium" onPress={onLoginPress}>
+          <Button darkContent {...buttonProps} onPress={onLoginPress}>
             {i18n.t('auth.login')}
           </Button>
         </View>
@@ -119,3 +118,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
+type ButtonType = Partial<
+  ButtonPropsType & {
+    containerStyle?: ViewStyle | undefined;
+    spacingType?: SpacingType | undefined;
+    children?: React.ReactNode;
+  } & UISpacingPropType
+>;
+const buttonProps: ButtonType = {
+  font: 'medium',
+  bottom: 'XL',
+  // containerStyle: styles.containerStyle,
+};

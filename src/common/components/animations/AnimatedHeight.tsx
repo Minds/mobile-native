@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -6,7 +6,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import ThemedStyles from '~/styles/ThemedStyles';
 
-const AnimatedHeight: React.FunctionComponent = ({ children }) => {
+const AnimatedHeight: React.FunctionComponent<PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const [height, setHeight] = useState(0);
 
   const handleLayout = useCallback(

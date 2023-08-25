@@ -16,25 +16,20 @@ import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
+import { useTweetMessageQuery } from '~/graphql/strapi';
 
 function TwitterSyncScreen() {
   const mindsSettings = mindsConfigService.getSettings()!;
   const minFollowers = mindsSettings.twitter?.min_followers_for_sync;
 
   const user = useCurrentUser();
-  const {
-    connectedAccount,
-    error: connectedAccountError,
-  } = useConnectedAccount();
-  const {
-    connectAccount,
-    loading: connectAccountLoading,
-  } = useConnectAccount();
+  const { connectedAccount, error: connectedAccountError } =
+    useConnectedAccount();
+  const { connectAccount, loading: connectAccountLoading } =
+    useConnectAccount();
   const { updateAccount } = useUpdateAccount();
-  const {
-    disconnectAccount,
-    loading: disconnectAccountLoading,
-  } = useDisconnectAccount();
+  const { disconnectAccount, loading: disconnectAccountLoading } =
+    useDisconnectAccount();
 
   const [twitterHandle, setTwitterHandle] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -44,21 +39,30 @@ function TwitterSyncScreen() {
     connectedAccount?.discoverable || true,
   );
 
+  const { data: { twitterSyncTweetText } = {}, isLoading } =
+    useTweetMessageQuery();
+
+  const tweetText =
+    twitterSyncTweetText?.data?.attributes?.tweetText ??
+    i18n.t('settings.twitterSync.verificationText');
+
+  const tweetMessage = tweetText.replace(
+    /{url}/g,
+    mindsSettings.site_url + user?.username,
+  );
+
   /**
    * posts the verification text on twitter by open a url
    **/
   const onPostToTwitter = useCallback(() => {
-    if (!user) return;
-
-    const siteUrl = mindsSettings.site_url;
-    const tweetMessage = `${i18n.t('settings.twitterSync.verificationText')} ${
-      siteUrl + user?.username
-    }`;
+    if (!user) {
+      return;
+    }
 
     return Linking.openURL(
       `https://twitter.com/intent/tweet?text=${tweetMessage}`,
     );
-  }, [mindsSettings.site_url, user]);
+  }, [tweetMessage, user]);
 
   /**
    * validates the twitter handle
@@ -194,7 +198,11 @@ function TwitterSyncScreen() {
           <B1 color="secondary" vertical="L">
             {i18n.t('settings.twitterSync.step1.desc')}
           </B1>
-          <Button onPress={onPostToTwitter} type={'action'} mode={'outline'}>
+          <Button
+            disabled={isLoading}
+            onPress={onPostToTwitter}
+            type={'action'}
+            mode={'outline'}>
             {i18n.t('settings.twitterSync.step1.action')}
           </Button>
         </ScreenSection>

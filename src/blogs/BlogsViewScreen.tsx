@@ -2,15 +2,14 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Alert, SafeAreaView, ScrollView, View } from 'react-native';
+import { Alert, Image, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Image } from 'expo-image';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import withModalProvider from '~/navigation/withModalProvide';
 import Actions from '~/newsfeed/activity/Actions';
-import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
+import { pushCommentBottomSheet } from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
 import SmartImage from '../common/components/SmartImage';
@@ -66,7 +65,6 @@ class BlogsViewScreen extends Component<PropsType> {
   constructor(props) {
     super(props);
 
-    this.commentsRef = React.createRef();
     this.blogsView = props.blogsView ?? new BlogsViewStore();
   }
 
@@ -132,7 +130,11 @@ class BlogsViewScreen extends Component<PropsType> {
       <SafeAreaView style={theme.bgPrimaryBackground}>
         <Actions
           onPressComment={() => {
-            this.commentsRef.current.expand();
+            if (this.blogsView?.comments) {
+              pushCommentBottomSheet({
+                commentsStore: this.blogsView.comments,
+              });
+            }
           }}
           entity={blog}
         />
@@ -266,17 +268,11 @@ class BlogsViewScreen extends Component<PropsType> {
           <>
             {this.getBody()}
             {this.getToolbar()}
-            {this.blogsView.comments && (
-              <CommentBottomSheet
-                ref={this.commentsRef}
-                commentsStore={this.blogsView.comments}
-              />
-            )}
           </>
         ) : (
           <View style={theme.flexColumnCentered}>
             <Image
-              contentFit="contain"
+              resizeMode="contain"
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
@@ -319,7 +315,7 @@ const styles = ThemedStyles.create({
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
-  ownerBlockContainer: ['bgSecondaryBackground'],
+  ownerBlockContainer: ['bgPrimaryBackground'],
   description: {
     paddingLeft: 15,
     paddingRight: 15,
@@ -336,6 +332,6 @@ const styles = ThemedStyles.create({
     padding: 12,
     flexDirection: 'row',
   },
-  container: ['flexContainer', 'bgSecondaryBackground'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
   iconStyle: { fontSize: 28 },
 });

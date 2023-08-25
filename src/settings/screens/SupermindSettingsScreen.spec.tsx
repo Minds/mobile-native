@@ -17,6 +17,7 @@ const navigation = { goBack: jest.fn() };
 
 describe('Supermind settings', () => {
   beforeEach(() => {
+    jest.useRealTimers();
     mockedApi.get.mockClear();
     const resp: any = {
       min_cash: '12',
@@ -24,6 +25,9 @@ describe('Supermind settings', () => {
     };
 
     mockedApi.get.mockResolvedValue(resp);
+  });
+  afterAll(() => {
+    jest.useFakeTimers();
   });
 
   it('should load data and render correctly', async () => {

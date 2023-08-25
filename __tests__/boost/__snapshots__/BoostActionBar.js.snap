@@ -3,11 +3,11 @@
 exports[`Boost action bar component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "borderColor": "#3f4b56",
       },
-      Object {
+      {
         "alignItems": "stretch",
         "display": "flex",
         "flexDirection": "row",
@@ -20,7 +20,7 @@ exports[`Boost action bar component renders correctly 1`] = `
   <View
     key="bid"
     style={
-      Object {
+      {
         "alignContent": "center",
         "alignItems": "center",
         "flex": 1,
@@ -34,19 +34,19 @@ exports[`Boost action bar component renders correctly 1`] = `
       name="bank"
       size={20}
       style={
-        Array [
-          Object {
+        [
+          {
             "marginBottom": 4,
           },
-          Object {
-            "color": "#B8C1CA",
+          {
+            "color": "#b9bbc0",
           },
         ]
       }
     />
     <MText
       style={
-        Object {
+        {
           "fontSize": 11,
           "marginTop": 4,
         }
@@ -58,7 +58,7 @@ exports[`Boost action bar component renders correctly 1`] = `
   <View
     key="time"
     style={
-      Object {
+      {
         "alignContent": "center",
         "alignItems": "center",
         "flex": 1,
@@ -72,12 +72,12 @@ exports[`Boost action bar component renders correctly 1`] = `
       name="clock"
       size={20}
       style={
-        Array [
-          Object {
+        [
+          {
             "marginBottom": 4,
           },
-          Object {
-            "color": "#B8C1CA",
+          {
+            "color": "#b9bbc0",
           },
         ]
       }
@@ -85,7 +85,7 @@ exports[`Boost action bar component renders correctly 1`] = `
     <MText
       numberOfLines={1}
       style={
-        Object {
+        {
           "fontSize": 11,
           "marginTop": 4,
         }

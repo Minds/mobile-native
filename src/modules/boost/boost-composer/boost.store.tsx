@@ -1,6 +1,5 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
-import type { BoostType } from '~/boost/legacy/createBoostStore';
 import UserModel from '~/channel/UserModel';
 import apiService from '~/common/services/api.service';
 import mindsConfigService from '~/common/services/minds-config.service';
@@ -8,15 +7,17 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
 import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
+import { hasVariation } from 'ExperimentsProvider';
+import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 import {
   DEFAULT_DAILY_CASH_BUDGET,
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
-import { InsightEstimateResponse } from '../hooks/useBoostInsights';
-import { hasVariation } from 'ExperimentsProvider';
 
-export const IS_IAP_ON = IS_FROM_STORE && hasVariation('mob-4851-iap-boosts');
+export const IS_IAP_ON = IS_FROM_STORE;
+
+export type BoostType = 'post' | 'channel' | 'group';
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -29,17 +30,57 @@ export const createBoostStore = ({
   entity,
   wallet,
 }: BoostStoreParams) => ({
+  goalsEnabled:
+    boostType === 'post' &&
+    entity?.isOwner() &&
+    hasVariation('minds-3952-boost-goals'),
   config: mindsConfigService.getSettings().boost as IBoostConfig,
   entity,
   insights: null as null | InsightEstimateResponse,
   wallet,
   boostType,
   audience: 'safe' as IBoostAudience,
+  target_platform_web: true as boolean,
+  target_platform_ios: true as boolean,
+  target_platform_android: true as boolean,
+  goal: BoostGoal.VIEWS as BoostGoal,
+  button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
+  link: BoostButtonText.LEARN_MORE as BoostButtonText,
+  linkUrl: '',
+  get platformsText() {
+    const enabled: string[] = [];
+    this.target_platform_ios && enabled.push('iOS');
+    this.target_platform_android && enabled.push('Android');
+    this.target_platform_web && enabled.push('Web');
+
+    return enabled.join(', ');
+  },
+  togglePlatformWeb() {
+    this.target_platform_web = !this.target_platform_web;
+  },
+  togglePlatformIos() {
+    this.target_platform_ios = !this.target_platform_ios;
+  },
+  togglePlatformAndroid() {
+    this.target_platform_android = !this.target_platform_android;
+  },
   setInsights(insights) {
     this.insights = insights;
   },
   setAudience(audience: IBoostAudience) {
     this.audience = audience;
+  },
+  setGoal(goal: BoostGoal) {
+    this.goal = goal;
+  },
+  setButton(button: BoostButtonText) {
+    this.button = button;
+  },
+  setLink(link: BoostButtonText) {
+    this.link = link;
+  },
+  setLinkUrl(url: string) {
+    this.linkUrl = url;
   },
   get amount() {
     return this.paymentType === 'cash' ? this.cashAmount : this.tokenAmount;
@@ -68,26 +109,45 @@ export const createBoostStore = ({
     this.selectedCardId = cardId;
   },
   selectedCardId: '',
-  createBoost() {
+  createBoost(creditPaymentMethod?: string) {
     if (!this.validate()) {
       return null;
     }
 
-    return apiService
-      .post('api/v3/boosts', {
-        entity_guid: this.entity.guid,
-        target_suitability: this.audience === 'safe' ? 1 : 2,
-        target_location: boostType === 'post' ? 1 : 2,
-        payment_method: this.paymentType === 'cash' ? 1 : 2,
-        payment_method_id:
-          this.paymentType === 'cash' ? this.selectedCardId : undefined,
-        daily_bid: this.amount,
-        duration_days: this.duration,
-      } as CreateBoostParams)
-      .catch(e => {
-        showNotification(e.message || 'Something went wrong', 'danger');
-        throw e;
-      });
+    const payload: CreateBoostParams = {
+      entity_guid: this.entity.guid,
+      target_suitability: this.audience === 'safe' ? 1 : 2,
+      target_location: ['channel', 'group'].includes(boostType) ? 2 : 1,
+      payment_method: this.paymentType === 'cash' ? 1 : 2,
+      payment_method_id:
+        this.paymentType === 'cash'
+          ? creditPaymentMethod ?? this.selectedCardId
+          : undefined,
+      daily_bid: this.amount,
+      duration_days: this.duration,
+    };
+
+    if (this.goalsEnabled) {
+      payload.goal = this.goal;
+      if (this.goal === BoostGoal.SUBSCRIBERS) {
+        payload.goal_button_text = this.button;
+      } else if (this.goal === BoostGoal.CLICKS) {
+        payload.goal_button_url = this.linkUrl;
+        payload.goal_button_text = this.link;
+      }
+    }
+
+    if (hasVariation('mob-4952-boost-platform-targeting')) {
+      payload.target_platform_web = this.target_platform_web;
+      payload.target_platform_android = this.target_platform_android;
+      payload.target_platform_ios = this.target_platform_ios;
+    }
+
+    return apiService.post('api/v3/boosts', payload).catch(e => {
+      console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
+      showNotification(e.message || 'Something went wrong', 'danger');
+      throw e;
+    });
   },
   validate() {
     return true;
@@ -143,12 +203,34 @@ export interface CreateBoostParams {
   target_suitability: number;
   target_location: number;
   payment_method: number;
-  payment_method_id: string;
+  payment_method_id?: string;
   daily_bid: number;
   duration_days: number;
+
+  goal?: BoostGoal;
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
+  target_platform_web?: boolean;
+  target_platform_android?: boolean;
+  target_platform_ios?: boolean;
 }
 
 export type IBoostAudience = 'safe' | 'mature';
+export enum BoostGoal {
+  VIEWS = 1, // "expand reach" - require nothing
+  ENGAGEMENT = 2, // "increase engagement" - require nothing
+  SUBSCRIBERS = 3, // "grow your following" - require button
+  CLICKS = 4, // "get more clicks" - require button and url
+}
+export enum BoostButtonText {
+  SUBSCRIBE_TO_MY_CHANNEL = 1,
+  GET_CONNECTED = 2,
+  STAY_IN_THE_LOOP = 3,
+  LEARN_MORE = 4,
+  GET_STARTED = 5,
+  SIGN_UP = 6,
+  TRY_FOR_FREE = 7,
+}
 export type IPaymentType = 'cash' | 'offchain_tokens' | 'onchain_tokens';
 type IBoostConfig = {
   bid_increments: {

@@ -13,6 +13,7 @@ type PropsType = {
   tiers: SupportTiersType[];
   useForSelection: boolean;
   tierStore: TierStoreType | undefined;
+  tierManagementStore: any;
   navigation: any;
   onLinkPress: () => void;
 };
@@ -22,6 +23,7 @@ const TiersList = observer(
     tiers,
     useForSelection,
     tierStore,
+    tierManagementStore,
     navigation,
     onLinkPress,
   }: PropsType) => {
@@ -54,7 +56,7 @@ const TiersList = observer(
             onPress={
               useForSelection && tierStore
                 ? () => tierStore.setSelectedTier(tier)
-                : () => navToTierScreen(navigation, tier)
+                : () => navToTierScreen(navigation, tier, tierManagementStore)
             }
             icon={useForSelection ? 'check' : undefined}
             iconColor={

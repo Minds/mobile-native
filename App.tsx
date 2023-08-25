@@ -27,13 +27,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
-import 'react-native-image-keyboard';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import deviceInfo from 'react-native-device-info';
 
 import NavigationService, {
-  setTopLevelNavigator,
+  navigationRef,
 } from './src/navigation/NavigationService';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
@@ -49,7 +48,6 @@ import i18n from './src/common/services/i18n.service';
 
 import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
-import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
 import FriendlyCaptchaProvider, {
@@ -57,6 +55,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
+import { ConfigProvider } from '~/modules/livepeer';
 
 appInitManager.initializeServices();
 
@@ -178,43 +177,42 @@ class App extends Component<Props> {
       <View style={appContainerStyle}>
         <ExperimentsProvider>
           <SafeAreaProvider>
-            {sessionService.ready && (
-              <NavigationContainer
-                ref={setTopLevelNavigator}
-                theme={ThemedStyles.navTheme}
-                onReady={appInitManager.onNavigatorReady}
-                onStateChange={NavigationService.onStateChange}>
+            <UIProvider
+              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+              {sessionService.ready && (
                 <StoresProvider>
                   <QueryProvider>
                     <Provider key="app" {...stores}>
-                      <AppMessageProvider key={`message_${ThemedStyles.theme}`}>
-                        <FriendlyCaptchaProvider
-                          ref={setFriendlyCaptchaReference}>
-                          <PortalProvider>
-                            <UIProvider
-                              defaultTheme={
-                                ThemedStyles.theme === 0 ? 'dark' : 'light'
-                              }>
+                      <NavigationContainer
+                        ref={navigationRef}
+                        theme={ThemedStyles.navTheme}
+                        onReady={appInitManager.onNavigatorReady}
+                        onStateChange={NavigationService.onStateChange}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
                               <BottomSheetModalProvider>
                                 <ErrorBoundary
                                   message="An error occurred"
                                   containerStyle={ThemedStyles.style.centered}>
-                                  <WCContextProvider>
+                                  <ConfigProvider>
                                     <NavigationStack
                                       key={ThemedStyles.theme + i18n.locale}
                                     />
-                                  </WCContextProvider>
+                                  </ConfigProvider>
                                 </ErrorBoundary>
                               </BottomSheetModalProvider>
-                            </UIProvider>
-                          </PortalProvider>
-                        </FriendlyCaptchaProvider>
-                      </AppMessageProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </NavigationContainer>
                     </Provider>
                   </QueryProvider>
                 </StoresProvider>
-              </NavigationContainer>
-            )}
+              )}
+            </UIProvider>
           </SafeAreaProvider>
         </ExperimentsProvider>
       </View>
@@ -234,6 +232,6 @@ const appContainerStyle = ThemedStyles.combine(
   },
 );
 
-if (__DEV__) {
-  require('tron');
-}
+// if (__DEV__) {
+//   require('./tron');
+// }

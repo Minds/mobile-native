@@ -489,7 +489,7 @@ describe('api service auth refresh', () => {
     expect(auth.refreshToken).toBeCalledTimes(1);
   });
 
-  it('should prompt for 2fa if required and repeat the call', async done => {
+  it('should prompt for 2fa if required and repeat the call', async () => {
     try {
       NavigationService.navigate.mockImplementation((screen, params) => {
         // mock user entered code
@@ -516,14 +516,12 @@ describe('api service auth refresh', () => {
 
       await api.post('api/channels/me1', params);
       expect(NavigationService.navigate).toBeCalled();
-
-      done();
     } catch (error) {
       console.log(error);
     }
   });
 
-  it('should throw if 2FA is canceled', async done => {
+  it('should throw if 2FA is canceled', async () => {
     try {
       NavigationService.navigate.mockImplementation((screen, params) => {
         // mock user entered code
@@ -542,12 +540,9 @@ describe('api service auth refresh', () => {
 
       await api.post('api/channels/me1', params);
       expect(NavigationService.navigate).toBeCalled();
-
-      done();
     } catch (error) {
       expect(error).toBeInstanceOf(UserError);
       console.log(error);
-      done();
     }
   });
 });

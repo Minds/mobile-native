@@ -1,12 +1,12 @@
 # Run QA WebdriverIO Browserstack Tests
 .wdio_tests: &wdio_tests
   - yarn install --frozen-lockfile
-  - yarn run test:real:ios
-  - yarn run test:real:android
+  - yarn run e2e:ios:browserstack
+  - yarn run e2e:android:browserstack
 
 .qa_base:
   stage: qa
-  image: node:14.19.2
+  image: node:18.13.0
   allow_failure: true
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -26,9 +26,9 @@ qa:rc:
     - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
     - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
     - *wdio_tests
-  only:
-    refs:
-      - /^develop$/
+  # only:
+  #   refs:
+  #     - /^develop$/
 
 qa:rc:nightly:
   extends: .qa_base

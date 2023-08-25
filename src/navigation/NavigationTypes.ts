@@ -45,8 +45,10 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
+  AffiliateProgram: undefined;
   SupermindConsole?: {
     tab: 'inbound' | 'outbound';
   };
@@ -126,9 +128,12 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  ChangeEmail: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
+  GroupsDiscovery: {};
+  GroupView: {};
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
@@ -209,6 +214,8 @@ export type RootStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   StoryBook: {};
   CodePushSync: {};
+  Report: {};
+  BoostUpgrade: undefined;
 };
 
 export type AuthStackParamList = {
@@ -222,6 +229,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  GifCardClaim: {
+    code: string;
+  };
   SingleBoostConsole: {
     guid: string;
   };
@@ -265,7 +275,6 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
-  PermawebSelector: {};
   AccessSelector: {
     store: ComposeStoreType;
   };
@@ -313,7 +322,6 @@ export type AppStackParamList = {
   Transactions: {};
   BlockchainWalletImport: {};
   BlockchainWalletDetails: {};
-  Report: {};
   More: {};
   Withdraw: {};
   WalletOnboarding: {};
@@ -342,6 +350,7 @@ export type AppStackParamList = {
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   Referrals: {};
+  BoostSettingsScreen: {};
 };
 
 // types for channel edit screens
@@ -356,10 +365,13 @@ export type AboutScreenNavigationProp = StackNavigationProp<
   'About'
 >;
 
-export type AppStackScreenProps<
-  T extends keyof AppStackParamList
-> = NativeStackScreenProps<AppStackParamList, T>;
+export type AppStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
 
-export type RootStackScreenProps<
-  T extends keyof RootStackParamList
-> = NativeStackScreenProps<RootStackParamList, T>;
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;
+
+export type WalletStackParamList = {
+  Wallet: {};
+  CreditTransactions: { guid: string; expireAt?: number };
+};

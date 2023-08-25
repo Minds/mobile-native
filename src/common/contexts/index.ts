@@ -3,7 +3,6 @@ import user from '../../auth/UserStore';
 import blogs from '../../blogs/BlogsStore';
 import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
-import groupView from '../../groups/GroupViewStore';
 import hashtag from '../../common/stores/HashtagStore';
 import reportStore from '../../report/ReportStore';
 import wallet from '../../wallet/WalletStore';
@@ -25,7 +24,6 @@ export function createClassStores() {
     blogs: new blogs(),
     wire: new wire(),
     groups: new groups(),
-    groupView: new groupView(),
     hashtag: new hashtag(),
     reportstore: new reportStore(),
     discoveryV2Store: new DiscoveryV2Store(),

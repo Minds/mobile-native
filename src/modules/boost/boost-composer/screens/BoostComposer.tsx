@@ -12,22 +12,22 @@ import {
   H3,
   HairlineRow,
   Screen,
-  ScreenHeader,
 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
-import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
   const { t } = useTranslation();
   const boostStore = useBoostStore();
+  const balance = useGetGiftBalance(false);
   const { insights } = useBoostInsights(boostStore);
   const {
     amount,
@@ -35,7 +35,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     duration,
     config,
     paymentType,
-    boostType,
     amountRangeValues,
     durationRangeValues,
     setAmount,
@@ -57,7 +56,9 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     },
   ];
 
-  if ((useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE) || IS_IOS) {
+  const removeCashTab = false; // (balance ?? 0) <= 0 && IS_IOS;
+
+  if (removeCashTab) {
     tabs.shift();
     // if we disable cash, offchain_tokens should be the default
     boostStore.paymentType = 'offchain_tokens';
@@ -108,11 +109,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader
-        title={boostType === 'channel' ? t('Boost Channel') : t('Boost Post')}
-        back
-        shadow
-      />
+      <BoostComposerHeader />
       <FitScrollView>
         <TopbarTabbar
           containerStyle={ThemedStyles.style.marginTop}

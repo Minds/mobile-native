@@ -1,18 +1,22 @@
-### UPLOAD STAGE
-.upload_s3: &upload_s3
+.upload_base:
   stage: upload
   tags: [minds-ci]
-  image: cimg/aws:2022.06.1
   interruptible: true
+
+# Gets the version of the iOS app parsing the project files
+.getiosversion: &getiosversion
+  - export FASTLANE_DISABLE_COLORS=1
+  - export APPVERSION=`fastlane run get_version_number xcodeproj:"Minds.xcodeproj" target:"Minds" | grep "Result:" | awk '{sub(/-.*/,"",$3);print $3}'`
+  - echo "APPVERSION=$APPVERSION"
+
+.upload_s3: &upload_s3
+  image: cimg/aws:2022.06.1
   script:
     - echo "Upload $TARGET_NAME"
     - aws s3 cp $APK_NAME s3://minds-repo/mobile/$TARGET_NAME
 
 .upload_browserstack: &upload_browserstack
-  stage: upload
-  tags: [minds-ci]
-  image: node:14.19.2
-  interruptible: true
+  image: node:18.13.0
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -21,81 +25,151 @@
   script:
     - yarn install --frozen-lockfile
     - !reference [.delete_browserstack, script]
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$APK_NAME;filename=$TARGET_NAME" -F $CUSTOM_ID
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=$INPUT_FILE;filename=$TARGET_NAME" -F 'data={"custom_id":$CUSTOM_ID}'
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=$INPUT_FILE;filename=$TARGET_NAME" -F 'data={"custom_id":$CUSTOM_ID}'
 
-# Upload production builds (Full version)
-upload:s3:oss: # Upload to S3
-  <<: *upload_s3
-  extends: .only_tags
-  before_script:
-    - !reference [.getversion, script]
-    - export TARGET_NAME=Minds-$APPVERSION.apk
-  dependencies:
-    - build:androidproduction
+#===============| ANDROID |===============>
 
 # Upload full APK to Browserstack
-upload:browserstack:oss:
+upload:android:browserstack:oss:
   <<: *upload_browserstack
-  extends: .only_tags
+  extends:
+    - .upload_base
   before_script:
     - !reference [.getversion, script]
     - export TARGET_NAME=Minds-$APPVERSION.apk
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION"}'
+    - export INPUT_FILE=@$APK_NAME
+    - export CUSTOM_ID='ANDROID_PRODUCTION'
   dependencies:
-    - build:androidproduction
-
-# Upload production builds (play-store version)
-upload:s3:playstore: # Upload to S3
-  <<: *upload_s3
-  extends: .only_tags
-  before_script:
-    - !reference [.getversion, script]
-    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-  dependencies:
-    - build:androidproduction-playstore
+    - build:android
+  needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_version_tag, rules]
 
 # Upload to Browserstack
-upload:browserstack:playstore:
-  <<: *upload_browserstack
-  extends: .only_tags
-  before_script:
-    - !reference [.getversion, script]
-    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_PRODUCTION_PLAYSTORE"}'
-  dependencies:
-    - build:androidproduction-playstore
-
-# Upload production RC (develop branch)
-upload:s3:oss:rc: # Upload to S3
-  <<: *upload_s3
-  extends: .rule_automatic_develop
-  before_script:
-    - !reference [.getversion, script]
-    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-  dependencies:
-    - build:androidproduction
-
-# Upload to Browserstack
-upload:browserstack:oss:rc:
-  <<: *upload_browserstack
-  extends: .rule_automatic_develop
-  before_script:
-    - !reference [.getversion, script]
-    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
-    - export CUSTOM_ID='data={"custom_id":"ANDROID_RC"}'
-  dependencies:
-    - build:androidproduction
-
-# Upload MR builds to browserstack
-upload:browserstack:mr:
+upload:android:browserstack:playstore:
   <<: *upload_browserstack
   extends:
-    - .except_nightly
-    - .only_native
+    - .upload_base
   before_script:
     - !reference [.getversion, script]
-    - export TARGET_NAME=Minds-$CI_COMMIT_REF_SLUG.apk
-    - export CUSTOM_ID='data={"custom_id":"MR_LATEST"}'
+    - export TARGET_NAME="Minds-$APPVERSION-play_store.apk"
+    - export INPUT_FILE=@$APK_NAME
+    - export CUSTOM_ID='ANDROID_PRODUCTION_PLAYSTORE'
   dependencies:
-    - build:android_mr_production
+    - build:android:store
+  needs: [build:android:store]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_version_tag, rules]
+
+# Upload production RC
+upload:android:s3:oss:rc: # Upload to S3
+  <<: *upload_s3
+  extends:
+    - .upload_base
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+  dependencies:
+    - build:android
+  needs: [build:android]
+  when: manual
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
+
+# Upload to Browserstack
+upload:android:browserstack:oss:rc:
+  <<: *upload_browserstack
+  extends:
+    - .upload_base
+  before_script:
+    - !reference [.getversion, script]
+    - export TARGET_NAME="Minds-$APPVERSION-RC.apk"
+    - export INPUT_FILE=@$APK_NAME
+    - export CUSTOM_ID='ANDROID_RC'
+  dependencies:
+    - build:android
+  needs: [build:android]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
+
+# Upload MR builds to browserstack
+upload:android:browserstack:mr:
+  <<: *upload_browserstack
+  extends:
+    - .upload_base
+  before_script:
+    - !reference [.getversion, script]
+    - export TAG_OR_REF_SLUG=${CI_COMMIT_TAG:-$CI_COMMIT_REF_SLUG}
+    - export TARGET_NAME=Minds-$TAG_OR_REF_SLUG.ipa
+    - export INPUT_FILE=@$APK_NAME
+    - export CUSTOM_ID='MR_LATEST'
+  dependencies:
+    - build:android:mr
+  needs: [build:android:mr]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_native_branch, rules]
+    - !reference [.rule_custom_tag, rules]
+
+#===============| IOS |===============>
+
+# Uploads ipa to browserstack with appname Minds-$CI_COMMIT_REF_SLUG.ipa
+# only runs on native branches
+upload:ios:browserstack:mr:
+  extends:
+    - .upload_base
+    - .upload_browserstack
+  before_script:
+    - export ENVFILE=".env.review"
+    - export INPUT_FILE=@ios/Minds.ipa
+    - export TAG_OR_REF_SLUG=${CI_COMMIT_TAG:-$CI_COMMIT_REF_SLUG}
+    - export TARGET_NAME=Minds-$TAG_OR_REF_SLUG.ipa
+    - export CUSTOM_ID=IOS_MR
+  dependencies:
+    - build:ios
+  needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_native_branch, rules]
+    - !reference [.rule_custom_tag, rules]
+
+# Uploads ipa to browserstack with appname Minds-$APPVERSION-RC.ipa
+# only runs on release branches
+upload:ios:browserstack:rc:
+  extends:
+    - .upload_base
+    - .upload_browserstack
+  before_script:
+    - *getiosversion
+    - export INPUT_FILE=@ios/Minds.ipa
+    - export TARGET_NAME=Minds-$APPVERSION-RC.ipa
+    - export CUSTOM_ID=IOS_RC
+  dependencies:
+    - build:ios
+  needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_release_branch, rules]
+
+# Uploads ipa to browserstack with appname Minds-$APPVERSION.ipa
+# runs automatically on major and minor tags. And manually on patch tags.
+upload:ios:browserstack:
+  extends:
+    - .upload_base
+    - .upload_browserstack
+  before_script:
+    - *getiosversion
+    - export INPUT_FILE=@ios/Minds.ipa
+    - export TARGET_NAME=Minds-$APPVERSION.ipa
+    - export CUSTOM_ID=IOS_PRODUCTION
+  dependencies:
+    - build:ios
+  needs: [build:ios]
+  rules:
+    - !reference [.rule_never_nightly, rules]
+    - !reference [.rule_automatic_nonpatch_manual_patch, rules]

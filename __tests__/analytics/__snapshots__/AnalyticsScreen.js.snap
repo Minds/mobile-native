@@ -9,31 +9,26 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     title="Analytics"
   />
   <TopbarTabbar
-    current="token"
+    current="traffic"
     onChange={[Function]}
     tabs={
-      Array [
-        Object {
+      [
+        {
           "id": "traffic",
           "key": "traffic",
           "title": "Traffic",
         },
-        Object {
-          "id": "token",
-          "key": "token",
-          "title": "Tokens",
-        },
-        Object {
+        {
           "id": "engagement",
           "key": "engagement",
           "title": "Engagement",
         },
-        Object {
+        {
           "id": "earnings",
           "key": "earnings",
           "title": "Earnings",
         },
-        Object {
+        {
           "id": "trending",
           "key": "trending",
           "title": "Trending",
@@ -43,7 +38,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "alignContent": "center",
         "alignItems": "center",
         "alignSelf": "center",
@@ -52,8 +47,13 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   >
     <Memo(wrappedComponent)
-      key="token"
+      defaultMetric="page_views"
+      key="traffic"
+      url="api/v2/analytics/dashboards/traffic"
     />
   </View>
+  <OnboardingOverlay
+    type="analytics"
+  />
 </Screen>
 `;

@@ -1,5 +1,5 @@
 export default function generateFakeUser(
-  guid,
+  guid = '123',
   name = 'Some User',
   username = 'someusermane',
 ) {

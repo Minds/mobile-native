@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { Circle } from 'react-native-animated-spinkit';
 import { Icon, IconButton, IconButtonNext } from '~ui/icons';
@@ -9,10 +9,10 @@ import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import i18n from '../common/services/i18n.service';
 import { Button, H3, Row } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
-import AudienceSelector from './ComposeAudienceSelector';
 import { pushComposeCreateScreen } from './ComposeCreateScreen';
 import { ComposeCreateMode } from './createComposeStore';
 import type { ComposeStoreType } from './useComposeStore';
+import BaseModel from '../common/BaseModel';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -25,6 +25,10 @@ interface ComposeTopBarProps {
 export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
   const { store } = props;
   const theme = ThemedStyles.style;
+  const isScheduled = useMemo(
+    () => store.time_created && BaseModel.isScheduled(store.time_created),
+    [store.time_created],
+  );
 
   const onPressPost = useCallback(async () => {
     if (store.attachments.uploading) {
@@ -56,20 +60,28 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
     <View style={styles.dotIndicatorContainerStyle}>
       <Circle size={28} color={ThemedStyles.getColor('Link')} />
     </View>
-  ) : store.isEdit ? (
-    <MText style={styles.postButton} onPress={onPressPost} testID="topBarDone">
-      {i18n.t('save')}
-    </MText>
   ) : (
-    <IconButtonNext
-      name="send"
-      size="medium"
-      scale
-      onPress={onPressPost}
-      disabled={!store.isValid}
-      color={store.isValid ? 'Link' : 'Icon'}
-      style={store.attachments.uploading ? theme.opacity25 : null}
-    />
+    <>
+      {isScheduled && <Icon name="alarm" size="small" right="XL" />}
+      {store.isEdit ? (
+        <MText
+          style={styles.postButton}
+          onPress={onPressPost}
+          testID="topBarDone">
+          {i18n.t('save')}
+        </MText>
+      ) : (
+        <IconButtonNext
+          name="send"
+          size="medium"
+          scale
+          onPress={onPressPost}
+          disabled={!store.isValid}
+          color={store.isValid ? 'Link' : 'Icon'}
+          style={store.attachments.uploading ? theme.opacity25 : null}
+        />
+      )}
+    </>
   );
 
   const handleModePress = () =>
@@ -102,7 +114,6 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
         )}
       </Button>
       <View style={theme.flexContainer} />
-      {!store.isEdit && <AudienceSelector store={store} />}
       {rightButton}
     </Row>
   );

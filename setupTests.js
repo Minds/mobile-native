@@ -28,14 +28,18 @@ jest.mock('@react-native-cookies/cookies', () => ({
   clearByName: jest.fn(),
 }));
 
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
+jest.mock('react-native-reanimated', () => ({
+  ...require('react-native-reanimated/mock'),
+  useAnimatedKeyboard: jest.fn().mockReturnValue({ height: 0 }),
+}));
 
 jest.mock('./src/common/services/analytics.service');
 jest.mock('./src/newsfeed/NewsfeedService');
 
+jest.mock('expo-font');
+
 jest.mock('react-native-localize');
+jest.mock('@react-native-camera-roll/camera-roll');
 jest.mock('expo-image');
 // jest.mock('react-native-device-info', () =>
 //   require('./node_modules/react-native-device-info/jest/react-native-device-info-mock'),
@@ -78,6 +82,13 @@ jest.mock(
     return MockTouchable;
   },
 );
+
+jest.mock('react-native-bootsplash', () => {
+  return {
+    hide: jest.fn().mockResolvedValueOnce(),
+    getVisibilityStatus: jest.fn().mockResolvedValue('hidden'),
+  };
+});
 
 jest.mock(
   'react-native/Libraries/Components/Touchable/TouchableHighlight.js',

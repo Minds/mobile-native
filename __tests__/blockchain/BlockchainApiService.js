@@ -3,37 +3,37 @@ import BlockchainApiService from '../../src/blockchain/BlockchainApiService';
 
 jest.mock('../../src/common/services/api.service');
 
-
 /**
  * Blockchain api service
  */
 describe('blockchain api service', () => {
-
   const fakeResponse = {
     wallet: {
-      address: '0xMyWallet'
-    }
+      address: '0xMyWallet',
+    },
   };
   const fakeRateResponse = {
-    rate: 1.2
+    rate: 1.2,
   };
 
   beforeEach(() => {
     api.get.mockClear();
   });
 
-  it('should return an error message', async (done) => {
-
+  it('should return an error message', done => {
     api.get.mockRejectedValueOnce(new Error('Async error'));
 
-    try {
-      await BlockchainApiService.getWallet(true);
-      done.fail();
-    } catch(e) {
-      // should throw an error with the following message
-      expect(e.message).toEqual('There was an issue getting your saved wallet info');
-    }
-    done();
+    BlockchainApiService.getWallet(true)
+      .then(() => {
+        done.fail();
+      })
+      .catch(e => {
+        // should throw an error with the following message
+        expect(e.message).toEqual(
+          'There was an issue getting your saved wallet info',
+        );
+        done();
+      });
   });
 
   it('should return the wallet', async () => {
@@ -46,8 +46,7 @@ describe('blockchain api service', () => {
   });
 
   it('should return the cached wallet', async () => {
-
-    api.get.mockClear()
+    api.get.mockClear();
 
     const address = await BlockchainApiService.getWallet();
 
@@ -58,7 +57,6 @@ describe('blockchain api service', () => {
   });
 
   it('should call the endpoint and set the wallet', async () => {
-
     api.post.mockClear();
 
     const address = '0xMyWallet';
@@ -66,7 +64,7 @@ describe('blockchain api service', () => {
     await BlockchainApiService.setWallet(address);
 
     // should call the endpoint
-    expect(api.post).toBeCalledWith('api/v2/blockchain/wallet',{address});
+    expect(api.post).toBeCalledWith('api/v2/blockchain/wallet', { address });
 
     // should set the address
     expect(BlockchainApiService.serverWalletAddressCache).toEqual(address);

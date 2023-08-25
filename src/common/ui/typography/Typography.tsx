@@ -29,7 +29,14 @@ export type TypographyType =
 
 export type TypographyPropsType = {
   align?: 'auto' | 'left' | 'right' | 'center' | 'justify';
-  color?: 'primary' | 'secondary' | 'link' | 'white' | 'danger' | 'tertiary';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'link'
+    | 'white'
+    | 'black'
+    | 'danger'
+    | 'tertiary';
   type?: TypographyType;
   font?: FontFamily;
   flat?: boolean;

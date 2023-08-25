@@ -2,34 +2,7 @@ import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { storages } from '~/common/services/storage/storages.service';
-
-export type TDiscoveryV2Tabs =
-  | 'top'
-  | 'foryou'
-  | 'your-tags'
-  | 'trending-tags'
-  | 'boosts'
-  | 'superminds';
-
-const tabIndex: Record<TDiscoveryV2Tabs, number> = {
-  top: 0,
-  foryou: 1,
-  'your-tags': 2,
-  'trending-tags': 3,
-  boosts: 4,
-  superminds: 5,
-};
-
-export type TDiscoveryTrendsTrend = {};
-
-export type TDiscoveryTagsTag = {
-  value: string;
-};
-
-const DISCOVERY_TS_KEY = 'discovery_ts';
-
-// TODO: workaround please remove
-const BOOST_V3 = true;
+import { hasVariation } from '../../../ExperimentsProvider';
 
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = 'top';
@@ -47,30 +20,15 @@ export default class DiscoveryV2Store {
   @observable loadingTags = false;
   @observable refreshing = false;
   @observable badgeVisible = true;
-  boostFeed: FeedStore;
   trendingFeed: FeedStore;
   allFeed: FeedStore;
   topFeed: FeedStore;
   supermindsFeed: FeedStore;
   lastDiscoveryTimestamp = 0;
+  plus?: boolean;
 
   constructor(plus: boolean = false) {
-    this.boostFeed = new FeedStore(true);
-    this.boostFeed
-      .getMetadataService()!
-      .setSource('feed/boosts')
-      .setMedium('featured-content');
-
-    this.boostFeed
-      .setEndpoint(BOOST_V3 ? 'api/v3/boosts/feed' : 'api/v2/boost/feed')
-      .setInjectBoost(false)
-      .setLimit(15);
-
-    if (BOOST_V3) {
-      this.boostFeed.feedsService.setDataProperty('boosts');
-      this.boostFeed.setParams({ location: 1 });
-    }
-
+    this.plus = plus;
     this.trendingFeed = new FeedStore(true)
       .setEndpoint('api/v2/feeds/global/top/all')
       .setParams({ period: '12h', plus })
@@ -119,13 +77,10 @@ export default class DiscoveryV2Store {
         case 'top':
           this.topFeed.fetchRemoteOrLocal();
           break;
-        case 'boosts':
-          this.boostFeed.fetchRemoteOrLocal();
-          break;
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
           break;
-        case 'superminds':
+        case 'supermind':
           this.supermindsFeed.fetchRemoteOrLocal();
           break;
         case 'foryou':
@@ -254,8 +209,6 @@ export default class DiscoveryV2Store {
       case 'trending-tags':
         this.refreshTags();
         return this.trendingFeed.clear().refresh();
-      case 'boosts':
-        return this.boostFeed.refresh();
     }
   }
 
@@ -264,11 +217,14 @@ export default class DiscoveryV2Store {
     this.allFeed.reset();
     this.topFeed.reset();
     this.trendingFeed.reset();
-    this.boostFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
-    this.activeTabId = 'foryou';
+    this.activeTabId = hasVariation('mob-5038-discovery-consolidation')
+      ? this.plus
+        ? 'foryou'
+        : 'top'
+      : 'foryou';
     this.refreshing = false;
     this.loading = false;
     this.showBadge();
@@ -286,3 +242,32 @@ export default class DiscoveryV2Store {
     storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }
+
+export type TDiscoveryV2Tabs =
+  | 'top'
+  | 'foryou'
+  | 'your-tags'
+  | 'trending-tags'
+  | 'boosts'
+  | 'supermind'
+  | 'channels'
+  | 'groups';
+
+const tabIndex: Record<TDiscoveryV2Tabs, number> = {
+  top: 0,
+  foryou: 1,
+  'your-tags': 2,
+  'trending-tags': 3,
+  boosts: 4,
+  supermind: 5,
+  channels: 6,
+  groups: 7,
+};
+
+export type TDiscoveryTrendsTrend = {};
+
+export type TDiscoveryTagsTag = {
+  value: string;
+};
+
+const DISCOVERY_TS_KEY = 'discovery_ts';

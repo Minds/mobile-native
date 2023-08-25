@@ -20,6 +20,7 @@
     "pendingModeration": "This post is awaiting moderation"
   },
   "permissions": {
+    "notification": "Stay connected with instant updates on Minds. Enable push notifications now!",
     "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
     "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
     "camera": "Minds needs access to your external camera so you can capture pictures.",
@@ -196,7 +197,7 @@
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
-    "authCode": "Authentication code",
+    "authCode": "Verification Code",
     "recoveryCode": "Recovery code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
     "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
@@ -216,7 +217,8 @@
     "rateLimit": "Too many attempts, please try again later",
     "newPassword": "Create a new password. You’ll use this to access your account.",
     "nextLabel": "Next",
-    "submitLabel": "Submit"
+    "submitLabel": "Submit",
+    "mistypedEmail": "Mistyped your email? Change your email address below."
   },
   "multiUser": {
     "switchChannel": "Switch Account",
@@ -393,6 +395,7 @@
     "boostCashViews": "{{amount}} USD = {{views}} views",
     "boostTokenViews": "{{amount}} token = {{views}} views",
     "boostedChannel": "Boosted Channel",
+    "boostedGroup": "Boosted Group",
     "boostChangingTitle": "Boost is changing",
     "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
     "boostChangingLink": "Read more about the update."
@@ -443,7 +446,7 @@
     "text": "Text",
     "postOptions": "Post Options",
     "retake": "Retake",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
+    "allowMinds": "Enable access so you can take photos and record videos to share on Minds. Microphone access lets you record videos and use audio features.",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
@@ -501,6 +504,14 @@
       "descriptionMany": {
         "one": "and {{count}} other are subscribed",
         "other": "and {{count}} others are subscribed"
+      },
+      "follow": {
+        "one": "follows {{user}}",
+        "other": "follow {{user}}"
+      },
+      "followMany": {
+        "one": "and {{count}} other follow {{user}}",
+        "other": "and {{count}} others follow {{user}}"
       }
     },
     "boostComposer": {
@@ -512,10 +523,12 @@
     "manage": "Manage Tags",
     "justForYou": "Just for you",
     "top": "Top",
+    "topV2": "Trending",
     "yourTags": "Your tags",
     "otherTags": "Other tags",
     "trendingTags": "Trending tags",
     "trending": "Trending",
+    "trendingV2": "Trending tags",
     "search": "Search...",
     "nothingToShow": "Nothing to show",
     "nothingToSee": "Nothing to see here...",
@@ -525,12 +538,14 @@
     "images": "Images",
     "blogs": "Blogs",
     "groups": "Groups",
+    "discoverGroups": "Discover Groups",
     "addTags": "Add tags to personalize your feed",
     "selectTags": "Select tags",
     "posts": "posts",
     "votes": "votes"
   },
   "groups": {
+    "title": "Groups",
     "ongoingGathering": "Ongoing gathering",
     "joinGathering": "Join Gathering",
     "gotoGroup": "Go to group",
@@ -568,15 +583,11 @@
     "title": "Newsfeed",
     "designYourChannel": "Design your channel",
     "empty": "Your newsfeed is empty",
-    "topPosts": "Top Posts",
-    "latestPosts": "Latest Posts",
+    "topPosts": "Top",
+    "foryouPosts": "For you",
+    "latestPosts": "Latest",
+    "groups": "Groups",
     "seeMoreTopPosts": "See more top posts",
-    "latestTitle": "Latest posts enabled",
-    "latestDesc": "Show posts as they happen",
-    "latestAction": "Enable Latest Posts",
-    "topTitle": "Top posts enabled",
-    "topDesc": "Priotitize the most engaged with posts at the top your newsfeed",
-    "topAction": "Enable Top Posts",
     "seeLatestTitle": "See {{count}} latest posts"
   },
   "comments": {
@@ -639,6 +650,7 @@
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "claimGiftButton": "Claim Gift",
     "filters": {
       "all": "All",
       "tags": "Tags",
@@ -680,7 +692,10 @@
       "boost_rejected_v2": "Your Boost was rejected",
       "boost_completed": "Your Boost is complete",
       "boost_accepted": "Your Boost is now running",
-      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!",
+      "affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
+      "referrer_affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
+      "gift_card_recipient_notified": "sent you a gift for Boost"
     }
   },
   "interactions": {
@@ -786,6 +801,9 @@
           },
           "6": {
             "label": "Trafficking"
+          },
+          "7": {
+            "label": "Animal abuse"
           }
         }
       },
@@ -861,6 +879,7 @@
     "reportAs": "Do you want to report this post as:"
   },
   "settings": {
+    "affiliateProgram": "Affiliate Program",
     "submit": "Submit",
     "boostConsole": "Boost",
     "chooseBrowser": "Choose Browser",
@@ -1092,7 +1111,7 @@
       "description": "Using our Twitter Sync tool, Twitter users with over {{limit}} followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.",
       "discoverable": "Allow other channels to discover me via Twitter",
       "disconnect": "Disconnect",
-      "verificationText": "Verifying my channel on @minds.",
+      "verificationText": "Verifying my channel on @minds. {url}",
       "step1": {
         "title": "Step 1",
         "desc": "We need you to create a Tweet so that we can pair your account. It's important that the pre-populated link is not changed.",
@@ -1487,8 +1506,8 @@
   },
   "wire": {
     "customDonation": "Custom Donation",
-    "selectCredit": "Select a credit card.",
-    "addCard": "Add card.",
+    "selectCredit": "Select a credit card",
+    "addCard": "Add card",
     "amountMonth": "{{amount}} / month",
     "noAddress": "This channel has not configured their {{type}} address yet",
     "amountMonthDescription": "THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {{amount}}/MONTH TO @{{name}}",
@@ -1651,6 +1670,8 @@
   "edit": "Edit",
   "goback": "Go back",
   "quote": "Quote",
+  "groupShare": "Group share",
+  "shareToGroup": "Share to a group",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -1704,9 +1725,10 @@
   "passwordConmfirmPlaceholder": "confirm password...",
   "boost": "Boost",
   "boosted": "Boosted",
-  "follow": "Follow",
+  "follow": "Follow post",
   "unfollow": "Unfollow",
   "tokens": "Tokens",
+  "credits": "Credits",
   "share": "Share",
   "edited": "Edited",
   "success": "Success",
@@ -1779,18 +1801,11 @@
   "pinnedPost": "Pinned post",
   "postReminded": "Post has been reminded",
   "remindRemoved": "Remind has been removed",
+  "hidePost": "Hide Post",
   "postHidden": "Post has been hidden",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
   "yesterday": "Yesterday",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Help",
   "unblock": "Unblock",
   "earnScreen": {
@@ -1834,12 +1849,15 @@
   "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
+  "copyLink": "Copy Link",
   "emptyList": "Sorry the list is empty",
   "nothingToSee": "Nothing to see here",
   "and": "and",
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "recommendedForYou": "Recommended for you",
+  "recommendedGroups": "Recommended Groups",
   "expires": "Expires",
   "requirements": "Requirements",
   "seeMore": "See more",
@@ -1855,19 +1873,13 @@
   },
   "codePush": {
     "prompt": {
-      "title": "New update available",
-      "description": "There is a newer version of the app available. Would you like to update now?",
-      "action": "Restart"
-    },
-    "nativePrompt": {
-      "description": "Please update your app in order to enjoy the latest features.",
-      "current": "Current:",
-      "available": "Available:",
-      "action": "Download"
+      "heading": "Stay up to date and ",
+      "getVersion": "get version "
     },
     "syncing": "Syncing app bundle...",
     "custom": {
-      "staging": "You're on staging",
+      "staging": "You're on Staging",
+      "rc": "You're on Release candidate",
       "usingCustom": "You're using a custom app version",
       "updateDescription": "Update description",
       "revertToProd": "Revert to Production"
@@ -1893,8 +1905,9 @@
         }
       },
       "memberships": "Memberships",
-      "groups": "Groups",
+      "groups": "Your Groups",
       "noGroups": "You aren't a member of any groups",
+      "discoverGroups": "Discover groups",
       "plus": {
         "title": "Plus monetization",
         "action": "I agree to the terms"
@@ -1931,5 +1944,12 @@
       }
     }
   },
-  "back": "Back"
+  "group": {
+    "search": "Search Group",
+    "share": "Share Group",
+    "boost": "Boost Group"
+  },
+  "back": "Back",
+  "explore": "Explore",
+  "restart": "Restart"
 }

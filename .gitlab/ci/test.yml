@@ -1,8 +1,9 @@
 test:quality:
-  extends: .except_nightly
-  image: node:14.19.2
+  image: node:18.13.0
   stage: test
   interruptible: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}

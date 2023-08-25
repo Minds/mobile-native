@@ -3,18 +3,18 @@
 exports[`Activity screen component renders correctly  1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "fontScale": 2,
         "height": 1334,
         "scale": 2,
         "width": 750,
       },
-      Object {
+      {
         "flex": 1,
       },
-      Object {
-        "backgroundColor": "#1F252C",
+      {
+        "backgroundColor": "#1C1D1F",
       },
     ]
   }
@@ -22,272 +22,102 @@ exports[`Activity screen component renders correctly  1`] = `
 >
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
-            "borderBottomWidth": 0.5,
+        [
+          {
+            "backgroundColor": "#1C1D1F",
           },
-          Object {
-            "borderColor": "#414C57",
+          {
+            "borderBottomWidth": 0,
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.22,
+            "shadowRadius": 2.22,
           },
-          Array [
-            Object {
-              "backgroundColor": "#1F252C",
-            },
-            Object {
-              "borderBottomWidth": 0,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-              "shadowRadius": 2.22,
-            },
-            Object {
-              "paddingTop": -10,
-            },
-          ],
+          {
+            "paddingTop": -10,
+          },
         ]
       }
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "flexDirection": "row",
-            "paddingHorizontal": 16,
-            "paddingVertical": 13,
-          }
+          [
+            {
+              "borderBottomWidth": 0.5,
+            },
+            {
+              "borderColor": "#53565A",
+            },
+            undefined,
+          ]
         }
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
-              "color": "#FFFFFF",
-              "elevation": 4,
-              "justifyContent": "center",
-              "left": 0,
-              "marginLeft": -20,
-              "marginRight": -5,
-              "paddingTop": 0,
-              "position": undefined,
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 1,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 3,
-              "top": undefined,
-              "width": 50,
+              "display": "flex",
+              "flexDirection": "row",
+              "paddingHorizontal": 16,
+              "paddingVertical": 13,
             }
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={13.333333333333332}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "alignItems": "center",
+                "color": "#F2F2F2",
+                "elevation": 4,
                 "justifyContent": "center",
-              }
-            }
-            testID="floatingBackButton"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 40,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#AEB0B8",
-                        "fontSize": 40,
-                      },
-                      Object {},
-                      Object {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  󰅁
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          onPress={[Function]}
-        >
-          <Image
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                  "no-cache": "1",
+                "left": 0,
+                "marginLeft": -20,
+                "marginRight": -5,
+                "paddingTop": 0,
+                "position": undefined,
+                "shadowOffset": {
+                  "height": 1,
+                  "width": 1,
                 },
-                "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
-              }
-            }
-            style={
-              Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
-              }
-            }
-          />
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-              "marginLeft": 10,
-              "paddingRight": 5,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "flexDirection": "column",
+                "shadowOpacity": 0.2,
+                "shadowRadius": 3,
+                "top": undefined,
+                "width": 50,
               }
             }
           >
             <View
-              pointerEvents="box-none"
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "flex-start",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                ]
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
               }
-            >
-              <Text
-                accessible={true}
-                focusable={true}
-                hitSlop={
-                  Object {
-                    "bottom": 4,
-                    "left": 4,
-                    "right": 4,
-                    "top": 4,
-                  }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
-                numberOfLines={1}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto-Bold",
-                    },
-                    Object {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              />
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        />
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-              ]
-            }
-          >
-            <View
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
-              hitSlop={9.333333333333332}
+              hitSlop={13.333333333333332}
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
@@ -298,66 +128,288 @@ exports[`Activity screen component renders correctly  1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "justifyContent": "center",
                 }
               }
+              testID="floatingBackButton"
             >
               <View
-                collapsable={false}
                 style={
-                  Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 40,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "color": "#AEB0B8",
+                          "fontSize": 40,
+                        },
+                        {},
+                        {
+                          "fontFamily": "Material Design Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        {},
+                      ]
+                    }
+                  >
+                    󰅁
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            onPress={[Function]}
+          >
+            <View>
+              <Image
+                recyclingKey="824853017709780997"
+                source={
+                  {
+                    "headers": {
+                      "App-Version": "3.8.0",
+                      "Cache-Control": "no-cache, no-store, must-revalidate",
+                      "Content-Type": "application/json",
+                      "Pragma": "no-cache",
+                      "no-cache": "1",
+                    },
+                    "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                  }
+                }
+                style={
+                  {
+                    "borderRadius": 18,
+                    "height": 36,
+                    "width": 36,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 10,
+                "paddingRight": 5,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "column",
+                }
+              }
+            >
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
                       "flexDirection": "row",
-                      "justifyContent": "center",
+                      "justifyContent": "flex-start",
+                    },
+                    {
+                      "alignItems": "center",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  hitSlop={
+                    {
+                      "bottom": 4,
+                      "left": 4,
+                      "right": 4,
+                      "top": 4,
+                    }
+                  }
+                  numberOfLines={1}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto-Bold",
+                      },
+                      {
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ]
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "flexDirection": "row",
+              }
+            }
+          />
+          <View
+            style={
+              {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "position": "relative",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                hitSlop={9.333333333333332}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    {
+                      "transform": [
+                        {
+                          "scale": 1,
+                        },
+                      ],
                     }
                   }
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "alignItems": "center",
                         "flexDirection": "row",
-                        "height": 28,
                         "justifyContent": "center",
-                        "overflow": "hidden",
-                        "width": 28,
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <View
                       style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 25.76,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
+                        {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 28,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 28,
+                        }
                       }
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        selectable={false}
+                        style={
+                          [
+                            {
+                              "color": "#AEB0B8",
+                              "fontSize": 25.76,
+                            },
+                            undefined,
+                            {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -368,11 +420,11 @@ exports[`Activity screen component renders correctly  1`] = `
     </View>
     <RCTScrollView
       contentContainerStyle={
-        Array [
-          Object {
+        [
+          {
             "width": "100%",
           },
-          Object {
+          {
             "flexGrow": 1,
             "justifyContent": "center",
           },
@@ -381,7 +433,7 @@ exports[`Activity screen component renders correctly  1`] = `
       onContentSizeChange={[Function]}
       onLayout={[Function]}
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -391,11 +443,11 @@ exports[`Activity screen component renders correctly  1`] = `
           accessibilityLabel="touchableTextCopy"
           onLongPress={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "paddingHorizontal": 16,
               },
-              Object {
+              {
                 "paddingVertical": 16,
               },
             ]
@@ -407,27 +459,27 @@ exports[`Activity screen component renders correctly  1`] = `
             <Text
               selectable={true}
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
+                [
+                  {
+                    "color": "#F2F2F2",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto",
                   },
-                  Array [
-                    Array [
-                      Object {
+                  [
+                    [
+                      {
                         "fontSize": 28,
                       },
-                      Object {
+                      {
                         "fontFamily": "Roboto-Medium",
                         "fontWeight": "500",
                       },
                     ],
-                    Object {
+                    {
                       "marginBottom": 4,
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Black",
                       "fontWeight": "700",
                     },
@@ -438,20 +490,20 @@ exports[`Activity screen component renders correctly  1`] = `
               TITLE
             </Text>
             <Text
-              selectable={false}
+              selectable={true}
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
+                [
+                  {
+                    "color": "#F2F2F2",
                   },
-                  Object {
+                  {
                     "fontFamily": "Roboto",
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "fontSize": 28,
                     },
-                    Object {
+                    {
                       "fontFamily": "Roboto-Medium",
                       "fontWeight": "500",
                     },
@@ -466,15 +518,15 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flexDirection": "row",
                 "justifyContent": "space-between",
               },
-              Object {
+              {
                 "padding": 8,
               },
-              Object {
+              {
                 "paddingHorizontal": 16,
               },
             ]
@@ -482,21 +534,21 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
-                    "color": "#B8C1CA",
+                [
+                  {
+                    "color": "#b9bbc0",
                   },
-                  Object {
+                  {
                     "fontSize": 14,
                   },
-                  Object {
+                  {
                     "paddingVertical": 4,
                   },
                 ],
@@ -510,13 +562,13 @@ exports[`Activity screen component renders correctly  1`] = `
     </RCTScrollView>
     <ExpoLinearGradient
       colors={
-        Array [
-          "#1A202500",
-          "#1A2025FF",
+        [
+          "#38393D00",
+          "#38393DFF",
         ]
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "height": 40,
           "position": "absolute",
@@ -527,55 +579,320 @@ exports[`Activity screen component renders correctly  1`] = `
   </View>
   <View
     style={
-      Object {
-        "backgroundColor": "#1F252C",
+      {
+        "backgroundColor": "#1C1D1F",
         "paddingBottom": -10,
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
             "justifyContent": "flex-start",
           },
-          Object {
-            "backgroundColor": "#1F252C",
+          {
+            "backgroundColor": "#1C1D1F",
           },
-          Object {
+          {
             "paddingLeft": 8,
           },
-          Object {
+          {
             "borderTopWidth": 0.5,
           },
-          Object {
-            "borderColor": "#414C57",
+          {
+            "borderColor": "#53565A",
           },
         ]
       }
     />
-    <View>
-      <View
-        style={
-          Array [
-            Object {
-              "borderTopWidth": 0.5,
+    <View
+      style={
+        [
+          [
+            {
               "display": "flex",
               "flexDirection": "row",
               "justifyContent": "space-around",
+              "minHeight": 64,
               "paddingHorizontal": 16,
             },
-            Object {
-              "borderColor": "#414C57",
+            {
+              "borderColor": "#53565A",
             },
+          ],
+          {
+            "borderTopWidth": 0.5,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
+            },
+          ]
+        }
+        testID="Thumb up activity button"
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "nowrap",
+                },
+                {
+                  "margin": 4,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  {},
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#AEB0B8",
+                      "fontSize": 23.04,
+                    },
+                    {},
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
+            },
+          ]
+        }
+        testID="Thumb down activity button"
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "nowrap",
+                },
+                {
+                  "margin": 4,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  {},
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#AEB0B8",
+                      "fontSize": 23.04,
+                    },
+                    {},
+                    {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
           ]
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
+          hitSlop={6.666666666666666}
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -586,578 +903,396 @@ exports[`Activity screen component renders correctly  1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              Object {
-                "margin": 4,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-              Object {
-                "alignItems": "center",
-              },
-            ]
-          }
-          testID="Thumb up activity button"
-        >
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "flexWrap": "nowrap",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    Object {},
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#AEB0B8",
-                        "fontSize": 23.04,
-                      },
-                      Object {},
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              Object {
-                "margin": 4,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-              Object {
-                "alignItems": "center",
-              },
-            ]
-          }
-          testID="Thumb down activity button"
-        >
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "flexWrap": "nowrap",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    Object {},
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#AEB0B8",
-                        "fontSize": 23.04,
-                      },
-                      Object {},
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
-                "position": "relative",
               },
-              undefined,
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                Object {
-                  "margin": 4,
-                },
-                Object {
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "alignItems": "center",
-                },
-              ],
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
             ]
           }
+          testID=""
         >
           <View
-            accessible={true}
             collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                Object {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
             }
-            testID=""
           >
             <View
-              collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
-                      "scale": 1,
-                    },
-                  ],
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                 }
               }
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
+                    "height": 20,
                     "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
                   }
                 }
               >
-                <View
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
-                  }
-                >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#AEB0B8",
-                          "fontSize": 18.400000000000002,
-                        },
-                        Object {
-                          "marginTop": 2,
-                        },
-                        Object {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰍡
-                  </Text>
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "flexDirection": "row",
-                        "justifyContent": "center",
+                    [
+                      {
+                        "color": "#AEB0B8",
+                        "fontSize": 18.400000000000002,
                       },
-                      Object {
-                        "marginLeft": 4,
+                      {
+                        "marginTop": 2,
                       },
+                      {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
                     ]
                   }
                 >
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                        },
-                        Object {
-                          "fontFamily": "Roboto",
-                        },
-                        Array [
-                          Array [
-                            Object {
-                              "color": "#AEB0B8",
-                            },
-                            Object {
-                              "fontSize": 14,
-                            },
-                            Object {
-                              "fontFamily": "Roboto-Medium",
-                              "fontWeight": "500",
-                            },
-                          ],
-                          undefined,
+                  󰍡
+                </Text>
+              </View>
+              <View
+                style={
+                  [
+                    {
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "marginLeft": 4,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto",
+                      },
+                      [
+                        [
+                          {
+                            "color": "#AEB0B8",
+                          },
+                          {
+                            "fontSize": 14,
+                          },
+                          {
+                            "fontFamily": "Roboto-Medium",
+                            "fontWeight": "500",
+                          },
                         ],
-                      ]
-                    }
-                  />
-                </View>
+                        undefined,
+                      ],
+                    ]
+                  }
+                />
               </View>
             </View>
           </View>
         </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
+          ]
+        }
+      >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={6.666666666666666}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
-                "position": "relative",
               },
-              undefined,
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                Object {
-                  "margin": 4,
-                },
-                Object {
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "alignItems": "center",
-                },
-              ],
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
             ]
           }
+          testID="Remind activity button"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
               }
             }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                Object {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
-            }
-            testID="Remind activity button"
           >
             <View
-              collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
-                      "scale": 1,
-                    },
-                  ],
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                 }
               }
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
+                    "height": 20,
                     "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
                   }
                 }
               >
-                <View
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
+                    [
+                      {
+                        "color": "#AEB0B8",
+                        "fontSize": 20.8,
+                      },
+                      {
+                        "marginTop": -1,
+                      },
+                      {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#AEB0B8",
-                          "fontSize": 20.8,
-                        },
-                        Object {
-                          "marginTop": -1,
-                        },
-                        Object {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰑖
-                  </Text>
-                </View>
+                  󰑖
+                </Text>
               </View>
             </View>
           </View>
         </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
+          ]
+        }
+      >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={6.666666666666666}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "justifyContent": "center",
-                "position": "relative",
               },
-              undefined,
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "column",
-                },
-                Object {
-                  "margin": 4,
-                },
-                Object {
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "alignItems": "center",
-                },
-              ],
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
             ]
           }
         >
           <View
-            accessible={true}
             collapsable={false}
-            focusable={true}
-            hitSlop={6.666666666666666}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                Object {
-                  "alignItems": "center",
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
             }
           >
             <View
-              collapsable={false}
               style={
-                Object {
-                  "transform": Array [
-                    Object {
-                      "scale": 1,
-                    },
-                  ],
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                 }
               }
             >
               <View
                 style={
-                  Object {
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
+                    "height": 20,
                     "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
                   }
                 }
               >
-                <View
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "height": 20,
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                      "width": 20,
-                    }
+                    [
+                      {
+                        "color": "#AEB0B8",
+                        "fontSize": 20,
+                      },
+                      {
+                        "marginTop": -2,
+                      },
+                      {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#AEB0B8",
-                          "fontSize": 20,
-                        },
-                        Object {
-                          "marginTop": -2,
-                        },
-                        Object {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
+                  
+                </Text>
               </View>
             </View>
           </View>
@@ -1167,41 +1302,42 @@ exports[`Activity screen component renders correctly  1`] = `
   </View>
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1224,8 +1360,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1245,10 +1382,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1259,7 +1396,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1273,7 +1410,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1290,7 +1427,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1298,41 +1435,42 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1355,8 +1493,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1376,10 +1515,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1390,7 +1529,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1404,7 +1543,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1421,7 +1560,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1429,41 +1568,42 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1486,8 +1626,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1507,10 +1648,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1521,7 +1662,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1535,7 +1676,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1552,7 +1693,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }
@@ -1560,41 +1701,42 @@ exports[`Activity screen component renders correctly  1`] = `
   />
   <InteractionsBottomSheet
     entity={
-      Object {
+      {
+        "_collapsed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "can": [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "view",
               true,
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "vote",
             ],
-            Array [
+            [
               "remind",
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
-            Object {
+            {
               "type": "return",
               "value": true,
             },
@@ -1617,8 +1759,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "__list": null,
+          "_collapsed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
@@ -1638,10 +1781,10 @@ exports[`Activity screen component renders correctly  1`] = `
           "mature": false,
           "mature_visibility": false,
           "mode": 0,
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "pending_subscribe": false,
-          "permissions": Object {},
+          "permissions": {},
           "plus": false,
           "plus_method": "tokens",
           "pro": false,
@@ -1652,7 +1795,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1522036284",
           "time_updated": "",
           "type": "user",
@@ -1666,7 +1809,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "paywall": "",
         "paywall_unlocked": false,
         "perma_url": false,
-        "permissions": Object {},
+        "permissions": {},
         "pinned": false,
         "quotes": 0,
         "reminds": 0,
@@ -1683,191 +1826,9 @@ exports[`Activity screen component renders correctly  1`] = `
         "type": "activity",
         "urn": "",
         "username": "",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
-      }
-    }
-  />
-  <CommentBottomSheet
-    autoOpen={false}
-    commentsStore={
-      CommentsStore {
-        "analyticContexts": Array [
-          undefined,
-          undefined,
-        ],
-        "attachment": AttachmentStore {
-          "assetId": "",
-          "cancelOrDelete": [Function],
-          "ephemeral": true,
-          "filename": "",
-          "guid": "",
-          "onClear": undefined,
-          "path": "",
-          "transcoding": false,
-        },
-        "comments": Array [],
-        "embed": RichEmbedStore {
-          "_richEmbedFetchTimer": null,
-          "clearRichEmbedAction": [Function],
-          "richEmbedUrl": "",
-          "setRichEmbedPromise": null,
-        },
-        "entity": Object {
-          "access_id": "",
-          "allow_comments": true,
-          "attachment_guid": false,
-          "blurb": false,
-          "can": [MockFunction] {
-            "calls": Array [
-              Array [
-                "view",
-                true,
-              ],
-              Array [
-                "vote",
-              ],
-              Array [
-                "vote",
-              ],
-              Array [
-                "remind",
-              ],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-              Object {
-                "type": "return",
-                "value": true,
-              },
-            ],
-          },
-          "comments:count": undefined,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "entity_guid": "",
-          "getLockType": [Function],
-          "guid": "activityguid0",
-          "impressions": 0,
-          "isOwner": [Function],
-          "is_visible": false,
-          "listenForMetricsDebounced": [Function],
-          "mature": false,
-          "mature_visibility": false,
-          "message": "Message",
-          "ownerObj": Object {
-            "__list": null,
-            "access_id": "",
-            "allow_comments": true,
-            "blocked": undefined,
-            "canary": false,
-            "confirmEmail": [Function],
-            "disable_autoplay_videos": undefined,
-            "disabled_boost": undefined,
-            "email_confirmed": false,
-            "eth_wallet": "",
-            "founder": false,
-            "groupsCount": 0,
-            "guid": "824853017709780997",
-            "impressions": undefined,
-            "isOwner": [Function],
-            "is_admin": false,
-            "last_accepted_tos": 0,
-            "mature": false,
-            "mature_visibility": false,
-            "mode": 0,
-            "nsfw": Array [],
-            "onchain_booster": 0,
-            "pending_subscribe": false,
-            "permissions": Object {},
-            "plus": false,
-            "plus_method": "tokens",
-            "pro": false,
-            "pro_method": "tokens",
-            "rewards": false,
-            "subscribed": undefined,
-            "subscriber": false,
-            "subscribers_count": undefined,
-            "subscriptions_count": 0,
-            "subtype": false,
-            "tags": Array [],
-            "time_created": "1522036284",
-            "time_updated": "",
-            "type": "user",
-            "urn": "",
-            "username": "",
-            "verified": false,
-            "wire_rewards": undefined,
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "paywall": "",
-          "paywall_unlocked": false,
-          "perma_url": false,
-          "permissions": Object {},
-          "pinned": false,
-          "quotes": 0,
-          "reminds": 0,
-          "rowKey": "something0",
-          "subtype": "",
-          "thumbnail_src": false,
-          "thumbs:down:count": undefined,
-          "thumbs:down:user_guids": undefined,
-          "thumbs:up:count": undefined,
-          "thumbs:up:user_guids": undefined,
-          "time_created": "1522036284",
-          "time_updated": "",
-          "title": "TITLE",
-          "type": "activity",
-          "urn": "",
-          "username": "",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
-        },
-        "errorLoadingNext": false,
-        "errorLoadingPrevious": false,
-        "focusedCommentUrn": null,
-        "level": 0,
-        "loadNext": "",
-        "loadPrevious": "",
-        "loaded": false,
-        "loadingNext": false,
-        "loadingPrevious": false,
-        "mature": 0,
-        "onAttachedMedia": [Function],
-        "parent": null,
-        "post": [Function],
-        "refreshing": false,
-        "reversed": true,
-        "saving": false,
-        "selectMediaType": [Function],
-        "selection": Object {
-          "end": 0,
-          "start": 0,
-        },
-        "showInput": false,
-        "showSpamComments": [Function],
-        "socketRoomName": "",
-        "spamComments": Array [],
-        "spamCommentsShown": false,
-        "text": "",
       }
     }
   />

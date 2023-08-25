@@ -4,19 +4,19 @@ exports[`Owner component renders correctly 1`] = `
 <TouchableOpacity
   onPress={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 30,
         "width": 30,
       },
-      Object {
-        "backgroundColor": "#1A2025",
+      {
+        "backgroundColor": "#38393D",
       },
-      Object {
+      {
         "borderWidth": 0.5,
       },
-      Object {
-        "borderColor": "#414C57",
+      {
+        "borderColor": "#53565A",
       },
     ]
   }
@@ -27,12 +27,12 @@ exports[`Owner component renders correctly 1`] = `
     <Memo(wrappedComponent)
       onLoadEnd={[Function]}
       source={
-        Object {
+        {
           "uri": "https://www.minds.com/image",
         }
       }
       style={
-        Object {
+        {
           "height": 30,
           "width": 30,
         }

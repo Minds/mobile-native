@@ -2,7 +2,6 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
 
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -43,8 +42,6 @@ export const DiscoveryTrendsList = observer(
   ({ plus, store, header }: PropsType) => {
     let listRef = useRef<any>(null);
     let tagRef = useRef<BottomSheetModal>(null);
-
-    const navigation = useNavigation();
 
     useEffect(() => {
       // do not reload if there is data already
@@ -103,7 +100,7 @@ export const DiscoveryTrendsList = observer(
             </View>
           )
         }
-        navigation={navigation}
+        refreshing={store.refreshing}
         onRefresh={onRefresh}
       />
     );

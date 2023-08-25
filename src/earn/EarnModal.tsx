@@ -15,6 +15,7 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const linkTo = (dest: string) =>
   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -109,6 +110,8 @@ export default withErrorBoundaryScreen(
 
     const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
+    const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
+
     const earnItems: ContentType[] = [
       {
         name: 'create',
@@ -118,7 +121,8 @@ export default withErrorBoundaryScreen(
       {
         name: 'refer',
         icon: 'account-multiple',
-        onPress: () => navTo('Referrals'),
+        onPress: () =>
+          affiliatesEnabled ? navTo('AffiliateProgram') : navTo('Referrals'),
       },
     ];
 

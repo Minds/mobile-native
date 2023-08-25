@@ -23,11 +23,8 @@ export interface AutoCompleteProps {
 }
 
 function AutoComplete(props: AutoCompleteProps) {
-  const {
-    query,
-    handleAutoCompleteSelect,
-    handleAutoCompleteLoaded,
-  } = useAutoComplete(props);
+  const { query, handleAutoCompleteSelect, handleAutoCompleteLoaded } =
+    useAutoComplete(props);
 
   if (!query) {
     return null;

@@ -21,11 +21,29 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Increment build number"
+  lane :increment_build do |options|
+    previous_build_number = google_play_track_version_codes(
+      package_name: "com.minds.mobile",
+      track: "production",
+      json_key: 'app/play-store.json',
+    )[0]
+      
+    current_build_number = options[:play] ?  previous_build_number + 1 : 1050000000 + previous_build_number + 1
+      
+    sh("sed -i 's/^versionCode=.*/versionCode="+(current_build_number.to_s)+"/' ../gradle.properties")
+  end
+
   desc "Create a release build"
-  lane :assemble_build do
+  lane :assemble_build do |options|
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../app/minds.keystore")
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../minds.keystore")
     sh("echo $SENTRY_ANDROID_PROPERTIES | base64 --decode > ../sentry.properties")
+    sh("echo $ANDROID_PLAYSTORE_JSON | base64 --decode > ../app/play-store.json")
+    
+    # Increment build number
+    increment_build(play: options[:play])
+
     gradle(
       task: "assemble",
       build_type: "Release",

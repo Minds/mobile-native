@@ -14,6 +14,12 @@ module.exports = {
       },
     ],
     [
+      '@babel/plugin-transform-flow-strip-types',
+      {
+        allowDeclareFields: true,
+      },
+    ],
+    [
       'react-native-reanimated/plugin',
       {
         globals: ['__scanOCR'],
@@ -22,7 +28,7 @@ module.exports = {
     [
       'transform-inline-environment-variables',
       {
-        include: 'TAMAGUI_TARGET',
+        include: ['APP_VERSION', 'TAMAGUI_TARGET'],
       },
     ],
     [

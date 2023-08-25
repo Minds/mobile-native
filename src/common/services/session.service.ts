@@ -135,9 +135,8 @@ export class SessionService {
       this.setActiveIndex(sessionData.activeIndex);
       this.setSessions(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user, pseudoId } = this.sessions[
-        this.activeIndex
-      ];
+      const { accessToken, refreshToken, user, pseudoId } =
+        this.sessions[this.activeIndex];
 
       // set the analytics pseudo id
       analyticsService.setUserId(pseudoId);

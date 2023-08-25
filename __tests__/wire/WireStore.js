@@ -80,37 +80,31 @@ describe('wire store', () => {
     expect(store.recurring).toBe(false);
   });
 
-  it('should load the user rewards from the service', async (done) => {
+  it('should load the user rewards from the service', async () => {
     const fakeOwner = { name: 'someone', guid: '123123' };
     const fakeOwnerResponse = { name: 'someone', guid: '123123' };
 
     wireService.userRewards.mockResolvedValue(fakeOwnerResponse);
 
-    try {
-      store.setOwner(fakeOwner);
-      const result = await store.loadUserRewards();
-      // should return the owner
-      expect(result).toEqual(fakeOwnerResponse);
-      // should set the owner
-      expect(store.owner).toEqual(fakeOwnerResponse);
-    } catch (e) {
-      done.fail(e);
-    }
-    done();
+    store.setOwner(fakeOwner);
+    const result = await store.loadUserRewards();
+    // should return the owner
+    expect(result).toEqual(fakeOwnerResponse);
+    // should set the owner
+    expect(store.owner).toEqual(fakeOwnerResponse);
   });
 
-  it('should not set the owner if load rewards fails', async (done) => {
+  it('should not set the owner if load rewards fails', async () => {
     store.setOwner({ guid: '123123', name: 'someone' });
     wireService.userRewards = jest.fn();
     wireService.userRewards.mockRejectedValue(new Error('fakeError'));
 
     try {
       await store.loadUserRewards();
-      done.fail();
+      fail('It should not reach this point');
     } catch (e) {
       // should not set the owner
       expect(store.owner).toEqual({ guid: '123123', name: 'someone' });
-      done();
     }
   });
 
@@ -160,49 +154,44 @@ describe('wire store', () => {
     return expect(store.send()).resolves.toBeUndefined();
   });
 
-  it('should send a wire', async (done) => {
+  it('should send a wire', async () => {
     const fakeDone = { done: true };
     wireService.send.mockResolvedValue(fakeDone);
 
     expect.assertions(4);
-    try {
-      // should set sending in true
-      when(
-        () => store.sending,
-        () => expect(store.sending).toEqual(true),
-      );
 
-      store.setOwner({ guid: '123123', name: 'someone' });
+    // should set sending in true
+    when(
+      () => store.sending,
+      () => expect(store.sending).toEqual(true),
+    );
 
-      const result = await store.send();
+    store.setOwner({ guid: '123123', name: 'someone' });
 
-      // should return the service call result
-      expect(result).toBe(fakeDone);
+    const result = await store.send();
 
-      // should set sending in false on finish
-      expect(store.sending).toEqual(false);
+    // should return the service call result
+    expect(result).toBe(fakeDone);
 
-      // should call the service
-      expect(wireService.send).toBeCalledWith(
-        {
-          currency: 'tokens',
-          amount: store.amount,
-          guid: store.guid,
-          owner: store.owner,
-          offchain: true,
-          recurring: store.recurring,
-          paymentMethodId: '',
-        },
-        undefined,
-      );
+    // should set sending in false on finish
+    expect(store.sending).toEqual(false);
 
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    // should call the service
+    expect(wireService.send).toBeCalledWith(
+      {
+        currency: 'tokens',
+        amount: store.amount,
+        guid: store.guid,
+        owner: store.owner,
+        offchain: true,
+        recurring: store.recurring,
+        paymentMethodId: '',
+      },
+      undefined,
+    );
   });
 
-  it('should throw on send a wire', async (done) => {
+  it('should throw on send a wire', async () => {
     const fakeDone = { done: true };
     wireService.send.mockRejectedValue(fakeDone);
 
@@ -216,8 +205,6 @@ describe('wire store', () => {
 
       store.setOwner({ guid: '123123', name: 'someone' });
       await store.send();
-
-      done.fail('should fail');
     } catch (e) {
       // should set sending in false on finish
       expect(store.sending).toEqual(false);
@@ -234,7 +221,6 @@ describe('wire store', () => {
         },
         undefined,
       );
-      done();
     }
   });
 });

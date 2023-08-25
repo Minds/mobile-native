@@ -7,10 +7,17 @@ import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
+import i18n from '~/common/services/i18n.service';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
-  'TopNewsfeed' | 'Channel' | 'Activity' | 'InAppVerification' | 'BoostScreenV2'
+  | 'TopNewsfeed'
+  | 'Channel'
+  | 'Activity'
+  | 'InAppVerification'
+  | 'BoostScreenV2'
+  | 'GroupView'
+  | 'BoostSettingsScreen'
 > & { MainFeed: AppStackParamList['Newsfeed'] };
 
 const NewsfeedStack = createNativeStackNavigator<NewsfeedStackParamList>();
@@ -54,6 +61,20 @@ export default function () {
         name="BoostScreenV2"
         getComponent={() => require('modules/boost').BoostComposerStack}
         options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="GroupView"
+        getComponent={() =>
+          require('~/modules/groups/screens/GroupScreen').GroupScreen
+        }
+        options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="BoostSettingsScreen"
+        getComponent={() =>
+          require('~/settings/screens/BoostSettingsScreen').default
+        }
+        options={{ title: i18n.t('settings.accountOptions.8') }}
       />
     </NewsfeedStack.Navigator>
   );

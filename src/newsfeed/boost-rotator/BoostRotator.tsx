@@ -7,12 +7,28 @@ import {
 import BoostRotatorCarousel from './components/BoostRotatorCarousel';
 import BoostRotatorHeader from './components/BoostRotatorHeader';
 import BoostRotatorPageIndicator from './components/BoostRotatorPageIndicator';
+import { useCallback, useEffect } from 'react';
+import NewsfeedStore from '../NewsfeedStore';
 
 function BoostRotator() {
-  const boostRotatorStore = useBoostRotatorStore();
   const user = sessionService.getUser();
+  const store = useBoostRotatorStore(true);
 
-  if (user.disabled_boost || !boostRotatorStore.activites.length) {
+  const refresh = useCallback(() => {
+    store.fetch();
+    store.setActiveIndex(0);
+  }, [store]);
+
+  useEffect(() => {
+    NewsfeedStore.events.on('feedChange', refresh);
+
+    return () => {
+      NewsfeedStore.events.off('feedChange', refresh);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (user.disabled_boost || !store.activites.length) {
     return null;
   }
 

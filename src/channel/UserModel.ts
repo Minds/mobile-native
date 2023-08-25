@@ -170,7 +170,7 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  toggleSubscription = async (shouldUpdateFeed = true) => {
+  toggleSubscription = async () => {
     const value = !this.subscribed;
     this.subscribed = value;
 
@@ -179,7 +179,7 @@ export default class UserModel extends BaseModel {
       await ChannelService.toggleSubscription(this.guid, value, metadata);
       UserModel.events.emit('toggleSubscription', {
         user: this,
-        shouldUpdateFeed,
+        shouldUpdateFeed: false,
       });
     } catch (err) {
       runInAction(() => {

@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { observer } from 'mobx-react';
-import { StyleSheet } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { MotiView, AnimatePresence } from 'moti';
-
-import { Icon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import settingsStore from '../settings/SettingsStore';
 import GroupModel from '~/groups/GroupModel';
+import ThemedStyles from '~/styles/ThemedStyles';
 
-type PropsType = {
+type CaptureFabProps = {
   group?: GroupModel;
   visible?: boolean;
-  route: { key: string };
+  routeKey: string;
   navigation: any;
   testID?: string;
+  style?: ViewStyle;
 };
 
 /**
@@ -27,57 +28,71 @@ function ShowHide({ children, ...other }) {
   );
 }
 
-@observer
-export default class CaptureFab extends Component<PropsType> {
-  navToCapture = () => {
-    this.props.navigation.push('Compose', {
-      group: this.props.group,
-      parentKey: this.props.route.key,
+const CaptureFab = ({
+  navigation,
+  visible,
+  group,
+  testID,
+  routeKey,
+  style,
+}: CaptureFabProps) => {
+  const navToCapture = () => {
+    navigation.push('Compose', {
+      group: group,
+      parentKey: routeKey,
     });
   };
 
-  render() {
-    return (
-      <AnimatePresence>
-        {this.props.visible && (
-          <ShowHide
-            style={
-              settingsStore.leftHanded ? styles.leftSide : styles.rightSide
-            }>
+  return (
+    <AnimatePresence>
+      {visible && (
+        <ShowHide
+          style={[
+            settingsStore.leftHanded ? styles.leftSide : styles.rightSide,
+            style,
+          ]}>
+          <View style={styles.container}>
             <Icon
-              raised
-              reverse
               name="edit"
-              type="material"
-              color="#4690DF"
-              size={28}
-              iconProps={iconProps}
-              onPress={() => this.navToCapture()}
-              testID={this.props.testID}
+              style={ThemedStyles.style.colorPrimaryText_Light}
+              size={32}
+              onPress={navToCapture}
+              testID={testID}
             />
-          </ShowHide>
-        )}
-      </AnimatePresence>
-    );
-  }
-}
+          </View>
+        </ShowHide>
+      )}
+    </AnimatePresence>
+  );
+};
 
-const iconProps = { size: 23 } as any;
+export default observer(CaptureFab);
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  container: [
+    {
+      width: 64,
+      height: 64,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 32,
+    },
+    'bgLink',
+  ],
   rightSide: {
     position: 'absolute',
     // backgroundColor:'#4690DF',
-    bottom: 35,
+    bottom: 48,
+    zIndex: 1000,
     // zIndex: 1,
-    right: 8,
+    right: 24,
   },
   leftSide: {
     position: 'absolute',
     // backgroundColor:'#4690DF',
-    bottom: 35,
+    bottom: 48,
     zIndex: 1000,
-    left: 8,
+    left: 24,
   },
 });
 
@@ -85,17 +100,19 @@ const styles = StyleSheet.create({
 const animation = {
   from: {
     opacity: 0,
-    translateY: 70,
+    scale: 0.5,
   },
   transition: {
-    delay: 200,
-  },
+    type: 'timing',
+    delay: 50,
+    duration: 100,
+  } as any, //solve moti type issue
   animate: {
     opacity: 1,
-    translateY: 0,
+    scale: 1,
   },
   exit: {
     opacity: 0,
-    translateY: 70,
+    scale: 0.5,
   },
 };

@@ -8,7 +8,6 @@ import { B1, Button, Column, Row } from '~/common/ui';
 import { format } from '~/wallet/v3/currency-tabs/MindsTokens';
 import { useTranslation } from '../../../locales';
 import type BoostModel from '../../../models/BoostModelV3';
-import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';
 
 type BoostActionBarProps = {
@@ -17,7 +16,6 @@ type BoostActionBarProps = {
 };
 
 function BoostActionBar({ boost }: BoostActionBarProps) {
-  const boostConsoleStore = useBoostConsoleStore();
   const { t } = useTranslation();
   const {
     created_timestamp,
@@ -49,7 +47,7 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
         description: t('Are you sure you want to revoke this boost?'),
       })
     ) {
-      boost.revoke(boostConsoleStore.filter).catch(() => {
+      boost.revoke().catch(() => {
         showNotification(
           t('Something went wrong while revoking boost'),
           'danger',
@@ -86,6 +84,24 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
               <B1 color="secondary">{date}</B1>
             </Column>
           </Row>
+          <Row flex>
+            <Column flex>
+              {Boolean(boost.summary?.total_clicks) && (
+                <B1 font="bold">{t('Link clicks')}</B1>
+              )}
+            </Column>
+            <Column flex />
+            <Column flex />
+          </Row>
+          {Boolean(boost.summary?.total_clicks) && (
+            <Row flex bottom="L">
+              <Column flex>
+                <B1 color="secondary">{boost.summary?.total_clicks}</B1>
+              </Column>
+              <Column flex />
+              <Column flex />
+            </Row>
+          )}
         </>
       )}
       {!!revokable && (

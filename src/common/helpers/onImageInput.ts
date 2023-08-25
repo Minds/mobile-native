@@ -1,5 +1,4 @@
-import { Dimensions, Image, ImageChangeEvent } from 'react-native';
-
+import { Dimensions, Image } from 'react-native';
 const { width } = Dimensions.get('window');
 
 /**
@@ -9,9 +8,7 @@ const { width } = Dimensions.get('window');
  * @param {function} onMedia a function to call with the processed media
  * @returns {function}
  */
-const onImageInput = (onMedia: (media: any) => void) => async (
-  event: ImageChangeEvent,
-) => {
+const onImageInput = (onMedia: (media: any) => void) => async event => {
   try {
     const { uri, linkUri, mime } = event.nativeEvent;
     const actualUri = linkUri ?? (uri.includes('://') ? uri : 'file://' + uri);

@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import hashtagService from '../services/hashtag.service';
 import settingsStore from '../../settings/SettingsStore';
@@ -21,6 +21,11 @@ export class HashtagStore {
     const tags = await hashtagService.getSuggested();
     this.setLoading(false);
     this.setSuggested(tags);
+  }
+
+  @computed
+  get selectedCount() {
+    return this.suggested.filter(s => s.selected).length;
   }
 
   @action

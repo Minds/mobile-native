@@ -1,5 +1,4 @@
 import { useBackHandler } from '@react-native-community/hooks';
-import appInitManager from 'AppInitManager';
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
@@ -11,6 +10,7 @@ import sessionService from '~/common/services/session.service';
 import { B1 } from '~/common/ui';
 import AuthService from './AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import NavigationService from '../navigation/NavigationService';
 
 /**
  * Initial email verification screen
@@ -49,9 +49,6 @@ const InitialEmailVerificationScreen = () => {
           .rawPost('api/v3/email/confirm', {}, headers);
 
         sessionService.getUser().setEmailConfirmed(true);
-        setTimeout(() => {
-          appInitManager.navigateToInitialScreen();
-        }, 300);
       } catch (error) {
         if (error instanceof TwoFactorError) {
           localStore.emailKey = error.message;
@@ -134,15 +131,28 @@ const InitialEmailVerificationScreen = () => {
   }, [localStore]);
 
   const detail = (
-    <B1 color="secondary" vertical="XL" horizontal="L">
-      {i18n.t('onboarding.verifyEmailDescription2')}
-      <B1
-        color={localStore.resending ? 'tertiary' : 'link'}
-        onPress={localStore.resend}>
-        {' '}
-        {i18n.t('onboarding.resend')}
+    <>
+      <B1 color="secondary" vertical="XL" horizontal="L">
+        {i18n.t('onboarding.verifyEmailDescription2')}
+        <B1
+          color={localStore.resending ? 'tertiary' : 'link'}
+          onPress={localStore.resend}>
+          {' '}
+          {i18n.t('onboarding.resend')}
+        </B1>
       </B1>
-    </B1>
+
+      <B1
+        horizontal="L"
+        color="link"
+        onPress={() =>
+          NavigationService.push('ChangeEmail', {
+            onSubmit: () => localStore.resend(),
+          })
+        }>
+        Change email
+      </B1>
+    </>
   );
   return (
     <CodeConfirmScreen

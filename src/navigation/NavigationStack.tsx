@@ -75,12 +75,20 @@ const AppStack = observer(() => {
     <>
       <StatusBar
         barStyle={statusBarStyle}
-        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Tabs"
           component={TabScreenWithModal}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="GifCardClaim"
+          getComponent={() =>
+            require('~/modules/gif-card/screens/GifCardClaimScreen')
+              .GifCardClaimScreen
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -147,7 +155,9 @@ const AppStack = observer(() => {
         />
         <AppStackNav.Screen
           name="GroupView"
-          getComponent={() => require('~/groups/GroupViewScreen').withModal}
+          getComponent={() =>
+            require('~/modules/groups/screens/GroupScreen').GroupScreen
+          }
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -159,11 +169,6 @@ const AppStack = observer(() => {
           name="WireFab"
           getComponent={() => require('~/wire/v2/FabScreen').default}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="Report"
-          getComponent={() => require('~/report/ReportScreen').default}
-          options={{ title: i18n.t('report') }}
         />
         <AppStackNav.Screen
           name="TierScreen"
@@ -328,16 +333,28 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            <RootStackNav.Screen
-              name="App"
-              component={AppStack}
-              options={({ route }) => ({
-                // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
-                animationEnabled: Boolean(route.params),
-                cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
-                ...(route.params ? TransitionPresets.SlideFromRightIOS : null),
-              })}
-            />
+            {AuthService.justRegistered && !AuthService.onboardCompleted ? (
+              <RootStackNav.Screen
+                name="App"
+                getComponent={() =>
+                  require('modules/onboarding').MandatoryOnboardingStack
+                }
+                options={modalOptions}
+              />
+            ) : (
+              <RootStackNav.Screen
+                name="App"
+                component={AppStack}
+                options={({ route }) => ({
+                  // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
+                  animationEnabled: Boolean(route.params),
+                  cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+                  ...(route.params
+                    ? TransitionPresets.SlideFromRightIOS
+                    : null),
+                })}
+              />
+            )}
             <RootStackNav.Screen
               name="Capture"
               getComponent={() => require('~/compose/CameraScreen').default}
@@ -448,11 +465,6 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              name="BoostScreen"
-              getComponent={() => require('~/boost/legacy/BoostScreen').default}
-              options={modalOptions}
-            />
-            <RootStackNav.Screen
               name="WalletWithdrawal"
               getComponent={() =>
                 require('~/wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal')
@@ -542,6 +554,38 @@ const RootStack = observer(function () {
                 headerShown: false,
               }}
             />
+            <RootStackNav.Screen
+              name="GroupsDiscovery"
+              getComponent={() =>
+                require('~/groups/GroupsDiscoveryScreen').default
+              }
+              options={{
+                ...rootStackCardScreenOptions,
+                headerShown: false,
+              }}
+            />
+            <RootStackNav.Screen
+              name="GroupView"
+              getComponent={() =>
+                require('~/modules/groups/screens/GroupScreen').GroupScreen
+              }
+              options={{
+                ...rootStackCardScreenOptions,
+                headerShown: false,
+              }}
+            />
+            <RootStackNav.Screen
+              name="Report"
+              getComponent={() => require('~/report/ReportScreen').default}
+            />
+            <RootStackNav.Screen
+              name="BoostUpgrade"
+              getComponent={() => require('~/modules/boost').BoostUpgrade}
+              options={{
+                ...defaultScreenOptions,
+                headerShown: false,
+              }}
+            />
           </>
         )
       ) : (
@@ -597,6 +641,10 @@ const RootStack = observer(function () {
           ...TransitionPresets.ModalFadeTransition,
           gestureEnabled: false,
         }}
+      />
+      <RootStackNav.Screen
+        name="ChangeEmail"
+        getComponent={() => require('~/auth/ChangeEmailScreen').default}
       />
     </RootStackNav.Navigator>
   );

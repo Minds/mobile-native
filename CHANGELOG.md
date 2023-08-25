@@ -2,6 +2,207 @@
 
 Minds Mobile
 
+## v4.39.0 (2023-08-14)
+
+### Features ✨ (8 changes)
+
+- [Revamped downvotes with multiple experiments](minds/mobile-native!2400)
+- [Added the option to change email in onboarding](minds/mobile-native!2387)
+- [Added gift cards as boost payment method](minds/mobile-native!2380)
+- [added notification support for gift cards](minds/mobile-native!2373)
+- [Groups: empty state and group recommendation upgrade](minds/mobile-native!2353)
+- [Added copy to clipboard option](minds/mobile-native!2344)
+- [Added support for affiliate notifications](minds/mobile-native!2343)
+- [Added composer FAB](minds/mobile-native!2334)
+
+### Fixed 🐛 (13 changes)
+
+- [Fixed bug in boosts goals](minds/mobile-native!2405)
+- [Fixed an issue where some blogs would cause an error and colors being wrong](minds/mobile-native!2403)
+- [Fixed an issue where the report screen would open below comments](minds/mobile-native!2388)
+- [Fixed Api errors not showing properly](minds/mobile-native!2385)
+- [Fixed Android 13 push notifications permission](minds/mobile-native!2382)
+- [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
+- [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
+- [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)
+- [Fixed an issue where a selected group wouldn't get unselected in composer](minds/mobile-native!2363)
+- [Fixed minds+ anually](minds/mobile-native!2351)
+- [Fixed search too slow](minds/mobile-native!2339)
+- [Fixed label in post options](minds/mobile-native!2338)
+- [fixed back navigation from rotator settings](minds/mobile-native!2336)
+
+### Changed 🔧 (2 changes)
+
+- [Changed subscribe button style to be solid on the channel top bar](minds/mobile-native!2402)
+- [Changed: Explore screen consolidation](minds/mobile-native!2375)
+
+### Removed 🗑️ (1 change)
+
+- [Temporary removed isInternetReachable condition](minds/mobile-native!2395)
+
+## 4.38.0 (2023-07-20)
+
+### Features ✨ (3 changes)
+
+- [Added copy to clipboard option](minds/mobile-native!2344)
+- [Added support for affiliate notifications](minds/mobile-native!2343)
+- [Added composer FAB](minds/mobile-native!2334)
+
+### Fixed 🐛 (8 changes)
+
+- [Feed performance & package updates](minds/mobile-native!2391)
+- [Soft reset crash on Android](minds/mobile-native!2390)
+- [Android 13 missing push notification permissions](minds/mobile-native!2382)
+- [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
+- [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
+- [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)
+- [Fixed an issue where a newly registered user would still see boosts ](minds/mobile-native!2361)
+- [Fixed minds+ anually](minds/mobile-native!2351)
+- [Fixed search too slow](minds/mobile-native!2339)
+- [Fixed label in post options](minds/mobile-native!2338)
+- [fixed back navigation from rotator settings](minds/mobile-native!2336)
+
+## 4.37.0 (2023-07-04)
+
+### Features ✨ (11 changes)
+
+- [Groups: empty state and group recommendation upgrade](minds/mobile-native!2353)
+- [Boost CTAs are now shown on the boost console](minds/mobile-native!2325)
+- [Added group recommendations in the groups feed](minds/mobile-native!2324)
+- [Added icons in drawer](minds/mobile-native!2319)
+- [Added Groups feed](minds/mobile-native!2314)
+- [Group Share: Posts can now be shared into groups directly from the feed](minds/mobile-native!2308)
+- [Channels: Introduced Subscribe button in the channel topbar](minds/mobile-native!2299)
+- [Composer: audience selector now shows which group or membership you have selected](minds/mobile-native!2294)
+- [Added strapi remote banner](minds/mobile-native!2284)
+- [Added support for upgrading to Minds+ from Minds+ discovery screen](minds/mobile-native!2291)
+- [Added groups tab to channels](minds/mobile-native!2282)
+
+### Fixed 🐛 (7 changes)
+
+- [Fixed an issue where a selected group wouldn't get unselected in composer](minds/mobile-native!2363)
+- [Fixed remote banner on android](minds/mobile-native!2352)
+- [Fixed an issue where the feed scroll would change after subscribing to a channel](minds/mobile-native!2331)
+- [Fixed video not repeating after upload in composer](minds/mobile-native!2329)
+- [Fixed an issue where scheduled posts weren't working as expected](minds/mobile-native!2328)
+- [Fixed bug in boost rotator](minds/mobile-native!2322)
+- [Fixed the errors in Wallet](minds/mobile-native!2321)
+
+### Changed 🔧 (2 changes)
+
+- [Changed remote banner in update prompt](minds/mobile-native!2320)
+- [Changed color to black on yellow buttons](minds/mobile-native!2318)
+- [Update react native to 0.71 and update many dependencies](minds/mobile-native!2278)
+
+## 4.36.2 (2023-06-05)
+
+### Features ✨ (1 changes)
+
+- [New post button added to the groups screen](minds/mobile-native!2313)
+
+## 4.36.0 (2023-05-24)
+
+### Features ✨ (2 changes)
+
+- [Added support for displaying Boost CTAs on the feed](minds/mobile-native!2277)
+- [Boost Composer: Added support for adding a link or button to the boost](minds/mobile-native!2258)
+
+### Fixed 🐛 (8 changes)
+
+- [Fixed an issue with boosting non-owner activities](minds/mobile-native!2280)
+- [Fixed an issue where video thumbnail would be incorrect after posting](minds/mobile-native!2279)
+- [Fixed the loading indicator behind the banner](minds/mobile-native!2276)
+- [Fixed composer, avatar image](minds/mobile-native!2274)
+- [Fixed some issues with disabled comments functionality](minds/mobile-native!2271)
+- [Fixed keyboard popup in composer](minds/mobile-native!2265)
+- [Fixed an issue with videos in the boost rotator not navigating to the activity on click](minds/mobile-native!2264)
+- [Fixed video dimension issue on portrait mode](minds/mobile-native!2261)
+
+### Changed 🔧 (2 changes)
+
+- [Changed colors to match new new design system](minds/mobile-native!2249)
+- [Changed colors to match new design system](minds/mobile-native!2249)
+
+### Removed 🗑️ (1 change)
+
+- [Removed Tokens tab from analytics screen](minds/mobile-native!2268)
+
+### fix (1 change)
+
+- [Fixed broken logic in boosts goals](minds/mobile-native!2302)
+
+### updated (1 change)
+
+- [Updated the codepush section in Developer Options](minds/mobile-native!2275)
+
+## 4.35.2 (2023-05-09)
+
+### Features ✨ (7 changes)
+
+- [Added delete button to tiers](minds/mobile-native!2248)
+- [Added support for hiding spam comments by default](minds/mobile-native!2244)
+- [Retain referrer for 72h](minds/mobile-native!2234)
+- [Boost Console: added boost button for feed and sidebar](minds/mobile-native!2233)
+- [Add followers you know to activity screen](minds/mobile-native!2222)
+- [Added Hide option on boosted posts](minds/mobile-native!2228)
+- [Moments: Added timer](minds/mobile-native!2200)
+
+### Fixed 🐛 (2 changes)
+
+- [Fixed navigation error on new account](minds/mobile-native!2262)
+- [Fixed an issue where channel boost settings wasn't being applied](minds/mobile-native!2226)
+
+### added Update Settings button for Stripe (1 change)
+
+- [Added Update Settings button](minds/mobile-native!2247)
+
+## 4.35.1 (2023-04-27)
+
+### Features ✨ (7 changes)
+
+- [Added delete button to tiers](minds/mobile-native!2248)
+- [Added support for hiding spam comments by default](minds/mobile-native!2244)
+- [Retain referrer for 72h](minds/mobile-native!2234)
+- [Boost Console: added boost button for feed and sidebar](minds/mobile-native!2233)
+- [Add followers you know to activity screen](minds/mobile-native!2222)
+- [Added Hide option on boosted posts](minds/mobile-native!2228)
+- [Moments: Added timer](minds/mobile-native!2200)
+
+### Fixed 🐛 (1 change)
+
+- [Fixed an issue where channel boost settings wasn't being applied](minds/mobile-native!2226)
+
+### added Update Settings button for Stripe (1 change)
+
+- [Added Update Settings button](minds/mobile-native!2247)
+
+## 4.35.0 (2023-04-27)
+
+### Features ✨ (7 changes)
+
+- [Added back button to More screens](minds/mobile-native!2243)
+- [Added support for hiding spam comments by default](minds/mobile-native!2244)
+- [Retain referrer for 72h](minds/mobile-native!2234)
+- [Boost Console: added boost button for feed and sidebar](minds/mobile-native!2233)
+- [Add followers you know to activity screen](minds/mobile-native!2222)
+- [Added Hide option on boosted posts](minds/mobile-native!2228)
+- [Moments: Added timer](minds/mobile-native!2200)
+
+### Fixed 🐛 (4 changes)
+
+- [Fixed hide boost title in carousel](minds/mobile-native!2255)
+- [Fixed an issue where multiple images couldn't be attached composer on Android](minds/mobile-native!2253)
+- [Superminds: tapping the supermind reply notification will now open the reply instead of the request](minds/mobile-native!2251)
+- [Fixed an issue where channel boost settings wasn't being applied](minds/mobile-native!2226)
+
+### Removed 🗑️ (1 change)
+
+- [Removed payment methods for google version](minds/mobile-native!2257)
+
+### added Update Settings button for Stripe (1 change)
+
+- [Added Update Settings button](minds/mobile-native!2247)
+
 ## 4.34.2 (2023-04-20)
 
 No changes.

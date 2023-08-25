@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 
 import { Alert, ImageURISource, View, ViewStyle } from 'react-native';
 
-import Clipboard from '@react-native-clipboard/clipboard';
 import { ImageProps } from 'expo-image';
 
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
@@ -20,6 +19,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import CommentModel from '../../comments/v2/CommentModel';
 import { showNotification } from '../../../AppMessages';
 import MediaViewMultiImage from './media-view/MediaViewMultiImage';
+import { copyToClipboard } from '../helpers/copyToClipboard';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -32,6 +32,10 @@ type PropsType = {
   ignoreDataSaver?: boolean;
   smallEmbed?: boolean;
   onVideoProgress?: (progress: number) => void;
+  /**
+   * overrides the onPress of the video overlay
+   */
+  onVideoOverlayPress?: () => void;
 };
 
 /**
@@ -96,6 +100,7 @@ export default class MediaView extends Component<PropsType> {
               onStoreCreated={this.onStoreCreated}
               hideOverlay={this.props.hideOverlay}
               onProgress={this.props.onVideoProgress}
+              onOverlayPress={this.props.onVideoOverlayPress}
               repeat={true}
             />
           </View>
@@ -196,12 +201,7 @@ export default class MediaView extends Component<PropsType> {
 
   imageLongPress = () => {
     if (this.props.entity.perma_url) {
-      setTimeout(async () => {
-        if (this.props.entity.perma_url) {
-          await Clipboard.setString(this.props.entity.perma_url);
-          showNotification(i18n.t('linkCopied'));
-        }
-      }, 100);
+      setTimeout(() => copyToClipboard(this.props.entity.perma_url), 100);
     } else {
       this.download();
     }

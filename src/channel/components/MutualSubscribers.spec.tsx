@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import MutualSubscribers from './MutualSubscribers';
 import generateFakeUser from '../../../__mocks__/fake/channel/UserFactory';
+import UserModel from '../UserModel';
 
 const mockEntity = generateFakeUser();
 
@@ -16,7 +17,7 @@ jest.mock('~/common/hooks/useApiFetch', () => () => ({
 describe('MutualSubscribers', () => {
   test('renders correctly', () => {
     const component = shallow(
-      <MutualSubscribers navigation={{}} userGuid="fake" />,
+      <MutualSubscribers navigation={{}} channel={new UserModel()} />,
     );
     expect(component).toMatchSnapshot();
   });

@@ -12,6 +12,9 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { BottomSheet, BottomSheetProps } from './';
 import { useBackHandler } from '@react-native-community/hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Handle from '../bottom-sheet/Handle';
+import MText from '../MText';
+import { observer } from 'mobx-react';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -20,6 +23,7 @@ type BottomSheetScreenNavigationProp = StackNavigationProp<
 
 export type BottomSheetScreenParams = {
   safe?: boolean;
+  title?: string;
   component: (
     ref: BottomSheetMethods,
     handleContentLayout: ({
@@ -37,11 +41,8 @@ export interface BottomSheetScreenProps {
   };
 }
 
-export default function BottomSheetScreen({
-  route,
-  navigation,
-}: BottomSheetScreenProps) {
-  const { component, snapPoints, safe, ...props } = route.params;
+function BottomSheetScreen({ route, navigation }: BottomSheetScreenProps) {
+  const { component, snapPoints, title, safe, ...props } = route.params;
 
   const handleClose = useCallback(() => {
     props?.onClose?.();
@@ -61,6 +62,17 @@ export default function BottomSheetScreen({
     ? BottomSheetInnerContainerSafe
     : BottomSheetInnerContainer;
 
+  const HandleComponent = useCallback(
+    () => (
+      <Handle>
+        <View style={styles.navbarContainer}>
+          <MText style={styles.titleStyle}>{title}</MText>
+        </View>
+      </Handle>
+    ),
+    [title],
+  );
+
   return (
     <BottomSheet
       index={0}
@@ -68,6 +80,7 @@ export default function BottomSheetScreen({
       handleHeight={animatedHandleHeight}
       contentHeight={animatedContentHeight}
       snapPoints={animatedSnapPoints}
+      handleComponent={title ? HandleComponent : undefined}
       {...props}
       onClose={handleClose}>
       <Container
@@ -77,6 +90,8 @@ export default function BottomSheetScreen({
     </BottomSheet>
   );
 }
+
+export default observer(BottomSheetScreen);
 
 const BottomSheetInnerContainer = ({
   component,
@@ -92,10 +107,13 @@ const BottomSheetInnerContainer = ({
   );
 
   const close = () => {
-    bottomSheet.close();
-    setTimeout(() => {
-      NavigationService.goBack();
-    }, 200);
+    return new Promise(resolve => {
+      bottomSheet.close();
+      setTimeout(() => {
+        NavigationService.goBack();
+        resolve(true);
+      }, 100);
+    });
   };
 
   return (
@@ -105,28 +123,33 @@ const BottomSheetInnerContainer = ({
   );
 };
 
-const BottomSheetInnerContainerSafe = ({
-  component,
-  handleContentLayout,
-}: Pick<BottomSheetScreenParams, 'component'> | any) => {
-  const bottomSheet = useBottomSheet();
+const BottomSheetInnerContainerSafe = observer(
+  ({
+    component,
+    handleContentLayout,
+  }: Pick<BottomSheetScreenParams, 'component'> | any) => {
+    const bottomSheet = useBottomSheet();
 
-  const close = () => {
-    bottomSheet.close();
-    setTimeout(() => {
-      NavigationService.goBack();
-    }, 200);
-  };
+    const close = () => {
+      return new Promise(resolve => {
+        bottomSheet.close();
+        setTimeout(() => {
+          NavigationService.goBack();
+          resolve(true);
+        }, 100);
+      });
+    };
 
-  return (
-    <SafeAreaView
-      edges={['bottom']}
-      style={styles.container}
-      onLayout={handleContentLayout}>
-      {component({ ...bottomSheet, close }, handleContentLayout)}
-    </SafeAreaView>
-  );
-};
+    return (
+      <SafeAreaView
+        edges={['bottom']}
+        style={styles.container}
+        onLayout={handleContentLayout}>
+        {component({ ...bottomSheet, close }, handleContentLayout)}
+      </SafeAreaView>
+    );
+  },
+);
 
 export const pushBottomSheet = (params: BottomSheetScreenParams) => {
   Keyboard.dismiss();
@@ -135,4 +158,6 @@ export const pushBottomSheet = (params: BottomSheetScreenParams) => {
 
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
+  navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackground'],
+  titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],
 });

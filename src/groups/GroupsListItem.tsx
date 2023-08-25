@@ -1,12 +1,15 @@
+import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import * as entities from 'entities';
+
 import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { Button, Icon } from '../common/ui';
+import { B2, Button, Icon, Row } from '../common/ui';
 import GroupModel from './GroupModel';
+import capitalize from '~/common/helpers/capitalize';
 
 const HITSLOP = {
   hitSlop: 10,
@@ -14,7 +17,7 @@ const HITSLOP = {
 
 type PropsType = {
   group: GroupModel;
-  onPress?: Function;
+  onPress?: () => void;
   hideButton?: boolean;
   index?: number;
   noNavigate?: boolean;
@@ -23,16 +26,22 @@ type PropsType = {
 type ButtonPropsType = {
   group: GroupModel;
   index?: number;
+  onPress?: () => void;
 };
 
-const JoinButton = observer(({ group, index }: ButtonPropsType) => {
+const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
   const isMember = group['is:member'];
-  let onPress;
-  if (isMember) {
-    onPress = () => group.leave();
-  } else {
-    onPress = group.can(FLAG_JOIN, true) ? () => group.join() : () => {};
-  }
+
+  const onPress = useCallback(() => {
+    if (isMember) {
+      group.leave();
+    } else {
+      if (group.can(FLAG_JOIN, true)) {
+        group.join();
+        props.onPress?.();
+      }
+    }
+  }, [group, isMember, props]);
 
   return (
     <Button
@@ -41,16 +50,9 @@ const JoinButton = observer(({ group, index }: ButtonPropsType) => {
       size="tiny"
       onPress={onPress}
       pressableProps={HITSLOP}
-      testID={`suggestedGroup${index}`}
-      icon={
-        <Icon
-          name={isMember ? 'check' : 'plus'}
-          color="PrimaryText"
-          size="small"
-          horizontal="S"
-        />
-      }
-    />
+      testID={`suggestedGroup${index}`}>
+      {isMember ? 'Joined' : 'Join'}
+    </Button>
   );
 });
 
@@ -74,18 +76,39 @@ const GroupsListItem = observer((props: PropsType) => {
 
   return (
     <MenuItem
+      alignTop
       avatar={avatarSource?.source}
       title={group.name}
-      subtitle={i18n.t('groups.listMembersCount', {
-        count: abbrev(group['members:count']),
-      })}
       onPress={_onPress}
       icon={
-        !props.hideButton && <JoinButton index={props.index} group={group} />
+        !props.hideButton && (
+          <JoinButton
+            index={props.index}
+            group={group}
+            onPress={props.onPress}
+          />
+        )
       }
-      noBorderTop={typeof props.index === 'number' && props.index > 0}
-    />
+      borderless>
+      <>
+        <B2 top="XS">
+          {abbrev(group['members:count'])}{' '}
+          <B2 color="secondary">{i18n.t('members').toLocaleLowerCase()}</B2>
+        </B2>
+        <B2 numberOfLines={2} color="secondary" right="XL" top="XS">
+          {entities.decodeHTML(capitalize(group.brief_description))}
+        </B2>
+        {group.boosted && <BoostedGroupLabel />}
+      </>
+    </MenuItem>
   );
 });
+
+const BoostedGroupLabel = () => (
+  <Row top="XS" align="centerStart">
+    <Icon name="boost" size="tiny" right="XS" color="Link" />
+    <B2 color="link">{i18n.t('boosts.boostedGroup')}</B2>
+  </Row>
+);
 
 export default GroupsListItem;

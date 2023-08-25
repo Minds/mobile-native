@@ -13,6 +13,7 @@ import {
   BoostTargetLocation,
   BoostTargetSuitability,
 } from '../boost-console/types/BoostConsoleBoost';
+import { BoostButtonText, BoostGoal } from '../boost-composer/boost.store';
 
 /**
  * User model
@@ -23,6 +24,7 @@ export default class BoostModel extends BaseModel {
   created_timestamp!: number;
   daily_bid!: number;
   duration_days!: number;
+  rowKey!: string;
   entity?: ActivityModel;
   entity_guid!: string;
   payment_amount!: number;
@@ -31,8 +33,12 @@ export default class BoostModel extends BaseModel {
   target_suitability!: BoostTargetSuitability;
   updated_timestamp?: number | null;
   rejection_reason?: BoostRejectionReason;
+  goal?: BoostGoal;
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
   summary?: {
     views_delivered: number;
+    total_clicks?: number;
   };
 
   constructor() {
@@ -43,9 +49,9 @@ export default class BoostModel extends BaseModel {
   }
 
   @action
-  async revoke(filter) {
+  async revoke() {
     try {
-      await revokeBoost(this.guid, filter);
+      await revokeBoost(this.guid);
       this.boost_status = BoostStatus.REFUND_IN_PROGRESS;
       showNotification(i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {

@@ -12,7 +12,7 @@ jest.mock('../../src/common/stores/OffsetListStore');
 BlogModel.createMany = jest.fn();
 
 // we return the same array converted to strings as a model representation
-BlogModel.createMany.mockImplementation((r) => r.map(u => u.toString()));
+BlogModel.createMany.mockImplementation(r => r.map(u => u.toString()));
 
 /**
  * Tests
@@ -24,49 +24,38 @@ describe('blogs store', () => {
     store = new BlogsStore();
   });
 
-  it('should call blogs service loadList and update the list', async (done) => {
-
-    const fakeData = {entities: [1,2,3], 'load-next': 'a0'};
+  it('should call blogs service loadList and update the list', async () => {
+    const fakeData = { entities: [1, 2, 3], 'load-next': 'a0' };
 
     blogsService.loadList.mockResolvedValue(fakeData);
 
-    try {
-      // tested method
-      const res = await store.loadList();
+    // tested method
+    const res = await store.loadList();
 
-      // call blogs service loadlist one time
-      expect(blogsService.loadList.mock.calls.length).toEqual(1);
+    // call blogs service loadlist one time
+    expect(blogsService.loadList.mock.calls.length).toEqual(1);
 
-      // should create models
-      expect(BlogModel.createMany).toBeCalledWith([1,2,3]);
+    // should create models
+    expect(BlogModel.createMany).toBeCalledWith([1, 2, 3]);
 
-      // should be called with response
-      expect(store.list.setList).toBeCalledWith(fakeData);
+    // should be called with response
+    expect(store.list.setList).toBeCalledWith(fakeData);
 
-      // should be converted to models
-      expect(fakeData.entities).toEqual(['1', '2', '3']);
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    // should be converted to models
+    expect(fakeData.entities).toEqual(['1', '2', '3']);
   });
 
-  it('should clear list and reload on refresh', async (done) => {
-    try {
-      const spy = jest.spyOn(store, 'loadList');
-      // tested method
-      const res = await store.refresh();
+  it('should clear list and reload on refresh', async () => {
+    const spy = jest.spyOn(store, 'loadList');
+    // tested method
+    const res = await store.refresh();
 
-      // should clear the list
-      expect(store.list.refresh).toBeCalled();
-      // should load new data
-      expect(spy).toBeCalled();
-      // should fire refresh done
-      expect(store.list.refreshDone).toBeCalled();
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    // should clear the list
+    expect(store.list.refresh).toBeCalled();
+    // should load new data
+    expect(spy).toBeCalled();
+    // should fire refresh done
+    expect(store.list.refreshDone).toBeCalled();
   });
 
   it('should set the filter', () => {

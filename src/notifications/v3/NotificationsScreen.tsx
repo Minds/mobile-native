@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
-import { View, FlatList, ViewToken } from 'react-native';
+import { View, FlatList, ViewToken, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar, {
   NotificationsTabOptions,
@@ -89,7 +89,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (query.error && !query.isLoading && !query.isRefetching) {
       return (
         <View style={styles.errorContainerStyle}>
-          <MText style={styles.errorStyle} onPress={refresh}>
+          <MText style={styles.errorStyle} onPress={() => refresh()}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
           </MText>
@@ -156,7 +156,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={refresh}
         refreshing={query.isRefetching && query.isFetchedAfterMount}
         onViewableItemsChanged={onViewableItemsChanged}
-        // contentContainerStyle={}
+        contentContainerStyle={
+          Platform.OS === 'android' && styles.paddedContainer
+        }
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
@@ -196,4 +198,5 @@ const styles = ThemedStyles.create({
   errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],
   errorText: ['colorLink', 'marginTop2x'],
   spinner: ['marginTop12x'],
+  paddedContainer: ['paddingBottom4x'],
 });

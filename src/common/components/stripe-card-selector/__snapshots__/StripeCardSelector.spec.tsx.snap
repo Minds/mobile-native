@@ -1,183 +1,164 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StripeCardSelector should render correctly 1`] = `
-<Modal
-  backdropComponent={[Function]}
-  backgroundComponent={null}
-  contentHeight={null}
-  enablePanDownToClose={true}
-  handleComponent={[Function]}
-  handleHeight={null}
-  hardwareAccelerated={false}
-  onAnimate={[Function]}
-  snapPoints={null}
-  stackBehavior="push"
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "shadowColor": "#000000",
-      },
-      Object {
-        "elevation": 16,
-        "shadowOffset": Object {
-          "height": -3,
-          "width": 0,
+    [
+      [
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         },
-        "shadowOpacity": 0.58,
-        "shadowRadius": 4,
+        {
+          "alignItems": "center",
+        },
+        {
+          "backgroundColor": "#38393D",
+        },
+        {
+          "paddingVertical": 16,
+        },
+        {
+          "paddingHorizontal": 16,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+        {
+          "borderLeftWidth": 0,
+        },
+        {
+          "borderRightWidth": 0,
+        },
+        {
+          "borderWidth": 0.5,
+        },
+        undefined,
+      ],
+      {
+        "backgroundColor": "#38393D",
       },
     ]
   }
-  topInset={0}
-  visible={true}
 >
   <View
-    onLayout={null}
     style={
-      Array [
-        Array [
-          Object {
-            "backgroundColor": "#1E242A",
-          },
-        ],
-        Object {
-          "paddingBottom": 24,
-        },
-      ]
+      {
+        "flex": 1,
+        "flexDirection": "column",
+      }
     }
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
-          "justifyContent": "center",
-          "marginBottom": 20,
+          "justifyContent": "space-between",
         }
       }
     >
-      CardField
-    </View>
-    <View
-      style={
-        Object {
-          "marginHorizontal": 16,
-          "marginTop": 16,
-        }
-      }
-    >
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+      <Text
         style={
-          Object {
-            "alignSelf": "stretch",
-          }
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "color": "#b9bbc0",
+              },
+              {
+                "fontSize": 16,
+              },
+              undefined,
+            ],
+          ]
         }
       >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "transparent",
-                "borderRadius": 100,
-                "flexDirection": "column",
-                "justifyContent": "center",
-                "overflow": "hidden",
-              },
-              undefined,
-              Object {
-                "minHeight": 42,
-                "paddingHorizontal": 24,
-                "paddingVertical": 2,
-              },
-              undefined,
-              undefined,
-              undefined,
-              false,
-            ]
-          }
-        >
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#3f4b56",
-                "borderColor": "transparent",
-                "borderRadius": 100,
-                "borderWidth": 1,
-                "bottom": 0,
-                "justifyContent": "center",
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.1)",
-                "bottom": 0,
-                "left": 0,
-                "opacity": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                  },
-                  Object {
-                    "fontFamily": "Roboto-Medium",
-                  },
-                  Object {
-                    "fontSize": 18,
-                    "lineHeight": 24,
-                  },
-                  Object {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Cancel
-            </Text>
-          </View>
-        </View>
-      </View>
+        Payment Method
+      </Text>
     </View>
   </View>
-</Modal>
+  <View
+    style={
+      {
+        "alignItems": "flex-end",
+        "flexDirection": "column",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 24,
+            "justifyContent": "center",
+            "overflow": "hidden",
+            "width": 24,
+          },
+          {},
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#AEB0B8",
+              "fontSize": 24,
+            },
+            {},
+            {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        󰅀
+      </Text>
+    </View>
+  </View>
+</View>
 `;

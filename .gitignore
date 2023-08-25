@@ -4,7 +4,7 @@
 
 dist/
 **/.tamagui/*
-
+CodePush/*
 # Xcode
 #
 build/
@@ -78,3 +78,7 @@ sentry.properties
 
 apps/
 *.log
+
+
+# Ignore GrpahQL Schema files
+gql-schemas/

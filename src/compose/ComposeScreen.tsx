@@ -13,11 +13,15 @@ import {
 import { useBackHandler } from '@react-native-community/hooks';
 import { useFocusEffect } from '@react-navigation/core';
 import { observer } from 'mobx-react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  NativeSafeAreaViewProps,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { confirm } from '~/common/components/Confirm';
 import sessionService from '~/common/services/session.service';
+import { Row } from '~/common/ui';
 import { IconButtonNext } from '~ui/icons';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
@@ -42,6 +46,8 @@ import TopBar from './TopBar';
 import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
+import ComposeAudienceSelector from './ComposeAudienceSelector';
+import { IS_IOS } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
 
@@ -158,8 +164,12 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // #region effects
   useFocusEffect(store.onScreenFocused);
 
+  const edges: NativeSafeAreaViewProps['edges'] = IS_IOS
+    ? ['top']
+    : ['top', 'bottom'];
+
   const autofocus =
-    props.route?.params?.createMode === 'post' ||
+    (props.route?.params?.createMode ?? 'post') === 'post' ||
     props.route?.params?.createMode === 'boost';
 
   useEffect(() => {
@@ -197,7 +207,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
 
   return (
     <ComposeContext.Provider value={store}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={edges}>
         {isCreateModalOn ? (
           <ComposeTopBar store={store} onPressBack={onPressBack} />
         ) : (
@@ -223,6 +233,11 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           contentContainerStyle={scrollViewContentContainerStyle}
           scrollEventThrottle={64}
           onScroll={onScrollHandler}>
+          {isCreateModalOn && !store.isEdit && (
+            <Row horizontal="S" vertical="S" right="XXXL2">
+              <ComposeAudienceSelector store={store} />
+            </Row>
+          )}
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
               <Image source={avatar} style={styles.wrappedAvatar} />
@@ -268,17 +283,6 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           inputRef={inputRef}
           scrollViewRef={scrollViewRef}
         />
-        {showBottomBar && (
-          <KeyboardSpacingView noInset style={styles.bottomBarContainer}>
-            <BottomBar
-              store={store}
-              onHashtag={handleHashtagPress}
-              onMoney={handleMoneyPress}
-              onOptions={handleOptionsPress}
-              onSupermind={handleSupermindPress}
-            />
-          </KeyboardSpacingView>
-        )}
 
         <PosterBottomSheet ref={optionsRef} />
 
@@ -296,6 +300,17 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
             onPress={closeConfirm}
           />
         </BottomSheet>
+        {showBottomBar && (
+          <KeyboardSpacingView enabled style={styles.bottomBarContainer}>
+            <BottomBar
+              store={store}
+              onHashtag={handleHashtagPress}
+              onMoney={handleMoneyPress}
+              onOptions={handleOptionsPress}
+              onSupermind={handleSupermindPress}
+            />
+          </KeyboardSpacingView>
+        )}
       </SafeAreaView>
     </ComposeContext.Provider>
   );

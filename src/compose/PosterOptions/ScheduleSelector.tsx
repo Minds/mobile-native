@@ -23,10 +23,10 @@ export default observer(function () {
     showPicker() {
       dateTimePickerRef.current.show();
     },
-    onSelect(data) {
+    onSelect(data?: Date) {
       // only assign if the date is gt than now
-      if (moment(data).diff(moment()) > 0) {
-        store.setTimeCreated(data);
+      if (data?.getTime && moment(data).diff(moment()) > 0) {
+        store.setTimeCreated(data.getTime());
       } else {
         showNotification(i18n.t('capture.scheduleError'), 'warning', 3000);
       }

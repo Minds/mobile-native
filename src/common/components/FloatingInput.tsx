@@ -54,8 +54,12 @@ const FloatingInput = React.forwardRef(
 
     return (
       <Portal key={key} name={key}>
-        <FullWindowOverlay style={StyleSheet.absoluteFill}>
+        <FullWindowOverlay
+          //@ts-ignore missing style type
+          style={StyleSheet.absoluteFill}>
           <KeyboardSpacingView
+            enabled
+            translate
             style={StyleSheet.absoluteFill}
             pointerEvents="box-none">
             <View style={styles.mainContainer}>

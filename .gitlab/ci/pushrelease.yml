@@ -1,5 +1,5 @@
 .codepush_base:
-  image: node:14.19.1
+  image: node:18.13.0
   tags: [minds-ci]
   stage: pushrelease
   needs: ['test:quality']
@@ -7,35 +7,136 @@
     - npm install -g patch-package
     - npm install -g appcenter-cli
     - yarn install
+    - TAG_VERSION=${CI_COMMIT_TAG:1}
+    - export RELEASE_VERSION=${TAG_VERSION:-$CI_COMMIT_BRANCH}
 
-pushrelease_staging:ios:
+#===============| STAGING |===============>
+
+pushrelease:staging:ios:
   extends:
     - .codepush_base
-    - .only_master
+    - .only_develop
   environment: codepush_staging_ios
   script:
     - appcenter codepush release-react -a Minds/Minds-iOS -d Staging
 
-pushrelease_staging:android:
+pushrelease:staging:android:
   extends:
     - .codepush_base
-    - .only_master
+    - .only_develop
   environment: codepush_staging_android
   script:
     - appcenter codepush release-react -a Minds/Minds -d Staging
 
-pushrelease_prod:ios:
+#===============| RC |===============>
+
+pushrelease:rc:ios:
+  extends:
+    - .codepush_base
+    - .rule_release_branch
+  environment: codepush_rc_ios
+  script:
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds-iOS -d 'Release Candidate'
+
+pushrelease:rc:android:
+  extends:
+    - .codepush_base
+    - .rule_release_branch
+  environment: codepush_rc_android
+  script:
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds -d 'Release Candidate'
+
+#===============| PRODUCTION |===============>
+
+pushrelease:prod:ios:
   extends:
     - .codepush_base
     - .rule_patch_release
   environment: codepush_production_ios
   script:
-    - appcenter codepush release-react -a Minds/Minds-iOS -d Production
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds-iOS -d Production
 
-pushrelease_prod:android:
+pushrelease:prod:android:
   extends:
     - .codepush_base
     - .rule_patch_release
   environment: codepush_production_android
   script:
-    - appcenter codepush release-react -a Minds/Minds -d Production
+    - APP_VERSION=$RELEASE_VERSION appcenter codepush release-react -a Minds/Minds -d Production
+
+#===============| MR |===============>
+pushrelease:mr:android:
+  image: cimg/aws:2023.05.1
+  tags: [minds-ci]
+  stage: pushrelease
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # - if: $CI_COMMIT_BRANCH =~ /^js\/.*/
+  artifacts:
+    name: 'Update'
+    paths:
+      - update.json
+      - bundle.zip
+    expire_in: 15 days
+    when: on_success
+  script:
+    - export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`
+    - yarn install
+    - export TAG_OR_REF_SLUG=${CI_COMMIT_TAG:-$CI_COMMIT_REF_SLUG}
+    - export JSON_TARGET_NAME=Android_$TAG_OR_REF_SLUG.json
+    - export ZIP_TARGET_NAME=Android_$TAG_OR_REF_SLUG.zip
+    - mkdir CodePush
+    # Create the JS bundle
+    - yarn react-native bundle --assets-dest CodePush --bundle-output main.jsbundle --dev false --platform android --entry-file index.js
+    # Compile bitcode for hermes (linux)
+    - node_modules/react-native/sdks/hermesc/linux64-bin/hermesc -w -emit-binary main.jsbundle -out CodePush/index.android.bundle
+    # Make the bundle
+    - zip -r bundle.zip CodePush
+    # Generate hash
+    - export BUNDLE_HASH="$(openssl dgst -sha1 bundle.zip)"
+    - export BUNDLE_HASH="${BUNDLE_HASH##* }"
+    # Create release json data
+    - echo "{\"description\":\"$TAG_OR_REF_SLUG\",\"appVersion\":\"$APPVERSION\",\"label\":\"$CI_COMMIT_SHORT_SHA\",\"downloadUrl\":\"https://minds-repo.s3.amazonaws.com/android/codepush/$ZIP_TARGET_NAME\",\"packageHash\":\"$BUNDLE_HASH\"}" > update.json
+    # upload to S3
+    - aws s3 cp bundle.zip s3://minds-repo/android/codepush/$ZIP_TARGET_NAME
+    - aws s3 cp update.json s3://minds-repo/android/codepush/$JSON_TARGET_NAME
+    - echo $CI_MERGE_REQUEST_IID
+    - echo $CI_MERGE_REQUEST_PROJECT_ID
+    - 'curl -v --location --request POST "https://gitlab.com/api/v4/projects/$CI_MERGE_REQUEST_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes" --header "PRIVATE-TOKEN: $PROJECT_BOT" --header "Content-Type: application/json" --data-raw "{ \"body\": \"Test Android ![url](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.minds.com/customcodepush/$JSON_TARGET_NAME).\" }"'
+
+pushrelease:mr:ios:
+  image: cimg/aws:2023.05.1
+  tags: [minds-ci]
+  stage: pushrelease
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # - if: $CI_COMMIT_BRANCH =~ /^js\/.*/
+  artifacts:
+    name: 'Update'
+    paths:
+      - update.json
+      - bundle.zip
+    expire_in: 15 days
+    when: on_success
+  script:
+    - export APPVERSION=`grep -o "^versionName=.*" android/gradle.properties | tr -d "versionName="`
+    - yarn install
+    - export TAG_OR_REF_SLUG=${CI_COMMIT_TAG:-$CI_COMMIT_REF_SLUG}
+    - export JSON_TARGET_NAME=iOS_$TAG_OR_REF_SLUG.json
+    - export ZIP_TARGET_NAME=iOS_$TAG_OR_REF_SLUG.zip
+    - mkdir CodePush
+    # Create the JS bundle
+    - yarn react-native bundle --assets-dest CodePush --bundle-output main.jsbundle --dev false --platform ios --entry-file index.js
+    # Compile bitcode for hermes (linux)
+    - node_modules/react-native/sdks/hermesc/linux64-bin/hermesc -w -emit-binary main.jsbundle -out CodePush/main.jsbundle
+    # Make the bundle
+    - zip -r bundle.zip CodePush
+    # Generate hash
+    - export BUNDLE_HASH="$(openssl dgst -sha1 bundle.zip)"
+    - export BUNDLE_HASH="${BUNDLE_HASH##* }"
+    # Create release json data
+    - echo "{\"description\":\"$TAG_OR_REF_SLUG\",\"appVersion\":\"$APPVERSION\",\"label\":\"$CI_COMMIT_SHORT_SHA\",\"downloadUrl\":\"https://minds-repo.s3.amazonaws.com/android/codepush/$ZIP_TARGET_NAME\",\"packageHash\":\"$BUNDLE_HASH\"}" > update.json
+    # upload to S3
+    - aws s3 cp bundle.zip s3://minds-repo/android/codepush/$ZIP_TARGET_NAME
+    - aws s3 cp update.json s3://minds-repo/android/codepush/$JSON_TARGET_NAME
+    - 'curl -v --location --request POST "https://gitlab.com/api/v4/projects/$CI_MERGE_REQUEST_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes" --header "PRIVATE-TOKEN: $PROJECT_BOT" --header "Content-Type: application/json" --data-raw "{ \"body\": \"Test IOS ![url](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.minds.com/customcodepush/$JSON_TARGET_NAME).\" }"'

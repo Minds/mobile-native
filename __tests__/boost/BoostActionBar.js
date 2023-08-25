@@ -31,8 +31,6 @@ describe('Boost action bar component', () => {
         navigation={navigation}
       />,
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {

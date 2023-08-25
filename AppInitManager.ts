@@ -18,7 +18,7 @@ import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { hasVariation, updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
 import { codePushStore } from 'modules/codepush';
@@ -164,11 +164,7 @@ export class AppInitManager {
     // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
     if (this.navReady) {
       // when the experiment is enabled, we don't want to navigate to the initial screen because the navigation is done after the email verification.
-      this.initialNavigationHandling(
-        hasVariation('minds-3055-email-codes')
-          ? Boolean(user.email_confirmed)
-          : true,
-      );
+      this.initialNavigationHandling();
     }
   };
 
@@ -186,7 +182,7 @@ export class AppInitManager {
     sessionService.setInitialScreen('');
   }
 
-  async initialNavigationHandling(navigateInitialScreen: boolean = true) {
+  async initialNavigationHandling() {
     // ensure we run it once
     if (this.initialized) {
       return;
@@ -194,9 +190,6 @@ export class AppInitManager {
     this.initialized = true;
     console.log('[App] initial Navigation Handling');
     try {
-      // navigate to initial screen if set
-      navigateInitialScreen && this.navigateToInitialScreen();
-
       const deepLinkUrl = (await Linking.getInitialURL()) || '';
 
       // handle deep link (if the app is opened by one)

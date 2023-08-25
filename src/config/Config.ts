@@ -1,12 +1,9 @@
-//@ts-nocheck
 import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
 import CodePush, { CodePushOptions } from 'react-native-code-push';
-
-export const CODEPUSH_VERSION = '4.34.2';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -29,6 +26,10 @@ export const CODE_PUSH_PROD_KEY = IS_IOS
 export const CODE_PUSH_STAGING_KEY = IS_IOS
   ? RNConfig.CODEPUSH_STAGING_KEY_IOS
   : RNConfig.CODEPUSH_STAGING_KEY_ANDROID;
+
+export const CODE_PUSH_RC_KEY = IS_IOS
+  ? RNConfig.CODEPUSH_RC_KEY_IOS
+  : RNConfig.CODEPUSH_RC_KEY_ANDROID;
 
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
@@ -65,11 +66,19 @@ export const IMAGE_MAX_SIZE = 2048;
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
+
+const MINDS_PROD = true;
 export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
-    : 'https://www.minds.com/';
-// : 'https://feat-user-verification-2460.minds.io/';
+    : MINDS_PROD
+    ? 'https://www.minds.com/'
+    : 'https://feat-explainer-screens-m4132.oke.minds.io';
+
+const STRAPI_PROD = true;
+export const STRAPI_API_URI = STRAPI_PROD
+  ? 'https://cms.minds.com/graphql'
+  : 'https://cms.oke.minds.io/graphql';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
@@ -154,7 +163,7 @@ export const MINDS_DEEPLINK = [
   ['analytics/dashboard/:type', 'More/Analytics', 'navigate'],
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
-  ['discovery/:tab', 'Discovery', 'navigate'],
+  ['discovery/:tab', 'Discovery/Discovery', 'navigate'],
   [
     'supermind/inbox',
     'More/SupermindConsole',
@@ -178,7 +187,8 @@ export const MINDS_DEEPLINK = [
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
-  DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
+  parseInt(`${DeviceInfo.getBuildNumber()}`, 10) < 1050000000 &&
+  Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
 
@@ -238,5 +248,6 @@ export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
     delayInHours: 4,
     maxRetryAttempts: 2,
   },
-  updateDialog: false,
 };
+
+export const BOOSTS_DELAY = 604800;

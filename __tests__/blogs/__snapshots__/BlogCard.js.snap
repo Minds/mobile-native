@@ -3,15 +3,27 @@
 exports[`blog card component should renders correctly 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#1A2025",
+    {
+      "backgroundColor": "#1C1D1F",
     }
   }
 >
   <View
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
+        "checked": undefined,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -27,9 +39,9 @@ exports[`blog card component should renders correctly 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
+      [
         undefined,
-        Object {
+        {
           "backgroundColor": undefined,
         },
       ]
@@ -38,8 +50,8 @@ exports[`blog card component should renders correctly 1`] = `
     <Image
       contentFit="cover"
       source={
-        Object {
-          "headers": Object {
+        {
+          "headers": {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Content-Type": "application/json",
@@ -50,7 +62,7 @@ exports[`blog card component should renders correctly 1`] = `
         }
       }
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "flexDirection": "row",
           "height": 150,
@@ -60,14 +72,14 @@ exports[`blog card component should renders correctly 1`] = `
     />
     <View
       style={
-        Object {
+        {
           "padding": 8,
         }
       }
     >
       <View
         style={
-          Object {
+          {
             "width": "100%",
           }
         }
@@ -76,22 +88,22 @@ exports[`blog card component should renders correctly 1`] = `
           ellipsizeMode="tail"
           numberOfLines={2}
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Array [
-                Object {
+              [
+                {
                   "fontSize": 18,
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                   "fontWeight": "500",
                 },
-                Object {
+                {
                   "flex": 1,
                 },
               ],
@@ -102,18 +114,18 @@ exports[`blog card component should renders correctly 1`] = `
         </Text>
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "marginBottom": 8,
               },
-              Object {
+              {
                 "marginTop": 12,
               },
-              Object {
+              {
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "alignItems": "center",
               },
             ]
@@ -122,7 +134,7 @@ exports[`blog card component should renders correctly 1`] = `
           <View
             height={26}
             style={
-              Object {
+              {
                 "backgroundColor": "transparent",
                 "borderRadius": 17,
                 "height": 34,
@@ -130,8 +142,8 @@ exports[`blog card component should renders correctly 1`] = `
               }
             }
             theme={
-              Object {
-                "colors": Object {
+              {
+                "colors": {
                   "black": "#242424",
                   "disabled": "hsl(208, 8%, 90%)",
                   "divider": "#bcbbc1",
@@ -143,8 +155,8 @@ exports[`blog card component should renders correctly 1`] = `
                   "grey4": "#bdc6cf",
                   "grey5": "#e1e8ee",
                   "greyOutline": "#bbb",
-                  "platform": Object {
-                    "android": Object {
+                  "platform": {
+                    "android": {
                       "error": "#f44336",
                       "grey": "rgba(0, 0, 0, 0.54)",
                       "primary": "#2196f3",
@@ -152,7 +164,7 @@ exports[`blog card component should renders correctly 1`] = `
                       "success": "#4caf50",
                       "warning": "#ffeb3b",
                     },
-                    "ios": Object {
+                    "ios": {
                       "error": "#ff3b30",
                       "grey": "#7d7d7d",
                       "primary": "#007aff",
@@ -176,7 +188,7 @@ exports[`blog card component should renders correctly 1`] = `
             <View
               accessibilityIgnoresInvertColors={true}
               style={
-                Object {
+                {
                   "backgroundColor": "transparent",
                   "borderRadius": 17,
                   "flex": 1,
@@ -189,7 +201,7 @@ exports[`blog card component should renders correctly 1`] = `
                 borderRadius={17}
                 onLoad={[Function]}
                 style={
-                  Object {
+                  {
                     "bottom": 0,
                     "flex": 1,
                     "height": null,
@@ -202,8 +214,8 @@ exports[`blog card component should renders correctly 1`] = `
                 }
                 testID="RNE__Image"
                 theme={
-                  Object {
-                    "colors": Object {
+                  {
+                    "colors": {
                       "black": "#242424",
                       "disabled": "hsl(208, 8%, 90%)",
                       "divider": "#bcbbc1",
@@ -215,8 +227,8 @@ exports[`blog card component should renders correctly 1`] = `
                       "grey4": "#bdc6cf",
                       "grey5": "#e1e8ee",
                       "greyOutline": "#bbb",
-                      "platform": Object {
-                        "android": Object {
+                      "platform": {
+                        "android": {
                           "error": "#f44336",
                           "grey": "rgba(0, 0, 0, 0.54)",
                           "primary": "#2196f3",
@@ -224,7 +236,7 @@ exports[`blog card component should renders correctly 1`] = `
                           "success": "#4caf50",
                           "warning": "#ffeb3b",
                         },
-                        "ios": Object {
+                        "ios": {
                           "error": "#ff3b30",
                           "grey": "#7d7d7d",
                           "primary": "#007aff",
@@ -251,7 +263,7 @@ exports[`blog card component should renders correctly 1`] = `
                 importantForAccessibility="yes"
                 pointerEvents="auto"
                 style={
-                  Object {
+                  {
                     "bottom": 0,
                     "left": 0,
                     "opacity": 1,
@@ -263,7 +275,7 @@ exports[`blog card component should renders correctly 1`] = `
               >
                 <View
                   style={
-                    Object {
+                    {
                       "alignItems": "center",
                       "backgroundColor": "transparent",
                       "flex": 1,
@@ -277,7 +289,7 @@ exports[`blog card component should renders correctly 1`] = `
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "flex": 1,
                     "height": null,
                     "width": null,
@@ -289,21 +301,21 @@ exports[`blog card component should renders correctly 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "fontSize": 16,
                   },
-                  Object {
+                  {
                     "paddingLeft": 8,
                   },
-                  Object {
+                  {
                     "flex": 1,
                   },
                 ],
@@ -314,18 +326,18 @@ exports[`blog card component should renders correctly 1`] = `
           </Text>
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "fontSize": 10,
                   },
-                  Object {
+                  {
                     "paddingLeft": 4,
                   },
                 ],
@@ -336,7 +348,7 @@ exports[`blog card component should renders correctly 1`] = `
           </Text>
           <View
             style={
-              Object {
+              {
                 "paddingLeft": 4,
               }
             }
@@ -347,20 +359,20 @@ exports[`blog card component should renders correctly 1`] = `
                 onPress={[Function]}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": undefined,
                       "fontSize": 28,
                     },
-                    Object {
-                      "color": "#797B82",
+                    {
+                      "color": "#a1a5ab",
                     },
-                    Object {
+                    {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -373,15 +385,16 @@ exports[`blog card component should renders correctly 1`] = `
     </View>
     <Actions
       entity={
-        Object {
+        {
+          "_collapsed": false,
           "access_id": "2",
           "allow_comments": true,
           "boost_rejection_reason": -1,
-          "categories": Array [],
+          "categories": [],
           "category": "education",
           "comments:count": undefined,
           "container_guid": "100",
-          "custom_meta": Object {
+          "custom_meta": {
             "author": "",
             "description": "",
             "title": "",
@@ -408,8 +421,9 @@ exports[`blog card component should renders correctly 1`] = `
           "mature_visibility": false,
           "message": "",
           "monetized": false,
-          "ownerObj": Object {
+          "ownerObj": {
             "__list": null,
+            "_collapsed": false,
             "access_id": "2",
             "allow_comments": true,
             "banned": "no",
@@ -419,7 +433,7 @@ exports[`blog card component should renders correctly 1`] = `
             "boost_rating": "2",
             "briefdescription": "",
             "canary": false,
-            "categories": Array [
+            "categories": [
               "music",
               "nature",
               "news",
@@ -446,11 +460,11 @@ exports[`blog card component should renders correctly 1`] = `
             "founder": false,
             "gender": "private",
             "getAvatarSource": [MockFunction] {
-              "calls": Array [
-                Array [],
+              "calls": [
+                [],
               ],
-              "results": Array [
-                Object {
+              "results": [
+                {
                   "type": "return",
                   "value": undefined,
                 },
@@ -468,8 +482,8 @@ exports[`blog card component should renders correctly 1`] = `
             "mature": "1",
             "mature_channel": "0",
             "mature_visibility": false,
-            "merchant": Object {
-              "exclusive": Object {
+            "merchant": {
+              "exclusive": {
                 "amount": "10",
                 "enabled": true,
               },
@@ -479,31 +493,31 @@ exports[`blog card component should renders correctly 1`] = `
             "mode": 0,
             "monetized": "",
             "name": "Some User",
-            "nsfw": Array [],
+            "nsfw": [],
             "onchain_booster": 0,
             "owner_guid": "0",
             "pending_subscribe": false,
-            "permissions": Object {},
-            "pinned_posts": Array [],
+            "permissions": {},
+            "pinned_posts": [],
             "plus": true,
             "plus_method": "tokens",
             "pro": false,
             "pro_method": "tokens",
-            "programs": Array [
+            "programs": [
               "affiliate",
             ],
             "rating": "1",
             "rewards": true,
             "signup_method": false,
             "site_guid": false,
-            "social_profiles": Array [],
+            "social_profiles": [],
             "spam": "0",
             "subscribed": false,
             "subscriber": true,
             "subscribers_count": 50,
             "subscriptions_count": 0,
             "subtype": false,
-            "tags": Array [],
+            "tags": [],
             "time_created": "1468113204",
             "time_updated": false,
             "type": "user",
@@ -511,11 +525,11 @@ exports[`blog card component should renders correctly 1`] = `
             "username": "someusermane",
             "verified": true,
             "website": "",
-            "wire_rewards": Object {
+            "wire_rewards": {
               "description": "",
-              "rewards": Object {
-                "money": Array [],
-                "points": Array [],
+              "rewards": {
+                "money": [],
+                "points": [],
               },
             },
           },
@@ -523,7 +537,7 @@ exports[`blog card component should renders correctly 1`] = `
           "paywall": false,
           "paywall_unlocked": false,
           "perma_url": "https://www.minds.com/blog/view/836607056186159104",
-          "permissions": Object {},
+          "permissions": {},
           "pinned": false,
           "published": true,
           "quotes": 0,
@@ -534,11 +548,11 @@ exports[`blog card component should renders correctly 1`] = `
           "subtype": "blog",
           "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
           "thumbs:down:count": 1,
-          "thumbs:down:user_guids": Array [
+          "thumbs:down:user_guids": [
             "3",
           ],
           "thumbs:up:count": 2,
-          "thumbs:up:user_guids": Array [
+          "thumbs:up:user_guids": [
             "1",
             "2",
           ],

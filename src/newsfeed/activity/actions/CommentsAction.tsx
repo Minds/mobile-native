@@ -5,8 +5,9 @@ import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
-import { GroupContext } from '~/groups/GroupViewScreen';
 import EntityCounter from './EntityCounter';
+import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
+import { observer } from 'mobx-react';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -22,7 +23,7 @@ type PropsType = {
 const CommentsAction = (props: PropsType) => {
   const icon = props.entity.allow_comments ? 'chat-solid' : 'chat-off';
   const route: ActivityRouteProp = useRoute();
-  const group = React.useContext(GroupContext);
+  const group = useGroupContext()?.group;
 
   const openComments = useCallback(() => {
     if (props.onPressComment) {
@@ -58,6 +59,9 @@ const CommentsAction = (props: PropsType) => {
       name={icon}
       size="small"
       fill
+      disabled={
+        !props.entity.allow_comments && props.entity['comments:count'] === 0
+      }
       onPress={openComments}
       testID={props.testID}
       extra={
@@ -69,4 +73,4 @@ const CommentsAction = (props: PropsType) => {
   );
 };
 
-export default CommentsAction;
+export default observer(CommentsAction);

@@ -1,12 +1,17 @@
 import React, { useEffect, useReducer } from 'react';
+import { default as codePush } from 'react-native-code-push'; // use external codepush to avoid cyclic error
 import { LocalPackage, RemotePackage } from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
 import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
-import { B2, Button, Column, H3 } from '~/common/ui';
-import { CODE_PUSH_PROD_KEY, CODE_PUSH_STAGING_KEY } from '~/config/Config';
+import { B2, B3, Button, Column, H3 } from '~/common/ui';
+import {
+  CODE_PUSH_PROD_KEY,
+  CODE_PUSH_RC_KEY,
+  CODE_PUSH_STAGING_KEY,
+} from '~/config/Config';
 import { Version } from '~/config/Version';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { codePush, logMessage } from '../';
+import { logMessage } from '../';
 
 const CodePushDebugger = () => {
   const {
@@ -36,11 +41,15 @@ const CodePushDebugger = () => {
       <Column horizontal="L" vertical="M">
         {metadata ? (
           <>
-            <B2 font="bold">Current CodePush Version</B2>
-            <B2>App version: {appVersion}</B2>
-            <B2>Label: {label}</B2>
+            <B2 font="bold">
+              App Version: {Version.VERSION}
+              <B3> ({appVersion})</B3>
+            </B2>
+            <B2>CodePush Version: {label}</B2>
             {!!description && <B2>Description: {description}</B2>}
-            <B2>{`failedInstall: ${failedInstall} isFirstRun: ${isFirstRun} isPending: ${isPending}`}</B2>
+            {failedInstall ? (
+              <B2>{`failedInstall: ${failedInstall} isFirstRun: ${isFirstRun} isPending: ${isPending}`}</B2>
+            ) : undefined}
           </>
         ) : metadataLoading ? (
           <B2>Loading metadata...</B2>
@@ -56,6 +65,10 @@ const CodePushDebugger = () => {
           {
             label: 'Staging',
             key: CODE_PUSH_STAGING_KEY,
+          },
+          {
+            label: 'Release Candidate',
+            key: CODE_PUSH_RC_KEY,
           },
           {
             label: 'Production',

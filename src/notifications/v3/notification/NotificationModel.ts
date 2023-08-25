@@ -1,5 +1,4 @@
 import { observable } from 'mobx';
-import { hasVariation } from '../../../../ExperimentsProvider';
 import UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -64,11 +63,12 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.supermind_expired:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
+      case NotificationType.gift_card_recipient_notified:
         return '';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
+        return '';
     }
 
     return this.entity?.owner_guid === sessionService.getUser().guid ||
@@ -84,16 +84,17 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.token_rewards_summary:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
+      case NotificationType.gift_card_recipient_notified:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
       case NotificationType.boost_peer_rejected:
         return 'boost offer';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
-        return 'boost';
+        return '';
+
       case NotificationType.supermind_created:
       case NotificationType.supermind_declined:
       case NotificationType.supermind_accepted:
@@ -117,27 +118,24 @@ export default class NotificationModel extends AbstractModel {
     let type: NotificationType | 'reply' | 'boost_rejected_v2' =
       this.data && this.data.is_reply ? 'reply' : this.type;
 
-    if (
-      type === NotificationType.boost_rejected &&
-      hasVariation('mob-4638-boost-v3')
-    ) {
+    if (type === NotificationType.boost_rejected) {
       type = 'boost_rejected_v2';
     }
     return i18n.t(`notification.verbs.${type}`, {
-      amount: this.data?.tokens_formatted,
+      amount: this.data?.tokens_formatted ?? this.data?.amount_usd,
     });
   }
 
   get Subject() {
     switch (this.type) {
+      case NotificationType.affiliate_earnings_deposited:
+      case NotificationType.referrer_affiliate_earnings_deposited:
       case NotificationType.token_rewards_summary:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
         return '';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
+        return '';
     }
 
     return this.from?.name;
@@ -181,4 +179,7 @@ export enum NotificationType {
   supermind_accepted = 'supermind_accepted',
   supermind_expired = 'supermind_expired',
   supermind_expire24h = 'supermind_expire24h',
+  affiliate_earnings_deposited = 'affiliate_earnings_deposited',
+  referrer_affiliate_earnings_deposited = 'referrer_affiliate_earnings_deposited',
+  gift_card_recipient_notified = 'gift_card_recipient_notified',
 }

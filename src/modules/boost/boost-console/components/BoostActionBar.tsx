@@ -21,6 +21,7 @@ type PropsType = {
 @observer
 export default class BoostActionBar extends Component<PropsType> {
   static contextType = BoostConsoleStoreContext;
+  declare context: React.ContextType<typeof BoostConsoleStoreContext>;
 
   render() {
     let actions: ReactElement[] | null = null;
@@ -131,7 +132,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => {
-              this.props.boost.revoke(this.context.filter);
+              this.props.boost.revoke();
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>

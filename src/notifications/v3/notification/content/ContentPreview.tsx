@@ -1,13 +1,16 @@
 import React from 'react';
 import { View, TextStyle } from 'react-native';
+import i18n from '~/common/services/i18n.service';
+import { Button } from '~/common/ui';
+import ReadMore from '~/common/components/ReadMore';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
-import ReadMore from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
 import { NotificationType } from '../NotificationModel';
 import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
+import useNotificationRouter from '../useNotificationRouter';
 
 type PropsType = {
   notification: NotificationModel;
@@ -21,6 +24,9 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   const isEntityComment = notification.entity?.type === 'comment';
   const isNoCommentEntity =
     notification.entity && notification.entity?.type !== 'comment';
+  const hasGiftCard =
+    notification.type === NotificationType.gift_card_recipient_notified;
+  const { navigateToObject } = useNotificationRouter(notification);
 
   switch (notification.type) {
     case NotificationType.supermind_created:
@@ -28,18 +34,27 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
     case NotificationType.supermind_accepted:
     case NotificationType.supermind_expired:
     case NotificationType.supermind_expire24h:
+    case NotificationType.affiliate_earnings_deposited:
+    case NotificationType.referrer_affiliate_earnings_deposited:
       return null;
   }
 
   if (
-    entityIsUser ||
-    (!hasCommentExcerpt && !isEntityComment && !isNoCommentEntity)
+    (entityIsUser && !hasGiftCard) ||
+    (!hasGiftCard &&
+      !hasCommentExcerpt &&
+      !isEntityComment &&
+      !isNoCommentEntity)
   ) {
     return null;
   }
 
   return (
-    <View style={styles.contentPreviewContainer}>
+    <View
+      style={[
+        styles.contentPreviewContainer,
+        hasGiftCard && styles.buttonMargin,
+      ]}>
       {hasCommentExcerpt &&
         renderComment(
           notification.data.comment_excerpt,
@@ -52,7 +67,14 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
           bodyTextStyle,
           navigation,
         )}
-      {isNoCommentEntity && renderContent(notification, navigation)}
+      {!hasGiftCard &&
+        isNoCommentEntity &&
+        renderContent(notification, navigation)}
+      {hasGiftCard && (
+        <Button mode="outline" type="action" onPress={navigateToObject}>
+          {i18n.t('notification.claimGiftButton')}
+        </Button>
+      )}
     </View>
   );
 });

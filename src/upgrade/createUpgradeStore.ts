@@ -73,9 +73,9 @@ const createUpgradeStore = () => {
 
       const settings = mindsConfigService.getSettings();
 
-      this.settings = (pro
-        ? settings.upgrades.pro
-        : settings.upgrades.plus) as SettingsSubscriptionsType;
+      this.settings = (
+        pro ? settings.upgrades.pro : settings.upgrades.plus
+      ) as SettingsSubscriptionsType;
 
       // used to pay plus by wire
       const handler = pro ? settings.handlers.pro : settings.handlers.plus;

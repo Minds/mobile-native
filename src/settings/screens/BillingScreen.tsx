@@ -1,7 +1,6 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 
 import i18n from '../../common/services/i18n.service';
@@ -9,7 +8,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
 
 export default class BillingScreen extends Component {
-  onSelectCard = card => {
+  onSelectCard = _ => {
     return;
   };
 

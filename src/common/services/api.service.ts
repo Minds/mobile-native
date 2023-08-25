@@ -731,4 +731,36 @@ export class ApiService {
   }
 }
 
-export default new ApiService();
+const apiService = new ApiService();
+
+export default apiService;
+
+export const gqlFetcher = <TData, TVariables>(
+  query: string,
+  variables?: TVariables,
+  options?: RequestInit['headers'],
+): (() => Promise<TData>) => {
+  return async () => {
+    const response = await apiService.post<{ data: TData }>(
+      'api/graphql',
+      JSON.stringify({
+        query,
+        variables,
+      }),
+      options
+        ? {
+            headers: {
+              ...options,
+            },
+          }
+        : undefined,
+    );
+
+    if (response.errors) {
+      const { message } = response.errors[0] || {};
+      throw new Error(message || 'Error…');
+    }
+
+    return response.data;
+  };
+};

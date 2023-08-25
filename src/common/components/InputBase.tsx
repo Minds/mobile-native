@@ -47,7 +47,7 @@ export default function InputBase({
         style,
       ]}>
       <Column flex>
-        <Row flex align="centerBetween" bottom="M">
+        <Row flex align="centerBetween">
           <MText style={[theme.colorSecondaryText, theme.fontL, labelStyle]}>
             {label}
           </MText>

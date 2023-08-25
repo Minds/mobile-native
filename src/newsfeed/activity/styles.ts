@@ -4,7 +4,7 @@ const CONTAINER_MIN_HEIGHT = 150;
 
 const styles = ThemedStyles.create({
   container: {
-    overflow: 'visible',
+    // overflow: 'visible',
   },
   bodyContainer: {
     minHeight: CONTAINER_MIN_HEIGHT,

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, Image as RNImage, ScrollView, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import { Image } from 'expo-image';
@@ -27,6 +27,7 @@ import ChannelRecommendation from '~/common/components/ChannelRecommendation/Cha
 import UserModel from '../UserModel';
 import useModelEvent from '~/common/hooks/useModelEvent';
 import MutualSubscribers from '../components/MutualSubscribers';
+import GroupsTab from './tabs/GroupsTab';
 
 const CENTERED = false;
 
@@ -69,6 +70,7 @@ const ChannelHeader = withErrorBoundary(
     const tabs: Array<TabType<ChannelTabType>> = [
       { id: 'feed', title: i18n.t('feed') },
       { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+      { id: 'groups', title: i18n.t('groups.title') },
       { id: 'about', title: i18n.t('about') },
     ];
     // remove membership tab
@@ -105,8 +107,8 @@ const ChannelHeader = withErrorBoundary(
     useModelEvent(
       UserModel,
       'toggleSubscription',
-      ({ user }) => {
-        if (user.guid === channelGuid) {
+      ({ user, shouldUpdateFeed }) => {
+        if (user.guid === channelGuid && shouldUpdateFeed) {
           setInteracted(user.subscribed);
         }
       },
@@ -159,6 +161,10 @@ const ChannelHeader = withErrorBoundary(
           } else {
             return null;
           }
+        case 'groups':
+          return (
+            <GroupsTab store={props.store} navigation={props.navigation} />
+          );
         case 'about':
           return (
             <ScrollView>
@@ -201,7 +207,7 @@ const ChannelHeader = withErrorBoundary(
               <Image
                 style={styles.avatar}
                 source={channel.getAvatarSource()}
-                resizeMode="cover"
+                contentFit="cover"
               />
             </View>
           )}
@@ -211,7 +217,7 @@ const ChannelHeader = withErrorBoundary(
            **/}
           {!channel && (
             <View style={styles.avatarContainer}>
-              <Image
+              <RNImage
                 style={styles.avatar}
                 source={require('./../../assets/logos/bulb.png')}
                 resizeMode="cover"
@@ -284,7 +290,7 @@ const ChannelHeader = withErrorBoundary(
               {!ownChannel && (
                 <MutualSubscribers
                   navigation={props.navigation}
-                  userGuid={channel.guid}
+                  channel={channel}
                   top="M"
                   onPress={props.onOpenSubscribersYouKnow}
                 />

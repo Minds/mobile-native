@@ -5,11 +5,11 @@ exports[`ChannelRecommendation renders correctly 1`] = `
   <ChannelRecommendationHeader
     location="fakeLocation"
     recommendationStore={
-      Object {
-        "result": Object {
-          "entities": Array [
-            Object {
-              "entity": Object {
+      {
+        "result": {
+          "entities": [
+            {
+              "entity": {
                 "access_id": "2",
                 "banned": "no",
                 "blocked": false,
@@ -17,7 +17,7 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "boost_autorotate": true,
                 "boost_rating": "2",
                 "briefdescription": "",
-                "categories": Array [
+                "categories": [
                   "music",
                   "nature",
                   "news",
@@ -41,15 +41,15 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "founder": false,
                 "gender": "private",
                 "getAvatarSource": [MockFunction],
-                "guid": undefined,
+                "guid": "123",
                 "icontime": "1523515420",
                 "impressions": 100,
                 "language": "en",
                 "legacy_guid": false,
                 "mature": "1",
                 "mature_channel": "0",
-                "merchant": Object {
-                  "exclusive": Object {
+                "merchant": {
+                  "exclusive": {
                     "amount": "10",
                     "enabled": true,
                   },
@@ -59,16 +59,16 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "monetized": "",
                 "name": "Some User",
                 "owner_guid": "0",
-                "pinned_posts": Array [],
+                "pinned_posts": [],
                 "plus": true,
-                "programs": Array [
+                "programs": [
                   "affiliate",
                 ],
                 "rating": "1",
                 "rewards": true,
                 "signup_method": false,
                 "site_guid": false,
-                "social_profiles": Array [],
+                "social_profiles": [],
                 "spam": "0",
                 "subscribed": false,
                 "subscriber": true,
@@ -80,11 +80,11 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "username": "someusermane",
                 "verified": true,
                 "website": "",
-                "wire_rewards": Object {
+                "wire_rewards": {
                   "description": "",
-                  "rewards": Object {
-                    "money": Array [],
-                    "points": Array [],
+                  "rewards": {
+                    "money": [],
+                    "points": [],
                   },
                 },
               },
@@ -99,11 +99,11 @@ exports[`ChannelRecommendation renders correctly 1`] = `
   <ChannelRecommendationBody
     location="fakeLocation"
     recommendationStore={
-      Object {
-        "result": Object {
-          "entities": Array [
-            Object {
-              "entity": Object {
+      {
+        "result": {
+          "entities": [
+            {
+              "entity": {
                 "access_id": "2",
                 "banned": "no",
                 "blocked": false,
@@ -111,7 +111,7 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "boost_autorotate": true,
                 "boost_rating": "2",
                 "briefdescription": "",
-                "categories": Array [
+                "categories": [
                   "music",
                   "nature",
                   "news",
@@ -135,15 +135,15 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "founder": false,
                 "gender": "private",
                 "getAvatarSource": [MockFunction],
-                "guid": undefined,
+                "guid": "123",
                 "icontime": "1523515420",
                 "impressions": 100,
                 "language": "en",
                 "legacy_guid": false,
                 "mature": "1",
                 "mature_channel": "0",
-                "merchant": Object {
-                  "exclusive": Object {
+                "merchant": {
+                  "exclusive": {
                     "amount": "10",
                     "enabled": true,
                   },
@@ -153,16 +153,16 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "monetized": "",
                 "name": "Some User",
                 "owner_guid": "0",
-                "pinned_posts": Array [],
+                "pinned_posts": [],
                 "plus": true,
-                "programs": Array [
+                "programs": [
                   "affiliate",
                 ],
                 "rating": "1",
                 "rewards": true,
                 "signup_method": false,
                 "site_guid": false,
-                "social_profiles": Array [],
+                "social_profiles": [],
                 "spam": "0",
                 "subscribed": false,
                 "subscriber": true,
@@ -174,11 +174,11 @@ exports[`ChannelRecommendation renders correctly 1`] = `
                 "username": "someusermane",
                 "verified": true,
                 "website": "",
-                "wire_rewards": Object {
+                "wire_rewards": {
                   "description": "",
-                  "rewards": Object {
-                    "money": Array [],
-                    "points": Array [],
+                  "rewards": {
+                    "money": [],
+                    "points": [],
                   },
                 },
               },
@@ -194,32 +194,14 @@ exports[`ChannelRecommendation renders correctly 1`] = `
 `;
 
 exports[`ChannelRecommendationItem renders correctly 1`] = `
-<MPressable
-  onPress={[Function]}
->
-  <Row
-    horizontal="L"
-    vertical="S"
-  >
-    <withSpacer()
-      right="M"
-      size="tiny"
-      top="XS"
-    />
-    <Column
-      align="centerStart"
-      flex={true}
-      right="L"
-    >
-      <B1
-        font="bold"
-      >
-        Some User
-      </B1>
-    </Column>
-    <Subscribe
+<_default
+  alignTop={true}
+  borderless={true}
+  icon={
+    <Memo(Subscribe)
       channel={
-        Object {
+        {
+          "_collapsed": false,
           "access_id": "2",
           "allow_comments": true,
           "banned": "no",
@@ -229,7 +211,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "boost_rating": "2",
           "briefdescription": "",
           "canary": false,
-          "categories": Array [
+          "categories": [
             "music",
             "nature",
             "news",
@@ -256,20 +238,20 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "founder": false,
           "gender": "private",
           "getAvatarSource": [MockFunction] {
-            "calls": Array [
-              Array [
+            "calls": [
+              [
                 "medium",
               ],
             ],
-            "results": Array [
-              Object {
+            "results": [
+              {
                 "type": "return",
                 "value": undefined,
               },
             ],
           },
           "groupsCount": 0,
-          "guid": undefined,
+          "guid": "123",
           "icontime": "1523515420",
           "impressions": 100,
           "isOwner": [Function],
@@ -280,8 +262,8 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "mature": "1",
           "mature_channel": "0",
           "mature_visibility": false,
-          "merchant": Object {
-            "exclusive": Object {
+          "merchant": {
+            "exclusive": {
               "amount": "10",
               "enabled": true,
             },
@@ -291,31 +273,31 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "mode": 0,
           "monetized": "",
           "name": "Some User",
-          "nsfw": Array [],
+          "nsfw": [],
           "onchain_booster": 0,
           "owner_guid": "0",
           "pending_subscribe": false,
-          "permissions": Object {},
-          "pinned_posts": Array [],
+          "permissions": {},
+          "pinned_posts": [],
           "plus": true,
           "plus_method": "tokens",
           "pro": false,
           "pro_method": "tokens",
-          "programs": Array [
+          "programs": [
             "affiliate",
           ],
           "rating": "1",
           "rewards": true,
           "signup_method": false,
           "site_guid": false,
-          "social_profiles": Array [],
+          "social_profiles": [],
           "spam": "0",
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
           "subscriptions_count": 0,
           "subtype": false,
-          "tags": Array [],
+          "tags": [],
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",
@@ -323,11 +305,11 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           "username": "someusermane",
           "verified": true,
           "website": "",
-          "wire_rewards": Object {
+          "wire_rewards": {
             "description": "",
-            "rewards": Object {
-              "money": Array [],
-              "points": Array [],
+            "rewards": {
+              "money": [],
+              "points": [],
             },
           },
         }
@@ -335,6 +317,15 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
       mini={true}
       shouldUpdateFeed={false}
     />
-  </Row>
-</MPressable>
+  }
+  onPress={[Function]}
+  title="Some User"
+>
+  <B2
+    color="secondary"
+    numberOfLines={2}
+    right="XL"
+    top="XS"
+  />
+</_default>
 `;

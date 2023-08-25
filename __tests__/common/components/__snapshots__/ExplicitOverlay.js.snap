@@ -4,17 +4,17 @@ exports[`Explicit overlay component renders correctly 1`] = `
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "stretch",
         "flex": 1,
         "flexDirection": "column",
         "justifyContent": "center",
       },
-      Object {
-        "backgroundColor": "#1A2025",
+      {
+        "backgroundColor": "#38393D",
       },
-      Object {
+      {
         "alignItems": "center",
         "minHeight": 400,
       },
@@ -28,24 +28,24 @@ exports[`Explicit overlay component renders correctly 1`] = `
     onPress={[Function]}
     size={55}
     style={
-      Object {
-        "color": "#B8C1CA",
+      {
+        "color": "#b9bbc0",
       }
     }
   />
   <MText
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
+      [
+        {
+          "color": "#F2F2F2",
         },
-        Object {
+        {
           "paddingTop": 24,
         },
-        Object {
+        {
           "fontSize": 22,
         },
-        Object {
+        {
           "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
@@ -56,17 +56,17 @@ exports[`Explicit overlay component renders correctly 1`] = `
   </MText>
   <MText
     style={
-      Array [
-        Object {
-          "color": "#797B82",
+      [
+        {
+          "color": "#a1a5ab",
         },
-        Object {
+        {
           "paddingVertical": 8,
         },
-        Object {
+        {
           "marginBottom": 24,
         },
-        Object {
+        {
           "fontSize": 18,
         },
       ]
@@ -75,17 +75,17 @@ exports[`Explicit overlay component renders correctly 1`] = `
   <TouchableOpacity
     onPress={[Function]}
     style={
-      Array [
-        Object {
-          "borderColor": "#414C57",
+      [
+        {
+          "borderColor": "#53565A",
         },
-        Object {
+        {
           "borderWidth": 0.5,
         },
-        Object {
-          "backgroundColor": "#1F252C",
+        {
+          "backgroundColor": "#1C1D1F",
         },
-        Object {
+        {
           "margin": 16,
         },
       ]
@@ -93,11 +93,11 @@ exports[`Explicit overlay component renders correctly 1`] = `
   >
     <MText
       style={
-        Array [
-          Object {
+        [
+          {
             "padding": 8,
           },
-          Object {
+          {
             "fontSize": 16,
           },
           undefined,
@@ -114,17 +114,17 @@ exports[`Explicit overlay component should renders the etag 1`] = `
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "stretch",
         "flex": 1,
         "flexDirection": "column",
         "justifyContent": "center",
       },
-      Object {
-        "backgroundColor": "#1A2025",
+      {
+        "backgroundColor": "#38393D",
       },
-      Object {
+      {
         "alignItems": "center",
         "minHeight": 400,
       },
@@ -138,24 +138,24 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     onPress={[Function]}
     size={55}
     style={
-      Object {
-        "color": "#B8C1CA",
+      {
+        "color": "#b9bbc0",
       }
     }
   />
   <MText
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
+      [
+        {
+          "color": "#F2F2F2",
         },
-        Object {
+        {
           "paddingTop": 24,
         },
-        Object {
+        {
           "fontSize": 22,
         },
-        Object {
+        {
           "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
@@ -166,17 +166,17 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   </MText>
   <MText
     style={
-      Array [
-        Object {
-          "color": "#797B82",
+      [
+        {
+          "color": "#a1a5ab",
         },
-        Object {
+        {
           "paddingVertical": 8,
         },
-        Object {
+        {
           "marginBottom": 24,
         },
-        Object {
+        {
           "fontSize": 18,
         },
       ]
@@ -185,17 +185,17 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   <TouchableOpacity
     onPress={[Function]}
     style={
-      Array [
-        Object {
-          "borderColor": "#414C57",
+      [
+        {
+          "borderColor": "#53565A",
         },
-        Object {
+        {
           "borderWidth": 0.5,
         },
-        Object {
-          "backgroundColor": "#1F252C",
+        {
+          "backgroundColor": "#1C1D1F",
         },
-        Object {
+        {
           "margin": 16,
         },
       ]
@@ -203,11 +203,11 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   >
     <MText
       style={
-        Array [
-          Object {
+        [
+          {
             "padding": 8,
           },
-          Object {
+          {
             "fontSize": 16,
           },
           undefined,

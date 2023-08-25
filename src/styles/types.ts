@@ -83,33 +83,31 @@ export type DynamicStyles = {
   marginHorizontal: any;
   margin: any;
 } & {
-    [key in Numbers_99 as `width${key}` | `height${key}`];
-  } &
-  {
-    [key in keyof ColorsType as
-      | `bg${key}`
-      | `bg${key}${ThemeSuffix}`
-      | `color${key}`
-      | `color${key}${ThemeSuffix}`
-      | `bcolor${key}`
-      | `bcolor${key}${ThemeSuffix}`
-      | `shadow${key}`
-      | `shadow${key}${ThemeSuffix}`];
-  } &
-  {
-    [key in UIUnitType as
-      | `paddingVertical${key}`
-      | `paddingTop${key}`
-      | `paddingLeft${key}`
-      | `paddingRight${key}`
-      | `paddingBottom${key}`
-      | `paddingHorizontal${key}`
-      | `padding${key}`
-      | `marginVertical${key}`
-      | `marginTop${key}`
-      | `marginLeft${key}`
-      | `marginRight${key}`
-      | `marginBottom${key}`
-      | `marginHorizontal${key}`
-      | `margin${key}`]: any;
-  };
+  [key in Numbers_99 as `width${key}` | `height${key}`];
+} & {
+  [key in keyof ColorsType as
+    | `bg${key}`
+    | `bg${key}${ThemeSuffix}`
+    | `color${key}`
+    | `color${key}${ThemeSuffix}`
+    | `bcolor${key}`
+    | `bcolor${key}${ThemeSuffix}`
+    | `shadow${key}`
+    | `shadow${key}${ThemeSuffix}`];
+} & {
+  [key in UIUnitType as
+    | `paddingVertical${key}`
+    | `paddingTop${key}`
+    | `paddingLeft${key}`
+    | `paddingRight${key}`
+    | `paddingBottom${key}`
+    | `paddingHorizontal${key}`
+    | `padding${key}`
+    | `marginVertical${key}`
+    | `marginTop${key}`
+    | `marginLeft${key}`
+    | `marginRight${key}`
+    | `marginBottom${key}`
+    | `marginHorizontal${key}`
+    | `margin${key}`]: any;
+};

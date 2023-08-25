@@ -20,7 +20,7 @@ import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
-import type GroupModel from '../groups/GroupModel';
+import GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
 import mindsService from '../common/services/minds-config.service';
 import NavigationService from '../navigation/NavigationService';
@@ -29,6 +29,7 @@ import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import socketService from '~/common/services/socket.service';
 import { hasVariation } from '../../ExperimentsProvider';
 import { Image, ImageSource } from 'expo-image';
+import { BoostButtonText } from '../modules/boost/boost-composer/boost.store';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -97,13 +98,18 @@ export default class ActivityModel extends BaseModel {
   };
   spam?: boolean;
   type?: string;
-  permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
   blurhash?: string;
   blurb?: string;
   container_guid?: string;
   tags?: string[];
+
+  /**
+   * Goals
+   */
+  goal_button_text?: BoostButtonText;
+  goal_button_url?: string;
 
   /**
    * Mature visibility flag
@@ -209,6 +215,7 @@ export default class ActivityModel extends BaseModel {
   childModels(): any {
     return {
       ownerObj: UserModel,
+      containerObj: GroupModel,
       remind_object: ActivityModel,
     };
   }
@@ -639,6 +646,15 @@ export default class ActivityModel extends BaseModel {
     socketService.unsubscribe(this.metricsRoom, event =>
       this.onMetricsUpdate(event),
     );
+  }
+
+  /**
+   * Used to handle the state for the collapsed state
+   */
+  @action
+  setCollapsed(on = true) {
+    this._collapsed = on;
+    this.__list?.updateEntity(this.guid, this);
   }
 }
 

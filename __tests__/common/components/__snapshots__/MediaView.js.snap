@@ -4,13 +4,13 @@ exports[`Media view component renders correctly 1`] = `
 <View>
   <MediaViewImage
     entity={
-      Object {
+      {
         "attachment_guid": false,
         "blurb": false,
         "containerObj": undefined,
         "container_guid": "activityguid0",
-        "custom_data": Array [
-          Object {
+        "custom_data": [
+          {
             "height": 50,
             "width": 20,
           },
@@ -24,7 +24,7 @@ exports[`Media view component renders correctly 1`] = `
         "isGif": [MockFunction],
         "mature": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": {
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -39,7 +39,7 @@ exports[`Media view component renders correctly 1`] = `
         "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
-        "wire_totals": Object {
+        "wire_totals": {
           "tokens": 1000000000000000000,
         },
       }

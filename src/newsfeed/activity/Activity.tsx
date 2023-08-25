@@ -40,10 +40,11 @@ import { withAnalyticsContext } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
 import { useFeedStore } from '~/common/contexts/feed-store.context';
 import FadeView from '../../common/components/FadeView';
-
+import { withActivityContext } from './contexts/Activity.context';
+import undoable from './hocs/undoable';
 const FONT_THRESHOLD = 300;
 
-type PropsType = {
+export type ActivityProps = {
   entity: ActivityModel;
   navigation: any;
   hydrateOnNav?: boolean;
@@ -58,13 +59,18 @@ type PropsType = {
   borderless?: boolean;
   hideMetrics?: boolean;
   displayBoosts?: 'none' | 'distinct';
+  emphasizeGroup?: boolean;
   maxContentHeight?: number;
+  onDownvote?: () => void;
+  quietDownvote?: boolean;
+  explicitVoteButtons?: boolean;
+  hidePostOnDownvote?: boolean;
 };
 
 /**
  * Activity
  */
-@withAnalyticsContext<PropsType>(props => {
+@withAnalyticsContext<ActivityProps>(props => {
   const feedStore = useFeedStore();
   const clientMetaContext =
     feedStore?.metadataService &&
@@ -79,8 +85,15 @@ type PropsType = {
   }
   return contexts;
 })
+@undoable()
+@withActivityContext(props => ({
+  quietDownvote: true,
+  explicitVoteButtons: props.explicitVoteButtons,
+  hidePostOnDownvote: props.hidePostOnDownvote,
+  onDownvote: props.onDownvote,
+}))
 @observer
-export default class Activity extends Component<PropsType> {
+export default class Activity extends Component<ActivityProps> {
   /**
    * Disposer for autoplay reaction
    */
@@ -268,6 +281,7 @@ export default class Activity extends Component<PropsType> {
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}
         displayBoosts={this.props.displayBoosts}
+        emphasizeGroup={this.props.emphasizeGroup}
       />
     ) : null;
   }
@@ -340,6 +354,12 @@ export default class Activity extends Component<PropsType> {
       <Lock entity={entity} navigation={this.props.navigation} />
     ) : null;
 
+    if (!hasText) {
+      // We reset the translate reference if there is no text, this prevents to have an old reference when recycling
+      //@ts-ignore
+      this.translate.current = null;
+    }
+
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
         {hasText ? (
@@ -347,9 +367,11 @@ export default class Activity extends Component<PropsType> {
             <ExplicitText
               entity={entity}
               navigation={this.props.navigation}
+              selectable={false}
               style={fontStyle}
             />
             <Translate
+              key={`translate-${entity.guid}`} // force render if entity change (solve issues when recycling)
               ref={this.translate}
               entity={entity}
               style={styles.message}
@@ -381,6 +403,9 @@ export default class Activity extends Component<PropsType> {
           entity={entity}
           onPress={this.navToActivity}
           autoHeight={this.props.autoHeight}
+          onVideoOverlayPress={
+            this.props.maxContentHeight ? this.navToActivity : undefined
+          }
         />
         {this.showRemind()}
         {this.props.entity.remind_deleted && <DeletedRemind />}

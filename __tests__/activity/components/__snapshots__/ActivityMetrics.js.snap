@@ -3,15 +3,15 @@
 exports[`activity metrics component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "flexDirection": "row",
         "justifyContent": "space-between",
       },
-      Object {
+      {
         "padding": 8,
       },
-      Object {
+      {
         "paddingHorizontal": 16,
       },
     ]
@@ -19,21 +19,21 @@ exports[`activity metrics component renders correctly 1`] = `
 >
   <Text
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
+      [
+        {
+          "color": "#F2F2F2",
         },
-        Object {
+        {
           "fontFamily": "Roboto",
         },
-        Array [
-          Object {
-            "color": "#B8C1CA",
+        [
+          {
+            "color": "#b9bbc0",
           },
-          Object {
+          {
             "fontSize": 14,
           },
-          Object {
+          {
             "paddingVertical": 4,
           },
         ],

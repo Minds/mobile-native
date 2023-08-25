@@ -3,14 +3,11 @@ import i18n from '../../../common/services/i18n.service';
 import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
-import { Button, Icon } from '~ui';
+import { Button, ButtonPropsType, Icon } from '~ui';
 
-const HITSLOP = {
-  hitSlop: 10,
-};
-
-const Subscribe = (props: {
+export interface SubscribeProps {
   channel: UserModel;
+  text?: string;
   testID?: string;
   /**
    * whether the subscribe button should only show a plus/check icon
@@ -24,25 +21,35 @@ const Subscribe = (props: {
    * subscribe button was pressed
    */
   onSubscribed?: (user: UserModel) => void;
-}) => {
-  const { channel, mini, shouldUpdateFeed = true, onSubscribed } = props;
+  disabled?: boolean;
+  buttonProps?: Partial<ButtonPropsType>;
+}
 
-  const subscriptionText = channel.subscribed
-    ? i18n.t('channel.subscribed')
-    : i18n.t('channel.subscribe');
+const HITSLOP = {
+  hitSlop: 10,
+};
+
+const Subscribe = (props: SubscribeProps) => {
+  const { channel, mini, onSubscribed } = props;
+
+  const subscriptionText =
+    props.text ??
+    (channel.subscribed
+      ? i18n.t('channel.subscribed')
+      : i18n.t('channel.subscribe'));
 
   const onSubscriptionPress = useCallback(() => {
     if (channel.subscribed) {
       Alert.alert(i18n.t('attention'), i18n.t('channel.confirmUnsubscribe'), [
         {
           text: i18n.t('yesImSure'),
-          onPress: () => channel.toggleSubscription(shouldUpdateFeed),
+          onPress: () => channel.toggleSubscription(),
         },
         { text: i18n.t('no') },
       ]);
     } else {
       onSubscribed?.(channel);
-      return channel.toggleSubscription(shouldUpdateFeed);
+      return channel.toggleSubscription();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel.subscribed, channel.toggleSubscription, onSubscribed]);
@@ -52,6 +59,7 @@ const Subscribe = (props: {
       mode="outline"
       type={channel.subscribed ? 'base' : 'action'}
       size="tiny"
+      disabled={props.disabled}
       onPress={onSubscriptionPress}
       pressableProps={HITSLOP}
       icon={
@@ -64,7 +72,8 @@ const Subscribe = (props: {
           />
         )
       }
-      testID={props.testID}>
+      testID={props.testID}
+      {...props.buttonProps}>
       {mini ? undefined : subscriptionText}
     </Button>
   );

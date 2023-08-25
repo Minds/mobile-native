@@ -13,6 +13,7 @@ import { Dimensions, StatusBar } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const { height: windowHeight } = Dimensions.get('window');
 const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
@@ -61,12 +62,18 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       enablePanDownToClose={true}
       enableContentPanningGesture={false}
       enableHandlePanningGesture={true}
-      backgroundComponent={null}
+      backgroundStyle={styles.container}
+      handleIndicatorStyle={styles.handleIndicator}
       {...props}
       snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}
       onAnimate={onAnimateHandler}
     />
   );
+});
+
+const styles = ThemedStyles.create({
+  container: ['bgPrimaryBackground'],
+  handleIndicator: ['bgSecondaryText'],
 });
 
 export default MBottomSheet;

@@ -10,13 +10,15 @@ import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
 import { ensureTwitterConnected } from './SupermindTwitterConnectScreen';
 import { SupermindRequestStatus } from './types';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import { observer } from 'mobx-react';
 
 type Props = {
   request: SupermindRequestModel;
   outbound?: boolean;
 };
 
-export default function SupermindRequest({ request, outbound }: Props) {
+function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
   const isTwitterEnabled =
     request.twitter_required && hasVariation('engine-2503-twitter-feats');
@@ -36,8 +38,12 @@ export default function SupermindRequest({ request, outbound }: Props) {
       allowedMode: composerModes[request.reply_type],
       entity: request.entity,
       onSave: entity => {
+        //  update request status
         request.setStatus(SupermindRequestStatus.ACCEPTED);
         request.setReplyGuid(entity.guid);
+
+        // refresh in-feed notices
+        inFeedNoticesService.load();
       },
     });
   }, [isTwitterEnabled, navigation, request]);
@@ -110,6 +116,8 @@ export default function SupermindRequest({ request, outbound }: Props) {
 
 // Composer mode based on request_type
 const composerModes = [null, 'photo', 'video'];
+
+export default observer(SupermindRequest);
 
 /**
  * Status label

@@ -9,11 +9,14 @@ import groupsService from './GroupsService';
 export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
   @observable mature_visibility = false;
+  @observable briefdescription = '';
   name!: string;
   type!: string;
   nsfw: Array<number> = [];
   icontime: any;
   entity_guid?: string;
+  brief_description = '';
+  boosted?: boolean;
 
   @action
   toggleMatureVisibility() {
@@ -82,9 +85,8 @@ export default class GroupModel extends BaseModel {
 /**
  * Define model observables
  */
+//@ts-ignore
 decorate(GroupModel, {
-  //@ts-ignore
-  briefdescription: observable,
   name: observable,
   'is:member': observable,
   'members:count': observable,

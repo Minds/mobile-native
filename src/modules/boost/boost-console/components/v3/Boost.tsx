@@ -20,88 +20,37 @@ import {
 } from '../../types/BoostConsoleBoost';
 import BoostActionBar from './BoostActionBar';
 import BoostHeader from './BoostHeader';
+import GroupModel from '~/groups/GroupModel';
+import abbrev from '~/common/helpers/abbrev';
 
 interface BoostProps {
   boost: BoostModel;
 }
 
-/**
- * Boost console item
- */
-function Boost({ boost }: BoostProps) {
-  return (
-    <View style={styles.container}>
-      <BoostHeader boost={boost} />
-      <BoostEntity boost={boost} />
-      {boost.boost_status === BoostStatus.REJECTED ? (
-        <Rejection boost={boost} />
-      ) : (
-        <BoostActionBar boost={boost} />
-      )}
-    </View>
-  );
-}
-
 const BoostEntity = ({ boost }: BoostProps) => {
-  const navigation = useNavigation();
   const { t } = useTranslation();
-  const { boost_status, entity } = boost ?? {};
 
-  if (!entity) {
+  if (!boost.entity) {
     return null;
   }
 
-  const renderEntityByType = {
-    activity: () => (
-      <Activity
-        entity={ActivityModel.create(entity)}
-        hideTabs={true}
-        navigation={navigation}
-        borderless
-        hideMetrics={
-          boost_status === BoostStatus.APPROVED ||
-          boost_status === BoostStatus.COMPLETED
-        }
-      />
-    ),
-    user: () => {
-      const user = UserModel.create(entity);
+  switch (boost.entity.type) {
+    case 'activity':
+      return <ActivityBody boost={boost} />;
+    case 'user':
+      return <UserBody boost={boost} />;
+    case 'group':
+      return <GroupBody boost={boost} />;
+    default:
       return (
-        <Column>
-          <MPressable
-            onPress={() =>
-              navigation.navigate('Channel', {
-                guid: user.guid,
-                entity: user,
-              })
-            }>
-            <Row vertical="M" horizontal="L" align="centerBoth">
-              <Avatar source={user.getAvatarSource()} size={'small'} />
-              <Column align="centerStart" left="M" flex>
-                <B1 font="bold">{user.name}</B1>
-                <B1>@{user.username}</B1>
-              </Column>
-              <ChannelBadges channel={user} />
-            </Row>
-          </MPressable>
-          <Row horizontal="L" bottom="M">
-            <B1 color="secondary">{user.briefdescription}</B1>
-          </Row>
-        </Column>
+        <B1 horizontal="L" vertical="L" color="secondary">
+          {t('Entity {{type}} {{subtype}} not supported', {
+            type: boost.entity.type,
+            subtype: boost.entity.subtype,
+          })}
+        </B1>
       );
-    },
-    default: () => (
-      <B1 horizontal="L" vertical="L" color="secondary">
-        {t('Entity {{type}} {{subtype}} not supported', {
-          type: entity.type,
-          subtype: entity.subtype,
-        })}
-      </B1>
-    ),
-  };
-
-  const renderEntityByTypeFn = renderEntityByType[entity.type ?? 'default'];
-  return renderEntityByTypeFn?.() ?? renderEntityByType.default();
+  }
 };
 
 const Rejection = ({ boost }: BoostProps) => {
@@ -134,6 +83,114 @@ const Rejection = ({ boost }: BoostProps) => {
           </Link>
         )}
       </B1>
+    </Column>
+  );
+};
+
+/**
+ * Boost console item
+ */
+function Boost({ boost }: BoostProps) {
+  return (
+    <View style={styles.container}>
+      <BoostHeader boost={boost} />
+      <BoostEntity boost={boost} />
+      {boost.boost_status === BoostStatus.REJECTED ? (
+        <Rejection boost={boost} />
+      ) : (
+        <BoostActionBar boost={boost} />
+      )}
+    </View>
+  );
+}
+
+/**
+ * Renders an activity inside the boost
+ */
+const ActivityBody = ({ boost }: BoostProps) => {
+  const navigation = useNavigation();
+
+  if (!boost.entity) return null;
+
+  const activity = ActivityModel.create(boost.entity);
+  activity.goal_button_text = boost.goal_button_text;
+  activity.goal_button_url = boost.goal_button_url;
+
+  return (
+    <Activity
+      entity={activity}
+      hideTabs={true}
+      navigation={navigation}
+      borderless
+      hideMetrics={
+        boost.boost_status === BoostStatus.APPROVED ||
+        boost.boost_status === BoostStatus.COMPLETED
+      }
+    />
+  );
+};
+
+/**
+ * Renders a user inside the boost
+ */
+const UserBody = ({ boost }: BoostProps) => {
+  const navigation = useNavigation();
+
+  if (!boost.entity) return null;
+  const user = UserModel.create(boost.entity);
+  return (
+    <Column>
+      <MPressable
+        onPress={() =>
+          navigation.navigate('Channel', {
+            guid: user.guid,
+            entity: user,
+          })
+        }>
+        <Row vertical="M" horizontal="L" align="centerBoth">
+          <Avatar source={user.getAvatarSource()} size={'small'} />
+          <Column align="centerStart" left="M" flex>
+            <B1 font="bold">{user.name}</B1>
+            <B1>@{user.username}</B1>
+          </Column>
+          <ChannelBadges channel={user} />
+        </Row>
+      </MPressable>
+      <Row horizontal="L" bottom="M">
+        <B1 color="secondary">{user.briefdescription}</B1>
+      </Row>
+    </Column>
+  );
+};
+
+/**
+ * Renders a group inside the boost
+ */
+const GroupBody = ({ boost }: BoostProps) => {
+  const navigation = useNavigation();
+
+  if (!boost.entity) return null;
+  const group = GroupModel.create(boost.entity);
+  return (
+    <Column>
+      <MPressable
+        onPress={() =>
+          navigation.navigate('Group', {
+            guid: group.guid,
+            group: group,
+          })
+        }>
+        <Row vertical="M" horizontal="L" align="centerBoth">
+          <Avatar source={group.getAvatar().source} size={'small'} />
+          <Column align="centerStart" left="M" flex>
+            <B1 font="bold">{group.name}</B1>
+            <B1>{abbrev(group['members:count'])} members</B1>
+          </Column>
+        </Row>
+      </MPressable>
+      <Row horizontal="L" bottom="M">
+        <B1 color="secondary">{group.briefdescription}</B1>
+      </Row>
     </Column>
   );
 };

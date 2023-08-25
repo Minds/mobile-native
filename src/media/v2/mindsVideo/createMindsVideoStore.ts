@@ -28,10 +28,12 @@ const createMindsVideoStore = ({
   autoplay,
   repeat,
   onProgress,
+  onOverlayPress,
 }: {
   autoplay?: boolean;
   repeat?: boolean;
   onProgress?: (progress: number) => void;
+  onOverlayPress?: () => void;
 }) => {
   const store = {
     entity: <ActivityModel | null>null,
@@ -267,6 +269,10 @@ const createMindsVideoStore = ({
       }
     },
     openControlOverlay() {
+      if (onOverlayPress) {
+        return onOverlayPress();
+      }
+
       if (!this.showOverlay) {
         this.setShowOverlay(true);
       }

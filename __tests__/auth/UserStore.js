@@ -18,7 +18,7 @@ describe('user store', () => {
     store = new UserStore();
   });
 
-  it('should call channel service load and update me', async (done) => {
+  it('should call channel service load and update me', async () => {
     expect.assertions(3);
     // fake api response
     const apiResponseFake = { channel: meFactory(1) };
@@ -32,25 +32,21 @@ describe('user store', () => {
       () => store.me.guid,
       () => expect(store.me.guid).toEqual(apiResponseFake.channel.guid),
       200,
-      () => done.fail("store didn't set me observable"),
+      () => {
+        throw new Error("store didn't set me observable");
+      },
     );
 
-    try {
-      // me must be empty before call load
-      expect(store.me.guid).toEqual('');
+    // me must be empty before call load
+    expect(store.me.guid).toEqual('');
 
-      const res = await store.load();
+    const res = await store.load();
 
-      // call api post one time
-      expect(channelService.load).toBeCalledWith('me');
-
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    // call api post one time
+    expect(channelService.load).toBeCalledWith('me');
   });
 
-  it('should create a new model on setUser', async (done) => {
+  it('should create a new model on setUser', done => {
     expect.assertions(2);
 
     // fake user
@@ -76,7 +72,7 @@ describe('user store', () => {
     }
   });
 
-  it('should set rewards on the observable', async (done) => {
+  it('should set rewards on the observable', done => {
     expect.assertions(1);
 
     // fake user
@@ -101,7 +97,7 @@ describe('user store', () => {
     }
   });
 
-  it('should set wallet on the observable', async (done) => {
+  it('should set wallet on the observable', done => {
     try {
       // fake user
       const fakeUser = meFactory(1);
@@ -124,7 +120,7 @@ describe('user store', () => {
     }
   });
 
-  it('should clear the user', async (done) => {
+  it('should clear the user', done => {
     expect.assertions(1);
 
     // fake user
@@ -151,7 +147,7 @@ describe('user store', () => {
     }
   });
 
-  it('should clear the user on reset', async (done) => {
+  it('should clear the user on reset', done => {
     expect.assertions(1);
 
     // fake user
@@ -178,7 +174,7 @@ describe('user store', () => {
     }
   });
 
-  it('should returns if the user has rewards', async (done) => {
+  it('should returns if the user has rewards', done => {
     // fake user
     const fakeUser = meFactory(1);
 
@@ -198,7 +194,7 @@ describe('user store', () => {
     }
   });
 
-  it('should returns if the user has wallet', async (done) => {
+  it('should returns if the user has wallet', done => {
     // fake user
     const fakeUser = meFactory(1);
 
@@ -218,7 +214,7 @@ describe('user store', () => {
     }
   });
 
-  it('should returns if the user is admin', async (done) => {
+  it('should returns if the user is admin', done => {
     // fake user
     const fakeUser = meFactory(2);
     fakeUser.is_admin = true;

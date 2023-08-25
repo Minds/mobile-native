@@ -3,14 +3,14 @@
 exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
 <RCTScrollView
   contentContainerStyle={
-    Array [
-      Object {
+    [
+      {
         "paddingHorizontal": 16,
       },
-      Object {
+      {
         "paddingTop": 24,
       },
-      Object {
+      {
         "paddingBottom": 24,
       },
     ]
@@ -22,7 +22,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
   <View>
     <View
       style={
-        Object {
+        {
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -30,18 +30,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
+          [
+            {
+              "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto-Bold",
             },
-            Object {
+            {
               "fontSize": 18,
               "lineHeight": 28,
             },
-            Object {
+            {
               "textAlign": "left",
             },
           ]
@@ -52,7 +52,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -61,7 +61,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -69,8 +69,8 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -78,7 +78,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -88,18 +88,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 29.12,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -109,7 +109,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -117,18 +117,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -138,18 +138,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -162,7 +162,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -171,7 +171,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -179,8 +179,8 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -188,7 +188,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -198,18 +198,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 28,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -219,7 +219,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -227,18 +227,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -248,18 +248,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -272,7 +272,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -281,7 +281,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -289,8 +289,8 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -298,7 +298,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -308,18 +308,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 28,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -329,7 +329,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -337,18 +337,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -358,18 +358,18 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -382,7 +382,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -391,9 +391,9 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       activeOpacity={0.7}
       onPress={[MockFunction]}
       style={
-        Array [
-          Array [
-            Object {
+        [
+          [
+            {
               "borderRadius": 100,
               "height": 36,
               "overflow": "hidden",
@@ -406,38 +406,38 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     >
       <ExpoLinearGradient
         colors={
-          Array [
+          [
             "#2B52E8",
             "#5238ED",
             "#9B0FA8",
           ]
         }
         end={
-          Object {
+          {
             "x": 1,
             "y": 0,
           }
         }
         locations={
-          Array [
+          [
             0,
             0.4,
             1,
           ]
         }
         start={
-          Object {
+          {
             "x": 0,
             "y": 0,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "flex": 1,
               "justifyContent": "center",
             },
-            Object {
+            {
               "paddingHorizontal": 8,
             },
           ]
@@ -445,25 +445,25 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "marginHorizontal": 4,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFFFFF",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "center",
                 },
               ]
@@ -481,14 +481,14 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
 exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
 <RCTScrollView
   contentContainerStyle={
-    Array [
-      Object {
+    [
+      {
         "paddingHorizontal": 16,
       },
-      Object {
+      {
         "paddingTop": 24,
       },
-      Object {
+      {
         "paddingBottom": 24,
       },
     ]
@@ -500,7 +500,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
   <View>
     <View
       style={
-        Object {
+        {
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -508,18 +508,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
+          [
+            {
+              "color": "#F2F2F2",
             },
-            Object {
+            {
               "fontFamily": "Roboto-Bold",
             },
-            Object {
+            {
               "fontSize": 18,
               "lineHeight": 28,
             },
-            Object {
+            {
               "textAlign": "left",
             },
           ]
@@ -530,7 +530,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -539,7 +539,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -547,8 +547,8 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -556,7 +556,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -566,18 +566,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 29.12,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -587,7 +587,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -595,18 +595,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -616,18 +616,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -638,18 +638,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
           <Text
             onPress={[Function]}
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
+              [
+                {
+                  "color": "#F2F2F2",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto",
                 },
-                Array [
-                  Object {
-                    "color": "#B8C1CA",
+                [
+                  {
+                    "color": "#b9bbc0",
                   },
-                  Object {
+                  {
                     "textDecorationLine": "underline",
                   },
                 ],
@@ -663,7 +663,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -672,7 +672,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -680,8 +680,8 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -689,7 +689,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -699,18 +699,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 28,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -720,7 +720,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -728,18 +728,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -749,18 +749,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -773,7 +773,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "marginBottom": 32,
           "marginRight": 40,
@@ -782,7 +782,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -790,8 +790,8 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "height": 28,
@@ -799,7 +799,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "overflow": "hidden",
                 "width": 28,
               },
-              Object {
+              {
                 "marginTop": 4,
               },
             ]
@@ -809,18 +809,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#AEB0B8",
                   "fontSize": 28,
                 },
-                Object {},
-                Object {
+                {},
+                {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -830,7 +830,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "column",
             "marginRight": 16,
           }
@@ -838,18 +838,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
+            [
+              {
+                "color": "#F2F2F2",
               },
-              Object {
+              {
                 "fontFamily": "Roboto-Bold",
               },
-              Object {
+              {
                 "fontSize": 18,
                 "lineHeight": 28,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -859,18 +859,18 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#B8C1CA",
+            [
+              {
+                "color": "#b9bbc0",
               },
-              Object {
+              {
                 "fontFamily": "Roboto",
               },
-              Object {
+              {
                 "fontSize": 14,
                 "lineHeight": 20,
               },
-              Object {
+              {
                 "textAlign": "left",
               },
             ]
@@ -883,7 +883,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -892,9 +892,9 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       activeOpacity={0.7}
       onPress={[MockFunction]}
       style={
-        Array [
-          Array [
-            Object {
+        [
+          [
+            {
               "borderRadius": 100,
               "height": 36,
               "overflow": "hidden",
@@ -907,38 +907,38 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     >
       <ExpoLinearGradient
         colors={
-          Array [
+          [
             "#2B52E8",
             "#5238ED",
             "#9B0FA8",
           ]
         }
         end={
-          Object {
+          {
             "x": 1,
             "y": 0,
           }
         }
         locations={
-          Array [
+          [
             0,
             0.4,
             1,
           ]
         }
         start={
-          Object {
+          {
             "x": 0,
             "y": 0,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "flex": 1,
               "justifyContent": "center",
             },
-            Object {
+            {
               "paddingHorizontal": 8,
             },
           ]
@@ -946,25 +946,25 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "marginHorizontal": 4,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFFFFF",
                 },
-                Object {
+                {
                   "fontFamily": "Roboto-Medium",
                 },
-                Object {
+                {
                   "fontSize": 14,
                   "lineHeight": 20,
                 },
-                Object {
+                {
                   "textAlign": "center",
                 },
               ]

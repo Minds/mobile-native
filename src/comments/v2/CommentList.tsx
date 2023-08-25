@@ -127,14 +127,16 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           </View>
         )}
 
-        <TouchableOpacity
-          onPress={() => props.store.setShowInput(true)}
-          style={styles.touchableStyles}>
-          <Image source={user.getAvatarSource()} style={styles.avatar} />
-          <MText style={styles.reply}>
-            {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-          </MText>
-        </TouchableOpacity>
+        {props.store.entity.allow_comments && (
+          <TouchableOpacity
+            onPress={() => props.store.setShowInput(true)}
+            style={styles.touchableStyles}>
+            <Image source={user.getAvatarSource()} style={styles.avatar} />
+            <MText style={styles.reply}>
+              {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+            </MText>
+          </TouchableOpacity>
+        )}
 
         <LoadMore store={props.store} next={true} />
       </>

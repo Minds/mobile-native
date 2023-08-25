@@ -12,6 +12,7 @@ const guid = 'fakeGuid';
 
 describe('SupermindScreen', () => {
   test('should render correctly', () => {
+    mockedApi.get.mockResolvedValue(supermindRequestFaker() as any);
     render(
       <SupermindScreen
         route={
@@ -23,7 +24,6 @@ describe('SupermindScreen', () => {
         }
       />,
     );
-    mockedApi.get.mockResolvedValue(supermindRequestFaker() as any);
     expect(apiService.get).toHaveBeenCalledWith(
       '/api/v3/supermind/' + guid,
       expect.anything(),
