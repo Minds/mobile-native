@@ -243,8 +243,11 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           onScroll={onScrollHandler}>
           {isTopRowVisible && (
             <Row left="S" vertical="S" align="centerBetween">
-              {isCreateModalOn && !store.isEdit && (
+              {isCreateModalOn && !store.isEdit ? (
                 <ComposeAudienceSelector store={store} />
+              ) : (
+                // this is to make sure the title toggle is rendered on the right
+                <View />
               )}
               {store.attachments.hasAttachment && <TitleToggle store={store} />}
             </Row>
