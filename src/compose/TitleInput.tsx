@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import TextInput from '../common/components/TextInput';
 import i18nService from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { IS_IOS } from '../config/Config';
 
 /**
  * Title input
@@ -36,6 +37,6 @@ const textInputStyle = ThemedStyles.combine(
 );
 const container = ThemedStyles.combine(
   'fullWidth',
-  'marginTop2x',
   'marginBottom',
+  IS_IOS ? 'marginTop' : 'marginBottom',
 );
