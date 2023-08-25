@@ -54,9 +54,9 @@ export default class BoostModel extends BaseModel {
   }
 
   @action
-  async revoke(filter) {
+  async revoke() {
     try {
-      await revokeBoost(this.guid, filter);
+      await revokeBoost(this.guid);
       this.state = 'revoked';
       showNotification(i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {

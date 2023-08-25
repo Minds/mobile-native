@@ -28,7 +28,7 @@ import {
   useFetchSearchQuery,
 } from '~/graphql/api';
 import GroupModel from '~/groups/GroupModel';
-import { ChannelRecommendationItem } from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
+import { ChannelRecommendationItem } from '~/modules/recommendation';
 
 interface Props {
   navigation: any;

@@ -21,11 +21,11 @@ function BoostTabBar({}: BoostTabBarProps) {
   const tabs: Array<TabType<string>> = [
     {
       id: 'feed',
-      title: t('Feed'),
+      title: t('Posts'),
     },
     {
       id: 'sidebar',
-      title: t('Sidebar'),
+      title: t('Channel + groups'),
     },
     {
       id: 'explore',

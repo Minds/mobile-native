@@ -75,7 +75,7 @@ const AppStack = observer(() => {
     <>
       <StatusBar
         barStyle={statusBarStyle}
-        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
