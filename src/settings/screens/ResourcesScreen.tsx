@@ -7,6 +7,7 @@ import { Screen } from '../../common/ui';
 import FitScrollView from '../../common/components/FitScrollView';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { navigateToHelp } from '../SettingsScreen';
 
 type PropsType = {};
 
@@ -70,7 +71,7 @@ const items = [
     options: [
       {
         id: 'help',
-        onPress: () => Linking.openURL('https://mobile.minds.com/help'),
+        onPress: navigateToHelp,
       },
       {
         id: 'contact',
