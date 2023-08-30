@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 
 import { View, FlatList } from 'react-native';
 
@@ -117,7 +117,6 @@ export const DiscoverySearchList = observer((props: Props) => {
   const { algorithm, q: searchTerm } =
     store.listStore.feedsService.params ?? {};
   const isTop = algorithm === 'top';
-  console.log('Search', isTop, searchTerm);
 
   return (
     <View style={theme.flexContainer}>
@@ -141,7 +140,43 @@ export const DiscoverySearchList = observer((props: Props) => {
 
 function Finder({ type, query }: { type: 'group' | 'channel'; query: string }) {
   const store = useDiscoveryV2SearchStore();
+  const entities = useSearchQuery(type, query);
 
+  return entities.length === 0 ? null : (
+    <>
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
+        <Row align="centerBetween" vertical="L" horizontal="L">
+          <H4>{type === 'channel' ? 'Channels' : 'Groups'}</H4>
+          <B2
+            color="link"
+            onPress={() => {
+              store.setAlgorithm(type === 'channel' ? 'channels' : 'groups');
+            }}>
+            {i18nService.t('seeMore')}
+          </B2>
+        </Row>
+      </View>
+      {entities.map((item, index) =>
+        type === 'group' ? (
+          <GroupsListItem
+            group={item as GroupModel}
+            index={index}
+            onPress={() => null}
+          />
+        ) : (
+          <ChannelRecommendationItem
+            key={item.guid}
+            channel={item as UserModel}
+            onSubscribed={() => null}
+          />
+        ),
+      )}
+      <Divider />
+    </>
+  );
+}
+
+const useSearchQuery = (type: 'group' | 'channel', query: string) => {
   const Model = type === 'group' ? GroupModel : UserModel;
   const { data } = useFetchSearchQuery(
     {
@@ -156,45 +191,13 @@ function Finder({ type, query }: { type: 'group' | 'channel'; query: string }) {
     },
   );
 
-  const entities = data?.search?.edges;
-  if (!entities?.length) {
-    return null;
-  }
-
-  return (
-    <>
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
-        <Row align="centerBetween" vertical="L" horizontal="L">
-          <H4>{type === 'channel' ? 'Channels' : 'Groups'}</H4>
-          <B2
-            color="link"
-            onPress={() => {
-              store.setAlgorithm(type === 'channel' ? 'channels' : 'groups');
-            }}>
-            {i18nService.t('seeMore')}
-          </B2>
-        </Row>
-      </View>
-      {entities.map((item, index) => {
-        const ent = Model.create(
-          JSON.parse((item.node as ActivityNode).legacy),
-        );
-
-        return type === 'group' ? (
-          <GroupsListItem
-            group={ent as GroupModel}
-            index={index}
-            onPress={() => null}
-          />
-        ) : (
-          <ChannelRecommendationItem
-            key={ent.guid}
-            channel={ent as UserModel}
-            onSubscribed={() => null}
-          />
-        );
-      })}
-      <Divider />
-    </>
+  const items = useMemo(
+    () =>
+      data?.search?.edges?.map(item =>
+        Model.create(JSON.parse((item.node as ActivityNode).legacy)),
+      ) ?? [],
+    [data, Model],
   );
-}
+
+  return items;
+};
