@@ -1,36 +1,29 @@
-import { useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import i18nService from '~/common/services/i18n.service';
-import FeedStore from '~/common/stores/FeedStore';
 import { Button, Icon } from '~/common/ui';
-import { useSeeLatestStyle } from './SeeLatestButton';
+import { useSeeLatestStyle } from '../../../newsfeed/SeeLatestButton';
+import useApiQuery from '~/services/hooks/useApiQuery';
+import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 
 interface SeeLatestPostsButtonProps {
   onPress: () => void;
-  feedStore: FeedStore;
+  countEndpoint: string;
+  lastFetch: number;
 }
 
 /**
  * A prompt that appears in a feed and shows how many new posts are there
  */
 const SeeLatestPostsButton = ({
-  feedStore,
   onPress,
+  countEndpoint,
+  lastFetch,
 }: SeeLatestPostsButtonProps) => {
-  const navigation = useNavigation();
-  const style = useSeeLatestStyle(feedStore.newPostsCount);
+  const count = useWatchForUpdates(countEndpoint, lastFetch);
+  const style = useSeeLatestStyle(count);
 
-  useEffect(() => {
-    const disposeWatcher = feedStore.watchForUpdates(() =>
-      navigation.isFocused(),
-    );
-
-    return () => disposeWatcher();
-  }, [feedStore, navigation]);
-
-  if (!feedStore.newPostsCount) {
+  if (!count) {
     return null;
   }
 
@@ -49,11 +42,29 @@ const SeeLatestPostsButton = ({
         onPress={onPress}
         shouldAnimateChanges={false}>
         {i18nService.t('newsfeed.seeLatestTitle', {
-          count: feedStore.newPostsCount,
+          count,
         })}
       </Button>
     </Animated.View>
   );
 };
+export default SeeLatestPostsButton;
 
-export default observer(SeeLatestPostsButton);
+function useWatchForUpdates(endpoint: string, lastFetch: number) {
+  const query = useApiQuery<{ count: number }>(
+    ['newsfeed', lastFetch],
+    endpoint,
+    { from_timestamp: lastFetch },
+    'get',
+    {
+      //@ts-ignore type error in react query
+      refetchInterval: NEWSFEED_NEW_POST_POLL_INTERVAL,
+      refetchOnWindowFocus: true,
+      initialData,
+    },
+  );
+
+  return query.data?.count || 0;
+}
+
+const initialData = { count: 0 };

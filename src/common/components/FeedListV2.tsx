@@ -42,6 +42,9 @@ export type FeedListProps<T extends BaseModel> = {
 
 const colors = [ThemedStyles.getColor('Link')];
 
+/**
+ * Functional implementation of the FeedList component
+ */
 function FeedList<T extends BaseModel>(
   props: FeedListProps<T>,
   ref: React.Ref<FlashList<T>>,
@@ -197,7 +200,7 @@ const getItemType = (item: ActivityModel | InjectItem) => {
     ? item.type
     : isActivity && item.hasVideo()
     ? 'video'
-    : isActivity && item.hasVideo()
+    : isActivity && item.hasImage()
     ? 'image'
     : 'row';
 };

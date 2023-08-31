@@ -10,14 +10,21 @@ import { toggleAllowComments as toggleAllow } from '../comments/CommentsService'
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
-import MetadataService, { MetadataMedium } from './services/metadata.service';
+import MetadataService, {
+  Metadata,
+  MetadataMedium,
+} from './services/metadata.service';
 import { storeRatingService } from 'modules/store-rating';
 
 /**
  * Base model
  */
 export default class BaseModel extends AbstractModel {
+  _viewed: boolean = false; // entity reported as viewed
+
+  //@deprecated used to inform position but it will no longer be necessary with the graphql refactor
   position?: number;
+
   username: string = '';
   access_id: string = '';
   guid: string = '';
@@ -313,6 +320,7 @@ export default class BaseModel extends AbstractModel {
 
   /**
    * Report viewed content
+   * @deprecated used by FeedStore, removed with graphql implementation
    */
   sendViewed(medium?: MetadataMedium, position?: number) {
     if (this._list) {
@@ -322,6 +330,17 @@ export default class BaseModel extends AbstractModel {
       metadata.setMedium('single').setSource('single');
       recordView(this, metadata.getClientMetadata(this, medium, position));
     }
+  }
+
+  /**
+   * Report viewed entity
+   */
+  trackView(meta: Metadata) {
+    if (this._viewed) {
+      return;
+    }
+    recordView(this, meta);
+    this._viewed = true;
   }
 
   /**

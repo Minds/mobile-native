@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
-import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
+import { NewsfeedScreen } from '~/modules/newsfeed';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 import i18n from '~/common/services/i18n.service';
 
