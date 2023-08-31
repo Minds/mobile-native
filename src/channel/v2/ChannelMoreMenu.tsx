@@ -1,6 +1,7 @@
 import React, { forwardRef, useCallback } from 'react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from '@minds/ui';
 
 import type UserModel from '../UserModel';
 import i18n from '~/common/services/i18n.service';
@@ -16,6 +17,8 @@ import {
 import { Platform } from 'react-native';
 import { useStores } from '~/common/hooks/use-stores';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
+import openUrlService from '../../common/services/open-url.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -36,11 +39,32 @@ const getOptions = (
   ref: any,
 ) => {
   let options: Array<{
-    iconName: string;
-    iconType: string;
+    icon?: JSX.Element;
+    iconName?: string;
+    iconType?: string;
     title: string;
     onPress: () => void;
   }> = [];
+
+  const externalData = channel.getExternalData();
+  if (externalData && channel.source === 'activitypub') {
+    options.push({
+      icon: (
+        <Icon
+          size={24}
+          name="captivePortal"
+          color={ThemedStyles.getColor('Icon')}
+        />
+      ),
+      title: i18n.t('viewOnExternal', { external: externalData.source }),
+      onPress: () => {
+        openUrlService.openLinkInInAppBrowser(
+          `https://${externalData.source}/@${externalData.handle}`,
+        );
+        ref.current.dismiss();
+      },
+    });
+  }
 
   const shareOption = {
     iconName: 'share',

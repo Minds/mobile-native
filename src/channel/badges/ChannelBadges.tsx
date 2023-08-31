@@ -1,31 +1,10 @@
-import React, { FC, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { IconNext } from '~ui/icons';
 import type UserModel from '../UserModel';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import { Popable } from 'react-native-popable';
-import { B3, Row, SpacerPropType } from '~ui';
-
-/**
- * Badge tooltip using Poppable because react-native-elements/Tooltip
- * doesn't have a way to show the Tooltip on top
- **/
-const BadgeTooltip: FC<any> = ({ label, color, children }) => {
-  const fontColor = ThemedStyles.theme === 1 ? 'black' : 'white';
-  return (
-    <Popable
-      backgroundColor={color}
-      position={'top'}
-      animationType={'spring'}
-      content={
-        <B3 color={fontColor} align="center" vertical="XS">
-          {label}
-        </B3>
-      }>
-      {children}
-    </Popable>
-  );
-};
+import ThemedStyles from '~/styles/ThemedStyles';
+import i18n from '~/common/services/i18n.service';
+import { Row, SpacerPropType } from '~ui';
+import BadgeTooltip from '~/common/components/BadgeTooltip';
 
 type PropsType = {
   channel: UserModel;
@@ -44,6 +23,18 @@ export default class ChannelBadges extends PureComponent<
     const { channel, ...spacer } = this.props;
     const size = 'tiny';
     const badges: Array<React.ReactNode> = [];
+
+    if (channel.source === 'activitypub') {
+      const source = channel.username?.split('@')?.[1] || 'External';
+      badges.push(
+        <BadgeTooltip
+          key="source"
+          label={`${source} profile`}
+          color={ThemedStyles.getColor('Link')}>
+          <IconNext name="globe" size={size} active horizontal="XXXS" key={2} />
+        </BadgeTooltip>,
+      );
+    }
 
     if (channel.plus) {
       badges.push(
