@@ -165,23 +165,18 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * @tags
    */
   parseUser = str => {
-    return this.replaceRegular(
-      str,
-      regex.tag,
-      (i, content) => {
-        return (
-          <MText
-            key={i}
-            style={[this.props.style, ThemedStyles.style.colorLink]}
-            onPress={() => {
-              this.navToChannel(content);
-            }}>
-            @{content}
-          </MText>
-        );
-      },
-      4,
-    );
+    return this.replaceRegular(str, regex.tag, (i, content) => {
+      return (
+        <MText
+          key={i}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
+          onPress={() => {
+            this.navToChannel(content);
+          }}>
+          @{content}
+        </MText>
+      );
+    });
   };
 
   /**
