@@ -36,6 +36,7 @@ import { Upvote } from './icons/Upvote';
 import { VerifiedBadge } from './icons/VerifiedBadge';
 import { Wallet } from './icons/Wallet';
 import { MindsPro } from './icons/MindsPro';
+import { CaptivePortal } from './icons/CaptivePortal';
 
 export const icons = {
   adjust: Adjust,
@@ -53,6 +54,7 @@ export const icons = {
   group: Group,
   hashtag: Hashtag,
   help: Help,
+  captivePortal: CaptivePortal,
   info: Info,
   launch: Launch,
   lightmode: Lightmode,
@@ -92,6 +94,7 @@ export {
   Group,
   Hashtag,
   Help,
+  CaptivePortal,
   Info,
   Launch,
   Lightmode,

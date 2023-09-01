@@ -437,6 +437,10 @@ const ICON_MAP = {
     name: 'play-arrow',
     transform: [{ rotate: '270deg' }],
   },
+  globe: {
+    font: 'MaterialIcons',
+    name: 'language',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

@@ -111,6 +111,8 @@ export default class ActivityModel extends BaseModel {
   goal_button_text?: BoostButtonText;
   goal_button_url?: string;
 
+  canonical_url?: string;
+
   /**
    * Mature visibility flag
    */
@@ -655,6 +657,26 @@ export default class ActivityModel extends BaseModel {
   setCollapsed(on = true) {
     this._collapsed = on;
     this.__list?.updateEntity(this.guid, this);
+  }
+
+  /**
+   * returns external data such as mastodon handle and source
+   */
+  getExternalData() {
+    if (!this.source) {
+      return undefined;
+    }
+
+    const [handle, source] = this.ownerObj.username.split('@');
+
+    if (!handle || !source) {
+      return undefined;
+    }
+
+    return {
+      handle,
+      source,
+    };
   }
 }
 

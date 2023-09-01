@@ -294,6 +294,7 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               {
                 "flexDirection": "row",
+                "marginRight": 8,
               }
             }
           />
