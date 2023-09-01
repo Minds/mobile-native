@@ -13,18 +13,18 @@ import {
   HairlineRow,
   Icon,
   Screen,
-  ScreenHeader,
 } from '~/common/ui';
 import { showNotification } from '../../../../../AppMessages';
 import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { IS_IPAD } from '~/config/Config';
+// import { IS_IPAD } from '~/config/Config';
 import { BoostStoreType } from '../boost.store';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import MPressable from '~/common/components/MPressable';
 import ThemedStyles from '~/styles/ThemedStyles';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type AudienceSelectorScreenProps =
   BoostStackScreenProps<'BoostAudienceSelector'>;
@@ -37,9 +37,9 @@ function AudienceSelectorScreen({
   const { safe, backIcon } = route.params ?? ({} as Record<string, any>);
   const boostStore = useBoostStore();
 
-  const routes = navigation.getState()?.routes;
-  const showBackButton =
-    !IS_IPAD || routes[routes.length - 2]?.name === 'BoostGoal';
+  // const routes = navigation.getState()?.routes;
+  // const showBackButton =
+  //   !IS_IPAD || routes[routes.length - 2]?.name === 'BoostGoal';
 
   if (!boostStore.config) {
     showNotification('Boost config not found', 'danger');
@@ -53,7 +53,7 @@ function AudienceSelectorScreen({
 
   return (
     <Screen safe onlyTopEdge={!safe}>
-      <ScreenHeader
+      {/* <ScreenHeader
         title={
           boostStore.boostType === 'channel'
             ? t('Boost Channel')
@@ -62,7 +62,8 @@ function AudienceSelectorScreen({
         back={showBackButton}
         backIcon={backIcon}
         shadow
-      />
+      /> */}
+      <BoostComposerHeader backIcon={backIcon} />
       <FitScrollView>
         <Column align="centerBoth" bottom="XL2" top="XL">
           <H2>{t('Customize your audience')}</H2>

@@ -132,7 +132,7 @@ export default class BoostActionBar extends Component<PropsType> {
         <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => {
-              this.props.boost.revoke(this.context?.filter);
+              this.props.boost.revoke();
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>

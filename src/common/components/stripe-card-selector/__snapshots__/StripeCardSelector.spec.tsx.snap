@@ -1,687 +1,164 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StripeCardSelector should render correctly 1`] = `
-[
-  <View
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
-      }
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
     }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    [
       [
-        [
-          {
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          },
-          {
-            "alignItems": "center",
-          },
-          {
-            "backgroundColor": "#38393D",
-          },
-          {
-            "paddingVertical": 16,
-          },
-          {
-            "paddingHorizontal": 16,
-          },
-          {
-            "borderColor": "#53565A",
-          },
-          {
-            "borderLeftWidth": 0,
-          },
-          {
-            "borderRightWidth": 0,
-          },
-          {
-            "borderWidth": 0.5,
-          },
-          undefined,
-        ],
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+        {
+          "alignItems": "center",
+        },
         {
           "backgroundColor": "#38393D",
         },
-      ]
+        {
+          "paddingVertical": 16,
+        },
+        {
+          "paddingHorizontal": 16,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+        {
+          "borderLeftWidth": 0,
+        },
+        {
+          "borderRightWidth": 0,
+        },
+        {
+          "borderWidth": 0.5,
+        },
+        undefined,
+      ],
+      {
+        "backgroundColor": "#38393D",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "flexDirection": "column",
+      }
     }
   >
     <View
       style={
         {
+          "alignItems": "center",
           "flex": 1,
-          "flexDirection": "column",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
       }
     >
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
-        }
-      >
-        <Text
-          style={
-            [
-              {
-                "color": "#F2F2F2",
-              },
-              {
-                "fontFamily": "Roboto",
-              },
-              [
-                {
-                  "color": "#b9bbc0",
-                },
-                {
-                  "fontSize": 16,
-                },
-                undefined,
-              ],
-            ]
-          }
-        >
-          Payment Method
-        </Text>
-      </View>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "flex-end",
-          "flexDirection": "column",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <View
+      <Text
         style={
           [
             {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "height": 24,
-              "justifyContent": "center",
-              "overflow": "hidden",
-              "width": 24,
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto",
+            },
+            [
+              {
+                "color": "#b9bbc0",
+              },
+              {
+                "fontSize": 16,
+              },
+              undefined,
+            ],
+          ]
+        }
+      >
+        Payment Method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "flex-end",
+        "flexDirection": "column",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 24,
+            "justifyContent": "center",
+            "overflow": "hidden",
+            "width": 24,
+          },
+          {},
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#AEB0B8",
+              "fontSize": 24,
+            },
+            {},
+            {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
             },
             {},
           ]
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            [
-              {
-                "color": "#AEB0B8",
-                "fontSize": 24,
-              },
-              {},
-              {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              {},
-            ]
-          }
-        >
-          󰅀
-        </Text>
-      </View>
+        󰅀
+      </Text>
     </View>
-  </View>,
-  <Modal
-    backdropComponent={[Function]}
-    backgroundComponent={null}
-    contentHeight={null}
-    enablePanDownToClose={true}
-    handleComponent={[Function]}
-    handleHeight={null}
-    hardwareAccelerated={false}
-    onAnimate={[Function]}
-    snapPoints={null}
-    stackBehavior="push"
-    style={
-      [
-        {
-          "shadowColor": "#000000",
-        },
-        {
-          "elevation": 16,
-          "shadowOffset": {
-            "height": -3,
-            "width": 0,
-          },
-          "shadowOpacity": 0.58,
-          "shadowRadius": 4,
-        },
-      ]
-    }
-    topInset={0}
-    visible={true}
-  >
-    <View
-      onLayout={null}
-      style={
-        [
-          [
-            {
-              "backgroundColor": "#1C1D1F",
-            },
-          ],
-          {
-            "paddingBottom": 24,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          {
-            "alignSelf": "stretch",
-            "marginHorizontal": 16,
-            "marginTop": 16,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignSelf": "stretch",
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "backgroundColor": "transparent",
-                  "borderRadius": 100,
-                  "flexDirection": "column",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                {
-                  "backgroundColor": "transparent",
-                },
-                {
-                  "minHeight": 42,
-                  "paddingHorizontal": 24,
-                  "paddingVertical": 2,
-                },
-                undefined,
-                undefined,
-                undefined,
-                false,
-              ]
-            }
-          >
-            <View
-              style={
-                {
-                  "alignItems": "center",
-                  "borderColor": "#FFD048",
-                  "borderRadius": 100,
-                  "borderWidth": 1,
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.05)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <Text
-                numberOfLines={1}
-                style={
-                  [
-                    {
-                      "color": "#F2F2F2",
-                    },
-                    {
-                      "fontFamily": "Roboto-Medium",
-                    },
-                    {
-                      "fontSize": 18,
-                      "lineHeight": 24,
-                    },
-                    {
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                Add card
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          {
-            "alignSelf": "stretch",
-            "marginHorizontal": 16,
-            "marginTop": 16,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignSelf": "stretch",
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "backgroundColor": "transparent",
-                  "borderRadius": 100,
-                  "flexDirection": "column",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                undefined,
-                {
-                  "minHeight": 42,
-                  "paddingHorizontal": 24,
-                  "paddingVertical": 2,
-                },
-                undefined,
-                undefined,
-                undefined,
-                false,
-              ]
-            }
-          >
-            <View
-              style={
-                {
-                  "alignItems": "center",
-                  "backgroundColor": "#3f4b56",
-                  "borderColor": "transparent",
-                  "borderRadius": 100,
-                  "borderWidth": 1,
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.1)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <Text
-                numberOfLines={1}
-                style={
-                  [
-                    {
-                      "color": "#FFFFFF",
-                    },
-                    {
-                      "fontFamily": "Roboto-Medium",
-                    },
-                    {
-                      "fontSize": 18,
-                      "lineHeight": 24,
-                    },
-                    {
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                Cancel
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </Modal>,
-  <Modal
-    backdropComponent={[Function]}
-    backgroundComponent={null}
-    contentHeight={null}
-    enablePanDownToClose={true}
-    handleComponent={[Function]}
-    handleHeight={null}
-    hardwareAccelerated={false}
-    onAnimate={[Function]}
-    snapPoints={null}
-    stackBehavior="push"
-    style={
-      [
-        {
-          "shadowColor": "#000000",
-        },
-        {
-          "elevation": 16,
-          "shadowOffset": {
-            "height": -3,
-            "width": 0,
-          },
-          "shadowOpacity": 0.58,
-          "shadowRadius": 4,
-        },
-      ]
-    }
-    topInset={0}
-    visible={true}
-  >
-    <View
-      onLayout={null}
-      style={
-        [
-          [
-            {
-              "backgroundColor": "#1C1D1F",
-            },
-          ],
-          {
-            "paddingBottom": 24,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginBottom": 20,
-          }
-        }
-      >
-        CardField
-      </View>
-      <View
-        style={
-          {
-            "alignSelf": "stretch",
-            "marginHorizontal": 16,
-            "marginTop": 16,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignSelf": "stretch",
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "backgroundColor": "transparent",
-                  "borderRadius": 100,
-                  "flexDirection": "column",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                undefined,
-                {
-                  "minHeight": 42,
-                  "paddingHorizontal": 24,
-                  "paddingVertical": 2,
-                },
-                undefined,
-                undefined,
-                undefined,
-                false,
-              ]
-            }
-          >
-            <View
-              style={
-                {
-                  "alignItems": "center",
-                  "backgroundColor": "#3f4b56",
-                  "borderColor": "transparent",
-                  "borderRadius": 100,
-                  "borderWidth": 1,
-                  "bottom": 0,
-                  "justifyContent": "center",
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.1)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
-            <View
-              collapsable={false}
-              style={
-                {
-                  "transform": [
-                    {
-                      "scale": 1,
-                    },
-                  ],
-                }
-              }
-            >
-              <Text
-                numberOfLines={1}
-                style={
-                  [
-                    {
-                      "color": "#FFFFFF",
-                    },
-                    {
-                      "fontFamily": "Roboto-Medium",
-                    },
-                    {
-                      "fontSize": 18,
-                      "lineHeight": 24,
-                    },
-                    {
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                Cancel
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </Modal>,
-]
+  </View>
+</View>
 `;

@@ -162,6 +162,14 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
+  if (IS_IPAD) {
+    secondSection.push({
+      title: i18n.t('settings.accounts'),
+      screen: 'Switch',
+      params: {},
+    });
+  }
+
   secondSection.push({
     title: i18n.t('settings.logout'),
     onPress: () => AuthService.logout(),

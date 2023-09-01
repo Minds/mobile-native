@@ -1,5 +1,5 @@
 import { useLayout } from '@react-native-community/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -10,6 +10,7 @@ import type BaseModel from '../BaseModel';
 import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
 import { StyleSheet, View } from 'react-native';
 import { FeedListProps, FeedListV2 } from './FeedListV2';
+import { FlashList } from '@shopify/flash-list';
 
 /**
  * Animated header
@@ -67,6 +68,32 @@ function FeedListSticky<T extends BaseModel>(
    * headerHeight - set by the header layout
    */
   const [headerHeight, setHeaderHeight] = useState(0);
+
+  const childRef = useRef<FlashList<T>>(null);
+
+  useImperativeHandle(ref, () => ({
+    getScrollPosition: () => {
+      return translationY.value;
+    },
+    prepareForLayoutAnimationRender: () => {
+      childRef.current?.prepareForLayoutAnimationRender();
+    },
+    recordInteraction: () => {
+      childRef.current?.recordInteraction();
+    },
+    scrollToEnd: params => {
+      childRef.current?.scrollToEnd(params);
+    },
+    scrollToIndex: params => {
+      childRef.current?.scrollToIndex(params);
+    },
+    scrollToItem: params => {
+      childRef.current?.scrollToItem(params);
+    },
+    scrollToOffset: params => {
+      childRef.current?.scrollToOffset(params);
+    },
+  }));
 
   /**
    * Scroll handler
@@ -127,8 +154,8 @@ function FeedListSticky<T extends BaseModel>(
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <View style={styles.container}>
         <AnimatedFeedListV2
-          ref={ref}
           {...otherProps}
+          ref={childRef}
           scrollEventThrottle={16}
           onScroll={scrollHandler}
           contentContainerStyle={contentStyle}
@@ -149,4 +176,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.forwardRef(FeedListSticky);
+const FeedListStickyForwarded = React.forwardRef(FeedListSticky) as <
+  T extends BaseModel,
+>(
+  props: FeedListStickyProps<T> & {
+    ref?: React.Ref<FeedListStickyHandle>;
+  },
+) => ReturnType<typeof FeedListSticky>;
+
+export type FeedListStickyType = typeof FeedListStickyForwarded;
+
+export default FeedListStickyForwarded;
+
+export type FeedListStickyHandle = {
+  getScrollPosition: () => number;
+  prepareForLayoutAnimationRender: () => void;
+  recordInteraction: () => void;
+  scrollToEnd: (params?: any) => void;
+  scrollToIndex: (params: any) => void;
+  scrollToItem: (params: any) => void;
+  scrollToOffset: (params: any) => void;
+};

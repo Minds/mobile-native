@@ -7,30 +7,27 @@ import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import {
-  B1,
-  B2,
-  Button,
-  Column,
-  H2,
-  HairlineRow,
-  Screen,
-  ScreenHeader,
-} from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { useBoostStore } from '../boost.store';
+import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import NavigationService from '../../../../navigation/NavigationService';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '../../../../config/Config';
+import { InteractionManager } from 'react-native';
+import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import { IS_IOS } from '~/config/Config';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const boostStore = useBoostStore();
 
   const { name, balance, creditPaymentMethod, hasCredits } = useCredits(
@@ -62,14 +59,34 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       total: t('{{total}} tokens', { total: boostStore.total }),
     },
   };
-  const title =
-    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
+
+  const titleMap: Record<BoostType, string> = {
+    channel: t('Boost Channel'),
+    post: t('Boost Post'),
+    group: t('Boost Group'),
+  };
+
+  const title = titleMap[boostStore.boostType];
 
   const handleCreate = () => {
     return boostStore.createBoost(creditPaymentMethod)?.then(() => {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
+
+      // only show the boost upgrade modal for users that arent plus or pro
+      if (user?.pro || user?.plus) {
+        return;
+      }
+
+      if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
+        InteractionManager.runAfterInteractions(() => {
+          setTimeout(() => {
+            NavigationService.push('BoostUpgrade');
+            // the same time as the toast dismisses
+          }, 2800);
+        });
+      }
     });
   };
 
@@ -86,7 +103,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={title} back shadow />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>

@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
   TabType,
@@ -93,6 +93,15 @@ function SupermindConsoleScreen({
 
     inFeedNoticesService.load();
   }, [feedStore]);
+
+  const switchToAllIfPendingEmpty = useCallback(
+    data => {
+      if (data.length === 0 && filter === 'pending') {
+        setFilter('all');
+      }
+    },
+    [filter],
+  );
 
   const scrollToTopAndRefresh = () => {
     listRef.current?.scrollToOffset({ offset: 0 });
@@ -210,6 +219,7 @@ function SupermindConsoleScreen({
               : renderSupermindOutbound
           }
           endpointData=""
+          onListUpdate={switchToAllIfPendingEmpty}
           onScroll={scrollHandler}
         />
       )}

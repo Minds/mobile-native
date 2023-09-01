@@ -1,5 +1,4 @@
 import { observable } from 'mobx';
-import { hasVariation } from '../../../../ExperimentsProvider';
 import UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -69,9 +68,7 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.gift_card_recipient_notified:
         return '';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
+        return '';
     }
 
     return this.entity?.owner_guid === sessionService.getUser().guid ||
@@ -96,10 +93,8 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.boost_peer_rejected:
         return 'boost offer';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
-        return 'boost';
+        return '';
+
       case NotificationType.supermind_created:
       case NotificationType.supermind_declined:
       case NotificationType.supermind_accepted:
@@ -123,10 +118,7 @@ export default class NotificationModel extends AbstractModel {
     let type: NotificationType | 'reply' | 'boost_rejected_v2' =
       this.data && this.data.is_reply ? 'reply' : this.type;
 
-    if (
-      type === NotificationType.boost_rejected &&
-      hasVariation('mob-4638-boost-v3')
-    ) {
+    if (type === NotificationType.boost_rejected) {
       type = 'boost_rejected_v2';
     }
     return i18n.t(`notification.verbs.${type}`, {
@@ -143,9 +135,7 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.boost_completed:
         return '';
       case NotificationType.boost_rejected:
-        if (hasVariation('mob-4638-boost-v3')) {
-          return '';
-        }
+        return '';
     }
 
     return this.from?.name;

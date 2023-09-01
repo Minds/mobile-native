@@ -54,6 +54,7 @@ import FriendlyCaptchaProvider, {
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
+import { ConfigProvider } from '~/modules/livepeer';
 
 appInitManager.initializeServices();
 
@@ -199,9 +200,11 @@ class App extends Component<Props> {
                                 <ErrorBoundary
                                   message="An error occurred"
                                   containerStyle={ThemedStyles.style.centered}>
-                                  <NavigationStack
-                                    key={ThemedStyles.theme + i18n.locale}
-                                  />
+                                  <ConfigProvider>
+                                    <NavigationStack
+                                      key={ThemedStyles.theme + i18n.locale}
+                                    />
+                                  </ConfigProvider>
                                 </ErrorBoundary>
                               </BottomSheetModalProvider>
                             </PortalProvider>

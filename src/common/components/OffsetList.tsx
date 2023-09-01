@@ -131,7 +131,9 @@ export default observer(
 
     // =====================| EFFECTS |=====================>
     useEffect(() => {
-      props.onListUpdate?.(data);
+      if (!fetchStore.loading) {
+        props.onListUpdate?.(data);
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
@@ -259,7 +261,7 @@ export default observer(
       );
     }
 
-    return <List {...listProps} />;
+    return <List {...listProps} ListHeaderComponent={props.header} />;
   }),
 );
 

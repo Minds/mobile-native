@@ -5,15 +5,13 @@ import { FlatList, View } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { H4, IconButton, Screen, ScreenHeader } from '~ui';
-import { hasVariation } from '../../../../../ExperimentsProvider';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
-import Boost from '../components/Boost';
-import BoostTabBar from '../components/BoostTabBar';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 import { IS_IPAD } from '~/config/Config';
+import BoostFeed from '../components/v3/BoostFeed';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 interface BoostConsoleScreenProps {
@@ -69,12 +67,7 @@ function BoostConsoleScreen({
    * Render row
    */
   const renderBoost = row => {
-    const boost = row.item;
-    if (hasVariation('mob-4638-boost-v3')) {
-      return <BoostV3 boost={boost} />;
-    }
-
-    return <Boost boost={boost} navigation={navigation} />;
+    return <BoostV3 boost={row.item} />;
   };
 
   if (boostConsoleStore.loading) {
@@ -92,12 +85,6 @@ function BoostConsoleScreen({
       </View>
     );
   }
-
-  const tabs = (
-    <View>
-      {hasVariation('mob-4638-boost-v3') ? <BoostTabBarV3 /> : <BoostTabBar />}
-    </View>
-  );
 
   return (
     <BoostConsoleStoreContext.Provider value={boostConsoleStore}>
@@ -119,18 +106,22 @@ function BoostConsoleScreen({
             />
           }
         />
-        <FlatList
-          ListHeaderComponent={tabs}
-          ListEmptyComponent={empty}
-          data={boostConsoleStore.list.entities.slice()}
-          renderItem={renderBoost}
-          keyExtractor={item => item.rowKey}
-          onRefresh={refresh}
-          refreshing={boostConsoleStore.list.refreshing}
-          onEndReached={loadFeed}
-          onEndReachedThreshold={0}
-          style={styles.list}
-        />
+        {boostConsoleStore.filter !== 'explore' ? (
+          <FlatList
+            ListHeaderComponent={<BoostTabBarV3 />}
+            ListEmptyComponent={empty}
+            data={boostConsoleStore.list.entities.slice()}
+            renderItem={renderBoost}
+            keyExtractor={item => item.rowKey}
+            onRefresh={refresh}
+            refreshing={boostConsoleStore.list.refreshing}
+            onEndReached={loadFeed}
+            onEndReachedThreshold={0}
+            style={styles.list}
+          />
+        ) : (
+          <BoostFeed ListHeaderComponent={<BoostTabBarV3 />} />
+        )}
         <OnboardingOverlay type="boost" />
       </Screen>
     </BoostConsoleStoreContext.Provider>
@@ -140,6 +131,6 @@ function BoostConsoleScreen({
 export default observer(BoostConsoleScreen);
 
 const styles = ThemedStyles.create({
-  list: ['bgPrimaryBackground', 'flexContainer', 'marginTop3x'],
+  list: ['bgPrimaryBackground', 'flexContainer'],
   emptyContent: ['alignCenter', 'marginTop12x'],
 });
