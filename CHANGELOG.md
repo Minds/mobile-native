@@ -2,7 +2,25 @@
 
 Minds Mobile
 
-## v4.39.0 (2023-08-14)
+## 4.39.1 (2023-09-01)
+
+### Features ✨ (2 changes)
+
+- [Added boosting group functionality](minds/mobile-native!2414)
+- [Added Minds+ / Pro promo after Boost checkout](minds/mobile-native!2410)
+
+### Fixed 🐛 (4 changes)
+
+- [Fixed bottom sheet inconsistency in card selector](minds/mobile-native!2437)
+- [Fixed upload image issue on Android 13](minds/mobile-native!2433)
+- [Fix can't find server error on inactivity](minds/mobile-native!2432)
+- [Fixed channel suggestion in comments not being showed completely](minds/mobile-native!2404)
+
+### Changed 🔧 (1 change)
+
+- [Changed supermind feed to show all superminds when no pending were available](minds/mobile-native!2418)
+
+## 4.39.0 (2023-08-14)
 
 ### Features ✨ (8 changes)
 
@@ -1005,4 +1023,3 @@ No changes.
 
 - Two-Factor Auth
 - Bug fixing
-

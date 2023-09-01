@@ -218,20 +218,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       });
     }
 
-    // Permaweb
-    if (entity.permaweb_id) {
-      options.push({
-        title: i18n.t('permaweb.viewOnPermaweb'),
-        iconName: 'format-paragraph',
-        iconType: 'material-community',
-        onPress: () => {
-          Linking.openURL(
-            'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
-          );
-        },
-      });
-    }
-
     if (!entity.isOwner()) {
       // Report
       options.push({

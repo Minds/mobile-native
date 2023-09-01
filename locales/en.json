@@ -395,6 +395,7 @@
     "boostCashViews": "{{amount}} USD = {{views}} views",
     "boostTokenViews": "{{amount}} token = {{views}} views",
     "boostedChannel": "Boosted Channel",
+    "boostedGroup": "Boosted Group",
     "boostChangingTitle": "Boost is changing",
     "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
     "boostChangingLink": "Read more about the update."
@@ -801,6 +802,9 @@
           },
           "6": {
             "label": "Trafficking"
+          },
+          "7": {
+            "label": "Animal abuse"
           }
         }
       },
@@ -1803,14 +1807,6 @@
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
   "yesterday": "Yesterday",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Help",
   "unblock": "Unblock",
   "earnScreen": {
@@ -1861,6 +1857,7 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "recommendedForYou": "Recommended for you",
   "recommendedGroups": "Recommended Groups",
   "expires": "Expires",
   "requirements": "Requirements",
@@ -1950,7 +1947,8 @@
   },
   "group": {
     "search": "Search Group",
-    "share": "Share Group"
+    "share": "Share Group",
+    "boost": "Boost Group"
   },
   "back": "Back",
   "explore": "Explore",

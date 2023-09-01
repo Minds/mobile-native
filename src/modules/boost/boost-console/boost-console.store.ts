@@ -2,10 +2,8 @@ import { action, observable } from 'mobx';
 import { isAbort, isNetworkError } from '~/common/services/api.service';
 import logService from '~/common/services/log.service';
 import OffsetListStore from '~/common/stores/OffsetListStore';
-import { hasVariation } from '../../../../ExperimentsProvider';
-import BoostModel from '../models/BoostModel';
 import BoostModelV3 from '../models/BoostModelV3';
-import { getBoosts, getBoostsV3 } from './boost-console.api';
+import { getBoostsV3 } from './boost-console.api';
 import { BoostStatus } from './types/BoostConsoleBoost';
 
 /**
@@ -20,7 +18,7 @@ class BoostConsoleStore {
   /**
    * Boosts list filter
    */
-  @observable filter: 'feed' | 'sidebar' = 'feed';
+  @observable filter: 'feed' | 'sidebar' | 'explore' = 'feed';
   @observable peer_filter = 'inbox';
   @observable feedFilter: 'all' | BoostStatus = 'all';
 
@@ -42,19 +40,15 @@ class BoostConsoleStore {
       // @ts-ignore
       const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
       let feed: any = null; // TODO: any
-      if (hasVariation('mob-4638-boost-v3')) {
-        feed = await getBoostsV3(
-          this.list.offset,
-          this.filter,
-          this.feedFilter === 'all' ? undefined : this.feedFilter,
-        );
-        this.assignRowKeys(feed);
-        feed.entities = BoostModelV3.createMany(feed.entities);
-      } else {
-        feed = await getBoosts(this.list.offset, this.filter, peer_filter);
-        this.assignRowKeys(feed);
-        feed.entities = BoostModel.createMany(feed.entities);
-      }
+
+      feed = await getBoostsV3(
+        this.list.offset,
+        this.filter,
+        this.feedFilter === 'all' ? undefined : this.feedFilter,
+      );
+      this.assignRowKeys(feed);
+      feed.entities = BoostModelV3.createMany(feed.entities);
+
       this.list.setList(feed, refresh);
     } catch (err) {
       // ignore aborts

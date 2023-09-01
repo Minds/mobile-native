@@ -462,6 +462,11 @@ export default class FeedsService {
         throw err;
       }
 
+      // TODO: remove this after fixed https://github.com/react-native-netinfo/react-native-netinfo/issues/669
+      if (connectivityService.isConnected) {
+        return;
+      }
+
       showNotification(
         connectivityService.isConnected
           ? i18n.t('cantReachServer')

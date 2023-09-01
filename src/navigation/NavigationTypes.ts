@@ -216,6 +216,7 @@ export type RootStackParamList = {
   StoryBook: {};
   CodePushSync: {};
   Report: {};
+  BoostUpgrade: undefined;
 };
 
 export type AuthStackParamList = {
@@ -275,7 +276,6 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
-  PermawebSelector: {};
   AccessSelector: {
     store: ComposeStoreType;
   };

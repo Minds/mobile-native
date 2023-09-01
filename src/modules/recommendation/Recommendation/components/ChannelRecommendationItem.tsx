@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { FC, useCallback } from 'react';
+import * as entities from 'entities';
+
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
-import MPressable from '~/common/components/MPressable';
+import MenuItem from '~/common/components/menus/MenuItem';
 import i18n from '~/common/services/i18n.service';
-import { Avatar, B1, B2, Column, Icon, Row } from '~/common/ui';
+import { B2, Icon, Row } from '~/common/ui';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
@@ -17,7 +19,10 @@ const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
   onSubscribed,
   disableNavigation,
 }) => {
-  const avatar = channel.getAvatarSource?.('medium') ?? {};
+  const avatar =
+    channel && channel.getAvatarSource
+      ? channel.getAvatarSource('medium')
+      : undefined;
   const navigation = useNavigation<any>();
   const onPress = useCallback(
     () =>
@@ -32,26 +37,27 @@ const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
   const description = channel.briefdescription?.trim?.() ?? '';
 
   return (
-    <MPressable onPress={onPress}>
-      <Row vertical="S" horizontal="L">
-        <Avatar size="tiny" right="M" top="XS" source={avatar} />
-        <Column flex align="centerStart" right="L">
-          <B1 font="bold">{channel.name}</B1>
-          {Boolean(description) && (
-            <B2 numberOfLines={2} color="secondary">
-              {description}
-            </B2>
-          )}
-          {!!channel.boosted && <BoostedChannelLabel />}
-        </Column>
+    <MenuItem
+      alignTop
+      avatar={avatar}
+      title={channel.name}
+      onPress={onPress}
+      icon={
         <Subscribe
           mini
           shouldUpdateFeed={false}
           channel={channel}
           onSubscribed={onSubscribed}
         />
-      </Row>
-    </MPressable>
+      }
+      borderless>
+      <>
+        <B2 numberOfLines={2} color="secondary" top="XS" right="XL">
+          {entities.decodeHTML(description)}
+        </B2>
+        {Boolean(channel.boosted) && <BoostedChannelLabel />}
+      </>
+    </MenuItem>
   );
 };
 

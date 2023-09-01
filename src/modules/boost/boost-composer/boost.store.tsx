@@ -1,6 +1,5 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
-import type { BoostType } from '~/boost/legacy/createBoostStore';
 import UserModel from '~/channel/UserModel';
 import apiService from '~/common/services/api.service';
 import mindsConfigService from '~/common/services/minds-config.service';
@@ -15,6 +14,8 @@ import {
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
+
+export type BoostType = 'post' | 'channel' | 'group';
 
 type BoostStoreParams = {
   boostType: BoostType;
@@ -114,7 +115,7 @@ export const createBoostStore = ({
     const payload: CreateBoostParams = {
       entity_guid: this.entity.guid,
       target_suitability: this.audience === 'safe' ? 1 : 2,
-      target_location: boostType === 'post' ? 1 : 2,
+      target_location: ['channel', 'group'].includes(boostType) ? 2 : 1,
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
         this.paymentType === 'cash'

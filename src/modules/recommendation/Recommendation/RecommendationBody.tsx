@@ -5,7 +5,6 @@ import UserModel from '~/channel/UserModel';
 import { Spacer } from '~/common/ui';
 import GroupsListItem from '~/groups/GroupsListItem';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { hasVariation } from '../../../../ExperimentsProvider';
 import useRecommendationContext from './Recommendation.context';
 import ChannelRecommendationItem from './components/ChannelRecommendationItem';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
@@ -33,7 +32,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
   type,
   location,
   visible = true,
-  size = hasVariation('mob-4638-boost-v3') ? 4 : 3,
+  size = 4,
 }) => {
   const [listSize, setListSize] = useState(size);
   const recommendation = useRecommendationContext();
@@ -101,7 +100,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
               .map(suggestion => (
                 <ChannelRecommendationItem
                   key={suggestion.entity.guid}
-                  channel={suggestion.entity}
+                  channel={suggestion.entity as UserModel}
                   onSubscribed={onSubscribed}
                 />
               ))

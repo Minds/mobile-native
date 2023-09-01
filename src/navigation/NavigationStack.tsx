@@ -75,7 +75,7 @@ const AppStack = observer(() => {
     <>
       <StatusBar
         barStyle={statusBarStyle}
-        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
@@ -577,6 +577,14 @@ const RootStack = observer(function () {
             <RootStackNav.Screen
               name="Report"
               getComponent={() => require('~/report/ReportScreen').default}
+            />
+            <RootStackNav.Screen
+              name="BoostUpgrade"
+              getComponent={() => require('~/modules/boost').BoostUpgrade}
+              options={{
+                ...defaultScreenOptions,
+                headerShown: false,
+              }}
             />
           </>
         )

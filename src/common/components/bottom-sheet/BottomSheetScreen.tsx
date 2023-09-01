@@ -14,6 +14,7 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Handle from '../bottom-sheet/Handle';
 import MText from '../MText';
+import { observer } from 'mobx-react';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -40,10 +41,7 @@ export interface BottomSheetScreenProps {
   };
 }
 
-export default function BottomSheetScreen({
-  route,
-  navigation,
-}: BottomSheetScreenProps) {
+function BottomSheetScreen({ route, navigation }: BottomSheetScreenProps) {
   const { component, snapPoints, title, safe, ...props } = route.params;
 
   const handleClose = useCallback(() => {
@@ -93,6 +91,8 @@ export default function BottomSheetScreen({
   );
 }
 
+export default observer(BottomSheetScreen);
+
 const BottomSheetInnerContainer = ({
   component,
   handleContentLayout,
@@ -123,31 +123,33 @@ const BottomSheetInnerContainer = ({
   );
 };
 
-const BottomSheetInnerContainerSafe = ({
-  component,
-  handleContentLayout,
-}: Pick<BottomSheetScreenParams, 'component'> | any) => {
-  const bottomSheet = useBottomSheet();
+const BottomSheetInnerContainerSafe = observer(
+  ({
+    component,
+    handleContentLayout,
+  }: Pick<BottomSheetScreenParams, 'component'> | any) => {
+    const bottomSheet = useBottomSheet();
 
-  const close = () => {
-    return new Promise(resolve => {
-      bottomSheet.close();
-      setTimeout(() => {
-        NavigationService.goBack();
-        resolve(true);
-      }, 100);
-    });
-  };
+    const close = () => {
+      return new Promise(resolve => {
+        bottomSheet.close();
+        setTimeout(() => {
+          NavigationService.goBack();
+          resolve(true);
+        }, 100);
+      });
+    };
 
-  return (
-    <SafeAreaView
-      edges={['bottom']}
-      style={styles.container}
-      onLayout={handleContentLayout}>
-      {component({ ...bottomSheet, close }, handleContentLayout)}
-    </SafeAreaView>
-  );
-};
+    return (
+      <SafeAreaView
+        edges={['bottom']}
+        style={styles.container}
+        onLayout={handleContentLayout}>
+        {component({ ...bottomSheet, close }, handleContentLayout)}
+      </SafeAreaView>
+    );
+  },
+);
 
 export const pushBottomSheet = (params: BottomSheetScreenParams) => {
   Keyboard.dismiss();
