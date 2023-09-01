@@ -68,7 +68,7 @@ const GroupsListScreen = observer(() => {
             <GroupMemberships />
 
             <H4 horizontal="L" vertical="L">
-              Groups youve joined
+              {i18n.t('groups.joined')}
             </H4>
           </>
         }

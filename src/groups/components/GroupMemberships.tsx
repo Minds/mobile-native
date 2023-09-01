@@ -49,7 +49,7 @@ function useGroupMemberships() {
   });
 
   return {
-    memberships: result?.groups,
+    memberships: result?.groups?.slice(0, 3),
     ...rest,
   };
 }
