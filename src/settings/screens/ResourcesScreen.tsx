@@ -24,7 +24,7 @@ const items = [
       },
       {
         id: 'blog',
-        onPress: () => Linking.openURL('https:/mobile.minds.com/minds/blogs'),
+        onPress: () => Linking.openURL('https://mobile.minds.com/minds/blogs'),
       },
       {
         id: 'whitepaper',
@@ -36,7 +36,7 @@ const items = [
       {
         id: 'rights',
         onPress: () =>
-          Linking.openURL('https:/mobile.minds.com/p/billofrights'),
+          Linking.openURL('https://mobile.minds.com/p/billofrights'),
       },
       {
         id: 'events',
@@ -74,7 +74,7 @@ const items = [
       },
       {
         id: 'contact',
-        onPress: () => Linking.openURL('https:/mobile.minds.com/p/contact'),
+        onPress: () => Linking.openURL('https://mobile.minds.com/p/contact'),
       },
       {
         id: 'community',
@@ -105,16 +105,16 @@ const items = [
         id: 'token',
         onPress: () => Linking.openURL('https://mobile.minds.com/token'),
       },
-      {
-        id: 'plus',
-        onPress: () => Linking.openURL('https://mobile.minds.com/plus'),
-        show: false,
-      },
-      {
-        id: 'pro',
-        onPress: () => Linking.openURL('https://mobile.minds.com/pro'),
-        show: false,
-      },
+      // {
+      //   id: 'plus',
+      //   onPress: () => Linking.openURL('https://mobile.minds.com/plus'),
+      //   show: false,
+      // },
+      // {
+      //   id: 'pro',
+      //   onPress: () => Linking.openURL('https://mobile.minds.com/pro'),
+      //   show: false,
+      // },
       {
         id: 'pay',
         onPress: () => Linking.openURL('https://mobile.minds.com/pay'),
