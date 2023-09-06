@@ -1,6 +1,6 @@
 import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import Pinchable from 'react-native-pinchable';
 
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
@@ -136,9 +136,10 @@ export default function MediaViewImage({
     ? { blurhash: blur, width: 9, height: 9 }
     : thumbnail;
 
+  // Wrapped in a pressable to avoid the press event after zooming on android (Pinchable bug)
   return (
-    <View pointerEvents="box-none">
-      <Pinchable>
+    <Pressable>
+      <Pinchable key={entity.guid}>
         <DoubleTapTouchable
           onPress={onImagePress}
           onLongPress={onImageLongPress}
@@ -158,7 +159,7 @@ export default function MediaViewImage({
           />
         </DoubleTapTouchable>
       </Pinchable>
-    </View>
+    </Pressable>
   );
 }
 
