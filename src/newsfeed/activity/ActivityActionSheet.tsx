@@ -6,6 +6,7 @@ import {
   withSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
 import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
@@ -29,6 +30,8 @@ import logService from '~/common/services/log.service';
 import { isApiError } from '../../common/services/api.service';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
+import ThemedStyles from '../../styles/ThemedStyles';
+import openUrlService from '../../common/services/open-url.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -87,8 +90,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   getOptions() {
     const options: Array<{
-      iconName: string;
-      iconType: string;
+      iconName?: string;
+      iconType?: string;
+      icon?: JSX.Element;
       title: string;
       testID?: string;
       onPress: () => Promise<void> | void;
@@ -116,6 +120,22 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
             showNotification(i18n.t('errorMessage'), 'warning');
           }
         },
+      });
+    }
+
+    const externalData = entity.getExternalData();
+    if (entity.canonical_url && externalData) {
+      options.push({
+        title: i18n.t('viewOnExternal', { external: externalData.source }),
+        icon: (
+          <Icon
+            size={24}
+            name="captivePortal"
+            color={ThemedStyles.getColor('Icon')}
+          />
+        ),
+        onPress: () =>
+          openUrlService.openLinkInInAppBrowser(entity.canonical_url),
       });
     }
 

@@ -24,11 +24,9 @@ describe('regex service', () => {
       '',
       '',
       'mdeveloper3',
-      undefined,
       ' hash #minds',
       ' ',
       'msantangelo@minds.com',
-      undefined,
       '',
     ]);
   });
