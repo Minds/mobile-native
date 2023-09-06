@@ -27,7 +27,7 @@ interface HelpResponse extends ApiResponse {
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
-const navigateToHelp = async () => {
+export const navigateToHelp = async () => {
   try {
     const response = await apiService.get<HelpResponse>(
       'api/v3/helpdesk/zendesk',

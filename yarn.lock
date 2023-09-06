@@ -17135,6 +17135,11 @@ react-native-photo-editor@^1.0.13:
   resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.13.tgz#292d2f1a87bb3fb9b75000683f05664f360bdf6b"
   integrity sha512-SWrnatVC4H73cEN+6rVlc0M5cGS20K6EwL8u2CmlBlLNEwH6OfayMgOCwpKJdmN2GPZKJ2JraQru8Ga7JL4zaw==
 
+react-native-pinchable@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-pinchable/-/react-native-pinchable-0.2.1.tgz#93cf6ce78f65cef2f1364187320e363170d2e212"
+  integrity sha512-LRSLCrizUX/XtYwwBxyuYL4xDLUhyPbBvD/tUpzns0PX2Zs0pR0fd/LsFm/n6tEigCLL/0KlDrOVhOdW3wtz+Q==
+
 react-native-popable@^0.4.2:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/react-native-popable/-/react-native-popable-0.4.3.tgz#6e08678d5768f1d2b4a0dd60604d6f7fdef31fde"
