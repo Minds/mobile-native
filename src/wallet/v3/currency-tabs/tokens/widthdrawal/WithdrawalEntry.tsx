@@ -10,7 +10,7 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
 import i18n from '../../../../../common/services/i18n.service';
 import MText from '~/common/components/MText';
-// import openUrlService from '~/common/services/open-url.service';
+import openUrlService from '~/common/services/open-url.service';
 
 /**
  * Individual withdrawal row
@@ -24,12 +24,12 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
    * @param { string } address - address to truncate.
    * @returns { string } truncated address.
    */
-  // const truncateAddress = (address: string): string => {
-  //   if (!address) {
-  //     return '';
-  //   }
-  //   return address.substr(0, 3) + '...' + address.substr(-3);
-  // };
+  const truncateAddress = (address: string): string => {
+    if (!address) {
+      return '';
+    }
+    return address.substr(0, 3) + '...' + address.substr(-3);
+  };
 
   /**
    * Converts gwei values to whole tokens.
@@ -67,25 +67,25 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
    * @param { string } address - eth address
    * @returns { void }
    */
-  // const navigateToEtherscan = (address: string): void => {
-  //   openUrlService.open(`https://etherscan.com/tx/${address}`);
-  // };
+  const navigateToEtherscan = (address: string): void => {
+    openUrlService.open(`https://etherscan.com/tx/${address}`);
+  };
 
   /**
    * Component for the display of transaction addresses with a "launch button"
    * @param { { address: string } } object containing string eth address.
    * @returns { ReactElement }
    */
-  // const TransactionAddress = (props: { address: string }): ReactElement => {
-  //   return (
-  //     <TouchableOpacity
-  //       style={launchButtonContainerStyle}
-  //       onPress={() => navigateToEtherscan(props.address)}>
-  //       <MText>{truncateAddress(withdrawal.tx)}</MText>
-  //       <Icon name={'launch'} size={15} style={inlineIconStyle} />
-  //     </TouchableOpacity>
-  //   );
-  // };
+  const TransactionAddress = (props: { address: string }): ReactElement => {
+    return (
+      <TouchableOpacity
+        style={launchButtonContainerStyle}
+        onPress={() => navigateToEtherscan(props.address)}>
+        <MText>{truncateAddress(withdrawal.tx)}</MText>
+        <Icon name={'launch'} size={15} style={inlineIconStyle} />
+      </TouchableOpacity>
+    );
+  };
 
   /**
    * Component for internal tooltip text.
@@ -118,7 +118,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
   return (
     <View style={outerContainerStyle}>
       <View style={innerColumnStyle}>
-        {/* <TransactionAddress address={withdrawal.tx} /> */}
+        <TransactionAddress address={withdrawal.tx} />
         <MText style={theme.colorSecondaryText}>
           {i18n.date(withdrawal.timestamp * 1000, 'date')}
         </MText>
@@ -171,13 +171,13 @@ const innerColumnStyle = ThemedStyles.combine(
   'justifyCenter',
 );
 
-// const launchButtonContainerStyle = ThemedStyles.combine(
-//   'flexContainer',
-//   'fullWidth',
-//   'rowJustifyStart',
-//   'alignCenter',
-//   { flexWrap: 'nowrap' },
-// );
+const launchButtonContainerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'fullWidth',
+  'rowJustifyStart',
+  'alignCenter',
+  { flexWrap: 'nowrap' },
+);
 
 const tooltipViewStyle = ThemedStyles.combine(
   'flexContainer',

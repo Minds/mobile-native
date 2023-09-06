@@ -12,9 +12,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DismissKeyboard from '../../../../common/components/DismissKeyboard';
 import PhoneInput from 'react-native-phone-number-input';
 import MText from '../../../../common/components/MText';
-// import { B1 } from '../../../../common/ui';
-// import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
-// import openUrlService from '../../../../common/services/open-url.service';
+import { B1 } from '../../../../common/ui';
+import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
+import openUrlService from '../../../../common/services/open-url.service';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -147,7 +147,7 @@ const CashOnboarding = observer(
               selectTextOnFocus={true}
             />
           </View>
-          {/* <View>
+          <View>
             <MenuItemOption
               onPress={localStore.setStripeAgree}
               multiLine
@@ -177,7 +177,7 @@ const CashOnboarding = observer(
               selected={localStore.stripeAgree}
               mode="checkbox"
             />
-          </View> */}
+          </View>
         </DismissKeyboard>
       </KeyboardAwareScrollView>
     );
