@@ -1951,5 +1951,6 @@
   },
   "back": "Back",
   "explore": "Explore",
-  "restart": "Restart"
+  "restart": "Restart",
+  "viewOnExternal": "View on {{external}}"
 }

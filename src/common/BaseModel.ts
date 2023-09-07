@@ -30,6 +30,7 @@ export default class BaseModel extends AbstractModel {
   wire_totals?: {
     [name: string]: number;
   };
+  source?: string;
 
   // TODO remove this and fix model.listRef logic
   // listRef?: any;

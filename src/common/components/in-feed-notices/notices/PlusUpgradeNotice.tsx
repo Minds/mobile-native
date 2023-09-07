@@ -5,7 +5,7 @@ import React, { useCallback } from 'react';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import openUrlService from '~/common/services/open-url.service';
+// import openUrlService from '~/common/services/open-url.service';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
@@ -54,10 +54,10 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
       btnText={i18n.t('inFeedNotices.plusUpgrade.action')}
       iconName="queue"
       onPress={onPress}
-      btnSecondaryText={i18n.t('inFeedNotices.plusUpgrade.secondaryAction')}
-      onSecondaryPress={() =>
-        openUrlService.openLinkInInAppBrowser('https://minds.com/plus')
-      }
+      // btnSecondaryText={i18n.t('inFeedNotices.plusUpgrade.secondaryAction')}
+      // onSecondaryPress={() =>
+      //   openUrlService.openLinkInInAppBrowser('https://minds.com/plus')
+      // }
     />
   );
 }

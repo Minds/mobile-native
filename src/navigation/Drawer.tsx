@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavigationProp } from '@react-navigation/native';
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
@@ -19,36 +18,9 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
-import apiService, { isNetworkError } from '~/common/services/api.service';
-import { showNotification } from 'AppMessages';
 import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
-import { MoreStackParamList } from './NavigationTypes';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
-
-type Navigation = NavigationProp<MoreStackParamList, 'Drawer'>;
-
-/**
- * Retrieves the link & jwt for zendesk and navigate to it.
- */
-const navigateToHelp = async (navigation: Navigation) => {
-  try {
-    const response = await apiService.get<any>('api/v3/helpdesk/zendesk', {
-      returnUrl: 'true',
-    });
-    if (response && response.url) {
-      navigation.navigate('WebView', {
-        url: unescape(response.url),
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    if (isNetworkError(err)) {
-      showNotification(i18n.t('errorMessage'), 'warning');
-    } else {
-      showNotification(i18n.t('cantReachServer'), 'warning');
-    }
-  }
-};
+import { navigateToHelp } from '../settings/SettingsScreen';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -66,9 +38,7 @@ const getOptionsSmallList = navigation => {
     },
     {
       name: i18n.t('help'),
-      onPress: () => {
-        navigateToHelp(navigation);
-      },
+      onPress: navigateToHelp,
     },
   ];
 };
