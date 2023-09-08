@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { isAbort, isApiError, isNetworkError } from '../services/api.service';
-import { isTokenExpired } from '../services/session.service';
+import { isAbort, isApiError, isNetworkError } from '../services/ApiErrors';
+import { isTokenExpired } from '../services/TokenExpiredError';
 import { isUserError } from '../UserError';
 
 export default function shouldReportToSentry(error) {

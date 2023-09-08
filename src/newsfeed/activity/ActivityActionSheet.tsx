@@ -27,7 +27,7 @@ import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
 import SendIntentAndroid from 'react-native-send-intent';
 import logService from '~/common/services/log.service';
-import { isApiError } from '../../common/services/api.service';
+import { isApiError } from '~/common/services/ApiErrors';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import ThemedStyles from '../../styles/ThemedStyles';

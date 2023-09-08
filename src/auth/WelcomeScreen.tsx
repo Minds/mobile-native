@@ -1,9 +1,10 @@
+import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import MText from '~/common/components/MText';
 import { DEV_MODE } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';

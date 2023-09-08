@@ -1,7 +1,7 @@
 import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
-import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
+import * as Sentry from '@sentry/react-native';
 
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
@@ -21,9 +21,10 @@ import openUrlService from '~/common/services/open-url.service';
 import { updateGrowthBookAttributes } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
-import { codePushStore } from 'modules/codepush';
-import { InteractionManager } from 'react-native';
 import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
+import socketService from '~/common/services/socket.service';
+import blockListService from '~/common/services/block-list.service';
+import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 
 /**
  * App initialization manager
@@ -39,6 +40,15 @@ export class AppInitManager {
     // init push service
     pushService.init();
 
+    // init socket service
+    socketService.init();
+
+    // init block list service
+    blockListService.init();
+
+    // init in feed notices service
+    inFeedNoticesService.init();
+
     // On app login (runs if the user login or if it is already logged in)
     sessionService.onLogin(this.onLogin);
 
@@ -49,15 +59,15 @@ export class AppInitManager {
 
     storeRatingService.track('appSession');
 
-    if (!__DEV__) {
-      codePushStore.syncCodepush({
-        onDownload: () => {
-          InteractionManager.runAfterInteractions(() => {
-            RNBootSplash.hide({ fade: true });
-          });
-        },
-      });
-    }
+    // if (!__DEV__) {
+    //   codePushStore.syncCodepush({
+    //     onDownload: () => {
+    //       InteractionManager.runAfterInteractions(() => {
+    //         RNBootSplash.hide({ fade: true });
+    //       });
+    //     },
+    //   });
+    // }
 
     try {
       logService.info('[App] init session');
@@ -69,16 +79,18 @@ export class AppInitManager {
 
         logService.info('[App] there is no active session');
 
-        if (await codePushStore.checkForUpdates()) {
-          // the syncCodepush will remove the splash once the SyncScreen is pushed,
-          // but here we will hide the splash screen after a delay as a timeout if
-          // anything goes wrong.
-          setTimeout(() => {
-            RNBootSplash.hide({ fade: true });
-          }, 400);
-        } else {
-          RNBootSplash.hide({ fade: true });
-        }
+        // if (await codePushStore.checkForUpdates()) {
+        //   // the syncCodepush will remove the splash once the SyncScreen is pushed,
+        //   // but here we will hide the splash screen after a delay as a timeout if
+        //   // anything goes wrong.
+        //   setTimeout(() => {
+        //     RNBootSplash.hide({ fade: true });
+        //   }, 400);
+        // } else {
+        //   RNBootSplash.hide({ fade: true });
+        // }
+
+        RNBootSplash.hide({ fade: true });
       } else {
         logService.info('[App] session initialized');
       }

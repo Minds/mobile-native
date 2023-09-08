@@ -10,7 +10,6 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
-import TabsScreen from '../tabs/TabsScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 
@@ -26,7 +25,6 @@ import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 
-import withModalProvider from './withModalProvide';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
@@ -62,8 +60,6 @@ export const InternalStack = () => {
   );
 };
 
-const TabScreenWithModal = withModalProvider(TabsScreen);
-
 const AppStack = observer(() => {
   if (sessionService.switchingAccount) {
     return null;
@@ -80,7 +76,7 @@ const AppStack = observer(() => {
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Tabs"
-          component={TabScreenWithModal}
+          getComponent={() => require('~/tabs/TabsScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -302,16 +298,18 @@ const RootStack = observer(function () {
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
-        isStoryBookOn ? (
-          <RootStackNav.Screen
-            name="StoryBook"
-            getComponent={() => require('modules/storybook').default}
-            options={{
-              title: 'TAMAGUI',
-              ...TransitionPresets.RevealFromBottomAndroid,
-            }}
-          />
-        ) : shouldShowEmailVerification ? (
+        // uncomment to develop
+        // isStoryBookOn ? (
+        //   <RootStackNav.Screen
+        //     name="StoryBook"
+        //     getComponent={() => require('modules/storybook').default}
+        //     options={{
+        //       title: 'TAMAGUI',
+        //       ...TransitionPresets.RevealFromBottomAndroid,
+        //     }}
+        //   />
+        // ) :
+        shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}

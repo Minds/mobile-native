@@ -1,5 +1,6 @@
 //@ts-ignore
-import _ from 'lodash';
+import chunk from 'lodash/chunk';
+import flattenDeep from 'lodash/flattenDeep';
 
 import React, { PropsWithChildren, PureComponent } from 'react';
 
@@ -37,7 +38,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
 
     if (Array.isArray(tags)) {
       // workaround to prevent styling problems when there is many tags
-      const chunks = _.chunk(tags, 50);
+      const chunks = chunk(tags, 50);
 
       return chunks.map((data, i) => {
         return (
@@ -68,7 +69,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
     rtn = this.parseArrayOrString(rtn, this.parseUser);
 
     if (Array.isArray(rtn)) {
-      return _.flattenDeep(rtn);
+      return flattenDeep(rtn);
     }
 
     return rtn;

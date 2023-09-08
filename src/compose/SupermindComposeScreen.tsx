@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React, { useCallback, useReducer, useRef } from 'react';
@@ -185,7 +185,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
     };
 
     // if object wasn't dirty, just go back without saving
-    if (_.isEqual(supermindRequest, data)) {
+    if (isEqual(supermindRequest, data)) {
       NavigationService.goBack();
       return;
     }

@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { isAbort, isNetworkError } from '~/common/services/api.service';
+import { isAbort, isNetworkError } from '~/common/services/ApiErrors';
 import logService from '~/common/services/log.service';
 import OffsetListStore from '~/common/stores/OffsetListStore';
 import BoostModelV3 from '../models/BoostModelV3';

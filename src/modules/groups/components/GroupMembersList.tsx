@@ -3,7 +3,7 @@ import { FlashList, FlashListProps } from '@shopify/flash-list';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { truncate } from 'lodash';
+import truncate from 'lodash/truncate';
 
 import { FLAG_APPOINT_MODERATOR } from '~/common/Permissions';
 import GroupMemberListItem from '~/groups/GroupMemberListItem';

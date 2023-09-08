@@ -24,7 +24,6 @@ import PressableScale from '~/common/components/PressableScale';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
-import DiscoveryStack from '~/navigation/DiscoveryStack';
 import { IS_IOS } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
@@ -38,6 +37,7 @@ import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
 import CaptureFab from '~/capture/CaptureFab';
+import withModalProvider from '~/navigation/withModalProvide';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
@@ -234,7 +234,7 @@ const Tabs = observer(function ({ navigation }) {
         {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
         <Tab.Screen
           name="Discovery"
-          component={DiscoveryStack}
+          getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
         {showFAB ? (
@@ -359,3 +359,5 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
 });
 
 export default Tabs;
+
+export const withModal = withModalProvider(Tabs);

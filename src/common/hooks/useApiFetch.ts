@@ -2,7 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { IReactionDisposer, reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useCallback, useEffect } from 'react';
-import apiService, { isAbort } from '../services/api.service';
+import apiService from '../services/api.service';
+import { isAbort } from '../services/ApiErrors';
 import { storages } from '../services/storage/storages.service';
 
 const getCacheKey = (url: string, params: any) =>

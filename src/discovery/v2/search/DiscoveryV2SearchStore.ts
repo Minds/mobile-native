@@ -3,7 +3,6 @@ import debounce from 'lodash/debounce';
 import { storages } from '~/common/services/storage/storages.service';
 
 import FeedStore from '../../../common/stores/FeedStore';
-import type { DebouncedFunc } from 'lodash';
 
 export type DiscoveryV2SearchStoreAlgorithm =
   | 'top'
@@ -22,7 +21,7 @@ export default class DiscoveryV2SearchStore {
   @observable refreshing: boolean = false;
   @observable filter: string = 'all';
   @observable nsfw: Array<number> = [];
-  refresh: DebouncedFunc<() => Promise<void>>;
+  refresh: any;
 
   params = {
     period: 'relevant',

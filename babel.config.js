@@ -3,9 +3,13 @@ const path = require('path');
 process.env.TAMAGUI_TARGET = 'native';
 process.env.TAMAGUI_ENABLE_DYNAMIC_LOAD = 1;
 process.env.TAMAGUI_DISABLE_WARN_DYNAMIC_LOAD = 1;
-
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+  presets: [
+    [
+      'module:metro-react-native-babel-preset',
+      { disableImportExportTransform: true },
+    ],
+  ],
   plugins: [
     [
       '@babel/plugin-proposal-decorators',
