@@ -1529,15 +1529,5 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       />
     </View>
   </RCTScrollView>
-  <InteractionsBottomSheet
-    entity={{}}
-    keepOpen={false}
-    snapPoints={
-      [
-        "90%",
-      ]
-    }
-    withoutInsets={true}
-  />
 </View>
 `;

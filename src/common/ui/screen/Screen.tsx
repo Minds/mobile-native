@@ -28,7 +28,9 @@ export const Screen = ({
 
   if (scroll) {
     return (
-      <Renderer style={styles[background]}>
+      <Renderer
+        edges={onlyTopEdge ? ['top'] : edges}
+        style={styles[background]}>
         <FitScrollView style={ThemedStyles.style.flexContainer}>
           {children}
         </FitScrollView>

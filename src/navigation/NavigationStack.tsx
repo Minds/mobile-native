@@ -131,6 +131,14 @@ const AppStack = observer(() => {
           }
         />
         <AppStackNav.Screen
+          name="Interactions"
+          getComponent={() =>
+            require('~/common/components/interactions/InteractionsScreen')
+              .default
+          }
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
           name="DiscoverySearch"
           getComponent={() =>
             require('~/discovery/v2/search/DiscoverySearchScreen')

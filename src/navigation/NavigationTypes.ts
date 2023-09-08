@@ -20,6 +20,7 @@ import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindT
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ComposeScreenParams } from '../compose/ComposeScreen';
+import type { InteractionsScreenParams } from '../common/components/interactions/InteractionsScreen';
 
 type AnyType = any;
 
@@ -45,6 +46,8 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  Activity: AppStackParamList['Activity'];
+  Interactions: AppStackParamList['Interactions'];
   GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -229,6 +232,8 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Interactions: InteractionsScreenParams;
+  BottomSheet: BottomSheetScreenParams;
   GifCardClaim: {
     code: string;
   };

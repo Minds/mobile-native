@@ -122,6 +122,13 @@ export default function () {
         }
       />
       <MoreStack.Screen
+        name="Interactions"
+        getComponent={() =>
+          require('~/common/components/interactions/InteractionsScreen').default
+        }
+        options={hideHeader}
+      />
+      <MoreStack.Screen
         name="PlusDiscoveryScreen"
         getComponent={() =>
           require('~/discovery/v2/PlusDiscoveryScreen').default
@@ -399,6 +406,12 @@ export default function () {
           require('~/modules/groups/screens/GroupScreen').GroupScreen
         }
         options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="Activity"
+        getComponent={() => require('~/newsfeed/ActivityScreen').default}
+        options={hideHeader}
+        initialParams={{ noBottomInset: true }}
       />
     </MoreStack.Navigator>
   );
