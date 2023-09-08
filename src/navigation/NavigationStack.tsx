@@ -29,7 +29,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
-import { isStoryBookOn } from '~/config/Config';
+// import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -298,7 +298,7 @@ const RootStack = observer(function () {
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
-        // uncomment to develop
+        // Removed from production bundle
         // isStoryBookOn ? (
         //   <RootStackNav.Screen
         //     name="StoryBook"
