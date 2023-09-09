@@ -1,4 +1,4 @@
-import { ApiError, NetworkError } from '../../src/common/services/api.service';
+import { ApiError, NetworkError } from '../../src/common/services/ApiErrors';
 import shouldReportToSentry from '../../src/common/helpers/errors';
 import { UserError } from '../../src/common/UserError';
 

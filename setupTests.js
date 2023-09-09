@@ -103,14 +103,13 @@ jest.mock(
     return MockTouchable;
   },
 );
-
-jest.mock('pusher-js/react-native', () => jest.fn());
 jest.mock('react-native-system-setting', () => {
   return {
     getVolume: jest.fn(() => Promise.resolve()),
   };
 });
 jest.mock('react-native-silent-switch');
+jest.mock('react-native-bignumber', () => ({ BN: jest.fn() }));
 jest.mock('react-native-mmkv-storage');
 global.__reanimatedWorkletInit = jest.fn();
 
