@@ -19,6 +19,7 @@ import { useActivityContext } from './contexts/Activity.context';
 import { Button, HairlineRow, Icon, Row } from '../../common/ui';
 import { useAnalytics } from '../../common/contexts/analytics.context';
 import ActivityModel from '../ActivityModel';
+import Counter from './actions/Counter';
 
 type PropsType = {
   entity: ActivityModel;
@@ -123,6 +124,7 @@ export const Actions = observer((props: PropsType) => {
               direction="up"
               voted={entity.votedUp}
               onVote={voteUp}
+              count={props.hideCount ? undefined : entity['thumbs:up:count']}
             />
             <VoteButtonWithText
               direction="down"
@@ -162,21 +164,29 @@ const VoteButtonWithText = ({
   direction,
   voted,
   onVote,
+  count,
 }: {
   direction: 'up' | 'down';
   voted: boolean;
   onVote: () => void;
+  count?: number;
 }) => (
   <Button
     size="small"
     mode="outline"
     color={voted ? 'link' : undefined}
     icon={
-      <Icon
-        color={voted ? 'Link' : undefined}
-        name={`thumb-${direction}`}
-        right="XS"
-      />
+      <Row align="centerBoth" right="XS">
+        <Icon color={voted ? 'Link' : undefined} name={`thumb-${direction}`} />
+        {!!count && (
+          <Counter
+            style={voted ? ThemedStyles.style.colorLink : undefined}
+            count={Number(count)}
+            spaced={true}
+            animated={false}
+          />
+        )}
+      </Row>
     }
     onPress={onVote}>
     {direction === 'up' ? 'See more of this' : 'See less of this'}
