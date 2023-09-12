@@ -134,11 +134,11 @@ const SettingsScreen = observer(({ navigation }) => {
     params: {},
   });
 
-  firstSection.push({
-    title: i18n.t('settings.resources'),
-    screen: 'Resources',
-    params: {},
-  });
+  // firstSection.push({
+  //   title: i18n.t('settings.resources'),
+  //   screen: 'Resources',
+  //   params: {},
+  // });
 
   const secondSection: Array<Item> = [
     {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
@@ -217,14 +217,12 @@ const BoostSettingsScreen = observer(() => {
           theme.paddingLeft4x,
           styles.lineHeight,
         ]}>
-        {`${i18n.t('settings.boost.description')}\n${i18n.t(
-          'settings.boost.learn',
-        )} `}
-        <MText
+        {i18n.t('settings.boost.description')}
+        {/* <MText
           style={theme.colorLink}
           onPress={() => Linking.openURL('https://www.minds.com/boost')}>
           Boost
-        </MText>
+        </MText> */}
       </MText>
       {items.map(item => (
         <Item item={item} key={item.id} />
