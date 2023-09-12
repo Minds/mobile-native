@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
@@ -96,9 +96,10 @@ const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
               I agree to the{' '}
               <MText
                 style={theme.link}
-                onPress={() =>
-                  Linking.openURL('https://www.minds.com/p/monetization-terms ')
-                }>
+                // onPress={() =>
+                //   Linking.openURL('https://www.minds.com/p/monetization-terms')
+                // }
+              >
                 Minds monetization terms{' '}
               </MText>
               and have the rights to monetize this content.
