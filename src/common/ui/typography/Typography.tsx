@@ -36,6 +36,7 @@ export type TypographyPropsType = {
     | 'white'
     | 'black'
     | 'danger'
+    | 'green'
     | 'tertiary';
   type?: TypographyType;
   font?: FontFamily;

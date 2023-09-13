@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import { ImageBackground, Platform, View } from 'react-native';
@@ -16,6 +16,9 @@ import InputContainer from '~/common/components/InputContainer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { B1, Button, Row } from '~/common/ui';
+import FloatingInput from '~/common/components/FloatingInput';
+import { KeyVal, buildKeyVal } from '~/channel/SocialProfileMeta';
 
 type PropsType = {
   route: any;
@@ -26,6 +29,7 @@ type PropsType = {
 const createEditChannelStore = () => ({
   loaded: false,
   briefDescription: '',
+  socialLinks: [] as Array<KeyVal>,
   setBriefDescription(briefDescription) {
     this.briefDescription = briefDescription;
   },
@@ -36,6 +40,15 @@ const createEditChannelStore = () => ({
   setEditingCity(editingCity: boolean) {
     this.editingCity = editingCity;
     return editingCity;
+  },
+  setSocialLinks(socialLinks) {
+    this.socialLinks = socialLinks;
+  },
+  addSocialLink(link: string) {
+    this.socialLinks.push(buildKeyVal(link));
+  },
+  removeSocialLink(index: number) {
+    this.socialLinks.splice(index, 1);
   },
   setLoaded(loaded) {
     this.loaded = loaded;
@@ -55,6 +68,7 @@ const createEditChannelStore = () => ({
       this.setCity(channelStore.channel.city);
       this.setDob(channelStore.channel.dob);
       this.setLoaded(true);
+      this.setSocialLinks(channelStore.channel.social_profiles);
       this.briefDescription = channelStore.channel.briefdescription;
     }
     this.setLoaded(true);
@@ -94,6 +108,51 @@ const Avatar = observer(({ route }: PropsType) => {
     </ImageBackground>
   );
 });
+
+const SocialLinks = observer(({ store }: PropsType) => {
+  const ref = useRef<any>(null);
+  return (
+    <View>
+      <B1 color="secondary" vertical="M" horizontal="L">
+        Social Links
+      </B1>
+      <FloatingInput
+        ref={ref}
+        defaultValue="https://"
+        hideKeyboard
+        onSubmitEditing={event => {
+          store.addSocialLink(event.nativeEvent.text);
+          ref.current?.hide();
+        }}
+      />
+      <Row align="baseline" horizontal="L" bottom="XL">
+        {store.socialLinks.map((link, index) => (
+          <LinkChip link={link} onPress={() => store.removeSocialLink(index)} />
+        ))}
+      </Row>
+      <Button
+        onPress={() => {
+          ref.current?.show();
+        }}
+        size="tiny"
+        align="center">
+        Add Link
+      </Button>
+    </View>
+  );
+});
+
+const LinkChip = ({ link, onPress }) => (
+  <View style={styles.link}>
+    <B1 right="S">{link.value}</B1>
+    <Icon
+      name="close"
+      size={22}
+      onPress={onPress}
+      style={ThemedStyles.style.colorPrimaryText}
+    />
+  </View>
+);
 
 const Banner = observer(({ route }: PropsType) => {
   const { store } = route.params ?? {};
@@ -188,6 +247,7 @@ const ChannelEditScreen = (props: PropsType) => {
       city: store.city,
       dob: store.dob,
       briefdescription: store.briefDescription,
+      social_profiles: store.socialLinks,
     });
     store.setLoaded(true);
     navigation.goBack();
@@ -253,6 +313,7 @@ const ChannelEditScreen = (props: PropsType) => {
         </LabeledComponent>
         <Bio {...props} store={store} />
         <About {...props} store={store} onFocusLocation={onFocusLocation} />
+        <SocialLinks {...props} store={store} />
       </View>
     </KeyboardAwareScrollView>
   );
@@ -263,6 +324,14 @@ const styles = ThemedStyles.create({
   container: ['flexContainer', 'paddingTop3x'],
   contentContainerStyle: ['paddingBottom10x'],
   labelStyle: ['paddingLeft4x', 'paddingBottom2x'],
+  link: [
+    'rowJustifyCenter',
+    'padding2x',
+    'paddingHorizontal3x',
+    'bcolorPrimaryBorder',
+    'borderRadius20x',
+    'border',
+  ],
   tapOverlayView: {
     position: 'absolute',
     top: 0,

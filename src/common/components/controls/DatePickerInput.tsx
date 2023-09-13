@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
-import { InteractionManager, View, ViewStyle } from 'react-native';
+import { InteractionManager, Keyboard, View, ViewStyle } from 'react-native';
 import ModernDatePicker from 'react-native-modern-datepicker';
 import i18n from '~/common/services/i18n.service';
 import { UIUnitType } from '~/styles/Tokens';
@@ -60,6 +60,8 @@ const DatePickerInput: ForwardRefRenderFunction<
     : i18n.date(value, 'date', 'UTC');
 
   const show = useCallback(() => {
+    // if the keyboard is shown dismiss it
+    Keyboard.dismiss();
     bottomSheetRef.current?.present();
   }, [bottomSheetRef]);
 
