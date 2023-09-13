@@ -437,7 +437,7 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
         size={17}
       />
       <B2 left="XS">
-        {channel.social_profiles[0].value}
+        {shortenLink(channel.social_profiles[0].value)}
         {channel.social_profiles.length > 1
           ? ` and ${channel.social_profiles.length - 1} other links`
           : ''}
