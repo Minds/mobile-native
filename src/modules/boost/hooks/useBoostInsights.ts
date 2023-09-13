@@ -1,5 +1,7 @@
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import { BoostStoreType } from '../boost-composer/boost.store';
+import { useQueries } from '@tanstack/react-query';
+import apiService from '~/common/services/api.service';
 
 interface InsightEstimateParams {
   daily_bid: number;
@@ -33,3 +35,27 @@ export default function useBoostInsights(boostStore: BoostStoreType) {
     ...fetchStore,
   };
 }
+
+type CachedBoostInsights = {
+  daily_bid: number;
+  duration: number;
+  safeAudience: boolean;
+};
+export const useCachedBoostInsights = (products: CachedBoostInsights[]) => {
+  const productQueries = useQueries({
+    queries: products.map(({ daily_bid, duration, safeAudience }) => {
+      return {
+        queryKey: ['insights', daily_bid, duration, safeAudience],
+        queryFn: () =>
+          apiService.get('api/v3/boosts/insights/estimate', {
+            daily_bid,
+            duration,
+            audience: safeAudience ? 1 : 2,
+            payment_method: 1, // cash
+          }),
+      };
+    }),
+  });
+
+  return productQueries;
+};

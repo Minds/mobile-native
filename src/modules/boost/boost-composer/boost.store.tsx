@@ -47,6 +47,7 @@ export const createBoostStore = ({
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
   linkUrl: '',
+  iapTransaction: undefined as undefined | string,
   get platformsText() {
     const enabled: string[] = [];
     this.target_platform_ios && enabled.push('iOS');
@@ -109,6 +110,9 @@ export const createBoostStore = ({
     this.selectedCardId = cardId;
   },
   selectedCardId: '',
+  setIapTransaction(transaction: string) {
+    this.iapTransaction = transaction;
+  },
   createBoost(creditPaymentMethod?: string) {
     if (!this.validate()) {
       return null;
@@ -121,8 +125,9 @@ export const createBoostStore = ({
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
         this.paymentType === 'cash'
-          ? creditPaymentMethod ?? this.selectedCardId
+          ? creditPaymentMethod ?? this.selectedCardId // ios_iap, android_iap
           : undefined,
+      iap_transaction: this.iapTransaction,
       daily_bid: this.amount,
       duration_days: this.duration,
     };
@@ -156,8 +161,13 @@ export const createBoostStore = ({
    * IAP
    */
   get skus() {
-    // return [`boost.a${this.amount}.d${this.duration}.001`];
-    return ['boost.consumable.001'];
+    const amountProductMap = {
+      1: 'boost.001',
+      10: 'boost.010',
+      30: 'boost.030',
+      300: 'boost.300',
+    };
+    return [amountProductMap[this.amount * this.duration] ?? 'boost.300'];
   },
   isAmountValid() {
     return IS_IAP_ON ? this.total < 450 : true;
@@ -213,6 +223,7 @@ export interface CreateBoostParams {
   target_platform_web?: boolean;
   target_platform_android?: boolean;
   target_platform_ios?: boolean;
+  iap_transaction?: string;
 }
 
 export type IBoostAudience = 'safe' | 'mature';
