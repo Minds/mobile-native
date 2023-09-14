@@ -29,10 +29,14 @@ import ChannelListItem from '../../common/components/ChannelListItem';
 import UserModel from '../../channel/UserModel';
 import GroupsListItem from '../../groups/GroupsListItem';
 import GroupModel from '../../groups/GroupModel';
-import { useIsFeatureOn } from '../../../ExperimentsProvider';
+import {
+  useIsAndroidFeatureOn,
+  useIsFeatureOn,
+} from '../../../ExperimentsProvider';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
+import CaptureFab from '~/capture/CaptureFab';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -50,6 +54,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const isDiscoveryConsolidationOn = useIsFeatureOn(
       'mob-5038-discovery-consolidation',
     );
+    const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time
@@ -293,6 +298,13 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
+        {showFAB && (
+          <CaptureFab
+            visible={true}
+            navigation={navigation}
+            style={composeFABStyle}
+          />
+        )}
       </Screen>
     );
   }),
@@ -304,3 +316,4 @@ const styles = ThemedStyles.create({
   header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth', 'marginTopXXXL2'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
 });
+const composeFABStyle = { bottom: 24 };
