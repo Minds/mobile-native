@@ -6,7 +6,6 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import { hasVariation } from 'ExperimentsProvider';
 import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 import {
@@ -14,8 +13,6 @@ import {
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
-
-export const IS_IAP_ON = IS_FROM_STORE;
 
 export type BoostType = 'post' | 'channel' | 'group';
 
@@ -102,7 +99,7 @@ export const createBoostStore = ({
   get total() {
     return this.amount * this.duration;
   },
-  paymentType: (IS_IOS ? 'offchain_tokens' : 'cash') as IPaymentType,
+  paymentType: 'cash' as IPaymentType,
   setPaymentType(paymentType: IPaymentType) {
     this.paymentType = paymentType;
   },
@@ -157,30 +154,10 @@ export const createBoostStore = ({
   validate() {
     return true;
   },
-  /**
-   * IAP
-   */
-  get skus() {
-    const amountProductMap = {
-      1: 'boost.001',
-      10: 'boost.010',
-      30: 'boost.030',
-      300: 'boost.300',
-    };
-    return [amountProductMap[this.amount * this.duration] ?? 'boost.300'];
-  },
   isAmountValid() {
-    return IS_IAP_ON ? this.total < 450 : true;
+    return true;
   },
   get amountRangeValues() {
-    if (IS_IAP_ON && this.paymentType === 'cash') {
-      return {
-        stepSize: 5,
-        defaultValue: 10,
-        minimumRangeValue: 5,
-        maximumRangeValue: 15,
-      };
-    }
     return {
       stepSize: 1,
       defaultValue: 1,
@@ -190,15 +167,6 @@ export const createBoostStore = ({
     };
   },
   get durationRangeValues() {
-    if (IS_IAP_ON && this.paymentType === 'cash') {
-      return {
-        stepSize: 1,
-        defaultValue: 1,
-        minimumRangeValue: 1,
-        maximumRangeValue: 30,
-        steps: [1, 3, 10, 30],
-      };
-    }
     return {
       stepSize: 1,
       defaultValue: 1,

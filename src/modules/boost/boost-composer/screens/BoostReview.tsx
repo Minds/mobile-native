@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { showNotification } from '~/../AppMessages';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
@@ -9,7 +9,7 @@ import number from '~/common/helpers/number';
 import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { BoostType, IS_IAP_ON, useBoostStore } from '../boost.store';
+import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   finishTransaction,
@@ -21,14 +21,19 @@ import {
 } from 'react-native-iap';
 import NavigationService from '../../../../navigation/NavigationService';
 import {
+  IS_FROM_STORE,
   IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '../../../../config/Config';
+} from '~/config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
+import {
+  GiftCardProductIdEnum,
+  useFetchPaymentMethodsQuery,
+} from '~/graphql/api';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -40,36 +45,31 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     total,
     wallet,
     audience,
-    paymentType: paymentTypeFromStore,
+    paymentType,
     insights,
     selectedCardId,
-    skus,
     entity,
     setSelectedCardId,
     setIapTransaction,
     createBoost,
   } = useBoostStore();
 
-  const { products, getProducts } = useIAP();
+  /**
+   * CREDITS
+   */
+  const creditPaymentMethod = useCreditPaymentMethod(total);
 
-  const [selectedMethod, setSelectedMethod] = useState<string>();
+  /**
+   * InApp Purchase
+   */
 
-  const paymentType = paymentTypeFromStore === 'cash' ? 'cash' : 'tokens';
-  const isCashFromStore = paymentType === 'cash' && IS_IAP_ON;
-  const isCashFromStripe = paymentType === 'cash' && !IS_IAP_ON;
+  const { selectedProduct } = useInAppPurchase(total);
 
-  useEffect(() => {
-    if (isCashFromStore) {
-      getProducts({ skus });
-    }
-  }, [getProducts, isCashFromStore, skus]);
+  const defaultSelectedMethod = creditPaymentMethod ? 'gifts' : 'iap';
 
-  let selectedProduct: any;
-  if (products.length !== 0) {
-    selectedProduct = products.filter(
-      product => product.productId === skus[0],
-    )?.[0];
-  }
+  const [selectedMethod, setSelectedMethod] = useState<string>(
+    defaultSelectedMethod,
+  );
 
   const user = useCurrentUser();
   const boostStore = useBoostStore();
@@ -103,9 +103,14 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const title = titleMap[boostStore.boostType];
 
+  const isTokenPayment = paymentType !== 'cash';
+  const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
+  const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
+
   const handleCreate = async () => {
+    // Tokens, OSS or Gifts
     if (!isCashFromStore) {
-      return createBoost()?.then(() => {
+      return createBoost(creditPaymentMethod)?.then(() => {
         showNotification(t('Boost created successfully'));
         navigation.popToTop();
         navigation.goBack();
@@ -170,11 +175,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       ? `; ${boostStore.platformsText}`
       : '';
 
-  const tokenPaymentMethod = paymentType !== 'cash';
-  const cashPaymentMethod = !tokenPaymentMethod && IS_IAP_ON;
-  const stripePaymentMethod = !tokenPaymentMethod && !IS_IAP_ON;
-
-  console.log('selectedMethod', selectedMethod);
+  console.log('selectedMethod', selectedMethod, selectedCardId);
 
   return (
     <Screen safe onlyTopEdge>
@@ -209,14 +210,15 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             subtitle={textMapping[paymentType].budgetDescription}
             borderless
           />
-          {cashPaymentMethod && (
+          {isCashFromStore && (
             <CashSelector
+              methodSelected={selectedMethod}
               onMethodSelected={method => setSelectedMethod(method)}
               style={ThemedStyles.style.bgTransparent}
               borderless
             />
           )}
-          {stripePaymentMethod && (
+          {isCashFromStripe && (
             <StripeCardSelector
               onCardSelected={card => setSelectedCardId(card.id)}
               selectedCardId={selectedCardId}
@@ -224,7 +226,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               borderless
             />
           )}
-          {tokenPaymentMethod && (
+          {isTokenPayment && (
             <MenuItem
               title={t('Payment method')}
               subtitle={tokenLabel}
@@ -283,3 +285,44 @@ export default withErrorBoundaryScreen(
   withIAPContext(observer(BoostReviewScreen)),
   'BoostReview',
 );
+
+const useCreditPaymentMethod = (total: number) => {
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
+  const creditPaymentMethod = data?.paymentMethods?.[0]?.id;
+  const hasCredits = (data?.paymentMethods?.[0]?.balance ?? 0) > total;
+
+  return hasCredits ? creditPaymentMethod : undefined;
+};
+
+const useInAppPurchase = (total: number) => {
+  const { products, getProducts } = useIAP();
+  const skus = useMemo(() => [amountProductMap[total] ?? 'boost.300'], [total]);
+
+  useEffect(() => {
+    if (IS_FROM_STORE) {
+      getProducts({ skus });
+    }
+  }, [getProducts, skus]);
+
+  let selectedProduct: any;
+  if (products.length !== 0) {
+    selectedProduct = products.filter(
+      product => product.productId === skus[0],
+    )?.[0];
+  }
+
+  console.log('selectedProduct', selectedProduct);
+
+  return {
+    selectedProduct,
+  };
+};
+
+const amountProductMap = {
+  1: 'boost.001',
+  10: 'boost.010',
+  30: 'boost.030',
+  300: 'boost.300',
+};

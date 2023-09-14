@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import number from '~/common/helpers/number';
 
 type CashSelectorProps = {
+  methodSelected?: string;
   onMethodSelected: (method: string) => void;
   style?: StyleProp<ViewStyle>;
   borderless?: boolean;
@@ -27,10 +28,9 @@ export const CashSelector = observer(
     const { methods, selected, setSelected } = useSelectMethod(total);
     const singleItem = methods.length === 1;
 
-    const selectMethod = (method: string) => {
-      console.log('Select method', method);
+    const selectMethod = (method: Method) => {
       setSelected(method);
-      onMethodSelected(method);
+      onMethodSelected(method.key);
     };
 
     const onPress = singleItem
@@ -45,7 +45,7 @@ export const CashSelector = observer(
         {...inputSelectorProps}
         label={i18n.t('orderReport.paymentMethod')}
         labelStyle={[theme.colorPrimaryText, theme.fontBold]}
-        value={selected}
+        value={selected.name}
         valueStyle={[theme.colorSecondaryText, theme.fontM]}
         icon={singleItem ? null : <Icon name="chevron-down" />}
       />
@@ -53,9 +53,18 @@ export const CashSelector = observer(
   },
 );
 
+type Method = {
+  key: 'iap' | 'gifts';
+  name: string;
+};
 const useSelectMethod = (total: number) => {
   const { t } = useTranslation();
-  const methods = [t('Use In-App Purchase')] as string[];
+  const methods = [
+    {
+      key: 'iap',
+      name: t('Use In-App Purchase'),
+    },
+  ] as Method[];
 
   const { data } = useFetchPaymentMethodsQuery({
     giftCardProductId: GiftCardProductIdEnum.Boost,
@@ -64,11 +73,13 @@ const useSelectMethod = (total: number) => {
   const balance = data?.paymentMethods?.[0]?.balance ?? -1;
 
   const hasCredits = Number(balance) >= Number(total);
-  if (!hasCredits) {
-    const creditLabel = t('Gift Cards (${{value}} Credits)', {
-      value: number(balance || 0, 2, 2),
+  if (hasCredits) {
+    methods.unshift({
+      key: 'gifts',
+      name: t('Gift Cards (${{value}} Credits)', {
+        value: number(balance || 0, 2, 2),
+      }),
     });
-    methods.unshift(creditLabel);
   }
   const [selected, setSelected] = useState(methods[0]);
 
@@ -80,9 +91,9 @@ const useSelectMethod = (total: number) => {
 };
 
 type CardSelectorArgs = {
-  methods: string[];
-  selected: string;
-  selectMethod: (method: string) => void;
+  methods: Method[];
+  selected: Method;
+  selectMethod: (method: Method) => void;
 };
 const pushCardSelectorBottomSheet = ({
   methods,
@@ -95,9 +106,10 @@ const pushCardSelectorBottomSheet = ({
       <>
         {methods.map(method => (
           <MenuItem
+            key={method.key}
             borderless
             noIcon
-            title={method}
+            title={method.name}
             titleStyle={
               selected === method ? ThemedStyles.style.colorLink : undefined
             }
