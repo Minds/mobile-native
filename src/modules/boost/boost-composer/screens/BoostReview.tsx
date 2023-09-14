@@ -30,10 +30,7 @@ import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
-import {
-  GiftCardProductIdEnum,
-  useFetchPaymentMethodsQuery,
-} from '~/graphql/api';
+import { useGifts } from '~/common/hooks/useGifts';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -67,7 +64,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const defaultSelectedMethod = creditPaymentMethod ? 'gifts' : 'iap';
 
-  const [selectedMethod, setSelectedMethod] = useState<string>(
+  const [selectedMethod, setSelectedMethod] = useState<'gifts' | 'iap'>(
     defaultSelectedMethod,
   );
 
@@ -287,13 +284,10 @@ export default withErrorBoundaryScreen(
 );
 
 const useCreditPaymentMethod = (total: number) => {
-  const { data } = useFetchPaymentMethodsQuery({
-    giftCardProductId: GiftCardProductIdEnum.Boost,
-  });
-  const creditPaymentMethod = data?.paymentMethods?.[0]?.id;
-  const hasCredits = (data?.paymentMethods?.[0]?.balance ?? 0) > total;
+  const { creditPaymentMethod, balance } = useGifts();
+  console.log('Credit payment method', creditPaymentMethod);
 
-  return hasCredits ? creditPaymentMethod : undefined;
+  return (balance ?? 0) >= total ? creditPaymentMethod : undefined;
 };
 
 const useInAppPurchase = (total: number) => {

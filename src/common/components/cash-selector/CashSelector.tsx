@@ -7,25 +7,25 @@ import { BottomSheetButton, pushBottomSheet } from '../bottom-sheet';
 import InputBase from '../InputBase';
 import { StyleProp, ViewStyle } from 'react-native';
 import MenuItem from '../menus/MenuItem';
-import {
-  GiftCardProductIdEnum,
-  useFetchPaymentMethodsQuery,
-} from '~/graphql/api';
 import { useTranslation } from 'react-i18next';
 import number from '~/common/helpers/number';
+import { useGifts } from '~/common/hooks/useGifts';
 
 type CashSelectorProps = {
-  methodSelected?: string;
-  onMethodSelected: (method: string) => void;
+  methodSelected: MethodKey;
+  onMethodSelected: (method: MethodKey) => void;
   style?: StyleProp<ViewStyle>;
   borderless?: boolean;
 };
 
 export const CashSelector = observer(
-  ({ onMethodSelected, ...inputSelectorProps }: CashSelectorProps) => {
+  ({
+    onMethodSelected,
+    methodSelected,
+    ...inputSelectorProps
+  }: CashSelectorProps) => {
     const theme = ThemedStyles.style;
-    const total = 300;
-    const { methods, selected, setSelected } = useSelectMethod(total);
+    const { methods, selected, setSelected } = useSelectMethod(methodSelected);
     const singleItem = methods.length === 1;
 
     const selectMethod = (method: Method) => {
@@ -53,11 +53,12 @@ export const CashSelector = observer(
   },
 );
 
+type MethodKey = 'iap' | 'gifts';
 type Method = {
-  key: 'iap' | 'gifts';
+  key: MethodKey;
   name: string;
 };
-const useSelectMethod = (total: number) => {
+const useSelectMethod = (methodSelected: MethodKey) => {
   const { t } = useTranslation();
   const methods = [
     {
@@ -66,18 +67,13 @@ const useSelectMethod = (total: number) => {
     },
   ] as Method[];
 
-  const { data } = useFetchPaymentMethodsQuery({
-    giftCardProductId: GiftCardProductIdEnum.Boost,
-  });
+  const { balance } = useGifts();
 
-  const balance = data?.paymentMethods?.[0]?.balance ?? -1;
-
-  const hasCredits = Number(balance) >= Number(total);
-  if (hasCredits) {
+  if (methodSelected === 'gifts') {
     methods.unshift({
       key: 'gifts',
       name: t('Gift Cards (${{value}} Credits)', {
-        value: number(balance || 0, 2, 2),
+        value: number(balance ?? 0, 2, 2),
       }),
     });
   }
@@ -114,7 +110,6 @@ const pushCardSelectorBottomSheet = ({
               selected === method ? ThemedStyles.style.colorLink : undefined
             }
             onPress={() => {
-              console.log('Press', method);
               selectMethod(method);
               bottomSheetRef.close();
             }}
