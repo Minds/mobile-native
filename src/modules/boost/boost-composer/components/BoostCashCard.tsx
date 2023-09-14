@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { B3, B1, Icon } from '~/common/ui';
+import { B3, B1, Icon, Row } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 const colorMap = {
@@ -40,35 +40,36 @@ export const BoostCashCard = ({
         style={styles.linear}
         start={{ x: 0.1, y: 0.2 }}
       />
+      <Row vertical="M" horizontal="M" align="centerBetween">
+        <View>
+          <B3>Estimated view</B3>
+          <B1 color="primary" font="black">
+            {estimated}
+          </B1>
+        </View>
+        <Check checked={selected} />
+      </Row>
 
-      <View style={styles.topLeft}>
-        <B3>Estimated view</B3>
-        <B1 color="primary" font="black">
-          {estimated}
-        </B1>
-      </View>
-
-      <View style={styles.bottomLeft}>
-        <B3>Duration</B3>
-        <B1 color="primary" font="black">
-          {duration} days
-        </B1>
-      </View>
-
-      <Check checked={selected} />
-
-      <View style={[styles.bottomRight, styles.pill]}>
-        <B1 color="primary" font="black">
-          {amount * duration} $
-        </B1>
-      </View>
+      <Row vertical="M" horizontal="M" align="centerBetween">
+        <View>
+          <B3>Duration</B3>
+          <B1 color="primary" font="black">
+            {duration} days
+          </B1>
+        </View>
+        <View style={styles.pill}>
+          <B1 color="primary" font="black">
+            {amount * duration} $
+          </B1>
+        </View>
+      </Row>
     </TouchableOpacity>
   );
 };
 
 const Check = ({ checked }: { checked?: boolean }) => {
   return (
-    <View style={[styles.topRight, checked ? styles.check : styles.checkBlank]}>
+    <View style={checked ? styles.check : styles.checkBlank}>
       {checked && <Icon name="check" color="Black" size="small" />}
     </View>
   );
@@ -80,10 +81,7 @@ const styles = ThemedStyles.create({
     'marginHorizontal4x',
     'borderRadius12x',
     'bcolorActive',
-    {
-      minHeight: 120,
-      borderWidth: 1,
-    },
+    'border1x',
   ],
   linear: [
     'positionAbsolute',
@@ -104,30 +102,12 @@ const styles = ThemedStyles.create({
   get checkBlank() {
     return [this.rounded, 'border1x', 'bcolorWhite'];
   },
-  pill: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    backgroundColor: 'rgba(255, 255, 255,0.1)',
-    borderRadius: 240,
-  },
-  topLeft: {
-    position: 'absolute',
-    top: 16,
-    left: 16,
-  },
-  topRight: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
-  },
-  bottomLeft: {
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-  },
-  bottomRight: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-  },
+  pill: [
+    'paddingVertical1x',
+    'paddingHorizontal2x',
+    'borderRadius20x',
+    {
+      backgroundColor: 'rgba(255, 255, 255,0.1)',
+    },
+  ],
 });
