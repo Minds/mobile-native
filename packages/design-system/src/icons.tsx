@@ -36,6 +36,7 @@ import { Upvote } from './icons/Upvote';
 import { VerifiedBadge } from './icons/VerifiedBadge';
 import { Wallet } from './icons/Wallet';
 import { MindsPro } from './icons/MindsPro';
+import { Verified } from './icons/Verified';
 import { CaptivePortal } from './icons/CaptivePortal';
 
 export const icons = {
@@ -76,6 +77,7 @@ export const icons = {
   verifiedBadge: VerifiedBadge,
   wallet: Wallet,
   mindsPro: MindsPro,
+  verified: Verified,
 };
 
 export {
@@ -116,6 +118,7 @@ export {
   VerifiedBadge,
   Wallet,
   MindsPro,
+  Verified,
 };
 
 export type IconNames = keyof typeof icons;

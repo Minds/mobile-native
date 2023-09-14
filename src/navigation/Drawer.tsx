@@ -18,9 +18,12 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
+import { Icon as IconV2 } from '@minds/ui';
 import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -47,7 +50,7 @@ type Flags = Record<'isIosMindsHidden', boolean>;
 
 type MenuItem = {
   name: string;
-  icon: IconNameType;
+  icon: IconNameType | JSX.Element;
   onPress: () => void;
   testID?: string;
 } | null;
@@ -108,6 +111,23 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('GroupsList');
       },
     },
+    PRO_PLUS_SUBSCRIPTION_ENABLED
+      ? {
+          name: i18n.t('moreScreen.upgrade'),
+          icon: (
+            <IconV2
+              name="verified"
+              color={ThemedStyles.getColor('PrimaryText')}
+            />
+          ),
+          testID: 'Drawer:upgrade',
+          onPress: () => {
+            navigation.navigate('UpgradeScreen', {
+              onComplete: () => null,
+            });
+          },
+        }
+      : null,
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
@@ -218,7 +238,7 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
 
 type DrawerNavItemProps = {
   name: string;
-  icon?: IconMapNameType;
+  icon?: IconMapNameType | JSX.Element;
   onPress: () => void;
   small?: boolean;
   testID?: string;
@@ -234,7 +254,11 @@ const DrawerNavItem = ({
   return (
     <PressableLine testID={testID} onPress={onPress}>
       <Row align="centerStart" flex left="XXL" vertical={small ? 'M' : 'L'}>
-        {icon ? <Icon name={icon} size={24} color="PrimaryText" /> : undefined}
+        {typeof icon === 'string' ? (
+          <Icon name={icon} size={24} color="PrimaryText" />
+        ) : (
+          icon
+        )}
         <T left={icon ? 'L' : undefined} font={small ? 'regular' : 'bold'}>
           {name}
         </T>
