@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 
-import { Button } from '~ui';
+import { B3, Button } from '~ui';
 import i18n from '~/common/services/i18n.service';
 import { UpgradeStoreType } from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
@@ -21,7 +21,8 @@ import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
 import sessionService from '~/common/services/session.service';
 import apiService from '~/common/services/api.service';
-// import apiService from '~/common/services/api.service';
+import { useStores } from '~/common/hooks/use-stores';
+import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -40,6 +41,15 @@ const UpgradeInAppPurchasesTokens = ({
   const navigation = useNavigation();
 
   const wireStore = useUpgradeWireStore();
+
+  const walletStore: WalletStoreType = useStores().wallet;
+
+  const cheapestTokenPrice = store.plansTokens.reduce(
+    (min, b) => Math.min(min, b?.cost ?? 1000),
+    store.plansTokens[0]?.cost ?? 1000,
+  );
+
+  const insufficientFunds = walletStore.balance < cheapestTokenPrice;
 
   const {
     currentPurchase,
@@ -168,7 +178,14 @@ const UpgradeInAppPurchasesTokens = ({
     <>
       <PaymentMethod store={store} cashName="Cash" />
       {store.method === 'tokens' ? (
-        <PlanOptions store={store} />
+        <>
+          <PlanOptions store={store} />
+          {insufficientFunds && (
+            <B3 top="XL" align="center">
+              {i18n.t('monetize.insufficientTokens')}!
+            </B3>
+          )}
+        </>
       ) : (
         subscriptions.length !== 0 && (
           <PlanOptionsIAP
@@ -184,6 +201,7 @@ const UpgradeInAppPurchasesTokens = ({
         horizontal="L"
         loading={wireStore.loading}
         onPress={confirmSend}
+        disabled={store.method === 'tokens' && insufficientFunds}
         spinner>
         {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
       </Button>
