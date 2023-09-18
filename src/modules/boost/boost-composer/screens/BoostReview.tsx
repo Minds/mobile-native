@@ -149,8 +149,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     if ((purchases as unknown as ProductPurchase[])?.length > 0) {
       const purchase = purchases?.[0];
       const { transactionId, transactionReceipt } = purchase ?? {};
+      const receipt = isIosStorekit2() ? transactionId : transactionReceipt;
 
-      if ((isIosStorekit2() && transactionId) || transactionReceipt) {
+      if (receipt) {
         const result = await finishTransaction({
           purchase: purchases?.[0],
           isConsumable: true,
@@ -160,7 +161,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           // set payment_method_id
           setSelectedCardId(IS_IOS ? 'ios_iap' : 'android_iap');
           // set the IAP transaction details
-          setIapTransaction(transactionId ?? transactionReceipt);
+          setIapTransaction(receipt);
 
           return createBoost()?.then(() => {
             showNotification(t('Boost created successfully'));
