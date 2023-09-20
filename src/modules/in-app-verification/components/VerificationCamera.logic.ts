@@ -25,7 +25,7 @@ import { IS_IOS } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import NavigationService from '~/navigation/NavigationService';
 import { api } from '../api';
-import { ApiError } from '~/common/services/api.service';
+import { ApiError } from '~/common/services/ApiErrors';
 import type { Timeout } from '~/types/Common';
 
 export const TARGET_WIDTH_RATIO = 0.65;

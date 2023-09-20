@@ -9,9 +9,11 @@ import { hasVariation } from '../../ExperimentsProvider';
 import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
 import { ensureTwitterConnected } from './SupermindTwitterConnectScreen';
-import { SupermindRequestStatus } from './types';
+import { SupermindRequestReplyType, SupermindRequestStatus } from './types';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { observer } from 'mobx-react';
+import apiService from '~/common/services/api.service';
+import { confirm } from '~/common/components/Confirm';
 
 type Props = {
   request: SupermindRequestModel;
@@ -32,20 +34,35 @@ function SupermindRequest({ request, outbound }: Props) {
       }
     }
 
-    navigation.navigate('Compose', {
-      isRemind: true,
-      supermindObject: request,
-      allowedMode: composerModes[request.reply_type],
-      entity: request.entity,
-      onSave: entity => {
-        //  update request status
+    if (request.reply_type === SupermindRequestReplyType.LIVE) {
+      if (
+        await confirm({
+          title: i18n.t('supermind.liveReplyConfirm.title'),
+          description: i18n.t('supermind.liveReplyConfirm.description'),
+        })
+      ) {
+        apiService.post(`api/v3/supermind/${request.guid}/accept-live`);
         request.setStatus(SupermindRequestStatus.ACCEPTED);
-        request.setReplyGuid(entity.guid);
 
         // refresh in-feed notices
         inFeedNoticesService.load();
-      },
-    });
+      }
+    } else {
+      navigation.navigate('Compose', {
+        isRemind: true,
+        supermindObject: request,
+        allowedMode: composerModes[request.reply_type],
+        entity: request.entity,
+        onSave: entity => {
+          //  update request status
+          request.setStatus(SupermindRequestStatus.ACCEPTED);
+          request.setReplyGuid(entity.guid);
+
+          // refresh in-feed notices
+          inFeedNoticesService.load();
+        },
+      });
+    }
   }, [isTwitterEnabled, navigation, request]);
 
   return (

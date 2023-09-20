@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import { FlatList, Alert, Platform } from 'react-native';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
@@ -11,10 +11,8 @@ import {
   unfollow,
   follow,
 } from '../newsfeed/NewsfeedService';
-import api, {
-  isApiError,
-  isNetworkError,
-} from '../common/services/api.service';
+import api from '../common/services/api.service';
+import { isApiError, isNetworkError } from '~/common/services/ApiErrors';
 
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
@@ -627,7 +625,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * listens to metrics updates with 1000ms debounce time
    */
-  private listenForMetricsDebounced = _.debounce(this.listenForMetrics, 1000);
+  private listenForMetricsDebounced = debounce(this.listenForMetrics, 1000);
 
   /**
    * listens to metrics updates

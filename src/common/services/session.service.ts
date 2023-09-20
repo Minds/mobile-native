@@ -12,12 +12,7 @@ import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
-
-export class TokenExpiredError extends Error {}
-
-export const isTokenExpired = error => {
-  return error instanceof TokenExpiredError;
-};
+import { TokenExpiredError } from './TokenExpiredError';
 
 /**
  * Session service

@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import WebView, { WebViewNavigation, WebViewProps } from 'react-native-webview';
+import type { WebViewNavigation, WebViewProps } from 'react-native-webview';
 import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
@@ -44,6 +44,9 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
   if (route.params.headers) {
     source.headers = route.params.headers;
   }
+
+  // lazy load
+  const WebView = require('react-native-webview').WebView;
 
   return (
     <Screen>

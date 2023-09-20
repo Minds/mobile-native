@@ -413,6 +413,11 @@ export default function () {
         options={hideHeader}
         initialParams={{ noBottomInset: true }}
       />
+      <MoreStack.Screen
+        name="GroupsManage"
+        getComponent={() => require('~/groups/GroupsManageScreen').default}
+        options={{ headerShown: false }}
+      />
     </MoreStack.Navigator>
   );
 }

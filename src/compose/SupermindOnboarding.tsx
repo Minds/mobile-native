@@ -7,7 +7,7 @@ import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import i18n from '../common/services/i18n.service';
-import openUrlService from '../common/services/open-url.service';
+// import openUrlService from '../common/services/open-url.service';
 import { DismissIdentifier } from '../common/stores/DismissalStore';
 import { B2, Column, H4, Icon, Row } from '../common/ui';
 import { IconMapNameType } from '../common/ui/icons/map';
@@ -25,7 +25,7 @@ const onboardingTypes = {
         icon: 'money',
         link: {
           title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
-          onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
+          onPress: () => null, // openUrlService.open('https://www.minds.com/p/terms'),
         },
       },
       {

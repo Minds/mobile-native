@@ -7,7 +7,7 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { B1 } from '~ui';
 import { showNotification } from 'AppMessages';
 import i18n from '../common/services/i18n.service';
-import { TwoFactorError } from '~/common/services/api.service';
+import { TwoFactorError } from '~/common/services/ApiErrors';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';

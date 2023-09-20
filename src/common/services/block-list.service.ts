@@ -12,7 +12,7 @@ const key = 'blockedChannels';
 export class BlockListService {
   @observable blocked: Map<string, undefined> = new Map();
 
-  constructor() {
+  init() {
     sessionService.onSession(async token => {
       if (token) {
         await this.loadFromStorage();
