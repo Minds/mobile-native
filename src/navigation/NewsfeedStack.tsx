@@ -18,6 +18,7 @@ type NewsfeedStackParamList = Pick<
   | 'BoostScreenV2'
   | 'GroupView'
   | 'BoostSettingsScreen'
+  | 'Interactions'
 > & { MainFeed: AppStackParamList['Newsfeed'] };
 
 const NewsfeedStack = createNativeStackNavigator<NewsfeedStackParamList>();
@@ -41,6 +42,13 @@ export default function () {
         getComponent={() => require('~/channel/v2/ChannelScreen').default}
         getId={({ params }) =>
           'Channel' + (params?.entity?.guid || params?.guid || '')
+        }
+        options={hideHeader}
+      />
+      <NewsfeedStack.Screen
+        name="Interactions"
+        getComponent={() =>
+          require('~/common/components/interactions/InteractionsScreen').default
         }
         options={hideHeader}
       />

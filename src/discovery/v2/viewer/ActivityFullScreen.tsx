@@ -32,7 +32,6 @@ import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
-import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 import {
   useAnalytics,
@@ -40,7 +39,7 @@ import {
 } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
 import MutualSubscribers from '../../../channel/components/MutualSubscribers';
-import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
+import { pushInteractionsScreen } from '../../../common/components/interactions/pushInteractionsBottomSheet';
 import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
@@ -98,7 +97,7 @@ const ActivityOwner = ({
           language={'follow'}
           font="B3"
           onPress={() =>
-            pushInteractionsBottomSheet({
+            pushInteractionsScreen({
               entity: entity.ownerObj,
               interaction: 'subscribersYouKnow',
             })
@@ -149,10 +148,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
-  const upVotesInteractionsRef = useRef<any>(null);
-  const downVotesInteractionsRef = useRef<any>(null);
-  const remindsInteractionsRef = useRef<any>(null);
-  const quotesInteractionsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -211,17 +206,29 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
   const showUpVotes = useCallback(() => {
-    upVotesInteractionsRef.current?.show('upVotes');
-  }, [upVotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'upVotes',
+    });
+  }, [entity]);
   const showDownVotes = useCallback(() => {
-    downVotesInteractionsRef.current?.show('downVotes');
-  }, [downVotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'downVotes',
+    });
+  }, [entity]);
   const showReminds = useCallback(() => {
-    remindsInteractionsRef.current?.show('reminds');
-  }, [remindsInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'reminds',
+    });
+  }, [entity]);
   const showQuotes = useCallback(() => {
-    quotesInteractionsRef.current?.show('quotes');
-  }, [quotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'quotes',
+    });
+  }, [entity]);
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -356,13 +363,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           />
           <Actions entity={entity} hideCount onPressComment={openComments} />
         </View>
-        <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
-        <InteractionsBottomSheet
-          entity={entity}
-          ref={downVotesInteractionsRef}
-        />
-        <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
-        <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
       </View>
     </GroupContextProvider>
   );

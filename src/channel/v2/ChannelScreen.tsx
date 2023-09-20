@@ -37,13 +37,13 @@ import {
   IOSImageColors,
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
-import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
 import Empty from '~/common/components/Empty';
 import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
 
 const tinycolor = require('tinycolor2');
 
@@ -110,9 +110,6 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 
   const bannerUri = store.channel?.getBannerSource().uri;
-  const subscribersActionSheetRef = useRef<any>(null);
-  const subscriptionsActionSheetRef = useRef<any>(null);
-  const subscribersYouKnowSheetRef = useRef<any>(null);
   /**
    * scroll offset
    **/
@@ -284,6 +281,7 @@ const ChannelScreen = observer((props: PropsType) => {
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       offset.value,
       topBarBackgroundVisible,
@@ -314,18 +312,30 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 
   const openSubscribers = useCallback(
-    () => subscribersActionSheetRef.current?.show('channelSubscribers'),
-    [],
+    () =>
+      pushInteractionsScreen({
+        entity: store.channel,
+        interaction: 'channelSubscribers',
+      }),
+    [store.channel],
   );
 
   const openSubscriptions = useCallback(
-    () => subscriptionsActionSheetRef.current?.show('channelSubscriptions'),
-    [],
+    () =>
+      pushInteractionsScreen({
+        entity: store.channel,
+        interaction: 'channelSubscriptions',
+      }),
+    [store.channel],
   );
 
   const openSubscribersYouKnow = useCallback(
-    () => subscribersYouKnowSheetRef.current?.show('subscribersYouKnow'),
-    [],
+    () =>
+      pushInteractionsScreen({
+        entity: store.channel,
+        interaction: 'subscribersYouKnow',
+      }),
+    [store.channel],
   );
 
   // =====================| RENDERS |=====================>
@@ -491,19 +501,6 @@ const ChannelScreen = observer((props: PropsType) => {
           onPress={onTopBarPress}
         />
       </Animated.View>
-
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscribersActionSheetRef}
-      />
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscriptionsActionSheetRef}
-      />
-      <InteractionsBottomSheet
-        entity={store.channel}
-        ref={subscribersYouKnowSheetRef}
-      />
     </ChannelContext.Provider>
   );
 });
