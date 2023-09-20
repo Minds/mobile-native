@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -17,8 +17,8 @@ import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
-const linkTo = (dest: string) =>
-  Linking.openURL(`https://www.minds.com/${dest}`);
+// const linkTo = (dest: string) =>
+//   Linking.openURL(`https://www.minds.com/${dest}`);
 
 const onComplete = () => true;
 
@@ -143,26 +143,21 @@ export default withErrorBoundaryScreen(
     }
 
     const resourcesItems: ResourceType[] = [
-      {
-        name: 'resources.rewards',
-        onPress: () => linkTo('rewards'),
-      },
-      {
-        name: 'resources.tokens',
-        onPress: () => linkTo('token'),
-      },
+      // {
+      //   name: 'resources.rewards',
+      //   onPress: () => linkTo('rewards'),
+      // },
+      // {
+      //   name: 'resources.tokens',
+      //   onPress: () => linkTo('token'),
+      // },
       {
         name: 'resources.earnings',
-        onPress: () =>
-          navTo('Tabs', { screen: 'CaptureTab', params: { screen: 'Wallet' } }),
+        onPress: () => navTo('Wallet'),
       },
       {
         name: 'resources.analytics',
-        onPress: () =>
-          navTo('Tabs', {
-            screen: 'CaptureTab',
-            params: { screen: 'Analytics' },
-          }),
+        onPress: () => navTo('Analytics'),
       },
     ];
 

@@ -69,8 +69,7 @@ const TokenTopBar = ({
         </>
       ) : (
         <Row bottom="S" align="centerBetween">
-          <Row>{tokens}</Row>
-          {onchain}
+          {tokens}
         </Row>
       )}
     </Spacer>

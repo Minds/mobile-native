@@ -1,4 +1,4 @@
-import { isApiError, isNetworkError } from '../services/api.service';
+import { isApiError, isNetworkError } from '../services/ApiErrors';
 import connectivityService from '../services/connectivity.service';
 import i18n from '../services/i18n.service';
 

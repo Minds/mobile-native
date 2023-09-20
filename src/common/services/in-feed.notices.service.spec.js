@@ -4,9 +4,9 @@ import apiService from './api.service';
 import { when } from 'mobx';
 import { storages } from '~/common/services/storage/storages.service';
 
-jest.mock('~/common/services/api.service');
-jest.mock('~/common/services/session.service');
-jest.mock('~/common/services/storage/storages.service');
+jest.mock('./api.service');
+jest.mock('./session.service');
+jest.mock('./storage/storages.service');
 
 apiService.get.mockResolvedValue({
   status: 'success',
@@ -49,6 +49,8 @@ describe('InFeedNoticesService', () => {
     const service = new InFeedNoticesService();
     const init = jest.spyOn(service, 'init');
 
+    service.init();
+
     await onLoginCB();
 
     // init called
@@ -69,6 +71,7 @@ describe('InFeedNoticesService', () => {
 
   test('service visible method', async () => {
     const service = new InFeedNoticesService();
+    service.init();
 
     await onLoginCB();
 
@@ -95,6 +98,7 @@ describe('InFeedNoticesService', () => {
 
   test('notice dismissal', async () => {
     const service = new InFeedNoticesService();
+    service.init();
 
     await onLoginCB();
 

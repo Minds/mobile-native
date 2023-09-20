@@ -1,4 +1,4 @@
-import BN from 'bn.js';
+import { BN } from 'react-native-bignumber';
 // **
 // Converts really long crypto values into friendly numbers
 // Notes:

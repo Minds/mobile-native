@@ -6,7 +6,6 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
-import WebView from 'react-native-webview';
 import openUrlService from '~/common/services/open-url.service';
 import { MINDS_API_URI } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -85,6 +84,9 @@ function FriendlyCaptcha(
 
     return true;
   }, []);
+
+  // lazy load
+  const WebView = require('react-native-webview').WebView;
 
   return (
     <WebView

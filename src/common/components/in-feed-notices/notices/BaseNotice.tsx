@@ -14,7 +14,7 @@ type PropsType = {
   btnText: string;
   dismissable?: boolean;
   onClose?: () => void;
-  onPress: () => void;
+  onPress?: () => void;
   btnSecondaryText?: string;
   onSecondaryPress?: () => void;
   borderless?: boolean;
@@ -67,10 +67,12 @@ export default function BaseNotice({
           {description}
         </B2>
         <View style={styles.buttonContainer}>
-          <Button fit size="medium" type="action" spinner onPress={onPress}>
-            {btnText}
-          </Button>
-          {Boolean(btnSecondaryText) && (
+          {Boolean(onPress) && (
+            <Button fit size="medium" type="action" spinner onPress={onPress}>
+              {btnText}
+            </Button>
+          )}
+          {Boolean(onSecondaryPress) && (
             <Button
               size="medium"
               type="base"

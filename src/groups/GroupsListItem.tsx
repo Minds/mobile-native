@@ -46,7 +46,7 @@ const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
   return (
     <Button
       mode="outline"
-      type={isMember ? 'base' : 'action'}
+      type={'action'}
       size="tiny"
       onPress={onPress}
       pressableProps={HITSLOP}
@@ -80,6 +80,7 @@ const GroupsListItem = observer((props: PropsType) => {
       avatar={avatarSource?.source}
       title={group.name}
       onPress={_onPress}
+      isRightIconButton
       icon={
         !props.hideButton && (
           <JoinButton
@@ -95,9 +96,11 @@ const GroupsListItem = observer((props: PropsType) => {
           {abbrev(group['members:count'])}{' '}
           <B2 color="secondary">{i18n.t('members').toLocaleLowerCase()}</B2>
         </B2>
-        <B2 numberOfLines={2} color="secondary" right="XL" top="XS">
-          {entities.decodeHTML(capitalize(group.brief_description))}
-        </B2>
+        {group.brief_description?.length > 0 && (
+          <B2 numberOfLines={2} color="secondary" right="XL" top="XS">
+            {entities.decodeHTML(capitalize(group.brief_description))}
+          </B2>
+        )}
         {group.boosted && <BoostedGroupLabel />}
       </>
     </MenuItem>

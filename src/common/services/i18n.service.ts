@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, memoize } from 'lodash';
+import get from 'lodash/get';
+import memoize from 'lodash/memoize';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import { I18nManager, NativeModules, Platform } from 'react-native';

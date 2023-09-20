@@ -42,6 +42,7 @@ export type MenuItemProps = {
   alignTop?: boolean;
   primaryColor?: ColorsNameType;
   secondaryColor?: TypographyPropsType['color'];
+  isRightIconButton?: boolean;
 } & TouchableHighlightProps;
 
 export default function ({
@@ -63,6 +64,7 @@ export default function ({
   reversedIcon,
   avatarSize,
   alignTop,
+  isRightIconButton,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -172,6 +174,8 @@ export default function ({
 
   const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
 
+  const iconButtonStyle = isRightIconButton ? { paddingRight: 45 } : undefined;
+
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
       {avatar && <Image source={avatar} style={avatarStyle} />}
@@ -179,7 +183,10 @@ export default function ({
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>
       )}
-      <Column flex right={shouldRenderIcon && !reversedIcon ? 'L2' : undefined}>
+      <Column
+        flex
+        containerStyle={iconButtonStyle}
+        right={shouldRenderIcon && !reversedIcon ? 'L2' : undefined}>
         <Row align="centerBetween">
           <MText
             style={theTitleStyle}

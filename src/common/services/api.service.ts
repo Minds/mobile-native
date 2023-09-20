@@ -15,7 +15,8 @@ export const TWO_FACTOR_INVALID =
 
 export type TwoFactorType = 'sms' | 'email' | 'totp';
 
-import session, { isTokenExpired } from './session.service';
+import session from './session.service';
+import { isTokenExpired } from './TokenExpiredError';
 import {
   IS_IOS,
   MINDS_API_URI,
@@ -33,8 +34,13 @@ import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
 import referrerService from './referrer.service';
-
-type FieldError = { field: string; message: string };
+import {
+  TwoFactorError,
+  isApiForbidden,
+  NetworkError,
+  ApiError,
+  FieldError,
+} from './ApiErrors';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -48,43 +54,6 @@ export interface ApiResponse {
  * This array is transformed to param[]=value&param[]=value
  */
 export class ParamsArray extends Array<any> {}
-
-/**
- * Api Error
- */
-export class ApiError extends Error {
-  errId: string = '';
-  status: number = 0;
-  headers: any = null;
-  errors?: FieldError[];
-  errorId?: string;
-
-  constructor(message: string, status: number, errors?: FieldError[]) {
-    super(message);
-    this.status = status;
-    this.errors = errors;
-  }
-}
-
-export class NetworkError extends Error {}
-
-export class TwoFactorError extends Error {}
-
-export const isApiError = function (err): err is ApiError {
-  return err instanceof ApiError;
-};
-
-export const isNetworkError = function (err): err is NetworkError {
-  return err instanceof NetworkError;
-};
-
-export const isApiForbidden = function (err) {
-  return err.status === 403;
-};
-
-export const isAbort = error => {
-  return axios.isCancel(error);
-};
 
 const isNot401Exception = (url: string) => {
   return !EXCEPTIONS_401.some(e => url.startsWith(e));

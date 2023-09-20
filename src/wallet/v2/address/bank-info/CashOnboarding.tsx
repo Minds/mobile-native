@@ -155,14 +155,14 @@ const CashOnboarding = observer(
               title={
                 <B1>
                   {i18n.t('wallet.bank.agree')}{' '}
-                  <MText
+                  {/* <MText
                     style={styles.link}
                     onPress={() =>
                       openUrlService.open('https://stripe.com/legal')
                     }>
                     {i18n.t('wallet.bank.ssa')}
                   </MText>
-                  <B1> {i18n.t('and')} </B1>
+                  <B1> {i18n.t('and')} </B1> */}
                   <MText
                     style={styles.link}
                     onPress={() =>

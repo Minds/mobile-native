@@ -5,7 +5,6 @@ import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
 import NavigationService from '../navigation/NavigationService';
-import sessionService from './../common/services/session.service';
 import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
@@ -223,7 +222,7 @@ class AuthService {
       }
 
       // delete device token first
-      await this.unregisterTokenFrom(sessionService.activeIndex);
+      await this.unregisterTokenFrom(session.activeIndex);
 
       if (preLogoutCallBack) {
         await preLogoutCallBack();
@@ -271,7 +270,7 @@ class AuthService {
         }
       }
       // delete device token first
-      await this.unregisterTokenFrom(sessionService.activeIndex);
+      await this.unregisterTokenFrom(session.activeIndex);
 
       session.setSwitchingAccount(true);
       // revoke local session
@@ -310,9 +309,9 @@ class AuthService {
    */
   async unregisterTokenFrom(index: number) {
     try {
-      const deviceToken = sessionService.deviceToken;
+      const deviceToken = session.deviceToken;
       if (deviceToken) {
-        return await sessionService.apiServiceInstances[index].delete(
+        return await session.apiServiceInstances[index].delete(
           `api/v3/notifications/push/token/${deviceToken}`,
         );
       }
@@ -334,7 +333,7 @@ class AuthService {
       await this.unregisterTokenFrom(index);
 
       // revoke access token from backend
-      sessionService.apiServiceInstances[index].post('api/v3/oauth/revoke');
+      session.apiServiceInstances[index].post('api/v3/oauth/revoke');
       session.setSwitchingAccount(true);
       const logoutActive = session.logoutFrom(index);
 

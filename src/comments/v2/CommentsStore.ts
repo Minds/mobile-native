@@ -22,7 +22,7 @@ import type BlogModel from '../../blogs/BlogModel';
 import type GroupModel from '../../groups/GroupModel';
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
-import { isNetworkError } from '../../common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 import { storeRatingService } from 'modules/store-rating';
 import { EventContext } from '@snowplow/react-native-tracker';
 import analyticsService from '../../common/services/analytics.service';

@@ -8,6 +8,7 @@ import {
 
 // import {onError} from 'mobx-react';
 import * as Sentry from '@sentry/react-native';
+
 import shouldReportToSentry from './src/common/helpers/errors';
 
 // Init Sentry (if not running test)
@@ -30,11 +31,9 @@ if (process.env.JEST_WORKER_ID === undefined) {
           );
         }
       }
-
       if (__DEV__) {
         return null;
       }
-
       // for dev only log into the console
       return event;
     },
