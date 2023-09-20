@@ -236,7 +236,7 @@ const ChannelHeader = withErrorBoundary(
               <B2 color="secondary" numberOfLines={1}>
                 @{channel ? channel.username : props.channelName}
               </B2>
-              {Boolean(channel!.subscriber) && (
+              {!ownChannel && Boolean(channel!.subscriber) && (
                 <B2 color="secondary">
                   {' · '}
                   {i18n.t('channel.subscriber')}
