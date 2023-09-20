@@ -67,7 +67,7 @@ export default class UserModel extends BaseModel {
   @observable disable_autoplay_videos?: boolean;
   @observable disabled_boost?: boolean;
 
-  social_profiles?: Array<SocialProfile>;
+  social_profiles: Array<SocialProfile> = [];
 
   /**
    * @var {boolean}
