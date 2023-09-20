@@ -177,14 +177,14 @@ class App extends Component<Props> {
     const stores = getStores();
 
     return (
-      <View style={appContainerStyle}>
-        <ExperimentsProvider>
-          <SafeAreaProvider>
-            <UIProvider
-              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-              {sessionService.ready && (
-                <StoresProvider>
-                  <QueryProvider>
+      <QueryProvider>
+        <View style={appContainerStyle}>
+          <ExperimentsProvider>
+            <SafeAreaProvider>
+              <UIProvider
+                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+                {sessionService.ready && (
+                  <StoresProvider>
                     <Provider key="app" {...stores}>
                       <NavigationContainer
                         ref={navigationRef}
@@ -212,13 +212,13 @@ class App extends Component<Props> {
                         </AppMessageProvider>
                       </NavigationContainer>
                     </Provider>
-                  </QueryProvider>
-                </StoresProvider>
-              )}
-            </UIProvider>
-          </SafeAreaProvider>
-        </ExperimentsProvider>
-      </View>
+                  </StoresProvider>
+                )}
+              </UIProvider>
+            </SafeAreaProvider>
+          </ExperimentsProvider>
+        </View>
+      </QueryProvider>
     );
   }
 }

@@ -59,7 +59,9 @@ function useWatchForUpdates(endpoint: string, lastFetch: number) {
     {
       //@ts-ignore type error in react query
       refetchInterval: NEWSFEED_NEW_POST_POLL_INTERVAL,
+      retry: 0,
       refetchOnWindowFocus: true,
+      cacheTime: 0,
       initialData,
     },
   );
