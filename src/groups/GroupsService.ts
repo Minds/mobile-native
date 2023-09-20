@@ -207,6 +207,11 @@ class GroupsService {
       conversationDisabled: state,
     });
   }
+  toggleShowBoosts(group_guid: string, state: 1 | 0) {
+    return api.post(`api/v1/groups/group/${group_guid}`, {
+      show_boosts: state,
+    });
+  }
 }
 
 export default new GroupsService();
