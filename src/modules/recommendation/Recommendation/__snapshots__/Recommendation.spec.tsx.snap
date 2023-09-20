@@ -9,6 +9,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
       channel={
         {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "2",
           "allow_comments": true,
           "banned": "no",
