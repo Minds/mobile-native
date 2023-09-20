@@ -62,16 +62,19 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
         <>
           <Row flex>
             <Column flex>
+              <B1 font="bold">{t('Start date')}</B1>
+            </Column>
+            <Column flex>
               <B1 font="bold">{t('Results')}</B1>
             </Column>
             <Column flex>
               <B1 font="bold">{t('CPM')}</B1>
             </Column>
-            <Column flex>
-              <B1 font="bold">{t('Start date')}</B1>
-            </Column>
           </Row>
           <Row flex bottom="L">
+            <Column flex>
+              <B1 color="secondary">{date}</B1>
+            </Column>
             <Column flex>
               <B1 color="secondary">
                 {boost.summary?.views_delivered ?? ''} {t('views')}
@@ -79,9 +82,6 @@ function BoostActionBar({ boost }: BoostActionBarProps) {
             </Column>
             <Column flex>
               <B1 color="secondary">{cpmLabel}</B1>
-            </Column>
-            <Column flex>
-              <B1 color="secondary">{date}</B1>
             </Column>
           </Row>
           <Row flex>
