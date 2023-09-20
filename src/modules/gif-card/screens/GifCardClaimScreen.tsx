@@ -35,10 +35,14 @@ export function GifCardClaimScreen({ navigation, route }: Props) {
     showNotification('Gift card code is required');
     navigation.goBack();
   }
-
-  const { data, error, isLoading, refetch } = useGetGiftCardByCodeQuery({
-    claimCode: code,
-  });
+  const { data, error, isLoading, refetch } = useGetGiftCardByCodeQuery(
+    {
+      claimCode: code,
+    },
+    {
+      cacheTime: 0,
+    },
+  );
 
   const claimMutation = useClaimGiftCardMutation();
 
@@ -86,7 +90,7 @@ export function GifCardClaimScreen({ navigation, route }: Props) {
             </AnimatedContainer>
           ) : (
             <AnimatedContainer key="claimed">
-              <ScreenHeader title={t('claimed.title')} back />
+              <ScreenHeader title={t('claimed.title')} back backIcon="close" />
               <ScreenSection top="XL">
                 <B1 color="primary" font="bold" bottom="L">
                   {t('claimed.subtitle')}
@@ -136,14 +140,12 @@ export function GifCardClaimScreen({ navigation, route }: Props) {
 
 const AnimatedContainer = ({
   children,
-  key,
 }: {
   children: React.ReactNode;
   key: string;
 }) => {
   return (
     <MotiView
-      key={key}
       from={{
         opacity: 0,
         scale: 0.9,
