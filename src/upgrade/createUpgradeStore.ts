@@ -21,7 +21,7 @@ const IAP_SKUS_PRO = {
 const createUpgradeStore = () => {
   return {
     loaded: false,
-    method: 'tokens' as PayMethodType,
+    method: 'usd' as PayMethodType,
     settings: null as null | SettingsSubscriptionsType,
     plansTokens: [] as Array<PaymentPlanType>,
     plansUSD: [] as Array<PaymentPlanType>,
