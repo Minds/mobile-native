@@ -1,6 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, Image as RNImage, ScrollView, View } from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  Image as RNImage,
+  ScrollView,
+  View,
+} from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
+import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import { Image } from 'expo-image';
 
@@ -21,13 +28,23 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import MText from '../../common/components/MText';
-import { B2, Column, H4, Row } from '~ui';
+import { B1, B2, Column, H4, Row } from '~ui';
 import { IS_IOS } from '~/config/Config';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import UserModel from '../UserModel';
 import useModelEvent from '~/common/hooks/useModelEvent';
 import MutualSubscribers from '../components/MutualSubscribers';
 import GroupsTab from './tabs/GroupsTab';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  BottomSheetButton,
+  pushBottomSheet,
+} from '~/common/components/bottom-sheet';
+import {
+  buildFromV1ChannelProfile,
+  getSocialProfileMeta,
+  shortenLink,
+} from '../SocialProfileMeta';
 
 const CENTERED = false;
 
@@ -287,6 +304,8 @@ const ChannelHeader = withErrorBoundary(
                 </MText>
               </MText>
 
+              <SocialLinks channel={channel} />
+
               {!ownChannel && (
                 <MutualSubscribers
                   navigation={props.navigation}
@@ -339,8 +358,97 @@ const ChannelHeader = withErrorBoundary(
   }),
 );
 
+const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
+  const openLinks = useCallback(() => {
+    const links = buildFromV1ChannelProfile(channel.social_profiles)
+      .filter(socialLink => socialLink.key && socialLink.value)
+      .map(socialLink => {
+        socialLink = { ...socialLink }; // Clone
+
+        if (!socialLink.value.toLowerCase().startsWith('http')) {
+          socialLink.value = `https://${socialLink.value}`;
+        }
+
+        let linkWithMeta = {
+          ...socialLink,
+          ...getSocialProfileMeta(socialLink.key),
+        };
+
+        return linkWithMeta;
+      });
+
+    pushBottomSheet({
+      component: (bottomSheetRef, handleContentLayout) => (
+        <View onLayout={handleContentLayout}>
+          {links.map(link => (
+            <TouchableOpacity
+              onPress={() => Linking.openURL(link.value)}
+              key={link.key}>
+              <Row space="L" left="M" align="centerStart">
+                <View style={styles.iconContainer}>
+                  {!link.customIcon ? (
+                    <IconMC
+                      name={link.icon}
+                      size={28}
+                      style={
+                        link.verified
+                          ? ThemedStyles.style.colorGreen
+                          : ThemedStyles.style.colorPrimaryText
+                      }
+                    />
+                  ) : (
+                    <Image
+                      source={link.icon}
+                      style={styles.iconImage}
+                      tintColor="#FFFFFF"
+                    />
+                  )}
+                </View>
+                <View style={ThemedStyles.style.flexContainer}>
+                  <B1
+                    font="medium"
+                    numberOfLines={1}
+                    right="S"
+                    color={link.verified ? 'green' : 'primary'}>
+                    {shortenLink(link.value)}
+                  </B1>
+                </View>
+                {link.verified && (
+                  <IconMC
+                    name="check"
+                    size={18}
+                    style={ThemedStyles.style.colorGreen}
+                  />
+                )}
+              </Row>
+            </TouchableOpacity>
+          ))}
+          <BottomSheetButton text="Cancel" onPress={bottomSheetRef.close} />
+        </View>
+      ),
+    });
+  }, [channel.social_profiles]);
+
+  return channel.social_profiles.length > 0 ? (
+    <TouchableOpacity style={styles.linkContainer} onPress={openLinks}>
+      <IconMC
+        name="link-variant"
+        style={ThemedStyles.style.colorPrimaryText}
+        size={17}
+      />
+      <B2 left="XS">
+        {shortenLink(channel.social_profiles[0].value)}
+        {channel.social_profiles.length > 1
+          ? ` and ${channel.social_profiles.length - 1} other links`
+          : ''}
+      </B2>
+    </TouchableOpacity>
+  ) : null;
+});
+
 const styles = ThemedStyles.create({
   channelDescription: ['paddingVertical'],
+  linkContainer: ['rowJustifyStart', 'alignCenter', 'paddingVertical3x'],
   buttonsMarginContainer: {
     position: 'absolute',
     right: 7,
@@ -418,6 +526,12 @@ const styles = ThemedStyles.create({
     width: avatarSize,
     height: avatarSize,
     borderRadius: avatarSize / 2,
+  },
+  iconImage: { height: 28, width: 28 },
+  iconContainer: {
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tapOverlayView: {
     position: 'absolute',
