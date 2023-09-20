@@ -9,13 +9,10 @@ import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
-import DoubleTap from '../DoubleTap';
 
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
-
-const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
@@ -140,7 +137,7 @@ export default function MediaViewImage({
   return (
     <Pressable>
       <Pinchable key={entity.guid}>
-        <DoubleTapTouchable
+        <TouchableOpacity
           onPress={onImagePress}
           onLongPress={onImageLongPress}
           style={imageStyle}
@@ -157,7 +154,7 @@ export default function MediaViewImage({
             locked={entity?.isLocked()}
             recyclingKey={entity.urn}
           />
-        </DoubleTapTouchable>
+        </TouchableOpacity>
       </Pinchable>
     </Pressable>
   );
