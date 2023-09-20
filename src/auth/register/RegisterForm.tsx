@@ -3,7 +3,7 @@ import { Linking, ScrollView, View } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import InputContainer, {
   InputContainerImperativeHandle,
 } from '../../common/components/InputContainer';

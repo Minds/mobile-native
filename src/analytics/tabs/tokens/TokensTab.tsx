@@ -14,7 +14,7 @@ import capitalize from '../../../common/helpers/capitalize';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 import MText from '../../../common/components/MText';
 import { useRoute } from '@react-navigation/native';
-import { lowerCase } from 'lodash';
+import lowerCase from 'lodash/lowerCase';
 import Card from './Card';
 
 export type DashBoardPropsType = {

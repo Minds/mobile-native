@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import map from 'lodash/map';
+import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
 import { extendObservable } from 'mobx';
 import { InjectItem } from '~/common/components/FeedList';
 import PortraitBarItem from '../models/PortraitBarItem';
@@ -52,8 +54,8 @@ const postProcessPortraitEntities = ({
    * 2. filter paywalled contents
    * 3. create {PortraitBarItem} instances
    **/
-  let items = _.map(
-    _.groupBy(
+  let items = map(
+    groupBy(
       user.plus
         ? entities.filter(
             a =>
@@ -71,7 +73,7 @@ const postProcessPortraitEntities = ({
   /**
    * Sort to show unseen first
    **/
-  items = _.sortBy(items, d => !d.unseen);
+  items = sortBy(items, d => !d.unseen);
 
   /**
    * Set item positions (used for analytics metadata)

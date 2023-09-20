@@ -53,6 +53,7 @@ const CodePushUpdatePrompt = observer(({ children }: PropsWithChildren) => {
   useFocusEffect(
     useThrottledCallback(
       () => {
+        console.log('[CodePushUpdatePrompt] Syncing codepush');
         codePush.getUpdateMetadata().then(data => {
           if (!data?.deploymentKey) {
             return;

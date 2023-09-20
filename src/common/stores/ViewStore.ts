@@ -1,5 +1,5 @@
 import { recordView } from '../../newsfeed/NewsfeedService';
-import { isNetworkError } from '../services/api.service';
+import { isNetworkError } from '../services/ApiErrors';
 import type MetadataService from '../services/metadata.service';
 import { MetadataMedium } from '../services/metadata.service';
 

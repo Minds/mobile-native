@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
-  ApiError,
   ApiService,
   TWO_FACTOR_ERROR,
 } from '../../../src/common/services/api.service';
+import { ApiError } from '../../../src/common/services/ApiErrors';
+
 import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
@@ -524,6 +525,7 @@ describe('api service auth refresh', () => {
   it('should throw if 2FA is canceled', async () => {
     try {
       NavigationService.navigate.mockImplementation((screen, params) => {
+        console.log('CANCEL CALLED');
         // mock user entered code
         params && params.onCancel && params.onCancel();
       });
@@ -541,6 +543,7 @@ describe('api service auth refresh', () => {
       await api.post('api/channels/me1', params);
       expect(NavigationService.navigate).toBeCalled();
     } catch (error) {
+      console.log('error', error);
       expect(error).toBeInstanceOf(UserError);
       console.log(error);
     }
