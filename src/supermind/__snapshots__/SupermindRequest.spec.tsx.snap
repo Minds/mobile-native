@@ -285,6 +285,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           style={
             {
               "flexDirection": "row",
+              "marginRight": 8,
             }
           }
         />
@@ -772,6 +773,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           style={
             {
               "flexDirection": "row",
+              "marginRight": 8,
             }
           }
         />

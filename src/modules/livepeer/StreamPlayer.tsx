@@ -8,15 +8,17 @@ import { B2, H2 } from '~/common/ui';
 
 export type StreamPlayerProps = {
   id: string;
+  enabled?: boolean;
 };
 
 /**
  * Livepeer live streaming player
  */
-export const StreamPlayer = ({ id }: StreamPlayerProps) => {
+export const StreamPlayer = ({ id, enabled }: StreamPlayerProps) => {
   const playbackInfo = usePlaybackInfo({
     playbackId: id,
     refetchInterval: 20000,
+    enabled,
   });
 
   if (!playbackInfo.data) {
@@ -35,7 +37,9 @@ export const StreamPlayer = ({ id }: StreamPlayerProps) => {
     <Pressable>
       <Player
         src={playbackInfo.data.meta.source[0].url}
+        muted={true}
         aspectRatio="16to9"
+        _isCurrentlyShown={enabled}
         autoPlay={true}
       />
     </Pressable>

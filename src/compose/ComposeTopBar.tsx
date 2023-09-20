@@ -13,6 +13,8 @@ import { pushComposeCreateScreen } from './ComposeCreateScreen';
 import { ComposeCreateMode } from './createComposeStore';
 import type { ComposeStoreType } from './useComposeStore';
 import BaseModel from '../common/BaseModel';
+import { ReplyType } from './SupermindComposeScreen';
+import delay from '~/common/helpers/delay';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -34,8 +36,11 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
     if (store.attachments.uploading) {
       return;
     }
-    const { channel: targetChannel, payment_options } =
-      store.supermindRequest ?? {};
+    const {
+      channel: targetChannel,
+      payment_options,
+      reply_type,
+    } = store.supermindRequest ?? {};
 
     if (
       targetChannel?.name &&
@@ -46,6 +51,19 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
       }))
     ) {
       return;
+    }
+
+    if (reply_type === ReplyType.live) {
+      // we need a small delay to ensure the previous confirm screen is closed
+      await delay(500);
+      if (
+        !(await confirm({
+          title: i18n.t('supermind.liveReplyRequest.title'),
+          description: i18n.t('supermind.liveReplyRequest.description'),
+        }))
+      ) {
+        return;
+      }
     }
 
     const isEdit = store.isEdit;

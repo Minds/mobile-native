@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 import groupsService from './GroupsService';
 import GroupModel from './GroupModel';
 import logService from '../common/services/log.service';
-import { isAbort, isNetworkError } from '../common/services/api.service';
+import { isAbort, isNetworkError } from '~/common/services/ApiErrors';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import { storages } from '../common/services/storage/storages.service';
 

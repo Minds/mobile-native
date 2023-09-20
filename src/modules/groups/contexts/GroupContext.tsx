@@ -28,12 +28,15 @@ export const GroupScreenContextProvider = ({
   const feedStore = useGroupFeedStore(group);
   const feedMembersStore = useGroupMembersStore(group);
   const context = { feedStore, feedMembersStore, group };
+
   return <GroupContext.Provider value={context} children={children} />;
 };
 
 export function useGroupContext() {
   return useContext(GroupContext);
 }
+
+export type GroupContextType = ReturnType<typeof useGroupContext>;
 
 export const GroupContextProvider = ({
   group,

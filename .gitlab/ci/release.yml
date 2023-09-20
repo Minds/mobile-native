@@ -27,6 +27,7 @@ release:android:google_play:
     - yarn release-json Minds.apk
     - cd android
     - bundle install --path=vendor/bundle
+    - echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json
   environment: google_play
   script:
     - echo "Upload to the play store $APK_NAME"

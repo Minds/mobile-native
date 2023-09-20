@@ -79,7 +79,8 @@
     "replyType": {
       "0": "Text Reply",
       "1": "Image Reply",
-      "2": "Video Reply"
+      "2": "Video Reply",
+      "3": "Live Reply"
     },
     "filter": {
       "all": "All",
@@ -153,6 +154,14 @@
       "title": "Confirm Offer",
       "offerDescription": "I understand this transaction is non-refundable once the recipient approves my offer.",
       "description": "I understand this transaction is non-refundable."
+    },
+    "liveReplyRequest": {
+      "title": "Live reply",
+      "description": "This Supermind is requesting a live reply. The recipient will respond on a live stream, podcast, or other media platform, which means you won't get a Minds activity post reply when they accept the offer."
+    },
+    "liveReplyConfirm": {
+      "title": "Live reply",
+      "description": "This Supermind is requesting a live reply. You won't need to create a post to accept this offer, just respond on your live stream, podcast, or other preferred medium."
     },
     "supermind": "Supermind",
     "requireTwitter": "Optional: Require reply to be posted on Twitter",
@@ -395,6 +404,7 @@
     "boostCashViews": "{{amount}} USD = {{views}} views",
     "boostTokenViews": "{{amount}} token = {{views}} views",
     "boostedChannel": "Boosted Channel",
+    "boostedGroup": "Boosted Group",
     "boostChangingTitle": "Boost is changing",
     "boostChangingText": "Heads up, we're working on a new version of Boost. Because of this, your in-progress Boosts may be refunded if they don't deliver before we transition. ",
     "boostChangingLink": "Read more about the update."
@@ -562,7 +572,9 @@
     "removeModerator": "Remove as Moderator",
     "listMembersCount": "{{count}} members",
     "disableConversations": "Disable conversations",
-    "enableConversations": "Enable conversations"
+    "enableConversations": "Enable conversations",
+    "manage": "Groups you manage",
+    "joined": "Groups you've joined"
   },
   "messenger": {
     "errorDirectMessage": "Error sending direct message",
@@ -1628,7 +1640,8 @@
       "originalContent": "This content is my original content",
       "exclusive": "This content is exclusive to Minds+",
       "violations": "I understand that violation of these requirements may result in losing the ability to publish Premium Content for Minds+ members."
-    }
+    },
+    "insufficientTokens": "Insufficient tokens to upgrade"
   },
   "referrals": {
     "menu": "Invite friends",
@@ -1855,6 +1868,7 @@
   "others": "others",
   "newMoment": "New Moment",
   "recommendedChannels": "Recommended Channels",
+  "recommendedForYou": "Recommended for you",
   "recommendedGroups": "Recommended Groups",
   "expires": "Expires",
   "requirements": "Requirements",
@@ -1945,9 +1959,12 @@
   "group": {
     "search": "Search Group",
     "share": "Share Group",
-    "boost": "Boost Group"
+    "boost": "Boost Group",
+    "disableBoost": "Disable boosts",
+    "enableBoost": "Enable boosts"
   },
   "back": "Back",
   "explore": "Explore",
-  "restart": "Restart"
+  "restart": "Restart",
+  "viewOnExternal": "View on {{external}}"
 }

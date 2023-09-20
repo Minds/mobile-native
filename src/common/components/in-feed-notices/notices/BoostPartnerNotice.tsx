@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 import i18n from '~/common/services/i18n.service';
-import openUrlService from '~/common/services/open-url.service';
+// import openUrlService from '~/common/services/open-url.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 
@@ -26,15 +26,15 @@ function BoostPartnerNotice({ name }: NoticeProps) {
       name={name}
       title={i18n.t('inFeedNotices.boostPartnerTitle')}
       description={i18n.t('inFeedNotices.boostPartnerDescription')}
-      btnText={i18n.t('inFeedNotices.boostPartnerButton')}
-      btnSecondaryText={i18n.t('moreScreen.settings')}
+      btnText={i18n.t('moreScreen.settings')}
+      btnSecondaryText={i18n.t('inFeedNotices.boostPartnerButton')}
       iconName="info-outline"
-      onPress={() =>
-        openUrlService.open(
-          'https://www.minds.com/info/blog/introducing-boost-partners-program-1477787849246904328',
-        )
-      }
-      onSecondaryPress={onPress}
+      onPress={onPress}
+      // onSecondaryPress={() =>
+      //   openUrlService.open(
+      //     'https://www.minds.com/info/blog/introducing-boost-partners-program-1477787849246904328',
+      //   )
+      // }
     />
   );
 }

@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import remoteAction from '../../src/common/RemoteAction';
 import connectivityService from '../../src/common/services/connectivity.service';
-import { ApiError, NetworkError } from '../../src/common/services/api.service';
+import { ApiError, NetworkError } from '../../src/common/services/ApiErrors';
 
 jest.mock('../../src/common/services/connectivity.service');
 

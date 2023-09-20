@@ -1,5 +1,4 @@
 import React from 'react';
-import WebView from 'react-native-webview';
 import CloseableModal, { CloseableModalProps } from './CloseableModal';
 
 type Props = CloseableModalProps & {
@@ -12,6 +11,8 @@ export default function ({
   uri,
   onCloseButtonPress,
 }: Props) {
+  // lazy load
+  const WebView = require('react-native-webview').WebView;
   return (
     <CloseableModal
       isVisible={isVisible}

@@ -67,7 +67,7 @@ export default class UserModel extends BaseModel {
   @observable disable_autoplay_videos?: boolean;
   @observable disabled_boost?: boolean;
 
-  social_profiles?: Array<SocialProfile>;
+  social_profiles: Array<SocialProfile> = [];
 
   /**
    * @var {boolean}
@@ -424,6 +424,26 @@ export default class UserModel extends BaseModel {
   @action
   setLiquiditySpotOptOut(liquidity_spot_opt_out: boolean) {
     this.liquidity_spot_opt_out = liquidity_spot_opt_out;
+  }
+
+  /**
+   * returns external data such as mastodon handle and source
+   */
+  getExternalData() {
+    if (!this.source) {
+      return undefined;
+    }
+
+    const [handle, source] = this.username.split('@');
+
+    if (!handle || !source) {
+      return undefined;
+    }
+
+    return {
+      handle,
+      source,
+    };
   }
 }
 

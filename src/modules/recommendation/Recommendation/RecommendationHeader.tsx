@@ -44,11 +44,7 @@ function RecommendationHeader({ type, location, shadow }: PropsType) {
           : ThemedStyles.style.bgPrimaryBackground
       }>
       <Row align="centerBetween" vertical="L" horizontal="L">
-        <H4>
-          {type === 'channel'
-            ? i18nService.t('recommendedChannels')
-            : i18nService.t('recommendedGroups')}
-        </H4>
+        <H4>{i18nService.t('recommendedForYou')}</H4>
         <Row align="centerBoth">
           <B2
             color="link"

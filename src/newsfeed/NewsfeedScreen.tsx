@@ -14,10 +14,8 @@ import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '../portrait/components/PortraitContentBar';
 import type NewsfeedStore from './NewsfeedStore';
 import TopFeedHighlights from './TopFeedHighlights';
-import ChannelRecommendationBody from '~/common/components/ChannelRecommendation/ChannelRecommendationBody';
 import NewsfeedPlaceholder from './NewsfeedPlaceholder';
 import SeeLatestPostsButton from './SeeLatestPostsButton';
-import ChannelRecommendationHeader from '~/common/components/ChannelRecommendation/ChannelRecommendationHeader';
 import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -30,7 +28,7 @@ import InlineInFeedNotice from '~/common/components/in-feed-notices/InlineInFeed
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
 import { IS_IOS } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsAndroidFeatureOn, useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
@@ -45,6 +43,8 @@ import {
   Recommendation,
 } from 'modules/recommendation';
 import { GroupsEmpty } from '../modules/groups';
+import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
+import CaptureFab from '~/capture/CaptureFab';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -77,6 +77,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
   const portrait = useStores().portrait;
   const inFeedBoostRotator = useIsFeatureOn('mob-5009-boost-rotator-in-feed');
   const inAppVerification = useIsFeatureOn('mob-4472-in-app-verification');
+  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
 
   const refreshNewsfeed = useCallback(
     (scrollAndRefresh = false) => {
@@ -179,10 +180,7 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       prepend,
       boostRotatorInjectItem,
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
-        <>
-          <ChannelRecommendationHeader location="newsfeed" />
-          <ChannelRecommendationBody location="newsfeed" />
-        </>
+        <ChannelRecommendation location="newsfeed" />
       )),
       new InjectItem(
         7,
@@ -261,11 +259,19 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
           </View>
         </RecommendationProvider>
       </ChannelRecommendationProvider>
+      {showFAB && (
+        <CaptureFab
+          visible={true}
+          navigation={navigation}
+          style={composeFABStyle}
+        />
+      )}
     </Screen>
   );
 });
 
 const prefetch: NotificationsTabOptions[] = ['all'];
 const RECOMMENDATION_TYPES: RecommendationType[] = ['group'];
+const composeFABStyle = { bottom: 24 };
 
 export default withErrorBoundary(NewsfeedScreen);

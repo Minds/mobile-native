@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
-import BoxShadow from '~/common/components/BoxShadow';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import FloatingBackButton from '~/common/components/FloatingBackButton';
 import MText from '~/common/components/MText';
@@ -133,21 +132,6 @@ const PortraitActivity = observer((props: PropsType) => {
     </OwnerBlock>
   );
 
-  const shadowOpt = {
-    width: window.width,
-    height: 70 + (props.hasPaginator ? 26 : 0),
-    color: '#000',
-    border: 5,
-    opacity: 0.15,
-    x: 0,
-    y: 0,
-  };
-
-  const ownerBlockShadow = Platform.select({
-    ios: ownerBlock,
-    android: <BoxShadow setting={shadowOpt}>{ownerBlock}</BoxShadow>, // Android fallback for shadows
-  });
-
   const touchableStyle = {
     top: 90 + insets.top,
     height: window.height - ((isIOS ? 200 : 230) + insets.top + insets.bottom),
@@ -177,7 +161,7 @@ const PortraitActivity = observer((props: PropsType) => {
   return (
     <View style={styles.mainContainer}>
       <View style={theme.flexContainer}>
-        {ownerBlockShadow}
+        {ownerBlock}
         {showNSFW && tappingArea}
         <View pointerEvents="box-none" style={styles.content}>
           {showNSFW ? (

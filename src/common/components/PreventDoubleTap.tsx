@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 interface OnPressType {
   onPress: Function;

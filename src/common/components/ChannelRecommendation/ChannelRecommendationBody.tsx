@@ -1,76 +1,16 @@
-import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React, { FC, useCallback, useState } from 'react';
 import { View } from 'react-native';
+
 import UserModel from '~/channel/UserModel';
-import Subscribe from '~/channel/v2/buttons/Subscribe';
-import MPressable from '~/common/components/MPressable';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-import i18n from '~/common/services/i18n.service';
-import { Avatar, B1, B2, Column, Icon, Row, Spacer } from '~/common/ui';
+import { Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
-
-interface ChannelRecommendationItemProps {
-  channel: UserModel;
-  onSubscribed?: (user: UserModel) => void;
-  disableNavigation?: boolean;
-}
-
-export const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
-  channel,
-  onSubscribed,
-  disableNavigation,
-}) => {
-  const avatar =
-    channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
-  const navigation = useNavigation<any>();
-  const onPress = useCallback(
-    () =>
-      !disableNavigation &&
-      navigation.push('Channel', {
-        guid: channel.guid,
-        entity: channel,
-      }),
-    [navigation, channel, disableNavigation],
-  );
-
-  const description =
-    channel.briefdescription && channel.briefdescription.trim
-      ? channel.briefdescription.trim()
-      : '';
-
-  return (
-    <MPressable onPress={onPress}>
-      <Row vertical="S" horizontal="L">
-        <Avatar size="tiny" right="M" top="XS" source={avatar} />
-        <Column flex align="centerStart" right="L">
-          <B1 font="bold">{channel.name}</B1>
-          {Boolean(description) && (
-            <B2 numberOfLines={2} color="secondary">
-              {description}
-            </B2>
-          )}
-          {!!channel.boosted && <BoostedChannelLabel />}
-        </Column>
-        <Subscribe
-          mini
-          shouldUpdateFeed={false}
-          channel={channel}
-          onSubscribed={onSubscribed}
-        />
-      </Row>
-    </MPressable>
-  );
-};
-
-const BoostedChannelLabel = () => (
-  <Row top="XS" align="centerStart">
-    <Icon name="boost" size="tiny" right="XS" color="Link" />
-    <B2 color="link">{i18n.t('boosts.boostedChannel')}</B2>
-  </Row>
-);
+import GroupsListItem from '~/groups/GroupsListItem';
+import { ChannelRecommendationItem } from '~/modules/recommendation';
+import GroupModel from '~/groups/GroupModel';
 
 export interface ChannelRecommendationProps {
   location: string;
@@ -141,13 +81,27 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
       <Spacer bottom="XL">
         {recommendation?.result?.entities
           .slice(0, listSize)
-          .map((suggestion, index) => (
-            <ChannelRecommendationItem
-              key={`${suggestion.entity.guid}_${index}`}
-              channel={suggestion.entity}
-              onSubscribed={onSubscribed}
-            />
-          ))}
+          .map((suggestion, index) => {
+            switch (suggestion.entity_type) {
+              case 'user':
+                return (
+                  <ChannelRecommendationItem
+                    key={`${suggestion.entity.guid}_${index}`}
+                    channel={suggestion.entity as UserModel}
+                    onSubscribed={onSubscribed}
+                  />
+                );
+              case 'group':
+                return (
+                  <GroupsListItem
+                    group={suggestion.entity as GroupModel}
+                    key={suggestion.entity.guid}
+                  />
+                );
+            }
+            console.error('Unknown entity type', suggestion.entity_type);
+            return null;
+          })}
       </Spacer>
       <View style={styles.borderBottom} />
     </>

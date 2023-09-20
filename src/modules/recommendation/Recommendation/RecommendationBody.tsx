@@ -100,7 +100,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
               .map(suggestion => (
                 <ChannelRecommendationItem
                   key={suggestion.entity.guid}
-                  channel={suggestion.entity}
+                  channel={suggestion.entity as UserModel}
                   onSubscribed={onSubscribed}
                 />
               ))
@@ -108,6 +108,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
               .slice(0, listSize)
               .map((suggestion, index) => (
                 <GroupsListItem
+                  key={suggestion.entity_guid}
                   group={suggestion.entity}
                   index={index}
                   onPress={() => onJoined(suggestion.entity)}

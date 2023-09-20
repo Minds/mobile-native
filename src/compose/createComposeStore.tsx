@@ -70,6 +70,7 @@ export default function (props) {
     isEdit: false,
     accessId: 2,
     mode: settingsStore.composerMode,
+    isTitleOpen: false,
     /**
      * what compose mode is allowed? photo, video, and null for any
      */
@@ -268,6 +269,7 @@ export default function (props) {
       this.text = entity.message || '';
       this.time_created = Number(entity.time_created) * 1000;
       this.title = entity.title || '';
+      this.isTitleOpen = Boolean(this.title);
       this.nsfw = entity.nsfw || [];
       this.tags = entity.tags || [];
       this.wire_threshold = entity.wire_threshold || DEFAULT_MONETIZE;
@@ -829,6 +831,12 @@ export default function (props) {
       date.setSeconds(0);
 
       return Math.floor(date.getTime() / 1000);
+    },
+    toggleTitle() {
+      if (this.isTitleOpen) {
+        this.title = '';
+      }
+      this.isTitleOpen = !this.isTitleOpen;
     },
   };
 }

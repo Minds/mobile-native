@@ -81,7 +81,7 @@ class MetadataService {
   /**
    * Constructor
    */
-  constructor() {
+  init() {
     sessionService.onLogin(() => {
       this.initDelta();
     });

@@ -4,7 +4,7 @@ import { observable, action } from 'mobx';
 import ReportListStore from './ReportListStore';
 import reportService from './ReportService';
 import logService from '../common/services/log.service';
-import { isNetworkError } from '../common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 
 export default class ReportStore {
   @observable filter = 'review';

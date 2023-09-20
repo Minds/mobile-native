@@ -40,8 +40,11 @@ class OpenURLService {
      * TODO: do not open links such as minds links and youtube
      *       links in the IABrowser. Logic is TBD
      **/
-    const excludedURLs = ['youtube.com', 'youtu.be'].map(url => new URL(url));
-    return !excludedURLs.find(p => url.includes(String(p)));
+    const excludedURLRegexes = [
+      // regex for youtube videos
+      /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?‌​=]*)?/,
+    ];
+    return !excludedURLRegexes.find(p => p.test(url));
   }
 
   async openLinkInInAppBrowser(url) {

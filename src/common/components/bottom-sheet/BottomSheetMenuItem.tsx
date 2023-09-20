@@ -10,6 +10,7 @@ export type BottomSheetMenuItemProps = {
   title: string | JSX.Element;
   iconName?: string;
   iconType?: IconType;
+  icon?: JSX.Element;
   iconSize?: number;
   testID?: string;
   onPress?: () => void;
@@ -20,6 +21,7 @@ export type BottomSheetMenuItemProps = {
 const BottomSheetMenuItem = ({
   iconName,
   iconType,
+  icon,
   title,
   onPress,
   iconSize,
@@ -38,18 +40,22 @@ const BottomSheetMenuItem = ({
       onPress={onPress}
       testID={testID}
       disabled={!onPress}>
-      {Boolean(iconName) && (
+      {(!!iconName || !!icon) && (
         <View style={styles.iconContainer}>
-          <Icon
-            size={iconSize}
-            name={iconName!}
-            type={iconType}
-            iconStyle={
-              iconName === 'ios-radio-button-on'
-                ? ThemedStyles.style.colorIconActive
-                : ThemedStyles.style.colorSecondaryText
-            }
-          />
+          {iconName ? (
+            <Icon
+              size={iconSize}
+              name={iconName!}
+              type={iconType}
+              iconStyle={
+                iconName === 'ios-radio-button-on'
+                  ? ThemedStyles.style.colorIconActive
+                  : ThemedStyles.style.colorSecondaryText
+              }
+            />
+          ) : (
+            icon
+          )}
         </View>
       )}
       {textStyle ? (

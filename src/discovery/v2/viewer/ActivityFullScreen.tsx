@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -29,7 +29,6 @@ import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay
 import LockV2 from '../../../wire/v2/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
@@ -254,16 +253,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <LockV2 entity={entity} navigation={navigation} />
   ) : null;
 
-  const shadowOpt = {
-    width: window.width,
-    height: 60 + (entity.remind_users ? 42 : 0),
-    color: '#000',
-    border: 5,
-    opacity: 0.15,
-    x: 0,
-    y: 0,
-  };
-
   let remind: null | React.ReactNode = null;
 
   if (hasRemind) {
@@ -281,29 +270,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ) : null;
   }
 
-  const ownerBlockShadow = React.useMemo(
-    () =>
-      Platform.select({
-        ios: (
-          <ActivityOwner
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        ),
-        android: (
-          <BoxShadow setting={shadowOpt}>
-            <ActivityOwner
-              entity={entity}
-              navigation={navigation}
-              onTranslate={onTranslate}
-            />
-          </BoxShadow>
-        ), // Android fallback for shadows
-      }),
-    [entity, navigation, onTranslate, shadowOpt],
-  );
-
   const containerStyle = useStyle(
     window,
     'flexContainer',
@@ -314,7 +280,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <GroupContextProvider group={route.params?.group || null}>
       <View testID="ActivityScreen" style={containerStyle}>
         <View style={theme.flexContainer}>
-          {ownerBlockShadow}
+          <ActivityOwner
+            entity={entity}
+            navigation={navigation}
+            onTranslate={onTranslate}
+          />
+
           <ScrollView
             style={theme.flexContainer}
             onLayout={store.onScrollViewSizeChange}

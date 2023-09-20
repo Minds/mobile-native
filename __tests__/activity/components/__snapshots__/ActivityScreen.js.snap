@@ -294,6 +294,7 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               {
                 "flexDirection": "row",
+                "marginRight": 8,
               }
             }
           />
@@ -1391,6 +1392,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "pro": false,
           "pro_method": "tokens",
           "rewards": false,
+          "social_profiles": [],
           "subscribed": undefined,
           "subscriber": false,
           "subscribers_count": undefined,
@@ -1524,6 +1526,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "pro": false,
           "pro_method": "tokens",
           "rewards": false,
+          "social_profiles": [],
           "subscribed": undefined,
           "subscriber": false,
           "subscribers_count": undefined,
@@ -1657,6 +1660,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "pro": false,
           "pro_method": "tokens",
           "rewards": false,
+          "social_profiles": [],
           "subscribed": undefined,
           "subscriber": false,
           "subscribers_count": undefined,
@@ -1790,6 +1794,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "pro": false,
           "pro_method": "tokens",
           "rewards": false,
+          "social_profiles": [],
           "subscribed": undefined,
           "subscriber": false,
           "subscribers_count": undefined,

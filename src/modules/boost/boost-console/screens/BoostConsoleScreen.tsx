@@ -7,7 +7,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { H4, IconButton, Screen, ScreenHeader } from '~ui';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
-import Boost from '../components/Boost';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';

@@ -11,7 +11,6 @@ import ThemedStyles from '~/styles/ThemedStyles';
 type CaptureFabProps = {
   group?: GroupModel;
   visible?: boolean;
-  routeKey: string;
   navigation: any;
   testID?: string;
   style?: ViewStyle;
@@ -33,13 +32,11 @@ const CaptureFab = ({
   visible,
   group,
   testID,
-  routeKey,
   style,
 }: CaptureFabProps) => {
   const navToCapture = () => {
     navigation.push('Compose', {
       group: group,
-      parentKey: routeKey,
     });
   };
 
