@@ -1,10 +1,7 @@
-import api, {
-  ApiResponse,
-  isNetworkError,
-} from '~/common/services/api.service';
+import api, { ApiResponse } from '~/common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
-import { hasVariation } from '../../../../ExperimentsProvider';
 import BoostModelV3 from '../models/BoostModelV3';
 import { BoostConsoleBoost, BoostStatus } from './types/BoostConsoleBoost';
 
@@ -43,7 +40,7 @@ export async function getBoosts(offset, filter, peer_filter) {
 
 export async function getBoostsV3(
   offset,
-  location: 'feed' | 'sidebar',
+  location: 'feed' | 'sidebar' | 'explore',
   status?: BoostStatus,
 ) {
   try {
@@ -66,28 +63,16 @@ export async function getBoostsV3(
   }
 }
 
-export function revokeBoost(guid, filter) {
-  if (hasVariation('mob-4638-boost-v3')) {
-    return api.post(`api/v3/boosts/${guid}/cancel`);
-  }
-
-  return api.delete(`api/v2/boost/${filter}/${guid}/revoke`);
+export function revokeBoost(guid) {
+  return api.post(`api/v3/boosts/${guid}/cancel`);
 }
 
 export function rejectBoost(guid) {
-  if (hasVariation('mob-4638-boost-v3')) {
-    return api.post(`api/v3/boosts/${guid}/reject`);
-  }
-
-  return api.delete(`api/v2/boost/peer/${guid}`);
+  return api.post(`api/v3/boosts/${guid}/reject`);
 }
 
 export function acceptBoost(guid) {
-  if (hasVariation('mob-4638-boost-v3')) {
-    return api.post(`api/v3/boosts/${guid}/approve`);
-  }
-
-  return api.put(`api/v2/boost/peer/${guid}`);
+  return api.post(`api/v3/boosts/${guid}/approve`);
 }
 
 export async function getSingleBoost(

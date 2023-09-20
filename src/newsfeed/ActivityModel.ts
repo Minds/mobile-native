@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import { FlatList, Alert, Platform } from 'react-native';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
@@ -11,10 +11,8 @@ import {
   unfollow,
   follow,
 } from '../newsfeed/NewsfeedService';
-import api, {
-  isApiError,
-  isNetworkError,
-} from '../common/services/api.service';
+import api from '../common/services/api.service';
+import { isApiError, isNetworkError } from '~/common/services/ApiErrors';
 
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
@@ -98,7 +96,6 @@ export default class ActivityModel extends BaseModel {
   };
   spam?: boolean;
   type?: string;
-  permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;
   blurhash?: string;
@@ -111,6 +108,8 @@ export default class ActivityModel extends BaseModel {
    */
   goal_button_text?: BoostButtonText;
   goal_button_url?: string;
+
+  canonical_url?: string;
 
   /**
    * Mature visibility flag
@@ -626,7 +625,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * listens to metrics updates with 1000ms debounce time
    */
-  private listenForMetricsDebounced = _.debounce(this.listenForMetrics, 1000);
+  private listenForMetricsDebounced = debounce(this.listenForMetrics, 1000);
 
   /**
    * listens to metrics updates
@@ -656,6 +655,26 @@ export default class ActivityModel extends BaseModel {
   setCollapsed(on = true) {
     this._collapsed = on;
     this.__list?.updateEntity(this.guid, this);
+  }
+
+  /**
+   * returns external data such as mastodon handle and source
+   */
+  getExternalData() {
+    if (!this.source) {
+      return undefined;
+    }
+
+    const [handle, source] = this.ownerObj.username.split('@');
+
+    if (!handle || !source) {
+      return undefined;
+    }
+
+    return {
+      handle,
+      source,
+    };
   }
 }
 

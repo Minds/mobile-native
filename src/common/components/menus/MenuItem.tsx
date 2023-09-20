@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import {
   StyleProp,
   TextStyle,
-  TouchableOpacityProps,
+  TouchableHighlightProps,
   View,
   ViewStyle,
 } from 'react-native';
@@ -13,6 +13,8 @@ import { B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
 import { IconMapNameType } from '../../ui/icons/map';
 import MPressable from '../MPressable';
 import MText from '../MText';
+import { TypographyPropsType } from '../../ui/typography/Typography';
+import { ColorsNameType } from '../../../styles/Colors';
 
 export type MenuItemProps = {
   containerItemStyle?: StyleProp<ViewStyle>;
@@ -38,7 +40,10 @@ export type MenuItemProps = {
   avatarSize?: number;
   children?: ReactNode;
   alignTop?: boolean;
-} & TouchableOpacityProps;
+  primaryColor?: ColorsNameType;
+  secondaryColor?: TypographyPropsType['color'];
+  isRightIconButton?: boolean;
+} & TouchableHighlightProps;
 
 export default function ({
   containerItemStyle,
@@ -46,7 +51,6 @@ export default function ({
   subtitle,
   onPress,
   icon,
-  leftIcon,
   iconSize,
   iconColor,
   avatar,
@@ -60,6 +64,7 @@ export default function ({
   reversedIcon,
   avatarSize,
   alignTop,
+  isRightIconButton,
   ...props
 }: MenuItemProps) {
   const containerStyle = useMemoStyle(() => {
@@ -91,13 +96,42 @@ export default function ({
     if (titleStyle) {
       stylesList.push(titleStyle);
     }
+    if (props.primaryColor) {
+      stylesList.push({
+        color: ThemedStyles.getColor(props.primaryColor),
+      });
+    }
 
     return stylesList;
-  }, [titleStyle]);
+  }, [titleStyle, props.primaryColor]);
+
+  const leftIcon = useMemo(() => {
+    if (!props.leftIcon) {
+      return null;
+    }
+
+    if (typeof props.leftIcon === 'string') {
+      return (
+        <Icon
+          name={props.leftIcon as IconMapNameType}
+          size={iconSize}
+          color={iconColor}
+        />
+      );
+    }
+
+    return props.leftIcon;
+  }, [iconColor, iconSize, props.leftIcon]);
 
   const rightIcon = useMemo(() => {
     if (!icon && onPress) {
-      return <Icon name={'chevron-right'} size={iconSize} />;
+      return (
+        <Icon
+          name={'chevron-right'}
+          color={props.primaryColor}
+          size={iconSize}
+        />
+      );
     }
 
     if (typeof icon === 'string') {
@@ -111,7 +145,7 @@ export default function ({
     }
 
     return icon;
-  }, [icon, iconColor, iconSize, onPress]);
+  }, [icon, iconColor, iconSize, onPress, props.primaryColor]);
 
   const avatarStyle = useMemoStyle(() => {
     const avatarStyles = [styles.avatar];
@@ -140,22 +174,19 @@ export default function ({
 
   const shouldRenderIcon = Boolean(rightIcon) && !noIcon;
 
+  const iconButtonStyle = isRightIconButton ? { paddingRight: 45 } : undefined;
+
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
       {avatar && <Image source={avatar} style={avatarStyle} />}
-      {leftIcon && (
-        <View style={styles.leftIcon}>
-          <Icon
-            name={leftIcon as IconMapNameType}
-            size={iconSize}
-            color={iconColor}
-          />
-        </View>
-      )}
+      {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>
       )}
-      <Column flex right={shouldRenderIcon && !reversedIcon ? 'L2' : undefined}>
+      <Column
+        flex
+        containerStyle={iconButtonStyle}
+        right={shouldRenderIcon && !reversedIcon ? 'L2' : undefined}>
         <Row align="centerBetween">
           <MText
             style={theTitleStyle}
@@ -172,7 +203,9 @@ export default function ({
           )}
         </Row>
         {Boolean(subtitle) && (
-          <B2 color="secondary" testID={`subtitle-${subtitle}`}>
+          <B2
+            color={props.secondaryColor ?? 'secondary'}
+            testID={`subtitle-${subtitle}`}>
             {subtitle}
           </B2>
         )}
@@ -199,5 +232,5 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     right: 15,
   },
-  leftIcon: ['marginRight4x', 'alignSelfStart'],
+  leftIcon: ['marginRight4x'],
 });

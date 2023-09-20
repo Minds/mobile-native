@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   TextInputProps,
+  Keyboard,
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import { Portal } from '@gorhom/portal';
@@ -23,7 +24,8 @@ const Touchable = preventDoubleTap(TouchableOpacity);
 
 type PropsType = {
   progress?: boolean;
-  onSubmit: () => void;
+  hideKeyboard?: boolean;
+  onSubmit?: () => void;
   onCancel?: () => void;
   children?: React.ReactNode;
 } & TextInputProps;
@@ -32,13 +34,24 @@ type PropsType = {
  * Floating Input component
  */
 const FloatingInput = React.forwardRef(
-  ({ onSubmit, progress, onCancel, children, ...props }: PropsType, ref) => {
+  (
+    {
+      onSubmit,
+      progress,
+      onCancel,
+      children,
+      hideKeyboard,
+      ...props
+    }: PropsType,
+    ref,
+  ) => {
     const theme = ThemedStyles.style;
     const inputRef = React.useRef<TextInputType>(null);
     const [show, setShow] = React.useState(false);
 
     React.useImperativeHandle(ref, () => ({
       show() {
+        hideKeyboard && Keyboard.dismiss();
         setShow(true);
       },
       hide() {
@@ -81,14 +94,16 @@ const FloatingInput = React.forwardRef(
                     style={styles.input}
                   />
                   {!progress ? (
-                    <View>
-                      <Touchable
-                        onPress={onSubmit}
-                        testID="submitButton"
-                        style={theme.paddingBottom}>
-                        {children}
-                      </Touchable>
-                    </View>
+                    onSubmit ? (
+                      <View>
+                        <Touchable
+                          onPress={onSubmit}
+                          testID="submitButton"
+                          style={theme.paddingBottom}>
+                          {children}
+                        </Touchable>
+                      </View>
+                    ) : null
                   ) : (
                     <View style={styles.indicator}>
                       <Flow color={ThemedStyles.getColor('PrimaryText')} />

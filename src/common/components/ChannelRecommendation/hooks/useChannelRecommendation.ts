@@ -3,11 +3,12 @@ import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import useApiFetch, { FetchStore } from '~/common/hooks/useApiFetch';
 import { ParamsArray } from '~/common/services/api.service';
+import GroupModel from '~/groups/GroupModel';
 
 type ChannelRecommendationType = {
   entities: {
     confidence_score: number;
-    entity: UserModel;
+    entity: UserModel | GroupModel;
     entity_guid: string;
     entity_type: string;
   }[];
@@ -38,7 +39,10 @@ export const useChannelRecommendation = (
         .filter(rec => Boolean(rec.entity))
         .map(recommendation => ({
           ...recommendation,
-          entity: UserModel.create(recommendation.entity),
+          entity:
+            recommendation.entity_type === 'user'
+              ? UserModel.create(recommendation.entity)
+              : GroupModel.create(recommendation.entity),
         })),
     skip: true,
   });

@@ -55,7 +55,7 @@ function ChannelRecommendationHeader({
           : ThemedStyles.style.bgPrimaryBackground
       }>
       <Row align="centerBetween" vertical="L" horizontal="L">
-        <H4>{i18nService.t('recommendedChannels')}</H4>
+        <H4>{i18nService.t('recommendedForYou')}</H4>
         <Row align="centerBoth">
           <B2
             color="link"

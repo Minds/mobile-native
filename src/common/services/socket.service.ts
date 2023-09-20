@@ -13,7 +13,7 @@ export class SocketService {
   registered = false;
   rooms: string[] = [];
 
-  constructor() {
+  init() {
     sessionService.onSession(token => {
       if (token) {
         this.setUp();

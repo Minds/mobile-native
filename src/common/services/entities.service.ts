@@ -1,7 +1,8 @@
 //@ts-nocheck
-import _ from 'lodash';
+import difference from 'lodash/difference';
 
-import apiService, { isAbort, isApiForbidden } from './api.service';
+import apiService from './api.service';
+import { isAbort, isApiForbidden } from './ApiErrors';
 import GroupModel from '../../groups/GroupModel';
 import UserModel from '../../channel/UserModel';
 import BlogModel from '../../blogs/BlogModel';
@@ -84,7 +85,7 @@ class EntitiesService {
         .readMany(urnsToFetch)
         .filter(e => e !== null);
       if (localEntities.length > 0) {
-        urnsToFetch = _.difference(
+        urnsToFetch = difference(
           urnsToFetch,
           localEntities.map((m: any): string => m.urn),
         );

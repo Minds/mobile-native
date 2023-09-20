@@ -6,8 +6,6 @@ const MINDS_API_URI = 'https://www.minds.com/api/graphql';
 const STRAPI_API_URI = 'https://cms.minds.com/graphql';
 // use this for sandbox
 // const STRAPI_API_URI = 'https://cms.oke.minds.io/graphql';
-// use this for local development
-// const STRAPI_API_URI = 'http://localhost:1337/graphql';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -50,10 +48,8 @@ const config: CodegenConfig = {
       config: {
         namedClient: 'strapi',
         fetcher: {
-          endpoint: STRAPI_API_URI,
-          fetchParams: {
-            headers: defaultHeaders,
-          },
+          func: '~/common/services/strapi.service#gqlFetcher',
+          isReactHook: false,
         },
       },
     },

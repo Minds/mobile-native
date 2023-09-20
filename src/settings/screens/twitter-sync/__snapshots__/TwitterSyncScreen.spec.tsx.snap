@@ -21,7 +21,7 @@ exports[`TwitterSyncScreen renders correctly 1`] = `
       "mountCount": 0,
       "mutationCache": MutationCache {
         "config": {},
-        "listeners": [],
+        "listeners": Set {},
         "mutationId": 0,
         "mutations": [],
         "subscribe": [Function],
@@ -29,7 +29,7 @@ exports[`TwitterSyncScreen renders correctly 1`] = `
       "mutationDefaults": [],
       "queryCache": QueryCache {
         "config": {},
-        "listeners": [],
+        "listeners": Set {},
         "queries": [],
         "queriesMap": {},
         "subscribe": [Function],

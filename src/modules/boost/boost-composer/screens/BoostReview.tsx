@@ -3,46 +3,36 @@ import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
-import Link from '~/common/components/Link';
+// import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import {
-  B1,
-  B2,
-  Button,
-  Column,
-  H2,
-  HairlineRow,
-  Screen,
-  ScreenHeader,
-} from '~/common/ui';
+import { B1, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
-import { useBoostStore } from '../boost.store';
+import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   GiftCardProductIdEnum,
   useFetchPaymentMethodsQuery,
 } from '~/graphql/api';
+import NavigationService from '../../../../navigation/NavigationService';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '../../../../config/Config';
+import { InteractionManager } from 'react-native';
+import useCurrentUser from '../../../../common/hooks/useCurrentUser';
+import { IS_IOS } from '~/config/Config';
+import BoostComposerHeader from '../components/BoostComposerHeader';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const boostStore = useBoostStore();
 
-  const { data } = useFetchPaymentMethodsQuery({
-    giftCardProductId: GiftCardProductIdEnum.Boost,
-  });
-
-  const {
-    balance,
-    id: creditPaymentMethod,
-    name,
-  } = data?.paymentMethods?.[0] ?? {};
-
-  const hasCredits = Number(balance) >= Number(boostStore.total);
+  const { name, balance, creditPaymentMethod, hasCredits } = useCredits(
+    boostStore.total,
+  );
 
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
     value: number(boostStore.wallet?.balance || 0, 0, 2),
@@ -69,14 +59,34 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       total: t('{{total}} tokens', { total: boostStore.total }),
     },
   };
-  const title =
-    boostStore.boostType === 'channel' ? t('Boost Channel') : t('Boost Post');
+
+  const titleMap: Record<BoostType, string> = {
+    channel: t('Boost Channel'),
+    post: t('Boost Post'),
+    group: t('Boost Group'),
+  };
+
+  const title = titleMap[boostStore.boostType];
 
   const handleCreate = () => {
     return boostStore.createBoost(creditPaymentMethod)?.then(() => {
       showNotification(t('Boost created successfully'));
       navigation.popToTop();
       navigation.goBack();
+
+      // only show the boost upgrade modal for users that arent plus or pro
+      if (user?.pro || user?.plus) {
+        return;
+      }
+
+      if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
+        InteractionManager.runAfterInteractions(() => {
+          setTimeout(() => {
+            NavigationService.push('BoostUpgrade');
+            // the same time as the toast dismisses
+          }, 2800);
+        });
+      }
     });
   };
 
@@ -93,7 +103,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={title} back shadow />
+      <BoostComposerHeader />
       <FitScrollView>
         <Column align="centerBoth" vertical="XL2">
           <H2>{t('Review your boost')}</H2>
@@ -130,7 +140,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               subtitle={creditLabel}
               borderless
             />
-          ) : boostStore.paymentType === 'cash' ? (
+          ) : boostStore.paymentType === 'cash' && !IS_IOS ? (
             <StripeCardSelector
               onCardSelected={card => boostStore.setSelectedCardId(card.id)}
               selectedCardId={boostStore.selectedCardId}
@@ -168,7 +178,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           {title}
         </Button>
 
-        <B2
+        {/* <B2
           color="secondary"
           horizontal="L"
           top="XL"
@@ -183,11 +193,28 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           <Link url="https://www.minds.com/p/monetization-terms">
             {t('Refund Policy')}
           </Link>
-        </B2>
+        </B2> */}
       </FitScrollView>
     </Screen>
   );
 }
+
+const useCredits = (total = 0) => {
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
+
+  const { balance, id, name } = data?.paymentMethods?.[0] ?? {};
+
+  const hasCredits = Number(balance) >= Number(total);
+
+  return {
+    balance,
+    creditPaymentMethod: id,
+    name,
+    hasCredits,
+  };
+};
 
 export default withErrorBoundaryScreen(
   observer(BoostReviewScreen),

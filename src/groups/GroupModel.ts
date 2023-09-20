@@ -10,17 +10,25 @@ export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
   @observable mature_visibility = false;
   @observable briefdescription = '';
+  @observable show_boosts: 1 | 0 = 1;
   name!: string;
   type!: string;
   nsfw: Array<number> = [];
   icontime: any;
   entity_guid?: string;
   brief_description = '';
+  boosted?: boolean;
 
   @action
   toggleMatureVisibility() {
     if (GOOGLE_PLAY_STORE) return;
     this.mature_visibility = !this.mature_visibility;
+  }
+
+  @action
+  toggleShowBoosts(enabled: boolean) {
+    this.show_boosts = enabled ? 1 : 0;
+    groupsService.toggleShowBoosts(this.guid, this.show_boosts);
   }
 
   @action

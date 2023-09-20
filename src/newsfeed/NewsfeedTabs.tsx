@@ -4,11 +4,10 @@ import type NewsfeedStore from './NewsfeedStore';
 import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import type BaseModel from '~/common/BaseModel';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import { NewsfeedType } from './NewsfeedStore';
 
-function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore<BaseModel> }) {
+function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
   const { groups } = useLegacyStores();
 

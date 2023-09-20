@@ -2,7 +2,7 @@
 import connectivityService from './services/connectivity.service';
 import i18nService from './services/i18n.service';
 import { Alert } from 'react-native';
-import { isApiError, isNetworkError } from './services/api.service';
+import { isApiError, isNetworkError } from './services/ApiErrors';
 import { isUserError } from './UserError';
 
 /**

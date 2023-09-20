@@ -8,7 +8,7 @@ import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import settingsStore from '../../settings/SettingsStore';
-import { isAbort } from '../services/api.service';
+import { isAbort } from '../services/ApiErrors';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
 import { Image } from 'expo-image';
@@ -728,12 +728,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Refresh
    */
   @action
-  async refresh() {
+  async refresh(wait?: Promise<any>) {
     this.refreshing = true;
     this.newPostsCount = 0;
 
     try {
-      await this.fetchRemoteOrLocal(true);
+      await this.fetchRemoteOrLocal(true, wait);
     } catch (err) {
       logService.exception('[FeedStore]', err);
     } finally {

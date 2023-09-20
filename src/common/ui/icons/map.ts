@@ -237,6 +237,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'insights',
   },
+  affiliates: {
+    font: 'MaterialIcons',
+    name: 'volunteer-activism',
+  },
   queue: {
     font: 'MaterialIcons',
     name: 'add-to-queue',
@@ -363,6 +367,66 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'alarm',
   },
+  article: {
+    font: 'MaterialIcons',
+    name: 'article',
+  },
+  attach_money: {
+    font: 'MaterialIcons',
+    name: 'attach-money',
+  },
+  ads_click: {
+    font: 'MaterialIcons',
+    name: 'ads-click',
+  },
+  insights: {
+    font: 'MaterialIcons',
+    name: 'insights',
+  },
+  ssid_chart: {
+    font: 'MaterialIcons',
+    name: 'equalizer',
+  },
+  shopping_bag: {
+    font: 'MaterialIcons',
+    name: 'shopping-bag',
+  },
+  hub: {
+    font: 'MaterialIcons',
+    name: 'grain',
+  },
+  trending_up: {
+    font: 'MaterialIcons',
+    name: 'trending-up',
+  },
+  dynamic_feed: {
+    font: 'MaterialIcons',
+    name: 'dynamic-feed',
+  },
+  groups: {
+    font: 'MaterialIcons',
+    name: 'groups',
+  },
+  lock_open: {
+    font: 'MaterialIcons',
+    name: 'lock-open',
+  },
+  add_to_queue: {
+    font: 'MaterialIcons',
+    name: 'add-to-queue',
+  },
+  payments: {
+    font: 'MaterialIcons',
+    name: 'payments',
+  },
+  star: {
+    font: 'MaterialIcons',
+    name: 'star',
+  },
+  account_balance_wallet: {
+    font: 'MaterialIcons',
+    name: 'account-balance-wallet',
+  },
   'triangle-down': {
     font: 'MaterialIcons',
     name: 'play-arrow',
@@ -372,6 +436,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'play-arrow',
     transform: [{ rotate: '270deg' }],
+  },
+  globe: {
+    font: 'MaterialIcons',
+    name: 'language',
   },
 } as const;
 

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 import i18n from '~/common/services/i18n.service';
-import openUrlService from '~/common/services/open-url.service';
+// import openUrlService from '~/common/services/open-url.service';
 import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
@@ -34,9 +34,9 @@ function BoostChannelNotice({ name }: NoticeProps) {
       btnSecondaryText={i18n.t('inFeedNotices.boostChannelLearMoreButton')}
       iconName="info-outline"
       onPress={onPress}
-      onSecondaryPress={() => {
-        openUrlService.open('https://www.minds.com/boost');
-      }}
+      // onSecondaryPress={() => {
+      //   openUrlService.open('https://www.minds.com/boost');
+      // }}
     />
   );
 }

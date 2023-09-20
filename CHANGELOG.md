@@ -2,6 +2,62 @@
 
 Minds Mobile
 
+## 4.39.1 (2023-09-01)
+
+### Features ✨ (2 changes)
+
+- [Added boosting group functionality](minds/mobile-native!2414)
+- [Added Minds+ / Pro promo after Boost checkout](minds/mobile-native!2410)
+
+### Fixed 🐛 (4 changes)
+
+- [Fixed bottom sheet inconsistency in card selector](minds/mobile-native!2437)
+- [Fixed upload image issue on Android 13](minds/mobile-native!2433)
+- [Fix can't find server error on inactivity](minds/mobile-native!2432)
+- [Fixed channel suggestion in comments not being showed completely](minds/mobile-native!2404)
+
+### Changed 🔧 (1 change)
+
+- [Changed supermind feed to show all superminds when no pending were available](minds/mobile-native!2418)
+
+## 4.39.0 (2023-08-14)
+
+### Features ✨ (8 changes)
+
+- [Revamped downvotes with multiple experiments](minds/mobile-native!2400)
+- [Added the option to change email in onboarding](minds/mobile-native!2387)
+- [Added gift cards as boost payment method](minds/mobile-native!2380)
+- [added notification support for gift cards](minds/mobile-native!2373)
+- [Groups: empty state and group recommendation upgrade](minds/mobile-native!2353)
+- [Added copy to clipboard option](minds/mobile-native!2344)
+- [Added support for affiliate notifications](minds/mobile-native!2343)
+- [Added composer FAB](minds/mobile-native!2334)
+
+### Fixed 🐛 (13 changes)
+
+- [Fixed bug in boosts goals](minds/mobile-native!2405)
+- [Fixed an issue where some blogs would cause an error and colors being wrong](minds/mobile-native!2403)
+- [Fixed an issue where the report screen would open below comments](minds/mobile-native!2388)
+- [Fixed Api errors not showing properly](minds/mobile-native!2385)
+- [Fixed Android 13 push notifications permission](minds/mobile-native!2382)
+- [Fixed BoostCTA text when subscribed](minds/mobile-native!2371)
+- [Fixed an issue where subscribing to a group from search would throw an error](minds/mobile-native!2369)
+- [Fixed an issue with Subscribe button appearing on user's own channel](minds/mobile-native!2368)
+- [Fixed an issue where a selected group wouldn't get unselected in composer](minds/mobile-native!2363)
+- [Fixed minds+ anually](minds/mobile-native!2351)
+- [Fixed search too slow](minds/mobile-native!2339)
+- [Fixed label in post options](minds/mobile-native!2338)
+- [fixed back navigation from rotator settings](minds/mobile-native!2336)
+
+### Changed 🔧 (2 changes)
+
+- [Changed subscribe button style to be solid on the channel top bar](minds/mobile-native!2402)
+- [Changed: Explore screen consolidation](minds/mobile-native!2375)
+
+### Removed 🗑️ (1 change)
+
+- [Temporary removed isInternetReachable condition](minds/mobile-native!2395)
+
 ## 4.38.0 (2023-07-20)
 
 ### Features ✨ (3 changes)

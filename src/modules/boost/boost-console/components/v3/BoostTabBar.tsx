@@ -21,11 +21,15 @@ function BoostTabBar({}: BoostTabBarProps) {
   const tabs: Array<TabType<string>> = [
     {
       id: 'feed',
-      title: t('Feed'),
+      title: t('Posts'),
     },
     {
       id: 'sidebar',
-      title: t('Sidebar'),
+      title: t('Channel + groups'),
+    },
+    {
+      id: 'explore',
+      title: t('Explore'),
     },
   ];
 
@@ -40,12 +44,14 @@ function BoostTabBar({}: BoostTabBarProps) {
           containerStyle={styles.tabbar}
         />
 
-        <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+        {boostConsoleStore.filter !== 'explore' && (
+          <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+        )}
       </Row>
 
       <HairlineRow />
 
-      {boostConsoleStore.filter === 'feed' ? (
+      {boostConsoleStore.filter !== 'sidebar' ? (
         <BoostLatestPostPrompt />
       ) : (
         <BoostChannelPrompt />

@@ -35,6 +35,8 @@ import { Tip } from './icons/Tip';
 import { Upvote } from './icons/Upvote';
 import { VerifiedBadge } from './icons/VerifiedBadge';
 import { Wallet } from './icons/Wallet';
+import { MindsPro } from './icons/MindsPro';
+import { CaptivePortal } from './icons/CaptivePortal';
 
 export const icons = {
   adjust: Adjust,
@@ -52,6 +54,7 @@ export const icons = {
   group: Group,
   hashtag: Hashtag,
   help: Help,
+  captivePortal: CaptivePortal,
   info: Info,
   launch: Launch,
   lightmode: Lightmode,
@@ -72,6 +75,7 @@ export const icons = {
   upvote: Upvote,
   verifiedBadge: VerifiedBadge,
   wallet: Wallet,
+  mindsPro: MindsPro,
 };
 
 export {
@@ -90,6 +94,7 @@ export {
   Group,
   Hashtag,
   Help,
+  CaptivePortal,
   Info,
   Launch,
   Lightmode,
@@ -110,6 +115,7 @@ export {
   Upvote,
   VerifiedBadge,
   Wallet,
+  MindsPro,
 };
 
 export type IconNames = keyof typeof icons;

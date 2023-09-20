@@ -33,7 +33,7 @@ export function useGroupFeedStore(group: GroupModel) {
     store.feed.getMetadataService()?.setSource('feed/groups').setMedium('feed');
     store.feed
       .setEndpoint(`api/v2/feeds/container/${group.guid}/activities`)
-      .setInjectBoost(true)
+      .setInjectBoost(Boolean(group.show_boosts))
       .setLimit(12)
       .fetchRemoteOrLocal();
   }, [group.guid, store]);

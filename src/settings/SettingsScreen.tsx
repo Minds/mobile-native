@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
-import { isNetworkError } from '../common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '../common/services/i18n.service';
 import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
@@ -27,7 +27,7 @@ interface HelpResponse extends ApiResponse {
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
-const navigateToHelp = async () => {
+export const navigateToHelp = async () => {
   try {
     const response = await apiService.get<HelpResponse>(
       'api/v3/helpdesk/zendesk',
@@ -134,11 +134,11 @@ const SettingsScreen = observer(({ navigation }) => {
     params: {},
   });
 
-  firstSection.push({
-    title: i18n.t('settings.resources'),
-    screen: 'Resources',
-    params: {},
-  });
+  // firstSection.push({
+  //   title: i18n.t('settings.resources'),
+  //   screen: 'Resources',
+  //   params: {},
+  // });
 
   const secondSection: Array<Item> = [
     {

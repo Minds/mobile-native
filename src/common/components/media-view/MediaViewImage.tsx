@@ -1,6 +1,7 @@
 import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import Pinchable from 'react-native-pinchable';
 
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -8,13 +9,10 @@ import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
-import DoubleTap from '../DoubleTap';
 
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
-
-const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
@@ -135,26 +133,30 @@ export default function MediaViewImage({
     ? { blurhash: blur, width: 9, height: 9 }
     : thumbnail;
 
+  // Wrapped in a pressable to avoid the press event after zooming on android (Pinchable bug)
   return (
-    <DoubleTapTouchable
-      onDoubleTap={onImageDoublePress}
-      onPress={onImagePress}
-      onLongPress={onImageLongPress}
-      style={imageStyle}
-      activeOpacity={1}
-      testID="Posted Image">
-      <SmartImage
-        contentFit={mode}
-        style={imageStyle}
-        source={source}
-        onLoad={onLoadImage}
-        onError={imageError}
-        ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
-        placeholder={placeholder}
-        locked={entity?.isLocked()}
-        recyclingKey={entity.urn}
-      />
-    </DoubleTapTouchable>
+    <Pressable>
+      <Pinchable key={entity.guid}>
+        <TouchableOpacity
+          onPress={onImagePress}
+          onLongPress={onImageLongPress}
+          style={imageStyle}
+          activeOpacity={1}
+          testID="Posted Image">
+          <SmartImage
+            contentFit={mode}
+            style={imageStyle}
+            source={source}
+            onLoad={onLoadImage}
+            onError={imageError}
+            ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
+            placeholder={placeholder}
+            locked={entity?.isLocked()}
+            recyclingKey={entity.urn}
+          />
+        </TouchableOpacity>
+      </Pinchable>
+    </Pressable>
   );
 }
 

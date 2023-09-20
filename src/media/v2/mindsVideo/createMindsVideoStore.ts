@@ -6,7 +6,8 @@ import {
   VideoFullscreenUpdateEvent,
 } from 'expo-av';
 import Cancelable from 'promise-cancelable';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
+import padStart from 'lodash/padStart';
 import { runInAction } from 'mobx';
 
 import attachmentService from '../../../common/services/attachment.service';
@@ -216,9 +217,9 @@ const createMindsVideoStore = ({
       var minutes = Math.floor(seconds / 60);
       var remainingSeconds = seconds % 60;
       return (
-        _.padStart(minutes.toFixed(0), 2, '0') +
+        padStart(minutes.toFixed(0), 2, '0') +
         ':' +
-        _.padStart(remainingSeconds.toFixed(0), 2, '0')
+        padStart(remainingSeconds.toFixed(0), 2, '0')
       );
     },
     get currentTimeSeconds() {
@@ -347,7 +348,7 @@ const createMindsVideoStore = ({
       this.player = player;
 
       // We define hide overlay here to avoid the weird scope issue on the arrow function
-      this.hideOverlay = _.debounce(() => {
+      this.hideOverlay = debounce(() => {
         if (this.showOverlay) {
           this.setShowOverlay(false);
         }

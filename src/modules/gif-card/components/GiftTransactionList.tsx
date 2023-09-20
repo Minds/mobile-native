@@ -102,6 +102,10 @@ const useGetTransactions = (giftCardGuid: string) => {
     'giftCardTransactionLedger',
   );
 
+  if (sortState === 'Descending') {
+    result.data = result.data.reverse();
+  }
+
   return {
     ...result,
     sortState,

@@ -1,6 +1,7 @@
 //@ts-nocheck
 import logService from './log.service';
-import apiService, { isAbort, isNetworkError } from './api.service';
+import apiService from './api.service';
+import { isAbort, isNetworkError } from './ApiErrors';
 import entitiesService from './entities.service';
 import feedsStorage from './storage/feeds.storage';
 import i18n from './i18n.service';
@@ -9,7 +10,7 @@ import { boostedContentService } from 'modules/boost';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
-import _ from 'lodash';
+import difference from 'lodash/difference';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 import sessionService from './session.service';
@@ -59,9 +60,9 @@ export default class FeedsService {
   countEndpoint: string = '';
 
   /**
-   * @var {Object}
+   * @var {Record<string, any>}
    */
-  params: Object = { sync: 1 };
+  params: Record<string, any> = { sync: 1 };
 
   /**
    * @var {Array}
@@ -365,7 +366,7 @@ export default class FeedsService {
       if (more) {
         this.feed = this.params.sync
           ? this.feed.concat(response[this.dataProperty])
-          : _.difference(response[this.dataProperty], this.feed);
+          : difference(response[this.dataProperty], this.feed);
       } else {
         this.feed = response[this.dataProperty];
       }
@@ -460,6 +461,11 @@ export default class FeedsService {
       if (!(await this.fetchLocal())) {
         // if there is no local data rethrow the exception
         throw err;
+      }
+
+      // TODO: remove this after fixed https://github.com/react-native-netinfo/react-native-netinfo/issues/669
+      if (connectivityService.isConnected) {
+        return;
       }
 
       showNotification(

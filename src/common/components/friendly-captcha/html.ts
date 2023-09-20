@@ -1,6 +1,3 @@
-import widget from './widget.min';
-import widgetModule from './widget.module.min';
-
 export default `
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +80,13 @@ export default `
   <body>
     <div id="captcha"></div>
   </body>
-  <script type="module">
-    ${widgetModule}
-  </script>
-  <script nomodule>
-    ${widget}
-  </script>
+  <script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.13/widget.module.min.js"
+  async
+  defer
+></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.13/widget.min.js" async defer></script>
   <script>
     let widgetInstance;
 
