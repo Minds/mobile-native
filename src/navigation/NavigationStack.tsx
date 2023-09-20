@@ -80,6 +80,11 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="Report"
+          options={{ title: i18n.t('report') }}
+          getComponent={() => require('~/report/ReportScreen').default}
+        />
+        <AppStackNav.Screen
           name="GifCardClaim"
           getComponent={() =>
             require('~/modules/gif-card/screens/GifCardClaimScreen')
@@ -571,10 +576,6 @@ const RootStack = observer(function () {
                 ...rootStackCardScreenOptions,
                 headerShown: false,
               }}
-            />
-            <RootStackNav.Screen
-              name="Report"
-              getComponent={() => require('~/report/ReportScreen').default}
             />
             <RootStackNav.Screen
               name="BoostUpgrade"
