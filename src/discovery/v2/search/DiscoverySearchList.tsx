@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 
 import { View, FlatList } from 'react-native';
 
@@ -13,10 +13,22 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import GroupsListItem from '../../../groups/GroupsListItem';
 import i18n from '../../../common/services/i18n.service';
-import type UserModel from '../../../channel/UserModel';
+import UserModel from '../../../channel/UserModel';
 import { useStores } from '../../../common/hooks/use-stores';
 import MText from '../../../common/components/MText';
 import ChannelListItem from '~/common/components/ChannelListItem';
+import AnimatedHeight from '~/common/components/animations/AnimatedHeight';
+import { B2, H4, Row } from '~/common/ui';
+import i18nService from '../../../common/services/i18n.service';
+import Divider from '~/common/components/Divider';
+import {
+  ActivityNode,
+  SearchFilterEnum,
+  SearchMediaTypeEnum,
+  useFetchSearchQuery,
+} from '~/graphql/api';
+import GroupModel from '~/groups/GroupModel';
+import { ChannelRecommendationItem } from '~/modules/recommendation';
 
 interface Props {
   navigation: any;
@@ -102,9 +114,21 @@ export const DiscoverySearchList = observer((props: Props) => {
     );
   }, [store.refreshing]);
 
+  const { algorithm, q: searchTerm } =
+    store.listStore.feedsService.params ?? {};
+  const isTop = algorithm === 'top';
+
   return (
     <View style={theme.flexContainer}>
       <FeedList
+        header={
+          isTop ? (
+            <AnimatedHeight>
+              <Finder type="group" query={searchTerm} />
+              <Finder type="channel" query={searchTerm} />
+            </AnimatedHeight>
+          ) : undefined
+        }
         feedStore={store.listStore}
         navigation={props.navigation}
         emptyMessage={EmptyPartial}
@@ -113,3 +137,67 @@ export const DiscoverySearchList = observer((props: Props) => {
     </View>
   );
 });
+
+function Finder({ type, query }: { type: 'group' | 'channel'; query: string }) {
+  const store = useDiscoveryV2SearchStore();
+  const entities = useSearchQuery(type, query);
+
+  return entities.length === 0 ? null : (
+    <>
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
+        <Row align="centerBetween" vertical="L" horizontal="L">
+          <H4>{type === 'channel' ? 'Channels' : 'Groups'}</H4>
+          <B2
+            color="link"
+            onPress={() => {
+              store.setAlgorithm(type === 'channel' ? 'channels' : 'groups');
+            }}>
+            {i18nService.t('seeMore')}
+          </B2>
+        </Row>
+      </View>
+      {entities.map((item, index) =>
+        type === 'group' ? (
+          <GroupsListItem
+            group={item as GroupModel}
+            index={index}
+            onPress={() => null}
+          />
+        ) : (
+          <ChannelRecommendationItem
+            key={item.guid}
+            channel={item as UserModel}
+            onSubscribed={() => null}
+          />
+        ),
+      )}
+      <Divider />
+    </>
+  );
+}
+
+const useSearchQuery = (type: 'group' | 'channel', query: string) => {
+  const Model = type === 'group' ? GroupModel : UserModel;
+  const { data } = useFetchSearchQuery(
+    {
+      query,
+      filter:
+        type === 'channel' ? SearchFilterEnum.User : SearchFilterEnum.Group,
+      mediaType: SearchMediaTypeEnum.All,
+      limit: 3,
+    },
+    {
+      staleTime: 3000,
+    },
+  );
+
+  const items = useMemo(
+    () =>
+      data?.search?.edges?.map(item =>
+        Model.create(JSON.parse((item.node as ActivityNode).legacy)),
+      ) ?? [],
+    [data, Model],
+  );
+
+  return items;
+};

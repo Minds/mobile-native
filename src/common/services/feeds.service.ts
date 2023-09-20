@@ -60,9 +60,9 @@ export default class FeedsService {
   countEndpoint: string = '';
 
   /**
-   * @var {Object}
+   * @var {Record<string, any>}
    */
-  params: Object = { sync: 1 };
+  params: Record<string, any> = { sync: 1 };
 
   /**
    * @var {Array}

@@ -46,7 +46,7 @@ const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
   return (
     <Button
       mode="outline"
-      type={isMember ? 'base' : 'action'}
+      type={'action'}
       size="tiny"
       onPress={onPress}
       pressableProps={HITSLOP}
@@ -80,6 +80,7 @@ const GroupsListItem = observer((props: PropsType) => {
       avatar={avatarSource?.source}
       title={group.name}
       onPress={_onPress}
+      isRightIconButton
       icon={
         !props.hideButton && (
           <JoinButton
