@@ -45,14 +45,13 @@ const routes = [
   { key: 'members', title: 'Members', index: 1 },
 ];
 
-const PostToGroupButton = observer(({ navigation, routeKey }) => {
+const PostToGroupButton = observer(({ navigation }) => {
   const groupContext = useGroupContext();
   return (
     <CaptureFab
       visible={true}
       navigation={navigation}
       group={groupContext?.group}
-      routeKey={routeKey}
     />
   );
 });
@@ -64,7 +63,7 @@ export function GroupScreen({ route, navigation }) {
   return group ? (
     <GroupScreenContextProvider group={group}>
       <GroupScreenView group={group} />
-      <PostToGroupButton routeKey={route.key} navigation={navigation} />
+      <PostToGroupButton navigation={navigation} />
     </GroupScreenContextProvider>
   ) : (
     <CenteredLoading />
