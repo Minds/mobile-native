@@ -109,7 +109,7 @@ jest.mock('react-native-system-setting', () => {
   };
 });
 jest.mock('react-native-silent-switch');
-jest.mock('react-native-bignumber', () => ({ BN: jest.fn() }));
+jest.mock('big.js', () => ({ Big: jest.fn() }));
 jest.mock('react-native-mmkv-storage');
 global.__reanimatedWorkletInit = jest.fn();
 
