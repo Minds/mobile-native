@@ -11,12 +11,12 @@ import TabBar from './../components/TabBar';
 
 // common "Given" steps
 
-Given(/^I'm logged in$/, async () => {
+Given(/^I am logged in$/, async () => {
   await WelcomeScreen.loginButton.waitForDisplayed();
   await WelcomeScreen.loginButton.click();
   await LoginScreen.submitButton.waitForDisplayed();
 
-  const targetChannel = context.logins['valid channel'];
+  const targetChannel = context.logins['valid'];
   if (!targetChannel.username || !targetChannel.password) {
     throw new Error('channel not set');
   }
@@ -25,6 +25,10 @@ Given(/^I'm logged in$/, async () => {
     password: targetChannel.password,
   });
   return HomeScreen.waitForIsShown();
+});
+
+Given(/^I am logged out$/, async () => {
+  await WelcomeScreen.loginButton.waitForDisplayed();
 });
 
 Given(/^I navigate to (.+) screen$/, async (screen: string) => {

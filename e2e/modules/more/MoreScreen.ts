@@ -19,12 +19,20 @@ class MoreScreen extends AppScreen {
     return selectElement('id', 'Drawer:settings');
   }
 
+  get switchAccount() {
+    return selectElement('id', 'Drawer:switchAccount');
+  }
+
   openWallet() {
     return this.wallet.click();
   }
 
   openChannel() {
     return this.channel.click();
+  }
+
+  openSwitchAccount() {
+    return this.switchAccount.click();
   }
 
   async openSettings() {

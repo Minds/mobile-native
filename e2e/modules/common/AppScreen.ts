@@ -8,14 +8,10 @@ export default class AppScreen {
   }
 
   /**
-   * Wait for the login screen to be visible
-   *
-   * @param {boolean} isShown
+   * Wait for the screen to be visible
    */
-  async waitForIsShown(isShown = true): Promise<boolean | void> {
-    return selectElement('id', this.selector).waitForDisplayed({
-      reverse: !isShown,
-    });
+  async waitForIsShown(): Promise<boolean | void> {
+    return selectElement('id', this.selector).waitForDisplayed();
   }
 
   async isDisplayed(): Promise<boolean | void> {

@@ -11,9 +11,11 @@
     "strictNullChecks": true,
     "types": [
       "node",
-      "webdriverio/async",
+      // "webdriverio/async",
       "@wdio/mocha-framework",
-      "expect-webdriverio"
+      "@wdio/cucumber-framework",
+      "expect-webdriverio",
+      "@wdio/globals/types"
     ]
   },
   "include": ["./**/*.ts"]

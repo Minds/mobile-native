@@ -6,6 +6,7 @@ import { SpacingType } from '../helpers';
 export type SpacerPropType = {
   containerStyle?: ViewStyle | ViewStyle[];
   spacingType?: SpacingType;
+  accessible?: boolean;
   children?: ReactNode;
 } & UISpacingPropType;
 

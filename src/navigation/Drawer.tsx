@@ -111,7 +111,6 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
-      testID: 'Drawer:settings',
       onPress: () => {
         navigation.navigate('Settings');
       },
@@ -200,7 +199,7 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
           {name || `@${username}`}
         </H2>
         {name && (
-          <B1 flat onPress={onUserPress} testID="channelUsername">
+          <B1 flat onPress={onUserPress}>
             @{username}
           </B1>
         )}
@@ -209,7 +208,7 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
         scale
         color="SecondaryText"
         name="account-multi"
-        testID="multiUserIcon"
+        testID="Drawer:switchAccount"
         onPress={onIconPress}
       />
     </Row>

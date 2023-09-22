@@ -15,7 +15,13 @@ export const HairlineSpacer = ({
   noBorder,
   ...more
 }: HairlinePropType & SpacerPropType) => {
-  return <Spacer containerStyle={!noBorder && styles.border} {...more} />;
+  return (
+    <Spacer
+      accessible={false}
+      containerStyle={!noBorder && styles.border}
+      {...more}
+    />
+  );
 };
 
 export const HairlineRow = ({

@@ -4,7 +4,7 @@ import AppScreen from '../common/AppScreen';
 
 class LoginScreen extends AppScreen {
   constructor() {
-    super('~Login-screen');
+    super('usernameLoginInput');
   }
 
   get usernameField() {

@@ -10,6 +10,13 @@ const SCREENS: { [k: string]: () => Promise<boolean | void> } = {
     await TabBar.openMore();
     return MoreScreen.openChannel();
   },
+  'Switch Account': async () => {
+    await TabBar.openMore();
+    return MoreScreen.openSwitchAccount();
+  },
+  Drawer: async () => {
+    return TabBar.openMore();
+  },
 };
 
 export { SCREENS };

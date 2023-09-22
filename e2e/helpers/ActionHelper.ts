@@ -1,4 +1,5 @@
 // @ts-nocheck
+const fs = require('fs');
 
 class ActionHelper {
   static launchBrowserUrl(urlToLaunch: string) {
@@ -53,6 +54,18 @@ class ActionHelper {
 
   static getText(locator) {
     return $(locator).getText();
+  }
+
+  /**
+   * Useful when you can't selectElement and want to check how the element
+   * looks like without using AppiumInspector
+   */
+  static async downloadXMLSource() {
+    // Capture a screenshot
+    const screenshot = await driver.getPageSource();
+
+    // Save the screenshot to a file
+    fs.writeFileSync('screenshot.xml', screenshot);
   }
 }
 

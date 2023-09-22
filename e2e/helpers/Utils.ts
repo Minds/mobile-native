@@ -32,7 +32,7 @@ export async function openDeepLinkUrl(url: string) {
   // Check if we are a simulator
   if (
     'udid' in driver.capabilities &&
-    simulatorRegex.test(driver.capabilities.udid as string)
+    simulatorRegex.test(driver.capabilities.udid as unknown as string)
   ) {
     await driver.url(`${prefix}${url}`);
   } else {
@@ -93,8 +93,19 @@ export function selectElement(
         return $(`~${text}`);
       case 'text':
         if (wild) {
+          // we check whether the name of the element contains our text and its length is less than text.length + 4.
+          // we do the length check with + 4 because sometimes icons are represented in the accessibility name or label
+          // of the element with a special character which can sometimes have a length of 2.
+          // this is not perfect and sometimes the element may contain more than 2 icons for example. Then
+          // this part of the predicate will need to be changed
+          const namePredicate = `name CONTAINS[c] '${text}' && name.length <= ${
+            text.length + 4
+          }`;
+          const labelPredicate = `label CONTAINS[c] '${text}' && label.length <= ${
+            text.length + 4
+          }`;
           return $(
-            `-ios predicate string:type == 'XCUIElementTypeOther' && name CONTAINS '${text}'`,
+            `-ios predicate string:(type == 'XCUIElementTypeOther' OR type == 'XCUIElementTypeStaticText') && ((${namePredicate}) || (${labelPredicate}))`,
           );
         }
         return $(`~${text}`);

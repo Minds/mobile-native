@@ -44,11 +44,7 @@ const MultiUserScreen = ({}: PropsType) => {
             containerItemStyle={theme.bgPrimaryBackgroundHighlight}
             {...options.create}
           />
-          <MenuItem
-            containerItemStyle={menuStyle}
-            testID="multiUserLogin"
-            {...options.login}
-          />
+          <MenuItem containerItemStyle={menuStyle} {...options.login} />
         </View>
       </FitScrollView>
     </ModalFullScreen>

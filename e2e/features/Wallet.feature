@@ -3,7 +3,7 @@ Feature: Wallet screen
     I want to use my wallet
 
     Background:
-        Given I'm logged in
+        Given I am logged in
         And I navigate to Wallet screen
 
     @android

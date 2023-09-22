@@ -1,6 +1,6 @@
 Feature: Boost
   Background:
-    Given I'm logged in
+    Given I am logged in
 
   Scenario: I boost my post with cash
     When I navigate to My Channel screen
