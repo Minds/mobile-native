@@ -3,11 +3,10 @@ import React, { useContext } from 'react';
 import UserModel from '~/channel/UserModel';
 import apiService from '~/common/services/api.service';
 import mindsConfigService from '~/common/services/minds-config.service';
-import { IS_IOS } from '~/config/Config';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { hasVariation } from '../../../../ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 import {
   DEFAULT_DAILY_CASH_BUDGET,
@@ -45,6 +44,7 @@ export const createBoostStore = ({
   button: BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL as BoostButtonText,
   link: BoostButtonText.LEARN_MORE as BoostButtonText,
   linkUrl: '',
+  iapTransaction: undefined as undefined | string,
   get platformsText() {
     const enabled: string[] = [];
     this.target_platform_ios && enabled.push('iOS');
@@ -99,7 +99,7 @@ export const createBoostStore = ({
   get total() {
     return this.amount * this.duration;
   },
-  paymentType: (IS_IOS ? 'offchain_tokens' : 'cash') as IPaymentType,
+  paymentType: 'cash' as IPaymentType,
   setPaymentType(paymentType: IPaymentType) {
     this.paymentType = paymentType;
   },
@@ -107,6 +107,9 @@ export const createBoostStore = ({
     this.selectedCardId = cardId;
   },
   selectedCardId: '',
+  setIapTransaction(transaction: string) {
+    this.iapTransaction = transaction;
+  },
   createBoost(creditPaymentMethod?: string) {
     if (!this.validate()) {
       return null;
@@ -119,8 +122,9 @@ export const createBoostStore = ({
       payment_method: this.paymentType === 'cash' ? 1 : 2,
       payment_method_id:
         this.paymentType === 'cash'
-          ? creditPaymentMethod ?? this.selectedCardId
+          ? creditPaymentMethod ?? this.selectedCardId // ios_iap, android_iap
           : undefined,
+      iap_transaction: this.iapTransaction,
       daily_bid: this.amount,
       duration_days: this.duration,
     };
@@ -150,6 +154,26 @@ export const createBoostStore = ({
   validate() {
     return true;
   },
+  isAmountValid() {
+    return true;
+  },
+  get amountRangeValues() {
+    return {
+      stepSize: 1,
+      defaultValue: 1,
+      maximumRangeValue: this.config.max[this.paymentType],
+      minimumRangeValue: this.config.min[this.paymentType],
+      steps: this.config.bid_increments[this.paymentType],
+    };
+  },
+  get durationRangeValues() {
+    return {
+      stepSize: 1,
+      defaultValue: 1,
+      maximumRangeValue: this.config.duration.max,
+      minimumRangeValue: this.config.duration.min,
+    };
+  },
 });
 
 export interface CreateBoostParams {
@@ -167,6 +191,7 @@ export interface CreateBoostParams {
   target_platform_web?: boolean;
   target_platform_android?: boolean;
   target_platform_ios?: boolean;
+  iap_transaction?: string;
 }
 
 export type IBoostAudience = 'safe' | 'mature';

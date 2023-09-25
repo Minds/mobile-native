@@ -6,7 +6,6 @@ import i18n from '../../common/services/i18n.service';
 import { Screen } from '../../common/ui';
 import FitScrollView from '../../common/components/FitScrollView';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import { navigateToHelp } from '../SettingsScreen';
 
 type PropsType = {};
@@ -175,8 +174,7 @@ type Options<T extends number> = typeof items[T]['options'][number] & {
 };
 
 const ResourcesScreen = ({}: PropsType) => {
-  const shouldHideCash =
-    useIsFeatureOn('mob-4836-iap-no-cash') && GOOGLE_PLAY_STORE;
+  const shouldHideCash = GOOGLE_PLAY_STORE;
   return (
     <Screen>
       <FitScrollView>

@@ -309,7 +309,7 @@ const ComposeAudienceGroupItem = ({ group, selected, onPress, index }) => {
 
 const Check = () => (
   <View style={styles.check}>
-    <Icon name="check" color="White" size="small" />
+    <Icon name="check" color="Black" size="small" />
   </View>
 );
 

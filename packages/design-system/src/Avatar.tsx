@@ -33,8 +33,7 @@ const DefaultImage = React.memo(() => (
     height="100%"
     // to confirm the default cdn for the minds icon
     source={{
-      uri:
-        'https://design-system-v2-0-0.oke.minds.io/icon/1403367290623234053/medium/1659964835',
+      uri: 'https://design-system-v2-0-0.oke.minds.io/icon/1403367290623234053/medium/1659964835',
     }}
   />
 ));
