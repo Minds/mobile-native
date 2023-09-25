@@ -1,5 +1,9 @@
 /**
- * Get the time difference in seconds
+ * The timeDifference function calculates the elapsed time in seconds between two given timestamps and
+ * logs a message with the provided string and the elapsed time.
+ * @param {string} string - A string that represents a message or description of the time difference.
+ * @param {number} start - The `start` parameter represents the starting time in milliseconds.
+ * @param {number} end - The "end" parameter represents the end time in milliseconds.
  */
 export function timeDifference(string: string, start: number, end: number) {
   const elapsed = (end - start) / 1000;
@@ -7,81 +11,21 @@ export function timeDifference(string: string, start: number, end: number) {
 }
 
 /**
- * Create a cross platform solution for opening a deep link
+ * The `selectElement` function is used to select an element on a mobile app based on its ID or text,
+ * with an optional wildcard search.
+ * @param {'id' | 'text'} type - The `type` parameter specifies the type of element to select. It can
+ * have two possible values: 'id' or 'text'.
+ * @param {string} text - The `text` parameter is a string that represents the identifier or the text
+ * content of the element you want to select.
+ * @param {boolean} [wild] - The `wild` parameter is an optional boolean parameter. If it is set to
+ * `true`, the function will perform a wildcard search for the element's text. This means that it will
+ * search for elements whose text contains the provided `text` parameter, rather than an exact match.
+ * If `wild`
+ * @returns a reference to an element in the UI based on the specified type and text. The type can be
+ * either 'id' or 'text'. If the type is 'id', the function returns the element with the specified
+ * accessibility id. If the type is 'text', the function returns the element with the specified text.
+ * If the 'wild' parameter is provided and set to true, the
  */
-export async function openDeepLinkUrl(url: string) {
-  const prefix = 'wdio://';
-
-  if (driver.isAndroid) {
-    // Life is so much easier
-    return driver.execute('mobile:deepLink', {
-      url: `${prefix}${url}`,
-      package: 'com.wdiodemoapp',
-    });
-  }
-
-  // We can use `driver.url` on iOS simulators, but not on iOS real devices. The reason is that iOS real devices
-  // open Siri when you call `driver.url('')` to use a deep link. This means that real devices need to have a different implementation
-  // then iOS sims
-  // iOS sims and real devices can be distinguished by their UDID. Based on these sources there is a diff in the UDIDS
-  // - https://blog.diawi.com/2018/10/15/2018-apple-devices-and-their-new-udid-format/
-  // - https://www.theiphonewiki.com/wiki/UDID
-  // iOS sims have more than 1 `-` in the UDID and the UDID is being
-  const simulatorRegex = new RegExp('(.*-.*){2,}');
-
-  // Check if we are a simulator
-  if (
-    'udid' in driver.capabilities &&
-    simulatorRegex.test(driver.capabilities.udid as unknown as string)
-  ) {
-    await driver.url(`${prefix}${url}`);
-  } else {
-    // Else we are a real device and we need to take some extra steps
-    // Launch Safari to open the deep link
-    await driver.execute('mobile: launchApp', {
-      bundleId: 'com.apple.mobilesafari',
-    });
-
-    // Add the deep link url in Safari in the `URL`-field
-    // This can be 2 different elements, or the button, or the text field
-    // Use the predicate string because  the accessibility label will return 2 different types
-    // of elements making it flaky to use. With predicate string we can be more precise
-    const addressBarSelector = 'label == "Address" OR name == "URL"';
-    const urlFieldSelector =
-      'type == "XCUIElementTypeTextField" && name CONTAINS "URL"';
-    const addressBar = $(`-ios predicate string:${addressBarSelector}`);
-    const urlField = $(`-ios predicate string:${urlFieldSelector}`);
-
-    // Wait for the url button to appear and click on it so the text field will appear
-    // iOS 13 now has the keyboard open by default because the URL field has focus when opening the Safari browser
-    if (!(await driver.isKeyboardShown())) {
-      await addressBar.waitForDisplayed();
-      await addressBar.click();
-    }
-
-    // Submit the url and add a break
-    await urlField.setValue(`${prefix}${url}\uE007`);
-  }
-
-  /**
-   * PRO TIP:
-   * if you started the iOS device with `autoAcceptAlerts:true` in the capabilities then Appium will auto accept the alert that should
-   * be shown now. You can then comment out the code below
-   */
-  // Wait for the notification and accept it
-  // When using an iOS simulator you will only get the pop-up once, all the other times it won't be shown
-  try {
-    const openSelector =
-      "type == 'XCUIElementTypeButton' && name CONTAINS 'Open'";
-    const openButton = $(`-ios predicate string:${openSelector}`);
-    // Assumption is made that the alert will be seen within 2 seconds, if not it did not appear
-    await openButton.waitForDisplayed({ timeout: 2000 });
-    await openButton.click();
-  } catch (e) {
-    // ignore
-  }
-}
-
 export function selectElement(
   type: 'id' | 'text',
   text: string,

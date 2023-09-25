@@ -2,7 +2,6 @@ import { Then } from '@cucumber/cucumber';
 import { assert } from 'chai';
 import TabBar from '../components/TabBar';
 import { selectElement } from '../../../helpers/Utils';
-import ActionHelper from '../../../helpers/ActionHelper';
 
 // common "Then" steps
 
