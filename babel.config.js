@@ -56,7 +56,6 @@ module.exports = {
           // 'ReactNativeRenderer-prod':
           //   './node_modules/react-native/Libraries/Renderer/implementations/ReactNativeRenderer-profiling',
           // 'scheduler/tracing': 'scheduler/tracing-profiling',
-          'bn.js': 'react-native-bignumber',
           app: path.resolve(__dirname, 'src/app'),
           assets: path.resolve(__dirname, 'src/assets'),
           components: path.resolve(__dirname, 'src/components'),

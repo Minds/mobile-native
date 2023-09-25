@@ -19,7 +19,7 @@ export default function toFriendlyCrypto(
   const longVal = new Big(longCryptoVal.toString());
 
   // Calculate friendlyCryptoVal
-  const power = new Big(10).pow(decimalCount);
+  const power = new Big(10).pow(18 - decimalCount);
   const friendlyCryptoVal =
     longVal.div(power).toNumber() / Math.pow(10, decimalCount);
 
