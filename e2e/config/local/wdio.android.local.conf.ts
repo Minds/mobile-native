@@ -23,6 +23,7 @@ config.capabilities = [
     'appium:platformVersion': process.env.ANDROID_PLATFORM_VERSION,
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',
+    'appium:autoGrantPermissions': true,
     // The path to the app
     'appium:app': join(process.cwd(), './apps/Minds.apk'),
     'appium:appWaitActivity': 'com.minds.mobile.MainActivity',
