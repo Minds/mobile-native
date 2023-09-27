@@ -3,11 +3,11 @@ import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
-// import Link from '~/common/components/Link';
+import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import { B1, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { BoostType, useBoostStore } from '../boost.store';
@@ -178,22 +178,24 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           {title}
         </Button>
 
-        {/* <B2
-          color="secondary"
-          horizontal="L"
-          top="XL"
-          bottom="XL2"
-          align="center">
-          {t('By clicking Boost Channel, you agree to Minds')}
-          {'\n'}
-          <Link url="https://www.minds.com/content-policy">
+        {
+          <B2
+            color="secondary"
+            horizontal="L"
+            top="XL"
+            bottom="XL2"
+            align="center">
+            {t('By clicking Boost Channel, you agree to Minds')}
+            {'\n'}
+            {/* <Link url="https://www.minds.com/content-policy"> */}
             {t('Content Policy')}
-          </Link>
-          {t(' and ')}
-          <Link url="https://www.minds.com/p/monetization-terms">
-            {t('Refund Policy')}
-          </Link>
-        </B2> */}
+            {/* </Link> */}
+            {t(' and ')}
+            <Link url="https://www.minds.com/p/monetization-terms">
+              {t('Refund Policy')}
+            </Link>
+          </B2>
+        }
       </FitScrollView>
     </Screen>
   );

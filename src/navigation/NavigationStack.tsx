@@ -653,6 +653,10 @@ const RootStack = observer(function () {
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}
       />
+      <RootStackNav.Screen
+        name="WebContent"
+        getComponent={() => require('../common/screens/WebContent').default}
+      />
     </RootStackNav.Navigator>
   );
 });
