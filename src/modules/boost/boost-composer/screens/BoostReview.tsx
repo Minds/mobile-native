@@ -16,6 +16,7 @@ import {
   isIosStorekit2,
   Product,
   ProductPurchase,
+  PurchaseResult,
   requestPurchase,
   useIAP,
   withIAPContext,
@@ -141,37 +142,89 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
     const purchases = await requestPurchase({
       skus: [selectedProduct?.productId ?? ''],
+      sku: selectedProduct?.productId ?? '',
       obfuscatedAccountIdAndroid: entity.guid,
       obfuscatedProfileIdAndroid: entity.ownerObj?.guid ?? 'no-owner',
       // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
     }).catch(processError);
 
-    if ((purchases as unknown as ProductPurchase[])?.length > 0) {
-      const purchase = purchases?.[0];
-      const { transactionId, transactionReceipt } = purchase ?? {};
-      const receipt = isIosStorekit2() ? transactionId : transactionReceipt;
+    console.log('purchases typeof', typeof purchases);
+    console.log('purchases', purchases);
 
-      if (receipt) {
-        const result = await finishTransaction({
-          purchase: purchases?.[0],
-          isConsumable: true,
-        }).catch(processError);
-
-        if ((typeof result !== 'boolean' && result?.code === 'OK') || result) {
-          // set payment_method_id
-          setSelectedCardId(IS_IOS ? 'ios_iap' : 'android_iap');
-          // set the IAP transaction details
-          setIapTransaction(receipt);
-
-          return createBoost()?.then(() => {
-            showNotification(t('Boost created successfully'));
-            navigation.popToTop();
-            navigation.goBack();
-          });
-        }
-      }
+    switch (true) {
+      case Array.isArray(purchases):
+        await processAndroidIAPPurchase(
+          purchases as unknown as ProductPurchase[],
+        );
+        break;
+      case typeof purchases === 'object':
+        await processAppleIAPPurchase(purchases as ProductPurchase);
+        break;
+      default:
+        processError({
+          message: 'An error occurred while processing purchase1',
+        });
     }
   };
+
+  async function processAndroidIAPPurchase(
+    purchases: ProductPurchase[],
+  ): Promise<void | undefined> {
+    if ((purchases as unknown as ProductPurchase[])?.length === 0) {
+      return;
+    }
+    const purchase = purchases?.[0];
+    const { transactionReceipt } = purchase ?? {};
+    const receipt = transactionReceipt;
+
+    if (receipt) {
+      const result = await finishTransaction({
+        purchase: purchases?.[0],
+        isConsumable: true,
+      }).catch(processError);
+
+      if (!result || (result as PurchaseResult).code !== 'OK') {
+        processError({
+          message: 'An error occurred while processing purchase2',
+        });
+        return;
+      }
+      // set payment_method_id
+      setSelectedCardId('android_iap');
+      // set the IAP transaction details
+      setIapTransaction(receipt);
+
+      return createBoost()?.then(() => {
+        showNotification(t('Boost created successfully'));
+        navigation.popToTop();
+        navigation.goBack();
+      });
+    }
+  }
+
+  async function processAppleIAPPurchase(
+    purchase: ProductPurchase,
+  ): Promise<void | undefined> {
+    const receipt = purchase?.transactionId ?? '';
+
+    const result = await finishTransaction({
+      purchase: purchase,
+      isConsumable: true,
+    }).catch(processError);
+
+    if (!result || (typeof result !== 'boolean' && result?.code !== 'OK')) {
+      processError({ message: 'An error occurred while processing purchase3' });
+      return;
+    }
+
+    setSelectedCardId('ios_iap');
+    setIapTransaction(receipt);
+    return createBoost()?.then(() => {
+      showNotification(t('Boost created successfully'));
+      navigation.popToTop();
+      navigation.goBack();
+    });
+  }
 
   const estimatedReach = insights?.views?.low
     ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
@@ -299,6 +352,7 @@ export default withErrorBoundaryScreen(
 );
 
 const useInAppPurchase = (total: number) => {
+  console.log('Total: ', total);
   const { products, getProducts } = useIAP();
   const skus = useMemo(() => [amountProductMap[total] ?? 'boost.300'], [total]);
 
