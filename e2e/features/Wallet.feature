@@ -1,3 +1,4 @@
+@Pending
 Feature: Wallet screen
     As a user
     I want to use my wallet

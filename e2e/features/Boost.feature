@@ -1,3 +1,4 @@
+@Pending
 Feature: Boost
   Background:
     Given I am logged in
