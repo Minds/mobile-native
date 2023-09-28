@@ -1,0 +1,90 @@
+query GetOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              # id
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    # alternativeText
+                    # hash
+                    # mime
+                    # name
+                    # provider
+                    # size
+                  }
+                }
+              }
+            }
+            title
+            description
+            stepKey
+            # stepType
+            # verifyEmailForm {
+            #   id
+            #   inputLabel
+            #   inputPlaceholder
+            #   resendCodeText
+            #   resendCodeActionText
+            # }
+            tagSelector {
+              id
+              customTagInputText
+            }
+            # radioSurveyQuestion
+            # radioSurvey {
+            #   id
+            #   optionTitle
+            #   optionDescription
+            #   optionKey
+            # }
+            userSelector {
+              id
+            }
+            groupSelector {
+              id
+            }
+            # actionButton {
+            #   id
+            #   text
+            #   dataRef
+            # }
+            # skipButton {
+            #   id
+            #   text
+            #   dataRef
+            # }
+          }
+        }
+        # completionStep {
+        #   id
+        #   message
+        #   media {
+        #     data {
+        #       attributes {
+        #         url
+        #         height
+        #         width
+        #         alternativeText
+        #         hash
+        #         mime
+        #         name
+        #         provider
+        #         size
+        #       }
+        #     }
+        #   }
+        # }
+      }
+    }
+  }
+}

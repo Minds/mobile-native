@@ -28,6 +28,7 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   DateTime: { input: any; output: any };
+  I18NLocaleCode: { input: any; output: any };
   JSON: { input: any; output: any };
   OnboardingV5VersionStepsDynamicZoneInput: { input: any; output: any };
   Upload: { input: any; output: any };
@@ -854,7 +855,8 @@ export type GenericMorph =
   | UploadFolder
   | UsersPermissionsPermission
   | UsersPermissionsRole
-  | UsersPermissionsUser;
+  | UsersPermissionsUser
+  | ValuePropCard;
 
 export type Homepage = {
   __typename?: 'Homepage';
@@ -1027,6 +1029,8 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createValuePropCard?: Maybe<ValuePropCardEntityResponse>;
+  createValuePropCardLocalization?: Maybe<ValuePropCardEntityResponse>;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
   deleteExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   deleteExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
@@ -1041,6 +1045,7 @@ export type Mutation = {
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
@@ -1067,6 +1072,7 @@ export type Mutation = {
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   upload: UploadFileEntityResponse;
 };
 
@@ -1112,6 +1118,17 @@ export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
 };
 
+export type MutationCreateValuePropCardArgs = {
+  data: ValuePropCardInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type MutationCreateValuePropCardLocalizationArgs = {
+  data?: InputMaybe<ValuePropCardInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
 export type MutationDeleteAuxPageArgs = {
   id: Scalars['ID']['input'];
 };
@@ -1146,6 +1163,11 @@ export type MutationDeleteUsersPermissionsRoleArgs = {
 
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteValuePropCardArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationEmailConfirmationArgs = {
@@ -1241,6 +1263,12 @@ export type MutationUpdateUsersPermissionsRoleArgs = {
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateValuePropCardArgs = {
+  data: ValuePropCardInput;
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationUploadArgs = {
@@ -1408,6 +1436,8 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  valuePropCard?: Maybe<ValuePropCardEntityResponse>;
+  valuePropCards?: Maybe<ValuePropCardEntityResponseCollection>;
 };
 
 export type QueryAuxPageArgs = {
@@ -1524,6 +1554,19 @@ export type QueryUsersPermissionsUserArgs = {
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryValuePropCardArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type QueryValuePropCardsArgs = {
+  filters?: InputMaybe<ValuePropCardFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1981,6 +2024,68 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type ValuePropCard = {
+  __typename?: 'ValuePropCard';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  locale?: Maybe<Scalars['String']['output']>;
+  localizations?: Maybe<ValuePropCardRelationResponseCollection>;
+  media: UploadFileEntityResponse;
+  order?: Maybe<Scalars['Float']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ValuePropCardLocalizationsArgs = {
+  filters?: InputMaybe<ValuePropCardFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ValuePropCardEntity = {
+  __typename?: 'ValuePropCardEntity';
+  attributes?: Maybe<ValuePropCard>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ValuePropCardEntityResponse = {
+  __typename?: 'ValuePropCardEntityResponse';
+  data?: Maybe<ValuePropCardEntity>;
+};
+
+export type ValuePropCardEntityResponseCollection = {
+  __typename?: 'ValuePropCardEntityResponseCollection';
+  data: Array<ValuePropCardEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ValuePropCardFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ValuePropCardFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<ValuePropCardFiltersInput>;
+  not?: InputMaybe<ValuePropCardFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ValuePropCardFiltersInput>>>;
+  order?: InputMaybe<FloatFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ValuePropCardInput = {
+  media?: InputMaybe<Scalars['ID']['input']>;
+  order?: InputMaybe<Scalars['Float']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ValuePropCardRelationResponseCollection = {
+  __typename?: 'ValuePropCardRelationResponseCollection';
+  data: Array<ValuePropCardEntity>;
+};
+
 export type RemoteBannerQueryVariables = Exact<{ [key: string]: never }>;
 
 export type RemoteBannerQuery = {
@@ -2059,6 +2164,64 @@ export type GetExplainerScreenQuery = {
           text: string;
           dataRef: string;
         };
+      } | null;
+    }>;
+  } | null;
+};
+
+export type GetOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename?: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              carousel: Array<{
+                __typename?: 'ComponentOnboardingV5CarouselItem';
+                title: string;
+                media: {
+                  __typename?: 'UploadFileEntityResponse';
+                  data?: {
+                    __typename?: 'UploadFileEntity';
+                    attributes?: {
+                      __typename?: 'UploadFile';
+                      url: string;
+                      height?: number | null;
+                      width?: number | null;
+                    } | null;
+                  } | null;
+                };
+              } | null>;
+              tagSelector?: {
+                __typename?: 'ComponentOnboardingV5TagSelectorStep';
+                id: string;
+                customTagInputText: string;
+              } | null;
+              userSelector?: {
+                __typename?: 'ComponentOnboardingV5UserSelectorStep';
+                id: string;
+              } | null;
+              groupSelector?: {
+                __typename?: 'ComponentOnboardingV5GroupSelectorStep';
+                id: string;
+              } | null;
+            }
+          | { __typename?: 'Error' }
+          | null
+        >;
       } | null;
     }>;
   } | null;
@@ -2187,6 +2350,64 @@ export const useGetExplainerScreenQuery = <
       GetExplainerScreenDocument,
       variables,
     ),
+    options,
+  );
+export const GetOnboardingV5VersionsDocument = `
+    query GetOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                  }
+                }
+              }
+            }
+            title
+            description
+            stepKey
+            tagSelector {
+              id
+              customTagInputText
+            }
+            userSelector {
+              id
+            }
+            groupSelector {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOnboardingV5VersionsQuery = <
+  TData = GetOnboardingV5VersionsQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingV5VersionsQueryVariables,
+  options?: UseQueryOptions<GetOnboardingV5VersionsQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingV5VersionsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingV5Versions']
+      : ['GetOnboardingV5Versions', variables],
+    gqlFetcher<
+      GetOnboardingV5VersionsQuery,
+      GetOnboardingV5VersionsQueryVariables
+    >(GetOnboardingV5VersionsDocument, variables),
     options,
   );
 export const TweetMessageDocument = `

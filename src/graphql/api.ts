@@ -92,6 +92,13 @@ export type BoostNode = NodeInterface & {
   legacy: Scalars['String']['output'];
 };
 
+export type BoostsConnection = ConnectionInterface & {
+  __typename?: 'BoostsConnection';
+  /** Gets Boost edges in connection. */
+  edges: Array<BoostEdge>;
+  pageInfo: PageInfo;
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -181,6 +188,8 @@ export type GiftCardNode = NodeInterface & {
   id: Scalars['ID']['output'];
   issuedAt: Scalars['Int']['output'];
   issuedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Username of the gift card issuer */
+  issuedByUsername?: Maybe<Scalars['String']['output']>;
   productId: GiftCardProductIdEnum;
   /**
    * Returns transactions relating to the gift card
@@ -218,6 +227,7 @@ export enum GiftCardStatusFilterEnum {
 export type GiftCardTargetInput = {
   targetEmail?: InputMaybe<Scalars['String']['input']>;
   targetUserGuid?: InputMaybe<Scalars['String']['input']>;
+  targetUsername?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GiftCardTransaction = NodeInterface & {
@@ -288,6 +298,7 @@ export type Mutation = {
   dismiss: Dismissal;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  updateAccount: Array<Scalars['String']['output']>;
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -314,6 +325,13 @@ export type MutationDismissArgs = {
 
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
+};
+
+export type MutationUpdateAccountArgs = {
+  currentUsername: Scalars['String']['input'];
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  newUsername?: InputMaybe<Scalars['String']['input']>;
+  resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -384,6 +402,8 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Gets Boosts. */
+  boosts: BoostsConnection;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -419,6 +439,17 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryBoostsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  servedByGuid?: InputMaybe<Scalars['String']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  targetAudience?: InputMaybe<Scalars['Int']['input']>;
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryDismissalByKeyArgs = {
