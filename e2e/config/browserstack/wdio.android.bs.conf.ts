@@ -1,4 +1,4 @@
-import bsSharedConfig, { localIdentifier } from './wdio.shared.bs.conf';
+import bsSharedConfig from './wdio.shared.bs.conf';
 
 // ============
 // Capabilities
@@ -8,15 +8,11 @@ import bsSharedConfig, { localIdentifier } from './wdio.shared.bs.conf';
 bsSharedConfig.capabilities = [
   {
     build: 'Minds Android Build',
-    name: 'smoke_test',
+    name: 'Smoke test',
     device: 'Google Pixel 6',
     os_version: '12.0',
     app: process.env.BROWSERSTACK_ANDROID_APP_ID,
     autoGrantPermissions: true,
-    // @ts-ignore
-    'browserstack.localIdentifier': localIdentifier,
-    'browserstack.local': false,
-    'browserstack.debug': true,
   },
 ];
 

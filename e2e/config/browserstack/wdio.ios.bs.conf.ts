@@ -1,4 +1,4 @@
-import bsSharedConfig, { localIdentifier } from './wdio.shared.bs.conf';
+import bsSharedConfig from './wdio.shared.bs.conf';
 
 // ============
 // Capabilities
@@ -8,15 +8,11 @@ import bsSharedConfig, { localIdentifier } from './wdio.shared.bs.conf';
 bsSharedConfig.capabilities = [
   {
     build: 'Minds iOS Build',
-    name: 'smoke_test',
+    name: 'Smoke test',
     device: 'iPhone 13',
     os_version: '15.0',
     app: process.env.BROWSERSTACK_IOS_APP_ID,
     autoAcceptAlerts: true,
-    // @ts-ignore
-    'browserstack.localIdentifier': localIdentifier,
-    'browserstack.local': false,
-    'browserstack.debug': true,
   },
 ];
 

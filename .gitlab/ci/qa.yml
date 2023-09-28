@@ -18,17 +18,25 @@
       - wdioLogs
   needs: []
 
-qa:rc:
+qa:ios:mr:
   extends:
     - .except_nightly
     - .qa_base
   script:
-    - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
-    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
-    - *wdio_tests
-  # only:
-  #   refs:
-  #     - /^develop$/
+    - export BROWSERSTACK_IOS_APP_ID="IOS_MR_LATEST"
+    - yarn install --frozen-lockfile
+    - yarn run e2e:ios:browserstack
+  needs: [upload:ios:browserstack:mr]
+
+qa:android:mr:
+  extends:
+    - .except_nightly
+    - .qa_base
+  script:
+    - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_MR_LATEST"
+    - yarn install --frozen-lockfile
+    - yarn run e2e:android:browserstack
+  needs: [upload:android:browserstack:mr]
 
 qa:rc:nightly:
   extends: .qa_base

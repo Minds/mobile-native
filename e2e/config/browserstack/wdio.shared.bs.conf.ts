@@ -8,7 +8,19 @@ config.user = process.env.BROWSERSTACK_USERNAME || '';
 config.key = process.env.BROWSERSTACK_ACCESS_KEY || '';
 
 // Use browserstack service
-config.services = ['browserstack'];
+config.services = [
+  [
+    'browserstack',
+    {
+      testObservability: true,
+      testObservabilityOptions: {
+        projectName: 'Minds',
+        buildName: 'Build name', // if useful, please get this from the pipeline or somewhere
+      },
+      browserstackLocal: false,
+    },
+  ],
+];
 
 export const localIdentifier = `e2e:id:${Date.now()}`;
 
