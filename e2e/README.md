@@ -20,6 +20,8 @@ Before you begin writing E2E tests, make sure you have the following prerequisit
 
 4. Set the proper values in .env at the root of the project
 
+5. You can run the test by running the command `yarn e2e:android:local --spec e2e/features/Login.feature` or similar
+
 ## Getting the App
 
 Certainly, here's an updated paragraph within the documentation explaining why WebDriverIO requires the `.apk` (Android) and `.app` (iOS) files to run tests:

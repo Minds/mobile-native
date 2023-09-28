@@ -1,5 +1,8 @@
 import { hooks } from '../support/hooks';
 
+const path = require('path');
+const baseDirectory = process.cwd();
+
 require('dotenv').config();
 
 /**
@@ -22,7 +25,7 @@ export const config: WebdriverIO.Config = {
   /**
    * NOTE: This is just a place holder and will be overwritten by each specific configuration
    */
-  specs: ['e2e/**/*.feature'],
+  specs: [path.join(baseDirectory, 'e2e', 'features', '*.feature')],
   //
   // ============
   // Capabilities
