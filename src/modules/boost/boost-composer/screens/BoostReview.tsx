@@ -13,7 +13,7 @@ import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
   finishTransaction,
-  isIosStorekit2,
+  // isIosStorekit2,
   Product,
   ProductPurchase,
   PurchaseResult,
@@ -24,7 +24,7 @@ import {
 import NavigationService from '../../../../navigation/NavigationService';
 import {
   IS_FROM_STORE,
-  IS_IOS,
+  // IS_IOS,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { InteractionManager } from 'react-native';
