@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { showNotification } from '~/../AppMessages';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
 // import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
+import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
 import { B1, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -12,92 +13,50 @@ import { useTranslation } from '../../locales';
 import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import {
-  finishTransaction,
-  isIosStorekit2,
-  Product,
-  ProductPurchase,
-  requestPurchase,
-  useIAP,
-  withIAPContext,
-} from 'react-native-iap';
+  GiftCardProductIdEnum,
+  useFetchPaymentMethodsQuery,
+} from '~/graphql/api';
 import NavigationService from '../../../../navigation/NavigationService';
-import {
-  IS_FROM_STORE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '../../../../config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
+import { IS_IOS } from '~/config/Config';
 import BoostComposerHeader from '../components/BoostComposerHeader';
-import { CashSelector } from '~/common/components/cash-selector/CashSelector';
-import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
-import { useGifts } from '~/common/hooks/useGifts';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const {
-    amount,
-    duration,
-    total,
-    wallet,
-    audience,
-    paymentType,
-    insights,
-    selectedCardId,
-    entity,
-    boostType,
-    target_platform_android,
-    target_platform_ios,
-    target_platform_web,
-    platformsText,
-    goalsEnabled,
-    goal,
-    setSelectedCardId,
-    setIapTransaction,
-    createBoost,
-  } = useBoostStore();
+  const boostStore = useBoostStore();
 
-  /**
-   * CREDITS
-   */
-  const { creditPaymentMethod, balance } = useGifts();
-  const hasCredit = (balance ?? 0) >= total;
-
-  const defaultSelectedMethod = hasCredit ? 'gifts' : 'iap';
-  const [selectedMethod, setSelectedMethod] = useState<'gifts' | 'iap'>(
-    defaultSelectedMethod,
+  const { name, balance, creditPaymentMethod, hasCredits } = useCredits(
+    boostStore.total,
   );
 
-  const creditLabel = t('Gift Cards (${{value}} Credits)', {
-    value: number(balance ?? 0, 2, 2),
-  });
-
-  /**
-   * InApp Purchase
-   */
-  const { selectedProduct } = useInAppPurchase(total);
-
   const tokenLabel = t('Off-chain ({{value}} tokens)', {
-    value: number(wallet?.balance || 0, 0, 2),
+    value: number(boostStore.wallet?.balance || 0, 0, 2),
   });
 
+  const creditLabel = t('{{name}} (${{value}} Credits)', {
+    name,
+    value: number(balance || 0, 2, 2),
+  });
+  const paymentType = boostStore.paymentType === 'cash' ? 'cash' : 'tokens';
   const textMapping = {
     cash: {
       budgetDescription: t('${{amount}} per day for {{duration}} days', {
-        amount,
-        duration,
+        amount: boostStore.amount,
+        duration: boostStore.duration,
       }),
-      total: t('${{total}}.00', { total: total }),
+      total: t('${{total}}.00', { total: boostStore.total }),
     },
     tokens: {
       budgetDescription: t('{{amount}} tokens per day for {{duration}} days', {
-        amount,
-        duration,
+        amount: boostStore.amount,
+        duration: boostStore.duration,
       }),
-      total: t('{{total}} tokens', { total: total }),
+      total: t('{{total}} tokens', { total: boostStore.total }),
     },
   };
 
@@ -107,79 +66,39 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     group: t('Boost Group'),
   };
 
-  const title = titleMap[boostType];
+  const title = titleMap[boostStore.boostType];
 
-  const isTokenPayment = paymentType !== 'cash';
-  const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
-  const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
+  const handleCreate = () => {
+    return boostStore.createBoost(creditPaymentMethod)?.then(() => {
+      showNotification(t('Boost created successfully'));
+      navigation.popToTop();
+      navigation.goBack();
 
-  const handleCreate = async () => {
-    // Tokens, OSS or Gifts
-    if (!isCashFromStore) {
-      return createBoost(hasCredit ? creditPaymentMethod : undefined)?.then(
-        () => {
-          showNotification(t('Boost created successfully'));
-          navigation.popToTop();
-          navigation.goBack();
-
-          // only show the boost upgrade modal for users that arent plus or pro
-          if (user?.pro || user?.plus) {
-            return;
-          }
-
-          if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
-            InteractionManager.runAfterInteractions(() => {
-              setTimeout(() => {
-                NavigationService.push('BoostUpgrade');
-                // the same time as the toast dismisses
-              }, 2800);
-            });
-          }
-        },
-      );
-    }
-
-    const purchases = await requestPurchase({
-      skus: [selectedProduct?.productId ?? ''],
-      obfuscatedAccountIdAndroid: entity.guid,
-      obfuscatedProfileIdAndroid: entity.ownerObj?.guid ?? 'no-owner',
-      // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
-    }).catch(processError);
-
-    if ((purchases as unknown as ProductPurchase[])?.length > 0) {
-      const purchase = purchases?.[0];
-      const { transactionId, transactionReceipt } = purchase ?? {};
-      const receipt = isIosStorekit2() ? transactionId : transactionReceipt;
-
-      if (receipt) {
-        const result = await finishTransaction({
-          purchase: purchases?.[0],
-          isConsumable: true,
-        }).catch(processError);
-
-        if ((typeof result !== 'boolean' && result?.code === 'OK') || result) {
-          // set payment_method_id
-          setSelectedCardId(IS_IOS ? 'ios_iap' : 'android_iap');
-          // set the IAP transaction details
-          setIapTransaction(receipt);
-
-          return createBoost()?.then(() => {
-            showNotification(t('Boost created successfully'));
-            navigation.popToTop();
-            navigation.goBack();
-          });
-        }
+      // only show the boost upgrade modal for users that arent plus or pro
+      if (user?.pro || user?.plus) {
+        return;
       }
-    }
+
+      if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
+        InteractionManager.runAfterInteractions(() => {
+          setTimeout(() => {
+            NavigationService.push('BoostUpgrade');
+            // the same time as the toast dismisses
+          }, 2800);
+        });
+      }
+    });
   };
 
-  const estimatedReach = insights?.views?.low
-    ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
+  const estimatedReach = boostStore.insights?.views?.low
+    ? `${boostStore.insights?.views?.low?.toLocaleString()} - ${boostStore.insights?.views?.high?.toLocaleString()}`
     : 'unknown';
 
   const audiencePlatforms =
-    !target_platform_android || !target_platform_ios || !target_platform_web
-      ? `; ${platformsText}`
+    !boostStore.target_platform_android ||
+    !boostStore.target_platform_ios ||
+    !boostStore.target_platform_web
+      ? `; ${boostStore.platformsText}`
       : '';
 
   return (
@@ -196,17 +115,17 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
         <HairlineRow />
         <Column vertical="M">
-          {goalsEnabled && (
+          {boostStore.goalsEnabled && (
             <MenuItem
               title={t('Goal')}
-              subtitle={t(`goal.${goal}`)}
+              subtitle={t(`goal.${boostStore.goal}`)}
               borderless
             />
           )}
           <MenuItem
             title={t('Audience')}
             subtitle={`${
-              audience === 'safe' ? t('Safe') : t('Controversial')
+              boostStore.audience === 'safe' ? t('Safe') : t('Controversial')
             }${audiencePlatforms}`}
             borderless
           />
@@ -215,36 +134,27 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             subtitle={textMapping[paymentType].budgetDescription}
             borderless
           />
-          {isCashFromStore && (
-            <CashSelector
-              methodSelected={selectedMethod}
-              onMethodSelected={method => setSelectedMethod(method)}
-              style={ThemedStyles.style.bgTransparent}
+          {hasCredits ? (
+            <MenuItem
+              title={t('Payment method')}
+              subtitle={creditLabel}
               borderless
             />
-          )}
-          {isCashFromStripe &&
-            (selectedMethod === 'gifts' ? (
-              <MenuItem
-                title={t('Payment method')}
-                subtitle={creditLabel}
-                borderless
-              />
-            ) : (
-              <StripeCardSelector
-                onCardSelected={card => setSelectedCardId(card.id)}
-                selectedCardId={selectedCardId}
-                containerStyle={ThemedStyles.style.bgPrimaryBackground}
-                borderless
-              />
-            ))}
-          {isTokenPayment && (
+          ) : boostStore.paymentType === 'cash' && !IS_IOS ? (
+            <StripeCardSelector
+              onCardSelected={card => boostStore.setSelectedCardId(card.id)}
+              selectedCardId={boostStore.selectedCardId}
+              containerStyle={ThemedStyles.style.bgPrimaryBackground}
+              borderless
+            />
+          ) : (
             <MenuItem
               title={t('Payment method')}
               subtitle={tokenLabel}
               borderless
             />
           )}
+
           <MenuItem
             title="Total"
             subtitle={textMapping[paymentType].total}
@@ -259,8 +169,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           spinner
           type="action"
           disabled={
-            (isCashFromStore && !selectedProduct) ||
-            (isCashFromStripe && !selectedCardId)
+            boostStore.paymentType === 'cash' &&
+            !hasCredits &&
+            !boostStore.selectedCardId
           }
           top="XXXL2"
           horizontal="L">
@@ -288,41 +199,24 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   );
 }
 
-function processError(error: any) {
-  showNotification(error.message);
-  console.log('error', error);
-}
+const useCredits = (total = 0) => {
+  const { data } = useFetchPaymentMethodsQuery({
+    giftCardProductId: GiftCardProductIdEnum.Boost,
+  });
 
-export default withErrorBoundaryScreen(
-  withIAPContext(observer(BoostReviewScreen)),
-  'BoostReview',
-);
+  const { balance, id, name } = data?.paymentMethods?.[0] ?? {};
 
-const useInAppPurchase = (total: number) => {
-  const { products, getProducts } = useIAP();
-  const skus = useMemo(() => [amountProductMap[total] ?? 'boost.300'], [total]);
-
-  useEffect(() => {
-    if (IS_FROM_STORE) {
-      getProducts({ skus });
-    }
-  }, [getProducts, skus]);
-
-  let selectedProduct = undefined as Product | undefined;
-  if (products.length !== 0) {
-    selectedProduct = products.filter(
-      product => product.productId === skus[0],
-    )?.[0];
-  }
+  const hasCredits = Number(balance) >= Number(total);
 
   return {
-    selectedProduct,
+    balance,
+    creditPaymentMethod: id,
+    name,
+    hasCredits,
   };
 };
 
-const amountProductMap = {
-  1: 'boost.001',
-  10: 'boost.010',
-  30: 'boost.030',
-  300: 'boost.300',
-};
+export default withErrorBoundaryScreen(
+  observer(BoostReviewScreen),
+  'BoostReview',
+);
