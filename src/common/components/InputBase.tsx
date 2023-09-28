@@ -10,7 +10,6 @@ interface InputBaseProps {
   style?: any;
   labelStyle?: StyleProp<TextStyle>;
   label: string;
-  valueStyle?: StyleProp<TextStyle>;
   value: string;
   onPress?: () => void;
   info?: string;
@@ -23,7 +22,6 @@ export default function InputBase({
   style,
   labelStyle,
   label,
-  valueStyle,
   value,
   onPress,
   info,
@@ -61,12 +59,7 @@ export default function InputBase({
         </Row>
         {value ? (
           <MText
-            style={[
-              theme.colorPrimaryText,
-              theme.fontL,
-              theme.marginBottom,
-              valueStyle,
-            ]}>
+            style={[theme.colorPrimaryText, theme.fontL, theme.marginBottom]}>
             {value}
           </MText>
         ) : undefined}
