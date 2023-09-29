@@ -30,6 +30,8 @@ Certainly, here's an updated paragraph within the documentation explaining why W
 
 ## Getting the Application
 
+You need to have a Minds.apk and Minds.app in the /apps folder in order to test the app locally. These apps can be "debug" apps so they can use the packager.
+
 ### Android (.apk)
 
 To obtain the Android application (.apk) for testing, follow these steps:
@@ -54,7 +56,19 @@ When writing E2E tests for the React Native application, consider the following 
 
 2. **Debugging**: Utilize the `await driver.debug();` command when debugging the test code. This command allows you to interactively run Appium commands and inspect the application's state during test execution.
 
-3. **Element Inspection**: Use Appium Inspector to inspect and identify elements within your React Native application. This tool helps you obtain element locators (e.g., XPath, ID, class name) required for test automation.
+3. **Element Inspection**: Use Appium Inspector to inspect and identify elements within your React Native application. This tool helps you obtain element locators (e.g., XPath, ID, class name) required for test automation. Example capability for connecting to an iOS simulator:
+
+```json
+{
+  "platformName": "iOS",
+  "appium:platformVersion": "16.4",
+  "appium:deviceName": "iPhone 14 Pro Max",
+  "appium:automationName": "XCUITest",
+  "appium:udid": "929861AD-C02E-4165-A4A1-CDEA2989F3CC",
+  "appium:settings[snapshotMaxDepth]": 80,
+  "appium:autoAcceptAlerts": "true"
+}
+```
 
 4. **React Native Development**: When testing development versions of your React Native application, make sure to run the Metro Bundler using `yarn start`. This ensures that the app picks up the JavaScript bundle from Metro.
 
