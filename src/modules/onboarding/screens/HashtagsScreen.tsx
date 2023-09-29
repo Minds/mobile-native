@@ -9,12 +9,12 @@ import Header from '../components/Header';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import AuthService from '~/auth/AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useSurveylData } from '../hooks';
+import { useSurveyData } from '../hooks';
 
 function HashTagsScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const { hashtag } = useLegacyStores();
-  const { noData } = useSurveylData();
+  const { noData } = useSurveyData();
 
   const mandatoryOnboarding = useIsFeatureOn(
     'minds-3921-mandatory-onboarding-tags',

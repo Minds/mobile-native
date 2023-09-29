@@ -67,7 +67,6 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
 
 export const OnboardingCarousel = () => {
   const { data } = useCarouselData();
-  console.log('OnboardingCarousel', data);
   return <CarouselComponent data={data} />;
 };
 

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 
-import { H4, Icon } from '~/common/ui';
+import { Button, H4, Icon, ScreenSection } from '~/common/ui';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import Header from './Header';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { useSurveylData } from '../hooks';
+import { useSurveyData } from '../hooks';
+import { observer } from 'mobx-react';
 
 type Survey = {
   title: string | undefined;
@@ -23,14 +24,15 @@ type Survey = {
 };
 
 type SurveyViewProps = {
-  onSelect?: (selection?: string) => void;
+  onPressContinue?: () => void;
 };
 
 type SurveyComponentProps = SurveyViewProps & {
   data?: Survey[];
 };
 
-const SurveyComponent = (props: SurveyComponentProps) => {
+const SurveyComponent = ({ onPressContinue, data }: SurveyComponentProps) => {
+  const theme = ThemedStyles.style;
   const [selection, setSelection] = useState<string>();
 
   const {
@@ -38,20 +40,25 @@ const SurveyComponent = (props: SurveyComponentProps) => {
     description = '',
     radioSurveyQuestion,
     radioSurvey,
-  } = props.data?.[0] ?? {};
+  } = data?.[0] ?? {};
+
+  const onPressNext = useCallback(() => {
+    // TODO: do something with the selection
+    onPressContinue?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onPress = (value?: string) => () => {
     setSelection(value);
-    props.onSelect?.(value);
   };
 
   return (
     <>
       <Header {...{ title, description, spaced: true }} />
-      <H4 left="XXXL" bottom="L">
+      <H4 horizontal="XXXL" bottom="L">
         {radioSurveyQuestion}
       </H4>
-      <View style={ThemedStyles.style.paddingHorizontal3x}>
+      <View style={[theme.flexContainer, theme.paddingHorizontal3x]}>
         {radioSurvey?.map(survey => {
           return (
             <MenuItemOption
@@ -65,11 +72,20 @@ const SurveyComponent = (props: SurveyComponentProps) => {
               multiLine
               borderless
               selected
-              containerItemStyle={ThemedStyles.style.marginBottom2x}
+              containerItemStyle={theme.marginBottom2x}
             />
           );
         })}
       </View>
+      <ScreenSection bottom="L">
+        <Button
+          type="action"
+          size="large"
+          disabled={!selection}
+          onPress={onPressNext}>
+          Continue
+        </Button>
+      </ScreenSection>
     </>
   );
 };
@@ -80,11 +96,10 @@ const Check = ({ checked }: { checked?: boolean }) => (
   </View>
 );
 
-export const SurveyView = ({ onSelect }: SurveyViewProps) => {
-  const { data } = useSurveylData();
-  console.log('SurveyView', JSON.stringify(data));
-  return <SurveyComponent data={data} onSelect={onSelect} />;
-};
+export const SurveyView = observer(({ onPressContinue }: SurveyViewProps) => {
+  const { data } = useSurveyData();
+  return <SurveyComponent data={data} onPressContinue={onPressContinue} />;
+});
 
 const styles = ThemedStyles.create({
   rounded: {

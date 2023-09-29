@@ -15,7 +15,6 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
-// import { SurveyView } from '~/modules/onboarding/components/SurveyView';
 
 type PropsType = {
   navigation: any;
@@ -26,7 +25,6 @@ export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
-
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
   }, [props.navigation]);
@@ -44,7 +42,6 @@ function WelcomeScreen(props: PropsType) {
     <SafeAreaView style={theme.flexContainer}>
       <View style={theme.flexContainer}>
         <OnboardingCarousel />
-        {/* <SurveyView /> */}
         <View style={styles.buttonContainer}>
           <Button
             type="action"

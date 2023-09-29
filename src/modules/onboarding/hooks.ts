@@ -57,7 +57,7 @@ export const useCarouselData = () => {
   };
 };
 
-export const useSurveylData = () => {
+export const useSurveyData = () => {
   const { data: originalData, ...rest } = useGetOnboardingV5VersionsQuery();
   const data = surveyExtractor(originalData);
   return {
