@@ -15,7 +15,7 @@ const styles = ThemedStyles.create({
   },
   messageContainer: ['paddingHorizontal4x', 'paddingVertical3x'],
   message: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 16,
     lineHeight: 24,
   },

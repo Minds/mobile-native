@@ -142,7 +142,7 @@ exports[`Update Screen Component renders correctly 1`] = `
                 "fontSize": 14,
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
                 "fontWeight": "500",
               },
               {

@@ -69,7 +69,7 @@ export const showNotification = (
       ...getIcon(type),
       closeIconSize: 18,
       messageProps: {
-        fontFamily: 'Roboto-Medium',
+        fontFamily: 'Roboto_500Medium',
         fontSize: 15,
       },
       iconSize: 24,

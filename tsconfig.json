@@ -72,5 +72,6 @@
     "./setupTests.js",
     "tasks",
     "tests-helpers"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }

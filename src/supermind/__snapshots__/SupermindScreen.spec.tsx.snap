@@ -134,7 +134,7 @@ exports[`SupermindScreen should render correctly 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Bold",
+                    "fontFamily": "Roboto_700Bold",
                   },
                   {
                     "fontSize": 24,

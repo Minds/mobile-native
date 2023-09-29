@@ -1,4 +1,87 @@
 {
-  "name": "Minds",
-  "displayName": "Minds"
+  "expo": {
+    "name": "Minds",
+    "scheme": "mindsapp",
+    "version": "4.42.0",
+    "plugins": [
+      "react-native-iap",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0",
+            "kotlinVersion": "1.8.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.0"
+          }
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "This lets you share photos from your library",
+          "savePhotosPermission": "This lets you save photos to your camera roll",
+          "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera.",
+
+          // optionally, if you want to record audio:
+          "enableMicrophonePermission": true,
+          "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone."
+        }
+      ]
+    ],
+    "android": {
+      "package": "com.minds.mobile",
+      "versionCode": "310178",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "www.minds.com"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "splash": {
+        "image": "./src/assets/logos/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#1C1D1F"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.minds.mobile",
+      "buildNumber": "1",
+      "associatedDomains": [
+        "applinks:www.minds.com",
+        "activitycontinuation:www.minds.com",
+        "webcredentials:www.minds.com"
+      ],
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["mindschat"]
+      },
+      "splash": {
+        "image": "./src/assets/logos/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#1C1D1F"
+      }
+    }
+  },
+  "android": {
+    "package": "com.minds.mobile"
+  },
+  "ios": {
+    "bundleIdentifier": "com.minds.mobile"
+  }
 }

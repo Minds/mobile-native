@@ -7,7 +7,6 @@ import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';
 import sessionService from '../session.service';
 import EventEmitter from 'eventemitter3';
-import permissionsService from '~/common/services/permissions.service';
 
 /**
  * Android Platform
@@ -88,10 +87,10 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Android don't need permissions from user
    */
   checkPermissions() {
-    return permissionsService.requestNotificationPermission();
+    // return permissionsService.requestNotificationPermission();
   }
 
   requestPermission() {
-    permissionsService.requestNotificationPermission();
+    // permissionsService.requestNotificationPermission();
   }
 }

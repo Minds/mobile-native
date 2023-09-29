@@ -5,7 +5,7 @@ import moment from 'moment-timezone';
 import React, { useRef } from 'react';
 import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import {
   BottomSheetButton,
   BottomSheetModal,

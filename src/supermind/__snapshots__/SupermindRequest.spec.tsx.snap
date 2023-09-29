@@ -91,7 +91,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                     "color": "#FFFFFF",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 14,
@@ -266,7 +266,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Bold",
+                      "fontFamily": "Roboto_700Bold",
                     },
                     {
                       "fontSize": 16,
@@ -371,7 +371,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -379,7 +379,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -411,7 +411,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -579,7 +579,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                     "color": "#FFFFFF",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 14,
@@ -754,7 +754,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Bold",
+                      "fontFamily": "Roboto_700Bold",
                     },
                     {
                       "fontSize": 16,
@@ -859,7 +859,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -867,7 +867,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -899,7 +899,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],

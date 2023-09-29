@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { View, ViewStyle } from 'react-native';
 import { MotiView, AnimatePresence } from 'moti';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import settingsStore from '../settings/SettingsStore';
 import GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';

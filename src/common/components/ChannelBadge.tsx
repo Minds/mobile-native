@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { StyleSheet } from 'react-native';
 import type UserModel from '../../channel/UserModel';

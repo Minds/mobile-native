@@ -7,7 +7,7 @@ import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import {
   ONCHAIN_ENABLED,
   LIQUIDITY_ENABLED,
@@ -225,6 +225,6 @@ const styles = StyleSheet.create({
   textItem: {
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
 });

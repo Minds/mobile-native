@@ -23,7 +23,7 @@ import { setup } from 'react-native-iap';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import ShareMenu from 'react-native-share-menu';
+// import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
@@ -45,16 +45,36 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import i18n from './src/common/services/i18n.service';
 
-import receiveShareService from './src/common/services/receive-share.service';
+// import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import * as SplashScreen from 'expo-splash-screen';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
 import { ConfigProvider } from '~/modules/livepeer';
+
+import {
+  useFonts,
+  Roboto_100Thin,
+  Roboto_100Thin_Italic,
+  Roboto_300Light,
+  Roboto_300Light_Italic,
+  Roboto_400Regular,
+  Roboto_400Regular_Italic,
+  Roboto_500Medium,
+  Roboto_500Medium_Italic,
+  Roboto_700Bold,
+  Roboto_700Bold_Italic,
+  Roboto_900Black,
+  Roboto_900Black_Italic,
+} from '@expo-google-fonts/roboto';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 appInitManager.initializeServices();
 
@@ -104,9 +124,9 @@ class App extends Component<Props> {
       'url',
       this.handleOpenURL,
     );
-    this.shareReceiveSubscription = ShareMenu.addNewShareListener(
-      receiveShareService.handle,
-    );
+    // this.shareReceiveSubscription = ShareMenu.addNewShareListener(
+    //   receiveShareService.handle,
+    // );
 
     // set global audio settings for the app
     Audio.setAudioModeAsync({
@@ -177,53 +197,75 @@ class App extends Component<Props> {
     const stores = getStores();
 
     return (
-      <View style={appContainerStyle}>
-        <ExperimentsProvider>
-          <SafeAreaProvider>
-            <UIProvider
-              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-              {sessionService.ready && (
-                <StoresProvider>
-                  <QueryProvider>
-                    <Provider key="app" {...stores}>
-                      <NavigationContainer
-                        ref={navigationRef}
-                        theme={ThemedStyles.navTheme}
-                        onReady={appInitManager.onNavigatorReady}
-                        onStateChange={NavigationService.onStateChange}>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
-                          <FriendlyCaptchaProvider
-                            ref={setFriendlyCaptchaReference}>
-                            <PortalProvider>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
-                                  <ConfigProvider>
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                  </ConfigProvider>
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </PortalProvider>
-                          </FriendlyCaptchaProvider>
-                        </AppMessageProvider>
-                      </NavigationContainer>
-                    </Provider>
-                  </QueryProvider>
-                </StoresProvider>
-              )}
-            </UIProvider>
-          </SafeAreaProvider>
-        </ExperimentsProvider>
-      </View>
+      <FontsLoader>
+        <View style={appContainerStyle}>
+          <ExperimentsProvider>
+            <SafeAreaProvider>
+              <UIProvider
+                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+                {sessionService.ready && (
+                  <StoresProvider>
+                    <QueryProvider>
+                      <Provider key="app" {...stores}>
+                        <NavigationContainer
+                          ref={navigationRef}
+                          theme={ThemedStyles.navTheme}
+                          onReady={appInitManager.onNavigatorReady}
+                          onStateChange={NavigationService.onStateChange}>
+                          <AppMessageProvider
+                            key={`message_${ThemedStyles.theme}`}>
+                            <FriendlyCaptchaProvider
+                              ref={setFriendlyCaptchaReference}>
+                              <PortalProvider>
+                                <BottomSheetModalProvider>
+                                  <ErrorBoundary
+                                    message="An error occurred"
+                                    containerStyle={
+                                      ThemedStyles.style.centered
+                                    }>
+                                    <ConfigProvider>
+                                      <NavigationStack
+                                        key={ThemedStyles.theme + i18n.locale}
+                                      />
+                                    </ConfigProvider>
+                                  </ErrorBoundary>
+                                </BottomSheetModalProvider>
+                              </PortalProvider>
+                            </FriendlyCaptchaProvider>
+                          </AppMessageProvider>
+                        </NavigationContainer>
+                      </Provider>
+                    </QueryProvider>
+                  </StoresProvider>
+                )}
+              </UIProvider>
+            </SafeAreaProvider>
+          </ExperimentsProvider>
+        </View>
+      </FontsLoader>
     );
   }
 }
 
 export default App;
+
+const FontsLoader = ({ children }) => {
+  let [fontsLoaded] = useFonts({
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  });
+  return fontsLoaded ? children : null;
+};
 
 const appContainerStyle = ThemedStyles.combine(
   'flexContainer',

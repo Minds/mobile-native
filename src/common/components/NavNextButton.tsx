@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { View, TouchableHighlight, StyleSheet } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import MText from './MText';
 
 type PropsType = {

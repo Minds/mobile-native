@@ -4,9 +4,8 @@ import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
-import { codePushStore } from 'modules/codepush';
 import referrerService from './referrer.service';
-import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
+// import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
 
 /**
  * Deeplinks router
@@ -85,25 +84,25 @@ class DeeplinksRouter {
     // this will track not only deep links, but navigation initiated from push notifs
     analyticsService.trackDeepLinkReceivedEvent(url);
 
-    if (cleanURL.startsWith('codepush/')) {
-      const deploymentKey = cleanURL.split('codepush/')?.[1];
-      if (deploymentKey) {
-        return codePushStore.syncCodepush({
-          deploymentKey,
-          force: true,
-          clearUpdates: true,
-        });
-      }
-    }
+    // if (cleanURL.startsWith('codepush/')) {
+    //   const deploymentKey = cleanURL.split('codepush/')?.[1];
+    //   if (deploymentKey) {
+    //     return codePushStore.syncCodepush({
+    //       deploymentKey,
+    //       force: true,
+    //       clearUpdates: true,
+    //     });
+    //   }
+    // }
 
-    if (cleanURL.startsWith('customcodepush/')) {
-      const file = cleanURL.split('customcodepush/')?.[1];
-      if (file) {
-        console.log('Codepush File', file);
-        forceUpdate(file);
-      }
-      return;
-    }
+    // if (cleanURL.startsWith('customcodepush/')) {
+    //   const file = cleanURL.split('customcodepush/')?.[1];
+    //   if (file) {
+    //     console.log('Codepush File', file);
+    //     forceUpdate(file);
+    //   }
+    //   return;
+    // }
 
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
@@ -228,18 +227,18 @@ type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
 
 export default new DeeplinksRouter();
 
-const forceUpdate = async (file: string) => {
-  try {
-    console.log('Custom CodePush ->', file);
-    const response = await fetch(
-      'https://minds-repo.s3.amazonaws.com/android/codepush/' + file,
-    );
+// const forceUpdate = async (file: string) => {
+//   try {
+//     console.log('Custom CodePush ->', file);
+//     const response = await fetch(
+//       'https://minds-repo.s3.amazonaws.com/android/codepush/' + file,
+//     );
 
-    const update = await response.json();
+//     const update = await response.json();
 
-    console.log('Custom CodePush JSON', update);
-    forceCodepushCustomBundle(update);
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     console.log('Custom CodePush JSON', update);
+//     forceCodepushCustomBundle(update);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

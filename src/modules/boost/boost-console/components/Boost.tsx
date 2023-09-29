@@ -1,7 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import IonIcon from '@expo/vector-icons/Ionicons';
 import i18n from '~/common/services/i18n.service';
 import { B1, B2 } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';

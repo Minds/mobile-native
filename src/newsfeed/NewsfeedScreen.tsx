@@ -32,8 +32,8 @@ import { useIsAndroidFeatureOn, useIsFeatureOn } from 'ExperimentsProvider';
 import InFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { InAppVerificationPrompt } from '../modules/in-app-verification';
 import BoostRotator from './boost-rotator/BoostRotator';
-import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
-import RemoteBanner from '~/common/components/RemoteBanner';
+// import CodePushUpdatePrompt from '../modules/codepush/widgets/CodePushUpdatePrompt';
+// import RemoteBanner from '~/common/components/RemoteBanner';
 import NewsfeedTabs from './NewsfeedTabs';
 import {
   RecommendationProvider,
@@ -157,9 +157,9 @@ const NewsfeedScreen = observer(({ navigation }: NewsfeedScreenProps) => {
       () => (
         <>
           <CheckLanguage />
-          <CodePushUpdatePrompt>
+          {/* <CodePushUpdatePrompt>
             <RemoteBanner />
-          </CodePushUpdatePrompt>
+          </CodePushUpdatePrompt> */}
           <InitialOnboardingButton />
           <PortraitContentBar />
           <TopInFeedNotice />

@@ -72,7 +72,7 @@ exports[`Tos screen render and accept 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -401,7 +401,7 @@ exports[`Tos screen render and accept 1`] = `
                         "color": "#000000",
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                       },
                       {
                         "fontSize": 18,

@@ -1,10 +1,10 @@
-import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
-import ShareMenu from 'react-native-share-menu';
+// import ShareMenu from 'react-native-share-menu';
 import * as Sentry from '@sentry/react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 import pushService from './src/common/services/push.service';
-import receiveShare from './src/common/services/receive-share.service';
+// import receiveShare from './src/common/services/receive-share.service';
 
 import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
@@ -63,7 +63,7 @@ export class AppInitManager {
     //   codePushStore.syncCodepush({
     //     onDownload: () => {
     //       InteractionManager.runAfterInteractions(() => {
-    //         RNBootSplash.hide({ fade: true });
+    //         SplashScreen.hideAsync();
     //       });
     //     },
     //   });
@@ -84,13 +84,14 @@ export class AppInitManager {
         //   // but here we will hide the splash screen after a delay as a timeout if
         //   // anything goes wrong.
         //   setTimeout(() => {
-        //     RNBootSplash.hide({ fade: true });
+        //     SplashScreen.hideAsync();
         //   }, 400);
         // } else {
-        //   RNBootSplash.hide({ fade: true });
+        //   SplashScreen.hideAsync();
         // }
 
-        RNBootSplash.hide({ fade: true });
+        console.log('HIDE SPLASH 2');
+        SplashScreen.hideAsync();
       } else {
         logService.info('[App] session initialized');
       }
@@ -163,7 +164,7 @@ export class AppInitManager {
     pushService.registerToken();
 
     // request for permission (applies to iOS)
-    pushService.requestNotificationPermission();
+    // pushService.requestNotificationPermission();
 
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -199,6 +200,8 @@ export class AppInitManager {
     if (this.initialized) {
       return;
     }
+    console.log('HIDE SPLASH 1');
+    SplashScreen.hideAsync();
     this.initialized = true;
     console.log('[App] initial Navigation Handling');
     try {
@@ -212,19 +215,17 @@ export class AppInitManager {
       }
 
       // handle initial notifications (if the app is opened by tap on one)
-      pushService.handleInitialNotification();
+      // pushService.handleInitialNotification();
 
       // handle initial shared content`
-      ShareMenu.getInitialShare(receiveShare.handle);
+      // ShareMenu.getInitialShare(receiveShare.handle);
 
       if (sessionService.recoveryCodeUsed) {
         sessionService.setRecoveryCodeUsed(false);
         NavigationService.navigate('RecoveryCodeUsedScreen');
       }
-
-      // hide splash
-      RNBootSplash.hide({ fade: true });
     } catch (err) {
+      console.log('ACAAAAAAA', err);
       logService.exception(err);
     }
   }

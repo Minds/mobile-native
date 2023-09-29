@@ -65,7 +65,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -141,7 +141,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -217,7 +217,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -293,7 +293,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,

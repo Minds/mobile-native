@@ -573,7 +573,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "color": "#000000",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 18,

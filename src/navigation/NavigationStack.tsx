@@ -640,7 +640,7 @@ const RootStack = observer(function () {
           animationEnabled: false,
         }}
       />
-      <RootStackNav.Screen
+      {/* <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="CodePushSync"
         getComponent={() => require('modules/codepush').CodePushSyncScreen}
@@ -648,7 +648,7 @@ const RootStack = observer(function () {
           ...TransitionPresets.ModalFadeTransition,
           gestureEnabled: false,
         }}
-      />
+      /> */}
       <RootStackNav.Screen
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}

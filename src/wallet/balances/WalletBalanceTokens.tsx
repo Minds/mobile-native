@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   addressesLabel: {
     fontWeight: '700',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
   addressesAddress: {
     fontSize: 8,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     // fontWeight: '800',
-    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+    fontFamily: 'Roboto_900Black', // workaround android ignoring >= 800
   },
   addressesEthBalance: {
     fontSize: 12,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 45,
     fontWeight: '600',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     color: colors.primary,
   },
   currency: {
@@ -162,6 +162,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 32,
     fontWeight: '700',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
 });

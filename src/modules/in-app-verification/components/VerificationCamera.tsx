@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import { View, LayoutChangeEvent, Dimensions } from 'react-native';
 import { Camera } from 'react-native-vision-camera';
 

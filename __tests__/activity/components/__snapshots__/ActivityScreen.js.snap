@@ -275,7 +275,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Bold",
+                        "fontFamily": "Roboto_700Bold",
                       },
                       {
                         "fontSize": 16,
@@ -473,7 +473,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "fontSize": 28,
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -481,7 +481,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -505,7 +505,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "fontSize": 28,
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -1010,7 +1010,7 @@ exports[`Activity screen component renders correctly  1`] = `
                             "fontSize": 14,
                           },
                           {
-                            "fontFamily": "Roboto-Medium",
+                            "fontFamily": "Roboto_500Medium",
                             "fontWeight": "500",
                           },
                         ],

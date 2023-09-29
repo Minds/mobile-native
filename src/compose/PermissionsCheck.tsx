@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { openSettings } from 'react-native-permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { useAppState } from '@react-native-community/hooks';

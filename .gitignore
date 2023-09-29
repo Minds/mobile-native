@@ -5,6 +5,10 @@
 dist/
 **/.tamagui/*
 CodePush/*
+
+.expo
+credentials.json
+
 # Xcode
 #
 build/

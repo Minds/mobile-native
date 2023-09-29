@@ -27,7 +27,7 @@ const MText = ({ style, ...p }: MTextProps) => {
 };
 
 const styles = StyleSheet.create({
-  text: { fontFamily: 'Roboto' },
+  text: { fontFamily: 'Roboto_400Regular' },
 });
 
 export default MText;

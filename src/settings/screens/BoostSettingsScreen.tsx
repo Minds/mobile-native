@@ -5,7 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import sessionService from '../../common/services/session.service';
 import { Tooltip } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
 import settingsService from '../SettingsService';
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
   lineHeight: {
     lineHeight: 35,

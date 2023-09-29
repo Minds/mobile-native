@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 12,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     alignSelf: 'center',
   },
   tooltipTitle: {
     color: 'white',
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
   tooltipText: {
     color: 'white',

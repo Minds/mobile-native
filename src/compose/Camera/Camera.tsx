@@ -10,8 +10,8 @@ import Reanimated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FIcon from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FIcon from '@expo/vector-icons/Feather';
+import Icon from '@expo/vector-icons/Ionicons';
 import { Camera } from 'react-native-vision-camera';
 import FadeFrom from '../../common/components/animations/FadeFrom';
 import { IS_IOS } from '../../config/Config';

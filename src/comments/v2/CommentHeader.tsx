@@ -142,11 +142,11 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 15,
   },
   groupName: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 15,
     marginTop: 1,
   },

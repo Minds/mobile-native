@@ -18,7 +18,7 @@ import {
   useFrameProcessor,
   VideoFile,
 } from 'react-native-vision-camera';
-import { OCRFrame, scanOCR } from 'vision-camera-ocr';
+// import { OCRFrame, scanOCR } from 'vision-camera-ocr';
 
 import logService from '~/common/services/log.service';
 import { IS_IOS } from '~/config/Config';
@@ -350,8 +350,8 @@ export function useVerificationCamera(code: string, deviceId: string) {
   const frameProcessor = useFrameProcessor(
     frame => {
       'worklet';
-      const data = scanOCR(frame);
-      runOnJS(store.validate)(data);
+      // const data = scanOCR(frame);
+      // runOnJS(store.validate)(data);
     },
     [store.status],
   );

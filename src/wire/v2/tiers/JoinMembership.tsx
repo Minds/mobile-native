@@ -404,11 +404,11 @@ const styles = ThemedStyles.create({
     marginBottom: 10,
   },
   switchText: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 16,
   },
   costText: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     letterSpacing: 0,
   },
 });

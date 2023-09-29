@@ -3,7 +3,6 @@ import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import { DevMode } from './DevMode';
-import CodePush, { CodePushOptions } from 'react-native-code-push';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -239,15 +238,15 @@ export const STORE_LINK = Platform.select({
 
 export const isStoryBookOn = storages.app.getBool('storybook');
 
-export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-  installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-  mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-  minimumBackgroundDuration: 15 * 60, // 15 minutes
-  rollbackRetryOptions: {
-    delayInHours: 4,
-    maxRetryAttempts: 2,
-  },
-};
+// export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
+//   checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+//   installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+//   mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+//   minimumBackgroundDuration: 15 * 60, // 15 minutes
+//   rollbackRetryOptions: {
+//     delayInHours: 4,
+//     maxRetryAttempts: 2,
+//   },
+// };
 
 export const BOOSTS_DELAY = 604800;

@@ -132,7 +132,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -285,7 +285,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -328,7 +328,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,
@@ -558,7 +558,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -711,7 +711,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -754,7 +754,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,
@@ -1379,7 +1379,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -1532,7 +1532,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -1575,7 +1575,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,

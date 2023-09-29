@@ -2,7 +2,7 @@ import React from 'react';
 import { Player } from '@livepeer/react-native';
 import { usePlaybackInfo } from '@livepeer/react-native/hooks';
 import { Pressable, StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Foundation';
+import Icon from '@expo/vector-icons/Foundation';
 
 import { B2, H2 } from '~/common/ui';
 

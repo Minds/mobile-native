@@ -6,8 +6,8 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import IconM from 'react-native-vector-icons/MaterialIcons';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconM from '@expo/vector-icons/MaterialIcons';
+import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import { Image } from 'expo-image';
 

@@ -190,7 +190,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Bold",
+                        "fontFamily": "Roboto_700Bold",
                       },
                       {
                         "fontSize": 24,
@@ -593,7 +593,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#FFD048",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,
@@ -768,7 +768,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#b9bbc0",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,
@@ -943,7 +943,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#b9bbc0",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,
@@ -1118,7 +1118,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#b9bbc0",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,
@@ -1293,7 +1293,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#b9bbc0",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,
@@ -1468,7 +1468,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               "color": "#b9bbc0",
                             },
                             {
-                              "fontFamily": "Roboto-Medium",
+                              "fontFamily": "Roboto_500Medium",
                             },
                             {
                               "fontSize": 10,

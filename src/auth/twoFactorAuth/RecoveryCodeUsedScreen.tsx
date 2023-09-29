@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
   closeContainer: {
     position: 'absolute',
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   closeText: {
     fontSize: 18,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     paddingVertical: 2.5,
   },
   text: {

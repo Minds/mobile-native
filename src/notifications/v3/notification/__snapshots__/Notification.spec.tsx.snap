@@ -174,7 +174,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -203,7 +203,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -665,7 +665,7 @@ exports[`Notification An offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -696,7 +696,7 @@ exports[`Notification An offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -1825,7 +1825,7 @@ exports[`Notification Gift boost created 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2020,7 +2020,7 @@ exports[`Notification Gift boost created 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 18,
@@ -2214,7 +2214,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2245,7 +2245,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2489,7 +2489,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2520,7 +2520,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2982,7 +2982,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -3013,7 +3013,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {

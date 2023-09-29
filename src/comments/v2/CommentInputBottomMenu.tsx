@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import type CommentsStore from './CommentsStore';
 import ThemedStyles from '../../styles/ThemedStyles';

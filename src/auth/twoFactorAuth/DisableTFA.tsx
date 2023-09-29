@@ -79,12 +79,12 @@ const styles = StyleSheet.create({
   title: {
     paddingLeft: 20,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 20,
   },
   smallTitle: {
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 16,
   },
   text: {

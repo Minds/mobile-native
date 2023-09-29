@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { withSpacer } from '~ui/layout';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import IonIcon from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import Fontisto from '@expo/vector-icons/Fontisto';
+import Entypo from '@expo/vector-icons/Entypo';
 import ICON_MAP, { IconMapNameType } from './map';
 import {
   ICON_DEFAULT,

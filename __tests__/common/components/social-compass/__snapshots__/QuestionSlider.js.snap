@@ -24,7 +24,7 @@ exports[`Slider component should render correctly 1`] = `
             "fontSize": 16,
           },
           {
-            "fontFamily": "Roboto-Medium",
+            "fontFamily": "Roboto_500Medium",
             "fontWeight": "500",
           },
         ],
@@ -84,7 +84,7 @@ exports[`Slider component should render correctly 1`] = `
               "fontSize": 13,
             },
             {
-              "fontFamily": "Roboto-Medium",
+              "fontFamily": "Roboto_500Medium",
               "fontWeight": "500",
             },
             {
@@ -110,7 +110,7 @@ exports[`Slider component should render correctly 1`] = `
               "fontSize": 13,
             },
             {
-              "fontFamily": "Roboto-Medium",
+              "fontFamily": "Roboto_500Medium",
               "fontWeight": "500",
             },
             {

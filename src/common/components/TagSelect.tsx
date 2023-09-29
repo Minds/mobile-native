@@ -95,7 +95,7 @@ export default class TagSelect extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   error: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     color: 'red',
     textAlign: 'center',
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   tagText: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     paddingRight: 5,
   },
   tagContainer: {

@@ -8,7 +8,7 @@ module.exports = {
   presets: [
     [
       'module:metro-react-native-babel-preset',
-      { disableImportExportTransform: env !== 'test' },
+      // { disableImportExportTransform: env !== 'test' },
     ],
   ],
   plugins: [
@@ -24,12 +24,7 @@ module.exports = {
         allowDeclareFields: true,
       },
     ],
-    [
-      'react-native-reanimated/plugin',
-      {
-        globals: ['__scanOCR'],
-      },
-    ],
+    ['react-native-reanimated/plugin'],
     [
       'transform-inline-environment-variables',
       {

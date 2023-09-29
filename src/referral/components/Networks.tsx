@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, View } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import IonIcon from '@expo/vector-icons/Ionicons';
 import { IS_IOS } from '~/config/Config';
 import MText from '../../common/components/MText';
 import Touchable from '../../common/components/Touchable';

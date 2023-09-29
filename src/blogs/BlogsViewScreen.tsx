@@ -313,7 +313,7 @@ const styles = ThemedStyles.create({
     paddingRight: 15,
     fontSize: 22,
     // fontWeight: '800',
-    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+    fontFamily: 'Roboto_900Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: ['bgPrimaryBackground'],
   description: {
