@@ -2,12 +2,14 @@ import React from 'react';
 import { useBackHandler } from '@react-native-community/hooks';
 import { StackScreenProps } from '@react-navigation/stack';
 import HashtagsScreen from './screens/HashtagsScreen';
+import SurveyScreen from './screens/SurveyScreen';
 import ChannelsScreen from './screens/ChannelsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GroupsScreen from './screens/GroupsScreen';
 
 export type OnboardingStackParamList = {
   OnboardingHashtag: undefined;
+  OnboardingSurvey: undefined;
   OnboardingChannels: undefined;
   OnboardingGroups: undefined;
 };
@@ -29,6 +31,7 @@ export default function MandatoryOnboardingStack() {
   return (
     <Navigator screenOptions={defaultScreenOptions}>
       <Screen name="OnboardingHashtag" component={HashtagsScreen} />
+      <Screen name="OnboardingSurvey" component={SurveyScreen} />
       <Screen name="OnboardingChannels" component={ChannelsScreen} />
       <Screen name="OnboardingGroups" component={GroupsScreen} />
     </Navigator>

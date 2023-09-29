@@ -1,33 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import {
-  Dimensions,
-  Image as RNImage,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE, STRAPI_URI } from '~/config/Config';
+import { DEV_MODE } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button, ButtonPropsType, H3 } from '~ui';
+import { Button, ButtonPropsType } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
-import { Image } from 'expo-image';
-import Carousel from 'react-native-reanimated-carousel';
-import Pagination from '~/newsfeed/boost-rotator/components/pagination/Pagination';
-import {
-  ComponentOnboardingV5OnboardingStep,
-  GetOnboardingV5VersionsQuery,
-  useGetOnboardingV5VersionsQuery,
-} from '~/graphql/strapi';
+import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
+// import { SurveyView } from '~/modules/onboarding/components/SurveyView';
 
 type PropsType = {
   navigation: any;
@@ -36,14 +24,8 @@ type PropsType = {
 
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
-const { width } = Dimensions.get('screen');
-
 function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
-
-  const { data, isLoading } = useGetOnboardingV5VersionsQuery();
-  const carouselData = carouselExtractor(data);
-  console.log('WelcomeScreen', JSON.stringify(carouselData), isLoading);
 
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
@@ -61,12 +43,8 @@ function WelcomeScreen(props: PropsType) {
   return (
     <SafeAreaView style={theme.flexContainer}>
       <View style={theme.flexContainer}>
-        <RNImage
-          resizeMode="contain"
-          source={require('./../assets/logos/bulb.png')}
-          style={styles.image}
-        />
-        <OnboardingCarousel data={carouselData} />
+        <OnboardingCarousel />
+        {/* <SurveyView /> */}
         <View style={styles.buttonContainer}>
           <Button
             type="action"
@@ -93,82 +71,6 @@ function WelcomeScreen(props: PropsType) {
   );
 }
 
-const carouselExtractor = (data?: GetOnboardingV5VersionsQuery) => {
-  const screens = [
-    ...new Map(
-      data?.onboardingV5Versions?.data?.[0]?.attributes?.steps
-        ?.map(step => (step as ComponentOnboardingV5OnboardingStep)?.carousel)
-        .flat()
-        .map(item => [item?.title, { ...item?.media, title: item?.title }]),
-    ).values(),
-  ];
-  return screens;
-};
-
-type OnboardingCarouselProps = {
-  data?: any[];
-};
-const OnboardingCarousel = ({ data }: OnboardingCarouselProps) => {
-  const [index, setIndex] = useState(0);
-
-  const renderItem = useCallback(({ item, index }) => {
-    const { url } = item?.data?.attributes ?? {};
-    const imageSize = { height: 338, width: 156 };
-    const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
-    return (
-      <View
-        key={`${index}`}
-        style={{ alignItems: 'center', paddingHorizontal: 60 }}>
-        <H3 align="center" bottom="XXXL2">
-          {item.title}
-        </H3>
-        <Image source={image} style={imageSize} />
-      </View>
-    );
-  }, []);
-
-  return (
-    <>
-      <Carousel
-        autoPlay
-        autoPlayInterval={1500}
-        pagingEnabled
-        onSnapToItem={setIndex}
-        width={width}
-        height={475}
-        data={data?.length ? data : defaultData}
-        renderItem={renderItem}
-        style={ThemedStyles.style.marginBottom1x}
-      />
-      <Pagination
-        activeDotIndex={index}
-        dotsLength={data?.length ?? 0}
-        dotColor={ThemedStyles.getColor('PrimaryText')}
-        inactiveDotColor={ThemedStyles.getColor('SecondaryText')}
-      />
-    </>
-  );
-};
-
-const defaultData = [
-  {
-    title: 'Own your identity, content and social graph',
-    image: require('./../assets/images/onboarding1.png'),
-  },
-  {
-    title: 'Connect with creative minds and communities globally',
-    image: require('./../assets/images/onboarding2.png'),
-  },
-  {
-    title: 'The best place to grow your audience',
-    image: require('./../assets/images/onboarding3.png'),
-  },
-  {
-    title: 'Earn real revenue as a creator or an affiliate',
-    image: require('./../assets/images/onboarding4.png'),
-  },
-];
-
 const devtoolsStyle = ThemedStyles.combine(
   'positionAbsoluteTopRight',
   'marginTop9x',
@@ -187,13 +89,7 @@ export default withErrorBoundaryScreen(
   'WelcomeScreen',
 );
 
-const styles = StyleSheet.create({
-  image: {
-    height: 36,
-    width: 30,
-    marginVertical: 30,
-    alignSelf: 'center',
-  },
+const styles = ThemedStyles.create({
   buttonContainer: {
     position: 'absolute',
     bottom: 12,

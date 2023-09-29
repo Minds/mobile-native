@@ -2188,7 +2188,7 @@ export type GetOnboardingV5VersionsQuery = {
               id: string;
               title: string;
               description: string;
-              stepKey: string;
+              radioSurveyQuestion?: string | null;
               carousel: Array<{
                 __typename?: 'ComponentOnboardingV5CarouselItem';
                 title: string;
@@ -2205,19 +2205,13 @@ export type GetOnboardingV5VersionsQuery = {
                   } | null;
                 };
               } | null>;
-              tagSelector?: {
-                __typename?: 'ComponentOnboardingV5TagSelectorStep';
+              radioSurvey?: Array<{
+                __typename?: 'ComponentOnboardingV5RadioOption';
                 id: string;
-                customTagInputText: string;
-              } | null;
-              userSelector?: {
-                __typename?: 'ComponentOnboardingV5UserSelectorStep';
-                id: string;
-              } | null;
-              groupSelector?: {
-                __typename?: 'ComponentOnboardingV5GroupSelectorStep';
-                id: string;
-              } | null;
+                optionTitle: string;
+                optionDescription: string;
+                optionKey: string;
+              } | null> | null;
             }
           | { __typename?: 'Error' }
           | null
@@ -2375,16 +2369,12 @@ export const GetOnboardingV5VersionsDocument = `
             }
             title
             description
-            stepKey
-            tagSelector {
+            radioSurveyQuestion
+            radioSurvey {
               id
-              customTagInputText
-            }
-            userSelector {
-              id
-            }
-            groupSelector {
-              id
+              optionTitle
+              optionDescription
+              optionKey
             }
           }
         }

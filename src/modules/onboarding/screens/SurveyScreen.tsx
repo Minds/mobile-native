@@ -9,12 +9,10 @@ import Header from '../components/Header';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import AuthService from '~/auth/AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useSurveylData } from '../hooks';
 
-function HashTagsScreen({ navigation }) {
+function SurveyScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const { hashtag } = useLegacyStores();
-  const { noData } = useSurveylData();
 
   const mandatoryOnboarding = useIsFeatureOn(
     'minds-3921-mandatory-onboarding-tags',
@@ -22,7 +20,7 @@ function HashTagsScreen({ navigation }) {
 
   const next = () =>
     mandatoryOnboarding
-      ? navigation.navigate(noData ? 'OnboardingChannels' : 'OnboardingSurvey')
+      ? navigation.navigate('OnboardingChannels')
       : AuthService.setCompletedOnboard();
 
   React.useEffect(() => {
@@ -32,7 +30,7 @@ function HashTagsScreen({ navigation }) {
   return (
     <Screen safe>
       <Header
-        title="Hashtags"
+        title="Survey"
         description="Select at least 3 tags that are of interest to you. This helps us
           recommend relevant content."
       />
@@ -61,7 +59,7 @@ function HashTagsScreen({ navigation }) {
   );
 }
 
-export default withErrorBoundaryScreen(observer(HashTagsScreen));
+export default withErrorBoundaryScreen(observer(SurveyScreen));
 
 const styles = ThemedStyles.create({
   text: ['colorSecondaryText', 'fontM', 'bold'],

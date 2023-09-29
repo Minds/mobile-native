@@ -27,7 +27,7 @@ query GetOnboardingV5Versions {
             }
             title
             description
-            stepKey
+            # stepKey
             # stepType
             # verifyEmailForm {
             #   id
@@ -36,23 +36,23 @@ query GetOnboardingV5Versions {
             #   resendCodeText
             #   resendCodeActionText
             # }
-            tagSelector {
-              id
-              customTagInputText
-            }
-            # radioSurveyQuestion
-            # radioSurvey {
+            # tagSelector {
             #   id
-            #   optionTitle
-            #   optionDescription
-            #   optionKey
+            #   customTagInputText
             # }
-            userSelector {
+            radioSurveyQuestion
+            radioSurvey {
               id
+              optionTitle
+              optionDescription
+              optionKey
             }
-            groupSelector {
-              id
-            }
+            # userSelector {
+            #   id
+            # }
+            # groupSelector {
+            #   id
+            # }
             # actionButton {
             #   id
             #   text
