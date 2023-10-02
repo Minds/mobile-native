@@ -4,18 +4,30 @@ import FeedStore from '~/common/stores/FeedStore';
 import type GroupModel from '~/groups/GroupModel';
 
 export type GroupFeedAlgorithms = 'latest' | 'top';
+type Filter = 'all' | 'images' | 'videos';
 
 export function useGroupFeedStore(group: GroupModel) {
   const store = useLocalStore(() => ({
     feed: new FeedStore(true),
     feedTop: new FeedStore(true),
     search: '',
+    filter: 'all' as Filter,
     showSearch: false,
     toggleSearch() {
       this.showSearch = !this.showSearch;
       if (!this.showSearch) {
         this.setSearch('');
       }
+    },
+    setFilter(value: Filter) {
+      store.filter = value;
+      store.feed.setEndpoint(
+        `api/v2/feeds/container/${group.guid}/${
+          value === 'all' ? 'activities' : value
+        }`,
+      );
+      store.feed.clear();
+      store.feed.fetchRemoteOrLocal();
     },
     setSearch(value: string) {
       this.search = value;

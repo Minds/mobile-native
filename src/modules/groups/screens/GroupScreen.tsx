@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSharedValue } from 'react-native-reanimated';
 
@@ -22,6 +22,7 @@ import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
 import { storages } from '~/common/services/storage/storages.service';
+import FeedFilter from '~/common/components/FeedFilter';
 
 const HEADER_HEIGHT = 54;
 
@@ -142,13 +143,25 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
     storages.user?.setInt('GroupTab', idx);
   }, []);
 
+  const renderTabBar = useCallback(
+    props => (
+      <View style={styles.tabBarStyle}>
+        <ScrollableAutoWidthTabBar {...props} />
+        {groupContext?.feedStore && index === 0 && (
+          <FeedFilter store={groupContext?.feedStore} hideLabel hideBlogs />
+        )}
+      </View>
+    ),
+    [groupContext?.feedStore, index],
+  );
+
   const minHeaderHeight = Platform.select({
     default: headerHeight ? headerHeight : HEADER_HEIGHT + top,
     android: headerHeight ? 0 : HEADER_HEIGHT + top,
   });
 
   const currentStore =
-    index === 1 ? groupContext?.feedMembersStore : groupContext?.feedStore;
+    index === 2 ? groupContext?.feedMembersStore : groupContext?.feedStore;
 
   return (
     <>
@@ -184,4 +197,10 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
   );
 });
 
-const renderTabBar = props => <ScrollableAutoWidthTabBar {...props} />;
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+  },
+});
