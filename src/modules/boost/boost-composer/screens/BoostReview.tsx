@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { showNotification } from '~/../AppMessages';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import FitScrollView from '~/common/components/FitScrollView';
-// import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
@@ -16,17 +15,12 @@ import {
   finishTransaction,
   isIosStorekit2,
   Product,
-  ProductPurchase,
   requestPurchase,
   useIAP,
   withIAPContext,
 } from 'react-native-iap';
 import NavigationService from '../../../../navigation/NavigationService';
-import {
-  IS_FROM_STORE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { IS_FROM_STORE, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
@@ -141,35 +135,42 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
     const purchases = await requestPurchase({
       skus: [selectedProduct?.productId ?? ''],
+      sku: selectedProduct?.productId ?? '',
       obfuscatedAccountIdAndroid: entity.guid,
       obfuscatedProfileIdAndroid: entity.ownerObj?.guid ?? 'no-owner',
       // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
     }).catch(processError);
 
-    if ((purchases as unknown as ProductPurchase[])?.length > 0) {
-      const purchase = purchases?.[0];
-      const { transactionId, transactionReceipt } = purchase ?? {};
-      const receipt = isIosStorekit2() ? transactionId : transactionReceipt;
+    const is_ios = isIosStorekit2();
 
-      if (receipt) {
-        const result = await finishTransaction({
-          purchase: purchases?.[0],
-          isConsumable: true,
-        }).catch(processError);
+    const purchase = is_ios ? purchases : purchases?.[0];
 
-        if ((typeof result !== 'boolean' && result?.code === 'OK') || result) {
-          // set payment_method_id
-          setSelectedCardId(IS_IOS ? 'ios_iap' : 'android_iap');
-          // set the IAP transaction details
-          setIapTransaction(receipt);
+    const receipt = is_ios
+      ? purchase.transactionId
+      : purchase.transactionReceipt;
 
-          return createBoost()?.then(() => {
-            showNotification(t('Boost created successfully'));
-            navigation.popToTop();
-            navigation.goBack();
-          });
-        }
+    if (receipt) {
+      const result = await finishTransaction({
+        purchase,
+        isConsumable: true,
+      }).catch(processError);
+
+      if (!result || (typeof result !== 'boolean' && result?.code !== 'OK')) {
+        return processError({
+          message: 'An error occurred while processing purchase3',
+        });
       }
+
+      // set payment_method_id
+      setSelectedCardId(is_ios ? 'ios_iap' : 'android_iap');
+      // set the IAP transaction details
+      setIapTransaction(receipt);
+
+      return createBoost()?.then(() => {
+        showNotification(t('Boost created successfully'));
+        navigation.popToTop();
+        navigation.goBack();
+      });
     }
   };
 
