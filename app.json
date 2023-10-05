@@ -38,7 +38,7 @@
     ],
     "android": {
       "package": "com.minds.mobile",
-      "versionCode": "310178",
+      "versionCode": 310178,
       "intentFilters": [
         {
           "action": "VIEW",
