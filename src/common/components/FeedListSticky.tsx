@@ -73,7 +73,7 @@ function FeedListSticky<T extends BaseModel>(
 
   useImperativeHandle(ref, () => ({
     getScrollPosition: () => {
-      return scrollY.value;
+      return translationY.value;
     },
     prepareForLayoutAnimationRender: () => {
       childRef.current?.prepareForLayoutAnimationRender();
