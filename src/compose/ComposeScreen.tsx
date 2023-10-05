@@ -48,6 +48,8 @@ import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
+import { ReplyType } from './SupermindComposeScreen';
+import delay from '~/common/helpers/delay';
 import { IS_IOS } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
@@ -93,8 +95,11 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
     if (store.attachments.uploading) {
       return;
     }
-    const { channel: targetChannel, payment_options } =
-      store.supermindRequest ?? {};
+    const {
+      channel: targetChannel,
+      payment_options,
+      reply_type,
+    } = store.supermindRequest ?? {};
 
     if (
       targetChannel?.name &&
@@ -105,6 +110,19 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
       }))
     ) {
       return;
+    }
+
+    if (reply_type === ReplyType.live) {
+      // we need a small delay to ensure the previous confirm screen is closed
+      await delay(500);
+      if (
+        !(await confirm({
+          title: i18n.t('supermind.liveReplyRequest.title'),
+          description: i18n.t('supermind.liveReplyRequest.description'),
+        }))
+      ) {
+        return;
+      }
     }
 
     const isEdit = store.isEdit;
