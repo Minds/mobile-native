@@ -113,6 +113,7 @@ exports[`Thumb action component renders correctly 1`] = `
             "pro": false,
             "pro_method": "tokens",
             "rewards": false,
+            "social_profiles": [],
             "subscribed": undefined,
             "subscriber": false,
             "subscribers_count": undefined,
