@@ -8,7 +8,6 @@ export type MetadataSource =
   | 'feed/channel'
   | 'feed/highlights'
   | 'feed/groups'
-  | 'top-feed/groups'
   | 'feed/discovery'
   | 'feed/boosts'
   | 'search/latest'

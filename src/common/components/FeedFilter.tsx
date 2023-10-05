@@ -12,7 +12,6 @@ import BaseFeedFilter from '~/common/components/feed-filters/BaseFeedFilter';
 
 type PropsType = {
   hideLabel?: boolean;
-  hideBlogs?: boolean;
   nsfw?: boolean;
   dateRange?: boolean;
   store: {
@@ -46,21 +45,19 @@ const FeedFilter = (props: PropsType) => {
 
   const options = React.useMemo(
     () =>
-      filters
-        .filter(filter => !(props.hideBlogs && filter === 'blogs'))
-        .map(filter => ({
-          title: i18n.t(`discovery.${filter}`),
-          onPress: () => {
-            dismiss();
-            // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast
-            setTimeout(() => {
-              if (props.store && props.store.setFilter) {
-                props.store.setFilter(filter);
-              }
-            }, 1000);
-          },
-          selected: props.store.filter === filter,
-        })),
+      filters.map(filter => ({
+        title: i18n.t(`discovery.${filter}`),
+        onPress: () => {
+          dismiss();
+          // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast
+          setTimeout(() => {
+            if (props.store && props.store.setFilter) {
+              props.store.setFilter(filter);
+            }
+          }, 1000);
+        },
+        selected: props.store.filter === filter,
+      })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dismiss, props.store, props.store.filter],
   );
