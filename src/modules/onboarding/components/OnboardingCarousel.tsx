@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Image as RNImage, Dimensions, View } from 'react-native';
 import { Image } from 'expo-image';
 import { H3 } from '~/common/ui';
@@ -20,22 +20,6 @@ type OnboardingCarouselProps = {
 
 export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   const [index, setIndex] = useState(0);
-
-  const renderItem = useCallback(({ item, index }) => {
-    const { url } = item?.data?.attributes ?? {};
-    const imageSize = { height: 338, width: 156 };
-    const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
-    return (
-      <View
-        key={`${index}`}
-        style={[ThemedStyles.style.alignCenter, { paddingHorizontal: 60 }]}>
-        <H3 align="center" bottom="XXXL2">
-          {item.title}
-        </H3>
-        <Image source={image} style={imageSize} />
-      </View>
-    );
-  }, []);
 
   return (
     <>
@@ -62,6 +46,22 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
         inactiveDotColor={ThemedStyles.getColor('SecondaryText')}
       />
     </>
+  );
+};
+
+const renderItem = ({ item, index }) => {
+  const { url } = item?.data?.attributes ?? {};
+  const imageSize = { height: 338, width: 156 };
+  const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
+  return (
+    <View
+      key={`${index}`}
+      style={[ThemedStyles.style.alignCenter, { paddingHorizontal: 60 }]}>
+      <H3 align="center" bottom="XXXL2">
+        {item.title}
+      </H3>
+      <Image source={image} style={imageSize} />
+    </View>
   );
 };
 
