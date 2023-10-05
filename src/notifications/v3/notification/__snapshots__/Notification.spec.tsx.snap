@@ -140,7 +140,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -166,7 +166,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -195,7 +195,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -234,7 +234,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -414,7 +414,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -452,7 +452,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -632,7 +632,7 @@ exports[`Notification An offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -657,7 +657,7 @@ exports[`Notification An offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -688,7 +688,7 @@ exports[`Notification An offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -727,7 +727,7 @@ exports[`Notification An offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -907,7 +907,7 @@ exports[`Notification Boost accepted 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -945,7 +945,7 @@ exports[`Notification Boost accepted 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1202,7 +1202,7 @@ exports[`Notification Boost complete 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1240,7 +1240,7 @@ exports[`Notification Boost complete 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1497,7 +1497,7 @@ exports[`Notification Boost rejected 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1535,7 +1535,7 @@ exports[`Notification Boost rejected 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1792,7 +1792,7 @@ exports[`Notification Gift boost created 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1817,7 +1817,7 @@ exports[`Notification Gift boost created 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -1858,7 +1858,7 @@ exports[`Notification Gift boost created 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2181,7 +2181,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2206,7 +2206,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2237,7 +2237,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2276,7 +2276,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2456,7 +2456,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2481,7 +2481,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2512,7 +2512,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2551,7 +2551,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2731,7 +2731,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2769,7 +2769,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2949,7 +2949,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2974,7 +2974,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -3005,7 +3005,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -3044,7 +3044,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {

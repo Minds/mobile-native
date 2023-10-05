@@ -302,27 +302,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                               ]
                             }
                           >
-                            <Text
-                              allowFontScaling={false}
-                              selectable={false}
-                              style={
-                                [
-                                  {
-                                    "color": "#F2F2F2",
-                                    "fontSize": 18.400000000000002,
-                                  },
-                                  {},
-                                  {
-                                    "fontFamily": "Material Design Icons",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "normal",
-                                  },
-                                  {},
-                                ]
-                              }
-                            >
-                              󰍡
-                            </Text>
+                            <MaterialCommunityIcons
+                              color="#F2F2F2"
+                              name="message"
+                              size={18.400000000000002}
+                              style={{}}
+                            />
                           </View>
                         </View>
                       </View>
@@ -400,27 +385,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#F2F2F2",
-                                "fontSize": 19.2,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Ionicons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          
-                        </Text>
+                        <IonIcon
+                          color="#F2F2F2"
+                          name="search"
+                          size={19.2}
+                          style={{}}
+                        />
                       </View>
                     </View>
                   </View>
@@ -555,27 +525,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#FFD048",
-                                "fontSize": 24,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Material Icons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          
-                        </Text>
+                        <MaterialIcons
+                          color="#FFD048"
+                          name="format-list-bulleted"
+                          size={24}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View
@@ -730,27 +685,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#AEB0B8",
-                                "fontSize": 22.080000000000002,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Material Icons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          
-                        </Text>
+                        <MaterialIcons
+                          color="#AEB0B8"
+                          name="local-offer"
+                          size={22.080000000000002}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View
@@ -905,27 +845,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#AEB0B8",
-                                "fontSize": 22.080000000000002,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Material Design Icons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          󰍡
-                        </Text>
+                        <MaterialCommunityIcons
+                          color="#AEB0B8"
+                          name="message"
+                          size={22.080000000000002}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View
@@ -1080,27 +1005,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#AEB0B8",
-                                "fontSize": 19.200000000000003,
-                              },
-                              {},
-                              {
-                                "fontFamily": "FontAwesome",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          
-                        </Text>
+                        <FontAwesome
+                          color="#AEB0B8"
+                          name="group"
+                          size={19.200000000000003}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View
@@ -1255,27 +1165,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#AEB0B8",
-                                "fontSize": 23.04,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Material Icons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          
-                        </Text>
+                        <MaterialIcons
+                          color="#AEB0B8"
+                          name="thumb-up"
+                          size={23.04}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View
@@ -1430,27 +1325,12 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                           ]
                         }
                       >
-                        <Text
-                          allowFontScaling={false}
-                          selectable={false}
-                          style={
-                            [
-                              {
-                                "color": "#AEB0B8",
-                                "fontSize": 24.96,
-                              },
-                              {},
-                              {
-                                "fontFamily": "Material Design Icons",
-                                "fontStyle": "normal",
-                                "fontWeight": "normal",
-                              },
-                              {},
-                            ]
-                          }
-                        >
-                          󰑖
-                        </Text>
+                        <MaterialCommunityIcons
+                          color="#AEB0B8"
+                          name="repeat"
+                          size={24.96}
+                          style={{}}
+                        />
                       </View>
                     </View>
                     <View

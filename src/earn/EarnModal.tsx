@@ -17,6 +17,8 @@ import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
+type IconName = React.ComponentProps<typeof Icon>['name'];
+
 // const linkTo = (dest: string) =>
 //   Linking.openURL(`https://www.minds.com/${dest}`);
 
@@ -36,7 +38,7 @@ interface ResourceType {
 interface ContentType {
   name: 'create' | 'refer' | 'pool' | 'transfer';
   onPress: () => void;
-  icon: string;
+  icon: IconName;
 }
 
 const EarnItem = ({ content }: { content: ContentType }) => {

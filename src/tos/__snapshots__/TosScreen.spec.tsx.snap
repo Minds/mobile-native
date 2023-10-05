@@ -12,15 +12,6 @@ exports[`Tos screen render and accept 1`] = `
         ],
       }
     }
-    style={
-      {
-        "transform": [
-          {
-            "translateY": 0,
-          },
-        ],
-      }
-    }
     transition={
       {
         "mass": 0.3,
@@ -141,7 +132,7 @@ exports[`Tos screen render and accept 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 16,
@@ -188,7 +179,7 @@ exports[`Tos screen render and accept 1`] = `
                   "color": "#FFD048",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,
@@ -236,7 +227,7 @@ exports[`Tos screen render and accept 1`] = `
                   "color": "#FFD048",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,
@@ -267,7 +258,7 @@ exports[`Tos screen render and accept 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,

@@ -565,7 +565,7 @@ exports[`Activity component renders correctly 1`] = `
           style={
             [
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
                 "fontSize": 16,
                 "lineHeight": 24,
               },
@@ -683,7 +683,7 @@ exports[`Activity component renders correctly 1`] = `
           key="translate-activityguid0"
           style={
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
               "fontSize": 16,
               "lineHeight": 24,
             }

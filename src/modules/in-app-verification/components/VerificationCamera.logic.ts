@@ -1,7 +1,7 @@
 import { useLocalStore } from 'mobx-react';
 import React from 'react';
 import { LayoutRectangle } from 'react-native';
-import { runOnJS } from 'react-native-reanimated';
+// import { runOnJS } from 'react-native-reanimated';
 import {
   Accelerometer,
   Gyroscope,
@@ -19,6 +19,7 @@ import {
   VideoFile,
 } from 'react-native-vision-camera';
 // import { OCRFrame, scanOCR } from 'vision-camera-ocr';
+type OCRFrame = any;
 
 import logService from '~/common/services/log.service';
 import { IS_IOS } from '~/config/Config';

@@ -15,29 +15,15 @@ exports[`SupermindFeedFilter should render 1`] = `
     }
     testID="FilterToggle"
   >
-    <Text
-      allowFontScaling={false}
-      selectable={false}
+    <MaterialCommunityIcons
+      name="filter-variant"
+      size={18}
       style={
-        [
-          {
-            "color": undefined,
-            "fontSize": 18,
-          },
-          {
-            "color": "#AEB0B8",
-          },
-          {
-            "fontFamily": "Material Design Icons",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          {},
-        ]
+        {
+          "color": "#AEB0B8",
+        }
       }
-    >
-      󰈶
-    </Text>
+    />
     <Text
       style={
         [
@@ -45,7 +31,7 @@ exports[`SupermindFeedFilter should render 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {

@@ -6,7 +6,6 @@ import { SessionStorageService } from '../../src/common/services/storage/session
 
 jest.mock('../../src/common/services/api.service');
 jest.mock('../../src/common/helpers/delay', () => jest.fn());
-jest.mock('react-native-bootsplash');
 
 describe('auth service login', () => {
   const sessionStorage = new SessionStorageService();

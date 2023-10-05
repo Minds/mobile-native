@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { useAppState } from '@react-native-community/hooks';
@@ -75,12 +75,12 @@ export default function PermissionsCheck(props: PropsType) {
       <View style={[theme.flexContainer, theme.centered, theme.padding8x]}>
         <MText
           style={[theme.fontXL, theme.textCenter, theme.colorWhite]}
-          onPress={() => openSettings()}>
+          onPress={() => Linking.openSettings()}>
           {i18nService.t('capture.blockedMinds')}
         </MText>
         <MText
           style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}
-          onPress={() => openSettings()}>
+          onPress={() => Linking.openSettings()}>
           {i18nService.t('permissions.tapAllow')}
         </MText>
       </View>

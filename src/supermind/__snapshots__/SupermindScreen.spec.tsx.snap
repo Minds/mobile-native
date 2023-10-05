@@ -102,27 +102,12 @@ exports[`SupermindScreen should render correctly 1`] = `
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
-                      style={
-                        [
-                          {
-                            "color": "#AEB0B8",
-                            "fontSize": 28,
-                          },
-                          {},
-                          {
-                            "fontFamily": "Material Design Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
-                      }
-                    >
-                      󰅁
-                    </Text>
+                    <MaterialCommunityIcons
+                      color="#AEB0B8"
+                      name="chevron-left"
+                      size={28}
+                      style={{}}
+                    />
                   </View>
                 </View>
               </View>

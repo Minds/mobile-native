@@ -93,7 +93,7 @@ exports[`blog card component should renders correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -306,7 +306,7 @@ exports[`blog card component should renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -331,7 +331,7 @@ exports[`blog card component should renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -354,30 +354,16 @@ exports[`blog card component should renders correctly 1`] = `
             }
           >
             <View>
-              <Text
-                allowFontScaling={false}
+              <MaterialIcons
+                name="more-vert"
                 onPress={[Function]}
-                selectable={false}
+                size={28}
                 style={
-                  [
-                    {
-                      "color": undefined,
-                      "fontSize": 28,
-                    },
-                    {
-                      "color": "#a1a5ab",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "color": "#a1a5ab",
+                  }
                 }
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>

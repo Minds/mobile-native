@@ -111,27 +111,11 @@ exports[`Boost action component renders correctly 1`] = `
             }
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 20.8,
-                },
-                undefined,
-                {
-                  "fontFamily": "Material Design Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            󰔵
-          </Text>
+          <MaterialCommunityIcons
+            color="#AEB0B8"
+            name="trending-up"
+            size={20.8}
+          />
         </View>
       </View>
     </View>

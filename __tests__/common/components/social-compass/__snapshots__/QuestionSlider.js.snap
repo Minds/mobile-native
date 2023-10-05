@@ -17,7 +17,7 @@ exports[`Slider component should render correctly 1`] = `
           "color": "#F2F2F2",
         },
         {
-          "fontFamily": "Roboto",
+          "fontFamily": "Roboto_400Regular",
         },
         [
           {
@@ -77,7 +77,7 @@ exports[`Slider component should render correctly 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -103,7 +103,7 @@ exports[`Slider component should render correctly 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
