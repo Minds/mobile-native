@@ -400,6 +400,11 @@ export default function () {
         }
         options={{ headerShown: false }}
       />
+      <MoreStack.Screen
+        name="GroupsManage"
+        getComponent={() => require('~/groups/GroupsManageScreen').default}
+        options={{ headerShown: false }}
+      />
     </MoreStack.Navigator>
   );
 }
