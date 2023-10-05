@@ -3,19 +3,21 @@
 exports[`Counter component renders correctly 1`] = `
 <View
   style={
-    [
-      {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      null,
-    ]
+    {
+      "alignItems": "center",
+      "flexDirection": "column",
+    }
   }
 >
   <Text
-    onLayout={[Function]}
     style={
       [
+        {
+          "color": "#F2F2F2",
+        },
+        {
+          "fontFamily": "Roboto_400Regular",
+        },
         [
           [
             {
@@ -31,14 +33,10 @@ exports[`Counter component renders correctly 1`] = `
           ],
           undefined,
         ],
-        {
-          "position": "absolute",
-          "top": -999999,
-        },
       ]
     }
   >
-    0
+    100
   </Text>
 </View>
 `;

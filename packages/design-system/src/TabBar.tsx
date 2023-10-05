@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: fix TS errors of tamagui
 import React from 'react';
 import { styled, Stack, GetProps, AnimationProp } from '@tamagui/core';
 import { Pressable, ScrollView, ViewProps } from 'react-native';

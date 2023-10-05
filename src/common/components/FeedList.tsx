@@ -89,11 +89,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   stickyHeaderHiddenOnScroll?: boolean;
   onEndReachedThreshold?: number;
   stickyHeaderIndices?: number[];
-  placeholder?:
-    | React.ComponentType<any>
-    | React.ReactElement
-    | null
-    | undefined;
+  placeholder?: React.ComponentType<any> | null | undefined;
   /**
    * a function to call on refresh. this replaces the feedList default refresh function
    */
