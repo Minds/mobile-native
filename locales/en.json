@@ -1959,7 +1959,9 @@
   "group": {
     "search": "Search Group",
     "share": "Share Group",
-    "boost": "Boost Group"
+    "boost": "Boost Group",
+    "disableBoost": "Disable boosts",
+    "enableBoost": "Enable boosts"
   },
   "back": "Back",
   "explore": "Explore",
