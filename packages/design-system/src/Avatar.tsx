@@ -42,7 +42,7 @@ export type AvatarProps = GetProps<typeof AvatarFrame> & {
   url?: string;
 };
 
-export const Avatar = AvatarFrame.extractable(
+export const Avatar = AvatarFrame.styleable(
   React.forwardRef<TamaguiElement, AvatarProps>(({ url, ...props }, ref) => {
     return (
       <AvatarFrame ref={ref} {...props}>

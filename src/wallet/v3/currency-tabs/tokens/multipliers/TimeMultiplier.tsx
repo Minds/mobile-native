@@ -34,7 +34,7 @@ type PropsType = {
 const TimeMultiplier = ({ multiplier }: PropsType) => {
   const tooltipRef = useRef<any>();
   const theme = ThemedStyles.style;
-  const progressBar = {
+  const progressBar: any = {
     flex: 1,
     width: `${(multiplier / 3) * 100}%`,
     backgroundColor: '#A3C000',

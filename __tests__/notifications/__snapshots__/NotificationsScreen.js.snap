@@ -131,6 +131,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     <RCTRefreshControl />
     <View>
       <View
+        collapsable={false}
         onLayout={[Function]}
       >
         <View
