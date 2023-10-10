@@ -50,6 +50,7 @@ export const NEWSFEED_FORYOU_ENABLED = !IS_TENANT;
 export const WIRE_ENABLED = !IS_TENANT && !IS_IOS;
 export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS && !IS_TENANT;
 export const BOOSTS_ENABLED = !IS_TENANT;
+export const BLOCK_USER_ENABLED = !IS_TENANT;
 export const CHAT_ENABLED = !IS_TENANT;
 
 export const ACCENT_COLOR_LIGHT =

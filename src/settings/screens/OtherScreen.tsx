@@ -6,7 +6,11 @@ import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import { MEMBERSHIP_TIERS_ENABLED, TWITTER_ENABLED } from '~/config/Config';
+import {
+  BLOCK_USER_ENABLED,
+  MEMBERSHIP_TIERS_ENABLED,
+  TWITTER_ENABLED,
+} from '~/config/Config';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -77,7 +81,8 @@ export default function () {
 
   return (
     <ScrollView style={containerStyle}>
-      {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
+      {BLOCK_USER_ENABLED &&
+        generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {!affiliatesEnabled &&
         generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {MEMBERSHIP_TIERS_ENABLED &&

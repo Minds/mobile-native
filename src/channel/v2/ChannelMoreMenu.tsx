@@ -7,7 +7,12 @@ import type UserModel from '../UserModel';
 import i18n from '~/common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
-import { BOOSTS_ENABLED, CHAT_ENABLED, MINDS_URI } from '../../config/Config';
+import {
+  BLOCK_USER_ENABLED,
+  BOOSTS_ENABLED,
+  CHAT_ENABLED,
+  MINDS_URI,
+} from '../../config/Config';
 import { observer } from 'mobx-react';
 import {
   BottomSheetModal,
@@ -158,21 +163,13 @@ const getOptions = (
   }
 
   if (!channel.isOwner()) {
-    if (!channel.blocked) {
+    if (BLOCK_USER_ENABLED) {
       options.push({
         iconName: 'block',
         iconType: 'material',
-        title: i18n.t('channel.block'),
-        onPress: () => {
-          channel.toggleBlock();
-          ref.current.dismiss();
-        },
-      });
-    } else {
-      options.push({
-        iconName: 'block',
-        iconType: 'material',
-        title: i18n.t('channel.unblock'),
+        title: !channel.blocked
+          ? i18n.t('channel.block')
+          : i18n.t('channel.unblock'),
         onPress: () => {
           channel.toggleBlock();
           ref.current.dismiss();
