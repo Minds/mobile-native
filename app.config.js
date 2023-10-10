@@ -1,5 +1,19 @@
 import { Config } from '@expo/config';
 
+/**
+ * Configuration settings for the minds / multi-tenant app, using environment variables.
+ *
+ * @param {Object} config - The base configuration object, typically from Expo's configuration.
+ * @param {string} process.env.APP_NAME - The name of the app (default: 'Minds').
+ * @param {string} process.env.APP_SCHEME - The app's scheme, used for deep-links (default: 'mindsapp').
+ * @param {string} process.env.APP_VERSION - The app's version (default: '4.42.0').
+ * @param {string} process.env.APP_ANDROID_PACKAGE - The Android package name (default: 'com.minds.mobile').
+ * @param {string} process.env.APP_HOST - The app's host URL, used for deep-links (default: 'www.minds.com').
+ * @param {string} process.env.APP_IOS_BUNDLE - The iOS bundle identifier (default: 'com.minds.mobile').
+ * @param {Object} process.env.APP_HOST - Associated domains for iOS, based on the host URL.
+ * @param {string} process.env.APP_API_URL - The API URL (default: 'https://www.minds.com/').
+ * @returns {Object} - A configuration object for the Expo app.
+ */
 export default ({ config }: { config: Config }) => ({
   ...config,
   name: process.env.APP_NAME || 'Minds',
@@ -99,7 +113,9 @@ export default ({ config }: { config: Config }) => ({
     },
   },
   extra: {
-    isTenant: true,
+    isTenant: process.env.APP_NAME ? true : false,
+    ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
+    ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
     API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
     eas: {
       projectId: '1bc9a718-f25b-407e-aa16-f18f0ae61b71',
