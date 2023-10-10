@@ -6,6 +6,7 @@ import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import { MEMBERSHIP_TIERS_ENABLED, TWITTER_ENABLED } from '~/config/Config';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -72,15 +73,17 @@ export default function () {
       onPress: useNavCallback('AppInfo'),
     },
   ];
-  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
+  const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   return (
     <ScrollView style={containerStyle}>
       {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {!affiliatesEnabled &&
         generateSection(i18n.t('settings.otherOptions.g'), referrals)}
-      {generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
-      {isTwitterEnabled &&
+      {MEMBERSHIP_TIERS_ENABLED &&
+        generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {isTwitterFFEnabled &&
+        TWITTER_ENABLED &&
         generateSection(
           i18n.t('settings.otherOptions.contentMigration'),
           contentMigration,

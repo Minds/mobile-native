@@ -8,7 +8,7 @@ import { B2, Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 import ComposeIcon from './ComposeIcon';
 import type { ComposeCreateMode } from './createComposeStore';
-import { IS_IOS } from '../config/Config';
+import { IS_IOS, SUPERMIND_ENABLED } from '../config/Config';
 import i18nService from '../common/services/i18n.service';
 
 interface ComposeCreateScreenProps {
@@ -53,14 +53,16 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         borderless
         onPress={() => navigateToCompose('boost')}
       />
-      <MenuItem
-        title={texts.supermind.title}
-        subtitle={texts.supermind.subtitle}
-        iconColor={selected === 'supermind' ? 'Link' : undefined}
-        leftIcon="supermind"
-        borderless
-        onPress={() => navigateToCompose('supermind')}
-      />
+      {SUPERMIND_ENABLED && (
+        <MenuItem
+          title={texts.supermind.title}
+          subtitle={texts.supermind.subtitle}
+          iconColor={selected === 'supermind' ? 'Link' : undefined}
+          leftIcon="supermind"
+          borderless
+          onPress={() => navigateToCompose('supermind')}
+        />
+      )}
       {!selected && (
         <B2 color="secondary" align="center" top="L">
           <Trans

@@ -9,7 +9,12 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
-import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
+import {
+  ANDROID_CHAT_APP,
+  BOOSTS_ENABLED,
+  IS_IOS,
+  MINDS_URI,
+} from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
@@ -212,16 +217,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           },
         });
       }
-      options.push({
-        title: 'Boost',
-        iconName: 'trending-up',
-        iconType: 'material-community',
-        onPress: () => {
-          this.props.navigation.push('BoostScreenV2', {
-            entity: this.props.entity,
-          });
-        },
-      });
+      if (BOOSTS_ENABLED) {
+        options.push({
+          title: 'Boost',
+          iconName: 'trending-up',
+          iconType: 'material-community',
+          onPress: () => {
+            this.props.navigation.push('BoostScreenV2', {
+              entity: this.props.entity,
+            });
+          },
+        });
+      }
     }
 
     if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {

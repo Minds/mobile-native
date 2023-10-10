@@ -9,6 +9,7 @@ import NewsfeedService from './NewsfeedService';
 import { hasVariation } from 'ExperimentsProvider';
 import sessionService from '../common/services/session.service';
 import EventEmitter from 'eventemitter3';
+import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
@@ -159,7 +160,9 @@ class NewsfeedStore {
 
         // in case we have stored the foryou tab and it's not in the experiment, we default to latest
         if (
-          !hasVariation('mob-4938-newsfeed-for-you') &&
+          !(
+            hasVariation('mob-4938-newsfeed-for-you') || NEWSFEED_FORYOU_ENABLED
+          ) &&
           storedFeedType === 'foryou'
         ) {
           storages.user?.setString(FEED_TYPE_KEY, 'latest');

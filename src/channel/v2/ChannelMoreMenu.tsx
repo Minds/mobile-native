@@ -7,7 +7,7 @@ import type UserModel from '../UserModel';
 import i18n from '~/common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
-import { MINDS_URI } from '../../config/Config';
+import { BOOSTS_ENABLED, CHAT_ENABLED, MINDS_URI } from '../../config/Config';
 import { observer } from 'mobx-react';
 import {
   BottomSheetModal,
@@ -80,7 +80,7 @@ const getOptions = (
     options.push(shareOption);
   }
 
-  if (!channel.isOwner() && openChat) {
+  if (CHAT_ENABLED && !channel.isOwner() && openChat) {
     options.push({
       iconName: 'message-outline',
       iconType: 'material-community',
@@ -93,7 +93,7 @@ const getOptions = (
     });
   }
 
-  if (channel.isOwner()) {
+  if (channel.isOwner() && BOOSTS_ENABLED) {
     options.push({
       iconName: 'trending-up',
       iconType: 'material-community',
