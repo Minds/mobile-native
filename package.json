@@ -37,6 +37,7 @@
   "dependencies": {
     "@bigbee.dev/react-native-measure-text-size": "^1.0.0",
     "@expo-google-fonts/roboto": "^0.2.3",
+    "@expo/vector-icons": "^13.0.0",
     "@flyerhq/react-native-android-uri-path": "^2.3.0",
     "@gorhom/bottom-sheet": "^4.5.1",
     "@gorhom/portal": "^1.0.12",
