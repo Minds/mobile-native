@@ -215,18 +215,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -342,18 +355,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -469,18 +495,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-on"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": undefined,
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": undefined,
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -596,18 +635,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -723,18 +775,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -850,18 +915,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -977,18 +1055,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -1104,18 +1195,31 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
                       style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
+                        [
+                          {
+                            "color": "#242424",
+                            "fontSize": 24,
+                          },
+                          {
+                            "backgroundColor": "transparent",
+                            "color": "#b9bbc0",
+                          },
+                          {
+                            "fontFamily": "Ionicons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          {},
+                        ]
                       }
                       testID="iconIcon"
-                    />
+                    >
+                      
+                    </Text>
                   </View>
                 </View>
               </View>

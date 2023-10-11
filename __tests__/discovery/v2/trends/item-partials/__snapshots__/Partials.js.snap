@@ -356,17 +356,30 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
           }
         }
       >
-        <MaterialCommunityIcons
-          color="#a1a5ab"
-          name="chevron-right"
-          size={32}
+        <Text
+          allowFontScaling={false}
+          selectable={false}
           style={
-            {
-              "backgroundColor": "transparent",
-            }
+            [
+              {
+                "color": "#a1a5ab",
+                "fontSize": 32,
+              },
+              {
+                "backgroundColor": "transparent",
+              },
+              {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {},
+            ]
           }
           testID="iconIcon"
-        />
+        >
+          󰅂
+        </Text>
       </View>
     </View>
   </View>
