@@ -527,7 +527,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         }
                       >
                         <MaterialIcons
-                          color="#FFD048"
                           name="format-list-bulleted"
                           size={24}
                           style={{}}
@@ -546,7 +545,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           [
                             {
-                              "color": "#FFD048",
+                              "color": undefined,
                             },
                             {
                               "fontFamily": "Roboto_500Medium",
@@ -571,7 +570,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     [
                       [
                         {
-                          "backgroundColor": "#FFD048",
+                          "backgroundColor": undefined,
                         },
                         {
                           "bottom": -2.5,

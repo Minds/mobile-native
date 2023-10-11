@@ -176,7 +176,7 @@ exports[`Tos screen render and accept 1`] = `
             style={
               [
                 {
-                  "color": "#FFD048",
+                  "color": undefined,
                 },
                 {
                   "fontFamily": "Roboto_400Regular",
@@ -224,7 +224,7 @@ exports[`Tos screen render and accept 1`] = `
             style={
               [
                 {
-                  "color": "#FFD048",
+                  "color": undefined,
                 },
                 {
                   "fontFamily": "Roboto_400Regular",
@@ -345,7 +345,7 @@ exports[`Tos screen render and accept 1`] = `
                 style={
                   {
                     "alignItems": "center",
-                    "backgroundColor": "#FFD048",
+                    "backgroundColor": undefined,
                     "borderColor": "transparent",
                     "borderRadius": 100,
                     "borderWidth": 1,

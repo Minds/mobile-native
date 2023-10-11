@@ -55,7 +55,6 @@ exports[`Slider component should render correctly 1`] = `
       }
     }
     tapToSeek={false}
-    thumbTintColor="#FFD048"
     upperLimit={9007199254740991}
     value={25}
   />
