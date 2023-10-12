@@ -3,6 +3,7 @@ import { Image, View } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
 import MText from './MText';
+import assets from '@assets';
 
 type PropsType = {
   title?: string;
@@ -17,10 +18,7 @@ export default function Empty({
 }: PropsType) {
   return (
     <View style={styles.emptyContainer}>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/emptyFeed.png')}
-      />
+      <Image style={styles.image} source={assets.EMPTY_FEED} />
       {Boolean(title) && <MText style={styles.header}>{title}</MText>}
       {Boolean(subtitle) && <MText style={styles.subtitle}>{subtitle}</MText>}
       {children}

@@ -10,6 +10,7 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import assets from '@assets';
 
 const UpdatingScreen = observer(() => {
   return (
@@ -18,7 +19,7 @@ const UpdatingScreen = observer(() => {
         <Image
           resizeMode={'contain'}
           style={styles.logo}
-          source={require('../assets/logos/bulb.png')}
+          source={assets.ICON}
         />
         <View>
           <MText style={styles.title}>

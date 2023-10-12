@@ -2,10 +2,9 @@ import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ShareMenuReactView } from 'react-native-share-menu';
+import assets from '@assets';
 
 const Share = () => {
-  const logo = require('./src/assets/logos/logo-white.png');
-
   useEffect(() => {
     ShareMenuReactView.data().then(({ mimeType, data }) => {
       ShareMenuReactView.continueInApp();
@@ -14,7 +13,11 @@ const Share = () => {
 
   return (
     <View style={styles.container}>
-      <Image contentFit="cover" style={styles.logo} source={logo} />
+      <Image
+        contentFit="cover"
+        style={styles.logo}
+        source={assets.LOGO_WHITE}
+      />
     </View>
   );
 };

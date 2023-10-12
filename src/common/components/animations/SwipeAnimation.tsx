@@ -36,7 +36,7 @@ export default function SwipeAnimation(props) {
         autoPlay={props.autoPlay}
         resizeMode="contain"
         style={props.style}
-        source={require('../../../assets/animations/swipe.json')}
+        source={require('~/assets/animations/swipe.json')}
         loop={false}
         enableMergePathsAndroidForKitKatAndAbove
         speed={3}

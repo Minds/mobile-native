@@ -96,30 +96,17 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -370,30 +357,17 @@ exports[`Notification Affiliate earnings deposited 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="attach-money"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -588,30 +562,17 @@ exports[`Notification An offer expires 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -863,30 +824,17 @@ exports[`Notification Boost accepted 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1158,30 +1106,17 @@ exports[`Notification Boost complete 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1453,30 +1388,17 @@ exports[`Notification Boost rejected 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1748,30 +1670,17 @@ exports[`Notification Gift boost created 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="redeem"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2137,30 +2046,17 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2412,30 +2308,17 @@ exports[`Notification Receiver declines an offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2687,30 +2570,17 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="attach-money"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2905,30 +2775,17 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>

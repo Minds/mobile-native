@@ -1,0 +1,5 @@
+---
+message: |
+  npx hygen {bold tenant new <tenantName>}  
+  npx hygen {bold tenant switch <tenantName>}  
+---

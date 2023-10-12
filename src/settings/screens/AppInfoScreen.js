@@ -6,12 +6,10 @@ import { Image } from 'expo-image';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { Version } from '~/config/Version';
 import MText from '~/common/components/MText';
+import assets from '@assets';
 
 export default function AppInfoScreen() {
   const theme = ThemedStyles.style;
-  const logo = ThemedStyles.theme
-    ? require('~/assets/logos/logo-white.png')
-    : require('~/assets/logos/logo.png');
 
   const rowStyle = [
     theme.rowJustifySpaceBetween,
@@ -35,7 +33,7 @@ export default function AppInfoScreen() {
       <Image
         contentFit="cover"
         style={[styles.logo, theme.marginTop2x]}
-        source={logo}
+        source={ThemedStyles.theme ? assets.LOGO_WHITE : assets.LOGO}
       />
       <View style={styles.footer}>
         <MText

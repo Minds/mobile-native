@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import assets from '@assets';
 
 import MText from '~/common/components/MText';
 import { DEV_MODE } from '~/config/Config';
@@ -46,7 +47,7 @@ function WelcomeScreen(props: PropsType) {
       <View style={theme.flexColumnStretch}>
         <Animated.Image
           resizeMode="contain"
-          source={require('./../assets/logos/logo-white.png')}
+          source={assets.LOGO_WHITE}
           style={styles.image}
         />
         <View style={styles.buttonContainer}>
