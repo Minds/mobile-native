@@ -8,7 +8,12 @@ import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
-import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
+import {
+  IS_FROM_STORE,
+  IS_IOS,
+  MEMBERSHIP_TIERS_ENABLED,
+  TWITTER_ENABLED,
+} from '~/config/Config';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import WalletStack from './WalletStack';
 
@@ -16,7 +21,7 @@ const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
-  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
+  const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   const AccountScreenOptions = navigation => [
     {
@@ -261,16 +266,18 @@ export default function () {
         }
         options={{ title: i18n.t('settings.blockedChannels') }}
       />
-      <MoreStack.Screen
-        name="TierManagementScreen"
-        getComponent={() =>
-          require('~/common/components/tier-management/TierManagementScreen')
-            .default
-        }
-        options={{ title: i18n.t('settings.otherOptions.b1') }}
-        initialParams={{ useForSelection: false }}
-      />
-      {isTwitterEnabled && (
+      {MEMBERSHIP_TIERS_ENABLED && (
+        <MoreStack.Screen
+          name="TierManagementScreen"
+          getComponent={() =>
+            require('~/common/components/tier-management/TierManagementScreen')
+              .default
+          }
+          options={{ title: i18n.t('settings.otherOptions.b1') }}
+          initialParams={{ useForSelection: false }}
+        />
+      )}
+      {isTwitterFFEnabled && TWITTER_ENABLED && (
         <MoreStack.Screen
           name="TwitterSync"
           getComponent={() =>

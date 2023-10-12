@@ -368,7 +368,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 placeholderTextColor="#a1a5ab"
                 returnKeyLabel="Next"
                 returnKeyType="next"
-                selectionColor="#FFD048"
                 style={
                   [
                     {
@@ -555,7 +554,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     returnKeyLabel="Submit"
                     returnKeyType="send"
                     secureTextEntry={true}
-                    selectionColor="#FFD048"
                     style={
                       [
                         {
@@ -688,7 +686,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   {
                     "alignItems": "center",
-                    "backgroundColor": "#FFD048",
+                    "backgroundColor": undefined,
                     "borderColor": "transparent",
                     "borderRadius": 100,
                     "borderWidth": 1,

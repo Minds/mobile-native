@@ -9,7 +9,13 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
-import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
+import {
+  ANDROID_CHAT_APP,
+  BLOCK_USER_ENABLED,
+  BOOSTS_ENABLED,
+  IS_IOS,
+  MINDS_URI,
+} from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
@@ -212,16 +218,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           },
         });
       }
-      options.push({
-        title: 'Boost',
-        iconName: 'trending-up',
-        iconType: 'material-community',
-        onPress: () => {
-          this.props.navigation.push('BoostScreenV2', {
-            entity: this.props.entity,
-          });
-        },
-      });
+      if (BOOSTS_ENABLED) {
+        options.push({
+          title: 'Boost',
+          iconName: 'trending-up',
+          iconType: 'material-community',
+          onPress: () => {
+            this.props.navigation.push('BoostScreenV2', {
+              entity: this.props.entity,
+            });
+          },
+        });
+      }
     }
 
     if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {
@@ -251,41 +259,42 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
 
-      const blocked = this.props.channel
-        ? this.props.channel.blocked
-        : this.state.userBlocked;
-
       // Block / Unblock
-      options.push({
-        title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
-        iconName: 'remove-circle-outline',
-        iconType: 'ionicon',
-        onPress: async () => {
-          if (this.props.channel) {
-            return this.props.channel?.toggleBlock();
-          }
+      if (BLOCK_USER_ENABLED) {
+        const blocked = this.props.channel
+          ? this.props.channel.blocked
+          : this.state.userBlocked;
+        options.push({
+          title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
+          iconName: 'remove-circle-outline',
+          iconType: 'ionicon',
+          onPress: async () => {
+            if (this.props.channel) {
+              return this.props.channel?.toggleBlock();
+            }
 
-          if (!this.state.userBlocked) {
-            try {
-              await this.props.entity.blockOwner();
-              this.setState({
-                userBlocked: true,
-              });
-            } catch (err) {
-              this.showError();
+            if (!this.state.userBlocked) {
+              try {
+                await this.props.entity.blockOwner();
+                this.setState({
+                  userBlocked: true,
+                });
+              } catch (err) {
+                this.showError();
+              }
+            } else {
+              try {
+                await this.props.entity.unblockOwner();
+                this.setState({
+                  userBlocked: false,
+                });
+              } catch (err) {
+                this.showError();
+              }
             }
-          } else {
-            try {
-              await this.props.entity.unblockOwner();
-              this.setState({
-                userBlocked: false,
-              });
-            } catch (err) {
-              this.showError();
-            }
-          }
-        },
-      });
+          },
+        });
+      }
     }
     // Copy URL
     options.push(
