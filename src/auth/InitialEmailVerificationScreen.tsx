@@ -12,6 +12,7 @@ import { B1 } from '~/common/ui';
 import AuthService from './AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import NavigationService from '../navigation/NavigationService';
+import { tenant } from '~/config/Config';
 
 /**
  * Initial email verification screen
@@ -160,7 +161,7 @@ const InitialEmailVerificationScreen = () => {
       onBack={AuthService.justRegistered ? undefined : localStore.cancel}
       title={i18n.t('onboarding.verifyEmailAddress')}
       onVerify={localStore.submit}
-      description={i18n.t('auth.2faEmailDescription')}
+      description={i18n.t('auth.2faEmailDescription', { tenant })}
       maxLength={6}
       keyboardType={'numeric'}
       placeholder={i18n.t('auth.authCode')}

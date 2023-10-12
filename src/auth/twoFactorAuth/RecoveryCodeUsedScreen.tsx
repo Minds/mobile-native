@@ -12,6 +12,7 @@ import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { tenant } from '~/config/Config';
 
 const wHeight = Dimensions.get('window').height;
 
@@ -33,7 +34,7 @@ const RecoveryCodeUsedScreen = () => {
         </TouchableOpacity>
       </View>
       <MText style={[theme.marginTop6x, textStyle]}>
-        {i18n.t('settings.TFARecoveryCodeUsedDesc')}
+        {i18n.t('settings.TFARecoveryCodeUsedDesc', { tenant })}
       </MText>
       <Button
         text={i18n.t('settings.TFARecoveryCodeUsedEnable')}

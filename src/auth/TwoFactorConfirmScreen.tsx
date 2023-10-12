@@ -11,6 +11,7 @@ import { TwoFactorError } from '~/common/services/ApiErrors';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { tenant } from '~/config/Config';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -121,7 +122,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
 
   const description =
     mfaType === 'email'
-      ? i18n.t('auth.2faEmailDescription')
+      ? i18n.t('auth.2faEmailDescription', { tenant })
       : mfaType === 'totp'
       ? i18n.t('auth.2faAppDescription')
       : i18n.t('auth.2faSmsDescription');

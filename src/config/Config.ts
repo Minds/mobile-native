@@ -57,6 +57,8 @@ export const ACCENT_COLOR_LIGHT =
   Constants.expoConfig?.extra?.ACCENT_COLOR_LIGHT;
 export const ACCENT_COLOR_DARK = Constants.expoConfig?.extra?.ACCENT_COLOR_DARK;
 
+export const tenant = Constants.expoConfig?.extra?.APP_NAME || 'Minds';
+
 /**
  * We get the values only for review apps in order to avoid issues
  * by setting them to true in a review app and after updating the app
