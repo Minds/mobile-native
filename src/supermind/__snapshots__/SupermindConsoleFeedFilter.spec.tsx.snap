@@ -506,7 +506,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                           },
                           {
                             "backgroundColor": "transparent",
-                            "color": "#FFD048",
+                            "color": undefined,
                           },
                           {
                             "fontFamily": "Ionicons",

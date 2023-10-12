@@ -14,6 +14,7 @@ import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { observer } from 'mobx-react';
 import apiService from '~/common/services/api.service';
 import { confirm } from '~/common/components/Confirm';
+import { TWITTER_ENABLED } from '~/config/Config';
 
 type Props = {
   request: SupermindRequestModel;
@@ -23,7 +24,9 @@ type Props = {
 function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
   const isTwitterEnabled =
-    request.twitter_required && hasVariation('engine-2503-twitter-feats');
+    request.twitter_required &&
+    hasVariation('engine-2503-twitter-feats') &&
+    TWITTER_ENABLED;
 
   const answer = React.useCallback(async () => {
     if (isTwitterEnabled && hasVariation('mob-twitter-oauth-4715')) {

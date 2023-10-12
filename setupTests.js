@@ -130,6 +130,10 @@ jest.mock('@expo/vector-icons/FontAwesome5', () => 'FontAwesome5');
 jest.mock('@expo/vector-icons/FontAwesome', () => 'FontAwesome');
 jest.mock('@expo/vector-icons/Ionicons', () => 'IonIcon');
 jest.mock('@expo/vector-icons/Feather', () => 'Feather');
-jest.mock('@expo/vector-icons/Evilicons', () => 'EvilIcons');
 jest.mock('@expo/vector-icons/Fontisto', () => 'Fontisto');
 jest.mock('@expo/vector-icons/Entypo', () => 'Entypo');
+jest.mock('@expo/vector-icons', () => ({
+  FontAwesome: () => {
+    return 'FontAwesome';
+  },
+}));

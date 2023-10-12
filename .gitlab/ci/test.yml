@@ -1,5 +1,5 @@
 test:quality:
-  image: node:18.13.0
+  image: node:18.18.0
   stage: test
   interruptible: true
   rules:

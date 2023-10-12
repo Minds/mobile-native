@@ -1,5 +1,5 @@
 .codepush_base:
-  image: node:18.13.0
+  image: node:18.18.0
   tags: [minds-ci]
   stage: pushrelease
   needs: ['test:quality']

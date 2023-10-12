@@ -6,7 +6,7 @@
 
 .qa_base:
   stage: qa
-  image: node:18.13.0
+  image: node:18.18.0
   allow_failure: true
   cache:
     key: ${CI_COMMIT_REF_SLUG}

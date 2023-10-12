@@ -149,7 +149,6 @@ exports[`SupermindScreen should render correctly 1`] = `
         }
       >
         <ActivityIndicator
-          color="#FFD048"
           size="large"
         />
       </View>
