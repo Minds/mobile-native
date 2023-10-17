@@ -43,7 +43,7 @@ export const BoostCashCards = ({
   const insights = useCachedBoostInsights(audience);
   const { t } = useTranslation();
   const [selected, setSelected] = useState<CardColor>(
-    defaultCard(DEFAULT_DAILY_CASH_BUDGET + 2),
+    defaultCard(DEFAULT_DAILY_CASH_BUDGET),
   );
 
   const onSelect = (card: CardColor) => () => {
