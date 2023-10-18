@@ -109,7 +109,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const handleCreate = async () => {
     // Tokens, OSS or Gifts
-    if (!isCashFromStore) {
+    if (!isCashFromStore || hasCredit) {
       return createBoost(hasCredit ? creditPaymentMethod : undefined)?.then(
         () => {
           showNotification(t('Boost created successfully'));
@@ -218,7 +218,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           />
           {isCashFromStore && (
             <CashSelector
-              methodSelected={selectedMethod}
+              methodSelected={defaultSelectedMethod}
               onMethodSelected={method => setSelectedMethod(method)}
               style={ThemedStyles.style.bgTransparent}
               borderless
