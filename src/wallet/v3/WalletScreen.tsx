@@ -151,7 +151,7 @@ const WalletScreen = observer((props: PropsType) => {
         tabStyle={theme.paddingVertical}
       />
       {store.wallet.loaded ? body[store.currency] : body.loading}
-      <OnboardingOverlay type="wallet_cash_earnings" />
+      <OnboardingOverlay type="wallet_cash_earnings" disableLinks />
     </Screen>
   );
 });

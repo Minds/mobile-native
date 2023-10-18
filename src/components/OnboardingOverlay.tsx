@@ -20,9 +20,13 @@ type OnboardingType =
 
 interface OnboardingProps {
   type: OnboardingType;
+  disableLinks?: boolean;
 }
 
-export default function OnboardingOverlay({ type: key }: OnboardingProps) {
+export default function OnboardingOverlay({
+  type: key,
+  disableLinks,
+}: OnboardingProps) {
   const { explainer, dismissed, onDismiss } = useExplainer(key);
 
   if (!explainer || dismissed) {
@@ -49,9 +53,7 @@ export default function OnboardingOverlay({ type: key }: OnboardingProps) {
               </Column>
               <Column right="L">
                 <H4 font="bold">{step?.title}</H4>
-                <MarkDown
-                  disableLinks={key === 'wallet_cash_earnings'}
-                  style={styles}>
+                <MarkDown disableLinks={disableLinks} style={styles}>
                   {step?.description?.trim()}
                 </MarkDown>
               </Column>
