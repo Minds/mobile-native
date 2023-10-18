@@ -128,7 +128,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   notification: {
     icon:
-      process.env.NOTIFICATION_ICON || './assets/minds/images/icon-mono.png',
+      process.env.NOTIFICATION_ICON || './assets/minds/images/icon_mono.png',
     color: '#ffffff', // we can use the accent color here instead
     iosDisplayInForeground: true,
   },
