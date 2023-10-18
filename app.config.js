@@ -133,7 +133,7 @@ export default ({ config }) => ({
     iosDisplayInForeground: true,
   },
   extra: {
-    isTenant: process.env.APP_NAME ? true : false,
+    APP_NAME: process.env.APP_NAME,
     ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
     ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
     API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
