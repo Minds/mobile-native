@@ -14,6 +14,7 @@ import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
+import assets from '@assets';
 
 type PropsType = {
   navigation: any;
@@ -107,9 +108,7 @@ export const Topbar = observer((props: PropsType) => {
                   <Image
                     resizeMode="contain"
                     source={
-                      ThemedStyles.theme
-                        ? require('../assets/logos/logo-white.png')
-                        : require('../assets/logos/logo.png')
+                      ThemedStyles.theme ? assets.LOGO_WHITE : assets.LOGO
                     }
                     style={styles.logo}
                   />

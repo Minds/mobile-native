@@ -40,7 +40,7 @@ export const DEV_MODE = new DevMode(IS_REVIEW);
 export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 // Enabled Features for the app
-export const IS_TENANT = Constants.expoConfig?.extra?.isTenant;
+export const IS_TENANT = Constants.expoConfig?.extra?.APP_NAME ? true : false;
 export const SUPERMIND_ENABLED = !IS_TENANT;
 export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;
@@ -56,6 +56,8 @@ export const CHAT_ENABLED = !IS_TENANT;
 export const ACCENT_COLOR_LIGHT =
   Constants.expoConfig?.extra?.ACCENT_COLOR_LIGHT;
 export const ACCENT_COLOR_DARK = Constants.expoConfig?.extra?.ACCENT_COLOR_DARK;
+
+export const tenant = Constants.expoConfig?.extra?.APP_NAME || 'Minds';
 
 /**
  * We get the values only for review apps in order to avoid issues

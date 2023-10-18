@@ -5,6 +5,7 @@ import { B1 } from '~/common/ui';
 import { observer } from 'mobx-react';
 import { GetGiftCardByCodeQuery, GiftCardProductIdEnum } from '~/graphql/api';
 import { useTranslation } from '../locales';
+import assets from '@assets';
 
 export default observer(function GiftCard({
   gift,
@@ -16,11 +17,7 @@ export default observer(function GiftCard({
     <View style={styles.card}>
       <View style={styles.top}>
         <Image
-          source={
-            isDark
-              ? require('~/assets/logos/logo_mono.png')
-              : require('~/assets/logos/logo_mono_white.png')
-          }
+          source={isDark ? assets.LOGO_MONO : assets.LOGO_MONO_WHITE}
           resizeMode="contain"
           style={styles.logo}
         />

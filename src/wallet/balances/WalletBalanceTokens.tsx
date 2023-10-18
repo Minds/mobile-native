@@ -8,6 +8,7 @@ import number from '../../common/helpers/number';
 import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
 import MText from '../../common/components/MText';
+import assets from '@assets';
 
 @inject('wallet')
 @observer
@@ -86,7 +87,7 @@ export default class WalletBalanceTokens extends Component {
           <Image
             resizeMode="contain"
             style={styles.logo}
-            source={require('../../assets/logos/bulb.png')}
+            source={assets.ICON}
           />
           <MText style={styles.amount}>
             {this.props.wallet.formattedBalance}

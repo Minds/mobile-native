@@ -4,7 +4,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { useAppState } from '@react-native-community/hooks';
 import { Camera, CameraPermissionStatus } from 'react-native-vision-camera';
-import { IS_IOS } from '../config/Config';
+import { IS_IOS, tenant } from '../config/Config';
 import MText from '../common/components/MText';
 
 type PropsType = {
@@ -61,7 +61,7 @@ export default function PermissionsCheck(props: PropsType) {
         style={[theme.flexContainer, theme.centered, theme.padding8x]}
         onPress={tap}>
         <MText style={[theme.fontXL, theme.textCenter, theme.colorWhite]}>
-          {i18nService.t('capture.allowMinds')}
+          {i18nService.t('capture.allowMinds', { tenant })}
         </MText>
         <MText style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}>
           {i18nService.t('permissions.tapAllow')}

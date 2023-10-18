@@ -1,8 +1,7 @@
 import { Image, ImageProps } from 'react-native';
 import * as React from 'react';
+import assets from '@assets';
 
-function ComposeIcon(props: Partial<ImageProps>) {
-  return <Image source={require('../assets/compose.png')} {...props} />;
+export default function ComposeIcon(props: Partial<ImageProps>) {
+  return <Image source={assets.COMPOSE} {...props} />;
 }
-
-export default ComposeIcon;

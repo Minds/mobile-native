@@ -1,3 +1,4 @@
+import { ExpoConfig, ConfigContext } from 'expo/config';
 /**
  * Configuration settings for the minds / multi-tenant app, using environment variables.
  *
@@ -11,13 +12,27 @@
  * @param {string} process.env.APP_API_URL - The API URL (default: 'https://www.minds.com/').
  * @param {string} process.env.ACCENT_COLOR_LIGHT - Theme accent color (default: '#1B85D6').
  * @param {string} process.env.ACCENT_COLOR_DARK - Theme accent color (default: '#FFD048').
+ * @param {string} process.env.APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.ADAPTIVE_ICON - The path to the android adaptive icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.ANDROID_SPLASH - The path to the android splash file (in ./assets/<tenant>/images).
+ * @param {string} process.env.IOS_SPLASH - The path to the ios splash file (in ./assets/<tenant>/images).
+ * @param {string} process.env.NOTIFICATION_ICON - The path to the splash file (in ./assets/<tenant>/images).
  * @returns {Object} - A configuration object for the Expo app.
  */
-export default ({ config }) => ({
+
+const name = process.env.APP_NAME || 'Minds';
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: process.env.APP_NAME || 'Minds',
+  name,
   scheme: process.env.APP_SCHEME || 'mindsapp',
+  slug: name.toLowerCase(),
   version: process.env.APP_VERSION || '4.42.0',
+  icon: process.env.APP_ICON || './assets/minds/images/icon.png',
+  orientation: 'portrait',
+  userInterfaceStyle: 'light',
+
   plugins: [
     'react-native-iap',
     [
@@ -69,7 +84,7 @@ export default ({ config }) => ({
       },
     ],
     splash: {
-      image: './src/assets/logos/splash.png',
+      image: process.env.ANDROID_SPLASH || './assets/minds/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
@@ -106,19 +121,25 @@ export default ({ config }) => ({
         '$(PRODUCT_NAME) needs access to your Microphone.',
     },
     splash: {
-      image: './src/assets/logos/splash.png',
+      image: process.env.IOS_SPLASH || './assets/minds/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
   },
+  notification: {
+    icon:
+      process.env.NOTIFICATION_ICON || './assets/minds/images/icon_mono.png',
+    color: '#ffffff', // we can use the accent color here instead
+    iosDisplayInForeground: true,
+  },
   extra: {
-    isTenant: process.env.APP_NAME ? true : false,
+    APP_NAME: name,
     ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
     ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
     API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
     eas: {
-      projectId: '1bc9a718-f25b-407e-aa16-f18f0ae61b71',
+      projectId: '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
     },
   },
-  owner: 'myminds',
+  owner: 'minds-inc',
 });

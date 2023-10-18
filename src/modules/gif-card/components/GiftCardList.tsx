@@ -18,6 +18,7 @@ import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
 import { dateFormat, useInfiniteQuery, useRefetchOnFocus } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
+import assets from '@assets';
 
 export const GiftCardList = () => {
   const { t } = useTranslation();
@@ -102,11 +103,7 @@ const MindsCard = observer(({ disabled = false }) => {
   return (
     <View style={[styles.card, disabled && styles.disabled]}>
       <Image
-        source={
-          isDark
-            ? require('~/assets/logos/logo_mono.png')
-            : require('~/assets/logos/logo_mono_white.png')
-        }
+        source={isDark ? assets.LOGO_MONO : assets.LOGO_MONO_WHITE}
         resizeMode="contain"
         style={styles.logo}
       />

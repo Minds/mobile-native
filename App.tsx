@@ -1,10 +1,4 @@
 //@ts-nocheck
-/**
- * Minds mobile app
- * https://www.minds.com
- *
- * @format
- */
 import React, { Component } from 'react';
 import {
   BackHandler,

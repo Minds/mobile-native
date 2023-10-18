@@ -5,6 +5,7 @@ import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import { tenant } from '~/config/Config';
 
 /**
  * Invite a Friend Notice
@@ -23,7 +24,9 @@ function InviteFriendsNotice({ name }: NoticeProps) {
     <InFeedNotice
       name={name}
       title={i18nService.t('inFeedNotices.inviteFriendsTitle')}
-      description={i18nService.t('inFeedNotices.inviteFriendsDescription')}
+      description={i18nService.t('inFeedNotices.inviteFriendsDescription', {
+        tenant,
+      })}
       btnText={i18nService.t('inFeedNotices.inviteFriendsAction')}
       iconName="info-outline"
       onPress={onPress}

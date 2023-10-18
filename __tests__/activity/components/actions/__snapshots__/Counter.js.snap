@@ -3,10 +3,13 @@
 exports[`Counter component renders correctly 1`] = `
 <View
   style={
-    {
-      "alignItems": "center",
-      "flexDirection": "column",
-    }
+    [
+      {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+      null,
+    ]
   }
 >
   <Text
