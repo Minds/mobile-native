@@ -3,11 +3,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { MotiView } from 'moti';
 
 import FitScrollView from '~/common/components/FitScrollView';
-import { B2, Button, Column, H4, Icon, Row } from '~/common/ui';
+import { Button, Column, H4, Icon, Row } from '~/common/ui';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import { useGetExplainerScreenQuery } from '~/graphql/strapi';
 import { useDismissMutation, useGetDismissalQuery } from '~/graphql/api';
 import ThemedStyles from '../styles/ThemedStyles';
+import { MarkDown } from '~/common/components/MarkDown';
 
 type OnboardingType =
   | 'affiliates'
@@ -48,7 +49,11 @@ export default function OnboardingOverlay({ type: key }: OnboardingProps) {
               </Column>
               <Column right="L">
                 <H4 font="bold">{step?.title}</H4>
-                <B2 color="secondary">{step?.description?.trim()}</B2>
+                <MarkDown
+                  disableLinks={key === 'wallet_cash_earnings'}
+                  style={styles}>
+                  {step?.description?.trim()}
+                </MarkDown>
               </Column>
             </Row>
           ))}
@@ -98,4 +103,5 @@ const exit = { opacity: 0 };
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'marginTop28x', 'padding6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
+  body: ['colorSecondaryText', 'fontM'],
 });
