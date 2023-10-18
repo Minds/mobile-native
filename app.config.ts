@@ -1,3 +1,4 @@
+import { ExpoConfig, ConfigContext } from 'expo/config';
 /**
  * Configuration settings for the minds / multi-tenant app, using environment variables.
  *
@@ -19,12 +20,15 @@
  * @param {string} process.env.NOTIFICATION_ICON - The path to the splash file (in ./assets/<tenant>/images).
  * @returns {Object} - A configuration object for the Expo app.
  */
-export default ({ config }) => ({
-  ...config,
-  name: process.env.APP_NAME || 'Minds',
-  scheme: process.env.APP_SCHEME || 'mindsapp',
-  version: process.env.APP_VERSION || '4.42.0',
 
+const name = process.env.APP_NAME || 'Minds';
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  ...config,
+  name,
+  scheme: process.env.APP_SCHEME || 'mindsapp',
+  slug: name.toLowerCase(),
+  version: process.env.APP_VERSION || '4.42.0',
   icon: process.env.APP_ICON || './assets/minds/images/icon.png',
   orientation: 'portrait',
   userInterfaceStyle: 'light',
@@ -79,11 +83,6 @@ export default ({ config }) => ({
         category: ['BROWSABLE', 'DEFAULT'],
       },
     ],
-    adaptiveIcon: {
-      foregroundImage:
-        process.env.ADAPTIVE_ICON || './assets/minds/images/adaptive-icon.png',
-      backgroundColor: '#FFFFFF',
-    },
     splash: {
       image: process.env.ANDROID_SPLASH || './assets/minds/images/splash.png',
       resizeMode: 'contain',
@@ -128,12 +127,13 @@ export default ({ config }) => ({
     },
   },
   notification: {
-    icon: process.env.NOTIFICATION_ICON || './assets/minds/images/icon.png',
-    color: '#ffffff',
+    icon:
+      process.env.NOTIFICATION_ICON || './assets/minds/images/icon-mono.png',
+    color: '#ffffff', // we can use the accent color here instead
     iosDisplayInForeground: true,
   },
   extra: {
-    APP_NAME: process.env.APP_NAME,
+    APP_NAME: name,
     ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
     ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
     API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
