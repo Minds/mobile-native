@@ -219,6 +219,7 @@ export type RootStackParamList = {
   StoryBook: {};
   CodePushSync: {};
   BoostUpgrade: undefined;
+  WebContent: { path: string };
 };
 
 export type AuthStackParamList = {

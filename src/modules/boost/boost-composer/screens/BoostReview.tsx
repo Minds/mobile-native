@@ -6,7 +6,7 @@ import FitScrollView from '~/common/components/FitScrollView';
 import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import { B1, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { BoostType, useBoostStore } from '../boost.store';
@@ -26,6 +26,7 @@ import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
 import { useGifts } from '~/common/hooks/useGifts';
+import Link from '~/common/components/Link';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -268,7 +269,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           {title}
         </Button>
 
-        {/* <B2
+        <B2
           color="secondary"
           horizontal="L"
           top="XL"
@@ -276,14 +277,14 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           align="center">
           {t('By clicking Boost Channel, you agree to Minds')}
           {'\n'}
-          <Link url="https://www.minds.com/content-policy">
-            {t('Content Policy')}
-          </Link>
+          {/* <Link url="https://www.minds.com/content-policy"> */}
+          {t('Content Policy')}
+          {/* </Link> */}
           {t(' and ')}
           <Link url="https://www.minds.com/p/monetization-terms">
             {t('Refund Policy')}
           </Link>
-        </B2> */}
+        </B2>
       </FitScrollView>
     </Screen>
   );
