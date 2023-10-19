@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 import { Dimensions, ScrollView, View } from 'react-native';
 import { confirm } from '../common/components/Confirm';
-// import Link from '../common/components/Link';
+import Link from '../common/components/Link';
 import OffsetList from '../common/components/OffsetList';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 import MenuItem from '../common/components/menus/MenuItem';
@@ -334,9 +334,9 @@ const PlusTerms = () => (
 );
 
 const TermsLink = () => (
-  // <Link url="https://www.minds.com/p/monetization-terms">
-  <B2>{i18n.t('monetize.terms.linkTitle')}</B2>
-  // </Link>
+  <Link url="https://www.minds.com/p/monetization-terms">
+    <B2>{i18n.t('monetize.terms.linkTitle')}</B2>
+  </Link>
 );
 
 export const pushAudienceSelector = (

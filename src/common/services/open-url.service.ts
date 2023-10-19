@@ -50,7 +50,7 @@ class OpenURLService {
   async openLinkInInAppBrowser(url) {
     try {
       if (await InAppBrowser.isAvailable()) {
-        const result = await InAppBrowser.open(url, {
+        await InAppBrowser.open(url, {
           // iOS Properties
           dismissButtonStyle: 'cancel',
           preferredBarTintColor: ThemedStyles.getColor('PrimaryBackground'),
@@ -97,6 +97,11 @@ class OpenURLService {
    */
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
+
+    if (url.startsWith(`${MINDS_URI}p/`)) {
+      return NavigationService.navigate('WebContent', { path: url });
+    }
+
     if (url.startsWith(MINDS_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;
