@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Dimensions, Linking, Platform, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
