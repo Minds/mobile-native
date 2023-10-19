@@ -115,7 +115,6 @@ export const featureList = [
   'mob-4722-track-code-push',
   'mob-4812-discovery-badge',
   'minds-3921-mandatory-onboarding-tags',
-  'mob-4836-iap-no-cash',
   'mob-4903-referrer-banner',
   'mob-4903-wefounder-banner',
   'minds-3952-boost-goals',

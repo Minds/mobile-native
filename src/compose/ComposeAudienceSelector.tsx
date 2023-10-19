@@ -114,6 +114,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
       }
 
       groupsListRef.current?.refreshList?.();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
@@ -309,7 +310,7 @@ const ComposeAudienceGroupItem = ({ group, selected, onPress, index }) => {
 
 const Check = () => (
   <View style={styles.check}>
-    <Icon name="check" color="White" size="small" />
+    <Icon name="check" color="Black" size="small" />
   </View>
 );
 
