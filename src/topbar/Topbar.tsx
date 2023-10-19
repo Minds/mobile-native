@@ -108,7 +108,9 @@ export const Topbar = observer((props: PropsType) => {
                   <Image
                     resizeMode="contain"
                     source={
-                      ThemedStyles.theme ? assets.LOGO_WHITE : assets.LOGO
+                      ThemedStyles.theme
+                        ? assets.LOGO_HORIZONTAL_DARK
+                        : assets.LOGO_HORIZONTAL
                     }
                     style={styles.logo}
                   />

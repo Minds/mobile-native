@@ -33,7 +33,11 @@ export default function AppInfoScreen() {
       <Image
         contentFit="cover"
         style={[styles.logo, theme.marginTop2x]}
-        source={ThemedStyles.theme ? assets.LOGO_WHITE : assets.LOGO}
+        source={
+          ThemedStyles.theme
+            ? assets.LOGO_HORIZONTAL_DARK
+            : assets.LOGO_HORIZONTAL
+        }
       />
       <View style={styles.footer}>
         <MText

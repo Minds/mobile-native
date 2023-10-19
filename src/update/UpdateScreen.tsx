@@ -19,7 +19,7 @@ const UpdatingScreen = observer(() => {
         <Image
           resizeMode={'contain'}
           style={styles.logo}
-          source={assets.ICON}
+          source={assets.LOGO_SQUARED}
         />
         <View>
           <MText style={styles.title}>

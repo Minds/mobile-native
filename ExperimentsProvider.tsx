@@ -122,7 +122,6 @@ export const featureList = [
   'minds-3952-boost-goals',
   'epic-304-affiliates',
   'mob-4938-newsfeed-for-you',
-  'mob-4989-compose-fab',
   'mob-4952-boost-platform-targeting',
   'mob-5038-discovery-consolidation',
   'mob-5075-hide-post-on-downvote',

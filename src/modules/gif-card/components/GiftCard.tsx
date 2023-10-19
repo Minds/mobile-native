@@ -17,7 +17,7 @@ export default observer(function GiftCard({
     <View style={styles.card}>
       <View style={styles.top}>
         <Image
-          source={isDark ? assets.LOGO_MONO : assets.LOGO_MONO_WHITE}
+          source={isDark ? assets.LOGO_HORIZONTAL_DARK : assets.LOGO_HORIZONTAL}
           resizeMode="contain"
           style={styles.logo}
         />

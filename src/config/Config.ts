@@ -40,7 +40,9 @@ export const DEV_MODE = new DevMode(IS_REVIEW);
 export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 // Enabled Features for the app
-export const IS_TENANT = Constants.expoConfig?.extra?.APP_NAME ? true : false;
+export const IS_TENANT =
+  !Constants.expoConfig?.extra?.APP_NAME ||
+  Constants.expoConfig?.extra?.APP_NAME !== 'Minds';
 export const SUPERMIND_ENABLED = !IS_TENANT;
 export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;

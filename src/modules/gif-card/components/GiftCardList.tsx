@@ -103,7 +103,7 @@ const MindsCard = observer(({ disabled = false }) => {
   return (
     <View style={[styles.card, disabled && styles.disabled]}>
       <Image
-        source={isDark ? assets.LOGO_MONO : assets.LOGO_MONO_WHITE}
+        source={isDark ? assets.LOGO_HORIZONTAL_DARK : assets.LOGO_HORIZONTAL}
         resizeMode="contain"
         style={styles.logo}
       />

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Trans } from 'react-i18next';
 import { Keyboard, View } from 'react-native';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 import MenuItem from '../common/components/menus/MenuItem';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
-import { B2, Screen, ScreenHeader, Spacer } from '../common/ui';
+import { B2, Row, Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
-import ComposeIcon from './ComposeIcon';
 import type { ComposeCreateMode } from './createComposeStore';
 import { IS_IOS, SUPERMIND_ENABLED } from '../config/Config';
 import i18nService from '../common/services/i18n.service';
+import { CaptureFabIcon } from '~/capture/CaptureFab';
 
 interface ComposeCreateScreenProps {
   selected?: ComposeCreateMode;
@@ -64,15 +63,11 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         />
       )}
       {!selected && (
-        <B2 color="secondary" align="center" top="L">
-          <Trans
-            i18nKey="compose"
-            defaults={texts.description}
-            components={{
-              compose: <Compose />,
-            }}
-          />
-        </B2>
+        <Row top="L" align="centerBoth">
+          <B2 color="secondary">Long press</B2>
+          <CaptureFabIcon scale={0.5} />
+          <B2 color="secondary">to open this menu again</B2>
+        </Row>
       )}
 
       <Spacer top="XXXL2" />
@@ -100,20 +95,6 @@ export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) => {
   });
 };
 
-const Compose = () => (
-  <View>
-    <ComposeIcon style={styles.composeIcon} />
-  </View>
-);
-
-const styles = {
-  composeIcon: {
-    width: 20,
-    height: 20,
-    top: 4,
-  },
-};
-
 const texts = {
   post: {
     title: i18nService.t('composer.create.screen.post.title'),
@@ -131,5 +112,4 @@ const texts = {
     title: <SupermindLabel font="B1" />,
     subtitle: i18nService.t('composer.create.screen.supermind.subtitle'),
   },
-  description: i18nService.t('composer.create.screen.description'),
 };
