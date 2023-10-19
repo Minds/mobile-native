@@ -275,7 +275,7 @@ class BlogsViewScreen extends Component<PropsType> {
             <Image
               resizeMode="contain"
               style={ComponentsStyle.logo}
-              source={assets.LOGO}
+              source={assets.LOGO_SQUARED}
             />
             <MText style={[theme.fontL, theme.colorAlert]}>
               {i18n.t('blogs.error')}

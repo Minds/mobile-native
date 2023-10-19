@@ -1,44 +1,30 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import {
-  View,
-  Platform,
-  TouchableOpacity,
-  Dimensions,
-  PlatformIOSStatic,
-} from 'react-native';
+import { View, Platform, Dimensions, PlatformIOSStatic } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
-import ComposeIcon from '../compose/ComposeIcon';
-import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
-import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_TENANT } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation, useIsAndroidFeatureOn } from 'ExperimentsProvider';
-import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
-import { storages } from '../common/services/storage/storages.service';
-import { triggerHaptic } from '../common/services/haptic.service';
-import { useIsFeatureOn } from '../../ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 import withModalProvider from '~/navigation/withModalProvide';
 
-const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
 
 export type TabParamList = {
@@ -165,42 +151,8 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  * Main tabs
  * @param {Object} props
  */
-const Tabs = observer(function ({ navigation }) {
+const Tabs = observer(function () {
   const theme = ThemedStyles.style;
-  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
-  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
-
-  const pushComposeCreate = () =>
-    pushComposeCreateScreen({
-      onItemPress: async key => {
-        navigation.goBack();
-        storages.user?.setBool('compose:create', true);
-        navigation.navigate('Compose', { createMode: key });
-      },
-    });
-
-  const navToComposer = useCallback(
-    () => navigation.push('Compose'),
-    [navigation],
-  );
-
-  const navToVideoCapture = useCallback(
-    () => navigation.push('Capture', { mode: 'video', start: true }),
-    [navigation],
-  );
-
-  const handleComposePress = () => {
-    if (storages.user?.getBool('compose:create')) {
-      return navigation.push('Compose');
-    }
-
-    pushComposeCreate();
-  };
-
-  const handleComposeLongPress = () => {
-    triggerHaptic();
-    pushComposeCreate();
-  };
 
   return (
     <View style={theme.flexContainer}>
@@ -221,7 +173,7 @@ const Tabs = observer(function ({ navigation }) {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        {showFAB ? (
+        {!IS_TENANT && (
           <Tab.Screen
             name="MindsPlus"
             getComponent={() =>
@@ -229,25 +181,6 @@ const Tabs = observer(function ({ navigation }) {
             }
             options={{ tabBarTestID: 'Tabs:MindsPlus' }}
             initialParams={{ backEnable: false }}
-          />
-        ) : (
-          <Tab.Screen
-            name="CaptureTab"
-            component={InternalStack}
-            options={{
-              tabBarTestID: 'CaptureTabButton',
-              tabBarButton: props => (
-                <DoubleTapSafeTouchable
-                  {...props}
-                  onPress={isCreateModalOn ? handleComposePress : navToComposer}
-                  onLongPress={
-                    isCreateModalOn ? handleComposeLongPress : navToVideoCapture
-                  }
-                  delayLongPress={200}
-                  testID="CaptureTouchableButton"
-                />
-              ),
-            }}
           />
         )}
         <Tab.Screen
@@ -323,9 +256,6 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
     }
     if (route.name === 'Notifications') {
       return <NotificationIcon active={focused} />;
-    }
-    if (route.name === 'CaptureTab') {
-      return <ComposeIcon style={styles.compose} />;
     }
 
     return (

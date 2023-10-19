@@ -29,10 +29,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: process.env.APP_SCHEME || 'mindsapp',
   slug: name.toLowerCase(),
   version: process.env.APP_VERSION || '4.42.0',
-  icon: process.env.APP_ICON || './assets/minds/images/icon.png',
+  icon: process.env.APP_ICON || './assets/images/icon.png',
   orientation: 'portrait',
-  userInterfaceStyle: 'light',
-
   plugins: [
     'react-native-iap',
     [
@@ -84,7 +82,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     splash: {
-      image: process.env.ANDROID_SPLASH || './assets/minds/images/splash.png',
+      image: process.env.ANDROID_SPLASH || './assets/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
@@ -121,14 +119,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         '$(PRODUCT_NAME) needs access to your Microphone.',
     },
     splash: {
-      image: process.env.IOS_SPLASH || './assets/minds/images/splash.png',
+      image: process.env.IOS_SPLASH || './assets/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
   },
   notification: {
-    icon:
-      process.env.NOTIFICATION_ICON || './assets/minds/images/icon_mono.png',
+    icon: process.env.NOTIFICATION_ICON || './assets/images/icon_mono.png',
     color: '#ffffff', // we can use the accent color here instead
     iosDisplayInForeground: true,
   },

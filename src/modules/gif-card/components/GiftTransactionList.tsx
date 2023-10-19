@@ -82,7 +82,11 @@ const renderItem =
 const MindsIcon = () => {
   return (
     <View style={styles.logo}>
-      <Image source={assets.ICON} resizeMode="contain" style={styles.bulb} />
+      <Image
+        source={assets.LOGO_SQUARED}
+        resizeMode="contain"
+        style={styles.bulb}
+      />
     </View>
   );
 };

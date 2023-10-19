@@ -16,7 +16,7 @@ const Share = () => {
       <Image
         contentFit="cover"
         style={styles.logo}
-        source={assets.LOGO_WHITE}
+        source={assets.LOGO_HORIZONTAL}
       />
     </View>
   );

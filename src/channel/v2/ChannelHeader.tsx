@@ -237,7 +237,7 @@ const ChannelHeader = withErrorBoundary(
             <View style={styles.avatarContainer}>
               <RNImage
                 style={styles.avatar}
-                source={assets.ICON}
+                source={assets.LOGO_SQUARED}
                 resizeMode="cover"
               />
             </View>

@@ -87,7 +87,7 @@ export default class WalletBalanceTokens extends Component {
           <Image
             resizeMode="contain"
             style={styles.logo}
-            source={assets.ICON}
+            source={assets.LOGO_SQUARED}
           />
           <MText style={styles.amount}>
             {this.props.wallet.formattedBalance}
