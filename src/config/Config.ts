@@ -58,6 +58,8 @@ export const CHAT_ENABLED = !IS_TENANT;
 export const ACCENT_COLOR_LIGHT =
   Constants.expoConfig?.extra?.ACCENT_COLOR_LIGHT;
 export const ACCENT_COLOR_DARK = Constants.expoConfig?.extra?.ACCENT_COLOR_DARK;
+export const TENANT_THEME =
+  Constants.expoConfig?.extra?.THEME === 'light' ? 0 : 1;
 
 export const tenant = Constants.expoConfig?.extra?.APP_NAME || 'Minds';
 

@@ -13,7 +13,7 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
  * @param {string} process.env.ACCENT_COLOR_LIGHT - Theme accent color (default: '#1B85D6').
  * @param {string} process.env.ACCENT_COLOR_DARK - Theme accent color (default: '#FFD048').
  * @param {string} process.env.APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
- * @param {string} process.env.APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.APP_THEME - Tenant theme (default: 'dark').
  * @param {string} process.env.ADAPTIVE_ICON - The path to the android adaptive icon file (in ./assets/<tenant>/images).
  * @param {string} process.env.ANDROID_SPLASH - The path to the android splash file (in ./assets/<tenant>/images).
  * @param {string} process.env.IOS_SPLASH - The path to the ios splash file (in ./assets/<tenant>/images).
@@ -31,6 +31,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: process.env.APP_VERSION || '4.42.0',
   icon: process.env.APP_ICON || './assets/images/icon.png',
   orientation: 'portrait',
+  runtimeVersion: {
+    policy: 'nativeVersion',
+  },
   plugins: [
     'react-native-iap',
     [
@@ -133,6 +136,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     APP_NAME: name,
     ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
     ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
+    THEME: process.env.APP_THEME || 'dark',
     API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
     eas: {
       projectId: '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
