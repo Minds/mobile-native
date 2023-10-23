@@ -16,6 +16,7 @@ import {
   AFFILIATES_ENABLED,
   DEV_MODE,
   IS_IOS,
+  IS_TENANT,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -141,16 +142,18 @@ const SettingsScreen = observer(({ navigation }) => {
 
   const secondSection: Array<Item> = [
     {
-      title: i18n.t(
-        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-      ),
-      onPress: setDarkMode,
-    },
-    {
       title: i18n.t('help'),
       onPress: navigateToHelp,
     },
   ];
+  if (!IS_TENANT) {
+    secondSection.unshift({
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    });
+  }
 
   if (DEV_MODE.isActive || __DEV__) {
     secondSection.push({
