@@ -8,7 +8,6 @@ import { Tooltip } from 'react-native-elements';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
 import SettingsStore from '../../settings/SettingsStore';
-// import Pulse from '~/common/components/animations/Pulse';
 import { Spacer } from '~/common/ui';
 import { useThrottledCallback } from '~/common/hooks/useDebouncedCallback';
 
@@ -20,7 +19,6 @@ export default observer(function InitialOnboardingButton() {
   const theme = ThemedStyles.style;
   const tooltipRef = useRef<Tooltip>(null);
   const navigation = useNavigation();
-  // const { width } = useDimensions().screen;
 
   // get onboarding progress
   const progressStore = useOnboardingProgress();
@@ -69,11 +67,7 @@ export default observer(function InitialOnboardingButton() {
       progressStore.result?.id === 'OngoingOnboardingGroup'
         ? i18n.t('onboarding.improveExperience')
         : i18n.t('onboarding.startEarning'),
-    onPress: () =>
-      navigation.navigate('Tabs', {
-        screen: 'CaptureTab',
-        params: { screen: 'Onboarding' },
-      }),
+    onPress: () => navigation.navigate('Onboarding'),
   };
 
   if (
@@ -87,10 +81,8 @@ export default observer(function InitialOnboardingButton() {
   }
 
   return (
-    // <Pulse repeat={2}>
     <Spacer bottom="S">
       <MenuItem {...item} titleStyle={theme.bold} testID="startOnboarding" />
     </Spacer>
-    // </Pulse>
   );
 });

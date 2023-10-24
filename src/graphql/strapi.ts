@@ -192,6 +192,57 @@ export type ComponentExplainerScreenSectionInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentFooterColumns = {
+  __typename?: 'ComponentFooterColumns';
+  id: Scalars['ID']['output'];
+  links: Array<Maybe<ComponentFooterLink>>;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentFooterColumnsLinksArgs = {
+  filters?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentFooterColumnsFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsFiltersInput>>>;
+  links?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  not?: InputMaybe<ComponentFooterColumnsFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsFiltersInput>>>;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentFooterColumnsInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  links?: InputMaybe<Array<InputMaybe<ComponentFooterLinkInput>>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentFooterLink = {
+  __typename?: 'ComponentFooterLink';
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type ComponentFooterLinkFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentFooterLinkFiltersInput>>>;
+  dataRef?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentFooterLinkFiltersInput>>>;
+  text?: InputMaybe<StringFilterInput>;
+  url?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentFooterLinkInput = {
+  dataRef?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ComponentMarketingComponentsAsFeaturedIn = {
   __typename?: 'ComponentMarketingComponentsAsFeaturedIn';
   id: Scalars['ID']['output'];
@@ -1206,11 +1257,59 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Footer = {
+  __typename?: 'Footer';
+  bottomLinks?: Maybe<Array<Maybe<ComponentFooterLink>>>;
+  columns: Array<Maybe<ComponentFooterColumns>>;
+  copyrightText: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  logo: UploadFileEntityResponse;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  showLanguageBar: Scalars['Boolean']['output'];
+  slogan: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FooterBottomLinksArgs = {
+  filters?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FooterColumnsArgs = {
+  filters?: InputMaybe<ComponentFooterColumnsFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FooterEntity = {
+  __typename?: 'FooterEntity';
+  attributes?: Maybe<Footer>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FooterEntityResponse = {
+  __typename?: 'FooterEntityResponse';
+  data?: Maybe<FooterEntity>;
+};
+
+export type FooterInput = {
+  bottomLinks?: InputMaybe<Array<InputMaybe<ComponentFooterLinkInput>>>;
+  columns?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsInput>>>;
+  copyrightText?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  showLanguageBar?: InputMaybe<Scalars['Boolean']['input']>;
+  slogan?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GenericMorph =
   | AuxPage
   | ComponentCommonActionButton
   | ComponentExplainerScreenContinueButton
   | ComponentExplainerScreenSection
+  | ComponentFooterColumns
+  | ComponentFooterLink
   | ComponentMarketingComponentsAsFeaturedIn
   | ComponentMarketingComponentsHero
   | ComponentMarketingComponentsMarketingPageSection
@@ -1247,6 +1346,7 @@ export type GenericMorph =
   | FeatTableColumn
   | FeatTableItem
   | FeatTableSection
+  | Footer
   | Homepage
   | I18NLocale
   | OnboardingV5Version
@@ -1448,6 +1548,7 @@ export type Mutation = {
   deleteFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
   deleteFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
   deleteFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
+  deleteFooter?: Maybe<FooterEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
   deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   deleteProductFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -1481,6 +1582,7 @@ export type Mutation = {
   updateFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
   updateFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateFooter?: Maybe<FooterEntityResponse>;
   updateHomepage?: Maybe<HomepageEntityResponse>;
   updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   updateProductFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -1707,6 +1809,10 @@ export type MutationUpdateFeatTableSectionArgs = {
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
+};
+
+export type MutationUpdateFooterArgs = {
+  data: FooterInput;
 };
 
 export type MutationUpdateHomepageArgs = {
@@ -2042,6 +2148,7 @@ export type Query = {
   featTableItems?: Maybe<FeatTableItemEntityResponseCollection>;
   featTableSection?: Maybe<FeatTableSectionEntityResponse>;
   featTableSections?: Maybe<FeatTableSectionEntityResponseCollection>;
+  footer?: Maybe<FooterEntityResponse>;
   homepage?: Maybe<HomepageEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
@@ -2134,6 +2241,10 @@ export type QueryFeatTableSectionsArgs = {
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryFooterArgs = {
+  publicationState?: InputMaybe<PublicationState>;
 };
 
 export type QueryHomepageArgs = {

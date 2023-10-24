@@ -52,10 +52,10 @@ export const InternalStack = () => {
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
-      <InternalStackNav.Screen
+      {/* <InternalStackNav.Screen
         name="Onboarding"
         getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
-      />
+      /> */}
     </InternalStackNav.Navigator>
   );
 };
@@ -242,6 +242,13 @@ const AppStack = observer(() => {
         <AppStackNav.Screen
           name="SingleBoostConsole"
           getComponent={() => require('modules/boost').SingleBoostConsoleScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="Onboarding"
+          getComponent={() =>
+            require('~/onboarding/v2/OnboardingScreen').default
+          }
           options={hideHeader}
         />
       </AppStackNav.Navigator>
