@@ -27,13 +27,14 @@ import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 
-import withModalProvider from './withModalProvide';
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
-import { IS_IPAD, isStoryBookOn } from '~/config/Config';
+import { IS_IPAD } from '~/config/Config';
+// import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
+import withModalProvider from './withModalProvide';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -84,7 +85,13 @@ const AppStack = observer(() => {
         <AppStackNav.Screen
           name="Tabs"
           component={TabScreenWithModal}
+          // getComponent={() => require('~/tabs/TabsScreen').withModal}
           options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="Report"
+          options={{ title: i18n.t('report') }}
+          getComponent={() => require('~/report/ReportScreen').default}
         />
         <AppStackNav.Screen
           name="GifCardClaim"
@@ -132,6 +139,14 @@ const AppStack = observer(() => {
           getId={({ params }) =>
             'Channel' + (params?.entity?.guid || params?.guid || '')
           }
+        />
+        <AppStackNav.Screen
+          name="Interactions"
+          getComponent={() =>
+            require('~/common/components/interactions/InteractionsScreen')
+              .default
+          }
+          options={hideHeader}
         />
         <AppStackNav.Screen
           name="DiscoverySearch"
@@ -305,16 +320,18 @@ const RootStack = observer(function () {
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sessionService.showAuthNav ? (
-        isStoryBookOn ? (
-          <RootStackNav.Screen
-            name="StoryBook"
-            getComponent={() => require('modules/storybook').default}
-            options={{
-              title: 'TAMAGUI',
-              ...TransitionPresets.RevealFromBottomAndroid,
-            }}
-          />
-        ) : shouldShowEmailVerification ? (
+        // Removed from production bundle
+        // isStoryBookOn ? (
+        //   <RootStackNav.Screen
+        //     name="StoryBook"
+        //     getComponent={() => require('modules/storybook').default}
+        //     options={{
+        //       title: 'TAMAGUI',
+        //       ...TransitionPresets.RevealFromBottomAndroid,
+        //     }}
+        //   />
+        // ) :
+        shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}
@@ -578,10 +595,6 @@ const RootStack = observer(function () {
               }}
             />
             <RootStackNav.Screen
-              name="Report"
-              getComponent={() => require('~/report/ReportScreen').default}
-            />
-            <RootStackNav.Screen
               name="BoostUpgrade"
               getComponent={() => require('~/modules/boost').BoostUpgrade}
               options={{
@@ -648,6 +661,10 @@ const RootStack = observer(function () {
       <RootStackNav.Screen
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}
+      />
+      <RootStackNav.Screen
+        name="WebContent"
+        getComponent={() => require('../common/screens/WebContent').default}
       />
     </RootStackNav.Navigator>
   );

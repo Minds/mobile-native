@@ -8,7 +8,7 @@ import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import settingsStore from '../../settings/SettingsStore';
-import { isAbort } from '../services/api.service';
+import { isAbort } from '../services/ApiErrors';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
 import { Image } from 'expo-image';

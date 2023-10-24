@@ -5,7 +5,14 @@ import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import OffsetList from '../common/components/OffsetList';
 import GroupModel from './GroupModel';
-import { ScreenHeader, Screen, Button, Row, HairlineRow } from '~/common/ui';
+import {
+  ScreenHeader,
+  Screen,
+  Button,
+  Row,
+  HairlineRow,
+  H4,
+} from '~/common/ui';
 import i18n from '~/common/services/i18n.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_IPAD } from '~/config/Config';
@@ -15,6 +22,7 @@ import Divider from '../common/components/Divider';
 import AnimatedHeight from '../common/components/animations/AnimatedHeight';
 import { useNavigation } from '@react-navigation/native';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
+import GroupMemberships from './components/GroupMemberships';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -38,24 +46,32 @@ const GroupsListScreen = observer(() => {
       <OffsetList
         renderItem={renderGroup}
         header={
-          !isEmpty ? (
-            <>
-              <Row left="L" bottom="L">
-                <Button
-                  right="M"
-                  size="medium"
-                  type="action"
-                  spinner
-                  onPress={navigateToDiscovery}>
-                  Discover
-                </Button>
-              </Row>
-              <Divider />
-              <AnimatedHeight>
-                <Recommendation size={1} location="feed" type="group" />
-              </AnimatedHeight>
-            </>
-          ) : undefined
+          <>
+            {!isEmpty ? (
+              <>
+                <Row left="L" bottom="L">
+                  <Button
+                    right="M"
+                    size="medium"
+                    type="action"
+                    spinner
+                    onPress={navigateToDiscovery}>
+                    Discover
+                  </Button>
+                </Row>
+                <Divider />
+                <AnimatedHeight>
+                  <Recommendation size={1} location="feed" type="group" />
+                </AnimatedHeight>
+              </>
+            ) : undefined}
+
+            <GroupMemberships />
+
+            <H4 horizontal="L" vertical="L">
+              {i18n.t('groups.joined')}
+            </H4>
+          </>
         }
         fetchEndpoint={'api/v1/groups/member'}
         endpointData={'groups'}

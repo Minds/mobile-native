@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
@@ -12,6 +12,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { AppStackParamList } from '~/navigation/NavigationTypes';
+import openUrlService from '~/common/services/open-url.service';
 
 const createPlusMonetizeStore = () => {
   const store = {
@@ -97,7 +98,9 @@ const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
               <MText
                 style={theme.link}
                 onPress={() =>
-                  Linking.openURL('https://www.minds.com/p/monetization-terms ')
+                  openUrlService.open(
+                    'https://www.minds.com/p/monetization-terms',
+                  )
                 }>
                 Minds monetization terms{' '}
               </MText>

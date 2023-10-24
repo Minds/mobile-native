@@ -1,0 +1,12 @@
+query AuxPages($path: String!) {
+  auxPages(filters: { slug: { eq: $path } }) {
+    data {
+      attributes {
+        h1
+        body
+        slug
+        updatedAt
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import _ from 'lodash';
+import times from 'lodash/times';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -36,7 +36,7 @@ export default observer(function () {
   const length = store.nsfw.length;
   const options = useMemo(
     () =>
-      _.times(7, ((i: 0 | 1 | 2 | 3 | 4 | 5 | 6) => ({
+      times(7, ((i: 0 | 1 | 2 | 3 | 4 | 5 | 6) => ({
         value: i,
         selected: i === 0 ? length === 0 : store.nsfw.some(o => i === o),
         label: i18n.t(`nsfw.${i}`),

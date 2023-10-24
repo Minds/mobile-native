@@ -178,22 +178,24 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           {title}
         </Button>
 
-        <B2
-          color="secondary"
-          horizontal="L"
-          top="XL"
-          bottom="XL2"
-          align="center">
-          {t('By clicking Boost Channel, you agree to Minds')}
-          {'\n'}
-          <Link url="https://www.minds.com/content-policy">
+        {
+          <B2
+            color="secondary"
+            horizontal="L"
+            top="XL"
+            bottom="XL2"
+            align="center">
+            {t('By clicking Boost Channel, you agree to Minds')}
+            {'\n'}
+            {/* <Link url="https://www.minds.com/content-policy"> */}
             {t('Content Policy')}
-          </Link>
-          {t(' and ')}
-          <Link url="https://www.minds.com/p/monetization-terms">
-            {t('Refund Policy')}
-          </Link>
-        </B2>
+            {/* </Link> */}
+            {t(' and ')}
+            <Link url="https://www.minds.com/p/monetization-terms">
+              {t('Refund Policy')}
+            </Link>
+          </B2>
+        }
       </FitScrollView>
     </Screen>
   );

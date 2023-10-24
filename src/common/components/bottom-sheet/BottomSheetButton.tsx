@@ -5,7 +5,7 @@ import { Button } from '~ui';
 interface PropsType {
   text: string;
   action?: boolean;
-  onPress: () => void;
+  onPress?: () => void;
   testID?: string;
   loading?: boolean;
   solid?: boolean;

@@ -8,7 +8,7 @@ import domain from '../../helpers/domain';
 import MText from '../MText';
 import SmartImage from '../SmartImage';
 import MediaViewImage from './MediaViewImage';
-import { StreamPlayer } from '~/modules/livepeer';
+import { FeedStreamPlayer } from '~/modules/livepeer';
 
 type PropsType = {
   entity: ActivityModel;
@@ -41,7 +41,13 @@ export default function EmbedLink({
       'https://minds-player.withlivepeer.com?v=',
       '',
     );
-    return <StreamPlayer id={videoId} key={`${entity.guid}_player`} />;
+    return (
+      <FeedStreamPlayer
+        id={videoId}
+        entity={entity}
+        key={`${entity.guid}_player`}
+      />
+    );
   }
 
   if (!small) {

@@ -6,6 +6,8 @@ import { AppStackParamList } from './NavigationTypes';
 
 const NotificationsStack = createNativeStackNavigator<AppStackParamList>();
 
+const hideHeader = { headerShown: false };
+
 export default function () {
   return (
     <NotificationsStack.Navigator
@@ -26,7 +28,28 @@ export default function () {
         getComponent={() =>
           require('~/supermind/SupermindTwitterConnectScreen').default
         }
-        options={{ headerShown: false }}
+        options={hideHeader}
+      />
+      <NotificationsStack.Screen
+        name="Channel"
+        getComponent={() => require('~/channel/v2/ChannelScreen').default}
+        options={hideHeader}
+        getId={({ params }) =>
+          'Channel' + (params?.entity?.guid || params?.guid || '')
+        }
+      />
+      <NotificationsStack.Screen
+        name="Interactions"
+        getComponent={() =>
+          require('~/common/components/interactions/InteractionsScreen').default
+        }
+        options={hideHeader}
+      />
+      <NotificationsStack.Screen
+        name="Activity"
+        getComponent={() => require('~/newsfeed/ActivityScreen').default}
+        options={hideHeader}
+        initialParams={{ noBottomInset: true }}
       />
     </NotificationsStack.Navigator>
   );

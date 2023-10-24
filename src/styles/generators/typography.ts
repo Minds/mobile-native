@@ -10,6 +10,7 @@ const colorMap = {
   tertiary: 'colorTertiaryText',
   link: 'colorLink',
   white: 'colorWhite',
+  green: 'colorGreen',
   black: 'colorBlack',
   danger: 'colorDangerBackground',
 };

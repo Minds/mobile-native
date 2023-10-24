@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 import React, { useCallback, useReducer, useRef } from 'react';
@@ -35,12 +35,32 @@ export enum ReplyType {
   text = 0,
   image = 1,
   video = 2,
+  live = 3,
 }
 
 enum PaymentType {
   cash = 0,
   token = 1,
 }
+
+const replyOptions = [
+  {
+    value: ReplyType.text,
+    label: 'Text',
+  },
+  {
+    value: ReplyType.image,
+    label: 'Image',
+  },
+  {
+    value: ReplyType.video,
+    label: 'Video',
+  },
+  {
+    value: ReplyType.live,
+    label: 'Live',
+  },
+];
 
 export interface SupermindRequestParam {
   channel: UserModel;
@@ -185,7 +205,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
     };
 
     // if object wasn't dirty, just go back without saving
-    if (_.isEqual(supermindRequest, data)) {
+    if (isEqual(supermindRequest, data)) {
       NavigationService.goBack();
       return;
     }
@@ -317,20 +337,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
           onSelected={replyType => setState({ replyType })}
           selected={replyType}
           label="Response Type"
-          data={[
-            {
-              value: ReplyType.text,
-              label: 'Text',
-            },
-            {
-              value: ReplyType.image,
-              label: 'Image',
-            },
-            {
-              value: ReplyType.video,
-              label: 'Video',
-            },
-          ]}
+          data={replyOptions}
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
@@ -339,6 +346,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
             containerItemStyle={styles.twitterMenuItem}
             onPress={() => setState({ requireTwitter: !requireTwitter })}
             selected={requireTwitter}
+            disabled={replyType === ReplyType.live}
             title={i18nService.t('supermind.requireTwitter')}
             mode="checkbox"
             multiLine

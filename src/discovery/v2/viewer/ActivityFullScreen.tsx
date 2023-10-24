@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -29,11 +29,9 @@ import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay
 import LockV2 from '../../../wire/v2/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
-import InteractionsBottomSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 import {
   useAnalytics,
@@ -41,7 +39,7 @@ import {
 } from '~/common/contexts/analytics.context';
 import analyticsService from '~/common/services/analytics.service';
 import MutualSubscribers from '../../../channel/components/MutualSubscribers';
-import pushInteractionsBottomSheet from '../../../common/components/interactions/pushInteractionsBottomSheet';
+import { pushInteractionsScreen } from '../../../common/components/interactions/pushInteractionsBottomSheet';
 import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 import { getMaxFeedWidth } from '~/styles/Style';
 
@@ -96,7 +94,7 @@ const ActivityOwner = ({
           language={'follow'}
           font="B3"
           onPress={() =>
-            pushInteractionsBottomSheet({
+            pushInteractionsScreen({
               entity: entity.ownerObj,
               interaction: 'subscribersYouKnow',
             })
@@ -141,16 +139,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }));
   const route = useRoute<ActivityRoute>();
   const insets = useSafeAreaInsets();
-  const { width, height } = useDimensions().window;
+  const { height } = useDimensions().window;
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
-  const upVotesInteractionsRef = useRef<any>(null);
-  const downVotesInteractionsRef = useRef<any>(null);
-  const remindsInteractionsRef = useRef<any>(null);
-  const quotesInteractionsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -209,17 +203,29 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
   const showUpVotes = useCallback(() => {
-    upVotesInteractionsRef.current?.show('upVotes');
-  }, [upVotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'upVotes',
+    });
+  }, [entity]);
   const showDownVotes = useCallback(() => {
-    downVotesInteractionsRef.current?.show('downVotes');
-  }, [downVotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'downVotes',
+    });
+  }, [entity]);
   const showReminds = useCallback(() => {
-    remindsInteractionsRef.current?.show('reminds');
-  }, [remindsInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'reminds',
+    });
+  }, [entity]);
   const showQuotes = useCallback(() => {
-    quotesInteractionsRef.current?.show('quotes');
-  }, [quotesInteractionsRef]);
+    pushInteractionsScreen({
+      entity: entity,
+      interaction: 'quotes',
+    });
+  }, [entity]);
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -251,17 +257,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <LockV2 entity={entity} navigation={navigation} />
   ) : null;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const shadowOpt = {
-    width,
-    height: 60 + (entity.remind_users ? 42 : 0),
-    color: '#000',
-    border: 5,
-    opacity: 0.15,
-    x: 0,
-    y: 0,
-  };
-
   let remind: null | React.ReactNode = null;
 
   if (hasRemind) {
@@ -279,29 +274,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ) : null;
   }
 
-  const ownerBlockShadow = React.useMemo(
-    () =>
-      Platform.select({
-        ios: (
-          <ActivityOwner
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        ),
-        android: (
-          <BoxShadow setting={shadowOpt}>
-            <ActivityOwner
-              entity={entity}
-              navigation={navigation}
-              onTranslate={onTranslate}
-            />
-          </BoxShadow>
-        ), // Android fallback for shadows
-      }),
-    [entity, navigation, onTranslate, shadowOpt],
-  );
-
   const containerStyle = useStyle(
     { height },
     'flexContainer',
@@ -313,7 +285,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <GroupContextProvider group={route.params?.group || null}>
       <View testID="ActivityScreen" style={containerStyle}>
         <View style={theme.flexContainer}>
-          {ownerBlockShadow}
+          <ActivityOwner
+            entity={entity}
+            navigation={navigation}
+            onTranslate={onTranslate}
+          />
+
           <ScrollView
             style={[theme.flexContainer, { width: getMaxFeedWidth() }]}
             onLayout={store.onScrollViewSizeChange}
@@ -384,13 +361,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           />
           <Actions entity={entity} hideCount onPressComment={openComments} />
         </View>
-        <InteractionsBottomSheet entity={entity} ref={upVotesInteractionsRef} />
-        <InteractionsBottomSheet
-          entity={entity}
-          ref={downVotesInteractionsRef}
-        />
-        <InteractionsBottomSheet entity={entity} ref={remindsInteractionsRef} />
-        <InteractionsBottomSheet entity={entity} ref={quotesInteractionsRef} />
       </View>
     </GroupContextProvider>
   );

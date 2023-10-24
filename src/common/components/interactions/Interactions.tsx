@@ -22,7 +22,7 @@ type InteractionsProps = {
   entity: BaseModel;
   withoutInsets?: boolean;
   interaction?: Interactions;
-  onCancel: () => void;
+  onCancel?: () => void;
 };
 /**
  * Interactions Action Sheet
@@ -155,6 +155,7 @@ const Interactions = (props: InteractionsProps) => {
   // =====================| METHODS |=====================>
   useEffect(() => {
     store.setInteraction(interaction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interaction]);
 
   // =====================| RENDERS |=====================>
@@ -214,12 +215,12 @@ const Interactions = (props: InteractionsProps) => {
           contentContainerStyle={styles.contentContainerStyle}
         />
       )}
-      {footer}
+      {props.onCancel ? footer : null}
     </>
   );
 };
 
-type Interactions =
+export type Interactions =
   | 'upVotes'
   | 'downVotes'
   | 'reminds'

@@ -1,7 +1,5 @@
-import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
 import UserModel from '~/channel/UserModel';
 import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
@@ -17,9 +15,6 @@ import injectBoosts from './utils/inject-boosts';
 
 const portraitEndpoint = 'api/v2/feeds/subscribed/activities';
 
-// Subscriptions observable
-let subscription$: Subscription | null = null;
-
 /**
  * Portrait store generator
  */
@@ -29,18 +24,24 @@ function createPortraitStore() {
     .setLimit(150)
     .setPaginated(false);
 
-  const joins = fromEvent<{ user: UserModel; shouldUpdateFeed: boolean }>(
-    UserModel.events,
-    'toggleSubscription',
-  ).pipe(filter(({ shouldUpdateFeed }) => shouldUpdateFeed));
-
   return {
+    subscription: null as any,
     items: [] as (PortraitBarItem | PortraitBarBoostItem)[],
     loading: false,
     listenSubscriptions() {
-      if (!subscription$) {
+      if (!this.subscription) {
         // we don't cancel the subscription because the global store lives until the app is closed.
-        subscription$ = joins.pipe(debounceTime(1500)).subscribe(this.load);
+        this.subscription = UserModel.events.on(
+          'toggleSubscription',
+          ({
+            shouldUpdateFeed,
+          }: {
+            user: UserModel;
+            shouldUpdateFeed: boolean;
+          }) => {
+            if (shouldUpdateFeed) this.load();
+          },
+        );
       }
     },
     /**
@@ -50,7 +51,7 @@ function createPortraitStore() {
       const barItems = this.items.filter(
         item => !(item instanceof PortraitBarBoostItem),
       );
-      const sortedBarItems = _.sortBy(barItems, d => !d.unseen);
+      const sortedBarItems = sortBy(barItems, d => !d.unseen);
       this.items = injectBoosts(sortedBarItems);
     },
     async load() {

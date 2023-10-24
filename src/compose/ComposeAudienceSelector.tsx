@@ -114,6 +114,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
       }
 
       groupsListRef.current?.refreshList?.();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
@@ -334,7 +335,7 @@ const PlusTerms = () => (
 
 const TermsLink = () => (
   <Link url="https://www.minds.com/p/monetization-terms">
-    {i18n.t('monetize.terms.linkTitle')}
+    <B2>{i18n.t('monetize.terms.linkTitle')}</B2>
   </Link>
 );
 

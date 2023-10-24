@@ -1,7 +1,5 @@
-import api, {
-  ApiResponse,
-  isNetworkError,
-} from '~/common/services/api.service';
+import api, { ApiResponse } from '~/common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
 import BoostModelV3 from '../models/BoostModelV3';

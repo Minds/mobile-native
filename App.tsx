@@ -5,7 +5,6 @@
  *
  * @format
  */
-
 import React, { Component } from 'react';
 import {
   BackHandler,
@@ -164,6 +163,10 @@ class App extends Component<Props> {
       }, 100);
     }
   };
+
+  report(...data) {
+    console.log(data);
+  }
 
   /**
    * Render

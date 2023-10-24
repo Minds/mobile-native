@@ -36,9 +36,9 @@ export class InFeedNoticesService {
   @observable dismissed: Dismissed = {};
   loading = false;
 
-  constructor() {
+  init() {
     // We init the service on login
-    sessionService.onLogin(() => this.init());
+    sessionService.onLogin(() => this.onLogin());
     // And clear on logout
     sessionService.onLogout(() => this.clear());
   }
@@ -46,7 +46,7 @@ export class InFeedNoticesService {
   /**
    * Init the service
    */
-  init() {
+  onLogin() {
     const stored = this.loadStoredData();
 
     if (stored) {

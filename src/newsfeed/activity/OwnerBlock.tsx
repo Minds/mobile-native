@@ -290,7 +290,7 @@ class OwnerBlock extends PureComponent<PropsType> {
               {this.props.children}
             </View>
           </View>
-          <ChannelBadges channel={this.props.entity.ownerObj} />
+          <ChannelBadges channel={this.props.entity.ownerObj} right="S" />
           {rightToolbar}
         </View>
       </View>

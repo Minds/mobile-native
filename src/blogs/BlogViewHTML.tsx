@@ -1,9 +1,8 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Dimensions, Linking, Platform, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 
-import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
@@ -255,6 +254,8 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
    * Render
    */
   render() {
+    // lazy load
+    const WebView = require('react-native-webview').WebView;
     return (
       <WebView
         originWhitelist={this.all}

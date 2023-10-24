@@ -1,4 +1,5 @@
-import apiService, { isApiForbidden } from './api.service';
+import apiService from './api.service';
+import { isApiForbidden } from './ApiErrors';
 
 import UserModel from '../../channel/UserModel';
 import entitiesStorage from './storage/entities.storage';

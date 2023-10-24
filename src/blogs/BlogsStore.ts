@@ -5,7 +5,7 @@ import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import logService from '../common/services/log.service';
-import { isNetworkError } from '../common/services/api.service';
+import { isNetworkError } from '~/common/services/ApiErrors';
 
 /**
  * Blogs store

@@ -1,6 +1,6 @@
 //@ts-nocheck
 import settingsStore from '../../settings/SettingsStore';
-import * as Sentry from '@sentry/react-native';
+// import { withScope, captureException } from '@sentry/react-native/dist/js/sdk';
 import shouldReportToSentry from '../helpers/errors';
 
 /**
@@ -53,14 +53,14 @@ class LogService {
       process.env.JEST_WORKER_ID === undefined &&
       !__DEV__
     ) {
-      if (prepend) {
-        Sentry.withScope(scope => {
-          scope.setExtra('where', prepend);
-          Sentry.captureException(error);
-        });
-      } else {
-        Sentry.captureException(error);
-      }
+      // if (prepend) {
+      //   withScope(scope => {
+      //     scope.setExtra('where', prepend);
+      //     captureException(error);
+      //   });
+      // } else {
+      //   captureException(error);
+      // }
     }
   }
 }

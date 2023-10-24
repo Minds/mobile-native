@@ -1,7 +1,7 @@
 import { MotiView } from 'moti';
 import React from 'react';
 import { Dimensions, Image, View } from 'react-native';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,

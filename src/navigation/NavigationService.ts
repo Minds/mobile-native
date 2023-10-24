@@ -2,7 +2,6 @@
 import {
   CommonActions,
   StackActions,
-  SwitchActions,
   createNavigationContainerRef,
 } from '@react-navigation/native';
 import analyticsService from '~/common/services/analytics.service';
@@ -58,10 +57,6 @@ function goBack() {
   navigationRef.dispatch(CommonActions.goBack());
 }
 
-function jumpTo(route) {
-  navigationRef.dispatch(SwitchActions.jumpTo({ route }));
-}
-
 function addListener(name, fn) {
   return navigationRef?.addListener(name, fn);
 }
@@ -82,7 +77,6 @@ function onStateChange() {
 export default {
   dispatch,
   navigate,
-  jumpTo,
   getCurrentState,
   push,
   goBack,

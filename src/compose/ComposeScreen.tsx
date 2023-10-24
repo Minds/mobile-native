@@ -41,12 +41,15 @@ import MediaPreview from './MediaPreview';
 import MetaPreview from './MetaPreview';
 import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
 import RemindPreview from './RemindPreview';
+import TitleToggle from './TitleToggle';
 import TitleInput from './TitleInput';
 import TopBar from './TopBar';
 import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
+import { ReplyType } from './SupermindComposeScreen';
+import delay from '~/common/helpers/delay';
 import { IS_IOS } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
@@ -92,8 +95,11 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
     if (store.attachments.uploading) {
       return;
     }
-    const { channel: targetChannel, payment_options } =
-      store.supermindRequest ?? {};
+    const {
+      channel: targetChannel,
+      payment_options,
+      reply_type,
+    } = store.supermindRequest ?? {};
 
     if (
       targetChannel?.name &&
@@ -104,6 +110,19 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
       }))
     ) {
       return;
+    }
+
+    if (reply_type === ReplyType.live) {
+      // we need a small delay to ensure the previous confirm screen is closed
+      await delay(500);
+      if (
+        !(await confirm({
+          title: i18n.t('supermind.liveReplyRequest.title'),
+          description: i18n.t('supermind.liveReplyRequest.description'),
+        }))
+      ) {
+        return;
+      }
     }
 
     const isEdit = store.isEdit;
@@ -205,6 +224,13 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
     />
   );
 
+  /**
+   * if there was an attachment we need to show the title input,
+   * or if the create mode was on we need to show the audience selector
+   */
+  const isTopRowVisible =
+    store.attachments.hasAttachment || (isCreateModalOn && !store.isEdit);
+
   return (
     <ComposeContext.Provider value={store}>
       <SafeAreaView style={styles.container} edges={edges}>
@@ -233,9 +259,15 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           contentContainerStyle={scrollViewContentContainerStyle}
           scrollEventThrottle={64}
           onScroll={onScrollHandler}>
-          {isCreateModalOn && !store.isEdit && (
-            <Row horizontal="S" vertical="S" right="XXXL2">
-              <ComposeAudienceSelector store={store} />
+          {isTopRowVisible && (
+            <Row left="S" vertical="S" align="centerBetween">
+              {isCreateModalOn && !store.isEdit ? (
+                <ComposeAudienceSelector store={store} />
+              ) : (
+                // this is to make sure the title toggle is rendered on the right
+                <View />
+              )}
+              {store.attachments.hasAttachment && <TitleToggle store={store} />}
             </Row>
           )}
           <View style={theme.rowJustifyStart}>
@@ -245,9 +277,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
             <View style={useStyle('flexContainer', 'marginRight2x')}>
               {!store.noText && (
                 <>
-                  {store.attachments.hasAttachment && (
-                    <TitleInput store={store} />
-                  )}
+                  {store.isTitleOpen && <TitleInput store={store} />}
                   <ComposerTextInput
                     ref={inputRef}
                     placeholder={placeholder}

@@ -1,5 +1,5 @@
 import { observable, action, computed, toJS, runInAction } from 'mobx';
-import _ from 'lodash';
+import get from 'lodash/get';
 import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
@@ -30,6 +30,7 @@ export default class BaseModel extends AbstractModel {
   wire_totals?: {
     [name: string]: number;
   };
+  source?: string;
 
   // TODO remove this and fix model.listRef logic
   // listRef?: any;
@@ -145,7 +146,7 @@ export default class BaseModel extends AbstractModel {
    */
   @action
   get(property) {
-    return _.get(this, property);
+    return get(this, property);
   }
 
   /**

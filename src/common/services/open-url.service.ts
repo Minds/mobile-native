@@ -40,14 +40,17 @@ class OpenURLService {
      * TODO: do not open links such as minds links and youtube
      *       links in the IABrowser. Logic is TBD
      **/
-    const excludedURLs = ['youtube.com', 'youtu.be'].map(url => new URL(url));
-    return !excludedURLs.find(p => url.includes(String(p)));
+    const excludedURLRegexes = [
+      // regex for youtube videos
+      /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?‌​=]*)?/,
+    ];
+    return !excludedURLRegexes.find(p => p.test(url));
   }
 
   async openLinkInInAppBrowser(url) {
     try {
       if (await InAppBrowser.isAvailable()) {
-        const result = await InAppBrowser.open(url, {
+        await InAppBrowser.open(url, {
           // iOS Properties
           dismissButtonStyle: 'cancel',
           preferredBarTintColor: ThemedStyles.getColor('PrimaryBackground'),
@@ -94,6 +97,11 @@ class OpenURLService {
    */
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
+
+    if (url.startsWith(`${MINDS_URI}p/`)) {
+      return NavigationService.navigate('WebContent', { path: url });
+    }
+
     if (url.startsWith(MINDS_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;

@@ -14,12 +14,13 @@ import type GroupModel from '~/groups/GroupModel';
 import { SupermindRequestParam } from '../compose/SupermindComposeScreen';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
 import { BottomSheetScreenParams } from '../common/components/bottom-sheet/BottomSheetScreen';
-import type { BoostType } from '../boost/legacy/createBoostStore';
 import type { WebViewNavigation } from 'react-native-webview';
 import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindTwitterConnectScreen';
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ComposeScreenParams } from '../compose/ComposeScreen';
+import type { InteractionsScreenParams } from '../common/components/interactions/InteractionsScreen';
+import type { BoostType } from '~/modules/boost/boost-composer/boost.store';
 
 type AnyType = any;
 
@@ -45,6 +46,9 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  Activity: AppStackParamList['Activity'];
+  Interactions: AppStackParamList['Interactions'];
+  GroupsManage: {};
   GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -214,8 +218,8 @@ export type RootStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   StoryBook: {};
   CodePushSync: {};
-  Report: {};
   BoostUpgrade: undefined;
+  WebContent: { path: string };
 };
 
 export type AuthStackParamList = {
@@ -229,6 +233,9 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Interactions: InteractionsScreenParams;
+  BottomSheet: BottomSheetScreenParams;
+  Report: {};
   GifCardClaim: {
     code: string;
   };

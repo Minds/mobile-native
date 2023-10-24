@@ -12,7 +12,7 @@ import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
 import EmptyList from '../../common/components/EmptyList';
 import MText from '../../common/components/MText';
-import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
+import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
 import sessionService from '~/common/services/session.service';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -35,7 +35,6 @@ const viewabilityConfig = {
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const { notifications } = useStores();
-  const interactionsBottomSheetRef = useRef<any>();
   const listRef = useRef<FlatList>(null);
 
   const [query, notificationsList] = useInfiniteFeedQuery(
@@ -130,9 +129,12 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         containerStyle={ThemedStyles.style.borderBottomHair}>
         <NotificationItem
           notification={notification}
-          onShowSubscribers={() => {
-            interactionsBottomSheetRef.current?.show('subscribers');
-          }}
+          onShowSubscribers={() =>
+            pushInteractionsScreen({
+              entity: user,
+              interaction: 'subscribers',
+            })
+          }
         />
       </ErrorBoundary>
     );
@@ -167,13 +169,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
-      <InteractionsBottomSheet
-        entity={user}
-        ref={interactionsBottomSheetRef}
-        withoutInsets
-        snapPoints={snapPoints}
-        keepOpen={false}
-      />
     </View>
   );
 });
@@ -186,7 +181,6 @@ const prefetch: NotificationsTabOptions[] = [
   'votes',
 ];
 
-const snapPoints = ['90%'];
 const sticky = [0];
 const keyExtractor = (item: NotificationModel, index) =>
   item ? `${item.urn}-${index}` : 'menu';

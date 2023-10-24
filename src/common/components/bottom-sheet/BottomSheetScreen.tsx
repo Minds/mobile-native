@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Handle from '../bottom-sheet/Handle';
 import MText from '../MText';
 import { observer } from 'mobx-react';
+import { useIsFocused } from '@react-navigation/native';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -98,15 +99,9 @@ const BottomSheetInnerContainer = ({
   handleContentLayout,
 }: Pick<BottomSheetScreenParams, 'component'> | any) => {
   const bottomSheet = useBottomSheet();
+  const isFocused = useIsFocused();
 
-  useBackHandler(
-    useCallback(() => {
-      bottomSheet.close();
-      return true;
-    }, [bottomSheet]),
-  );
-
-  const close = () => {
+  const close = useCallback(() => {
     return new Promise(resolve => {
       bottomSheet.close();
       setTimeout(() => {
@@ -114,7 +109,18 @@ const BottomSheetInnerContainer = ({
         resolve(true);
       }, 100);
     });
-  };
+  }, [bottomSheet]);
+
+  useBackHandler(
+    useCallback(() => {
+      if (!isFocused) {
+        return false;
+      }
+
+      close();
+      return true;
+    }, [close, isFocused]),
+  );
 
   return (
     <View style={styles.container}>

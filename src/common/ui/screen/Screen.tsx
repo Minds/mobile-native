@@ -30,7 +30,9 @@ export const Screen = ({
 
   if (scroll) {
     return (
-      <Renderer style={[styles[background], hasMaxWidth && styles.maxWidth]}>
+      <Renderer
+        edges={onlyTopEdge ? ['top'] : edges}
+        style={[styles[background], hasMaxWidth && styles.maxWidth]}>
         <FitScrollView style={ThemedStyles.style.flexContainer}>
           {children}
         </FitScrollView>

@@ -108,6 +108,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
               .slice(0, listSize)
               .map((suggestion, index) => (
                 <GroupsListItem
+                  key={suggestion.entity_guid}
                   group={suggestion.entity}
                   index={index}
                   onPress={() => onJoined(suggestion.entity)}
