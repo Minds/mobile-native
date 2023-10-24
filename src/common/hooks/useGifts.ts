@@ -6,9 +6,15 @@ import {
 } from '~/graphql/api';
 
 export const useGifts = () => {
-  const { data, isError } = useFetchPaymentMethodsQuery({
-    giftCardProductId: GiftCardProductIdEnum.Boost,
-  });
+  const { data, isError } = useFetchPaymentMethodsQuery(
+    {
+      giftCardProductId: GiftCardProductIdEnum.Boost,
+    },
+    {
+      staleTime: 1000,
+      refetchInterval: 2500,
+    },
+  );
 
   useEffect(() => {
     if (isError) {

@@ -22,10 +22,12 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
+import { useGifts } from '~/common/hooks/useGifts';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
+  useGifts();
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);

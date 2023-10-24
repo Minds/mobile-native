@@ -87,7 +87,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       }),
       total: t('${{total}}.00', { total }),
     },
-    tokens: {
+    offchain_tokens: {
       budgetDescription: t('{{amount}} tokens per day for {{duration}} days', {
         amount,
         duration,
@@ -110,7 +110,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const handleCreate = async () => {
     // Tokens, OSS or Gifts
-    if (!isCashFromStore || hasCredit) {
+    if (!isCashFromStore || selectedMethod === 'gifts') {
       return createBoost(hasCredit ? creditPaymentMethod : undefined)?.then(
         () => {
           showNotification(t('Boost created successfully'));

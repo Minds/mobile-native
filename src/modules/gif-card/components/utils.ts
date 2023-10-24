@@ -4,7 +4,7 @@ import { UseInfiniteQueryResult } from '@tanstack/react-query';
 import moment from 'moment';
 
 export const dateFormat = (val: number) =>
-  moment(val * 1000).format('ddd, MMM do, YYYY');
+  moment(val * 1000).format('ddd, MMM D, YYYY');
 export const timeFormat = (val: number) => moment(val * 1000).format('HH:mm');
 
 type HookFunc = (
