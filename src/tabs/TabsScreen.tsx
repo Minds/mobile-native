@@ -17,7 +17,6 @@ import NotificationIcon from '../notifications/v3/notifications-tab-icon/Notific
 import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
 import ComposeIcon from '../compose/ComposeIcon';
-import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
@@ -233,7 +232,7 @@ const Tabs = observer(function ({ navigation }) {
         ) : (
           <Tab.Screen
             name="CaptureTab"
-            component={InternalStack}
+            getComponent={() => require('')}
             options={{
               tabBarTestID: 'CaptureTabButton',
               tabBarButton: props => (

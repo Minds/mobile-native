@@ -34,10 +34,6 @@ export type DrawerParamList = {
   Tabs: {};
 };
 
-export type InternalStackParamList = {
-  Onboarding: {};
-};
-
 type WebViewParams = {
   url: string;
   headers?: { [key: string]: string };
