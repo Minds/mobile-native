@@ -13,7 +13,7 @@ import { storages } from './storage/storages.service';
  * Update service
  */
 class UpdateService {
-  @observable progress = 0;
+  // @observable progress = 0;
   @observable version = '';
   @observable downloading = false;
 
@@ -152,10 +152,10 @@ class UpdateService {
     return false;
   }
 
-  @action
-  setProgress(p) {
-    this.progress = p;
-  }
+  // @action
+  // setProgress(p) {
+  //   this.progress = p;
+  // }
 
   @action
   setDownloading(d) {
@@ -172,9 +172,9 @@ class UpdateService {
     const updater = new UpdateAPK.UpdateAPK({
       fileProviderAuthority: 'com.minds.mobile.provider',
 
-      downloadApkProgress: progress => {
-        this.setProgress(progress);
-      },
+      // downloadApkProgress: progress => {
+      //   this.setProgress(progress);
+      // },
 
       onError: err => {
         showNotification(i18n.t('update.failed'), 'danger');
