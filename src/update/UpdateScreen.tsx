@@ -4,11 +4,11 @@ import { Image, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 
-import updateService from '../common/services/update.service';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
-import MText from '../common/components/MText';
+import updateService from '~/common/services/update.service';
+import i18n from '~/common/services/i18n.service';
+import MText from '~/common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const UpdatingScreen = observer(() => {
   return (
