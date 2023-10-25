@@ -9,7 +9,7 @@ import createTwoFactorStore, { Options } from './createTwoFactorStore';
 import MText from '../../common/components/MText';
 import Button from '~/common/components/Button';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 type OptionDef = { id: Exclude<Options, 'disable'>; enabled: boolean };
 
@@ -57,7 +57,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
   return (
     <View>
       <MText style={styles.description}>
-        {i18n.t('settings.TFAdescription', { tenant })}
+        {i18n.t('settings.TFAdescription', { TENANT })}
       </MText>
       {localStore.loaded ? (
         <>

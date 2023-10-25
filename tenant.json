@@ -1,0 +1,12 @@
+{
+  "APP_NAME": "Minds",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.mobile",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobile",
+  "ACCENT_COLOR_LIGHT": "#1B85D6",
+  "ACCENT_COLOR_DARK": "#FFD048",
+  "THEME": "dark",
+  "API_URL": "https://www.minds.com/"
+}

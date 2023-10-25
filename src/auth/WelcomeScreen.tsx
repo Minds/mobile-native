@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import assets from '@assets';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE, tenant, IS_TENANT } from '~/config/Config';
+import { DEV_MODE, TENANT, IS_TENANT } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 import { Button, ButtonPropsType } from '~ui';
 import i18n from '../common/services/i18n.service';
@@ -58,7 +58,7 @@ function WelcomeScreen(props: PropsType) {
             {...buttonProps}
             testID="joinNowButton"
             onPress={onRegisterPress}>
-            {i18n.t('auth.createChannel', { tenant })}
+            {i18n.t('auth.createChannel', { TENANT })}
           </Button>
           <Button darkContent {...buttonProps} onPress={onLoginPress}>
             {i18n.t('auth.login')}

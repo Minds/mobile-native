@@ -6,7 +6,7 @@ import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 /**
  * Setup Channel Notice
@@ -28,7 +28,7 @@ function SetupChannelNotice({ name }: NoticeProps) {
       name={name}
       title={i18nService.t('inFeedNotices.whois', { name: user?.name })}
       description={i18nService.t('inFeedNotices.userDescription', {
-        tenant,
+        TENANT,
       })}
       btnText={i18nService.t('inFeedNotices.userButton')}
       iconName="info-outline"

@@ -7,7 +7,7 @@ import i18n from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 /**
  * Boost channel notice
@@ -31,7 +31,7 @@ function BoostChannelNotice({ name }: NoticeProps) {
       name={name}
       title={i18n.t('inFeedNotices.boostChannelTitle')}
       description={i18n.t('inFeedNotices.boostChannelDescription', {
-        tenant,
+        TENANT,
       })}
       btnText={i18n.t('inFeedNotices.boostChannelButton')}
       btnSecondaryText={i18n.t('inFeedNotices.boostChannelLearMoreButton')}
