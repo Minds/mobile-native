@@ -5,19 +5,13 @@ variables:
 
 include:
   - local: .gitlab/ci/test.yml
-  - local: .gitlab/ci/pushrelease.yml
-  - local: .gitlab/ci/build.yml
-  - local: .gitlab/ci/upload.yml
-  - local: .gitlab/ci/release.yml
+  - local: .gitlab/ci/build_apk.yml
   - local: .gitlab/ci/maintenance.yml
   - local: .gitlab/ci/qa.yml
 
 stages:
   - test
-  - pushrelease
-  - build
-  - upload
-  - release
+  - build_apk
   - maintenance
   - qa
 

@@ -3,33 +3,33 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
  * Configuration settings for the minds / multi-tenant app, using environment variables.
  *
  * @param {Object} config - The base configuration object, typically from Expo's configuration.
- * @param {string} process.env.APP_NAME - The name of the app (default: 'Minds').
- * @param {string} process.env.APP_SCHEME - The app's scheme, used for deep-links (default: 'mindsapp').
- * @param {string} process.env.APP_VERSION - The app's version (default: '4.42.0').
- * @param {string} process.env.APP_ANDROID_PACKAGE - The Android package name (default: 'com.minds.mobile').
- * @param {string} process.env.APP_IOS_BUNDLE - The iOS bundle identifier (default: 'com.minds.mobile').
- * @param {string} process.env.APP_HOST - The app's host URL, used for deep-links (default: 'www.minds.com').
- * @param {string} process.env.APP_API_URL - The API URL (default: 'https://www.minds.com/').
- * @param {string} process.env.ACCENT_COLOR_LIGHT - Theme accent color (default: '#1B85D6').
- * @param {string} process.env.ACCENT_COLOR_DARK - Theme accent color (default: '#FFD048').
- * @param {string} process.env.APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
- * @param {string} process.env.APP_THEME - Tenant theme (default: 'dark').
- * @param {string} process.env.ADAPTIVE_ICON - The path to the android adaptive icon file (in ./assets/<tenant>/images).
- * @param {string} process.env.ANDROID_SPLASH - The path to the android splash file (in ./assets/<tenant>/images).
- * @param {string} process.env.IOS_SPLASH - The path to the ios splash file (in ./assets/<tenant>/images).
- * @param {string} process.env.NOTIFICATION_ICON - The path to the splash file (in ./assets/<tenant>/images).
+ * @param {string} process.env.MINDS_APP_NAME - The name of the app (default: 'Minds').
+ * @param {string} process.env.MINDS_APP_SCHEME - The app's scheme, used for deep-links (default: 'mindsapp').
+ * @param {string} process.env.MINDS_APP_VERSION - The app's version (default: '4.42.0').
+ * @param {string} process.env.MINDS_APP_ANDROID_PACKAGE - The Android package name (default: 'com.minds.mobile').
+ * @param {string} process.env.MINDS_APP_IOS_BUNDLE - The iOS bundle identifier (default: 'com.minds.mobile').
+ * @param {string} process.env.MINDS_APP_HOST - The app's host URL, used for deep-links (default: 'www.minds.com').
+ * @param {string} process.env.MINDS_APP_API_URL - The API URL (default: 'https://www.minds.com/').
+ * @param {string} process.env.MINDS_ACCENT_COLOR_LIGHT - Theme accent color (default: '#1B85D6').
+ * @param {string} process.env.MINDS_ACCENT_COLOR_DARK - Theme accent color (default: '#FFD048').
+ * @param {string} process.env.MINDS_APP_ICON - The path to the icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.MINDS_APP_THEME - Tenant theme (default: 'dark').
+ * @param {string} process.env.MINDS_ADAPTIVE_ICON - The path to the android adaptive icon file (in ./assets/<tenant>/images).
+ * @param {string} process.env.MINDS_ANDROID_SPLASH - The path to the android splash file (in ./assets/<tenant>/images).
+ * @param {string} process.env.MINDS_IOS_SPLASH - The path to the ios splash file (in ./assets/<tenant>/images).
+ * @param {string} process.env.MINDS_NOTIFICATION_ICON - The path to the splash file (in ./assets/<tenant>/images).
  * @returns {Object} - A configuration object for the Expo app.
  */
 
-const name = process.env.APP_NAME || 'Minds';
+const name = process.env.MINDS_APP_NAME || 'Minds';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name,
-  scheme: process.env.APP_SCHEME || 'mindsapp',
-  slug: name.toLowerCase(),
-  version: process.env.APP_VERSION || '4.42.0',
-  icon: process.env.APP_ICON || './assets/images/icon.png',
+  scheme: process.env.MINDS_APP_SCHEME || 'mindsapp',
+  slug: 'minds',
+  version: process.env.MINDS_APP_VERSION || '4.42.0',
+  icon: process.env.MINDS_APP_ICON || './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
     policy: 'nativeVersion',
@@ -69,7 +69,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   ],
   android: {
-    package: process.env.APP_ANDROID_PACKAGE || 'com.minds.mobile',
+    package: process.env.MINDS_APP_ANDROID_PACKAGE || 'com.minds.mobile',
     versionCode: 310178,
     intentFilters: [
       {
@@ -78,14 +78,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         data: [
           {
             scheme: 'https',
-            host: process.env.APP_HOST || 'www.minds.com',
+            host: process.env.MINDS_APP_HOST || 'www.minds.com',
           },
         ],
         category: ['BROWSABLE', 'DEFAULT'],
       },
     ],
     splash: {
-      image: process.env.ANDROID_SPLASH || './assets/images/splash.png',
+      image: process.env.MINDS_ANDROID_SPLASH || './assets/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
@@ -98,13 +98,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   },
   ios: {
-    bundleIdentifier: process.env.APP_IOS_BUNDLE || 'com.minds.mobile',
+    bundleIdentifier: process.env.MINDS_APP_IOS_BUNDLE || 'com.minds.mobile',
     buildNumber: '1',
-    associatedDomains: process.env.APP_HOST
+    associatedDomains: process.env.MINDS_APP_HOST
       ? [
-          'applinks:' + process.env.APP_HOST,
-          'activitycontinuation:' + process.env.APP_HOST,
-          'webcredentials:' + process.env.APP_HOST,
+          'applinks:' + process.env.MINDS_APP_HOST,
+          'activitycontinuation:' + process.env.MINDS_APP_HOST,
+          'webcredentials:' + process.env.MINDS_APP_HOST,
         ]
       : [
           'applinks:www.minds.com',
@@ -122,22 +122,23 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         '$(PRODUCT_NAME) needs access to your Microphone.',
     },
     splash: {
-      image: process.env.IOS_SPLASH || './assets/images/splash.png',
+      image: process.env.MINDS_IOS_SPLASH || './assets/images/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#1C1D1F',
     },
   },
   notification: {
-    icon: process.env.NOTIFICATION_ICON || './assets/images/icon_mono.png',
+    icon:
+      process.env.MINDS_NOTIFICATION_ICON || './assets/images/icon_mono.png',
     color: '#ffffff', // we can use the accent color here instead
     iosDisplayInForeground: true,
   },
   extra: {
     APP_NAME: name,
-    ACCENT_COLOR_LIGHT: process.env.ACCENT_COLOR_LIGHT || '#1B85D6',
-    ACCENT_COLOR_DARK: process.env.ACCENT_COLOR_DARK || '#FFD048',
-    THEME: process.env.APP_THEME || 'dark',
-    API_URL: process.env.APP_API_URL || 'https://www.minds.com/',
+    ACCENT_COLOR_LIGHT: process.env.MINDS_ACCENT_COLOR_LIGHT || '#1B85D6',
+    ACCENT_COLOR_DARK: process.env.MINDS_ACCENT_COLOR_DARK || '#FFD048',
+    THEME: process.env.MINDS_APP_THEME || 'dark',
+    API_URL: process.env.MINDS_APP_API_URL || 'https://www.minds.com/',
     eas: {
       projectId: '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
     },

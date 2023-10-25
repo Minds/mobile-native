@@ -1,0 +1,29 @@
+{
+  "cli": {
+    "version": ">= 5.4.0"
+  },
+  "build": {
+    "development": {
+      "extends": "production",
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "extends": "production",
+      "distribution": "internal"
+    },
+    "demo": {
+      "extends": "production",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "node": "18.18.0",
+      "env": {}
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

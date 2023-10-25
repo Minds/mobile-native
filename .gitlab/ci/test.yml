@@ -3,7 +3,7 @@ test:quality:
   stage: test
   interruptible: true
   rules:
-    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" && $BUILD_APK == null
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
