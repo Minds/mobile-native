@@ -31,6 +31,7 @@ import AuthService from '~/auth/AuthService';
 import i18nService from '../common/services/i18n.service';
 import TransparentLayer from '~/common/components/TransparentLayer';
 import VideoBackground from '~/common/components/VideoBackground';
+import { IS_TENANT } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -253,8 +254,14 @@ const AuthStack = function () {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
-      <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
-      <TransparentLayer />
+      {!IS_TENANT && (
+        <>
+          <VideoBackground
+            source={require('../assets/videos/minds-loop.mp4')}
+          />
+          <TransparentLayer />
+        </>
+      )}
       <AuthStackNav.Navigator
         // @ts-ignore
         screenOptions={AuthTransition}>
