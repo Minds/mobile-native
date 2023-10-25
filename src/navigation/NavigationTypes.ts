@@ -34,10 +34,6 @@ export type DrawerParamList = {
   Tabs: {};
 };
 
-export type InternalStackParamList = {
-  Onboarding: {};
-};
-
 type WebViewParams = {
   url: string;
   headers?: { [key: string]: string };
@@ -358,6 +354,7 @@ export type AppStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   Referrals: {};
   BoostSettingsScreen: {};
+  Onboarding: {};
 };
 
 // types for channel edit screens
