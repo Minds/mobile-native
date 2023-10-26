@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
-  View,
   Linking,
   UIManager,
   AppState,
@@ -52,6 +51,7 @@ import { UIProvider } from '@minds/ui';
 import { ConfigProvider } from '~/modules/livepeer';
 
 import { FontsLoader } from 'FontsLoader';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -178,7 +178,7 @@ class App extends Component<Props> {
 
     return (
       <FontsLoader>
-        <View style={appContainerStyle}>
+        <GestureHandlerRootView style={appContainerStyle}>
           <ExperimentsProvider>
             <SafeAreaProvider>
               <UIProvider
@@ -221,7 +221,7 @@ class App extends Component<Props> {
               </UIProvider>
             </SafeAreaProvider>
           </ExperimentsProvider>
-        </View>
+        </GestureHandlerRootView>
       </FontsLoader>
     );
   }
