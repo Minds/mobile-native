@@ -9,6 +9,7 @@ import { styles } from './TokensForm';
 import InputContainer from '../../common/components/InputContainer';
 import MText from '../../common/components/MText';
 import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
+import { IS_FROM_STORE } from '~/config/Config';
 
 type propsType = {
   store: FabScreenStore;
@@ -35,7 +36,9 @@ const UsdForm = observer(({ store }: propsType) => {
       />
       <View style={theme.paddingHorizontal4x}>
         <ScrollView contentContainerStyle={scrollviewStyle}>
-          <StripeCardSelector onCardSelected={store.setCard} />
+          {!IS_FROM_STORE && (
+            <StripeCardSelector onCardSelected={store.setCard} />
+          )}
         </ScrollView>
 
         <LabeledComponent label="Repeat Payment Monthly">
