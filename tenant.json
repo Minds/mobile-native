@@ -7,6 +7,7 @@
   "APP_ANDROID_PACKAGE": "com.minds.mobile",
   "ACCENT_COLOR_LIGHT": "#1B85D6",
   "ACCENT_COLOR_DARK": "#FFD048",
+  "WELCOME_LOGO": "horizontal",
   "THEME": "dark",
   "API_URL": "https://www.minds.com/"
 }

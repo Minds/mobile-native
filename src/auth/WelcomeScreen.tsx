@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import assets from '@assets';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE, TENANT, IS_TENANT } from '~/config/Config';
+import { DEV_MODE, TENANT, IS_TENANT, WELCOME_LOGO } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 import { Button, ButtonPropsType } from '~ui';
 import i18n from '../common/services/i18n.service';
@@ -48,7 +48,11 @@ function WelcomeScreen(props: PropsType) {
         <Animated.Image
           resizeMode="contain"
           source={
-            IS_TENANT ? assets.LOGO_HORIZONTAL : assets.LOGO_HORIZONTAL_DARK
+            IS_TENANT
+              ? WELCOME_LOGO === 'square'
+                ? assets.LOGO_SQUARED
+                : assets.LOGO_HORIZONTAL
+              : assets.LOGO_HORIZONTAL_DARK
           }
           style={styles.image}
         />

@@ -60,6 +60,8 @@ export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
 
 export const TENANT = Tenant.APP_NAME;
 
+export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
+
 /**
  * We get the values only for review apps in order to avoid issues
  * by setting them to true in a review app and after updating the app
