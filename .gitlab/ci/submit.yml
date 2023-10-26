@@ -1,6 +1,6 @@
 # Demo APK generation
-eas_build_apk:
-  stage: build_apk
+submit_production:
+  stage: submit
   image: node:alpine
   tags: [minds-ci]
   cache:
@@ -13,7 +13,9 @@ eas_build_apk:
   script:
     - echo "Getting config for tenant ${TENANT_ID}"
     - node tasks/setup-tenant.js ${TENANT_ID}
-    - npx eas-cli build --platform android --profile demo --non-interactive --json
-    #TODO: send link to the backend to email the apk to the customer
+    - npx eas-cli submit --profile production --non-interactive --json
   rules:
-    - if: $BUILD_MODE == 'APK'
+    - if: $BUILD_MODE == "production"
+      when: always
+    - if: $BUILD_MODE == null && $CI_COMMIT_BRANCH == "master"
+      when: manual
