@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from '~ui';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import i18n from '~/common/services/i18n.service';
-import { IS_IOS } from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import { UpgradeStoreType } from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
 import PlanOptions from './PlanOptions';
@@ -64,7 +64,7 @@ const UpgradeStripeTokens = ({
     <>
       {!IS_IOS && <PaymentMethod store={store} />}
       <PlanOptions store={store} />
-      {store.method === 'usd' && (
+      {!IS_FROM_STORE && store.method === 'usd' && (
         <StripeCardSelector onCardSelected={wireStore.setCard} />
       )}
       <Button
