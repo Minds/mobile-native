@@ -39,6 +39,7 @@ import { getNotice } from '~/common/components/in-feed-notices/notices';
 import { B1 } from '../../../common/ui';
 import Recommendation from '../components/Recommendation';
 import TopFeedHighlights from '../components/TopFeedHighlights';
+import CaptureFab from '~/capture/CaptureFab';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -239,6 +240,11 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         header={<Topbar noInsets navigation={navigation} />}
         renderList={renderList}
       />
+      <CaptureFab
+        visible={true}
+        navigation={navigation}
+        style={composeFABStyle}
+      />
     </Screen>
   );
 });
@@ -259,5 +265,6 @@ const Header = () => (
 );
 
 const prefetch: NotificationsTabOptions[] = ['all'];
+const composeFABStyle = { bottom: 24 };
 
 export const NewsfeedScreen = withErrorBoundary(NewsfeedScreenCmp);
