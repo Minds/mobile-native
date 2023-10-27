@@ -29,7 +29,7 @@ function StickyListWrapper(props: StickyListProps, ref: any) {
 
   useImperativeHandle(ref, () => ({
     getScrollPosition: () => {
-      return translationY.value;
+      return scrollY.value;
     },
   }));
 

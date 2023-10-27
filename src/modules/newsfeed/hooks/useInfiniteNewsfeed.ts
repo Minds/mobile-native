@@ -1,9 +1,15 @@
 import React, { useCallback, useMemo } from 'react';
-import { useInfiniteFetchNewsfeedQuery } from '~/graphql/api';
+import {
+  FetchNewsfeedQuery,
+  useInfiniteFetchNewsfeedQuery,
+} from '~/graphql/api';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import cloneDeep from 'lodash/cloneDeep';
+
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
-import { useQueryClient } from '@tanstack/react-query';
+import { storages } from '~/common/services/storage/storages.service';
 
 const mapModels = (edge: any, inFeedNoticesDelivered) => {
   if (edge.node.__mapped) {
@@ -63,8 +69,27 @@ const mapModels = (edge: any, inFeedNoticesDelivered) => {
 
 export function useInfiniteNewsfeed(algorithm) {
   const inFeedNoticesDelivered = React.useRef(emptyArray);
-  const lastFetchAt = React.useRef(0);
+
+  const local = React.useRef<{
+    lastFetchAt: number;
+    cachedData: undefined | null | InfiniteData<FetchNewsfeedQuery>;
+    cachedPersisted: boolean;
+  }>({
+    lastFetchAt: 0,
+    cachedData: null,
+    cachedPersisted: false,
+  }).current;
+
   const queryClient = useQueryClient();
+
+  // only on the first run
+  if (local.cachedData === null) {
+    // storages.user?.removeItem('NewsfeedCache');
+    local.cachedData = storages.user?.getMap('NewsfeedCache');
+    if (local.cachedData) {
+      local.cachedPersisted = true;
+    }
+  }
 
   const query = useInfiniteFetchNewsfeedQuery(
     'cursor',
@@ -74,8 +99,10 @@ export function useInfiniteNewsfeed(algorithm) {
       inFeedNoticesDelivered: [],
     },
     {
-      networkMode: 'offlineFirst',
-      getNextPageParam: lastPage => {
+      initialData: local.cachedData || undefined,
+      staleTime: 0,
+      retry: 0,
+      getNextPageParam: useCallback(lastPage => {
         const { endCursor, hasNextPage } = lastPage.newsfeed.pageInfo ?? {};
         return hasNextPage
           ? {
@@ -83,9 +110,20 @@ export function useInfiniteNewsfeed(algorithm) {
               inFeedNoticesDelivered: inFeedNoticesDelivered.current,
             }
           : undefined;
-      },
+      }, []),
     },
   );
+
+  /**
+   * We return the last refetch time (used to fetch the count)
+   */
+  if (query.data?.pages.length === 1 && query.dataUpdatedAt) {
+    local.lastFetchAt = query.dataUpdatedAt;
+    if (!local.cachedPersisted) {
+      local.cachedPersisted = true;
+      storages.user?.setMapAsync('NewsfeedCache', cloneDeep(query.data));
+    }
+  }
 
   const entities = useMemo(
     () =>
@@ -94,13 +132,6 @@ export function useInfiniteNewsfeed(algorithm) {
       ),
     [query.data],
   );
-
-  /**
-   * We return the last refetch time (used to fetch the count)
-   */
-  if (query.data?.pages.length === 1 && query.dataUpdatedAt) {
-    lastFetchAt.current = query.dataUpdatedAt;
-  }
 
   return {
     prepend: useCallback(
@@ -129,12 +160,16 @@ export function useInfiniteNewsfeed(algorithm) {
       },
       [algorithm, queryClient],
     ),
-    lastFetchAt: lastFetchAt.current,
+    lastFetchAt: local.lastFetchAt,
     query,
     refresh: useCallback(() => {
+      inFeedNoticesDelivered.current = emptyArray;
+      storages.user?.removeItem('NewsfeedCache');
+      local.cachedData = undefined;
+      local.cachedPersisted = false;
       query.remove();
       query.refetch();
-    }, [query]),
+    }, [query, local]),
     entities,
   };
 }
