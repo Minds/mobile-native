@@ -203,7 +203,6 @@
     "@types/cucumber": "^7.0.0",
     "@types/jest": "^29.2.1",
     "@types/react": "~18.2.6",
-    "@types/react-native-snap-carousel": "^3.8.1",
     "@types/react-test-renderer": "^18.0.0",
     "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.5",

@@ -3055,6 +3055,58 @@ export type GetExplainerScreenQuery = {
   } | null;
 };
 
+export type GetOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename?: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              radioSurveyQuestion?: string | null;
+              carousel: Array<{
+                __typename?: 'ComponentOnboardingV5CarouselItem';
+                title: string;
+                media: {
+                  __typename?: 'UploadFileEntityResponse';
+                  data?: {
+                    __typename?: 'UploadFileEntity';
+                    attributes?: {
+                      __typename?: 'UploadFile';
+                      url: string;
+                      height?: number | null;
+                      width?: number | null;
+                    } | null;
+                  } | null;
+                };
+              } | null>;
+              radioSurvey?: Array<{
+                __typename?: 'ComponentOnboardingV5RadioOption';
+                id: string;
+                optionTitle: string;
+                optionDescription: string;
+                optionKey: string;
+              } | null> | null;
+            }
+          | { __typename?: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TweetMessageQuery = {
@@ -3204,6 +3256,60 @@ export const useGetExplainerScreenQuery = <
       GetExplainerScreenDocument,
       variables,
     ),
+    options,
+  );
+export const GetOnboardingV5VersionsDocument = `
+    query GetOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                  }
+                }
+              }
+            }
+            title
+            description
+            radioSurveyQuestion
+            radioSurvey {
+              id
+              optionTitle
+              optionDescription
+              optionKey
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOnboardingV5VersionsQuery = <
+  TData = GetOnboardingV5VersionsQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingV5VersionsQueryVariables,
+  options?: UseQueryOptions<GetOnboardingV5VersionsQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingV5VersionsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingV5Versions']
+      : ['GetOnboardingV5Versions', variables],
+    gqlFetcher<
+      GetOnboardingV5VersionsQuery,
+      GetOnboardingV5VersionsQueryVariables
+    >(GetOnboardingV5VersionsDocument, variables),
     options,
   );
 export const TweetMessageDocument = `

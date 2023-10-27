@@ -664,6 +664,47 @@ export type DismissMutation = {
   };
 };
 
+export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOnboardingStateQuery = {
+  __typename?: 'Query';
+  onboardingState?: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  } | null;
+};
+
+export type GetOnboardingStepProgressQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingStepProgressQuery = {
+  __typename?: 'Query';
+  onboardingStepProgress: Array<{
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  }>;
+};
+
+export type SetOnboardingStateMutationVariables = Exact<{
+  completed: Scalars['Boolean']['input'];
+}>;
+
+export type SetOnboardingStateMutation = {
+  __typename?: 'Mutation';
+  setOnboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
+};
+
 export type PageInfoFragment = {
   __typename?: 'PageInfo';
   hasPreviousPage: boolean;
@@ -1675,6 +1716,168 @@ useDismissMutation.fetcher = (
 ) =>
   gqlFetcher<DismissMutation, DismissMutationVariables>(
     DismissDocument,
+    variables,
+    options,
+  );
+export const GetOnboardingStateDocument = `
+    query GetOnboardingState {
+  onboardingState {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
+    `;
+export const useGetOnboardingStateQuery = <
+  TData = GetOnboardingStateQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingStateQueryVariables,
+  options?: UseQueryOptions<GetOnboardingStateQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingStateQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingState']
+      : ['GetOnboardingState', variables],
+    gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+      GetOnboardingStateDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetOnboardingStateQuery = <
+  TData = GetOnboardingStateQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetOnboardingStateQueryVariables,
+  variables?: GetOnboardingStateQueryVariables,
+  options?: UseInfiniteQueryOptions<GetOnboardingStateQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetOnboardingStateQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingState.infinite']
+      : ['GetOnboardingState.infinite', variables],
+    metaData =>
+      gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+        GetOnboardingStateDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetOnboardingStateQuery.fetcher = (
+  variables?: GetOnboardingStateQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+    GetOnboardingStateDocument,
+    variables,
+    options,
+  );
+export const GetOnboardingStepProgressDocument = `
+    query GetOnboardingStepProgress {
+  onboardingStepProgress {
+    userGuid
+    stepKey
+    stepType
+    completedAt
+  }
+}
+    `;
+export const useGetOnboardingStepProgressQuery = <
+  TData = GetOnboardingStepProgressQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: UseQueryOptions<GetOnboardingStepProgressQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingStepProgressQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingStepProgress']
+      : ['GetOnboardingStepProgress', variables],
+    gqlFetcher<
+      GetOnboardingStepProgressQuery,
+      GetOnboardingStepProgressQueryVariables
+    >(GetOnboardingStepProgressDocument, variables),
+    options,
+  );
+export const useInfiniteGetOnboardingStepProgressQuery = <
+  TData = GetOnboardingStepProgressQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetOnboardingStepProgressQueryVariables,
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetOnboardingStepProgressQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetOnboardingStepProgressQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingStepProgress.infinite']
+      : ['GetOnboardingStepProgress.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetOnboardingStepProgressQuery,
+        GetOnboardingStepProgressQueryVariables
+      >(GetOnboardingStepProgressDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useGetOnboardingStepProgressQuery.fetcher = (
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetOnboardingStepProgressQuery,
+    GetOnboardingStepProgressQueryVariables
+  >(GetOnboardingStepProgressDocument, variables, options);
+export const SetOnboardingStateDocument = `
+    mutation SetOnboardingState($completed: Boolean!) {
+  setOnboardingState(completed: $completed) {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
+    `;
+export const useSetOnboardingStateMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    SetOnboardingStateMutation,
+    TError,
+    SetOnboardingStateMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    SetOnboardingStateMutation,
+    TError,
+    SetOnboardingStateMutationVariables,
+    TContext
+  >(
+    ['SetOnboardingState'],
+    (variables?: SetOnboardingStateMutationVariables) =>
+      gqlFetcher<
+        SetOnboardingStateMutation,
+        SetOnboardingStateMutationVariables
+      >(SetOnboardingStateDocument, variables)(),
+    options,
+  );
+useSetOnboardingStateMutation.fetcher = (
+  variables: SetOnboardingStateMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<SetOnboardingStateMutation, SetOnboardingStateMutationVariables>(
+    SetOnboardingStateDocument,
     variables,
     options,
   );

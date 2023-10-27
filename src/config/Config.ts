@@ -66,6 +66,7 @@ export const IMAGE_MAX_SIZE = 2048;
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';
+export const STRAPI_URI = 'https://cms.minds.com';
 
 const MINDS_PROD = true;
 export const MINDS_API_URI =
@@ -77,7 +78,7 @@ export const MINDS_API_URI =
 
 const STRAPI_PROD = true;
 export const STRAPI_API_URI = STRAPI_PROD
-  ? 'https://cms.minds.com/graphql'
+  ? `${STRAPI_URI}/graphql`
   : 'https://cms.oke.minds.io/graphql';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';

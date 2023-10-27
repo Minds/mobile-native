@@ -1,0 +1,24 @@
+query GetOnboardingState {
+  onboardingState {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
+
+query GetOnboardingStepProgress {
+  onboardingStepProgress {
+    userGuid
+    stepKey
+    stepType
+    completedAt
+  }
+}
+
+mutation SetOnboardingState($completed: Boolean!) {
+  setOnboardingState(completed: $completed) {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
