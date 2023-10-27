@@ -267,7 +267,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 style={
                   [
                     {
-                      "color": undefined,
+                      "color": "#FFD048",
                     },
                     {
                       "fontFamily": "Roboto_500Medium",
@@ -399,6 +399,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         }
       >
         <ActivityIndicator
+          color="#FFD048"
           size="large"
         />
       </View>
@@ -677,7 +678,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 style={
                   [
                     {
-                      "color": undefined,
+                      "color": "#FFD048",
                     },
                     {
                       "fontFamily": "Roboto_500Medium",
@@ -1168,7 +1169,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               },
               {
                 "backgroundColor": "#1C1D1F",
-                "borderColor": undefined,
+                "borderColor": "#FFD048",
                 "borderRadius": 21,
                 "borderWidth": 1,
                 "paddingHorizontal": 21,
@@ -1483,7 +1484,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 style={
                   [
                     {
-                      "color": undefined,
+                      "color": "#FFD048",
                     },
                     {
                       "fontFamily": "Roboto_500Medium",
@@ -1615,6 +1616,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         }
       >
         <ActivityIndicator
+          color="#FFD048"
           size="large"
         />
       </View>

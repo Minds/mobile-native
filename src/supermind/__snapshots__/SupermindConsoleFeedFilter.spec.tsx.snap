@@ -476,7 +476,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       style={
                         {
                           "backgroundColor": "transparent",
-                          "color": undefined,
+                          "color": "#FFD048",
                         }
                       }
                       testID="iconIcon"
