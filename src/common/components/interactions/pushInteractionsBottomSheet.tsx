@@ -5,11 +5,16 @@ import Interactions from './Interactions';
 import { Dimensions } from 'react-native';
 import capitalize from '../../helpers/capitalize';
 import { getTitle } from './InteractionsBottomSheet';
+import NavigationService from '~/navigation/NavigationService';
 
 const { height: windowHeight } = Dimensions.get('window');
 const MAX_HEIGHT = Math.floor(windowHeight * 0.8);
 const DEFAULT_SNAP_POINTS = [MAX_HEIGHT + 70];
 
+/**
+ * @see {@link pushInteractionsScreen}
+ * @deprecated
+ */
 const pushInteractionsBottomSheet = ({
   entity,
   interaction,
@@ -36,6 +41,12 @@ const pushInteractionsBottomSheet = ({
     }),
   );
 };
+
+export const pushInteractionsScreen = ({ entity, interaction }): void =>
+  NavigationService.push('Interactions', {
+    entity,
+    interaction,
+  });
 
 const EDGES: Edge[] = ['bottom'];
 

@@ -13,7 +13,12 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type DiscoveryStackParamList = Pick<
   AppStackParamList,
-  'Channel' | 'Activity' | 'DiscoverySearch' | 'BoostScreenV2' | 'GroupView'
+  | 'Channel'
+  | 'Activity'
+  | 'DiscoverySearch'
+  | 'BoostScreenV2'
+  | 'GroupView'
+  | 'Interactions'
 > & { Discovery: { tab?: TDiscoveryV2Tabs } };
 
 export type DiscoveryStackScreenProps<S extends keyof DiscoveryStackParamList> =
@@ -49,6 +54,13 @@ export default function () {
         getId={({ params }) =>
           'Channel' + (params?.entity?.guid || params?.guid || '')
         }
+      />
+      <DiscoveryStack.Screen
+        name="Interactions"
+        getComponent={() =>
+          require('~/common/components/interactions/InteractionsScreen').default
+        }
+        options={hideHeader}
       />
       <DiscoveryStack.Screen
         name="Activity"

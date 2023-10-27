@@ -19,6 +19,7 @@ import type { SupermindTwitterConnectRouteParams } from '../supermind/SupermindT
 import type { SupermindConfirmationRouteParams } from '../compose/SupermindConfirmation';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ComposeScreenParams } from '../compose/ComposeScreen';
+import type { InteractionsScreenParams } from '../common/components/interactions/InteractionsScreen';
 import type { BoostType } from '~/modules/boost/boost-composer/boost.store';
 
 type AnyType = any;
@@ -33,10 +34,6 @@ export type DrawerParamList = {
   Tabs: {};
 };
 
-export type InternalStackParamList = {
-  Onboarding: {};
-};
-
 type WebViewParams = {
   url: string;
   headers?: { [key: string]: string };
@@ -45,6 +42,8 @@ type WebViewParams = {
 };
 
 export type MoreStackParamList = {
+  Activity: AppStackParamList['Activity'];
+  Interactions: AppStackParamList['Interactions'];
   GroupsManage: {};
   GroupView: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
@@ -216,6 +215,7 @@ export type RootStackParamList = {
   StoryBook: {};
   CodePushSync: {};
   BoostUpgrade: undefined;
+  WebContent: { path: string };
 };
 
 export type AuthStackParamList = {
@@ -229,6 +229,8 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Interactions: InteractionsScreenParams;
+  BottomSheet: BottomSheetScreenParams;
   Report: {};
   GifCardClaim: {
     code: string;
@@ -352,6 +354,7 @@ export type AppStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   Referrals: {};
   BoostSettingsScreen: {};
+  Onboarding: {};
 };
 
 // types for channel edit screens

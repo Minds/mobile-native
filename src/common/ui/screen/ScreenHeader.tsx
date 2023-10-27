@@ -75,7 +75,12 @@ const styles = ThemedStyles.create({
   container: {
     zIndex: 1,
   },
-  titleCenteredContainer: ['absoluteFill', 'centered', { minHeight: 55 }],
+  titleCenteredContainer: [
+    'paddingHorizontal11x',
+    'absoluteFill',
+    'centered',
+    { minHeight: 55 },
+  ],
   border: [
     'bcolorPrimaryBorder',
     'borderBottom1x',

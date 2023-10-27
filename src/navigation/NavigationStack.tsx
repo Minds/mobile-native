@@ -16,7 +16,6 @@ import i18n from '../common/services/i18n.service';
 import {
   AppStackParamList,
   AuthStackParamList,
-  InternalStackParamList,
   RootStackParamList,
 } from './NavigationTypes';
 
@@ -37,27 +36,10 @@ const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
-const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 
 const modalOptions = {
   gestureResponseDistance: 240,
   gestureEnabled: true,
-};
-
-export const InternalStack = () => {
-  const internalOptions = {
-    ...ThemedStyles.defaultScreenOptions,
-    headerShown: false,
-    animation: 'none',
-  } as NativeStackNavigationOptions;
-  return (
-    <InternalStackNav.Navigator screenOptions={internalOptions}>
-      <InternalStackNav.Screen
-        name="Onboarding"
-        getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
-      />
-    </InternalStackNav.Navigator>
-  );
 };
 
 const AppStack = observer(() => {
@@ -130,6 +112,14 @@ const AppStack = observer(() => {
           getId={({ params }) =>
             'Channel' + (params?.entity?.guid || params?.guid || '')
           }
+        />
+        <AppStackNav.Screen
+          name="Interactions"
+          getComponent={() =>
+            require('~/common/components/interactions/InteractionsScreen')
+              .default
+          }
+          options={hideHeader}
         />
         <AppStackNav.Screen
           name="DiscoverySearch"
@@ -644,6 +634,10 @@ const RootStack = observer(function () {
       <RootStackNav.Screen
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}
+      />
+      <RootStackNav.Screen
+        name="WebContent"
+        getComponent={() => require('../common/screens/WebContent').default}
       />
     </RootStackNav.Navigator>
   );

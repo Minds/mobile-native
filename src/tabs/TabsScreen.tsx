@@ -17,7 +17,6 @@ import NotificationIcon from '../notifications/v3/notifications-tab-icon/Notific
 import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
 import ComposeIcon from '../compose/ComposeIcon';
-import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
@@ -36,7 +35,6 @@ import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
 import { useIsFeatureOn } from '../../ExperimentsProvider';
-import CaptureFab from '~/capture/CaptureFab';
 import withModalProvider from '~/navigation/withModalProvide';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -74,16 +72,9 @@ export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
   S
 >;
 
-const TabBar = ({
-  state,
-  descriptors,
-  navigation,
-  routeKey,
-  disableTabIndicator,
-}) => {
+const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -165,14 +156,6 @@ const TabBar = ({
       {!disableTabIndicator && (
         <Animated.View style={[styles.bar, barAnimatedStyle]} />
       )}
-      {showFAB ? (
-        <CaptureFab
-          visible={true}
-          navigation={navigation}
-          routeKey={routeKey}
-          style={styles.composeFAB}
-        />
-      ) : undefined}
     </View>
   );
 };
@@ -249,7 +232,7 @@ const Tabs = observer(function ({ navigation }) {
         ) : (
           <Tab.Screen
             name="CaptureTab"
-            component={InternalStack}
+            getComponent={() => require('')}
             options={{
               tabBarTestID: 'CaptureTabButton',
               tabBarButton: props => (
@@ -308,9 +291,6 @@ const styles = ThemedStyles.create({
     },
     'bcolorPrimaryBorder',
   ],
-  composeFAB: {
-    bottom: 24 + tabBarHeight,
-  },
 });
 
 const notificationOptions = {

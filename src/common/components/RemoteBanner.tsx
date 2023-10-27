@@ -1,5 +1,4 @@
 import { Linking, StyleSheet } from 'react-native';
-import Markdown from 'react-native-markdown-display';
 
 import Banner from './Banner';
 import analyticsService, { ClickRef } from '../services/analytics.service';
@@ -7,6 +6,7 @@ import moment from 'moment';
 import { DismissIdentifier } from '../stores/DismissalStore';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useRemoteBannerQuery } from '~/graphql/strapi';
+import { MarkDown } from './MarkDown';
 
 export default function RemoteBanner() {
   const {
@@ -38,13 +38,10 @@ export default function RemoteBanner() {
     <Banner
       dismissIdentifier={`banner:${identifier}` as DismissIdentifier}
       onPress={onPress}
-      text={<Markdown style={styles}>{fixDeepLinks(message)}</Markdown>}
+      text={<MarkDown style={styles}>{message}</MarkDown>}
     />
   );
 }
-
-// replace relative links with absolute app links `mindsapp://`
-const fixDeepLinks = (url: string) => url.replace(/\]\(\//g, '](mindsapp://');
 
 const styles = ThemedStyles.create({
   body: ['colorPrimaryText', 'fontLM'],
