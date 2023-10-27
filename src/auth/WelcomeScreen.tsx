@@ -43,7 +43,7 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <SafeAreaView style={theme.flexContainer}>
+    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <View style={theme.flexColumnStretch}>
         <Animated.Image
           resizeMode="contain"
