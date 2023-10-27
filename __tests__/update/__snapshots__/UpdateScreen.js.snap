@@ -80,54 +80,6 @@ exports[`Update Screen Component renders correctly 1`] = `
       >
         Updating to v
       </Text>
-      <View
-        animated={true}
-        animationConfig={
-          {
-            "bounciness": 0,
-          }
-        }
-        animationType="spring"
-        indeterminate={false}
-        indeterminateAnimationDuration={1000}
-        onLayout={[Function]}
-        progress={0}
-        style={
-          [
-            {
-              "backgroundColor": undefined,
-              "borderColor": "#FFD048",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "overflow": "hidden",
-              "width": null,
-            },
-            undefined,
-          ]
-        }
-        useNativeDriver={false}
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "backgroundColor": "#FFD048",
-              "height": 6,
-              "transform": [
-                {
-                  "translateX": 0,
-                },
-                {
-                  "translateX": 1,
-                },
-                {
-                  "scaleX": 0.0001,
-                },
-              ],
-            }
-          }
-        />
-      </View>
       <Text
         style={
           [
@@ -159,9 +111,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         }
       >
         Downloading
-         
-        0
-        %
+        ...
       </Text>
     </View>
   </View>
