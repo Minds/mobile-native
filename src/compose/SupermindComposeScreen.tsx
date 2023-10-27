@@ -17,7 +17,7 @@ import StripeCardSelector from '../common/components/stripe-card-selector/Stripe
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
-import { IS_IOS } from '../config/Config';
+import { IS_FROM_STORE, IS_IOS } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import {
@@ -318,7 +318,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
           }
           keyboardType="numeric"
         />
-        {paymentMethod === PaymentType.cash && (
+        {!IS_FROM_STORE && paymentMethod === PaymentType.cash && (
           <StripeCardSelector
             selectedCardId={cardId}
             onCardSelected={card => {

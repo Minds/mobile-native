@@ -128,6 +128,34 @@ export type EdgeInterface = {
   node?: Maybe<NodeInterface>;
 };
 
+export type FeedExploreTagEdge = EdgeInterface & {
+  __typename?: 'FeedExploreTagEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedExploreTagNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedExploreTagNode = NodeInterface & {
+  __typename?: 'FeedExploreTagNode';
+  id: Scalars['ID']['output'];
+  tag: Scalars['String']['output'];
+};
+
+export type FeedHeaderEdge = EdgeInterface & {
+  __typename?: 'FeedHeaderEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedHeaderNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedHeaderNode = NodeInterface & {
+  __typename?: 'FeedHeaderNode';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
 export type FeedHighlightsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'FeedHighlightsConnection';
@@ -382,6 +410,7 @@ export type PaymentMethod = {
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
+    dismissible: Scalars['Boolean']['output'];
     /**
      * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
      * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
@@ -726,6 +755,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
             | { __typename?: 'FeedHighlightsConnection'; id: string }
             | {
                 __typename?: 'FeedNoticeNode';
@@ -765,6 +796,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -785,6 +818,20 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
@@ -850,6 +897,16 @@ export type FetchSearchQuery = {
             | null;
         }
       | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
           node: { __typename?: 'FeedHighlightsConnection'; id: string };
@@ -903,6 +960,8 @@ export type FetchSearchQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -912,6 +971,17 @@ export type FetchSearchQuery = {
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
@@ -1181,6 +1251,8 @@ export type NewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
             | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
@@ -1238,6 +1310,8 @@ export type NewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -1254,6 +1328,20 @@ export type NewsfeedQuery = {
                             id: string;
                           }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
@@ -1313,6 +1401,16 @@ export type NewsfeedQuery = {
               }
             | { __typename?: 'UserNode'; id: string }
             | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
         }
       | {
           __typename?: 'FeedHighlightsEdge';
@@ -1382,6 +1480,8 @@ export type NewsfeedQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -1391,6 +1491,17 @@ export type NewsfeedQuery = {
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';

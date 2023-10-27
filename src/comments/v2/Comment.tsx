@@ -54,12 +54,9 @@ export default observer(function Comment({
     votedUp,
     votedDown,
     replies_count,
-    hasMedia,
-    isOwner,
-    toggleMatureVisibility,
-  } = comment ?? {};
+  } = comment;
 
-  const { username, plus: isPlusUser } = ownerObj ?? {};
+  const { username, plus: isPlusUser } = ownerObj;
 
   const mature = comment?.mature && !mature_visibility;
 
@@ -159,7 +156,7 @@ export default observer(function Comment({
       ]}>
       <CommentHeader entity={comment} navigation={navigation} />
 
-      {!mature || isOwner() ? (
+      {!mature || comment.isOwner() ? (
         <>
           <View style={[styles.body, theme.flexContainer]}>
             {!!description && (
@@ -174,7 +171,7 @@ export default observer(function Comment({
                 <Translate ref={translateRef} entity={comment} />
               </>
             )}
-            {(hasMedia() ||
+            {(comment.hasMedia() ||
               Boolean(attachment_guid) ||
               Boolean(comment.perma_url)) && (
               <View style={theme.paddingTop3x}>
@@ -234,7 +231,7 @@ export default observer(function Comment({
         // mature
         <View>
           <TouchableOpacity
-            onPress={toggleMatureVisibility}
+            onPress={comment.toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
             <MText style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
