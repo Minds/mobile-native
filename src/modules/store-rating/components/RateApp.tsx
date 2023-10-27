@@ -7,7 +7,7 @@ import {
 import i18nService from '../../../common/services/i18n.service';
 import { Spacer, H2 } from '../../../common/ui';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 interface RateAppProps {
   onConfirm: () => void;
@@ -31,7 +31,7 @@ export default function RateApp({
       onLayout={onLayout}>
       <Spacer horizontal="L" bottom="S">
         <H2 align="center" bottom="L">
-          {i18nService.t('storeRating.prompt', { tenant })}
+          {i18nService.t('storeRating.prompt', { TENANT })}
         </H2>
       </Spacer>
       <BottomSheetButton

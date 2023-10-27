@@ -6,7 +6,7 @@ const config = {
   testRegex: ['./__tests__/.*.js$', './src/.*\\.spec\\.[tj]sx?$'],
   preset: 'jest-expo',
   setupFiles: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '.yarn'],
   // transformIgnorePatterns: [
   //   'node_modules/(?!react-native|react-native-gesture-handler|react-navigation)/',
   //   'jest-runner',

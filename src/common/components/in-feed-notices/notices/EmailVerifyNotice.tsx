@@ -9,7 +9,7 @@ import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 /**
  * Email Verify Notice
@@ -26,7 +26,7 @@ function EmailVerifyNotice({ name }: NoticeProps) {
       name={name}
       title={i18nService.t('onboarding.verifyEmailAddress')}
       description={i18nService.t('inFeedNotices.verifyEmailDescription', {
-        tenant,
+        TENANT,
       })}
       btnText={i18nService.t('inFeedNotices.verifyEmail')}
       iconName="warning"

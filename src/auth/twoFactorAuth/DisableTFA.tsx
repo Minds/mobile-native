@@ -9,7 +9,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import MText from '../../common/components/MText';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 type DisableTFARouteProp = RouteProp<MoreStackParamList, 'DisableTFA'>;
 
@@ -46,7 +46,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
   return (
     <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
       <MText style={[styles.text, theme.colorSecondaryText]}>
-        {i18n.t('settings.TFADisableDesc', { tenant })}
+        {i18n.t('settings.TFADisableDesc', { TENANT })}
       </MText>
       {store.appAuthEnabled && (
         <InputContainer

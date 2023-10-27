@@ -1,10 +1,11 @@
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
-import Constants from 'expo-constants';
 
 import { storages } from '~/common/services/storage/storages.service';
 import { DevMode } from './DevMode';
+
+import Tenant from '../../tenant.json';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -40,9 +41,7 @@ export const DEV_MODE = new DevMode(IS_REVIEW);
 export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 // Enabled Features for the app
-export const IS_TENANT =
-  !Constants.expoConfig?.extra?.APP_NAME ||
-  Constants.expoConfig?.extra?.APP_NAME !== 'Minds';
+export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
 export const SUPERMIND_ENABLED = !IS_TENANT;
 export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;
@@ -55,13 +54,13 @@ export const BOOSTS_ENABLED = !IS_TENANT;
 export const BLOCK_USER_ENABLED = !IS_TENANT;
 export const CHAT_ENABLED = !IS_TENANT;
 
-export const ACCENT_COLOR_LIGHT =
-  Constants.expoConfig?.extra?.ACCENT_COLOR_LIGHT;
-export const ACCENT_COLOR_DARK = Constants.expoConfig?.extra?.ACCENT_COLOR_DARK;
-export const TENANT_THEME =
-  Constants.expoConfig?.extra?.THEME === 'light' ? 0 : 1;
+export const ACCENT_COLOR_LIGHT = Tenant.ACCENT_COLOR_LIGHT;
+export const ACCENT_COLOR_DARK = Tenant.ACCENT_COLOR_DARK;
+export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
 
-export const tenant = Constants.expoConfig?.extra?.APP_NAME || 'Minds';
+export const TENANT = Tenant.APP_NAME;
+
+export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
 
 /**
  * We get the values only for review apps in order to avoid issues
@@ -94,7 +93,7 @@ export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
-    : Constants.expoConfig?.extra?.API_URL || 'https://www.minds.com/';
+    : Tenant.API_URL || 'https://www.minds.com/';
 
 const STRAPI_PROD = true;
 export const STRAPI_API_URI = STRAPI_PROD

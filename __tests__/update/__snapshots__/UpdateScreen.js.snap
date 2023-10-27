@@ -92,7 +92,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           [
             {
               "backgroundColor": undefined,
-              "borderColor": "rgba(0, 122, 255, 1)",
+              "borderColor": "#FFD048",
               "borderRadius": 4,
               "borderWidth": 1,
               "overflow": "hidden",
@@ -107,7 +107,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           collapsable={false}
           style={
             {
-              "backgroundColor": "rgba(0, 122, 255, 1)",
+              "backgroundColor": "#FFD048",
               "height": 6,
               "transform": [
                 {

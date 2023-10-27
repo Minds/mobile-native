@@ -94,7 +94,7 @@ export const CaptureFabIcon = ({
     }>
     <Icon
       name="edit"
-      style={ThemedStyles.style.colorPrimaryText_Light}
+      style={ThemedStyles.style.colorPrimaryBackground}
       size={32}
       onPress={onPress}
       onLongPress={onLongPress}

@@ -89,9 +89,9 @@ export class AppInitManager {
         // } else {
         //   SplashScreen.hideAsync();
         // }
-
-        console.log('HIDE SPLASH 2');
-        SplashScreen.hideAsync();
+        setTimeout(() => {
+          SplashScreen.hideAsync();
+        }, 400);
       } else {
         logService.info('[App] session initialized');
       }
@@ -200,8 +200,6 @@ export class AppInitManager {
     if (this.initialized) {
       return;
     }
-    console.log('HIDE SPLASH 1');
-    SplashScreen.hideAsync();
     this.initialized = true;
     console.log('[App] initial Navigation Handling');
     try {
@@ -224,8 +222,8 @@ export class AppInitManager {
         sessionService.setRecoveryCodeUsed(false);
         NavigationService.navigate('RecoveryCodeUsedScreen');
       }
+      SplashScreen.hideAsync();
     } catch (err) {
-      console.log('ACAAAAAAA', err);
       logService.exception(err);
     }
   }

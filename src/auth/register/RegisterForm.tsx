@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 type PropsType = {
   // called after registration is finished
@@ -312,7 +312,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               containerStyle={styles.checkboxPromotions}
               title={
                 <MText style={styles.checkboxText}>
-                  {i18n.t('auth.promotions', { tenant })}
+                  {i18n.t('auth.promotions', { TENANT })}
                 </MText>
               }
               checked={store.exclusivePromotions}
@@ -322,7 +322,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           <BottomSheetButton
             solid
             onPress={store.onRegisterPress}
-            text={i18n.t('auth.createChannel', { tenant })}
+            text={i18n.t('auth.createChannel', { TENANT })}
             disabled={true || store.inProgress}
             loading={store.inProgress}
             testID="registerButton"

@@ -5,7 +5,7 @@ import { Button, ScreenSection, B1 } from '~ui';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import AuthService from '~/auth/AuthService';
-import { tenant } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 
 /**
  * Delete Channel Screen
@@ -43,7 +43,7 @@ export default class DeactivateChannelScreen extends Component {
     return (
       <ScrollView style={[theme.flexContainer, theme.padding2x]}>
         <ScreenSection top="M">
-          <B1>{i18n.t('settings.disableDescription', { tenant })}</B1>
+          <B1>{i18n.t('settings.disableDescription', { TENANT })}</B1>
           <Button top="XXL" onPress={this.confirmPassword} type="warning">
             {i18n.t('settings.disableChannelButton')}
           </Button>
