@@ -8,7 +8,7 @@ import i18nService from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
 import updateService from '~/common/services/update.service';
 import { B2 } from '~/common/ui';
-import { IS_FROM_STORE, STORE_LINK } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_FROM_STORE, STORE_LINK } from '~/config/Config';
 import { CommonReducer } from '../../../types/Common';
 import Banner from '~/common/components/Banner';
 
@@ -99,7 +99,7 @@ const CodePushUpdatePrompt = observer(({ children }: PropsWithChildren) => {
     );
   }
 
-  if (nativeUpdate) {
+  if (nativeUpdate && !GOOGLE_PLAY_STORE) {
     return (
       <Banner
         actionText="Download"
