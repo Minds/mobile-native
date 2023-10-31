@@ -99,7 +99,7 @@ const CodePushUpdatePrompt = observer(({ children }: PropsWithChildren) => {
     );
   }
 
-  if (nativeUpdate && GOOGLE_PLAY_STORE) {
+  if (nativeUpdate && !GOOGLE_PLAY_STORE) {
     return (
       <Banner
         actionText="Download"
