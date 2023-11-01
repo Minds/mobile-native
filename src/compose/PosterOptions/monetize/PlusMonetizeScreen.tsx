@@ -12,6 +12,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { AppStackParamList } from '~/navigation/NavigationTypes';
+import openUrlService from '~/common/services/open-url.service';
 
 const createPlusMonetizeStore = () => {
   const store = {
@@ -96,10 +97,11 @@ const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
               I agree to the{' '}
               <MText
                 style={theme.link}
-                // onPress={() =>
-                //   Linking.openURL('https://www.minds.com/p/monetization-terms')
-                // }
-              >
+                onPress={() =>
+                  openUrlService.open(
+                    'https://www.minds.com/p/monetization-terms',
+                  )
+                }>
                 Minds monetization terms{' '}
               </MText>
               and have the rights to monetize this content.

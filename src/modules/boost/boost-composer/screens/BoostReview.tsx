@@ -5,8 +5,9 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import FitScrollView from '~/common/components/FitScrollView';
 // import Link from '~/common/components/Link';
 import MenuItem from '~/common/components/menus/MenuItem';
+import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
-import { B1, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
+import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useTranslation } from '../../locales';
 import { BoostType, useBoostStore } from '../boost.store';
@@ -15,23 +16,18 @@ import {
   finishTransaction,
   isIosStorekit2,
   Product,
-  ProductPurchase,
   requestPurchase,
   useIAP,
   withIAPContext,
 } from 'react-native-iap';
 import NavigationService from '../../../../navigation/NavigationService';
-import {
-  IS_FROM_STORE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { IS_FROM_STORE, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
-import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import { useGifts } from '~/common/hooks/useGifts';
+import Link from '~/common/components/Link';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -90,14 +86,14 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
         amount,
         duration,
       }),
-      total: t('${{total}}.00', { total: total }),
+      total: t('${{total}}.00', { total }),
     },
-    tokens: {
+    offchain_tokens: {
       budgetDescription: t('{{amount}} tokens per day for {{duration}} days', {
         amount,
         duration,
       }),
-      total: t('{{total}} tokens', { total: total }),
+      total: t('{{total}} tokens', { total }),
     },
   };
 
@@ -115,7 +111,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const handleCreate = async () => {
     // Tokens, OSS or Gifts
-    if (!isCashFromStore) {
+    if (!isCashFromStore || selectedMethod === 'gifts') {
       return createBoost(hasCredit ? creditPaymentMethod : undefined)?.then(
         () => {
           showNotification(t('Boost created successfully'));
@@ -141,35 +137,42 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
     const purchases = await requestPurchase({
       skus: [selectedProduct?.productId ?? ''],
+      sku: selectedProduct?.productId ?? '',
       obfuscatedAccountIdAndroid: entity.guid,
       obfuscatedProfileIdAndroid: entity.ownerObj?.guid ?? 'no-owner',
       // appAccountToken: `${entity.ownerObj.guid}:${entity.guid}`,
     }).catch(processError);
 
-    if ((purchases as unknown as ProductPurchase[])?.length > 0) {
-      const purchase = purchases?.[0];
-      const { transactionId, transactionReceipt } = purchase ?? {};
-      const receipt = isIosStorekit2() ? transactionId : transactionReceipt;
+    const is_ios = isIosStorekit2();
 
-      if (receipt) {
-        const result = await finishTransaction({
-          purchase: purchases?.[0],
-          isConsumable: true,
-        }).catch(processError);
+    const purchase = is_ios ? purchases : purchases?.[0];
 
-        if ((typeof result !== 'boolean' && result?.code === 'OK') || result) {
-          // set payment_method_id
-          setSelectedCardId(IS_IOS ? 'ios_iap' : 'android_iap');
-          // set the IAP transaction details
-          setIapTransaction(receipt);
+    const receipt = is_ios
+      ? purchase.transactionId
+      : purchase.transactionReceipt;
 
-          return createBoost()?.then(() => {
-            showNotification(t('Boost created successfully'));
-            navigation.popToTop();
-            navigation.goBack();
-          });
-        }
+    if (receipt) {
+      const result = await finishTransaction({
+        purchase,
+        isConsumable: true,
+      }).catch(processError);
+
+      if (!result || (typeof result !== 'boolean' && result?.code !== 'OK')) {
+        return processError({
+          message: 'An error occurred while processing purchase3',
+        });
       }
+
+      // set payment_method_id
+      setSelectedCardId(is_ios ? 'ios_iap' : 'android_iap');
+      // set the IAP transaction details
+      setIapTransaction(receipt);
+
+      return createBoost()?.then(() => {
+        showNotification(t('Boost created successfully'));
+        navigation.popToTop();
+        navigation.goBack();
+      });
     }
   };
 
@@ -217,7 +220,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           />
           {isCashFromStore && (
             <CashSelector
-              methodSelected={selectedMethod}
+              methodSelected={defaultSelectedMethod}
               onMethodSelected={method => setSelectedMethod(method)}
               style={ThemedStyles.style.bgTransparent}
               borderless
@@ -267,7 +270,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           {title}
         </Button>
 
-        {/* <B2
+        <B2
           color="secondary"
           horizontal="L"
           top="XL"
@@ -275,14 +278,14 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           align="center">
           {t('By clicking Boost Channel, you agree to Minds')}
           {'\n'}
-          <Link url="https://www.minds.com/content-policy">
-            {t('Content Policy')}
-          </Link>
+          {/* <Link url="https://www.minds.com/content-policy"> */}
+          {t('Content Policy')}
+          {/* </Link> */}
           {t(' and ')}
           <Link url="https://www.minds.com/p/monetization-terms">
             {t('Refund Policy')}
           </Link>
-        </B2> */}
+        </B2>
       </FitScrollView>
     </Screen>
   );

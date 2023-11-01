@@ -6,7 +6,6 @@ import capitalize from '../../../common/helpers/capitalize';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
-// import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
@@ -24,6 +23,7 @@ import { Button } from '~ui';
 import Switch from '~/common/components/controls/Switch';
 import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
 import { confirm } from '~/common/components/Confirm';
+import { IS_FROM_STORE } from '~/config/Config';
 
 const isIos = Platform.OS === 'ios';
 
@@ -281,6 +281,10 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     }
   }
 
+  const enabled =
+    (store.payMethod === 'tokens' && store.currentTier?.has_tokens) ||
+    (store.payMethod === 'usd' && store.currentTier?.has_usd);
+
   const payText = store.currentTier?.public
     ? i18n.t('membership.join')
     : i18n.t('membership.pay');
@@ -298,13 +302,17 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 <MText style={styles.joinTitle}>Join a membership</MText>
               )}
               <View style={theme.flexContainer} />
-              <MText style={switchTextStyle}>USD</MText>
-              <Switch
-                value={store.payMethod === 'tokens'}
-                onChange={store.setPayMethod}
-                style={theme.marginHorizontal2x}
-              />
-              <MText style={switchTextStyle}>{'Tokens'}</MText>
+              {!IS_FROM_STORE && (
+                <>
+                  <MText style={switchTextStyle}>USD</MText>
+                  <Switch
+                    value={store.payMethod === 'tokens'}
+                    onChange={store.setPayMethod}
+                    style={theme.marginHorizontal2x}
+                  />
+                  <MText style={switchTextStyle}>{'Tokens'}</MText>
+                </>
+              )}
             </View>
           )}
           <View style={theme.paddingTop4x}>
@@ -320,7 +328,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
             )}
             {costText}
           </View>
-          {store.payMethod === 'usd' &&
+          {!IS_FROM_STORE &&
+            store.payMethod === 'usd' &&
             store.currentTier &&
             store.currentTier.has_usd && (
               <View style={styles.stripeCardSelectorWrapper}>
@@ -339,7 +348,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 type="action"
                 mode="outline"
                 onPress={confirmSend}
-                disabled={!!store.currentTier?.subscription_urn}
+                disabled={!!store.currentTier?.subscription_urn || !enabled}
                 spinner
                 loading={store.loading}>
                 {payText}

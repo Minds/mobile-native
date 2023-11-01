@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -16,7 +16,6 @@ import i18n from '../common/services/i18n.service';
 import {
   AppStackParamList,
   AuthStackParamList,
-  InternalStackParamList,
   RootStackParamList,
 } from './NavigationTypes';
 
@@ -29,36 +28,16 @@ import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
 // import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
-import TransparentLayer from '~/common/components/TransparentLayer';
-import VideoBackground from '~/common/components/VideoBackground';
-import { IS_TENANT } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
-const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 
 const modalOptions = {
   gestureResponseDistance: 240,
   gestureEnabled: true,
-};
-
-export const InternalStack = () => {
-  const internalOptions = {
-    ...ThemedStyles.defaultScreenOptions,
-    headerShown: false,
-    animation: 'none',
-  } as NativeStackNavigationOptions;
-  return (
-    <InternalStackNav.Navigator screenOptions={internalOptions}>
-      <InternalStackNav.Screen
-        name="Onboarding"
-        getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
-      />
-    </InternalStackNav.Navigator>
-  );
 };
 
 const AppStack = observer(() => {
@@ -252,16 +231,8 @@ const AppStack = observer(() => {
 
 const AuthStack = function () {
   return (
-    <View style={ThemedStyles.style.flexContainer}>
+    <>
       <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
-      {!IS_TENANT && (
-        <>
-          <VideoBackground
-            source={require('../assets/videos/minds-loop.mp4')}
-          />
-          <TransparentLayer />
-        </>
-      )}
       <AuthStackNav.Navigator
         // @ts-ignore
         screenOptions={AuthTransition}>
@@ -280,7 +251,7 @@ const AuthStack = function () {
           }}
         />
       </AuthStackNav.Navigator>
-    </View>
+    </>
   );
 };
 
@@ -659,6 +630,10 @@ const RootStack = observer(function () {
       <RootStackNav.Screen
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}
+      />
+      <RootStackNav.Screen
+        name="WebContent"
+        getComponent={() => require('../common/screens/WebContent').default}
       />
     </RootStackNav.Navigator>
   );

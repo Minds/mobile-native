@@ -83,10 +83,8 @@ export default `
   <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.13/widget.module.min.js"
-  async
-  defer
 ></script>
-<script nomodule src="https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.13/widget.min.js" async defer></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.13/widget.min.js"></script>
   <script>
     let widgetInstance;
 

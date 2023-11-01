@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Linking, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
@@ -25,6 +25,7 @@ import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { TENANT } from '~/config/Config';
+import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
   // called after registration is finished
@@ -298,7 +299,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                   <MText
                     style={theme.link}
                     onPress={() =>
-                      Linking.openURL('https://www.minds.com/p/terms')
+                      openUrlService.open('https://www.minds.com/p/terms')
                     }>
                     {i18n.t('auth.termsAndConditions')}
                   </MText>

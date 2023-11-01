@@ -10,7 +10,6 @@ import {
   BottomSheetButton,
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
-import { InjectItem } from '~/common/components/FeedList';
 import MenuItem, { MenuItemProps } from '~/common/components/menus/MenuItem';
 import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
@@ -18,9 +17,7 @@ import { showNotification } from '../../../AppMessages';
 import CenteredLoading from '../../common/components/CenteredLoading';
 
 import MText from '../../common/components/MText';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
-import sessionService from '../../common/services/session.service';
 import SettingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import useOnboardingProgress, {
@@ -44,7 +41,6 @@ export default withErrorBoundaryScreen(
     const theme = ThemedStyles.style;
     const { width } = useDimensions().screen;
     const navigation = useNavigation();
-    const { newsfeed } = useLegacyStores();
     // Do not render BottomSheet unless it is necessary
     const ref = React.useRef<any>(null);
     const onOnboardingCompleted = () => {
@@ -57,6 +53,7 @@ export default withErrorBoundaryScreen(
         );
       }, 300);
     };
+
     const updateState = (
       newData: OnboardingGroupState,
       oldData: OnboardingGroupState,
@@ -69,22 +66,6 @@ export default withErrorBoundaryScreen(
         return oldData;
       } else if (newData && newData.is_completed) {
         onOnboardingCompleted();
-      }
-
-      // Check for post created locally (the backend check takes too long)
-      if (newData.steps && newData.id === 'InitialOnboardingGroup') {
-        const step = newData.steps.find(s => s.id === 'CreatePostStep');
-        if (
-          step &&
-          !step.is_completed &&
-          !(newsfeed.feedStore.entities[0] instanceof InjectItem) &&
-          newsfeed.feedStore.entities[0] &&
-          newsfeed.feedStore.entities[0].owner_guid ===
-            sessionService.getUser().guid
-        ) {
-          step.is_completed = true;
-          newData.is_completed = !newData.steps.some(s => !s.is_completed);
-        }
       }
 
       return newData;
@@ -116,7 +97,7 @@ export default withErrorBoundaryScreen(
           if (progressStore && progressStore.result && !progressStore.loading) {
             progressStore.fetch();
           }
-        }, 3000);
+        }, 2000);
         return () => {
           if (interval) {
             clearInterval(interval);

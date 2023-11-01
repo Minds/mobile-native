@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import { RecommendationType } from '../types';
 import useRecommendationContext from '../Recommendation.context';
-
 // TODO: move logic out and use dismissible from props
 const useDismissibility = (
   type: RecommendationType,

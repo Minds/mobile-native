@@ -92,6 +92,13 @@ export type BoostNode = NodeInterface & {
   legacy: Scalars['String']['output'];
 };
 
+export type BoostsConnection = ConnectionInterface & {
+  __typename?: 'BoostsConnection';
+  /** Gets Boost edges in connection. */
+  edges: Array<BoostEdge>;
+  pageInfo: PageInfo;
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -119,6 +126,34 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type FeedExploreTagEdge = EdgeInterface & {
+  __typename?: 'FeedExploreTagEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedExploreTagNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedExploreTagNode = NodeInterface & {
+  __typename?: 'FeedExploreTagNode';
+  id: Scalars['ID']['output'];
+  tag: Scalars['String']['output'];
+};
+
+export type FeedHeaderEdge = EdgeInterface & {
+  __typename?: 'FeedHeaderEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedHeaderNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedHeaderNode = NodeInterface & {
+  __typename?: 'FeedHeaderNode';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
 };
 
 export type FeedHighlightsConnection = ConnectionInterface &
@@ -181,6 +216,8 @@ export type GiftCardNode = NodeInterface & {
   id: Scalars['ID']['output'];
   issuedAt: Scalars['Int']['output'];
   issuedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Username of the gift card issuer */
+  issuedByUsername?: Maybe<Scalars['String']['output']>;
   productId: GiftCardProductIdEnum;
   /**
    * Returns transactions relating to the gift card
@@ -218,6 +255,7 @@ export enum GiftCardStatusFilterEnum {
 export type GiftCardTargetInput = {
   targetEmail?: InputMaybe<Scalars['String']['input']>;
   targetUserGuid?: InputMaybe<Scalars['String']['input']>;
+  targetUsername?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GiftCardTransaction = NodeInterface & {
@@ -288,6 +326,7 @@ export type Mutation = {
   dismiss: Dismissal;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  updateAccount: Array<Scalars['String']['output']>;
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -314,6 +353,13 @@ export type MutationDismissArgs = {
 
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
+};
+
+export type MutationUpdateAccountArgs = {
+  currentUsername: Scalars['String']['input'];
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  newUsername?: InputMaybe<Scalars['String']['input']>;
+  resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -364,6 +410,7 @@ export type PaymentMethod = {
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
+    dismissible: Scalars['Boolean']['output'];
     /**
      * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
      * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
@@ -384,6 +431,8 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Gets Boosts. */
+  boosts: BoostsConnection;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -419,6 +468,17 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryBoostsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  servedByGuid?: InputMaybe<Scalars['String']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  targetAudience?: InputMaybe<Scalars['Int']['input']>;
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -604,6 +664,47 @@ export type DismissMutation = {
   };
 };
 
+export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOnboardingStateQuery = {
+  __typename?: 'Query';
+  onboardingState?: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  } | null;
+};
+
+export type GetOnboardingStepProgressQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingStepProgressQuery = {
+  __typename?: 'Query';
+  onboardingStepProgress: Array<{
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  }>;
+};
+
+export type SetOnboardingStateMutationVariables = Exact<{
+  completed: Scalars['Boolean']['input'];
+}>;
+
+export type SetOnboardingStateMutation = {
+  __typename?: 'Mutation';
+  setOnboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
+};
+
 export type PageInfoFragment = {
   __typename?: 'PageInfo';
   hasPreviousPage: boolean;
@@ -654,6 +755,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
             | { __typename?: 'FeedHighlightsConnection'; id: string }
             | {
                 __typename?: 'FeedNoticeNode';
@@ -693,6 +796,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -713,6 +818,20 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
@@ -778,6 +897,16 @@ export type FetchSearchQuery = {
             | null;
         }
       | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
           node: { __typename?: 'FeedHighlightsConnection'; id: string };
@@ -831,6 +960,8 @@ export type FetchSearchQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -840,6 +971,17 @@ export type FetchSearchQuery = {
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
@@ -1067,7 +1209,7 @@ export type GetGiftCardsQuery = {
   };
 };
 
-export type NewsfeedQueryVariables = Exact<{
+export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
   limit: Scalars['Int']['input'];
   cursor?: InputMaybe<Scalars['String']['input']>;
@@ -1076,21 +1218,22 @@ export type NewsfeedQueryVariables = Exact<{
   >;
 }>;
 
-export type NewsfeedQuery = {
+export type FetchNewsfeedQuery = {
   __typename?: 'Query';
   newsfeed: {
     __typename?: 'NewsfeedConnection';
     edges: Array<
       | {
           __typename?: 'ActivityEdge';
+          explicitVotes: boolean;
           cursor: string;
-          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+          node: { __typename: 'ActivityNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'BoostEdge';
           cursor: string;
           node: {
-            __typename?: 'BoostNode';
+            __typename: 'BoostNode';
             goalButtonUrl?: string | null;
             goalButtonText?: number | null;
             legacy: string;
@@ -1101,21 +1244,23 @@ export type NewsfeedQuery = {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | { __typename: 'ActivityNode'; legacy: string; id: string }
             | {
-                __typename?: 'BoostNode';
+                __typename: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'FeedExploreTagNode'; id: string }
+            | { __typename: 'FeedHeaderNode'; id: string }
             | {
-                __typename?: 'FeedHighlightsConnection';
+                __typename: 'FeedHighlightsConnection';
                 id: string;
                 edges: Array<{
                   __typename?: 'ActivityEdge';
                   node: {
-                    __typename?: 'ActivityNode';
+                    __typename: 'ActivityNode';
                     id: string;
                     legacy: string;
                   };
@@ -1129,30 +1274,28 @@ export type NewsfeedQuery = {
                 };
               }
             | {
-                __typename?: 'FeedNoticeNode';
+                __typename: 'FeedNoticeNode';
                 location: string;
                 key: string;
+                dismissible: boolean;
                 id: string;
               }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename: 'GiftCardNode'; id: string }
+            | { __typename: 'GiftCardTransaction'; id: string }
+            | { __typename: 'GroupNode'; id: string }
+            | { __typename: 'NodeImpl'; id: string }
             | {
-                __typename?: 'PublisherRecsConnection';
+                __typename: 'PublisherRecsConnection';
                 id: string;
                 edges: Array<
                   | {
                       __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'ActivityNode'; id: string };
                     }
                   | {
                       __typename?: 'BoostEdge';
                       publisherNode: {
-                        __typename?: 'BoostNode';
+                        __typename: 'BoostNode';
                         legacy: string;
                         id: string;
                       };
@@ -1160,72 +1303,86 @@ export type NewsfeedQuery = {
                   | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | { __typename?: 'GroupNode'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | {
-                            __typename?: 'UserNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
                       publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
+                        __typename: 'FeedHighlightsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
-                        __typename?: 'FeedNoticeNode';
+                        __typename: 'FeedNoticeNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'GiftCardNode'; id: string };
                     }
                   | {
                       __typename?: 'GiftCardTransactionEdge';
                       publisherNode: {
-                        __typename?: 'GiftCardTransaction';
+                        __typename: 'GiftCardTransaction';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GroupEdge';
-                      publisherNode: { __typename?: 'GroupNode'; id: string };
+                      publisherNode: {
+                        __typename: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
                       publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
+                        __typename: 'PublisherRecsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'UserEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -1239,18 +1396,28 @@ export type NewsfeedQuery = {
                   endCursor?: string | null;
                 };
               }
-            | { __typename?: 'UserNode'; id: string }
+            | { __typename: 'UserNode'; id: string }
             | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename: 'FeedHeaderNode'; id: string };
         }
       | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
           node: {
-            __typename?: 'FeedHighlightsConnection';
+            __typename: 'FeedHighlightsConnection';
             id: string;
             edges: Array<{
               __typename?: 'ActivityEdge';
-              node: { __typename?: 'ActivityNode'; id: string; legacy: string };
+              node: { __typename: 'ActivityNode'; id: string; legacy: string };
             }>;
             pageInfo: {
               __typename?: 'PageInfo';
@@ -1265,42 +1432,43 @@ export type NewsfeedQuery = {
           __typename?: 'FeedNoticeEdge';
           cursor: string;
           node: {
-            __typename?: 'FeedNoticeNode';
+            __typename: 'FeedNoticeNode';
             location: string;
             key: string;
+            dismissible: boolean;
             id: string;
           };
         }
       | {
           __typename?: 'GiftCardEdge';
           cursor: string;
-          node: { __typename?: 'GiftCardNode'; id: string };
+          node: { __typename: 'GiftCardNode'; id: string };
         }
       | {
           __typename?: 'GiftCardTransactionEdge';
           cursor: string;
-          node: { __typename?: 'GiftCardTransaction'; id: string };
+          node: { __typename: 'GiftCardTransaction'; id: string };
         }
       | {
           __typename?: 'GroupEdge';
           cursor: string;
-          node: { __typename?: 'GroupNode'; id: string };
+          node: { __typename: 'GroupNode'; id: string };
         }
       | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
-            __typename?: 'PublisherRecsConnection';
+            __typename: 'PublisherRecsConnection';
             id: string;
             edges: Array<
               | {
                   __typename?: 'ActivityEdge';
-                  publisherNode: { __typename?: 'ActivityNode'; id: string };
+                  publisherNode: { __typename: 'ActivityNode'; id: string };
                 }
               | {
                   __typename?: 'BoostEdge';
                   publisherNode: {
-                    __typename?: 'BoostNode';
+                    __typename: 'BoostNode';
                     legacy: string;
                     id: string;
                   };
@@ -1308,55 +1476,72 @@ export type NewsfeedQuery = {
               | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
-                    | { __typename?: 'ActivityNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | { __typename: 'ActivityNode'; id: string }
+                    | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'FeedExploreTagNode'; id: string }
+                    | { __typename: 'FeedHeaderNode'; id: string }
+                    | { __typename: 'FeedHighlightsConnection'; id: string }
+                    | { __typename: 'FeedNoticeNode'; id: string }
+                    | { __typename: 'GiftCardNode'; id: string }
+                    | { __typename: 'GiftCardTransaction'; id: string }
+                    | { __typename: 'GroupNode'; legacy: string; id: string }
+                    | { __typename: 'NodeImpl'; id: string }
+                    | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
                   publisherNode: {
-                    __typename?: 'FeedHighlightsConnection';
+                    __typename: 'FeedHighlightsConnection';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'FeedNoticeEdge';
-                  publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                  publisherNode: { __typename: 'FeedNoticeNode'; id: string };
                 }
               | {
                   __typename?: 'GiftCardEdge';
-                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                  publisherNode: { __typename: 'GiftCardNode'; id: string };
                 }
               | {
                   __typename?: 'GiftCardTransactionEdge';
                   publisherNode: {
-                    __typename?: 'GiftCardTransaction';
+                    __typename: 'GiftCardTransaction';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'GroupEdge';
-                  publisherNode: { __typename?: 'GroupNode'; id: string };
+                  publisherNode: {
+                    __typename: 'GroupNode';
+                    legacy: string;
+                    id: string;
+                  };
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
                   publisherNode: {
-                    __typename?: 'PublisherRecsConnection';
+                    __typename: 'PublisherRecsConnection';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'UserEdge';
                   publisherNode: {
-                    __typename?: 'UserNode';
+                    __typename: 'UserNode';
                     legacy: string;
                     id: string;
                   };
@@ -1374,7 +1559,7 @@ export type NewsfeedQuery = {
       | {
           __typename?: 'UserEdge';
           cursor: string;
-          node: { __typename?: 'UserNode'; id: string };
+          node: { __typename: 'UserNode'; id: string };
         }
     >;
     pageInfo: {
@@ -1533,6 +1718,168 @@ useDismissMutation.fetcher = (
 ) =>
   gqlFetcher<DismissMutation, DismissMutationVariables>(
     DismissDocument,
+    variables,
+    options,
+  );
+export const GetOnboardingStateDocument = `
+    query GetOnboardingState {
+  onboardingState {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
+    `;
+export const useGetOnboardingStateQuery = <
+  TData = GetOnboardingStateQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingStateQueryVariables,
+  options?: UseQueryOptions<GetOnboardingStateQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingStateQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingState']
+      : ['GetOnboardingState', variables],
+    gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+      GetOnboardingStateDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetOnboardingStateQuery = <
+  TData = GetOnboardingStateQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetOnboardingStateQueryVariables,
+  variables?: GetOnboardingStateQueryVariables,
+  options?: UseInfiniteQueryOptions<GetOnboardingStateQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetOnboardingStateQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingState.infinite']
+      : ['GetOnboardingState.infinite', variables],
+    metaData =>
+      gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+        GetOnboardingStateDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetOnboardingStateQuery.fetcher = (
+  variables?: GetOnboardingStateQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetOnboardingStateQuery, GetOnboardingStateQueryVariables>(
+    GetOnboardingStateDocument,
+    variables,
+    options,
+  );
+export const GetOnboardingStepProgressDocument = `
+    query GetOnboardingStepProgress {
+  onboardingStepProgress {
+    userGuid
+    stepKey
+    stepType
+    completedAt
+  }
+}
+    `;
+export const useGetOnboardingStepProgressQuery = <
+  TData = GetOnboardingStepProgressQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: UseQueryOptions<GetOnboardingStepProgressQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingStepProgressQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingStepProgress']
+      : ['GetOnboardingStepProgress', variables],
+    gqlFetcher<
+      GetOnboardingStepProgressQuery,
+      GetOnboardingStepProgressQueryVariables
+    >(GetOnboardingStepProgressDocument, variables),
+    options,
+  );
+export const useInfiniteGetOnboardingStepProgressQuery = <
+  TData = GetOnboardingStepProgressQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetOnboardingStepProgressQueryVariables,
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetOnboardingStepProgressQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetOnboardingStepProgressQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingStepProgress.infinite']
+      : ['GetOnboardingStepProgress.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetOnboardingStepProgressQuery,
+        GetOnboardingStepProgressQueryVariables
+      >(GetOnboardingStepProgressDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useGetOnboardingStepProgressQuery.fetcher = (
+  variables?: GetOnboardingStepProgressQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetOnboardingStepProgressQuery,
+    GetOnboardingStepProgressQueryVariables
+  >(GetOnboardingStepProgressDocument, variables, options);
+export const SetOnboardingStateDocument = `
+    mutation SetOnboardingState($completed: Boolean!) {
+  setOnboardingState(completed: $completed) {
+    userGuid
+    startedAt
+    completedAt
+  }
+}
+    `;
+export const useSetOnboardingStateMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    SetOnboardingStateMutation,
+    TError,
+    SetOnboardingStateMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    SetOnboardingStateMutation,
+    TError,
+    SetOnboardingStateMutationVariables,
+    TContext
+  >(
+    ['SetOnboardingState'],
+    (variables?: SetOnboardingStateMutationVariables) =>
+      gqlFetcher<
+        SetOnboardingStateMutation,
+        SetOnboardingStateMutationVariables
+      >(SetOnboardingStateDocument, variables)(),
+    options,
+  );
+useSetOnboardingStateMutation.fetcher = (
+  variables: SetOnboardingStateMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<SetOnboardingStateMutation, SetOnboardingStateMutationVariables>(
+    SetOnboardingStateDocument,
     variables,
     options,
   );
@@ -2054,8 +2401,8 @@ useGetGiftCardsQuery.fetcher = (
     variables,
     options,
   );
-export const NewsfeedDocument = `
-    query Newsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
+export const FetchNewsfeedDocument = `
+    query FetchNewsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
   newsfeed(
     algorithm: $algorithm
     first: $limit
@@ -2064,8 +2411,12 @@ export const NewsfeedDocument = `
   ) {
     edges {
       cursor
+      ... on ActivityEdge {
+        explicitVotes
+      }
       node {
         id
+        __typename
         ... on ActivityNode {
           legacy
         }
@@ -2077,10 +2428,12 @@ export const NewsfeedDocument = `
         ... on FeedNoticeNode {
           location
           key
+          dismissible
         }
         ... on FeedHighlightsConnection {
           edges {
             node {
+              __typename
               id
               legacy
             }
@@ -2092,11 +2445,15 @@ export const NewsfeedDocument = `
         ... on PublisherRecsConnection {
           edges {
             publisherNode: node {
+              __typename
               id
               ... on UserNode {
                 legacy
               }
               ... on BoostNode {
+                legacy
+              }
+              ... on GroupNode {
                 legacy
               }
             }
@@ -2113,43 +2470,46 @@ export const NewsfeedDocument = `
   }
 }
     ${PageInfoFragmentDoc}`;
-export const useNewsfeedQuery = <TData = NewsfeedQuery, TError = unknown>(
-  variables: NewsfeedQueryVariables,
-  options?: UseQueryOptions<NewsfeedQuery, TError, TData>,
+export const useFetchNewsfeedQuery = <
+  TData = FetchNewsfeedQuery,
+  TError = unknown,
+>(
+  variables: FetchNewsfeedQueryVariables,
+  options?: UseQueryOptions<FetchNewsfeedQuery, TError, TData>,
 ) =>
-  useQuery<NewsfeedQuery, TError, TData>(
-    ['Newsfeed', variables],
-    gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
-      NewsfeedDocument,
+  useQuery<FetchNewsfeedQuery, TError, TData>(
+    ['FetchNewsfeed', variables],
+    gqlFetcher<FetchNewsfeedQuery, FetchNewsfeedQueryVariables>(
+      FetchNewsfeedDocument,
       variables,
     ),
     options,
   );
-export const useInfiniteNewsfeedQuery = <
-  TData = NewsfeedQuery,
+export const useInfiniteFetchNewsfeedQuery = <
+  TData = FetchNewsfeedQuery,
   TError = unknown,
 >(
-  pageParamKey: keyof NewsfeedQueryVariables,
-  variables: NewsfeedQueryVariables,
-  options?: UseInfiniteQueryOptions<NewsfeedQuery, TError, TData>,
+  pageParamKey: keyof FetchNewsfeedQueryVariables,
+  variables: FetchNewsfeedQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchNewsfeedQuery, TError, TData>,
 ) => {
-  return useInfiniteQuery<NewsfeedQuery, TError, TData>(
-    ['Newsfeed.infinite', variables],
+  return useInfiniteQuery<FetchNewsfeedQuery, TError, TData>(
+    ['FetchNewsfeed.infinite', variables],
     metaData =>
-      gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(NewsfeedDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
+      gqlFetcher<FetchNewsfeedQuery, FetchNewsfeedQueryVariables>(
+        FetchNewsfeedDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
     options,
   );
 };
 
-useNewsfeedQuery.fetcher = (
-  variables: NewsfeedQueryVariables,
+useFetchNewsfeedQuery.fetcher = (
+  variables: FetchNewsfeedQueryVariables,
   options?: RequestInit['headers'],
 ) =>
-  gqlFetcher<NewsfeedQuery, NewsfeedQueryVariables>(
-    NewsfeedDocument,
+  gqlFetcher<FetchNewsfeedQuery, FetchNewsfeedQueryVariables>(
+    FetchNewsfeedDocument,
     variables,
     options,
   );

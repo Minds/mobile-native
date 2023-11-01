@@ -1,158 +1,27 @@
-import { action, observable } from 'mobx';
-import MetadataService from '~/common/services/metadata.service';
+import { action, computed, observable } from 'mobx';
 import { storages } from '~/common/services/storage/storages.service';
-import UserModel from '../channel/UserModel';
-import type { FeedListStickyType } from '../common/components/FeedListSticky';
-import FeedStore from '../common/stores/FeedStore';
-import ActivityModel from './ActivityModel';
-import NewsfeedService from './NewsfeedService';
 import { hasVariation } from 'ExperimentsProvider';
-import sessionService from '../common/services/session.service';
 import EventEmitter from 'eventemitter3';
 import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
+import MetadataService from '~/common/services/metadata.service';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
-export type NewsfeedType = 'top' | 'latest' | 'foryou' | 'groups';
+export type NewsfeedType = 'top' | 'latest' | 'for-you' | 'groups';
 /**
  * News feed store
  */
 class NewsfeedStore {
-  /**
-   * Feed store
-   */
-  latestFeedStore = new FeedStore()
-    .setEndpoint('api/v2/feeds/subscribed/activities')
-    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
-    .setInjectBoost(true)
-    .setLimit(12)
-    .setMetadata(
-      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
-    );
-  /**
-   * Feed store
-   */
-  topFeedStore = new FeedStore()
-    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-    .setInjectBoost(true)
-    .setLimit(12)
-    .setPaginated(false) // this endpoint doesn't support pagination!
-    .setMetadata(new MetadataService().setSource('top-feed').setMedium('feed'));
-
-  /**
-   * Highlight store
-   */
-  highlightsStore = new FeedStore()
-    .setEndpoint('api/v3/newsfeed/feed/unseen-top')
-    .setInjectBoost(false)
-    .setPaginated(false)
-    .setLimit(3)
-    .setMetadata(
-      new MetadataService().setSource('feed/highlights').setMedium('feed'),
-    );
-
-  /**
-   * For you store
-   */
-  forYouStore = new FeedStore()
-    .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
-    .setParams({ unseen: true })
-    .setInjectBoost(false)
-    .setLimit(15);
-
-  /**
-   * Feed store
-   */
-  groupsFeedStore = new FeedStore()
-    .setEndpoint('api/v2/feeds/subscribed/activities')
-    .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
-    .setInjectBoost(true)
-    .setLimit(12)
-    .setMetadata(
-      new MetadataService().setSource('feed/subscribed').setMedium('feed'),
-    );
-
-  /**
-   * List reference
-   */
-  listRef?: React.ElementRef<FeedListStickyType>;
-
-  service = new NewsfeedService();
-
   @observable
-  feedType?: NewsfeedType;
+  _feedType?: NewsfeedType;
 
   static events = new EventEmitter();
 
-  /**
-   * Constructors
-   */
-  constructor() {
-    // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
-    UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
-    ActivityModel.events.on('newPost', this.onNewPost);
-  }
+  meta = new MetadataService();
 
-  get feedStore() {
-    switch (this.feedType) {
-      case 'foryou':
-        return this.forYouStore;
-      case 'top':
-        return this.topFeedStore;
-      case 'groups':
-        return this.groupsFeedStore;
-      case 'latest':
-      default:
-        return this.latestFeedStore;
-    }
-  }
-
-  /**
-   * Change FeedType and refresh the feed
-   */
-  @action
-  changeFeedType = (feedType: NewsfeedType, refresh = false) => {
-    this.feedType = feedType;
-    try {
-      storages.user?.setString(FEED_TYPE_KEY, feedType);
-    } catch (e) {
-      console.error(e);
-    }
-    this.loadFeed(refresh);
-    NewsfeedStore.events.emit('feedChange', feedType);
-  };
-
-  /**
-   * On new post created
-   */
-  onNewPost = (entity: ActivityModel) => {
-    this.prepend(entity);
-  };
-
-  /**
-   * On subscription change
-   */
-  onSubscriptionChange = ({
-    user,
-    shouldUpdateFeed,
-  }: {
-    user: UserModel;
-    shouldUpdateFeed: boolean;
-  }) => {
-    if (!shouldUpdateFeed) {
-      return;
-    }
-
-    if (!user.subscribed) {
-      this.topFeedStore.removeFromOwner(user.guid);
-      this.latestFeedStore.removeFromOwner(user.guid);
-    } else {
-      this.feedStore.refresh();
-    }
-  };
-
-  public loadFeed = async (refresh?: boolean) => {
-    if (!this.feedType) {
+  @computed
+  get feedType() {
+    if (!this._feedType) {
       try {
         let storedFeedType = storages.user?.getString(
           FEED_TYPE_KEY,
@@ -163,66 +32,52 @@ class NewsfeedStore {
           !(
             hasVariation('mob-4938-newsfeed-for-you') || NEWSFEED_FORYOU_ENABLED
           ) &&
-          storedFeedType === 'foryou'
+          storedFeedType === 'for-you'
         ) {
           storages.user?.setString(FEED_TYPE_KEY, 'latest');
           storedFeedType = 'latest';
         }
 
-        this.feedType = storedFeedType || 'latest';
+        this._feedType = storedFeedType || 'latest';
       } catch (e) {
         console.error(e);
       }
+      this.updateMetadata();
     }
-
-    let waitPromise: Promise<any> | undefined;
-
-    // we should clear the top feed as it doesn't support pagination and if it already has data it will generate duplicated posts
-    if (this.feedType === 'top') {
-      refresh = true;
-    } else if (this.feedType === 'groups') {
-      this.groupsFeedStore.setParams({
-        group_posts_for_user_guid: sessionService.getUser()?.guid,
-      });
-    } else {
-      // fetch highlights for the latests feed
-      waitPromise = this.highlightsStore.fetch();
-    }
-
-    this.feedStore.fetchRemoteOrLocal(refresh, waitPromise);
-  };
-
-  /**
-   * Scroll to top
-   */
-  scrollToTop() {
-    if (this.listRef) {
-      this.listRef.scrollToOffset({ offset: 0 });
-    }
+    return this._feedType;
   }
 
-  /**
-   * Set FeedList reference
-   */
-  setListRef = r => {
-    if (r) {
-      this.listRef = r;
+  private updateMetadata() {
+    switch (this._feedType) {
+      case 'top':
+        this.meta.setSource('top-feed').setMedium('feed');
+        break;
+      case 'latest':
+      case 'groups':
+        this.meta.setSource('feed/subscribed').setMedium('feed');
+        break;
+      case 'for-you':
+        this.meta.setSource('feed/highlights').setMedium('feed');
     }
-  };
-
-  private prepend(entity: ActivityModel) {
-    const model = ActivityModel.checkOrCreate(entity);
-    this.feedStore.prepend(model);
   }
+  /**
+   * Change FeedType and refresh the feed
+   */
+  @action
+  changeFeedType = (feedType: NewsfeedType) => {
+    this._feedType = feedType;
+    this.updateMetadata();
+    try {
+      storages.user?.setString(FEED_TYPE_KEY, feedType);
+    } catch (e) {
+      console.error(e);
+    }
+    NewsfeedStore.events.emit('feedChange', feedType);
+  };
 
   @action
   reset() {
-    this.highlightsStore.reset();
-    this.latestFeedStore.reset();
-    this.topFeedStore.reset();
-    this.forYouStore.reset();
-    this.groupsFeedStore.reset();
-    this.feedType = undefined;
+    this._feedType = undefined;
   }
 }
 

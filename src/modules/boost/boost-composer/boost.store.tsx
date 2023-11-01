@@ -124,7 +124,6 @@ export const createBoostStore = ({
         this.paymentType === 'cash'
           ? creditPaymentMethod ?? this.selectedCardId // ios_iap, android_iap
           : undefined,
-      iap_transaction: this.iapTransaction,
       daily_bid: this.amount,
       duration_days: this.duration,
     };

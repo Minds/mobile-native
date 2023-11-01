@@ -194,7 +194,7 @@ export class FeedList<T extends BaseModel> extends Component<
       ? item.type
       : isActivity && item.hasVideo()
       ? 'video'
-      : isActivity && item.hasVideo()
+      : isActivity && item.hasImage()
       ? 'image'
       : 'row';
   }

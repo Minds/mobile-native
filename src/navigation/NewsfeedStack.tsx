@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import { AppStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
-import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
+import { NewsfeedScreen } from '~/modules/newsfeed';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
 import i18n from '~/common/services/i18n.service';
 
@@ -19,6 +19,7 @@ type NewsfeedStackParamList = Pick<
   | 'GroupView'
   | 'BoostSettingsScreen'
   | 'Interactions'
+  | 'Onboarding'
 > & { MainFeed: AppStackParamList['Newsfeed'] };
 
 const NewsfeedStack = createNativeStackNavigator<NewsfeedStackParamList>();
@@ -83,6 +84,11 @@ export default function () {
           require('~/settings/screens/BoostSettingsScreen').default
         }
         options={{ title: i18n.t('settings.accountOptions.8') }}
+      />
+      <NewsfeedStack.Screen
+        name="Onboarding"
+        getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
+        options={hideHeader}
       />
     </NewsfeedStack.Navigator>
   );

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { IconButtonNext } from '~ui/icons';
 import { FLAG_REMIND } from '../../../common/Permissions';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import i18n from '../../../common/services/i18n.service';
 import createComposeStore, {
@@ -110,7 +110,7 @@ const pushRemindActionSheet = ({
       .submit()
       .then(activity => {
         // append the entity to the feed
-        newsfeed.feedStore.prepend(activity);
+        ActivityModel.events.emit('newPost', activity);
         analytics.trackClick('remind');
         storeRatingService.track('remind', true);
 

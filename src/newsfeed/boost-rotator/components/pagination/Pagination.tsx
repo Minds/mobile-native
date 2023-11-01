@@ -44,10 +44,10 @@ interface PaginationProps {
 export default class Pagination extends PureComponent<PaginationProps> {
   static defaultProps = {
     inactiveDotOpacity: 0.5,
-    inactiveDotScale: 0.5,
+    inactiveDotScale: 0.95,
     tappableDots: false,
     vertical: false,
-    animatedDuration: 250,
+    animatedDuration: 0,
     animatedFriction: 4,
     animatedTension: 50,
     delayPressInDot: 0,

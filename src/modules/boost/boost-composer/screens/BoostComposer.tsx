@@ -22,9 +22,12 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
+import { useGifts } from '~/common/hooks/useGifts';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
+
 function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
+  useGifts();
   const { t } = useTranslation();
   const boostStore = useBoostStore();
   const { insights } = useBoostInsights(boostStore);
@@ -147,7 +150,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
                   {t('Try reducing the duration or the daily budget')}
                 </B1>
               )}
-
               <H2 bottom="S">
                 {insights
                   ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
@@ -169,6 +171,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
                     ? `$${value.toLocaleString()}`
                     : value.toLocaleString()
                 }
+                steps={config.bid_increments[paymentType]}
                 floatingLabel
               />
             </Column>
@@ -190,7 +193,6 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
                 floatingLabel
               />
             </Column>
-
             <HairlineRow />
           </>
         )}

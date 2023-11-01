@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import apiService from '~/common/services/api.service';
 import { BoostCashCard, CardColor } from './BoostCashCard';
 import { useState } from 'react';
+import { DEFAULT_DAILY_CASH_BUDGET } from '../boost.constants';
 
 type Product = {
   cardColor: CardColor;
@@ -41,7 +42,9 @@ export const BoostCashCards = ({
 }: BoostCashCardsProps) => {
   const insights = useCachedBoostInsights(audience);
   const { t } = useTranslation();
-  const [selected, setSelected] = useState<CardColor>('gray');
+  const [selected, setSelected] = useState<CardColor>(
+    defaultCard(DEFAULT_DAILY_CASH_BUDGET),
+  );
 
   const onSelect = (card: CardColor) => () => {
     setSelected(card);
@@ -98,3 +101,8 @@ const useCachedBoostInsights = (audience: string) => {
 
   return response;
 };
+
+const defaultCard = (amount: number) =>
+  (Object.entries(products).filter(
+    ([_, value]) => value.amount + value.duration >= amount,
+  )?.[0]?.[0] ?? 'yellow') as CardColor;

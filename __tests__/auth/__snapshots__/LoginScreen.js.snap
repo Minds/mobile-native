@@ -38,6 +38,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
         style={
           [
             {
+              "paddingHorizontal": 44,
+            },
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",

@@ -22,7 +22,7 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
 
       if (experimentOn && NEWSFEED_FORYOU_ENABLED) {
         _tabs.unshift({
-          id: 'foryou',
+          id: 'for-you',
           title: i18n.t('newsfeed.foryouPosts'),
         });
       }
