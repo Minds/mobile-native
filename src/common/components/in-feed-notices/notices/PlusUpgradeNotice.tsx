@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { useFeature } from 'ExperimentsProvider';
+import { useFeature, useIsFeatureOn } from 'ExperimentsProvider';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 // import openUrlService from '~/common/services/open-url.service';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 
@@ -17,6 +16,7 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser()!;
   const { value: activeExperiment } = useFeature('minds-3639-plus-notice');
+  const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
   let description = i18n.t('inFeedNotices.plusUpgrade.description');
 
   if ([1, 2, 3, 4].includes(activeExperiment)) {
@@ -38,11 +38,7 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
     });
   }, [navigation, user]);
 
-  if (
-    !inFeedNoticesService.visible(name) ||
-    user.plus ||
-    !PRO_PLUS_SUBSCRIPTION_ENABLED
-  ) {
+  if (!inFeedNoticesService.visible(name) || user.plus || !IOS_IAP_ENABLED) {
     return null;
   }
 

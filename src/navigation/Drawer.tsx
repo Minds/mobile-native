@@ -23,7 +23,6 @@ import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -46,7 +45,7 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden' | 'isIosIapEnabled', boolean>;
 
 type MenuItem = {
   name: string;
@@ -54,7 +53,10 @@ type MenuItem = {
   onPress: () => void;
   testID?: string;
 } | null;
-const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, isIosIapEnabled }: Flags,
+) => {
   const channel = sessionService.getUser();
   const list: MenuItem[] = [
     {
@@ -111,7 +113,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('GroupsList');
       },
     },
-    PRO_PLUS_SUBSCRIPTION_ENABLED
+    isIosIapEnabled
       ? {
           name: i18n.t('moreScreen.upgrade'),
           icon: (
@@ -159,6 +161,8 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+  const isIosIapEnabled = useIsIOSFeatureOn('mob-4990-iap-subscription-ios');
+
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
   };
@@ -170,6 +174,7 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
+    isIosIapEnabled,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (

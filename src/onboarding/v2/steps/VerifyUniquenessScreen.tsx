@@ -7,9 +7,9 @@ import ModalContainer from './ModalContainer';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { useNavigation } from '@react-navigation/native';
 import LabeledComponent from '../../../common/components/LabeledComponent';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type MappingItems = {
   title: string;
@@ -24,6 +24,7 @@ export default withErrorBoundaryScreen(
   observer(function VerifyUniquenessScreen() {
     const theme = ThemedStyles.style;
     const navigation = useNavigation();
+    const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
     const mappingCallback = ({ title, screen, params }: MappingItems) => ({
       title,
@@ -79,7 +80,7 @@ export default withErrorBoundaryScreen(
             <MenuItem key={item.title} {...item} />
           ))}
 
-          {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+          {IOS_IAP_ENABLED && (
             <LabeledComponent
               label={'OTHER'}
               labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>

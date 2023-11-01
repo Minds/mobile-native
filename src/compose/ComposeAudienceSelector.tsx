@@ -23,7 +23,7 @@ import {
   Screen,
   ScreenHeader,
 } from '../common/ui';
-import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '../config/Config';
+import { IS_IOS } from '../config/Config';
 import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -31,6 +31,7 @@ import { upgradeToPlus } from '../upgrade/UpgradeScreen';
 import { ComposeAudience } from './createComposeStore';
 import { ComposeStoreType } from './useComposeStore';
 import { Trans } from 'react-i18next';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const BOTTOM_SHEET_HEIGHT = Math.floor(Dimensions.get('window').height * 0.8);
 
@@ -54,6 +55,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const { user } = useLegacyStores();
   const selected = store?.audience ?? { type: 'public' };
   const groupsListRef = useRef<any>(null);
+  const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
   const handleSelect = useCallback(
     async audience => {
@@ -147,7 +149,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!mode && !!PRO_PLUS_SUBSCRIPTION_ENABLED && (
+      {!mode && IOS_IAP_ENABLED && (
         <MenuItemOption
           title={texts.audience.plus.title}
           subtitle={texts.audience.plus.subtitle}

@@ -4,7 +4,7 @@ import React from 'react';
 import sessionService from '../../../common/services/session.service';
 import { getFriendlyLabel } from './EarningsOverview';
 import { B1, B2, Column } from '~ui';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   earningId: string;
@@ -13,6 +13,7 @@ type PropsType = {
 const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
   const user = sessionService.getUser();
   const navigation = useNavigation();
+  const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
   const onCompletePro = success => {
     if (success) {
@@ -40,7 +41,7 @@ const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
   return (
     <Column flex>
       <B1 font="medium">{getFriendlyLabel(earningId)}</B1>
-      {earningId === 'partner' && !user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED && (
+      {earningId === 'partner' && !user.pro && IOS_IAP_ENABLED && (
         <B2>
           Upgrade to{' '}
           {!user.plus && (

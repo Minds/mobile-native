@@ -21,13 +21,14 @@ import {
   withIAPContext,
 } from 'react-native-iap';
 import NavigationService from '../../../../navigation/NavigationService';
-import { IS_FROM_STORE, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { IS_FROM_STORE } from '~/config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
 import { useGifts } from '~/common/hooks/useGifts';
 import Link from '~/common/components/Link';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -55,6 +56,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
     setIapTransaction,
     createBoost,
   } = useBoostStore();
+  const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
   /**
    * CREDITS
@@ -123,7 +125,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             return;
           }
 
-          if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
+          if (IOS_IAP_ENABLED) {
             InteractionManager.runAfterInteractions(() => {
               setTimeout(() => {
                 NavigationService.push('BoostUpgrade');

@@ -8,11 +8,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  ONCHAIN_ENABLED,
-  LIQUIDITY_ENABLED,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '../config/Config';
+import { ONCHAIN_ENABLED, LIQUIDITY_ENABLED } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn } from 'ExperimentsProvider';
@@ -99,6 +95,7 @@ export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
     const theme = ThemedStyles.style;
     const localStore = useLocalStore(createLocalStore);
+    const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
     useEffect(() => {
       const settings = mindsConfigService.getSettings();
@@ -194,7 +191,7 @@ export default withErrorBoundaryScreen(
           {resourcesItems.map(item => (
             <ResourceItem key={item.name} content={item} />
           ))}
-          {PRO_PLUS_SUBSCRIPTION_ENABLED && (
+          {IOS_IAP_ENABLED && (
             <>
               <MText style={[titleStyle, theme.paddingTop2x]}>
                 {i18n.t('earnScreen.unlock.title')}

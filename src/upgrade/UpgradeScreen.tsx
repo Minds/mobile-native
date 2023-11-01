@@ -11,14 +11,11 @@ import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
 import { UpgradeScreenNavigationProp, UpgradeScreenRouteProp } from './types';
 import { Button, Column, H4 } from '~ui';
-import {
-  IS_FROM_STORE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import UpgradeStripeTokens from './UpgradeStripeTokens';
 import UpgradeInAppPurchasesTokens from './UpgradeInAppPurchasesTokens';
 import { withIAPContext } from 'react-native-iap';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   route: UpgradeScreenRouteProp;
@@ -31,6 +28,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   const insets = useSafeAreaInsets();
   const { height } = useDimensions().window;
   const { onComplete, pro } = route.params;
+  const IOS_IAP_ENABLED = useIsFeatureOn('mob-4990-iap-subscription-ios');
 
   useEffect(() => {
     localStore.init(pro);
@@ -44,7 +42,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
+      {!IOS_IAP_ENABLED ? (
         <Column top="XL" align="centerBoth" horizontal="L">
           <H4 align="center">
             Sorry, the update is not available on mobile at the moment.

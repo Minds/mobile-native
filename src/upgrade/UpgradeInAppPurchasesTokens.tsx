@@ -23,6 +23,7 @@ import sessionService from '~/common/services/session.service';
 import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
+import { IS_IOS } from '~/config/Config';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -39,14 +40,12 @@ const UpgradeInAppPurchasesTokens = ({
   onComplete,
 }: UpgradeInPurchasesProps) => {
   const navigation = useNavigation();
-
   const wireStore = useUpgradeWireStore();
-
   const walletStore: WalletStoreType = useStores().wallet;
 
   const cheapestTokenPrice = store.plansTokens.reduce(
     (min, b) => Math.min(min, b?.cost ?? 1000),
-    store.plansTokens[0]?.cost ?? 1000,
+    store.plansTokens.length > 0 ? store.plansTokens[0]?.cost ?? 1000 : 1000,
   );
 
   const insufficientFunds = walletStore.balance < cheapestTokenPrice;
@@ -63,13 +62,13 @@ const UpgradeInAppPurchasesTokens = ({
    */
   useEffect(() => {
     if (store.method === 'usd') {
-      const skus = store.plansUSD.map(plan => plan.iapSku as 'string');
-
+      const skus = ['plus.monthly.01', 'plus.yearly.01'];
+      // store.plansUSD.map(plan => plan.iapSku as 'string');
       if (skus) {
-        getSubscriptions({ skus });
+        getSubscriptions({ skus }).catch(err => console.warn('err', err));
       }
     }
-  }, [getSubscriptions, store.method, store]);
+  }, [store.method, store]);
 
   /**
    * Set set offer tokens to the subscription layer
@@ -92,16 +91,33 @@ const UpgradeInAppPurchasesTokens = ({
    */
   useEffect(() => {
     const checkCurrentPurchase = async () => {
+      let payload = {};
       try {
         if (currentPurchase?.productId) {
+          const {
+            productId: subscriptionId,
+            purchaseToken,
+            autoRenewingAndroid,
+            originalTransactionDateIOS,
+            originalTransactionIdentifierIOS,
+            verificationResultIOS,
+          } = currentPurchase;
+          payload = {
+            service: IS_IOS ? 'apple' : 'google',
+            subscriptionId,
+            purchaseToken,
+            ...(IS_IOS
+              ? {
+                  originalTransactionDateIOS,
+                  originalTransactionIdentifierIOS,
+                  verificationResultIOS,
+                }
+              : { autoRenewingAndroid }),
+          };
+
           await apiService.post(
             '/api/v3/payments/iap/subscription/acknowledge',
-            {
-              service: 'google',
-              subscriptionId: currentPurchase.productId,
-              purchaseToken: currentPurchase.purchaseToken,
-              autoRenewingAndroid: currentPurchase.autoRenewingAndroid,
-            },
+            payload,
           );
 
           await finishTransaction({
@@ -113,6 +129,11 @@ const UpgradeInAppPurchasesTokens = ({
           navigation.goBack();
         }
       } catch (error) {
+        console.error(
+          'UpgradeIAP',
+          JSON.stringify(payload),
+          JSON.stringify(error),
+        );
         if (error instanceof PurchaseError) {
           showNotification(error.message, 'warning');
         } else {

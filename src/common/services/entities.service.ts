@@ -156,7 +156,7 @@ class EntitiesService {
     urn: string,
     defaultEntity: BaseModel | null = null,
     asActivities: boolean = false,
-  ): BaseModel {
+  ): Promise<BaseModel> {
     if (!urn.startsWith('urn:')) {
       // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity

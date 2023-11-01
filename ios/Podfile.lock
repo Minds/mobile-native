@@ -481,12 +481,6 @@ PODS:
   - React-jsinspector (0.71.12)
   - React-logger (0.71.12):
     - glog
-  - react-native-bignumber (0.2.1):
-    - OpenSSL-Universal (~> 1.1.180)
-    - React
-    - React-callinvoker
-    - React-Core
-    - ReactCommon/turbomodule/core
   - react-native-cameraroll (5.4.0):
     - React-Core
   - react-native-config (1.5.0):
@@ -494,6 +488,8 @@ PODS:
   - react-native-config/App (1.5.0):
     - React-Core
   - react-native-cookies (6.2.1):
+    - React-Core
+  - react-native-flipper (0.212.0):
     - React-Core
   - react-native-image-filter-kit (0.8.0):
     - Bolts/Tasks (= 1.9.0)
@@ -625,7 +621,7 @@ PODS:
     - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
-  - RNIap (12.10.5):
+  - RNIap (12.11.0):
     - React-Core
   - RNImageColors (1.5.2):
     - React-Core
@@ -783,10 +779,10 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-bignumber (from `../node_modules/react-native-bignumber`)
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
+  - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-image-filter-kit (from `../node_modules/react-native-image-filter-kit`)
   - react-native-image-keyboard (from `../node_modules/react-native-image-keyboard`)
   - "react-native-measure-text-size (from `../node_modules/@bigbee.dev/react-native-measure-text-size`)"
@@ -981,14 +977,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-bignumber:
-    :path: "../node_modules/react-native-bignumber"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
     :path: "../node_modules/@react-native-cookies/cookies"
+  react-native-flipper:
+    :path: "../node_modules/react-native-flipper"
   react-native-image-filter-kit:
     :path: "../node_modules/react-native-image-filter-kit"
   react-native-image-keyboard:
@@ -1178,10 +1174,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 509cd947c28834614808ce056ee8eb700a0662aa
   React-jsinspector: ec4dcbfb1f4e72f04f826a0301eceee5fa7ca540
   React-logger: 35538accacf2583693fbc3ee8b53e69a1776fcee
-  react-native-bignumber: 9850896db4534ea31e89dfd88182e7412eace199
   react-native-cameraroll: 8ffb0af7a5e5de225fd667610e2979fc1f0c2151
   react-native-config: 5330c8258265c1e5fdb8c009d2cabd6badd96727
   react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
+  react-native-flipper: 9c1957af24b76493ba74f46d000a5c1d485e7731
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-image-keyboard: adbf5996b8592a7d8cb8d3e431a9607f9cf3b270
   react-native-measure-text-size: dd1e5af48b18d26d0637dae3ff95377e101b34e9
@@ -1215,7 +1211,7 @@ SPEC CHECKSUMS:
   RNFlashList: 25b0e092b4470c84db0386d4f5316dc34123bb6d
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
-  RNIap: c397f49db45af3b10dca64b2325f21bb8078ad21
+  RNIap: fc9af04ee706894a80c9d8f979bae930b0dee191
   RNImageColors: 9ac05083b52d5c350e6972650ae3ba0e556466c1
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
