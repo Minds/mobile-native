@@ -17,7 +17,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: Tenant.APP_SCHEME,
   slug: 'minds',
   version: process.env.MINDS_APP_VERSION || '4.42.0',
-  icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
     policy: 'nativeVersion',
@@ -79,6 +78,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
       backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
     },
+    adaptiveIcon: {
+      backgroundColor: '#000000',
+      foregroundImage: './assets/images/icon.png',
+    },
     permissions: [
       'android.permission.READ_EXTERNAL_STORAGE',
       'android.permission.WRITE_EXTERNAL_STORAGE',
@@ -90,6 +93,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
     buildNumber: process.env.MINDS_APP_BUILD || '1',
+    icon: './assets/images/icon.png',
     associatedDomains: Tenant.APP_HOST
       ? [
           'applinks:' + Tenant.APP_HOST,

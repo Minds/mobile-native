@@ -132,6 +132,8 @@ export class ApiService {
       async error => {
         const { config: originalReq, response, request } = error;
 
+        console.log('APIerror', error);
+
         if (response) {
           // 2FA authentication interceptor
           if (
