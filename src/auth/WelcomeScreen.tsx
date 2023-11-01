@@ -2,12 +2,11 @@ import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { Image, View, ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MText from '~/common/components/MText';
 import { DEV_MODE, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button, ButtonPropsType } from '~ui';
+import { Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -40,7 +39,7 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <SafeAreaView style={theme.flexContainer}>
+    <Screen safe>
       <View style={theme.flexContainer}>
         {IS_TENANT ? (
           <Image
@@ -77,7 +76,7 @@ function WelcomeScreen(props: PropsType) {
       <HiddenTap style={devToggleStyle}>
         <View />
       </HiddenTap>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
