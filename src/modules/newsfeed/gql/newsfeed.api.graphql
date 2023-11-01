@@ -1,4 +1,4 @@
-query Newsfeed(
+query FetchNewsfeed(
   $algorithm: String!
   $limit: Int!
   $cursor: String
@@ -12,8 +12,12 @@ query Newsfeed(
   ) {
     edges {
       cursor
+      ... on ActivityEdge {
+        explicitVotes
+      }
       node {
         id
+        __typename
         ... on ActivityNode {
           legacy
         }
@@ -25,10 +29,12 @@ query Newsfeed(
         ... on FeedNoticeNode {
           location
           key
+          dismissible
         }
         ... on FeedHighlightsConnection {
           edges {
             node {
+              __typename
               id
               legacy
             }
@@ -40,11 +46,15 @@ query Newsfeed(
         ... on PublisherRecsConnection {
           edges {
             publisherNode: node {
+              __typename
               id
               ... on UserNode {
                 legacy
               }
               ... on BoostNode {
+                legacy
+              }
+              ... on GroupNode {
                 legacy
               }
             }

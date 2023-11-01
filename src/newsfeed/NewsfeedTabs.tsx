@@ -21,7 +21,7 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
 
       if (experimentOn) {
         _tabs.unshift({
-          id: 'foryou',
+          id: 'for-you',
           title: i18n.t('newsfeed.foryouPosts'),
         });
       }
