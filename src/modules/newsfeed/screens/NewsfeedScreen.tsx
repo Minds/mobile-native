@@ -237,7 +237,9 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
             />
           ) : undefined
         }
-        header={<Topbar noInsets navigation={navigation} />}
+        header={
+          <Topbar noInsets navigation={navigation} onTabPress={onTabPress} />
+        }
         renderList={renderList}
       />
       <CaptureFab
