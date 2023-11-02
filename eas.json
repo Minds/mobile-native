@@ -15,6 +15,7 @@
     "demo": {
       "extends": "production",
       "android": {
+        "credentialsSource": "local",
         "buildType": "apk"
       }
     },

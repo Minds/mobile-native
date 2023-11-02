@@ -21,6 +21,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: {
     policy: 'nativeVersion',
   },
+  icon: './assets/images/icon.png',
+  splash: {
+    image: './assets/images/splash.png',
+    resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
+    backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
+  },
   plugins: [
     'react-native-iap',
     [
@@ -73,15 +79,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         category: ['BROWSABLE', 'DEFAULT'],
       },
     ],
-    splash: {
-      image: './assets/images/splash.png',
-      resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
-      backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
-    },
-    adaptiveIcon: {
-      backgroundColor: '#000000',
-      foregroundImage: './assets/images/icon.png',
-    },
     permissions: [
       'android.permission.READ_EXTERNAL_STORAGE',
       'android.permission.WRITE_EXTERNAL_STORAGE',
@@ -93,7 +90,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
     buildNumber: process.env.MINDS_APP_BUILD || '1',
-    icon: './assets/images/icon.png',
     associatedDomains: Tenant.APP_HOST
       ? [
           'applinks:' + Tenant.APP_HOST,
@@ -114,11 +110,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       NSCameraUsageDescription: '$(PRODUCT_NAME) needs access to your Camera.',
       NSMicrophoneUsageDescription:
         '$(PRODUCT_NAME) needs access to your Microphone.',
-    },
-    splash: {
-      image: './assets/images/splash.png',
-      resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
-      backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
     },
   },
   notification: {

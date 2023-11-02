@@ -3,6 +3,8 @@
   "version": "4.22.0",
   "private": true,
   "scripts": {
+    "expo-switch-tenant": "node tasks/setup-tenant.js",
+    "expo-demo": "npx eas-cli build --platform android --profile demo --non-interactive --json --no-wait",
     "android": "react-native run-android --active-arch-only",
     "ios": "react-native run-ios",
     "start": "expo start --dev-client",
