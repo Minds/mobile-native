@@ -23,7 +23,6 @@ import {
 import StickyListWrapper from '~/common/components/StickyListWrapper';
 import Animated from 'react-native-reanimated';
 import CheckLanguage from '~/common/components/CheckLanguage';
-import CodePushUpdatePrompt from '~/modules/codepush/widgets/CodePushUpdatePrompt';
 import RemoteBanner from '~/common/components/RemoteBanner';
 import InitialOnboardingButton from '~/onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '~/portrait/components/PortraitContentBar';
@@ -252,7 +251,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 const Header = () => (
   <>
     <CheckLanguage />
-      <RemoteBanner />
+    <RemoteBanner />
     <InitialOnboardingButton />
     <PortraitContentBar />
     {useIsFeatureOn('mob-4472-in-app-verification') ? (

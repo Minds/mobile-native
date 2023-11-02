@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { View, ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, View, ViewStyle } from 'react-native';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE, TENANT } from '~/config/Config';
+import { DEV_MODE, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button, ButtonPropsType } from '~ui';
+import { Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -15,6 +14,7 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
+import assets from '@assets';
 
 type PropsType = {
   navigation: any;
@@ -39,9 +39,21 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <SafeAreaView style={theme.flexContainer}>
+    <Screen safe>
       <View style={theme.flexContainer}>
-        <OnboardingCarousel />
+        {IS_TENANT ? (
+          <Image
+            resizeMode="contain"
+            source={
+              WELCOME_LOGO === 'square'
+                ? assets.LOGO_SQUARED
+                : assets.LOGO_HORIZONTAL
+            }
+            style={styles.image}
+          />
+        ) : (
+          <OnboardingCarousel />
+        )}
         <View style={styles.buttonContainer}>
           <Button
             type="action"
@@ -64,7 +76,7 @@ function WelcomeScreen(props: PropsType) {
       <HiddenTap style={devToggleStyle}>
         <View />
       </HiddenTap>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
@@ -93,6 +105,13 @@ const styles = ThemedStyles.create({
     left: 0,
     right: 0,
     paddingHorizontal: 32,
+  },
+  image: {
+    height: '14%',
+    width: '50%',
+    position: 'absolute',
+    top: '10%',
+    alignSelf: 'center',
   },
 });
 
