@@ -82,3 +82,6 @@ apps/
 
 # Ignore GrpahQL Schema files
 gql-schemas/
+
+credentials/
+credentials.json
