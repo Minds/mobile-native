@@ -51,7 +51,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const isDiscoveryConsolidationOn = useIsFeatureOn(
       'mob-5038-discovery-consolidation',
     );
-    const showFAB = true;
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time
@@ -295,13 +294,11 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        {showFAB && (
-          <CaptureFab
-            visible={true}
-            navigation={navigation}
-            style={composeFABStyle}
-          />
-        )}
+        <CaptureFab
+          visible={true}
+          navigation={navigation}
+          style={composeFABStyle}
+        />
       </Screen>
     );
   }),

@@ -36,7 +36,7 @@ import { FeedListV2 } from '~/common/components/FeedListV2';
 import useFeedStore from '~/common/hooks/useFeedStore';
 import PendingSupermindNotice from '~/common/components/in-feed-notices/notices/PendingSupermindNotice';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type TabModeType = 'inbound' | 'outbound' | 'feed';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -81,7 +81,7 @@ function SupermindConsoleScreen({
   const feedStore = useFeedStore();
   const scrollDirection = useSharedValue(0);
   const scrollY = useSharedValue(0);
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   // configure feed store
   feedStore

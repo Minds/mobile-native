@@ -27,7 +27,7 @@ import sessionService from '~/common/services/session.service';
 import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -63,7 +63,7 @@ const UpgradeInAppPurchasesTokens = ({
     finishTransaction,
   } = useIAP();
 
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   /**
    * Get IAP subscriptions

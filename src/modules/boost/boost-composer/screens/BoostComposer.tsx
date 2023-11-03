@@ -23,7 +23,7 @@ import BoostComposerHeader from '../components/BoostComposerHeader';
 import { IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
 import { useGifts } from '~/common/hooks/useGifts';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -45,7 +45,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     setPaymentType,
     isAmountValid,
   } = boostStore;
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const tabs = [
     {

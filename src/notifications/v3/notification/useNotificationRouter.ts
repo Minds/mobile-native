@@ -3,14 +3,14 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import type NotificationModel from './NotificationModel';
 import { NotificationType } from './NotificationModel';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 const useNotificationRouter = (
   notification: NotificationModel,
   showSubscribersModal?: () => void,
 ) => {
   const navigation = useNavigation();
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const router = {
     navigation: navigation,

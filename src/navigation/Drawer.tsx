@@ -21,7 +21,7 @@ import {
 import { Icon as IconV2 } from '@minds/ui';
 import {
   hasVariation,
-  useIsAndroidFeatureOn,
+  useIsGoogleFeatureOn,
   useIsIOSFeatureOn,
 } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
@@ -168,7 +168,7 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });

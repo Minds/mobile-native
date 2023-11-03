@@ -21,13 +21,13 @@ import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
-import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
-  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   return (
     <Screen safe onlyTopEdge>

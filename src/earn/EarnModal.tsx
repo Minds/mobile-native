@@ -15,7 +15,7 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsAndroidFeatureOn, useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 // const linkTo = (dest: string) =>
 //   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -99,7 +99,7 @@ export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
     const theme = ThemedStyles.style;
     const localStore = useLocalStore(createLocalStore);
-    const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+    const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
     useEffect(() => {
       const settings = mindsConfigService.getSettings();
