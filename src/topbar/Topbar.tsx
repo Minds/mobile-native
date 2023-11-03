@@ -22,7 +22,7 @@ type PropsType = {
   noInsets?: boolean;
   shadowLess?: boolean;
   showBack?: boolean;
-  onTabPress?: (e: any) => void;
+  onLogoPress?: (e: any) => void;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -106,7 +106,7 @@ export const Topbar = observer((props: PropsType) => {
                     styles.logoWrapper,
                     isChatIconHidden && styles.noMarginLeft,
                   ]}>
-                  <PressableScale onPress={props.onTabPress}>
+                  <PressableScale onPress={props.onLogoPress}>
                     <Image
                       resizeMode="contain"
                       source={
