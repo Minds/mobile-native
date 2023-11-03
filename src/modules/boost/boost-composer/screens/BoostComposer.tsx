@@ -23,6 +23,7 @@ import BoostComposerHeader from '../components/BoostComposerHeader';
 import { IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
 import { useGifts } from '~/common/hooks/useGifts';
+import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -44,6 +45,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     setPaymentType,
     isAmountValid,
   } = boostStore;
+  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
 
   const tabs = [
     {
@@ -51,19 +53,14 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       title: t('Cash'),
       testID: 'BoostComposerScreen:tab:cash',
     },
-    {
+  ];
+
+  if (!hideTokens) {
+    tabs.push({
       id: 'offchain_tokens',
       title: t('Token'),
       testID: 'BoostComposerScreen:tab:token',
-    },
-  ];
-
-  const removeCashTab = false; // && IS_IOS;
-
-  if (removeCashTab) {
-    tabs.shift();
-    // if we disable cash, offchain_tokens should be the default
-    boostStore.paymentType = 'offchain_tokens';
+    });
   }
 
   const textMapping = {

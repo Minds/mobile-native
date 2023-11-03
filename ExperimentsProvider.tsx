@@ -10,7 +10,7 @@ import analyticsService from '~/common/services/analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import { IS_IOS, IS_REVIEW } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS, IS_REVIEW } from '~/config/Config';
 
 export const growthbook = new GrowthBook({
   trackingCallback: (experiment, result) => {
@@ -99,7 +99,7 @@ export const useIsIOSFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && IS_IOS;
 
 export const useIsAndroidFeatureOn = (feature: FeatureID) =>
-  useGrowthbookFeature(feature).on && !IS_IOS;
+  useGrowthbookFeature(feature).on && GOOGLE_PLAY_STORE;
 
 export const featureList = [
   'engine-2503-twitter-feats',
@@ -126,6 +126,7 @@ export const featureList = [
   'mob-5075-hide-post-on-downvote',
   'mob-5075-explicit-vote-buttons',
   'mob-5009-boost-rotator-in-feed',
+  'mob-5221-google-hide-tokens',
 ] as const;
 
 export type FeatureID = typeof featureList[number];

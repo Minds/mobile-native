@@ -30,7 +30,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation, useIsAndroidFeatureOn } from 'ExperimentsProvider';
+import { hasVariation } from 'ExperimentsProvider';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
@@ -167,7 +167,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
   const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
-  const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
+  const showFAB = true;
 
   const pushComposeCreate = () =>
     pushComposeCreateScreen({

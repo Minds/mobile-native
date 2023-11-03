@@ -4,7 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import { B3, Button } from '~ui';
 import i18n from '~/common/services/i18n.service';
-import { UpgradeStoreType } from './createUpgradeStore';
+import {
+  IAP_SKUS_PLUS,
+  IAP_SKUS_PRO,
+  UpgradeStoreType,
+} from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
 import PlanOptions from './PlanOptions';
 import { confirm } from '~/common/components/Confirm';
@@ -23,6 +27,7 @@ import sessionService from '~/common/services/session.service';
 import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
+import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -58,18 +63,19 @@ const UpgradeInAppPurchasesTokens = ({
     finishTransaction,
   } = useIAP();
 
+  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
+
   /**
    * Get IAP subscriptions
    */
   useEffect(() => {
     if (store.method === 'usd') {
-      const skus = store.plansUSD.map(plan => plan.iapSku as 'string');
-
-      if (skus) {
+      const skus = Object.values(pro ? IAP_SKUS_PRO : IAP_SKUS_PLUS);
+      if (skus.length) {
         getSubscriptions({ skus });
       }
     }
-  }, [getSubscriptions, store.method, store]);
+  }, [getSubscriptions, store.method, pro]);
 
   /**
    * Set set offer tokens to the subscription layer
@@ -176,7 +182,7 @@ const UpgradeInAppPurchasesTokens = ({
     <UpgradeScreenPlaceHolder />
   ) : (
     <>
-      <PaymentMethod store={store} cashName="Cash" />
+      {!hideTokens && <PaymentMethod store={store} cashName="Cash" />}
       {store.method === 'tokens' ? (
         <>
           <PlanOptions store={store} />

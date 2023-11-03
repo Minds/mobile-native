@@ -21,11 +21,13 @@ import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
+import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
+  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
 
   return (
     <Screen safe onlyTopEdge>
@@ -64,6 +66,7 @@ export default function AffiliateProgramScreen({ navigation }) {
           </B2>
 
           <Button
+            vertical={hideTokens ? 'XL' : undefined}
             top="XXXL"
             mode="outline"
             type="action"
@@ -72,24 +75,28 @@ export default function AffiliateProgramScreen({ navigation }) {
             }}>
             Invite and earn
           </Button>
-          <TotalEarnings />
-          <Row align="centerBetween" top="XL">
-            <Button
-              mode="outline"
-              onPress={() => {
-                navigation.navigate('Wallet', {
-                  currency: 'cash',
-                  section: 'earnings',
-                });
-              }}>
-              View earnings
-            </Button>
-          </Row>
-          <B3 vertical="XL">
-            Note - You will be credited as the click referrer for any purchases
-            of Boosts and subscriptions (Minds+ and Pro) they make for the next
-            72 hours.
-          </B3>
+          {hideTokens ? undefined : (
+            <>
+              <TotalEarnings />
+              <Row align="centerBetween" top="XL">
+                <Button
+                  mode="outline"
+                  onPress={() => {
+                    navigation.navigate('Wallet', {
+                      currency: 'cash',
+                      section: 'earnings',
+                    });
+                  }}>
+                  View earnings
+                </Button>
+              </Row>
+              <B3 vertical="XL">
+                Note - You will be credited as the click referrer for any
+                purchases of Boosts and subscriptions (Minds+ and Pro) they make
+                for the next 72 hours.
+              </B3>
+            </>
+          )}
         </ScreenSection>
       </FitScrollView>
       <OnboardingOverlay type="affiliates" />

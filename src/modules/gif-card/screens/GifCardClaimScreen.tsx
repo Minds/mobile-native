@@ -23,11 +23,13 @@ import {
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { showNotification } from 'AppMessages';
+import { useIsAndroidFeatureOn } from 'ExperimentsProvider';
 
 type Props = AppStackScreenProps<'GifCardClaim'>;
 
 export function GifCardClaimScreen({ navigation, route }: Props) {
   const { t } = useTranslation();
+  const hideTokens = useIsAndroidFeatureOn('mob-5221-google-hide-tokens');
 
   const code = route.params?.code;
 
@@ -102,21 +104,23 @@ export function GifCardClaimScreen({ navigation, route }: Props) {
                     ${data?.giftCardByClaimCode.amount}
                   </B1>
                 </B1>
-                <B2 color="secondary">
-                  <Trans
-                    i18nKey="claimed.description"
-                    t={t}
-                    components={[
-                      <B2
-                        color="link"
-                        onPress={() =>
-                          navigation.navigate('More', { screen: 'Wallet' })
-                        }
-                      />,
-                    ]}
-                  />
-                  {'\n\n' + t('claimed.description2')}
-                </B2>
+                {hideTokens ? undefined : (
+                  <B2 color="secondary">
+                    <Trans
+                      i18nKey="claimed.description"
+                      t={t}
+                      components={[
+                        <B2
+                          color="link"
+                          onPress={() =>
+                            navigation.navigate('More', { screen: 'Wallet' })
+                          }
+                        />,
+                      ]}
+                    />
+                    {'\n\n' + t('claimed.description2')}
+                  </B2>
+                )}
                 <ScreenSection top="XL">
                   <Button
                     mode="outline"
