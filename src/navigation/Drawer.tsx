@@ -27,7 +27,7 @@ import {
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -72,7 +72,7 @@ const getOptionsList = (
         navigation.push('Channel', { entity: channel });
       },
     },
-    !isIosMindsHidden
+    !isIosMindsHidden && IS_IOS // hide minds+ in google
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
