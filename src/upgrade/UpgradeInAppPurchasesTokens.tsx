@@ -1,10 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 
 import { B3, Button } from '~ui';
 import i18n from '~/common/services/i18n.service';
-import { UpgradeStoreType } from './createUpgradeStore';
+import {
+  IAP_SKUS_PLUS,
+  IAP_SKUS_PRO,
+  UpgradeStoreType,
+} from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
 import PlanOptions from './PlanOptions';
 import { confirm } from '~/common/components/Confirm';
@@ -42,13 +46,9 @@ const UpgradeInAppPurchasesTokens = ({
   const navigation = useNavigation();
   const wireStore = useUpgradeWireStore();
   const walletStore: WalletStoreType = useStores().wallet;
+  const [disabledButton, setDisabledButton] = useState(true);
 
-  const cheapestTokenPrice = store.plansTokens.reduce(
-    (min, b) => Math.min(min, b?.cost ?? 1000),
-    store.plansTokens.length > 0 ? store.plansTokens[0]?.cost ?? 1000 : 1000,
-  );
-
-  const insufficientFunds = walletStore.balance < cheapestTokenPrice;
+  const iapPlans = pro ? IAP_SKUS_PRO : IAP_SKUS_PLUS;
 
   const {
     currentPurchase,
@@ -57,22 +57,26 @@ const UpgradeInAppPurchasesTokens = ({
     finishTransaction,
   } = useIAP();
 
+  const cheapestTokenPrice = store.plansTokens.reduce(
+    (min, b) => Math.min(min, b?.cost ?? 1000),
+    store.plansTokens.length > 0 ? store.plansTokens[0]?.cost ?? 1000 : 1000,
+  );
+
+  const insufficientFunds = walletStore.balance < cheapestTokenPrice;
+
   /**
    * Get IAP subscriptions
    */
   useEffect(() => {
     if (store.method === 'usd') {
-      const skus = ['plus.monthly.01', 'plus.yearly.01'];
-      // store.plansUSD.map(plan => plan.iapSku as 'string');
+      const skus = Object.values(iapPlans);
       if (skus) {
         getSubscriptions({ skus }).catch(err => console.warn('err', err));
       }
     }
-  }, [store.method, store]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.method, store, iapPlans]);
 
-  /**
-   * Set set offer tokens to the subscription layer
-   */
   useEffect(() => {
     store.plansUSD.forEach(plan => {
       const sub = subscriptions.find(
@@ -84,7 +88,12 @@ const UpgradeInAppPurchasesTokens = ({
         )?.subscriptionOfferDetails?.[0].offerToken;
       }
     });
-  }, [store.plansUSD, subscriptions]);
+    setDisabledButton(
+      store.method === 'tokens'
+        ? insufficientFunds
+        : (subscriptions?.length ?? 0) === 0,
+    );
+  }, [store.plansUSD, insufficientFunds, store.method, subscriptions]);
 
   /**
    * Handle purchase
@@ -176,20 +185,30 @@ const UpgradeInAppPurchasesTokens = ({
       }
     } else {
       const sku = store.selectedOption.iapSku;
-      // Android Subscriptions needs a offerToken
       const offerToken = store.selectedOption.offerToken;
 
-      sku &&
-        offerToken &&
-        requestSubscription({
-          sku: sku,
-          obfuscatedAccountIdAndroid: sessionService.getUser().guid,
-          ...(offerToken && {
-            subscriptionOffers: [{ sku, offerToken }],
-          }),
-        }).catch(error => {
-          showNotification(error.message, 'warning');
-        });
+      // Android Subscriptions needs a offerToken
+      if (sku === undefined || (!IS_IOS && !offerToken)) {
+        showNotification('No SKU or offerToken', 'warning');
+        console.warn('sku', sku, offerToken);
+        return;
+      }
+      const payload = {
+        sku,
+        ...(IS_IOS
+          ? {
+              appAccountToken: sessionService.getUser().guid,
+              quantity: 1,
+            }
+          : {
+              obfuscatedAccountIdAndroid: sessionService.getUser().guid,
+              subscriptionOffers: [{ sku, offerToken }],
+            }),
+      };
+      requestSubscription(payload).catch(error => {
+        console.warn('IAP Error', error, payload);
+        showNotification(error.message, 'warning');
+      });
     }
   }, [store, wireStore, onComplete, navigation]);
 
@@ -208,11 +227,8 @@ const UpgradeInAppPurchasesTokens = ({
           )}
         </>
       ) : (
-        subscriptions.length !== 0 && (
-          <PlanOptionsIAP
-            store={store}
-            subscriptions={subscriptions as SubscriptionAndroid[]}
-          />
+        (subscriptions?.length ?? 0) !== 0 && (
+          <PlanOptionsIAP store={store} subscriptions={subscriptions} />
         )
       )}
       <Button
@@ -222,7 +238,7 @@ const UpgradeInAppPurchasesTokens = ({
         horizontal="L"
         loading={wireStore.loading}
         onPress={confirmSend}
-        disabled={store.method === 'tokens' && insufficientFunds}
+        disabled={disabledButton}
         spinner>
         {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
       </Button>

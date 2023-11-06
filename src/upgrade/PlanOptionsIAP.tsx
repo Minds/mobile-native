@@ -6,13 +6,18 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { UpgradeStoreType } from './createUpgradeStore';
 import MText from '../common/components/MText';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
-import type { SubscriptionAndroid } from 'react-native-iap';
+import type {
+  Subscription,
+  SubscriptionAndroid,
+  SubscriptionIOS,
+} from 'react-native-iap';
 import { PlanList } from './PlanOptions';
 import i18n from '~/common/services/i18n.service';
+import { IS_IOS } from '~/config/Config';
 
 type PropsType = {
   store: UpgradeStoreType;
-  subscriptions: SubscriptionAndroid[];
+  subscriptions: Subscription[];
 };
 
 /**
@@ -39,14 +44,76 @@ const PlanOptionsIAP = observer(({ store, subscriptions }: PropsType) => {
       </MText>
       {isTokens ? (
         <PlanList plans={plans} store={store} />
+      ) : IS_IOS ? (
+        <PlanListIOSIAP
+          subscriptions={subscriptions as SubscriptionIOS[]}
+          store={store}
+        />
       ) : (
-        <PlanListIAP subscriptions={subscriptions} store={store} />
+        <PlanListAndroidIAP
+          subscriptions={subscriptions as SubscriptionAndroid[]}
+          store={store}
+        />
       )}
     </View>
   );
 });
 
-export const PlanListIAP = observer(
+const PlanListIOSIAP = observer(
+  ({
+    subscriptions,
+    store,
+  }: {
+    subscriptions: SubscriptionIOS[];
+    store: UpgradeStoreType;
+  }) => {
+    const theme = ThemedStyles.style;
+    return (
+      <>
+        {subscriptions.map(subscription => {
+          const isMonthly = subscription.subscriptionPeriodUnitIOS === 'MONTH';
+          const detail = ' / month';
+          const cost = Math.round(parseFloat(subscription.price) * 100) / 100;
+          const currency = subscription.currency || 'USD';
+          const price = isMonthly
+            ? subscription.localizedPrice
+            : (cost / 12).toLocaleString(i18n.getDeviceLocale(), {
+                style: 'currency',
+                currency,
+              });
+          const label = isMonthly ? 'Monthly' : 'Yearly';
+          return (
+            <MenuItemOption
+              key={subscription.productId}
+              onPress={() => {
+                const plan = store.plansUSD.find(
+                  item => item.iapSku === subscription.productId,
+                );
+                if (plan) {
+                  store.setSelectedOption(plan);
+                }
+              }}
+              title={
+                <MText style={theme.colorPrimaryText}>
+                  {label + ' · ' + price}
+                  <MText style={theme.colorSecondaryText}>{detail}</MText>
+                </MText>
+              }
+              subtitle={
+                isMonthly
+                  ? undefined
+                  : `Billed annually at ${subscription.localizedPrice}`
+              }
+              selected={subscription.productId === store.selectedOption.iapSku}
+            />
+          );
+        })}
+      </>
+    );
+  },
+);
+
+export const PlanListAndroidIAP = observer(
   ({
     subscriptions,
     store,
@@ -77,7 +144,7 @@ export const PlanListIAP = observer(
                 key={`${subscription.productId}_${offer.offerId}`}
                 onPress={() => {
                   const plan = store.plansUSD.find(
-                    plan => plan.iapSku === subscription.productId,
+                    item => item.iapSku === subscription.productId,
                   );
                   if (plan) {
                     store.setSelectedOption(plan);
@@ -85,7 +152,7 @@ export const PlanListIAP = observer(
                 }}
                 title={
                   <MText style={theme.colorPrimaryText}>
-                    {lable[pricingPhases.billingPeriod] + ' · ' + price}
+                    {androidlabel[pricingPhases.billingPeriod] + ' · ' + price}
                     <MText style={theme.colorSecondaryText}>{detail}</MText>
                   </MText>
                 }
@@ -106,7 +173,7 @@ export const PlanListIAP = observer(
   },
 );
 
-const lable = {
+const androidlabel = {
   P1M: 'Monthly',
   P1Y: 'Annualy',
 };
