@@ -22,6 +22,7 @@ type PropsType = {
   noInsets?: boolean;
   shadowLess?: boolean;
   showBack?: boolean;
+  onLogoPress?: (e: any) => void;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -105,16 +106,17 @@ export const Topbar = observer((props: PropsType) => {
                     styles.logoWrapper,
                     isChatIconHidden && styles.noMarginLeft,
                   ]}>
-                  <Image
-                    resizeMode="contain"
-                    source={
-                      ThemedStyles.theme
-                        ? require('../assets/logos/logo-white.png')
-                        : require('../assets/logos/logo.png')
-                    }
-                    style={styles.logo}
-                  />
-
+                  <PressableScale onPress={props.onLogoPress}>
+                    <Image
+                      resizeMode="contain"
+                      source={
+                        ThemedStyles.theme
+                          ? require('../assets/logos/logo-white.png')
+                          : require('../assets/logos/logo.png')
+                      }
+                      style={styles.logo}
+                    />
+                  </PressableScale>
                   <CodePushCustomIcon />
                 </View>
               </>
