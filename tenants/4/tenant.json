@@ -1,0 +1,13 @@
+{
+  "APP_NAME": "Livepeer",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.demo_livepeer_mobile",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.demo_livepeer_mobile",
+  "ACCENT_COLOR_LIGHT": "#1FC47E",
+  "ACCENT_COLOR_DARK": "#1FC47E",
+  "WELCOME_LOGO": "horizontal",
+  "THEME": "light",
+  "API_URL": "https://www.minds.com/"
+}
