@@ -141,7 +141,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-navigation-bar-color": "^2.0.1",
-    "react-native-notifications": "Minds/react-native-notifications",
+    "react-native-notifications": "https://github.com/Minds/react-native-notifications",
     "react-native-pager-view": "6.2.0",
     "react-native-performance": "^2.0.0",
     "react-native-phone-number-input": "https://github.com/filipengberg/react-native-phone-number-input.git#feature/libphonenumber-js",
