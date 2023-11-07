@@ -24,6 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'react-native-iap',
+    './node_modules/react-native-notifications/app.plugin.js',
     [
       'expo-build-properties',
       {
@@ -35,6 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         },
         ios: {
           deploymentTarget: '13.0',
+          flipper: false,
         },
       },
     ],
@@ -86,6 +88,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'android.permission.CAMERA',
       'android.permission.RECORD_AUDIO',
     ],
+    googleServicesFile: './google-services.json',
   },
   ios: {
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
@@ -119,7 +122,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   notification: {
     icon: './assets/images/icon_mono.png',
-    color: '#ffffff', // we can use the accent color here instead
+    color: Tenant.ACCENT_COLOR_LIGHT,
     iosDisplayInForeground: true,
   },
   extra: {
