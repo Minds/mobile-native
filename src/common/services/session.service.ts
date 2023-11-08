@@ -13,7 +13,8 @@ import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
-import { decode as atob } from 'base-64';
+
+const atob = (text: string) => Buffer.from(text, 'base64');
 
 /**
  * Session service
