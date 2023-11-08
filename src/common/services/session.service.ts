@@ -13,6 +13,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
+import { decode as atob } from 'base-64';
 
 /**
  * Session service
