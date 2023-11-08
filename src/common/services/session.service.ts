@@ -14,6 +14,8 @@ import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
 
+const atob = (text: string) => Buffer.from(text, 'base64');
+
 /**
  * Session service
  */
@@ -294,6 +296,7 @@ export class SessionService {
       //@ts-ignore
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
+      console.warn('Error parsing token: ', token);
       return null;
     }
   }
