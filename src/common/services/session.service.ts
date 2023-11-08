@@ -1,4 +1,3 @@
-import { decode as atob } from 'base-64';
 import { observable, action, reaction, computed } from 'mobx';
 import {
   RefreshToken,
@@ -14,6 +13,8 @@ import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
+
+const atob = (text: string) => Buffer.from(text, 'base64');
 
 /**
  * Session service
@@ -295,6 +296,7 @@ export class SessionService {
       //@ts-ignore
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
+      console.warn('Error parsing token: ', token);
       return null;
     }
   }
