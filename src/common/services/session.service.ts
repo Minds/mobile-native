@@ -14,6 +14,8 @@ import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
 
+const atob = (text: string) => Buffer.from(text, 'base64');
+
 /**
  * Session service
  */
