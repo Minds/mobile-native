@@ -19,6 +19,8 @@ export const isTokenExpired = error => {
   return error instanceof TokenExpiredError;
 };
 
+const atob = (text: string) => Buffer.from(text, 'base64');
+
 /**
  * Session service
  */
