@@ -1,3 +1,4 @@
+import { decode as atob } from 'base-64';
 import { observable, action, reaction, computed } from 'mobx';
 import {
   RefreshToken,
