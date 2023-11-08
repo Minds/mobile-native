@@ -51,7 +51,13 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
 
 const renderItem = ({ item, index }) => {
   const { url } = item?.data?.attributes ?? {};
-  const imageSize = { height: 338, width: 156 };
+  const imageSize = {
+    height: 338,
+    width: 156,
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: '#565658',
+  };
   const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
   return (
     <View
