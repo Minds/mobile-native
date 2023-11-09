@@ -96,7 +96,8 @@ if (tenant) {
 // ];
 
 function prepareTenant(companyID) {
-  const command = `npx eas-cli build --platform android --profile demo --non-interactive --json --no-wait`;
+  const command =
+    'npx eas-cli build --platform android --profile demo --non-interactive --json --no-wait';
   // const command = `eas build --platform android --profile demo --non-interactive --json --no-wait --local`;
   // const Tenant = require(`../tenants/${companyID}/tenant.json`);
   console.log(`Preparing tenant ${companyID}...`);
@@ -106,33 +107,40 @@ function prepareTenant(companyID) {
   if (fs.existsSync(`./tenants/${companyID}/icon.png`)) {
     fs.copyFileSync(
       `./tenants/${companyID}/icon.png`,
-      `./assets/images/icon.png`,
+      './assets/images/icon.png',
     );
   } else {
     fs.copyFileSync(
       `./tenants/${companyID}/square.png`,
-      `./assets/images/icon.png`,
+      './assets/images/icon.png',
     );
   }
 
   fs.copyFileSync(
     `./tenants/${companyID}/square.png`,
-    `./assets/images/logo_square.png`,
+    './assets/images/logo_square.png',
   );
 
   fs.copyFileSync(
     `./tenants/${companyID}/horizontal.png`,
-    `./assets/images/logo_horizontal.png`,
+    './assets/images/logo_horizontal.png',
   );
   fs.copyFileSync(
     `./tenants/${companyID}/horizontal.png`,
-    `./assets/images/logo_horizontal_dark.png`,
+    './assets/images/logo_horizontal_dark.png',
   );
 
   fs.copyFileSync(
     `./tenants/${companyID}/splash.png`,
-    `./assets/images/splash.png`,
+    './assets/images/splash.png',
   );
+
+  if (fs.existsSync(`./tenants/${companyID}/adaptive-icon.png`)) {
+    fs.copyFileSync(
+      `./tenants/${companyID}/adaptive-icon.png`,
+      './assets/images/adaptive-icon.png',
+    );
+  }
 
   // const childProcess = exec(command, (error, stdout, stderr) => {
   //   if (error) {

@@ -3,10 +3,11 @@
   "APP_SCHEME": "mindsapp",
   "APP_HOST": "www.minds.com",
   "APP_IOS_BUNDLE": "com.minds.demoTPVMobile",
-  "APP_SPLASH_RESIZE": "cover",
+  "APP_SPLASH_RESIZE": "contain",
   "APP_ANDROID_PACKAGE": "com.minds.demoTPVMobile",
   "ACCENT_COLOR_LIGHT": "#2F65F6",
   "ACCENT_COLOR_DARK": "#2F65F6",
+  "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
   "THEME": "light",
   "API_URL": "https://www.minds.com/"
 }
