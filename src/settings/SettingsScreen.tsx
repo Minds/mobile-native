@@ -12,11 +12,7 @@ import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
-import {
-  DEV_MODE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { DEV_MODE, IS_IOS } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 
@@ -61,8 +57,6 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
-  const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
-
   const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
 
   const user = sessionService.getUser();
@@ -99,7 +93,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus && !UPGRADE_DISABLED) {
+  if (!user.plus) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -107,7 +101,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro && !UPGRADE_DISABLED) {
+  if (!user.pro) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',

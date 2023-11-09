@@ -1,4 +1,4 @@
-import { IS_FROM_STORE } from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import type UserModel from '../channel/UserModel';
 import entitiesService from '../common/services/entities.service';
 import mindsConfigService from '../common/services/minds-config.service';
@@ -10,12 +10,12 @@ import {
 } from './types';
 
 // TODO: move to the backend
-const IAP_SKUS_PLUS = {
-  monthly: 'plus.monthly.001',
-  yearly: 'plus.yearly.001',
+export const IAP_SKUS_PLUS = {
+  monthly: IS_IOS ? 'plus.monthly.01' : 'plus.monthly.001',
+  yearly: IS_IOS ? 'plus.yearly.01' : 'plus.yearly.001',
 };
-const IAP_SKUS_PRO = {
-  monthly: 'pro.monthly.001',
+export const IAP_SKUS_PRO = {
+  monthly: IS_IOS ? 'pro.monthly.01' : 'pro.monthly.001',
 };
 
 const createUpgradeStore = () => {
@@ -87,7 +87,7 @@ const createUpgradeStore = () => {
       this.isPro = pro;
 
       this.generatePaymentPlans();
-      this.selectedOption = this.plansTokens[0];
+      this.selectedOption = this.plansUSD[0];
 
       this.loaded = true;
     },

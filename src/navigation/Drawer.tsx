@@ -23,7 +23,6 @@ import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -111,23 +110,18 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('GroupsList');
       },
     },
-    PRO_PLUS_SUBSCRIPTION_ENABLED
-      ? {
-          name: i18n.t('moreScreen.upgrade'),
-          icon: (
-            <IconV2
-              name="verified"
-              color={ThemedStyles.getColor('PrimaryText')}
-            />
-          ),
-          testID: 'Drawer:upgrade',
-          onPress: () => {
-            navigation.navigate('UpgradeScreen', {
-              onComplete: () => null,
-            });
-          },
-        }
-      : null,
+    {
+      name: i18n.t('moreScreen.upgrade'),
+      icon: (
+        <IconV2 name="verified" color={ThemedStyles.getColor('PrimaryText')} />
+      ),
+      testID: 'Drawer:upgrade',
+      onPress: () => {
+        navigation.navigate('UpgradeScreen', {
+          onComplete: () => null,
+        });
+      },
+    },
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',

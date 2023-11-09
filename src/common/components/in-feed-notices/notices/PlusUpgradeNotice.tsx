@@ -6,7 +6,6 @@ import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 // import openUrlService from '~/common/services/open-url.service';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 
@@ -38,11 +37,7 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
     });
   }, [navigation, user]);
 
-  if (
-    !inFeedNoticesService.visible(name) ||
-    user.plus ||
-    !PRO_PLUS_SUBSCRIPTION_ENABLED
-  ) {
+  if (!inFeedNoticesService.visible(name) || user.plus) {
     return null;
   }
 
