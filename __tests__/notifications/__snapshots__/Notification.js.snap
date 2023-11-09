@@ -229,6 +229,7 @@ exports[`Notifications component renders correctly 1`] = `
               "entity_urn": "urn:user:968187695744425997",
               "from": {
                 "_collapsed": false,
+                "_viewed": false,
                 "access_id": false,
                 "allow_comments": false,
                 "allow_unsubscribed_contact": false,
@@ -496,6 +497,7 @@ exports[`Notifications component renders correctly 1`] = `
         "entity_urn": "urn:user:968187695744425997",
         "from": {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": false,
           "allow_comments": false,
           "allow_unsubscribed_contact": false,

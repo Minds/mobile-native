@@ -21,7 +21,7 @@ import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
 import OffsetList from '../../common/components/OffsetList';
@@ -54,7 +54,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const isDiscoveryConsolidationOn = useIsFeatureOn(
       'mob-5038-discovery-consolidation',
     );
-    const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
+    const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab') && !IS_IPAD;
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time

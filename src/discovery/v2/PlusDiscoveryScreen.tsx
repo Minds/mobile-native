@@ -2,21 +2,19 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { Edge, SafeAreaView } from 'react-native-safe-area-context';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 import Banner from '~/common/components/Banner';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { ScreenHeader } from '~ui/screen';
+import { Screen, ScreenHeader } from '~ui/screen';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 
-const SAFE_AREA_EDGES: Edge[] = ['top'];
 /**
  * Discovery Feed Screen
  */
@@ -40,7 +38,7 @@ const PlusDiscoveryScreen = observer(() => {
   }, [navigation, user]);
 
   return (
-    <SafeAreaView edges={SAFE_AREA_EDGES} style={theme.flexContainer}>
+    <Screen safe onlyTopEdge={IS_IOS}>
       <ScreenHeader back={backEnable} title={i18n.t('plusTabTitleDiscovery')} />
       {!user?.plus && (
         <Banner
@@ -74,7 +72,7 @@ const PlusDiscoveryScreen = observer(() => {
         )}
       </View>
       <OnboardingOverlay type="minds_plus" />
-    </SafeAreaView>
+    </Screen>
   );
 });
 

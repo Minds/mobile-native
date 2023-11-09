@@ -30,6 +30,7 @@ import { IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
+import { IS_FROM_STORE } from '~/config/Config';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -141,7 +142,7 @@ const WalletScreen = observer((props: PropsType) => {
       <ScreenHeader
         back={!IS_IPAD}
         title={i18n.t('wallet.wallet')}
-        extra={<TokenPrice />}
+        extra={IS_FROM_STORE ? null : <TokenPrice />}
       />
       <TopbarTabbar
         titleStyle={theme.fontXL}
@@ -151,7 +152,7 @@ const WalletScreen = observer((props: PropsType) => {
         tabStyle={theme.paddingVertical}
       />
       {store.wallet.loaded ? body[store.currency] : body.loading}
-      <OnboardingOverlay type="wallet_cash_earnings" />
+      <OnboardingOverlay type="wallet_cash_earnings" disableLinks />
     </Screen>
   );
 });

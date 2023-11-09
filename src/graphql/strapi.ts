@@ -32,6 +32,7 @@ export type Scalars = {
   JSON: { input: any; output: any };
   OnboardingV5VersionStepsDynamicZoneInput: { input: any; output: any };
   Upload: { input: any; output: any };
+  V2ProductPageProductPageDynamicZoneInput: { input: any; output: any };
 };
 
 export type AuxPage = {
@@ -114,6 +115,7 @@ export type ComponentCommonActionButton = {
   dataRef?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   navigationUrl?: Maybe<Scalars['String']['output']>;
+  solid?: Maybe<Scalars['Boolean']['output']>;
   text: Scalars['String']['output'];
 };
 
@@ -124,6 +126,7 @@ export type ComponentCommonActionButtonFiltersInput = {
   navigationUrl?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<ComponentCommonActionButtonFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ComponentCommonActionButtonFiltersInput>>>;
+  solid?: InputMaybe<BooleanFilterInput>;
   text?: InputMaybe<StringFilterInput>;
 };
 
@@ -132,6 +135,7 @@ export type ComponentCommonActionButtonInput = {
   dataRef?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   navigationUrl?: InputMaybe<Scalars['String']['input']>;
+  solid?: InputMaybe<Scalars['Boolean']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -186,6 +190,57 @@ export type ComponentExplainerScreenSectionInput = {
   icon?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentFooterColumns = {
+  __typename?: 'ComponentFooterColumns';
+  id: Scalars['ID']['output'];
+  links: Array<Maybe<ComponentFooterLink>>;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentFooterColumnsLinksArgs = {
+  filters?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentFooterColumnsFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsFiltersInput>>>;
+  links?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  not?: InputMaybe<ComponentFooterColumnsFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsFiltersInput>>>;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentFooterColumnsInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  links?: InputMaybe<Array<InputMaybe<ComponentFooterLinkInput>>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentFooterLink = {
+  __typename?: 'ComponentFooterLink';
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type ComponentFooterLinkFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentFooterLinkFiltersInput>>>;
+  dataRef?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentFooterLinkFiltersInput>>>;
+  text?: InputMaybe<StringFilterInput>;
+  url?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentFooterLinkInput = {
+  dataRef?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ComponentMarketingComponentsAsFeaturedIn = {
@@ -622,6 +677,182 @@ export type ComponentProductSectionInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentV2ProductActionButton = {
+  __typename?: 'ComponentV2ProductActionButton';
+  action?: Maybe<Enum_Componentv2Productactionbutton_Action>;
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  navigationUrl?: Maybe<Scalars['String']['output']>;
+  rounded?: Maybe<Scalars['Boolean']['output']>;
+  solid?: Maybe<Scalars['Boolean']['output']>;
+  text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductActionButtonFiltersInput = {
+  action?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductActionButtonFiltersInput>>
+  >;
+  dataRef?: InputMaybe<StringFilterInput>;
+  navigationUrl?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductActionButtonFiltersInput>>
+  >;
+  rounded?: InputMaybe<BooleanFilterInput>;
+  solid?: InputMaybe<BooleanFilterInput>;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductActionButtonInput = {
+  action?: InputMaybe<Enum_Componentv2Productactionbutton_Action>;
+  dataRef?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  navigationUrl?: InputMaybe<Scalars['String']['input']>;
+  rounded?: InputMaybe<Scalars['Boolean']['input']>;
+  solid?: InputMaybe<Scalars['Boolean']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductBasicExplainer = {
+  __typename?: 'ComponentV2ProductBasicExplainer';
+  body: Scalars['String']['output'];
+  button?: Maybe<ComponentV2ProductActionButton>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductClosingCta = {
+  __typename?: 'ComponentV2ProductClosingCta';
+  body: Scalars['String']['output'];
+  borderImage?: Maybe<UploadFileEntityResponse>;
+  button?: Maybe<ComponentV2ProductActionButton>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureHighlight = {
+  __typename?: 'ComponentV2ProductFeatureHighlight';
+  alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage;
+  backgroundColor: Scalars['String']['output'];
+  body: Scalars['String']['output'];
+  button?: Maybe<ComponentV2ProductActionButton>;
+  colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme;
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureShowcase = {
+  __typename?: 'ComponentV2ProductFeatureShowcase';
+  id: Scalars['ID']['output'];
+  items: Array<Maybe<ComponentV2ProductFeatureShowcaseItem>>;
+};
+
+export type ComponentV2ProductFeatureShowcaseItemsArgs = {
+  filters?: InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductFeatureShowcaseItem = {
+  __typename?: 'ComponentV2ProductFeatureShowcaseItem';
+  body: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureShowcaseItemFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>>
+  >;
+  body?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductFeatureTable = {
+  __typename?: 'ComponentV2ProductFeatureTable';
+  columns?: Maybe<FeatTableColumnRelationResponseCollection>;
+  id: Scalars['ID']['output'];
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureTableColumnsArgs = {
+  filters?: InputMaybe<FeatTableColumnFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductFeatureTableHeader = {
+  __typename?: 'ComponentV2ProductFeatureTableHeader';
+  button: ComponentV2ProductActionButton;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
+  >;
+  button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  not?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductFeatureTableHeaderInput = {
+  button?: InputMaybe<ComponentV2ProductActionButtonInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductHero = {
+  __typename?: 'ComponentV2ProductHero';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductPerk = {
+  __typename?: 'ComponentV2ProductPerk';
+  id: Scalars['ID']['output'];
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentV2ProductPerkFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkFiltersInput>>>;
+  not?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkFiltersInput>>>;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductPerkInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductPricingCards = {
+  __typename?: 'ComponentV2ProductPricingCards';
+  id: Scalars['ID']['output'];
+  productPlans?: Maybe<ProductPlanRelationResponseCollection>;
+  savingsText: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductPricingCardsProductPlansArgs = {
+  filters?: InputMaybe<ProductPlanFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -649,6 +880,9 @@ export type DateTimeFilterInput = {
 export enum Enum_Componentcommonactionbutton_Action {
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
+  OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
+  OpenProUpgradeModal = 'open_pro_upgrade_modal',
+  OpenRegisterModal = 'open_register_modal',
   OpenUniswapV2Liquidity = 'open_uniswap_v2_liquidity',
   ScrollToTop = 'scroll_to_top',
 }
@@ -659,6 +893,40 @@ export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
   TagSelector = 'tag_selector',
   UserSelector = 'user_selector',
   VerifyEmail = 'verify_email',
+}
+
+export enum Enum_Componentv2Productactionbutton_Action {
+  OpenComposer = 'open_composer',
+  OpenOnchainTransferModal = 'open_onchain_transfer_modal',
+  OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
+  OpenProUpgradeModal = 'open_pro_upgrade_modal',
+  OpenRegisterModal = 'open_register_modal',
+  OpenUniswapV2Liquidity = 'open_uniswap_v2_liquidity',
+  ScrollToTop = 'scroll_to_top',
+}
+
+export enum Enum_Componentv2Productfeaturehighlight_Alignimage {
+  Left = 'left',
+  Right = 'right',
+}
+
+export enum Enum_Componentv2Productfeaturehighlight_Colorscheme {
+  Dark = 'dark',
+  Light = 'light',
+}
+
+export enum Enum_Feattablecolumn_Tier {
+  Free = 'free',
+  Networks = 'networks',
+  Plus = 'plus',
+  Pro = 'pro',
+}
+
+export enum Enum_Productplan_Tier {
+  Free = 'free',
+  Networks = 'networks',
+  Plus = 'plus',
+  Pro = 'pro',
 }
 
 export type Error = {
@@ -788,6 +1056,177 @@ export type ExplainerScreenWebInput = {
   triggerRoute?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FeatTableColumn = {
+  __typename?: 'FeatTableColumn';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  featTableHeader?: Maybe<ComponentV2ProductFeatureTableHeader>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  sections?: Maybe<FeatTableSectionRelationResponseCollection>;
+  tier?: Maybe<Enum_Feattablecolumn_Tier>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FeatTableColumnSectionsArgs = {
+  filters?: InputMaybe<FeatTableSectionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FeatTableColumnEntity = {
+  __typename?: 'FeatTableColumnEntity';
+  attributes?: Maybe<FeatTableColumn>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FeatTableColumnEntityResponse = {
+  __typename?: 'FeatTableColumnEntityResponse';
+  data?: Maybe<FeatTableColumnEntity>;
+};
+
+export type FeatTableColumnEntityResponseCollection = {
+  __typename?: 'FeatTableColumnEntityResponseCollection';
+  data: Array<FeatTableColumnEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type FeatTableColumnFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<FeatTableColumnFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  featTableHeader?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<FeatTableColumnFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<FeatTableColumnFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  sections?: InputMaybe<FeatTableSectionFiltersInput>;
+  tier?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type FeatTableColumnInput = {
+  featTableHeader?: InputMaybe<ComponentV2ProductFeatureTableHeaderInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  tier?: InputMaybe<Enum_Feattablecolumn_Tier>;
+};
+
+export type FeatTableColumnRelationResponseCollection = {
+  __typename?: 'FeatTableColumnRelationResponseCollection';
+  data: Array<FeatTableColumnEntity>;
+};
+
+export type FeatTableItem = {
+  __typename?: 'FeatTableItem';
+  checkbox?: Maybe<Scalars['Boolean']['output']>;
+  columnText?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  productFeature?: Maybe<ProductFeatureEntityResponse>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FeatTableItemEntity = {
+  __typename?: 'FeatTableItemEntity';
+  attributes?: Maybe<FeatTableItem>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FeatTableItemEntityResponse = {
+  __typename?: 'FeatTableItemEntityResponse';
+  data?: Maybe<FeatTableItemEntity>;
+};
+
+export type FeatTableItemEntityResponseCollection = {
+  __typename?: 'FeatTableItemEntityResponseCollection';
+  data: Array<FeatTableItemEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type FeatTableItemFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<FeatTableItemFiltersInput>>>;
+  checkbox?: InputMaybe<BooleanFilterInput>;
+  columnText?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<FeatTableItemFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<FeatTableItemFiltersInput>>>;
+  productFeature?: InputMaybe<ProductFeatureFiltersInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type FeatTableItemInput = {
+  checkbox?: InputMaybe<Scalars['Boolean']['input']>;
+  columnText?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  productFeature?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type FeatTableItemRelationResponseCollection = {
+  __typename?: 'FeatTableItemRelationResponseCollection';
+  data: Array<FeatTableItemEntity>;
+};
+
+export type FeatTableSection = {
+  __typename?: 'FeatTableSection';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  headerText: Scalars['String']['output'];
+  items?: Maybe<FeatTableItemRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FeatTableSectionItemsArgs = {
+  filters?: InputMaybe<FeatTableItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FeatTableSectionEntity = {
+  __typename?: 'FeatTableSectionEntity';
+  attributes?: Maybe<FeatTableSection>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FeatTableSectionEntityResponse = {
+  __typename?: 'FeatTableSectionEntityResponse';
+  data?: Maybe<FeatTableSectionEntity>;
+};
+
+export type FeatTableSectionEntityResponseCollection = {
+  __typename?: 'FeatTableSectionEntityResponseCollection';
+  data: Array<FeatTableSectionEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type FeatTableSectionFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<FeatTableSectionFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  headerText?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  items?: InputMaybe<FeatTableItemFiltersInput>;
+  not?: InputMaybe<FeatTableSectionFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<FeatTableSectionFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type FeatTableSectionInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  headerText?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type FeatTableSectionRelationResponseCollection = {
+  __typename?: 'FeatTableSectionRelationResponseCollection';
+  data: Array<FeatTableSectionEntity>;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -818,11 +1257,59 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Footer = {
+  __typename?: 'Footer';
+  bottomLinks?: Maybe<Array<Maybe<ComponentFooterLink>>>;
+  columns: Array<Maybe<ComponentFooterColumns>>;
+  copyrightText: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  logo: UploadFileEntityResponse;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  showLanguageBar: Scalars['Boolean']['output'];
+  slogan: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FooterBottomLinksArgs = {
+  filters?: InputMaybe<ComponentFooterLinkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FooterColumnsArgs = {
+  filters?: InputMaybe<ComponentFooterColumnsFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FooterEntity = {
+  __typename?: 'FooterEntity';
+  attributes?: Maybe<Footer>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FooterEntityResponse = {
+  __typename?: 'FooterEntityResponse';
+  data?: Maybe<FooterEntity>;
+};
+
+export type FooterInput = {
+  bottomLinks?: InputMaybe<Array<InputMaybe<ComponentFooterLinkInput>>>;
+  columns?: InputMaybe<Array<InputMaybe<ComponentFooterColumnsInput>>>;
+  copyrightText?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  showLanguageBar?: InputMaybe<Scalars['Boolean']['input']>;
+  slogan?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GenericMorph =
   | AuxPage
   | ComponentCommonActionButton
   | ComponentExplainerScreenContinueButton
   | ComponentExplainerScreenSection
+  | ComponentFooterColumns
+  | ComponentFooterLink
   | ComponentMarketingComponentsAsFeaturedIn
   | ComponentMarketingComponentsHero
   | ComponentMarketingComponentsMarketingPageSection
@@ -843,12 +1330,29 @@ export type GenericMorph =
   | ComponentProductHero
   | ComponentProductOther
   | ComponentProductSection
+  | ComponentV2ProductActionButton
+  | ComponentV2ProductBasicExplainer
+  | ComponentV2ProductClosingCta
+  | ComponentV2ProductFeatureHighlight
+  | ComponentV2ProductFeatureShowcase
+  | ComponentV2ProductFeatureShowcaseItem
+  | ComponentV2ProductFeatureTable
+  | ComponentV2ProductFeatureTableHeader
+  | ComponentV2ProductHero
+  | ComponentV2ProductPerk
+  | ComponentV2ProductPricingCards
   | ExplainerScreenMobile
   | ExplainerScreenWeb
+  | FeatTableColumn
+  | FeatTableItem
+  | FeatTableSection
+  | Footer
   | Homepage
   | I18NLocale
   | OnboardingV5Version
+  | ProductFeature
   | ProductPage
+  | ProductPlan
   | TopbarAlert
   | TwitterSyncTweetText
   | UploadFile
@@ -856,6 +1360,7 @@ export type GenericMorph =
   | UsersPermissionsPermission
   | UsersPermissionsRole
   | UsersPermissionsUser
+  | V2ProductPage
   | ValuePropCard;
 
 export type Homepage = {
@@ -1021,22 +1526,34 @@ export type Mutation = {
   createAuxPage?: Maybe<AuxPageEntityResponse>;
   createExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   createExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
+  createFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
+  createFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
+  createFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
   createOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
+  createProductFeature?: Maybe<ProductFeatureEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
+  createProductPlan?: Maybe<ProductPlanEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createV2ProductPage?: Maybe<V2ProductPageEntityResponse>;
   createValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   createValuePropCardLocalization?: Maybe<ValuePropCardEntityResponse>;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
   deleteExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   deleteExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
+  deleteFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
+  deleteFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
+  deleteFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
+  deleteFooter?: Maybe<FooterEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
   deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
+  deleteProductFeature?: Maybe<ProductFeatureEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
+  deleteProductPlan?: Maybe<ProductPlanEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -1045,6 +1562,7 @@ export type Mutation = {
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteV2ProductPage?: Maybe<V2ProductPageEntityResponse>;
   deleteValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
@@ -1060,10 +1578,16 @@ export type Mutation = {
   updateAuxPage?: Maybe<AuxPageEntityResponse>;
   updateExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   updateExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
+  updateFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
+  updateFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
+  updateFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateFooter?: Maybe<FooterEntityResponse>;
   updateHomepage?: Maybe<HomepageEntityResponse>;
   updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
+  updateProductFeature?: Maybe<ProductFeatureEntityResponse>;
   updateProductPage?: Maybe<ProductPageEntityResponse>;
+  updateProductPlan?: Maybe<ProductPlanEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -1072,6 +1596,7 @@ export type Mutation = {
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateV2ProductPage?: Maybe<V2ProductPageEntityResponse>;
   updateValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   upload: UploadFileEntityResponse;
 };
@@ -1094,12 +1619,32 @@ export type MutationCreateExplainerScreenWebArgs = {
   data: ExplainerScreenWebInput;
 };
 
+export type MutationCreateFeatTableColumnArgs = {
+  data: FeatTableColumnInput;
+};
+
+export type MutationCreateFeatTableItemArgs = {
+  data: FeatTableItemInput;
+};
+
+export type MutationCreateFeatTableSectionArgs = {
+  data: FeatTableSectionInput;
+};
+
 export type MutationCreateOnboardingV5VersionArgs = {
   data: OnboardingV5VersionInput;
 };
 
+export type MutationCreateProductFeatureArgs = {
+  data: ProductFeatureInput;
+};
+
 export type MutationCreateProductPageArgs = {
   data: ProductPageInput;
+};
+
+export type MutationCreateProductPlanArgs = {
+  data: ProductPlanInput;
 };
 
 export type MutationCreateUploadFileArgs = {
@@ -1116,6 +1661,10 @@ export type MutationCreateUsersPermissionsRoleArgs = {
 
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
+};
+
+export type MutationCreateV2ProductPageArgs = {
+  data: V2ProductPageInput;
 };
 
 export type MutationCreateValuePropCardArgs = {
@@ -1141,11 +1690,31 @@ export type MutationDeleteExplainerScreenWebArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationDeleteFeatTableColumnArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteFeatTableItemArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteFeatTableSectionArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type MutationDeleteOnboardingV5VersionArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationDeleteProductFeatureArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type MutationDeleteProductPageArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteProductPlanArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1162,6 +1731,10 @@ export type MutationDeleteUsersPermissionsRoleArgs = {
 };
 
 export type MutationDeleteUsersPermissionsUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteV2ProductPageArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1218,9 +1791,28 @@ export type MutationUpdateExplainerScreenWebArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationUpdateFeatTableColumnArgs = {
+  data: FeatTableColumnInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateFeatTableItemArgs = {
+  data: FeatTableItemInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateFeatTableSectionArgs = {
+  data: FeatTableSectionInput;
+  id: Scalars['ID']['input'];
+};
+
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
+};
+
+export type MutationUpdateFooterArgs = {
+  data: FooterInput;
 };
 
 export type MutationUpdateHomepageArgs = {
@@ -1232,8 +1824,18 @@ export type MutationUpdateOnboardingV5VersionArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationUpdateProductFeatureArgs = {
+  data: ProductFeatureInput;
+  id: Scalars['ID']['input'];
+};
+
 export type MutationUpdateProductPageArgs = {
   data: ProductPageInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateProductPlanArgs = {
+  data: ProductPlanInput;
   id: Scalars['ID']['input'];
 };
 
@@ -1262,6 +1864,11 @@ export type MutationUpdateUsersPermissionsRoleArgs = {
 
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateV2ProductPageArgs = {
+  data: V2ProductPageInput;
   id: Scalars['ID']['input'];
 };
 
@@ -1343,6 +1950,50 @@ export type PaginationArg = {
   start?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type ProductFeature = {
+  __typename?: 'ProductFeature';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  explainerText?: Maybe<Scalars['String']['output']>;
+  featureName: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ProductFeatureEntity = {
+  __typename?: 'ProductFeatureEntity';
+  attributes?: Maybe<ProductFeature>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ProductFeatureEntityResponse = {
+  __typename?: 'ProductFeatureEntityResponse';
+  data?: Maybe<ProductFeatureEntity>;
+};
+
+export type ProductFeatureEntityResponseCollection = {
+  __typename?: 'ProductFeatureEntityResponseCollection';
+  data: Array<ProductFeatureEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ProductFeatureFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ProductFeatureFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  explainerText?: InputMaybe<StringFilterInput>;
+  featureName?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<ProductFeatureFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ProductFeatureFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ProductFeatureInput = {
+  explainerText?: InputMaybe<Scalars['String']['input']>;
+  featureName?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type ProductPage = {
   __typename?: 'ProductPage';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1405,6 +2056,79 @@ export type ProductPageInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ProductPlan = {
+  __typename?: 'ProductPlan';
+  button: ComponentV2ProductActionButton;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  mostPopular?: Maybe<Scalars['Boolean']['output']>;
+  perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
+  perksTitle: Scalars['String']['output'];
+  priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  subtitle: Scalars['String']['output'];
+  tier: Enum_Productplan_Tier;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ProductPlanPerksArgs = {
+  filters?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ProductPlanEntity = {
+  __typename?: 'ProductPlanEntity';
+  attributes?: Maybe<ProductPlan>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ProductPlanEntityResponse = {
+  __typename?: 'ProductPlanEntityResponse';
+  data?: Maybe<ProductPlanEntity>;
+};
+
+export type ProductPlanEntityResponseCollection = {
+  __typename?: 'ProductPlanEntityResponseCollection';
+  data: Array<ProductPlanEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ProductPlanFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
+  button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  mostPopular?: InputMaybe<BooleanFilterInput>;
+  not?: InputMaybe<ProductPlanFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
+  perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  perksTitle?: InputMaybe<StringFilterInput>;
+  priceStartingAt?: InputMaybe<BooleanFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  subtitle?: InputMaybe<StringFilterInput>;
+  tier?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ProductPlanInput = {
+  button?: InputMaybe<ComponentV2ProductActionButtonInput>;
+  mostPopular?: InputMaybe<Scalars['Boolean']['input']>;
+  perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
+  perksTitle?: InputMaybe<Scalars['String']['input']>;
+  priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  tier?: InputMaybe<Enum_Productplan_Tier>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProductPlanRelationResponseCollection = {
+  __typename?: 'ProductPlanRelationResponseCollection';
+  data: Array<ProductPlanEntity>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW',
@@ -1418,14 +2142,25 @@ export type Query = {
   explainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   explainerScreensMobile?: Maybe<ExplainerScreenMobileEntityResponseCollection>;
   explainerScreensWeb?: Maybe<ExplainerScreenWebEntityResponseCollection>;
+  featTableColumn?: Maybe<FeatTableColumnEntityResponse>;
+  featTableColumns?: Maybe<FeatTableColumnEntityResponseCollection>;
+  featTableItem?: Maybe<FeatTableItemEntityResponse>;
+  featTableItems?: Maybe<FeatTableItemEntityResponseCollection>;
+  featTableSection?: Maybe<FeatTableSectionEntityResponse>;
+  featTableSections?: Maybe<FeatTableSectionEntityResponseCollection>;
+  footer?: Maybe<FooterEntityResponse>;
   homepage?: Maybe<HomepageEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
   onboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   onboardingV5Versions?: Maybe<OnboardingV5VersionEntityResponseCollection>;
+  productFeature?: Maybe<ProductFeatureEntityResponse>;
+  productFeatures?: Maybe<ProductFeatureEntityResponseCollection>;
   productPage?: Maybe<ProductPageEntityResponse>;
   productPages?: Maybe<ProductPageEntityResponseCollection>;
+  productPlan?: Maybe<ProductPlanEntityResponse>;
+  productPlans?: Maybe<ProductPlanEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
   twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
@@ -1436,6 +2171,8 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  v2ProductPage?: Maybe<V2ProductPageEntityResponse>;
+  v2ProductPages?: Maybe<V2ProductPageEntityResponseCollection>;
   valuePropCard?: Maybe<ValuePropCardEntityResponse>;
   valuePropCards?: Maybe<ValuePropCardEntityResponseCollection>;
 };
@@ -1473,6 +2210,43 @@ export type QueryExplainerScreensWebArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type QueryFeatTableColumnArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryFeatTableColumnsArgs = {
+  filters?: InputMaybe<FeatTableColumnFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryFeatTableItemArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryFeatTableItemsArgs = {
+  filters?: InputMaybe<FeatTableItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryFeatTableSectionArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryFeatTableSectionsArgs = {
+  filters?: InputMaybe<FeatTableSectionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryFooterArgs = {
+  publicationState?: InputMaybe<PublicationState>;
+};
+
 export type QueryHomepageArgs = {
   publicationState?: InputMaybe<PublicationState>;
 };
@@ -1498,12 +2272,34 @@ export type QueryOnboardingV5VersionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type QueryProductFeatureArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryProductFeaturesArgs = {
+  filters?: InputMaybe<ProductFeatureFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type QueryProductPageArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type QueryProductPagesArgs = {
   filters?: InputMaybe<ProductPageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryProductPlanArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryProductPlansArgs = {
+  filters?: InputMaybe<ProductPlanFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1554,6 +2350,17 @@ export type QueryUsersPermissionsUserArgs = {
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryV2ProductPageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryV2ProductPagesArgs = {
+  filters?: InputMaybe<V2ProductPageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -2024,6 +2831,64 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type V2ProductPage = {
+  __typename?: 'V2ProductPage';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  metadata?: Maybe<ComponentMetadataGeneralPageMetadata>;
+  productPage?: Maybe<Array<Maybe<V2ProductPageProductPageDynamicZone>>>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  slug: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type V2ProductPageEntity = {
+  __typename?: 'V2ProductPageEntity';
+  attributes?: Maybe<V2ProductPage>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type V2ProductPageEntityResponse = {
+  __typename?: 'V2ProductPageEntityResponse';
+  data?: Maybe<V2ProductPageEntity>;
+};
+
+export type V2ProductPageEntityResponseCollection = {
+  __typename?: 'V2ProductPageEntityResponseCollection';
+  data: Array<V2ProductPageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type V2ProductPageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<V2ProductPageFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  metadata?: InputMaybe<ComponentMetadataGeneralPageMetadataFiltersInput>;
+  not?: InputMaybe<V2ProductPageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<V2ProductPageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type V2ProductPageInput = {
+  metadata?: InputMaybe<ComponentMetadataGeneralPageMetadataInput>;
+  productPage?: InputMaybe<
+    Array<Scalars['V2ProductPageProductPageDynamicZoneInput']['input']>
+  >;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type V2ProductPageProductPageDynamicZone =
+  | ComponentV2ProductBasicExplainer
+  | ComponentV2ProductClosingCta
+  | ComponentV2ProductFeatureHighlight
+  | ComponentV2ProductFeatureShowcase
+  | ComponentV2ProductFeatureTable
+  | ComponentV2ProductHero
+  | ComponentV2ProductPricingCards
+  | Error;
+
 export type ValuePropCard = {
   __typename?: 'ValuePropCard';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2190,6 +3055,58 @@ export type GetExplainerScreenQuery = {
   } | null;
 };
 
+export type GetOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename?: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              radioSurveyQuestion?: string | null;
+              carousel: Array<{
+                __typename?: 'ComponentOnboardingV5CarouselItem';
+                title: string;
+                media: {
+                  __typename?: 'UploadFileEntityResponse';
+                  data?: {
+                    __typename?: 'UploadFileEntity';
+                    attributes?: {
+                      __typename?: 'UploadFile';
+                      url: string;
+                      height?: number | null;
+                      width?: number | null;
+                    } | null;
+                  } | null;
+                };
+              } | null>;
+              radioSurvey?: Array<{
+                __typename?: 'ComponentOnboardingV5RadioOption';
+                id: string;
+                optionTitle: string;
+                optionDescription: string;
+                optionKey: string;
+              } | null> | null;
+            }
+          | { __typename?: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TweetMessageQuery = {
@@ -2339,6 +3256,60 @@ export const useGetExplainerScreenQuery = <
       GetExplainerScreenDocument,
       variables,
     ),
+    options,
+  );
+export const GetOnboardingV5VersionsDocument = `
+    query GetOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                  }
+                }
+              }
+            }
+            title
+            description
+            radioSurveyQuestion
+            radioSurvey {
+              id
+              optionTitle
+              optionDescription
+              optionKey
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOnboardingV5VersionsQuery = <
+  TData = GetOnboardingV5VersionsQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingV5VersionsQueryVariables,
+  options?: UseQueryOptions<GetOnboardingV5VersionsQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingV5VersionsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingV5Versions']
+      : ['GetOnboardingV5Versions', variables],
+    gqlFetcher<
+      GetOnboardingV5VersionsQuery,
+      GetOnboardingV5VersionsQueryVariables
+    >(GetOnboardingV5VersionsDocument, variables),
     options,
   );
 export const TweetMessageDocument = `

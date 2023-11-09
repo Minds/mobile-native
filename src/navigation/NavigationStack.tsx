@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -18,14 +18,11 @@ import i18n from '../common/services/i18n.service';
 import {
   AppStackParamList,
   AuthStackParamList,
-  InternalStackParamList,
   RootStackParamList,
 } from './NavigationTypes';
 
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
-import VideoBackground from '../common/components/VideoBackground';
-import TransparentLayer from '../common/components/TransparentLayer';
 
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
@@ -41,27 +38,10 @@ const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
-const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 
 const modalOptions = {
   gestureResponseDistance: 240,
   gestureEnabled: true,
-};
-
-export const InternalStack = () => {
-  const internalOptions = {
-    ...ThemedStyles.defaultScreenOptions,
-    headerShown: false,
-    animation: 'none',
-  } as NativeStackNavigationOptions;
-  return (
-    <InternalStackNav.Navigator screenOptions={internalOptions}>
-      <InternalStackNav.Screen
-        name="Onboarding"
-        getComponent={() => require('~/onboarding/v2/OnboardingScreen').default}
-      />
-    </InternalStackNav.Navigator>
-  );
 };
 
 const TabScreenWithModal = withModalProvider(
@@ -260,10 +240,8 @@ const AppStack = observer(() => {
 
 const AuthStack = function () {
   return (
-    <View style={ThemedStyles.style.flexContainer}>
+    <>
       <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
-      <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
-      <TransparentLayer />
       <AuthStackNav.Navigator
         // @ts-ignore
         screenOptions={AuthTransition}>
@@ -282,7 +260,7 @@ const AuthStack = function () {
           }}
         />
       </AuthStackNav.Navigator>
-    </View>
+    </>
   );
 };
 

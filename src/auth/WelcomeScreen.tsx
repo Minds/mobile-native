@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { View, ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MText from '~/common/components/MText';
@@ -15,9 +14,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
-
-const { height } = Dimensions.get('window');
-const LOGO_HEIGHT = height / 7;
+import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 
 type PropsType = {
   navigation: any;
@@ -43,17 +40,9 @@ function WelcomeScreen(props: PropsType) {
 
   return (
     <SafeAreaView style={theme.flexContainer}>
-      <View style={theme.flexColumnStretch}>
-        <Animated.Image
-          resizeMode="contain"
-          source={require('./../assets/logos/logo-white.png')}
-          style={styles.image}
-        />
-        <View
-          style={[
-            styles.buttonContainer,
-            IS_IPAD && theme.rowJustifySpaceBetween,
-          ]}>
+      <View style={theme.flexContainer}>
+        <OnboardingCarousel />
+        <View style={styles.buttonContainer}>
           <Button
             type="action"
             {...buttonProps}
@@ -97,26 +86,14 @@ export default withErrorBoundaryScreen(
   'WelcomeScreen',
 );
 
-const styles = StyleSheet.create({
-  bulb: {
-    width: '100%',
-    height: LOGO_HEIGHT,
-    justifyContent: 'flex-end',
-    // height: 70,
-  },
-  image: {
-    height: '14%',
-    width: '50%',
-    position: 'absolute',
-    top: '10%',
-    alignSelf: 'center',
-  },
+const styles = ThemedStyles.create({
   buttonContainer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     padding: 32,
+    alignItems: 'center',
   },
   containerStyle: {
     width: IS_IPAD ? '45%' : undefined,

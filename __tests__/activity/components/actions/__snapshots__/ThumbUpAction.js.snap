@@ -48,6 +48,7 @@ exports[`Thumb action component renders correctly 1`] = `
       entity={
         {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
@@ -85,6 +86,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "ownerObj": {
             "__list": null,
             "_collapsed": false,
+            "_viewed": false,
             "access_id": "",
             "allow_comments": true,
             "blocked": undefined,

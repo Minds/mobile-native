@@ -856,9 +856,6 @@
       "10": {
         "label": "Intellectual Property Violation"
       },
-      "11": {
-        "label": "Another reason"
-      },
       "12": {
         "label": "Incorrect use of hashtags"
       },
@@ -1558,6 +1555,7 @@
     "helpSupport": "Help & Support",
     "invite": "Refer your friends",
     "settings": "Settings",
+    "upgrade": "Upgrade",
     "terms": "Terms",
     "wallet": "Wallet"
   },
@@ -1913,7 +1911,7 @@
         },
         "plus": {
           "title": "Minds+",
-          "subtitle": "Submit this post to Minds+ Premium Content and earn a share of our revenue based on how it performs."
+          "subtitle": "Submit a paywalled post for Minds+ members and earn 45% of new subscriptions that it refers."
         }
       },
       "memberships": "Memberships",

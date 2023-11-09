@@ -1,4 +1,4 @@
-import { BN } from 'react-native-bignumber';
+import Big from 'big.js';
 // **
 // Converts really long crypto values into friendly numbers
 // Notes:
@@ -15,10 +15,13 @@ export default function toFriendlyCrypto(
   decimalCount = decimalCount > 17 ? 17 : decimalCount;
   decimalCount = decimalCount < 0 ? 0 : decimalCount;
 
-  const longVal = new BN(longCryptoVal.toString());
+  // Assuming longCryptoVal is a string
+  const longVal = new Big(longCryptoVal.toString());
+
+  // Calculate friendlyCryptoVal
+  const power = new Big(10).pow(18 - decimalCount);
   const friendlyCryptoVal =
-    longVal.div(new BN(10).pow(new BN(18 - decimalCount))).toNumber() /
-    Math.pow(10, decimalCount);
+    longVal.div(power).toNumber() / Math.pow(10, decimalCount);
 
   return friendlyCryptoVal;
 }

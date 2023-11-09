@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Platform } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSharedValue } from 'react-native-reanimated';
 
@@ -21,16 +21,20 @@ import {
 import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
+import { storages } from '~/common/services/storage/storages.service';
+import FeedFilter from '~/common/components/FeedFilter';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 const HEADER_HEIGHT = 54;
 
-const FeedScene = ({ route }: any) => {
+const FeedScene = ({ route, top }: any) => {
   const groupContext = useGroupContext();
   return groupContext && groupContext.feedStore ? (
     <TabFeedList
       index={route.index}
-      feedStore={groupContext.feedStore.feed}
+      feedStore={
+        top ? groupContext.feedStore.feedTop : groupContext.feedStore.feed
+      }
       displayBoosts="distinct"
       refreshControl={undefined}
     />
@@ -48,8 +52,9 @@ const MembersScene = ({ route, group }: any) => {
 };
 
 const routes = [
-  { key: 'feed', title: 'Discussion', index: 0 },
-  { key: 'members', title: 'Members', index: 1 },
+  { key: 'feed', title: 'Latest', index: 0 },
+  { key: 'top', title: 'Top', index: 1 },
+  { key: 'members', title: 'Members', index: 2 },
 ];
 
 const PostToGroupButton = observer(({ navigation }) => {
@@ -78,7 +83,15 @@ export function GroupScreen({ route, navigation }) {
 }
 
 const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
-  const [index, setIndex] = useState(0);
+  const initialTab = useRef(-1);
+
+  // initial loading
+  if (initialTab.current === -1) {
+    initialTab.current = storages.user?.getInt('GroupTab') || 0;
+  }
+
+  const [index, setIndex] = useState(initialTab.current);
+
   const animationHeaderPosition = useSharedValue(0);
   const animationHeaderHeight = useSharedValue(0);
   const scrollY = useSharedValue(0);
@@ -90,6 +103,8 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
   const onStartRefresh = async () => {
     if (index === 0) {
       groupContext?.feedStore?.feed.refresh();
+    } else if (index === 1) {
+      groupContext?.feedStore?.feedTop.refresh();
     } else {
       groupContext?.feedMembersStore?.refresh();
     }
@@ -98,6 +113,8 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
   const isRefreshing =
     index === 0
       ? groupContext?.feedStore?.feed.refreshing
+      : index === 1
+      ? groupContext?.feedStore?.feedTop.refreshing
       : groupContext?.feedMembersStore?.members.refreshing;
 
   const renderScene = useCallback(
@@ -105,6 +122,8 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
       switch (route.key) {
         case 'feed':
           return <FeedScene route={route} group={group} />;
+        case 'top':
+          return <FeedScene route={route} group={group} top />;
         case 'members':
           return <MembersScene route={route} group={group} />;
         default:
@@ -126,13 +145,30 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
     [animationHeaderHeight, animationHeaderPosition, group, top],
   );
 
+  const onIndexChange = useCallback(idx => {
+    setIndex(idx);
+    storages.user?.setInt('GroupTab', idx);
+  }, []);
+
+  const renderTabBar = useCallback(
+    props => (
+      <View style={styles.tabBarStyle}>
+        <ScrollableAutoWidthTabBar {...props} />
+        {groupContext?.feedStore && index === 0 && (
+          <FeedFilter store={groupContext?.feedStore} hideLabel hideBlogs />
+        )}
+      </View>
+    ),
+    [groupContext?.feedStore, index],
+  );
+
   const minHeaderHeight = Platform.select({
     default: headerHeight ? headerHeight : HEADER_HEIGHT + top,
     android: headerHeight ? 0 : HEADER_HEIGHT + top,
   });
 
   const currentStore =
-    index === 1 ? groupContext?.feedMembersStore : groupContext?.feedStore;
+    index === 2 ? groupContext?.feedMembersStore : groupContext?.feedStore;
 
   return (
     <>
@@ -141,7 +177,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
         isRefreshing={isRefreshing}
         navigationState={{ index, routes }}
         renderScene={renderScene}
-        onIndexChange={setIndex}
+        onIndexChange={onIndexChange}
         renderTabBar={renderTabBar}
         lazy
         renderScrollHeader={renderHeader}
@@ -168,4 +204,10 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
   );
 });
 
-const renderTabBar = props => <ScrollableAutoWidthTabBar {...props} />;
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+  },
+});

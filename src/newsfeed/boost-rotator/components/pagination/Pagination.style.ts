@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 
-const DEFAULT_DOT_SIZE = 7;
+const DEFAULT_DOT_SIZE = 12;
 const DEFAULT_DOT_COLOR = ThemedStyles.getColor('PrimaryText');
 
 export default StyleSheet.create({
@@ -13,7 +13,7 @@ export default StyleSheet.create({
   sliderPaginationDotContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 4,
+    marginHorizontal: 12,
   },
   sliderPaginationDot: {
     width: DEFAULT_DOT_SIZE,

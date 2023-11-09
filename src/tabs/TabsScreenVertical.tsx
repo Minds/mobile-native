@@ -23,19 +23,21 @@ import { Icon as NIcon } from 'react-native-elements';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
 import MoreStack from '~/navigation/MoreStack';
+import ChannelsScreen from '~/modules/onboarding/screens/ChannelsScreen';
+import sessionService from '~/common/services/session.service';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
 export type DrawerParamList = {
   Newsfeed: {};
   Explore: {};
-  More: {};
-  Notifications: {};
-  Boosts: {};
   MindsPlus: {};
+  Notifications: {};
+  Profile: {};
+  More: {};
+  Boosts: {};
   Supermind: {};
   Wallet: {};
-  Analytics: {};
   AffiliateProgram: {};
   Groups: {};
   Settings: {};
@@ -50,6 +52,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
   const { width, height } = useDimensions().window;
+  const channel = sessionService.getUser();
   const isPortrait = height > width;
 
   return (
@@ -79,15 +82,20 @@ const Tabs = observer(function () {
         />
         <Drawer.Screen name="Notifications" component={NotificationsStack} />
         <Drawer.Screen
+          name="Profile"
+          getComponent={() => require('~/channel/v2/ChannelScreen').default}
+          initialParams={{ entity: channel }}
+        />
+        <Drawer.Screen
           name="Boosts"
           getComponent={() => require('modules/boost').BoostConsoleScreen}
         />
-        {/* <Drawer.Screen //*** disabled for iOS ***
+        <Drawer.Screen //*** disabled for iOS ***
           name="MindsPlus"
           getComponent={() =>
             require('~/discovery/v2/PlusDiscoveryScreen').default
           }
-        /> */}
+        />
         <Drawer.Screen
           name="Supermind"
           getComponent={() =>
@@ -111,10 +119,10 @@ const Tabs = observer(function () {
           name="Groups"
           getComponent={() => require('~/groups/GroupsListScreen').default}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="Analytics"
           getComponent={() => require('~/analytics/AnalyticsScreen').default}
-        />
+        /> */}
         <Drawer.Screen name="Settings" component={MoreStack} />
       </Drawer.Navigator>
     </View>
@@ -237,6 +245,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   Newsfeed: 'home',
   User: 'user',
   Discovery: 'search',
+  Profile: 'profile',
   Boosts: 'boost',
   Supermind: 'supermind',
   Wallet: 'bank',

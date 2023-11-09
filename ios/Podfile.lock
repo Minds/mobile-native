@@ -481,12 +481,6 @@ PODS:
   - React-jsinspector (0.71.12)
   - React-logger (0.71.12):
     - glog
-  - react-native-bignumber (0.2.1):
-    - OpenSSL-Universal (~> 1.1.180)
-    - React
-    - React-callinvoker
-    - React-Core
-    - ReactCommon/turbomodule/core
   - react-native-cameraroll (5.4.0):
     - React-Core
   - react-native-config (1.5.0):
@@ -783,7 +777,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-bignumber (from `../node_modules/react-native-bignumber`)
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
@@ -981,8 +974,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-bignumber:
-    :path: "../node_modules/react-native-bignumber"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-config:
@@ -1178,7 +1169,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 509cd947c28834614808ce056ee8eb700a0662aa
   React-jsinspector: ec4dcbfb1f4e72f04f826a0301eceee5fa7ca540
   React-logger: 35538accacf2583693fbc3ee8b53e69a1776fcee
-  react-native-bignumber: 9850896db4534ea31e89dfd88182e7412eace199
   react-native-cameraroll: 8ffb0af7a5e5de225fd667610e2979fc1f0c2151
   react-native-config: 5330c8258265c1e5fdb8c009d2cabd6badd96727
   react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
@@ -1245,4 +1235,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f4a0e72b33eb11d7a302da094f3daf58ba1baacb
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.2

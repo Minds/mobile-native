@@ -1,5 +1,5 @@
 import { useLayout } from '@react-native-community/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -26,6 +26,12 @@ function StickyListWrapper(props: StickyListProps, ref: any) {
     ScrollDirection.neutral,
   );
   const { header, ...otherProps } = props;
+
+  useImperativeHandle(ref, () => ({
+    getScrollPosition: () => {
+      return scrollY.value;
+    },
+  }));
 
   /**
    * headerHeight - set by the header layout
@@ -91,9 +97,9 @@ function StickyListWrapper(props: StickyListProps, ref: any) {
       value={{ translationY, scrollY, headerHeight, scrollDirection }}>
       <View style={styles.container}>
         {props.renderList({
-          ref: ref,
           ...otherProps,
           ListComponent: Animated.FlatList,
+          scrollEventThrottle: 16,
           onScroll: scrollHandler,
           contentContainerStyle: contentStyle,
         })}

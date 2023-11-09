@@ -25,6 +25,7 @@ import portraitBoostedContentService from './src/portrait/services/portraitBoost
 import socketService from '~/common/services/socket.service';
 import blockListService from '~/common/services/block-list.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import { queryClient } from '~/services';
 
 /**
  * App initialization manager
@@ -140,6 +141,7 @@ export class AppInitManager {
     updateGrowthBookAttributes();
     boostedContentService.clear();
     portraitBoostedContentService.clear();
+    queryClient.clear();
   };
 
   /**
