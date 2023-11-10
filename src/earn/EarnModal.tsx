@@ -15,7 +15,7 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 // const linkTo = (dest: string) =>
 //   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -99,6 +99,7 @@ export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
     const theme = ThemedStyles.style;
     const localStore = useLocalStore(createLocalStore);
+    const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
     useEffect(() => {
       const settings = mindsConfigService.getSettings();
@@ -142,6 +143,15 @@ export default withErrorBoundaryScreen(
       });
     }
 
+    const resourceWallet: ResourceType[] = hideTokens
+      ? []
+      : [
+          {
+            name: 'resources.earnings',
+            onPress: () => navTo('Wallet'),
+          },
+        ];
+
     const resourcesItems: ResourceType[] = [
       // {
       //   name: 'resources.rewards',
@@ -151,10 +161,7 @@ export default withErrorBoundaryScreen(
       //   name: 'resources.tokens',
       //   onPress: () => linkTo('token'),
       // },
-      {
-        name: 'resources.earnings',
-        onPress: () => navTo('Wallet'),
-      },
+      ...resourceWallet,
       {
         name: 'resources.analytics',
         onPress: () => navTo('Analytics'),

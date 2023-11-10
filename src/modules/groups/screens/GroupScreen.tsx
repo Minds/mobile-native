@@ -24,6 +24,7 @@ import CaptureFab from '~/capture/CaptureFab';
 import { storages } from '~/common/services/storage/storages.service';
 import FeedFilter from '~/common/components/FeedFilter';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { IS_IPAD } from '~/config/Config';
 
 const HEADER_HEIGHT = 54;
 
@@ -155,7 +156,12 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
       <View style={styles.tabBarStyle}>
         <ScrollableAutoWidthTabBar {...props} />
         {groupContext?.feedStore && index === 0 && (
-          <FeedFilter store={groupContext?.feedStore} hideLabel hideBlogs />
+          <FeedFilter
+            store={groupContext?.feedStore}
+            hideLabel
+            hideBlogs
+            containerStyles={styles.filterStyle}
+          />
         )}
       </View>
     ),
@@ -206,8 +212,9 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 
 const styles = StyleSheet.create({
   tabBarStyle: {
+    alignSelf: 'center',
     flexDirection: 'row',
-    width: '100%',
     alignItems: 'center',
   },
+  filterStyle: { ...(IS_IPAD ? { marginLeft: -18, zIndex: 1000 } : undefined) },
 });

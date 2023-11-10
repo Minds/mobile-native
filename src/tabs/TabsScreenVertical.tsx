@@ -23,8 +23,8 @@ import { Icon as NIcon } from 'react-native-elements';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
 import MoreStack from '~/navigation/MoreStack';
-import ChannelsScreen from '~/modules/onboarding/screens/ChannelsScreen';
 import sessionService from '~/common/services/session.service';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
@@ -41,9 +41,16 @@ export type DrawerParamList = {
   AffiliateProgram: {};
   Groups: {};
   Settings: {};
+  GroupView: {};
+};
+
+export type GroupStackParamList = {
+  Groups: {};
+  GroupView: {};
 };
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
+const GroupStackNav = createNativeStackNavigator<GroupStackParamList>();
 
 /**
  * Main tabs
@@ -115,14 +122,7 @@ const Tabs = observer(function () {
             drawerLabel: 'Affiliate Program',
           }}
         />
-        <Drawer.Screen
-          name="Groups"
-          getComponent={() => require('~/groups/GroupsListScreen').default}
-        />
-        {/* <Drawer.Screen
-          name="Analytics"
-          getComponent={() => require('~/analytics/AnalyticsScreen').default}
-        /> */}
+        <Drawer.Screen name="Groups" component={GroupStack} />
         <Drawer.Screen name="Settings" component={MoreStack} />
       </Drawer.Navigator>
     </View>
@@ -132,41 +132,43 @@ const Tabs = observer(function () {
 type DrawerContentProps = DrawerNavigationOptions & {
   isPortrait?: boolean;
 };
-const drawerOptions = ({ route, isPortrait }): DrawerContentProps => ({
-  headerShown: false,
-  drawerType: 'permanent',
-  drawerStyle: {
-    width: isPortrait ? 78 : 270,
-  },
-  drawerActiveTintColor: ThemedStyles.getColor('PrimaryText'),
-  overlayColor: 'transparent',
-  lazy: true,
-  drawerLabelStyle: {
-    paddingLeft: 8,
-    fontSize: 16,
-  },
-  drawerIcon: ({ focused }) => {
-    if (route.name === 'Explore') {
+const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
+  return {
+    headerShown: false,
+    drawerType: 'permanent',
+    drawerStyle: {
+      width: isPortrait ? 78 : 270,
+    },
+    drawerActiveTintColor: ThemedStyles.getColor('PrimaryText'),
+    overlayColor: 'transparent',
+    lazy: true,
+    drawerLabelStyle: {
+      paddingLeft: 8,
+      fontSize: 16,
+    },
+    drawerIcon: ({ focused }) => {
+      if (route.name === 'Explore') {
+        return (
+          <DiscoveryIcon size="large" active={focused} style={styles.icon} />
+        );
+      }
+      if (route.name === 'Notifications') {
+        return (
+          <NotificationIcon size="large" active={focused} style={styles.icon} />
+        );
+      }
       return (
-        <DiscoveryIcon size="large" active={focused} style={styles.icon} />
+        <Icon
+          size="large"
+          active={focused}
+          name={iconFromRoute[route.name]}
+          activeColor="PrimaryText"
+          style={styles.icon}
+        />
       );
-    }
-    if (route.name === 'Notifications') {
-      return (
-        <NotificationIcon size="large" active={focused} style={styles.icon} />
-      );
-    }
-    return (
-      <Icon
-        size="large"
-        active={focused}
-        name={iconFromRoute[route.name]}
-        activeColor="PrimaryText"
-        style={styles.icon}
-      />
-    );
-  },
-});
+    },
+  };
+};
 
 function DrawerContent(props) {
   const { navigation, isPortrait } = props;
@@ -219,6 +221,21 @@ const ComposeButton = () => (
       color={ThemedStyles.getColor('PrimaryBackground')}
     />
   </View>
+);
+
+const GroupStack = () => (
+  <GroupStackNav.Navigator screenOptions={{ headerShown: false }}>
+    <GroupStackNav.Screen
+      name="Groups"
+      getComponent={() => require('~/groups/GroupsListScreen').default}
+    />
+    <GroupStackNav.Screen
+      name="GroupView"
+      getComponent={() =>
+        require('~/modules/groups/screens/GroupScreen').GroupScreen
+      }
+    />
+  </GroupStackNav.Navigator>
 );
 
 export const styles = ThemedStyles.create({

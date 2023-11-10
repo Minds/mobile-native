@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import i18n from '../../services/i18n.service';
-import { ScrollView } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
 
 import supportTiersService from '../../services/support-tiers.service';
@@ -12,6 +10,7 @@ import TiersList from './TiersList';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import Header from './Header';
 import { withErrorBoundaryScreen } from '../ErrorBoundaryScreen';
+import { Screen } from '~/common/ui';
 
 export type PaymentType = 'usd' | 'tokens';
 
@@ -56,12 +55,7 @@ const TierManagementScreen = observer(
     }
 
     return (
-      <ScrollView
-        contentContainerStyle={
-          localStore.support_tiers.length === 0
-            ? ThemedStyles.style.flexContainer
-            : null
-        }>
+      <Screen scroll>
         {localStore.support_tiers.length > 0 && (
           <Header
             labelText={i18n.t('monetize.membershipMonetize.label')}
@@ -77,7 +71,7 @@ const TierManagementScreen = observer(
           navigation={navigation}
           onLinkPress={() => navToTierScreen(navigation, false, localStore)}
         />
-      </ScrollView>
+      </Screen>
     );
   },
 );

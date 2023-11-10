@@ -11,7 +11,7 @@ import settingsService from '../SettingsService';
 import PasswordValidator from '../../common/components/password-input/PasswordValidator';
 import { isUserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
-import { Button } from '~ui';
+import { Button, Screen } from '~ui';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
 import apiService from '~/common/services/api.service';
@@ -149,50 +149,52 @@ export default observer(function () {
     <KeyboardAwareScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingTop3x}>
-      {!store.passwordFocused ? (
+      <Screen>
+        {!store.passwordFocused ? (
+          <PasswordInput
+            placeholder={i18n.t('settings.currentPassword')}
+            onChangeText={store.setCurrentPassword}
+            onSubmitEditing={newPasswordRef.current?.focus}
+            value={store.currentPassword}
+            returnKeyLabel={i18n.t('auth.nextLabel')}
+            returnKeyType="next"
+            testID={'currentPasswordInput'}
+            error={store.currentPasswordError}
+            style={[theme.paddingBottom7x]}
+          />
+        ) : (
+          <View style={[theme.paddingLeft3x]}>
+            <PasswordValidator password={store.newPassword} />
+          </View>
+        )}
         <PasswordInput
-          placeholder={i18n.t('settings.currentPassword')}
-          onChangeText={store.setCurrentPassword}
-          onSubmitEditing={newPasswordRef.current?.focus}
-          value={store.currentPassword}
+          ref={newPasswordRef}
+          placeholder={i18n.t('settings.newPassword')}
+          onChangeText={store.setNewPassword}
+          onSubmitEditing={confirmPasswordRef.current?.focus}
+          value={store.newPassword}
           returnKeyLabel={i18n.t('auth.nextLabel')}
           returnKeyType="next"
-          testID={'currentPasswordInput'}
-          error={store.currentPasswordError}
-          style={[theme.paddingBottom7x]}
+          testID={'newPasswordInput'}
+          onFocus={store.newPasswordFocus}
+          onBlur={store.newPasswordBlurred}
+          error={store.newPasswordError}
+          noBottomBorder={true}
         />
-      ) : (
-        <View style={[theme.paddingLeft3x]}>
-          <PasswordValidator password={store.newPassword} />
-        </View>
-      )}
-      <PasswordInput
-        ref={newPasswordRef}
-        placeholder={i18n.t('settings.newPassword')}
-        onChangeText={store.setNewPassword}
-        onSubmitEditing={confirmPasswordRef.current?.focus}
-        value={store.newPassword}
-        returnKeyLabel={i18n.t('auth.nextLabel')}
-        returnKeyType="next"
-        testID={'newPasswordInput'}
-        onFocus={store.newPasswordFocus}
-        onBlur={store.newPasswordBlurred}
-        error={store.newPasswordError}
-        noBottomBorder={true}
-      />
 
-      <PasswordInput
-        ref={confirmPasswordRef}
-        placeholder={i18n.t('settings.confirmNewPassword')}
-        onChangeText={store.setConfirmationPassword}
-        onSubmitEditing={confirmPassword}
-        returnKeyLabel={i18n.t('auth.submitLabel')}
-        returnKeyType="send"
-        value={store.confirmationPassword}
-        error={store.confirmationPasswordError}
-        testID={'confirmationPasswordPasswordInput'}
-        onBlur={store.newPasswordBlurred}
-      />
+        <PasswordInput
+          ref={confirmPasswordRef}
+          placeholder={i18n.t('settings.confirmNewPassword')}
+          onChangeText={store.setConfirmationPassword}
+          onSubmitEditing={confirmPassword}
+          returnKeyLabel={i18n.t('auth.submitLabel')}
+          returnKeyType="send"
+          value={store.confirmationPassword}
+          error={store.confirmationPasswordError}
+          testID={'confirmationPasswordPasswordInput'}
+          onBlur={store.newPasswordBlurred}
+        />
+      </Screen>
     </KeyboardAwareScrollView>
   );
 });

@@ -9,15 +9,12 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
 import { IS_FROM_STORE, IS_IOS, IS_IPAD } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import WalletStack from './WalletStack';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
-  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
-
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -272,15 +269,6 @@ export default function () {
         options={{ title: i18n.t('settings.otherOptions.b1') }}
         initialParams={{ useForSelection: false }}
       />
-      {isTwitterEnabled && (
-        <MoreStack.Screen
-          name="TwitterSync"
-          getComponent={() =>
-            require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
-          }
-          options={{ title: i18n.t('settings.twitterSync.titleLong') }}
-        />
-      )}
       <MoreStack.Screen
         name="DeleteChannel"
         getComponent={() =>

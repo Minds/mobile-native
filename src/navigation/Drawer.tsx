@@ -19,11 +19,15 @@ import {
   Spacer,
 } from '~ui';
 import { Icon as IconV2 } from '@minds/ui';
-import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import {
+  hasVariation,
+  useIsGoogleFeatureOn,
+  useIsIOSFeatureOn,
+} from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -46,7 +50,7 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden' | 'hideTokens', boolean>;
 
 type MenuItem = {
   name: string;
@@ -54,7 +58,10 @@ type MenuItem = {
   onPress: () => void;
   testID?: string;
 } | null;
-const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, hideTokens }: Flags,
+) => {
   const channel = sessionService.getUser();
   const list: MenuItem[] = [
     {
@@ -65,7 +72,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.push('Channel', { entity: channel });
       },
     },
-    !isIosMindsHidden
+    !isIosMindsHidden && IS_IOS // hide minds+ in google
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
@@ -88,14 +95,16 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
         navigation.navigate('SupermindConsole');
       },
     },
-    {
-      name: i18n.t('moreScreen.wallet'),
-      icon: 'bank',
-      testID: 'Drawer:wallet',
-      onPress: () => {
-        navigation.navigate('Wallet');
-      },
-    },
+    hideTokens
+      ? null
+      : {
+          name: i18n.t('moreScreen.wallet'),
+          icon: 'bank',
+          testID: 'Drawer:wallet',
+          onPress: () => {
+            navigation.navigate('Wallet');
+          },
+        },
     {
       name: 'Affiliate',
       icon: 'affiliate',
@@ -158,6 +167,8 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
   };
@@ -169,6 +180,7 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
+    hideTokens,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
