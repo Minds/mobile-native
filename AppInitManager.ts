@@ -38,10 +38,6 @@ export class AppInitManager {
    * Initialize services without waiting for the promises
    */
   async initializeServices() {
-    // init push service
-    pushService.init();
-
-    // init socket service
     socketService.init();
 
     // init block list service
@@ -215,7 +211,7 @@ export class AppInitManager {
       }
 
       // handle initial notifications (if the app is opened by tap on one)
-      // pushService.handleInitialNotification();
+      pushService.handleInitialNotification();
 
       // handle initial shared content`
       // ShareMenu.getInitialShare(receiveShare.handle);
@@ -226,6 +222,7 @@ export class AppInitManager {
       }
       SplashScreen.hideAsync();
     } catch (err) {
+      SplashScreen.hideAsync();
       logService.exception(err);
     }
   }

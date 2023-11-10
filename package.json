@@ -123,7 +123,7 @@
     "react-native-collapsible": "^1.6.0",
     "react-native-config": "^1.4.5",
     "react-native-convert-ph-asset": "^1.0.3",
-    "react-native-device-info": "^10.0.2",
+    "react-native-device-info": "^10.11.0",
     "react-native-elements": "^2.3.2",
     "react-native-exception-handler": "^2.10.10",
     "react-native-fs": "2.20.0",
@@ -141,7 +141,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",
     "react-native-navigation-bar-color": "^2.0.1",
-    "react-native-notifications": "Minds/react-native-notifications",
+    "react-native-notifications": "https://github.com/Minds/react-native-notifications",
     "react-native-pager-view": "6.2.0",
     "react-native-performance": "^2.0.0",
     "react-native-phone-number-input": "https://github.com/filipengberg/react-native-phone-number-input.git#feature/libphonenumber-js",
@@ -174,8 +174,6 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "react-native-flipper": "^0.212.0",
-    "react-query-native-devtools": "^4.0.0",
     "@babel/core": "^7.20.5",
     "@babel/plugin-proposal-class-properties": "7.18.6",
     "@babel/plugin-proposal-decorators": "7.21.0",
@@ -237,6 +235,7 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "18.2.0",
     "react-native-bundle-visualizer": "https://github.com/IjzerenHein/react-native-bundle-visualizer.git#fix-remove-minify-false",
+    "react-query-native-devtools": "^4.0.0",
     "react-test-renderer": "^18.2.0",
     "ts-node": "^10.8.0",
     "typescript": "^5.1.3"
