@@ -8,6 +8,6 @@
   "ACCENT_COLOR_LIGHT": "#2F65F6",
   "ACCENT_COLOR_DARK": "#2F65F6",
   "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
-  "THEME": "light",
+  "THEME": "dark",
   "API_URL": "https://www.minds.com/"
 }
