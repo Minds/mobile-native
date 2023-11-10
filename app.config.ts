@@ -127,7 +127,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
+      projectId:
+        Tenant.EAS_PROJECT_ID || '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
     },
   },
   owner: 'minds-inc',
