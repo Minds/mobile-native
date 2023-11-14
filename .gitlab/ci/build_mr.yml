@@ -20,10 +20,13 @@ eas_update_mr:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 stop_review:
+  stage: build_mr
   script:
     - eas channel:delete $CI_COMMIT_REF_SLUG --non-interactive
     - eas branch:delete $CI_COMMIT_REF_SLUG --non-interactive
-  when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     action: stop
