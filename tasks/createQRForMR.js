@@ -6,7 +6,7 @@ process.stdin.on('data', chunk => {
   inputData += chunk;
 });
 
-process.stdin.on('end', () => {
+process.stdin.on('end', async () => {
   try {
     // Parse JSON data
     const jsonData = JSON.parse(inputData);
