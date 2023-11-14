@@ -1,4 +1,4 @@
-# Demo APK generation
+# Production build & submit using expo for both platforms
 submit_production:
   stage: submit
   image: node:alpine
@@ -6,16 +6,37 @@ submit_production:
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
-      - .yarn
+      - ../.yarn
   before_script:
     - apk add --no-cache bash git
-    - yarn install --cache-folder .yarn
+    - yarn install --cache-folder ../.yarn
   script:
     - echo "Getting config for tenant ${TENANT_ID}"
     - node tasks/setup-tenant.js ${TENANT_ID}
     - npx eas-cli submit --profile production --non-interactive --json
   rules:
     - if: $BUILD_MODE == "production"
+      when: always
+    - if: $BUILD_MODE == null && $CI_COMMIT_BRANCH == "master"
+      when: manual
+
+submit_rc:
+  stage: submit
+  image: node:alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../.yarn
+  before_script:
+    - apk add --no-cache bash git
+    - yarn install --cache-folder ../.yarn
+  script:
+    - echo "Getting config for tenant ${TENANT_ID}"
+    - node tasks/setup-tenant.js ${TENANT_ID}
+    - npx eas-cli build --profile preview --non-interactive --json
+  rules:
+    - if: $BUILD_MODE == "rc"
       when: always
     - if: $BUILD_MODE == null && $CI_COMMIT_BRANCH == "master"
       when: manual
