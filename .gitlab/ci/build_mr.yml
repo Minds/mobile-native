@@ -1,7 +1,7 @@
 # preview using expo update
 eas_update_mr:
   stage: build_mr
-  image: node:alpine
+  image: node:18.18-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
