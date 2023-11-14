@@ -120,6 +120,8 @@ ri18n.init();
 // TAMAGUI
 process.env.TAMAGUI_TARGET = 'native';
 
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
 // expo vector icons
 jest.mock('@expo/vector-icons/MaterialIcons', () => 'MaterialIcons');
 jest.mock(

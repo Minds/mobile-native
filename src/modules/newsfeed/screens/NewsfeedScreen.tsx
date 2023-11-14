@@ -11,7 +11,7 @@ import NewsfeedPlaceholder from '../components/NewsfeedPlaceholder';
 import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_TENANT } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 
 import { useInfiniteNewsfeed } from '~/modules/newsfeed/hooks/useInfiniteNewsfeed';
@@ -252,7 +252,7 @@ const Header = () => (
   <>
     <CheckLanguage />
     <RemoteBanner />
-    <InitialOnboardingButton />
+    {!IS_TENANT && <InitialOnboardingButton />}
     <PortraitContentBar />
     {useIsFeatureOn('mob-4472-in-app-verification') ? (
       <InAppVerificationPrompt />
