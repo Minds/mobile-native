@@ -6,14 +6,14 @@ eas_update_mr:
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
-      - .yarn
+      - ../.yarn
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://expo.dev/accounts/minds-inc/projects/minds/updates # and set the variable produced in script to `environment:url`
     on_stop: stop_review
   before_script:
     - apk add --no-cache bash git
-    - yarn install --cache-folder .yarn
+    - yarn install --cache-folder ../.yarn
   script:
     - npx eas-cli update --branch $CI_COMMIT_REF_SLUG --message "$CI_MERGE_REQUEST_TITLE" --json --non-interactive | node tasks/createQRForMR.js
   rules:
