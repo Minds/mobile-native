@@ -1,5 +1,5 @@
 # preview using expo update
-eas_build_apk:
+eas_update_mr:
   stage: build_mr
   image: node:alpine
   tags: [minds-ci]
