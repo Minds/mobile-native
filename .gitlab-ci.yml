@@ -5,6 +5,7 @@ variables:
 
 include:
   - local: .gitlab/ci/test.yml
+  - local: .gitlab/ci/build_mr.yml
   - local: .gitlab/ci/build_apk.yml
   - local: .gitlab/ci/submit.yml
   - local: .gitlab/ci/maintenance.yml
@@ -12,6 +13,7 @@ include:
 
 stages:
   - test
+  - build_mr
   - build_apk
   - submit
   - maintenance
