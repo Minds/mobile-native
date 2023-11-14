@@ -172,7 +172,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         ref={feedListRef}
         overrideItemLayout={overrideItemLayout}
         emphasizeGroup
-        renderInFeedItems={renderInFeedItems}
+        renderInFeedItems={IS_TENANT ? undefined : renderInFeedItems}
         data={entities}
         refreshing={refreshing}
         onEndReached={query.fetchNextPage}
