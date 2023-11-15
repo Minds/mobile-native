@@ -7,6 +7,6 @@
   "APP_ANDROID_PACKAGE": "com.minds.demoValuetainmentMobile",
   "ACCENT_COLOR_LIGHT": "#EA2126",
   "ACCENT_COLOR_DARK": "#EA2126",
-  "THEME": "dark",
+  "THEME": "light",
   "API_URL": "https://e4da3b7fbbce2345d7772b0674a318d5.networks.minds.com/"
 }

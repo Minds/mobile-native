@@ -92,7 +92,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'android.permission.CAMERA',
       'android.permission.RECORD_AUDIO',
     ],
-    googleServicesFile: './google-services.json',
+    //   googleServicesFile: './google-services.json',
   },
   ios: {
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
