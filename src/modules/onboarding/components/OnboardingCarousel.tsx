@@ -35,7 +35,7 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
         onSnapToItem={setIndex}
         width={width}
         height={475}
-        data={data?.length ? data : defaultData}
+        data={defaultData}
         renderItem={renderItem}
         style={ThemedStyles.style.marginBottom1x}
       />
@@ -78,20 +78,12 @@ export const OnboardingCarousel = () => {
 
 const defaultData = [
   {
-    title: 'Own your identity, content and social graph',
+    title: 'Demo day baby!',
     image: require('~/assets/images/onboarding1.png'),
   },
   {
-    title: 'Connect with creative minds and communities globally',
+    title: 'Join now if you want to live',
     image: require('~/assets/images/onboarding2.png'),
-  },
-  {
-    title: 'The best place to grow your audience',
-    image: require('~/assets/images/onboarding3.png'),
-  },
-  {
-    title: 'Earn real revenue as a creator or an affiliate',
-    image: require('~/assets/images/onboarding4.png'),
   },
 ];
 
