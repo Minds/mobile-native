@@ -96,6 +96,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-store-review": "~6.4.0",
+    "expo-updates": "~0.18.17",
     "graphql": "^16.6.0",
     "i18n-js": "^3.8.0",
     "i18next": "^22.4.15",
