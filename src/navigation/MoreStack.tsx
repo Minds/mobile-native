@@ -266,6 +266,16 @@ export default function () {
         }
         options={{ title: i18n.t('settings.blockedChannels') }}
       />
+      <MoreStack.Screen
+        name="RssScreen"
+        getComponent={() =>
+          require('~/modules/rss-settings/screens/RssScreen.tsx').default
+        }
+        options={{
+          title: i18n.t('settings.rssSync'),
+          headerTitleAlign: 'center',
+        }}
+      />
       {MEMBERSHIP_TIERS_ENABLED && (
         <MoreStack.Screen
           name="TierManagementScreen"

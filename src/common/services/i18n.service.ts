@@ -195,6 +195,7 @@ class I18nService {
     value: moment.MomentInput,
     format: 'date' | 'nameDay' | 'time' | 'friendly' | 'datetime' = 'datetime',
     timezone = '',
+    suffix = false, // for friendly format
   ) {
     if (!this.dateFormat) {
       return '';
@@ -225,7 +226,7 @@ class I18nService {
         const diff = moment.duration(date.diff(now));
 
         if (diff.asMilliseconds() > -86400000) {
-          return diff.humanize(false);
+          return diff.humanize(suffix);
         }
         return now.year() === date.year()
           ? date.format(this.dateFormat.short)

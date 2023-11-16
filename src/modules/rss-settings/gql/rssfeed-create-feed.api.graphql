@@ -1,0 +1,3 @@
+mutation CreateRssFeed($url: String!) {
+  createRssFeed(rssFeed: { url: $url })
+}
