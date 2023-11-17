@@ -100,6 +100,28 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type CommentEdge = EdgeInterface & {
+  __typename?: 'CommentEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: CommentNode;
+  type: Scalars['String']['output'];
+};
+
+export type CommentNode = NodeInterface & {
+  __typename?: 'CommentNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -419,6 +441,16 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export enum IllegalSubReasonEnum {
+  AnimalAbuse = 'ANIMAL_ABUSE',
+  Extortion = 'EXTORTION',
+  Fraud = 'FRAUD',
+  MinorsSexualization = 'MINORS_SEXUALIZATION',
+  RevengePorn = 'REVENGE_PORN',
+  Terrorism = 'TERRORISM',
+  Trafficking = 'TRAFFICKING',
+}
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -472,7 +504,9 @@ export type Mutation = {
   createGiftCard: GiftCardNode;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
-  createRssFeed?: Maybe<Scalars['Void']['output']>;
+  /** Create a new report. */
+  createNewReport: Scalars['Boolean']['output'];
+  createRssFeed: RssFeed;
   createTenant: Tenant;
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
@@ -480,6 +514,8 @@ export type Mutation = {
   dismiss: Dismissal;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
+  /** Provide a verdict for a report. */
+  provideVerdict: Scalars['Boolean']['output'];
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   /** Sets onboarding state for the currently logged in user. */
@@ -515,6 +551,10 @@ export type MutationCreateNetworkRootUserArgs = {
   networkUser?: InputMaybe<TenantUserInput>;
 };
 
+export type MutationCreateNewReportArgs = {
+  reportInput: ReportInput;
+};
+
 export type MutationCreateRssFeedArgs = {
   rssFeed: RssFeedInput;
 };
@@ -533,6 +573,10 @@ export type MutationDismissArgs = {
 
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
+};
+
+export type MutationProvideVerdictArgs = {
+  verdictInput: VerdictInput;
 };
 
 export type MutationRefreshRssFeedArgs = {
@@ -572,6 +616,14 @@ export type NodeImpl = NodeInterface & {
 export type NodeInterface = {
   id: Scalars['ID']['output'];
 };
+
+export enum NsfwSubReasonEnum {
+  Nudity = 'NUDITY',
+  Pornography = 'PORNOGRAPHY',
+  Profanity = 'PROFANITY',
+  RaceReligionGender = 'RACE_RELIGION_GENDER',
+  ViolenceGore = 'VIOLENCE_GORE',
+}
 
 export type OnboardingState = {
   __typename?: 'OnboardingState';
@@ -664,6 +716,8 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Gets reports. */
+  reports: ReportsConnection;
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
@@ -742,6 +796,12 @@ export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
+export type QueryReportsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<ReportStatusEnum>;
+};
+
 export type QueryRssFeedArgs = {
   feedId: Scalars['String']['input'];
 };
@@ -760,6 +820,88 @@ export type QuerySearchArgs = {
 export type QueryTenantsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Report = NodeInterface & {
+  __typename?: 'Report';
+  action?: Maybe<ReportActionEnum>;
+  createdTimestamp: Scalars['Int']['output'];
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** Gets entity edge from entityUrn. */
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityGuid?: Maybe<Scalars['String']['output']>;
+  entityUrn: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  illegalSubReason?: Maybe<IllegalSubReasonEnum>;
+  moderatedByGuid?: Maybe<Scalars['String']['output']>;
+  nsfwSubReason?: Maybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  reportGuid?: Maybe<Scalars['String']['output']>;
+  reportedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Gets reported user edge from reportedByGuid. */
+  reportedByUserEdge?: Maybe<UserEdge>;
+  securitySubReason?: Maybe<SecuritySubReasonEnum>;
+  status: ReportStatusEnum;
+  tenantId?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export enum ReportActionEnum {
+  Ban = 'BAN',
+  Delete = 'DELETE',
+  Ignore = 'IGNORE',
+}
+
+export type ReportEdge = EdgeInterface & {
+  __typename?: 'ReportEdge';
+  /** Gets cursor for GraphQL. */
+  cursor: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** Gets node. */
+  node?: Maybe<Report>;
+  /** Gets type for GraphQL. */
+  type: Scalars['String']['output'];
+};
+
+export type ReportInput = {
+  entityUrn: Scalars['String']['input'];
+  illegalSubReason?: InputMaybe<IllegalSubReasonEnum>;
+  nsfwSubReason?: InputMaybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  securitySubReason?: InputMaybe<SecuritySubReasonEnum>;
+};
+
+export enum ReportReasonEnum {
+  ActivityPubReport = 'ACTIVITY_PUB_REPORT',
+  AnotherReason = 'ANOTHER_REASON',
+  Harassment = 'HARASSMENT',
+  Illegal = 'ILLEGAL',
+  Impersonation = 'IMPERSONATION',
+  InauthenticEngagement = 'INAUTHENTIC_ENGAGEMENT',
+  IncitementToViolence = 'INCITEMENT_TO_VIOLENCE',
+  IntellectualPropertyViolation = 'INTELLECTUAL_PROPERTY_VIOLATION',
+  Malware = 'MALWARE',
+  Nsfw = 'NSFW',
+  PersonalConfidentialInformation = 'PERSONAL_CONFIDENTIAL_INFORMATION',
+  Security = 'SECURITY',
+  Spam = 'SPAM',
+  ViolatesPremiumContentPolicy = 'VIOLATES_PREMIUM_CONTENT_POLICY',
+}
+
+export enum ReportStatusEnum {
+  Actioned = 'ACTIONED',
+  Pending = 'PENDING',
+}
+
+export type ReportsConnection = ConnectionInterface & {
+  __typename?: 'ReportsConnection';
+  /** Gets connections edges. */
+  edges: Array<EdgeInterface>;
+  /** ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  pageInfo: PageInfo;
 };
 
 export type RssFeed = {
@@ -820,6 +962,10 @@ export type SearchResultsCount = {
   count: Scalars['Int']['output'];
 };
 
+export enum SecuritySubReasonEnum {
+  HackedAccount = 'HACKED_ACCOUNT',
+}
+
 export type Tenant = {
   __typename?: 'Tenant';
   config?: Maybe<MultiTenantConfig>;
@@ -853,6 +999,12 @@ export enum TenantUserRoleEnum {
   Owner = 'OWNER',
   User = 'USER',
 }
+
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+  | ActivityEdge
+  | CommentEdge
+  | GroupEdge
+  | UserEdge;
 
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
@@ -897,6 +1049,11 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type VerdictInput = {
+  action: ReportActionEnum;
+  reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
@@ -1019,6 +1176,11 @@ export type FetchSearchQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename?: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -1030,6 +1192,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1067,6 +1230,10 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -1075,6 +1242,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1098,6 +1266,7 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1114,6 +1283,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1137,6 +1307,7 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1202,6 +1373,13 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename?: 'UserNode';
@@ -1218,6 +1396,7 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename?: 'Report'; id: string }
             | { __typename?: 'UserNode'; legacy: string; id: string }
             | null;
         }
@@ -1233,6 +1412,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1270,6 +1450,10 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -1278,6 +1462,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1301,6 +1486,7 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1317,6 +1503,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1340,6 +1527,7 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1405,6 +1593,13 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename?: 'UserNode';
@@ -1421,6 +1616,7 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename?: 'Report'; id: string }
             | { __typename?: 'UserNode'; legacy: string; id: string }
             | null;
         }
@@ -1484,10 +1680,15 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename?: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -1501,6 +1702,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1509,6 +1711,7 @@ export type FetchSearchQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -1522,6 +1725,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1574,6 +1778,10 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename?: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename?: 'UserNode';
@@ -1590,6 +1798,11 @@ export type FetchSearchQuery = {
               endCursor?: string | null;
             };
           };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename?: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
@@ -1794,6 +2007,11 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -1805,6 +2023,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'CommentNode'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -1858,6 +2077,10 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename: 'ActivityNode'; id: string }
@@ -1866,6 +2089,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -1883,6 +2107,7 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename: 'NodeImpl'; id: string }
                         | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
@@ -1895,6 +2120,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -1912,6 +2138,7 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename: 'NodeImpl'; id: string }
                         | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
@@ -1970,6 +2197,13 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename: 'UserNode';
@@ -1986,6 +2220,7 @@ export type FetchNewsfeedQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename: 'Report'; id: string }
             | { __typename: 'UserNode'; id: string }
             | null;
         }
@@ -2001,6 +2236,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'CommentNode'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2054,6 +2290,10 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename: 'ActivityNode'; id: string }
@@ -2062,6 +2302,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2079,6 +2320,7 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename: 'NodeImpl'; id: string }
                         | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
@@ -2091,6 +2333,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2108,6 +2351,7 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename: 'NodeImpl'; id: string }
                         | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
@@ -2166,6 +2410,13 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename: 'UserNode';
@@ -2182,6 +2433,7 @@ export type FetchNewsfeedQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename: 'Report'; id: string }
             | { __typename: 'UserNode'; id: string }
             | null;
         }
@@ -2260,10 +2512,15 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -2277,6 +2534,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'GroupNode'; legacy: string; id: string }
                     | { __typename: 'NodeImpl'; id: string }
                     | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
                     | { __typename: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -2285,6 +2543,7 @@ export type FetchNewsfeedQuery = {
                   publisherNode?:
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -2298,6 +2557,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'GroupNode'; legacy: string; id: string }
                     | { __typename: 'NodeImpl'; id: string }
                     | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
                     | { __typename: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -2350,6 +2610,10 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename: 'UserNode';
@@ -2366,6 +2630,11 @@ export type FetchNewsfeedQuery = {
               endCursor?: string | null;
             };
           };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
@@ -2389,7 +2658,17 @@ export type CreateRssFeedMutationVariables = Exact<{
 
 export type CreateRssFeedMutation = {
   __typename?: 'Mutation';
-  createRssFeed?: any | null;
+  createRssFeed: {
+    __typename?: 'RssFeed';
+    feedId: string;
+    userGuid: string;
+    title: string;
+    url: string;
+    tenantId?: number | null;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  };
 };
 
 export type RemoveRssFeedMutationVariables = Exact<{
@@ -3380,7 +3659,16 @@ useFetchNewsfeedQuery.fetcher = (
   );
 export const CreateRssFeedDocument = `
     mutation CreateRssFeed($url: String!) {
-  createRssFeed(rssFeed: {url: $url})
+  createRssFeed(rssFeed: {url: $url}) {
+    feedId
+    userGuid
+    title
+    url
+    tenantId
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
 }
     `;
 export const useCreateRssFeedMutation = <TError = unknown, TContext = unknown>(
