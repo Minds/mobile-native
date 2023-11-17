@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
 import type AttachmentStore from '../../common/stores/AttachmentStore';

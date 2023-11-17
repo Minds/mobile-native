@@ -10,7 +10,7 @@ import { ChannelStoreType } from '../createChannelStore';
 import SaveButton from '../../../common/components/SaveButton';
 import LocationAutoSuggest from '../../../common/components/LocationAutoSuggest';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
 import InputContainer from '~/common/components/InputContainer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

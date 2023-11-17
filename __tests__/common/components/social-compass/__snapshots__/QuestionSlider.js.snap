@@ -17,14 +17,14 @@ exports[`Slider component should render correctly 1`] = `
           "color": "#F2F2F2",
         },
         {
-          "fontFamily": "Roboto",
+          "fontFamily": "Roboto_400Regular",
         },
         [
           {
             "fontSize": 16,
           },
           {
-            "fontFamily": "Roboto-Medium",
+            "fontFamily": "Roboto_500Medium",
             "fontWeight": "500",
           },
         ],
@@ -77,14 +77,14 @@ exports[`Slider component should render correctly 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
               "fontSize": 13,
             },
             {
-              "fontFamily": "Roboto-Medium",
+              "fontFamily": "Roboto_500Medium",
               "fontWeight": "500",
             },
             {
@@ -103,14 +103,14 @@ exports[`Slider component should render correctly 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
               "fontSize": 13,
             },
             {
-              "fontFamily": "Roboto-Medium",
+              "fontFamily": "Roboto_500Medium",
               "fontWeight": "500",
             },
             {

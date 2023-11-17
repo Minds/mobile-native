@@ -581,7 +581,7 @@ exports[`Activity component renders correctly 1`] = `
           style={
             [
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
                 "fontSize": 16,
                 "lineHeight": 24,
               },
@@ -592,7 +592,7 @@ exports[`Activity component renders correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
                 "fontWeight": "500",
               },
             ]
@@ -701,7 +701,7 @@ exports[`Activity component renders correctly 1`] = `
           key="translate-activityguid0"
           style={
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
               "fontSize": 16,
               "lineHeight": 24,
             }

@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: fix TS errors of tamagui
 import { Button, Icons, Layout, ListItem, Text, View } from '@minds/ui';
 import { useNavigation } from '@react-navigation/native';
 import { Stack } from '@tamagui/core';

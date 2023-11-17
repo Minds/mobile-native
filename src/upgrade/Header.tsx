@@ -49,17 +49,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 17,
     paddingBottom: 5,
-    fontFamily: 'Roboto-Black',
+    fontFamily: 'Roboto_900Black',
   },
   title: {
     color: '#FFFFFF',
     fontSize: 24,
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto_700Bold',
   },
   text: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto_400Regular',
     marginVertical: 15,
   },
   banner: {

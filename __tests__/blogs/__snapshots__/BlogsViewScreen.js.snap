@@ -80,7 +80,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "fontFamily": "Roboto",
             },
             Object {
-              "fontFamily": "Roboto-Black",
+              "fontFamily": "Roboto_900Black",
               "fontSize": 22,
               "paddingBottom": 8,
               "paddingLeft": 15,
@@ -294,7 +294,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                           "color": "#FFFFFF",
                         },
                         Object {
-                          "fontFamily": "Roboto-Bold",
+                          "fontFamily": "Roboto_700Bold",
                         },
                         Object {
                           "fontSize": 16,
@@ -315,7 +315,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                             "color": "#B8C1CA",
                           },
                           Object {
-                            "fontFamily": "Roboto-Bold",
+                            "fontFamily": "Roboto_700Bold",
                           },
                           Object {
                             "fontSize": 14,

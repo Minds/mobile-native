@@ -12,7 +12,7 @@ exports[`Explicit text component renders correctly 1`] = `
           "marginBottom": 4,
         },
         {
-          "fontFamily": "Roboto-Black",
+          "fontFamily": "Roboto_900Black",
           "fontWeight": "700",
         },
       ]

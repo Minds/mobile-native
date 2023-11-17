@@ -223,7 +223,7 @@ const styles = ThemedStyles.create({
     fontSize: 16,
     fontWeight: '400',
     marginBottom: 0,
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
   errorContainer: {
     alignContent: 'flex-end',
@@ -231,7 +231,7 @@ const styles = ThemedStyles.create({
   },
   optional: {
     fontSize: 14,
-    fontFamily: 'Roboto-Italic',
+    fontFamily: 'Roboto_400Regular_Italic',
   },
   shadow: {
     shadowColor: '#000',

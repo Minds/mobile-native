@@ -5,7 +5,7 @@ import {
 } from './TransactionsListWithdrawalTypes';
 import { View } from 'react-native';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
 import i18n from '../../../../../common/services/i18n.service';

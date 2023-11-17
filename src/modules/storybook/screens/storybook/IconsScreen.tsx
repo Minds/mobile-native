@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: fix TS errors of tamagui
 import React from 'react';
 import { Button, Layout, View, Icons, Text, icons } from '@minds/ui';
 import { ScrollView } from 'react-native';

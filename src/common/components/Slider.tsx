@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { DimensionValue, StyleProp, View, ViewStyle } from 'react-native';
 import { Slider as ValueSlider } from 'react-native-elements';
 import MText from '~/common/components/MText';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -41,7 +41,7 @@ const Slider = ({
       ? 0
       : (value / (props.maximumRangeValue || 100)) * 93;
   const labelSpacerStyle: StyleProp<ViewStyle> = {
-    width: completionPercentage + '%',
+    width: (completionPercentage + '%') as DimensionValue,
     maxWidth: '90%',
     height: 20,
     flexDirection: 'row',

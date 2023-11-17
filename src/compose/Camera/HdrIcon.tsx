@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';

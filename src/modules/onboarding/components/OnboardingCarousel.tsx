@@ -8,7 +8,7 @@ import Pagination from '~/newsfeed/boost-rotator/components/pagination/Paginatio
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useCarouselData } from '../hooks';
 import { Maybe, UploadFileEntity } from '~/graphql/strapi';
-
+import assets from '@assets';
 const { width } = Dimensions.get('screen');
 
 type OnboardingCarouselProps = {
@@ -25,7 +25,7 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
     <>
       <RNImage
         resizeMode="contain"
-        source={require('assets/logos/bulb.png')}
+        source={assets.LOGO_SQUARED}
         style={styles.image}
       />
       <Carousel
@@ -79,19 +79,19 @@ export const OnboardingCarousel = () => {
 const defaultData = [
   {
     title: 'Own your identity, content and social graph',
-    image: require('assets/images/onboarding1.png'),
+    image: require('~/assets/images/onboarding1.png'),
   },
   {
     title: 'Connect with creative minds and communities globally',
-    image: require('assets/images/onboarding2.png'),
+    image: require('~/assets/images/onboarding2.png'),
   },
   {
     title: 'The best place to grow your audience',
-    image: require('assets/images/onboarding3.png'),
+    image: require('~/assets/images/onboarding3.png'),
   },
   {
     title: 'Earn real revenue as a creator or an affiliate',
-    image: require('assets/images/onboarding4.png'),
+    image: require('~/assets/images/onboarding4.png'),
   },
 ];
 

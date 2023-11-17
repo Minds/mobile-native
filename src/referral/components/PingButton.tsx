@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import { showNotification } from '../../../AppMessages';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
 import { useApiCall } from '../../common/hooks/useApiFetch';

@@ -1,7 +1,11 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
+import Constants from 'expo-constants';
 
-const MINDS_API_URI = 'https://www.minds.com/api/graphql';
-// const MINDS_API_URI =
+const API_URL =
+  Constants.expoConfig?.extra?.API_URL || 'https://www.minds.com/';
+
+const MAIN_API_URI = `${API_URL}api/graphql`;
+// const MAIN_API_URI =
 //   'https://feat-gift-card-txs-m4165.oke.minds.io/api/graphql';
 const STRAPI_API_URI = 'https://cms.minds.com/graphql';
 // use this for sandbox
@@ -25,7 +29,7 @@ const strapi_schema = {
 };
 const api_schema = {
   schema: {
-    [MINDS_API_URI]: {
+    [MAIN_API_URI]: {
       headers: { ...defaultHeaders, Cookie: 'staging=1' },
     },
   },

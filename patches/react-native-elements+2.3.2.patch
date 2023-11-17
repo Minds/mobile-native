@@ -1,3 +1,51 @@
+diff --git a/node_modules/react-native-elements/src/checkbox/CheckBoxIcon.js b/node_modules/react-native-elements/src/checkbox/CheckBoxIcon.js
+index 5db6737..39c5457 100644
+--- a/node_modules/react-native-elements/src/checkbox/CheckBoxIcon.js
++++ b/node_modules/react-native-elements/src/checkbox/CheckBoxIcon.js
+@@ -1,6 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import FAIcon from 'react-native-vector-icons/FontAwesome';
++import {FontAwesome as FAIcon} from '@expo/vector-icons';
+ 
+ import getIconType from '../helpers/getIconType';
+ 
+diff --git a/node_modules/react-native-elements/src/helpers/getIconType.js b/node_modules/react-native-elements/src/helpers/getIconType.js
+index 621aef0..30458b2 100644
+--- a/node_modules/react-native-elements/src/helpers/getIconType.js
++++ b/node_modules/react-native-elements/src/helpers/getIconType.js
+@@ -1,17 +1,17 @@
+-import ZocialIcon from 'react-native-vector-icons/Zocial';
+-import OcticonIcon from 'react-native-vector-icons/Octicons';
+-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+-import Ionicon from 'react-native-vector-icons/Ionicons';
+-import FoundationIcon from 'react-native-vector-icons/Foundation';
+-import EvilIcon from 'react-native-vector-icons/EvilIcons';
+-import EntypoIcon from 'react-native-vector-icons/Entypo';
+-import FAIcon from 'react-native-vector-icons/FontAwesome';
+-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+-import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
+-import FeatherIcon from 'react-native-vector-icons/Feather';
+-import AntIcon from 'react-native-vector-icons/AntDesign';
+-import Fontisto from 'react-native-vector-icons/Fontisto';
++import ZocialIcon from '@expo/vector-icons/Zocial';
++import OcticonIcon from '@expo/vector-icons/Octicons';
++import MaterialIcon from '@expo/vector-icons/MaterialIcons';
++import MaterialCommunityIcon from '@expo/vector-icons/MaterialCommunityIcons';
++import Ionicon from '@expo/vector-icons/Ionicons';
++import FoundationIcon from '@expo/vector-icons/Foundation';
++import EvilIcon from '@expo/vector-icons/EvilIcons';
++import EntypoIcon from '@expo/vector-icons/Entypo';
++import FAIcon from '@expo/vector-icons/FontAwesome';
++import FA5Icon from '@expo/vector-icons/FontAwesome5';
++import SimpleLineIcon from '@expo/vector-icons/SimpleLineIcons';
++import FeatherIcon from '@expo/vector-icons/Feather';
++import AntIcon from '@expo/vector-icons/AntDesign';
++import Fontisto from '@expo/vector-icons/Fontisto';
+ 
+ const customIcons = {};
+ 
 diff --git a/node_modules/react-native-elements/src/index.d.ts b/node_modules/react-native-elements/src/index.d.ts
 index 47e50e7..c9a3441 100644
 --- a/node_modules/react-native-elements/src/index.d.ts

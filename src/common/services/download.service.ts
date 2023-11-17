@@ -1,12 +1,11 @@
 import { Platform } from 'react-native';
 
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import * as MediaLibrary from 'expo-media-library';
 
 import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import permissionsService from './permissions.service';
 
 const ANDROID_API_VERSION = parseInt(Platform.constants['Release'] ?? 0, 10);
 /**
@@ -22,15 +21,15 @@ class DownloadService {
     try {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
       if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
-        return CameraRoll.save(url, { type: 'photo' });
+        return MediaLibrary.saveToLibraryAsync(url);
       } else if (ANDROID_API_VERSION < 11) {
-        let allowed = await permissionsService.checkWriteExternalStorage(true);
+        let permission = await MediaLibrary.getPermissionsAsync(true);
 
-        if (!allowed) {
-          allowed = await permissionsService.writeExternalStorage();
+        if (permission.status !== 'granted') {
+          permission = await MediaLibrary.requestPermissionsAsync();
         }
 
-        if (!allowed) {
+        if (!permission) {
           return;
         }
       }
@@ -47,7 +46,7 @@ class DownloadService {
 
       return download.promise.then(result => {
         if (result.statusCode === 200) {
-          return CameraRoll.save(filePath, { type: 'photo' });
+          return MediaLibrary.saveToLibraryAsync(filePath);
         } else {
           showNotification(i18nService.t('errorDownloading'), 'danger');
         }

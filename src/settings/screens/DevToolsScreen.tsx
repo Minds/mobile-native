@@ -14,9 +14,9 @@ import {
 } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { CodePushDebugger, codePush } from 'modules/codepush';
+// import { CodePushDebugger, codePush } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
-import Link from '../../common/components/Link';
+// import Link from '../../common/components/Link';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import pushService from '~/common/services/push.service';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -115,7 +115,7 @@ const DevToolsScreen = () => {
           </Row>
 
           <B2 align="center" color="tertiary">
-            Requires <Link onPress={() => codePush.restartApp()}>restart</Link>
+            Requires Restart
           </B2>
           <Row align="centerBetween" vertical="L">
             <B1>Push Notifications</B1>
@@ -130,7 +130,7 @@ const DevToolsScreen = () => {
             </Button>
           </Row>
         </ScreenSection>
-        <CodePushDebugger />
+        {/* <CodePushDebugger /> */}
         <GrowthbookDev />
       </ScrollView>
     </ModalContainer>

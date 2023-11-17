@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -14,7 +14,12 @@ import { useNavigation } from '@react-navigation/native';
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import SupermindAction from './actions/SupermindAction';
 import ShareAction from './actions/ShareAction';
-import { IS_IOS } from '~/config/Config';
+import {
+  BOOSTS_ENABLED,
+  IS_IOS,
+  SUPERMIND_ENABLED,
+  WIRE_ENABLED,
+} from '~/config/Config';
 import { useActivityContext } from './contexts/Activity.context';
 import { Button, HairlineRow, Icon, Row } from '../../common/ui';
 import { useAnalytics } from '../../common/contexts/analytics.context';
@@ -50,7 +55,6 @@ export const Actions = observer((props: PropsType) => {
 
   const entity = props.entity;
   const isOwner = entity.isOwner();
-  const hasWire = Platform.OS !== 'ios';
   const isScheduled = BaseModel.isScheduled(
     parseInt(entity.time_created, 10) * 1000,
   );
@@ -105,15 +109,17 @@ export const Actions = observer((props: PropsType) => {
 
         {IS_IOS && <ShareAction entity={entity} />}
 
-        {!isOwner && hasWire && (
+        {!isOwner && WIRE_ENABLED && (
           <WireAction owner={entity.ownerObj} navigation={navigation} />
         )}
 
-        {isOwner && !isScheduled && (
+        {isOwner && !isScheduled && BOOSTS_ENABLED && (
           <BoostAction entity={entity} navigation={navigation} />
         )}
 
-        {!isOwner && !IS_IOS && <SupermindAction entity={entity} />}
+        {!isOwner && !IS_IOS && SUPERMIND_ENABLED && (
+          <SupermindAction entity={entity} />
+        )}
       </View>
 
       {explicitVoteButtons && (

@@ -1,14 +1,16 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { StyleSheet } from 'react-native';
 import type UserModel from '../../channel/UserModel';
 import { ColorsNameType } from '../../styles/Colors';
 import MText from './MText';
 
+type IconName = React.ComponentProps<typeof Icon>['name'];
+
 type badge = {
   badge: string;
-  icon: string;
+  icon: IconName;
   color: ColorsNameType;
   shoudlShow: (channel: UserModel, activeBadges: Array<string>) => boolean;
 };
@@ -25,7 +27,7 @@ const badges: Array<badge> = [
   },
   {
     badge: 'Plus',
-    icon: 'add_circle_outline',
+    icon: 'add-circle-outline',
     color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('plus') && channel.plus && !channel.pro,
@@ -53,7 +55,7 @@ const badges: Array<badge> = [
   },
   {
     badge: 'Boosted OnChain in the last 7 days',
-    icon: 'Link',
+    icon: 'link',
     color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('onchain_booster') &&

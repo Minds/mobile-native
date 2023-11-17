@@ -15,29 +15,15 @@ exports[`SupermindFeedFilter should render 1`] = `
     }
     testID="FilterToggle"
   >
-    <Text
-      allowFontScaling={false}
-      selectable={false}
+    <MaterialCommunityIcons
+      name="filter-variant"
+      size={18}
       style={
-        [
-          {
-            "color": undefined,
-            "fontSize": 18,
-          },
-          {
-            "color": "#AEB0B8",
-          },
-          {
-            "fontFamily": "Material Design Icons",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          {},
-        ]
+        {
+          "color": "#AEB0B8",
+        }
       }
-    >
-      󰈶
-    </Text>
+    />
     <Text
       style={
         [
@@ -45,7 +31,7 @@ exports[`SupermindFeedFilter should render 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -126,7 +112,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -230,31 +216,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -266,7 +239,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -370,31 +343,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -406,7 +366,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -510,31 +470,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-on"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#FFD048",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#FFD048",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -546,7 +493,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -650,31 +597,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -686,7 +620,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -790,31 +724,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -826,7 +747,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -930,31 +851,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -966,7 +874,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -1070,31 +978,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -1106,7 +1001,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -1210,31 +1105,18 @@ exports[`SupermindFeedFilter should render 1`] = `
                       }
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      selectable={false}
+                    <IonIcon
+                      color="#242424"
+                      name="ios-radio-button-off"
+                      size={24}
                       style={
-                        [
-                          {
-                            "color": "#242424",
-                            "fontSize": 24,
-                          },
-                          {
-                            "backgroundColor": "transparent",
-                            "color": "#b9bbc0",
-                          },
-                          {
-                            "fontFamily": "Ionicons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
-                        ]
+                        {
+                          "backgroundColor": "transparent",
+                          "color": "#b9bbc0",
+                        }
                       }
                       testID="iconIcon"
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                 </View>
               </View>
@@ -1246,7 +1128,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 16,
@@ -1388,7 +1270,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                           "color": "#FFFFFF",
                         },
                         {
-                          "fontFamily": "Roboto-Medium",
+                          "fontFamily": "Roboto_500Medium",
                         },
                         {
                           "fontSize": 18,

@@ -1,8 +1,11 @@
+// import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
+// type IconName = React.ComponentProps<typeof IconMC>['name'];
+
 export interface SocialProfileMeta {
   key: string;
   label: string;
   linkFormat: string;
-  icon: string;
+  icon: any; // IconName; //TODO: use this type and fix missing icons
   domain: string;
   customIcon?: boolean;
   verified?: boolean;
@@ -231,7 +234,7 @@ export const socialProfileMeta: SocialProfileMeta[] = [
     key: 'wikipedia_user',
     label: 'Wikipedia',
     linkFormat: 'https://wikipedia.org/wiki/:value',
-    icon: 'wikipedia-w',
+    icon: 'wikipedia',
     domain: 'wikipedia.com',
   },
   {

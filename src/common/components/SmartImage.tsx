@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Image, ImageProps } from 'expo-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import { autorun } from 'mobx';

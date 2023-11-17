@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   lockMessage: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 16,
     letterSpacing: 0,
     textShadowColor: 'rgba(0, 0, 0, 0.5)',

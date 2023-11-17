@@ -11,7 +11,7 @@ import NewsfeedPlaceholder from '../components/NewsfeedPlaceholder';
 import { Screen } from '~/common/ui';
 import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
 import PrefetchNotifications from '~/notifications/v3/PrefetchNotifications';
-import { IS_IOS, IS_IPAD } from '~/config/Config';
+import { IS_IOS, IS_IPAD, IS_TENANT } from '~/config/Config';
 import { NotificationsTabOptions } from '~/notifications/v3/NotificationsTopBar';
 
 import { useInfiniteNewsfeed } from '~/modules/newsfeed/hooks/useInfiniteNewsfeed';
@@ -23,7 +23,6 @@ import {
 import StickyListWrapper from '~/common/components/StickyListWrapper';
 import Animated from 'react-native-reanimated';
 import CheckLanguage from '~/common/components/CheckLanguage';
-import CodePushUpdatePrompt from '~/modules/codepush/widgets/CodePushUpdatePrompt';
 import RemoteBanner from '~/common/components/RemoteBanner';
 import InitialOnboardingButton from '~/onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '~/portrait/components/PortraitContentBar';
@@ -256,10 +255,8 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 const Header = () => (
   <>
     <CheckLanguage />
-    <CodePushUpdatePrompt>
-      <RemoteBanner />
-    </CodePushUpdatePrompt>
-    <InitialOnboardingButton />
+    <RemoteBanner />
+    {!IS_TENANT && <InitialOnboardingButton />}
     <PortraitContentBar />
     {useIsFeatureOn('mob-4472-in-app-verification') ? (
       <InAppVerificationPrompt />

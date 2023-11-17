@@ -23,6 +23,7 @@ import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 
 export type ButtonsType =
   | 'edit'
@@ -102,7 +103,7 @@ const ChannelButtons = withErrorBoundary(
       <Row right="S" containerStyle={[props.containerStyle]}>
         {props.children}
         {shouldShow('edit') && <Edit {...props} />}
-        {shouldShow('wire') && (
+        {shouldShow('wire') && WIRE_ENABLED && (
           <SmallCircleButton
             raised={props.raisedIcons}
             name="attach-money"
@@ -123,7 +124,7 @@ const ChannelButtons = withErrorBoundary(
             </MotiView>
           )}
         </AnimatePresence>
-        {shouldShow('supermind') && (
+        {shouldShow('supermind') && SUPERMIND_ENABLED && (
           <SupermindButton
             entity={props.store.channel}
             style={ThemedStyles.style.marginLeft2x}

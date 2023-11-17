@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Keyboard, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
-import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MdIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import i18n from '~/common/services/i18n.service';

@@ -8,7 +8,13 @@ import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
-import { IS_FROM_STORE, IS_IOS, IS_IPAD } from '~/config/Config';
+import {
+  IS_FROM_STORE,
+  IS_IOS,
+  IS_IPAD,
+  MEMBERSHIP_TIERS_ENABLED,
+  TWITTER_ENABLED,
+} from '~/config/Config';
 import WalletStack from './WalletStack';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
@@ -260,15 +266,26 @@ export default function () {
         }
         options={{ title: i18n.t('settings.blockedChannels') }}
       />
-      <MoreStack.Screen
-        name="TierManagementScreen"
-        getComponent={() =>
-          require('~/common/components/tier-management/TierManagementScreen')
-            .default
-        }
-        options={{ title: i18n.t('settings.otherOptions.b1') }}
-        initialParams={{ useForSelection: false }}
-      />
+      {MEMBERSHIP_TIERS_ENABLED && (
+        <MoreStack.Screen
+          name="TierManagementScreen"
+          getComponent={() =>
+            require('~/common/components/tier-management/TierManagementScreen')
+              .default
+          }
+          options={{ title: i18n.t('settings.otherOptions.b1') }}
+          initialParams={{ useForSelection: false }}
+        />
+      )}
+      {TWITTER_ENABLED && (
+        <MoreStack.Screen
+          name="TwitterSync"
+          getComponent={() =>
+            require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
+          }
+          options={{ title: i18n.t('settings.twitterSync.titleLong') }}
+        />
+      )}
       <MoreStack.Screen
         name="DeleteChannel"
         getComponent={() =>

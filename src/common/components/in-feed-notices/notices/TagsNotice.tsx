@@ -5,6 +5,7 @@ import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import { TENANT } from '~/config/Config';
 
 /**
  * Update Tags Notice
@@ -24,7 +25,9 @@ function TagsNotice({ name }: NoticeProps) {
     <InFeedNotice
       name={name}
       title={i18nService.t('inFeedNotices.updatePreferences')}
-      description={i18nService.t('inFeedNotices.tagsDescription')}
+      description={i18nService.t('inFeedNotices.tagsDescription', {
+        TENANT,
+      })}
       btnText={i18nService.t('inFeedNotices.update')}
       iconName="info-outline"
       onPress={onPress}

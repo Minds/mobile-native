@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import MText from '../../common/components/MText';
 import i18nService from '../../common/services/i18n.service';

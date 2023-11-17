@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
   touchableText: {
     fontWeight: '700',

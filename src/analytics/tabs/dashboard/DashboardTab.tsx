@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import { Dimensions, TouchableOpacity, View } from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 import LineChart from '~/common/components/charts/LineChart';
 import Select from '~/common/components/controls/Select';

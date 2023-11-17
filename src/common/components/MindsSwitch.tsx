@@ -84,7 +84,7 @@ const MindsSwitch = observer(
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 15,
     padding: 10,
   },

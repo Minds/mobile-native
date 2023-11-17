@@ -1,18 +1,18 @@
 import 'react-native-gesture-handler'; // fix ongesturehandler error
 import 'react-native-image-keyboard';
+import 'react-native-reanimated';
 
 import './global';
 import 'intl-pluralrules';
 
-import React from 'react';
+import { registerRootComponent } from 'expo';
 // if (process.env.NODE_ENV === 'development') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render');
 //   whyDidYouRender(React, {
 //     trackAllPureComponents: true,
 //   });
 // }
-import { AppRegistry, LogBox, Platform } from 'react-native';
-import reanimated from 'react-native-reanimated';
+import { LogBox } from 'react-native';
 import App from './App';
 import { enableFreeze } from 'react-native-screens';
 
@@ -38,4 +38,4 @@ enableFreeze(true);
 // // grab this text blob, and put it in a file named packager/modulePaths.js
 // console.log(`module.exports = ${JSON.stringify(loadedModuleNames.sort())};`);
 
-AppRegistry.registerComponent('Minds', () => App);
+registerRootComponent(App);

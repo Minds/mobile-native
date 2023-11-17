@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title, RowRight } from '../AccordionContent';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import NavigationService from '../../../../navigation/NavigationService';
 import { observer, useLocalStore } from 'mobx-react';

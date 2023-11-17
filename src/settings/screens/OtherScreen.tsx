@@ -5,6 +5,11 @@ import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import {
+  BLOCK_USER_ENABLED,
+  MEMBERSHIP_TIERS_ENABLED,
+  // TWITTER_ENABLED,
+} from '~/config/Config';
 import { Screen } from '~/common/ui';
 
 function useNavCallback(screen) {
@@ -61,13 +66,22 @@ export default function () {
       onPress: useNavCallback('AppInfo'),
     },
   ];
+  // const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   return (
     <Screen scroll>
-      {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
+      {BLOCK_USER_ENABLED &&
+        generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {!affiliatesEnabled &&
         generateSection(i18n.t('settings.otherOptions.g'), referrals)}
-      {generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {MEMBERSHIP_TIERS_ENABLED &&
+        generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {/* {isTwitterFFEnabled &&
+        TWITTER_ENABLED &&
+        generateSection(
+          i18n.t('settings.otherOptions.contentMigration'),
+          contentMigration,
+        )} */}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}

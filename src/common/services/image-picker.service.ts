@@ -1,7 +1,7 @@
 import * as ImagePicker from 'expo-image-picker';
-import permissions from './permissions.service';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { IS_IOS } from '~/config/Config';
+import { Camera } from 'react-native-vision-camera';
 
 export type MediaType = 'All' | 'Videos' | 'Images';
 export type PickedMedia = ImagePickerAsset & { mime: string };
@@ -16,15 +16,13 @@ class ImagePickerService {
    * Check if we have permission or ask the user
    */
   async checkCameraPermissions(): Promise<boolean> {
-    let allowed = true;
-
-    allowed = await permissions.checkCamera();
-    if (!allowed) {
+    let cam = await Camera.getCameraPermissionStatus();
+    if (cam === 'denied') {
       // request user permission
-      allowed = await permissions.camera();
+      cam = await Camera.requestCameraPermission();
     }
 
-    return allowed;
+    return cam !== 'denied';
   }
 
   /**

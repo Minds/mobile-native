@@ -7,6 +7,8 @@ import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
 
 jest.mock('../AppInitManager');
+jest.mock('../FontsLoader');
+jest.mock('../src/common/services/update.service.ts');
 jest.mock('@minds/ui', () => ({
   UIProvider: ({ children }) => children,
 }));

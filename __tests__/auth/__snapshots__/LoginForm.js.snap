@@ -117,11 +117,11 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto",
+                      "fontFamily": "Roboto_400Regular",
                     },
                     [
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                         "fontSize": 16,
                         "fontWeight": "400",
                         "marginBottom": 0,
@@ -184,7 +184,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "borderRadius": 2,
                   "borderWidth": 1,
                   "color": "#F2F2F2",
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                   "fontSize": 16,
                   "lineHeight": 21,
                 },
@@ -224,6 +224,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View>
+        <View />
         <View
           style={
             [
@@ -304,11 +305,11 @@ exports[`LoginForm component should renders correctly 1`] = `
                           "color": "#F2F2F2",
                         },
                         {
-                          "fontFamily": "Roboto",
+                          "fontFamily": "Roboto_400Regular",
                         },
                         [
                           {
-                            "fontFamily": "Roboto",
+                            "fontFamily": "Roboto_400Regular",
                             "fontSize": 16,
                             "fontWeight": "400",
                             "marginBottom": 0,
@@ -370,7 +371,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "borderRadius": 2,
                       "borderWidth": 1,
                       "color": "#F2F2F2",
-                      "fontFamily": "Roboto",
+                      "fontFamily": "Roboto_400Regular",
                       "fontSize": 16,
                       "lineHeight": 21,
                     },
@@ -402,37 +403,23 @@ exports[`LoginForm component should renders correctly 1`] = `
             </View>
           </View>
         </View>
-        <Text
-          allowFontScaling={false}
+        <IonIcon
+          name="md-eye-off"
           onPress={[Function]}
-          selectable={false}
+          size={25}
           style={
             [
               {
-                "color": undefined,
-                "fontSize": 25,
+                "position": "absolute",
+                "right": 12,
+                "top": 30,
               },
-              [
-                {
-                  "position": "absolute",
-                  "right": 12,
-                  "top": 30,
-                },
-                {
-                  "color": "#b9bbc0",
-                },
-              ],
               {
-                "fontFamily": "Ionicons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
+                "color": "#b9bbc0",
               },
-              {},
             ]
           }
-        >
-          
-        </Text>
+        />
       </View>
     </View>
     <View
@@ -574,7 +561,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "color": "#000000",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 18,
@@ -635,7 +622,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             {
               "fontSize": 16,

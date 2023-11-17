@@ -12,9 +12,9 @@ import ChatIcon from '~/chat/ChatIcon';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
-import { ANDROID_CHAT_APP } from '~/config/Config';
+import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
-import { CodePushCustomIcon } from 'modules/codepush';
+import assets from '@assets';
 
 type PropsType = {
   navigation: any;
@@ -75,7 +75,7 @@ export const Topbar = observer((props: PropsType) => {
 
   return (
     <Animated.View style={[styles.shadow, animatedStyle]}>
-      <TabChatPreModal ref={chatModal} />
+      {CHAT_ENABLED && <TabChatPreModal ref={chatModal} />}
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
@@ -110,13 +110,12 @@ export const Topbar = observer((props: PropsType) => {
                       resizeMode="contain"
                       source={
                         ThemedStyles.theme
-                          ? require('../assets/logos/logo-white.png')
-                          : require('../assets/logos/logo.png')
+                          ? assets.LOGO_HORIZONTAL_DARK
+                          : assets.LOGO_HORIZONTAL
                       }
                       style={styles.logo}
                     />
                   </PressableScale>
-                  <CodePushCustomIcon />
                 </View>
               </>
             )}
@@ -190,10 +189,10 @@ export const styles = StyleSheet.create({
 });
 
 const useChatIconState = () => {
-  const [isChatIconHidden, setChatIconHidden] = useState(false);
+  const [isChatIconHidden, setChatIconHidden] = useState(!CHAT_ENABLED);
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && CHAT_ENABLED) {
       SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
         setChatIconHidden(!installed);
       });

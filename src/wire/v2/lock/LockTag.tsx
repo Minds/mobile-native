@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 13,
-    fontFamily: 'Roboto-Black',
+    fontFamily: 'Roboto_900Black',
     color: '#FFFFFF',
   },
   spacing: {

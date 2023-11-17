@@ -3,10 +3,12 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { View, ViewStyle } from 'react-native';
 import { MotiView, AnimatePresence } from 'moti';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import settingsStore from '../settings/SettingsStore';
 import GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { storages } from '~/common/services/storage/storages.service';
+import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
 
 type CaptureFabProps = {
   group?: GroupModel;
@@ -34,10 +36,22 @@ const CaptureFab = ({
   testID,
   style,
 }: CaptureFabProps) => {
-  const navToCapture = () => {
-    navigation.push('Compose', {
-      group: group,
+  const pushComposeCreate = () =>
+    pushComposeCreateScreen({
+      onItemPress: async key => {
+        navigation.goBack();
+        storages.user?.setBool('compose:create', true);
+        navigation.navigate('Compose', { createMode: key });
+      },
     });
+  const handleComposePress = () => {
+    if (storages.user?.getBool('compose:create')) {
+      return navigation.push('Compose', {
+        group: group,
+      });
+    }
+
+    pushComposeCreate();
   };
 
   return (
@@ -48,15 +62,11 @@ const CaptureFab = ({
             settingsStore.leftHanded ? styles.leftSide : styles.rightSide,
             style,
           ]}>
-          <View style={styles.container}>
-            <Icon
-              name="edit"
-              style={ThemedStyles.style.colorPrimaryText_Light}
-              size={32}
-              onPress={navToCapture}
-              testID={testID}
-            />
-          </View>
+          <CaptureFabIcon
+            onPress={handleComposePress}
+            onLongPress={pushComposeCreate}
+            testID={testID}
+          />
         </ShowHide>
       )}
     </AnimatePresence>
@@ -64,6 +74,34 @@ const CaptureFab = ({
 };
 
 export default observer(CaptureFab);
+
+export const CaptureFabIcon = ({
+  onPress,
+  onLongPress,
+  testID,
+  scale,
+}: {
+  onPress?: () => void;
+  onLongPress?: () => void;
+  testID?: string;
+  scale?: number;
+}) => (
+  <View
+    style={
+      scale
+        ? [styles.container, { transform: [{ scale: scale }] }]
+        : styles.container
+    }>
+    <Icon
+      name="edit"
+      style={ThemedStyles.style.colorPrimaryBackground}
+      size={32}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      testID={testID}
+    />
+  </View>
+);
 
 const styles = ThemedStyles.create({
   container: [

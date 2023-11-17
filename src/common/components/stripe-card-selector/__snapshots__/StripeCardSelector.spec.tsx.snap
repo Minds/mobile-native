@@ -95,7 +95,7 @@ exports[`StripeCardSelector should render correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -137,27 +137,12 @@ exports[`StripeCardSelector should render correctly 1`] = `
         ]
       }
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "#AEB0B8",
-              "fontSize": 24,
-            },
-            {},
-            {
-              "fontFamily": "Material Design Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        󰅀
-      </Text>
+      <MaterialCommunityIcons
+        color="#AEB0B8"
+        name="chevron-down"
+        size={24}
+        style={{}}
+      />
     </View>
   </View>
 </View>
