@@ -1,0 +1,13 @@
+{
+  "APP_NAME": "Tenet Media",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.demoTenetVMobile",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.demoTenetVMobile",
+  "ACCENT_COLOR_LIGHT": "#7A2AF2",
+  "ACCENT_COLOR_DARK": "#7A2AF2",
+  "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
+  "THEME": "light",
+  "API_URL": "https://c9f0f895fb98ab9159f51fd0297e236d.networks.minds.com/"
+}
