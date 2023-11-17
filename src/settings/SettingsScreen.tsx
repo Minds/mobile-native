@@ -4,7 +4,6 @@ import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
 import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '../common/services/i18n.service';
-import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -21,6 +20,7 @@ import {
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import NavigationService from '~/navigation/NavigationService';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -38,7 +38,9 @@ export const navigateToHelp = async () => {
       },
     );
     if (response && response.url) {
-      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+      NavigationService.navigate('WebView', {
+        url: unescape(response.url),
+      });
     }
   } catch (err) {
     console.log(err);
