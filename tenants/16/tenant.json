@@ -7,6 +7,7 @@
   "APP_ANDROID_PACKAGE": "com.minds.demoTenetVMobile",
   "ACCENT_COLOR_LIGHT": "#7A2AF2",
   "ACCENT_COLOR_DARK": "#7A2AF2",
+  "ADAPTIVE_COLOR": "#ffffff",
   "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
   "THEME": "light",
   "API_URL": "https://c9f0f895fb98ab9159f51fd0297e236d.networks.minds.com/"

@@ -7,6 +7,7 @@
   "APP_ANDROID_PACKAGE": "com.minds.demoPelionMobile",
   "ACCENT_COLOR_LIGHT": "#000000",
   "ACCENT_COLOR_DARK": "#000000",
+  "ADAPTIVE_COLOR": "#ffffff",
   "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
   "THEME": "light",
   "API_URL": "https://98f13708210194c475687be6106a3b84.networks.minds.com/"

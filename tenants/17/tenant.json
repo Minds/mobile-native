@@ -7,6 +7,7 @@
   "APP_ANDROID_PACKAGE": "com.minds.demoMacIverMobile",
   "ACCENT_COLOR_LIGHT": "#043866",
   "ACCENT_COLOR_DARK": "#043866",
+  "ADAPTIVE_COLOR": "#ffffff",
   "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
   "THEME": "light",
   "API_URL": "https://3c59dc048e8850243be8079a5c74d079.networks.minds.com/"
