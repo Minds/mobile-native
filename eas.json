@@ -10,6 +10,7 @@
     },
     "preview": {
       "extends": "production",
+      "channel": "preview",
       "distribution": "internal"
     },
     "demo": {
@@ -20,6 +21,7 @@
       }
     },
     "production": {
+      "channel": "production",
       "node": "18.18.0",
       "env": {}
     }

@@ -29,6 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'react-native-iap',
+    'expo-updates',
     './node_modules/react-native-notifications/app.plugin.js',
     [
       'expo-build-properties',
@@ -129,6 +130,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId:
         Tenant.EAS_PROJECT_ID || '7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
     },
+  },
+  updates: {
+    url: 'https://u.expo.dev/7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
   },
   owner: 'minds-inc',
 });

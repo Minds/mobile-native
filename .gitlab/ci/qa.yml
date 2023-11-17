@@ -26,9 +26,9 @@ qa:rc:
     - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
     - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
     - *wdio_tests
-  # only:
-  #   refs:
-  #     - /^develop$/
+  only:
+    refs:
+      - /^master$/
 
 qa:rc:nightly:
   extends: .qa_base
