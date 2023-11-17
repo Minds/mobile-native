@@ -131,7 +131,7 @@ const Item = ({ rssFeed, item }) => {
       { feedId: item.feedId },
       {
         onSuccess: () => {
-          showNotification('Feed refreshed');
+          showNotification(i18n.t('settings.rssScreen.feedRefreshed'));
           rssFeed.refetch();
         },
         onError: error => {
@@ -148,7 +148,7 @@ const Item = ({ rssFeed, item }) => {
       { feedId: item.feedId },
       {
         onSuccess: () => {
-          showNotification('Feed refreshed');
+          showNotification(i18n.t('settings.rssScreen.feedRemoved'));
           rssFeed.refetch();
         },
         onError: error => {
@@ -167,9 +167,15 @@ const Item = ({ rssFeed, item }) => {
       </B2>
       <B3 color="secondary" top="XS">
         {item.lastFetchAtTimestamp
-          ? 'Updated ' +
-            i18n.date(item.lastFetchAtTimestamp * 1000, 'friendly', '', true)
-          : 'Not synced yet'}
+          ? i18n.t('settings.rssScreen.updated', {
+              date: i18n.date(
+                item.lastFetchAtTimestamp * 1000,
+                'friendly',
+                '',
+                true,
+              ),
+            })
+          : i18n.t('settings.rssScreen.notSynced')}
       </B3>
       <Row top="M" containerStyle={styles.iconBar}>
         <PressableScale onPress={refresh}>

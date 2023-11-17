@@ -904,7 +904,11 @@
       "activeDescription": "The feed should sync around every 5 minutes. If you want to manually check for new updates, simply hit refresh",
       "activeFeedsTitle": "Active RSS feeds",
       "addFeed": "Add feed",
-      "addFeedTitle": "Add RSS feed"
+      "addFeedTitle": "Add RSS feed",
+      "feedRefreshed": "Feed refreshed",
+      "feedRemoved": "Feed removed",
+      "updated": "Updated {{date}}",
+      "notSynced": "Not synced yet"
     },
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
