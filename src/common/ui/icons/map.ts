@@ -34,8 +34,7 @@ const ICON_MAP = {
   },
   supermind: {
     font: 'MaterialCommunityIcons',
-    name: 'head-lightbulb-outline',
-    // name: 'tips-and-updates',
+    name: 'lightbulb',
   },
   warning: {
     font: 'MaterialIcons',
