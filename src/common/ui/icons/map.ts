@@ -33,8 +33,9 @@ const ICON_MAP = {
     name: 'info-outline',
   },
   supermind: {
-    font: 'MaterialIcons',
-    name: 'tips-and-updates',
+    font: 'MaterialCommunityIcons',
+    name: 'head-lightbulb-outline',
+    // name: 'tips-and-updates',
   },
   warning: {
     font: 'MaterialIcons',

@@ -11,8 +11,8 @@ import { Screen } from '~/common/ui';
 export default function AppInfoScreen() {
   const theme = ThemedStyles.style;
   const logo = ThemedStyles.theme
-    ? require('~/assets/logos/logo-white.png')
-    : require('~/assets/logos/logo.png');
+    ? require('../../../assets/images/logo_horizontal.png')
+    : require('../../../assets/images/logo_horizontal_dark.png');
 
   const rowStyle = [
     theme.rowJustifySpaceBetween,

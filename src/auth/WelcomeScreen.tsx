@@ -45,7 +45,7 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <Screen safe>
+    <Screen safe hasMaxWidth={false}>
       <View style={theme.flexContainer}>
         {IS_TENANT ? (
           <Image

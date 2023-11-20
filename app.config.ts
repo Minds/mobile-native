@@ -92,6 +92,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     googleServicesFile: './google-services.json',
   },
   ios: {
+    supportsTablet: true,
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
     buildNumber: process.env.MINDS_APP_BUILD || '1',
     associatedDomains: Tenant.APP_HOST
