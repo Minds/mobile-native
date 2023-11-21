@@ -13,6 +13,7 @@ import { MINDS_URI } from '~/config/Config';
 import GroupModel from '~/groups/GroupModel';
 import NavigationService from '../../../navigation/NavigationService';
 import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   group: GroupModel;
@@ -43,19 +44,21 @@ const getOptions = ({
 
   const link = `${MINDS_URI}group/${group.guid}/feed`;
 
-  options.push({
-    iconName: 'trending-up',
-    iconType: 'material',
-    title: i18n.t('group.boost'),
-    onPress: () => {
-      NavigationService.navigate('BoostScreenV2', {
-        entity: group,
-        boostType: 'group',
-      });
+  if (PermissionsService.canBoost()) {
+    options.push({
+      iconName: 'trending-up',
+      iconType: 'material',
+      title: i18n.t('group.boost'),
+      onPress: () => {
+        NavigationService.navigate('BoostScreenV2', {
+          entity: group,
+          boostType: 'group',
+        });
 
-      ref.current.dismiss();
-    },
-  });
+        ref.current.dismiss();
+      },
+    });
+  }
 
   options.push({
     iconName: 'search',

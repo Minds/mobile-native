@@ -44,6 +44,7 @@ import withModalProvider from '~/navigation/withModalProvide';
 import { hasVariation } from '../../../ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
+import PermissionsService from '~/common/services/permissions.service';
 
 const tinycolor = require('tinycolor2');
 
@@ -418,7 +419,7 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      {store.filter !== 'blogs' && (
+      {store.filter !== 'blogs' && PermissionsService.canCreatePost() && (
         <Button
           onPress={() => props.navigation.navigate('Compose')}
           text={i18n.t('channel.createFirstPostAction')}

@@ -32,6 +32,7 @@
     "tapAllow": "Tap to allow",
     "grant": "Grant",
     "notAllowed": {
+      "interact": "You are not allowed to interact with this content",
       "appoint_admin": "You are not allowed to appoint an admin",
       "appoint_moderator": "You are not allowed to appoint a moderator",
       "approve_subscriber": "You are not allowed to approve a subscriber",
@@ -1937,6 +1938,7 @@
     "create": {
       "boost": "Boosted Post",
       "newPost": "New Post",
+      "mediaVideoError": "Sorry, you are not allowed to upload videos",
       "screen": {
         "post": {
           "title": "Post",

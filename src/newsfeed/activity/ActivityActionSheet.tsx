@@ -38,6 +38,7 @@ import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
 import openUrlService from '../../common/services/open-url.service';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -148,17 +149,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     // if can edit
     if (entity.isOwner()) {
       // Edit
-      options.push({
-        title: i18n.t('edit'),
-        iconName: 'edit',
-        iconType: 'material',
-        onPress: () => {
-          this.props.navigation.navigate('Compose', {
-            isEdit: true,
-            entity: this.props.entity,
-          });
-        },
-      });
+      PermissionsService.canComment() &&
+        options.push({
+          title: i18n.t('edit'),
+          iconName: 'edit',
+          iconType: 'material',
+          onPress: () => {
+            this.props.navigation.navigate('Compose', {
+              isEdit: true,
+              entity: this.props.entity,
+            });
+          },
+        });
 
       // Set / Remove explicit
       options.push({
@@ -218,7 +220,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           },
         });
       }
-      if (BOOSTS_ENABLED) {
+      if (BOOSTS_ENABLED && PermissionsService.canBoost()) {
         options.push({
           title: 'Boost',
           iconName: 'trending-up',

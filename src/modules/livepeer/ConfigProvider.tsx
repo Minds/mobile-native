@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import mindsConfigService from '~/common/services/minds-config.service';
 
 export const ConfigProvider = observer(({ children }) => {
-  const API_KEY = mindsConfigService.getSettings().livepeer_api_key;
+  const API_KEY = mindsConfigService.getSettings()?.livepeer_api_key;
 
   const client = useMemo(
     () =>

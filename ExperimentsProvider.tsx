@@ -64,7 +64,7 @@ export function updateGrowthBookAttributes() {
   const user = sessionService.getUser();
   const config = mindsConfigService.getSettings();
   const userId = sessionService.token ? user?.guid : DeviceInfo.getUniqueId();
-  if (config.growthbook) {
+  if (config?.growthbook) {
     growthbook.setFeatures(config.growthbook?.features);
     growthbook.setAttributes({
       ...config.growthbook?.attributes,

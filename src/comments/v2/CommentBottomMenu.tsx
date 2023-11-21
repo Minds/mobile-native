@@ -23,6 +23,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import NavigationService from '~/navigation/NavigationService';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   comment: CommentModel;
@@ -126,16 +127,18 @@ export default function CommentBottomMenu({
     };
 
     if (comment.isOwner()) {
-      actions.push({
-        title: i18n.t('edit'),
-        iconName: 'edit',
-        iconType: 'material',
-        onPress: () => {
-          close();
-          // we delay showing the input to prevent the keyboard to be hidden
-          setTimeout(() => store.setShowInput(true, comment), 300);
-        },
-      });
+      const canComment = PermissionsService.canComment();
+      canComment &&
+        actions.push({
+          title: i18n.t('edit'),
+          iconName: 'edit',
+          iconType: 'material',
+          onPress: () => {
+            close();
+            // we delay showing the input to prevent the keyboard to be hidden
+            setTimeout(() => store.setShowInput(true, comment), 300);
+          },
+        });
 
       actions.push(deleteOpt);
 

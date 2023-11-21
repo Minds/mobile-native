@@ -25,6 +25,7 @@ import { Button, HairlineRow, Icon, Row } from '../../common/ui';
 import { useAnalytics } from '../../common/contexts/analytics.context';
 import ActivityModel from '../ActivityModel';
 import Counter from './actions/Counter';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -180,6 +181,12 @@ const VoteButtonWithText = ({
   <Button
     size="small"
     mode="outline"
+    containerStyle={
+      PermissionsService.canInteract()
+        ? undefined
+        : ThemedStyles.style.opacity50
+    }
+    disabled={!PermissionsService.canInteract()}
     color={voted ? 'link' : undefined}
     icon={
       <Row align="centerBoth" right="XS">

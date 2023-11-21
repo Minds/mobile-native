@@ -30,6 +30,7 @@ import MediaPreviewFullScreen from './MediaPreviewFullScreen';
 import { useBackHandler } from '@react-native-community/hooks';
 import { Orientation } from '~/services';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import PermissionsService from '~/common/services/permissions.service';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -88,7 +89,13 @@ export default withErrorBoundaryScreen(
     /**
      * sets mode to video
      */
-    const setModeVideo = useCallback(() => setMode('video'), []);
+    const setModeVideo = useCallback(() => {
+      if (!PermissionsService.canUploadVideo()) {
+        showNotification(i18n.t('composer.create.mediaVideoError'));
+        return;
+      }
+      setMode('video');
+    }, []);
 
     useEffect(() => {
       Orientation.unlock();
