@@ -118,14 +118,17 @@ export class AppInitManager {
   updateMindsConfigAndInitGrowthbook() {
     // init with current cached data
     updateGrowthBookAttributes();
-    // Update the config
-    mindsConfigService.update().then(() => {
+
+    const afterUpdate = () => {
       // if it changed we initialize growth book again
       updateGrowthBookAttributes();
 
       // Check Terms of service
       checkTOS();
-    });
+    };
+
+    // Update the config
+    mindsConfigService.update().then(afterUpdate);
   }
 
   /**

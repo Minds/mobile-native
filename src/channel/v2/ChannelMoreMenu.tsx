@@ -24,6 +24,7 @@ import { useStores } from '~/common/hooks/use-stores';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import openUrlService from '../../common/services/open-url.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import PermissionsService from '~/common/services/permissions.service';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -98,7 +99,7 @@ const getOptions = (
     });
   }
 
-  if (channel.isOwner() && BOOSTS_ENABLED) {
+  if (channel.isOwner() && BOOSTS_ENABLED && PermissionsService.canBoost()) {
     options.push({
       iconName: 'trending-up',
       iconType: 'material-community',
