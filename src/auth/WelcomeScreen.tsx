@@ -114,7 +114,7 @@ const styles = ThemedStyles.create({
     alignItems: 'center',
   },
   containerStyle: {
-    width: IS_IPAD ? '45%' : undefined,
+    width: IS_IPAD ? '45%' : '100%',
   },
   image: {
     height: '14%',

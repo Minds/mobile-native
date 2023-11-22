@@ -59,7 +59,7 @@ const renderItem =
       height: IS_IPAD && isPortrait ? 690 : 338,
       width: IS_IPAD && isPortrait ? 318 : 156,
       borderWidth: 2,
-      borderRadius: IS_IPAD && isPortrait ? 35 : 10,
+      borderRadius: IS_IPAD && isPortrait ? 35 : 17,
       borderColor: '#565658',
     };
     const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
