@@ -250,6 +250,7 @@ exports[`Tos screen render and accept 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginTop": 16,
             }
           }
@@ -279,6 +280,7 @@ exports[`Tos screen render and accept 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginTop": 56,
             }
           }

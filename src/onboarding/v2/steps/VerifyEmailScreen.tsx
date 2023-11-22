@@ -35,6 +35,7 @@ export default withErrorBoundaryScreen(
     return (
       <ModalContainer
         title="Verify email"
+        contentContainer={theme.alignSelfCenterMaxWidth}
         onPressBack={NavigationService.goBack}>
         <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
           <MText style={theme.fontLM}>

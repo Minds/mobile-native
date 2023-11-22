@@ -10,6 +10,7 @@ import BoostConsoleStore from '../boost-console.store';
 import BoostV3 from '../components/v3/Boost';
 import BoostTabBarV3 from '../components/v3/BoostTabBar';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
+import { IS_IPAD } from '~/config/Config';
 import BoostFeed from '../components/v3/BoostFeed';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 
@@ -90,15 +91,17 @@ function BoostConsoleScreen({
       <Screen safe onlyTopEdge>
         <ScreenHeader
           title={t('Boost Console')}
-          back
+          back={!IS_IPAD}
           extra={
             <IconButton
               name="cog"
               onPress={() =>
-                navigation.navigate('More', {
-                  screen: 'BoostSettingsScreen',
-                  initial: false,
-                })
+                IS_IPAD
+                  ? navigation.navigate('BoostSettingsScreen')
+                  : navigation.navigate('More', {
+                      screen: 'BoostSettingsScreen',
+                      initial: false,
+                    })
               }
             />
           }

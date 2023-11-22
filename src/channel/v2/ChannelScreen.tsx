@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { Platform, StatusBar, StatusBarStyle, View } from 'react-native';
 import React, {
   useCallback,

@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
 import ChooseBrowser from '../components/ChooseBrowser';
+import { Screen } from '~/common/ui';
 
 type PropsType = {};
 
@@ -10,14 +9,10 @@ type PropsType = {};
  */
 const ChooseBrowserScreen = ({}: PropsType) => {
   return (
-    <ScrollView style={styles.container}>
+    <Screen>
       <ChooseBrowser />
-    </ScrollView>
+    </Screen>
   );
 };
 
 export default ChooseBrowserScreen;
-
-const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgPrimaryBackground'],
-});

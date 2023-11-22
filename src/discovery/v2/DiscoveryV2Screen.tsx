@@ -21,7 +21,7 @@ import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
 import OffsetList from '../../common/components/OffsetList';
@@ -294,11 +294,13 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        <CaptureFab
-          visible={true}
-          navigation={navigation}
-          style={composeFABStyle}
-        />
+        {!IS_IPAD && (
+          <CaptureFab
+            visible={true}
+            navigation={navigation}
+            style={composeFABStyle}
+          />
+        )}
       </Screen>
     );
   }),

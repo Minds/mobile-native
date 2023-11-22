@@ -16,11 +16,12 @@ import {
   AFFILIATES_ENABLED,
   DEV_MODE,
   IS_IOS,
+  IS_IPAD,
   IS_TENANT,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -64,6 +65,7 @@ const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
   const affiliatesFFEnabled = useIsFeatureOn('epic-304-affiliates');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const user = sessionService.getUser();
 
@@ -91,7 +93,7 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  if (!IS_IOS) {
+  if (!IS_IOS && !hideTokens) {
     firstSection.push({
       title: i18n.t('settings.billing'),
       screen: 'Billing',
@@ -120,7 +122,7 @@ const SettingsScreen = observer(({ navigation }) => {
     screen: 'ChooseBrowser',
   });
 
-  if (affiliatesFFEnabled && AFFILIATES_ENABLED) {
+  if (affiliatesFFEnabled && !IS_IPAD && AFFILIATES_ENABLED) {
     firstSection.push({
       title: i18n.t('settings.affiliateProgram'),
       screen: 'AffiliateProgram',
@@ -155,11 +157,18 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (DEV_MODE.isActive || __DEV__) {
+  if (DEV_MODE.isActive) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',
       testID: 'SettingsScreen:DevTools',
+    });
+  }
+
+  if (IS_IPAD) {
+    secondSection.push({
+      title: 'Switch Accounts',
+      screen: 'MultiUserScreen',
     });
   }
 
@@ -187,7 +196,7 @@ const SettingsScreen = observer(({ navigation }) => {
   return (
     <Screen safe>
       <HiddenTap>
-        <ScreenHeader back title={i18n.t('moreScreen.settings')} />
+        <ScreenHeader back={!IS_IPAD} title={i18n.t('moreScreen.settings')} />
       </HiddenTap>
       <ScrollView
         testID="SettingsScreen"

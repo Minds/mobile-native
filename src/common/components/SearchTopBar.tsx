@@ -47,7 +47,9 @@ export default function SearchTopBar({
     <View style={[container, styles.searchInputIconContainerStyle]}>
       <AnimatePresence>
         {visible && (
-          <MotiView {...animation}>
+          <MotiView
+            style={ThemedStyles.style.alignSelfCenterMaxWidth}
+            {...animation}>
             <TextInput
               ref={ref}
               style={styles.searchInput}

@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Image as RNImage, Dimensions, View } from 'react-native';
+import { Image as RNImage, View } from 'react-native';
 import { Image } from 'expo-image';
 import { H3 } from '~/common/ui';
-import { STRAPI_URI } from '~/config/Config';
+import { IS_IPAD, STRAPI_URI } from '~/config/Config';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from '~/newsfeed/boost-rotator/components/pagination/Pagination';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useCarouselData } from '../hooks';
 import { Maybe, UploadFileEntity } from '~/graphql/strapi';
 import assets from '@assets';
-const { width } = Dimensions.get('screen');
+import { useDimensions } from '@react-native-community/hooks';
 
 type OnboardingCarouselProps = {
   data: {
@@ -20,6 +20,8 @@ type OnboardingCarouselProps = {
 
 export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   const [index, setIndex] = useState(0);
+  const { width, height } = useDimensions().screen;
+  const isPortrait = width < height;
 
   return (
     <>
@@ -34,9 +36,9 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
         pagingEnabled
         onSnapToItem={setIndex}
         width={width}
-        height={475}
+        height={IS_IPAD ? 820 : 475}
         data={data?.length ? data : defaultData}
-        renderItem={renderItem}
+        renderItem={renderItem(isPortrait)}
         style={ThemedStyles.style.marginBottom1x}
       />
       <Pagination
@@ -49,27 +51,29 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   );
 };
 
-const renderItem = ({ item, index }) => {
-  const { url } = item?.data?.attributes ?? {};
-  const imageSize = {
-    height: 338,
-    width: 156,
-    borderWidth: 2,
-    borderRadius: 10,
-    borderColor: '#565658',
+const renderItem =
+  (isPortrait: boolean) =>
+  ({ item, index }) => {
+    const { url } = item?.data?.attributes ?? {};
+    const imageSize = {
+      height: IS_IPAD && isPortrait ? 690 : 338,
+      width: IS_IPAD && isPortrait ? 318 : 156,
+      borderWidth: 2,
+      borderRadius: IS_IPAD && isPortrait ? 35 : 17,
+      borderColor: '#565658',
+    };
+    const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
+    return (
+      <View
+        key={`${index}`}
+        style={[ThemedStyles.style.alignCenter, { paddingHorizontal: 60 }]}>
+        <H3 align="center" bottom="XXXL2">
+          {item.title}
+        </H3>
+        <Image source={image} style={imageSize} />
+      </View>
+    );
   };
-  const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
-  return (
-    <View
-      key={`${index}`}
-      style={[ThemedStyles.style.alignCenter, { paddingHorizontal: 60 }]}>
-      <H3 align="center" bottom="XXXL2">
-        {item.title}
-      </H3>
-      <Image source={image} style={imageSize} />
-    </View>
-  );
-};
 
 export const OnboardingCarousel = () => {
   const { data } = useCarouselData();
