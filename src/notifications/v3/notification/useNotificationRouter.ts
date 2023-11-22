@@ -3,12 +3,15 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import type NotificationModel from './NotificationModel';
 import { NotificationType } from './NotificationModel';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 const useNotificationRouter = (
   notification: NotificationModel,
   showSubscribersModal?: () => void,
 ) => {
   const navigation = useNavigation();
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+
   const router = {
     navigation: navigation,
     navigate: () => {},
@@ -59,11 +62,12 @@ const useNotificationRouter = (
           break;
         case NotificationType.affiliate_earnings_deposited:
         case NotificationType.referrer_affiliate_earnings_deposited:
-          navigation.navigate('More', {
-            screen: 'Wallet',
-            params: { currency: 'usd', section: 'earnings' },
-            initial: false,
-          });
+          !hideTokens &&
+            navigation.navigate('More', {
+              screen: 'Wallet',
+              params: { currency: 'usd', section: 'earnings' },
+              initial: false,
+            });
           break;
         default:
           switch (notification.entity.type) {

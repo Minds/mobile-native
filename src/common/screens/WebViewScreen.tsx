@@ -49,7 +49,7 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
   const WebView = require('react-native-webview').WebView;
 
   return (
-    <Screen>
+    <Screen hasMaxWidth={false}>
       <WebView
         source={source}
         scrollEnabled={true}

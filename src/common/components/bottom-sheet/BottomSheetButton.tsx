@@ -1,4 +1,5 @@
 import React from 'react';
+import { ViewStyle } from 'react-native';
 import { Button } from '~ui';
 
 interface PropsType {
@@ -9,6 +10,7 @@ interface PropsType {
   loading?: boolean;
   solid?: boolean;
   disabled?: boolean;
+  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 export default function BottomSheetButton({
@@ -18,6 +20,7 @@ export default function BottomSheetButton({
   loading,
   testID,
   solid,
+  containerStyle,
 }: PropsType) {
   return (
     <Button
@@ -27,7 +30,8 @@ export default function BottomSheetButton({
       testID={testID}
       loading={loading}
       mode={action ? (solid ? 'solid' : 'outline') : 'solid'}
-      type={action ? 'action' : undefined}>
+      type={action ? 'action' : undefined}
+      containerStyle={containerStyle}>
       {text}
     </Button>
   );

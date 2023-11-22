@@ -80,6 +80,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -111,6 +112,7 @@ exports[`SupermindRequest should render inbound 1`] = `
       <View
         style={
           {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -143,7 +145,13 @@ exports[`SupermindRequest should render inbound 1`] = `
     onLayout={[Function]}
     style={
       [
-        {},
+        [
+          {
+            "alignSelf": "center",
+            "maxWidth": 750,
+            "width": "100%",
+          },
+        ],
         {
           "backgroundColor": "#1C1D1F",
         },
@@ -429,6 +437,7 @@ exports[`SupermindRequest should render inbound 1`] = `
   <View
     style={
       {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }
@@ -568,6 +577,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -599,6 +609,7 @@ exports[`SupermindRequest should render outbound 1`] = `
       <View
         style={
           {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -631,7 +642,13 @@ exports[`SupermindRequest should render outbound 1`] = `
     onLayout={[Function]}
     style={
       [
-        {},
+        [
+          {
+            "alignSelf": "center",
+            "maxWidth": 750,
+            "width": "100%",
+          },
+        ],
         {
           "backgroundColor": "#1C1D1F",
         },
@@ -917,6 +934,7 @@ exports[`SupermindRequest should render outbound 1`] = `
   <View
     style={
       {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }

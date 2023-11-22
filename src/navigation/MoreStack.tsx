@@ -11,18 +11,16 @@ import i18n from '~/common/services/i18n.service';
 import {
   IS_FROM_STORE,
   IS_IOS,
+  IS_IPAD,
   MEMBERSHIP_TIERS_ENABLED,
   TWITTER_ENABLED,
 } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import WalletStack from './WalletStack';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
-  const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
-
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -101,7 +99,9 @@ export default function () {
       ];
 
   return (
-    <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <MoreStack.Navigator
+      initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
+      screenOptions={ThemedStyles.defaultScreenOptions}>
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
       <MoreStack.Screen
         name="Wallet"
@@ -287,7 +287,7 @@ export default function () {
           initialParams={{ useForSelection: false }}
         />
       )}
-      {isTwitterFFEnabled && TWITTER_ENABLED && (
+      {TWITTER_ENABLED && (
         <MoreStack.Screen
           name="TwitterSync"
           getComponent={() =>

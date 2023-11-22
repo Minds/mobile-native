@@ -47,7 +47,6 @@ export default function BoostHeader({ boost }: BoostHeader) {
       'Pending on-chain confirmation',
     ),
   };
-
   const { textColor } = getColor({ theme: ThemedStyles.theme });
 
   return (

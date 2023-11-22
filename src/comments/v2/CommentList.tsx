@@ -18,6 +18,7 @@ import GroupModel from '~/groups/GroupModel';
 import i18n from '~/common/services/i18n.service';
 import MText from '~/common/components/MText';
 import CommentModel from './CommentModel';
+import PermissionsService from '~/common/services/permissions.service';
 
 // types
 type PropsType = {
@@ -101,6 +102,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     });
   }, [navigation, props.store, provider, scrollToFocusedComment]);
 
+  const canComment = PermissionsService.canComment();
+
   const renderItem = React.useCallback(
     (row: any): React.ReactElement => {
       const comment = row.item;
@@ -108,9 +111,15 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
       // add the editing observable property
       comment.editing = observable.box(false);
 
-      return <Comment comment={comment} store={props.store} />;
+      return (
+        <Comment
+          comment={comment}
+          store={props.store}
+          hideReply={!canComment}
+        />
+      );
     },
-    [props.store],
+    [props.store, canComment],
   );
 
   const Header = React.useCallback(() => {
@@ -130,7 +139,12 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         {props.store.entity.allow_comments && (
           <TouchableOpacity
             onPress={() => props.store.setShowInput(true)}
-            style={styles.touchableStyles}>
+            disabled={!canComment}
+            style={
+              canComment
+                ? styles.touchableStyles
+                : [styles.touchableStyles, styles.disabled]
+            }>
             <Image source={user.getAvatarSource()} style={styles.avatar} />
             <MText style={styles.reply}>
               {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
@@ -141,7 +155,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         <LoadMore store={props.store} next={true} />
       </>
     );
-  }, [placeHolder, props.store, user]);
+  }, [canComment, placeHolder, props.store, user]);
 
   const Footer = React.useCallback(() => {
     return <LoadMore store={props.store} />;
@@ -188,6 +202,7 @@ const styles = ThemedStyles.create({
     'paddingBottom2x',
     'alignCenter',
   ],
+  disabled: ['opacity50'],
   replay: ['fontL', 'colorSecondaryText'],
   headerCommentContainer: [
     'bcolorPrimaryBorder',

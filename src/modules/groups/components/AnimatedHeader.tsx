@@ -126,6 +126,7 @@ const styles = ThemedStyles.create({
     },
     'bgPrimaryBackground',
     'paddingHorizontal4x',
+    'alignSelfCenterMaxWidth',
   ],
   avatar: [
     'bgPrimaryBackground',

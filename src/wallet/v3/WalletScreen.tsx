@@ -26,6 +26,7 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 import { useIsIOSFeatureOn } from 'ExperimentsProvider';
+import { IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
@@ -139,7 +140,7 @@ const WalletScreen = observer((props: PropsType) => {
   return (
     <Screen safe>
       <ScreenHeader
-        back
+        back={!IS_IPAD}
         title={i18n.t('wallet.wallet')}
         extra={IS_FROM_STORE ? null : <TokenPrice />}
       />

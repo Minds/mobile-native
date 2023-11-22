@@ -1,17 +1,17 @@
-//@ts-nocheck
 import React, { useCallback, useState, useRef } from 'react';
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import Selector from '../../common/components/SelectorV2';
 import MText from '../../common/components/MText';
+import { Screen } from '~/common/ui';
 
 export default function () {
   const CS = ThemedStyles.style;
 
   const [language, setLanguage] = useState(i18n.getCurrentLocale());
 
-  let selectorRef = useRef(null);
+  let selectorRef = useRef<any>(null);
 
   const languageSelected = useCallback(
     ({ value }) => {
@@ -22,12 +22,12 @@ export default function () {
   );
 
   return (
-    <View style={[CS.flexContainer, CS.bgPrimaryBackground, CS.paddingTop4x]}>
+    <Screen>
       <View
         style={[
           styles.row,
           CS.bgSecondaryBackground,
-          CS.paddingVertical3x,
+          CS.paddingVertical4x,
           CS.paddingHorizontal3x,
           CS.bcolorPrimaryBorder,
           CS.borderHair,
@@ -37,7 +37,7 @@ export default function () {
         </MText>
         <MText
           style={[CS.colorPrimaryText, CS.fontM]}
-          onPress={() => selectorRef.current.show(language)}>
+          onPress={() => selectorRef.current?.show(language)}>
           {i18n.getCurrentLanguageName()}
         </MText>
       </View>
@@ -49,7 +49,7 @@ export default function () {
         valueExtractor={item => item.name}
         keyExtractor={item => item.value}
       />
-    </View>
+    </Screen>
   );
 }
 

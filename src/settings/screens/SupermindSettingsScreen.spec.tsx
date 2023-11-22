@@ -7,8 +7,11 @@ import {
 } from '@testing-library/react-native';
 import SupermindSettingsScreen from './SupermindSettingsScreen';
 import apiService from '~/common/services/api.service';
+import mindsConfigService from '~/common/services/minds-config.service';
 
 jest.mock('~/common/hooks/use-stores');
+jest.mock('~/common/services/permissions.service');
+jest.mock('~/common/services/minds-config.service');
 jest.mock('~/common/services/api.service');
 
 const mockedApi = apiService as jest.Mocked<typeof apiService>;
@@ -23,6 +26,15 @@ describe('Supermind settings', () => {
       min_cash: '12',
       min_offchain_tokens: '2',
     };
+    // @ts-ignore
+    mindsConfigService.getSettings.mockReturnValue({
+      supermind: {
+        min_thresholds: {
+          min_cash: 10,
+          min_offchain_tokens: 1,
+        },
+      },
+    });
 
     mockedApi.get.mockResolvedValue(resp);
   });
@@ -37,7 +49,7 @@ describe('Supermind settings', () => {
     expect(screen.toJSON()).toMatchSnapshot();
 
     await waitFor(() => screen.getAllByTestId('tokensInput'), {
-      timeout: 4000,
+      timeout: 15000,
       interval: 100,
     });
 

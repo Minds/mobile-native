@@ -5,16 +5,18 @@ exports[`Activity screen component renders correctly  1`] = `
   style={
     [
       {
-        "fontScale": 2,
         "height": 1334,
-        "scale": 2,
-        "width": 750,
       },
       {
         "flex": 1,
       },
       {
         "backgroundColor": "#1C1D1F",
+      },
+      {
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -32,16 +34,6 @@ exports[`Activity screen component renders correctly  1`] = `
         [
           {
             "backgroundColor": "#1C1D1F",
-          },
-          {
-            "borderBottomWidth": 0,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 1,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-            "shadowRadius": 2.22,
           },
           {
             "paddingTop": -10,
@@ -403,9 +395,14 @@ exports[`Activity screen component renders correctly  1`] = `
       onContentSizeChange={[Function]}
       onLayout={[Function]}
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "width": 750,
+          },
+        ]
       }
     >
       <View>
@@ -603,7 +600,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": undefined,
+            "disabled": true,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -630,18 +627,23 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
             {
-              "flex": 1,
-              "flexDirection": "column",
-            },
-            {
-              "margin": 4,
-            },
-            {
-              "paddingVertical": 12,
-            },
-            {
-              "alignItems": "center",
+              "opacity": 0.5,
             },
           ]
         }
@@ -696,7 +698,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": undefined,
+            "disabled": true,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -723,18 +725,23 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
             {
-              "flex": 1,
-              "flexDirection": "column",
-            },
-            {
-              "margin": 4,
-            },
-            {
-              "paddingVertical": 12,
-            },
-            {
-              "alignItems": "center",
+              "opacity": 0.5,
             },
           ]
         }

@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { ScrollView } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -13,6 +12,7 @@ import {
   TWITTER_ENABLED,
 } from '~/config/Config';
 import sessionService from '~/common/services/session.service';
+import { Screen } from '~/common/ui';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -24,10 +24,6 @@ export default function () {
   const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
   const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
   const contentAdmin = [
-    /*{
-      title: i18n.t('settings.otherOptions.a1'),
-      onPress: useNavCallback('ReportedContent'),
-    },*/
     {
       title: i18n.t('settings.blockedChannels'),
       onPress: useNavCallback('BlockedChannels'),
@@ -47,8 +43,6 @@ export default function () {
       onPress: useNavCallback('TierManagementScreen'),
     },
   ];
-
-  console.log('plus', sessionService.getUser().plus);
 
   const contentMigration: Array<any> = [];
 
@@ -92,7 +86,7 @@ export default function () {
   ];
 
   return (
-    <ScrollView style={containerStyle}>
+    <Screen scroll>
       {BLOCK_USER_ENABLED &&
         generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {!affiliatesEnabled &&
@@ -106,7 +100,7 @@ export default function () {
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
-    </ScrollView>
+    </Screen>
   );
 }
 
@@ -130,8 +124,4 @@ const firstMenuItemStyle = ThemedStyles.combine('bgPrimaryBackground');
 const menuItemStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   'borderTop0x',
-);
-const containerStyle = ThemedStyles.combine(
-  'flexContainer',
-  'bgPrimaryBackground',
 );

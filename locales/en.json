@@ -32,6 +32,7 @@
     "tapAllow": "Tap to allow",
     "grant": "Grant",
     "notAllowed": {
+      "interact": "You are not allowed to interact with this content",
       "appoint_admin": "You are not allowed to appoint an admin",
       "appoint_moderator": "You are not allowed to appoint a moderator",
       "approve_subscriber": "You are not allowed to approve a subscriber",
@@ -856,9 +857,6 @@
       "10": {
         "label": "Intellectual Property Violation"
       },
-      "11": {
-        "label": "Another reason"
-      },
       "12": {
         "label": "Incorrect use of hashtags"
       },
@@ -1658,7 +1656,7 @@
   },
   "referrals": {
     "menu": "Invite friends",
-    "title": "Earn tokens by inviting your friends to Minds",
+    "title": "Earn by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
     "moreWaysToShare": "More ways to share",
@@ -1841,7 +1839,7 @@
       "rewards": "How rewards are calculated",
       "tokens": "How to use tokens",
       "earnings": "Track your earnings",
-      "analytics": "View token analytics"
+      "analytics": "View analytics"
     },
     "pool": {
       "title": "Add liquidity"
@@ -1949,6 +1947,7 @@
     "create": {
       "boost": "Boosted Post",
       "newPost": "New Post",
+      "mediaVideoError": "Sorry, you are not allowed to upload videos",
       "screen": {
         "post": {
           "title": "Post",

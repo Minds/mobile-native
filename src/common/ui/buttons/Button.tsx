@@ -119,7 +119,6 @@ export const ButtonComponent = ({
         theme: ThemedStyles.theme,
         mode,
         darkContent,
-        lightContent,
         disabled,
         type,
       });

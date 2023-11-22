@@ -13,6 +13,8 @@ import type ActivityModel from '../../ActivityModel';
 import EntityCounter from './EntityCounter';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import { useActivityContext } from '../contexts/Activity.context';
+import PermissionsService from '~/common/services/permissions.service';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 export interface ThumbProps {
   direction: 'up' | 'down';
@@ -28,6 +30,7 @@ const ThumbAction = ({
   size = '21',
   ...props
 }: ThumbProps) => {
+  const canInteract = PermissionsService.canInteract();
   const { quietDownvote, onDownvote } = useActivityContext();
   const entity = props.entity;
   const canVote = entity.can(FLAG_VOTE);
@@ -54,7 +57,12 @@ const ThumbAction = ({
 
   return (
     <Touchable
-      style={actionsContainerStyle}
+      style={
+        canInteract
+          ? actionsContainerStyle
+          : [actionsContainerStyle, ThemedStyles.style.opacity50]
+      }
+      disabled={!canInteract}
       onPress={toggleThumb}
       testID={`Thumb ${direction} activity button`}>
       <View style={actionsContainerWrapper}>

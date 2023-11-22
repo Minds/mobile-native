@@ -73,7 +73,11 @@ export default function AnimatedTopHeader({
 
   return (
     <Animated.View style={[styles.container, topbarStyle]}>
-      <View style={styles.rowContainer}>
+      <View
+        style={[
+          styles.rowContainer,
+          ThemedStyles.style.alignSelfCenterMaxWidth,
+        ]}>
         <SmallCircleButton
           name="chevron-left"
           raised={true}
