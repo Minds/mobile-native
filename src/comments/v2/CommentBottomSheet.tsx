@@ -64,11 +64,11 @@ const CommentBottomSheetBase = (props: PropsType) => {
    */
   React.useEffect(() => {
     if (
-      props.commentsStore?.parent?.['comments:count'] === 0 ||
-      props.commentsStore?.entity?.['comments:count'] === 0
+      (props.commentsStore?.parent?.['comments:count'] === 0 ||
+        props.commentsStore?.entity?.['comments:count'] === 0) &&
+      PermissionsService.canComment()
     ) {
-      PermissionsService.canComment() &&
-        props.commentsStore?.setShowInput(true);
+      props.commentsStore?.setShowInput(true);
     }
   }, [props.commentsStore]);
 

@@ -127,8 +127,7 @@ export default function CommentBottomMenu({
     };
 
     if (comment.isOwner()) {
-      const canComment = PermissionsService.canComment();
-      canComment &&
+      PermissionsService.canComment() &&
         actions.push({
           title: i18n.t('edit'),
           iconName: 'edit',
