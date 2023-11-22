@@ -69,7 +69,7 @@ export const withSpacer = <P extends object>(
     bottom,
     horizontal,
     vertical,
-    containerStyle,
+    containerStyle = { alignSelf: 'stretch' },
     ...more
   }) => {
     if (top || left || right || bottom || horizontal || vertical) {

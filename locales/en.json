@@ -857,9 +857,6 @@
       "10": {
         "label": "Intellectual Property Violation"
       },
-      "11": {
-        "label": "Another reason"
-      },
       "12": {
         "label": "Incorrect use of hashtags"
       },
@@ -1647,7 +1644,7 @@
   },
   "referrals": {
     "menu": "Invite friends",
-    "title": "Earn tokens by inviting your friends to Minds",
+    "title": "Earn by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
     "moreWaysToShare": "More ways to share",
@@ -1830,7 +1827,7 @@
       "rewards": "How rewards are calculated",
       "tokens": "How to use tokens",
       "earnings": "Track your earnings",
-      "analytics": "View token analytics"
+      "analytics": "View analytics"
     },
     "pool": {
       "title": "Add liquidity"

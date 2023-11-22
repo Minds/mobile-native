@@ -4,7 +4,7 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import { View, Platform, Dimensions, PlatformIOSStatic } from 'react-native';
+import { View, Platform, Dimensions } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
@@ -50,8 +50,6 @@ const shadowOpt = {
 
 const tabBarHeight = IS_IOS ? 80 : 60;
 
-const isPad = (Platform as PlatformIOSStatic).isPad;
-
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
@@ -61,7 +59,7 @@ export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
 
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
-  const insets = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -74,11 +72,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   }));
 
   const bottomInset = {
-    paddingBottom: insets.bottom
-      ? isPad
-        ? insets.bottom + 4
-        : insets.bottom - 6
-      : 10,
+    paddingBottom: bottom ? bottom - 10 : 10,
   };
 
   const containerStyle = useMemoStyle(
@@ -88,7 +82,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
       styles.tabBar,
       bottomInset,
     ],
-    [insets.bottom],
+    [bottom],
   );
 
   if (focusedOptions.tabBarVisible === false) {

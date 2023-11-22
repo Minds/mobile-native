@@ -325,16 +325,18 @@ export class FeedList<T extends BaseModel> extends Component<
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
-        {entity instanceof InjectItem && InjectedComponent ? (
-          <InjectedComponent {...row} />
-        ) : (
-          <Activity
-            entity={entity}
-            navigation={this.props.navigation}
-            displayBoosts={this.props.displayBoosts}
-            autoHeight={false}
-          />
-        )}
+        <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
+          {entity instanceof InjectItem && InjectedComponent ? (
+            <InjectedComponent {...row} />
+          ) : (
+            <Activity
+              entity={entity}
+              navigation={this.props.navigation}
+              displayBoosts={this.props.displayBoosts}
+              autoHeight={false}
+            />
+          )}
+        </View>
       </ErrorBoundary>
     );
   };
