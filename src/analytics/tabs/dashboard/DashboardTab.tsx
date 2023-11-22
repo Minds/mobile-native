@@ -1,17 +1,16 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import { Dimensions, TouchableOpacity, View } from 'react-native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
-import ActivityIndicator from '../../../common/components/ActivityIndicator';
-import LineChart from '../../../common/components/charts/LineChart';
-import Select from '../../../common/components/controls/Select';
-import MText from '../../../common/components/MText';
-import Selector from '../../../common/components/SelectorV2';
-import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
+import LineChart from '~/common/components/charts/LineChart';
+import Select from '~/common/components/controls/Select';
+import MText from '~/common/components/MText';
+import Selector from '~/common/components/SelectorV2';
+import useApiFetch from '~/common/hooks/useApiFetch';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
 import {
   Dashboard,
   FiltersEntity,
@@ -19,6 +18,7 @@ import {
   SegmentBucketsEntity,
   TimespansEntity,
 } from '../../AnalyticsTypes';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 interface DashboardTabProps {
   url: string;
@@ -29,7 +29,7 @@ const valueExtractor = item => item.label;
 const keyExtractor = item => item.id;
 
 const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
-  const { width } = useDimensions().window;
+  const width = getMaxFeedWidth();
   const theme = ThemedStyles.style;
   const [filters, setFilters] = useState<{ [k: string]: FiltersEntity }>({});
   const [timespan, setTimespan] = useState<TimespansEntity | undefined>();
@@ -232,6 +232,7 @@ const styles = ThemedStyles.create({
     { width: width - ThemedStyles.style.padding3x.padding * 2 },
     'justifyCenter',
     'paddingTop3x',
+    'alignSelfCenterMaxWidth',
   ],
   secondaryContainer: [
     'rowJustifySpaceBetween',

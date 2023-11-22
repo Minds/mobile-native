@@ -56,7 +56,7 @@ const Subscribe = (props: SubscribeProps) => {
 
   return (
     <Button
-      mode="outline"
+      mode="solid"
       type={channel.subscribed ? 'base' : 'action'}
       size="tiny"
       disabled={props.disabled}

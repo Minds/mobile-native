@@ -425,6 +425,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     <View
       style={
         {
+          "alignSelf": "stretch",
           "marginHorizontal": 20,
           "marginTop": 24,
         }

@@ -50,6 +50,7 @@ const containerStyle = ThemedStyles.combine(
   'borderBottom1x',
   'rowJustifySpaceBetween',
   'bcolorTertiaryBackground',
+  'alignSelfCenterMaxWidth',
 );
 const containerSmallStyle = ThemedStyles.combine(
   {
@@ -60,6 +61,7 @@ const containerSmallStyle = ThemedStyles.combine(
   'borderBottom1x',
   'rowJustifySpaceBetween',
   'bcolorTertiaryBackground',
+  'alignSelfCenterMaxWidth',
 );
 
 export default NewsfeedHeader;

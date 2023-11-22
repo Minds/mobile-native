@@ -10,6 +10,7 @@ import { Button } from '~/common/ui';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
 import { DARK_THEME } from '../../styles/Colors';
 import MText from '~/common/components/MText';
+import { IS_IPAD } from '~/config/Config';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -43,7 +44,7 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         horizontal="L2"
         type="action"
         onPress={resetPassword}
-        containerStyle={styles.button}
+        containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
         spinner
         disabled={!store.password}
         loading={store.sending}>

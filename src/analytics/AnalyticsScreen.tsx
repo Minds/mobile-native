@@ -7,6 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
 import TrendingTab from './tabs/trending/TrendingTab';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
+import { IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 
 const AnalyticsScreen = observer(({ route }: { route: any }) => {
@@ -18,7 +19,7 @@ const AnalyticsScreen = observer(({ route }: { route: any }) => {
 
   return (
     <Screen safe>
-      <ScreenHeader back title={i18n.t('analytics.title')} />
+      <ScreenHeader back={!IS_IPAD} title={i18n.t('analytics.title')} />
       <TopbarTabbar
         current={activeTabId}
         onChange={setActiveTabId}

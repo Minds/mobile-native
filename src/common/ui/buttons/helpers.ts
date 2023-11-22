@@ -107,7 +107,7 @@ export const getColor = ({
   };
 };
 
-export function getFontRenderer(size) {
+export function getFontRenderer(size): (props: any) => JSX.Element {
   switch (size) {
     case 'pill':
     case 'tiny':

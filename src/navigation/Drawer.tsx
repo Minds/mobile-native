@@ -19,7 +19,11 @@ import {
   Spacer,
 } from '~ui';
 import { Icon as IconV2 } from '@minds/ui';
-import { hasVariation, useIsIOSFeatureOn } from 'ExperimentsProvider';
+import {
+  hasVariation,
+  useIsGoogleFeatureOn,
+  useIsIOSFeatureOn,
+} from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import {
@@ -57,7 +61,7 @@ const getOptionsSmallList = navigation => {
   ];
 };
 
-type Flags = Record<'isIosMindsHidden', boolean>;
+type Flags = Record<'isIosMindsHidden' | 'hideTokens', boolean>;
 
 type MenuItem = {
   name: string;
@@ -65,7 +69,10 @@ type MenuItem = {
   onPress: () => void;
   testID?: string;
 } | null;
-const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
+const getOptionsList = (
+  navigation,
+  { isIosMindsHidden, hideTokens }: Flags,
+) => {
   const channel = sessionService.getUser();
   const list: MenuItem[] = [
     {
@@ -103,7 +110,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
           },
         }
       : null,
-    WALLET_ENABLED
+    WALLET_ENABLED && !hideTokens
       ? {
           name: i18n.t('moreScreen.wallet'),
           icon: 'bank',
@@ -116,8 +123,7 @@ const getOptionsList = (navigation, { isIosMindsHidden }: Flags) => {
     AFFILIATES_ENABLED
       ? {
           name: 'Affiliate',
-          icon: 'affiliates',
-
+          icon: 'affiliate',
           onPress: () => {
             navigation.navigate('AffiliateProgram');
           },
@@ -178,6 +184,8 @@ export default function Drawer(props) {
   const isIosMindsHidden = useIsIOSFeatureOn(
     'mob-4637-ios-hide-minds-superminds',
   );
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
   };
@@ -189,6 +197,7 @@ export default function Drawer(props) {
 
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
+    hideTokens,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (

@@ -8,6 +8,7 @@ import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../SettingsStore';
+import { Screen } from '~/common/ui';
 
 /**
  * Data-saver settings screen
@@ -25,7 +26,7 @@ export default observer(function DataSaverScreen() {
   );
 
   return (
-    <View style={[theme.flexContainer, theme.margin]}>
+    <Screen>
       <View style={[theme.padding]}>
         <View style={styles.row}>
           <MText style={[theme.marginLeft, theme.fontL]}>
@@ -63,7 +64,7 @@ export default observer(function DataSaverScreen() {
           {i18n.t('settings.dataSaverDisableOnWiFiDescription')}
         </MText>
       </View>
-    </View>
+    </Screen>
   );
 });
 

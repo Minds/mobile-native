@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
 import { observer } from 'mobx-react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import truncate from 'lodash/truncate';
 
@@ -19,6 +19,7 @@ import i18n from '~/common/services/i18n.service';
 import { confirm } from '~/common/components/Confirm';
 import { GroupMembersStoreType } from '../hooks/useGroupMembersStore';
 import { useGroupContext } from '../contexts/GroupContext';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 export type GroupMembersListProps = {
   group: GroupModel;
@@ -57,18 +58,24 @@ function GroupMembersFlashList(
   );
 
   return store ? (
-    <FlashList
-      estimatedItemSize={75}
-      data={store.members.entities.slice()}
-      refreshing={store.members.refreshing}
-      onEndReachedThreshold={5}
-      ListFooterComponent={() => <Footer store={store} />}
-      renderItem={renderRow}
-      keyExtractor={keyExtractor}
-      onEndReached={() => store.loadMore()}
-      {...other}
-      ref={ref}
-    />
+    <View
+      style={[
+        ThemedStyles.style.flexContainer,
+        ThemedStyles.style.alignSelfCenterMaxWidth,
+      ]}>
+      <FlashList
+        estimatedItemSize={75}
+        data={store.members.entities.slice()}
+        refreshing={store.members.refreshing}
+        onEndReachedThreshold={5}
+        ListFooterComponent={() => <Footer store={store} />}
+        renderItem={renderRow}
+        keyExtractor={keyExtractor}
+        onEndReached={() => store.loadMore()}
+        {...other}
+        ref={ref}
+      />
+    </View>
   ) : null;
 }
 

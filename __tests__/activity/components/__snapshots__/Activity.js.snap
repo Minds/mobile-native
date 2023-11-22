@@ -5,7 +5,13 @@ exports[`Activity component renders correctly 1`] = `
   onLayout={[Function]}
   style={
     [
-      {},
+      [
+        {
+          "alignSelf": "center",
+          "maxWidth": 750,
+          "width": "100%",
+        },
+      ],
       {
         "borderBottomWidth": 6,
       },

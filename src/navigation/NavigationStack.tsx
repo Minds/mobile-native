@@ -10,6 +10,8 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
+import TabsScreen from '../tabs/TabsScreen';
+import TabsScreenVertical from '../tabs/TabsScreenVertical';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 
@@ -26,8 +28,10 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
+import { IS_IPAD } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
+import withModalProvider from './withModalProvide';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -39,6 +43,10 @@ const modalOptions = {
   gestureResponseDistance: 240,
   gestureEnabled: true,
 };
+
+const TabScreenWithModal = withModalProvider(
+  IS_IPAD ? TabsScreenVertical : TabsScreen,
+);
 
 const AppStack = observer(() => {
   if (sessionService.switchingAccount) {
@@ -56,7 +64,8 @@ const AppStack = observer(() => {
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Tabs"
-          getComponent={() => require('~/tabs/TabsScreen').withModal}
+          component={TabScreenWithModal}
+          // getComponent={() => require('~/tabs/TabsScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
