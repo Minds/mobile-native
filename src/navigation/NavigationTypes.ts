@@ -46,6 +46,7 @@ export type MoreStackParamList = {
   Interactions: AppStackParamList['Interactions'];
   GroupsManage: {};
   GroupView: {};
+  RssScreen: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   AffiliateProgram: undefined;

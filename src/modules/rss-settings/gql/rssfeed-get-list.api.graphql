@@ -1,0 +1,12 @@
+query GetRssFeeds {
+  rssFeeds {
+    feedId
+    userGuid
+    tenantId
+    title
+    url
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
+}

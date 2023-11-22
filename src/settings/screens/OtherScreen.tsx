@@ -7,9 +7,11 @@ import NavigationService from '../../navigation/NavigationService';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import {
   BLOCK_USER_ENABLED,
+  IS_TENANT,
   MEMBERSHIP_TIERS_ENABLED,
-  // TWITTER_ENABLED,
+  TWITTER_ENABLED,
 } from '~/config/Config';
+import sessionService from '~/common/services/session.service';
 import { Screen } from '~/common/ui';
 
 function useNavCallback(screen) {
@@ -20,7 +22,7 @@ function useNavCallback(screen) {
 
 export default function () {
   const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
-
+  const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
   const contentAdmin = [
     {
       title: i18n.t('settings.blockedChannels'),
@@ -41,6 +43,22 @@ export default function () {
       onPress: useNavCallback('TierManagementScreen'),
     },
   ];
+
+  const contentMigration: Array<any> = [];
+
+  if (isTwitterFFEnabled && TWITTER_ENABLED) {
+    contentMigration.push({
+      title: i18n.t('settings.twitterSync.title'),
+      onPress: useNavCallback('TwitterSync'),
+    });
+  }
+
+  if (IS_TENANT || sessionService.getUser().plus) {
+    contentMigration.push({
+      title: i18n.t('settings.rssSync'),
+      onPress: useNavCallback('RssScreen'),
+    });
+  }
 
   const account = [
     {
@@ -66,7 +84,6 @@ export default function () {
       onPress: useNavCallback('AppInfo'),
     },
   ];
-  // const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
 
   return (
     <Screen scroll>
@@ -76,12 +93,10 @@ export default function () {
         generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {MEMBERSHIP_TIERS_ENABLED &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
-      {/* {isTwitterFFEnabled &&
-        TWITTER_ENABLED &&
-        generateSection(
-          i18n.t('settings.otherOptions.contentMigration'),
-          contentMigration,
-        )} */}
+      {generateSection(
+        i18n.t('settings.otherOptions.contentMigration'),
+        contentMigration,
+      )}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
@@ -89,19 +104,21 @@ export default function () {
   );
 }
 
-const generateSection = (title, items) => (
-  <>
-    <MenuSubtitle>{title}</MenuSubtitle>
-    {items.map((item, i) => (
-      <MenuItem
-        key={i}
-        {...item}
-        i={i}
-        containerItemStyle={i > 0 ? menuItemStyle : firstMenuItemStyle}
-      />
-    ))}
-  </>
-);
+const generateSection = (title, items) => {
+  return items.length ? (
+    <>
+      <MenuSubtitle>{title}</MenuSubtitle>
+      {items.map((item, i) => (
+        <MenuItem
+          key={i}
+          {...item}
+          i={i}
+          containerItemStyle={i > 0 ? menuItemStyle : firstMenuItemStyle}
+        />
+      ))}
+    </>
+  ) : null;
+};
 
 const firstMenuItemStyle = ThemedStyles.combine('bgPrimaryBackground');
 const menuItemStyle = ThemedStyles.combine(

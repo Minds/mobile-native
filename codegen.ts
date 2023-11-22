@@ -1,8 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 
-const API_URL =
-  Constants.expoConfig?.extra?.API_URL || 'https://www.minds.com/';
+const API_URL = 'https://www.minds.com/';
 
 const MAIN_API_URI = `${API_URL}api/graphql`;
 // const MAIN_API_URI =

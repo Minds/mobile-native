@@ -896,6 +896,18 @@
     "chooseBrowserHint": "This option can be changed from the settings",
     "inAppBrowser": "In-App Browser",
     "defaultBrowser": "Default Browser",
+    "rssSync": "RSS Sync",
+    "rssScreen": {
+      "description": "Sync an RSS feed to your channel and automatically post links from the RSS feed to your social media channel. This is a great way to share new articles, blogs, or videos from an RSS feed with your audience, automatically.",
+      "activeDescription": "The feed should sync around every 5 minutes. If you want to manually check for new updates, simply hit refresh",
+      "activeFeedsTitle": "Active RSS feeds",
+      "addFeed": "Add feed",
+      "addFeedTitle": "Add RSS feed",
+      "feedRefreshed": "Feed refreshed",
+      "feedRemoved": "Feed removed",
+      "updated": "Updated {{date}}",
+      "notSynced": "Not synced yet"
+    },
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
