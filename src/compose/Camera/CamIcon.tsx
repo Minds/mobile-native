@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';

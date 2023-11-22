@@ -158,27 +158,12 @@ exports[`Activity screen component renders correctly  1`] = `
                     ]
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 40,
-                        },
-                        {},
-                        {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    󰅁
-                  </Text>
+                  <MaterialCommunityIcons
+                    color="#AEB0B8"
+                    name="chevron-left"
+                    size={40}
+                    style={{}}
+                  />
                 </View>
               </View>
             </View>
@@ -275,7 +260,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Bold",
+                        "fontFamily": "Roboto_700Bold",
                       },
                       {
                         "fontSize": 16,
@@ -389,27 +374,11 @@ exports[`Activity screen component renders correctly  1`] = `
                         }
                       }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        selectable={false}
-                        style={
-                          [
-                            {
-                              "color": "#AEB0B8",
-                              "fontSize": 25.76,
-                            },
-                            undefined,
-                            {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
+                      <MaterialIcons
+                        color="#AEB0B8"
+                        name="more-vert"
+                        size={25.76}
+                      />
                     </View>
                   </View>
                 </View>
@@ -465,7 +434,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     [
@@ -473,7 +442,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "fontSize": 28,
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -481,7 +450,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -498,14 +467,14 @@ exports[`Activity screen component renders correctly  1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     {
                       "fontSize": 28,
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -540,7 +509,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -712,27 +681,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
-                style={
-                  [
-                    {
-                      "color": "#AEB0B8",
-                      "fontSize": 23.04,
-                    },
-                    {},
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
+              <MaterialIcons
+                color="#AEB0B8"
+                name="thumb-up"
+                size={23.04}
+                style={{}}
+              />
             </View>
           </View>
         </View>
@@ -820,27 +774,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
-                style={
-                  [
-                    {
-                      "color": "#AEB0B8",
-                      "fontSize": 23.04,
-                    },
-                    {},
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
+              <MaterialIcons
+                color="#AEB0B8"
+                name="thumb-down"
+                size={23.04}
+                style={{}}
+              />
             </View>
           </View>
         </View>
@@ -955,29 +894,16 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="message"
+                  size={18.400000000000002}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 18.400000000000002,
-                      },
-                      {
-                        "marginTop": 2,
-                      },
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": 2,
+                    }
                   }
-                >
-                  󰍡
-                </Text>
+                />
               </View>
               <View
                 style={
@@ -999,7 +925,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                       },
                       [
                         [
@@ -1010,7 +936,7 @@ exports[`Activity screen component renders correctly  1`] = `
                             "fontSize": 14,
                           },
                           {
-                            "fontFamily": "Roboto-Medium",
+                            "fontFamily": "Roboto_500Medium",
                             "fontWeight": "500",
                           },
                         ],
@@ -1134,29 +1060,16 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="repeat"
+                  size={20.8}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 20.8,
-                      },
-                      {
-                        "marginTop": -1,
-                      },
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": -1,
+                    }
                   }
-                >
-                  󰑖
-                </Text>
+                />
               </View>
             </View>
           </View>
@@ -1271,29 +1184,16 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialIcons
+                  color="#AEB0B8"
+                  name="ios-share"
+                  size={20}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 20,
-                      },
-                      {
-                        "marginTop": -2,
-                      },
-                      {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": -2,
+                    }
                   }
-                >
-                  
-                </Text>
+                />
               </View>
             </View>
           </View>

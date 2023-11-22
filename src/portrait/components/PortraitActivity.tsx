@@ -3,7 +3,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';

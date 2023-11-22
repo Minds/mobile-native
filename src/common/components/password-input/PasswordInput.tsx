@@ -8,7 +8,7 @@ import InputContainer, {
   InputContainerPropsType,
 } from '../InputContainer';
 import i18n from '../../services/i18n.service';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import { IS_IOS } from '../../../config/Config';
 import { AnimatePresence } from 'moti';
 

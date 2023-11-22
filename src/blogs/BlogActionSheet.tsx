@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { View, Alert } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 
 import { MINDS_URI } from '../config/Config';
 import shareService from '../share/ShareService';

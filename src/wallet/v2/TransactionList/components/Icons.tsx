@@ -1,6 +1,6 @@
 import React from 'react';
 import { DeltaIconPropsType } from '../TransactionsListTypes';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 
 export const DeltaIcon = ({ delta }: DeltaIconPropsType) => {

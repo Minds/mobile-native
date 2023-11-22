@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import { NewsfeedType } from './NewsfeedStore';
+import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
@@ -19,7 +20,7 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
         { id: 'groups', title: i18n.t('newsfeed.groups') },
       ];
 
-      if (experimentOn) {
+      if (experimentOn && NEWSFEED_FORYOU_ENABLED) {
         _tabs.unshift({
           id: 'for-you',
           title: i18n.t('newsfeed.foryouPosts'),

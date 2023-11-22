@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { SocialProfile, SocialProfileMeta } from '../../types/Common';
-import FaIcon from 'react-native-vector-icons/FontAwesome5';
+import FaIcon from '@expo/vector-icons/FontAwesome5';
 import { Linking, View } from 'react-native';
 
 const getSocialProfileMeta = (key: string): SocialProfileMeta => {

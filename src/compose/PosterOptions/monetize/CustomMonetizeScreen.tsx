@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Wrapper from './common/Wrapper';

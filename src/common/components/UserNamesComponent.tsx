@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';

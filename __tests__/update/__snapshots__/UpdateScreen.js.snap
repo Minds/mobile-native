@@ -42,11 +42,7 @@ exports[`Update Screen Component renders correctly 1`] = `
   >
     <Image
       resizeMode="contain"
-      source={
-        {
-          "testUri": "../../../src/assets/logos/bulb.png",
-        }
-      }
+      source={1}
       style={
         {
           "height": 90,
@@ -62,7 +58,7 @@ exports[`Update Screen Component renders correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -87,14 +83,14 @@ exports[`Update Screen Component renders correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
                 "fontSize": 14,
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
                 "fontWeight": "500",
               },
               {

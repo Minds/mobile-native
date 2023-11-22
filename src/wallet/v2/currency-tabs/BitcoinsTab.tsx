@@ -57,16 +57,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   title: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 21,
     marginBottom: 15,
   },
   description: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 16,
   },
   menuTitle: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 15,
   },
 });

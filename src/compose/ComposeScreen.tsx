@@ -50,7 +50,7 @@ import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
 import { ReplyType } from './SupermindComposeScreen';
 import delay from '~/common/helpers/delay';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, TENANT } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
 
@@ -118,7 +118,9 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
       if (
         !(await confirm({
           title: i18n.t('supermind.liveReplyRequest.title'),
-          description: i18n.t('supermind.liveReplyRequest.description'),
+          description: i18n.t('supermind.liveReplyRequest.description', {
+            TENANT,
+          }),
         }))
       ) {
         return;

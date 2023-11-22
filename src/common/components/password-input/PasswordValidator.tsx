@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import { View } from 'react-native';
 import ThemedStyle from '../../../styles/ThemedStyles';
 import validatePassword from '../../helpers/validatePassword';

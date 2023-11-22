@@ -230,7 +230,7 @@ export default function (props) {
       measureHeights({
         texts: [this.text.substr(0, this.selection.start)],
         width: 326,
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto_400Regular',
         fontSize: fontSmall ? 18 : 22,
       })
         .then(result => (this.textHeight = Math.max(result[0], 26)))

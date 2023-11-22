@@ -5,8 +5,8 @@ import { StyleSheet, View, FlatList } from 'react-native';
 
 import Modal from 'react-native-modal';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import MdIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/Ionicons';
+import MdIcon from '@expo/vector-icons/MaterialIcons';
 
 import Touchable from '../Touchable';
 

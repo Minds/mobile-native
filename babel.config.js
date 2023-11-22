@@ -8,7 +8,7 @@ module.exports = {
   presets: [
     [
       'module:metro-react-native-babel-preset',
-      { disableImportExportTransform: env !== 'test' },
+      // { disableImportExportTransform: env !== 'test' },
     ],
   ],
   plugins: [
@@ -24,12 +24,7 @@ module.exports = {
         allowDeclareFields: true,
       },
     ],
-    [
-      'react-native-reanimated/plugin',
-      {
-        globals: ['__scanOCR'],
-      },
-    ],
+    ['react-native-reanimated/plugin'],
     [
       'transform-inline-environment-variables',
       {
@@ -50,6 +45,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
         root: ['.'],
         alias: {
+          '@assets': ['./assets'],
           '~': ['./src/'],
           '~ui': ['./src/common/ui'],
           '~styles': ['./src/styles'],
@@ -57,7 +53,6 @@ module.exports = {
           //   './node_modules/react-native/Libraries/Renderer/implementations/ReactNativeRenderer-profiling',
           // 'scheduler/tracing': 'scheduler/tracing-profiling',
           app: path.resolve(__dirname, 'src/app'),
-          assets: path.resolve(__dirname, 'src/assets'),
           components: path.resolve(__dirname, 'src/components'),
           modules: path.resolve(__dirname, 'src/modules'),
           services: path.resolve(__dirname, 'src/services'),

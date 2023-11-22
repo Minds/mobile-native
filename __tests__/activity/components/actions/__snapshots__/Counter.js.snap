@@ -13,9 +13,14 @@ exports[`Counter component renders correctly 1`] = `
   }
 >
   <Text
-    onLayout={[Function]}
     style={
       [
+        {
+          "color": "#F2F2F2",
+        },
+        {
+          "fontFamily": "Roboto_400Regular",
+        },
         [
           [
             {
@@ -25,20 +30,16 @@ exports[`Counter component renders correctly 1`] = `
               "fontSize": 14,
             },
             {
-              "fontFamily": "Roboto-Medium",
+              "fontFamily": "Roboto_500Medium",
               "fontWeight": "500",
             },
           ],
           undefined,
         ],
-        {
-          "position": "absolute",
-          "top": -999999,
-        },
       ]
     }
   >
-    0
+    100
   </Text>
 </View>
 `;

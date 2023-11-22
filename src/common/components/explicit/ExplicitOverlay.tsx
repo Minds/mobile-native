@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';

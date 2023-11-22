@@ -13,8 +13,10 @@ import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
+  AFFILIATES_ENABLED,
   DEV_MODE,
   IS_IOS,
+  IS_TENANT,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -61,10 +63,8 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
-  const UPGRADE_DISABLED = !PRO_PLUS_SUBSCRIPTION_ENABLED;
-
-  const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
   const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const affiliatesFFEnabled = useIsFeatureOn('epic-304-affiliates');
 
   const user = sessionService.getUser();
 
@@ -100,7 +100,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus && !UPGRADE_DISABLED) {
+  if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -108,7 +108,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro && !UPGRADE_DISABLED) {
+  if (!user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',
@@ -121,7 +121,7 @@ const SettingsScreen = observer(({ navigation }) => {
     screen: 'ChooseBrowser',
   });
 
-  if (affiliatesEnabled) {
+  if (affiliatesFFEnabled && AFFILIATES_ENABLED) {
     firstSection.push({
       title: i18n.t('settings.affiliateProgram'),
       screen: 'AffiliateProgram',
@@ -143,16 +143,18 @@ const SettingsScreen = observer(({ navigation }) => {
 
   const secondSection: Array<Item> = [
     {
-      title: i18n.t(
-        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-      ),
-      onPress: setDarkMode,
-    },
-    {
       title: i18n.t('help'),
       onPress: navigateToHelp,
     },
   ];
+  if (!IS_TENANT) {
+    secondSection.unshift({
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    });
+  }
 
   if (DEV_MODE.isActive || __DEV__) {
     secondSection.push({

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Alert, Image, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import assets from '@assets';
 
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import withModalProvider from '~/navigation/withModalProvide';
@@ -274,7 +275,7 @@ class BlogsViewScreen extends Component<PropsType> {
             <Image
               resizeMode="contain"
               style={ComponentsStyle.logo}
-              source={require('../assets/logos/logo.png')}
+              source={assets.LOGO_SQUARED}
             />
             <MText style={[theme.fontL, theme.colorAlert]}>
               {i18n.t('blogs.error')}
@@ -313,7 +314,7 @@ const styles = ThemedStyles.create({
     paddingRight: 15,
     fontSize: 22,
     // fontWeight: '800',
-    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+    fontFamily: 'Roboto_900Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: ['bgPrimaryBackground'],
   description: {

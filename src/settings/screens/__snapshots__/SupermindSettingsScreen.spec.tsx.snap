@@ -100,27 +100,12 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 28,
-                      },
-                      {},
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
-                  }
-                >
-                  󰅁
-                </Text>
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="chevron-left"
+                  size={28}
+                  style={{}}
+                />
               </View>
             </View>
           </View>
@@ -132,7 +117,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -285,7 +270,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -328,7 +313,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,
@@ -357,7 +342,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,
@@ -386,7 +371,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                   "color": "#b9bbc0",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,
@@ -526,27 +511,12 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 28,
-                      },
-                      {},
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
-                  }
-                >
-                  󰅁
-                </Text>
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="chevron-left"
+                  size={28}
+                  style={{}}
+                />
               </View>
             </View>
           </View>
@@ -558,7 +528,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -711,7 +681,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -754,7 +724,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,
@@ -783,7 +753,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,
@@ -812,7 +782,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "color": "#b9bbc0",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,
@@ -906,11 +876,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                       },
                       [
                         {
-                          "fontFamily": "Roboto",
+                          "fontFamily": "Roboto_400Regular",
                           "fontSize": 16,
                           "fontWeight": "400",
                           "marginBottom": 0,
@@ -969,7 +939,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                     "borderRadius": 2,
                     "borderWidth": 1,
                     "color": "#F2F2F2",
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                     "fontSize": 16,
                     "lineHeight": 21,
                   },
@@ -1080,11 +1050,11 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                       },
                       [
                         {
-                          "fontFamily": "Roboto",
+                          "fontFamily": "Roboto_400Regular",
                           "fontSize": 16,
                           "fontWeight": "400",
                           "marginBottom": 0,
@@ -1142,7 +1112,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                     "borderRadius": 2,
                     "borderWidth": 1,
                     "color": "#F2F2F2",
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                     "fontSize": 16,
                     "lineHeight": 21,
                   },
@@ -1219,7 +1189,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -1347,27 +1317,12 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 28,
-                      },
-                      {},
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
-                  }
-                >
-                  󰅁
-                </Text>
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="chevron-left"
+                  size={28}
+                  style={{}}
+                />
               </View>
             </View>
           </View>
@@ -1379,7 +1334,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 24,
@@ -1532,7 +1487,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                       "color": "#FFD048",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                     },
                     {
                       "fontSize": 18,
@@ -1575,7 +1530,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "color": "#a1a5ab",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 16,
@@ -1604,7 +1559,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 16,
@@ -1633,7 +1588,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
                   "color": "#b9bbc0",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,

@@ -6,7 +6,7 @@ import {
 } from '../../../common/components/bottom-sheet';
 import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
 import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
 import ThemedStyles from '../../../styles/ThemedStyles';

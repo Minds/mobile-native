@@ -5,7 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
 import UserNamesComponent from '../../common/components/UserNamesComponent';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import HeaderTabsComponent from '../../common/components/HeaderTabsComponent';
 import TokensForm from './TokensForm';
 import UsdForm from './UsdForm';

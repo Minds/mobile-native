@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';

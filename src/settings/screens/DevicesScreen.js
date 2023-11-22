@@ -9,6 +9,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import apiService from '../../common/services/api.service';
 import MText from '../../common/components/MText';
+import { TENANT } from '~/config/Config';
 
 const options = {
   retry: 0,
@@ -56,7 +57,7 @@ export default observer(function DeviceScreen() {
       ) : (
         <>
           <ScreenSection top="XL">
-            <B1>{i18n.t('settings.sessionsOpened')}</B1>
+            <B1>{i18n.t('settings.sessionsOpened', { TENANT })}</B1>
           </ScreenSection>
           {result?.sessions.map((s, i) => {
             return (

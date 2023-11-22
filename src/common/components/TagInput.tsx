@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   error: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     color: 'red',
     textAlign: 'center',
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   tagText: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
   tagContainer: {
     flex: 1,

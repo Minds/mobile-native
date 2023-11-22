@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Row } from '~/common/ui';
 import MText from '~/common/components/MText';
 import { useStores } from '~/common/hooks/use-stores';
@@ -181,7 +181,7 @@ const styles = ThemedStyles.create({
     {
       fontSize: 16,
       fontWeight: '500',
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'Roboto_500Medium',
     },
   ],
   amountText: {

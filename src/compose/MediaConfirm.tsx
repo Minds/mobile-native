@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';

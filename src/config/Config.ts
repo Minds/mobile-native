@@ -1,14 +1,15 @@
-import { storages } from '~/common/services/storage/storages.service';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
+
+import { storages } from '~/common/services/storage/storages.service';
 import { DevMode } from './DevMode';
-import CodePush, { CodePushOptions } from 'react-native-code-push';
+
+import Tenant from '../../tenant.json';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = false;
-export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS;
 
 // we should check how to use v2 before enable it again
 export const LIQUIDITY_ENABLED = false;
@@ -39,6 +40,28 @@ export const DEV_MODE = new DevMode(IS_REVIEW);
 
 export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
+// Enabled Features for the app
+export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
+export const SUPERMIND_ENABLED = !IS_TENANT;
+export const WALLET_ENABLED = !IS_TENANT;
+export const AFFILIATES_ENABLED = !IS_TENANT;
+export const MEMBERSHIP_TIERS_ENABLED = !IS_TENANT;
+export const TWITTER_ENABLED = !IS_TENANT;
+export const NEWSFEED_FORYOU_ENABLED = !IS_TENANT;
+export const WIRE_ENABLED = !IS_TENANT && !IS_IOS;
+export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS && !IS_TENANT;
+export const BOOSTS_ENABLED = !IS_TENANT;
+export const BLOCK_USER_ENABLED = !IS_TENANT;
+export const CHAT_ENABLED = !IS_TENANT;
+
+export const ACCENT_COLOR_LIGHT = Tenant.ACCENT_COLOR_LIGHT;
+export const ACCENT_COLOR_DARK = Tenant.ACCENT_COLOR_DARK;
+export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
+
+export const TENANT = Tenant.APP_NAME;
+
+export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
+
 /**
  * We get the values only for review apps in order to avoid issues
  * by setting them to true in a review app and after updating the app
@@ -68,13 +91,10 @@ export const ANDROID_CHAT_APP = 'com.minds.chat';
 export const MINDS_URI = 'https://www.minds.com/';
 export const STRAPI_URI = 'https://cms.minds.com';
 
-const MINDS_PROD = true;
 export const MINDS_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL
     ? CUSTOM_API_URL
-    : MINDS_PROD
-    ? 'https://www.minds.com/'
-    : 'https://feat-explainer-screens-m4132.oke.minds.io';
+    : Tenant.API_URL || 'https://www.minds.com/';
 
 const STRAPI_PROD = true;
 export const STRAPI_API_URI = STRAPI_PROD
@@ -240,15 +260,15 @@ export const STORE_LINK = Platform.select({
 
 export const isStoryBookOn = storages.app.getBool('storybook');
 
-export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-  installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-  mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-  minimumBackgroundDuration: 15 * 60, // 15 minutes
-  rollbackRetryOptions: {
-    delayInHours: 4,
-    maxRetryAttempts: 2,
-  },
-};
+// export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
+//   checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+//   installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+//   mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
+//   minimumBackgroundDuration: 15 * 60, // 15 minutes
+//   rollbackRetryOptions: {
+//     delayInHours: 4,
+//     maxRetryAttempts: 2,
+//   },
+// };
 
 export const BOOSTS_DELAY = 604800;

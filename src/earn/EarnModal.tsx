@@ -7,7 +7,7 @@ import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import {
   ONCHAIN_ENABLED,
   LIQUIDITY_ENABLED,
@@ -16,6 +16,8 @@ import {
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
+
+type IconName = React.ComponentProps<typeof Icon>['name'];
 
 // const linkTo = (dest: string) =>
 //   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -36,7 +38,7 @@ interface ResourceType {
 interface ContentType {
   name: 'create' | 'refer' | 'pool' | 'transfer';
   onPress: () => void;
-  icon: string;
+  icon: IconName;
 }
 
 const EarnItem = ({ content }: { content: ContentType }) => {
@@ -232,6 +234,6 @@ const styles = StyleSheet.create({
   textItem: {
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
 });

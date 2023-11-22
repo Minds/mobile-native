@@ -83,13 +83,6 @@ jest.mock(
   },
 );
 
-jest.mock('react-native-bootsplash', () => {
-  return {
-    hide: jest.fn().mockResolvedValueOnce(),
-    getVisibilityStatus: jest.fn().mockResolvedValue('hidden'),
-  };
-});
-
 jest.mock(
   'react-native/Libraries/Components/Touchable/TouchableHighlight.js',
   () => {
@@ -123,3 +116,26 @@ jest.mock('react-native-exception-handler');
 
 import ri18n from 'utils/locales';
 ri18n.init();
+
+// TAMAGUI
+process.env.TAMAGUI_TARGET = 'native';
+
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+// expo vector icons
+jest.mock('@expo/vector-icons/MaterialIcons', () => 'MaterialIcons');
+jest.mock(
+  '@expo/vector-icons/MaterialCommunityIcons',
+  () => 'MaterialCommunityIcons',
+);
+jest.mock('@expo/vector-icons/FontAwesome5', () => 'FontAwesome5');
+jest.mock('@expo/vector-icons/FontAwesome', () => 'FontAwesome');
+jest.mock('@expo/vector-icons/Ionicons', () => 'IonIcon');
+jest.mock('@expo/vector-icons/Feather', () => 'Feather');
+jest.mock('@expo/vector-icons/Fontisto', () => 'Fontisto');
+jest.mock('@expo/vector-icons/Entypo', () => 'Entypo');
+jest.mock('@expo/vector-icons', () => ({
+  FontAwesome: () => {
+    return 'FontAwesome';
+  },
+}));

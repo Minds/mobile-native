@@ -10,6 +10,7 @@ import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 import { Image, View } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
+import assets from '@assets';
 
 export const GiftTransationList = ({ guid }: { guid: string }) => {
   const { t } = useTranslation();
@@ -82,7 +83,7 @@ const MindsIcon = () => {
   return (
     <View style={styles.logo}>
       <Image
-        source={require('~/assets/logos/bulb.png')}
+        source={assets.LOGO_SQUARED}
         resizeMode="contain"
         style={styles.bulb}
       />

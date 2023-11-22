@@ -2,7 +2,7 @@ import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import MText from '../../../common/components/MText';
 import { B2, B1, Row as LayoutRow } from '~ui';
 

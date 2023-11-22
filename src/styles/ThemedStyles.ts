@@ -10,6 +10,7 @@ import { buildStyle, updateTheme } from './Style';
 import type { Styles } from './Style';
 import { storages } from '../common/services/storage/storages.service';
 import useIsPortrait from '../common/hooks/useIsPortrait';
+import { IS_TENANT, TENANT_THEME } from '~/config/Config';
 
 type Style = keyof Styles;
 
@@ -41,7 +42,7 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.theme = storages.app.getInt('theme') ?? 1;
+    this.theme = !IS_TENANT ? storages.app.getInt('theme') ?? 1 : TENANT_THEME;
     this.style = buildStyle(this.theme === 0 ? LIGHT_THEME : DARK_THEME);
     this.generateNavStyle();
   }

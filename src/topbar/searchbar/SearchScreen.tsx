@@ -139,7 +139,7 @@ const styles = ThemedStyles.create({
   textInput: {
     flex: 1,
     fontSize: 14,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto_400Regular',
   },
   cancel: ['marginLeft4x'],
 });

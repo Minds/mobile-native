@@ -65,7 +65,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -93,7 +93,7 @@ exports[`renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,
@@ -141,7 +141,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -169,7 +169,7 @@ exports[`renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,
@@ -217,7 +217,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -245,7 +245,7 @@ exports[`renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,
@@ -293,7 +293,7 @@ exports[`renders correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
               },
               {
                 "fontSize": 16,
@@ -321,7 +321,7 @@ exports[`renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 {
                   "fontSize": 14,

@@ -26,23 +26,34 @@ import {
 } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
+import {
+  AFFILIATES_ENABLED,
+  BOOSTS_ENABLED,
+  IS_TENANT,
+  SUPERMIND_ENABLED,
+  WALLET_ENABLED,
+} from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
-    {
-      name: i18n.t('earnScreen.title'),
-      onPress: () => {
-        navigation.navigate('EarnModal');
-      },
-    },
-    {
-      name: i18n.t('analytics.title'),
-      onPress: () => {
-        navigation.navigate('Analytics');
-      },
-    },
+    !IS_TENANT
+      ? {
+          name: i18n.t('earnScreen.title'),
+          onPress: () => {
+            navigation.navigate('EarnModal');
+          },
+        }
+      : null,
+    !IS_TENANT
+      ? {
+          name: i18n.t('analytics.title'),
+          onPress: () => {
+            navigation.navigate('Analytics');
+          },
+        }
+      : null,
     {
       name: i18n.t('help'),
       onPress: navigateToHelp,
@@ -72,7 +83,7 @@ const getOptionsList = (
         navigation.push('Channel', { entity: channel });
       },
     },
-    !isIosMindsHidden && IS_IOS // hide minds+ in google
+    !isIosMindsHidden && IS_IOS && !IS_TENANT
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
@@ -81,38 +92,44 @@ const getOptionsList = (
           },
         }
       : null,
-    {
-      name: i18n.t('settings.boostConsole'),
-      icon: 'boost',
-      onPress: () => {
-        navigation.push('BoostConsole');
-      },
-    },
-    {
-      name: 'Supermind',
-      icon: 'supermind',
-      onPress: () => {
-        navigation.navigate('SupermindConsole');
-      },
-    },
-    hideTokens
-      ? null
-      : {
+    BOOSTS_ENABLED
+      ? {
+          name: i18n.t('settings.boostConsole'),
+          icon: 'boost',
+          onPress: () => {
+            navigation.push('BoostConsole');
+          },
+        }
+      : null,
+    SUPERMIND_ENABLED
+      ? {
+          name: 'Supermind',
+          icon: 'supermind',
+          onPress: () => {
+            navigation.navigate('SupermindConsole');
+          },
+        }
+      : null,
+    WALLET_ENABLED && !hideTokens
+      ? {
           name: i18n.t('moreScreen.wallet'),
           icon: 'bank',
           testID: 'Drawer:wallet',
           onPress: () => {
             navigation.navigate('Wallet');
           },
-        },
-    {
-      name: 'Affiliate',
-      icon: 'affiliates',
+        }
+      : null,
+    AFFILIATES_ENABLED
+      ? {
+          name: 'Affiliate',
+          icon: 'affiliates',
 
-      onPress: () => {
-        navigation.navigate('AffiliateProgram');
-      },
-    },
+          onPress: () => {
+            navigation.navigate('AffiliateProgram');
+          },
+        }
+      : null,
     {
       name: i18n.t('discovery.groups'),
       icon: 'group',

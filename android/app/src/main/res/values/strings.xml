@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Minds</string>
-    <string name="gcm_sender_id">81109256529</string>
-    <string moduleConfig="true" name="CodePushDeploymentKey">_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ</string>
-</resources>

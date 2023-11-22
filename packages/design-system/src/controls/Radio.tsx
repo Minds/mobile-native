@@ -85,6 +85,7 @@ const Item = ({ value, label = '' }: RadioProps) => {
           )}
         </AnimatePresence>
       </StyledBullet>
+      {/* @ts-ignore TODO: fix TS errors of tamagui */}
       <Text pl="$2" size="$b1">
         {label}
       </Text>
