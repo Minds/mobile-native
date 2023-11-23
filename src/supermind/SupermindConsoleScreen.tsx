@@ -9,7 +9,7 @@ import TopbarTabbar, {
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import {
   SupermindOnboardingOverlay,
@@ -170,7 +170,7 @@ function SupermindConsoleScreen({
             />
           )
         }
-        back
+        back={!IS_IPAD}
         shadow
       />
       <TopbarTabbar

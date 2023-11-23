@@ -5,17 +5,24 @@ exports[`Notification 24 hours before an offer expires 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -266,17 +273,24 @@ exports[`Notification Affiliate earnings deposited 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -471,17 +485,24 @@ exports[`Notification An offer expires 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -733,17 +754,24 @@ exports[`Notification Boost accepted 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -945,7 +973,13 @@ exports[`Notification Boost accepted 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1015,17 +1049,24 @@ exports[`Notification Boost complete 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1227,7 +1268,13 @@ exports[`Notification Boost complete 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1297,17 +1344,24 @@ exports[`Notification Boost rejected 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1509,7 +1563,13 @@ exports[`Notification Boost rejected 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1579,17 +1639,24 @@ exports[`Notification Gift boost created 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1955,17 +2022,24 @@ exports[`Notification Receiver accepts an offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2217,17 +2291,24 @@ exports[`Notification Receiver declines an offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2479,17 +2560,24 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2684,17 +2772,24 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }

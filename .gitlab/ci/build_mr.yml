@@ -21,6 +21,12 @@ eas_update_mr:
 
 stop_review:
   stage: build_mr
+  image: node:18.18-alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../.yarn
   script:
     - npx eas-cli channel:delete $CI_COMMIT_REF_SLUG --non-interactive
     - npx eas-cli branch:delete $CI_COMMIT_REF_SLUG --non-interactive

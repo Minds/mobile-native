@@ -13,7 +13,7 @@ import InputContainer, {
 } from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
-import { IS_IOS } from '../../config/Config';
+import { IS_IOS, IS_IPAD } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
@@ -114,6 +114,7 @@ export default observer(function LoginForm(props: PropsType) {
           spinner
           horizontal="XL"
           top="XXL"
+          containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
           onPress={localStore.onLoginPress}>
           {i18n.t('auth.login')}
         </Button>
@@ -153,4 +154,11 @@ const styles = ThemedStyles.create({
     },
     'colorSecondaryText',
   ],
+  buttonIpad: {
+    width: '45%',
+    alignSelf: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

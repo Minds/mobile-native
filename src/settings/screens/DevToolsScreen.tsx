@@ -49,7 +49,10 @@ const DevToolsScreen = () => {
       title={'Developer Options'}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackgroundHighlight}
+      contentContainer={[
+        theme.bgPrimaryBackgroundHighlight,
+        theme.alignSelfCenterMaxWidth,
+      ]}
       titleStyle={theme.colorPrimaryText}>
       <ScrollView testID="DevToolsScreen">
         <ScreenSection vertical="M">

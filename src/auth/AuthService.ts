@@ -8,6 +8,7 @@ import NavigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
+import mindsConfigService from '~/common/services/minds-config.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -123,6 +124,7 @@ class AuthService {
 
     await session.addSession(data);
     await session.login();
+    await mindsConfigService.update();
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
     // To force rendering the app behind the modal and get rid of the splash screen

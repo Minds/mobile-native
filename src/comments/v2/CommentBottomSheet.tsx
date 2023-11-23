@@ -11,6 +11,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { pushBottomSheet } from '../../common/components/bottom-sheet';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   commentsStore: CommentsStore;
@@ -58,10 +59,14 @@ const CommentBottomSheetBase = (props: PropsType) => {
 
   const { height } = useWindowDimensions();
 
+  /**
+   * Auto show the input if there is no comments (if user can comment)
+   */
   React.useEffect(() => {
     if (
-      props.commentsStore?.parent?.['comments:count'] === 0 ||
-      props.commentsStore?.entity?.['comments:count'] === 0
+      (props.commentsStore?.parent?.['comments:count'] === 0 ||
+        props.commentsStore?.entity?.['comments:count'] === 0) &&
+      PermissionsService.canComment()
     ) {
       props.commentsStore?.setShowInput(true);
     }

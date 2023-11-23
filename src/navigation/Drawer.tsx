@@ -34,7 +34,7 @@ import {
   WALLET_ENABLED,
 } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
 
 const getOptionsSmallList = navigation => {
   return [
@@ -83,7 +83,7 @@ const getOptionsList = (
         navigation.push('Channel', { entity: channel });
       },
     },
-    !isIosMindsHidden && IS_IOS && !IS_TENANT
+    !isIosMindsHidden && !IS_TENANT
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
@@ -123,8 +123,7 @@ const getOptionsList = (
     AFFILIATES_ENABLED
       ? {
           name: 'Affiliate',
-          icon: 'affiliates',
-
+          icon: 'affiliate',
           onPress: () => {
             navigation.navigate('AffiliateProgram');
           },

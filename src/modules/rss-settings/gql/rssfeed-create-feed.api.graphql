@@ -1,0 +1,12 @@
+mutation CreateRssFeed($url: String!) {
+  createRssFeed(rssFeed: { url: $url }) {
+    feedId
+    userGuid
+    title
+    url
+    tenantId
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
+}

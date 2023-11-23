@@ -98,6 +98,7 @@ exports[`SupermindFeedFilter should render 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginBottom": 16,
                 "marginLeft": 20,
                 "marginTop": 16,
@@ -1152,6 +1153,7 @@ exports[`SupermindFeedFilter should render 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginHorizontal": 16,
                 "marginTop": 16,
               }

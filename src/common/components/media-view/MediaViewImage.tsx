@@ -3,7 +3,7 @@ import React from 'react';
 import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import Pinchable from 'react-native-pinchable';
 
-import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
+import { DATA_SAVER_THUMB_RES, IS_IPAD } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
@@ -13,6 +13,7 @@ import i18n from '../../services/i18n.service';
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
+import { getMaxFeedWidth } from '~/styles/Style';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,7 +26,8 @@ type PropsType = {
   onImageLongPress?: () => void;
 };
 
-const { width, height } = Dimensions.get('window');
+const { width: winWidth, height } = Dimensions.get('window');
+const width = IS_IPAD ? Math.min(getMaxFeedWidth(), winWidth) : winWidth;
 
 export default function MediaViewImage({
   entity,

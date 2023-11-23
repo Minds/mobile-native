@@ -46,6 +46,7 @@ export default withErrorBoundaryScreen(
     return (
       <ModalContainer
         title={i18n.t('wallet.phoneVerification')}
+        contentContainer={styles.container}
         onPressBack={navigation.goBack}>
         <PhoneValidationProvider {...params}>
           <DismissKeyboard style={theme.flexContainer}>
@@ -64,5 +65,6 @@ export default withErrorBoundaryScreen(
 );
 
 const styles = ThemedStyles.create({
+  container: ['alignSelfCenterMaxWidth'],
   description: ['colorSecondaryText', 'fontLM', 'centered', 'marginBottom5x'],
 });

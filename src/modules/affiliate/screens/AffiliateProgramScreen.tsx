@@ -19,6 +19,7 @@ import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
+import { IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
 import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
@@ -31,7 +32,7 @@ export default function AffiliateProgramScreen({ navigation }) {
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={t('screenTitle')} back />
+      <ScreenHeader title={t('screenTitle')} back={!IS_IPAD} />
       <FitScrollView>
         <LinksMindsSheet ref={linkBottomSheetRef} />
         <InviteToMindsSheet ref={inviteBottomSheetRef} />

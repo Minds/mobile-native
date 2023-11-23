@@ -55,8 +55,7 @@ export const Topbar = observer((props: PropsType) => {
   const container = React.useRef({
     paddingTop: !noInsets && insets && insets.top ? insets.top - 5 : 0,
     height: Platform.select({ ios: noInsets ? 60 : 100, android: 60 }),
-    display: 'flex',
-    flexDirection: 'row',
+    justifyContent: 'center',
   }).current as ViewStyle;
   // dereference to react to observable changes
 
@@ -106,15 +105,17 @@ export const Topbar = observer((props: PropsType) => {
                     styles.logoWrapper,
                     isChatIconHidden && styles.noMarginLeft,
                   ]}>
-                  <Image
-                    resizeMode="contain"
-                    source={
-                      ThemedStyles.theme
-                        ? assets.LOGO_HORIZONTAL_DARK
-                        : assets.LOGO_HORIZONTAL
-                    }
-                    style={styles.logo}
-                  />
+                  <PressableScale onPress={props.onLogoPress}>
+                    <Image
+                      resizeMode="contain"
+                      source={
+                        ThemedStyles.theme
+                          ? assets.LOGO_HORIZONTAL_DARK
+                          : assets.LOGO_HORIZONTAL
+                      }
+                      style={styles.logo}
+                    />
+                  </PressableScale>
                 </View>
               </>
             )}
@@ -133,13 +134,6 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         </View>
       </View>
-
-      {/* {props.banners && (
-        <>
-          <ReferBanner />
-          <WefounderBanner />
-        </>
-      )} */}
     </Animated.View>
   );
 });
@@ -170,8 +164,8 @@ export const styles = StyleSheet.create({
   },
   topbar: {
     flex: 1,
-    // alignItems: 'center',
     flexDirection: 'row',
+    ...ThemedStyles.style.alignSelfCenterMaxWidth,
   },
   topbarLeft: {
     flex: 1,

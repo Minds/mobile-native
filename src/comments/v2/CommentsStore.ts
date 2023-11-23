@@ -26,6 +26,7 @@ import { isNetworkError } from '~/common/services/ApiErrors';
 import { storeRatingService } from 'modules/store-rating';
 import { EventContext } from '@snowplow/react-native-tracker';
 import analyticsService from '../../common/services/analytics.service';
+import PermissionsService from '~/common/services/permissions.service';
 
 const COMMENTS_PAGE_SIZE = 12;
 
@@ -602,6 +603,10 @@ export default class CommentsStore {
    * Attach a video
    */
   async video() {
+    if (!PermissionsService.canUploadVideo()) {
+      showNotification(i18n.t('composer.create.mediaVideoError'));
+      return;
+    }
     try {
       const media = await attachmentService.video();
       if (media) this.onAttachedMedia(media);
@@ -636,6 +641,14 @@ export default class CommentsStore {
    */
   onAttachedMedia = async media => {
     const attachment = this.attachment;
+
+    if (
+      media.type.startsWith('video') &&
+      !PermissionsService.canUploadVideo()
+    ) {
+      showNotification(i18n.t('composer.create.mediaVideoError'));
+      return;
+    }
 
     try {
       await attachment.attachMedia(media);
@@ -680,6 +693,14 @@ export default class CommentsStore {
       if (!response) return;
 
       const media = Array.isArray(response) ? response[0] : response;
+
+      if (
+        media.mime.startsWith('video') &&
+        !PermissionsService.canUploadVideo()
+      ) {
+        showNotification(i18n.t('composer.create.mediaVideoError'));
+        return;
+      }
 
       await this.attachment.attachMedia({ ...media, type: media.mime });
     } catch (err) {

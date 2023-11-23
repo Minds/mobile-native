@@ -31,6 +31,9 @@ import useCameraStyle from './useCameraStyle';
 import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
 import PressableScale from '~/common/components/PressableScale';
+import PermissionsService from '~/common/services/permissions.service';
+import { showNotification } from 'AppMessages';
+import i18n from '~/common/services/i18n.service';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -156,6 +159,11 @@ export default observer(function (props: PropsType) {
   // capture long press handler
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
+      if (!PermissionsService.canUploadVideo()) {
+        showNotification(i18n.t('composer.create.mediaVideoError'));
+        return;
+      }
+
       if (props.onForceVideo) {
         props.onForceVideo();
       }

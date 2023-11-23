@@ -23,6 +23,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     <View
       style={
         {
+          "alignSelf": "stretch",
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -401,6 +402,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginHorizontal": 4,
             }
           }
@@ -456,6 +458,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     <View
       style={
         {
+          "alignSelf": "stretch",
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -857,6 +860,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginHorizontal": 4,
             }
           }
