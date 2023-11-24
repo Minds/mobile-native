@@ -5,7 +5,7 @@ import { storages } from '~/common/services/storage/storages.service';
 import { hasVariation } from '../../../ExperimentsProvider';
 
 export default class DiscoveryV2Store {
-  @observable activeTabId: TDiscoveryV2Tabs = 'top';
+  @observable activeTabId: TDiscoveryV2Tabs = 'latest';
   @observable trends: TDiscoveryTrendsTrend[] = [];
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
@@ -23,6 +23,7 @@ export default class DiscoveryV2Store {
   trendingFeed: FeedStore;
   allFeed: FeedStore;
   topFeed: FeedStore;
+  latestFeed: FeedStore;
   supermindsFeed: FeedStore;
   lastDiscoveryTimestamp = 0;
   plus?: boolean;
@@ -43,6 +44,13 @@ export default class DiscoveryV2Store {
 
     this.allFeed
       .setEndpoint('api/v2/feeds/global/topV2/all')
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    this.latestFeed = new FeedStore(true);
+    this.latestFeed
+      .setEndpoint('api/v2/feeds/global/latest/all')
+      .setParams({ period: '12h', plus })
       .setInjectBoost(false)
       .setLimit(15);
 
@@ -74,6 +82,9 @@ export default class DiscoveryV2Store {
     this.direction = tabIndex[id] > tabIndex[this.activeTabId] ? 1 : 0;
     if (tabIndex) {
       switch (id) {
+        case 'latest':
+          this.latestFeed.fetchRemoteOrLocal();
+          break;
         case 'top':
           this.topFeed.fetchRemoteOrLocal();
           break;
@@ -199,6 +210,8 @@ export default class DiscoveryV2Store {
   @action
   refreshActiveTab() {
     switch (this.activeTabId) {
+      case 'latest':
+        return this.latestFeed.refresh();
       case 'top':
         return this.topFeed.refresh();
       case 'foryou':
@@ -223,7 +236,7 @@ export default class DiscoveryV2Store {
     this.activeTabId = hasVariation('mob-5038-discovery-consolidation')
       ? this.plus
         ? 'foryou'
-        : 'top'
+        : 'latest'
       : 'foryou';
     this.refreshing = false;
     this.loading = false;
@@ -244,6 +257,7 @@ export default class DiscoveryV2Store {
 }
 
 export type TDiscoveryV2Tabs =
+  | 'latest'
   | 'top'
   | 'foryou'
   | 'your-tags'
@@ -254,14 +268,15 @@ export type TDiscoveryV2Tabs =
   | 'groups';
 
 const tabIndex: Record<TDiscoveryV2Tabs, number> = {
-  top: 0,
-  foryou: 1,
-  'your-tags': 2,
-  'trending-tags': 3,
-  boosts: 4,
-  supermind: 5,
-  channels: 6,
-  groups: 7,
+  latest: 0,
+  top: 1,
+  foryou: 2,
+  'your-tags': 3,
+  'trending-tags': 4,
+  boosts: 5,
+  supermind: 6,
+  channels: 7,
+  groups: 8,
 };
 
 export type TDiscoveryTrendsTrend = {};

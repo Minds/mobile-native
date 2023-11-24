@@ -441,6 +441,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'language',
   },
+  ignite: {
+    font: 'MaterialIcons',
+    name: 'local-fire-department',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

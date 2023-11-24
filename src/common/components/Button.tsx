@@ -33,6 +33,7 @@ export interface ButtonPropsType extends TouchableOpacityProps {
   active?: boolean;
   borderless?: boolean;
   centered?: boolean;
+  primary?: boolean;
 }
 
 /**
@@ -60,6 +61,7 @@ const Button: FC<ButtonPropsType> = props => {
     active,
     borderless,
     centered = true,
+    primary,
     ...extraProps
   } = props;
 
@@ -71,6 +73,11 @@ const Button: FC<ButtonPropsType> = props => {
 
   if (inverted !== undefined) {
     background = mainColor;
+    mainColor = ThemedStyles.getColor('PrimaryBackground');
+  }
+
+  if (primary) {
+    background = ThemedStyles.getColor('Link');
     mainColor = ThemedStyles.getColor('PrimaryBackground');
   }
 
@@ -105,7 +112,7 @@ const Button: FC<ButtonPropsType> = props => {
 
   const style = [
     theme.rowJustifyCenter,
-    centered ? theme.centered : {},
+    centered ? theme.centered : theme.alignSelfStart,
     {
       backgroundColor: background,
       borderRadius: 21,

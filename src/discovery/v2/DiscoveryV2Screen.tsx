@@ -20,8 +20,8 @@ import ChannelRecommendation from '~/common/components/ChannelRecommendation/Cha
 import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
-import { Screen } from '~/common/ui';
-import { IS_IOS, IS_IPAD } from '~/config/Config';
+import { B2, H3, Icon, Screen } from '~/common/ui';
+import { IS_IOS, IS_IPAD, IS_TENANT } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
 import OffsetList from '../../common/components/OffsetList';
@@ -34,6 +34,7 @@ import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import CaptureFab from '~/capture/CaptureFab';
+import { IconMapNameType } from '~/common/ui/icons/map';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -79,6 +80,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       () => {
         if (isDiscoveryConsolidationOn) {
           return [
+            { id: 'latest', title: i18n.t('discovery.latest') },
             { id: 'top', title: i18n.t('discovery.topV2') },
             { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
             { id: 'channels', title: 'Channels' },
@@ -121,7 +123,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
 
     const header = (
       <View style={styles.header}>
-        <InitialOnboardingButton />
+        {!IS_TENANT && <InitialOnboardingButton />}
         <TopbarTabbar
           current={store.activeTabId}
           onChange={tabId => {
@@ -197,6 +199,22 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
 
     const screen = () => {
       switch (store.activeTabId) {
+        case 'latest':
+          return (
+            <DiscoveryTabContent key="latest">
+              <FeedListSticky
+                ref={listRef}
+                header={header}
+                feedStore={store.latestFeed}
+                emptyMessage={
+                  <EmptyMessage
+                    title="Ignite the conversation"
+                    subtitle="The top posts from across the network will appear here. "
+                  />
+                }
+              />
+            </DiscoveryTabContent>
+          );
         case 'top':
           return (
             <DiscoveryTabContent key="top">
@@ -204,6 +222,12 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
+                emptyMessage={
+                  <EmptyMessage
+                    title="Ignite the conversation"
+                    subtitle="The top posts from across the network will appear here. "
+                  />
+                }
               />
             </DiscoveryTabContent>
           );
@@ -311,5 +335,39 @@ const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth', 'marginTopXXXL2'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
+  row: ['flexContainer', 'rowJustifySpaceBetween', 'marginVerticalXXL'],
+  icon: ['marginHorizontalXXL', 'marginTop1x'],
+  text: ['flexContainer', 'marginRightXL'],
 });
 const composeFABStyle = { bottom: 24 };
+
+type EmptyMessageProps = {
+  icon?: IconMapNameType;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+};
+const EmptyMessage = ({
+  icon = 'ignite',
+  title,
+  subtitle,
+  buttonText = i18n.t('createAPost'),
+}: EmptyMessageProps) => {
+  return (
+    <View style={[styles.row]}>
+      <Icon
+        name={icon}
+        size={24}
+        style={styles.icon}
+        color={ThemedStyles.theme === 1 ? 'White' : 'Black'}
+      />
+      <View style={styles.text}>
+        <H3>{title}</H3>
+        <B2 color="secondary" top="S" bottom="L">
+          {subtitle}
+        </B2>
+        <Button text={buttonText} large primary centered={false} />
+      </View>
+    </View>
+  );
+};
