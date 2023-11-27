@@ -1,0 +1,13 @@
+{
+  "APP_NAME": "LET",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.mobileDemoAPK",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobileDemoAPK",
+  "ACCENT_COLOR_LIGHT": "#2B385A",
+  "ACCENT_COLOR_DARK": "#262E65",
+  "WELCOME_LOGO": "horizontal",
+  "THEME": "light",
+  "API_URL": "https://www.minds.com/"
+}
