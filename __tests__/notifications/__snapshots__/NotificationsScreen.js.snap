@@ -346,7 +346,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         </View>
                       </View>
                     </View>
-                  </View>                  <View
+                  </View>
+                  <View
                     accessibilityState={
                       {
                         "busy": undefined,
