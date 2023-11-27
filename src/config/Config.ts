@@ -89,7 +89,7 @@ export const IMAGE_MAX_SIZE = 2048;
 
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
-export const MINDS_URI = 'https://www.minds.com/';
+export const MINDS_URI = IS_TENANT ? Tenant.API_URL : 'https://www.minds.com/';
 export const STRAPI_URI = 'https://cms.minds.com';
 
 export const MINDS_API_URI =
@@ -114,9 +114,10 @@ export const MINDS_MAX_VIDEO_LENGTH = 5; // in minutes
 
 export const SOCKET_URI = 'wss://ha-socket-alb-io-us-east-1.minds.com';
 
-export const MINDS_CDN_URI = 'https://cdn.minds.com/';
+export const MINDS_CDN_URI = IS_TENANT
+  ? Tenant.API_URL
+  : 'https://cdn.minds.com/';
 export const MINDS_ASSETS_CDN_URI = 'https://cdn-assets.minds.com/';
-// export const MINDS_CDN_URI = 'http://dev.minds.io/';
 
 export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
 
