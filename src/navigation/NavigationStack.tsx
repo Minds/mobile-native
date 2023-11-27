@@ -28,7 +28,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
 import withModalProvider from './withModalProvide';
@@ -331,7 +331,9 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            {AuthService.justRegistered && !AuthService.onboardCompleted ? (
+            {AuthService.justRegistered &&
+            !AuthService.onboardCompleted &&
+            !IS_TENANT ? (
               <RootStackNav.Screen
                 name="App"
                 getComponent={() =>
