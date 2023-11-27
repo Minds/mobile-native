@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { TENANT } from '~/config/Config';
+import { IS_IPAD, TENANT } from '~/config/Config';
 import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
@@ -328,6 +328,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             loading={store.inProgress}
             testID="registerButton"
             action
+            containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
           />
           <Captcha
             ref={captchaRef}
@@ -346,4 +347,11 @@ const styles = ThemedStyles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
+  buttonIpad: {
+    width: '45%',
+    alignSelf: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

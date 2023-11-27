@@ -33,8 +33,8 @@ const ICON_MAP = {
     name: 'info-outline',
   },
   supermind: {
-    font: 'MaterialIcons',
-    name: 'tips-and-updates',
+    font: 'MaterialCommunityIcons',
+    name: 'lightbulb',
   },
   warning: {
     font: 'MaterialIcons',
@@ -237,10 +237,6 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'insights',
   },
-  affiliates: {
-    font: 'MaterialIcons',
-    name: 'volunteer-activism',
-  },
   queue: {
     font: 'MaterialIcons',
     name: 'add-to-queue',
@@ -366,6 +362,10 @@ const ICON_MAP = {
   alarm: {
     font: 'MaterialIcons',
     name: 'alarm',
+  },
+  affiliate: {
+    font: 'MaterialCommunityIcons',
+    name: 'hand-heart',
   },
   article: {
     font: 'MaterialIcons',

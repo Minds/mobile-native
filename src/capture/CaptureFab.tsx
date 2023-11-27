@@ -9,6 +9,7 @@ import GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { storages } from '~/common/services/storage/storages.service';
 import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
+import PermissionsService from '~/common/services/permissions.service';
 
 type CaptureFabProps = {
   group?: GroupModel;
@@ -36,6 +37,9 @@ const CaptureFab = ({
   testID,
   style,
 }: CaptureFabProps) => {
+  if (!PermissionsService.canComment()) {
+    return null;
+  }
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
       onItemPress: async key => {

@@ -302,6 +302,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 16,
             }
           }
@@ -331,6 +332,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 12,
             }
           }
@@ -360,6 +362,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginBottom": 12,
             }
           }
@@ -713,6 +716,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 16,
             }
           }
@@ -742,6 +746,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 12,
             }
           }
@@ -771,6 +776,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginBottom": 12,
             }
           }
@@ -1519,6 +1525,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 16,
             }
           }
@@ -1548,6 +1555,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginVertical": 12,
             }
           }
@@ -1577,6 +1585,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginBottom": 12,
             }
           }

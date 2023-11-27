@@ -17,7 +17,7 @@ import { IconButtonCircle } from './IconButtonCircle';
  */
 const LinksMindsSheet = React.forwardRef<BottomSheetModalType>((props, ref) => {
   return (
-    <BottomSheetModal ref={ref} title="Earn with affiliate link">
+    <BottomSheetModal {...props} ref={ref} title="Earn with affiliate link">
       <Row align="centerBetween" vertical="XXL" horizontal="XL">
         <IconButtonCircle name="plus" title="Minds+" onPress={copyPlus} />
         <IconButtonCircle name="boost" title="Boost" onPress={copyBoost} />

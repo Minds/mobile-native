@@ -9,6 +9,7 @@ import Tenant from '../../tenant.json';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
+
 export const ONCHAIN_ENABLED = false;
 
 // we should check how to use v2 before enable it again

@@ -7,6 +7,7 @@ import createBlockedChannelsStore from './createBlockedChannelsStore';
 import i18n from '../../../common/services/i18n.service';
 import BlockedChannel, { Row } from './BlockedChannel';
 import MText from '../../../common/components/MText';
+import { Screen } from '~/common/ui';
 
 const BlockedChannelsScreen = observer(props => {
   const theme = ThemedStyles.style;
@@ -26,7 +27,7 @@ const BlockedChannelsScreen = observer(props => {
   });
 
   return (
-    <View style={theme.flexContainer}>
+    <Screen>
       <FeedList
         feedStore={localStore.feedStore}
         renderActivity={renderRow}
@@ -39,7 +40,7 @@ const BlockedChannelsScreen = observer(props => {
         style={[theme.bgPrimaryBackground, theme.flexContainer]}
         onRefresh={onRefresh}
       />
-    </View>
+    </Screen>
   );
 });
 

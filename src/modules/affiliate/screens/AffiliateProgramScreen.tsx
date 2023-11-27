@@ -19,17 +19,20 @@ import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
+import { IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   return (
     <Screen safe onlyTopEdge>
-      <ScreenHeader title={t('screenTitle')} back />
+      <ScreenHeader title={t('screenTitle')} back={!IS_IPAD} />
       <FitScrollView>
         <LinksMindsSheet ref={linkBottomSheetRef} />
         <InviteToMindsSheet ref={inviteBottomSheetRef} />
@@ -64,6 +67,7 @@ export default function AffiliateProgramScreen({ navigation }) {
           </B2>
 
           <Button
+            vertical={hideTokens ? 'XL' : undefined}
             top="XXXL"
             mode="outline"
             type="action"
@@ -72,24 +76,28 @@ export default function AffiliateProgramScreen({ navigation }) {
             }}>
             Invite and earn
           </Button>
-          <TotalEarnings />
-          <Row align="centerBetween" top="XL">
-            <Button
-              mode="outline"
-              onPress={() => {
-                navigation.navigate('Wallet', {
-                  currency: 'cash',
-                  section: 'earnings',
-                });
-              }}>
-              View earnings
-            </Button>
-          </Row>
-          <B3 vertical="XL">
-            Note - You will be credited as the click referrer for any purchases
-            of Boosts and subscriptions (Minds+ and Pro) they make for the next
-            72 hours.
-          </B3>
+          {hideTokens ? undefined : (
+            <>
+              <TotalEarnings />
+              <Row align="centerBetween" top="XL">
+                <Button
+                  mode="outline"
+                  onPress={() => {
+                    navigation.navigate('Wallet', {
+                      currency: 'cash',
+                      section: 'earnings',
+                    });
+                  }}>
+                  View earnings
+                </Button>
+              </Row>
+              <B3 vertical="XL">
+                Note - You will be credited as the click referrer for any
+                purchases of Boosts and subscriptions (Minds+ and Pro) they make
+                for the next 72 hours.
+              </B3>
+            </>
+          )}
         </ScreenSection>
       </FitScrollView>
       <OnboardingOverlay type="affiliates" />

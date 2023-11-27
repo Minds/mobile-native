@@ -4,7 +4,13 @@ import { observer } from 'mobx-react';
 import { Image, View, ViewStyle } from 'react-native';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
+import {
+  DEV_MODE,
+  IS_IPAD,
+  IS_TENANT,
+  TENANT,
+  WELCOME_LOGO,
+} from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 import { Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
@@ -39,7 +45,7 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <Screen safe>
+    <Screen safe hasMaxWidth={false}>
       <View style={theme.flexContainer}>
         {IS_TENANT ? (
           <Image
@@ -101,10 +107,14 @@ export default withErrorBoundaryScreen(
 const styles = ThemedStyles.create({
   buttonContainer: {
     position: 'absolute',
-    bottom: 12,
+    bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 32,
+    padding: 32,
+    alignItems: 'center',
+  },
+  containerStyle: {
+    width: IS_IPAD ? '45%' : '100%',
   },
   image: {
     height: '14%',
@@ -125,4 +135,5 @@ type ButtonType = Partial<
 const buttonProps: ButtonType = {
   font: 'medium',
   bottom: 'XL',
+  containerStyle: styles.containerStyle,
 };

@@ -17,6 +17,16 @@ import App from './App';
 import { enableFreeze } from 'react-native-screens';
 
 LogBox.ignoreAllLogs();
+LogBox.ignoreLogs([
+  'Module RCTSilentSwitch requires main queue setup since it overrides',
+  'Found screens with the same name nested inside one another',
+  'Possible Unhandled Promise Rejection',
+  'new NativeEventEmitter',
+  'You have passed a style',
+  'Non-serializable values were found in the navigation state',
+  'Easing was renamed',
+  'Require cycle: ',
+]);
 
 process.env.DEBUG === 'tamagui';
 process.env.TAMAGUI_TARGET = 'native';

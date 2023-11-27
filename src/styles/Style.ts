@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import sizes from './generators/sizes';
 import borders from './generators/borders';
 import colors from './generators/colors';
@@ -7,6 +7,7 @@ import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
 import type { ColorsType } from './Colors';
 import typography from './generators/typography';
+import { IS_IPAD } from '~/config/Config';
 
 const dynamicStyleHandler = {
   get: function (target, name) {
@@ -33,6 +34,10 @@ const dynamicStyleHandler = {
     return null;
   },
 };
+
+const { width, height } = Dimensions.get('window');
+export const getMaxFeedWidth = () =>
+  IS_IPAD ? Math.min(width, height) - 200 : width;
 
 const _buildStyle = (theme: ColorsType) =>
   ({
@@ -129,6 +134,11 @@ const _buildStyle = (theme: ColorsType) =>
     },
     alignSelfCenter: {
       alignSelf: 'center',
+    },
+    alignSelfCenterMaxWidth: {
+      alignSelf: 'center',
+      width: '100%',
+      maxWidth: getMaxFeedWidth(),
     },
     alignSelfStretch: {
       alignSelf: 'stretch',

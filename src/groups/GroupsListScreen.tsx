@@ -15,6 +15,7 @@ import {
 } from '~/common/ui';
 import i18n from '~/common/services/i18n.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { IS_IPAD } from '~/config/Config';
 import { GroupsEmpty } from '../modules/groups';
 import { Recommendation } from '../modules/recommendation';
 import Divider from '../common/components/Divider';
@@ -41,7 +42,7 @@ const GroupsListScreen = observer(() => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('discovery.groups')} back />
+      <ScreenHeader title={i18n.t('discovery.groups')} back={!IS_IPAD} />
       <OffsetList
         renderItem={renderGroup}
         header={

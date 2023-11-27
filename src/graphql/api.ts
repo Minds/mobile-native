@@ -34,6 +34,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  Void: { input: any; output: any };
 };
 
 export type ActivityEdge = EdgeInterface & {
@@ -99,6 +100,28 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type CommentEdge = EdgeInterface & {
+  __typename?: 'CommentEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: CommentNode;
+  type: Scalars['String']['output'];
+};
+
+export type CommentNode = NodeInterface & {
+  __typename?: 'CommentNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -110,12 +133,37 @@ export type ConnectionInterface = {
   pageInfo: PageInfo;
 };
 
+export enum CustomHostnameStatusEnum {
+  Active = 'ACTIVE',
+  ActiveRedeploying = 'ACTIVE_REDEPLOYING',
+  Blocked = 'BLOCKED',
+  Deleted = 'DELETED',
+  Moved = 'MOVED',
+  Pending = 'PENDING',
+  PendingBlocked = 'PENDING_BLOCKED',
+  PendingDeletion = 'PENDING_DELETION',
+  PendingMigration = 'PENDING_MIGRATION',
+  PendingProvisioned = 'PENDING_PROVISIONED',
+  Provisioned = 'PROVISIONED',
+  TestActive = 'TEST_ACTIVE',
+  TestActiveApex = 'TEST_ACTIVE_APEX',
+  TestBlocked = 'TEST_BLOCKED',
+  TestFailed = 'TEST_FAILED',
+  TestPending = 'TEST_PENDING',
+}
+
 export type Dismissal = {
   __typename?: 'Dismissal';
   dismissalTimestamp: Scalars['Int']['output'];
   key: Scalars['String']['output'];
   userGuid: Scalars['String']['output'];
 };
+
+export enum DnsRecordEnum {
+  A = 'A',
+  Cname = 'CNAME',
+  Txt = 'TXT',
+}
 
 export type EdgeImpl = EdgeInterface & {
   __typename?: 'EdgeImpl';
@@ -127,6 +175,88 @@ export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
 };
+
+export type FeaturedEntity = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedEntity';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets entity name. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+  };
+
+export type FeaturedEntityConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedEntityConnection';
+    /** Gets connections edges. */
+    edges: Array<EdgeInterface>;
+    /** ID for GraphQL. */
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
+
+export type FeaturedEntityEdge = EdgeInterface & {
+  __typename?: 'FeaturedEntityEdge';
+  /** Gets cursor for GraphQL. */
+  cursor: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** Gets node - can be either a FeaturedUser or FeaturedGroup. */
+  node?: Maybe<NodeInterface>;
+  /** Gets type for GraphQL. */
+  type: Scalars['String']['output'];
+};
+
+export type FeaturedEntityInput = {
+  autoSubscribe?: InputMaybe<Scalars['Boolean']['input']>;
+  entityGuid: Scalars['String']['input'];
+  recommended?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type FeaturedEntityInterface = {
+  autoSubscribe: Scalars['Boolean']['output'];
+  entityGuid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** Gets entity name. */
+  name: Scalars['String']['output'];
+  recommended: Scalars['Boolean']['output'];
+  tenantId: Scalars['String']['output'];
+};
+
+export enum FeaturedEntityTypeEnum {
+  Group = 'GROUP',
+  User = 'USER',
+}
+
+export type FeaturedGroup = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedGroup';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets count of members. */
+    membersCount: Scalars['Int']['output'];
+    /** Gets group name. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+  };
+
+export type FeaturedUser = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedUser';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets user's display name, or username. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+    username?: Maybe<Scalars['String']['output']>;
+  };
 
 export type FeedExploreTagEdge = EdgeInterface & {
   __typename?: 'FeedExploreTagEdge';
@@ -311,9 +441,59 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export enum IllegalSubReasonEnum {
+  AnimalAbuse = 'ANIMAL_ABUSE',
+  Extortion = 'EXTORTION',
+  Fraud = 'FRAUD',
+  MinorsSexualization = 'MINORS_SEXUALIZATION',
+  RevengePorn = 'REVENGE_PORN',
+  Terrorism = 'TERRORISM',
+  Trafficking = 'TRAFFICKING',
+}
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
+};
+
+export enum MultiTenantColorScheme {
+  Dark = 'DARK',
+  Light = 'LIGHT',
+}
+
+export type MultiTenantConfig = {
+  __typename?: 'MultiTenantConfig';
+  colorScheme?: Maybe<MultiTenantColorScheme>;
+  communityGuidelines?: Maybe<Scalars['String']['output']>;
+  lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  primaryColor?: Maybe<Scalars['String']['output']>;
+  siteEmail?: Maybe<Scalars['String']['output']>;
+  siteName?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type MultiTenantConfigInput = {
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+  siteEmail?: InputMaybe<Scalars['String']['input']>;
+  siteName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MultiTenantDomain = {
+  __typename?: 'MultiTenantDomain';
+  dnsRecord?: Maybe<MultiTenantDomainDnsRecord>;
+  domain: Scalars['String']['output'];
+  ownershipVerificationDnsRecord?: Maybe<MultiTenantDomainDnsRecord>;
+  status: CustomHostnameStatusEnum;
+  tenantId: Scalars['Int']['output'];
+};
+
+export type MultiTenantDomainDnsRecord = {
+  __typename?: 'MultiTenantDomainDnsRecord';
+  name: Scalars['String']['output'];
+  type: DnsRecordEnum;
+  value: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -322,10 +502,26 @@ export type Mutation = {
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  createMultiTenantDomain: MultiTenantDomain;
+  createNetworkRootUser: TenantUser;
+  /** Create a new report. */
+  createNewReport: Scalars['Boolean']['output'];
+  createRssFeed: RssFeed;
+  createTenant: Tenant;
+  /** Deletes featured entity. */
+  deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  /** Sets multi-tenant config for the calling tenant. */
+  multiTenantConfig: Scalars['Boolean']['output'];
+  /** Provide a verdict for a report. */
+  provideVerdict: Scalars['Boolean']['output'];
+  refreshRssFeed: RssFeed;
+  removeRssFeed?: Maybe<Scalars['Void']['output']>;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Stores featured entity. */
+  storeFeaturedEntity: FeaturedEntityInterface;
   updateAccount: Array<Scalars['String']['output']>;
 };
 
@@ -347,12 +543,56 @@ export type MutationCreateGiftCardArgs = {
   targetInput: GiftCardTargetInput;
 };
 
+export type MutationCreateMultiTenantDomainArgs = {
+  hostname: Scalars['String']['input'];
+};
+
+export type MutationCreateNetworkRootUserArgs = {
+  networkUser?: InputMaybe<TenantUserInput>;
+};
+
+export type MutationCreateNewReportArgs = {
+  reportInput: ReportInput;
+};
+
+export type MutationCreateRssFeedArgs = {
+  rssFeed: RssFeedInput;
+};
+
+export type MutationCreateTenantArgs = {
+  tenant?: InputMaybe<TenantInput>;
+};
+
+export type MutationDeleteFeaturedEntityArgs = {
+  entityGuid: Scalars['String']['input'];
+};
+
 export type MutationDismissArgs = {
   key: Scalars['String']['input'];
 };
 
+export type MutationMultiTenantConfigArgs = {
+  multiTenantConfigInput: MultiTenantConfigInput;
+};
+
+export type MutationProvideVerdictArgs = {
+  verdictInput: VerdictInput;
+};
+
+export type MutationRefreshRssFeedArgs = {
+  feedId: Scalars['String']['input'];
+};
+
+export type MutationRemoveRssFeedArgs = {
+  feedId: Scalars['String']['input'];
+};
+
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
+};
+
+export type MutationStoreFeaturedEntityArgs = {
+  featuredEntity: FeaturedEntityInput;
 };
 
 export type MutationUpdateAccountArgs = {
@@ -376,6 +616,14 @@ export type NodeImpl = NodeInterface & {
 export type NodeInterface = {
   id: Scalars['ID']['output'];
 };
+
+export enum NsfwSubReasonEnum {
+  Nudity = 'NUDITY',
+  Pornography = 'PORNOGRAPHY',
+  Profanity = 'PROFANITY',
+  RaceReligionGender = 'RACE_RELIGION_GENDER',
+  ViolenceGore = 'VIOLENCE_GORE',
+}
 
 export type OnboardingState = {
   __typename?: 'OnboardingState';
@@ -437,6 +685,8 @@ export type Query = {
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
   dismissals: Array<Dismissal>;
+  /** Gets featured entities. */
+  featuredEntities: FeaturedEntityConnection;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
   /** Returns an individual gift card by its claim code. */
@@ -456,6 +706,9 @@ export type Query = {
   giftCardsBalance: Scalars['Float']['output'];
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
+  /** Gets multi-tenant config for the calling tenant. */
+  multiTenantConfig?: Maybe<MultiTenantConfig>;
+  multiTenantDomain: MultiTenantDomain;
   newsfeed: NewsfeedConnection;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
@@ -463,7 +716,12 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Gets reports. */
+  reports: ReportsConnection;
+  rssFeed: RssFeed;
+  rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  tenants: Array<Tenant>;
 };
 
 export type QueryActivityArgs = {
@@ -483,6 +741,12 @@ export type QueryBoostsArgs = {
 
 export type QueryDismissalByKeyArgs = {
   key: Scalars['String']['input'];
+};
+
+export type QueryFeaturedEntitiesArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  type: FeaturedEntityTypeEnum;
 };
 
 export type QueryGiftCardArgs = {
@@ -532,6 +796,16 @@ export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
+export type QueryReportsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<ReportStatusEnum>;
+};
+
+export type QueryRssFeedArgs = {
+  feedId: Scalars['String']['input'];
+};
+
 export type QuerySearchArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -542,6 +816,115 @@ export type QuerySearchArgs = {
   nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
   query: Scalars['String']['input'];
 };
+
+export type QueryTenantsArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Report = NodeInterface & {
+  __typename?: 'Report';
+  action?: Maybe<ReportActionEnum>;
+  createdTimestamp: Scalars['Int']['output'];
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** Gets entity edge from entityUrn. */
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityGuid?: Maybe<Scalars['String']['output']>;
+  entityUrn: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  illegalSubReason?: Maybe<IllegalSubReasonEnum>;
+  moderatedByGuid?: Maybe<Scalars['String']['output']>;
+  nsfwSubReason?: Maybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  reportGuid?: Maybe<Scalars['String']['output']>;
+  reportedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Gets reported user edge from reportedByGuid. */
+  reportedByUserEdge?: Maybe<UserEdge>;
+  securitySubReason?: Maybe<SecuritySubReasonEnum>;
+  status: ReportStatusEnum;
+  tenantId?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export enum ReportActionEnum {
+  Ban = 'BAN',
+  Delete = 'DELETE',
+  Ignore = 'IGNORE',
+}
+
+export type ReportEdge = EdgeInterface & {
+  __typename?: 'ReportEdge';
+  /** Gets cursor for GraphQL. */
+  cursor: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** Gets node. */
+  node?: Maybe<Report>;
+  /** Gets type for GraphQL. */
+  type: Scalars['String']['output'];
+};
+
+export type ReportInput = {
+  entityUrn: Scalars['String']['input'];
+  illegalSubReason?: InputMaybe<IllegalSubReasonEnum>;
+  nsfwSubReason?: InputMaybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  securitySubReason?: InputMaybe<SecuritySubReasonEnum>;
+};
+
+export enum ReportReasonEnum {
+  ActivityPubReport = 'ACTIVITY_PUB_REPORT',
+  AnotherReason = 'ANOTHER_REASON',
+  Harassment = 'HARASSMENT',
+  Illegal = 'ILLEGAL',
+  Impersonation = 'IMPERSONATION',
+  InauthenticEngagement = 'INAUTHENTIC_ENGAGEMENT',
+  IncitementToViolence = 'INCITEMENT_TO_VIOLENCE',
+  IntellectualPropertyViolation = 'INTELLECTUAL_PROPERTY_VIOLATION',
+  Malware = 'MALWARE',
+  Nsfw = 'NSFW',
+  PersonalConfidentialInformation = 'PERSONAL_CONFIDENTIAL_INFORMATION',
+  Security = 'SECURITY',
+  Spam = 'SPAM',
+  ViolatesPremiumContentPolicy = 'VIOLATES_PREMIUM_CONTENT_POLICY',
+}
+
+export enum ReportStatusEnum {
+  Actioned = 'ACTIONED',
+  Pending = 'PENDING',
+}
+
+export type ReportsConnection = ConnectionInterface & {
+  __typename?: 'ReportsConnection';
+  /** Gets connections edges. */
+  edges: Array<EdgeInterface>;
+  /** ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  pageInfo: PageInfo;
+};
+
+export type RssFeed = {
+  __typename?: 'RssFeed';
+  createdAtTimestamp?: Maybe<Scalars['Int']['output']>;
+  feedId: Scalars['String']['output'];
+  lastFetchAtTimestamp?: Maybe<Scalars['Int']['output']>;
+  lastFetchStatus?: Maybe<RssFeedLastFetchStatusEnum>;
+  tenantId?: Maybe<Scalars['Int']['output']>;
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+  userGuid: Scalars['String']['output'];
+};
+
+export type RssFeedInput = {
+  url: Scalars['String']['input'];
+};
+
+export enum RssFeedLastFetchStatusEnum {
+  FailedToConnect = 'FAILED_TO_CONNECT',
+  FailedToParse = 'FAILED_TO_PARSE',
+  Success = 'SUCCESS',
+}
 
 export enum SearchFilterEnum {
   Group = 'GROUP',
@@ -578,6 +961,50 @@ export type SearchResultsCount = {
   __typename?: 'SearchResultsCount';
   count: Scalars['Int']['output'];
 };
+
+export enum SecuritySubReasonEnum {
+  HackedAccount = 'HACKED_ACCOUNT',
+}
+
+export type Tenant = {
+  __typename?: 'Tenant';
+  config?: Maybe<MultiTenantConfig>;
+  domain?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  ownerGuid?: Maybe<Scalars['String']['output']>;
+  rootUserGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type TenantInput = {
+  config?: InputMaybe<MultiTenantConfigInput>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  ownerGuid?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TenantUser = {
+  __typename?: 'TenantUser';
+  guid: Scalars['String']['output'];
+  role: TenantUserRoleEnum;
+  tenantId: Scalars['Int']['output'];
+  username: Scalars['String']['output'];
+};
+
+export type TenantUserInput = {
+  tenantId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum TenantUserRoleEnum {
+  Admin = 'ADMIN',
+  Owner = 'OWNER',
+  User = 'USER',
+}
+
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+  | ActivityEdge
+  | CommentEdge
+  | GroupEdge
+  | UserEdge;
 
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
@@ -622,6 +1049,11 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type VerdictInput = {
+  action: ReportActionEnum;
+  reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
@@ -744,6 +1176,11 @@ export type FetchSearchQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename?: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -755,6 +1192,11 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
             | { __typename?: 'FeedExploreTagNode'; id: string }
             | { __typename?: 'FeedHeaderNode'; id: string }
             | { __typename?: 'FeedHighlightsConnection'; id: string }
@@ -788,6 +1230,10 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -796,6 +1242,14 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
                         | { __typename?: 'FeedExploreTagNode'; id: string }
                         | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
@@ -812,6 +1266,48 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -877,6 +1373,13 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename?: 'UserNode';
@@ -893,6 +1396,227 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename?: 'Report'; id: string }
+            | { __typename?: 'UserNode'; legacy: string; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeaturedEntityEdge';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'Report'; id: string }
             | { __typename?: 'UserNode'; legacy: string; id: string }
             | null;
         }
@@ -956,10 +1680,19 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename?: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
                     | { __typename?: 'FeedExploreTagNode'; id: string }
                     | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
@@ -969,6 +1702,30 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeaturedEntityEdge';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1021,6 +1778,10 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename?: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename?: 'UserNode';
@@ -1037,6 +1798,11 @@ export type FetchSearchQuery = {
               endCursor?: string | null;
             };
           };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename?: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
@@ -1241,6 +2007,11 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -1252,6 +2023,11 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'FeaturedEntity'; id: string }
+            | { __typename: 'FeaturedEntityConnection'; id: string }
+            | { __typename: 'FeaturedGroup'; id: string }
+            | { __typename: 'FeaturedUser'; id: string }
             | { __typename: 'FeedExploreTagNode'; id: string }
             | { __typename: 'FeedHeaderNode'; id: string }
             | {
@@ -1301,6 +2077,10 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename: 'ActivityNode'; id: string }
@@ -1309,6 +2089,11 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
                         | { __typename: 'FeedExploreTagNode'; id: string }
                         | { __typename: 'FeedHeaderNode'; id: string }
                         | { __typename: 'FeedHighlightsConnection'; id: string }
@@ -1322,6 +2107,38 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename: 'NodeImpl'; id: string }
                         | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename: 'ActivityNode'; id: string }
+                        | {
+                            __typename: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
@@ -1380,6 +2197,13 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename: 'UserNode';
@@ -1396,6 +2220,220 @@ export type FetchNewsfeedQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename: 'Report'; id: string }
+            | { __typename: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeaturedEntityEdge';
+          cursor: string;
+          node?:
+            | { __typename: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'FeaturedEntity'; id: string }
+            | { __typename: 'FeaturedEntityConnection'; id: string }
+            | { __typename: 'FeaturedGroup'; id: string }
+            | { __typename: 'FeaturedUser'; id: string }
+            | { __typename: 'FeedExploreTagNode'; id: string }
+            | { __typename: 'FeedHeaderNode'; id: string }
+            | {
+                __typename: 'FeedHighlightsConnection';
+                id: string;
+                edges: Array<{
+                  __typename?: 'ActivityEdge';
+                  node: {
+                    __typename: 'ActivityNode';
+                    id: string;
+                    legacy: string;
+                  };
+                }>;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | {
+                __typename: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                dismissible: boolean;
+                id: string;
+              }
+            | { __typename: 'GiftCardNode'; id: string }
+            | { __typename: 'GiftCardTransaction'; id: string }
+            | { __typename: 'GroupNode'; id: string }
+            | { __typename: 'NodeImpl'; id: string }
+            | {
+                __typename: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: { __typename: 'ActivityNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename: 'CommentNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename: 'ActivityNode'; id: string }
+                        | {
+                            __typename: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename: 'ActivityNode'; id: string }
+                        | {
+                            __typename: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: { __typename: 'GiftCardNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename: 'Report'; id: string }
             | { __typename: 'UserNode'; id: string }
             | null;
         }
@@ -1474,10 +2512,19 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'FeaturedEntity'; id: string }
+                    | { __typename: 'FeaturedEntityConnection'; id: string }
+                    | { __typename: 'FeaturedGroup'; id: string }
+                    | { __typename: 'FeaturedUser'; id: string }
                     | { __typename: 'FeedExploreTagNode'; id: string }
                     | { __typename: 'FeedHeaderNode'; id: string }
                     | { __typename: 'FeedHighlightsConnection'; id: string }
@@ -1487,6 +2534,30 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'GroupNode'; legacy: string; id: string }
                     | { __typename: 'NodeImpl'; id: string }
                     | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
+                    | { __typename: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeaturedEntityEdge';
+                  publisherNode?:
+                    | { __typename: 'ActivityNode'; id: string }
+                    | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'FeaturedEntity'; id: string }
+                    | { __typename: 'FeaturedEntityConnection'; id: string }
+                    | { __typename: 'FeaturedGroup'; id: string }
+                    | { __typename: 'FeaturedUser'; id: string }
+                    | { __typename: 'FeedExploreTagNode'; id: string }
+                    | { __typename: 'FeedHeaderNode'; id: string }
+                    | { __typename: 'FeedHighlightsConnection'; id: string }
+                    | { __typename: 'FeedNoticeNode'; id: string }
+                    | { __typename: 'GiftCardNode'; id: string }
+                    | { __typename: 'GiftCardTransaction'; id: string }
+                    | { __typename: 'GroupNode'; legacy: string; id: string }
+                    | { __typename: 'NodeImpl'; id: string }
+                    | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
                     | { __typename: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1539,6 +2610,10 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename: 'UserNode';
@@ -1557,6 +2632,11 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename: 'Report'; id: string } | null;
+        }
+      | {
           __typename?: 'UserEdge';
           cursor: string;
           node: { __typename: 'UserNode'; id: string };
@@ -1569,6 +2649,70 @@ export type FetchNewsfeedQuery = {
       startCursor?: string | null;
       endCursor?: string | null;
     };
+  };
+};
+
+export type CreateRssFeedMutationVariables = Exact<{
+  url: Scalars['String']['input'];
+}>;
+
+export type CreateRssFeedMutation = {
+  __typename?: 'Mutation';
+  createRssFeed: {
+    __typename?: 'RssFeed';
+    feedId: string;
+    userGuid: string;
+    title: string;
+    url: string;
+    tenantId?: number | null;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  };
+};
+
+export type RemoveRssFeedMutationVariables = Exact<{
+  feedId: Scalars['String']['input'];
+}>;
+
+export type RemoveRssFeedMutation = {
+  __typename?: 'Mutation';
+  removeRssFeed?: any | null;
+};
+
+export type GetRssFeedsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetRssFeedsQuery = {
+  __typename?: 'Query';
+  rssFeeds: Array<{
+    __typename?: 'RssFeed';
+    feedId: string;
+    userGuid: string;
+    tenantId?: number | null;
+    title: string;
+    url: string;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  }>;
+};
+
+export type RefreshRssFeedMutationVariables = Exact<{
+  feedId: Scalars['String']['input'];
+}>;
+
+export type RefreshRssFeedMutation = {
+  __typename?: 'Mutation';
+  refreshRssFeed: {
+    __typename?: 'RssFeed';
+    feedId: string;
+    userGuid: string;
+    title: string;
+    url: string;
+    tenantId?: number | null;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
   };
 };
 
@@ -2510,6 +3654,188 @@ useFetchNewsfeedQuery.fetcher = (
 ) =>
   gqlFetcher<FetchNewsfeedQuery, FetchNewsfeedQueryVariables>(
     FetchNewsfeedDocument,
+    variables,
+    options,
+  );
+export const CreateRssFeedDocument = `
+    mutation CreateRssFeed($url: String!) {
+  createRssFeed(rssFeed: {url: $url}) {
+    feedId
+    userGuid
+    title
+    url
+    tenantId
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
+}
+    `;
+export const useCreateRssFeedMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateRssFeedMutation,
+    TError,
+    CreateRssFeedMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    CreateRssFeedMutation,
+    TError,
+    CreateRssFeedMutationVariables,
+    TContext
+  >(
+    ['CreateRssFeed'],
+    (variables?: CreateRssFeedMutationVariables) =>
+      gqlFetcher<CreateRssFeedMutation, CreateRssFeedMutationVariables>(
+        CreateRssFeedDocument,
+        variables,
+      )(),
+    options,
+  );
+useCreateRssFeedMutation.fetcher = (
+  variables: CreateRssFeedMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<CreateRssFeedMutation, CreateRssFeedMutationVariables>(
+    CreateRssFeedDocument,
+    variables,
+    options,
+  );
+export const RemoveRssFeedDocument = `
+    mutation RemoveRssFeed($feedId: String!) {
+  removeRssFeed(feedId: $feedId)
+}
+    `;
+export const useRemoveRssFeedMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RemoveRssFeedMutation,
+    TError,
+    RemoveRssFeedMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    RemoveRssFeedMutation,
+    TError,
+    RemoveRssFeedMutationVariables,
+    TContext
+  >(
+    ['RemoveRssFeed'],
+    (variables?: RemoveRssFeedMutationVariables) =>
+      gqlFetcher<RemoveRssFeedMutation, RemoveRssFeedMutationVariables>(
+        RemoveRssFeedDocument,
+        variables,
+      )(),
+    options,
+  );
+useRemoveRssFeedMutation.fetcher = (
+  variables: RemoveRssFeedMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<RemoveRssFeedMutation, RemoveRssFeedMutationVariables>(
+    RemoveRssFeedDocument,
+    variables,
+    options,
+  );
+export const GetRssFeedsDocument = `
+    query GetRssFeeds {
+  rssFeeds {
+    feedId
+    userGuid
+    tenantId
+    title
+    url
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
+}
+    `;
+export const useGetRssFeedsQuery = <TData = GetRssFeedsQuery, TError = unknown>(
+  variables?: GetRssFeedsQueryVariables,
+  options?: UseQueryOptions<GetRssFeedsQuery, TError, TData>,
+) =>
+  useQuery<GetRssFeedsQuery, TError, TData>(
+    variables === undefined ? ['GetRssFeeds'] : ['GetRssFeeds', variables],
+    gqlFetcher<GetRssFeedsQuery, GetRssFeedsQueryVariables>(
+      GetRssFeedsDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetRssFeedsQuery = <
+  TData = GetRssFeedsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetRssFeedsQueryVariables,
+  variables?: GetRssFeedsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetRssFeedsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetRssFeedsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetRssFeeds.infinite']
+      : ['GetRssFeeds.infinite', variables],
+    metaData =>
+      gqlFetcher<GetRssFeedsQuery, GetRssFeedsQueryVariables>(
+        GetRssFeedsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetRssFeedsQuery.fetcher = (
+  variables?: GetRssFeedsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetRssFeedsQuery, GetRssFeedsQueryVariables>(
+    GetRssFeedsDocument,
+    variables,
+    options,
+  );
+export const RefreshRssFeedDocument = `
+    mutation RefreshRssFeed($feedId: String!) {
+  refreshRssFeed(feedId: $feedId) {
+    feedId
+    userGuid
+    title
+    url
+    tenantId
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
+}
+    `;
+export const useRefreshRssFeedMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RefreshRssFeedMutation,
+    TError,
+    RefreshRssFeedMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    RefreshRssFeedMutation,
+    TError,
+    RefreshRssFeedMutationVariables,
+    TContext
+  >(
+    ['RefreshRssFeed'],
+    (variables?: RefreshRssFeedMutationVariables) =>
+      gqlFetcher<RefreshRssFeedMutation, RefreshRssFeedMutationVariables>(
+        RefreshRssFeedDocument,
+        variables,
+      )(),
+    options,
+  );
+useRefreshRssFeedMutation.fetcher = (
+  variables: RefreshRssFeedMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<RefreshRssFeedMutation, RefreshRssFeedMutationVariables>(
+    RefreshRssFeedDocument,
     variables,
     options,
   );

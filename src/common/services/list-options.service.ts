@@ -81,7 +81,6 @@ export const REASONS = [
   },
   { value: 8, label: 'Spam' },
   { value: 10, label: 'This infringes my copyright' },
-  { value: 11, label: 'Another reason' },
 ];
 
 export const REPORT_ACTIONS = {

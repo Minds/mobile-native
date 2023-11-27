@@ -1,0 +1,3 @@
+mutation RemoveRssFeed($feedId: String!) {
+  removeRssFeed(feedId: $feedId)
+}
