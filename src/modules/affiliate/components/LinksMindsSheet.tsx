@@ -36,7 +36,7 @@ const copyLink = (link: string) => {
   showNotification('Link copied to clipboard');
 };
 
-const copyReferrer = () => {
+export const copyReferrer = () => {
   copyLink(`${MINDS_URI}?referrer=${sessionService.getUser().username}`);
 };
 const copyPlus = () => {

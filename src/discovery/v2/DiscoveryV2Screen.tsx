@@ -20,7 +20,7 @@ import ChannelRecommendation from '~/common/components/ChannelRecommendation/Cha
 import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
-import { B2, H3, Icon, Screen } from '~/common/ui';
+import { Screen } from '~/common/ui';
 import { IS_IOS, IS_IPAD, IS_TENANT } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
@@ -34,7 +34,8 @@ import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import CaptureFab from '~/capture/CaptureFab';
-import { IconMapNameType } from '~/common/ui/icons/map';
+import { EmptyMessage } from './EmptyMessage';
+import { copyReferrer } from '~/modules/affiliate/components/LinksMindsSheet';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -198,6 +199,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     );
 
     const screen = () => {
+      const emptyMessageComponent = emptyMessage(store.activeTabId);
       switch (store.activeTabId) {
         case 'latest':
           return (
@@ -206,12 +208,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.latestFeed}
-                emptyMessage={
-                  <EmptyMessage
-                    title="Ignite the conversation"
-                    subtitle="The top posts from across the network will appear here. "
-                  />
-                }
               />
             </DiscoveryTabContent>
           );
@@ -222,12 +218,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
-                emptyMessage={
-                  <EmptyMessage
-                    title="Ignite the conversation"
-                    subtitle="The top posts from across the network will appear here. "
-                  />
-                }
+                emptyMessage={emptyMessageComponent(() =>
+                  navigation.navigate('Compose'),
+                )}
               />
             </DiscoveryTabContent>
           );
@@ -250,6 +243,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
+                emptyMessage={emptyMessageComponent()}
               />
             </DiscoveryTabContent>
           );
@@ -281,6 +275,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                     navigation={navigation}
                   />
                 )}
+                ListEmptyComponent={emptyMessageComponent(copyReferrer)}
               />
             </DiscoveryTabContent>
           );
@@ -299,6 +294,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                     group={GroupModel.checkOrCreate(item.entity)}
                   />
                 )}
+                ListEmptyComponent={emptyMessageComponent()}
               />
             </DiscoveryTabContent>
           );
@@ -341,33 +337,31 @@ const styles = ThemedStyles.create({
 });
 const composeFABStyle = { bottom: 24 };
 
-type EmptyMessageProps = {
-  icon?: IconMapNameType;
-  title?: string;
-  subtitle?: string;
-  buttonText?: string;
+const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
+  return <EmptyMessage {...emptyMessages[tab]} onPress={onPress} />;
 };
-const EmptyMessage = ({
-  icon = 'ignite',
-  title,
-  subtitle,
-  buttonText = i18n.t('createAPost'),
-}: EmptyMessageProps) => {
-  return (
-    <View style={[styles.row]}>
-      <Icon
-        name={icon}
-        size={24}
-        style={styles.icon}
-        color={ThemedStyles.theme === 1 ? 'White' : 'Black'}
-      />
-      <View style={styles.text}>
-        <H3>{title}</H3>
-        <B2 color="secondary" top="S" bottom="L">
-          {subtitle}
-        </B2>
-        <Button text={buttonText} large primary centered={false} />
-      </View>
-    </View>
-  );
+
+const emptyMessages: { [k in TDiscoveryV2Tabs]?: any } = {
+  top: {
+    title: 'Ignite the conversation',
+    subtitle: 'The top posts from across the network will appear here. ',
+    buttonText: i18n.t('createAPost'),
+  },
+  'trending-tags': {
+    title: 'Explore topics that are heating up',
+    subtitle: 'The most frequently-used tags on the network will appear here.',
+  },
+  channels: {
+    icon: 'profile',
+    title: 'Get ready for exploration',
+    subtitle:
+      'There are no channels to recommend for you yet. Check back later for personalized recommendations.',
+    buttonText: 'Copy invite link',
+  },
+  groups: {
+    icon: 'group',
+    title: 'Be a pioneer in group exploration',
+    subtitle:
+      'There are no groups to recommend for you yet. Check back later for personalized recommendations.',
+  },
 };

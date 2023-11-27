@@ -356,6 +356,7 @@ export type AppStackParamList = {
   Referrals: {};
   BoostSettingsScreen: {};
   Onboarding: {};
+  Compose: undefined;
 };
 
 // types for channel edit screens

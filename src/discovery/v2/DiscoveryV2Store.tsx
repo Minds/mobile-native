@@ -49,10 +49,8 @@ export default class DiscoveryV2Store {
 
     this.latestFeed = new FeedStore(true);
     this.latestFeed
-      .setEndpoint('api/v2/feeds/global/latest/all')
-      .setParams({ period: '12h', plus })
-      .setInjectBoost(false)
-      .setLimit(15);
+      .setEndpoint('api/v3/discovery/search?q=&f=latest&t=all')
+      .fetchRemoteOrLocal();
 
     this.topFeed = new FeedStore(true);
     this.topFeed

@@ -36,7 +36,7 @@ export class PushService {
               `[PushService] Notification opened with an action identifier: ${action?.identifier} and response text: ${action?.text}`,
             );
         }
-        let data = notification.payload;
+        let data = notification?.payload;
         // navigate
         router.navigate(data);
         analyticsService.trackClick('push-notification');
@@ -46,11 +46,17 @@ export class PushService {
   }
 
   onInitialNotification = notification => {
-    if (__DEV__)
+    if (!notification) {
+      return;
+    }
+    if (__DEV__) {
       console.log('[PushService] onInitialNotification', notification);
+    }
     // get notification data
     const data = notification.payload;
-    if (data.json) data.json = JSON.parse(data.json);
+    if (data?.json) {
+      data.json = JSON.parse(data.json);
+    }
     // delay navigation on app start
     setTimeout(() => {
       router.navigate(data);
