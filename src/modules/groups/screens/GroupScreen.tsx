@@ -24,7 +24,6 @@ import CaptureFab from '~/capture/CaptureFab';
 import { storages } from '~/common/services/storage/storages.service';
 import FeedFilter from '~/common/components/FeedFilter';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { IS_IPAD } from '~/config/Config';
 
 const HEADER_HEIGHT = 54;
 
@@ -187,7 +186,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
         renderTabBar={renderTabBar}
         lazy
         renderScrollHeader={renderHeader}
-        refreshHeight={top + HEADER_HEIGHT}
+        refreshHeight={top + HEADER_HEIGHT + 300}
         minHeaderHeight={minHeaderHeight}
         overridenShareAnimatedValue={scrollY}
         animationHeaderPosition={animationHeaderPosition}
@@ -211,10 +210,12 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 });
 
 const styles = StyleSheet.create({
-  tabBarStyle: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
+  tabBarStyle: {},
+  filter: {},
+  filterStyle: {
+    position: 'absolute',
+    top: 12,
+    right: 20,
+    zIndex: 999,
   },
-  filterStyle: { ...(IS_IPAD ? { marginLeft: -18, zIndex: 1000 } : undefined) },
 });
