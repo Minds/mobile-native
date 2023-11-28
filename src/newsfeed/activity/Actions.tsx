@@ -118,9 +118,7 @@ export const Actions = observer((props: PropsType) => {
           <BoostAction entity={entity} navigation={navigation} />
         )}
 
-        {!isOwner && !IS_IOS && SUPERMIND_ENABLED && (
-          <SupermindAction entity={entity} />
-        )}
+        {!isOwner && SUPERMIND_ENABLED && <SupermindAction entity={entity} />}
       </View>
 
       {explicitVoteButtons && (
