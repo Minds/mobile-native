@@ -7,7 +7,7 @@ import GroupModel from '~/groups/GroupModel';
 import FeedStore from '~/common/stores/FeedStore';
 import GroupsListItem from '~/groups/GroupsListItem';
 
-// TODO: to refactor this tab to use feedlist
+// TODO: to refactor this tab to use feedlist #5264
 const Groups = observer(() => {
   const { current: groupStore } = useRef(new FeedStore<GroupModel>());
   useEffect(() => {
