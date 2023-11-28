@@ -7,12 +7,13 @@ import GroupModel from '~/groups/GroupModel';
 import FeedStore from '~/common/stores/FeedStore';
 import GroupsListItem from '~/groups/GroupsListItem';
 
+// TODO: to refactor this tab to use feedlist
 const Groups = observer(() => {
   const { current: groupStore } = useRef(new FeedStore<GroupModel>());
   useEffect(() => {
     groupStore
       .setEndpoint('api/v1/groups/member')
-      .setLimit(12)
+      .setLimit(120)
       .setInjectBoost(false)
       .setAsActivities(true)
       .setParams({ nsfw: [] })
