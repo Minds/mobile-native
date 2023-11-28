@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSharedValue } from 'react-native-reanimated';
 
@@ -152,7 +152,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 
   const renderTabBar = useCallback(
     props => (
-      <View style={styles.tabBarStyle}>
+      <>
         <ScrollableAutoWidthTabBar {...props} />
         {groupContext?.feedStore && index === 0 && (
           <FeedFilter
@@ -162,7 +162,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
             containerStyles={styles.filterStyle}
           />
         )}
-      </View>
+      </>
     ),
     [groupContext?.feedStore, index],
   );
@@ -210,8 +210,6 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 });
 
 const styles = StyleSheet.create({
-  tabBarStyle: {},
-  filter: {},
   filterStyle: {
     position: 'absolute',
     top: 12,
