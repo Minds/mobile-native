@@ -14,7 +14,8 @@ import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
 
-const atob = (text: string) => Buffer.from(text, 'base64');
+const atob = (value: string) =>
+  Buffer.from(value, 'base64') as unknown as string;
 
 /**
  * Session service
@@ -306,7 +307,9 @@ export class SessionService {
    */
   getTokenExpiration(token) {
     const parsed = this.parseJwt(token);
-    if (parsed && parsed.exp) return parsed.exp;
+    if (parsed && parsed.exp) {
+      return parsed.exp;
+    }
     return null;
   }
 
