@@ -294,9 +294,11 @@ export class SessionService {
    */
   parseJwt(token) {
     try {
-      //@ts-ignore
-      return JSON.parse(atob(token.split('.')[1]));
+      const encodedToken = token.split('.')[1];
+      const decodedToken = atob(encodedToken);
+      return JSON.parse(decodedToken);
     } catch (e) {
+      console.log('Error parsing JWT', e);
       return null;
     }
   }
