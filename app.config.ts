@@ -17,19 +17,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: Tenant.APP_SCHEME,
   slug: 'minds',
   version: process.env.MINDS_APP_VERSION || '4.42.0',
+  icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
     policy: 'nativeVersion',
   },
-  icon: './assets/images/icon.png',
-  splash: {
-    image: './assets/images/splash.png',
-    resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
-    backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
-  },
   plugins: [
     'react-native-iap',
     'expo-updates',
+    'expo-barcode-scanner',
     './node_modules/react-native-notifications/app.plugin.js',
     [
       'expo-build-properties',
@@ -37,7 +33,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         android: {
           compileSdkVersion: 33,
           targetSdkVersion: 33,
-          buildToolsVersion: '33.0.2',
+          buildToolsVersion: '33.0.0',
           kotlinVersion: '1.8.0',
         },
         ios: {
@@ -65,10 +61,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   ],
   android: {
-    adaptiveIcon: {
-      foregroundImage: Tenant.ADAPTIVE_ICON,
-      backgroundColor: Tenant.ADAPTIVE_COLOR || '#ffffff',
-    },
     package: Tenant.APP_ANDROID_PACKAGE,
     versionCode: process.env.MINDS_APP_BUILD
       ? parseInt(process.env.MINDS_APP_BUILD, 10)
@@ -86,6 +78,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         category: ['BROWSABLE', 'DEFAULT'],
       },
     ],
+    splash: {
+      image: './assets/images/splash.png',
+      resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
+      backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
+    },
     permissions: [
       'android.permission.READ_EXTERNAL_STORAGE',
       'android.permission.WRITE_EXTERNAL_STORAGE',
@@ -93,7 +90,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'android.permission.CAMERA',
       'android.permission.RECORD_AUDIO',
     ],
-    //   googleServicesFile: './google-services.json',
+    googleServicesFile: './google-services.json',
   },
   ios: {
     supportsTablet: true,
@@ -119,6 +116,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       NSCameraUsageDescription: '$(PRODUCT_NAME) needs access to your Camera.',
       NSMicrophoneUsageDescription:
         '$(PRODUCT_NAME) needs access to your Microphone.',
+    },
+    splash: {
+      image: './assets/images/splash.png',
+      resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
+      backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
     },
   },
   notification: {
