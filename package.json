@@ -246,7 +246,6 @@
   "resolutions": {
     "color": "4.2.3",
     "escape-string-regexp": "4.0.0",
-    "react-devtools-core": "4.13.0",
     "color-convert": "2.0.1",
     "react-native-gesture-handler": "~2.12.0"
   },
