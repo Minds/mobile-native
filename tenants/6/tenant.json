@@ -8,6 +8,7 @@
   "ACCENT_COLOR_LIGHT": "#ffffff",
   "ACCENT_COLOR_DARK": "#ffffff",
   "ADAPTIVE_COLOR": "#000000",
+  "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
   "WELCOME_LOGO": "horizontal",
   "THEME": "dark",
   "API_URL": "https://70efdf2ec9b086079795c442636b55fb.networks.minds.com/",
