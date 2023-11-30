@@ -1,0 +1,16 @@
+{
+  "APP_NAME": "DEMO",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.mobileDemoAPK",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobileDemoAPK",
+  "ACCENT_COLOR_LIGHT": "#000000",
+  "ACCENT_COLOR_DARK": "#ffffff",
+  "ADAPTIVE_COLOR": "#000000",
+  "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
+  "WELCOME_LOGO": "horizontal",
+  "THEME": "dark",
+  "API_URL": "https://<network-id>.networks.minds.com/",
+  "EAS_PROJECT_ID": "7a92bc49-6d7e-468f-af13-0a9aff39fc0e"
+}

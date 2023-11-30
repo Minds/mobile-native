@@ -96,4 +96,6 @@ credentials.json
 ios/
 android/
 
+google-services.json
+
 credentias/
