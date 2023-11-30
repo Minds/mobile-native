@@ -25,7 +25,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     'react-native-iap',
     'expo-updates',
-    'expo-barcode-scanner',
     './node_modules/react-native-notifications/app.plugin.js',
     [
       'expo-build-properties',
