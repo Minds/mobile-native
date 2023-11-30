@@ -1,0 +1,15 @@
+{
+  "APP_NAME": "Grayzone",
+  "APP_SCHEME": "mindsapp",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.mobileDemoAPK",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobileDemoAPK",
+  "ACCENT_COLOR_LIGHT": "#ffffff",
+  "ACCENT_COLOR_DARK": "#ffffff",
+  "ADAPTIVE_COLOR": "#000000",
+  "WELCOME_LOGO": "horizontal",
+  "THEME": "dark",
+  "API_URL": "https://70efdf2ec9b086079795c442636b55fb.networks.minds.com/",
+  "EAS_PROJECT_ID": "7a92bc49-6d7e-468f-af13-0a9aff39fc0e"
+}
