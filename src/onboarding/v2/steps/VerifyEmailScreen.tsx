@@ -1,61 +1,48 @@
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
-import { View } from 'react-native';
-import { showNotification } from '../../../../AppMessages';
-import Button from '../../../common/components/Button';
-import MText from '../../../common/components/MText';
-import useApiFetch from '../../../common/hooks/useApiFetch';
-import emailConfirmationService from '../../../common/services/email-confirmation.service';
+import React, { useEffect } from 'react';
 import i18n from '../../../common/services/i18n.service';
 import NavigationService from '../../../navigation/NavigationService';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import ModalContainer from './ModalContainer';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-
-const sendEmail = async () => {
-  if (await emailConfirmationService.send()) {
-    showNotification(i18n.t('emailConfirm.sent'), 'info');
-  } else {
-    showNotification(i18n.t('pleaseTryAgain'), 'warning');
-  }
-};
+import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
+import { TENANT } from '~/config/Config';
+import { B1 } from '~/common/ui';
+import { use2FAEmailVerification } from '../use2FAEmailVerification';
 
 /**
  * Verify Email Modal Screen
  */
 export default withErrorBoundaryScreen(
   observer(function VerifyEmailScreen() {
-    const theme = ThemedStyles.style;
-    const settings =
-      useApiFetch<{ channel: { email: string } }>('api/v1/settings');
-    const email = settings.result?.channel.email || '';
+    const localStore = use2FAEmailVerification();
 
-    const onPress = useCallback(() => sendEmail(), []);
+    useEffect(() => {
+      localStore.verify();
+    }, [localStore]);
 
     return (
-      <ModalContainer
-        title="Verify email"
-        contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={NavigationService.goBack}>
-        <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
-          <MText style={theme.fontLM}>
-            {i18n.t('onboarding.verifyEmailDescription1', { email }) + '\n\n'}
+      <CodeConfirmScreen
+        onBack={NavigationService.goBack}
+        title={i18n.t('onboarding.verifyEmailAddress')}
+        onVerify={localStore.submit}
+        description={i18n.t('auth.2faEmailDescription', { TENANT })}
+        maxLength={6}
+        keyboardType={'numeric'}
+        placeholder={i18n.t('auth.authCode')}
+        onChangeText={localStore.setCode}
+        error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
+        value={localStore.code}
+        detail={
+          <B1 color="secondary" vertical="XL" horizontal="L">
             {i18n.t('onboarding.verifyEmailDescription2')}
-          </MText>
-          <Button
-            onPress={onPress}
-            text={i18n.t('onboarding.resendEmail')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.fullWidth,
-              theme.marginTop6x,
-              theme.bcolorPrimaryBorder,
-            ]}
-            textStyle={theme.buttonText}
-          />
-        </View>
-      </ModalContainer>
+            <B1
+              color={localStore.resending ? 'tertiary' : 'link'}
+              onPress={localStore.resend}>
+              {' '}
+              {i18n.t('onboarding.resend')}
+            </B1>
+          </B1>
+        }
+      />
     );
   }),
   'VerifyEmailScreen',

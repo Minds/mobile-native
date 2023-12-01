@@ -117,23 +117,6 @@ export default class UserModel extends BaseModel {
   onchain_booster: number = 0;
 
   /**
-   * LEGACY: remove when the FF minds-3055-email-codes is cleaned up
-   * Confirm email
-   * @param {Object} params
-   */
-  confirmEmail = async params => {
-    // call any api endpoint with the param
-    try {
-      await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
-
-      this.setEmailConfirmed(true);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  /**
    * Confirm email using 2FA flow
    */
   async confirmEmailCode() {

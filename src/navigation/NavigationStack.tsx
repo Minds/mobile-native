@@ -26,7 +26,6 @@ import AuthTransition from './AuthTransition';
 
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
-import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
 import { IS_IPAD, IS_TENANT } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';
@@ -65,7 +64,6 @@ const AppStack = observer(() => {
         <AppStackNav.Screen
           name="Tabs"
           component={TabScreenWithModal}
-          // getComponent={() => require('~/tabs/TabsScreen').withModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -286,13 +284,11 @@ const rootStackCardScreenOptions = {
 };
 
 const RootStack = observer(function () {
-  const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
 
   const shouldShowEmailVerification =
     !is_email_confirmed &&
     !sessionService.switchingAccount &&
-    codeEmailFF.on &&
     AuthService.justRegistered;
 
   return (
