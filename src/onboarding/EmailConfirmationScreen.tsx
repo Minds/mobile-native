@@ -5,7 +5,6 @@ import { Button } from '~/common/ui';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
@@ -31,26 +30,26 @@ class EmailConfirmationScreen extends Component<{
   /**
    * Component did mount
    */
-  componentDidMount() {
-    this.confirm();
-  }
+  // componentDidMount() {
+  //   this.confirm();
+  // }
 
   /**
    * Confirm
    */
-  confirm = async () => {
-    this.setState({ error: false });
+  // confirm = async () => {
+  //   this.setState({ error: false });
 
-    const result = await sessionService
-      .getUser()
-      .confirmEmail(this.props.route.params);
+  //   const result = await sessionService
+  //     .getUser()
+  //     .confirmEmail(this.props.route.params);
 
-    if (!result) {
-      this.setState({ error: true });
-    } else {
-      this.setState({ confirmed: true });
-    }
-  };
+  //   if (!result) {
+  //     this.setState({ error: true });
+  //   } else {
+  //     this.setState({ confirmed: true });
+  //   }
+  // };
 
   /**
    * Render body
@@ -59,8 +58,7 @@ class EmailConfirmationScreen extends Component<{
     if (this.state.error) {
       return (
         <MText
-          style={[ThemedStyles.style.fontL, ThemedStyles.style.textCenter]}
-          onPress={this.confirm}>
+          style={[ThemedStyles.style.fontL, ThemedStyles.style.textCenter]}>
           {i18n.t('errorMessage') + '\n'}
           <MText style={ThemedStyles.style.colorLink}>
             {i18n.t('tryAgain')}

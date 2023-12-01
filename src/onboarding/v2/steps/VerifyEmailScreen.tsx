@@ -23,7 +23,10 @@ export default withErrorBoundaryScreen(
       <CodeConfirmScreen
         onBack={NavigationService.goBack}
         title={i18n.t('onboarding.verifyEmailAddress')}
-        onVerify={localStore.submit}
+        onVerify={() => {
+          localStore.submit();
+          NavigationService.goBack();
+        }}
         description={i18n.t('auth.2faEmailDescription', { TENANT })}
         maxLength={6}
         keyboardType={'numeric'}
