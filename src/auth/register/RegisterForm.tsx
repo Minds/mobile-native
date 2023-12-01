@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { IS_IPAD, TENANT } from '~/config/Config';
+import { IS_IPAD, IS_TENANT, TENANT } from '~/config/Config';
 import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
@@ -50,7 +50,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     username: '',
     email: '',
     termsAccepted: false,
-    exclusivePromotions: true,
+    exclusivePromotions: IS_TENANT ? false : true,
     inProgress: false,
     showErrors: false,
     usernameTaken: false,
@@ -308,17 +308,19 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               checked={store.termsAccepted}
               onPress={store.toggleTerms}
             />
-            <CheckBox
-              checkedColor={ThemedStyles.getColor('Link')}
-              containerStyle={styles.checkboxPromotions}
-              title={
-                <MText style={styles.checkboxText}>
-                  {i18n.t('auth.promotions', { TENANT })}
-                </MText>
-              }
-              checked={store.exclusivePromotions}
-              onPress={store.togglePromotions}
-            />
+            {!IS_TENANT && (
+              <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
+                containerStyle={styles.checkboxPromotions}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.promotions', { TENANT })}
+                  </MText>
+                }
+                checked={store.exclusivePromotions}
+                onPress={store.togglePromotions}
+              />
+            )}
           </View>
           <BottomSheetButton
             solid
