@@ -1,6 +1,7 @@
 import React from 'react';
 import BuildAlgorithmNotice from './BuildAlgorithmNotice';
 import EmailVerifyNotice from './EmailVerifyNotice';
+import InviteFriendsNotice from './InviteFriendsNotice';
 import PendingSupermindNotice from './PendingSupermindNotice';
 import SetupChannelNotice from './SetupChannelNotice';
 import TagsNotice from './TagsNotice';
@@ -16,6 +17,7 @@ export const noticeMapper = {
   'update-tags': TagsNotice,
   'setup-channel': SetupChannelNotice,
   'verify-uniqueness': VerifyUniquenessNotice,
+  'invite-friends': InviteFriendsNotice,
   'plus-upgrade': PlusUpgradeNotice,
   'boost-partners': BoostPartnerNotice,
   'boost-channel': BoostChannelNotice,

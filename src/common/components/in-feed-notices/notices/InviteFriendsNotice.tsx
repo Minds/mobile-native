@@ -14,7 +14,7 @@ function InviteFriendsNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
 
   const onPress = useCallback(() => {
-    navigation.navigate('Referrals');
+    navigation.navigate('AffiliateProgram');
   }, [navigation]);
 
   if (!inFeedNoticesService.visible(name)) {
