@@ -21,19 +21,11 @@ function useNavCallback(screen) {
 }
 
 export default function () {
-  const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
   const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
   const contentAdmin = [
     {
       title: i18n.t('settings.blockedChannels'),
       onPress: useNavCallback('BlockedChannels'),
-    },
-  ];
-
-  const referrals = [
-    {
-      title: i18n.t('settings.referrals'),
-      onPress: useNavCallback('Referrals'),
     },
   ];
 
@@ -89,8 +81,6 @@ export default function () {
     <Screen scroll>
       {BLOCK_USER_ENABLED &&
         generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
-      {!affiliatesEnabled &&
-        generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {MEMBERSHIP_TIERS_ENABLED &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {generateSection(

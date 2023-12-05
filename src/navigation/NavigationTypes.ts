@@ -72,7 +72,6 @@ export type MoreStackParamList = {
   Network: {};
   Security: {};
   Billing: {};
-  Referrals: {};
   Other: {};
   Resources: {};
   SettingsEmail: {};
@@ -352,7 +351,6 @@ export type AppStackParamList = {
     onSuccess?: () => void;
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
-  Referrals: {};
   BoostSettingsScreen: {};
   Onboarding: {};
 };

@@ -15,7 +15,7 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type IconName = React.ComponentProps<typeof Icon>['name'];
 
@@ -113,8 +113,6 @@ export default withErrorBoundaryScreen(
 
     const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
-    const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
-
     const earnItems: ContentType[] = [
       {
         name: 'create',
@@ -124,8 +122,7 @@ export default withErrorBoundaryScreen(
       {
         name: 'refer',
         icon: 'account-multiple',
-        onPress: () =>
-          affiliatesEnabled ? navTo('AffiliateProgram') : navTo('Referrals'),
+        onPress: () => navTo('AffiliateProgram'),
       },
     ];
 
