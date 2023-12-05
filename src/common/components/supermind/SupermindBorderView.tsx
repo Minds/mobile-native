@@ -16,10 +16,12 @@ export default function SupermindBorderView({ children }: PropsType) {
     <View style={styles.outerStyle}>
       <GradientBorderView
         colors={SupermindGradient}
+        borderRadius={5}
         borderWidth={1}
+        style={styles.outerStyle}
         start={start}
         end={end}>
-        <View style={styles.innerStyle}>{children}</View>
+        {children}
       </GradientBorderView>
     </View>
   );
@@ -29,16 +31,5 @@ const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
 
 const styles = ThemedStyles.create({
-  outerStyle: [
-    {
-      borderRadius: 5,
-      overflow: 'hidden',
-    },
-    'margin3x',
-    'marginHorizontal4x',
-  ],
-  innerStyle: {
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
+  outerStyle: ['margin3x', 'marginHorizontal4x'],
 });

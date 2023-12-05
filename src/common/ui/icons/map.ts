@@ -32,6 +32,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'info-outline',
   },
+  binoculars: {
+    font: 'MaterialCommunityIcons',
+    name: 'binoculars',
+  },
   supermind: {
     font: 'MaterialCommunityIcons',
     name: 'lightbulb',
@@ -286,6 +290,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
   },
+  'arrow-right': {
+    font: 'MaterialCommunityIcons',
+    name: 'arrow-right',
+  },
   sms: {
     font: 'MaterialIcons',
     name: 'sms',
@@ -355,9 +363,29 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'alpha-s-circle',
   },
+  network: {
+    font: 'MaterialCommunityIcons',
+    name: 'network-outline',
+  },
+  web_plus: {
+    font: 'MaterialCommunityIcons',
+    name: 'web-plus',
+  },
+  palette_swatch: {
+    font: 'MaterialCommunityIcons',
+    name: 'palette-swatch-variant',
+  },
+  account_edit: {
+    font: 'MaterialCommunityIcons',
+    name: 'account-edit',
+  },
   rocket: {
     font: 'MaterialCommunityIcons',
     name: 'rocket-launch',
+  },
+  eye_off: {
+    font: 'IonIcon',
+    name: 'md-eye-off',
   },
   alarm: {
     font: 'MaterialIcons',

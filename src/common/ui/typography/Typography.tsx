@@ -44,7 +44,7 @@ export type TypographyPropsType = {
   children?: React.ReactNode;
   onPress?: () => void;
 } & SpacerPropType &
-  Omit<TextProps, 'style'>;
+  TextProps;
 
 export const TypographyComponent = ({
   align = 'left',
@@ -53,12 +53,15 @@ export const TypographyComponent = ({
   font = 'regular',
   type = 'B1',
   flat,
+  style,
   onPress,
   ...more
 }: TypographyPropsType) => {
   const styleName = `typo_${type}_${font}_${color}_${align}_${!!flat}`;
 
-  const fontStyle = ThemedStyles.style[styleName];
+  const fontStyle = style
+    ? [ThemedStyles.style[styleName], style]
+    : ThemedStyles.style[styleName];
 
   const renderedText = (
     <Text style={fontStyle} {...more}>

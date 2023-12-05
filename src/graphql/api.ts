@@ -75,6 +75,12 @@ export type ActivityNode = NodeInterface & {
   votesUpCount: Scalars['Int']['output'];
 };
 
+export type AssetConnection = ConnectionInterface & {
+  __typename?: 'AssetConnection';
+  edges: Array<EdgeInterface>;
+  pageInfo: PageInfo;
+};
+
 export type BoostEdge = EdgeInterface & {
   __typename?: 'BoostEdge';
   cursor: Scalars['String']['output'];
@@ -498,6 +504,8 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Assigns a user to a role */
+  assignUserToRole: Role;
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
@@ -520,9 +528,18 @@ export type Mutation = {
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Sets a permission for that a role has */
+  setRolePermission: Role;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
+  /** Un-ssigns a user to a role */
+  unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+};
+
+export type MutationAssignUserToRoleArgs = {
+  roleId: Scalars['Int']['input'];
+  userGuid: Scalars['String']['input'];
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -591,8 +608,19 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
+export type MutationSetRolePermissionArgs = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  permission: PermissionsEnum;
+  roleId: Scalars['Int']['input'];
+};
+
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
+};
+
+export type MutationUnassignUserFromRoleArgs = {
+  roleId: Scalars['Int']['input'];
+  userGuid: Scalars['String']['input'];
 };
 
 export type MutationUpdateAccountArgs = {
@@ -625,6 +653,13 @@ export enum NsfwSubReasonEnum {
   ViolenceGore = 'VIOLENCE_GORE',
 }
 
+export type OidcProviderPublic = {
+  __typename?: 'OidcProviderPublic';
+  id: Scalars['Int']['output'];
+  loginUrl: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type OnboardingState = {
   __typename?: 'OnboardingState';
   completedAt?: Maybe<Scalars['Int']['output']>;
@@ -655,6 +690,16 @@ export type PaymentMethod = {
   name: Scalars['String']['output'];
 };
 
+export enum PermissionsEnum {
+  CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
+  CanBoost = 'CAN_BOOST',
+  CanComment = 'CAN_COMMENT',
+  CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanCreatePost = 'CAN_CREATE_POST',
+  CanInteract = 'CAN_INTERACT',
+  CanUploadVideo = 'CAN_UPLOAD_VIDEO',
+}
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -679,6 +724,14 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Returns all permissions that exist on the site */
+  allPermissions: Array<PermissionsEnum>;
+  /** Returns all roles that exist on the site and their permission assignments */
+  allRoles: Array<Role>;
+  /** Returns the permissions that the current session holds */
+  assignedPermissions: Array<PermissionsEnum>;
+  /** Returns the roles the session holds */
+  assignedRoles: Array<Role>;
   /** Gets Boosts. */
   boosts: BoostsConnection;
   /** Get dismissal by key. */
@@ -710,6 +763,7 @@ export type Query = {
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
   newsfeed: NewsfeedConnection;
+  oidcProviders: Array<OidcProviderPublic>;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
@@ -721,11 +775,21 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  tenantAssets: AssetConnection;
+  tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
+  userAssets: AssetConnection;
+  userQuotaUsage: QuotaDetails;
+  /** Returns users and their roles */
+  usersByRole: UserRoleConnection;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAssignedRolesArgs = {
+  userGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryBoostsArgs = {
@@ -817,9 +881,32 @@ export type QuerySearchArgs = {
   query: Scalars['String']['input'];
 };
 
+export type QueryTenantAssetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type QueryTenantsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryUserAssetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryUsersByRoleArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  roleId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QuotaDetails = {
+  __typename?: 'QuotaDetails';
+  sizeInBytes: Scalars['Int']['output'];
 };
 
 export type Report = NodeInterface & {
@@ -904,6 +991,13 @@ export type ReportsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type Role = {
+  __typename?: 'Role';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  permissions: Array<PermissionsEnum>;
+};
+
 export type RssFeed = {
   __typename?: 'RssFeed';
   createdAtTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -923,6 +1017,7 @@ export type RssFeedInput = {
 export enum RssFeedLastFetchStatusEnum {
   FailedToConnect = 'FAILED_TO_CONNECT',
   FailedToParse = 'FAILED_TO_PARSE',
+  FetchInProgress = 'FETCH_IN_PROGRESS',
   Success = 'SUCCESS',
 }
 
@@ -1049,6 +1144,19 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type UserRoleConnection = ConnectionInterface & {
+  __typename?: 'UserRoleConnection';
+  edges: Array<UserRoleEdge>;
+  pageInfo: PageInfo;
+};
+
+export type UserRoleEdge = EdgeInterface & {
+  __typename?: 'UserRoleEdge';
+  cursor: Scalars['String']['output'];
+  node: UserNode;
+  roles: Array<Role>;
 };
 
 export type VerdictInput = {
@@ -1387,6 +1495,14 @@ export type FetchSearchQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -1607,6 +1723,14 @@ export type FetchSearchQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -1789,6 +1913,14 @@ export type FetchSearchQuery = {
                     id: string;
                   };
                 }
+              | {
+                  __typename?: 'UserRoleEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
             >;
             pageInfo: {
               __typename?: 'PageInfo';
@@ -1806,6 +1938,11 @@ export type FetchSearchQuery = {
         }
       | {
           __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'UserRoleEdge';
           cursor: string;
           node: { __typename?: 'UserNode'; legacy: string; id: string };
         }
@@ -2211,6 +2348,14 @@ export type FetchNewsfeedQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -2424,6 +2569,14 @@ export type FetchNewsfeedQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -2621,6 +2774,14 @@ export type FetchNewsfeedQuery = {
                     id: string;
                   };
                 }
+              | {
+                  __typename?: 'UserRoleEdge';
+                  publisherNode: {
+                    __typename: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
             >;
             pageInfo: {
               __typename?: 'PageInfo';
@@ -2638,6 +2799,11 @@ export type FetchNewsfeedQuery = {
         }
       | {
           __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename: 'UserNode'; id: string };
+        }
+      | {
+          __typename?: 'UserRoleEdge';
           cursor: string;
           node: { __typename: 'UserNode'; id: string };
         }

@@ -304,6 +304,11 @@ export default function () {
         options={{ title: i18n.t('settings.deleteChannel') }}
       />
       <MoreStack.Screen
+        name="UpgradeOptionsScreen"
+        getComponent={() => require('modules/upgrade').UpgradeOptionsScreen}
+        options={{ title: 'Upgrade' }}
+      />
+      <MoreStack.Screen
         name="DeactivateChannel"
         getComponent={() =>
           require('~/settings/screens/DeactivateChannelScreen').default
