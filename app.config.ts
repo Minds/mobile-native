@@ -61,6 +61,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ],
   android: {
     package: Tenant.APP_ANDROID_PACKAGE,
+    adaptiveIcon: Tenant.ADAPTIVE_ICON
+      ? {
+          foregroundImage: Tenant.ADAPTIVE_ICON,
+          backgroundColor: Tenant.ADAPTIVE_COLOR,
+        }
+      : undefined,
     versionCode: process.env.MINDS_APP_BUILD
       ? parseInt(process.env.MINDS_APP_BUILD, 10)
       : 310178,
