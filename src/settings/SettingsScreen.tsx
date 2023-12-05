@@ -21,7 +21,7 @@ import {
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import NavigationService from '~/navigation/NavigationService';
-import { useIsFeatureOn, useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -66,7 +66,6 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
-  const affiliatesFFEnabled = useIsFeatureOn('epic-304-affiliates');
   const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const user = sessionService.getUser();
@@ -124,7 +123,7 @@ const SettingsScreen = observer(({ navigation }) => {
     screen: 'ChooseBrowser',
   });
 
-  if (affiliatesFFEnabled && !IS_IPAD && AFFILIATES_ENABLED) {
+  if (!IS_IPAD && AFFILIATES_ENABLED) {
     firstSection.push({
       title: i18n.t('settings.affiliateProgram'),
       screen: 'AffiliateProgram',
