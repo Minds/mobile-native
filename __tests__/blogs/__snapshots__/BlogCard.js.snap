@@ -434,7 +434,6 @@ exports[`blog card component should renders correctly 1`] = `
             ],
             "chat": true,
             "city": "",
-            "confirmEmail": [Function],
             "container_guid": "0",
             "deleted": "0",
             "disable_autoplay_videos": undefined,
