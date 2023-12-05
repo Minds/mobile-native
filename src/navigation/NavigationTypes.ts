@@ -283,7 +283,6 @@ export type AppStackParamList = {
     store: ComposeStoreType;
   };
   LicenseSelector: {};
-  EmailConfirmation: {};
   Update: {};
   Boost: {};
   Analytics: {};

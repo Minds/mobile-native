@@ -94,12 +94,6 @@ const AppStack = observer(() => {
           }}
         />
         <AppStackNav.Screen
-          name="EmailConfirmation"
-          getComponent={() =>
-            require('~/onboarding/EmailConfirmationScreen').default
-          }
-        />
-        <AppStackNav.Screen
           name="Update"
           getComponent={() => require('~/update/UpdateScreen').default}
           options={hideHeader}
