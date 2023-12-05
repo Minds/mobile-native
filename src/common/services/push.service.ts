@@ -53,7 +53,7 @@ export class PushService {
       console.log('[PushService] onInitialNotification', notification);
     }
     // get notification data
-    const data = notification.payload;
+    const data = notification?.payload;
     if (data?.json) {
       data.json = JSON.parse(data.json);
     }

@@ -179,11 +179,6 @@ export default function () {
         initialParams={{ options: BillingScreenOptions }}
       />
       <MoreStack.Screen
-        name="Referrals"
-        getComponent={() => require('~/referral/ReferralsScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
         name="AffiliateProgram"
         getComponent={() =>
           require('modules/affiliate/screens/AffiliateProgramScreen').default

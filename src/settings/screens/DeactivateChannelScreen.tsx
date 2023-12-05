@@ -4,6 +4,7 @@ import { Button, ScreenSection, B1, Screen } from '~ui';
 import i18n from '../../common/services/i18n.service';
 import AuthService from '~/auth/AuthService';
 import { useNavigation } from '@react-navigation/native';
+import { TENANT } from '~/config/Config';
 
 /**
  * Delete Channel Screen
@@ -41,7 +42,7 @@ export default function DeactivateChannelScreen() {
   return (
     <Screen>
       <ScreenSection top="M">
-        <B1>{i18n.t('settings.disableDescription')}</B1>
+        <B1>{i18n.t('settings.disableDescription', { TENANT })}</B1>
         <Button top="XXL" onPress={confirmPassword} type="warning">
           {i18n.t('settings.disableChannelButton')}
         </Button>

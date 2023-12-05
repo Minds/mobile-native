@@ -28,7 +28,7 @@ import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
 import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
 import withModalProvider from './withModalProvide';
@@ -218,12 +218,6 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
-          name="Referrals"
-          getComponent={() => require('~/referral/ReferralsScreen').default}
-          options={hideHeader}
-          initialParams={{ title: 'Invite Friends' }}
-        />
-        <AppStackNav.Screen
           name="BoostConsole"
           getComponent={() => require('modules/boost').BoostConsoleScreen}
           options={hideHeader}
@@ -331,7 +325,9 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            {AuthService.justRegistered && !AuthService.onboardCompleted ? (
+            {AuthService.justRegistered &&
+            !AuthService.onboardCompleted &&
+            !IS_TENANT ? (
               <RootStackNav.Screen
                 name="App"
                 getComponent={() =>
