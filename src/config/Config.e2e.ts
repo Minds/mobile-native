@@ -83,7 +83,6 @@ const redirectPages = [
 export const MINDS_DEEPLINK = [
   ...redirectPages,
   ['forgot-password;:username;:code', 'ResetPassword'],
-  ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
   ['notifications', 'Notifications', 'navigate'],

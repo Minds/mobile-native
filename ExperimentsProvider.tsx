@@ -107,7 +107,6 @@ export const useIsGoogleFeatureOn = (feature: FeatureID) =>
 export const featureList = [
   'engine-2503-twitter-feats',
   'epic-303-boost-partners',
-  'minds-3055-email-codes',
   'minds-3639-plus-notice',
   'mob-discovery-redirect',
   'mob-twitter-oauth-4715',
