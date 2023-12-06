@@ -147,7 +147,7 @@ const getOptionsList = (
           ),
           testID: 'Drawer:upgrade',
           onPress: () => {
-            navigation.navigate('UpgradeScreen', {
+            navigation.navigate('UpgradeOptionsScreen', {
               onComplete: () => null,
             });
           },

@@ -311,12 +311,10 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             style={
                               [
                                 {
+                                  "backgroundColor": "#404e53",
                                   "borderRadius": 200,
                                   "overflow": "hidden",
-                                  "padding": 6.4,
-                                },
-                                {
-                                  "backgroundColor": "#404e53",
+                                  "padding": 10.4,
                                 },
                               ]
                             }
@@ -394,12 +392,10 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           [
                             {
+                              "backgroundColor": "#404e53",
                               "borderRadius": 200,
                               "overflow": "hidden",
-                              "padding": 6.4,
-                            },
-                            {
-                              "backgroundColor": "#404e53",
+                              "padding": 10.4,
                             },
                           ]
                         }
