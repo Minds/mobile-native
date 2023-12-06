@@ -19,6 +19,7 @@ export type DiscoveryStackParamList = Pick<
   | 'BoostScreenV2'
   | 'GroupView'
   | 'Interactions'
+  | 'Compose'
 > & { Discovery: { tab?: TDiscoveryV2Tabs } };
 
 export type DiscoveryStackScreenProps<S extends keyof DiscoveryStackParamList> =

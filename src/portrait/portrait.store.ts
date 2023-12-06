@@ -4,7 +4,7 @@ import UserModel from '~/channel/UserModel';
 import logService from '~/common/services/log.service';
 import sessionService from '~/common/services/session.service';
 import FeedStore from '~/common/stores/FeedStore';
-import { MINDS_GUID } from '~/config/Config';
+import { IS_TENANT, MINDS_GUID } from '~/config/Config';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 
 import { PortraitBarBoostItem } from './models/PortraitBarBoostItem';
@@ -90,7 +90,7 @@ function createPortraitStore() {
         /**
          * fallback to minds portrait
          **/
-        if (!feedStore.entities.length) {
+        if (!IS_TENANT && !feedStore.entities.length) {
           feedStore.setEndpoint(
             `api/v2/feeds/container/${MINDS_GUID}/activities`,
           );

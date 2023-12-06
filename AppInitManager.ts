@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import pushService from './src/common/services/push.service';
 // import receiveShare from './src/common/services/receive-share.service';
 
-import { GOOGLE_PLAY_STORE } from './src/config/Config';
+import { GOOGLE_PLAY_STORE, IS_TENANT } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
 import sessionService from './src/common/services/session.service';
@@ -154,8 +154,10 @@ export class AppInitManager {
     this.updateMindsConfigAndInitGrowthbook();
 
     // load boosted content
-    boostedContentService.load();
-    portraitBoostedContentService.load();
+    if (!IS_TENANT) {
+      boostedContentService.load();
+      portraitBoostedContentService.load();
+    }
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });

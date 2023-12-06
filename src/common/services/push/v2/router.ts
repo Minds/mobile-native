@@ -11,7 +11,7 @@ export const router = {
   navigate: (data: any) => {
     try {
       let callback;
-      if (data.uri && data.uri.startsWith(MINDS_URI)) {
+      if (data?.uri && data.uri.startsWith(MINDS_URI)) {
         callback = () => deeplinksRouterService.navigate(data.uri);
       } else {
         callback = () =>
@@ -19,11 +19,11 @@ export const router = {
       }
 
       if (
-        data.user_guid &&
+        data?.user_guid &&
         sessionService.activeIndex !==
           sessionService.getIndexSessionFromGuid(data.user_guid)
       ) {
-        AuthService.loginWithGuid(data.user_guid, () => {
+        AuthService.loginWithGuid(data?.user_guid, () => {
           setTimeout(callback, 700);
         });
       } else {

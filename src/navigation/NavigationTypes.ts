@@ -354,6 +354,7 @@ export type AppStackParamList = {
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
   BoostSettingsScreen: {};
   Onboarding: {};
+  Compose: undefined;
 };
 
 // types for channel edit screens

@@ -19,6 +19,7 @@ type PropsType = {
   plus?: boolean;
   store: DiscoveryV2Store;
   header?: React.ReactElement;
+  emptyMessage?: React.ReactElement;
 };
 
 const ItemPartial = (item, index) => {
@@ -39,7 +40,7 @@ const Trend = observer(({ store }) => {
  * Discovery List Item
  */
 export const DiscoveryTrendsList = observer(
-  ({ plus, store, header }: PropsType) => {
+  ({ plus, store, header, emptyMessage }: PropsType) => {
     let listRef = useRef<any>(null);
     let tagRef = useRef<BottomSheetModal>(null);
 
@@ -87,6 +88,8 @@ export const DiscoveryTrendsList = observer(
           store.allFeed.loading ||
           store.allFeed.refreshing ? (
             <CenteredLoading />
+          ) : emptyMessage ? (
+            emptyMessage
           ) : (
             <View style={styles.emptyContainer}>
               <MText style={styles.emptyMessage}>
