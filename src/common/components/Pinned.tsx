@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import IconMa from 'react-native-vector-icons/MaterialIcons';
+import IconMa from '@expo/vector-icons/MaterialIcons';
 import { Platform, StyleSheet, View } from 'react-native';
 import i18nService from '../services/i18n.service';
 import MText from './MText';

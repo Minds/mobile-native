@@ -19,7 +19,7 @@ export default function Empty({
     <View style={styles.emptyContainer}>
       <Image
         style={styles.image}
-        source={require('../../assets/images/emptyFeed.png')}
+        source={require('~/assets/images/emptyFeed.png')}
       />
       {Boolean(title) && <MText style={styles.header}>{title}</MText>}
       {Boolean(subtitle) && <MText style={styles.subtitle}>{subtitle}</MText>}

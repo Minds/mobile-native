@@ -6,11 +6,12 @@ exports[`TwitterSyncScreen renders correctly 1`] = `
     QueryClient {
       "defaultOptions": {
         "queries": {
+          "cacheTime": 0,
           "refetchOnMount": false,
           "refetchOnReconnect": false,
           "refetchOnWindowFocus": false,
           "retry": false,
-          "staleTime": 300000,
+          "staleTime": 0,
         },
       },
       "logger": {

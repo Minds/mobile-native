@@ -93,14 +93,14 @@ exports[`blog card component should renders correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
                   "fontSize": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -306,7 +306,7 @@ exports[`blog card component should renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -331,7 +331,7 @@ exports[`blog card component should renders correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -354,30 +354,16 @@ exports[`blog card component should renders correctly 1`] = `
             }
           >
             <View>
-              <Text
-                allowFontScaling={false}
+              <MaterialIcons
+                name="more-vert"
                 onPress={[Function]}
-                selectable={false}
+                size={28}
                 style={
-                  [
-                    {
-                      "color": undefined,
-                      "fontSize": 28,
-                    },
-                    {
-                      "color": "#a1a5ab",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "color": "#a1a5ab",
+                  }
                 }
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -387,6 +373,7 @@ exports[`blog card component should renders correctly 1`] = `
       entity={
         {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "2",
           "allow_comments": true,
           "boost_rejection_reason": -1,
@@ -424,6 +411,7 @@ exports[`blog card component should renders correctly 1`] = `
           "ownerObj": {
             "__list": null,
             "_collapsed": false,
+            "_viewed": false,
             "access_id": "2",
             "allow_comments": true,
             "banned": "no",
@@ -446,7 +434,6 @@ exports[`blog card component should renders correctly 1`] = `
             ],
             "chat": true,
             "city": "",
-            "confirmEmail": [Function],
             "container_guid": "0",
             "deleted": "0",
             "disable_autoplay_videos": undefined,

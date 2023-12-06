@@ -78,11 +78,11 @@ export const ICON_COLOR_LIGHT = 'IconLight';
 export const ICON_DEFAULT = 'remind';
 
 export const FONT_FAMILY = {
-  regular: 'Roboto',
-  medium: 'Roboto-Medium',
-  bold: 'Roboto-Bold',
-  black: 'Roboto-Black',
-  italic: 'Roboto-Italic',
+  regular: 'Roboto_400Regular',
+  medium: 'Roboto_500Medium',
+  bold: 'Roboto_700Bold',
+  black: 'Roboto_900Black',
+  italic: 'Roboto_400Regular_Italic',
 };
 
 export const AVATAR_SIZE_DEFAULT = 'medium';

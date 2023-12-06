@@ -3,13 +3,15 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
   TransitionPresets,
 } from '@react-navigation/stack';
 
+import TabsScreen from '../tabs/TabsScreen';
+import TabsScreenVertical from '../tabs/TabsScreenVertical';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 
@@ -21,15 +23,14 @@ import {
 
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
-import VideoBackground from '../common/components/VideoBackground';
-import TransparentLayer from '../common/components/TransparentLayer';
 
 import { observer } from 'mobx-react';
 import sessionService from '~/common/services/session.service';
-import { useFeature } from '@growthbook/growthbook-react';
 import AuthService from '~/auth/AuthService';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';
 import i18nService from '../common/services/i18n.service';
+import withModalProvider from './withModalProvide';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -41,6 +42,10 @@ const modalOptions = {
   gestureResponseDistance: 240,
   gestureEnabled: true,
 };
+
+const TabScreenWithModal = withModalProvider(
+  IS_IPAD ? TabsScreenVertical : TabsScreen,
+);
 
 const AppStack = observer(() => {
   if (sessionService.switchingAccount) {
@@ -58,7 +63,7 @@ const AppStack = observer(() => {
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Tabs"
-          getComponent={() => require('~/tabs/TabsScreen').withModal}
+          component={TabScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -87,12 +92,6 @@ const AppStack = observer(() => {
             animation: 'fade_from_bottom',
             ...hideHeader,
           }}
-        />
-        <AppStackNav.Screen
-          name="EmailConfirmation"
-          getComponent={() =>
-            require('~/onboarding/EmailConfirmationScreen').default
-          }
         />
         <AppStackNav.Screen
           name="Update"
@@ -211,12 +210,6 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
-          name="Referrals"
-          getComponent={() => require('~/referral/ReferralsScreen').default}
-          options={hideHeader}
-          initialParams={{ title: 'Invite Friends' }}
-        />
-        <AppStackNav.Screen
           name="BoostConsole"
           getComponent={() => require('modules/boost').BoostConsoleScreen}
           options={hideHeader}
@@ -233,10 +226,8 @@ const AppStack = observer(() => {
 
 const AuthStack = function () {
   return (
-    <View style={ThemedStyles.style.flexContainer}>
+    <>
       <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
-      <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
-      <TransparentLayer />
       <AuthStackNav.Navigator
         // @ts-ignore
         screenOptions={AuthTransition}>
@@ -255,7 +246,7 @@ const AuthStack = function () {
           }}
         />
       </AuthStackNav.Navigator>
-    </View>
+    </>
   );
 };
 
@@ -281,13 +272,11 @@ const rootStackCardScreenOptions = {
 };
 
 const RootStack = observer(function () {
-  const codeEmailFF = useFeature('minds-3055-email-codes');
   const is_email_confirmed = sessionService.getUser()?.email_confirmed;
 
   const shouldShowEmailVerification =
     !is_email_confirmed &&
     !sessionService.switchingAccount &&
-    codeEmailFF.on &&
     AuthService.justRegistered;
 
   return (
@@ -326,7 +315,9 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            {AuthService.justRegistered && !AuthService.onboardCompleted ? (
+            {AuthService.justRegistered &&
+            !AuthService.onboardCompleted &&
+            !IS_TENANT ? (
               <RootStackNav.Screen
                 name="App"
                 getComponent={() =>
@@ -622,7 +613,7 @@ const RootStack = observer(function () {
           animationEnabled: false,
         }}
       />
-      <RootStackNav.Screen
+      {/* <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="CodePushSync"
         getComponent={() => require('modules/codepush').CodePushSyncScreen}
@@ -630,7 +621,7 @@ const RootStack = observer(function () {
           ...TransitionPresets.ModalFadeTransition,
           gestureEnabled: false,
         }}
-      />
+      /> */}
       <RootStackNav.Screen
         name="ChangeEmail"
         getComponent={() => require('~/auth/ChangeEmailScreen').default}

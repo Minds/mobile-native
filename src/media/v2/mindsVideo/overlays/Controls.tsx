@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import type { MindsVideoStoreType } from '../createMindsVideoStore';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/v2/CommentModel';
 import { View, TouchableWithoutFeedback } from 'react-native';

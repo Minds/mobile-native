@@ -89,11 +89,7 @@ export type FeedListPropsType<T extends BaseModel> = {
   stickyHeaderHiddenOnScroll?: boolean;
   onEndReachedThreshold?: number;
   stickyHeaderIndices?: number[];
-  placeholder?:
-    | React.ComponentType<any>
-    | React.ReactElement
-    | null
-    | undefined;
+  placeholder?: React.ComponentType<any> | null | undefined;
   /**
    * a function to call on refresh. this replaces the feedList default refresh function
    */
@@ -198,7 +194,7 @@ export class FeedList<T extends BaseModel> extends Component<
       ? item.type
       : isActivity && item.hasVideo()
       ? 'video'
-      : isActivity && item.hasVideo()
+      : isActivity && item.hasImage()
       ? 'image'
       : 'row';
   }
@@ -329,16 +325,18 @@ export class FeedList<T extends BaseModel> extends Component<
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
-        {entity instanceof InjectItem && InjectedComponent ? (
-          <InjectedComponent {...row} />
-        ) : (
-          <Activity
-            entity={entity}
-            navigation={this.props.navigation}
-            displayBoosts={this.props.displayBoosts}
-            autoHeight={false}
-          />
-        )}
+        <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
+          {entity instanceof InjectItem && InjectedComponent ? (
+            <InjectedComponent {...row} />
+          ) : (
+            <Activity
+              entity={entity}
+              navigation={this.props.navigation}
+              displayBoosts={this.props.displayBoosts}
+              autoHeight={false}
+            />
+          )}
+        </View>
       </ErrorBoundary>
     );
   };

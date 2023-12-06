@@ -8,9 +8,11 @@ import {
   View,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
+
+type IconName = React.ComponentProps<typeof Icon>['name'];
 
 interface Props {
   placeholder: string;
@@ -19,7 +21,7 @@ interface Props {
   onBlur?: () => void;
   onChangeText?: (text) => void;
   containerStyle: StyleProp<ViewStyle>;
-  iconRight: string | null;
+  iconRight: IconName | null;
   iconRightOnPress: Function;
 }
 
@@ -72,10 +74,8 @@ export default class SearchView extends PureComponent<Props> {
 
   /**
    * Get right icon or null
-   * @param {string} iconRight
-   * @param {function} iconRightOnPress
    */
-  getRightIcon(iconRight, iconRightOnPress) {
+  getRightIcon(iconRight: IconName | null, iconRightOnPress) {
     if (iconRight) {
       if (typeof iconRight === 'string') {
         if (iconRightOnPress) {

@@ -1,12 +1,12 @@
-import RNBootSplash from 'react-native-bootsplash';
 import { Linking, Alert, Platform } from 'react-native';
-import ShareMenu from 'react-native-share-menu';
+// import ShareMenu from 'react-native-share-menu';
 import * as Sentry from '@sentry/react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 import pushService from './src/common/services/push.service';
-import receiveShare from './src/common/services/receive-share.service';
+// import receiveShare from './src/common/services/receive-share.service';
 
-import { GOOGLE_PLAY_STORE } from './src/config/Config';
+import { GOOGLE_PLAY_STORE, IS_TENANT } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
 import sessionService from './src/common/services/session.service';
@@ -25,6 +25,7 @@ import portraitBoostedContentService from './src/portrait/services/portraitBoost
 import socketService from '~/common/services/socket.service';
 import blockListService from '~/common/services/block-list.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import { queryClient } from '~/services';
 
 /**
  * App initialization manager
@@ -37,10 +38,6 @@ export class AppInitManager {
    * Initialize services without waiting for the promises
    */
   async initializeServices() {
-    // init push service
-    pushService.init();
-
-    // init socket service
     socketService.init();
 
     // init block list service
@@ -63,7 +60,7 @@ export class AppInitManager {
     //   codePushStore.syncCodepush({
     //     onDownload: () => {
     //       InteractionManager.runAfterInteractions(() => {
-    //         RNBootSplash.hide({ fade: true });
+    //         SplashScreen.hideAsync();
     //       });
     //     },
     //   });
@@ -84,13 +81,14 @@ export class AppInitManager {
         //   // but here we will hide the splash screen after a delay as a timeout if
         //   // anything goes wrong.
         //   setTimeout(() => {
-        //     RNBootSplash.hide({ fade: true });
+        //     SplashScreen.hideAsync();
         //   }, 400);
         // } else {
-        //   RNBootSplash.hide({ fade: true });
+        //   SplashScreen.hideAsync();
         // }
-
-        RNBootSplash.hide({ fade: true });
+        setTimeout(() => {
+          SplashScreen.hideAsync();
+        }, 400);
       } else {
         logService.info('[App] session initialized');
       }
@@ -120,14 +118,17 @@ export class AppInitManager {
   updateMindsConfigAndInitGrowthbook() {
     // init with current cached data
     updateGrowthBookAttributes();
-    // Update the config
-    mindsConfigService.update().then(() => {
+
+    const afterUpdate = () => {
       // if it changed we initialize growth book again
       updateGrowthBookAttributes();
 
       // Check Terms of service
       checkTOS();
-    });
+    };
+
+    // Update the config
+    mindsConfigService.update().then(afterUpdate);
   }
 
   /**
@@ -140,6 +141,7 @@ export class AppInitManager {
     updateGrowthBookAttributes();
     boostedContentService.clear();
     portraitBoostedContentService.clear();
+    queryClient.clear();
   };
 
   /**
@@ -152,8 +154,10 @@ export class AppInitManager {
     this.updateMindsConfigAndInitGrowthbook();
 
     // load boosted content
-    boostedContentService.load();
-    portraitBoostedContentService.load();
+    if (!IS_TENANT) {
+      boostedContentService.load();
+      portraitBoostedContentService.load();
+    }
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
@@ -163,7 +167,7 @@ export class AppInitManager {
     pushService.registerToken();
 
     // request for permission (applies to iOS)
-    pushService.requestNotificationPermission();
+    // pushService.requestNotificationPermission();
 
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -215,16 +219,15 @@ export class AppInitManager {
       pushService.handleInitialNotification();
 
       // handle initial shared content`
-      ShareMenu.getInitialShare(receiveShare.handle);
+      // ShareMenu.getInitialShare(receiveShare.handle);
 
       if (sessionService.recoveryCodeUsed) {
         sessionService.setRecoveryCodeUsed(false);
         NavigationService.navigate('RecoveryCodeUsedScreen');
       }
-
-      // hide splash
-      RNBootSplash.hide({ fade: true });
+      SplashScreen.hideAsync();
     } catch (err) {
+      SplashScreen.hideAsync();
       logService.exception(err);
     }
   }

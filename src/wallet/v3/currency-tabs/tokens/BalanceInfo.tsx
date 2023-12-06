@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 3,
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
 });
 

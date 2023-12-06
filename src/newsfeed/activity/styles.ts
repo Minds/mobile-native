@@ -3,9 +3,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 const CONTAINER_MIN_HEIGHT = 150;
 
 const styles = ThemedStyles.create({
-  container: {
-    // overflow: 'visible',
-  },
+  container: ['alignSelfCenterMaxWidth'],
   bodyContainer: {
     minHeight: CONTAINER_MIN_HEIGHT,
   },
@@ -15,7 +13,7 @@ const styles = ThemedStyles.create({
   },
   messageContainer: ['paddingHorizontal4x', 'paddingVertical3x'],
   message: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 16,
     lineHeight: 24,
   },
@@ -76,6 +74,7 @@ const remindBlockContainerStyle = ThemedStyles.combine(
 
 const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
+  'alignSelfCenterMaxWidth',
   'margin3x',
   'marginHorizontal4x',
   'borderRadius3x',

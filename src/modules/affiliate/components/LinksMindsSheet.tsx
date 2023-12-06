@@ -17,7 +17,7 @@ import { IconButtonCircle } from './IconButtonCircle';
  */
 const LinksMindsSheet = React.forwardRef<BottomSheetModalType>((props, ref) => {
   return (
-    <BottomSheetModal ref={ref} title="Earn with affiliate link">
+    <BottomSheetModal {...props} ref={ref} title="Earn with affiliate link">
       <Row align="centerBetween" vertical="XXL" horizontal="XL">
         <IconButtonCircle name="plus" title="Minds+" onPress={copyPlus} />
         <IconButtonCircle name="boost" title="Boost" onPress={copyBoost} />
@@ -36,7 +36,7 @@ const copyLink = (link: string) => {
   showNotification('Link copied to clipboard');
 };
 
-const copyReferrer = () => {
+export const copyReferrer = () => {
   copyLink(`${MINDS_URI}?referrer=${sessionService.getUser().username}`);
 };
 const copyPlus = () => {

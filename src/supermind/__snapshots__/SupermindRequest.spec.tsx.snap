@@ -80,6 +80,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -91,7 +92,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                     "color": "#FFFFFF",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 14,
@@ -111,6 +112,7 @@ exports[`SupermindRequest should render inbound 1`] = `
       <View
         style={
           {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -122,7 +124,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -143,7 +145,13 @@ exports[`SupermindRequest should render inbound 1`] = `
     onLayout={[Function]}
     style={
       [
-        {},
+        [
+          {
+            "alignSelf": "center",
+            "maxWidth": 750,
+            "width": "100%",
+          },
+        ],
         {
           "backgroundColor": "#1C1D1F",
         },
@@ -266,7 +274,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Bold",
+                      "fontFamily": "Roboto_700Bold",
                     },
                     {
                       "fontSize": 16,
@@ -355,12 +363,12 @@ exports[`SupermindRequest should render inbound 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     [
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                         "fontSize": 16,
                         "lineHeight": 24,
                       },
@@ -371,7 +379,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -379,7 +387,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -396,11 +404,11 @@ exports[`SupermindRequest should render inbound 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     {
-                      "fontFamily": "Roboto",
+                      "fontFamily": "Roboto_400Regular",
                       "fontSize": 16,
                       "lineHeight": 24,
                     },
@@ -411,7 +419,7 @@ exports[`SupermindRequest should render inbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -429,6 +437,7 @@ exports[`SupermindRequest should render inbound 1`] = `
   <View
     style={
       {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }
@@ -440,7 +449,7 @@ exports[`SupermindRequest should render inbound 1`] = `
             "color": "#b9bbc0",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           {
             "fontSize": 14,
@@ -460,7 +469,7 @@ exports[`SupermindRequest should render inbound 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             {
               "fontSize": 14,
@@ -568,6 +577,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           <View
             style={
               {
+                "alignSelf": "stretch",
                 "marginHorizontal": 4,
               }
             }
@@ -579,7 +589,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                     "color": "#FFFFFF",
                   },
                   {
-                    "fontFamily": "Roboto-Medium",
+                    "fontFamily": "Roboto_500Medium",
                   },
                   {
                     "fontSize": 14,
@@ -599,6 +609,7 @@ exports[`SupermindRequest should render outbound 1`] = `
       <View
         style={
           {
+            "alignSelf": "stretch",
             "marginLeft": 16,
           }
         }
@@ -610,7 +621,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -631,7 +642,13 @@ exports[`SupermindRequest should render outbound 1`] = `
     onLayout={[Function]}
     style={
       [
-        {},
+        [
+          {
+            "alignSelf": "center",
+            "maxWidth": 750,
+            "width": "100%",
+          },
+        ],
         {
           "backgroundColor": "#1C1D1F",
         },
@@ -754,7 +771,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Bold",
+                      "fontFamily": "Roboto_700Bold",
                     },
                     {
                       "fontSize": 16,
@@ -843,12 +860,12 @@ exports[`SupermindRequest should render outbound 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     [
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                         "fontSize": 16,
                         "lineHeight": 24,
                       },
@@ -859,7 +876,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -867,7 +884,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -884,11 +901,11 @@ exports[`SupermindRequest should render outbound 1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     {
-                      "fontFamily": "Roboto",
+                      "fontFamily": "Roboto_400Regular",
                       "fontSize": 16,
                       "lineHeight": 24,
                     },
@@ -899,7 +916,7 @@ exports[`SupermindRequest should render outbound 1`] = `
                       "color": "#F2F2F2",
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -917,6 +934,7 @@ exports[`SupermindRequest should render outbound 1`] = `
   <View
     style={
       {
+        "alignSelf": "stretch",
         "marginLeft": 16,
       }
     }
@@ -928,7 +946,7 @@ exports[`SupermindRequest should render outbound 1`] = `
             "color": "#b9bbc0",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           {
             "fontSize": 14,
@@ -948,7 +966,7 @@ exports[`SupermindRequest should render outbound 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             {
               "fontSize": 14,

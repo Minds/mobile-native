@@ -7,6 +7,7 @@ type PropsType = {
   title: string;
   description: string;
   skip?: boolean;
+  spaced?: boolean;
   onSkip?: () => void;
 };
 
@@ -14,6 +15,7 @@ export default function Header({
   title,
   description,
   skip,
+  spaced,
   onSkip,
 }: PropsType) {
   return (
@@ -28,7 +30,7 @@ export default function Header({
           </View>
         )}
       </View>
-      <B1 align="center" top="M">
+      <B1 align="center" top={spaced ? 'XL' : 'M'}>
         {description}
       </B1>
     </ScreenSection>

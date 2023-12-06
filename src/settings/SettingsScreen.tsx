@@ -4,7 +4,6 @@ import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
 import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '../common/services/i18n.service';
-import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
 import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -12,9 +11,16 @@ import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
-import { DEV_MODE, IS_IOS } from '~/config/Config';
+import {
+  AFFILIATES_ENABLED,
+  DEV_MODE,
+  IS_IOS,
+  IS_IPAD,
+  IS_TENANT,
+} from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import NavigationService from '~/navigation/NavigationService';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 interface HelpResponse extends ApiResponse {
   url: string;
@@ -32,7 +38,9 @@ export const navigateToHelp = async () => {
       },
     );
     if (response && response.url) {
-      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+      NavigationService.navigate('WebView', {
+        url: unescape(response.url),
+      });
     }
   } catch (err) {
     console.log(err);
@@ -57,7 +65,7 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
 
-  const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const user = sessionService.getUser();
 
@@ -85,7 +93,7 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  if (!IS_IOS) {
+  if (!IS_IOS && !hideTokens) {
     firstSection.push({
       title: i18n.t('settings.billing'),
       screen: 'Billing',
@@ -114,7 +122,7 @@ const SettingsScreen = observer(({ navigation }) => {
     screen: 'ChooseBrowser',
   });
 
-  if (affiliatesEnabled) {
+  if (!IS_IPAD && AFFILIATES_ENABLED) {
     firstSection.push({
       title: i18n.t('settings.affiliateProgram'),
       screen: 'AffiliateProgram',
@@ -136,22 +144,31 @@ const SettingsScreen = observer(({ navigation }) => {
 
   const secondSection: Array<Item> = [
     {
-      title: i18n.t(
-        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-      ),
-      onPress: setDarkMode,
-    },
-    {
       title: i18n.t('help'),
       onPress: navigateToHelp,
     },
   ];
+  if (!IS_TENANT) {
+    secondSection.unshift({
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    });
+  }
 
-  if (DEV_MODE.isActive || __DEV__) {
+  if (DEV_MODE.isActive) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',
       testID: 'SettingsScreen:DevTools',
+    });
+  }
+
+  if (IS_IPAD) {
+    secondSection.push({
+      title: 'Switch Accounts',
+      screen: 'MultiUserScreen',
     });
   }
 
@@ -179,7 +196,7 @@ const SettingsScreen = observer(({ navigation }) => {
   return (
     <Screen safe>
       <HiddenTap>
-        <ScreenHeader back title={i18n.t('moreScreen.settings')} />
+        <ScreenHeader back={!IS_IPAD} title={i18n.t('moreScreen.settings')} />
       </HiddenTap>
       <ScrollView
         testID="SettingsScreen"

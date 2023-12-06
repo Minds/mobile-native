@@ -36,6 +36,9 @@ class AttachmentService {
       type: media.type,
       name: media.filename || 'test',
     };
+    if (file.type === 'image') {
+      file.type = 'image/jpeg';
+    }
 
     const progress = e => {
       if (!e.lengthComputable) return;

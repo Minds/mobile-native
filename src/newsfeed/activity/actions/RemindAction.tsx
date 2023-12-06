@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { IconButtonNext } from '~ui/icons';
 import { FLAG_REMIND } from '../../../common/Permissions';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import i18n from '../../../common/services/i18n.service';
 import createComposeStore, {
@@ -22,6 +22,7 @@ import { storeRatingService } from 'modules/store-rating';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import NavigationService from '../../../navigation/NavigationService';
 import type NewsfeedStore from '../../NewsfeedStore';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -46,13 +47,19 @@ export default function ({ entity, hideCount }: PropsTypes) {
   const analytics = useAnalytics();
 
   const showDropdown = useCallback(() => {
+    const canPost = PermissionsService.canCreatePost();
+    const canInteract = PermissionsService.canInteract();
+    if (!canPost && !canInteract) {
+      showNotification(i18n.t('permissions.notAllowed.interact'));
+      return;
+    }
     pushRemindActionSheet({
       reminded,
       entity,
       newsfeed,
       analytics,
     });
-  }, [reminded, entity]);
+  }, [reminded, entity, newsfeed, analytics]);
 
   return (
     <IconButtonNext
@@ -110,7 +117,7 @@ const pushRemindActionSheet = ({
       .submit()
       .then(activity => {
         // append the entity to the feed
-        newsfeed.feedStore.prepend(activity);
+        ActivityModel.events.emit('newPost', activity);
         analytics.trackClick('remind');
         storeRatingService.track('remind', true);
 
@@ -149,6 +156,9 @@ const pushRemindActionSheet = ({
     });
   };
 
+  const canPost = PermissionsService.canCreatePost();
+  const canInteract = PermissionsService.canInteract();
+
   return pushBottomSheet({
     safe: true,
     component: ref => (
@@ -165,24 +175,29 @@ const pushRemindActionSheet = ({
           />
         ) : (
           <>
-            <BottomSheetMenuItem
-              onPress={async () => {
-                await ref.close();
-                remind();
-              }}
-              title={i18n.t('capture.remind')}
-              iconName="repeat"
-              iconType="material"
-            />
-            <BottomSheetMenuItem
-              onPress={async () => {
-                await ref.close();
-                quote();
-              }}
-              title={i18n.t('quote')}
-              iconName="edit"
-              iconType="material"
-            />
+            {canInteract && (
+              <BottomSheetMenuItem
+                onPress={async () => {
+                  await ref.close();
+                  remind();
+                }}
+                title={i18n.t('capture.remind')}
+                iconName="repeat"
+                iconType="material"
+              />
+            )}
+            {canPost && (
+              <BottomSheetMenuItem
+                onPress={async () => {
+                  await ref.close();
+                  quote();
+                }}
+                title={i18n.t('quote')}
+                iconName="edit"
+                iconType="material"
+              />
+            )}
+
             <BottomSheetMenuItem
               onPress={async () => {
                 await ref.close();

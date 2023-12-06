@@ -29,8 +29,7 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
     }
   >
-    <Icon
-      allowFontScaling={false}
+    <MaterialCommunityIcons
       name="bank"
       size={20}
       style={
@@ -67,8 +66,7 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
     }
   >
-    <Icon
-      allowFontScaling={false}
+    <MaterialCommunityIcons
       name="clock"
       size={20}
       style={

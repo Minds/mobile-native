@@ -7,7 +7,7 @@ import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import {
   ONCHAIN_ENABLED,
   LIQUIDITY_ENABLED,
@@ -15,7 +15,9 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
+
+type IconName = React.ComponentProps<typeof Icon>['name'];
 
 // const linkTo = (dest: string) =>
 //   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -36,7 +38,7 @@ interface ResourceType {
 interface ContentType {
   name: 'create' | 'refer' | 'pool' | 'transfer';
   onPress: () => void;
-  icon: string;
+  icon: IconName;
 }
 
 const EarnItem = ({ content }: { content: ContentType }) => {
@@ -99,6 +101,7 @@ export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
     const theme = ThemedStyles.style;
     const localStore = useLocalStore(createLocalStore);
+    const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
     useEffect(() => {
       const settings = mindsConfigService.getSettings();
@@ -110,8 +113,6 @@ export default withErrorBoundaryScreen(
 
     const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
-    const affiliatesEnabled = useIsFeatureOn('epic-304-affiliates');
-
     const earnItems: ContentType[] = [
       {
         name: 'create',
@@ -121,8 +122,7 @@ export default withErrorBoundaryScreen(
       {
         name: 'refer',
         icon: 'account-multiple',
-        onPress: () =>
-          affiliatesEnabled ? navTo('AffiliateProgram') : navTo('Referrals'),
+        onPress: () => navTo('AffiliateProgram'),
       },
     ];
 
@@ -142,6 +142,15 @@ export default withErrorBoundaryScreen(
       });
     }
 
+    const resourceWallet: ResourceType[] = hideTokens
+      ? []
+      : [
+          {
+            name: 'resources.earnings',
+            onPress: () => navTo('Wallet'),
+          },
+        ];
+
     const resourcesItems: ResourceType[] = [
       // {
       //   name: 'resources.rewards',
@@ -151,10 +160,7 @@ export default withErrorBoundaryScreen(
       //   name: 'resources.tokens',
       //   onPress: () => linkTo('token'),
       // },
-      {
-        name: 'resources.earnings',
-        onPress: () => navTo('Wallet'),
-      },
+      ...resourceWallet,
       {
         name: 'resources.analytics',
         onPress: () => navTo('Analytics'),
@@ -225,6 +231,6 @@ const styles = StyleSheet.create({
   textItem: {
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
 });

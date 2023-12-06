@@ -95,7 +95,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -116,7 +116,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -175,7 +175,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -196,7 +196,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -290,7 +290,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -316,7 +316,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto",
+            "fontFamily": "Roboto_400Regular",
           },
           [
             {
@@ -356,30 +356,17 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
+        <MaterialCommunityIcons
+          color="#a1a5ab"
+          name="chevron-right"
+          size={32}
           style={
-            [
-              {
-                "color": "#a1a5ab",
-                "fontSize": 32,
-              },
-              {
-                "backgroundColor": "transparent",
-              },
-              {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              {},
-            ]
+            {
+              "backgroundColor": "transparent",
+            }
           }
           testID="iconIcon"
-        >
-          󰅂
-        </Text>
+        />
       </View>
     </View>
   </View>

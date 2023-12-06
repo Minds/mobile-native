@@ -43,7 +43,10 @@ export default withErrorBoundaryScreen(
     return (
       <ModalContainer
         title={i18n.t('onboarding.subscribeToChannel')}
-        contentContainer={theme.bgPrimaryBackgroundHighlight}
+        contentContainer={[
+          theme.bgPrimaryBackgroundHighlight,
+          theme.alignSelfCenterMaxWidth,
+        ]}
         onPressBack={NavigationService.goBack}>
         <ScrollView style={theme.flexContainer}>
           {empty}

@@ -5,17 +5,24 @@ exports[`Notifications component renders correctly 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -222,6 +229,7 @@ exports[`Notifications component renders correctly 1`] = `
               "entity_urn": "urn:user:968187695744425997",
               "from": {
                 "_collapsed": false,
+                "_viewed": false,
                 "access_id": false,
                 "allow_comments": false,
                 "allow_unsubscribed_contact": false,
@@ -236,7 +244,6 @@ exports[`Notifications component renders correctly 1`] = `
                 "canary": false,
                 "categories": [],
                 "city": false,
-                "confirmEmail": [Function],
                 "container_guid": false,
                 "disable_autoplay_videos": false,
                 "disabled_boost": false,
@@ -489,6 +496,7 @@ exports[`Notifications component renders correctly 1`] = `
         "entity_urn": "urn:user:968187695744425997",
         "from": {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": false,
           "allow_comments": false,
           "allow_unsubscribed_contact": false,
@@ -503,7 +511,6 @@ exports[`Notifications component renders correctly 1`] = `
           "canary": false,
           "categories": [],
           "city": false,
-          "confirmEmail": [Function],
           "container_guid": false,
           "disable_autoplay_videos": false,
           "disabled_boost": false,

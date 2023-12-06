@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, ColorValue } from 'react-native';
 import { Icon, IIcon } from './Icon';
 import {
   ICON_BACKGROUND,
@@ -10,16 +10,27 @@ import {
 import { getSpacingStylesNext } from '~ui/helpers';
 import ThemedStyles from '~styles/ThemedStyles';
 
-export function IconCircled({ style, active, ...extra }: IIcon) {
-  const background = active
+export function IconCircled({
+  style,
+  active,
+  backgroundColor,
+  ...extra
+}: IIcon & { active?: boolean; backgroundColor?: ColorValue }) {
+  const background = backgroundColor
+    ? backgroundColor
+    : active
     ? ThemedStyles.getColor(ICON_COLOR_ACTIVE)
     : ThemedStyles.getColor(ICON_BACKGROUND);
 
   const color = active ? 'White' : ICON_COLOR_DEFAULT;
 
   const containerStyles: any = [
-    styles.container,
-    { backgroundColor: background },
+    {
+      overflow: 'hidden',
+      borderRadius: 200,
+      padding: UNIT.S * 1.3,
+      backgroundColor: background,
+    },
   ];
 
   const extraStyles = getSpacingStylesNext(extra);
@@ -31,17 +42,10 @@ export function IconCircled({ style, active, ...extra }: IIcon) {
   if (style) {
     containerStyles.push(style);
   }
+
   return (
     <View style={containerStyles}>
       <Icon color={color} nested {...extra} space="XS" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    overflow: 'hidden',
-    borderRadius: 200,
-    padding: UNIT.S * 0.8,
-  },
-});

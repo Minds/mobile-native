@@ -10,8 +10,8 @@ import Reanimated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FIcon from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FIcon from '@expo/vector-icons/Feather';
+import Icon from '@expo/vector-icons/Ionicons';
 import { Camera } from 'react-native-vision-camera';
 import FadeFrom from '../../common/components/animations/FadeFrom';
 import { IS_IOS } from '../../config/Config';
@@ -31,6 +31,9 @@ import useCameraStyle from './useCameraStyle';
 import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
 import PressableScale from '~/common/components/PressableScale';
+import PermissionsService from '~/common/services/permissions.service';
+import { showNotification } from 'AppMessages';
+import i18n from '~/common/services/i18n.service';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -156,6 +159,11 @@ export default observer(function (props: PropsType) {
   // capture long press handler
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
+      if (!PermissionsService.canUploadVideo()) {
+        showNotification(i18n.t('composer.create.mediaVideoError'));
+        return;
+      }
+
       if (props.onForceVideo) {
         props.onForceVideo();
       }

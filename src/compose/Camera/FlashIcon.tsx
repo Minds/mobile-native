@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/Ionicons';
+import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';
 import PressableScale from '~/common/components/PressableScale';
+type IconName = React.ComponentProps<typeof Icon>['name'];
 
 type PropsType = {
   store: CameraStore;
   style: any;
 };
 
-const icons = {
+const icons: { [key: string]: IconName } = {
   on: 'md-flash-outline',
   off: 'md-flash-off-outline',
   auto: 'md-flash-outline',
@@ -24,7 +25,7 @@ const FlashIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   // Toggle callback
   const onPress = React.useCallback(() => store.toggleFlash(), [store]);
 
-  let flashIconName = icons[store.flashMode] || '';
+  let flashIconName = icons[store.flashMode];
 
   const autoStyle = [style, { position: 'absolute', top: -3, left: 0 }];
 

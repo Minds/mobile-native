@@ -55,6 +55,7 @@ export const ListItem = BaseListItemFrame.extractable(
         {(avatarUrl || leftIcon) && (
           <View mr="$3" mt="$1" als="flex-start">
             {avatarUrl ? (
+              // @ts-ignore TODO: fix TS errors of tamagui
               <Avatar sSize="m" bordered url={avatarUrl} />
             ) : (
               leftIcon && <Icon name={leftIcon} size="$3" />
@@ -64,8 +65,10 @@ export const ListItem = BaseListItemFrame.extractable(
 
         {/* Content section */}
         <YStack f={1} jc="center">
+          {/* @ts-ignore TODO: fix TS errors of tamagui */}
           <Text fow={'500'}>{props.title}</Text>
           {!!props.subtitle && (
+            // @ts-ignore TODO: fix TS errors of tamagui
             <Text color="$colorTextSecondary" size="$b2" fow={'400'}>
               {props.subtitle}
             </Text>

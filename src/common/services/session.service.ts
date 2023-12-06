@@ -296,6 +296,7 @@ export class SessionService {
       //@ts-ignore
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
+      console.warn('Error parsing token: ', token);
       return null;
     }
   }

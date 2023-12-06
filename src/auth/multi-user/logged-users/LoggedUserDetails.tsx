@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MCIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Options from './Options';
 import UnreadNotifications from './UnreadNotifications';

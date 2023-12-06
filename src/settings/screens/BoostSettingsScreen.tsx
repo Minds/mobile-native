@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import sessionService from '../../common/services/session.service';
 import { Tooltip } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
+import { Screen } from '~/common/ui';
 
 /****** Boost Settings *****
  *  disabled_boost === true => viewBoostedContent = false
@@ -209,9 +210,10 @@ const BoostSettingsScreen = observer(() => {
   ];
 
   return (
-    <ScrollView style={[theme.fullHeight, theme.paddingTop4x]}>
+    <Screen scroll>
       <MText
         style={[
+          theme.paddingTop4x,
           theme.colorSecondaryText,
           theme.marginBottom6x,
           theme.paddingLeft4x,
@@ -227,7 +229,7 @@ const BoostSettingsScreen = observer(() => {
       {items.map(item => (
         <Item item={item} key={item.id} />
       ))}
-    </ScrollView>
+    </Screen>
   );
 });
 
@@ -294,7 +296,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
   },
   lineHeight: {
     lineHeight: 35,

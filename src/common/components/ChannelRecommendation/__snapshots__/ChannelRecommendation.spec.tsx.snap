@@ -202,6 +202,7 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
       channel={
         {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "2",
           "allow_comments": true,
           "banned": "no",
@@ -224,7 +225,6 @@ exports[`ChannelRecommendationItem renders correctly 1`] = `
           ],
           "chat": true,
           "city": "",
-          "confirmEmail": [Function],
           "container_guid": "0",
           "deleted": "0",
           "disable_autoplay_videos": undefined,

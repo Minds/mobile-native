@@ -9,7 +9,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import { inject } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
-import { Button } from '~ui';
+import { Button, Screen } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
 import type UserStore from '~/auth/UserStore';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
@@ -79,13 +79,15 @@ class EmailScreen extends Component<
    * Save email
    */
   save = () => {
-    if (!validator.email(this.state.email)) return;
+    if (!validator.email(this.state.email)) {
+      return;
+    }
 
     this.setState({ saving: true });
 
     settingsService
       .submitSettings({ email: this.state.email })
-      .then(data => {
+      .then(() => {
         this.props.navigation.goBack();
       })
       .finally(() => {
@@ -138,23 +140,25 @@ class EmailScreen extends Component<
     ) : null;
 
     return (
-      <DismissKeyboard
-        style={[
-          theme.flexContainer,
-          theme.paddingTop3x,
-          theme.bgPrimaryBackground,
-        ]}>
-        <InputContainer
-          placeholder={i18n.t('settings.currentEmail')}
-          onChangeText={this.setEmail}
-          value={email}
-          editable={!this.state.inProgress}
-          testID="emailScreenInput"
-          error={valid ? undefined : i18n.t('validation.email')}
-          selectTextOnFocus={true}
-        />
-        {confirmNote}
-      </DismissKeyboard>
+      <Screen>
+        <DismissKeyboard
+          style={[
+            theme.flexContainer,
+            theme.paddingTop3x,
+            theme.bgPrimaryBackground,
+          ]}>
+          <InputContainer
+            placeholder={i18n.t('settings.currentEmail')}
+            onChangeText={this.setEmail}
+            value={email}
+            editable={!this.state.inProgress}
+            testID="emailScreenInput"
+            error={valid ? undefined : i18n.t('validation.email')}
+            selectTextOnFocus={true}
+          />
+          {confirmNote}
+        </DismissKeyboard>
+      </Screen>
     );
   }
 }

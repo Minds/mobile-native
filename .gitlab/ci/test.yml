@@ -1,9 +1,9 @@
 test:quality:
-  image: node:18.13.0
+  image: node:18.18.0
   stage: test
   interruptible: true
   rules:
-    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "master") && $BUILD_MODE == null
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}

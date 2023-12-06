@@ -2,12 +2,19 @@ import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 import i18nService from '~/common/services/i18n.service';
 import { B2, Icon, IconButton, Row } from '~/common/ui';
+import { IS_IPAD } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export default function BoostRotatorHeader() {
   const navigation = useNavigation();
 
-  const navToBoostSettings = () => navigation.navigate('BoostSettingsScreen');
+  const navToBoostSettings = () =>
+    IS_IPAD
+      ? navigation.navigate('BoostSettingsScreen')
+      : navigation.navigate('More', {
+          screen: 'BoostSettingsScreen',
+          initial: false,
+        });
 
   return (
     <View style={styles.container}>

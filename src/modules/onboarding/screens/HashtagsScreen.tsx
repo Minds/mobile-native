@@ -9,10 +9,12 @@ import Header from '../components/Header';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import AuthService from '~/auth/AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useSurveyData } from '../hooks';
 
 function HashTagsScreen({ navigation }) {
   const theme = ThemedStyles.style;
   const { hashtag } = useLegacyStores();
+  const { noData } = useSurveyData();
 
   const mandatoryOnboarding = useIsFeatureOn(
     'minds-3921-mandatory-onboarding-tags',
@@ -20,7 +22,7 @@ function HashTagsScreen({ navigation }) {
 
   const next = () =>
     mandatoryOnboarding
-      ? navigation.navigate('OnboardingChannels')
+      ? navigation.navigate(noData ? 'OnboardingChannels' : 'OnboardingSurvey')
       : AuthService.setCompletedOnboard();
 
   React.useEffect(() => {

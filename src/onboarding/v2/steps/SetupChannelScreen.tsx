@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
 import { Image } from 'expo-image';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 
 import Button from '../../../common/components/Button';
 import InputContainer from '../../../common/components/InputContainer';
@@ -99,6 +99,7 @@ export default withErrorBoundaryScreen(
     return (
       <ModalContainer
         title={i18n.t('onboarding.setupChannel')}
+        contentContainer={theme.alignSelfCenterMaxWidth}
         onPressBack={NavigationService.goBack}
         leftButton={
           keyboard.keyboardShown ? (

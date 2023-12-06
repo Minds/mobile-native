@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import sizes from './generators/sizes';
 import borders from './generators/borders';
 import colors from './generators/colors';
@@ -7,6 +7,7 @@ import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
 import type { ColorsType } from './Colors';
 import typography from './generators/typography';
+import { IS_IPAD } from '~/config/Config';
 
 const dynamicStyleHandler = {
   get: function (target, name) {
@@ -33,6 +34,10 @@ const dynamicStyleHandler = {
     return null;
   },
 };
+
+const { width, height } = Dimensions.get('window');
+export const getMaxFeedWidth = () =>
+  IS_IPAD ? Math.min(width, height) - 200 : width;
 
 const _buildStyle = (theme: ColorsType) =>
   ({
@@ -129,6 +134,11 @@ const _buildStyle = (theme: ColorsType) =>
     },
     alignSelfCenter: {
       alignSelf: 'center',
+    },
+    alignSelfCenterMaxWidth: {
+      alignSelf: 'center',
+      width: '100%',
+      maxWidth: getMaxFeedWidth(),
     },
     alignSelfStretch: {
       alignSelf: 'stretch',
@@ -236,23 +246,23 @@ const _buildStyle = (theme: ColorsType) =>
     // todo: replace by fontBold
     bold: {
       fontWeight: '700',
-      fontFamily: 'Roboto-Black',
+      fontFamily: 'Roboto_900Black',
     },
     fontBold: {
       fontWeight: '700',
-      fontFamily: 'Roboto-Black',
+      fontFamily: 'Roboto_900Black',
     },
     extraBold: {
       // fontWeight: '800'
-      fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+      fontFamily: 'Roboto_900Black', // workaround android ignoring >= 800
     },
     fontThin: {
       fontWeight: '200',
-      fontFamily: 'Roboto-Thin',
+      fontFamily: 'Roboto_100Thin',
     },
     fontHairline: {
       fontWeight: '100',
-      fontFamily: 'Roboto-Thin',
+      fontFamily: 'Roboto_100Thin',
     },
     fontLight: {
       fontWeight: '300',
@@ -263,7 +273,7 @@ const _buildStyle = (theme: ColorsType) =>
     },
     fontMedium: {
       fontWeight: '500',
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'Roboto_500Medium',
     },
     fontSemibold: {
       fontWeight: '600',
@@ -314,13 +324,13 @@ const _buildStyle = (theme: ColorsType) =>
       paddingBottom: 20,
     },
     titleText: {
-      fontFamily: 'Roboto',
+      fontFamily: 'Roboto_400Regular',
       fontSize: Platform.select({ ios: 26, android: 24 }),
       fontWeight: '500',
       lineHeight: 44,
     },
     subTitleText: {
-      fontFamily: 'Roboto',
+      fontFamily: 'Roboto_400Regular',
       fontSize: Platform.select({ ios: 16, android: 15 }),
       fontWeight: '500',
       lineHeight: 23,
@@ -331,7 +341,7 @@ const _buildStyle = (theme: ColorsType) =>
       color: theme.PrimaryText,
       fontSize: 16,
       // padding: 10,
-      fontFamily: 'Roboto',
+      fontFamily: 'Roboto_400Regular',
       backgroundColor: 'transparent',
       // height: 50,
       borderRadius: 2,
@@ -368,7 +378,7 @@ const _buildStyle = (theme: ColorsType) =>
       height: 60,
     },
     buttonText: {
-      // fontFamily: 'Roboto',
+      // fontFamily:'Roboto_400Regular',
       fontSize: 20,
       fontWeight: '500',
       color: 'white',

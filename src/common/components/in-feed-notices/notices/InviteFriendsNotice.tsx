@@ -5,6 +5,7 @@ import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import { TENANT } from '~/config/Config';
 
 /**
  * Invite a Friend Notice
@@ -13,7 +14,7 @@ function InviteFriendsNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
 
   const onPress = useCallback(() => {
-    navigation.navigate('Referrals');
+    navigation.navigate('AffiliateProgram');
   }, [navigation]);
 
   if (!inFeedNoticesService.visible(name)) {
@@ -23,7 +24,9 @@ function InviteFriendsNotice({ name }: NoticeProps) {
     <InFeedNotice
       name={name}
       title={i18nService.t('inFeedNotices.inviteFriendsTitle')}
-      description={i18nService.t('inFeedNotices.inviteFriendsDescription')}
+      description={i18nService.t('inFeedNotices.inviteFriendsDescription', {
+        TENANT,
+      })}
       btnText={i18nService.t('inFeedNotices.inviteFriendsAction')}
       iconName="info-outline"
       onPress={onPress}

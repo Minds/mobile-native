@@ -23,6 +23,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
     <View
       style={
         {
+          "alignSelf": "stretch",
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -35,7 +36,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto-Bold",
+              "fontFamily": "Roboto_700Bold",
             },
             {
               "fontSize": 18,
@@ -84,27 +85,12 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 29.12,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="attach-money"
+            size={29.12}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -122,7 +108,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -143,7 +129,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -194,27 +180,12 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 28,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="sms"
+            size={28}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -232,7 +203,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -253,7 +224,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -304,27 +275,12 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 28,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="date-range"
+            size={28}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -342,7 +298,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -363,7 +319,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -446,6 +402,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginHorizontal": 4,
             }
           }
@@ -457,7 +414,7 @@ exports[`SupermindOnboarding render consumer onboarding correctly 1`] = `
                   "color": "#FFFFFF",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 14,
@@ -501,6 +458,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
     <View
       style={
         {
+          "alignSelf": "stretch",
           "marginBottom": 40,
           "marginLeft": 8,
         }
@@ -513,7 +471,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto-Bold",
+              "fontFamily": "Roboto_700Bold",
             },
             {
               "fontSize": 18,
@@ -562,27 +520,12 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 29.12,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="attach-money"
+            size={29.12}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -600,7 +543,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -621,7 +564,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -643,7 +586,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -695,27 +638,12 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 28,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="sms"
+            size={28}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -733,7 +661,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -754,7 +682,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -805,27 +733,12 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
             ]
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#AEB0B8",
-                  "fontSize": 28,
-                },
-                {},
-                {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
+          <MaterialIcons
+            color="#AEB0B8"
+            name="delete"
+            size={28}
+            style={{}}
+          />
         </View>
       </View>
       <View
@@ -843,7 +756,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Bold",
+                "fontFamily": "Roboto_700Bold",
               },
               {
                 "fontSize": 18,
@@ -864,7 +777,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                 "color": "#b9bbc0",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               {
                 "fontSize": 14,
@@ -947,6 +860,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
         <View
           style={
             {
+              "alignSelf": "stretch",
               "marginHorizontal": 4,
             }
           }
@@ -958,7 +872,7 @@ exports[`SupermindOnboarding renders producer onboarding correctly 1`] = `
                   "color": "#FFFFFF",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 14,

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as entities from 'entities';
 import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import { showNotification } from '../../../AppMessages';
@@ -23,6 +23,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import NavigationService from '~/navigation/NavigationService';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   comment: CommentModel;
@@ -126,16 +127,17 @@ export default function CommentBottomMenu({
     };
 
     if (comment.isOwner()) {
-      actions.push({
-        title: i18n.t('edit'),
-        iconName: 'edit',
-        iconType: 'material',
-        onPress: () => {
-          close();
-          // we delay showing the input to prevent the keyboard to be hidden
-          setTimeout(() => store.setShowInput(true, comment), 300);
-        },
-      });
+      PermissionsService.canComment() &&
+        actions.push({
+          title: i18n.t('edit'),
+          iconName: 'edit',
+          iconType: 'material',
+          onPress: () => {
+            close();
+            // we delay showing the input to prevent the keyboard to be hidden
+            setTimeout(() => store.setShowInput(true, comment), 300);
+          },
+        });
 
       actions.push(deleteOpt);
 

@@ -1,7 +1,9 @@
+// @ts-nocheck TODO: fix TS errors of tamagui
 import React from 'react';
 import { Button, Layout, View, Icons, Text, TabBar } from '@minds/ui';
 import { ScrollView } from 'react-native';
 
+// @ts-nocheck TODO: fix TS errors of tamagui
 import { useNavigation } from '@react-navigation/native';
 
 const tabs = [

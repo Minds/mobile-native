@@ -167,6 +167,7 @@ export const ScrollableAutoWidthTabBar = ({
           borderColor: ThemedStyles.getColor('PrimaryBorder'),
           borderBottomWidth: StyleSheet.hairlineWidth,
         },
+        ThemedStyles.style.alignSelfCenterMaxWidth,
         style,
       ]}
       indicatorContainerStyle={styles.zIndex1}

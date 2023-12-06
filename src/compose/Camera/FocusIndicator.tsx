@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { useMemoStyle } from '../../styles/ThemedStyles';
 
 type PropsType = {

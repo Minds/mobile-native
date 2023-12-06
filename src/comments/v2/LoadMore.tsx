@@ -2,7 +2,7 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
 import type CommentsStore from './CommentsStore';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
 import i18n from '../../common/services/i18n.service';

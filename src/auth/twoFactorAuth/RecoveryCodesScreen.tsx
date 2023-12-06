@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { MoreStackParamList } from '../../navigation/NavigationTypes';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import SaveButton from '../../common/components/SaveButton';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
@@ -85,12 +85,12 @@ const styles = StyleSheet.create({
   title: {
     paddingLeft: 20,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 20,
   },
   smallTitle: {
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 16,
   },
   text: {

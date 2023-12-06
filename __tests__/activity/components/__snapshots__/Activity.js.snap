@@ -5,7 +5,13 @@ exports[`Activity component renders correctly 1`] = `
   onLayout={[Function]}
   style={
     [
-      {},
+      [
+        {
+          "alignSelf": "center",
+          "maxWidth": 750,
+          "width": "100%",
+        },
+      ],
       {
         "borderBottomWidth": 6,
       },
@@ -22,6 +28,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       {
         "_collapsed": false,
+        "_viewed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -46,11 +53,11 @@ exports[`Activity component renders correctly 1`] = `
         "ownerObj": {
           "__list": null,
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
-          "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
           "disabled_boost": undefined,
           "email_confirmed": false,
@@ -121,6 +128,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       {
         "_collapsed": false,
+        "_viewed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -145,11 +153,11 @@ exports[`Activity component renders correctly 1`] = `
         "ownerObj": {
           "__list": null,
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
-          "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
           "disabled_boost": undefined,
           "email_confirmed": false,
@@ -226,6 +234,7 @@ exports[`Activity component renders correctly 1`] = `
         entity={
           {
             "_collapsed": false,
+            "_viewed": false,
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -250,11 +259,11 @@ exports[`Activity component renders correctly 1`] = `
             "ownerObj": {
               "__list": null,
               "_collapsed": false,
+              "_viewed": false,
               "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
               "canary": false,
-              "confirmEmail": [Function],
               "disable_autoplay_videos": undefined,
               "disabled_boost": undefined,
               "email_confirmed": false,
@@ -349,6 +358,7 @@ exports[`Activity component renders correctly 1`] = `
         entity={
           {
             "_collapsed": false,
+            "_viewed": false,
             "access_id": "",
             "allow_comments": true,
             "attachment_guid": false,
@@ -373,11 +383,11 @@ exports[`Activity component renders correctly 1`] = `
             "ownerObj": {
               "__list": null,
               "_collapsed": false,
+              "_viewed": false,
               "access_id": "",
               "allow_comments": true,
               "blocked": undefined,
               "canary": false,
-              "confirmEmail": [Function],
               "disable_autoplay_videos": undefined,
               "disabled_boost": undefined,
               "email_confirmed": false,
@@ -461,6 +471,7 @@ exports[`Activity component renders correctly 1`] = `
           entity={
             {
               "_collapsed": false,
+              "_viewed": false,
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -485,11 +496,11 @@ exports[`Activity component renders correctly 1`] = `
               "ownerObj": {
                 "__list": null,
                 "_collapsed": false,
+                "_viewed": false,
                 "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
                 "canary": false,
-                "confirmEmail": [Function],
                 "disable_autoplay_videos": undefined,
                 "disabled_boost": undefined,
                 "email_confirmed": false,
@@ -565,7 +576,7 @@ exports[`Activity component renders correctly 1`] = `
           style={
             [
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
                 "fontSize": 16,
                 "lineHeight": 24,
               },
@@ -576,7 +587,7 @@ exports[`Activity component renders correctly 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto-Medium",
+                "fontFamily": "Roboto_500Medium",
                 "fontWeight": "500",
               },
             ]
@@ -586,6 +597,7 @@ exports[`Activity component renders correctly 1`] = `
           entity={
             {
               "_collapsed": false,
+              "_viewed": false,
               "access_id": "",
               "allow_comments": true,
               "attachment_guid": false,
@@ -610,11 +622,11 @@ exports[`Activity component renders correctly 1`] = `
               "ownerObj": {
                 "__list": null,
                 "_collapsed": false,
+                "_viewed": false,
                 "access_id": "",
                 "allow_comments": true,
                 "blocked": undefined,
                 "canary": false,
-                "confirmEmail": [Function],
                 "disable_autoplay_videos": undefined,
                 "disabled_boost": undefined,
                 "email_confirmed": false,
@@ -683,7 +695,7 @@ exports[`Activity component renders correctly 1`] = `
           key="translate-activityguid0"
           style={
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
               "fontSize": 16,
               "lineHeight": 24,
             }
@@ -696,6 +708,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       {
         "_collapsed": false,
+        "_viewed": false,
         "access_id": "",
         "allow_comments": true,
         "attachment_guid": false,
@@ -720,11 +733,11 @@ exports[`Activity component renders correctly 1`] = `
         "ownerObj": {
           "__list": null,
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "",
           "allow_comments": true,
           "blocked": undefined,
           "canary": false,
-          "confirmEmail": [Function],
           "disable_autoplay_videos": undefined,
           "disabled_boost": undefined,
           "email_confirmed": false,

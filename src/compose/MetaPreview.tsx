@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import IonIcon from '@expo/vector-icons/Ionicons';
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 

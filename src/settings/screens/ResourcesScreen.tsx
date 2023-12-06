@@ -16,20 +16,20 @@ const items = [
     options: [
       // {
       //   id: 'mobile',
-      //   onPress: () => Linking.openURL('https://mobile.minds.com/mobile'),
+      //   onPress: () => openUrlService.open('https://mobile.minds.com/mobile'),
       // },
       // {
       //   id: 'careers',
-      //   onPress: () => Linking.openURL('https://jobs.lever.co/minds'),
+      //   onPress: () => openUrlService.open('https://jobs.lever.co/minds'),
       // },
       // {
       //   id: 'blog',
-      //   onPress: () => Linking.openURL('https://mobile.minds.com/minds/blogs'),
+      //   onPress: () => openUrlService.open('https://www.minds.com/minds/blogs'),
       // },
       // {
       //   id: 'whitepaper',
       //   onPress: () =>
-      //     Linking.openURL(
+      //     openUrlService.open(
       //       'https://cdn-assets.minds.com/front/dist/browser/en/assets/documents/Minds-Whitepaper-v2.pdf',
       //     ),
       // },
@@ -40,11 +40,11 @@ const items = [
       },
       // {
       //   id: 'events',
-      //   onPress: () => Linking.openURL('https://change.minds.com/'),
+      //   onPress: () => openUrlService.open('https://change.minds.com/'),
       // },
       // {
       //   id: 'store',
-      //   onPress: () => Linking.openURL('https://teespring.com/stores/minds'),
+      //   onPress: () => openUrlService.open('https://teespring.com/stores/minds'),
       // },
       {
         id: 'terms',
@@ -57,7 +57,7 @@ const items = [
       // {
       //   id: 'content',
       //   onPress: () =>
-      //     Linking.openURL('https://mobile.minds.com/content-policy'),
+      //     openUrlService.open('https://mobile.minds.com/content-policy'),
       // },
       {
         id: 'dmca',
@@ -79,13 +79,13 @@ const items = [
       // {
       //   id: 'community',
       //   onPress: () =>
-      //     Linking.openURL(
-      //       'https://mobile.minds.com/groups/profile/100000000000000681',
+      //     openUrlService.open(
+      //       'https://www.minds.com/groups/profile/100000000000000681',
       //     ),
       // },
       // {
       //   id: 'languages',
-      //   onPress: () => Linking.openURL('https://mobile.minds.com/localization'),
+      //   onPress: () => openUrlService.open('https://mobile.minds.com/localization'),
       // },
       {
         id: 'status',
@@ -98,43 +98,43 @@ const items = [
   //   options: [
   //     {
   //       id: 'upgrade',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/upgrades'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/upgrades'),
   //       show: false,
   //     },
   //     {
   //       id: 'token',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/token'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/token'),
   //     },
   //     {
   //       id: 'plus',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/plus'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/plus'),
   //       show: false,
   //     },
   //     {
   //       id: 'pro',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/pro'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/pro'),
   //       show: false,
   //     },
   //     {
   //       id: 'pay',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/pay'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/pay'),
   //     },
   //     {
   //       id: 'nodes',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/nodes'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/nodes'),
   //     },
   //     {
   //       id: 'boost',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/boost'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/boost'),
   //     },
   //     {
   //       id: 'rewards',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/rewards'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/rewards'),
   //     },
   //     {
   //       id: 'youtube',
   //       onPress: () =>
-  //         Linking.openURL('https://mobile.minds.com/youtube-migration'),
+  //         openUrlService.open('https://mobile.minds.com/youtube-migration'),
   //     },
   //   ],
   // },
@@ -143,26 +143,26 @@ const items = [
   //   options: [
   //     {
   //       id: 'docs',
-  //       onPress: () => Linking.openURL('https://developers.minds.com/'),
+  //       onPress: () => openUrlService.open('https://developers.minds.com/'),
   //     },
   //     {
   //       id: 'community',
   //       onPress: () =>
-  //         Linking.openURL(
+  //         openUrlService.open(
   //           'https://mobile.minds.com/groups/profile/365903183068794880',
   //         ),
   //     },
   //     {
   //       id: 'code',
-  //       onPress: () => Linking.openURL('https://gitlab.com/minds'),
+  //       onPress: () => openUrlService.open('https://gitlab.com/minds'),
   //     },
   //     {
   //       id: 'canary',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/canary'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/canary'),
   //     },
   //     {
   //       id: 'branding',
-  //       onPress: () => Linking.openURL('https://mobile.minds.com/branding'),
+  //       onPress: () => openUrlService.open('https://mobile.minds.com/branding'),
   //     },
   //   ],
   // },

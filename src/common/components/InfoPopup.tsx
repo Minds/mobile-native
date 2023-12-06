@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
 
 import MText from './MText';
 

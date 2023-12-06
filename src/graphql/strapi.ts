@@ -794,6 +794,8 @@ export type ComponentV2ProductFeatureTableHeader = {
   __typename?: 'ComponentV2ProductFeatureTableHeader';
   button: ComponentV2ProductActionButton;
   id: Scalars['ID']['output'];
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
+  priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   title: Scalars['String']['output'];
 };
 
@@ -802,16 +804,20 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
   >;
   button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
   or?: InputMaybe<
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
   >;
+  priceStartingAt?: InputMaybe<BooleanFilterInput>;
   title?: InputMaybe<StringFilterInput>;
 };
 
 export type ComponentV2ProductFeatureTableHeaderInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
+  priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -918,15 +924,42 @@ export enum Enum_Componentv2Productfeaturehighlight_Colorscheme {
 export enum Enum_Feattablecolumn_Tier {
   Free = 'free',
   Networks = 'networks',
+  NetworksCommunity = 'networks_community',
+  NetworksEnterprise = 'networks_enterprise',
+  NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
 }
 
 export enum Enum_Productplan_Tier {
   Free = 'free',
   Networks = 'networks',
+  NetworksCommunity = 'networks_community',
+  NetworksEnterprise = 'networks_enterprise',
+  NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
+}
+
+export enum Enum_Upgradepage_Cardid {
+  Hero = 'hero',
+  Networks = 'networks',
+  Plus = 'plus',
+  Pro = 'pro',
+}
+
+export enum Enum_Upgradepage_Iconsource {
+  Material = 'material',
+  Svg = 'svg',
+}
+
+export enum Enum_Upgradepage_Rowtype {
+  Bullet = 'bullet',
+  LinkText = 'linkText',
+  Price = 'price',
+  Title = 'title',
 }
 
 export type Error = {
@@ -1355,6 +1388,7 @@ export type GenericMorph =
   | ProductPlan
   | TopbarAlert
   | TwitterSyncTweetText
+  | UpgradePage
   | UploadFile
   | UploadFolder
   | UsersPermissionsPermission
@@ -1533,6 +1567,8 @@ export type Mutation = {
   createProductFeature?: Maybe<ProductFeatureEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
   createProductPlan?: Maybe<ProductPlanEntityResponse>;
+  createUpgradePage?: Maybe<UpgradePageEntityResponse>;
+  createUpgradePageLocalization?: Maybe<UpgradePageEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -1556,6 +1592,7 @@ export type Mutation = {
   deleteProductPlan?: Maybe<ProductPlanEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  deleteUpgradePage?: Maybe<UpgradePageEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -1590,6 +1627,7 @@ export type Mutation = {
   updateProductPlan?: Maybe<ProductPlanEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  updateUpgradePage?: Maybe<UpgradePageEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -1645,6 +1683,17 @@ export type MutationCreateProductPageArgs = {
 
 export type MutationCreateProductPlanArgs = {
   data: ProductPlanInput;
+};
+
+export type MutationCreateUpgradePageArgs = {
+  data: UpgradePageInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type MutationCreateUpgradePageLocalizationArgs = {
+  data?: InputMaybe<UpgradePageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationCreateUploadFileArgs = {
@@ -1716,6 +1765,11 @@ export type MutationDeleteProductPageArgs = {
 
 export type MutationDeleteProductPlanArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteUpgradePageArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationDeleteUploadFileArgs = {
@@ -1845,6 +1899,12 @@ export type MutationUpdateTopbarAlertArgs = {
 
 export type MutationUpdateTwitterSyncTweetTextArgs = {
   data: TwitterSyncTweetTextInput;
+};
+
+export type MutationUpdateUpgradePageArgs = {
+  data: UpgradePageInput;
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationUpdateUploadFileArgs = {
@@ -2061,6 +2121,7 @@ export type ProductPlan = {
   button: ComponentV2ProductActionButton;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   mostPopular?: Maybe<Scalars['Boolean']['output']>;
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
   perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
@@ -2100,6 +2161,7 @@ export type ProductPlanFiltersInput = {
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   mostPopular?: InputMaybe<BooleanFilterInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ProductPlanFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
   perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
@@ -2115,6 +2177,7 @@ export type ProductPlanFiltersInput = {
 export type ProductPlanInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   mostPopular?: InputMaybe<Scalars['Boolean']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
   perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
   perksTitle?: InputMaybe<Scalars['String']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2163,6 +2226,8 @@ export type Query = {
   productPlans?: Maybe<ProductPlanEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
   twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  upgradePage?: Maybe<UpgradePageEntityResponse>;
+  upgradePages?: Maybe<UpgradePageEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -2313,6 +2378,19 @@ export type QueryTwitterSyncTweetTextArgs = {
   publicationState?: InputMaybe<PublicationState>;
 };
 
+export type QueryUpgradePageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type QueryUpgradePagesArgs = {
+  filters?: InputMaybe<UpgradePageFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type QueryUploadFileArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -2460,6 +2538,78 @@ export type TwitterSyncTweetTextEntityResponse = {
 export type TwitterSyncTweetTextInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   tweetText?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpgradePage = {
+  __typename?: 'UpgradePage';
+  bulletOrderWithinCard?: Maybe<Scalars['Float']['output']>;
+  cardId: Enum_Upgradepage_Cardid;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  displayText: Scalars['String']['output'];
+  iconId?: Maybe<Scalars['String']['output']>;
+  iconSource?: Maybe<Enum_Upgradepage_Iconsource>;
+  locale?: Maybe<Scalars['String']['output']>;
+  localizations?: Maybe<UpgradePageRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  rowType: Enum_Upgradepage_Rowtype;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UpgradePageLocalizationsArgs = {
+  filters?: InputMaybe<UpgradePageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type UpgradePageEntity = {
+  __typename?: 'UpgradePageEntity';
+  attributes?: Maybe<UpgradePage>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type UpgradePageEntityResponse = {
+  __typename?: 'UpgradePageEntityResponse';
+  data?: Maybe<UpgradePageEntity>;
+};
+
+export type UpgradePageEntityResponseCollection = {
+  __typename?: 'UpgradePageEntityResponseCollection';
+  data: Array<UpgradePageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UpgradePageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
+  bulletOrderWithinCard?: InputMaybe<FloatFilterInput>;
+  cardId?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  displayText?: InputMaybe<StringFilterInput>;
+  iconId?: InputMaybe<StringFilterInput>;
+  iconSource?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<UpgradePageFiltersInput>;
+  not?: InputMaybe<UpgradePageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  rowType?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type UpgradePageInput = {
+  bulletOrderWithinCard?: InputMaybe<Scalars['Float']['input']>;
+  cardId?: InputMaybe<Enum_Upgradepage_Cardid>;
+  displayText?: InputMaybe<Scalars['String']['input']>;
+  iconId?: InputMaybe<Scalars['String']['input']>;
+  iconSource?: InputMaybe<Enum_Upgradepage_Iconsource>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  rowType?: InputMaybe<Enum_Upgradepage_Rowtype>;
+};
+
+export type UpgradePageRelationResponseCollection = {
+  __typename?: 'UpgradePageRelationResponseCollection';
+  data: Array<UpgradePageEntity>;
 };
 
 export type UploadFile = {
@@ -3055,6 +3205,78 @@ export type GetExplainerScreenQuery = {
   } | null;
 };
 
+export type GetOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename?: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              radioSurveyQuestion?: string | null;
+              carousel: Array<{
+                __typename?: 'ComponentOnboardingV5CarouselItem';
+                title: string;
+                media: {
+                  __typename?: 'UploadFileEntityResponse';
+                  data?: {
+                    __typename?: 'UploadFileEntity';
+                    attributes?: {
+                      __typename?: 'UploadFile';
+                      url: string;
+                      height?: number | null;
+                      width?: number | null;
+                    } | null;
+                  } | null;
+                };
+              } | null>;
+              radioSurvey?: Array<{
+                __typename?: 'ComponentOnboardingV5RadioOption';
+                id: string;
+                optionTitle: string;
+                optionDescription: string;
+                optionKey: string;
+              } | null> | null;
+            }
+          | { __typename?: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
+export type UpgradePageQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UpgradePageQuery = {
+  __typename?: 'Query';
+  upgradePages?: {
+    __typename?: 'UpgradePageEntityResponseCollection';
+    data: Array<{
+      __typename?: 'UpgradePageEntity';
+      attributes?: {
+        __typename?: 'UpgradePage';
+        cardId: Enum_Upgradepage_Cardid;
+        rowType: Enum_Upgradepage_Rowtype;
+        displayText: string;
+        iconId?: string | null;
+        iconSource?: Enum_Upgradepage_Iconsource | null;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type TweetMessageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TweetMessageQuery = {
@@ -3202,6 +3424,87 @@ export const useGetExplainerScreenQuery = <
     ['GetExplainerScreen', variables],
     gqlFetcher<GetExplainerScreenQuery, GetExplainerScreenQueryVariables>(
       GetExplainerScreenDocument,
+      variables,
+    ),
+    options,
+  );
+export const GetOnboardingV5VersionsDocument = `
+    query GetOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                  }
+                }
+              }
+            }
+            title
+            description
+            radioSurveyQuestion
+            radioSurvey {
+              id
+              optionTitle
+              optionDescription
+              optionKey
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOnboardingV5VersionsQuery = <
+  TData = GetOnboardingV5VersionsQuery,
+  TError = unknown,
+>(
+  variables?: GetOnboardingV5VersionsQueryVariables,
+  options?: UseQueryOptions<GetOnboardingV5VersionsQuery, TError, TData>,
+) =>
+  useQuery<GetOnboardingV5VersionsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetOnboardingV5Versions']
+      : ['GetOnboardingV5Versions', variables],
+    gqlFetcher<
+      GetOnboardingV5VersionsQuery,
+      GetOnboardingV5VersionsQueryVariables
+    >(GetOnboardingV5VersionsDocument, variables),
+    options,
+  );
+export const UpgradePageDocument = `
+    query UpgradePage {
+  upgradePages(sort: "bulletOrderWithinCard:ASC", pagination: {limit: 30}) {
+    data {
+      attributes {
+        cardId
+        rowType
+        displayText
+        iconId
+        iconSource
+      }
+    }
+  }
+}
+    `;
+export const useUpgradePageQuery = <TData = UpgradePageQuery, TError = unknown>(
+  variables?: UpgradePageQueryVariables,
+  options?: UseQueryOptions<UpgradePageQuery, TError, TData>,
+) =>
+  useQuery<UpgradePageQuery, TError, TData>(
+    variables === undefined ? ['UpgradePage'] : ['UpgradePage', variables],
+    gqlFetcher<UpgradePageQuery, UpgradePageQueryVariables>(
+      UpgradePageDocument,
       variables,
     ),
     options,

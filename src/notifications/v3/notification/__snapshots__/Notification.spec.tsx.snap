@@ -5,17 +5,24 @@ exports[`Notification 24 hours before an offer expires 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -88,7 +95,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -96,30 +103,17 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -140,7 +134,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -166,7 +160,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -174,7 +168,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -195,7 +189,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -203,7 +197,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -234,7 +228,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -264,7 +258,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -279,17 +273,24 @@ exports[`Notification Affiliate earnings deposited 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -362,7 +363,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -370,30 +371,17 @@ exports[`Notification Affiliate earnings deposited 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="attach-money"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -414,7 +402,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -452,7 +440,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -482,7 +470,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -497,17 +485,24 @@ exports[`Notification An offer expires 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -580,7 +575,7 @@ exports[`Notification An offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -588,30 +583,17 @@ exports[`Notification An offer expires 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -632,7 +614,7 @@ exports[`Notification An offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -657,7 +639,7 @@ exports[`Notification An offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -665,7 +647,7 @@ exports[`Notification An offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -688,7 +670,7 @@ exports[`Notification An offer expires 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -696,7 +678,7 @@ exports[`Notification An offer expires 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -727,7 +709,7 @@ exports[`Notification An offer expires 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -757,7 +739,7 @@ exports[`Notification An offer expires 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -772,17 +754,24 @@ exports[`Notification Boost accepted 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -855,7 +844,7 @@ exports[`Notification Boost accepted 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -863,30 +852,17 @@ exports[`Notification Boost accepted 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -907,7 +883,7 @@ exports[`Notification Boost accepted 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -945,7 +921,7 @@ exports[`Notification Boost accepted 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -975,7 +951,7 @@ exports[`Notification Boost accepted 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -997,7 +973,13 @@ exports[`Notification Boost accepted 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1067,17 +1049,24 @@ exports[`Notification Boost complete 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1150,7 +1139,7 @@ exports[`Notification Boost complete 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1158,30 +1147,17 @@ exports[`Notification Boost complete 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1202,7 +1178,7 @@ exports[`Notification Boost complete 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1240,7 +1216,7 @@ exports[`Notification Boost complete 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1270,7 +1246,7 @@ exports[`Notification Boost complete 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -1292,7 +1268,13 @@ exports[`Notification Boost complete 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1362,17 +1344,24 @@ exports[`Notification Boost rejected 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1445,7 +1434,7 @@ exports[`Notification Boost rejected 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1453,30 +1442,17 @@ exports[`Notification Boost rejected 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialCommunityIcons
+                color="#000000"
+                name="trending-up"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                󰔵
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1497,7 +1473,7 @@ exports[`Notification Boost rejected 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1535,7 +1511,7 @@ exports[`Notification Boost rejected 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1565,7 +1541,7 @@ exports[`Notification Boost rejected 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -1587,7 +1563,13 @@ exports[`Notification Boost rejected 1`] = `
       onLayout={[Function]}
       style={
         [
-          {},
+          [
+            {
+              "alignSelf": "center",
+              "maxWidth": 750,
+              "width": "100%",
+            },
+          ],
           {
             "borderWidth": 0.5,
           },
@@ -1657,17 +1639,24 @@ exports[`Notification Gift boost created 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -1740,7 +1729,7 @@ exports[`Notification Gift boost created 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1748,30 +1737,17 @@ exports[`Notification Gift boost created 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="redeem"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -1792,7 +1768,7 @@ exports[`Notification Gift boost created 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1817,7 +1793,7 @@ exports[`Notification Gift boost created 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -1825,7 +1801,7 @@ exports[`Notification Gift boost created 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -1858,7 +1834,7 @@ exports[`Notification Gift boost created 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -1888,7 +1864,7 @@ exports[`Notification Gift boost created 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -1974,7 +1950,7 @@ exports[`Notification Gift boost created 1`] = `
           style={
             {
               "alignItems": "center",
-              "borderColor": "#FFD048",
+              "borderColor": undefined,
               "borderRadius": 100,
               "borderWidth": 1,
               "bottom": 0,
@@ -2020,7 +1996,7 @@ exports[`Notification Gift boost created 1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                 },
                 {
                   "fontSize": 18,
@@ -2046,17 +2022,24 @@ exports[`Notification Receiver accepts an offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2129,7 +2112,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2137,30 +2120,17 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2181,7 +2151,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2206,7 +2176,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2214,7 +2184,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2237,7 +2207,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2245,7 +2215,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2276,7 +2246,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2306,7 +2276,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -2321,17 +2291,24 @@ exports[`Notification Receiver declines an offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2404,7 +2381,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2412,30 +2389,17 @@ exports[`Notification Receiver declines an offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2456,7 +2420,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2481,7 +2445,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2489,7 +2453,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2512,7 +2476,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2520,7 +2484,7 @@ exports[`Notification Receiver declines an offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -2551,7 +2515,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2581,7 +2545,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -2596,17 +2560,24 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2679,7 +2650,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2687,30 +2658,17 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="attach-money"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2731,7 +2689,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2769,7 +2727,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2799,7 +2757,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -2814,17 +2772,24 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+          "paddingHorizontal": 20,
+          "paddingVertical": 16,
+        },
+        {
+          "borderBottomWidth": 0.5,
+        },
+        {
+          "borderColor": "#53565A",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-        "paddingHorizontal": 20,
-        "paddingVertical": 16,
-      },
-      {
-        "borderBottomWidth": 0.5,
-      },
-      {
-        "borderColor": "#53565A",
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -2897,7 +2862,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#FFD048",
+                  "backgroundColor": "#1C1D1F",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2905,30 +2870,17 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
+              <MaterialIcons
+                color="#000000"
+                name="tips-and-updates"
+                size={10}
                 style={
-                  [
-                    {
-                      "color": "#000000",
-                      "fontSize": 10,
-                    },
-                    {
-                      "backgroundColor": "transparent",
-                    },
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
+                  {
+                    "backgroundColor": "transparent",
+                  }
                 }
                 testID="iconIcon"
-              >
-                
-              </Text>
+              />
             </View>
           </View>
         </View>
@@ -2949,7 +2901,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -2974,7 +2926,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -2982,7 +2934,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -3005,7 +2957,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                 "color": "#F2F2F2",
               },
               {
-                "fontFamily": "Roboto",
+                "fontFamily": "Roboto_400Regular",
               },
               [
                 {
@@ -3013,7 +2965,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
                   "lineHeight": 18,
                 },
                 {
-                  "fontFamily": "Roboto-Medium",
+                  "fontFamily": "Roboto_500Medium",
                   "fontWeight": "500",
                 },
                 {
@@ -3044,7 +2996,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "color": "#F2F2F2",
             },
             {
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto_400Regular",
             },
             [
               {
@@ -3074,7 +3026,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": "#FFD048",
+              "backgroundColor": undefined,
             },
           ]
         }

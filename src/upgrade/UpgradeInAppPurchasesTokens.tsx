@@ -28,6 +28,7 @@ import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { IS_IOS } from '~/config/Config';
+import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -65,6 +66,7 @@ const UpgradeInAppPurchasesTokens = ({
   );
 
   const insufficientFunds = walletStore.balance < cheapestTokenPrice;
+  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   /**
    * Get IAP subscriptions
@@ -218,7 +220,7 @@ const UpgradeInAppPurchasesTokens = ({
     <UpgradeScreenPlaceHolder />
   ) : (
     <>
-      <PaymentMethod store={store} cashName="Cash" />
+      {!hideTokens && <PaymentMethod store={store} cashName="Cash" />}
       {store.method === 'tokens' ? (
         <>
           <PlanOptions store={store} />

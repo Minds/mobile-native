@@ -1,20 +1,12 @@
 //@ts-nocheck
-/**
- * Minds mobile app
- * https://www.minds.com
- *
- * @format
- */
 import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
-  View,
   Linking,
   UIManager,
   AppState,
   AppStateStatus,
-  Dimensions,
   NativeEventSubscription,
   EmitterSubscription,
 } from 'react-native';
@@ -23,12 +15,12 @@ import { setup } from 'react-native-iap';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import ShareMenu from 'react-native-share-menu';
+// import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import deviceInfo from 'react-native-device-info';
+import { IS_IPAD } from '~/config/Config';
 
 import NavigationService, {
   navigationRef,
@@ -45,16 +37,23 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import i18n from './src/common/services/i18n.service';
 
-import receiveShareService from './src/common/services/receive-share.service';
+// import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
+import * as SplashScreen from 'expo-splash-screen';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { UIProvider } from '@minds/ui';
 import { ConfigProvider } from '~/modules/livepeer';
+
+import { FontsLoader } from 'FontsLoader';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 appInitManager.initializeServices();
 
@@ -88,7 +87,11 @@ class App extends Component<Props> {
     private backHandlerSubscription?: NativeEventSubscription,
   ) {
     super(props);
-    Orientation.lockPortrait();
+    if (IS_IPAD) {
+      Orientation.unlock();
+    } else {
+      Orientation.lockPortrait();
+    }
   }
 
   /**
@@ -104,9 +107,9 @@ class App extends Component<Props> {
       'url',
       this.handleOpenURL,
     );
-    this.shareReceiveSubscription = ShareMenu.addNewShareListener(
-      receiveShareService.handle,
-    );
+    // this.shareReceiveSubscription = ShareMenu.addNewShareListener(
+    //   receiveShareService.handle,
+    // );
 
     // set global audio settings for the app
     Audio.setAudioModeAsync({
@@ -177,48 +180,52 @@ class App extends Component<Props> {
     const stores = getStores();
 
     return (
-      <View style={appContainerStyle}>
-        <ExperimentsProvider>
-          <SafeAreaProvider>
-            <UIProvider
-              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-              {sessionService.ready && (
-                <StoresProvider>
-                  <QueryProvider>
-                    <Provider key="app" {...stores}>
-                      <NavigationContainer
-                        ref={navigationRef}
-                        theme={ThemedStyles.navTheme}
-                        onReady={appInitManager.onNavigatorReady}
-                        onStateChange={NavigationService.onStateChange}>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
-                          <FriendlyCaptchaProvider
-                            ref={setFriendlyCaptchaReference}>
-                            <PortalProvider>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
-                                  <ConfigProvider>
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                  </ConfigProvider>
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </PortalProvider>
-                          </FriendlyCaptchaProvider>
-                        </AppMessageProvider>
-                      </NavigationContainer>
-                    </Provider>
-                  </QueryProvider>
-                </StoresProvider>
-              )}
-            </UIProvider>
-          </SafeAreaProvider>
-        </ExperimentsProvider>
-      </View>
+      <FontsLoader>
+        <GestureHandlerRootView style={appContainerStyle}>
+          <ExperimentsProvider>
+            <SafeAreaProvider>
+              <UIProvider
+                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+                {sessionService.ready && (
+                  <StoresProvider>
+                    <QueryProvider>
+                      <Provider key="app" {...stores}>
+                        <NavigationContainer
+                          ref={navigationRef}
+                          theme={ThemedStyles.navTheme}
+                          onReady={appInitManager.onNavigatorReady}
+                          onStateChange={NavigationService.onStateChange}>
+                          <AppMessageProvider
+                            key={`message_${ThemedStyles.theme}`}>
+                            <FriendlyCaptchaProvider
+                              ref={setFriendlyCaptchaReference}>
+                              <PortalProvider>
+                                <BottomSheetModalProvider>
+                                  <ErrorBoundary
+                                    message="An error occurred"
+                                    containerStyle={
+                                      ThemedStyles.style.centered
+                                    }>
+                                    <ConfigProvider>
+                                      <NavigationStack
+                                        key={ThemedStyles.theme + i18n.locale}
+                                      />
+                                    </ConfigProvider>
+                                  </ErrorBoundary>
+                                </BottomSheetModalProvider>
+                              </PortalProvider>
+                            </FriendlyCaptchaProvider>
+                          </AppMessageProvider>
+                        </NavigationContainer>
+                      </Provider>
+                    </QueryProvider>
+                  </StoresProvider>
+                )}
+              </UIProvider>
+            </SafeAreaProvider>
+          </ExperimentsProvider>
+        </GestureHandlerRootView>
+      </FontsLoader>
     );
   }
 }
@@ -228,11 +235,6 @@ export default App;
 const appContainerStyle = ThemedStyles.combine(
   'flexContainer',
   'bgPrimaryBackground',
-  {
-    paddingHorizontal: deviceInfo.isTablet()
-      ? (Dimensions.get('window').width - 530) / 2
-      : 0,
-  },
 );
 
 // if (__DEV__) {

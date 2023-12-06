@@ -32,9 +32,13 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'info-outline',
   },
+  binoculars: {
+    font: 'MaterialCommunityIcons',
+    name: 'binoculars',
+  },
   supermind: {
-    font: 'MaterialIcons',
-    name: 'tips-and-updates',
+    font: 'MaterialCommunityIcons',
+    name: 'lightbulb',
   },
   warning: {
     font: 'MaterialIcons',
@@ -237,10 +241,6 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'insights',
   },
-  affiliates: {
-    font: 'MaterialIcons',
-    name: 'volunteer-activism',
-  },
   queue: {
     font: 'MaterialIcons',
     name: 'add-to-queue',
@@ -289,6 +289,10 @@ const ICON_MAP = {
   'arrow-up': {
     font: 'MaterialCommunityIcons',
     name: 'arrow-up',
+  },
+  'arrow-right': {
+    font: 'MaterialCommunityIcons',
+    name: 'arrow-right',
   },
   sms: {
     font: 'MaterialIcons',
@@ -359,13 +363,37 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'alpha-s-circle',
   },
+  network: {
+    font: 'MaterialCommunityIcons',
+    name: 'network-outline',
+  },
+  web_plus: {
+    font: 'MaterialCommunityIcons',
+    name: 'web-plus',
+  },
+  palette_swatch: {
+    font: 'MaterialCommunityIcons',
+    name: 'palette-swatch-variant',
+  },
+  account_edit: {
+    font: 'MaterialCommunityIcons',
+    name: 'account-edit',
+  },
   rocket: {
     font: 'MaterialCommunityIcons',
     name: 'rocket-launch',
   },
+  eye_off: {
+    font: 'IonIcon',
+    name: 'md-eye-off',
+  },
   alarm: {
     font: 'MaterialIcons',
     name: 'alarm',
+  },
+  affiliate: {
+    font: 'MaterialCommunityIcons',
+    name: 'hand-heart',
   },
   article: {
     font: 'MaterialIcons',
@@ -440,6 +468,10 @@ const ICON_MAP = {
   globe: {
     font: 'MaterialIcons',
     name: 'language',
+  },
+  ignite: {
+    font: 'MaterialIcons',
+    name: 'local-fire-department',
   },
 } as const;
 

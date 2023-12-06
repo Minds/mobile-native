@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Platform, StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from '@expo/vector-icons/AntDesign';
 import Modal, { ModalProps } from 'react-native-modal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

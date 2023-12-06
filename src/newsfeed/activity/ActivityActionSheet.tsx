@@ -9,7 +9,13 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
-import { ANDROID_CHAT_APP, IS_IOS, MINDS_URI } from '../../config/Config';
+import {
+  ANDROID_CHAT_APP,
+  BLOCK_USER_ENABLED,
+  BOOSTS_ENABLED,
+  IS_IOS,
+  MINDS_URI,
+} from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
@@ -32,6 +38,7 @@ import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
 import openUrlService from '../../common/services/open-url.service';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -142,17 +149,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     // if can edit
     if (entity.isOwner()) {
       // Edit
-      options.push({
-        title: i18n.t('edit'),
-        iconName: 'edit',
-        iconType: 'material',
-        onPress: () => {
-          this.props.navigation.navigate('Compose', {
-            isEdit: true,
-            entity: this.props.entity,
-          });
-        },
-      });
+      PermissionsService.canComment() &&
+        options.push({
+          title: i18n.t('edit'),
+          iconName: 'edit',
+          iconType: 'material',
+          onPress: () => {
+            this.props.navigation.navigate('Compose', {
+              isEdit: true,
+              entity: this.props.entity,
+            });
+          },
+        });
 
       // Set / Remove explicit
       options.push({
@@ -212,16 +220,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           },
         });
       }
-      options.push({
-        title: 'Boost',
-        iconName: 'trending-up',
-        iconType: 'material-community',
-        onPress: () => {
-          this.props.navigation.push('BoostScreenV2', {
-            entity: this.props.entity,
-          });
-        },
-      });
+      if (BOOSTS_ENABLED && PermissionsService.canBoost()) {
+        options.push({
+          title: 'Boost',
+          iconName: 'trending-up',
+          iconType: 'material-community',
+          onPress: () => {
+            this.props.navigation.push('BoostScreenV2', {
+              entity: this.props.entity,
+            });
+          },
+        });
+      }
     }
 
     if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {
@@ -251,41 +261,42 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
 
-      const blocked = this.props.channel
-        ? this.props.channel.blocked
-        : this.state.userBlocked;
-
       // Block / Unblock
-      options.push({
-        title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
-        iconName: 'remove-circle-outline',
-        iconType: 'ionicon',
-        onPress: async () => {
-          if (this.props.channel) {
-            return this.props.channel?.toggleBlock();
-          }
+      if (BLOCK_USER_ENABLED) {
+        const blocked = this.props.channel
+          ? this.props.channel.blocked
+          : this.state.userBlocked;
+        options.push({
+          title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
+          iconName: 'remove-circle-outline',
+          iconType: 'ionicon',
+          onPress: async () => {
+            if (this.props.channel) {
+              return this.props.channel?.toggleBlock();
+            }
 
-          if (!this.state.userBlocked) {
-            try {
-              await this.props.entity.blockOwner();
-              this.setState({
-                userBlocked: true,
-              });
-            } catch (err) {
-              this.showError();
+            if (!this.state.userBlocked) {
+              try {
+                await this.props.entity.blockOwner();
+                this.setState({
+                  userBlocked: true,
+                });
+              } catch (err) {
+                this.showError();
+              }
+            } else {
+              try {
+                await this.props.entity.unblockOwner();
+                this.setState({
+                  userBlocked: false,
+                });
+              } catch (err) {
+                this.showError();
+              }
             }
-          } else {
-            try {
-              await this.props.entity.unblockOwner();
-              this.setState({
-                userBlocked: false,
-              });
-            } catch (err) {
-              this.showError();
-            }
-          }
-        },
-      });
+          },
+        });
+      }
     }
     // Copy URL
     options.push(

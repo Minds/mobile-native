@@ -41,7 +41,7 @@ export const ModalFullScreen = ({
   );
 
   return (
-    <Screen loading={loading} scroll={scroll} safe>
+    <Screen loading={loading} scroll={scroll} safe hasMaxWidth={false}>
       <StatusBar backgroundColor={theme.bgPrimaryBackground.backgroundColor} />
       <MotiView
         transition={{

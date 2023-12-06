@@ -8,6 +8,7 @@ import number from '../../common/helpers/number';
 import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
 import MText from '../../common/components/MText';
+import assets from '@assets';
 
 @inject('wallet')
 @observer
@@ -86,7 +87,7 @@ export default class WalletBalanceTokens extends Component {
           <Image
             resizeMode="contain"
             style={styles.logo}
-            source={require('../../assets/logos/bulb.png')}
+            source={assets.LOGO_SQUARED}
           />
           <MText style={styles.amount}>
             {this.props.wallet.formattedBalance}
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   },
   addressesLabel: {
     fontWeight: '700',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
   addressesAddress: {
     fontSize: 8,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     // fontWeight: '800',
-    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+    fontFamily: 'Roboto_900Black', // workaround android ignoring >= 800
   },
   addressesEthBalance: {
     fontSize: 12,
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 45,
     fontWeight: '600',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
     color: colors.primary,
   },
   currency: {
@@ -162,6 +163,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 32,
     fontWeight: '700',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto_400Regular',
   },
 });

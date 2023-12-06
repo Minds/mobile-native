@@ -2,10 +2,10 @@
 import { createFont } from '@tamagui/core';
 import { useFonts } from 'expo-font';
 
-const regularFont = 'Inter-Regular';
-const mediumFont = 'Inter-Medium';
-const boldFont = 'Inter-Bold';
-const blackFont = 'Inter-Black';
+const regularFont = 'Roboto-Regular';
+const mediumFont = 'Roboto-Medium';
+const boldFont = 'Roboto-Bold';
+const blackFont = 'Roboto-Black';
 
 const body = createFont({
   family: regularFont,
@@ -70,8 +70,8 @@ export const fonts = {
 
 export const useFontsLoaded = () =>
   useFonts({
-    'Inter-Regular': require('../assets/Inter/Inter-Regular.ttf'),
-    'Inter-Medium': require('../assets/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/Inter/Inter-Bold.ttf'),
-    'Inter-Black': require('../assets/Inter/Inter-Black.ttf'),
+    'Roboto-Regular': require('~/assets/fonts/Roboto/Roboto-Regular.ttf'),
+    'Roboto-Medium': require('~/assets/fonts/Roboto/Roboto-Medium.ttf'),
+    'Roboto-Bold': require('~/assets/fonts/Roboto/Roboto-Bold.ttf'),
+    'Roboto-Black': require('~/assets/fonts/Roboto/Roboto-Black.ttf'),
   });

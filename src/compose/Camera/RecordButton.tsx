@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { mix, useTransition } from 'react-native-redash';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { observer } from 'mobx-react';
 import Pulse from '../../common/components/Pulse';
 
@@ -20,34 +22,44 @@ type PropsType = {
  */
 export default observer(function (props: PropsType) {
   // base the animation on the recording prop
-  const transition = useTransition(props.store.recording);
-  const scale = mix(transition, 1, 0.4);
+  const recording = props.store.recording;
+  const isPhoto = props.isPhoto;
   const internalSize = props.size - 5;
-  const borderRadiusInternal = mix(transition, internalSize / 2, 10);
+  const [pressed, setPressed] = React.useState(false);
 
-  const innerStyle: any = useMemo(
+  const innerStyle: any = useAnimatedStyle(
     () => ({
-      transform: [{ scale }],
-      backgroundColor: props.isPhoto ? '#fff' : '#E03C20',
-      borderRadius: borderRadiusInternal,
+      transform: [
+        {
+          scale: withTiming(
+            isPhoto ? (pressed ? 0.9 : 1) : recording ? 0.4 : 1,
+          ),
+        },
+      ],
+      backgroundColor: isPhoto ? '#fff' : '#E03C20',
+      borderRadius: withTiming(recording ? 10 : internalSize / 2),
       width: internalSize,
       height: internalSize,
     }),
-    [borderRadiusInternal, internalSize, props.isPhoto, scale],
+    [recording, isPhoto, internalSize, pressed],
   );
-  const containerStyle = useMemo(
-    () => [styles.circleWrapper, styles.circle],
-    [],
-  );
+
+  const onPressIn = () => {
+    setPressed(true);
+  };
+
+  const onPressOut = () => {
+    setPressed(false);
+    props.onPressOut?.();
+  };
+
   const buttonStyle = useMemo(
-    () => [
-      styles.circleWrapper,
-      {
-        width: props.size,
-        height: props.size,
-        borderRadius: props.size / 2,
-      },
-    ],
+    () => ({
+      ...styles.circleWrapper,
+      width: props.size,
+      height: props.size,
+      borderRadius: props.size / 2,
+    }),
     [props.size],
   );
 
@@ -57,7 +69,8 @@ export default observer(function (props: PropsType) {
       <Pressable
         onPress={props.onPress}
         onLongPress={props.onLongPress}
-        onPressOut={props.onPressOut}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         style={buttonStyle}>
         <Animated.View style={innerStyle} />
       </Pressable>
@@ -77,3 +90,5 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
 });
+
+const containerStyle = [styles.circleWrapper, styles.circle];

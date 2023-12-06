@@ -6,10 +6,11 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import IconM from 'react-native-vector-icons/MaterialIcons';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconM from '@expo/vector-icons/MaterialIcons';
+import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import { Image } from 'expo-image';
+import assets from '@assets';
 
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
@@ -236,7 +237,7 @@ const ChannelHeader = withErrorBoundary(
             <View style={styles.avatarContainer}>
               <RNImage
                 style={styles.avatar}
-                source={require('./../../assets/logos/bulb.png')}
+                source={assets.LOGO_SQUARED}
                 resizeMode="cover"
               />
             </View>

@@ -5,16 +5,18 @@ exports[`Activity screen component renders correctly  1`] = `
   style={
     [
       {
-        "fontScale": 2,
         "height": 1334,
-        "scale": 2,
-        "width": 750,
       },
       {
         "flex": 1,
       },
       {
         "backgroundColor": "#1C1D1F",
+      },
+      {
+        "alignSelf": "center",
+        "maxWidth": 750,
+        "width": "100%",
       },
     ]
   }
@@ -32,16 +34,6 @@ exports[`Activity screen component renders correctly  1`] = `
         [
           {
             "backgroundColor": "#1C1D1F",
-          },
-          {
-            "borderBottomWidth": 0,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 1,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-            "shadowRadius": 2.22,
           },
           {
             "paddingTop": -10,
@@ -158,27 +150,12 @@ exports[`Activity screen component renders correctly  1`] = `
                     ]
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 40,
-                        },
-                        {},
-                        {
-                          "fontFamily": "Material Design Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    󰅁
-                  </Text>
+                  <MaterialCommunityIcons
+                    color="#AEB0B8"
+                    name="chevron-left"
+                    size={40}
+                    style={{}}
+                  />
                 </View>
               </View>
             </View>
@@ -275,7 +252,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto-Bold",
+                        "fontFamily": "Roboto_700Bold",
                       },
                       {
                         "fontSize": 16,
@@ -389,27 +366,11 @@ exports[`Activity screen component renders correctly  1`] = `
                         }
                       }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        selectable={false}
-                        style={
-                          [
-                            {
-                              "color": "#AEB0B8",
-                              "fontSize": 25.76,
-                            },
-                            undefined,
-                            {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
+                      <MaterialIcons
+                        color="#AEB0B8"
+                        name="more-vert"
+                        size={25.76}
+                      />
                     </View>
                   </View>
                 </View>
@@ -434,9 +395,14 @@ exports[`Activity screen component renders correctly  1`] = `
       onContentSizeChange={[Function]}
       onLayout={[Function]}
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "width": 750,
+          },
+        ]
       }
     >
       <View>
@@ -465,7 +431,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     [
@@ -473,7 +439,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "fontSize": 28,
                       },
                       {
-                        "fontFamily": "Roboto-Medium",
+                        "fontFamily": "Roboto_500Medium",
                         "fontWeight": "500",
                       },
                     ],
@@ -481,7 +447,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "marginBottom": 4,
                     },
                     {
-                      "fontFamily": "Roboto-Black",
+                      "fontFamily": "Roboto_900Black",
                       "fontWeight": "700",
                     },
                   ],
@@ -498,14 +464,14 @@ exports[`Activity screen component renders correctly  1`] = `
                     "color": "#F2F2F2",
                   },
                   {
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto_400Regular",
                   },
                   [
                     {
                       "fontSize": 28,
                     },
                     {
-                      "fontFamily": "Roboto-Medium",
+                      "fontFamily": "Roboto_500Medium",
                       "fontWeight": "500",
                     },
                   ],
@@ -540,7 +506,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   "color": "#F2F2F2",
                 },
                 {
-                  "fontFamily": "Roboto",
+                  "fontFamily": "Roboto_400Regular",
                 },
                 [
                   {
@@ -634,7 +600,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": undefined,
+            "disabled": true,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -661,18 +627,23 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
             {
-              "flex": 1,
-              "flexDirection": "column",
-            },
-            {
-              "margin": 4,
-            },
-            {
-              "paddingVertical": 12,
-            },
-            {
-              "alignItems": "center",
+              "opacity": 0.5,
             },
           ]
         }
@@ -712,27 +683,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
-                style={
-                  [
-                    {
-                      "color": "#AEB0B8",
-                      "fontSize": 23.04,
-                    },
-                    {},
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
+              <MaterialIcons
+                color="#AEB0B8"
+                name="thumb-up"
+                size={23.04}
+                style={{}}
+              />
             </View>
           </View>
         </View>
@@ -742,7 +698,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": undefined,
+            "disabled": true,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -769,18 +725,23 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
             {
-              "flex": 1,
-              "flexDirection": "column",
-            },
-            {
-              "margin": 4,
-            },
-            {
-              "paddingVertical": 12,
-            },
-            {
-              "alignItems": "center",
+              "opacity": 0.5,
             },
           ]
         }
@@ -820,27 +781,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                selectable={false}
-                style={
-                  [
-                    {
-                      "color": "#AEB0B8",
-                      "fontSize": 23.04,
-                    },
-                    {},
-                    {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
+              <MaterialIcons
+                color="#AEB0B8"
+                name="thumb-down"
+                size={23.04}
+                style={{}}
+              />
             </View>
           </View>
         </View>
@@ -955,29 +901,16 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="message"
+                  size={18.400000000000002}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 18.400000000000002,
-                      },
-                      {
-                        "marginTop": 2,
-                      },
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": 2,
+                    }
                   }
-                >
-                  󰍡
-                </Text>
+                />
               </View>
               <View
                 style={
@@ -999,7 +932,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#F2F2F2",
                       },
                       {
-                        "fontFamily": "Roboto",
+                        "fontFamily": "Roboto_400Regular",
                       },
                       [
                         [
@@ -1010,7 +943,7 @@ exports[`Activity screen component renders correctly  1`] = `
                             "fontSize": 14,
                           },
                           {
-                            "fontFamily": "Roboto-Medium",
+                            "fontFamily": "Roboto_500Medium",
                             "fontWeight": "500",
                           },
                         ],
@@ -1134,29 +1067,16 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="repeat"
+                  size={20.8}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 20.8,
-                      },
-                      {
-                        "marginTop": -1,
-                      },
-                      {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": -1,
+                    }
                   }
-                >
-                  󰑖
-                </Text>
+                />
               </View>
             </View>
           </View>
@@ -1271,29 +1191,136 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
+                <MaterialIcons
+                  color="#AEB0B8"
+                  name="ios-share"
+                  size={20}
                   style={
-                    [
-                      {
-                        "color": "#AEB0B8",
-                        "fontSize": 20,
-                      },
-                      {
-                        "marginTop": -2,
-                      },
-                      {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      {},
-                    ]
+                    {
+                      "marginTop": -2,
+                    }
                   }
-                >
-                  
-                </Text>
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative",
+            },
+            undefined,
+            [
+              {
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              {
+                "margin": 4,
+              },
+              {
+                "paddingVertical": 12,
+              },
+              {
+                "alignItems": "center",
+              },
+            ],
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={6.666666666666666}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+              },
+              {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          testID="supermind button"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 20,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 20,
+                  }
+                }
+              >
+                <MaterialCommunityIcons
+                  color="#AEB0B8"
+                  name="lightbulb"
+                  size={20}
+                />
               </View>
             </View>
           </View>

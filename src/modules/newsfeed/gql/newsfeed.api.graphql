@@ -1,0 +1,80 @@
+query FetchNewsfeed(
+  $algorithm: String!
+  $limit: Int!
+  $cursor: String
+  $inFeedNoticesDelivered: [String!]
+) {
+  newsfeed(
+    algorithm: $algorithm
+    first: $limit
+    after: $cursor
+    inFeedNoticesDelivered: $inFeedNoticesDelivered
+  ) {
+    edges {
+      cursor
+      ... on ActivityEdge {
+        explicitVotes
+      }
+      node {
+        id
+        __typename
+        ... on ActivityNode {
+          legacy
+        }
+        ... on BoostNode {
+          goalButtonUrl
+          goalButtonText
+          legacy
+        }
+        ... on FeedNoticeNode {
+          location
+          key
+          dismissible
+        }
+        ... on FeedHighlightsConnection {
+          edges {
+            node {
+              __typename
+              id
+              legacy
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+        ... on PublisherRecsConnection {
+          edges {
+            publisherNode: node {
+              __typename
+              id
+              ... on UserNode {
+                legacy
+              }
+              ... on BoostNode {
+                legacy
+              }
+              ... on GroupNode {
+                legacy
+              }
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+      }
+    }
+
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+
+fragment PageInfo on PageInfo {
+  hasPreviousPage
+  hasNextPage
+  startCursor
+  endCursor
+}

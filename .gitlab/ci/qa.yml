@@ -6,7 +6,7 @@
 
 .qa_base:
   stage: qa
-  image: node:18.13.0
+  image: node:18.18.0
   allow_failure: true
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -26,9 +26,9 @@ qa:rc:
     - export BROWSERSTACK_IOS_APP_ID="IOS_RC"
     - export BROWSERSTACK_ANDROID_APP_ID="ANDROID_RC"
     - *wdio_tests
-  # only:
-  #   refs:
-  #     - /^develop$/
+  only:
+    refs:
+      - /^master$/
 
 qa:rc:nightly:
   extends: .qa_base

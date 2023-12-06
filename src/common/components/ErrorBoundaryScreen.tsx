@@ -7,7 +7,6 @@ import { showNotification } from '../../../AppMessages';
 import Clipboard from '@react-native-clipboard/clipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Button } from '../ui/buttons';
-import { codePush } from '~/modules/codepush';
 import { B2, H1, H4 } from '../ui';
 
 type PropsType = {
@@ -69,7 +68,7 @@ export default class ErrorBoundaryScreen extends Component<
           vertical="L"
           mode="solid"
           type="warning"
-          onPress={this.props.navigation?.goBack ?? codePush.restartApp}>
+          onPress={this.props.navigation?.goBack}>
           {i18n.t(this.props.navigation ? 'goback' : 'restart')}
         </Button>
       </View>

@@ -1,23 +1,26 @@
 import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, View, ViewStyle } from 'react-native';
 
 import MText from '~/common/components/MText';
-import { DEV_MODE } from '~/config/Config';
+import {
+  DEV_MODE,
+  IS_IPAD,
+  IS_TENANT,
+  TENANT,
+  WELCOME_LOGO,
+} from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button, ButtonPropsType } from '~ui';
+import { Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
-
-const { height } = Dimensions.get('window');
-const LOGO_HEIGHT = height / 7;
+import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
+import assets from '@assets';
 
 type PropsType = {
   navigation: any;
@@ -42,20 +45,28 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <SafeAreaView style={theme.flexContainer}>
-      <View style={theme.flexColumnStretch}>
-        <Animated.Image
-          resizeMode="contain"
-          source={require('./../assets/logos/logo-white.png')}
-          style={styles.image}
-        />
+    <Screen safe hasMaxWidth={false}>
+      <View style={theme.flexContainer}>
+        {IS_TENANT ? (
+          <Image
+            resizeMode="contain"
+            source={
+              WELCOME_LOGO === 'square'
+                ? assets.LOGO_SQUARED
+                : assets.LOGO_HORIZONTAL
+            }
+            style={styles.image}
+          />
+        ) : (
+          <OnboardingCarousel />
+        )}
         <View style={styles.buttonContainer}>
           <Button
             type="action"
             {...buttonProps}
             testID="joinNowButton"
             onPress={onRegisterPress}>
-            {i18n.t('auth.createChannel')}
+            {i18n.t('auth.createChannel', { TENANT })}
           </Button>
           <Button darkContent {...buttonProps} onPress={onLoginPress}>
             {i18n.t('auth.login')}
@@ -71,7 +82,7 @@ function WelcomeScreen(props: PropsType) {
       <HiddenTap style={devToggleStyle}>
         <View />
       </HiddenTap>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
@@ -93,12 +104,17 @@ export default withErrorBoundaryScreen(
   'WelcomeScreen',
 );
 
-const styles = StyleSheet.create({
-  bulb: {
-    width: '100%',
-    height: LOGO_HEIGHT,
-    justifyContent: 'flex-end',
-    // height: 70,
+const styles = ThemedStyles.create({
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 32,
+    alignItems: 'center',
+  },
+  containerStyle: {
+    width: IS_IPAD ? '45%' : '100%',
   },
   image: {
     height: '14%',
@@ -106,17 +122,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '10%',
     alignSelf: 'center',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: '3%',
-    left: 0,
-    right: 0,
-    padding: 32,
-  },
-  buttonContainerStyle: {
-    alignSelf: 'stretch',
-    marginBottom: 20,
   },
 });
 
@@ -130,5 +135,5 @@ type ButtonType = Partial<
 const buttonProps: ButtonType = {
   font: 'medium',
   bottom: 'XL',
-  // containerStyle: styles.containerStyle,
+  containerStyle: styles.containerStyle,
 };

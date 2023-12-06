@@ -2,21 +2,27 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <preventDoubleTap(PressableScale)
+  disabled={true}
   onPress={[Function]}
   style={
     [
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+        },
+        {
+          "margin": 4,
+        },
+        {
+          "paddingVertical": 12,
+        },
+        {
+          "alignItems": "center",
+        },
+      ],
       {
-        "flex": 1,
-        "flexDirection": "column",
-      },
-      {
-        "margin": 4,
-      },
-      {
-        "paddingVertical": 12,
-      },
-      {
-        "alignItems": "center",
+        "opacity": 0.5,
       },
     ]
   }
@@ -48,6 +54,7 @@ exports[`Thumb action component renders correctly 1`] = `
       entity={
         {
           "_collapsed": false,
+          "_viewed": false,
           "access_id": "",
           "allow_comments": true,
           "attachment_guid": false,
@@ -85,11 +92,11 @@ exports[`Thumb action component renders correctly 1`] = `
           "ownerObj": {
             "__list": null,
             "_collapsed": false,
+            "_viewed": false,
             "access_id": "",
             "allow_comments": true,
             "blocked": undefined,
             "canary": false,
-            "confirmEmail": [Function],
             "disable_autoplay_videos": undefined,
             "disabled_boost": undefined,
             "email_confirmed": false,

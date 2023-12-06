@@ -8,16 +8,19 @@ import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Drawer from './Drawer';
 import i18n from '~/common/services/i18n.service';
-import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
-import { useIsFeatureOn } from 'ExperimentsProvider';
+import {
+  IS_FROM_STORE,
+  IS_IOS,
+  IS_IPAD,
+  MEMBERSHIP_TIERS_ENABLED,
+  TWITTER_ENABLED,
+} from '~/config/Config';
 import WalletStack from './WalletStack';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
-  const isTwitterEnabled = useIsFeatureOn('engine-2503-twitter-feats');
-
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -96,7 +99,9 @@ export default function () {
       ];
 
   return (
-    <MoreStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <MoreStack.Navigator
+      initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
+      screenOptions={ThemedStyles.defaultScreenOptions}>
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
       <MoreStack.Screen
         name="Wallet"
@@ -172,11 +177,6 @@ export default function () {
         }
         options={{ title: i18n.t('settings.billing') }}
         initialParams={{ options: BillingScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Referrals"
-        getComponent={() => require('~/referral/ReferralsScreen').default}
-        options={hideHeader}
       />
       <MoreStack.Screen
         name="AffiliateProgram"
@@ -262,15 +262,27 @@ export default function () {
         options={{ title: i18n.t('settings.blockedChannels') }}
       />
       <MoreStack.Screen
-        name="TierManagementScreen"
+        name="RssScreen"
         getComponent={() =>
-          require('~/common/components/tier-management/TierManagementScreen')
-            .default
+          require('~/modules/rss-settings/screens/RssScreen.tsx').default
         }
-        options={{ title: i18n.t('settings.otherOptions.b1') }}
-        initialParams={{ useForSelection: false }}
+        options={{
+          title: i18n.t('settings.rssSync'),
+          headerTitleAlign: 'center',
+        }}
       />
-      {isTwitterEnabled && (
+      {MEMBERSHIP_TIERS_ENABLED && (
+        <MoreStack.Screen
+          name="TierManagementScreen"
+          getComponent={() =>
+            require('~/common/components/tier-management/TierManagementScreen')
+              .default
+          }
+          options={{ title: i18n.t('settings.otherOptions.b1') }}
+          initialParams={{ useForSelection: false }}
+        />
+      )}
+      {TWITTER_ENABLED && (
         <MoreStack.Screen
           name="TwitterSync"
           getComponent={() =>
@@ -285,6 +297,11 @@ export default function () {
           require('~/settings/screens/DeleteChannelScreen').default
         }
         options={{ title: i18n.t('settings.deleteChannel') }}
+      />
+      <MoreStack.Screen
+        name="UpgradeOptionsScreen"
+        getComponent={() => require('modules/upgrade').UpgradeOptionsScreen}
+        options={{ title: 'Upgrade' }}
       />
       <MoreStack.Screen
         name="DeactivateChannel"

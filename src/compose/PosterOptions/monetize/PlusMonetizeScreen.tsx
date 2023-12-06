@@ -130,7 +130,7 @@ const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 17,
   },
   checkbox: {

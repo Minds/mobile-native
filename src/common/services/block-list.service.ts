@@ -3,6 +3,7 @@ import sessionService from './session.service';
 import logService from './log.service';
 import { observable, action } from 'mobx';
 import { storages } from './storage/storages.service';
+import { BLOCK_USER_ENABLED } from '~/config/Config';
 
 const key = 'blockedChannels';
 
@@ -13,14 +14,16 @@ export class BlockListService {
   @observable blocked: Map<string, undefined> = new Map();
 
   init() {
-    sessionService.onSession(async token => {
-      if (token) {
-        await this.loadFromStorage();
-        this.fetch();
-      } else {
-        this.prune();
-      }
-    });
+    if (BLOCK_USER_ENABLED) {
+      sessionService.onSession(async token => {
+        if (token) {
+          await this.loadFromStorage();
+          this.fetch();
+        } else {
+          this.prune();
+        }
+      });
+    }
   }
 
   has(guid) {

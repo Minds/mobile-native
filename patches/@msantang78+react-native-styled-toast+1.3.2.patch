@@ -1,0 +1,35 @@
+diff --git a/node_modules/@msantang78/react-native-styled-toast/dist/Icon/index.js b/node_modules/@msantang78/react-native-styled-toast/dist/Icon/index.js
+index 7472cca..bca335a 100644
+--- a/node_modules/@msantang78/react-native-styled-toast/dist/Icon/index.js
++++ b/node_modules/@msantang78/react-native-styled-toast/dist/Icon/index.js
+@@ -15,18 +15,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+ var React = __importStar(require("react"));
+-var Entypo_1 = __importDefault(require("react-native-vector-icons/Entypo"));
+-var EvilIcons_1 = __importDefault(require("react-native-vector-icons/EvilIcons"));
+-var Feather_1 = __importDefault(require("react-native-vector-icons/Feather"));
+-var FontAwesome_1 = __importDefault(require("react-native-vector-icons/FontAwesome"));
+-var FontAwesome5_1 = __importDefault(require("react-native-vector-icons/FontAwesome5"));
+-var Foundation_1 = __importDefault(require("react-native-vector-icons/Foundation"));
+-var Ionicons_1 = __importDefault(require("react-native-vector-icons/Ionicons"));
+-var MaterialCommunityIcons_1 = __importDefault(require("react-native-vector-icons/MaterialCommunityIcons"));
+-var MaterialIcons_1 = __importDefault(require("react-native-vector-icons/MaterialIcons"));
+-var Octicons_1 = __importDefault(require("react-native-vector-icons/Octicons"));
+-var SimpleLineIcons_1 = __importDefault(require("react-native-vector-icons/SimpleLineIcons"));
+-var Zocial_1 = __importDefault(require("react-native-vector-icons/Zocial"));
++var Entypo_1 = __importDefault(require("@expo/vector-icons/Entypo"));
++var EvilIcons_1 = __importDefault(require("@expo/vector-icons/EvilIcons"));
++var Feather_1 = __importDefault(require("@expo/vector-icons/Feather"));
++var FontAwesome_1 = __importDefault(require("@expo/vector-icons/FontAwesome"));
++var FontAwesome5_1 = __importDefault(require("@expo/vector-icons/FontAwesome5"));
++var Foundation_1 = __importDefault(require("@expo/vector-icons/Foundation"));
++var Ionicons_1 = __importDefault(require("@expo/vector-icons/Ionicons"));
++var MaterialCommunityIcons_1 = __importDefault(require("@expo/vector-icons/MaterialCommunityIcons"));
++var MaterialIcons_1 = __importDefault(require("@expo/vector-icons/MaterialIcons"));
++var Octicons_1 = __importDefault(require("@expo/vector-icons/Octicons"));
++var SimpleLineIcons_1 = __importDefault(require("@expo/vector-icons/SimpleLineIcons"));
++var Zocial_1 = __importDefault(require("@expo/vector-icons/Zocial"));
+ var native_1 = __importDefault(require("styled-components/native"));
+ var styled_system_1 = require("styled-system");
+ var Icon = function (props) {

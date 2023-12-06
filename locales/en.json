@@ -20,10 +20,10 @@
     "pendingModeration": "This post is awaiting moderation"
   },
   "permissions": {
-    "notification": "Stay connected with instant updates on Minds. Enable push notifications now!",
-    "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
-    "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
-    "camera": "Minds needs access to your external camera so you can capture pictures.",
+    "notification": "Stay connected with instant updates on {{TENANT}}. Enable push notifications now!",
+    "externalStorage": "{{TENANT}} needs access to your external storage so you can upload images and videos.",
+    "writeExternalStorage": "{{TENANT}} needs access to your external storage so you can download images and videos.",
+    "camera": "{{TENANT}} needs access to your external camera so you can capture pictures.",
     "mediaLibrary": "This lets you share photos from your library and save photos to your camera roll",
     "blockedCamera": "You have blocked access to your camera. Please go to your device settings to enable.",
     "blockedStorageWrite": "You have blocked to write the storage. Please go to your device settings to enable.",
@@ -32,6 +32,7 @@
     "tapAllow": "Tap to allow",
     "grant": "Grant",
     "notAllowed": {
+      "interact": "You are not allowed to interact with this content",
       "appoint_admin": "You are not allowed to appoint an admin",
       "appoint_moderator": "You are not allowed to appoint a moderator",
       "approve_subscriber": "You are not allowed to approve a subscriber",
@@ -178,7 +179,7 @@
   },
   "auth": {
     "2faRequired": "2FA required",
-    "2faEmailDescription": "Minds just sent a 6-digit authentication code to your registered email address",
+    "2faEmailDescription": "{{TENANT}} just sent a 6-digit authentication code to your registered email address",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
     "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
     "2faInvalid": "Invalid code",
@@ -198,11 +199,11 @@
     "invalidPasswordDescription": "Password must match the criteria",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError": "You should accept the terms and conditions",
-    "promotions": "Receive exclusive promotions from Minds",
+    "promotions": "Receive exclusive promotions from {{TENANT}}",
     "accept": "I accept the",
     "termsAndConditions": "Terms & Conditions",
     "join": "Create a channel",
-    "createChannel": "Join Minds",
+    "createChannel": "Join {{TENANT}}",
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
@@ -249,7 +250,7 @@
     "boostChannelTitle": "Expand Your Reach",
     "boostChannelButton": "Boost Now",
     "boostChannelLearMoreButton": "Learn More",
-    "boostChannelDescription": "Use Boost to reach new audiences on Minds. Boosted channels get more engagement and subscribers.",
+    "boostChannelDescription": "Use Boost to reach new audiences on {{TENANT}}. Boosted channels get more engagement and subscribers.",
     "boostPartnerTitle": "Welcome to the Boost Partners Program",
     "boostPartnerDescription": "You are now eligible to earn a 50/50 revenue-share for serving Boosts on your channel and content pages. You may disable or change your settings any time.",
     "boostPartnerButton": "Read more",
@@ -257,17 +258,17 @@
     "pendingSupermindDescription": "Reply to your fans to claim cash or tokens before your pending offers expire.",
     "pendingSupermindButton": "Let's go ",
     "verifyEmail": "Verify email",
-    "verifyEmailDescription": "Before getting down to business on Minds, can we please ask that you verify your email address. (P.S. Check your spam folder 📥)",
+    "verifyEmailDescription": "Before getting down to business on {{TENANT}}, can we please ask that you verify your email address. (P.S. Check your spam folder 📥)",
     "updatePreferences": "Update your preferences",
-    "tagsDescription": "Updating your interest tags improves your experience on Minds, and makes it easier to discover creators and content you haven't found yet.",
+    "tagsDescription": "Updating your interest tags improves your experience on {{TENANT}}, and makes it easier to discover creators and content you haven't found yet.",
     "update": "Update",
     "whois": "Who is @{{name}}",
-    "userDescription": "Let the Minds community know who you are by decking out your channel page. This step is required to join the token rewards program.",
+    "userDescription": "Let the {{TENANT}} community know who you are by decking out your channel page. This step is required to join the token rewards program.",
     "userButton": "Setup my channel",
     "uniquenessTitle": "You're invited! Join rewards",
     "uniquenessDescription": "Verify your uniqueness to get started earning token rewards for engagement on your content.",
     "inviteFriendsTitle": "Invite Friends",
-    "inviteFriendsDescription": "Minds gets better with friends. Share your referral link to invite them to join. If they earn money on Minds, you'll earn a 5% referral fee.",
+    "inviteFriendsDescription": "{{TENANT}} gets better with friends. Share your referral link to invite them to join. If they earn money on {{TENANT}}, you'll earn a 5% referral fee.",
     "inviteFriendsAction": "Invite Friend",
     "plusUpgrade": {
       "title": "Upgrade to Minds+",
@@ -455,7 +456,7 @@
     "text": "Text",
     "postOptions": "Post Options",
     "retake": "Retake",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds. Microphone access lets you record videos and use audio features.",
+    "allowMinds": "Enable access so you can take photos and record videos to share on {{TENANT}}. Microphone access lets you record videos and use audio features.",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
@@ -531,6 +532,7 @@
     "title": "Discovery",
     "manage": "Manage Tags",
     "justForYou": "Just for you",
+    "latest": "Latest",
     "top": "Top",
     "topV2": "Trending",
     "yourTags": "Your tags",
@@ -764,8 +766,8 @@
     "emailWith": "Email me with",
     "emailUpdated": "Keep me updated with",
     "exclusive_promotions": "Exclusive Promotions",
-    "minds_news": "News about new Minds products and features",
-    "minds_tips": "Tips on how to use Minds",
+    "minds_news": "News about new {{TENANT}} products and features",
+    "minds_tips": "Tips on how to use {{TENANT}}",
     "boost_completed": "My boost has been completed",
     "unread_notifications": "I have unread notifications",
     "wire_received": "I receive a wire",
@@ -856,9 +858,6 @@
       "10": {
         "label": "Intellectual Property Violation"
       },
-      "11": {
-        "label": "Another reason"
-      },
       "12": {
         "label": "Incorrect use of hashtags"
       },
@@ -898,6 +897,18 @@
     "chooseBrowserHint": "This option can be changed from the settings",
     "inAppBrowser": "In-App Browser",
     "defaultBrowser": "Default Browser",
+    "rssSync": "RSS Sync",
+    "rssScreen": {
+      "description": "Sync an RSS feed to your channel and automatically post links from the RSS feed to your social media channel. This is a great way to share new articles, blogs, or videos from an RSS feed with your audience, automatically.",
+      "activeDescription": "The feed should sync around every 5 minutes. If you want to manually check for new updates, simply hit refresh",
+      "activeFeedsTitle": "Active RSS feeds",
+      "addFeed": "Add feed",
+      "addFeedTitle": "Add RSS feed",
+      "feedRefreshed": "Feed refreshed",
+      "feedRemoved": "Feed removed",
+      "updated": "Updated {{date}}",
+      "notSynced": "Not synced yet"
+    },
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
@@ -908,7 +919,7 @@
     "disableChannelButton": "Deactivate my account",
     "deleteChannelButton": "Delete my account",
     "deleteChannel": "Delete Account",
-    "disableDescription": "Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
+    "disableDescription": "Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to {{TENANT}}.",
     "deleteDescription": "Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable.",
     "confirmNewPassword": "Confirm New Password",
     "currentEmail": "Current Email",
@@ -938,12 +949,12 @@
     "passwordFormatNoSpaces": "Doesn't have spaces",
     "showMatureContent": "Always show mature content (+18)",
     "TFA": "2FA",
-    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that {{TENANT}} sends to you via text or an app on your phone.",
     "TFAEnabled": "2FA Enabled",
     "TFADisabled": "2FA Disabled",
     "TFADisable": "Disable 2FA",
     "TFADisableYes": "Yes, Disable 2FA",
-    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your {{TENANT}} account?",
     "TFAEnterCode": "Enter the six-digit code from the application",
     "TFARecoveryCodes": "Recovery codes",
     "TFARecoveryCodesTitle": "2. Recovery codes",
@@ -956,7 +967,7 @@
     "TFAVerifyPhoneDesc2": "Verification code sent to",
     "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
     "TFARecoveryCodeEnter": "Enter a two-factor recovery code",
-    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your Minds account because you used your one-time TOTP recovery code.",
+    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your {{TENANT}} account because you used your one-time TOTP recovery code.",
     "TFARecoveryCodeUsedEnable": "Enable 2FA",
     "TFARecoveryCodeUsedSettings": "Security Settings",
     "TFARecoveryCodeUsedContact": "If you did not enter your recovery code or believe you have received this message in error, please contact us immediately at",
@@ -969,7 +980,7 @@
       "emailTitle": "Email",
       "emailDescription": "Minds will send you an email with a two-factor authentication code when no other Two-factor authentication is set-up."
     },
-    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into {{TENANT}} account on the following devices.",
     "closeSessions": "Close all sessions",
     "closeSession": "Close session",
     "subscriptionListEmpty": "You don't have any recurring subscription",
@@ -1646,7 +1657,7 @@
   },
   "referrals": {
     "menu": "Invite friends",
-    "title": "Earn tokens by inviting your friends to Minds",
+    "title": "Earn by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
     "moreWaysToShare": "More ways to share",
@@ -1829,7 +1840,7 @@
       "rewards": "How rewards are calculated",
       "tokens": "How to use tokens",
       "earnings": "Track your earnings",
-      "analytics": "View token analytics"
+      "analytics": "View analytics"
     },
     "pool": {
       "title": "Add liquidity"
@@ -1882,7 +1893,7 @@
   },
   "failedTryAgain": "Sorry, failed to load. please try again",
   "storeRating": {
-    "prompt": "Are you enjoying Minds?"
+    "prompt": "Are you enjoying {{TENANT}}?"
   },
   "codePush": {
     "prompt": {
@@ -1937,6 +1948,7 @@
     "create": {
       "boost": "Boosted Post",
       "newPost": "New Post",
+      "mediaVideoError": "Sorry, you are not allowed to upload videos",
       "screen": {
         "post": {
           "title": "Post",
@@ -1952,8 +1964,7 @@
         },
         "supermind": {
           "subtitle": "Get replies from your favorite creators by sending them paid offers!"
-        },
-        "description": "Long press <compose /> to open this menu again"
+        }
       }
     }
   },

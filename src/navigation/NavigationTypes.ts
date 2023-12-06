@@ -45,7 +45,9 @@ export type MoreStackParamList = {
   Activity: AppStackParamList['Activity'];
   Interactions: AppStackParamList['Interactions'];
   GroupsManage: {};
+  UpgradeOptionsScreen: {};
   GroupView: {};
+  RssScreen: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
   AffiliateProgram: undefined;
@@ -71,7 +73,6 @@ export type MoreStackParamList = {
   Network: {};
   Security: {};
   Billing: {};
-  Referrals: {};
   Other: {};
   Resources: {};
   SettingsEmail: {};
@@ -282,7 +283,6 @@ export type AppStackParamList = {
     store: ComposeStoreType;
   };
   LicenseSelector: {};
-  EmailConfirmation: {};
   Update: {};
   Boost: {};
   Analytics: {};
@@ -352,9 +352,9 @@ export type AppStackParamList = {
     onSuccess?: () => void;
   };
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
-  Referrals: {};
   BoostSettingsScreen: {};
   Onboarding: {};
+  Compose: undefined;
 };
 
 // types for channel edit screens

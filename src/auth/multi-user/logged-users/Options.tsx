@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import {
   BottomSheetModal,
   BottomSheetButton,

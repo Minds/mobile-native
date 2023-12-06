@@ -26,6 +26,7 @@ import type GroupModel from '../groups/GroupModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import { pushAudienceSelector } from './ComposeAudienceSelector';
 import { regex } from '~/services';
+import PermissionsService from '~/common/services/permissions.service';
 
 /**
  * Display an error message to the user.
@@ -230,7 +231,7 @@ export default function (props) {
       measureHeights({
         texts: [this.text.substr(0, this.selection.start)],
         width: 326,
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto_400Regular',
         fontSize: fontSmall ? 18 : 22,
       })
         .then(result => (this.textHeight = Math.max(result[0], 26)))
@@ -535,20 +536,32 @@ export default function (props) {
      * On media selected from gallery
      */
     async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
+      const canUploadVideo = PermissionsService.canUploadVideo();
       if (Array.isArray(media)) {
         media.forEach(mediaItem => {
-          this.attachments.attachMedia(
-            {
-              ...mediaItem,
-              type: mediaItem.mime,
-            },
-            this.extra,
-          );
+          if (!canUploadVideo && mediaItem.type?.startsWith('video')) {
+            showError(i18n.t('composer.create.mediaVideoError'));
+            return;
+          }
+
+          if (mediaItem.type?.startsWith('video')) {
+            this.attachments.attachMedia(
+              {
+                ...mediaItem,
+                type: mediaItem.mime,
+              },
+              this.extra,
+            );
+          }
         });
         this.mode = 'text';
       } else {
         if (this.portraitMode && media.height < media.width) {
           showError(i18n.t('capture.mediaPortraitError'));
+          return;
+        }
+        if (!canUploadVideo && media.type?.startsWith('video')) {
+          showError(i18n.t('composer.create.mediaVideoError'));
           return;
         }
         this.attachments.attachMedia(

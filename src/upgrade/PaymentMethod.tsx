@@ -38,7 +38,7 @@ export default observer(PaymentMethod);
 
 const styles = StyleSheet.create({
   switchText: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 15,
   },
 });

@@ -24,6 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
+import { IS_IPAD, IS_TENANT, TENANT } from '~/config/Config';
 import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
@@ -49,7 +50,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     username: '',
     email: '',
     termsAccepted: false,
-    exclusivePromotions: true,
+    exclusivePromotions: IS_TENANT ? false : true,
     inProgress: false,
     showErrors: false,
     usernameTaken: false,
@@ -307,26 +308,29 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               checked={store.termsAccepted}
               onPress={store.toggleTerms}
             />
-            <CheckBox
-              checkedColor={ThemedStyles.getColor('Link')}
-              containerStyle={styles.checkboxPromotions}
-              title={
-                <MText style={styles.checkboxText}>
-                  {i18n.t('auth.promotions')}
-                </MText>
-              }
-              checked={store.exclusivePromotions}
-              onPress={store.togglePromotions}
-            />
+            {!IS_TENANT && (
+              <CheckBox
+                checkedColor={ThemedStyles.getColor('Link')}
+                containerStyle={styles.checkboxPromotions}
+                title={
+                  <MText style={styles.checkboxText}>
+                    {i18n.t('auth.promotions', { TENANT })}
+                  </MText>
+                }
+                checked={store.exclusivePromotions}
+                onPress={store.togglePromotions}
+              />
+            )}
           </View>
           <BottomSheetButton
             solid
             onPress={store.onRegisterPress}
-            text={i18n.t('auth.createChannel')}
+            text={i18n.t('auth.createChannel', { TENANT })}
             disabled={true || store.inProgress}
             loading={store.inProgress}
             testID="registerButton"
             action
+            containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
           />
           <Captcha
             ref={captchaRef}
@@ -345,4 +349,11 @@ const styles = ThemedStyles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
+  buttonIpad: {
+    width: '45%',
+    alignSelf: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

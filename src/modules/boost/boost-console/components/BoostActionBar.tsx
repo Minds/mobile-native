@@ -1,8 +1,8 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component, ReactElement } from 'react';
 import { TouchableHighlight, View } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IonIcon from '@expo/vector-icons/Ionicons';
+import MCIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import type UserStore from '~/auth/UserStore';
 import MText from '~/common/components/MText';
 import token from '~/common/helpers/token';

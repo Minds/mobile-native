@@ -21,7 +21,7 @@ import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
 import { Screen } from '~/common/ui';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, IS_IPAD, IS_TENANT } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { DiscoveryStackScreenProps } from '~/navigation/DiscoveryStack';
 import OffsetList from '../../common/components/OffsetList';
@@ -29,14 +29,13 @@ import ChannelListItem from '../../common/components/ChannelListItem';
 import UserModel from '../../channel/UserModel';
 import GroupsListItem from '../../groups/GroupsListItem';
 import GroupModel from '../../groups/GroupModel';
-import {
-  useIsAndroidFeatureOn,
-  useIsFeatureOn,
-} from '../../../ExperimentsProvider';
+import { useIsFeatureOn } from '../../../ExperimentsProvider';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import CaptureFab from '~/capture/CaptureFab';
+import { EmptyMessage } from './EmptyMessage';
+import { copyReferrer } from '~/modules/affiliate/components/LinksMindsSheet';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -54,7 +53,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const isDiscoveryConsolidationOn = useIsFeatureOn(
       'mob-5038-discovery-consolidation',
     );
-    const showFAB = useIsAndroidFeatureOn('mob-4989-compose-fab');
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time
@@ -83,6 +81,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
       () => {
         if (isDiscoveryConsolidationOn) {
           return [
+            { id: 'latest', title: i18n.t('discovery.latest') },
             { id: 'top', title: i18n.t('discovery.topV2') },
             { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
             { id: 'channels', title: 'Channels' },
@@ -125,7 +124,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
 
     const header = (
       <View style={styles.header}>
-        <InitialOnboardingButton />
+        {!IS_TENANT && <InitialOnboardingButton />}
         <TopbarTabbar
           current={store.activeTabId}
           onChange={tabId => {
@@ -200,7 +199,18 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     );
 
     const screen = () => {
+      const emptyMessageComponent = emptyMessage(store.activeTabId);
       switch (store.activeTabId) {
+        case 'latest':
+          return (
+            <DiscoveryTabContent key="latest">
+              <FeedListSticky
+                ref={listRef}
+                header={header}
+                feedStore={store.latestFeed}
+              />
+            </DiscoveryTabContent>
+          );
         case 'top':
           return (
             <DiscoveryTabContent key="top">
@@ -208,6 +218,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.topFeed}
+                emptyMessage={emptyMessageComponent(() =>
+                  navigation.navigate('Compose'),
+                )}
               />
             </DiscoveryTabContent>
           );
@@ -230,6 +243,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                 ref={listRef}
                 header={header}
                 feedStore={store.trendingFeed}
+                emptyMessage={emptyMessageComponent()}
               />
             </DiscoveryTabContent>
           );
@@ -261,6 +275,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                     navigation={navigation}
                   />
                 )}
+                ListEmptyComponent={emptyMessageComponent(copyReferrer)}
               />
             </DiscoveryTabContent>
           );
@@ -279,6 +294,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
                     group={GroupModel.checkOrCreate(item.entity)}
                   />
                 )}
+                ListEmptyComponent={emptyMessageComponent()}
               />
             </DiscoveryTabContent>
           );
@@ -298,7 +314,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        {showFAB && (
+        {!IS_IPAD && (
           <CaptureFab
             visible={true}
             navigation={navigation}
@@ -315,5 +331,37 @@ const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth', 'marginTopXXXL2'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
+  row: ['flexContainer', 'rowJustifySpaceBetween', 'marginVerticalXXL'],
+  icon: ['marginHorizontalXXL', 'marginTop1x'],
+  text: ['flexContainer', 'marginRightXL'],
 });
 const composeFABStyle = { bottom: 24 };
+
+const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
+  return <EmptyMessage {...emptyMessages[tab]} onPress={onPress} />;
+};
+
+const emptyMessages: { [k in TDiscoveryV2Tabs]?: any } = {
+  top: {
+    title: 'Ignite the conversation',
+    subtitle: 'The top posts from across the network will appear here. ',
+    buttonText: i18n.t('createAPost'),
+  },
+  'trending-tags': {
+    title: 'Explore topics that are heating up',
+    subtitle: 'The most frequently-used tags on the network will appear here.',
+  },
+  channels: {
+    icon: 'profile',
+    title: 'Get ready for exploration',
+    subtitle:
+      'There are no channels to recommend for you yet. Check back later for personalized recommendations.',
+    buttonText: 'Copy invite link',
+  },
+  groups: {
+    icon: 'group',
+    title: 'Be a pioneer in group exploration',
+    subtitle:
+      'There are no groups to recommend for you yet. Check back later for personalized recommendations.',
+  },
+};

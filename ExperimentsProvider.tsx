@@ -10,7 +10,7 @@ import analyticsService from '~/common/services/analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
 import sessionService from '~/common/services/session.service';
 import { storages } from '~/common/services/storage/storages.service';
-import { IS_IOS, IS_REVIEW } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS, IS_REVIEW } from '~/config/Config';
 
 export const growthbook = new GrowthBook({
   trackingCallback: (experiment, result) => {
@@ -64,7 +64,7 @@ export function updateGrowthBookAttributes() {
   const user = sessionService.getUser();
   const config = mindsConfigService.getSettings();
   const userId = sessionService.token ? user?.guid : DeviceInfo.getUniqueId();
-  if (config.growthbook) {
+  if (config?.growthbook) {
     growthbook.setFeatures(config.growthbook?.features);
     growthbook.setAttributes({
       ...config.growthbook?.attributes,
@@ -101,10 +101,12 @@ export const useIsIOSFeatureOn = (feature: FeatureID) =>
 export const useIsAndroidFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && !IS_IOS;
 
+export const useIsGoogleFeatureOn = (feature: FeatureID) =>
+  useGrowthbookFeature(feature).on && GOOGLE_PLAY_STORE;
+
 export const featureList = [
   'engine-2503-twitter-feats',
   'epic-303-boost-partners',
-  'minds-3055-email-codes',
   'minds-3639-plus-notice',
   'mob-discovery-redirect',
   'mob-twitter-oauth-4715',
@@ -118,14 +120,13 @@ export const featureList = [
   'mob-4903-referrer-banner',
   'mob-4903-wefounder-banner',
   'minds-3952-boost-goals',
-  'epic-304-affiliates',
   'mob-4938-newsfeed-for-you',
-  'mob-4989-compose-fab',
   'mob-4952-boost-platform-targeting',
   'mob-5038-discovery-consolidation',
   'mob-5075-hide-post-on-downvote',
   'mob-5075-explicit-vote-buttons',
   'mob-5009-boost-rotator-in-feed',
+  'mob-5221-google-hide-tokens',
 ] as const;
 
 export type FeatureID = typeof featureList[number];

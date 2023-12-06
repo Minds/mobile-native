@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { Button } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 

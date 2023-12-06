@@ -2,8 +2,8 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/MaterialIcons';
+import IonIcon from '@expo/vector-icons/Ionicons';
 import { Badge } from 'react-native-elements';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';

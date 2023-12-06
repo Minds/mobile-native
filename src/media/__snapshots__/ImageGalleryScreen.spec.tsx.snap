@@ -12,15 +12,6 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
         ],
       }
     }
-    style={
-      {
-        "transform": [
-          {
-            "translateY": -100,
-          },
-        ],
-      }
-    }
     transition={
       {
         "mass": 0.3,
@@ -125,27 +116,12 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      [
-                        {
-                          "color": "#AEB0B8",
-                          "fontSize": 25.76,
-                        },
-                        {},
-                        {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
+                  <MaterialIcons
+                    color="#AEB0B8"
+                    name="close"
+                    size={25.76}
+                    style={{}}
+                  />
                 </View>
               </View>
             </View>
@@ -199,18 +175,9 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
         }
       }
       style={
-        [
-          {
-            "backgroundColor": "#1C1D1F",
-          },
-          {
-            "transform": [
-              {
-                "translateY": 100,
-              },
-            ],
-          },
-        ]
+        {
+          "backgroundColor": "#1C1D1F",
+        }
       }
       transition={
         {
