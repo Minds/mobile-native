@@ -8,7 +8,6 @@ import {
   Button,
   H2,
   H3,
-  Row,
   Screen,
   ScreenHeader,
   ScreenSection,
@@ -24,7 +23,7 @@ import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
 import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
-export default function AffiliateProgramScreen({ navigation }) {
+export default function AffiliateProgramScreen() {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
@@ -79,7 +78,7 @@ export default function AffiliateProgramScreen({ navigation }) {
           {hideTokens ? undefined : (
             <>
               <TotalEarnings />
-              <Row align="centerBetween" top="XL">
+              {/* <Row align="centerBetween" top="XL">
                 <Button
                   mode="outline"
                   onPress={() => {
@@ -90,7 +89,7 @@ export default function AffiliateProgramScreen({ navigation }) {
                   }}>
                   View earnings
                 </Button>
-              </Row>
+              </Row> */}
               <B3 vertical="XL">
                 Note - You will be credited as the click referrer for any
                 purchases of Boosts and subscriptions (Minds+ and Pro) they make
