@@ -57,7 +57,10 @@ const PasswordConfirmScreen = withErrorBoundaryScreen(
         this.error = false;
         try {
           await authService.validatePassword(this.password);
-          onConfirm && onConfirm(this.password);
+          if (onConfirm) {
+            NavigationService.goBack();
+            onConfirm(this.password);
+          }
           this.password = '';
         } catch (err) {
           this.error = true;
