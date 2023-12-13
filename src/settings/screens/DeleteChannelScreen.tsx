@@ -24,15 +24,10 @@ export default function DeleteChannelScreen() {
     );
   };
 
-  const onConfirmPasswordSuccess = password => {
-    navigation.goBack();
-    onDelete(password);
-  };
-
   const confirmPassword = () => {
     navigation.navigate('PasswordConfirmation', {
       title: i18n.t('settings.deleteChannel'),
-      onConfirm: onConfirmPasswordSuccess,
+      onConfirm: onDelete,
     });
   };
 
