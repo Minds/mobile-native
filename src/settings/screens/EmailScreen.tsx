@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import { Alert } from 'react-native';
 
@@ -29,7 +29,7 @@ const EmailScreenS = inject('user')(
         },
       );
 
-    const save = useCallback(async () => {
+    const save = async () => {
       if (!validator.email(email)) {
         return;
       }
@@ -45,8 +45,7 @@ const EmailScreenS = inject('user')(
           setState({ saving: false });
           user.me.setEmailConfirmed(false);
         });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [email]);
+    };
 
     useEffect(() => {
       navigation.setOptions({
