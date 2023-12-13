@@ -43,6 +43,10 @@ export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 // Enabled Features for the app
 export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
+/**
+ * Is a tenant preview app (packaged to be used with the mobile preview app)
+ */
+export const IS_TENANT_PREVIEW = Tenant.IS_PREVIEW && IS_TENANT;
 export const SUPERMIND_ENABLED = !IS_TENANT;
 export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;

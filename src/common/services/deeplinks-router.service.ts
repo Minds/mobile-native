@@ -1,10 +1,11 @@
-import { MINDS_DEEPLINK } from '../../config/Config';
+import { IS_TENANT_PREVIEW, MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
 import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import referrerService from './referrer.service';
+import PreviewUpdateService from 'preview/PreviewUpdateService';
 // import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
 
 /**
@@ -75,6 +76,12 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
+    if (IS_TENANT_PREVIEW && url && PreviewUpdateService.isPreviewURL(url)) {
+      const channel = PreviewUpdateService.getPreviewChannel(url);
+      PreviewUpdateService.updatePreview(channel);
+      return;
+    }
+
     const cleanURL = this.cleanUrl(url);
 
     if (!url || !cleanURL) {
