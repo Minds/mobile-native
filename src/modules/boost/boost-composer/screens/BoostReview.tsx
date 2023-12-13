@@ -21,7 +21,7 @@ import {
   withIAPContext,
 } from 'react-native-iap';
 import NavigationService from '../../../../navigation/NavigationService';
-import { IS_FROM_STORE, PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
+import { IS_FROM_STORE } from '~/config/Config';
 import { InteractionManager } from 'react-native';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
@@ -123,14 +123,12 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             return;
           }
 
-          if (PRO_PLUS_SUBSCRIPTION_ENABLED) {
-            InteractionManager.runAfterInteractions(() => {
-              setTimeout(() => {
-                NavigationService.push('BoostUpgrade');
-                // the same time as the toast dismisses
-              }, 2800);
-            });
-          }
+          InteractionManager.runAfterInteractions(() => {
+            setTimeout(() => {
+              NavigationService.push('BoostUpgrade');
+              // the same time as the toast dismisses
+            }, 2800);
+          });
         },
       );
     }

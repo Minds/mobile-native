@@ -87,7 +87,7 @@ const createUpgradeStore = () => {
       this.isPro = pro;
 
       this.generatePaymentPlans();
-      this.selectedOption = this.plansTokens[0];
+      this.selectedOption = this.plansUSD[0];
 
       this.loaded = true;
     },

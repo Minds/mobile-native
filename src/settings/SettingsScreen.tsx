@@ -17,7 +17,6 @@ import {
   IS_IOS,
   IS_IPAD,
   IS_TENANT,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import NavigationService from '~/navigation/NavigationService';
@@ -102,7 +101,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.plus) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -110,7 +109,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro && PRO_PLUS_SUBSCRIPTION_ENABLED) {
+  if (!user.pro) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',

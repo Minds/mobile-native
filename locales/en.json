@@ -784,7 +784,9 @@
     "groups": "Groups",
     "wires": "Wires",
     "reports": "Reports",
-    "community_updates": "Community Updates"
+    "community_updates": "Community Updates",
+    "affiliate_earnings": "Affiliate Earnings",
+    "gift_cards": "Gift Cards"
   },
   "plus": {
     "freeTrialDesciption": "Start your free trial for 7 days"

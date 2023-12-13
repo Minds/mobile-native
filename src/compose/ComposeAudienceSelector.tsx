@@ -23,7 +23,7 @@ import {
   Screen,
   ScreenHeader,
 } from '../common/ui';
-import { IS_IOS, PRO_PLUS_SUBSCRIPTION_ENABLED } from '../config/Config';
+import { IS_IOS } from '../config/Config';
 import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -147,7 +147,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!mode && !!PRO_PLUS_SUBSCRIPTION_ENABLED && (
+      {!mode && (
         <MenuItemOption
           title={texts.audience.plus.title}
           subtitle={texts.audience.plus.subtitle}

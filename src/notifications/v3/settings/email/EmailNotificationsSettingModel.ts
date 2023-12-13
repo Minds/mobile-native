@@ -2,6 +2,7 @@ import { action, computed, observable } from 'mobx';
 import apiService from '../../../../common/services/api.service';
 import i18n, { LocaleType } from '../../../../common/services/i18n.service';
 import logService from '../../../../common/services/log.service';
+import { TENANT } from '~/config/Config';
 
 export type EmailNotificationsSettingType = {
   campaign: 'global' | 'when' | 'with';
@@ -31,7 +32,7 @@ export default class EmailNotificationsSettingModel {
 
   @computed
   get topic() {
-    let translation = i18n.t(`notificationSettings.${this._topic}`);
+    let translation = i18n.t(`notificationSettings.${this._topic}`, { TENANT });
     if (
       translation.includes('missing') &&
       translation.includes('translation')

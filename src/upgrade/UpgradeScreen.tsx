@@ -5,17 +5,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDimensions } from '@react-native-community/hooks';
 
 import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
 import FitScrollView from '../common/components/FitScrollView';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
 import { UpgradeScreenNavigationProp, UpgradeScreenRouteProp } from './types';
-import { Button, Column, H4 } from '~ui';
-import {
-  IS_FROM_STORE,
-  IS_IOS,
-  PRO_PLUS_SUBSCRIPTION_ENABLED,
-} from '~/config/Config';
+import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import UpgradeStripeTokens from './UpgradeStripeTokens';
 import UpgradeInAppPurchasesTokens from './UpgradeInAppPurchasesTokens';
 import { withIAPContext } from 'react-native-iap';
@@ -25,7 +19,7 @@ type PropsType = {
   navigation: UpgradeScreenNavigationProp;
 };
 
-const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
+const UpgradeScreen = observer(({ route }: PropsType) => {
   const localStore = useLocalStore(createUpgradeStore);
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
@@ -44,38 +38,23 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      {!PRO_PLUS_SUBSCRIPTION_ENABLED ? (
-        <Column top="XL" align="centerBoth" horizontal="L">
-          <H4 align="center">
-            Sorry, the update is not available on mobile at the moment.
-          </H4>
-          <Button
-            top="XL2"
-            mode="outline"
-            type="action"
-            onPress={navigation.goBack}>
-            {i18n.t('close')}
-          </Button>
-        </Column>
-      ) : (
-        <>
-          <FitScrollView>
-            {!IS_FROM_STORE ? (
-              <UpgradeStripeTokens
-                store={localStore}
-                pro={!!pro}
-                onComplete={onComplete}
-              />
-            ) : (
-              <UpgradeInAppPurchasesTokens
-                store={localStore}
-                pro={!!pro}
-                onComplete={onComplete}
-              />
-            )}
-          </FitScrollView>
-        </>
-      )}
+      <>
+        <FitScrollView>
+          {!IS_FROM_STORE ? (
+            <UpgradeStripeTokens
+              store={localStore}
+              pro={!!pro}
+              onComplete={onComplete}
+            />
+          ) : (
+            <UpgradeInAppPurchasesTokens
+              store={localStore}
+              pro={!!pro}
+              onComplete={onComplete}
+            />
+          )}
+        </FitScrollView>
+      </>
     </View>
   );
 });
