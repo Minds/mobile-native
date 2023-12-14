@@ -24,15 +24,10 @@ export default function DeactivateChannelScreen() {
     );
   };
 
-  const onConfirmPasswordSuccess = () => {
-    navigation.goBack();
-    onDisable();
-  };
-
   const confirmPassword = () => {
     navigation.navigate('PasswordConfirmation', {
       title: i18n.t('settings.disableChannel'),
-      onConfirm: onConfirmPasswordSuccess,
+      onConfirm: onDisable,
     });
   };
 
