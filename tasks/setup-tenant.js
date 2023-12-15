@@ -74,7 +74,7 @@ function prepareTenant(companyID) {
           return;
         }
 
-        const tenantJson = JSON.parse(data);
+        const tenantJson = JSON.parse(dataTenant);
 
         tenantJson.EAS_PROJECT_ID = previewJson.EAS_PROJECT_ID;
         tenantJson.APP_SLUG = previewJson.APP_SLUG;
