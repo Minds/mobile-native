@@ -26,6 +26,15 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "961771928"
+      }
+    },
+    "tenantPreview": {
+      "ios": {
+        "ascAppId": "6473803640"
+      }
+    }
   }
 }
