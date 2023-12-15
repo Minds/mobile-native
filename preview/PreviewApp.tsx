@@ -1,4 +1,5 @@
-import { Linking, StatusBar } from 'react-native';
+import { Linking, StatusBar, Image } from 'react-native';
+
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -7,7 +8,6 @@ import PreviewUpdateService from './PreviewUpdateService';
 
 import { Button, H4, Screen } from '~/common/ui';
 import AppMessageProvider from 'AppMessageProvider';
-import { Image } from 'expo-image';
 import { View } from 'react-native';
 import { QRScanner } from './QRScanner';
 import CenteredLoading from '~/common/components/CenteredLoading';
@@ -70,7 +70,7 @@ const Preview = () => {
         <>
           <Image
             source={require('../assets/images/splash.png')}
-            contentFit="contain"
+            resizeMode="contain"
             style={{ height: '60%', width: '100%' }}
           />
           <View
