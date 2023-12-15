@@ -35,7 +35,9 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
         size="medium">
         {props.withPlus && <PlusIcon />}
       </Avatar>
-      <B3 top="XXS">{excerpt(props.title, 10)}</B3>
+      <B3 top="XXS" align="center">
+        {excerpt(props.title, 10)}
+      </B3>
     </Column>
   );
 });
