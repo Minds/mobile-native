@@ -1,0 +1,16 @@
+{
+  "APP_NAME": "Tablet",
+  "APP_SCHEME": "tabletmag",
+  "APP_HOST": "d09bf41544a3365a46c9077ebb5e35c3.networks.minds.com",
+  "APP_IOS_BUNDLE": "com.tabletmag.app",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.tabletmag.app",
+  "ACCENT_COLOR_LIGHT": "#000000",
+  "ACCENT_COLOR_DARK": "#ffffff",
+  "ADAPTIVE_COLOR": "#000000",
+  "ADAPTIVE_ICON": "./assets/images/adaptive-icon.png",
+  "WELCOME_LOGO": "horizontal",
+  "THEME": "light",
+  "API_URL": "https://d09bf41544a3365a46c9077ebb5e35c3.networks.minds.com/",
+  "EAS_PROJECT_ID": "f178dec9-099d-4665-a3c9-2c32a3d43cf8"
+}
