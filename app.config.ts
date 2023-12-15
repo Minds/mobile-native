@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name,
   scheme: Tenant.APP_SCHEME,
   slug: 'minds',
-  version: process.env.MINDS_APP_VERSION || '4.42.0',
+  version: process.env.MINDS_APP_VERSION || '5.0.0',
   icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
@@ -69,7 +69,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       : undefined,
     versionCode: process.env.MINDS_APP_BUILD
       ? parseInt(process.env.MINDS_APP_BUILD, 10)
-      : 310178,
+      : 310190,
     intentFilters: [
       {
         action: 'VIEW',
@@ -100,7 +100,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
-    buildNumber: process.env.MINDS_APP_BUILD || '1',
+    buildNumber: process.env.MINDS_APP_BUILD || '201907230460',
     associatedDomains: Tenant.APP_HOST
       ? [
           'applinks:' + Tenant.APP_HOST,
