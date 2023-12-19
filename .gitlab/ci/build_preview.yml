@@ -16,5 +16,7 @@ eas_build_preview:
     - unzip -o config.zip
     - cp ./preview/tenant/patches/* ./patches
     - npx eas-cli update --branch "$TENANT_ID" --message "preview"
+    - echo "Demo link mindspreview://preview/$TENANT_ID"
+    - echo "Demo QR https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mindspreview://preview/$TENANT_ID"
   rules:
     - if: $BUILD_MODE == 'PREVIEW_ZIP'
