@@ -1,0 +1,18 @@
+{
+  "APP_NAME": "Networks",
+  "APP_SCHEME": "mindspreview",
+  "APP_SLUG": "mindspreview",
+  "APP_HOST": "www.minds.com",
+  "IS_PREVIEW": false,
+  "APP_IOS_BUNDLE": "com.minds.mobilepreview",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobilepreview",
+  "ACCENT_COLOR_LIGHT": "#3967FF",
+  "ACCENT_COLOR_DARK": "#3967FF",
+  "WELCOME_LOGO": "horizontal",
+  "ADAPTIVE_ICON": "",
+  "ADAPTIVE_COLOR": "",
+  "THEME": "light",
+  "API_URL": "https://www.minds.com/",
+  "EAS_PROJECT_ID": "36866456-8056-40f0-b92e-533525cdbf78"
+}

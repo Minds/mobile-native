@@ -1,0 +1,22 @@
+# Demo generation for preview app
+eas_build_preview:
+  stage: build_preview
+  image: node:alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - apk add --no-cache bash git
+    - yarn install --cache-folder ../yarn
+  script:
+    - echo "Building preview for tenant $TENANT_ID..."
+    - wget -O config.zip $ZIP_FILE
+    - unzip -o config.zip
+    - cp ./preview/tenant/patches/* ./patches
+    - npx eas-cli update --branch "$TENANT_ID" --message "preview"
+    - echo "Demo link mindspreview://preview/$TENANT_ID"
+    - echo "Demo QR https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mindspreview://preview/$TENANT_ID"
+  rules:
+    - if: $BUILD_MODE == 'PREVIEW_ZIP'

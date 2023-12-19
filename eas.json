@@ -8,6 +8,10 @@
       "developmentClient": true,
       "distribution": "internal"
     },
+    "tenantPreview": {
+      "extends": "production",
+      "distribution": "store"
+    },
     "preview": {
       "extends": "production",
       "channel": "preview",

@@ -6,7 +6,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import pushService from './src/common/services/push.service';
 // import receiveShare from './src/common/services/receive-share.service';
 
-import { GOOGLE_PLAY_STORE, IS_TENANT } from './src/config/Config';
+import {
+  GOOGLE_PLAY_STORE,
+  IS_TENANT,
+  IS_TENANT_PREVIEW,
+} from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
 import sessionService from './src/common/services/session.service';
@@ -240,6 +244,13 @@ export class AppInitManager {
     // if the user is already logged in, handle initial navigation
     if (sessionService.userLoggedIn) {
       this.initialNavigationHandling();
+    } else if (IS_TENANT_PREVIEW) {
+      const deepLinkUrl = (await Linking.getInitialURL()) || '';
+      if (deepLinkUrl) {
+        setTimeout(() => {
+          deeplinkService.navigate(deepLinkUrl);
+        }, 300);
+      }
     }
   };
 }

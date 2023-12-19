@@ -11,16 +11,24 @@ const name = Tenant.APP_NAME;
 const theme = Tenant.THEME;
 const is_dark = theme === 'dark';
 
+const extraUpdate: any =
+  Tenant.APP_SLUG === 'mindspreview'
+    ? {
+        checkAutomatically: 'NEVER',
+        fallbackToCacheTimeout: 0,
+      }
+    : {};
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name,
   scheme: Tenant.APP_SCHEME,
-  slug: 'minds',
+  slug: Tenant.APP_SLUG || 'minds',
   version: process.env.MINDS_APP_VERSION || '5.0.0',
   icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
-    policy: 'nativeVersion',
+    policy: 'appVersion',
   },
   plugins: [
     'react-native-iap',
@@ -140,7 +148,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   updates: {
-    url: 'https://u.expo.dev/7a92bc49-6d7e-468f-af13-0a9aff39fc0e',
+    ...extraUpdate,
+    url: `https://u.expo.dev/${
+      Tenant.EAS_PROJECT_ID || '7a92bc49-6d7e-468f-af13-0a9aff39fc0e'
+    }`,
   },
   owner: 'minds-inc',
 });
