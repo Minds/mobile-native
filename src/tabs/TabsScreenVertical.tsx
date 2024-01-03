@@ -25,6 +25,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import MoreStack from '~/navigation/MoreStack';
 import sessionService from '~/common/services/session.service';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { IS_TENANT } from '~/config/Config';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
@@ -93,35 +94,40 @@ const Tabs = observer(function () {
           getComponent={() => require('~/channel/v2/ChannelScreen').default}
           initialParams={{ entity: channel }}
         />
-        <Drawer.Screen
-          name="Boosts"
-          getComponent={() => require('modules/boost').BoostConsoleScreen}
-        />
-        <Drawer.Screen //*** disabled for iOS ***
-          name="MindsPlus"
-          getComponent={() =>
-            require('~/discovery/v2/PlusDiscoveryScreen').default
-          }
-        />
-        <Drawer.Screen
-          name="Supermind"
-          getComponent={() =>
-            require('~/supermind/SupermindConsoleScreen').default
-          }
-        />
-        <Drawer.Screen
-          name="Wallet"
-          getComponent={() => require('~/wallet/v3/WalletScreen').default}
-        />
-        <Drawer.Screen
-          name="AffiliateProgram"
-          getComponent={() =>
-            require('modules/affiliate/screens/AffiliateProgramScreen').default
-          }
-          options={{
-            drawerLabel: 'Affiliate Program',
-          }}
-        />
+        {!IS_TENANT && (
+          <>
+            <Drawer.Screen
+              name="Boosts"
+              getComponent={() => require('modules/boost').BoostConsoleScreen}
+            />
+            <Drawer.Screen //*** disabled for iOS ***
+              name="MindsPlus"
+              getComponent={() =>
+                require('~/discovery/v2/PlusDiscoveryScreen').default
+              }
+            />
+            <Drawer.Screen
+              name="Supermind"
+              getComponent={() =>
+                require('~/supermind/SupermindConsoleScreen').default
+              }
+            />
+            <Drawer.Screen
+              name="Wallet"
+              getComponent={() => require('~/wallet/v3/WalletScreen').default}
+            />
+            <Drawer.Screen
+              name="AffiliateProgram"
+              getComponent={() =>
+                require('modules/affiliate/screens/AffiliateProgramScreen')
+                  .default
+              }
+              options={{
+                drawerLabel: 'Affiliate Program',
+              }}
+            />
+          </>
+        )}
         <Drawer.Screen name="Groups" component={GroupStack} />
         <Drawer.Screen name="Settings" component={MoreStack} />
       </Drawer.Navigator>
