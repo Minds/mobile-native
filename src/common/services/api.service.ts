@@ -306,6 +306,10 @@ export class ApiService {
       : session.refreshAuthToken();
   }
 
+  set accessToken(accessToken: string) {
+    session.setAccessTokenFrom(this.sessionIndex, accessToken);
+  }
+
   /**
    * Refresh token (only one call at the time)
    */

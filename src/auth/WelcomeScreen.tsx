@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { Image, View, ViewStyle } from 'react-native';
@@ -22,14 +22,100 @@ import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 import assets from '@assets';
 
+// import { useFetchOidcProvidersQuery } from '~/graphql/api';
+
+import * as WebBrowser from 'expo-web-browser';
+import {
+  ResponseType,
+  makeRedirectUri,
+  useAuthRequest,
+  useAutoDiscovery,
+  exchangeCodeAsync,
+} from 'expo-auth-session';
+
+WebBrowser.maybeCompleteAuthSession();
+const redirectUri = makeRedirectUri({
+  scheme: 'mindsapp',
+});
+const scopes = ['openid', 'profile', 'email'];
+
 type PropsType = {
   navigation: any;
   route: WelcomeScreenRouteProp;
 };
 
+const clientId = '244645782253313996@minds-test'; // 'mortynet',
+const providerUrl = 'https://minds-test-hlrirg.zitadel.cloud/'; // 'https://keycloak.minds.com/auth/realms/minds-inc',
+
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
+  // const { data } = useFetchOidcProvidersQuery();
+  // const loginUrl = data?.oidcProviders?.[0]?.loginUrl;
+  // useEffect(() => {
+  //   if (!loginUrl) {
+  //     return;
+  //   }
+  //   fetch(loginUrl, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then(response => {
+  //       console.log('response', loginUrl, response.url);
+  //       return response.url;
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, [loginUrl]);
+
+  const discovery = useAutoDiscovery(providerUrl);
+
+  const [request, result, promptAsync] = useAuthRequest(
+    {
+      clientId,
+      redirectUri,
+      scopes,
+      responseType: ResponseType.Code,
+      usePKCE: true,
+    },
+    discovery,
+  );
+
+  // console.log('useAuthRequest', request, result);
+
+  useEffect(() => {
+    if (discovery && result?.type === 'success' && result?.params?.code) {
+      exchangeCodeAsync(
+        {
+          clientId,
+          code: result?.params?.code,
+          redirectUri,
+          extraParams: {
+            code_verifier: request?.codeVerifier ?? '',
+          },
+        },
+        discovery,
+      )
+        .then(exchangeTokenResponse => {
+          const { accessToken, refreshToken, expiresIn, tokenType } =
+            exchangeTokenResponse;
+          const data = {
+            access_token: accessToken,
+            expires_in: expiresIn,
+            refresh_token: refreshToken,
+            status: 'success',
+            token_type: tokenType,
+          };
+          console.log(data, exchangeTokenResponse);
+        })
+        .catch(err => {
+          console.log('response err', err);
+        });
+    }
+  }, [discovery, request?.codeVerifier, result]);
+
   const theme = ThemedStyles.style;
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
@@ -43,6 +129,8 @@ function WelcomeScreen(props: PropsType) {
     () => props.navigation.navigate('DevTools'),
     [props.navigation],
   );
+
+  // const onLoginMindsPress = () => {};
 
   return (
     <Screen safe hasMaxWidth={false}>
@@ -70,6 +158,9 @@ function WelcomeScreen(props: PropsType) {
           </Button>
           <Button darkContent {...buttonProps} onPress={onLoginPress}>
             {i18n.t('auth.login')}
+          </Button>
+          <Button type="action" {...buttonProps} onPress={promptAsync}>
+            {i18n.t('auth.login') + ' with Minds'}
           </Button>
         </View>
       </View>

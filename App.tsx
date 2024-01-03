@@ -20,7 +20,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 
 import NavigationService, {
   navigationRef,
@@ -51,6 +51,7 @@ import { ConfigProvider } from '~/modules/livepeer';
 
 import { FontsLoader } from 'FontsLoader';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as WebBrowser from 'expo-web-browser';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -127,6 +128,9 @@ class App extends Component<Props> {
         focusManager.setFocused(status === 'active');
       },
     );
+    if (!IS_IOS) {
+      WebBrowser.warmUpAsync();
+    }
   }
 
   /**
@@ -137,6 +141,9 @@ class App extends Component<Props> {
     this.disposeLinkSubscription?.remove();
     this.backHandlerSubscription?.remove();
     this.shareReceiveSubscription?.remove();
+    if (!IS_IOS) {
+      WebBrowser.coolDownAsync();
+    }
   }
 
   /**

@@ -307,7 +307,9 @@ export class SessionService {
    */
   getTokenExpiration(token) {
     const parsed = this.parseJwt(token);
-    if (parsed && parsed.exp) return parsed.exp;
+    if (parsed && parsed.exp) {
+      return parsed.exp;
+    }
     return null;
   }
 
@@ -649,6 +651,12 @@ export class SessionService {
 
   getRefreshTokenFrom(index) {
     return this.sessions[index].refreshToken.refresh_token;
+  }
+
+  setAccessTokenFrom(index: number | null, access_token: string) {
+    if (index !== null) {
+      this.sessions[index].accessToken.access_token = access_token;
+    }
   }
 }
 

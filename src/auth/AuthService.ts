@@ -81,23 +81,31 @@ class AuthService {
    * @param newUser it's a new registered user
    */
   async login(username: string, password: string, newUser: boolean = false) {
-    const params = {
-      grant_type: 'password',
-      client_id: 'mobile',
-      //client_secret: '',
-      username,
-      password,
-    } as loginParms;
+    // const params = {
+    //   grant_type: 'password',
+    //   client_id: 'mobile',
+    //   //client_secret: '',
+    //   username,
+    //   password,
+    // } as loginParms;
 
     this.justRegistered = newUser;
 
     // ignore if already logged in
     this.checkUserExist(username);
 
-    const { data, headers: responseHeaders } = await api.rawPost<LoginResponse>(
-      'api/v3/oauth/token',
-      params,
-    );
+    const { headers: responseHeaders, ...data } =
+      await api.rawPost<LoginResponse>(
+        // 'api/v3/oauth/token',
+        // params,
+        'api/v1/authenticate',
+        {
+          username,
+          password,
+        },
+      );
+
+    console.log('response: ', data, 'headers: ', responseHeaders);
 
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
@@ -113,6 +121,8 @@ class AuthService {
 
     const isFirstLogin = session.sessionsCount === 0;
 
+    console.log('isFirstLogin', session);
+
     // if already have other sessions...
     if (!isFirstLogin) {
       session.setSwitchingAccount(true);
@@ -123,6 +133,7 @@ class AuthService {
     await delay(100);
 
     await session.addSession(data);
+    console.log('adding data ', data);
     await session.login();
     await mindsConfigService.update();
 

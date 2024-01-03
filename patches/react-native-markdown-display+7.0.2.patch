@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-markdown-display/src/index.d.ts b/node_modules/react-native-markdown-display/src/index.d.ts
-index f0daf4a..fce16e4 100644
+index e03f08e..823436d 100644
 --- a/node_modules/react-native-markdown-display/src/index.d.ts
 +++ b/node_modules/react-native-markdown-display/src/index.d.ts
 @@ -89,6 +89,7 @@ export interface MarkdownProps {
@@ -9,4 +9,4 @@ index f0daf4a..fce16e4 100644
 +  children?: ReactNode;
  }
  
- type MarkdownStatic = ComponentType<MarkdownProps>;
+ type MarkdownStatic = ComponentType<PropsWithChildren<MarkdownProps>>;

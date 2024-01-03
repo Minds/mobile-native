@@ -31,6 +31,10 @@ class MindsConfigService {
       const settings = await api.get<any>('api/v1/minds/config');
       this.currentPromise = null;
       if (settings.permissions) {
+        settings.permissions =
+          typeof settings.permissions === 'object'
+            ? Object.values(settings.permissions)
+            : settings.permissions;
         settings.permissions = settings.permissions.reduce((acc, cur) => {
           acc[cur] = true;
           return acc;

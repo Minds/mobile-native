@@ -1164,6 +1164,18 @@ export type VerdictInput = {
   reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FetchOidcProvidersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FetchOidcProvidersQuery = {
+  __typename?: 'Query';
+  oidcProviders: Array<{
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    loginUrl: string;
+  }>;
+};
+
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDismissalsQuery = {
@@ -2890,6 +2902,62 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const FetchOidcProvidersDocument = `
+    query FetchOidcProviders {
+  oidcProviders {
+    id
+    name
+    loginUrl
+  }
+}
+    `;
+export const useFetchOidcProvidersQuery = <
+  TData = FetchOidcProvidersQuery,
+  TError = unknown,
+>(
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: UseQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+) =>
+  useQuery<FetchOidcProvidersQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchOidcProviders']
+      : ['FetchOidcProviders', variables],
+    gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+      FetchOidcProvidersDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteFetchOidcProvidersQuery = <
+  TData = FetchOidcProvidersQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchOidcProvidersQueryVariables,
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchOidcProvidersQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchOidcProviders.infinite']
+      : ['FetchOidcProviders.infinite', variables],
+    metaData =>
+      gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+        FetchOidcProvidersDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useFetchOidcProvidersQuery.fetcher = (
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+    FetchOidcProvidersDocument,
+    variables,
+    options,
+  );
 export const GetDismissalsDocument = `
     query GetDismissals {
   dismissals {
