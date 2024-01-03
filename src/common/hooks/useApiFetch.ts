@@ -99,6 +99,7 @@ export interface FetchStore<T> {
   retryTimer: any;
   reactionDisposal: IReactionDisposer | null;
   loading: boolean;
+  loaded: boolean;
   result: T | null | undefined;
   error: any;
   reaction: (observableParams: object) => void;
@@ -126,6 +127,7 @@ const createStore = (storeOptions: {
   retryTimer: <any>null,
   retryCount: 0,
   loading: false,
+  loaded: false,
   refreshing: false,
   result: <any>undefined,
   error: null,
@@ -235,6 +237,7 @@ const createStore = (storeOptions: {
 
       const state = updateState(result, this.result);
       this.setResult(state);
+      this.loaded = true;
 
       if (persist) {
         this.persist(data);

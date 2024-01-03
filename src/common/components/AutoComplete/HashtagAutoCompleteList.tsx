@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import ThemedStyles from '~styles/ThemedStyles';
 import { observer } from 'mobx-react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
@@ -32,7 +32,7 @@ function ChannelAutoCompleteList({
   onSelect,
   flatListComponent,
 }: ChannelAutoCompleteListProps) {
-  const { result } = useSuggestedHashtags(query);
+  const { result, loaded } = useSuggestedHashtags(query);
   const tags = result?.tags || [];
   const length = tags.length;
 
@@ -55,12 +55,19 @@ function ChannelAutoCompleteList({
       keyboardDismissMode={'none'}
       data={tags}
       renderItem={renderItem}
-      keyExtractor={item => item.guid}
+      ListEmptyComponent={loaded ? Empty : null}
+      keyExtractor={keyExtractor}
       contentContainerStyle={contentContainerStyle}
       style={ThemedStyles.style.bgPrimaryBackgroundHighlight}
     />
   );
 }
+
+const Empty = () => (
+  <View style={styles.empty}>
+    <B1>No matching tags found</B1>
+  </View>
+);
 
 const contentContainerStyle = ThemedStyles.combine(
   'borderTop',
@@ -98,4 +105,7 @@ const styles = ThemedStyles.create({
     'bcolorPrimaryBorder',
     'borderBottom1x',
   ],
+  empty: ['flexContainerCenter', 'padding4x'],
 });
+
+const keyExtractor = item => item;
