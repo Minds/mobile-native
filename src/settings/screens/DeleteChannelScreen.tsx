@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React from 'react';
 import { Alert } from 'react-native';
 import { Screen, ScreenSection, Button, B1 } from '~ui';
@@ -8,7 +7,7 @@ import AuthService from '~/auth/AuthService';
 /**
  * Delete Channel Screen
  */
-export default function DeleteChannelScreen() {
+export default function DeleteChannelScreen({ navigation }) {
   const onDelete = password => {
     Alert.alert(
       i18n.t('attention'),
