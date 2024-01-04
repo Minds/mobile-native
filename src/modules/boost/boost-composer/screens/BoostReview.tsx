@@ -183,6 +183,10 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       ? `; ${platformsText}`
       : '';
 
+  const disabled =
+    (isCashFromStore && !selectedProduct && selectedMethod === 'iap') ||
+    (isCashFromStripe && !selectedCardId);
+
   return (
     <Screen safe onlyTopEdge>
       <BoostComposerHeader />
@@ -259,10 +263,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
           mode="solid"
           spinner
           type="action"
-          disabled={
-            (isCashFromStore && !selectedProduct) ||
-            (isCashFromStripe && !selectedCardId)
-          }
+          disabled={disabled}
           top="XXXL2"
           horizontal="L">
           {title}

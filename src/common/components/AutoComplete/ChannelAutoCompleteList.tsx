@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import ThemedStyles from '~styles/ThemedStyles';
 import UserModel from '~/channel/UserModel';
 import { observer } from 'mobx-react';
 import useChannelSuggestion from './useChannelSuggestion';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { B1 } from '~/common/ui';
 
 export interface ChannelAutoCompleteListProps {
   /**
@@ -32,7 +33,7 @@ function ChannelAutoCompleteList({
   onSelect,
   flatListComponent,
 }: ChannelAutoCompleteListProps) {
-  const { result } = useChannelSuggestion(query);
+  const { result, loaded } = useChannelSuggestion(query);
   const channels = result?.entities || [];
   const length = channels.length;
 
@@ -60,6 +61,7 @@ function ChannelAutoCompleteList({
       keyboardShouldPersistTaps={'always'}
       keyboardDismissMode={'none'}
       data={channels}
+      ListEmptyComponent={loaded ? Empty : null}
       renderItem={renderItem}
       keyExtractor={item => item.guid}
       contentContainerStyle={contentContainerStyle}
@@ -67,6 +69,16 @@ function ChannelAutoCompleteList({
     />
   );
 }
+
+const Empty = () => (
+  <View style={styles.empty}>
+    <B1>No matching channels found</B1>
+  </View>
+);
+
+const styles = ThemedStyles.create({
+  empty: ['flexContainerCenter', 'padding4x'],
+});
 
 const contentContainerStyle = ThemedStyles.combine(
   'borderTop',

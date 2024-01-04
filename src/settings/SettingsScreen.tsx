@@ -93,7 +93,7 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  if (!IS_IOS && !hideTokens) {
+  if (!IS_IOS && !hideTokens && !IS_TENANT) {
     firstSection.push({
       title: i18n.t('settings.billing'),
       screen: 'Billing',
@@ -101,7 +101,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.plus) {
+  if (!user.plus && !IS_TENANT) {
     firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
@@ -109,7 +109,7 @@ const SettingsScreen = observer(({ navigation }) => {
     });
   }
 
-  if (!user.pro) {
+  if (!user.pro && !IS_TENANT) {
     firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',

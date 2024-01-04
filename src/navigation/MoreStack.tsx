@@ -12,6 +12,7 @@ import {
   IS_FROM_STORE,
   IS_IOS,
   IS_IPAD,
+  IS_TENANT,
   MEMBERSHIP_TIERS_ENABLED,
   TWITTER_ENABLED,
 } from '~/config/Config';
@@ -38,7 +39,7 @@ export default function () {
       title: i18n.t('settings.accountOptions.4'),
       onPress: () => navigation.push('SettingsNotifications'),
     },
-    !IS_IOS
+    !IS_IOS && !IS_TENANT
       ? {
           title: i18n.t('settings.accountOptions.5'),
           onPress: () => navigation.push('NSFWScreen'),
@@ -48,10 +49,12 @@ export default function () {
       title: i18n.t('settings.accountOptions.7'),
       onPress: () => navigation.push('AutoplaySettingsScreen'),
     },
-    {
-      title: i18n.t('settings.accountOptions.8'),
-      onPress: () => navigation.push('BoostSettingsScreen'),
-    },
+    !IS_TENANT
+      ? {
+          title: i18n.t('settings.accountOptions.8'),
+          onPress: () => navigation.push('BoostSettingsScreen'),
+        }
+      : null,
   ];
 
   const NotificationsScreenOptions = navigation => [
