@@ -113,6 +113,18 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
 
   const isIAP = IS_FROM_STORE && paymentType === 'cash';
 
+  const sliderProps = {
+    ...amountRangeValues,
+    minimumStepLabel:
+      paymentType === 'cash'
+        ? `$${amountRangeValues.minimumRangeValue}`
+        : `${amountRangeValues.minimumRangeValue} tokens`,
+    maximumStepLabel:
+      paymentType === 'cash'
+        ? `$${amountRangeValues.maximumRangeValue}`
+        : `${amountRangeValues.maximumRangeValue} tokens`,
+  };
+
   return (
     <Screen safe onlyTopEdge>
       <BoostComposerHeader />
@@ -131,11 +143,11 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
         ) : (
           <>
             <Column align="centerBoth" top="M">
-              <H2 bottom="S" top="M">
+              <H2 bottom="S" top="M" align="center">
                 {textMapping[paymentType].totalSpend}
               </H2>
               {isAmountValid() ? (
-                <B1 bottom="M" color="secondary">
+                <B1 bottom="M" color="secondary" align="center">
                   {t('Total Spend')}
                 </B1>
               ) : (
@@ -147,7 +159,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
                   {t('Try reducing the duration or the daily budget')}
                 </B1>
               )}
-              <H2 bottom="S">
+              <H2 bottom="S" align="center">
                 {insights
                   ? `${insights?.views?.low?.toLocaleString()} - ${insights?.views?.high?.toLocaleString()}`
                   : t('Unknown')}
@@ -158,9 +170,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
             <Column top="M" horizontal="L2">
               <H3>{t('Daily budget')}</H3>
               <Slider
-                {...amountRangeValues}
-                minimumStepLabel={`$${amountRangeValues.minimumRangeValue}`}
-                maximumStepLabel={`$${amountRangeValues.maximumRangeValue}`}
+                {...sliderProps}
                 currentValue={amount}
                 onAnswer={setAmount}
                 formatValue={value =>
