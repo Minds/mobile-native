@@ -32,19 +32,23 @@ const EmailScreenS = inject('user')(
       },
     );
 
-    const save = async () => {
+    const save = () => {
       if (!validator.email(email)) {
         return;
       }
       setState({ saving: true });
-      const { status } = await settingsService.submitSettings({ email });
-      setState({ saving: false, disabled: true });
-      user.me.setEmailConfirmed(false);
-      if (status !== 'success') {
-        Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
-      } else {
-        user.me.confirmEmailCode();
-      }
+      settingsService
+        .submitSettings({ email })
+        .then(() => {
+          user.me.confirmEmailCode();
+        })
+        .catch(() => {
+          Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
+        })
+        .finally(() => {
+          setState({ saving: false, disabled: true });
+          user.me.setEmailConfirmed(false);
+        });
     };
 
     useEffect(() => {
