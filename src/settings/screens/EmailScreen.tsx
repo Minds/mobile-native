@@ -17,34 +17,34 @@ import { useNavigation } from '@react-navigation/native';
 const EmailScreenS = inject('user')(
   observer(({ user }) => {
     const navigation = useNavigation();
-    const [{ email, saving, loaded, inProgress, showConfirmNote }, setState] =
-      useReducer<EmailStateFn>(
-        (prevState, nextState) => ({ ...prevState, ...nextState }),
-        {
-          email: '',
-          saving: false,
-          loaded: false,
-          inProgress: false,
-          showConfirmNote: false,
-        },
-      );
+    const [
+      { email, saving, loaded, inProgress, showConfirmNote, disabled },
+      setState,
+    ] = useReducer<EmailStateFn>(
+      (prevState, nextState) => ({ ...prevState, ...nextState }),
+      {
+        email: '',
+        saving: false,
+        loaded: false,
+        inProgress: false,
+        showConfirmNote: false,
+        disabled: true,
+      },
+    );
 
     const save = async () => {
       if (!validator.email(email)) {
         return;
       }
       setState({ saving: true });
-      settingsService
-        .submitSettings({
-          email: email,
-        })
-        .catch(() => {
-          Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
-        })
-        .finally(() => {
-          setState({ saving: false });
-          user.me.setEmailConfirmed(false);
-        });
+      const { status } = await settingsService.submitSettings({ email });
+      setState({ saving: false, disabled: true });
+      user.me.setEmailConfirmed(false);
+      if (status !== 'success') {
+        Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
+      } else {
+        user.me.confirmEmailCode();
+      }
     };
 
     useEffect(() => {
@@ -54,6 +54,7 @@ const EmailScreenS = inject('user')(
             type="action"
             mode="flat"
             size="small"
+            disabled={disabled}
             onPress={() =>
               navigation.navigate('PasswordConfirmation', {
                 title: i18n.t('auth.confirmpassword'),
@@ -65,7 +66,7 @@ const EmailScreenS = inject('user')(
         ),
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [save]);
+    }, [save, disabled]);
 
     useEffect(() => {
       settingsService.getSettings().then(({ channel }) => {
@@ -75,8 +76,13 @@ const EmailScreenS = inject('user')(
 
     const theme = ThemedStyles.style;
 
-    const setEmail = (value: string) =>
-      setState({ email: value, showConfirmNote: true });
+    const setEmail = (value: string) => {
+      setState({
+        email: value,
+        showConfirmNote: true,
+        disabled: value === email,
+      });
+    };
 
     const valid = validator.email(email);
 
@@ -125,6 +131,7 @@ type EmailState = {
   loaded?: boolean;
   inProgress?: boolean;
   showConfirmNote?: boolean;
+  disabled?: boolean;
 };
 type EmailStateFn = (prev: EmailState, next: EmailState) => EmailState;
 
