@@ -66,8 +66,8 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.affiliate_earnings_deposited:
       case NotificationType.referrer_affiliate_earnings_deposited:
       case NotificationType.gift_card_recipient_notified:
-        return '';
       case NotificationType.boost_rejected:
+      case NotificationType.post_subscription:
         return '';
     }
 
@@ -87,14 +87,13 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.affiliate_earnings_deposited:
       case NotificationType.referrer_affiliate_earnings_deposited:
       case NotificationType.gift_card_recipient_notified:
+      case NotificationType.boost_rejected:
+      case NotificationType.post_subscription:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
       case NotificationType.boost_peer_rejected:
         return 'boost offer';
-      case NotificationType.boost_rejected:
-        return '';
-
       case NotificationType.supermind_created:
       case NotificationType.supermind_declined:
       case NotificationType.supermind_accepted:
@@ -133,7 +132,6 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.token_rewards_summary:
       case NotificationType.boost_accepted:
       case NotificationType.boost_completed:
-        return '';
       case NotificationType.boost_rejected:
         return '';
     }
@@ -182,4 +180,5 @@ export enum NotificationType {
   affiliate_earnings_deposited = 'affiliate_earnings_deposited',
   referrer_affiliate_earnings_deposited = 'referrer_affiliate_earnings_deposited',
   gift_card_recipient_notified = 'gift_card_recipient_notified',
+  post_subscription = 'post_subscription',
 }
