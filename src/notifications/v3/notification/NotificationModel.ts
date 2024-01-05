@@ -71,8 +71,9 @@ export default class NotificationModel extends AbstractModel {
         return '';
     }
 
-    return this.entity?.owner_guid === sessionService.getUser().guid ||
-      this.to_guid === sessionService.getUser().guid
+    const sessionGuid = sessionService.getUser().guid;
+    return this.entity?.owner_guid === sessionGuid ||
+      (this.to_guid === sessionGuid && this.type !== 'tag')
       ? 'your'
       : 'their';
   }
@@ -88,7 +89,6 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.referrer_affiliate_earnings_deposited:
       case NotificationType.gift_card_recipient_notified:
       case NotificationType.boost_rejected:
-      case NotificationType.post_subscription:
         return '';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:

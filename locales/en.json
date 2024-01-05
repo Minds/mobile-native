@@ -709,7 +709,7 @@
       "affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
       "referrer_affiliate_earnings_deposited": "You just earned ${{amount}} from Minds Affiliate Program",
       "gift_card_recipient_notified": "sent you a gift for Boost",
-      "post_subscription": "posted"
+      "post_subscription": "created a new"
     }
   },
   "interactions": {
