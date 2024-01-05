@@ -102,6 +102,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'android.permission.ACCESS_MEDIA_LOCATION',
       'android.permission.CAMERA',
       'android.permission.RECORD_AUDIO',
+      'android.permission.POST_NOTIFICATIONS',
     ],
     googleServicesFile: './google-services.json',
   },
