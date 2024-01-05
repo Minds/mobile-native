@@ -4,7 +4,6 @@ import {
   useInfiniteFetchNewsfeedQuery,
 } from '~/graphql/api';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
-import cloneDeep from 'lodash/cloneDeep';
 
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
@@ -100,6 +99,7 @@ export function useInfiniteNewsfeed(algorithm) {
     },
     {
       initialData: local.cachedData || undefined,
+      keepPreviousData: true,
       staleTime: 0,
       retry: 0,
       getNextPageParam: useCallback(lastPage => {
@@ -121,7 +121,7 @@ export function useInfiniteNewsfeed(algorithm) {
     local.lastFetchAt = query.dataUpdatedAt;
     if (!local.cachedPersisted) {
       local.cachedPersisted = true;
-      storages.user?.setMapAsync('NewsfeedCache', cloneDeep(query.data));
+      storages.user?.setMap('NewsfeedCache', query.data);
     }
   }
 

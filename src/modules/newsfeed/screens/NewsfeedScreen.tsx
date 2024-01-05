@@ -86,7 +86,6 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         if (scrollAndRefresh) {
           feedListRef.current?.scrollToOffset({ offset: 0, animated: true });
         }
-
         await refresh();
         portrait.load();
       }
@@ -132,8 +131,6 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
     [],
   );
 
-  const refreshing = query.isLoading && query.isFetchedAfterMount; // listen to refetching
-
   /**
    * Render in feed components (Recommendation, TopFeedHighlights)
    */
@@ -174,7 +171,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         emphasizeGroup
         renderInFeedItems={renderInFeedItems}
         data={entities}
-        refreshing={refreshing}
+        refreshing={query.isRefetching}
         onEndReached={query.fetchNextPage}
         onItemViewed={(item, index) => {
           item.trackView?.(
@@ -216,7 +213,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
       query.isFetchedAfterMount,
       query.isFetchingNextPage,
       refresh,
-      refreshing,
+      query.isRefetching,
       renderInFeedItems,
     ],
   );

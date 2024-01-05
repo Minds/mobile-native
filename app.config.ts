@@ -10,14 +10,22 @@ type ResizeType = 'cover' | 'contain';
 const name = Tenant.APP_NAME;
 const theme = Tenant.THEME;
 const is_dark = theme === 'dark';
+const is_previewer_app = Tenant.APP_SLUG === 'mindspreview';
 
-const extraUpdate: any =
-  Tenant.APP_SLUG === 'mindspreview'
-    ? {
-        checkAutomatically: 'NEVER',
-        fallbackToCacheTimeout: 0,
-      }
-    : {};
+/**
+ * The camera and microphone permissions messages are different for the previewer app.
+ */
+const cameraMessage = is_previewer_app
+  ? 'Camera access lets you scan QR codes to preview your mobile app, and to create posts with photos and videos.'
+  : 'Camera access lets you create posts with photos and videos.';
+const micMessage = 'Microphone access lets you create new posts with videos.';
+
+const extraUpdate: any = is_previewer_app
+  ? {
+      checkAutomatically: 'NEVER',
+      fallbackToCacheTimeout: 0,
+    }
+  : {};
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -60,10 +68,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'react-native-vision-camera',
       {
-        cameraPermissionText: '$(PRODUCT_NAME) needs access to your Camera.',
+        cameraPermissionText: cameraMessage,
         enableMicrophonePermission: true,
-        microphonePermissionText:
-          '$(PRODUCT_NAME) needs access to your Microphone.',
+        microphonePermissionText: micMessage,
       },
     ],
   ],
@@ -102,6 +109,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'android.permission.ACCESS_MEDIA_LOCATION',
       'android.permission.CAMERA',
       'android.permission.RECORD_AUDIO',
+      'android.permission.POST_NOTIFICATIONS',
     ],
     googleServicesFile: './google-services.json',
   },
@@ -126,9 +134,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         'This lets you share photos from your library',
       NSPhotoLibraryAddUsageDescription:
         'This lets you save photos to your camera roll',
-      NSCameraUsageDescription: '$(PRODUCT_NAME) needs access to your Camera.',
-      NSMicrophoneUsageDescription:
-        '$(PRODUCT_NAME) needs access to your Microphone.',
+      NSCameraUsageDescription: cameraMessage,
+      NSMicrophoneUsageDescription: micMessage,
     },
     splash: {
       image: './assets/images/splash.png',
