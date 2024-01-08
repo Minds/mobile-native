@@ -85,7 +85,7 @@ export class PushService {
           this.token = event.deviceToken;
           apiService
             .post('api/v3/notifications/push/token', {
-              service: 'apns',
+              service: IS_IOS ? 'apns' : 'fcm',
               token: event.deviceToken,
             })
             .catch(err => logService.exception('[PushService]', err))
