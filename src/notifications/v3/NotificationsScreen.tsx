@@ -138,6 +138,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         />
       </ErrorBoundary>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

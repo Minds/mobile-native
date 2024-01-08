@@ -170,9 +170,6 @@ export class AppInitManager {
     // register device token into backend on login
     pushService.registerToken();
 
-    // request for permission (applies to iOS)
-    // pushService.requestNotificationPermission();
-
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
       setTimeout(async () => {

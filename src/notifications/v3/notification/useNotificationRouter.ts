@@ -98,6 +98,8 @@ const useNotificationRouter = (
           });
           break;
         case NotificationType.supermind_accepted:
+        case NotificationType.tag:
+        case NotificationType.post_subscription:
           router.navToEntity();
           break;
         case NotificationType.gift_card_recipient_notified:

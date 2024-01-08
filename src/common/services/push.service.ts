@@ -4,12 +4,14 @@ import {
   Registered,
   RegistrationError,
 } from 'react-native-notifications';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 import { router } from './push/v2/router';
 import logService from './log.service';
 import analyticsService from './analytics.service';
 import { NotificationActionResponse } from 'react-native-notifications/lib/src/interfaces/NotificationActionResponse';
 import apiService from './api.service';
+import { IS_IOS } from '~/config/Config';
 
 /**
  * Push Service
@@ -66,8 +68,14 @@ export class PushService {
   /**
    * Register push service token
    */
-  registerToken() {
+  async registerToken() {
     console.log('[PushService] registerToken...');
+    // ask for permissions for android 13
+    if (!IS_IOS && (Platform.Version as number) >= 33) {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
     Notifications.registerRemoteNotifications();
     Notifications.events().registerRemoteNotificationsRegistered(
       (event: Registered) => {
@@ -77,7 +85,7 @@ export class PushService {
           this.token = event.deviceToken;
           apiService
             .post('api/v3/notifications/push/token', {
-              service: 'apns',
+              service: IS_IOS ? 'apns' : 'fcm',
               token: event.deviceToken,
             })
             .catch(err => logService.exception('[PushService]', err))

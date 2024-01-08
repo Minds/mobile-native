@@ -16,6 +16,7 @@ import Handle from '../bottom-sheet/Handle';
 import MText from '../MText';
 import { observer } from 'mobx-react';
 import { useIsFocused } from '@react-navigation/native';
+import delay from '~/common/helpers/delay';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -102,12 +103,12 @@ const BottomSheetInnerContainer = ({
   const isFocused = useIsFocused();
 
   const close = useCallback(() => {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       bottomSheet.close();
-      setTimeout(() => {
-        NavigationService.goBack();
-        resolve(true);
-      }, 100);
+      await delay(100);
+      NavigationService.goBack();
+      await delay(100);
+      resolve(true);
     });
   }, [bottomSheet]);
 
@@ -136,15 +137,15 @@ const BottomSheetInnerContainerSafe = observer(
   }: Pick<BottomSheetScreenParams, 'component'> | any) => {
     const bottomSheet = useBottomSheet();
 
-    const close = () => {
-      return new Promise(resolve => {
+    const close = useCallback(() => {
+      return new Promise(async resolve => {
         bottomSheet.close();
-        setTimeout(() => {
-          NavigationService.goBack();
-          resolve(true);
-        }, 100);
+        await delay(100);
+        NavigationService.goBack();
+        await delay(100);
+        resolve(true);
       });
-    };
+    }, [bottomSheet]);
 
     return (
       <SafeAreaView
