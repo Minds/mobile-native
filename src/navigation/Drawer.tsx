@@ -36,28 +36,26 @@ import {
 import ThemedStyles from '~/styles/ThemedStyles';
 
 const getOptionsSmallList = navigation => {
-  return [
-    !IS_TENANT
-      ? {
+  return !IS_TENANT
+    ? [
+        {
           name: i18n.t('earnScreen.title'),
           onPress: () => {
             navigation.navigate('EarnModal');
           },
-        }
-      : null,
-    !IS_TENANT
-      ? {
+        },
+        {
           name: i18n.t('analytics.title'),
           onPress: () => {
             navigation.navigate('Analytics');
           },
-        }
-      : null,
-    {
-      name: i18n.t('help'),
-      onPress: navigateToHelp,
-    },
-  ];
+        },
+        {
+          name: i18n.t('help'),
+          onPress: navigateToHelp,
+        },
+      ]
+    : null;
 };
 
 type Flags = Record<'isIosMindsHidden' | 'hideTokens', boolean>;
@@ -135,18 +133,23 @@ const getOptionsList = (
         navigation.navigate('GroupsList');
       },
     },
-    {
-      name: i18n.t('moreScreen.upgrade'),
-      icon: (
-        <IconV2 name="verified" color={ThemedStyles.getColor('PrimaryText')} />
-      ),
-      testID: 'Drawer:upgrade',
-      onPress: () => {
-        navigation.navigate('UpgradeScreen', {
-          onComplete: () => null,
-        });
-      },
-    },
+    !IS_TENANT
+      ? {
+          name: i18n.t('moreScreen.upgrade'),
+          icon: (
+            <IconV2
+              name="verified"
+              color={ThemedStyles.getColor('PrimaryText')}
+            />
+          ),
+          testID: 'Drawer:upgrade',
+          onPress: () => {
+            navigation.navigate('UpgradeScreen', {
+              onComplete: () => null,
+            });
+          },
+        }
+      : null,
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
@@ -209,10 +212,14 @@ export default function Drawer(props) {
         <Spacer vertical="M">
           <DrawerList list={optionsList} small={false} />
         </Spacer>
-        <HairlineSpacer />
-        <Spacer vertical="M">
-          <DrawerList list={optionsSmallList} small />
-        </Spacer>
+        {Boolean(optionsSmallList) && (
+          <>
+            <HairlineSpacer />
+            <Spacer vertical="M">
+              <DrawerList list={optionsSmallList} small />
+            </Spacer>
+          </>
+        )}
       </FitScrollView>
     </Screen>
   );
