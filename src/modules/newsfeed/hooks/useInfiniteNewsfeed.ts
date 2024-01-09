@@ -185,7 +185,6 @@ const useInfiniteFetchNewsfeedQuery = <
   return useInfiniteQuery<FetchNewsfeedQuery, TError, TData>(
     ['FetchNewsfeed.infinite', variables],
     async metaData => {
-      console.log('----> Fetching newsfeed', metaData.pageParam);
       const data = await gqlFetcher<
         FetchNewsfeedQuery,
         FetchNewsfeedQueryVariables
