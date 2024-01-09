@@ -62,7 +62,7 @@ export default function AnimatedTopHeader({
         {
           translateY: interpolate(
             scrollY.value,
-            [151, 185],
+            [159, 193],
             [34, 0],
             Extrapolation.CLAMP,
           ),
