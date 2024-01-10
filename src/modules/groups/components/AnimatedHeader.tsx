@@ -13,6 +13,7 @@ import GroupModel from '~/groups/GroupModel';
 import { MINDS_CDN_URI } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { B2, H4 } from '~/common/ui';
+import SubscribeButton from './SubscribeButton';
 
 const avatarSize = 83;
 const avatarBorder = 3;
@@ -73,6 +74,7 @@ export default function AnimatedHeader({
     }
 
     return {
+      paddingTop: 8,
       transform: [
         {
           translateX: interpolate(
@@ -99,6 +101,9 @@ export default function AnimatedHeader({
             style={StyleSheet.absoluteFillObject}
           />
         </Animated.View>
+        <View style={styles.join}>
+          <SubscribeButton group={group} />
+        </View>
         <Animated.View style={titleStyle}>
           <H4>{group.name}</H4>
         </Animated.View>
@@ -128,6 +133,7 @@ const styles = ThemedStyles.create({
     'paddingHorizontal4x',
     'alignSelfCenterMaxWidth',
   ],
+  join: { position: 'absolute', right: 16, top: 16 },
   avatar: [
     'bgPrimaryBackground',
     'bcolorPrimaryBackground',
