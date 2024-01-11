@@ -136,19 +136,20 @@ const SettingsScreen = observer(({ navigation }) => {
     params: {},
   });
 
-  firstSection.push({
-    title: i18n.t('settings.resources'),
-    screen: 'Resources',
-    params: {},
-  });
+  if (!IS_TENANT) {
+    firstSection.push({
+      title: i18n.t('settings.resources'),
+      screen: 'Resources',
+      params: {},
+    });
+  }
 
-  const secondSection: Array<Item> = [
-    {
+  const secondSection: Array<Item> = [];
+  if (!IS_TENANT) {
+    secondSection.unshift({
       title: i18n.t('help'),
       onPress: navigateToHelp,
-    },
-  ];
-  if (!IS_TENANT) {
+    });
     secondSection.unshift({
       title: i18n.t(
         ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',

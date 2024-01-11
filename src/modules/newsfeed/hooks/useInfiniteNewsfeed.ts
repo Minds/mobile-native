@@ -1,14 +1,21 @@
 import React, { useCallback, useMemo } from 'react';
 import {
+  FetchNewsfeedDocument,
   FetchNewsfeedQuery,
-  useInfiniteFetchNewsfeedQuery,
+  FetchNewsfeedQueryVariables,
 } from '~/graphql/api';
-import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  UseInfiniteQueryOptions,
+  useInfiniteQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
 import { storages } from '~/common/services/storage/storages.service';
+import { gqlFetcher } from '~/common/services/api.service';
 
 const mapModels = (edge: any, inFeedNoticesDelivered) => {
   if (edge.node.__mapped) {
@@ -72,22 +79,17 @@ export function useInfiniteNewsfeed(algorithm) {
   const local = React.useRef<{
     lastFetchAt: number;
     cachedData: undefined | null | InfiniteData<FetchNewsfeedQuery>;
-    cachedPersisted: boolean;
   }>({
-    lastFetchAt: 0,
+    lastFetchAt: Date.now(),
     cachedData: null,
-    cachedPersisted: false,
   }).current;
 
   const queryClient = useQueryClient();
 
   // only on the first run
   if (local.cachedData === null) {
-    // storages.user?.removeItem('NewsfeedCache');
-    local.cachedData = storages.user?.getMap('NewsfeedCache');
-    if (local.cachedData) {
-      local.cachedPersisted = true;
-    }
+    // storages.userCache?.removeItem('NewsfeedCache');
+    local.cachedData = storages.userCache?.getMap('NewsfeedCache');
   }
 
   const query = useInfiniteFetchNewsfeedQuery(
@@ -113,17 +115,6 @@ export function useInfiniteNewsfeed(algorithm) {
       }, []),
     },
   );
-
-  /**
-   * We return the last refetch time (used to fetch the count)
-   */
-  if (query.data?.pages.length === 1 && query.dataUpdatedAt) {
-    local.lastFetchAt = query.dataUpdatedAt;
-    if (!local.cachedPersisted) {
-      local.cachedPersisted = true;
-      storages.user?.setMap('NewsfeedCache', query.data);
-    }
-  }
 
   const entities = useMemo(
     () =>
@@ -164,9 +155,9 @@ export function useInfiniteNewsfeed(algorithm) {
     query,
     refresh: useCallback(() => {
       inFeedNoticesDelivered.current = emptyArray;
-      storages.user?.removeItem('NewsfeedCache');
+      storages.userCache?.removeItem('NewsfeedCache');
       local.cachedData = undefined;
-      local.cachedPersisted = false;
+      local.lastFetchAt = Date.now();
       query.remove();
       query.refetch();
     }, [query, local]),
@@ -175,3 +166,43 @@ export function useInfiniteNewsfeed(algorithm) {
 }
 
 const emptyArray = [];
+
+/**
+ * Custom implementation of the query to be able to cache directly from the query
+ * @param pageParamKey
+ * @param variables
+ * @param options
+ * @returns
+ */
+const useInfiniteFetchNewsfeedQuery = <
+  TData = FetchNewsfeedQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchNewsfeedQueryVariables,
+  variables: FetchNewsfeedQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchNewsfeedQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchNewsfeedQuery, TError, TData>(
+    ['FetchNewsfeed.infinite', variables],
+    async metaData => {
+      const data = await gqlFetcher<
+        FetchNewsfeedQuery,
+        FetchNewsfeedQueryVariables
+      >(FetchNewsfeedDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })();
+
+      // save to cache when fetching the first page
+      if (!metaData.pageParam && data?.newsfeed?.edges?.length) {
+        storages.userCache?.setMap('NewsfeedCache', {
+          pages: [data],
+          pageParams: [undefined],
+        });
+      }
+
+      return data;
+    },
+    options,
+  );
+};

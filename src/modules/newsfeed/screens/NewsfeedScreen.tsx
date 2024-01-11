@@ -254,7 +254,7 @@ const Header = () => (
     <CheckLanguage />
     <RemoteBanner />
     {!IS_TENANT && <InitialOnboardingButton />}
-    <PortraitContentBar />
+    {!IS_TENANT && <PortraitContentBar />}
     {useIsFeatureOn('mob-4472-in-app-verification') ? (
       <InAppVerificationPrompt />
     ) : null}

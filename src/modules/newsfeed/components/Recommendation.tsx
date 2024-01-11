@@ -40,7 +40,7 @@ const Recommendation: FC<RecommendationProps> = ({
     `recommendation:${type}:${location}`,
   );
 
-  if (isDismissed && entities.length) {
+  if (isDismissed || entities.length === 0) {
     return null;
   }
 
