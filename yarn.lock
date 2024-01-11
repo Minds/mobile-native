@@ -14147,7 +14147,7 @@ react-native-navigation-bar-color@^2.0.1:
 
 "react-native-notifications@https://github.com/Minds/react-native-notifications":
   version "5.0.1"
-  resolved "https://github.com/Minds/react-native-notifications#9b9cef16b8bce08c3460e96f40ba431ae6f3aa9a"
+  resolved "https://github.com/Minds/react-native-notifications#ef0840c326ab4f3acab2f3476d5b17da718bc4fc"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
