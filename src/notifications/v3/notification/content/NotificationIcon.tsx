@@ -36,7 +36,7 @@ const notificationIconsTypes: {
     type: 'material',
   },
   gift_card_recipient_notified: { name: 'redeem', type: 'material' },
-  post_subscription: { name: 'create', type: 'material' },
+  post_subscription: { name: 'notifications', type: 'material' },
 };
 
 const NotificationIcon = ({ type }: { type: NotificationType }) => {
