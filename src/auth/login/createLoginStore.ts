@@ -38,11 +38,12 @@ const createLoginStore = ({ props }) => ({
     showNotification(msg, 'warning', 3000);
     this.inProgress = false;
   },
-  onLoginPress() {
+  onLoginPress(xsrfToken: string) {
     if (!this.username || !this.password) {
       this.showErrors = true;
       return;
     }
+    AuthService.setXsrfCookie(xsrfToken);
 
     this.initLogin();
     // is two factor auth

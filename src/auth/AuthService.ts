@@ -9,6 +9,7 @@ import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
 import mindsConfigService from '~/common/services/minds-config.service';
+import CookieManager from '@react-native-cookies/cookies';
 
 export type TFA = 'sms' | 'totp';
 
@@ -30,7 +31,7 @@ interface ValidateResponse extends ApiResponse {}
 
 interface ResetResponse extends ApiResponse {}
 
-type loginParms = {
+type LoginParms = {
   username: string;
   password: string;
   grant_type: string;
@@ -38,7 +39,7 @@ type loginParms = {
   refresh_token: string;
 };
 
-export type registerParams = {
+export type RegisterParams = {
   username: string;
   email: string;
   password: string;
@@ -46,18 +47,25 @@ export type registerParams = {
   friendly_captcha_enabled?: boolean;
 };
 
-type resetParams = {
+type ResetParams = {
   username: string;
   code: string;
   password: string;
 };
 
-type forgotParams = {
+type ForgotParams = {
   username: string;
 };
 
-type validateParams = {
+type ValidateParams = {
   password: string;
+};
+
+type LoginUserResponse = {
+  permissions: string[];
+  status: 'success' | 'error';
+  user: UserModel;
+  pseudo_id?: string;
 };
 
 /**
@@ -66,11 +74,23 @@ type validateParams = {
 class AuthService {
   @observable justRegistered = false;
   @observable onboardCompleted = false;
+  @observable xsrfToken: string = '';
   showLoginPasswordModal: null | Function = null;
 
   @action
   setCompletedOnboard() {
     this.onboardCompleted = true;
+  }
+
+  setXsrfCookie(xsrfToken: string) {
+    this.xsrfToken = xsrfToken;
+    console.log('init auth service with cookie', this.xsrfToken);
+    CookieManager.set('https://www.minds.com', {
+      name: 'XSRF-TOKEN',
+      value: this.xsrfToken,
+      path: '/',
+      secure: true,
+    });
   }
 
   /**
@@ -81,31 +101,73 @@ class AuthService {
    * @param newUser it's a new registered user
    */
   async login(username: string, password: string, newUser: boolean = false) {
-    // const params = {
-    //   grant_type: 'password',
-    //   client_id: 'mobile',
-    //   //client_secret: '',
-    //   username,
-    //   password,
-    // } as loginParms;
+    this.justRegistered = newUser;
+    // ignore if already logged in
+    this.checkUserExist(username);
+    const { data } = await api.rawPost<LoginUserResponse>(
+      'api/v1/authenticate',
+      {
+        username,
+        password,
+      },
+    );
+
+    console.log('response: ', data);
+    const cookies = await CookieManager.get('https://www.minds.com');
+    data.pseudo_id = cookies.minds_pseudoid?.value;
+    console.log('pseudo_id: ', data.pseudo_id);
+
+    if (session.isRelogin(username, data)) {
+      return data;
+    }
+
+    const isFirstLogin = session.sessionsCount === 0;
+
+    console.log('isFirstLogin', isFirstLogin, session);
+
+    // if already have other sessions...
+    if (!isFirstLogin) {
+      session.setSwitchingAccount(true);
+      this.sessionLogout(newUser);
+    }
+
+    await api.clearCookies();
+    await delay(100);
+
+    await session.addSession(data);
+    console.log('adding data ', data);
+    await session.login();
+    await mindsConfigService.update();
+
+    // if this is not the first login we reset the stack keeping the login screen and the main only.
+    // To force rendering the app behind the modal and get rid of the splash screen
+    if (!isFirstLogin) {
+      resetStackAndGoBack();
+    }
+
+    session.setSwitchingAccount(false);
+
+    return data;
+  }
+
+  async oldLogin(username: string, password: string, newUser: boolean = false) {
+    const params = {
+      grant_type: 'password',
+      client_id: 'mobile',
+      //client_secret: '',
+      username,
+      password,
+    } as LoginParms;
 
     this.justRegistered = newUser;
 
     // ignore if already logged in
     this.checkUserExist(username);
 
-    const { headers: responseHeaders, ...data } =
-      await api.rawPost<LoginResponse>(
-        // 'api/v3/oauth/token',
-        // params,
-        'api/v1/authenticate',
-        {
-          username,
-          password,
-        },
-      );
-
-    console.log('response: ', data, 'headers: ', responseHeaders);
+    const { headers: responseHeaders, data } = await api.rawPost<LoginResponse>(
+      'api/v3/oauth/token',
+      params,
+    );
 
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
@@ -412,7 +474,7 @@ class AuthService {
       client_id: 'mobile',
       //client_secret: '',
       refresh_token: refreshToken || session.refreshToken,
-    } as loginParms;
+    } as LoginParms;
 
     const headers = accessToken
       ? api.buildAuthorizationHeader(accessToken)
@@ -436,7 +498,7 @@ class AuthService {
    * Register user and returns UserModel
    * @param params
    */
-  async register(params: registerParams): Promise<RegisterResponse> {
+  async register(params: RegisterParams): Promise<RegisterResponse> {
     try {
       const response = await api.post<RegisterResponse>(
         'api/v1/register',
@@ -452,7 +514,7 @@ class AuthService {
    * @param username
    */
   forgot(username: string): Promise<ForgotResponse> {
-    const params = { username } as forgotParams;
+    const params = { username } as ForgotParams;
     return api.post('api/v1/forgotpassword/request', params);
   }
   /**
@@ -470,7 +532,7 @@ class AuthService {
       username,
       code,
       password,
-    } as resetParams;
+    } as ResetParams;
 
     return api.post('api/v1/forgotpassword/reset', params, {
       Authorization: undefined, // we want this request to be without authorization
@@ -481,7 +543,7 @@ class AuthService {
    * @param password
    */
   validatePassword(password: string): Promise<ValidateResponse> {
-    const params = { password } as validateParams;
+    const params = { password } as ValidateParams;
     return api.post('api/v2/settings/password/validate', params);
   }
 }

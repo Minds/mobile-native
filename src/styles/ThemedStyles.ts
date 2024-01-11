@@ -170,13 +170,14 @@ export function useStyle(...styles: Array<StyleOrCustom>) {
 
 export function useMemoStyle(
   styles: Array<StyleOrCustom> | (() => Array<StyleOrCustom>),
-  dependencies: React.DependencyList | undefined,
+  dependencies: React.DependencyList | readonly unknown[],
 ) {
   const fn =
     typeof styles === 'function'
       ? () => ThemedStyles.combine(...styles())
       : () => ThemedStyles.combine(...styles);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useMemo(fn, dependencies);
 }
 
@@ -253,6 +254,7 @@ export function useOrientationStyles(
       }
     });
     return ThemedStyles.create(styles as CustomStyles);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orientation, ...(dependencies || [])]);
 }
 

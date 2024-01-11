@@ -405,6 +405,7 @@ export class ApiService {
       Pragma: 'no-cache',
       'no-cache': '1',
       'App-Version': Version.VERSION,
+      'X-XSRF-TOKEN': AuthService.xsrfToken,
       ...customHeaders,
     };
 

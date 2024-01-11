@@ -13,7 +13,7 @@ import validatePassword from '../../common/helpers/validatePassword';
 import { showNotification } from '../../../AppMessages';
 import validatorService from '../../common/services/validator.service';
 import Captcha from '../../common/components/Captcha';
-import authService, { registerParams } from '../AuthService';
+import authService, { RegisterParams } from '../AuthService';
 import apiService from '../../common/services/api.service';
 import delay from '../../common/helpers/delay';
 import logService from '../../common/services/log.service';
@@ -87,7 +87,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           password: store.password,
           exclusive_promotions: store.exclusivePromotions,
           captcha: store.captcha,
-        } as registerParams;
+        } as RegisterParams;
         if (store.friendlyCaptchaEnabled) {
           params.friendly_captcha_enabled = true;
         }
