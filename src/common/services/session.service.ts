@@ -13,6 +13,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
+import { IS_TENANT } from '../../config/Config';
 
 const atob = (text: string) => Buffer.from(text, 'base64');
 
@@ -135,8 +136,8 @@ export class SessionService {
       const { accessToken, refreshToken, user, pseudoId } =
         this.sessions[this.activeIndex];
 
-      // set the analytics pseudo id
-      analyticsService.setUserId(pseudoId);
+      // set the analytics pseudo id (if not tenant)
+      analyticsService.setUserId(IS_TENANT ? user.guid : pseudoId);
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
@@ -253,15 +254,15 @@ export class SessionService {
    */
   async loadUser(user?: UserModel) {
     if (user) {
-      getStores().user.setUser(user);
+      getStores()?.user.setUser(user);
       // we update the user without wait
       getStores()
-        .user.load(true)
+        ?.user.load(true)
         .then(updatedUser => {
           this.updateActiveSessionUser(updatedUser);
         });
     } else {
-      user = await getStores().user.load();
+      user = await getStores()?.user.load();
     }
 
     this.guid = user.guid;
@@ -271,7 +272,7 @@ export class SessionService {
    * Return current user
    */
   getUser(): UserModel {
-    return getStores().user.me;
+    return getStores()?.user.me;
   }
 
   /**
@@ -385,7 +386,9 @@ export class SessionService {
       sessions.push(sessionData);
       this.setSessions(sessions);
 
-      analyticsService.setUserId(sessionData.pseudoId);
+      analyticsService.setUserId(
+        IS_TENANT ? sessionData.user.guid : sessionData.pseudoId,
+      );
 
       // set the active index which will be logged
       this.setActiveIndex(this.sessions.length - 1);
@@ -416,7 +419,9 @@ export class SessionService {
     this.accessTokenExpires = sessions.accessToken.access_token_expires;
     this.refreshTokenExpires = sessions.refreshToken.refresh_token_expires;
 
-    analyticsService.setUserId(sessions.pseudoId);
+    analyticsService.setUserId(
+      IS_TENANT ? sessions.user.guid : sessions.pseudoId,
+    );
 
     // persist index
     this.persistActiveIndex();
