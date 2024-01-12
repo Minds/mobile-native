@@ -64,6 +64,7 @@ export const ACCENT_COLOR_DARK = Tenant.ACCENT_COLOR_DARK;
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
 
 export const TENANT = Tenant.APP_NAME;
+export const TENANT_ID = Tenant.TENANT_ID;
 
 export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
 
