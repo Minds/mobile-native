@@ -11,7 +11,7 @@ import CookieManager from '@react-native-cookies/cookies';
 import i18nService from './i18n.service';
 import { Version } from '../../config/Version';
 import { storages } from './storage/storages.service';
-import { IS_IOS, IS_TENANT, TENANT, TENANT_ID } from '~/config/Config';
+import { IS_IOS, IS_TENANT, TENANT_ID } from '~/config/Config';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
@@ -80,7 +80,7 @@ export class AnalyticsService {
     const screen = Dimensions.get('screen');
     const window = Dimensions.get('window');
 
-    const useragent = `Minds/${Version.VERSION} (${DeviceInfo?.getModel()}; ${
+    const useragent = `Minds/${Version.VERSION} (${DeviceInfo.getModel()}; ${
       Platform.OS === 'ios' ? 'iOS' : 'Android'
     } ${DeviceInfo.getSystemVersion()}) Version/${Version.VERSION}`;
 
