@@ -1,32 +1,46 @@
 {
   "cli": {
-    "version": ">= 5.4.0"
+    "version": ">= 5.4.0",
+    "appVersionSource": "remote"
   },
   "build": {
+    "production": {
+      "channel": "production",
+      "node": "18.18.0",
+      "autoIncrement": true,
+      "env": {}
+    },
+    "ossProduction": {
+      "extends": "production",
+      "autoIncrement": false,
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {}
+    },
+    "tenantPreviewer": {
+      "extends": "production",
+      "distribution": "store",
+      "autoIncrement": true
+    },
     "development": {
       "extends": "production",
+      "autoIncrement": false,
       "developmentClient": true,
       "distribution": "internal"
     },
-    "tenantPreview": {
-      "extends": "production",
-      "distribution": "store"
-    },
     "preview": {
       "extends": "production",
+      "autoIncrement": false,
       "channel": "preview",
       "distribution": "internal"
     },
     "demo": {
       "extends": "production",
+      "autoIncrement": false,
       "android": {
         "buildType": "apk"
       }
-    },
-    "production": {
-      "channel": "production",
-      "node": "18.18.0",
-      "env": {}
     }
   },
   "submit": {
@@ -35,7 +49,7 @@
         "ascAppId": "961771928"
       }
     },
-    "tenantPreview": {
+    "tenantPreviewer": {
       "ios": {
         "ascAppId": "6473803640"
       }
