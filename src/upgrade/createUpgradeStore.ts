@@ -54,6 +54,8 @@ const createUpgradeStore = () => {
           }
         }
       }
+      this.plansUSD = [...this.plansUSD];
+      this.plansTokens = [...this.plansTokens];
     },
     get canHaveTrial(): boolean {
       return this.method === 'usd' && this.selectedOption.can_have_trial;

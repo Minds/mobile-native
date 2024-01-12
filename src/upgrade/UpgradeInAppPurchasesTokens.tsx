@@ -29,6 +29,7 @@ import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { IS_IOS } from '~/config/Config';
 import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import CenteredLoading from '~/common/components/CenteredLoading';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -50,6 +51,7 @@ const UpgradeInAppPurchasesTokens = ({
 
   const walletStore: WalletStoreType = useStores().wallet;
   const [disabledButton, setDisabledButton] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const iapPlans = pro ? IAP_SKUS_PRO : IAP_SKUS_PLUS;
 
@@ -75,7 +77,20 @@ const UpgradeInAppPurchasesTokens = ({
     if (store.method === 'usd') {
       const skus = Object.values(iapPlans);
       if (skus) {
-        getSubscriptions({ skus }).catch(err => console.warn('err', err));
+        setLoading(true);
+        getSubscriptions({ skus })
+          .then(() => setLoading(false))
+          .catch(() => {
+            // sometimes it fails with "Unable to auto-initialize connection" error. Need to try again.
+            getSubscriptions({ skus })
+              .catch(() => {
+                showNotification(
+                  'Unable to auto-initialize connection. Please go back and try again',
+                  'warning',
+                );
+              })
+              .finally(() => setLoading(false));
+          });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -193,7 +208,10 @@ const UpgradeInAppPurchasesTokens = ({
 
       // Android Subscriptions needs a offerToken
       if (sku === undefined || (!IS_IOS && !offerToken)) {
-        showNotification('No SKU or offerToken', 'warning');
+        showNotification(
+          `No ${offerToken ? 'SKU' : 'offerToken'} found`,
+          'warning',
+        );
         console.warn('sku', sku, offerToken);
         return;
       }
@@ -235,6 +253,7 @@ const UpgradeInAppPurchasesTokens = ({
           <PlanOptionsIAP store={store} subscriptions={subscriptions} />
         )
       )}
+      {loading && <CenteredLoading />}
       <Button
         mode="outline"
         type="action"
