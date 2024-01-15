@@ -5,6 +5,7 @@ import { InteractionManager, Linking } from 'react-native';
 import openUrlService from '../../common/services/open-url.service';
 import { storages } from '../../common/services/storage/storages.service';
 import {
+  IS_TENANT,
   RATING_APP_SCORE_THRESHOLD,
   STORE_REVIEW_LINK,
   USAGE_SCORES,
@@ -24,6 +25,13 @@ class StoreRatingService {
   }
 
   track(key: keyof typeof USAGE_SCORES, prompt = false) {
+    // Do not track or prompt on tenant apps
+    if (IS_TENANT) {
+      return;
+    }
+
+    const pointsOld = this.points;
+
     this.points += USAGE_SCORES[key];
 
     if (prompt && this.shouldPrompt) {
@@ -32,6 +40,11 @@ class StoreRatingService {
           this.prompt();
         });
       }, 500);
+    }
+
+    // do not save if the threshold was reached already (optimization)
+    if (pointsOld > RATING_APP_SCORE_THRESHOLD) {
+      return;
     }
 
     this.debouncedSetStorage(SCORES_KEY, this.points);
