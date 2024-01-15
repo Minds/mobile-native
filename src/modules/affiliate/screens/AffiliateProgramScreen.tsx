@@ -28,7 +28,8 @@ export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens =
+    useIsGoogleFeatureOn('mob-5221-google-hide-tokens') && IS_FROM_STORE;
 
   return (
     <Screen safe onlyTopEdge>

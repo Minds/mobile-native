@@ -183,9 +183,13 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
       ? `; ${platformsText}`
       : '';
 
-  const disabled =
-    (isCashFromStore && !selectedProduct && selectedMethod === 'iap') ||
-    (isCashFromStripe && !selectedCardId);
+  const noProduct =
+    isCashFromStore && selectedMethod === 'iap' && !selectedProduct;
+  const noCard =
+    isCashFromStripe && selectedMethod !== 'gifts' && !selectedCardId;
+  const noCredit = selectedMethod === 'gifts' && !hasCredit;
+
+  const disabled = noProduct && noCredit && noCard;
 
   return (
     <Screen safe onlyTopEdge>

@@ -47,6 +47,8 @@ type PropsType = {
  * Wallet screen
  */
 const WalletScreen = observer((props: PropsType) => {
+  const { currency, section } = props.route.params ?? {};
+
   const theme = ThemedStyles.style;
   const store: WalletStoreType = useStores().wallet;
 
@@ -84,7 +86,6 @@ const WalletScreen = observer((props: PropsType) => {
 
   useEffect(() => {
     store.loadWallet();
-    const { currency, section } = props.route.params ?? {};
     if (!currency || !section) {
       return;
     }
@@ -101,7 +102,7 @@ const WalletScreen = observer((props: PropsType) => {
     ) {
       tokenTabStore.setOption(section as TokensOptions);
     }
-  }, [props.route.params, store, tokenTabStore, usdTabStore]);
+  }, [currency, section, store, tokenTabStore, usdTabStore]);
 
   useFocusEffect(
     React.useCallback(() => {
