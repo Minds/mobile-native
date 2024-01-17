@@ -1,6 +1,8 @@
-# preview using expo update
+# Preview using expo update
+# This Jobs generate a new QA update to test scanning the QR code
+# it runs every time an MR is created/updated
 eas_update_mr:
-  stage: build_mr
+  stage: build
   image: node:18.18-alpine
   tags: [minds-ci]
   cache:
@@ -20,7 +22,7 @@ eas_update_mr:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 stop_review:
-  stage: build_mr
+  stage: build
   image: node:18.18-alpine
   tags: [minds-ci]
   cache:

@@ -1,6 +1,6 @@
 # Demo generation for preview app
 eas_build_preview:
-  stage: build_preview
+  stage: build
   image: node:alpine
   tags: [minds-ci]
   cache:

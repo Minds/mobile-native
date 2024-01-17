@@ -14,6 +14,7 @@
     "pull-locale": "cd ../l10n; git pull origin master; cd -; cp ../l10n/mobile-native/locale/*.json locales/",
     "static-analysis": "tsc",
     "prepare-preview-app": "node tasks/prepare-preview-app.js",
+    "prepare-android-oss": "node tasks/prepare-android-oss.js",
     "validate-locales": "node tasks/validate-locales.js",
     "unused-locales": "ts-node tasks/unused-locales.js",
     "update-settings": "ts-node tasks/update-settings.js",

@@ -1,6 +1,16 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 import Tenant from './tenant.json';
 
+/**
+ * The app version
+ * This should be updated after each release
+ */
+const APP_VERSION = '5.0.0';
+
+const appBuildNumber = process.env.MINDS_APP_BUILD
+  ? { versionCode: parseInt(process.env.MINDS_APP_BUILD, 10) }
+  : {};
+
 type ResizeType = 'cover' | 'contain';
 
 /**
@@ -32,7 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name,
   scheme: Tenant.APP_SCHEME,
   slug: Tenant.APP_SLUG || 'minds',
-  version: process.env.MINDS_APP_VERSION || '5.0.0',
+  version: APP_VERSION,
   icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
@@ -82,9 +92,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           backgroundColor: Tenant.ADAPTIVE_COLOR,
         }
       : undefined,
-    versionCode: process.env.MINDS_APP_BUILD
-      ? parseInt(process.env.MINDS_APP_BUILD, 10)
-      : 310190,
+    ...appBuildNumber,
     intentFilters: [
       {
         action: 'VIEW',
@@ -116,7 +124,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: Tenant.APP_IOS_BUNDLE,
-    buildNumber: process.env.MINDS_APP_BUILD || '201907230460',
     associatedDomains: Tenant.APP_HOST
       ? [
           'applinks:' + Tenant.APP_HOST,

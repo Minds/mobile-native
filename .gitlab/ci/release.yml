@@ -1,0 +1,23 @@
+# Release the OSS version
+eas_release_android_oss:
+  stage: release
+  image: cimg/aws:2023.12
+  tags: [minds-ci]
+  artifacts:
+    paths:
+      - Minds.apk
+      - releases.json
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  dependencies:
+    - eas_build_production_android_oss
+  script:
+    - echo "Uploading release.json"
+    - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_OSS"
+      when: manual
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual
