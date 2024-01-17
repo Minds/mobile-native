@@ -19,6 +19,7 @@ jest.mock('../common/services/api.service', () => ({
   delete: jest.fn(),
   clearCookies: jest.fn(),
   buildAuthorizationHeader: jest.fn(),
+  buildXsrfHeaders: jest.fn(),
 
   isApiError: jest.fn(),
   isNetworkError: jest.fn(),

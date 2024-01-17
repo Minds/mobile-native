@@ -8,4 +8,5 @@ export default {
   delete: jest.fn(),
   clearCookies: jest.fn(),
   buildAuthorizationHeader: jest.fn(),
+  buildXsrfHeaders: jest.fn(),
 };

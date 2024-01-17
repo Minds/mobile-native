@@ -15,7 +15,7 @@ describe('Session service', () => {
 
     const now = Date.now() + 3600;
     expect(service.initialScreen).toEqual('');
-    expect(service.token).toEqual('');
+    expect(service.cookies).toEqual(undefined);
     appStores.user.load.mockResolvedValue({ guid: 'guid1' });
     await service.init();
 

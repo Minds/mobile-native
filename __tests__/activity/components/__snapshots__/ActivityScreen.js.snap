@@ -173,6 +173,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "Cache-Control": "no-cache, no-store, must-revalidate",
                       "Content-Type": "application/json",
                       "Pragma": "no-cache",
+                      "X-XSRF-TOKEN": "",
                       "no-cache": "1",
                     },
                     "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",

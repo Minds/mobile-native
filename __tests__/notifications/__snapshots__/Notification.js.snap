@@ -54,6 +54,7 @@ exports[`Notifications component renders correctly 1`] = `
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Type": "application/json",
                 "Pragma": "no-cache",
+                "X-XSRF-TOKEN": "",
                 "no-cache": "1",
               },
               "uri": "https://cdn.minds.com/icon/100000000000000519/medium/1623077876",

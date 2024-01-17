@@ -37,7 +37,7 @@ describe('LoginForm component', () => {
   it('should calls onLogin when user login', async () => {
     authService.login.mockResolvedValue();
 
-    const { getByTestId, getByA11yLabel } = render(<LoginForm />);
+    const { getByTestId } = render(<LoginForm />);
 
     const user = getByTestId('usernameLoginInput');
     const pass = getByTestId('userPasswordInput');

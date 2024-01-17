@@ -14,8 +14,8 @@ export class SocketService {
   rooms: string[] = [];
 
   init() {
-    sessionService.onSession(token => {
-      if (token) {
+    sessionService.onSession(cookies => {
+      if (cookies) {
         this.setUp();
       } else if (this.socket) {
         this.deregister();
@@ -153,7 +153,7 @@ export class SocketService {
   }
 
   registerWithAccessToken() {
-    this.emit('register', sessionService.guid, sessionService.token);
+    this.emit('register', sessionService.guid, sessionService.cookies);
   }
 
   deregister() {

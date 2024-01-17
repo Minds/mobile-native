@@ -1,5 +1,5 @@
-import api, { ApiResponse } from './../common/services/api.service';
-import session from './../common/services/session.service';
+import api, { ApiResponse } from '../common/services/api.service';
+import session from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
@@ -9,16 +9,9 @@ import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
 import mindsConfigService from '~/common/services/minds-config.service';
-import CookieManager from '@react-native-cookies/cookies';
+import CookieManager, { Cookies } from '@react-native-cookies/cookies';
 
 export type TFA = 'sms' | 'totp';
-
-interface LoginResponse extends ApiResponse {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  pseudo_id: string;
-}
 
 export interface RegisterResponse extends ApiResponse {
   guid: string;
@@ -30,14 +23,6 @@ interface ForgotResponse extends ApiResponse {}
 interface ValidateResponse extends ApiResponse {}
 
 interface ResetResponse extends ApiResponse {}
-
-type LoginParms = {
-  username: string;
-  password: string;
-  grant_type: string;
-  client_id: string;
-  refresh_token: string;
-};
 
 export type RegisterParams = {
   username: string;
@@ -65,7 +50,7 @@ type LoginUserResponse = {
   permissions: string[];
   status: 'success' | 'error';
   user: UserModel;
-  pseudo_id?: string;
+  pseudoId?: string;
 };
 
 /**
@@ -74,23 +59,11 @@ type LoginUserResponse = {
 class AuthService {
   @observable justRegistered = false;
   @observable onboardCompleted = false;
-  @observable xsrfToken: string = '';
   showLoginPasswordModal: null | Function = null;
 
   @action
   setCompletedOnboard() {
     this.onboardCompleted = true;
-  }
-
-  setXsrfCookie(xsrfToken: string) {
-    this.xsrfToken = xsrfToken;
-    console.log('init auth service with cookie', this.xsrfToken);
-    CookieManager.set('https://www.minds.com', {
-      name: 'XSRF-TOKEN',
-      value: this.xsrfToken,
-      path: '/',
-      secure: true,
-    });
   }
 
   /**
@@ -104,6 +77,15 @@ class AuthService {
     this.justRegistered = newUser;
     // ignore if already logged in
     this.checkUserExist(username);
+
+    const isFirstLogin = session.sessionsCount === 0;
+
+    // if already have other sessions...
+    if (!isFirstLogin) {
+      session.setSwitchingAccount(true);
+    }
+
+    await api.updateXsrfToken();
     const { data } = await api.rawPost<LoginUserResponse>(
       'api/v1/authenticate',
       {
@@ -112,90 +94,20 @@ class AuthService {
       },
     );
 
-    console.log('response: ', data);
+    if (!data) {
+      console.log('[AuthService] login: no data');
+      return null;
+    }
+
     const cookies = await CookieManager.get('https://www.minds.com');
-    data.pseudo_id = cookies.minds_pseudoid?.value;
-    console.log('pseudo_id: ', data.pseudo_id);
 
-    if (session.isRelogin(username, data)) {
+    if (session.isRelogin(username, data, cookies)) {
       return data;
     }
 
-    const isFirstLogin = session.sessionsCount === 0;
-
-    console.log('isFirstLogin', isFirstLogin, session);
-
-    // if already have other sessions...
-    if (!isFirstLogin) {
-      session.setSwitchingAccount(true);
-      this.sessionLogout(newUser);
-    }
-
-    await api.clearCookies();
     await delay(100);
 
-    await session.addSession(data);
-    console.log('adding data ', data);
-    await session.login();
-    await mindsConfigService.update();
-
-    // if this is not the first login we reset the stack keeping the login screen and the main only.
-    // To force rendering the app behind the modal and get rid of the splash screen
-    if (!isFirstLogin) {
-      resetStackAndGoBack();
-    }
-
-    session.setSwitchingAccount(false);
-
-    return data;
-  }
-
-  async oldLogin(username: string, password: string, newUser: boolean = false) {
-    const params = {
-      grant_type: 'password',
-      client_id: 'mobile',
-      //client_secret: '',
-      username,
-      password,
-    } as LoginParms;
-
-    this.justRegistered = newUser;
-
-    // ignore if already logged in
-    this.checkUserExist(username);
-
-    const { headers: responseHeaders, data } = await api.rawPost<LoginResponse>(
-      'api/v3/oauth/token',
-      params,
-    );
-
-    if (responseHeaders && responseHeaders['set-cookie']) {
-      const regex = /minds_pseudoid=([^;]*);/g;
-      const result = regex.exec(responseHeaders['set-cookie'].join());
-      if (result && result[1]) {
-        data.pseudo_id = result[1];
-      }
-    }
-
-    if (session.isRelogin(username, data)) {
-      return data;
-    }
-
-    const isFirstLogin = session.sessionsCount === 0;
-
-    console.log('isFirstLogin', session);
-
-    // if already have other sessions...
-    if (!isFirstLogin) {
-      session.setSwitchingAccount(true);
-      this.sessionLogout(newUser);
-    }
-
-    await api.clearCookies();
-    await delay(100);
-
-    await session.addSession(data);
-    console.log('adding data ', data);
+    await session.addSession(data, cookies);
     await session.login();
     await mindsConfigService.update();
 
@@ -224,9 +136,10 @@ class AuthService {
   }
 
   async loginWithIndex(sessionIndex: number) {
+    console.log('[AuthService] loginWithIndex', sessionIndex);
     session.setSwitchingAccount(true);
-    await this.sessionLogout();
-    await api.clearCookies();
+    // await this.sessionLogout();
+    // await api.clearCookies();
     await delay(100);
     await session.switchUser(sessionIndex);
     await session.login();
@@ -296,15 +209,9 @@ class AuthService {
         }
       }
 
-      // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
-
       if (preLogoutCallBack) {
         await preLogoutCallBack();
       }
-
-      api.post('api/v3/oauth/revoke');
-
       // Logout and handle user switching or navigating to welcome screen
       this.logoutSession();
 
@@ -330,41 +237,6 @@ class AuthService {
   }
 
   /**
-   * Revoke tokens and relogin (The current user session)
-   */
-  async revokeTokens(): Promise<boolean> {
-    this.justRegistered = false;
-    this.onboardCompleted = false;
-
-    try {
-      if (session.sessionsCount > 0) {
-        const state = NavigationService.getCurrentState();
-        if (state && state.name !== 'MultiUserScreen') {
-          NavigationService.navigate('MultiUserScreen');
-          await delay(100);
-        }
-      }
-      // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
-
-      session.setSwitchingAccount(true);
-      // revoke local session
-      session.setSessionExpired(true);
-
-      this.tryToRelog(() => {
-        session.setSessionExpired(false);
-        NavigationService.goBack();
-      });
-
-      return true;
-    } catch (err) {
-      session.setSwitchingAccount(false);
-      logService.exception('[AuthService] revokeTokens', err);
-      return false;
-    }
-  }
-
-  /**
    * Opens the re-login modal for the current user and handles a successful login or the cancel
    */
   async tryToRelog(onLogin?: Function) {
@@ -380,35 +252,12 @@ class AuthService {
   }
 
   /**
-   * Unregister the push token for a session index
-   */
-  async unregisterTokenFrom(index: number) {
-    try {
-      const deviceToken = session.deviceToken;
-      if (deviceToken) {
-        return await session.apiServiceInstances[index].delete(
-          `api/v3/notifications/push/token/${deviceToken}`,
-        );
-      }
-    } catch (error) {
-      logService.exception(
-        '[AuthService] error unregistering push token',
-        error,
-      );
-    }
-  }
-
-  /**
    * Logout user specified by index on session
    */
   async logoutFrom(index: number): Promise<boolean> {
     this.justRegistered = false;
     this.onboardCompleted = false;
     try {
-      await this.unregisterTokenFrom(index);
-
-      // revoke access token from backend
-      session.apiServiceInstances[index].post('api/v3/oauth/revoke');
       session.setSwitchingAccount(true);
       const logoutActive = session.logoutFrom(index);
 
@@ -450,7 +299,6 @@ class AuthService {
   async logoutAll(): Promise<boolean> {
     try {
       await api.delete('api/v1/authenticate/all');
-      await api.post('api/v3/oauth/revoke');
       session.logout();
 
       // Fixes auto-subscribe issue on register
@@ -460,37 +308,6 @@ class AuthService {
     } catch (err) {
       logService.exception('[AuthService] logoutAll', err);
       return false;
-    }
-  }
-
-  /**
-   * Refresh user token
-   */
-  async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
-    logService.info('[AuthService] Refreshing token...');
-
-    const params = {
-      grant_type: 'refresh_token',
-      client_id: 'mobile',
-      //client_secret: '',
-      refresh_token: refreshToken || session.refreshToken,
-    } as LoginParms;
-
-    const headers = accessToken
-      ? api.buildAuthorizationHeader(accessToken)
-      : {};
-
-    try {
-      const data: LoginResponse = await api.post<LoginResponse>(
-        'api/v3/oauth/token',
-        params,
-        headers,
-      );
-      logService.info('[AuthService] token refreshed');
-      return data;
-    } catch (err) {
-      logService.exception('[AuthService] error claiming refresh token', err);
-      throw err;
     }
   }
 
@@ -549,3 +366,10 @@ class AuthService {
 }
 
 export default new AuthService();
+
+CookieManager.setFromCookies = async (url: string, cookies: Cookies) =>
+  Promise.all(
+    Object.keys(cookies).map(async key =>
+      CookieManager.set(url, { ...cookies[key] }),
+    ),
+  );

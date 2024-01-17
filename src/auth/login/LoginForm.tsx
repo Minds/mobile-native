@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -17,7 +17,6 @@ import { IS_IOS, IS_IPAD } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
-import CookieManager from '@react-native-cookies/cookies';
 
 type PropsType = {
   onLogin?: Function;
@@ -30,7 +29,6 @@ type PropsType = {
  * Login Form component
  */
 export default observer(function LoginForm(props: PropsType) {
-  const [token, setToken] = useState('');
   const localStore = useLocalStore(createLoginStore, { props });
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
 
@@ -52,8 +50,7 @@ export default observer(function LoginForm(props: PropsType) {
   }, [props.sessionIndex, props.relogin, localStore.username]);
 
   const onLoginPress = () => {
-    console.log('onLoginPress', token);
-    localStore.onLoginPress(token);
+    localStore.onLoginPress();
   };
 
   const usernameInput = props.relogin ? (
@@ -129,7 +126,7 @@ export default observer(function LoginForm(props: PropsType) {
         <Row top="L2" align="centerBoth">
           <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
         </Row>
-        <HiddenWeb onSetCookie={setToken} />
+        {/* <HiddenWeb onSetCookie={setToken} /> */}
       </DismissKeyboard>
     </View>
   );
@@ -172,23 +169,23 @@ const styles = ThemedStyles.create({
   },
 });
 
-type WebProps = {
-  onSetCookie: (cookie: string) => void;
-};
+// type WebProps = {
+//   onSetCookie: (cookie: string) => void;
+// };
 
-const HiddenWeb = ({ onSetCookie }: WebProps) => {
-  const WebView = require('react-native-webview').WebView;
-  return (
-    <WebView
-      source={{ uri: 'https://www.minds.com/login' }}
-      // sharedCookiesEnabled
-      onNavigationStateChange={async () => {
-        const cookies = await CookieManager.get('https://www.minds.com');
-        const token = cookies?.['XSRF-TOKEN'];
-        console.log('cookieString', token);
-        onSetCookie?.(token.value);
-      }}
-      style={{ height: 0, width: 0 }}
-    />
-  );
-};
+// const HiddenWeb = ({ onSetCookie }: WebProps) => {
+//   const WebView = require('react-native-webview').WebView;
+//   return (
+//     <WebView
+//       source={{ uri: 'https://www.minds.com/login' }}
+//       // sharedCookiesEnabled
+//       onNavigationStateChange={async () => {
+//         const cookies = await CookieManager.get('https://www.minds.com');
+//         const token = cookies?.['XSRF-TOKEN'];
+//         console.log('cookieString', token);
+//         onSetCookie?.(token.value);
+//       }}
+//       style={{ height: 0, width: 0 }}
+//     />
+//   );
+// };

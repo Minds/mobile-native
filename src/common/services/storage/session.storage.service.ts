@@ -1,3 +1,4 @@
+import { Cookies } from '@react-native-cookies/cookies';
 import type UserModel from '../../../channel/UserModel';
 import logService from '../log.service';
 import { storages } from './storages.service';
@@ -5,23 +6,10 @@ import { storages } from './storages.service';
 const KEY = 'SESSIONS_DATA';
 const INDEX_KEY = 'SESSIONS_ACTIVE_INDEX';
 
-export type RefreshToken = {
-  refresh_token: string;
-  refresh_token_expires: number | null;
-};
-
 export type Session = {
   user: UserModel;
-  pseudoId: string; // used for snowplow
+  cookies?: Cookies;
   sessionExpired: boolean;
-  refreshToken: {
-    refresh_token: string;
-    refresh_token_expires: number | null;
-  };
-  accessToken: {
-    access_token: string;
-    access_token_expires: number | null;
-  };
 };
 
 export type Sessions = Array<Session>;
@@ -43,58 +31,14 @@ export class SessionStorageService {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
       const activeIndex = storages.session.getInt(INDEX_KEY) || 0;
 
-      if (sessionData === null || sessionData === undefined) {
-        return this.checkAndMigrate();
-      }
-      //  the active index was moved outside the session data
       if (sessionData) {
         sessionData.activeIndex = activeIndex;
+        return sessionData;
       }
-      return sessionData;
+      return null;
     } catch (err) {
       return null;
     }
-  }
-
-  checkAndMigrate() {
-    const data = storages.session.getMultipleItems<any>(
-      ['access_token', 'refresh_token', 'user'],
-      'object',
-    );
-
-    if (!data) {
-      return null;
-    }
-
-    const accessToken = data[0][1],
-      refreshToken = data[1][1],
-      user = data[2][1];
-
-    if (!accessToken || !refreshToken || !user) {
-      return null;
-    }
-
-    const sessionsData: SessionsData = {
-      activeIndex: 0,
-      tokensData: [
-        {
-          user,
-          pseudoId: '',
-          refreshToken,
-          accessToken,
-          sessionExpired: false,
-        },
-      ],
-    };
-
-    this.save(sessionsData);
-
-    // we remove the legacy session data once migrated
-    storages.session.removeItem('access_token');
-    storages.session.removeItem('refresh_token');
-    storages.session.removeItem('user');
-
-    return sessionsData;
   }
 
   /**
@@ -130,14 +74,11 @@ export class SessionStorageService {
   }
 
   /**
-   * Set access token
-   * @param {string} token
+   * Save cookies
+   * @param {Cookies} cookies
    */
-  setAccessToken(token, expires) {
-    storages.session.setMap('access_token', {
-      access_token: token,
-      access_token_expires: expires,
-    });
+  setCookies(cookies) {
+    storages.session.setMap('cookies', cookies);
   }
 
   /**
@@ -146,18 +87,6 @@ export class SessionStorageService {
    */
   setUser(user) {
     storages.session.setMap('user', user);
-  }
-
-  /**
-   * Set access token
-   * @param {string} token
-   * @param {string} guid
-   */
-  setRefreshToken(token, expires) {
-    storages.session.setMap('refresh_token', {
-      refresh_token: token,
-      refresh_token_expires: expires,
-    });
   }
 
   /**

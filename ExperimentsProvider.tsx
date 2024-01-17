@@ -63,13 +63,13 @@ export function IfHasVariation({
 export function updateGrowthBookAttributes() {
   const user = sessionService.getUser();
   const config = mindsConfigService.getSettings();
-  const userId = sessionService.token ? user?.guid : DeviceInfo.getUniqueId();
+  const userId = sessionService.cookies ? user?.guid : DeviceInfo.getUniqueId();
   if (config?.growthbook) {
     growthbook.setFeatures(config.growthbook?.features);
     growthbook.setAttributes({
       ...config.growthbook?.attributes,
       ...growthbook.getAttributes(),
-      loggedIn: Boolean(sessionService.token),
+      loggedIn: Boolean(sessionService.cookies),
       id: userId,
       appVersion: DeviceInfo.getVersion(),
       buildNumber: DeviceInfo.getBuildNumber(),

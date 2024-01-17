@@ -24,6 +24,7 @@ jest.mock('~/config/Version', () => ({
 }));
 
 jest.mock('@react-native-cookies/cookies', () => ({
+  get: jest.fn(),
   set: jest.fn(),
   clearByName: jest.fn(),
 }));

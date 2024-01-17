@@ -139,7 +139,7 @@ class DeeplinksRouter {
     ) {
       navigationService.navigate('WebView', {
         url: url.replace('mindsapp://', 'https://www.minds.com/'),
-        headers: apiService.buildAuthorizationHeader(),
+        headers: apiService.buildXsrfHeaders(),
       });
       return true;
     }

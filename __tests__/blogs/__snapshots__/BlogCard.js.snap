@@ -56,6 +56,7 @@ exports[`blog card component should renders correctly 1`] = `
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Content-Type": "application/json",
             "Pragma": "no-cache",
+            "X-XSRF-TOKEN": "",
             "no-cache": "1",
           },
           "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",

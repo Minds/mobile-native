@@ -1,12 +1,7 @@
 import Cancelable from 'promise-cancelable';
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
 import { NativeModules } from 'react-native';
-
-// ignore 401 for this URLs
-const EXCEPTIONS_401 = [
-  'api/v2/settings/password/validate',
-  'api/v3/oauth/token',
-];
+import { v4 as uuidv4 } from 'uuid';
 
 export const TWO_FACTOR_ERROR =
   'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
@@ -15,8 +10,6 @@ export const TWO_FACTOR_INVALID =
 
 export type TwoFactorType = 'sms' | 'email' | 'totp';
 
-import session from './session.service';
-import { isTokenExpired } from './TokenExpiredError';
 import {
   IS_IOS,
   MINDS_API_URI,
@@ -32,7 +25,6 @@ import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
-import AuthService from '~/auth/AuthService';
 import referrerService from './referrer.service';
 import {
   TwoFactorError,
@@ -55,10 +47,6 @@ export interface ApiResponse {
  */
 export class ParamsArray extends Array<any> {}
 
-const isNot401Exception = (url: string) => {
-  return !EXCEPTIONS_401.some(e => url.startsWith(e));
-};
-
 /**
  * Api service
  */
@@ -67,6 +55,7 @@ export class ApiService {
   axios: AxiosInstance;
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
+  @observable xsrfToken = '';
   sessionIndex: number | null;
 
   private twoFactorHandlerEnabled: boolean = true;
@@ -126,6 +115,7 @@ export class ApiService {
 
     this.axios.interceptors.response.use(
       response => {
+        this.updateXsrfToken();
         this.checkResponse(response);
         return response;
       },
@@ -240,32 +230,6 @@ export class ApiService {
             }
           }
 
-          // refresh token if possible and repeat the call
-          if (
-            response.status === 401 &&
-            !originalReq._isRetry &&
-            isNot401Exception(originalReq.url)
-          ) {
-            logService.info(
-              `[ApiService] refreshing token for ${originalReq.url}`,
-            );
-            await this.tokenRefresh(() => {
-              originalReq._isRetry = true;
-              logService.info(
-                '[ApiService] retrying request ' + originalReq.url,
-              );
-              this.axios.request(originalReq);
-            });
-
-            logService.info(
-              `[ApiService] refreshed token for ${originalReq.url}`,
-            );
-
-            originalReq._isRetry = true;
-            logService.info('[ApiService] retrying request ' + originalReq.url);
-            return this.axios.request(originalReq);
-          }
-
           // prompt the user if email verification is needed for this endpoint
           if (isApiForbidden(response) && response.data.must_verify) {
             this.setMustVerify(true);
@@ -287,57 +251,6 @@ export class ApiService {
   setSessionIndex(index) {
     this.sessionIndex = index;
   }
-
-  get accessToken() {
-    return this.sessionIndex !== null
-      ? session.getAccessTokenFrom(this.sessionIndex)
-      : session.token;
-  }
-
-  get refreshToken() {
-    return this.sessionIndex !== null
-      ? session.getRefreshTokenFrom(this.sessionIndex)
-      : session.refreshToken;
-  }
-
-  get refreshAuthTokenPromise() {
-    return this.sessionIndex !== null
-      ? session.refreshAuthTokenFrom(this.sessionIndex)
-      : session.refreshAuthToken();
-  }
-
-  set accessToken(accessToken: string) {
-    session.setAccessTokenFrom(this.sessionIndex, accessToken);
-  }
-
-  /**
-   * Refresh token (only one call at the time)
-   */
-  async tokenRefresh(onLogin: Function) {
-    if (!this.refreshPromise) {
-      this.refreshPromise = this.refreshAuthTokenPromise;
-    }
-    try {
-      await this.refreshPromise;
-      this.refreshPromise = null;
-    } catch (error: any) {
-      this.refreshPromise = null;
-      if (
-        (isTokenExpired(error) ||
-          (error.response && error.response.status === 401)) &&
-        this.accessToken
-      ) {
-        if (this.sessionIndex !== null) {
-          session.setSessionExpiredFor(true, this.sessionIndex);
-        } else {
-          session.setSessionExpired(true);
-          AuthService.tryToRelog(onLogin);
-        }
-      }
-      throw error;
-    }
-  }
-
   checkResponse<T extends ApiResponse>(
     response: AxiosResponse<T>,
     url?: string,
@@ -366,7 +279,6 @@ export class ApiService {
       );
       throw new ApiError('Server error ' + response.status, response.status);
     }
-
     return data;
   }
 
@@ -382,6 +294,31 @@ export class ApiService {
     }
   }
 
+  buildXsrfHeaders() {
+    return {
+      'X-XSRF-TOKEN': this.xsrfToken,
+    };
+  }
+
+  async updateXsrfToken() {
+    const cookies = await CookieManager.get('https://www.minds.com');
+    const xsrfToken = cookies?.['XSRF-TOKEN']?.value;
+    if (xsrfToken) {
+      this.xsrfToken = xsrfToken;
+      return;
+    }
+    await this.setXsrfToken();
+  }
+
+  async setXsrfToken(token?: string) {
+    this.xsrfToken = token ?? uuidv4();
+    await CookieManager.set('https://www.minds.com', {
+      name: 'XSRF-TOKEN',
+      value: this.xsrfToken,
+      path: '/',
+    });
+  }
+
   /**
    * Clear cookies
    */
@@ -390,6 +327,7 @@ export class ApiService {
       NativeModules.Networking.clearCookies(d => {
         // we need to set the network id cookie for android
         analyticsService.setNetworkCookie();
+        this.setXsrfToken();
         success(d);
       });
     });
@@ -405,7 +343,7 @@ export class ApiService {
       Pragma: 'no-cache',
       'no-cache': '1',
       'App-Version': Version.VERSION,
-      'X-XSRF-TOKEN': AuthService.xsrfToken,
+      'X-XSRF-TOKEN': this.xsrfToken,
       ...customHeaders,
     };
 
@@ -414,18 +352,7 @@ export class ApiService {
       headers.minds_referrer = referrer;
     }
 
-    if (this.accessToken) {
-      headers = {
-        ...this.buildAuthorizationHeader(this.accessToken),
-        ...headers,
-      };
-    }
-
     return headers;
-  }
-
-  buildAuthorizationHeader(token?: string) {
-    return { Authorization: `Bearer ${token || this.accessToken}` };
   }
 
   /**
@@ -652,7 +579,7 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+      // xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);

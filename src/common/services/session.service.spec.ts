@@ -5,6 +5,7 @@ import {
 import { SessionService } from './session.service';
 import analyticsService from './analytics.service';
 import * as configConstants from '../../config/Config';
+import { Cookies } from '@react-native-cookies/cookies';
 
 jest.mock('./storage/session.storage.service');
 jest.mock('./analytics.service');
@@ -15,6 +16,13 @@ const mockedStorage = SessionStorageService as jest.Mocked<
 const mockedAnalyticsService = analyticsService as jest.Mocked<
   typeof analyticsService
 >;
+
+const cookies: Cookies = {
+  minds_pseudoid: {
+    name: 'pseudo_id',
+    value: 'pseudo_id_here',
+  },
+};
 
 describe('SessionService', () => {
   let service: SessionService;
@@ -32,16 +40,8 @@ describe('SessionService', () => {
               user: {
                 guid: '123',
               },
-              pseudoId: 'pseudo_id_here',
+              cookies,
               sessionExpired: false,
-              refreshToken: {
-                refresh_token: '',
-                refresh_token_expires: Date.now(),
-              },
-              accessToken: {
-                access_token: '',
-                access_token_expires: Date.now(),
-              },
             },
           ],
         };

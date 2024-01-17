@@ -1,10 +1,17 @@
-import api, { isNetworkError } from '../../src/common/services/api.service';
+/* eslint-disable jest/no-disabled-tests */
+import api from '../../src/common/services/api.service';
 import authService from '../../src/auth/AuthService';
 import delay from '../../src/common/helpers/delay';
 import { SessionService } from '../../src/common/services/session.service';
 import { SessionStorageService } from '../../src/common/services/storage/session.storage.service';
 
-jest.mock('../../src/common/services/api.service');
+jest.mock('../../src/common/services/api.service', () => ({
+  post: jest.fn(),
+  get: jest.fn(),
+  clearCookies: jest.fn(),
+  rawPost: jest.fn(),
+  updateXsrfToken: jest.fn(),
+}));
 jest.mock('../../src/common/helpers/delay', () => jest.fn());
 
 describe('auth service login', () => {
@@ -16,7 +23,7 @@ describe('auth service login', () => {
     delay.mockResolvedValue();
   });
 
-  xit('login calls oauth2/token api and returns token', async () => {
+  it.skip('login calls oauth2/token api and returns token', async () => {
     const response = { access_token: 'a1', refresh_token: 'a2' };
 
     api.post.mockResolvedValue(response);
@@ -33,8 +40,15 @@ describe('auth service login', () => {
     expect(api.post.mock.calls[0][0]).toEqual('api/v3/oauth/token');
   });
 
-  xit('login create session on success', async () => {
-    const response = { access_token: 'a1', refresh_token: 'a2' };
+  it.skip('login create session on success', async () => {
+    const response = {
+      data: {
+        permissions: ['1', '2', '3'],
+        status: 'success',
+        user: {},
+        pseudoId: 'p1',
+      },
+    };
 
     api.post.mockResolvedValue(response);
 
@@ -97,7 +111,7 @@ describe('auth service logout', () => {
     expect(api.clearCookies).toBeCalled();
   });
 
-  xit('logout returns errors', async () => {
+  it.skip('logout returns errors', async () => {
     const response = { status: 'error', error: 'some error' };
 
     api.post.mockRejectedValue(response);

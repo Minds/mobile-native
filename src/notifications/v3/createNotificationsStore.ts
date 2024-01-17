@@ -28,8 +28,8 @@ const createNotificationsStore = () => ({
     this.silentRefresh = value;
   },
   init() {
-    sessionService.onSession((token: string) => {
-      if (token) {
+    sessionService.onSession(cookies => {
+      if (cookies) {
         // load count on session start
         this.loadUnreadCount();
         // start polling for count every 10 seconds
