@@ -52,7 +52,7 @@
     "@react-native-community/hooks": "^2.8.1",
     "@react-native-community/netinfo": "9.3.10",
     "@react-native-community/slider": "4.4.2",
-    "@react-native-cookies/cookies": "^6.0.11",
+    "@react-native-cookies/cookies": "^6.2.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.1.6",
