@@ -1,5 +1,6 @@
 const { request } = require('graphql-request');
 const fetch = require('node-fetch');
+const fse = require('fs-extra');
 const fs = require('fs');
 const { generateToken } = require('./helpers/jwt');
 
@@ -49,6 +50,8 @@ async function setupTenant(id) {
     generateTenantJSON(data.appReadyMobileConfig);
     // download the assets
     downloadAssets(data.appReadyMobileConfig.assets);
+    // copy previewer patches
+    copyPatches();
   } catch (error) {
     console.error(error);
     process.exit(1);
@@ -116,6 +119,16 @@ async function downloadAssets(assets) {
     './assets/images/logo_horizontal.png',
     './assets/images/logo_horizontal_dark.png',
   );
+}
+
+function copyPatches() {
+  fse.copy('./preview/tenant/patches', './patches', err => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('Preview patches copied successfully');
+  });
 }
 
 const assetsMap = {
