@@ -30,8 +30,7 @@ query GetMobileConfig($tenantId: Int!) {
 }
 `;
 
-const url =
-  'https://c81e728d9d4c2f636f067f89cc14862c.bens-networks.oke.minds.io/api/graphql';
+const url = process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql';
 
 /**
  * Generate tenant config
