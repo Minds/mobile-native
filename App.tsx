@@ -235,6 +235,6 @@ const appContainerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
 );
 
-if (__DEV__) {
-  require('./tron');
-}
+// if (__DEV__) {
+//   require('./tron');
+// }
