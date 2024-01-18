@@ -1,0 +1,74 @@
+# Build the OSS version of the app on EAS, downloads the APK and updates the releases.json
+eas_build_production_android_oss:
+  stage: build
+  image: cimg/aws:2023.12
+  tags: [minds-ci]
+  artifacts:
+    paths:
+      - Minds.apk
+      - releases.json
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - yarn install --cache-folder ../yarn
+    - wget -q -O - "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/google-services.json .
+  script:
+    - yarn prepare-android-oss
+    - JSON_RESPONSE=`npx eas-cli build --platform android --profile ossProduction --json --non-interactive`
+    - APK_URL=`echo $JSON_RESPONSE | node -pe  'JSON.parse(require("fs").readFileSync(0, "utf-8"))[0].artifacts.buildUrl;'`
+    - APP_VERSION=`echo $JSON_RESPONSE | node -pe  'JSON.parse(require("fs").readFileSync(0, "utf-8"))[0].appVersion;'`
+    - echo "DOWNLOADING $APK_URL"
+    - wget -O Minds.apk $APK_URL
+    - yarn release-json Minds.apk $APP_VERSION
+    - echo "Uploading APK to S3"
+    - aws s3 cp Minds.apk s3://minds-repo/mobile/Minds-$APP_VERSION.apk
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_OSS"
+      when: always
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual
+
+# Build and submit the android play store app
+eas_build_production_android:
+  stage: build
+  image: node:alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - apk add --no-cache bash git
+    - yarn install --cache-folder ../yarn
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/google-services.json .
+  script:
+    - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION"
+      when: always
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual
+
+# Build and submit the ios play store app
+eas_build_production_ios:
+  stage: build
+  image: node:alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - apk add --no-cache bash git
+    - yarn install --cache-folder ../yarn
+  script:
+    - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION"
+      when: always
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual

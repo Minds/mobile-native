@@ -1,4 +1,5 @@
 const filepath = process.argv[2];
+const versionParam = process.argv[3];
 const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
@@ -11,22 +12,27 @@ const parseChangelog = require('changelog-parser');
 async function run() {
   // open APK
   const input = fs.createReadStream(filepath);
+  let version = null;
 
-  // read version
-  const gradleProperties = fs.readFileSync('./android/gradle.properties');
+  if (!versionParam) {
+    // read version
+    const configfile = fs.readFileSync('./app.config.ts');
 
-  let version = gradleProperties.toString().match(/versionName=(.*)/);
-  if (version) {
-    version = version[1];
-    releases.versions.forEach(v => {
-      if (v.version === version) {
-        console.log('The version already exist to the json file');
-        process.exit(1);
-      }
-    });
+    version = configfile.toString().match(/const APP_VERSION = \'(.*)\'/);
+    if (version) {
+      version = version[1];
+      releases.versions.forEach(v => {
+        if (v.version === version) {
+          console.log('The version already exist to the json file');
+          process.exit(1);
+        }
+      });
+    } else {
+      console.log('Error reading the version');
+      process.exit(1);
+    }
   } else {
-    console.log('Error reading the version');
-    process.exit(1);
+    version = versionParam;
   }
 
   //Parse a changelog file
@@ -76,12 +82,6 @@ async function run() {
 
       // Write releases json
       fs.writeFileSync('./releases.json', JSON.stringify(releases, null, 2));
-
-      // Write changelog for fastlane
-      fs.writeFileSync(
-        './android/fastlane/metadata/android/en-US/changelogs/default.txt',
-        truncate(changelog.join('\n')),
-      );
     }
   });
 }

@@ -34,7 +34,12 @@ jest.mock('react-native-reanimated', () => ({
   useAnimatedKeyboard: jest.fn().mockReturnValue({ height: 0 }),
 }));
 
-jest.mock('./src/common/services/analytics.service');
+jest.mock('react-native-device-info', () => ({
+  getModel: jest.fn(),
+  getBuildNumber: jest.fn(),
+  getSystemVersion: jest.fn(),
+}));
+
 jest.mock('./src/newsfeed/NewsfeedService');
 
 jest.mock('expo-font');
