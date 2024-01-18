@@ -43,6 +43,9 @@ export class AppInitManager {
    */
   async initializeServices() {
     socketService.init();
+    const token = await sessionService.init().catch(error => {
+      logService.exception('[App] init session', error);
+    });
 
     // init block list service
     blockListService.init();
@@ -60,19 +63,8 @@ export class AppInitManager {
 
     storeRatingService.track('appSession');
 
-    // if (!__DEV__) {
-    //   codePushStore.syncCodepush({
-    //     onDownload: () => {
-    //       InteractionManager.runAfterInteractions(() => {
-    //         SplashScreen.hideAsync();
-    //       });
-    //     },
-    //   });
-    // }
-
     try {
       logService.info('[App] init session');
-      const token = await sessionService.init();
 
       if (!token) {
         // update settings and init growthbook
@@ -80,16 +72,6 @@ export class AppInitManager {
 
         logService.info('[App] there is no active session');
 
-        // if (await codePushStore.checkForUpdates()) {
-        //   // the syncCodepush will remove the splash once the SyncScreen is pushed,
-        //   // but here we will hide the splash screen after a delay as a timeout if
-        //   // anything goes wrong.
-        //   setTimeout(() => {
-        //     SplashScreen.hideAsync();
-        //   }, 400);
-        // } else {
-        //   SplashScreen.hideAsync();
-        // }
         setTimeout(() => {
           SplashScreen.hideAsync();
         }, 400);
