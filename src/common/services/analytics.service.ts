@@ -6,7 +6,6 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import DeviceInfo from 'react-native-device-info';
 import { Dimensions, Platform } from 'react-native';
-import CookieManager from '@react-native-cookies/cookies';
 
 import i18nService from './i18n.service';
 import { Version } from '../../config/Version';
@@ -15,6 +14,7 @@ import { IS_IOS } from '~/config/Config';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
+import { cookieService } from '~/auth/CookieService';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -112,10 +112,9 @@ export class AnalyticsService {
    */
   setNetworkCookie() {
     if (this.networkUserId) {
-      CookieManager.set('https://www.minds.com', {
+      cookieService.set({
         name: 'minds_sp',
         value: this.networkUserId,
-        path: '/',
         secure: true,
       });
     }
@@ -130,10 +129,9 @@ export class AnalyticsService {
     }
     this.tracker?.setUserId(userId);
     this.userId = userId;
-    CookieManager.set('https://www.minds.com', {
+    cookieService.set({
       name: 'minds_pseudoid',
       value: this.userId,
-      path: '/',
     });
   }
 

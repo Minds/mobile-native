@@ -9,7 +9,6 @@ import { ApiError } from '../../../src/common/services/ApiErrors';
 
 import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
-import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
 import { getStores } from '../../../AppStores';
 import NavigationService from '../../../src/navigation/NavigationService';
@@ -368,7 +367,6 @@ describe('api service auth refresh', () => {
   });
   afterEach(() => {
     mock.reset();
-    auth.refreshToken.mockClear();
   });
   it.skip('auth token should be refreshed only once for simultaneous calls', async () => {
     session.refreshTokenExpires = Date.now() / 1000 + 10000;

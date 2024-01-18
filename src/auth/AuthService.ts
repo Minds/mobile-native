@@ -9,9 +9,7 @@ import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
 import mindsConfigService from '~/common/services/minds-config.service';
-import CookieManager, { Cookies } from '@react-native-cookies/cookies';
-
-export type TFA = 'sms' | 'totp';
+import { cookieService } from './CookieService';
 
 export interface RegisterResponse extends ApiResponse {
   guid: string;
@@ -85,6 +83,7 @@ class AuthService {
       session.setSwitchingAccount(true);
     }
 
+    // update the xsrf token from present cookie
     await api.updateXsrfToken();
     const { data } = await api.rawPost<LoginUserResponse>(
       'api/v1/authenticate',
@@ -95,11 +94,11 @@ class AuthService {
     );
 
     if (!data) {
-      console.log('[AuthService] login: no data');
+      console.warn('[AuthService] login: no data');
       return null;
     }
 
-    const cookies = await CookieManager.get('https://www.minds.com');
+    const cookies = await cookieService.get();
 
     if (session.isRelogin(username, data, cookies)) {
       return data;
@@ -136,10 +135,7 @@ class AuthService {
   }
 
   async loginWithIndex(sessionIndex: number) {
-    console.log('[AuthService] loginWithIndex', sessionIndex);
     session.setSwitchingAccount(true);
-    // await this.sessionLogout();
-    // await api.clearCookies();
     await delay(100);
     await session.switchUser(sessionIndex);
     await session.login();
@@ -234,21 +230,6 @@ class AuthService {
     await api.clearCookies();
     await this.handleActiveAccount();
     session.setSwitchingAccount(false);
-  }
-
-  /**
-   * Opens the re-login modal for the current user and handles a successful login or the cancel
-   */
-  async tryToRelog(onLogin?: Function) {
-    const onCancel = async () => {
-      console.log('[AuthService] tryToRelog: session expired');
-      this.logoutSession();
-    };
-
-    NavigationService.navigate('RelogScreen', {
-      onLogin,
-      onCancel,
-    });
   }
 
   /**
@@ -366,10 +347,3 @@ class AuthService {
 }
 
 export default new AuthService();
-
-CookieManager.setFromCookies = async (url: string, cookies: Cookies) =>
-  Promise.all(
-    Object.keys(cookies).map(async key =>
-      CookieManager.set(url, { ...cookies[key] }),
-    ),
-  );

@@ -11,7 +11,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import apiService, { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { IS_TENANT } from '../../config/Config';
-import CookieManager, { Cookies } from '@react-native-cookies/cookies';
+import { Cookies, cookieService } from '~/auth/CookieService';
 
 /**
  * Session service
@@ -281,10 +281,7 @@ export class SessionService {
     this.setActiveIndex(sessionIndex);
     const session = this.sessions[sessionIndex];
     if (session.cookies) {
-      await CookieManager.setFromCookies(
-        'https://www.minds.com',
-        session.cookies,
-      );
+      await cookieService.setFromCookies(session.cookies);
       apiService.xsrfToken = session.cookies['XSRF-TOKEN'].value;
     }
     await this.loadUser(session.user);

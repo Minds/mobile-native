@@ -3,6 +3,4 @@ export default {
   logout: jest.fn(),
   forgot: jest.fn(),
   register: jest.fn(),
-  refreshToken: jest.fn(),
-  tryToRelog: jest.fn().mockImplementation(() => false),
 };

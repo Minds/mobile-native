@@ -23,7 +23,6 @@ import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import CookieManager from '@react-native-cookies/cookies';
 import analyticsService from './analytics.service';
 import referrerService from './referrer.service';
 import {
@@ -33,6 +32,7 @@ import {
   ApiError,
   FieldError,
 } from './ApiErrors';
+import { cookieService } from '~/auth/CookieService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -74,29 +74,31 @@ export class ApiService {
     this.sessionIndex = sessionIndex;
 
     if (MINDS_CANARY) {
-      CookieManager.set('https://www.minds.com', {
-        name: 'canary',
-        value: '1',
-        path: '/',
-      }).then(done => {
-        console.log('CookieManager.set =>', done);
-      });
+      cookieService
+        .set({
+          name: 'canary',
+          value: '1',
+        })
+        .then(done => {
+          console.log('cookieService.set =>', done);
+        });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'canary');
+        cookieService.clearByName('canary');
       }
     }
     if (MINDS_STAGING) {
-      CookieManager.set('https://www.minds.com', {
-        name: 'staging',
-        value: '1',
-        path: '/',
-      }).then(done => {
-        console.log('CookieManager.set =>', done);
-      });
+      cookieService
+        .set({
+          name: 'staging',
+          value: '1',
+        })
+        .then(done => {
+          console.log('cookieService.set =>', done);
+        });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'staging');
+        cookieService.clearByName('staging');
       }
     }
 
@@ -301,8 +303,7 @@ export class ApiService {
   }
 
   async updateXsrfToken() {
-    const cookies = await CookieManager.get('https://www.minds.com');
-    const xsrfToken = cookies?.['XSRF-TOKEN']?.value;
+    const xsrfToken = (await cookieService.get())?.['XSRF-TOKEN']?.value;
     if (xsrfToken) {
       this.xsrfToken = xsrfToken;
       return;
@@ -312,10 +313,9 @@ export class ApiService {
 
   async setXsrfToken(token?: string) {
     this.xsrfToken = token ?? uuidv4();
-    await CookieManager.set('https://www.minds.com', {
+    await cookieService.set({
       name: 'XSRF-TOKEN',
       value: this.xsrfToken,
-      path: '/',
     });
   }
 
@@ -579,7 +579,7 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
-      // xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+      xhr.setRequestHeader('X-XSRF-TOKEN', this.xsrfToken);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);
