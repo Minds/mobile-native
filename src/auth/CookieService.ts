@@ -7,7 +7,7 @@ class CookieService {
     return CookieManager.get(MINDS_URI);
   }
   async set(cookie: Cookie, flush: boolean = true) {
-    return CookieManager.set(MINDS_URI, { path: '/', ...cookie }).then(
+    return CookieManager.set(MINDS_URI, { path: '/', ...cookie })?.then(
       result => {
         ANDROID && flush && CookieManager.flush();
         return result;
@@ -26,7 +26,7 @@ class CookieService {
     });
   }
   async clearByName(name: string) {
-    return CookieManager.clearByName(MINDS_URI, name).then(result => {
+    return CookieManager.clearByName(MINDS_URI, name)?.then(result => {
       ANDROID && CookieManager.flush();
       return result;
     });
