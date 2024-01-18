@@ -14,13 +14,12 @@ import { Provider, observer } from 'mobx-react';
 import { setup } from 'react-native-iap';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-// import ShareMenu from 'react-native-share-menu';
+import { NavigationContainer, Theme } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import { IS_IOS, IS_IPAD } from '~/config/Config';
+import { IS_IPAD } from '~/config/Config';
 
 import NavigationService, {
   navigationRef,
@@ -37,7 +36,6 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import i18n from './src/common/services/i18n.service';
 
-// import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
 import ExperimentsProvider from 'ExperimentsProvider';
@@ -51,7 +49,6 @@ import { ConfigProvider } from '~/modules/livepeer';
 
 import { FontsLoader } from 'FontsLoader';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -128,9 +125,6 @@ class App extends Component<Props> {
         focusManager.setFocused(status === 'active');
       },
     );
-    if (!IS_IOS) {
-      WebBrowser.warmUpAsync();
-    }
   }
 
   /**
@@ -141,9 +135,6 @@ class App extends Component<Props> {
     this.disposeLinkSubscription?.remove();
     this.backHandlerSubscription?.remove();
     this.shareReceiveSubscription?.remove();
-    if (!IS_IOS) {
-      WebBrowser.coolDownAsync();
-    }
   }
 
   /**
@@ -199,7 +190,7 @@ class App extends Component<Props> {
                       <Provider key="app" {...stores}>
                         <NavigationContainer
                           ref={navigationRef}
-                          theme={ThemedStyles.navTheme}
+                          theme={ThemedStyles.navTheme as Theme}
                           onReady={appInitManager.onNavigatorReady}
                           onStateChange={NavigationService.onStateChange}>
                           <AppMessageProvider
@@ -244,6 +235,6 @@ const appContainerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
 );
 
-// if (__DEV__) {
-//   require('./tron');
-// }
+if (__DEV__) {
+  require('./tron');
+}
