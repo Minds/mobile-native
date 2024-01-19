@@ -22,6 +22,8 @@ import { useInfiniteFeedQuery } from '~/services';
 import { fetchNotificationsPage } from './api';
 import PrefetchNotifications from './PrefetchNotifications';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { IS_IPAD } from '~/config/Config';
+import CaptureFab from '~/capture/CaptureFab';
 
 type PropsType = {
   navigation?: any;
@@ -170,6 +172,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
+      {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
     </View>
   );
 });

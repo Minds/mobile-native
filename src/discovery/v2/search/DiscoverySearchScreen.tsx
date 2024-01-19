@@ -13,6 +13,8 @@ import DiscoveryV2SearchStore, {
   DiscoveryV2SearchStoreAlgorithm,
 } from './DiscoveryV2SearchStore';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { IS_IPAD } from '~/config/Config';
+import CaptureFab from '~/capture/CaptureFab';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -53,6 +55,7 @@ export const DiscoverySearchScreen = withErrorBoundaryScreen(
             style={theme.flexContainer}
           />
         </View>
+        {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
       </DiscoveryV2SearchStoreContext.Provider>
     );
   }),
