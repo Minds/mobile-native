@@ -40,6 +40,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'lightbulb',
   },
+  explore: {
+    font: 'MaterialCommunityIcons',
+    name: 'compass',
+  },
   warning: {
     font: 'MaterialIcons',
     name: 'warning',

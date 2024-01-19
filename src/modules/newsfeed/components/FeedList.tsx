@@ -168,16 +168,16 @@ export const FeedListFooter = ({ loading, error, reload }) => {
 
 const getItemType = item => {
   const isActivity = item instanceof ActivityModel;
-  const type =
-    isActivity && item.hasVideo()
-      ? 2 // video
-      : isActivity && item.hasImage()
-      ? 1 // image
-      : !isActivity && item.id
-      ? item.id
-      : 0; // text activity
 
-  return type;
+  if (isActivity) {
+    return item.hasVideo()
+      ? 2 // video
+      : item.hasImage()
+      ? 1 // image
+      : 0; // text activity
+  } else {
+    return item.__typename ? item.__typename : item.id ? item.id : 100;
+  }
 };
 
 const keyExtractor = (item, index: any) => {

@@ -44,7 +44,7 @@ class NewsfeedStore {
       }
       this.updateMetadata();
     }
-    return this._feedType;
+    return this._feedType || 'latest';
   }
 
   private updateMetadata() {
