@@ -1433,6 +1433,35 @@ export type VerdictInput = {
   reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetPostSubscriptionQueryVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+}>;
+
+export type GetPostSubscriptionQuery = {
+  __typename?: 'Query';
+  postSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
+};
+
+export type UpdatePostSubscriptionsMutationVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+  frequency: PostSubscriptionFrequencyEnum;
+}>;
+
+export type UpdatePostSubscriptionsMutation = {
+  __typename?: 'Mutation';
+  updatePostSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
+};
+
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDismissalsQuery = {
@@ -3240,6 +3269,100 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const GetPostSubscriptionDocument = `
+    query GetPostSubscription($entityGuid: String!) {
+  postSubscription(entityGuid: $entityGuid) {
+    userGuid
+    entityGuid
+    frequency
+  }
+}
+    `;
+export const useGetPostSubscriptionQuery = <
+  TData = GetPostSubscriptionQuery,
+  TError = unknown,
+>(
+  variables: GetPostSubscriptionQueryVariables,
+  options?: UseQueryOptions<GetPostSubscriptionQuery, TError, TData>,
+) =>
+  useQuery<GetPostSubscriptionQuery, TError, TData>(
+    ['GetPostSubscription', variables],
+    gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+      GetPostSubscriptionDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetPostSubscriptionQuery = <
+  TData = GetPostSubscriptionQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetPostSubscriptionQueryVariables,
+  variables: GetPostSubscriptionQueryVariables,
+  options?: UseInfiniteQueryOptions<GetPostSubscriptionQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetPostSubscriptionQuery, TError, TData>(
+    ['GetPostSubscription.infinite', variables],
+    metaData =>
+      gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+        GetPostSubscriptionDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetPostSubscriptionQuery.fetcher = (
+  variables: GetPostSubscriptionQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+    GetPostSubscriptionDocument,
+    variables,
+    options,
+  );
+export const UpdatePostSubscriptionsDocument = `
+    mutation UpdatePostSubscriptions($entityGuid: String!, $frequency: PostSubscriptionFrequencyEnum!) {
+  updatePostSubscription(entityGuid: $entityGuid, frequency: $frequency) {
+    userGuid
+    entityGuid
+    frequency
+  }
+}
+    `;
+export const useUpdatePostSubscriptionsMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    UpdatePostSubscriptionsMutation,
+    TError,
+    UpdatePostSubscriptionsMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    UpdatePostSubscriptionsMutation,
+    TError,
+    UpdatePostSubscriptionsMutationVariables,
+    TContext
+  >(
+    ['UpdatePostSubscriptions'],
+    (variables?: UpdatePostSubscriptionsMutationVariables) =>
+      gqlFetcher<
+        UpdatePostSubscriptionsMutation,
+        UpdatePostSubscriptionsMutationVariables
+      >(UpdatePostSubscriptionsDocument, variables)(),
+    options,
+  );
+useUpdatePostSubscriptionsMutation.fetcher = (
+  variables: UpdatePostSubscriptionsMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    UpdatePostSubscriptionsMutation,
+    UpdatePostSubscriptionsMutationVariables
+  >(UpdatePostSubscriptionsDocument, variables, options);
 export const GetDismissalsDocument = `
     query GetDismissals {
   dismissals {
