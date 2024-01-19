@@ -129,7 +129,7 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
 
 function getExternalLinkForReason(reason): undefined | string {
   if (reason.value === 10) {
-    return 'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852';
+    return 'https://www.minds.com/p/dmca';
   }
 
   return;
