@@ -16,7 +16,7 @@ export type Sessions = Array<Session>;
 
 export type SessionsData = {
   activeIndex: number;
-  tokensData: Array<Session>;
+  data: Array<Session>;
 };
 
 /**
@@ -59,7 +59,7 @@ export class SessionStorageService {
   saveSessions(sessions: Sessions) {
     try {
       storages.session.setMap(KEY, {
-        tokensData: sessions,
+        data: sessions,
       });
     } catch (err) {
       logService.exception('[SessionStorage] save', err);

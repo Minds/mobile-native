@@ -101,18 +101,14 @@ export class SessionService {
     try {
       const sessionData = this.sessionStorage.getAll();
       // if there is no session active we clean up and return;
-      if (
-        sessionData === null ||
-        sessionData === undefined ||
-        sessionData.tokensData.length === 0
-      ) {
+      if (!sessionData || (sessionData.data?.length ?? 0) === 0) {
         this.setCookies();
         this.setReady();
         return null;
       }
 
       this.setActiveIndex(sessionData.activeIndex);
-      this.setSessions(sessionData.tokensData);
+      this.setSessions(sessionData.data);
 
       const { user, cookies } = this.sessions[this.activeIndex];
 

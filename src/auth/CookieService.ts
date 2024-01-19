@@ -31,6 +31,10 @@ class CookieService {
       return result;
     });
   }
+
+  async getAll() {
+    return CookieManager.getAll();
+  }
 }
 
 export const cookieService = new CookieService();

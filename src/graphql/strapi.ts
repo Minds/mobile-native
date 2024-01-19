@@ -2740,7 +2740,6 @@ export type UpgradePage = {
   iconSource?: Maybe<Enum_Upgradepage_Iconsource>;
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<UpgradePageRelationResponseCollection>;
-  mobileIconId?: Maybe<Scalars['String']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   rowType: Enum_Upgradepage_Rowtype;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2781,7 +2780,6 @@ export type UpgradePageFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   locale?: InputMaybe<StringFilterInput>;
   localizations?: InputMaybe<UpgradePageFiltersInput>;
-  mobileIconId?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<UpgradePageFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
@@ -2795,7 +2793,6 @@ export type UpgradePageInput = {
   displayText?: InputMaybe<Scalars['String']['input']>;
   iconId?: InputMaybe<Scalars['String']['input']>;
   iconSource?: InputMaybe<Enum_Upgradepage_Iconsource>;
-  mobileIconId?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   rowType?: InputMaybe<Enum_Upgradepage_Rowtype>;
 };

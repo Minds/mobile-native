@@ -186,6 +186,7 @@
     "fieldRequired": "Required",
     "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
+    "loginWith": "Login with {{name}}",
     "forgot": "Forgot your password?",
     "alreadyLogged": "You are already logged into this account",
     "email": "Email",

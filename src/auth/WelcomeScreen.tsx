@@ -21,6 +21,7 @@ import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 import assets from '@assets';
+import { LoginWeb, useLoginWeb } from './oid';
 
 type PropsType = {
   navigation: any;
@@ -30,7 +31,7 @@ type PropsType = {
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
-  // const { promptAsync } = useSSO();
+  const { name, showLoginWeb, ...loginProps } = useLoginWeb();
 
   const theme = ThemedStyles.style;
   const onLoginPress = useCallback(() => {
@@ -47,7 +48,7 @@ function WelcomeScreen(props: PropsType) {
   );
 
   return (
-    <Screen safe hasMaxWidth={false}>
+    <Screen safe hasMaxWidth={true}>
       <View style={theme.flexContainer}>
         {IS_TENANT ? (
           <Image
@@ -63,19 +64,24 @@ function WelcomeScreen(props: PropsType) {
           <OnboardingCarousel />
         )}
         <View style={styles.buttonContainer}>
-          <Button
-            type="action"
-            {...buttonProps}
-            testID="joinNowButton"
-            onPress={onRegisterPress}>
-            {i18n.t('auth.createChannel', { TENANT })}
-          </Button>
-          <Button darkContent {...buttonProps} onPress={onLoginPress}>
-            {i18n.t('auth.login')}
-          </Button>
-          {/* <Button type="action" {...buttonProps} onPress={promptAsync}>
-            {i18n.t('auth.login') + ' with Minds'}
-          </Button> */}
+          {name ? (
+            <Button type="action" {...buttonProps} onPress={showLoginWeb}>
+              {i18n.t('auth.loginWith', { name })}
+            </Button>
+          ) : (
+            <>
+              <Button
+                type="action"
+                {...buttonProps}
+                testID="joinNowButton"
+                onPress={onRegisterPress}>
+                {i18n.t('auth.createChannel', { TENANT })}
+              </Button>
+              <Button darkContent {...buttonProps} onPress={onLoginPress}>
+                {i18n.t('auth.login')}
+              </Button>
+            </>
+          )}
         </View>
       </View>
 
@@ -87,6 +93,7 @@ function WelcomeScreen(props: PropsType) {
       <HiddenTap style={devToggleStyle}>
         <View />
       </HiddenTap>
+      <LoginWeb {...loginProps} />
     </Screen>
   );
 }
@@ -143,8 +150,6 @@ const buttonProps: ButtonType = {
   containerStyle: styles.containerStyle,
 };
 
-// import { useFetchOidcProvidersQuery } from '~/graphql/api';
-// import * as WebBrowser from 'expo-web-browser';
 // import {
 //   ResponseType,
 //   makeRedirectUri,
@@ -153,11 +158,10 @@ const buttonProps: ButtonType = {
 //   exchangeCodeAsync,
 // } from 'expo-auth-session';
 
-// WebBrowser.maybeCompleteAuthSession();
 // const redirectUri = makeRedirectUri({ scheme: 'mindsapp' });
 // const scopes = ['openid', 'profile', 'email'];
-// const clientId = '244645782253313996@minds-test'; // 'mortynet',
-// const providerUrl = 'https://minds-test-hlrirg.zitadel.cloud/'; // 'https://keycloak.minds.com/auth/realms/minds-inc',
+// const clientId = 'mortynet';
+// const providerUrl = 'https://keycloak.minds.com/auth/realms/minds-inc';
 
 // export const useSSO = () => {
 //   const { data } = useFetchOidcProvidersQuery();
