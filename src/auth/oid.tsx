@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CloseableModal from '~/common/components/CloseableModal';
 import { useFetchOidcProvidersQuery } from '~/graphql/api';
-import { Cookies, cookieService } from './CookieService';
+import { Cookies, cookieService } from '~/common/services/cookies.service';
 import WebView from 'react-native-webview';
 
 type LoginWebProps = {
