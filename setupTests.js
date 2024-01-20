@@ -27,6 +27,7 @@ jest.mock('@react-native-cookies/cookies', () => ({
   get: jest.fn(),
   set: jest.fn(),
   clearByName: jest.fn(),
+  flush: jest.fn(),
 }));
 
 jest.mock('react-native-reanimated', () => ({

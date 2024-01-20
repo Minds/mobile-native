@@ -9,7 +9,7 @@ import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
 import mindsConfigService from '~/common/services/minds-config.service';
-import { cookieService } from './CookieService';
+import { cookieService } from '~/common/services/cookies.service';
 
 export interface RegisterResponse extends ApiResponse {
   guid: string;

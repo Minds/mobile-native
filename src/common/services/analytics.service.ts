@@ -14,7 +14,7 @@ import { IS_IOS, IS_TENANT, TENANT_ID } from '~/config/Config';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
-import { cookieService } from '~/auth/CookieService';
+import { cookieService } from './cookies.service';
 
 const IGNORE_SCREENS = ['Comments'];
 

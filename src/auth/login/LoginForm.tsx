@@ -46,12 +46,7 @@ export default observer(function LoginForm(props: PropsType) {
       localStore.username = u.username;
     }
     return u;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.sessionIndex, props.relogin, localStore.username]);
-
-  const onLoginPress = () => {
-    localStore.onLoginPress();
-  };
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
@@ -105,7 +100,7 @@ export default observer(function LoginForm(props: PropsType) {
             returnKeyLabel={i18n.t('auth.submitLabel')}
             returnKeyType="send"
             autoFocus={props.relogin}
-            onSubmitEditing={onLoginPress}
+            onSubmitEditing={localStore.onLoginPress}
             error={
               localStore.showErrors && !localStore.password
                 ? i18n.t('auth.fieldRequired')
@@ -120,13 +115,12 @@ export default observer(function LoginForm(props: PropsType) {
           horizontal="XL"
           top="XXL"
           containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
-          onPress={onLoginPress}>
+          onPress={localStore.onLoginPress}>
           {i18n.t('auth.login')}
         </Button>
         <Row top="L2" align="centerBoth">
           <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
         </Row>
-        {/* <HiddenWeb onSetCookie={setToken} /> */}
       </DismissKeyboard>
     </View>
   );
@@ -168,24 +162,3 @@ const styles = ThemedStyles.create({
     alignSelf: 'stretch',
   },
 });
-
-// type WebProps = {
-//   onSetCookie: (cookie: string) => void;
-// };
-
-// const HiddenWeb = ({ onSetCookie }: WebProps) => {
-//   const WebView = require('react-native-webview').WebView;
-//   return (
-//     <WebView
-//       source={{ uri: 'https://www.minds.com/login' }}
-//       // sharedCookiesEnabled
-//       onNavigationStateChange={async () => {
-//         const cookies = await CookieManager.get('https://www.minds.com');
-//         const token = cookies?.['XSRF-TOKEN'];
-//         console.log('cookieString', token);
-//         onSetCookie?.(token.value);
-//       }}
-//       style={{ height: 0, width: 0 }}
-//     />
-//   );
-// };

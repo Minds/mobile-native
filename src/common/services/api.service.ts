@@ -32,7 +32,7 @@ import {
   ApiError,
   FieldError,
 } from './ApiErrors';
-import { cookieService } from '~/auth/CookieService';
+import { cookieService } from './cookies.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';

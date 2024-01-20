@@ -11,7 +11,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import apiService, { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { IS_TENANT } from '../../config/Config';
-import { Cookies, cookieService } from '~/auth/CookieService';
+import { Cookies, cookieService } from './cookies.service';
 
 /**
  * Session service
