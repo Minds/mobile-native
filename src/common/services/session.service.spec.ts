@@ -35,7 +35,7 @@ describe('SessionService', () => {
       .mockImplementation(() => {
         return <SessionsData>{
           activeIndex: 0,
-          tokensData: [
+          data: [
             {
               user: {
                 guid: '123',

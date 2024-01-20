@@ -11,7 +11,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import apiService, { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { IS_TENANT } from '../../config/Config';
-import { Cookies, cookieService } from '~/auth/CookieService';
+import { Cookies, cookieService } from './cookies.service';
 
 /**
  * Session service
@@ -104,7 +104,7 @@ export class SessionService {
       if (
         sessionData === null ||
         sessionData === undefined ||
-        sessionData.tokensData.length === 0
+        sessionData.data.length === 0
       ) {
         this.setCookies();
         this.setReady();
@@ -112,7 +112,7 @@ export class SessionService {
       }
 
       this.setActiveIndex(sessionData.activeIndex);
-      this.setSessions(sessionData.tokensData);
+      this.setSessions(sessionData.data);
 
       const { user, cookies } = this.sessions[this.activeIndex];
 

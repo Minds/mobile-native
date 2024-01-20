@@ -16,7 +16,7 @@ export type Sessions = Array<Session>;
 
 export type SessionsData = {
   activeIndex: number;
-  tokensData: Array<Session>;
+  data: Array<Session>;
 };
 
 /**

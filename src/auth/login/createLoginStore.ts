@@ -48,7 +48,7 @@ const createLoginStore = ({ props }) => ({
     // is two factor auth
     return AuthService.login(this.username, this.password)
       .then(() => {
-        props?.onLogin();
+        props.onLogin && props.onLogin();
       })
       .catch(err => {
         const errJson = err.response ? err.response.data : err;
