@@ -31,7 +31,7 @@ const tinycolor = require('tinycolor2');
 
 type PropsType = {
   navigation: any;
-  store?: ChannelStoreType;
+  store: ChannelStoreType;
   hideButtons?: boolean;
   hideInput?: boolean;
   /**
@@ -59,6 +59,7 @@ const hiddenChannelButtons: ButtonsType[] = [
   'wire',
   'boost',
   'supermind',
+  'postSubscription',
 ];
 const hiddenChannelButtonsWithWire = hiddenChannelButtons.filter(
   p => p !== 'wire',
@@ -200,6 +201,15 @@ const ChannelTopBar = observer(
       [store?.channelSearch],
     );
 
+    // hide buttons
+    const notShow = useMemo(() => {
+      const list = store.channel?.subscribed
+        ? hiddenChannelButtonsWithWire
+        : hiddenChannelButtons;
+
+      return withBg ? list : list.filter(b => b !== 'postSubscription');
+    }, [store.channel?.subscribed, withBg]);
+
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -255,11 +265,7 @@ const ChannelTopBar = observer(
             store={store}
             onEditPress={() => navigation.push('ChannelEdit', { store: store })}
             onSearchChannelPressed={onSearchChannelPressed}
-            notShow={
-              store.channel?.subscribed
-                ? hiddenChannelButtonsWithWire
-                : hiddenChannelButtons
-            }
+            notShow={notShow}
             containerStyle={theme.centered}
             iconsStyle={styles.channelButtonsIconsStyle}
             raisedIcons={!withBg}

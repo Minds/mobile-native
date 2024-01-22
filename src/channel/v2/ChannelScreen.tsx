@@ -361,7 +361,13 @@ const ChannelScreen = observer((props: PropsType) => {
    * CHANNEL NOT FOUND
    **/
   if (!store.channel) {
-    return <UserNotFound navigation={props.navigation} route={props.route} />;
+    return (
+      <UserNotFound
+        navigation={props.navigation}
+        route={props.route}
+        store={store}
+      />
+    );
   }
 
   /**
