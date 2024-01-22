@@ -48,7 +48,7 @@ async function setupTenant(id) {
     // generate tenant json
     generateTenantJSON(data.appReadyMobileConfig);
     // download the assets
-    downloadAssets(data.appReadyMobileConfig.assets);
+    await downloadAssets(data.appReadyMobileConfig.assets);
     // copy previewer patches
     copyPatches();
   } catch (error) {
@@ -89,13 +89,13 @@ function generateTenantJSON(data) {
   };
 
   console.log('Tenant', tenant);
-
-  fs.writeFile('tenant.json', JSON.stringify(tenant, null, 2), 'utf8', err => {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-  });
+  try {
+    fs.writeFileSync('tenant.json', JSON.stringify(tenant, null, 2), 'utf8');
+  } catch (error) {
+    console.log('Error writing tenant.json');
+    console.error(error);
+    process.exit(1);
+  }
 }
 
 async function downloadAssets(assets) {
