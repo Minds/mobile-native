@@ -12,6 +12,7 @@ async function callBuildWebhook() {
   let attempts = 3;
   for (let i = 0; i < attempts; i++) {
     try {
+      console.log('Calling webhook: ' + status);
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
@@ -26,6 +27,11 @@ async function callBuildWebhook() {
       });
       if (!response.ok) {
         throw new Error('Failed to call webhook');
+      }
+      if (status === 'failed') {
+        // If failed, exit the process to stop the pipeline
+        console.log('Webhook called successfully');
+        process.exit(1);
       }
       break; // If successful, break the loop
     } catch (error) {
