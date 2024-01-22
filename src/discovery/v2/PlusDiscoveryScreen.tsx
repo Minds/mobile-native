@@ -14,6 +14,7 @@ import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
+import CaptureFab from '~/capture/CaptureFab';
 
 /**
  * Discovery Feed Screen
@@ -72,6 +73,7 @@ const PlusDiscoveryScreen = observer(() => {
         )}
       </View>
       <OnboardingOverlay type="minds_plus" />
+      {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
     </Screen>
   );
 });

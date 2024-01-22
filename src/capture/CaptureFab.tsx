@@ -7,7 +7,6 @@ import Icon from '@expo/vector-icons/MaterialIcons';
 import settingsStore from '../settings/SettingsStore';
 import GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { storages } from '~/common/services/storage/storages.service';
 import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
 import PermissionsService from '~/common/services/permissions.service';
 
@@ -44,18 +43,14 @@ const CaptureFab = ({
     pushComposeCreateScreen({
       onItemPress: async key => {
         navigation.goBack();
-        storages.user?.setBool('compose:create', true);
         navigation.navigate('Compose', { createMode: key });
       },
     });
-  const handleComposePress = () => {
-    if (storages.user?.getBool('compose:create')) {
-      return navigation.push('Compose', {
-        group: group,
-      });
-    }
 
-    pushComposeCreate();
+  const handleComposePress = () => {
+    navigation.push('Compose', {
+      group: group,
+    });
   };
 
   return (
@@ -67,8 +62,8 @@ const CaptureFab = ({
             style,
           ]}>
           <CaptureFabIcon
-            onPress={handleComposePress}
-            onLongPress={pushComposeCreate}
+            onLongPress={handleComposePress}
+            onPress={pushComposeCreate}
             testID={testID}
           />
         </ShowHide>

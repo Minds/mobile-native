@@ -3,12 +3,11 @@ import { Keyboard, View } from 'react-native';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 import MenuItem from '../common/components/menus/MenuItem';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
-import { B2, Row, Screen, ScreenHeader, Spacer } from '../common/ui';
+import { Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 import type { ComposeCreateMode } from './createComposeStore';
 import { IS_IOS, SUPERMIND_ENABLED } from '../config/Config';
 import i18nService from '../common/services/i18n.service';
-import { CaptureFabIcon } from '~/capture/CaptureFab';
 
 interface ComposeCreateScreenProps {
   selected?: ComposeCreateMode;
@@ -62,14 +61,6 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
           onPress={() => navigateToCompose('supermind')}
         />
       )}
-      {!selected && (
-        <Row top="L" align="centerBoth">
-          <B2 color="secondary">Long press</B2>
-          <CaptureFabIcon scale={0.5} />
-          <B2 color="secondary">to open this menu again</B2>
-        </Row>
-      )}
-
       <Spacer top="XXXL2" />
     </Screen>
   );
