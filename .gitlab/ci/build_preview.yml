@@ -36,9 +36,11 @@ eas_build_preview:
   script:
     - echo "Building preview for tenant $TENANT_ID..."
     - node tasks/setup-tenant.js $TENANT_ID --preview || exit_code=$?
+    - echo "Exit code ${exit_code}"
     - if [ $exit_code -ne 0 ]; then node tasks/callbuild-webhook failed; fi;
     - cp ./preview/tenant/patches/* ./patches
-    - npx eas-cli update --branch "$TENANT_ID" --message "preview" || exit_code=$?
+    - npx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
+    - echo "Exit code ${exit_code}"
     - if [ $exit_code -ne 0 ]; then node tasks/callbuild-webhook failed; fi;
     - node tasks/callbuild-webhook
     - echo "Demo link mindspreview://preview/$TENANT_ID"
