@@ -86,8 +86,11 @@ export default function AffiliateProgramScreen({ navigation }) {
                     mode="outline"
                     onPress={() => {
                       navigation.navigate('Wallet', {
-                        currency: 'cash',
-                        section: 'earnings',
+                        screen: 'Wallet',
+                        params: {
+                          currency: 'cash',
+                          section: 'earnings',
+                        },
                       });
                     }}>
                     View earnings
