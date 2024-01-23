@@ -18,7 +18,7 @@
     "validate-locales": "node tasks/validate-locales.js",
     "unused-locales": "ts-node tasks/unused-locales.js",
     "update-settings": "ts-node tasks/update-settings.js",
-    "test": "jest --env=node --colors --verbose",
+    "test": "jest --env=node --colors --verbose --maxWorkers=4",
     "locale": "ts-node tasks/poeditor.js",
     "eas-build-pre-install": "./pre-install",
     "postinstall": "jetify; patch-package;",
