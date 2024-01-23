@@ -1433,16 +1433,33 @@ export type VerdictInput = {
   reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type FetchOidcProvidersQueryVariables = Exact<{ [key: string]: never }>;
+export type GetPostSubscriptionQueryVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+}>;
 
-export type FetchOidcProvidersQuery = {
+export type GetPostSubscriptionQuery = {
   __typename?: 'Query';
-  oidcProviders: Array<{
-    __typename?: 'OidcProviderPublic';
-    id: number;
-    name: string;
-    loginUrl: string;
-  }>;
+  postSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
+};
+
+export type UpdatePostSubscriptionsMutationVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+  frequency: PostSubscriptionFrequencyEnum;
+}>;
+
+export type UpdatePostSubscriptionsMutation = {
+  __typename?: 'Mutation';
+  updatePostSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
 };
 
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
@@ -2481,8 +2498,8 @@ export type FetchNewsfeedQuery = {
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
             | { __typename: 'FeaturedUser'; id: string }
-            | { __typename: 'FeedExploreTagNode'; id: string }
-            | { __typename: 'FeedHeaderNode'; id: string }
+            | { __typename: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename: 'FeedHeaderNode'; text: string; id: string }
             | {
                 __typename: 'FeedHighlightsConnection';
                 id: string;
@@ -2517,6 +2534,7 @@ export type FetchNewsfeedQuery = {
             | { __typename: 'NodeImpl'; id: string }
             | {
                 __typename: 'PublisherRecsConnection';
+                dismissible: boolean;
                 id: string;
                 edges: Array<
                   | {
@@ -2718,8 +2736,8 @@ export type FetchNewsfeedQuery = {
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
             | { __typename: 'FeaturedUser'; id: string }
-            | { __typename: 'FeedExploreTagNode'; id: string }
-            | { __typename: 'FeedHeaderNode'; id: string }
+            | { __typename: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename: 'FeedHeaderNode'; text: string; id: string }
             | {
                 __typename: 'FeedHighlightsConnection';
                 id: string;
@@ -2754,6 +2772,7 @@ export type FetchNewsfeedQuery = {
             | { __typename: 'NodeImpl'; id: string }
             | {
                 __typename: 'PublisherRecsConnection';
+                dismissible: boolean;
                 id: string;
                 edges: Array<
                   | {
@@ -2940,12 +2959,12 @@ export type FetchNewsfeedQuery = {
       | {
           __typename?: 'FeedExploreTagEdge';
           cursor: string;
-          node: { __typename: 'FeedExploreTagNode'; id: string };
+          node: { __typename: 'FeedExploreTagNode'; tag: string; id: string };
         }
       | {
           __typename?: 'FeedHeaderEdge';
           cursor: string;
-          node: { __typename: 'FeedHeaderNode'; id: string };
+          node: { __typename: 'FeedHeaderNode'; text: string; id: string };
         }
       | {
           __typename?: 'FeedHighlightsEdge';
@@ -3002,6 +3021,7 @@ export type FetchNewsfeedQuery = {
           cursor: string;
           node: {
             __typename: 'PublisherRecsConnection';
+            dismissible: boolean;
             id: string;
             edges: Array<
               | {
@@ -3249,62 +3269,100 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
-export const FetchOidcProvidersDocument = `
-    query FetchOidcProviders {
-  oidcProviders {
-    id
-    name
-    loginUrl
+export const GetPostSubscriptionDocument = `
+    query GetPostSubscription($entityGuid: String!) {
+  postSubscription(entityGuid: $entityGuid) {
+    userGuid
+    entityGuid
+    frequency
   }
 }
     `;
-export const useFetchOidcProvidersQuery = <
-  TData = FetchOidcProvidersQuery,
+export const useGetPostSubscriptionQuery = <
+  TData = GetPostSubscriptionQuery,
   TError = unknown,
 >(
-  variables?: FetchOidcProvidersQueryVariables,
-  options?: UseQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+  variables: GetPostSubscriptionQueryVariables,
+  options?: UseQueryOptions<GetPostSubscriptionQuery, TError, TData>,
 ) =>
-  useQuery<FetchOidcProvidersQuery, TError, TData>(
-    variables === undefined
-      ? ['FetchOidcProviders']
-      : ['FetchOidcProviders', variables],
-    gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
-      FetchOidcProvidersDocument,
+  useQuery<GetPostSubscriptionQuery, TError, TData>(
+    ['GetPostSubscription', variables],
+    gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+      GetPostSubscriptionDocument,
       variables,
     ),
     options,
   );
-export const useInfiniteFetchOidcProvidersQuery = <
-  TData = FetchOidcProvidersQuery,
+export const useInfiniteGetPostSubscriptionQuery = <
+  TData = GetPostSubscriptionQuery,
   TError = unknown,
 >(
-  pageParamKey: keyof FetchOidcProvidersQueryVariables,
-  variables?: FetchOidcProvidersQueryVariables,
-  options?: UseInfiniteQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+  pageParamKey: keyof GetPostSubscriptionQueryVariables,
+  variables: GetPostSubscriptionQueryVariables,
+  options?: UseInfiniteQueryOptions<GetPostSubscriptionQuery, TError, TData>,
 ) => {
-  return useInfiniteQuery<FetchOidcProvidersQuery, TError, TData>(
-    variables === undefined
-      ? ['FetchOidcProviders.infinite']
-      : ['FetchOidcProviders.infinite', variables],
+  return useInfiniteQuery<GetPostSubscriptionQuery, TError, TData>(
+    ['GetPostSubscription.infinite', variables],
     metaData =>
-      gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
-        FetchOidcProvidersDocument,
+      gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+        GetPostSubscriptionDocument,
         { ...variables, ...(metaData.pageParam ?? {}) },
       )(),
     options,
   );
 };
 
-useFetchOidcProvidersQuery.fetcher = (
-  variables?: FetchOidcProvidersQueryVariables,
+useGetPostSubscriptionQuery.fetcher = (
+  variables: GetPostSubscriptionQueryVariables,
   options?: RequestInit['headers'],
 ) =>
-  gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
-    FetchOidcProvidersDocument,
+  gqlFetcher<GetPostSubscriptionQuery, GetPostSubscriptionQueryVariables>(
+    GetPostSubscriptionDocument,
     variables,
     options,
   );
+export const UpdatePostSubscriptionsDocument = `
+    mutation UpdatePostSubscriptions($entityGuid: String!, $frequency: PostSubscriptionFrequencyEnum!) {
+  updatePostSubscription(entityGuid: $entityGuid, frequency: $frequency) {
+    userGuid
+    entityGuid
+    frequency
+  }
+}
+    `;
+export const useUpdatePostSubscriptionsMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    UpdatePostSubscriptionsMutation,
+    TError,
+    UpdatePostSubscriptionsMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    UpdatePostSubscriptionsMutation,
+    TError,
+    UpdatePostSubscriptionsMutationVariables,
+    TContext
+  >(
+    ['UpdatePostSubscriptions'],
+    (variables?: UpdatePostSubscriptionsMutationVariables) =>
+      gqlFetcher<
+        UpdatePostSubscriptionsMutation,
+        UpdatePostSubscriptionsMutationVariables
+      >(UpdatePostSubscriptionsDocument, variables)(),
+    options,
+  );
+useUpdatePostSubscriptionsMutation.fetcher = (
+  variables: UpdatePostSubscriptionsMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    UpdatePostSubscriptionsMutation,
+    UpdatePostSubscriptionsMutationVariables
+  >(UpdatePostSubscriptionsDocument, variables, options);
 export const GetDismissalsDocument = `
     query GetDismissals {
   dismissals {
@@ -4168,6 +4226,7 @@ export const FetchNewsfeedDocument = `
           }
         }
         ... on PublisherRecsConnection {
+          dismissible
           edges {
             publisherNode: node {
               __typename
@@ -4186,6 +4245,14 @@ export const FetchNewsfeedDocument = `
           pageInfo {
             ...PageInfo
           }
+        }
+        ... on FeedHeaderNode {
+          __typename
+          text
+        }
+        ... on FeedExploreTagNode {
+          __typename
+          tag
         }
       }
     }

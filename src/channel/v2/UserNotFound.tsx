@@ -12,7 +12,7 @@ const UserNotFound = props => {
   const params = props.route.params;
   return (
     <View>
-      <ChannelTopBar navigation={props.navigation} />
+      <ChannelTopBar navigation={props.navigation} store={props.store} />
       <View style={theme.centered}>
         <Icon
           name="alert-circle-outline"

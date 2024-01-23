@@ -44,6 +44,8 @@ import { hasVariation } from '../../../ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
 import PermissionsService from '~/common/services/permissions.service';
+import CaptureFab from '~/capture/CaptureFab';
+import { IS_IPAD } from '~/config/Config';
 
 const tinycolor = require('tinycolor2');
 
@@ -361,7 +363,13 @@ const ChannelScreen = observer((props: PropsType) => {
    * CHANNEL NOT FOUND
    **/
   if (!store.channel) {
-    return <UserNotFound navigation={props.navigation} route={props.route} />;
+    return (
+      <UserNotFound
+        navigation={props.navigation}
+        route={props.route}
+        store={store}
+      />
+    );
   }
 
   /**
@@ -501,6 +509,7 @@ const ChannelScreen = observer((props: PropsType) => {
           onPress={onTopBarPress}
         />
       </Animated.View>
+      {!IS_IPAD && <CaptureFab visible={true} navigation={props.navigation} />}
     </ChannelContext.Provider>
   );
 });

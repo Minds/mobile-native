@@ -267,7 +267,7 @@ const ChannelHeader = withErrorBoundary(
             <ChannelButtons
               store={props.store}
               onEditPress={onEditPress}
-              notShow={['message', 'wire', 'more']}
+              notShow={['message', 'wire', 'more', 'postSubscription']}
               iconsStyle={theme.colorSecondaryText}
               containerStyle={styles.buttonsMarginContainer}
             />
