@@ -39,6 +39,8 @@ import { B1 } from '../../../common/ui';
 import Recommendation from '../components/Recommendation';
 import TopFeedHighlights from '../components/TopFeedHighlights';
 import CaptureFab from '~/capture/CaptureFab';
+import FeedHeader from '../components/FeedHeader';
+import FeedExploreTag from '../components/FeedExploreTag';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -135,31 +137,51 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
    * Render in feed components (Recommendation, TopFeedHighlights)
    */
   const renderInFeedItems = useCallback(
-    row =>
-      row.item.__typename === 'FeedNoticeNode' ? (
-        getNotice(row.item.key)
-      ) : row.item.__typename === 'PublisherRecsConnection' ? (
-        <Recommendation
-          type="channel"
-          location="feed"
-          entities={row.item.edges}
-        />
-      ) : row.item.__typename === 'FeedHighlightsConnection' ? (
-        <TopFeedHighlights
-          entities={row.item.edges}
-          onSeeTopFeedPress={() => {
-            feedListRef.current?.scrollToOffset({ offset: 0, animated: true });
-            setTimeout(() => {
-              newsfeed.changeFeedType('top');
-            }, 500);
-          }}
-        />
-      ) : __DEV__ ? (
-        <B1>
-          Item renderer missing
-          {JSON.stringify(row.item.id) + console.log(row.item.id)}
-        </B1>
-      ) : null,
+    row => {
+      switch (row.item.__typename) {
+        case 'FeedNoticeNode':
+          return getNotice(row.item.key);
+        case 'PublisherRecsConnection':
+          return (
+            <Recommendation
+              type="channel"
+              location="feed"
+              entities={row.item.edges}
+            />
+          );
+        case 'FeedHighlightsConnection':
+          return (
+            <TopFeedHighlights
+              entities={row.item.edges}
+              onSeeTopFeedPress={() => {
+                feedListRef.current?.scrollToOffset({
+                  offset: 0,
+                  animated: true,
+                });
+                setTimeout(() => {
+                  newsfeed.changeFeedType('top');
+                }, 500);
+              }}
+            />
+          );
+        case 'FeedHeaderNode':
+          return row.item.text ? <FeedHeader text={row.item.text} /> : null;
+        case 'FeedExploreTagNode':
+          return row.item.tag ? <FeedExploreTag tag={row.item.tag} /> : null;
+        default:
+          if (__DEV__) {
+            console.log('Missing item renderer', row.item.__typename, row);
+            return (
+              <B1>
+                Item renderer missing
+                {JSON.stringify(row.item.__typename)}
+              </B1>
+            );
+          } else {
+            return null;
+          }
+      }
+    },
     [newsfeed],
   );
 
@@ -173,6 +195,10 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         data={entities}
         refreshing={query.isRefetching}
         onEndReached={query.fetchNextPage}
+        // to avoid issues with the repeated keys in the for-you feed
+        {...(newsfeed.feedType === 'for-you'
+          ? { keyExtractor: indexKeyExtractor }
+          : null)}
         onItemViewed={(item, index) => {
           item.trackView?.(
             newsfeed.meta.getClientMetadata(item, undefined, index),
@@ -261,6 +287,10 @@ const Header = () => (
     <NewsfeedTabs newsfeed={useLegacyStores().newsfeed} />
   </>
 );
+
+const indexKeyExtractor = (_, index: any) => {
+  return index.toString();
+};
 
 const prefetch: NotificationsTabOptions[] = ['all'];
 const composeFABStyle = { bottom: 24 };

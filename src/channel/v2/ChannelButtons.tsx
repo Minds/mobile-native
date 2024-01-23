@@ -24,6 +24,7 @@ import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
+import PostSubscription from './buttons/PostSubscription';
 
 export type ButtonsType =
   | 'edit'
@@ -33,6 +34,7 @@ export type ButtonsType =
   | 'message'
   | 'join'
   | 'supermind'
+  | 'postSubscription'
   | 'boost';
 
 export type ChannelButtonsPropsType = {
@@ -75,6 +77,7 @@ const check = {
     !store.channel!.isOwner() && store.channel!.can(FLAG_SUBSCRIBE),
   boost: (store: ChannelStoreType) => store.channel!.isOwner(),
   supermind: (store: ChannelStoreType) => !store.channel!.isOwner(),
+  postSubscription: (store: ChannelStoreType) => !store.channel!.isOwner(),
 };
 
 /**
@@ -112,6 +115,15 @@ const ChannelButtons = withErrorBoundary(
             color={props.iconColor}
             reverseColor={props.iconReverseColor}
             iconStyle={iconStyle}
+          />
+        )}
+        {shouldShow('postSubscription') && (
+          <PostSubscription
+            raised={props.raisedIcons}
+            guid={props.store.channel.guid}
+            iconStyle={iconStyle}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
           />
         )}
         <AnimatePresence>

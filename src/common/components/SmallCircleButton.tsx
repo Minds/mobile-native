@@ -12,13 +12,21 @@ type PropsType = {
   onPress?: () => void;
   reverseColor?: string;
   color?: string;
+  testID?: string;
+  disabled?: boolean;
   raised?: boolean;
   iconStyle?: any;
 };
 
-const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
+const SmallCircleButton = ({ raised = true, testID, ...props }: PropsType) => {
   return (
     <Icon
+      testID={testID}
+      disabled={props.disabled}
+      disabledStyle={{
+        backgroundColor:
+          props.color || ThemedStyles.getColor('PrimaryBackground'),
+      }}
       raised={raised}
       reverse
       name={props.name}

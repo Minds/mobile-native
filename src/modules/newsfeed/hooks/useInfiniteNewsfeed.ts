@@ -16,6 +16,7 @@ import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
 import { storages } from '~/common/services/storage/storages.service';
 import { gqlFetcher } from '~/common/services/api.service';
+import { NewsfeedType } from '~/newsfeed/NewsfeedStore';
 
 const mapModels = (edge: any, inFeedNoticesDelivered) => {
   if (edge.node.__mapped) {
@@ -68,12 +69,13 @@ const mapModels = (edge: any, inFeedNoticesDelivered) => {
         // add to the list of delivered notices
         inFeedNoticesDelivered.current.push(edge.node.key);
         edge.node.__mapped = true;
+        break;
     }
   }
   return edge.node;
 };
 
-export function useInfiniteNewsfeed(algorithm) {
+export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
   const inFeedNoticesDelivered = React.useRef(emptyArray);
 
   const local = React.useRef<{
@@ -101,7 +103,7 @@ export function useInfiniteNewsfeed(algorithm) {
     },
     {
       initialData: local.cachedData || undefined,
-      keepPreviousData: true,
+      keepPreviousData: false,
       staleTime: 0,
       retry: 0,
       getNextPageParam: useCallback(lastPage => {
@@ -127,6 +129,10 @@ export function useInfiniteNewsfeed(algorithm) {
   return {
     prepend: useCallback(
       post => {
+        // do not prepend posts on the for-you tab
+        if (algorithm === 'for-you') {
+          return;
+        }
         post.__mapped = true;
         queryClient.setQueryData<any>(
           [
