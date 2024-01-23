@@ -3053,12 +3053,12 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@livepeer/core-react@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/core-react/-/core-react-1.8.0.tgz#ffa50c7b0e66d004bcebcd4e0aaf36294634461e"
-  integrity sha512-DRciHEJgpALO2a9gHAy75g9VpaU6yszALP/gatO3W/+x9/o6MSR5PRhFg5eMDJA8o1ua39ZlaDu0/irLHIeE8g==
+"@livepeer/core-react@^2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@livepeer/core-react/-/core-react-2.1.9.tgz#f0cbcb7dc3dd6c49e290bb70c03d7cbbb302826e"
+  integrity sha512-UGT+sgtL92pdHNAZAbpALT2yK6+hgy0MpXG3WKUUnjmGY9ZM85mq8NsFr8enr5Ah3xEzmWBKh8FgrGgLFrXMUg==
   dependencies:
-    "@livepeer/core" "^1.8.0"
+    "@livepeer/core" "^2.1.9"
     "@tanstack/query-async-storage-persister" "4.29.23"
     "@tanstack/query-core" "4.29.23"
     "@tanstack/react-query" "4.29.23"
@@ -3066,10 +3066,10 @@
     use-sync-external-store "^1.2.0"
     zustand "^4.3.9"
 
-"@livepeer/core@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/core/-/core-1.8.0.tgz#abbf57f32a57217f7bcd63925cf5895ad5b2e513"
-  integrity sha512-Sr+DplfGfhpv2Arh53tTTL9DyPEzlVAzy+eXd8+PMIlXLVOHTgGfDgpfpaeSCB8v8WlJtrgX50vFdSWyUyxi3g==
+"@livepeer/core@^2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@livepeer/core/-/core-2.1.9.tgz#9361680f3e73211ffd66e422397368913b649d36"
+  integrity sha512-CaId6rSkKdHPhgco+AlkU+DJZa3de6aLVJNwm95P6GhdmopVtsXdR3cq/z1YSsE0wyOHx7EdP50BiD+dQFU1WA==
   dependencies:
     cross-fetch "^4.0.0"
     ms "^3.0.0-canary.1"
@@ -3077,12 +3077,12 @@
     tus-js-client "^3.1.0"
     zustand "^4.3.9"
 
-"@livepeer/react-native@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/react-native/-/react-native-1.8.0.tgz#ab4c976eb722f42f08a614553d8420750e272714"
-  integrity sha512-S/GsVWev3iuM5y3ahz4PTxNS80mpYyXpkpptwQz7S0HiVFrDiBqwwLblyTy1KWGGA4onP145F7MFi+yvysiEew==
+"@livepeer/react-native@^2.0.13":
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/@livepeer/react-native/-/react-native-2.0.13.tgz#38819ccbbfe7984326bacab79a0a9db7a1909c18"
+  integrity sha512-L9loV7rb5Nwv3I3Iac6auHZWrm0IXWG0dBbhlbqOVDQvy6fPxBV14g5I2Zu5sXtsW4aAyrasRamrrdXp6kZXWw==
   dependencies:
-    "@livepeer/core-react" "^1.8.0"
+    "@livepeer/core-react" "^2.1.9"
     react-native-url-polyfill "^2.0.0"
     stitches-native "^0.4.0"
     zustand "^4.3.9"
