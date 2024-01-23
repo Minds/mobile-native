@@ -1,10 +1,14 @@
-import { MINDS_URI } from '~/config/Config';
+import { IS_IOS, MINDS_URI } from '~/config/Config';
 import { cookieService, Cookie, Cookies } from './cookies.service';
 import CookieManager from '@react-native-cookies/cookies';
 
 describe('CookieService', () => {
   const testUri = MINDS_URI;
-  const testCookie: Cookie = { name: 'testCookie', value: 'testValue' };
+  const testCookie: Cookie = {
+    name: 'testCookie',
+    value: 'testValue',
+    path: '/',
+  };
   const testCookies: Cookies = { testCookie };
 
   beforeEach(() => {
@@ -14,7 +18,7 @@ describe('CookieService', () => {
   it('should get cookies', async () => {
     CookieManager.get = jest.fn().mockResolvedValue(testCookies);
     const cookies = await cookieService.get();
-    expect(CookieManager.get).toHaveBeenCalledWith(testUri);
+    expect(CookieManager.get).toHaveBeenCalledWith(testUri, IS_IOS);
     expect(cookies).toEqual(testCookies);
   });
 
@@ -24,6 +28,7 @@ describe('CookieService', () => {
     expect(CookieManager.set).toHaveBeenCalledWith(
       testUri,
       expect.objectContaining(testCookie),
+      IS_IOS,
     );
     expect(result).toEqual(testCookie);
   });
@@ -50,6 +55,7 @@ describe('CookieService', () => {
     expect(CookieManager.clearByName).toHaveBeenCalledWith(
       testUri,
       'testCookie',
+      IS_IOS,
     );
     expect(result).toBe(true);
   });

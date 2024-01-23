@@ -2,7 +2,6 @@ import { useState } from 'react';
 import CloseableModal from '~/common/components/CloseableModal';
 import { useFetchOidcProvidersQuery } from '~/graphql/api';
 import { Cookies, cookieService } from '~/common/services/cookies.service';
-import WebView from 'react-native-webview';
 
 type LoginWebProps = {
   uri?: string;
@@ -20,8 +19,10 @@ export const useLoginWeb = (): LoginWebProps & {
   const [isVisible, setVisible] = useState(false);
 
   const onCloseButtonPress = () => setVisible(false);
-  const onSetCookie = (cookies: Cookies) =>
+  const onSetCookie = (cookies: Cookies) => {
+    setVisible(false);
     console.log('on getting the Cookie', cookies);
+  };
   const showLoginWeb = () => setVisible(true);
 
   return {
@@ -40,9 +41,9 @@ export const LoginWeb = ({
   onCloseButtonPress,
   onSetCookie,
 }: LoginWebProps) => {
-  // const WebView = require('react-native-webview').WebView;
+  const WebView = require('react-native-webview').WebView;
   const [redirecting, setRedirecting] = useState(false);
-  const { hostname: baseHostName, origin: baseUri } = new URL(uri);
+  const { hostname: baseHostName } = new URL(uri);
   return (
     <CloseableModal
       isVisible={isVisible}
@@ -50,18 +51,14 @@ export const LoginWeb = ({
       onCloseButtonPress={onCloseButtonPress}
       closeButtonPosition={'right'}>
       <WebView
-        source={{ uri: redirecting ? baseUri : uri }}
+        source={{ uri }}
         sharedCookiesEnabled
         onLoad={async ({ nativeEvent: { url } }) => {
           const { hostname } = new URL(url);
-
-          const cookies = await cookieService.getAll();
-          console.log('cookieString', hostname, cookies);
+          const cookies = await cookieService.get();
           if (baseHostName === hostname) {
             if (!redirecting) {
-              console.log('Redirecting to', baseUri);
               setRedirecting(true);
-            } else {
               onSetCookie?.(cookies);
             }
           }

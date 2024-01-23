@@ -227,6 +227,20 @@ export enum CustomHostnameStatusEnum {
   TestPending = 'TEST_PENDING',
 }
 
+export type CustomPage = NodeInterface & {
+  __typename?: 'CustomPage';
+  content?: Maybe<Scalars['String']['output']>;
+  externalLink?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  pageType: CustomPageTypesEnum;
+};
+
+export enum CustomPageTypesEnum {
+  CommunityGuidelines = 'COMMUNITY_GUIDELINES',
+  PrivacyPolicy = 'PRIVACY_POLICY',
+  TermsOfService = 'TERMS_OF_SERVICE',
+}
+
 export type Dismissal = {
   __typename?: 'Dismissal';
   dismissalTimestamp: Scalars['Int']['output'];
@@ -600,7 +614,6 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
-  communityGuidelines?: Maybe<Scalars['String']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -612,7 +625,6 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -665,6 +677,7 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
+  setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -766,6 +779,12 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationResendInviteArgs = {
   inviteId: Scalars['Int']['input'];
+};
+
+export type MutationSetCustomPageArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
+  pageType: Scalars['String']['input'];
 };
 
 export type MutationSetEmbeddedCommentsSettingsArgs = {
@@ -946,6 +965,7 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -1037,6 +1057,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCustomPageArgs = {
+  pageType: Scalars['String']['input'];
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1433,6 +1457,18 @@ export type VerdictInput = {
   reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FetchOidcProvidersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FetchOidcProvidersQuery = {
+  __typename?: 'Query';
+  oidcProviders: Array<{
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    loginUrl: string;
+  }>;
+};
+
 export type GetPostSubscriptionQueryVariables = Exact<{
   entityGuid: Scalars['String']['input'];
 }>;
@@ -1599,6 +1635,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1651,6 +1688,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1694,6 +1732,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1839,6 +1878,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1891,6 +1931,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1934,6 +1975,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -2139,6 +2181,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2164,6 +2207,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2494,6 +2538,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2563,6 +2608,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2596,6 +2642,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2732,6 +2779,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2801,6 +2849,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2834,6 +2883,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -3046,6 +3096,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3071,6 +3122,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3269,6 +3321,62 @@ export const PageInfoFragmentDoc = `
   endCursor
 }
     `;
+export const FetchOidcProvidersDocument = `
+    query FetchOidcProviders {
+  oidcProviders {
+    id
+    name
+    loginUrl
+  }
+}
+    `;
+export const useFetchOidcProvidersQuery = <
+  TData = FetchOidcProvidersQuery,
+  TError = unknown,
+>(
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: UseQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+) =>
+  useQuery<FetchOidcProvidersQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchOidcProviders']
+      : ['FetchOidcProviders', variables],
+    gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+      FetchOidcProvidersDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteFetchOidcProvidersQuery = <
+  TData = FetchOidcProvidersQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof FetchOidcProvidersQueryVariables,
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: UseInfiniteQueryOptions<FetchOidcProvidersQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<FetchOidcProvidersQuery, TError, TData>(
+    variables === undefined
+      ? ['FetchOidcProviders.infinite']
+      : ['FetchOidcProviders.infinite', variables],
+    metaData =>
+      gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+        FetchOidcProvidersDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useFetchOidcProvidersQuery.fetcher = (
+  variables?: FetchOidcProvidersQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<FetchOidcProvidersQuery, FetchOidcProvidersQueryVariables>(
+    FetchOidcProvidersDocument,
+    variables,
+    options,
+  );
 export const GetPostSubscriptionDocument = `
     query GetPostSubscription($entityGuid: String!) {
   postSubscription(entityGuid: $entityGuid) {
