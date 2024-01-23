@@ -31,6 +31,8 @@ import Link from '~/common/components/Link';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
+const GIFTSCARD = 'giftscard';
+
 function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const { t } = useTranslation();
   const user = useCurrentUser();
@@ -108,11 +110,12 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const isTokenPayment = paymentType !== 'cash';
   const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
   const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
+  const canUseCredit = hasCredit && selectedCardId === GIFTSCARD;
 
   const handleCreate = async () => {
     // Tokens, OSS or Gifts
     if (!isCashFromStore || selectedMethod === 'gifts') {
-      return createBoost(hasCredit ? creditPaymentMethod : undefined)?.then(
+      return createBoost(canUseCredit ? creditPaymentMethod : undefined)?.then(
         () => {
           showNotification(t('Boost created successfully'));
           navigation.popToTop();
@@ -191,6 +194,9 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
   const disabled = noProduct && noCredit && noCard;
 
+  const selectedGiftedCardId =
+    hasCredit || selectedCardId !== GIFTSCARD ? selectedCardId : undefined;
+
   return (
     <Screen safe onlyTopEdge>
       <BoostComposerHeader />
@@ -232,21 +238,17 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               borderless
             />
           )}
-          {isCashFromStripe &&
-            (selectedMethod === 'gifts' ? (
-              <MenuItem
-                title={t('Payment method')}
-                subtitle={creditLabel}
-                borderless
-              />
-            ) : (
-              <StripeCardSelector
-                onCardSelected={card => setSelectedCardId(card.id)}
-                selectedCardId={selectedCardId}
-                containerStyle={ThemedStyles.style.bgPrimaryBackground}
-                borderless
-              />
-            ))}
+          {isCashFromStripe ? (
+            <StripeCardSelector
+              onCardSelected={card => {
+                setSelectedCardId(card.id);
+              }}
+              selectedCardId={selectedGiftedCardId}
+              creditLabel={hasCredit ? creditLabel : undefined}
+              containerStyle={ThemedStyles.style.bgPrimaryBackground}
+              borderless
+            />
+          ) : null}
           {isTokenPayment && (
             <MenuItem
               title={t('Payment method')}

@@ -18,6 +18,11 @@ interface IntentResponse extends ApiResponse {
   };
 }
 
+export const GIFTSCARD: Partial<StripeCard> = {
+  id: 'giftscard',
+  card_brand: 'minds',
+};
+
 export const selectValueExtractor = (item: any) => {
   if (!item) {
     return;
@@ -61,7 +66,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
     this.cards = cards;
   },
   get currentCard() {
-    return this.cards[this.current];
+    return this.current >= 0 ? this.cards[this.current] : GIFTSCARD;
   },
   get currentCardTitle() {
     return selectValueExtractor(this.currentCard);
@@ -86,7 +91,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
           ) {
             defaultSelectedCard = result.paymentmethods.find(
               p => p.id === selectedCardId,
-            )!;
+            )!.id;
           }
         }
 
@@ -94,8 +99,13 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
 
         this.setCards(cards);
         this.setLoaded(true);
-        if (defaultSelectedCard) {
-          this.selectCard(defaultSelectedCard);
+
+        if (selectedCardId === GIFTSCARD.id || defaultSelectedCard) {
+          this.selectCard(
+            selectedCardId === GIFTSCARD.id
+              ? selectedCardId
+              : defaultSelectedCard,
+          );
         }
       }
     } catch (err) {
@@ -118,10 +128,8 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
   },
   selectCard(cardId: string) {
     const index = this.cards.findIndex(c => c.id === cardId);
-    if (index >= 0) {
-      onCardSelected?.(this.cards[index]);
-      this.current = index;
-    }
+    this.current = index;
+    onCardSelected?.(index >= 0 ? this.cards[index] : GIFTSCARD);
   },
   async saveCard(): Promise<any> {
     try {
@@ -170,6 +178,9 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
   },
   get cardDetailsComplete() {
     return this.cardDetails.complete;
+  },
+  isGiftCards() {
+    return this.currentCard?.id === GIFTSCARD.id;
   },
 });
 

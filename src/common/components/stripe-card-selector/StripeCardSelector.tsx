@@ -8,6 +8,7 @@ import i18n from '../../services/i18n.service';
 import { Row, Icon, IconButton } from '../../ui';
 import { BottomSheetButton, pushBottomSheet } from '../bottom-sheet';
 import createCardSelectorStore, {
+  GIFTSCARD,
   selectValueExtractor,
 } from './createCardSelectorStore';
 import InputBase from '../InputBase';
@@ -21,12 +22,14 @@ type StripeCardSelectorProps = {
   error?: string;
   containerStyle?: StyleProp<ViewStyle>;
   borderless?: boolean;
+  creditLabel?: string;
 };
 
 const StripeCardSelector = observer(
   ({
     onCardSelected,
     selectedCardId,
+    creditLabel,
     ...inputSelectorProps
   }: StripeCardSelectorProps) => {
     const store = useLocalStore(createCardSelectorStore, {
@@ -41,28 +44,47 @@ const StripeCardSelector = observer(
     const currentCard =
       store.cards?.length > 0 ? store.cards[store.current] : undefined;
 
+    const giftSelected =
+      selectedCardId === GIFTSCARD.id || (creditLabel && !selectedCardId);
+
     return (
       <InputBase
-        onPress={() => pushCardSelectorBottomSheet(store)}
+        onPress={() => pushCardSelectorBottomSheet(store, creditLabel)}
         {...inputSelectorProps}
         label={i18n.t('orderReport.paymentMethod')}
-        value={selectValueExtractor(currentCard)}
+        value={giftSelected ? creditLabel : selectValueExtractor(currentCard)}
         icon={<Icon name="chevron-down" />}
       />
     );
   },
 );
 
-const pushCardSelectorBottomSheet = store => {
+const pushCardSelectorBottomSheet = (store, creditLabel) => {
   return pushBottomSheet({
     safe: true,
     component: bottomSheetRef => (
       <>
+        {creditLabel ? (
+          <MenuItem
+            title={creditLabel}
+            borderless
+            onPress={() => {
+              store.selectCard(GIFTSCARD.id);
+              bottomSheetRef.close();
+            }}
+            titleStyle={
+              store.isGiftCards() ? ThemedStyles.style.colorLink : undefined
+            }
+          />
+        ) : null}
         {store.cards.map((card, index) => (
           <MenuItem
+            key={`${card.id}`}
             title={selectValueExtractor(card)}
             titleStyle={
-              index === store.current ? ThemedStyles.style.colorLink : undefined
+              !store.isGiftCards() && index === store.current
+                ? ThemedStyles.style.colorLink
+                : undefined
             }
             onPress={() => {
               store.selectCard(card.id);
