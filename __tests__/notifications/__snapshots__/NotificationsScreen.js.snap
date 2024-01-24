@@ -1445,5 +1445,74 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       />
     </View>
   </RCTScrollView>
+  <View>
+    <View
+      animate={
+        {
+          "opacity": 1,
+          "scale": 1,
+        }
+      }
+      exit={
+        {
+          "opacity": 0,
+          "scale": 0.5,
+        }
+      }
+      from={
+        {
+          "opacity": 0,
+          "scale": 0.5,
+        }
+      }
+      style={
+        [
+          {
+            "bottom": 48,
+            "position": "absolute",
+            "right": 24,
+            "zIndex": 1000,
+          },
+          undefined,
+        ]
+      }
+      transition={
+        {
+          "delay": 50,
+          "duration": 100,
+          "type": "timing",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "borderRadius": 32,
+              "height": 64,
+              "justifyContent": "center",
+              "width": 64,
+            },
+            {
+              "backgroundColor": "#FFD048",
+            },
+          ]
+        }
+      >
+        <MaterialIcons
+          name="edit"
+          onLongPress={[Function]}
+          onPress={[Function]}
+          size={32}
+          style={
+            {
+              "color": "#1C1D1F",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
 </View>
 `;
