@@ -62,7 +62,10 @@ class MindsConfigService {
    */
   hasPermission(permission: string) {
     const settings = this.getSettings();
-    return Boolean(settings?.permissions[permission]);
+
+    return settings?.permissions[permission] !== undefined
+      ? Boolean(settings?.permissions[permission])
+      : true; // default to true if permissions are not loaded
   }
 
   /**
