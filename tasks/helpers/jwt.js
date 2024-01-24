@@ -6,7 +6,7 @@ function generateToken(payload, secret) {
   return jsonwebtoken.sign(
     {
       iss: process.env.JWT_ISS,
-      aud: process.env.JWT_AUD,
+      aud: process.env.AUDIENCE,
       ...payload,
     },
     secret || process.env.JWT_SECRET,
