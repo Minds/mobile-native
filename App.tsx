@@ -49,6 +49,8 @@ import { ConfigProvider } from '~/modules/livepeer';
 
 import { FontsLoader } from 'FontsLoader';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { cookieService } from '~/common/services/cookies.service';
+import apiService from '~/common/services/api.service';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -96,6 +98,11 @@ class App extends Component<Props> {
    * On component did mount
    */
   componentDidMount() {
+    // clear the cookies and setup the token
+    cookieService.clearAll().then(() => {
+      console.log('clear cookies');
+      apiService.updateXsrfToken();
+    });
     // Register event listeners
     this.backHandlerSubscription = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -234,7 +241,3 @@ const appContainerStyle = ThemedStyles.combine(
   'flexContainer',
   'bgPrimaryBackground',
 );
-
-// if (__DEV__) {
-//   require('./tron');
-// }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CloseableModal from '~/common/components/CloseableModal';
 import { useFetchOidcProvidersQuery } from '~/graphql/api';
 import { Cookies, cookieService } from '~/common/services/cookies.service';
+import apiService from '~/common/services/api.service';
 
 type LoginWebProps = {
   uri?: string;
@@ -19,9 +20,20 @@ export const useLoginWeb = (): LoginWebProps & {
   const [isVisible, setVisible] = useState(false);
 
   const onCloseButtonPress = () => setVisible(false);
-  const onSetCookie = (cookies: Cookies) => {
+  const onSetCookie = async (cookies: Cookies) => {
     setVisible(false);
-    console.log('on getting the Cookie', cookies);
+    console.log('onSetCookie', cookies);
+    await cookieService.setFromCookies(cookies);
+    const newCookies = await cookieService.getAll();
+    console.log('newCookies', newCookies);
+    const xsrfToken = newCookies?.['XSRF-TOKEN']?.value;
+    // const mindsSess = cookies?.minds_sess?.value;
+    await apiService.setXsrfToken(xsrfToken);
+    const response = await apiService.get('api/v1/minds/config', {}, null, {
+      // Cookie: `XSRF-TOKEN=${xsrfToken};minds_sess=${mindsSess}`,
+    });
+    cookieService.getAll().then(console.log);
+    console.log('response', response);
   };
   const showLoginWeb = () => setVisible(true);
 

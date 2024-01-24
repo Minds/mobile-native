@@ -117,7 +117,7 @@ export class ApiService {
 
     this.axios.interceptors.response.use(
       response => {
-        this.updateXsrfToken();
+        this.updateXsrfToken(response.config.url ?? 'no-url');
         this.checkResponse(response);
         return response;
       },
@@ -302,17 +302,25 @@ export class ApiService {
     };
   }
 
-  async updateXsrfToken() {
-    const xsrfToken = (await cookieService.get())?.['XSRF-TOKEN']?.value;
+  async updateXsrfToken(url: string) {
+    const cookies = await cookieService.get();
+    const xsrfToken = cookies?.['XSRF-TOKEN']?.value;
+    console.log('updateXsrfToken', { url, xsrfToken, cookies });
     if (xsrfToken) {
       this.xsrfToken = xsrfToken;
       return;
     }
+    console.log('setting xsrf token', xsrfToken, this.xsrfToken);
     await this.setXsrfToken();
   }
 
   async setXsrfToken(token?: string) {
     this.xsrfToken = token ?? uuidv4();
+    console.log('setXsrfToken', token, this.xsrfToken);
+    if (token && this.xsrfToken === token) {
+      return;
+    }
+    console.log('changeXsrfToken', { token, this: this.xsrfToken });
     await cookieService.set({
       name: 'XSRF-TOKEN',
       value: this.xsrfToken,
