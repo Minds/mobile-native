@@ -264,13 +264,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         }
         renderList={renderList}
       />
-      {!IS_IPAD && (
-        <CaptureFab
-          visible={true}
-          navigation={navigation}
-          style={composeFABStyle}
-        />
-      )}
+      {!IS_IPAD && <CaptureFab navigation={navigation} />}
     </Screen>
   );
 });
@@ -293,6 +287,5 @@ const indexKeyExtractor = (_, index: any) => {
 };
 
 const prefetch: NotificationsTabOptions[] = ['all'];
-const composeFABStyle = { bottom: 24 };
 
 export const NewsfeedScreen = withErrorBoundary(NewsfeedScreenCmp);

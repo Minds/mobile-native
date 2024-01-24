@@ -55,7 +55,7 @@ export const DiscoverySearchScreen = withErrorBoundaryScreen(
             style={theme.flexContainer}
           />
         </View>
-        {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
+        {!IS_IPAD && <CaptureFab navigation={navigation} />}
       </DiscoveryV2SearchStoreContext.Provider>
     );
   }),

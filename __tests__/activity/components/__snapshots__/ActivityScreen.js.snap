@@ -600,7 +600,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": true,
+            "disabled": false,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -627,23 +627,18 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
-            [
-              {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              {
-                "margin": 4,
-              },
-              {
-                "paddingVertical": 12,
-              },
-              {
-                "alignItems": "center",
-              },
-            ],
             {
-              "opacity": 0.5,
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
             },
           ]
         }
@@ -698,7 +693,7 @@ exports[`Activity screen component renders correctly  1`] = `
           {
             "busy": undefined,
             "checked": undefined,
-            "disabled": true,
+            "disabled": false,
             "expanded": undefined,
             "selected": undefined,
           }
@@ -725,23 +720,18 @@ exports[`Activity screen component renders correctly  1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           [
-            [
-              {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              {
-                "margin": 4,
-              },
-              {
-                "paddingVertical": 12,
-              },
-              {
-                "alignItems": "center",
-              },
-            ],
             {
-              "opacity": 0.5,
+              "flex": 1,
+              "flexDirection": "column",
+            },
+            {
+              "margin": 4,
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "alignItems": "center",
             },
           ]
         }

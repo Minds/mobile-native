@@ -2,27 +2,22 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <preventDoubleTap(PressableScale)
-  disabled={true}
+  disabled={false}
   onPress={[Function]}
   style={
     [
-      [
-        {
-          "flex": 1,
-          "flexDirection": "column",
-        },
-        {
-          "margin": 4,
-        },
-        {
-          "paddingVertical": 12,
-        },
-        {
-          "alignItems": "center",
-        },
-      ],
       {
-        "opacity": 0.5,
+        "flex": 1,
+        "flexDirection": "column",
+      },
+      {
+        "margin": 4,
+      },
+      {
+        "paddingVertical": 12,
+      },
+      {
+        "alignItems": "center",
       },
     ]
   }

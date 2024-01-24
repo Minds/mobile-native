@@ -509,7 +509,7 @@ const ChannelScreen = observer((props: PropsType) => {
           onPress={onTopBarPress}
         />
       </Animated.View>
-      {!IS_IPAD && <CaptureFab visible={true} navigation={props.navigation} />}
+      {!IS_IPAD && <CaptureFab navigation={props.navigation} />}
     </ChannelContext.Provider>
   );
 });

@@ -11,23 +11,18 @@ exports[`Boost action component renders correctly 1`] = `
       },
       undefined,
       [
-        [
-          {
-            "flex": 1,
-            "flexDirection": "column",
-          },
-          {
-            "margin": 4,
-          },
-          {
-            "paddingVertical": 12,
-          },
-          {
-            "alignItems": "center",
-          },
-        ],
         {
-          "opacity": 0.5,
+          "flex": 1,
+          "flexDirection": "column",
+        },
+        {
+          "margin": 4,
+        },
+        {
+          "paddingVertical": 12,
+        },
+        {
+          "alignItems": "center",
         },
       ],
     ]
@@ -38,7 +33,7 @@ exports[`Boost action component renders correctly 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": true,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -117,7 +112,7 @@ exports[`Boost action component renders correctly 1`] = `
           }
         >
           <MaterialCommunityIcons
-            color="#797B82"
+            color="#AEB0B8"
             name="trending-up"
             size={20.8}
           />
