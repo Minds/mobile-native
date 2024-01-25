@@ -101,11 +101,22 @@ export class PushService {
   }
 
   /**
+   * Clear all notifications
+   */
+  clearNotifications() {
+    Notifications.removeAllDeliveredNotifications();
+  }
+
+  /**
    * Set app badge
    * @param {integer} num
    */
   setBadgeCount(num) {
-    Notifications.ios.setBadgeCount(num);
+    if (IS_IOS) {
+      Notifications.ios.setBadgeCount(num);
+    } else {
+      Notifications.android.setBadgeCount(num);
+    }
   }
 
   /**

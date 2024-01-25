@@ -71,6 +71,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     const parent = navigation.getParent();
     const unsubscribeTab = parent.addListener('tabPress', onPress);
     const unsubscribeDrawer = parent.addListener('drawerItemPress', onPress);
+    notifications.setUnread(0);
     return () => {
       unsubscribeTab();
       unsubscribeDrawer();
