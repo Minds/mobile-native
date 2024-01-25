@@ -18,7 +18,6 @@ import deeplinkService from './src/common/services/deeplinks-router.service';
 import { boostedContentService } from 'modules/boost';
 import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
-import badgeService from './src/common/services/badge.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
@@ -140,7 +139,8 @@ export class AppInitManager {
    */
   onLogout = () => {
     // clear app badge
-    badgeService.setUnreadNotifications(0);
+    pushService.setBadgeCount(0);
+    pushService.clearNotifications();
     translationService.purgeLanguagesCache();
     updateGrowthBookAttributes();
     boostedContentService.clear();
