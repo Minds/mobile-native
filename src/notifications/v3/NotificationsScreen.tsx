@@ -173,7 +173,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
-      {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
+      {!IS_IPAD && <CaptureFab navigation={navigation} />}
     </View>
   );
 });

@@ -59,13 +59,7 @@ const routes = [
 
 const PostToGroupButton = observer(({ navigation }) => {
   const groupContext = useGroupContext();
-  return (
-    <CaptureFab
-      visible={true}
-      navigation={navigation}
-      group={groupContext?.group}
-    />
-  );
+  return <CaptureFab navigation={navigation} group={groupContext?.group} />;
 });
 
 export function GroupScreen({ route, navigation }) {
