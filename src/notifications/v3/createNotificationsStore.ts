@@ -1,6 +1,5 @@
 import { Timeout } from '~/types/Common';
 import apiService from '../../common/services/api.service';
-import badgeService from '../../common/services/badge.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import socketService from '../../common/services/socket.service';
@@ -10,6 +9,7 @@ import EmailNotificationsSettingModel, {
   EmailNotificationsSettingType,
 } from './settings/email/EmailNotificationsSettingModel';
 import PushNotificationsSettingModel from './settings/push/PushNotificationsSettingModel';
+import pushService from '~/common/services/push.service';
 
 export type FilterType = '' | NotificationsTabOptions;
 
@@ -50,7 +50,10 @@ const createNotificationsStore = () => ({
   },
   setUnread(unread: number) {
     this.unread = unread;
-    badgeService.setUnreadNotifications(unread);
+    pushService.setBadgeCount(unread);
+    if (unread === 0) {
+      pushService.clearNotifications();
+    }
   },
   onSocket() {
     const unread = this.unread + 1;

@@ -71,6 +71,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     const parent = navigation.getParent();
     const unsubscribeTab = parent.addListener('tabPress', onPress);
     const unsubscribeDrawer = parent.addListener('drawerItemPress', onPress);
+    notifications.setUnread(0);
     return () => {
       unsubscribeTab();
       unsubscribeDrawer();
@@ -172,7 +173,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
-      {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
+      {!IS_IPAD && <CaptureFab navigation={navigation} />}
     </View>
   );
 });

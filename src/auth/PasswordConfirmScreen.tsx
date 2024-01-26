@@ -115,6 +115,7 @@ const PasswordConfirmScreen = withErrorBoundaryScreen(
             <InputContainer
               labelStyle={theme.colorPrimaryText}
               style={theme.colorPrimaryText}
+              multiline={false}
               placeholder={i18n.t('auth.password')}
               secureTextEntry={localStore.hidePassword}
               autoComplete="password"

@@ -73,7 +73,7 @@ const PlusDiscoveryScreen = observer(() => {
         )}
       </View>
       <OnboardingOverlay type="minds_plus" />
-      {!IS_IPAD && <CaptureFab visible={true} navigation={navigation} />}
+      {!IS_IPAD && <CaptureFab navigation={navigation} />}
     </Screen>
   );
 });

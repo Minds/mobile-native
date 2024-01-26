@@ -314,13 +314,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        {!IS_IPAD && (
-          <CaptureFab
-            visible={true}
-            navigation={navigation}
-            style={composeFABStyle}
-          />
-        )}
+        {!IS_IPAD && <CaptureFab navigation={navigation} />}
       </Screen>
     );
   }),
@@ -335,7 +329,6 @@ const styles = ThemedStyles.create({
   icon: ['marginHorizontalXXL', 'marginTop1x'],
   text: ['flexContainer', 'marginRightXL'],
 });
-const composeFABStyle = { bottom: 24 };
 
 const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
   return <EmptyMessage {...emptyMessages[tab]} onPress={onPress} />;

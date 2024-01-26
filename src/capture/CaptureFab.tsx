@@ -1,41 +1,23 @@
 import React from 'react';
 
 import { observer } from 'mobx-react';
-import { View, ViewStyle } from 'react-native';
-import { MotiView, AnimatePresence } from 'moti';
+import { View } from 'react-native';
+
 import Icon from '@expo/vector-icons/MaterialIcons';
-import settingsStore from '../settings/SettingsStore';
+
 import GroupModel from '~/groups/GroupModel';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
 import PermissionsService from '~/common/services/permissions.service';
+import { IS_TENANT } from '~/config/Config';
 
 type CaptureFabProps = {
   group?: GroupModel;
-  visible?: boolean;
   navigation: any;
   testID?: string;
-  style?: ViewStyle;
 };
 
-/**
- * Animated presence container
- */
-function ShowHide({ children, ...other }) {
-  return (
-    <MotiView {...animation} {...other}>
-      {children}
-    </MotiView>
-  );
-}
-
-const CaptureFab = ({
-  navigation,
-  visible,
-  group,
-  testID,
-  style,
-}: CaptureFabProps) => {
+const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
   if (!PermissionsService.canComment()) {
     return null;
   }
@@ -54,21 +36,13 @@ const CaptureFab = ({
   };
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <ShowHide
-          style={[
-            settingsStore.leftHanded ? styles.leftSide : styles.rightSide,
-            style,
-          ]}>
-          <CaptureFabIcon
-            onLongPress={handleComposePress}
-            onPress={pushComposeCreate}
-            testID={testID}
-          />
-        </ShowHide>
-      )}
-    </AnimatePresence>
+    <View style={styles.container}>
+      <CaptureFabIcon
+        onLongPress={IS_TENANT ? undefined : handleComposePress}
+        onPress={IS_TENANT ? handleComposePress : pushComposeCreate}
+        testID={testID}
+      />
+    </View>
   );
 };
 
@@ -88,8 +62,8 @@ export const CaptureFabIcon = ({
   <View
     style={
       scale
-        ? [styles.container, { transform: [{ scale: scale }] }]
-        : styles.container
+        ? [styles.iconContainer, { transform: [{ scale: scale }] }]
+        : styles.iconContainer
     }>
     <Icon
       name="edit"
@@ -103,7 +77,7 @@ export const CaptureFabIcon = ({
 );
 
 const styles = ThemedStyles.create({
-  container: [
+  iconContainer: [
     {
       width: 64,
       height: 64,
@@ -113,40 +87,10 @@ const styles = ThemedStyles.create({
     },
     'bgLink',
   ],
-  rightSide: {
+  container: {
     position: 'absolute',
-    // backgroundColor:'#4690DF',
-    bottom: 48,
+    bottom: 28,
     zIndex: 1000,
-    // zIndex: 1,
     right: 24,
   },
-  leftSide: {
-    position: 'absolute',
-    // backgroundColor:'#4690DF',
-    bottom: 48,
-    zIndex: 1000,
-    left: 24,
-  },
 });
-
-// Animation definition
-const animation = {
-  from: {
-    opacity: 0,
-    scale: 0.5,
-  },
-  transition: {
-    type: 'timing',
-    delay: 50,
-    duration: 100,
-  } as any, //solve moti type issue
-  animate: {
-    opacity: 1,
-    scale: 1,
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.5,
-  },
-};
