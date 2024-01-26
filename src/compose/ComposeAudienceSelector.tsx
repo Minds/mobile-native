@@ -147,7 +147,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!mode && !IS_TENANT && (
+      {(!mode || mode === 'monetized') && !IS_TENANT && (
         <MenuItemOption
           title={texts.audience.plus.title}
           subtitle={texts.audience.plus.subtitle}
