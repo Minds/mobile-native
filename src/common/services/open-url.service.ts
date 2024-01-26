@@ -6,6 +6,7 @@ import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { storages } from './storage/storages.service';
 import NavigationService from '~/navigation/NavigationService';
+import { CustomPageType } from '~/modules/custom-pages/types';
 
 const STORAGE_NAMESPACE = 'openLinksBrowser';
 
@@ -100,6 +101,11 @@ class OpenURLService {
 
     if (url.startsWith(`${MINDS_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
+    }
+    if (url.startsWith(`${MINDS_URI}pages/`)) {
+      const page = url.replace(`${MINDS_URI}pages/`, '');
+
+      return NavigationService.navigate('CustomPages', { page });
     }
 
     if (url.startsWith(MINDS_URI) && !navigatingToPro) {

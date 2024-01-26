@@ -630,6 +630,12 @@ const RootStack = observer(function () {
         name="WebContent"
         getComponent={() => require('../common/screens/WebContent').default}
       />
+      <RootStackNav.Screen
+        name="CustomPages"
+        getComponent={() =>
+          require('~/modules/custom-pages/index').CustomPageScreen
+        }
+      />
     </RootStackNav.Navigator>
   );
 });

@@ -61,6 +61,7 @@ describe('RegisterScreen component', () => {
     await fireEvent.changeText(password, 'Temp');
 
     await fireEvent.press(checkboxes[0]);
+    await fireEvent.press(checkboxes[1]);
 
     await fireEvent.press(button);
 
@@ -86,6 +87,7 @@ describe('RegisterScreen component', () => {
     await fireEvent.changeText(password, 'Temp!1234');
 
     await fireEvent.press(checkboxes[0]);
+    await fireEvent.press(checkboxes[1]);
 
     await fireEvent.press(button);
 

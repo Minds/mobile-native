@@ -227,6 +227,20 @@ export enum CustomHostnameStatusEnum {
   TestPending = 'TEST_PENDING',
 }
 
+export type CustomPage = NodeInterface & {
+  __typename?: 'CustomPage';
+  content?: Maybe<Scalars['String']['output']>;
+  externalLink?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  pageType: CustomPageTypesEnum;
+};
+
+export enum CustomPageTypesEnum {
+  CommunityGuidelines = 'COMMUNITY_GUIDELINES',
+  PrivacyPolicy = 'PRIVACY_POLICY',
+  TermsOfService = 'TERMS_OF_SERVICE',
+}
+
 export type Dismissal = {
   __typename?: 'Dismissal';
   dismissalTimestamp: Scalars['Int']['output'];
@@ -600,7 +614,6 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
-  communityGuidelines?: Maybe<Scalars['String']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -612,7 +625,6 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -665,6 +677,7 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
+  setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -766,6 +779,12 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationResendInviteArgs = {
   inviteId: Scalars['Int']['input'];
+};
+
+export type MutationSetCustomPageArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
+  pageType: Scalars['String']['input'];
 };
 
 export type MutationSetEmbeddedCommentsSettingsArgs = {
@@ -946,6 +965,7 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -1037,6 +1057,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCustomPageArgs = {
+  pageType: Scalars['String']['input'];
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1335,6 +1359,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1343,6 +1368,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';
@@ -1599,6 +1630,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1651,6 +1683,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1694,6 +1727,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1839,6 +1873,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1891,6 +1926,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1934,6 +1970,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -2139,6 +2176,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2164,6 +2202,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2325,6 +2364,20 @@ export type FetchPaymentMethodsQuery = {
     name: string;
     balance?: number | null;
   }>;
+};
+
+export type GetCustomPageQueryVariables = Exact<{
+  pageType: Scalars['String']['input'];
+}>;
+
+export type GetCustomPageQuery = {
+  __typename?: 'Query';
+  customPage: {
+    __typename?: 'CustomPage';
+    pageType: CustomPageTypesEnum;
+    content?: string | null;
+    externalLink?: string | null;
+  };
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -2494,6 +2547,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2563,6 +2617,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2596,6 +2651,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2732,6 +2788,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2801,6 +2858,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2834,6 +2892,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -3046,6 +3105,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3071,6 +3131,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3874,6 +3935,58 @@ useFetchPaymentMethodsQuery.fetcher = (
 ) =>
   gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
     FetchPaymentMethodsDocument,
+    variables,
+    options,
+  );
+export const GetCustomPageDocument = `
+    query GetCustomPage($pageType: String!) {
+  customPage(pageType: $pageType) {
+    pageType
+    content
+    externalLink
+  }
+}
+    `;
+export const useGetCustomPageQuery = <
+  TData = GetCustomPageQuery,
+  TError = unknown,
+>(
+  variables: GetCustomPageQueryVariables,
+  options?: UseQueryOptions<GetCustomPageQuery, TError, TData>,
+) =>
+  useQuery<GetCustomPageQuery, TError, TData>(
+    ['GetCustomPage', variables],
+    gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+      GetCustomPageDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetCustomPageQuery = <
+  TData = GetCustomPageQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetCustomPageQueryVariables,
+  variables: GetCustomPageQueryVariables,
+  options?: UseInfiniteQueryOptions<GetCustomPageQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetCustomPageQuery, TError, TData>(
+    ['GetCustomPage.infinite', variables],
+    metaData =>
+      gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+        GetCustomPageDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetCustomPageQuery.fetcher = (
+  variables: GetCustomPageQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+    GetCustomPageDocument,
     variables,
     options,
   );
