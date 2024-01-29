@@ -6,8 +6,9 @@ import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import DeviceInfo from 'react-native-device-info';
 
-const ANDROID_API_VERSION = parseInt(Platform.constants['Release'] ?? 0, 10);
+const ANDROID_API_VERSION = parseInt(`${DeviceInfo.getBuildNumber()}`, 10);
 /**
  * Download Service
  */
@@ -21,7 +22,7 @@ class DownloadService {
     try {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
       if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
-        return MediaLibrary.saveToLibraryAsync(url);
+        return MediaLibrary.saveToLibraryAsync(this.checkAndFixImageURI(url));
       } else if (ANDROID_API_VERSION < 11) {
         let permission = await MediaLibrary.getPermissionsAsync(true);
 
@@ -69,6 +70,23 @@ class DownloadService {
       }
     }
     return isGif;
+  }
+
+  checkAndFixImageURI(uri) {
+    // Regular expression to match common image file extensions
+    const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|svg)$/i;
+
+    // Check if the URI ends with a '/'
+    if (uri.endsWith('/')) {
+      uri = uri.slice(0, -1); // Remove the trailing '/'
+    }
+
+    // Check if the URI doesn't have an extension
+    if (!uri.match(imageExtensions)) {
+      uri += '.jpg'; // Add the '.jpg' extension
+    }
+
+    return uri;
   }
 }
 
