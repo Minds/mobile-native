@@ -1,0 +1,28 @@
+query GetBoostFeed(
+  $targetLocation: Int
+  $first: Int
+  $after: Int!
+  $source: String!
+) {
+  boosts(
+    targetLocation: $targetLocation
+    first: $first
+    after: $after
+    source: $source
+  ) {
+    edges {
+      node {
+        guid
+        activity {
+          __typename
+          legacy
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}

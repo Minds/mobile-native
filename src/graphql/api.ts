@@ -95,6 +95,20 @@ export type AddOnSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AppReadyMobileConfig = {
+  __typename?: 'AppReadyMobileConfig';
+  ACCENT_COLOR_DARK: Scalars['String']['output'];
+  ACCENT_COLOR_LIGHT: Scalars['String']['output'];
+  API_URL: Scalars['String']['output'];
+  APP_HOST: Scalars['String']['output'];
+  APP_NAME: Scalars['String']['output'];
+  APP_SPLASH_RESIZE: Scalars['String']['output'];
+  TENANT_ID: Scalars['Int']['output'];
+  THEME: Scalars['String']['output'];
+  WELCOME_LOGO: Scalars['String']['output'];
+  assets: Array<KeyValueType>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
@@ -225,6 +239,20 @@ export enum CustomHostnameStatusEnum {
   TestBlocked = 'TEST_BLOCKED',
   TestFailed = 'TEST_FAILED',
   TestPending = 'TEST_PENDING',
+}
+
+export type CustomPage = NodeInterface & {
+  __typename?: 'CustomPage';
+  content?: Maybe<Scalars['String']['output']>;
+  externalLink?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  pageType: CustomPageTypesEnum;
+};
+
+export enum CustomPageTypesEnum {
+  CommunityGuidelines = 'COMMUNITY_GUIDELINES',
+  PrivacyPolicy = 'PRIVACY_POLICY',
+  TermsOfService = 'TERMS_OF_SERVICE',
 }
 
 export type Dismissal = {
@@ -590,6 +618,39 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export type KeyValueType = {
+  __typename?: 'KeyValueType';
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type MobileConfig = {
+  __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
+  previewQRCode: Scalars['String']['output'];
+  previewStatus: MobilePreviewStatusEnum;
+  splashScreenType: MobileSplashScreenTypeEnum;
+  updateTimestamp: Scalars['Int']['output'];
+  welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+};
+
+export enum MobilePreviewStatusEnum {
+  Error = 'ERROR',
+  NoPreview = 'NO_PREVIEW',
+  Pending = 'PENDING',
+  Ready = 'READY',
+}
+
+export enum MobileSplashScreenTypeEnum {
+  Contain = 'CONTAIN',
+  Cover = 'COVER',
+}
+
+export enum MobileWelcomeScreenLogoTypeEnum {
+  Horizontal = 'HORIZONTAL',
+  Square = 'SQUARE',
+}
+
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
   Light = 'LIGHT',
@@ -600,11 +661,11 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
-  communityGuidelines?: Maybe<Scalars['String']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -612,10 +673,10 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -658,6 +719,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -665,6 +727,7 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
+  setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -748,6 +811,12 @@ export type MutationInviteArgs = {
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type MutationMobileConfigArgs = {
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+};
+
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
@@ -766,6 +835,12 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationResendInviteArgs = {
   inviteId: Scalars['Int']['input'];
+};
+
+export type MutationSetCustomPageArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
+  pageType: Scalars['String']['input'];
 };
 
 export type MutationSetEmbeddedCommentsSettingsArgs = {
@@ -938,6 +1013,7 @@ export type Query = {
   allPermissions: Array<PermissionsEnum>;
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
+  appReadyMobileConfig: AppReadyMobileConfig;
   /** Returns the permissions that the current session holds */
   assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
@@ -946,6 +1022,7 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -981,6 +1058,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -1011,6 +1089,10 @@ export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
 };
 
+export type QueryAppReadyMobileConfigArgs = {
+  tenantId: Scalars['Int']['input'];
+};
+
 export type QueryAssignedRolesArgs = {
   userGuid?: InputMaybe<Scalars['String']['input']>;
 };
@@ -1037,6 +1119,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCustomPageArgs = {
+  pageType: Scalars['String']['input'];
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1335,6 +1421,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1343,6 +1430,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';
@@ -1599,6 +1692,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1651,6 +1745,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1694,6 +1789,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1839,6 +1935,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1891,6 +1988,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -1934,6 +2032,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -2139,6 +2238,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2164,6 +2264,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2325,6 +2426,34 @@ export type FetchPaymentMethodsQuery = {
     name: string;
     balance?: number | null;
   }>;
+};
+
+export type GetBoostFeedQueryVariables = Exact<{
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after: Scalars['Int']['input'];
+  source: Scalars['String']['input'];
+}>;
+
+export type GetBoostFeedQuery = {
+  __typename?: 'Query';
+  boosts: {
+    __typename?: 'BoostsConnection';
+    edges: Array<{
+      __typename?: 'BoostEdge';
+      node: {
+        __typename?: 'BoostNode';
+        guid: string;
+        activity: { __typename: 'ActivityNode'; legacy: string };
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -2494,6 +2623,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2563,6 +2693,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2596,6 +2727,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2732,6 +2864,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
             | { __typename: 'FeaturedEntityConnection'; id: string }
             | { __typename: 'FeaturedGroup'; id: string }
@@ -2801,6 +2934,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -2834,6 +2968,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
                         | { __typename: 'FeaturedEntityConnection'; id: string }
                         | { __typename: 'FeaturedGroup'; id: string }
@@ -3046,6 +3181,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3071,6 +3207,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'ActivityNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
                     | { __typename: 'FeaturedEntityConnection'; id: string }
                     | { __typename: 'FeaturedGroup'; id: string }
@@ -3874,6 +4011,74 @@ useFetchPaymentMethodsQuery.fetcher = (
 ) =>
   gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
     FetchPaymentMethodsDocument,
+    variables,
+    options,
+  );
+export const GetBoostFeedDocument = `
+    query GetBoostFeed($targetLocation: Int, $first: Int, $after: Int!, $source: String!) {
+  boosts(
+    targetLocation: $targetLocation
+    first: $first
+    after: $after
+    source: $source
+  ) {
+    edges {
+      node {
+        guid
+        activity {
+          __typename
+          legacy
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}
+    `;
+export const useGetBoostFeedQuery = <
+  TData = GetBoostFeedQuery,
+  TError = unknown,
+>(
+  variables: GetBoostFeedQueryVariables,
+  options?: UseQueryOptions<GetBoostFeedQuery, TError, TData>,
+) =>
+  useQuery<GetBoostFeedQuery, TError, TData>(
+    ['GetBoostFeed', variables],
+    gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+      GetBoostFeedDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetBoostFeedQuery = <
+  TData = GetBoostFeedQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetBoostFeedQueryVariables,
+  variables: GetBoostFeedQueryVariables,
+  options?: UseInfiniteQueryOptions<GetBoostFeedQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetBoostFeedQuery, TError, TData>(
+    ['GetBoostFeed.infinite', variables],
+    metaData =>
+      gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+        GetBoostFeedDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetBoostFeedQuery.fetcher = (
+  variables: GetBoostFeedQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+    GetBoostFeedDocument,
     variables,
     options,
   );

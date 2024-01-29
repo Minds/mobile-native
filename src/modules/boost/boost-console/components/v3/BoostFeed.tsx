@@ -1,33 +1,47 @@
-import React, { useEffect } from 'react';
-import useFeedStore from '~/common/hooks/useFeedStore';
-import { FeedListProps, FeedListV2 } from '~/common/components/FeedListV2';
+import React from 'react';
+import { FeedListProps } from '~/common/components/FeedListV2';
 import type ActivityModel from '~/newsfeed/ActivityModel';
+import { useInfiniteBoostFeed } from '../../hooks/useInfiniteBoostFeed';
+import {
+  FeedList,
+  FeedListEmpty,
+  FeedListFooter,
+} from '~/modules/newsfeed/components/FeedList';
+import { useMetadataService } from '~/services/hooks/useMetadataService';
 
 type BoostFeedProps = Omit<FeedListProps<ActivityModel>, 'feedStore'>;
-
 /**
  * Approved boost feed
  */
 export default function BoostFeed(props: BoostFeedProps) {
-  const feedStore = useFeedStore(true);
+  const { entities, refresh, query } = useInfiniteBoostFeed(1);
+  const meta = useMetadataService('feed/boosts', 'featured-content');
 
-  feedStore
-    .getMetadataService()!
-    .setSource('feed/boosts')
-    .setMedium('featured-content');
-
-  feedStore
-    .setEndpoint('api/v3/boosts/feed')
-    .setInjectBoost(false)
-    .feedsService.setDataProperty('boosts')
-    .setParams(params);
-  // .setLimit(12);
-
-  useEffect(() => {
-    feedStore.fetch();
-  }, [feedStore]);
-
-  return <FeedListV2 feedStore={feedStore} {...props} />;
+  return (
+    <FeedList
+      emphasizeGroup
+      data={entities}
+      refreshing={query.isRefetching}
+      onEndReached={query.fetchNextPage}
+      // to avoid issues with the repeated keys in the for-you feed
+      onItemViewed={(item, index) => {
+        item.trackView?.(meta.getClientMetadata(item, undefined, index));
+      }}
+      onRefresh={refresh}
+      keyExtractor={keyExtractor}
+      ListEmptyComponent={query.isFetchedAfterMount ? <FeedListEmpty /> : null}
+      ListFooterComponent={
+        <FeedListFooter
+          loading={query.isFetching}
+          error={query.error}
+          reload={query.fetchNextPage}
+        />
+      }
+      {...props}
+    />
+  );
 }
 
-const params = { location: 1 };
+const keyExtractor = (_, index: any) => {
+  return index.toString();
+};
