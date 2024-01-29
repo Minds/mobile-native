@@ -1779,7 +1779,6 @@
   "wantToDownloadImage": "Do you want to download this image?",
   "imageAdded": "Image added to gallery!",
   "errorDownloading": "Error downloading file",
-  "errorUnsupported": "File type unsupported by iOS",
   "errorMedia": "The media could not be loaded.",
   "errorMediaDisplay": "There was an error displaying this media",
   "transcodingMediaDisplay": "The video is being transcoded",
