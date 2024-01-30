@@ -68,6 +68,7 @@ const SettingsScreen = observer(({ navigation }) => {
   const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const user = sessionService.getUser();
+  console.log('user', user.pro);
 
   const onComplete = useCallback(
     (forPro: boolean) => {
@@ -86,12 +87,19 @@ const SettingsScreen = observer(({ navigation }) => {
       screen: 'Account',
       params: {},
     },
-    {
-      title: i18n.t('settings.security'),
-      screen: 'Security',
-      params: {},
-    },
   ];
+
+  firstSection.push({
+    title: i18n.t('settings.pro'),
+    screen: user.pro ? 'Pro' : 'UpgradeScreen',
+    params: { pro: true },
+  });
+
+  firstSection.push({
+    title: i18n.t('settings.security'),
+    screen: 'Security',
+    params: {},
+  });
 
   if (!IS_IOS && !hideTokens && !IS_TENANT) {
     firstSection.push({

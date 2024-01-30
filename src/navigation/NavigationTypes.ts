@@ -70,6 +70,7 @@ export type MoreStackParamList = {
   Analytics: {};
   InitialOnboarding: {};
   Account: {};
+  Pro: {};
   Network: {};
   Security: {};
   Billing: {};

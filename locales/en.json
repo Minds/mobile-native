@@ -1165,7 +1165,8 @@
         }
       }
     },
-    "profile": "Profile"
+    "profile": "Profile",
+    "pro": "Pro"
   },
   "comingSoon": {
     "try": "Try the canary app at",
