@@ -7,7 +7,7 @@ import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 
-const ANDROID_API_VERSION = parseInt(Platform.constants['Release'] ?? 0, 10);
+const ANDROID_API_VERSION = parseInt(`${Platform.Version}}`, 10);
 /**
  * Download Service
  */
@@ -20,8 +20,8 @@ class DownloadService {
   async downloadToGallery(url: string, entity?: ActivityModel, name?: string) {
     try {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
-      if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
-        return MediaLibrary.saveToLibraryAsync(url);
+      if (Platform.OS === 'ios') {
+        return MediaLibrary.saveToLibraryAsync(this.checkAndFixImageURI(url));
       } else if (ANDROID_API_VERSION < 11) {
         let permission = await MediaLibrary.getPermissionsAsync(true);
 
@@ -69,6 +69,23 @@ class DownloadService {
       }
     }
     return isGif;
+  }
+
+  checkAndFixImageURI(uri) {
+    // Regular expression to match common image file extensions
+    const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|svg)$/i;
+
+    // Check if the URI ends with a '/'
+    if (uri.endsWith('/')) {
+      uri = uri.slice(0, -1); // Remove the trailing '/'
+    }
+
+    // Check if the URI doesn't have an extension
+    if (!uri.match(imageExtensions)) {
+      uri += '.jpg'; // Add the '.jpg' extension
+    }
+
+    return uri;
   }
 }
 
