@@ -25,14 +25,14 @@ type PlaceholderType =
   | undefined;
 
 export type FeedListProps<T extends BaseModel> = {
-  onRefresh?: () => Promise<any>;
+  onRefresh?: () => void;
   loadMore?: () => void;
   onItemViewed?: (item: T, number) => void;
   renderInFeedItems?: (item) => JSX.Element;
   displayBoosts?: 'none' | 'distinct';
   emphasizeGroup?: boolean;
   placeholder?: PlaceholderType;
-} & Omit<FlashListProps<T>, 'getItemType' | 'keyExtractor' | 'renderItem'>;
+} & Omit<FlashListProps<T>, 'getItemType' | 'renderItem'>;
 
 const colors = [ThemedStyles.getColor('Link')];
 
@@ -122,7 +122,7 @@ function FeedListCmp<T extends BaseModel>(
       onEndReachedThreshold={5}
       drawDistance={height}
       renderItem={renderItem}
-      keyExtractor={keyExtractor}
+      keyExtractor={props.keyExtractor || keyExtractor}
       onViewableItemsChanged={onViewableItemsChanged}
       getItemType={getItemType}
       onEndReached={loadMore}
