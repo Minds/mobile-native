@@ -154,6 +154,14 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
     if (!channel) {
       err.username = 'Please select a target channel';
     }
+    if (paymentMethod === PaymentType.cash) {
+      if (!cardId) {
+        err.card = 'Card is required';
+      }
+      if (!channel?.merchant) {
+        err.username = 'Cannot receive cash offers';
+      }
+    }
     if (paymentMethod === PaymentType.cash && !cardId) {
       err.card = 'Card is required';
     }

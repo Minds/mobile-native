@@ -95,6 +95,20 @@ export type AddOnSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AppReadyMobileConfig = {
+  __typename?: 'AppReadyMobileConfig';
+  ACCENT_COLOR_DARK: Scalars['String']['output'];
+  ACCENT_COLOR_LIGHT: Scalars['String']['output'];
+  API_URL: Scalars['String']['output'];
+  APP_HOST: Scalars['String']['output'];
+  APP_NAME: Scalars['String']['output'];
+  APP_SPLASH_RESIZE: Scalars['String']['output'];
+  TENANT_ID: Scalars['Int']['output'];
+  THEME: Scalars['String']['output'];
+  WELCOME_LOGO: Scalars['String']['output'];
+  assets: Array<KeyValueType>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
@@ -604,6 +618,39 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export type KeyValueType = {
+  __typename?: 'KeyValueType';
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type MobileConfig = {
+  __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
+  previewQRCode: Scalars['String']['output'];
+  previewStatus: MobilePreviewStatusEnum;
+  splashScreenType: MobileSplashScreenTypeEnum;
+  updateTimestamp: Scalars['Int']['output'];
+  welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+};
+
+export enum MobilePreviewStatusEnum {
+  Error = 'ERROR',
+  NoPreview = 'NO_PREVIEW',
+  Pending = 'PENDING',
+  Ready = 'READY',
+}
+
+export enum MobileSplashScreenTypeEnum {
+  Contain = 'CONTAIN',
+  Cover = 'COVER',
+}
+
+export enum MobileWelcomeScreenLogoTypeEnum {
+  Horizontal = 'HORIZONTAL',
+  Square = 'SQUARE',
+}
+
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
   Light = 'LIGHT',
@@ -618,6 +665,7 @@ export type MultiTenantConfig = {
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -628,6 +676,7 @@ export type MultiTenantConfigInput = {
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -670,6 +719,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -684,6 +734,8 @@ export type Mutation = {
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
@@ -761,6 +813,12 @@ export type MutationInviteArgs = {
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type MutationMobileConfigArgs = {
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+};
+
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
@@ -801,6 +859,11 @@ export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
   roleId: Scalars['Int']['input'];
+};
+
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
 };
 
 export type MutationStoreFeaturedEntityArgs = {
@@ -957,6 +1020,7 @@ export type Query = {
   allPermissions: Array<PermissionsEnum>;
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
+  appReadyMobileConfig: AppReadyMobileConfig;
   /** Returns the permissions that the current session holds */
   assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
@@ -1001,6 +1065,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -1018,6 +1083,8 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -1029,6 +1096,10 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAppReadyMobileConfigArgs = {
+  tenantId: Scalars['Int']['input'];
 };
 
 export type QueryAssignedRolesArgs = {
@@ -1344,6 +1415,12 @@ export type SearchResultsCount = {
 export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
+
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
 
 export type Summary = {
   __typename?: 'Summary';
@@ -2364,6 +2441,34 @@ export type FetchPaymentMethodsQuery = {
     name: string;
     balance?: number | null;
   }>;
+};
+
+export type GetBoostFeedQueryVariables = Exact<{
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after: Scalars['Int']['input'];
+  source: Scalars['String']['input'];
+}>;
+
+export type GetBoostFeedQuery = {
+  __typename?: 'Query';
+  boosts: {
+    __typename?: 'BoostsConnection';
+    edges: Array<{
+      __typename?: 'BoostEdge';
+      node: {
+        __typename?: 'BoostNode';
+        guid: string;
+        activity: { __typename: 'ActivityNode'; legacy: string };
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
 };
 
 export type GetCustomPageQueryVariables = Exact<{
@@ -3935,6 +4040,74 @@ useFetchPaymentMethodsQuery.fetcher = (
 ) =>
   gqlFetcher<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables>(
     FetchPaymentMethodsDocument,
+    variables,
+    options,
+  );
+export const GetBoostFeedDocument = `
+    query GetBoostFeed($targetLocation: Int, $first: Int, $after: Int!, $source: String!) {
+  boosts(
+    targetLocation: $targetLocation
+    first: $first
+    after: $after
+    source: $source
+  ) {
+    edges {
+      node {
+        guid
+        activity {
+          __typename
+          legacy
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}
+    `;
+export const useGetBoostFeedQuery = <
+  TData = GetBoostFeedQuery,
+  TError = unknown,
+>(
+  variables: GetBoostFeedQueryVariables,
+  options?: UseQueryOptions<GetBoostFeedQuery, TError, TData>,
+) =>
+  useQuery<GetBoostFeedQuery, TError, TData>(
+    ['GetBoostFeed', variables],
+    gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+      GetBoostFeedDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetBoostFeedQuery = <
+  TData = GetBoostFeedQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetBoostFeedQueryVariables,
+  variables: GetBoostFeedQueryVariables,
+  options?: UseInfiniteQueryOptions<GetBoostFeedQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetBoostFeedQuery, TError, TData>(
+    ['GetBoostFeed.infinite', variables],
+    metaData =>
+      gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+        GetBoostFeedDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetBoostFeedQuery.fetcher = (
+  variables: GetBoostFeedQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
+    GetBoostFeedDocument,
     variables,
     options,
   );

@@ -11,7 +11,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
-import ActivityModel from '../../../newsfeed/ActivityModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
 import { storages } from '~/common/services/storage/storages.service';
