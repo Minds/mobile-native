@@ -20,7 +20,7 @@ class DownloadService {
   async downloadToGallery(url: string, entity?: ActivityModel, name?: string) {
     try {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
-      if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
+      if (Platform.OS === 'ios') {
         return MediaLibrary.saveToLibraryAsync(this.checkAndFixImageURI(url));
       } else if (ANDROID_API_VERSION < 11) {
         let permission = await MediaLibrary.getPermissionsAsync(true);
