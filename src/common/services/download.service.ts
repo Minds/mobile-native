@@ -6,9 +6,8 @@ import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import DeviceInfo from 'react-native-device-info';
 
-const ANDROID_API_VERSION = parseInt(`${DeviceInfo.getBuildNumber()}`, 10);
+const ANDROID_API_VERSION = parseInt(`${Platform.Version}}`, 10);
 /**
  * Download Service
  */
