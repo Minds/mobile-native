@@ -156,7 +156,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
         testID="usdInput"
         editable={!localStore.support_tier.urn}
         wrapperBorder={theme.borderTop}
-        keyboardType="number-pad"
+        keyboardType="decimal-pad"
       />
       {hideTokens ? undefined : (
         <View
