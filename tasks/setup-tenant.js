@@ -1,123 +1,143 @@
-const fs = require('fs');
+const { request } = require('graphql-request');
+const fetch = require('node-fetch');
 const fse = require('fs-extra');
+const fs = require('fs');
+const { generateToken } = require('./helpers/jwt');
+
 const args = process.argv.slice(2);
-
-const tenant = args[0];
 const preview = args[1] === '--preview';
+const tenantId = args[0];
 
-if (tenant) {
-  console.log(`Setting up tenant ${tenant}`);
-  prepareTenant(tenant);
-  // Implement tenant setup here
-} else {
-  console.log('No tenant provided, default to minds');
+const query = `
+query GetMobileConfig($tenantId: Int!) {
+  appReadyMobileConfig(tenantId: $tenantId) {
+    APP_NAME
+    TENANT_ID
+    APP_HOST
+    APP_SPLASH_RESIZE
+    ACCENT_COLOR_LIGHT
+    ACCENT_COLOR_DARK
+    WELCOME_LOGO
+    THEME
+    API_URL
+    assets {
+      key
+      value
+    }
+    __typename
+
+  }
+}
+`;
+
+const url = process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql';
+
+/**
+ * Generate tenant config
+ */
+async function setupTenant(id) {
+  try {
+    const data = await request(
+      url,
+      query,
+      { tenantId: parseInt(id, 10) },
+      {
+        Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
+      },
+    );
+    // generate tenant json
+    generateTenantJSON(data.appReadyMobileConfig);
+    // download the assets
+    await downloadAssets(data.appReadyMobileConfig.assets);
+    if (preview) {
+      // copy previewer patches
+      copyPatches();
+    }
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 }
 
-function prepareTenant(companyID) {
-  const command =
-    'npx eas-cli build --platform android --profile demo --non-interactive --json --no-wait';
-  // const command = `eas build --platform android --profile demo --non-interactive --json --no-wait --local`;
-  // const Tenant = require(`../tenants/${companyID}/tenant.json`);
-  fs.copyFileSync(`../tenants/${companyID}/tenant.json`, './tenant.json');
-
-  if (fs.existsSync(`../tenants/${companyID}/icon.png`)) {
-    fs.copyFileSync(
-      `../tenants/${companyID}/icon.png`,
-      './assets/images/icon.png',
-    );
-  } else {
-    fs.copyFileSync(
-      `../tenants/${companyID}/square.png`,
-      './assets/images/icon.png',
-    );
+function generateTenantJSON(data) {
+  if (preview) {
+    const previewerTenant = require('../preview/tenant/tenant.json');
+    data.APP_SLUG = previewerTenant.APP_SLUG;
+    data.APP_SCHEME = previewerTenant.APP_SCHEME;
+    data.EAS_PROJECT_ID = previewerTenant.EAS_PROJECT_ID;
+    data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE;
+    data.APP_ANDROID_PACKAGE = previewerTenant.APP_ANDROID_PACKAGE;
+    data.APP_ANDROID_PACKAGE = previewerTenant.APP_ANDROID_PACKAGE;
   }
 
-  fs.copyFileSync(
-    `../tenants/${companyID}/square.png`,
-    './assets/images/logo_square.png',
-  );
+  const tenant = {
+    APP_NAME: data.APP_NAME,
+    APP_SCHEME: data.APP_SCHEME,
+    APP_SLUG: data.APP_SLUG,
+    APP_HOST: data.APP_HOST,
+    APP_IOS_BUNDLE: data.APP_IOS_BUNDLE,
+    APP_SPLASH_RESIZE: data.APP_SPLASH_RESIZE,
+    APP_ANDROID_PACKAGE: data.APP_ANDROID_PACKAGE,
+    IS_PREVIEW: preview,
+    ACCENT_COLOR_LIGHT: data.ACCENT_COLOR_LIGHT,
+    ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK,
+    WELCOME_LOGO: data.WELCOME_LOGO,
+    ADAPTIVE_ICON: '',
+    ADAPTIVE_COLOR: '',
+    THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
+    TENANT_ID: data.TENANT_ID,
+    API_URL: data.API_URL,
+    EAS_PROJECT_ID: data.EAS_PROJECT_ID,
+  };
 
+  console.log('Tenant', tenant);
+  try {
+    fs.writeFileSync('tenant.json', JSON.stringify(tenant, null, 2), 'utf8');
+  } catch (error) {
+    console.log('Error writing tenant.json');
+    console.error(error);
+    process.exit(1);
+  }
+}
+
+async function downloadAssets(assets) {
+  for (const asset of assets) {
+    const response = await fetch(asset.value);
+    const filename = assetsMap[asset.key];
+    try {
+      const buffer = await response.buffer();
+
+      fs.writeFileSync(`./assets/images/${filename}`, buffer, () =>
+        console.log('finished downloading', filename),
+      );
+    } catch (error) {
+      console.error(error);
+      process.exit(1);
+    }
+  }
+  console.log('Copying logo_square.png to logo_square_dark.png');
   fs.copyFileSync(
-    `../tenants/${companyID}/horizontal.png`,
     './assets/images/logo_horizontal.png',
-  );
-  fs.copyFileSync(
-    `../tenants/${companyID}/horizontal.png`,
     './assets/images/logo_horizontal_dark.png',
   );
-
-  fs.copyFileSync(
-    `../tenants/${companyID}/splash.png`,
-    './assets/images/splash.png',
-  );
-
-  if (fs.existsSync(`../tenants/${companyID}/adaptive-icon.png`)) {
-    fs.copyFileSync(
-      `../tenants/${companyID}/adaptive-icon.png`,
-      './assets/images/adaptive-icon.png',
-    );
-  }
-
-  if (preview) {
-    console.log('Preview mode, overriding tenant.json properties...');
-    fs.readFile('./preview/tenant/tenant.json', 'utf8', (err, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const previewJson = JSON.parse(data);
-
-      fs.readFile('./tenant.json', 'utf8', (errTenant, dataTenant) => {
-        if (errTenant) {
-          console.error(errTenant);
-          return;
-        }
-
-        const tenantJson = JSON.parse(dataTenant);
-
-        tenantJson.EAS_PROJECT_ID = previewJson.EAS_PROJECT_ID;
-        tenantJson.APP_SLUG = previewJson.APP_SLUG;
-        tenantJson.IS_PREVIEW = true;
-
-        fs.writeFile(
-          './tenant.json',
-          JSON.stringify(tenantJson, null, 2),
-          'utf8',
-          err => {
-            if (err) {
-              console.error(err);
-              return;
-            }
-            console.log('tenant.json updated successfully');
-          },
-        );
-      });
-    });
-
-    fse.copy('./preview/tenant/patches', './patches', err => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log('Preview patches copied successfully');
-    });
-  }
-
-  // const childProcess = exec(command, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`Error building for ${company.name}: ${error}`);
-  //   } else {
-  //     console.log(`Build for ${company.name} completed successfully.`);
-  //     console.log(stdout);
-  //   }
-  // });
-
-  // childProcess.stdout.on('data', data => {
-  //   console.log(data);
-  // });
-
-  // childProcess.stderr.on('data', data => {
-  //   console.error(data);
-  // });
 }
+
+function copyPatches() {
+  fse.copy('./preview/tenant/patches', './patches', err => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('Preview patches copied successfully');
+  });
+}
+
+const assetsMap = {
+  square_logo: 'logo_square.png',
+  splash: 'splash.png',
+  horizontal_logo: 'logo_horizontal.png',
+  icon: 'icon.png',
+  icon_mono: 'icon_mono.png',
+};
+
+setupTenant(tenantId);
