@@ -5,7 +5,7 @@ import Tenant from './tenant.json';
  * The app version
  * This should be updated after each release
  */
-const APP_VERSION = '5.0.0';
+const APP_VERSION = '5.0.1';
 
 const appBuildNumber = process.env.MINDS_APP_BUILD
   ? { versionCode: parseInt(process.env.MINDS_APP_BUILD, 10) }
