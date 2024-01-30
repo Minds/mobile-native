@@ -49,8 +49,10 @@ async function setupTenant(id) {
     generateTenantJSON(data.appReadyMobileConfig);
     // download the assets
     await downloadAssets(data.appReadyMobileConfig.assets);
-    // copy previewer patches
-    copyPatches();
+    if (preview) {
+      // copy previewer patches
+      copyPatches();
+    }
   } catch (error) {
     console.error(error);
     process.exit(1);
@@ -82,7 +84,7 @@ function generateTenantJSON(data) {
     WELCOME_LOGO: data.WELCOME_LOGO,
     ADAPTIVE_ICON: '',
     ADAPTIVE_COLOR: '',
-    THEME: data.THEME,
+    THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
     TENANT_ID: data.TENANT_ID,
     API_URL: data.API_URL,
     EAS_PROJECT_ID: data.EAS_PROJECT_ID,
