@@ -98,6 +98,10 @@ class OpenURLService {
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
 
+    if (url.startsWith(MINDS_URI.replace('https://www.', ''))) {
+      url = `https://www.${url}`;
+    }
+
     if (url.startsWith(`${MINDS_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
     }
