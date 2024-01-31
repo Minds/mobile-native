@@ -544,15 +544,13 @@ export default function (props) {
             return;
           }
 
-          if (mediaItem.type?.startsWith('video')) {
-            this.attachments.attachMedia(
-              {
-                ...mediaItem,
-                type: mediaItem.mime,
-              },
-              this.extra,
-            );
-          }
+          this.attachments.attachMedia(
+            {
+              ...mediaItem,
+              type: mediaItem.mime,
+            },
+            this.extra,
+          );
         });
         this.mode = 'text';
       } else {
