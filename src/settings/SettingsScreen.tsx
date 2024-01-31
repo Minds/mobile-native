@@ -89,11 +89,20 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  firstSection.push({
-    title: i18n.t('settings.pro'),
-    screen: user.pro ? 'Pro' : 'UpgradeScreen',
-    params: { pro: true },
-  });
+  if (user.plus && !IS_TENANT) {
+    firstSection.push({
+      title: i18n.t('settings.pro'),
+      screen: user.pro ? 'Pro' : 'UpgradeScreen',
+      params: {
+        pro: true,
+        onComplete: (success: any) => {
+          if (success) {
+            user?.togglePro();
+          }
+        },
+      },
+    });
+  }
 
   firstSection.push({
     title: i18n.t('settings.security'),

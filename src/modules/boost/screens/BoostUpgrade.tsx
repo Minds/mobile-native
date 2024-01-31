@@ -33,7 +33,7 @@ function BoostUpgrade() {
     NavigationService.navigate('UpgradeScreen', {
       onComplete: (success: any) => {
         if (success) {
-          user?.togglePlus();
+          user?.togglePro();
           NavigationService.goBack();
         }
       },
