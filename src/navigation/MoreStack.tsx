@@ -178,7 +178,7 @@ export default function () {
         getComponent={() =>
           require('~/settings/screens/MindsProScreen').default
         }
-        options={{ title: i18n.t('settings.pro') }}
+        options={{ title: 'Cancel Pro Subscription' }}
       />
       <MoreStack.Screen
         name="Billing"

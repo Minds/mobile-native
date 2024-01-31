@@ -68,7 +68,7 @@ const SettingsScreen = observer(({ navigation }) => {
   const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
 
   const user = sessionService.getUser();
-  console.log('user', user.pro);
+  console.log('user', user.plus, user.pro);
 
   const onComplete = useCallback(
     (forPro: boolean) => {
