@@ -14,7 +14,7 @@ type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default brow
 /**
  * Open url service
  */
-class OpenURLService {
+export class OpenURLService {
   preferredBrowser: BrowserType = undefined;
 
   /**

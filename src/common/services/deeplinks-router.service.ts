@@ -91,26 +91,6 @@ class DeeplinksRouter {
     // this will track not only deep links, but navigation initiated from push notifs
     analyticsService.trackDeepLinkReceivedEvent(url);
 
-    // if (cleanURL.startsWith('codepush/')) {
-    //   const deploymentKey = cleanURL.split('codepush/')?.[1];
-    //   if (deploymentKey) {
-    //     return codePushStore.syncCodepush({
-    //       deploymentKey,
-    //       force: true,
-    //       clearUpdates: true,
-    //     });
-    //   }
-    // }
-
-    // if (cleanURL.startsWith('customcodepush/')) {
-    //   const file = cleanURL.split('customcodepush/')?.[1];
-    //   if (file) {
-    //     console.log('Codepush File', file);
-    //     forceUpdate(file);
-    //   }
-    //   return;
-    // }
-
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
       return true;
