@@ -1,42 +1,12 @@
 import { Alert } from 'react-native';
 import { B1, Button, Screen } from '~/common/ui';
 import subscriptionProService from '~/common/services/subscription.pro.service';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
+import sessionService from '~/common/services/session.service';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ({
-  navigation,
-}: {
-  navigation: StackNavigationProp<any>;
-}) {
-  const [expiryString, setExpiryString] = useState('');
-  useEffect(() => {
-    subscriptionProService
-      .isActive()
-      .then(() => setExpiryString(subscriptionProService.expiryString));
-  }, [expiryString]);
-
-  const cancelSubscription = async () => {
-    Alert.alert(
-      'Confirmation',
-      'Are you sure you want to cancel Pro subscription?',
-      [
-        { text: 'No', style: 'cancel' },
-        {
-          text: "Yes I'm Sure",
-          style: 'destructive',
-          onPress: async () => {
-            await subscriptionProService.isActive();
-            navigation.goBack();
-          },
-        },
-      ],
-      {
-        cancelable: true,
-      },
-    );
-  };
-
+export default function () {
+  const { cancelSubscription, expiryString } = useCancelProSubscription();
   return (
     <Screen>
       <B1 horizontal="XL2">Manage your subscription</B1>
@@ -53,3 +23,42 @@ export default function ({
     </Screen>
   );
 }
+
+const useCancelProSubscription = () => {
+  const navigation = useNavigation();
+  const user = sessionService.getUser();
+  const [expiryString, setExpiryString] = useState('');
+
+  useEffect(() => {
+    subscriptionProService
+      .expires()
+      .then(() => setExpiryString(subscriptionProService.expiryString));
+  }, [expiryString]);
+
+  const cancelSubscription = async () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to cancel Pro subscription?',
+      [
+        { text: 'No', style: 'cancel' },
+        {
+          text: "Yes I'm Sure",
+          style: 'destructive',
+          onPress: async () => {
+            await subscriptionProService.isActive();
+            user.togglePro();
+            navigation.goBack();
+          },
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  return {
+    cancelSubscription,
+    expiryString,
+  };
+};
