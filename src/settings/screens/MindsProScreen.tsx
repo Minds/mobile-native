@@ -45,7 +45,7 @@ const useCancelProSubscription = () => {
           text: "Yes I'm Sure",
           style: 'destructive',
           onPress: async () => {
-            await subscriptionProService.isActive();
+            await subscriptionProService.disable();
             user.togglePro();
             navigation.goBack();
           },
