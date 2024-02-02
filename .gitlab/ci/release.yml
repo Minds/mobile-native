@@ -1,6 +1,6 @@
 # Release the OSS version
 eas_release_android_oss:
-  stage: release
+  stage: build
   image: cimg/aws:2023.12
   tags: [minds-ci]
   artifacts:
