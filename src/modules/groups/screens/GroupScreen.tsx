@@ -24,6 +24,10 @@ import CaptureFab from '~/capture/CaptureFab';
 import { storages } from '~/common/services/storage/storages.service';
 import FeedFilter from '~/common/components/FeedFilter';
 import ThemedStyles from '~/styles/ThemedStyles';
+import ErrorLoading from '~/common/components/ErrorLoading';
+import i18n from '~/common/services/i18n.service';
+import { H4 } from '~/common/ui';
+import ScrollableTabComponent from '../components/ScrollableTabComponent';
 
 const HEADER_HEIGHT = 54;
 
@@ -64,7 +68,19 @@ const PostToGroupButton = observer(({ navigation }) => {
 
 export function GroupScreen({ route, navigation }) {
   const groupGuid = route.params.guid || route.params?.group?.guid;
-  const group = useGroup({ guid: groupGuid, group: route.params?.group });
+  const { group, error, refetch } = useGroup({
+    guid: groupGuid,
+    group: route.params?.group,
+  });
+
+  if (error) {
+    return (
+      <ErrorLoading
+        tryAgain={refetch}
+        message={i18n.t('groups.errorLoading')}
+      />
+    );
+  }
 
   return group ? (
     <GroupScreenContextProvider group={group}>
@@ -113,6 +129,15 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 
   const renderScene = useCallback(
     ({ route }: any) => {
+      if (!group.isMember && group.isPrivate) {
+        return (
+          <ScrollableTabComponent index={0}>
+            <H4 align="center" top="XL">
+              {i18n.t('group.closedMessage')}
+            </H4>
+          </ScrollableTabComponent>
+        );
+      }
       switch (route.key) {
         case 'feed':
           return <FeedScene route={route} group={group} />;

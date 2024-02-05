@@ -114,7 +114,6 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     top: 0,
     width: '100%',
-
     justifyContent: 'flex-end',
   },
   rowContainer: {

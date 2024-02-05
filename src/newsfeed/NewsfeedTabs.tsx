@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import type NewsfeedStore from './NewsfeedStore';
 import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
-import { useLegacyStores } from '../common/hooks/use-stores';
 import { NewsfeedType } from './NewsfeedStore';
 import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
-  const { groups } = useLegacyStores();
+  // const { groups } = useLegacyStores();
 
   const tabs = React.useMemo(
     () => {
@@ -32,12 +31,6 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [i18n.locale, experimentOn],
   );
-
-  useEffect(() => {
-    if (!groups.loaded) {
-      groups.loadList();
-    }
-  }, [groups]);
 
   return newsfeed.feedType ? (
     <TopbarTabbar

@@ -1976,10 +1976,13 @@
     "share": "Share Group",
     "boost": "Boost Group",
     "disableBoost": "Disable boosts",
-    "enableBoost": "Enable boosts"
+    "enableBoost": "Enable boosts",
+    "buttonInvited": "Accept Invite",
+    "closedMessage": "This discussion is only available to group members."
   },
   "back": "Back",
   "explore": "Explore",
   "restart": "Restart",
+  "awaiting": "Awaiting",
   "viewOnExternal": "View on {{external}}"
 }
