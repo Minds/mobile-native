@@ -198,10 +198,12 @@ export class SessionService {
     if (this.tokenCanRefresh()) {
       logService.info('[SessionService] refreshing token...');
       const tokens = await AuthService.refreshToken();
-      tokens.pseudo_id = this.sessions[this.activeIndex].pseudoId;
+      if ((this.sessions?.length ?? 0) > 0) {
+        tokens.pseudo_id = this.sessions[this.activeIndex]?.pseudoId;
+        this.sessions[this.activeIndex] = this.buildSessionData(tokens);
+      }
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
-      this.sessions[this.activeIndex] = this.buildSessionData(tokens);
       // persist sessions array
       this.persistSessionsArray();
       logService.info('[SessionService] token refreshed!');
