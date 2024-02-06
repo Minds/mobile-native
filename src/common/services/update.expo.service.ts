@@ -23,9 +23,7 @@ export class UpdateExpoService {
       try {
         this.fetchResult = await Updates.fetchUpdateAsync();
       } catch (error) {
-        this.fetchResult = await Updates.fetchUpdateAsync().catch(
-          () => undefined,
-        );
+        this.fetchResult = await Updates.fetchUpdateAsync();
       }
     }
     return this.fetchResult;
