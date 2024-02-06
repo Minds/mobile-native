@@ -34,4 +34,3 @@ export class UpdateExpoService {
 }
 
 export default new UpdateExpoService();
-
