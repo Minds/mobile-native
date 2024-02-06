@@ -41,6 +41,7 @@ import TopFeedHighlights from '../components/TopFeedHighlights';
 import CaptureFab from '~/capture/CaptureFab';
 import FeedHeader from '../components/FeedHeader';
 import FeedExploreTag from '../components/FeedExploreTag';
+import UpdateBanner from '~/common/components/UpdateBanner';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -272,6 +273,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 const Header = () => (
   <>
     <CheckLanguage />
+    <UpdateBanner />
     <RemoteBanner />
     {!IS_TENANT && <InitialOnboardingButton />}
     {!IS_TENANT && <PortraitContentBar />}

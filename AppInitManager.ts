@@ -1,4 +1,4 @@
-import { Linking, Alert, Platform } from 'react-native';
+import { Linking, Alert } from 'react-native';
 // import ShareMenu from 'react-native-share-menu';
 import * as Sentry from '@sentry/react-native';
 import * as SplashScreen from 'expo-splash-screen';
@@ -7,7 +7,7 @@ import pushService from './src/common/services/push.service';
 // import receiveShare from './src/common/services/receive-share.service';
 
 import {
-  GOOGLE_PLAY_STORE,
+  IS_FROM_STORE,
   IS_TENANT,
   IS_TENANT_PREVIEW,
 } from './src/config/Config';
@@ -59,16 +59,6 @@ export class AppInitManager {
 
     storeRatingService.track('appSession');
 
-    // if (!__DEV__) {
-    //   codePushStore.syncCodepush({
-    //     onDownload: () => {
-    //       InteractionManager.runAfterInteractions(() => {
-    //         SplashScreen.hideAsync();
-    //       });
-    //     },
-    //   });
-    // }
-
     try {
       logService.info('[App] init session');
       const token = await sessionService.init();
@@ -76,22 +66,8 @@ export class AppInitManager {
       if (!token) {
         // update settings and init growthbook
         this.updateMindsConfigAndInitGrowthbook();
-
         logService.info('[App] there is no active session');
-
-        // if (await codePushStore.checkForUpdates()) {
-        //   // the syncCodepush will remove the splash once the SyncScreen is pushed,
-        //   // but here we will hide the splash screen after a delay as a timeout if
-        //   // anything goes wrong.
-        //   setTimeout(() => {
-        //     SplashScreen.hideAsync();
-        //   }, 400);
-        // } else {
-        //   SplashScreen.hideAsync();
-        // }
-        setTimeout(() => {
-          SplashScreen.hideAsync();
-        }, 400);
+        SplashScreen.hideAsync();
       } else {
         logService.info('[App] session initialized');
       }
@@ -170,8 +146,8 @@ export class AppInitManager {
     // register device token into backend on login
     pushService.registerToken();
 
-    // check update
-    if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
+    // OSS check update
+    if (!IS_FROM_STORE) {
       setTimeout(async () => {
         const user = sessionService.getUser();
         updateService.checkUpdate(!user.canary);
