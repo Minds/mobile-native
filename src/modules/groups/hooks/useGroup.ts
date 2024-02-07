@@ -1,7 +1,16 @@
-import { useEffect, useState } from 'react';
-import entitiesService from '~/common/services/entities.service';
+import { useMemo } from 'react';
 import GroupModel from '~/groups/GroupModel';
+import useApiQuery from '~/services/hooks/useApiQuery';
 
+type GroupResponse = {
+  status: 'success' | 'error';
+  group: GroupModel;
+};
+
+/**
+ * Hook that returns a group by guid
+ * it can receive an optional group object that will by updated asynchronously
+ */
 export function useGroup({
   guid,
   group,
@@ -9,23 +18,21 @@ export function useGroup({
   guid?: string;
   group?: GroupModel;
 }) {
-  const [Group, setGroup] = useState<GroupModel | undefined>(group);
-
-  useEffect(() => {
-    if (!group && guid) {
-      fetchAndUpdateGroup(guid, group).then(fetchedGroup =>
-        setGroup(fetchedGroup),
-      );
-    }
-  }, [group, guid]);
-
-  return Group;
-}
-
-const fetchAndUpdateGroup = async (guid: string, defaultGroup?: GroupModel) => {
-  const group = await entitiesService.single(
-    `urn:group:${guid}`,
-    defaultGroup ? GroupModel.checkOrCreate(defaultGroup) : null,
+  const id = guid || group?.guid;
+  const { data, error, isFetching, refetch } = useApiQuery<GroupResponse>(
+    ['group', id],
+    'api/v1/groups/group/' + id,
   );
-  return (group as GroupModel) || null;
-};
+
+  const dataGroup = useMemo(
+    () =>
+      data
+        ? group
+          ? group.update(data.group)
+          : GroupModel.checkOrCreate(data.group)
+        : group || null,
+    [data, group],
+  );
+
+  return { group: dataGroup, error, isFetching, refetch };
+}

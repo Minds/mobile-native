@@ -126,6 +126,43 @@ class GroupsService {
   }
 
   /**
+   * Used by group moderator to accept a join request from targetUserGuid
+   */
+  acceptRequest(targetUserGuid: string) {
+    return this.join(targetUserGuid);
+  }
+
+  /**
+   * Used by group moderator to reject a join request from targetUserGuid
+   */
+  rejectRequest(targetUserGuid: string) {
+    return this.leave(targetUserGuid);
+  }
+
+  /**
+   * Cancel a request to join a group
+   */
+  public cancelRequest(guid) {
+    return api.post(`api/v1/groups/membership/${guid}/cancel`);
+  }
+
+  /**
+   * Decline invitation
+   * @param {string} guid
+   */
+  declineInvitation(guid) {
+    return api.post(`api/v1/groups/invitations/${guid}/decline`);
+  }
+
+  /**
+   * Accept invitation
+   * @param {string} guid
+   */
+  acceptInvitation(guid) {
+    return api.post(`api/v1/groups/invitations/${guid}/accept`);
+  }
+
+  /**
    * Join group
    * @param {string} guid
    */

@@ -3,6 +3,11 @@ import BaseModel from '../common/BaseModel';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 
+export enum GroupAccessType {
+  PRIVATE = 0,
+  PUBLIC = 2,
+}
+
 /**
  * Group model
  */
@@ -11,6 +16,7 @@ export default class GroupModel extends BaseModel {
   @observable mature_visibility = false;
   @observable briefdescription = '';
   @observable show_boosts: 1 | 0 = 1;
+  membership = 2;
   name!: string;
   type!: string;
   nsfw: Array<number> = [];
@@ -42,12 +48,23 @@ export default class GroupModel extends BaseModel {
 
   @action
   async join() {
-    this['is:member'] = true;
+    if (this.isPublic) {
+      this['is:member'] = true;
+    } else {
+      this['is:awaiting'] = true;
+    }
     try {
       await groupsService.join(this.guid);
       GroupModel.events.emit('joinedGroup', this);
     } catch (error) {
-      runInAction(() => (this['is:member'] = false));
+      console.log('Error joining', error);
+      runInAction(() => {
+        if (this.isPublic) {
+          this['is:member'] = false;
+        } else {
+          this['is:awaiting'] = false;
+        }
+      });
     }
   }
 
@@ -60,6 +77,66 @@ export default class GroupModel extends BaseModel {
     } catch (error) {
       runInAction(() => (this['is:member'] = true));
     }
+  }
+
+  async acceptInvitation() {
+    this['is:member'] = true;
+    this['is:invited'] = false;
+    try {
+      await groupsService.acceptInvitation(this.guid);
+      GroupModel.events.emit('joinedGroup', this);
+    } catch (error) {
+      runInAction(() => {
+        this['is:member'] = false;
+        this['is:invited'] = true;
+      });
+    }
+  }
+
+  async declineInvitation() {
+    this['is:invited'] = false;
+    try {
+      await groupsService.declineInvitation(this.guid);
+    } catch (error) {
+      runInAction(() => {
+        this['is:invited'] = true;
+      });
+    }
+  }
+
+  async cancelRequest() {
+    this['is:awaiting'] = false;
+    try {
+      await groupsService.cancelRequest(this.guid);
+    } catch (error) {
+      runInAction(() => {
+        this['is:awaiting'] = true;
+      });
+    }
+  }
+
+  get isBanned() {
+    return Boolean(this['is:banned']);
+  }
+
+  get isMember() {
+    return Boolean(this['is:member']);
+  }
+
+  get isAwaiting() {
+    return Boolean(this['is:awaiting']);
+  }
+
+  get isInvited() {
+    return Boolean(this['is:invited']);
+  }
+
+  get isPublic() {
+    return this['membership'] === GroupAccessType.PUBLIC;
+  }
+
+  get isPrivate() {
+    return this['membership'] === GroupAccessType.PRIVATE;
   }
 
   getAvatar(size = 'small') {
@@ -95,7 +172,10 @@ export default class GroupModel extends BaseModel {
 //@ts-ignore
 decorate(GroupModel, {
   name: observable,
+  membership: observable,
   'is:member': observable,
+  'is:awaiting': observable,
+  'is:invited': observable,
   'members:count': observable,
   'comments:count': observable,
 });
