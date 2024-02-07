@@ -44,10 +44,6 @@ class VideoPlayerService {
   };
 
   constructor() {
-    storages.app.getBoolAsync('BACKGROUND_SOUND').then(value => {
-      this.backgroundSound = value ?? true;
-      this.setAudioMode();
-    });
     SystemSetting.getVolume().then(value => (this.currentSystemVolume = value));
     SilentSwitch.addEventListener(silent => {
       this.setIsSilent(silent);
@@ -56,6 +52,13 @@ class VideoPlayerService {
         // we set the volume to v on the current video (this also calls the setVolume of this service)
         this.current.setVolume(v);
       }
+    });
+  }
+
+  init() {
+    storages.app.getBoolAsync('BACKGROUND_SOUND').then(value => {
+      this.backgroundSound = value ?? true;
+      this.setAudioMode();
     });
   }
 

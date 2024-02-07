@@ -47,15 +47,6 @@ jest.mock('react-native-inappbrowser-reborn', () => ({
   },
 }));
 
-jest.mock('./storage/storages.service', () => ({
-  storages: {
-    app: {
-      getInt: jest.fn(),
-      setInt: jest.fn(),
-    },
-  },
-}));
-
 jest.mock('~/navigation/NavigationService', () => ({
   navigate: jest.fn(),
   push: jest.fn(),
