@@ -129,6 +129,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  CustomPages: { page: string; title: string };
   ChangeEmail: {};
   TierManagementScreen: {};
   TierScreen: {};

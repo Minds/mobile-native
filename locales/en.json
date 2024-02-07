@@ -202,6 +202,8 @@
     "promotions": "Receive exclusive promotions from {{TENANT}}",
     "accept": "I accept the",
     "termsAndConditions": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "content": "Content",
     "join": "Create a channel",
     "createChannel": "Join {{TENANT}}",
     "haveAccount": "Don't have an account?",

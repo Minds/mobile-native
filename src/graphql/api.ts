@@ -734,6 +734,8 @@ export type Mutation = {
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
@@ -857,6 +859,11 @@ export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
   roleId: Scalars['Int']['input'];
+};
+
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
 };
 
 export type MutationStoreFeaturedEntityArgs = {
@@ -1076,6 +1083,8 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -1406,6 +1415,12 @@ export type SearchResultsCount = {
 export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
+
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
 
 export type Summary = {
   __typename?: 'Summary';
@@ -2453,6 +2468,20 @@ export type GetBoostFeedQuery = {
       endCursor?: string | null;
       startCursor?: string | null;
     };
+  };
+};
+
+export type GetCustomPageQueryVariables = Exact<{
+  pageType: Scalars['String']['input'];
+}>;
+
+export type GetCustomPageQuery = {
+  __typename?: 'Query';
+  customPage: {
+    __typename?: 'CustomPage';
+    pageType: CustomPageTypesEnum;
+    content?: string | null;
+    externalLink?: string | null;
   };
 };
 
@@ -4079,6 +4108,58 @@ useGetBoostFeedQuery.fetcher = (
 ) =>
   gqlFetcher<GetBoostFeedQuery, GetBoostFeedQueryVariables>(
     GetBoostFeedDocument,
+    variables,
+    options,
+  );
+export const GetCustomPageDocument = `
+    query GetCustomPage($pageType: String!) {
+  customPage(pageType: $pageType) {
+    pageType
+    content
+    externalLink
+  }
+}
+    `;
+export const useGetCustomPageQuery = <
+  TData = GetCustomPageQuery,
+  TError = unknown,
+>(
+  variables: GetCustomPageQueryVariables,
+  options?: UseQueryOptions<GetCustomPageQuery, TError, TData>,
+) =>
+  useQuery<GetCustomPageQuery, TError, TData>(
+    ['GetCustomPage', variables],
+    gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+      GetCustomPageDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetCustomPageQuery = <
+  TData = GetCustomPageQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetCustomPageQueryVariables,
+  variables: GetCustomPageQueryVariables,
+  options?: UseInfiniteQueryOptions<GetCustomPageQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetCustomPageQuery, TError, TData>(
+    ['GetCustomPage.infinite', variables],
+    metaData =>
+      gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+        GetCustomPageDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetCustomPageQuery.fetcher = (
+  variables: GetCustomPageQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetCustomPageQuery, GetCustomPageQueryVariables>(
+    GetCustomPageDocument,
     variables,
     options,
   );

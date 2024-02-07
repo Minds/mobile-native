@@ -8,6 +8,7 @@ import Markdown from 'react-native-markdown-display';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useAuxPagesQuery } from '~/graphql/strapi';
 import { MINDS_URI } from '~/config/Config';
+import CenteredLoading from '../components/CenteredLoading';
 
 type WebContentScreenRouteProp = RouteProp<RootStackParamList, 'WebContent'>;
 
@@ -26,14 +27,18 @@ function WebContentScreen({ route }: WebContentScreenProps) {
     h1 = 'Resource not found',
   } = data?.auxPages?.data?.[0]?.attributes ?? {};
 
-  if (!route.params || isLoading) {
+  if (!route.params) {
     return;
   }
 
   return (
-    <ModalFullScreen back title={h1}>
+    <ModalFullScreen back title={isLoading ? '' : h1}>
       <ScrollView style={styles.scrollView}>
-        <Markdown style={styles}>{fixDeepLinks(body)}</Markdown>
+        {isLoading ? (
+          <CenteredLoading />
+        ) : (
+          <Markdown style={styles}>{fixDeepLinks(body)}</Markdown>
+        )}
       </ScrollView>
     </ModalFullScreen>
   );
