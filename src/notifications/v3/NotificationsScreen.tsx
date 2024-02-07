@@ -46,8 +46,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     { refetchOnMount: 'always' }, // update notifications on mount (since they are prefetched)
   );
 
-  console.log('notificationsList', notificationsList.length);
-
   const insets = useSafeAreaInsets();
   const cleanTop = React.useRef({
     marginTop: insets && insets.top ? insets.top - 5 : 0,

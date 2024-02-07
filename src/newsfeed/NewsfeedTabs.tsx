@@ -9,7 +9,6 @@ import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
-  // const { groups } = useLegacyStores();
 
   const tabs = React.useMemo(
     () => {

@@ -17,8 +17,6 @@ export default function SubscribeButton({ group }: { group: GroupModel }) {
   let buttonType: GroupMembershipButtonType = null;
   const [loading, setLoading] = React.useState(false);
 
-  console.log('group', group);
-
   if (
     !group.isMember &&
     !group.isAwaiting &&
