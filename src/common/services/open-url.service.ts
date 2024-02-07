@@ -14,7 +14,7 @@ type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default brow
 /**
  * Open url service
  */
-class OpenURLService {
+export class OpenURLService {
   preferredBrowser: BrowserType = undefined;
 
   /**
@@ -97,6 +97,10 @@ class OpenURLService {
    */
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
+
+    if (url.startsWith(MINDS_URI.replace('https://www.', ''))) {
+      url = `https://www.${url}`;
+    }
 
     if (url.startsWith(`${MINDS_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
