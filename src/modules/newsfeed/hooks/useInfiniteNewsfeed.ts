@@ -17,8 +17,9 @@ import GroupModel from '~/groups/GroupModel';
 import { storages } from '~/common/services/storage/storages.service';
 import { gqlFetcher } from '~/common/services/api.service';
 import { NewsfeedType } from '~/newsfeed/NewsfeedStore';
+import useDismissible from '~/services/hooks/useDismissable';
 
-const mapModels = (edge: any, inFeedNoticesDelivered) => {
+const mapModels = (edge: any, inFeedNoticesDelivered, highlightsDimissed) => {
   if (edge.node.__mapped) {
     return edge.node;
   }
@@ -60,9 +61,15 @@ const mapModels = (edge: any, inFeedNoticesDelivered) => {
         }
         break;
       case 'FeedHighlightsConnection':
-        edge.node.edges = edge.node.edges.map(hEdge =>
-          ActivityModel.create(JSON.parse(hEdge.node.legacy)),
-        );
+        if (!highlightsDimissed && edge.node.edges.length) {
+          // we put the highlights inline with the rest of the feed
+          edge.node = edge.node.edges.map(hEdge =>
+            ActivityModel.create(JSON.parse(hEdge.node.legacy)),
+          );
+          edge.node.unshift({ __typename: 'FeedHighlightsTitle' });
+          edge.node.push({ __typename: 'FeedHighlightsFooter' });
+        }
+        // edge.node = FeedHighlightsModel.create(edge.node);
         edge.node.__mapped = true;
         break;
       case 'FeedNoticeNode':
@@ -77,6 +84,7 @@ const mapModels = (edge: any, inFeedNoticesDelivered) => {
 
 export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
   const inFeedNoticesDelivered = React.useRef(emptyArray);
+  const { isDismissed: highlightsDimissed } = useDismissible('top-highlights');
 
   const local = React.useRef<{
     lastFetchAt: number;
@@ -121,9 +129,11 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
   const entities = useMemo(
     () =>
       query.data?.pages.flatMap(page =>
-        page.newsfeed.edges.map(d => mapModels(d, inFeedNoticesDelivered)),
+        page.newsfeed.edges.flatMap(d =>
+          mapModels(d, inFeedNoticesDelivered, highlightsDimissed),
+        ),
       ),
-    [query.data],
+    [query.data, highlightsDimissed],
   );
 
   return {
