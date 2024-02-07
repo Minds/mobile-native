@@ -174,6 +174,13 @@ export default function () {
         initialParams={{ options: SecurityScreenOptions }}
       />
       <MoreStack.Screen
+        name="Pro"
+        getComponent={() =>
+          require('~/settings/screens/MindsProScreen').default
+        }
+        options={{ title: 'Cancel Pro Subscription' }}
+      />
+      <MoreStack.Screen
         name="Billing"
         getComponent={() =>
           require('~/common/components/OptionsDrawer').default

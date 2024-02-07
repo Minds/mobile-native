@@ -58,7 +58,10 @@ const getOptionsSmallList = navigation => {
     : null;
 };
 
-type Flags = Record<'isIosMindsHidden' | 'hideTokens', boolean>;
+type Flags = Record<
+  'isIosMindsHidden' | 'hideTokens' | 'hasPro' | 'hasPlus',
+  boolean
+>;
 
 type MenuItem = {
   name: string;
@@ -68,7 +71,7 @@ type MenuItem = {
 } | null;
 const getOptionsList = (
   navigation,
-  { isIosMindsHidden, hideTokens }: Flags,
+  { isIosMindsHidden, hideTokens, hasPro, hasPlus }: Flags,
 ) => {
   const channel = sessionService.getUser();
   const list: MenuItem[] = [
@@ -133,7 +136,7 @@ const getOptionsList = (
         navigation.navigate('GroupsList');
       },
     },
-    !IS_TENANT
+    !IS_TENANT && !(hasPro && hasPlus)
       ? {
           name: i18n.t('moreScreen.upgrade'),
           icon: (
@@ -146,6 +149,7 @@ const getOptionsList = (
           onPress: () => {
             navigation.navigate('UpgradeScreen', {
               onComplete: () => null,
+              pro: hasPro,
             });
           },
         }
@@ -195,6 +199,8 @@ export default function Drawer(props) {
   const optionsList = getOptionsList(props.navigation, {
     isIosMindsHidden,
     hideTokens,
+    hasPlus: channel.pro,
+    hasPro: channel.plus,
   });
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (

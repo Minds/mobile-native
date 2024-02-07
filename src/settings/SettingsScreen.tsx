@@ -60,12 +60,28 @@ const SettingsScreen = observer(({ navigation }) => {
       screen: 'Account',
       params: {},
     },
-    {
-      title: i18n.t('settings.security'),
-      screen: 'Security',
-      params: {},
-    },
   ];
+
+  if (user.plus && !IS_TENANT) {
+    firstSection.push({
+      title: i18n.t('settings.pro'),
+      screen: user.pro ? 'Pro' : 'UpgradeScreen',
+      params: {
+        pro: true,
+        onComplete: (success: any) => {
+          if (success) {
+            user?.togglePro();
+          }
+        },
+      },
+    });
+  }
+
+  firstSection.push({
+    title: i18n.t('settings.security'),
+    screen: 'Security',
+    params: {},
+  });
 
   if (!IS_IOS && !hideTokens && !IS_TENANT) {
     firstSection.push({
