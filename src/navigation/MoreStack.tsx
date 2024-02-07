@@ -49,6 +49,10 @@ export default function () {
       title: i18n.t('settings.accountOptions.7'),
       onPress: () => navigation.push('AutoplaySettingsScreen'),
     },
+    {
+      title: i18n.t('settings.accountOptions.9'),
+      onPress: () => navigation.push('VideoSoundSettingsScreen'),
+    },
     !IS_TENANT
       ? {
           title: i18n.t('settings.accountOptions.8'),
@@ -331,6 +335,13 @@ export default function () {
           require('~/settings/screens/AutoplaySettingsScreen').default
         }
         options={{ title: i18n.t('settings.accountOptions.7') }}
+      />
+      <MoreStack.Screen
+        name="VideoSoundSettingsScreen"
+        getComponent={() =>
+          require('~/settings/screens/VideoSoundSettingsScreen').default
+        }
+        options={{ title: i18n.t('settings.accountOptions.9') }}
       />
       <MoreStack.Screen
         name="SupermindSettingsScreen"
