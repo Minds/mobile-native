@@ -21,18 +21,6 @@ export const CANARY_KEY = 'canary';
 export const ENV =
   typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
-export const CODE_PUSH_PROD_KEY = IS_IOS
-  ? RNConfig.CODEPUSH_PROD_KEY_IOS
-  : RNConfig.CODEPUSH_PROD_KEY_ANDROID;
-
-export const CODE_PUSH_STAGING_KEY = IS_IOS
-  ? RNConfig.CODEPUSH_STAGING_KEY_IOS
-  : RNConfig.CODEPUSH_STAGING_KEY_ANDROID;
-
-export const CODE_PUSH_RC_KEY = IS_IOS
-  ? RNConfig.CODEPUSH_RC_KEY_IOS
-  : RNConfig.CODEPUSH_RC_KEY_ANDROID;
-
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
 
@@ -267,16 +255,5 @@ export const STORE_LINK = Platform.select({
 }) as string;
 
 export const isStoryBookOn = storages.app.getBool('storybook');
-
-// export const CODEPUSH_DEFAULT_CONFIG: CodePushOptions = {
-//   checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-//   installMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-//   mandatoryInstallMode: CodePush.InstallMode.ON_NEXT_SUSPEND,
-//   minimumBackgroundDuration: 15 * 60, // 15 minutes
-//   rollbackRetryOptions: {
-//     delayInHours: 4,
-//     maxRetryAttempts: 2,
-//   },
-// };
 
 export const BOOSTS_DELAY = 604800;

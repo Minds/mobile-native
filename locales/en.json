@@ -246,6 +246,9 @@
     "wefounder": {
       "title": "Become an owner of Minds by <link />",
       "refer": "joining our Wefunder."
+    },
+    "update": {
+      "title": "New version available."
     }
   },
   "inFeedNotices": {

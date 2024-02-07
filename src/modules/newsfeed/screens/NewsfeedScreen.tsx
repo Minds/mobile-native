@@ -40,6 +40,7 @@ import Recommendation from '../components/Recommendation';
 import CaptureFab from '~/capture/CaptureFab';
 import FeedHeader from '../components/FeedHeader';
 import FeedExploreTag from '../components/FeedExploreTag';
+import UpdateBanner from '~/common/components/UpdateBanner';
 import TopFeedHighlightsTitle from '../components/TopFeedHighlightsTitle';
 import TopFeedHighlightsFooter from '../components/TopFeedHighlightsFooter';
 
@@ -277,6 +278,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 const Header = () => (
   <>
     <CheckLanguage />
+    <UpdateBanner />
     <RemoteBanner />
     {!IS_TENANT && <InitialOnboardingButton />}
     {!IS_TENANT && <PortraitContentBar />}
