@@ -20,7 +20,7 @@ export const EmptyMessage = ({
   onPress,
 }: EmptyMessageProps) => {
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <Icon
         name={icon}
         size={24}

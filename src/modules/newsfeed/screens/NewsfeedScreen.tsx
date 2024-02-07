@@ -37,11 +37,12 @@ import { FlashList } from '@shopify/flash-list';
 import { getNotice } from '~/common/components/in-feed-notices/notices';
 import { B1 } from '../../../common/ui';
 import Recommendation from '../components/Recommendation';
-import TopFeedHighlights from '../components/TopFeedHighlights';
 import CaptureFab from '~/capture/CaptureFab';
 import FeedHeader from '../components/FeedHeader';
 import FeedExploreTag from '../components/FeedExploreTag';
 import UpdateBanner from '~/common/components/UpdateBanner';
+import TopFeedHighlightsTitle from '../components/TopFeedHighlightsTitle';
+import TopFeedHighlightsFooter from '../components/TopFeedHighlightsFooter';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -150,10 +151,11 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
               entities={row.item.edges}
             />
           );
-        case 'FeedHighlightsConnection':
+        case 'FeedHighlightsTitle':
+          return <TopFeedHighlightsTitle />;
+        case 'FeedHighlightsFooter':
           return (
-            <TopFeedHighlights
-              entities={row.item.edges}
+            <TopFeedHighlightsFooter
               onSeeTopFeedPress={() => {
                 feedListRef.current?.scrollToOffset({
                   offset: 0,
@@ -165,6 +167,9 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
               }}
             />
           );
+        case 'FeedHighlightsConnection':
+          // we don't want to render the top highlights if they are dismissed
+          return null;
         case 'FeedHeaderNode':
           return row.item.text ? <FeedHeader text={row.item.text} /> : null;
         case 'FeedExploreTagNode':

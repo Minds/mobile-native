@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { IS_IPAD, IS_TENANT, TENANT } from '~/config/Config';
+import { IS_IPAD, IS_TENANT, MINDS_URI, TENANT } from '~/config/Config';
 import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
@@ -50,6 +50,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     username: '',
     email: '',
     termsAccepted: false,
+    policiesAccepted: false,
     exclusivePromotions: IS_TENANT ? false : true,
     inProgress: false,
     showErrors: false,
@@ -119,7 +120,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     },
     onRegisterPress() {
       this.showErrors = true;
-      if (!store.termsAccepted) {
+      if (!store.termsAccepted || !store.policiesAccepted) {
         return showNotification(
           i18n.t('auth.termsAcceptedError'),
           'info',
@@ -179,6 +180,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     },
     toggleTerms() {
       store.termsAccepted = !store.termsAccepted;
+    },
+    togglePolicies() {
+      store.policiesAccepted = !store.policiesAccepted;
     },
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
@@ -299,7 +303,45 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                   <MText
                     style={theme.link}
                     onPress={() =>
-                      openUrlService.open('https://www.minds.com/p/terms')
+                      IS_TENANT
+                        ? openUrlService.open(
+                            `${MINDS_URI}pages/community-guidelines`,
+                          )
+                        : openUrlService.open(`${MINDS_URI}/p/content-policy`)
+                    }>
+                    {i18n.t('auth.content')}
+                  </MText>{' '}
+                  {i18n.t('and')}{' '}
+                  <MText
+                    style={theme.link}
+                    onPress={() =>
+                      IS_TENANT
+                        ? openUrlService.open(
+                            `${MINDS_URI}pages/privacy-policy`,
+                          )
+                        : openUrlService.open(`${MINDS_URI}p/privacy`)
+                    }>
+                    {i18n.t('auth.privacyPolicy')}
+                  </MText>
+                </MText>
+              }
+              checked={store.policiesAccepted}
+              onPress={store.togglePolicies}
+            />
+            <CheckBox
+              checkedColor={ThemedStyles.getColor('Link')}
+              containerStyle={styles.checkboxTerm}
+              title={
+                <MText style={styles.checkboxText}>
+                  {i18n.t('auth.accept')}{' '}
+                  <MText
+                    style={theme.link}
+                    onPress={() =>
+                      IS_TENANT
+                        ? openUrlService.open(
+                            `${MINDS_URI}pages/terms-of-service`,
+                          )
+                        : openUrlService.open('https://www.minds.com/p/terms')
                     }>
                     {i18n.t('auth.termsAndConditions')}
                   </MText>
@@ -308,6 +350,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               checked={store.termsAccepted}
               onPress={store.toggleTerms}
             />
+
             {!IS_TENANT && (
               <CheckBox
                 checkedColor={ThemedStyles.getColor('Link')}
