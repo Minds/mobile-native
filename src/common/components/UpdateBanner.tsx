@@ -1,9 +1,10 @@
 import Banner from './Banner';
 import updateExpoService from '../services/update.expo.service';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import i18nService from '../services/i18n.service';
 import { observer } from 'mobx-react';
+import useDebouncedCallback from '../hooks/useDebouncedCallback';
 
 export default observer(function UpdateBanner() {
   const { showNote, onReload } = useUpdates();
@@ -27,26 +28,29 @@ const useUpdates = () => {
   const showNote = !currentlyRunning && isUpdatePending;
 
   useFocusEffect(
-    useCallback(() => {
-      const { checkForUpdate, update } = updateExpoService;
-      if (currentlyRunning) {
-        return;
-      }
-      checkForUpdate().then(result => {
-        if (result) {
-          setCurrentlyRunning(true);
-          update()
-            .then(response => {
-              if (response?.isNew && response?.manifest) {
-                setIsUpdatePending(true);
-              }
-            })
-            .catch(console.log)
-            .finally(() => setCurrentlyRunning(false));
+    useDebouncedCallback(
+      () => {
+        const { checkForUpdate, update } = updateExpoService;
+        if (currentlyRunning) {
+          return;
         }
-      });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+        checkForUpdate().then(result => {
+          if (result) {
+            setCurrentlyRunning(true);
+            update()
+              .then(response => {
+                if (response?.isNew && response?.manifest) {
+                  setIsUpdatePending(true);
+                }
+              })
+              .catch(console.log)
+              .finally(() => setCurrentlyRunning(false));
+          }
+        });
+      },
+      5000,
+      [],
+    ),
   );
 
   const onReload = () => {
