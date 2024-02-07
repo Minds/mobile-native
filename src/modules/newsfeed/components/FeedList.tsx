@@ -188,6 +188,7 @@ const keyExtractor = (item, index: any) => {
 };
 
 const viewabilityConfig = {
+  waitForInteraction: true,
   itemVisiblePercentThreshold: 50,
   minimumViewTime: 500,
 };

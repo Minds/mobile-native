@@ -6,6 +6,7 @@ import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { storages } from './storage/storages.service';
 import NavigationService from '~/navigation/NavigationService';
+import { CustomPageType } from '~/modules/custom-pages/types';
 
 const STORAGE_NAMESPACE = 'openLinksBrowser';
 
@@ -14,7 +15,7 @@ type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default brow
 /**
  * Open url service
  */
-class OpenURLService {
+export class OpenURLService {
   preferredBrowser: BrowserType = undefined;
 
   /**
@@ -98,8 +99,17 @@ class OpenURLService {
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
 
+    if (url.startsWith(MINDS_URI.replace('https://www.', ''))) {
+      url = `https://www.${url}`;
+    }
+
     if (url.startsWith(`${MINDS_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
+    }
+    if (url.startsWith(`${MINDS_URI}pages/`)) {
+      const page = url.replace(`${MINDS_URI}pages/`, '');
+
+      return NavigationService.navigate('CustomPages', { page });
     }
 
     if (url.startsWith(MINDS_URI) && !navigatingToPro) {

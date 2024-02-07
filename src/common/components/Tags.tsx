@@ -121,7 +121,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
-            this.navToURL('http://' + content);
+            this.navToURL('https://' + content);
           }}>
           {content}
         </MText>

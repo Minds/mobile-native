@@ -2,13 +2,10 @@ import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
-import { isNetworkError } from '~/common/services/ApiErrors';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
-import apiService, { ApiResponse } from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
-import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
@@ -19,37 +16,14 @@ import {
   IS_TENANT,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import NavigationService from '~/navigation/NavigationService';
 import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
-
-interface HelpResponse extends ApiResponse {
-  url: string;
-}
+import openUrlService from '~/common/services/open-url.service';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
 export const navigateToHelp = async () => {
-  try {
-    const response = await apiService.get<HelpResponse>(
-      'api/v3/helpdesk/zendesk',
-      {
-        returnUrl: 'true',
-      },
-    );
-    if (response && response.url) {
-      NavigationService.navigate('WebView', {
-        url: unescape(response.url),
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    if (isNetworkError(err)) {
-      showNotification(i18n.t('errorMessage'), 'warning');
-    } else {
-      showNotification(i18n.t('cantReachServer'), 'warning');
-    }
-  }
+  openUrlService.open('https://chatwoot.help/hc/minds/en');
 };
 
 const setDarkMode = () => {
@@ -86,12 +60,28 @@ const SettingsScreen = observer(({ navigation }) => {
       screen: 'Account',
       params: {},
     },
-    {
-      title: i18n.t('settings.security'),
-      screen: 'Security',
-      params: {},
-    },
   ];
+
+  if (user.plus && !IS_TENANT) {
+    firstSection.push({
+      title: i18n.t('settings.pro'),
+      screen: user.pro ? 'Pro' : 'UpgradeScreen',
+      params: {
+        pro: true,
+        onComplete: (success: any) => {
+          if (success) {
+            user?.togglePro();
+          }
+        },
+      },
+    });
+  }
+
+  firstSection.push({
+    title: i18n.t('settings.security'),
+    screen: 'Security',
+    params: {},
+  });
 
   if (!IS_IOS && !hideTokens && !IS_TENANT) {
     firstSection.push({

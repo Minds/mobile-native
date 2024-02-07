@@ -140,8 +140,8 @@ export default class DiscoveryV2Store {
     this.loadingTags = true;
     try {
       const params = plus
-        ? { plus: 1, as_activities: 1 }
-        : { as_activities: 1 };
+        ? { plus: 1, as_activities: 1, trending_tags_v2: true }
+        : { as_activities: 1, trending_tags_v2: false };
       const response = await apiService.get<any>(
         'api/v3/discovery/tags',
         params,
