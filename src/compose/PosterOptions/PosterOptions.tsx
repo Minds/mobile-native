@@ -94,17 +94,13 @@ const PosterOptions: FC<PropsType> = props => {
           .join(', ')}
         onPress={onTagPress}
       />
-      {IS_IOS ? null : (
-        <MenuItem
-          title={i18n.t('nsfw.button')}
-          label={
-            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
-          }
-          onPress={onNsfwPress}
-          testID="nsfwButton"
-          noBorderTop
-        />
-      )}
+      <MenuItem
+        title={i18n.t('nsfw.button')}
+        label={nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')}
+        onPress={onNsfwPress}
+        testID="nsfwButton"
+        noBorderTop
+      />
       {showSchedule && (
         <MenuItem
           title={i18n.t('capture.schedule')}
