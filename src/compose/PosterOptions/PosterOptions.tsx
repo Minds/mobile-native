@@ -13,7 +13,6 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
-import { IS_IOS } from '~/config/Config';
 import { PosterStackScreenProps } from './PosterStackNavigator';
 
 export function useNavCallback(screen, store, navigation) {
