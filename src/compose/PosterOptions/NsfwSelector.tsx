@@ -20,7 +20,7 @@ const NsfwOption = props => {
   const onSelect = useCallback(() => {
     if (IS_FROM_STORE && props.option.value > 0) {
       return showNotification(
-        'You are not allowed to post NSFW content to MINDS.com and you won`t be able to see it in your feed',
+        'Posting and viewing NSFW content on this version of the app is not supported',
         'danger',
       );
     }
