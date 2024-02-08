@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import isEqual from 'lodash/isEqual';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
@@ -17,7 +16,7 @@ import StripeCardSelector from '../common/components/stripe-card-selector/Stripe
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18nService from '../common/services/i18n.service';
 import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
-import { IS_FROM_STORE, IS_IOS } from '../config/Config';
+import { IS_FROM_STORE } from '../config/Config';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import {
@@ -105,7 +104,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
     data?.channel?.supermind_settings ?? {};
 
   const defaultPaymentMethod =
-    data?.payment_options?.payment_type ?? IS_IOS
+    data?.payment_options?.payment_type ?? IS_FROM_STORE
       ? PaymentType.token
       : PaymentType.cash;
 
@@ -147,7 +146,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
 
   // hide payment method tabs
-  const tabsDisabled = IS_IOS;
+  const tabsDisabled = IS_FROM_STORE;
 
   const validate = useCallback(() => {
     const err: any = {};
