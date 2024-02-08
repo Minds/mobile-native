@@ -1,10 +1,12 @@
 import { action, observable } from 'mobx';
 import SystemSetting from 'react-native-system-setting';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 //@ts-ignore
 import SilentSwitch from 'react-native-silent-switch';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import { IS_IOS } from '~/config/Config';
+import { storages } from './storage/storages.service';
 
 /**
  * Video Player Service
@@ -21,6 +23,7 @@ class VideoPlayerService {
   @observable currentVolume = 0;
 
   @observable isSilent = false;
+  @observable backgroundSound = false;
 
   currentSystemVolume = 0;
 
@@ -52,6 +55,13 @@ class VideoPlayerService {
     });
   }
 
+  init() {
+    storages.app.getBoolAsync('BACKGROUND_SOUND').then(value => {
+      this.backgroundSound = value ?? true;
+      this.setAudioMode();
+    });
+  }
+
   /**
    * Set is silent
    * @param {boolean} value
@@ -59,6 +69,23 @@ class VideoPlayerService {
   @action
   setIsSilent(value: boolean) {
     this.isSilent = value;
+  }
+
+  @action
+  toggleBackgroundSound = () => {
+    this.backgroundSound = !this.backgroundSound;
+    storages.app.setBoolAsync('BACKGROUND_SOUND', this.backgroundSound);
+    this.setAudioMode();
+  };
+
+  private setAudioMode() {
+    Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+      shouldDuckAndroid: false,
+      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+      staysActiveInBackground: this.backgroundSound ?? true,
+    });
   }
 
   /**

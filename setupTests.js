@@ -58,6 +58,8 @@ jest.mock('@react-native-community/netinfo', () => ({
 
 jest.mock('./AppStores');
 jest.mock('./AppMessageProvider');
+
+jest.mock('./src/common/services/storage/storages.service');
 jest.useFakeTimers();
 
 jest.doMock('moment', () => {

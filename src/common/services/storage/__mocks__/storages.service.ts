@@ -10,6 +10,16 @@ const mockMMKVApi = () => {
     setArray: jest.fn(),
     getInt: jest.fn(),
     setInt: jest.fn(),
+    getBoolAsync: jest.fn().mockResolvedValue(true),
+    setBoolAsync: jest.fn(),
+    getStringAsync: jest.fn(),
+    setStringAsync: jest.fn(),
+    getMapAsync: jest.fn(),
+    setMapAsync: jest.fn(),
+    getArrayAsync: jest.fn(),
+    setArrayAsync: jest.fn(),
+    getIntAsync: jest.fn(),
+    setIntAsync: jest.fn(),
   };
 };
 

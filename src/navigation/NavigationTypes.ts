@@ -80,6 +80,7 @@ export type MoreStackParamList = {
   MessengerSettingsScreen: {};
   RekeyScreen: {};
   AutoplaySettingsScreen: {};
+  VideoSoundSettingsScreen: {};
   BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};

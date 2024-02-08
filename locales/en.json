@@ -1035,7 +1035,8 @@
       "5": "NSFW Content",
       "6": "Messenger",
       "7": "Autoplay Videos",
-      "8": "Boosted Content"
+      "8": "Boosted Content",
+      "9": "Background video playback"
     },
     "networkOptions": {
       "1": "Data Saver"
@@ -1072,6 +1073,10 @@
       "enable": "Enable video autoplay",
       "saved": "Changes Saved",
       "notPlus": "This feature is only available to Plus users."
+    },
+    "backgroundsound": {
+      "description": "Manage video playback when the app is in the background",
+      "enable": "Enable background playback"
     },
     "boost": {
       "description": "Control how boost works across the site.",

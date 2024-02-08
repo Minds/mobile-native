@@ -19,7 +19,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+
 import { IS_IPAD } from '~/config/Config';
 
 import NavigationService, {
@@ -110,15 +110,6 @@ class App extends Component<Props> {
     // this.shareReceiveSubscription = ShareMenu.addNewShareListener(
     //   receiveShareService.handle,
     // );
-
-    // set global audio settings for the app
-    Audio.setAudioModeAsync({
-      playsInSilentModeIOS: true,
-      interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-      shouldDuckAndroid: false,
-      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-      staysActiveInBackground: true,
-    });
 
     // send focus states to react query
     this.stateSubscription = AppState.addEventListener(
