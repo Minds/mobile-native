@@ -43,6 +43,7 @@ import FeedExploreTag from '../components/FeedExploreTag';
 import UpdateBanner from '~/common/components/UpdateBanner';
 import TopFeedHighlightsTitle from '../components/TopFeedHighlightsTitle';
 import TopFeedHighlightsFooter from '../components/TopFeedHighlightsFooter';
+import mindsConfigService from '~/common/services/minds-config.service';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -212,6 +213,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         }}
         onRefresh={() => {
           refresh();
+          mindsConfigService.update();
           portrait.load();
         }}
         ListEmptyComponent={
