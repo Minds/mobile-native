@@ -46,7 +46,10 @@ async function run() {
     return str.length > 500 ? str.substr(0, 497) + '...' : str;
   };
 
-  const filename = path.basename(filepath);
+  let filename = path.basename(filepath);
+  if (filename.indexOf(version) === -1) {
+    filename = filename.replace('.apk', `-${version}.apk`);
+  }
 
   input.on('readable', () => {
     const data = input.read();

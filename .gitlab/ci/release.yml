@@ -1,6 +1,6 @@
 # Release the OSS version
 eas_release_android_oss:
-  stage: release
+  stage: build
   image: cimg/aws:2023.12
   tags: [minds-ci]
   artifacts:
@@ -11,7 +11,7 @@ eas_release_android_oss:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - ../yarn
-  dependencies:
+  needs:
     - eas_build_production_android_oss
   script:
     - echo "Uploading release.json"
