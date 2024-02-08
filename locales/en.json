@@ -37,15 +37,15 @@
       "appoint_moderator": "You are not allowed to appoint a moderator",
       "approve_subscriber": "You are not allowed to approve a subscriber",
       "create_channel": "You are not allowed to create a channel",
-      "create_comment": "You are not allowed to create a comment",
+      "create_comment": "Your user role does not allow commenting",
       "create_group": "You are not allowed to create a group",
       "create_post": "You are not allowed to create a post",
       "delete_channel": "You are not allowed to delete this channel",
-      "delete_comment": "You are not allowed to delete this comment",
+      "delete_comment": "Your user role does not allow commenting",
       "delete_group": "You are not allowed to delete this group",
       "delete_post": "You are not allowed to delete this post",
       "edit_channel": "You are not allowed to edit this channel",
-      "edit_comment": "You are not allowed to edit this comment",
+      "edit_comment": "Your user role does not allow commenting",
       "edit_group": "You are not allowed to edit this group",
       "edit_post": "You are not allowed to edit this post",
       "invite": "You are not allowed to invite",
@@ -53,10 +53,10 @@
       "message": "You are not allowed to message this user",
       "subscribe": "You are not allowed to subscribe",
       "tag": "You are not allowed to tag this content",
-      "remind": "You are not allowed to remind this content",
+      "remind": "Your user role does not allow you to remind or quote post",
       "wire": "You are not allowed to wire this user",
       "view": "You are not allowed to view this content",
-      "vote": "You are not allowed to vote this content"
+      "vote": "Your user role does not allow interactions on posts"
     }
   },
   "supermind": {
