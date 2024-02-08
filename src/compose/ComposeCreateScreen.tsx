@@ -6,7 +6,7 @@ import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import { B2, Row, Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 import type { ComposeCreateMode } from './createComposeStore';
-import { IS_IOS, SUPERMIND_ENABLED } from '../config/Config';
+import { SUPERMIND_ENABLED } from '../config/Config';
 import i18nService from '../common/services/i18n.service';
 import { CaptureFabIcon } from '~/capture/CaptureFab';
 
@@ -34,16 +34,14 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         onPress={() => navigateToCompose('post')}
         containerItemStyle={ThemedStyles.style.marginTop4x}
       />
-      {!IS_IOS && (
-        <MenuItem
-          title={texts.monetizedPost.title}
-          subtitle={texts.monetizedPost.subtitle}
-          leftIcon="money"
-          iconColor={selected === 'monetizedPost' ? 'Link' : undefined}
-          borderless
-          onPress={() => navigateToCompose('monetizedPost')}
-        />
-      )}
+      <MenuItem
+        title={texts.monetizedPost.title}
+        subtitle={texts.monetizedPost.subtitle}
+        leftIcon="money"
+        iconColor={selected === 'monetizedPost' ? 'Link' : undefined}
+        borderless
+        onPress={() => navigateToCompose('monetizedPost')}
+      />
       <MenuItem
         title={texts.boost.title}
         subtitle={texts.boost.subtitle}
@@ -76,6 +74,7 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
 
 export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) => {
   Keyboard.dismiss();
+
   pushBottomSheet({
     component: (ref, handleContentLayout) => (
       <View onLayout={handleContentLayout}>
