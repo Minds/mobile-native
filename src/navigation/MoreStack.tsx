@@ -37,7 +37,10 @@ export default function () {
     },
     {
       title: i18n.t('settings.accountOptions.4'),
-      onPress: () => navigation.push('SettingsNotifications'),
+      onPress: () =>
+        navigation.push(
+          IS_TENANT ? 'PushNotificationsSettings' : 'SettingsNotifications',
+        ),
     },
     !IS_IOS && !IS_TENANT
       ? {
