@@ -106,14 +106,12 @@ const Interactions = (props: InteractionsProps) => {
       return opts;
     },
     get offsetField() {
-      return (
-        {
-          subscribers: 'from_timestamp',
-          channelSubscribers: undefined,
-          channelSubscriptions: undefined,
-          subscribersYouKnow: 'offset',
-        }[store.interaction] || 'next-page'
-      );
+      return {
+        subscribers: 'from_timestamp',
+        channelSubscribers: undefined,
+        channelSubscriptions: undefined,
+        subscribersYouKnow: 'offset',
+      }[store.interaction];
     },
     setOffset(offset: any) {
       this.offset = offset;
@@ -207,7 +205,7 @@ const Interactions = (props: InteractionsProps) => {
         />
       ) : (
         <FeedList
-          estimatedItemSize={60}
+          estimatedItemSize={74.9}
           feedStore={store.feedStore}
           navigation={navigation}
           renderActivity={renderItemUser}

@@ -19,7 +19,7 @@ function InteractionsScreen() {
   const { entity, interaction } = params;
 
   return (
-    <Screen safe onlyTopEdge scroll>
+    <Screen safe onlyTopEdge>
       <ScreenHeader back title={capitalize(getInteractionTitle(interaction))} />
       <Interactions entity={entity} interaction={interaction} />
     </Screen>
