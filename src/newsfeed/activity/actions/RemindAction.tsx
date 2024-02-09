@@ -1,4 +1,6 @@
 import React, { useCallback } from 'react';
+import { observer } from 'mobx-react';
+
 import { IconButtonNext } from '~ui/icons';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import ActivityModel from '../../../newsfeed/ActivityModel';
@@ -9,7 +11,6 @@ import createComposeStore, {
 } from '../../../compose/createComposeStore';
 import { pushAudienceSelector } from '../../../compose/ComposeAudienceSelector';
 import { showNotification } from '../../../../AppMessages';
-import sessionService from '../../../common/services/session.service';
 import { actionsContainerStyle } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
@@ -34,14 +35,8 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, hideCount }: PropsTypes) {
-  const reminded =
-    entity.remind_users &&
-    entity.remind_users.some(
-      user => user.guid === sessionService.getUser().guid,
-    );
-
-  const disabled = !reminded && !entity.can(FLAG_REMIND);
+export default observer(function ({ entity, hideCount }: PropsTypes) {
+  const disabled = !entity.can(FLAG_REMIND);
 
   const { newsfeed } = useLegacyStores();
   const analytics = useAnalytics();
@@ -54,12 +49,11 @@ export default function ({ entity, hideCount }: PropsTypes) {
       return;
     }
     pushRemindActionSheet({
-      reminded,
       entity,
       newsfeed,
       analytics,
     });
-  }, [reminded, entity, newsfeed, analytics]);
+  }, [entity, newsfeed, analytics]);
 
   return (
     <IconButtonNext
@@ -70,7 +64,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
       name="remind"
       size="small"
       fill
-      active={reminded}
+      active={entity.has_reminded ?? false}
       onPress={showDropdown}
       extra={
         !hideCount && entity.reminds ? (
@@ -79,15 +73,12 @@ export default function ({ entity, hideCount }: PropsTypes) {
       }
     />
   );
-}
+});
 
-const pushRemindActionSheet = ({
-  reminded,
+const pushRemindActionSheet = async ({
   entity,
-  newsfeed,
   analytics,
 }: {
-  reminded?: boolean;
   entity: ActivityModel;
   newsfeed: NewsfeedStore;
   analytics;
@@ -120,6 +111,7 @@ const pushRemindActionSheet = ({
         ActivityModel.events.emit('newPost', activity);
         analytics.trackClick('remind');
         storeRatingService.track('remind', true);
+        entity.setHasReminded(true);
 
         showNotification(i18n.t('postReminded'), 'success');
       })
@@ -133,6 +125,7 @@ const pushRemindActionSheet = ({
     entity
       .deleteRemind()
       .then(() => {
+        entity.setHasReminded(false);
         showNotification(i18n.t('remindRemoved'), 'success');
       })
       .catch(e => {
@@ -159,56 +152,57 @@ const pushRemindActionSheet = ({
   const canPost = PermissionsService.canCreatePost();
   const canInteract = PermissionsService.canInteract();
 
+  const reminded = await entity.hasReminded();
+
   return pushBottomSheet({
     safe: true,
     component: ref => (
       <>
-        {reminded ? (
-          <BottomSheetMenuItem
-            onPress={async () => {
-              await ref.close();
-              undo();
-            }}
-            title={i18n.t('undoRemind')}
-            iconName="undo"
-            iconType="material"
-          />
-        ) : (
-          <>
-            {canInteract && (
-              <BottomSheetMenuItem
-                onPress={async () => {
-                  await ref.close();
-                  remind();
-                }}
-                title={i18n.t('capture.remind')}
-                iconName="repeat"
-                iconType="material"
-              />
-            )}
-            {canPost && (
-              <BottomSheetMenuItem
-                onPress={async () => {
-                  await ref.close();
-                  quote();
-                }}
-                title={i18n.t('quote')}
-                iconName="edit"
-                iconType="material"
-              />
-            )}
-
+        <>
+          {canInteract && reminded ? (
             <BottomSheetMenuItem
               onPress={async () => {
                 await ref.close();
-                shareToGroup();
+                undo();
               }}
-              title={i18n.t('groupShare')}
-              iconName="account-multiple"
-              iconType="material-community"
+              title={i18n.t('undoRemind')}
+              iconName="undo"
+              iconType="material"
             />
-          </>
-        )}
+          ) : (
+            <BottomSheetMenuItem
+              onPress={async () => {
+                await ref.close();
+                remind();
+              }}
+              title={i18n.t('capture.remind')}
+              iconName="repeat"
+              iconType="material"
+            />
+          )}
+          {canPost && (
+            <BottomSheetMenuItem
+              onPress={async () => {
+                await ref.close();
+                quote();
+              }}
+              title={i18n.t('quote')}
+              iconName="edit"
+              iconType="material"
+            />
+          )}
+
+          <BottomSheetMenuItem
+            onPress={async () => {
+              await ref.close();
+              shareToGroup();
+            }}
+            title={i18n.t('groupShare')}
+            iconName="account-multiple"
+            iconType="material-community"
+          />
+        </>
+
         <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
       </>
     ),
