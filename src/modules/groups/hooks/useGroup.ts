@@ -24,15 +24,17 @@ export function useGroup({
     'api/v1/groups/group/' + id,
   );
 
-  const dataGroup = useMemo(
-    () =>
-      data
-        ? group
-          ? group.update(data.group)
-          : GroupModel.checkOrCreate(data.group)
-        : group || null,
-    [data, group],
-  );
+  const dataGroup = useMemo(() => {
+    if (data) {
+      if (group) {
+        group.update(data.group);
+        return group;
+      }
+      return GroupModel.checkOrCreate(data.group);
+    } else {
+      return group || null;
+    }
+  }, [data, group]);
 
   return { group: dataGroup, error, isFetching, refetch };
 }
