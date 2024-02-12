@@ -13,6 +13,7 @@ import type { SupportTiersType } from '~/wire/WireTypes';
 import { getLockType } from '~/wire/v2/lock/Lock';
 import MText from '~/common/components/MText';
 import SupermindLabel from '~/common/components/supermind/SupermindLabel';
+import { IS_TENANT } from '~/config/Config';
 
 type PropsType = {
   entity: ActivityModel;
@@ -54,10 +55,15 @@ export default class ActivityMetrics extends Component<PropsType> {
             : ''}
           {date}
         </MText>
-
-        {lockType !== null && <LockTag type={lockType} />}
-        {Boolean(this.props.entity.supermind) &&
-          !this.props.hideSupermindLabel && <SupermindLabel />}
+        {!IS_TENANT ? (
+          <LockNetworkTag name={'Some long name'} type="lock" />
+        ) : (
+          <>
+            {lockType !== null && <LockTag type={lockType} />}
+            {Boolean(this.props.entity.supermind) &&
+              !this.props.hideSupermindLabel && <SupermindLabel />}
+          </>
+        )}
       </View>
     );
   }
@@ -74,3 +80,43 @@ const textStyle = ThemedStyles.combine(
   'fontM',
   'paddingVertical',
 );
+
+type LockNetworkTag = {
+  name?: string;
+  type: 'lock' | 'unlock';
+};
+const LockNetworkTag = ({ name = 'member', type }: LockNetworkTag) => {
+  return (
+    <View
+      style={type === 'lock' ? styles.wrapperLockStyle : styles.wrapperStyle}>
+      <MText
+        numberOfLines={1}
+        style={type === 'lock' ? styles.memberLockStyle : styles.memberStyle}>
+        {name}
+      </MText>
+    </View>
+  );
+};
+
+const wrapperStyle = ThemedStyles.combine('bcolorIconActive', 'bgLink', {
+  borderWidth: 1,
+  borderRadius: 3,
+  paddingTop: 2,
+  paddingHorizontal: 4,
+  marginRight: 5,
+  marginVertical: 2,
+  maxWidth: '45%',
+});
+
+const memberStyle = ThemedStyles.combine('colorButtonText', {
+  fontFamily: 'Roboto_500',
+  fontSize: 12,
+  lineHeight: 14,
+});
+
+export const styles = {
+  wrapperStyle,
+  memberStyle,
+  wrapperLockStyle: ThemedStyles.combine(...wrapperStyle, 'bgTransparent'),
+  memberLockStyle: ThemedStyles.combine(...memberStyle, 'colorPrimaryText'),
+};
