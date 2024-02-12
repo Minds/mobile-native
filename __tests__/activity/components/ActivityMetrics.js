@@ -1,6 +1,5 @@
 import 'react-native';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
@@ -10,7 +9,7 @@ import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetr
 jest.mock('../../../src/auth/UserStore');
 
 describe('activity metrics component', () => {
-  let screen, user;
+  let screen;
   beforeEach(() => {
     let activityResponse = activitiesServiceFaker().load(1);
     let activity = activityResponse.activities[0];
@@ -25,6 +24,6 @@ describe('activity metrics component', () => {
 
   it('should have Text', async () => {
     let root = screen.root;
-    expect(root.findAllByType('Text')).toHaveLength(1);
+    expect(root.findAllByType('Text')).toHaveLength(2);
   });
 });
