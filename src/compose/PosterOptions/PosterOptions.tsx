@@ -13,7 +13,6 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
-import { IS_IOS } from '~/config/Config';
 import { PosterStackScreenProps } from './PosterStackNavigator';
 
 export function useNavCallback(screen, store, navigation) {
@@ -94,17 +93,13 @@ const PosterOptions: FC<PropsType> = props => {
           .join(', ')}
         onPress={onTagPress}
       />
-      {IS_IOS ? null : (
-        <MenuItem
-          title={i18n.t('nsfw.button')}
-          label={
-            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
-          }
-          onPress={onNsfwPress}
-          testID="nsfwButton"
-          noBorderTop
-        />
-      )}
+      <MenuItem
+        title={i18n.t('nsfw.button')}
+        label={nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')}
+        onPress={onNsfwPress}
+        testID="nsfwButton"
+        noBorderTop
+      />
       {showSchedule && (
         <MenuItem
           title={i18n.t('capture.schedule')}

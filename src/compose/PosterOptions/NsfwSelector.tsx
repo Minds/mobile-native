@@ -9,6 +9,8 @@ import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
+import { showNotification } from 'AppMessages';
+import { IS_FROM_STORE } from '~/config/Config';
 
 /**
  * Nsfw Option
@@ -16,6 +18,12 @@ import MenuItemOption from '../../common/components/menus/MenuItemOption';
  */
 const NsfwOption = props => {
   const onSelect = useCallback(() => {
+    if (IS_FROM_STORE && props.option.value > 0) {
+      return showNotification(
+        'Posting and viewing NSFW content on this version of the app is not supported',
+        'danger',
+      );
+    }
     props.store.toggleNsfw(props.option.value);
   }, [props.store, props.option.value]);
 
