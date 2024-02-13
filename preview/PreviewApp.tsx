@@ -37,6 +37,9 @@ const Preview = () => {
 
     if (url && PreviewUpdateService.isPreviewURL(url)) {
       const channel = PreviewUpdateService.getPreviewChannel(url);
+      if (!channel) {
+        return;
+      }
       setLoading(true);
       PreviewUpdateService.updatePreview(channel).finally(() => {
         setLoading(false);
